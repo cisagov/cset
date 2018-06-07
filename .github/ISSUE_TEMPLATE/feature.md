@@ -18,4 +18,4 @@ Please provide an example for how this feature would be used.
 
 ## Pitch
 
-Why does this feature belong in the CSET?
+Why does this feature belong in CSET?
