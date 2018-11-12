@@ -1,0 +1,54 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<form [formGroup]='statusCreateForm' #statusNgForm='ngForm' (submit)='handleSubmit($event, statusNgForm, statusCreateForm)'>
+
+  <div class="form-group">
+      <label for="file">Choose File</label>
+          <input #myInput type="file"
+                 id="file"
+                 (change)="handleFileInput($event.target.files)">
+  </div>
+
+  <textarea id='fileDescription' name='fileDescription' formControlName='fileDescription'></textarea>
+
+  <div *ngIf='fileDescription.invalid && (fileDescription.dirty || fileDescription.touched)'>
+      <div *ngIf='fileDescription.errors.required'>
+          Content is required.
+      </div>
+      <div *ngIf='fileDescription.errors.maxlength'>
+          Max length is 280
+      </div>
+      <div *ngIf='fileDescription.errors.minlength'>
+          Min length is 4
+      </div>
+  </div>
+
+
+  <button type='submit' class='btn btn-default' [disabled]='statusCreateForm.invalid'>Submit</button>
+  <button type='button' class='btn btn-default' (click)='statusNgForm.resetForm({})'>Reset</button>
+</form>
+
+
+Progress:
+<div style='width:50%;background-color:#007cae;'><span *ngIf='uploadProgress > 25'>%</span></div>
+

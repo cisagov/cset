@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <xs:element name="Standard">
+            <xs:complexType>
+                  <xs:sequence>                           
+                  <xs:element name="Category" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                  <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                  <xs:element name="Requirements" minOccurs="1" maxOccurs="1" nillable="false">
+                        <xs:complexType>
+                              <xs:sequence>
+                                    <xs:element name="Requirement" minOccurs="1" maxOccurs="unbounded" nillable="false">
+                                          <xs:complexType>
+                                                <xs:sequence>
+                                                      <xs:element name="Category" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                      <xs:element name="Heading" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                      <xs:element name="Identifier" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                      <xs:element name="Questions" minOccurs="1" maxOccurs="1" nillable="false">
+                                                            <xs:complexType>
+                                                                  <xs:sequence>
+                                                                        <xs:element name="Question" minOccurs="1" maxOccurs="unbounded" nillable="false"></xs:element> 
+                                                                  </xs:sequence>
+                                                            </xs:complexType>
+                                                      </xs:element>
+                                                      <xs:element name="References" minOccurs="0" maxOccurs="1" nillable="true">
+                                                            <xs:complexType>
+                                                                  <xs:sequence>
+                                                                        <xs:element name="Resource" minOccurs="1" maxOccurs="unbounded" nillable="false">
+                                                                              <xs:complexType>
+                                                                                    <xs:sequence>
+                                                                                          <xs:element name="Destination" type="xs:string"  minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                                                                                          <xs:element name="FileName" type="xs:string"  minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                                                          <xs:element name="PageNumber" type="xs:int" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>                                                                                
+                                                                                          <xs:element name="SectionReference" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                                                                                    </xs:sequence>
+                                                                              </xs:complexType>
+                                                                        </xs:element>
+                                                                  </xs:sequence>
+                                                            </xs:complexType>
+                                                      </xs:element>
+                                                      <xs:element name="SecurityAssuranceLevel" type="xs:int" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                      <xs:element name="Source" minOccurs="0" maxOccurs="1" nillable="true">     
+                                                                  <xs:complexType>
+                                                                  <xs:sequence>
+                                                                        <xs:element name="Destination" type="xs:string"  minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                                                                        <xs:element name="FileName" type="xs:string"  minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                                        <xs:element name="PageNumber" type="xs:int" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>                                                                                
+                                                                        <xs:element name="SectionReference" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                                                                  </xs:sequence>
+                                                            </xs:complexType>
+                                                      </xs:element>                                                       
+                                                      <xs:element name="Subcategory" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                                                      <xs:element name="Subheading" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                                                      <xs:element name="Supplemental" type="xs:string" minOccurs="1" maxOccurs="1" nillable="true"></xs:element>
+                                                      <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                      <xs:element name="Weight" type="xs:int" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                            
+                                                      
+                                                </xs:sequence>
+                                          </xs:complexType>
+                                    </xs:element>
+                              </xs:sequence>
+                        </xs:complexType>
+                  </xs:element>
+                  <xs:element name="ShortName" type="xs:string" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                  <xs:element name="Summary" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true"></xs:element>
+                  </xs:sequence>
+            </xs:complexType>
+      </xs:element>
+</xs:schema>

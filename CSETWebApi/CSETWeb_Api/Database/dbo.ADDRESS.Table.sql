@@ -1,0 +1,30 @@
+USE [CSETWeb]
+GO
+/****** Object:  Table [dbo].[ADDRESS]    Script Date: 6/28/2018 8:21:21 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ADDRESS](
+	[PrimaryEmail] [varchar](150) NOT NULL,
+	[AddressType] [varchar](50) NOT NULL,
+	[City] [varchar](150) NULL,
+	[Country] [varchar](150) NULL,
+	[Line1] [varchar](150) NULL,
+	[Line2] [varchar](150) NULL,
+	[State] [varchar](150) NULL,
+	[Zip] [varchar](150) NULL,
+ CONSTRAINT [PK_ADDRESS] PRIMARY KEY CLUSTERED 
+(
+	[PrimaryEmail] ASC,
+	[AddressType] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ADDRESS]  WITH CHECK ADD  CONSTRAINT [FK_ADDRESS_USERS] FOREIGN KEY([PrimaryEmail])
+REFERENCES [dbo].[USERS] ([PrimaryEmail])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ADDRESS] CHECK CONSTRAINT [FK_ADDRESS_USERS]
+GO

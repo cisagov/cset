@@ -1,0 +1,65 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <i class="mr-2 material-icons">email</i>
+    <span>Invitation Email</span>
+  </div>
+
+  <form class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content>
+      <div class="mt-3">
+        <label>From:</label> {{from.FirstName}} {{from.LastName}} &lt;{{from.PrimaryEmail}}&gt;
+      </div>
+
+      <div class="mt-3">
+        <label>To:</label>
+        <div class="p-1 email-to-box" >
+          <div>
+            {{recipientList}}
+          </div>
+          <div *ngIf="recipientList.length === 0">
+            All associated individuals have been invited
+          </div>          
+        </div>
+      </div>
+
+      <div class="mt-3 d-flex flex-column flex-11a">
+        <label for="subj">Subject:</label>
+        <input type="text" name="subj" id="subj" placeholder="Subject" [(ngModel)]="subject" class="pl-2 d-flex flex-11a" style="min-width: 50vw">
+      </div>
+
+      <div class="mt-3">
+        <label for="emailBody">Message:</label>
+        <div>
+          <textarea name="emailBody" id="emailBody" placeholder="Message Text" [value]="body" [(ngModel)]="body" style="width: 100%;height: 50%"
+            rows=6></textarea>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </form>
+  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+    <button type="button" class="m-0 btn btn-primary" (click)="send()" [disabled]="recipientList.length === 0">Send</button>
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+  </mat-dialog-actions>
+</div>

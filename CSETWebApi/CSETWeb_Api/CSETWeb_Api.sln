@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2011
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWeb_Api", "CSETWeb_Api\CSETWeb_Api.csproj", "{A87CB253-7A73-4C66-84E7-ABAA68723B7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{227F840D-EC18-4431-A4E8-061BD351E6CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{92BC0676-F3FC-4299-8483-39410D177EC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBuffer", "CryptoBuffer\CryptoBuffer.csproj", "{4E44142D-08E2-4F40-9532-896E1F00018C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWeb_ApiTests", "CSETWeb_ApiTests\CSETWeb_ApiTests.csproj", "{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportCSV", "ExportCSV\ExportCSV.csproj", "{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		localdb|Any CPU = localdb|Any CPU
+		localhost|Any CPU = localhost|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.localdb|Any CPU.Build.0 = localdb|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.localhost|Any CPU.Build.0 = localhost|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localdb|Any CPU.Build.0 = localdb|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localhost|Any CPU.Build.0 = localhost|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.localdb|Any CPU.Build.0 = localdb|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.localhost|Any CPU.Build.0 = localhost|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92BC0676-F3FC-4299-8483-39410D177EC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.localdb|Any CPU.Build.0 = localdb|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.localhost|Any CPU.Build.0 = localhost|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E44142D-08E2-4F40-9532-896E1F00018C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.localhost|Any CPU.Build.0 = localhost|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.localdb|Any CPU.Build.0 = localdb|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.localhost|Any CPU.Build.0 = localhost|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49CE5803-A690-4E54-A95A-B591B86B91FC}
+	EndGlobalSection
+EndGlobal
