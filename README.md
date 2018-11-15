@@ -1,4 +1,6 @@
 ﻿# CSET 9.0
+Download Windows Installer
+[CSET 9.0 StandAlone Installer](https://github.com/dhs-ncats/cset)
 
 ## License
 
