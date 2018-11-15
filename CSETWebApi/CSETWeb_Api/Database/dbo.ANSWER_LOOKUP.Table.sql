@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[ANSWER_LOOKUP]    Script Date: 6/28/2018 8:21:21 AM ******/
+/****** Object:  Table [dbo].[ANSWER_LOOKUP]    Script Date: 11/14/2018 3:57:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

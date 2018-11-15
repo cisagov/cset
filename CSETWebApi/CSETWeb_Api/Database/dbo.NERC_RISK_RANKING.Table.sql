@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[NERC_RISK_RANKING]    Script Date: 6/28/2018 8:21:24 AM ******/
+/****** Object:  Table [dbo].[NERC_RISK_RANKING]    Script Date: 11/14/2018 3:57:24 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[STANDARD_CATEGORY_SEQUENCE]    Script Date: 6/28/2018 8:21:27 AM ******/
+/****** Object:  Table [dbo].[STANDARD_CATEGORY_SEQUENCE]    Script Date: 11/14/2018 3:57:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,6 +16,7 @@ CREATE TABLE [dbo].[STANDARD_CATEGORY_SEQUENCE](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'', N'NERC_CIP_R6', 14)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'(DHS PED:~ ~)', N'FAA', 1)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Access Agreements', N'C800_161', 14)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Access Agreements', N'Cnssi_1253_V2', 276)
@@ -115,8 +116,8 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Application Partitioning', N'DODI_8510', 658)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Application Software Security', N'Cag', 213)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Application Software Security', N'CSC_V6', 19)
-INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Asset Management', N'NCSF_V1', 856)
 GO
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Asset Management', N'NCSF_V1', 856)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Asset Monitoring and Tracking', N'C800_161', 11)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Asset, Change, and Configuration Management', N'C2M2_V11', 2)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Attack Mitigation And Incident Response', N'NEI_0809', 1440)
@@ -201,6 +202,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Baseline Configuration', N'DODI_8510', 221)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Baseline Cyber Security Measures', N'FAA_MAINT', 17)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Baseline Cyber Security Measures', N'INGAA', 2)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'BES Cyber System Categorization', N'NERC_CIP_R6', 1)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Boundary Defense', N'Cag', 215)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Boundary Defense', N'CSC_V6', 12)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Boundary Protection', N'APTA_Rail_V1', 1)
@@ -215,9 +217,9 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Collaborative Computing Devices', N'DODI_8510', 709)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'C800_53_R3', 42)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'C800_53_R3_App_I', 80)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'C800_53_R4', 118)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'C800_53_R4_71', 118)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'C800_82_V1', 174)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'Cnssi_1253', 253)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Communication Protection', N'Cnssi_Ics_Pit', 501)
@@ -240,6 +242,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Change Control', N'Cnssi_1253_V2', 308)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Change Control', N'DODI_8510', 228)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Change Management', N'Nerc_Cip_R5', 942)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Change Management and Vulnerability Assessments', N'NERC_CIP_R6', 9)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Management', N'APTA_Rail_V1', 6)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Management', N'C800_161', 4)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Configuration Management', N'C800_171', 4)
@@ -315,10 +318,10 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity', N'Dod', 590)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity', N'INGAA', 821)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity', N'Nerc_Cip_R3', 893)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity', N'Nerc_Cip_R4', 920)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity', N'Nrc_571', 1175)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity of Operations', N'NISTIR_7628', 956)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuity of Operations', N'NISTIR_7628_R1', 12)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuous Assessment', N'Cag', 217)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Continuous Monitoring', N'C800_161', 4)
@@ -400,6 +403,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Distributed Processing and Storage', N'Cnssi_1253_V2', 334)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Distributed Processing and Storage', N'DODI_8510', 752)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Electronic Security Perimeter', N'Nerc_Cip_R5', 943)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Electronic Security Perimeter(s)', N'NERC_CIP_R6', 4)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Electronic Security Perimeters', N'Nerc_Cip_R3', 895)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Electronic Security Perimeters', N'Nerc_Cip_R4', 922)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Email and Web Browser Protections', N'CSC_V6', 7)
@@ -415,11 +419,11 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Environmental Security', N'C800_82_V1', 177)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Environmental Security', N'Universal', 1408)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Event and Incident Response, Continuity of Operations', N'C2M2_V11', 7)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'External Information System Services', N'C800_161', 17)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'External Information System Services', N'Cnssi_1253_V2', 336)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'External Information System Services', N'DODI_8510', 591)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Fail in Known State', N'Cnssi_1253_V2', 337)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Fail in Known State', N'DODI_8510', 728)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Fail-Safe Procedures', N'Cnssi_1253_V2', 338)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Fail-Safe Procedures', N'DODI_8510', 852)
@@ -484,6 +488,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Reporting & Response', N'Nerc_Cip_R3', 896)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Reporting & Response', N'Nerc_Cip_R4', 923)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Reporting & Response', N'Nerc_Cip_R5', 944)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Reporting and Response Planning', N'NERC_CIP_R6', 7)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response', N'C800_161', 7)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response', N'C800_171', 6)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response', N'C800_53_R3', 8)
@@ -515,12 +520,12 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Plan', N'Cnssi_1253_V2', 352)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Plan', N'DODI_8510', 412)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Policy and Procedures', N'C800_161', 8)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Policy and Procedures', N'Cnssi_1253_V2', 353)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Policy and Procedures', N'DODI_8510', 385)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Testing', N'Cnssi_1253_V2', 354)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Testing', N'DODI_8510', 391)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Training', N'Cnssi_1253_V2', 355)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Incident Response Training', N'DODI_8510', 388)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Individual Access', N'Cnssi_1253_V2', 356)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Individual Access', N'DODI_8510', 381)
@@ -560,6 +565,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Output Filtering', N'Cnssi_1253_V2', 360)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Output Filtering', N'DODI_8510', 850)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Protection', N'Nerc_Cip_R5', 945)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Protection', N'NERC_CIP_R6', 10)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Protection Processes and Procedures', N'NCSF_V1', 863)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Security', N'Tsa', 1399)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Information Security Architecture', N'C800_161', 12)
@@ -615,13 +621,13 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Least Functionality', N'C800_161', 5)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Least Functionality', N'Cnssi_1253_V2', 377)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Least Functionality', N'DODI_8510', 247)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Least Privilege', N'C800_161', 1)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Least Privilege', N'Cnssi_1253_V2', 378)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Least Privilege', N'DODI_8510', 58)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Limitation and Control of Network Ports', N'CSC_V6', 9)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Location of Information System Components', N'C800_161', 11)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Logging', N'Components', 259)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Maintain a Vulnerability Management Program', N'PCIDSS', 3)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Maintain an Information Security Policy', N'PCIDSS', 6)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Maintenance', N'C800_161', 8)
@@ -701,8 +707,8 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of Personally Identifiable Information', N'C800_53_R4_App_J', 153)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of Personally Identifiable Information', N'Cnssi_1253_V2', 391)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of Personally Identifiable Information', N'DODI_8510', 319)
-INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of Pii Used in Testing, Training, and Research', N'Cnssi_1253_V2', 392)
-INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of Pii Used in Testing, Training, and Research', N'DODI_8510', 323)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of PII Used in Testing, Training, and Research', N'Cnssi_1253_V2', 392)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Minimization of PII Used in Testing, Training, and Research', N'DODI_8510', 323)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Mission/Business Process Definition', N'C800_161', 13)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Mission/Business Process Definition', N'Cnssi_1253_V2', 393)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Mission/Business Process Definition', N'DODI_8510', 537)
@@ -716,13 +722,13 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'C800_53_R3_App_I', 91)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'C800_53_R4', 128)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'C800_53_R4_71', 128)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'C800_82_V1', 184)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'Cfats', 240)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'INGAA', 824)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'Nerc_Cip_R3', 899)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'Nerc_Cip_R4', 926)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Malware', N'Nrc_571', 1185)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring & Response', N'Cfats', 241)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring and Reviewing Control System Security Policy', N'Cor_7', 577)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Monitoring and Reviewing Control System Security Policy', N'Universal', 1413)
@@ -790,6 +796,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel', N'Nerc_Cip_R3', 901)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel', N'Nerc_Cip_R4', 928)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel', N'Nrc_571', 1187)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel & Training', N'NERC_CIP_R6', 3)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel and Training', N'Nerc_Cip_R3', 902)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel and Training', N'Nerc_Cip_R4', 929)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel and Training', N'Nerc_Cip_R5', 946)
@@ -816,6 +823,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Security', N'NISTIR_7628_R1', 21)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Security', N'Nrc_571', 1188)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Security', N'SP800-82 V2', 13)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Security', N'Universal', 1415)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Security Policy and Procedures', N'C800_161', 14)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Security Policy and Procedures', N'Cnssi_1253_V2', 407)
@@ -823,7 +831,6 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Termination', N'Cnssi_1253_V2', 408)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Termination', N'DODI_8510', 550)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Transfer', N'Cnssi_1253_V2', 409)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Personnel Transfer', N'DODI_8510', 552)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical & Envtl. Protection', N'Nrc_571', 1189)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Access', N'Components', 285)
@@ -873,7 +880,9 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Security', N'Nerc_Cip_R3', 903)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Security', N'Nerc_Cip_R4', 930)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Security', N'Nerc_Cip_R5', 947)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Security', N'NERC_CIP_R6', 15)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Security', N'Universal', 1417)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Physical Security of BES Cyber Systems', N'NERC_CIP_R6', 5)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Plan of Action and Milestones', N'C800_161', 4)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Plan of Action and Milestones', N'Cnssi_1253_V2', 414)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Plan of Action and Milestones', N'DODI_8510', 204)
@@ -905,7 +914,6 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Platform Vulnerabilities', N'C800_82', 167)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Platform Vulnerabilities', N'C800_82_V1', 195)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Platform-Independent Applications', N'C800_161', 18)
-INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Polices and Procedures and Documentation Requirements', N'HIPAA', 5)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies', N'Nerc_Cip_R3', 905)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies', N'Nerc_Cip_R4', 932)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies & Procedures General', N'C800_53_R3', 61)
@@ -916,15 +924,16 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies & Procedures General', N'Components', 30)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies & Procedures General', N'FAA', 0)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies & Procedures General', N'Nerc_Cip_R3', 906)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies & Procedures General', N'Nerc_Cip_R4', 933)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies & Procedures General', N'Nrc_571', 1192)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policies and Procedures and Documentation Requirements', N'HIPAA', 5)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policy Vulnerabilities', N'C800_82', 168)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Policy Vulnerabilities', N'C800_82_V1', 196)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'C800_53_R3', 62)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'C800_53_R3_App_I', 100)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'C800_53_R4', 135)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'C800_53_R4_71', 135)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'C800_82_V1', 197)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'Cnssi_1253', 266)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Portable/Mobile/Wireless', N'Components', 559)
@@ -1005,6 +1014,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Recovery Plans', N'Nerc_Cip_R3', 908)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Recovery Plans', N'Nerc_Cip_R4', 935)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Recovery Plans', N'Nerc_Cip_R5', 948)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Recovery Plans for BES Cyber Systems', N'NERC_CIP_R6', 8)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Redress', N'Cnssi_1253_V2', 435)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Redress', N'DODI_8510', 382)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Regularly Monitor and Test Networks', N'PCIDSS', 5)
@@ -1015,6 +1025,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Remote Access Control', N'C800_53_R3_App_I', 103)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Remote Access Control', N'C800_53_R4', 137)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Remote Access Control', N'C800_53_R4_71', 137)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Remote Access Control', N'C800_82_V1', 200)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Remote Access Control', N'Components', 331)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Remote Access Control', N'INGAA', 828)
@@ -1025,7 +1036,6 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Response Planning', N'NCSF_V1', 870)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Response to Audit Processing Failures', N'Cnssi_1253_V2', 437)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Response to Audit Processing Failures', N'DODI_8510', 147)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Assessment', N'C800_161', 15)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Assessment', N'C800_171', 11)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Assessment', N'C800_53_R3', 14)
@@ -1045,6 +1055,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Assessment Policy and Procedures', N'Cnssi_1253_V2', 439)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Assessment Policy and Procedures', N'DODI_8510', 558)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Management ', N'C2M2_V11', 1)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Management', N'NCSF_V1', 12)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Management and Assessment', N'C800_53_R3', 67)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Management and Assessment', N'C800_53_R3_App_I', 105)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Risk Management and Assessment', N'C800_53_R4', 139)
@@ -1115,6 +1126,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Attributes', N'Cnssi_1253_V2', 448)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Attributes', N'DODI_8510', 83)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Authorization', N'C800_161', 4)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Authorization', N'Cnssi_1253_V2', 449)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Authorization', N'DODI_8510', 206)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Authorization Process', N'Cnssi_1253_V2', 450)
@@ -1126,7 +1138,6 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Awareness and Training Policy and Procedures', N'Cnssi_1253_V2', 451)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Awareness and Training Policy and Procedures', N'DODI_8510', 125)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Awareness Training', N'Cnssi_1253_V2', 452)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Awareness Training', N'DODI_8510', 126)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Categorization', N'C800_161', 16)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Concept of Operations', N'Cnssi_1253_V2', 453)
@@ -1143,6 +1154,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Management', N'Nerc_Cip_R3', 910)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Management', N'Nerc_Cip_R4', 937)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Management', N'Nerc_Cip_R5', 949)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Management Controls', N'NERC_CIP_R6', 2)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Planning Policy and Procedures', N'C800_161', 12)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Planning Policy and Procedures', N'Cnssi_1253_V2', 456)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Security Planning Policy and Procedures', N'DODI_8510', 517)
@@ -1215,6 +1227,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'C800_171', 13)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'C800_53_R3', 16)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'C800_53_R3_App_I', 16)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'C800_53_R4', 16)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'C800_53_R4_71', 16)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'C800_82_V1', 204)
@@ -1227,7 +1240,6 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'Cor_7', 586)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'DODI_8510', 16)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection', N'SP800-82 V2', 16)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection Policy and Procedures', N'C800_161', 18)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection Policy and Procedures', N'Cnssi_1253_V2', 468)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System and Communications Protection Policy and Procedures', N'DODI_8510', 656)
@@ -1316,6 +1328,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'C800_53_R4', 146)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'C800_53_R4_71', 146)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'C800_82_V1', 208)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'Components', 288)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'INGAA', 832)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'Key', 852)
@@ -1324,11 +1337,11 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'Nrc_571', 1204)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Protection', N'Universal', 1428)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Recovery', N'Tsa', 1402)
+INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Security Management', N'NERC_CIP_R6', 6)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Security Plan', N'C800_161', 12)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Security Plan', N'Cnssi_1253_V2', 476)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'System Security Plan', N'DODI_8510', 518)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Systems Security Management', N'Nerc_Cip_R3', 913)
-GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Systems Security Management', N'Nerc_Cip_R4', 940)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Systems Security Management', N'Nerc_Cip_R5', 951)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Tamper Resistance and Detection', N'C800_161', 17)
@@ -1416,6 +1429,7 @@ INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Sta
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Vulnerability Scanning', N'Cnssi_1253_V2', 494)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Vulnerability Scanning', N'DODI_8510', 569)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Wireless', N'APTA_Rail_V1', 14)
+GO
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Wireless Access', N'C800_161', 1)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Wireless Access', N'Cnssi_1253_V2', 495)
 INSERT [dbo].[STANDARD_CATEGORY_SEQUENCE] ([Standard_Category], [Set_Name], [Standard_Category_Sequence]) VALUES (N'Wireless Access', N'DODI_8510', 97)

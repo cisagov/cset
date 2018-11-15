@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[ASSESSMENT_SELECTED_LEVELS]    Script Date: 6/28/2018 8:21:21 AM ******/
+/****** Object:  Table [dbo].[ASSESSMENT_SELECTED_LEVELS]    Script Date: 11/14/2018 3:57:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,39 +16,6 @@ CREATE TABLE [dbo].[ASSESSMENT_SELECTED_LEVELS](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (25, N'Availability_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (25, N'Confidence_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (25, N'Integrity_Level', N'Moderate')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (26, N'Availability_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (26, N'Confidence_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (26, N'Integrity_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (28, N'Availability_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (28, N'Confidence_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (28, N'Integrity_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (29, N'Availability_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (29, N'Confidence_Level', N'Moderate')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (29, N'Integrity_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (32, N'Availability_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (32, N'Confidence_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (32, N'Integrity_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (33, N'Availability_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (33, N'Confidence_Level', N'Moderate')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (33, N'Integrity_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (34, N'Availability_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (34, N'Confidence_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (34, N'Integrity_Level', N'Very High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (38, N'Availability_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (38, N'Confidence_Level', N'Moderate')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (38, N'Integrity_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (39, N'Availability_Level', N'Moderate')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (39, N'Confidence_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (39, N'Integrity_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (43, N'Availability_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (43, N'Confidence_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (43, N'Integrity_Level', N'High')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (44, N'Availability_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (44, N'Confidence_Level', N'Low')
-INSERT [dbo].[ASSESSMENT_SELECTED_LEVELS] ([Assessment_Id], [Level_Name], [Standard_Specific_Sal_Level]) VALUES (44, N'Integrity_Level', N'Low')
 ALTER TABLE [dbo].[ASSESSMENT_SELECTED_LEVELS]  WITH CHECK ADD  CONSTRAINT [FK_ASSESSMENT_SELECTED_LEVELS_LEVEL_NAMES] FOREIGN KEY([Level_Name])
 REFERENCES [dbo].[LEVEL_NAMES] ([Level_Name])
 ON UPDATE CASCADE

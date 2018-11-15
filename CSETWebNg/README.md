@@ -11,7 +11,3 @@ MIT License
 Copyright 2018 Battelle Energy Alliance, LLC
 
 See License.txt
-
-Contact information of authors: cset@hq.dhs.gov
-
-Idaho National Laboratory, P.O. Box 1625, MS 3870, Idaho Falls, ID 83415

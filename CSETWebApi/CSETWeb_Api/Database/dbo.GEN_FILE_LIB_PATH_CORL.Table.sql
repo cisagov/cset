@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[GEN_FILE_LIB_PATH_CORL]    Script Date: 6/28/2018 8:21:23 AM ******/
+/****** Object:  Table [dbo].[GEN_FILE_LIB_PATH_CORL]    Script Date: 11/14/2018 3:57:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1404,6 +1404,21 @@ INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (382
 INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3828, CAST(510 AS Numeric(38, 0)))
 INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3829, CAST(445 AS Numeric(38, 0)))
 INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3829, CAST(514 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3847, CAST(517 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3848, CAST(518 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3849, CAST(519 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3850, CAST(520 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3851, CAST(521 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3852, CAST(522 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3853, CAST(523 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3854, CAST(524 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3855, CAST(525 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3856, CAST(526 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3860, CAST(527 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3861, CAST(528 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3862, CAST(529 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3864, CAST(509 AS Numeric(38, 0)))
+INSERT [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (3866, CAST(509 AS Numeric(38, 0)))
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL]  WITH NOCHECK ADD  CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE] FOREIGN KEY([Gen_File_Id])
 REFERENCES [dbo].[GEN_FILE] ([Gen_File_Id])
 ON DELETE CASCADE

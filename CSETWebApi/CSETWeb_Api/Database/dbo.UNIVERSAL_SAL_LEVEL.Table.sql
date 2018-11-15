@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[UNIVERSAL_SAL_LEVEL]    Script Date: 6/28/2018 8:21:27 AM ******/
+/****** Object:  Table [dbo].[UNIVERSAL_SAL_LEVEL]    Script Date: 11/14/2018 3:57:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8,7 +8,7 @@ GO
 CREATE TABLE [dbo].[UNIVERSAL_SAL_LEVEL](
 	[Universal_Sal_Level] [varchar](10) NOT NULL,
 	[Sal_Level_Order] [int] NOT NULL,
-	[Full_Name_Sal] [varchar](50) NOT NULL,
+	[Full_Name_Sal] [varchar](10) NOT NULL,
  CONSTRAINT [PK_UNIVERSAL_SAL_LEVEL] PRIMARY KEY CLUSTERED 
 (
 	[Universal_Sal_Level] ASC

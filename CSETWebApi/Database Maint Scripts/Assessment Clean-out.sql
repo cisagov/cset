@@ -14,6 +14,7 @@ GO
 
 -- Clean out all User-related information
 delete from [USERS]
+delete from [USER_DETAIL_INFORMATION]
 
 DBCC CHECKIDENT ('[USERS]', RESEED, 0)
 GO

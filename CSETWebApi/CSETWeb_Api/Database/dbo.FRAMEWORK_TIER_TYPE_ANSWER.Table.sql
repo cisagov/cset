@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[FRAMEWORK_TIER_TYPE_ANSWER]    Script Date: 6/28/2018 8:21:23 AM ******/
+/****** Object:  Table [dbo].[FRAMEWORK_TIER_TYPE_ANSWER]    Script Date: 11/14/2018 3:57:23 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,22 +16,6 @@ CREATE TABLE [dbo].[FRAMEWORK_TIER_TYPE_ANSWER](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (25, N'External Participation', N'Tier 2')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (25, N'Integrated Risk Management Program', N'Tier 2')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (25, N'Risk Management Process', N'Tier 2')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (27, N'External Participation', N'Tier 1')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (27, N'Integrated Risk Management Program', N'Tier 2')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (27, N'Risk Management Process', N'Tier 3')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (28, N'External Participation', N'Tier 1')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (28, N'Integrated Risk Management Program', N'Tier 2')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (28, N'Risk Management Process', N'Tier 1')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (29, N'External Participation', N'Tier 1')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (29, N'Integrated Risk Management Program', N'Tier 1')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (29, N'Risk Management Process', N'Tier 1')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (33, N'External Participation', N'Tier 4')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (33, N'Integrated Risk Management Program', N'Tier 4')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (33, N'Risk Management Process', N'Tier 3')
-INSERT [dbo].[FRAMEWORK_TIER_TYPE_ANSWER] ([Assessment_Id], [TierType], [Tier]) VALUES (34, N'External Participation', N'Tier 4')
 ALTER TABLE [dbo].[FRAMEWORK_TIER_TYPE_ANSWER]  WITH CHECK ADD  CONSTRAINT [FK_FRAMEWORK_TIER_TYPE_ANSWER_ASSESSMENTS] FOREIGN KEY([Assessment_Id])
 REFERENCES [dbo].[ASSESSMENTS] ([Assessment_Id])
 ON UPDATE CASCADE

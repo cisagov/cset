@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[NCSF_CATEGORY]    Script Date: 6/28/2018 8:21:24 AM ******/
+/****** Object:  Table [dbo].[NCSF_CATEGORY]    Script Date: 11/14/2018 3:57:24 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -42,6 +42,7 @@ INSERT [dbo].[NCSF_CATEGORY] ([NCSF_Function_Id], [NCSF_Category_Id], [NCSF_Cate
 INSERT [dbo].[NCSF_CATEGORY] ([NCSF_Function_Id], [NCSF_Category_Id], [NCSF_Category_Name], [NCSF_Category_Description], [NCSF_Cat_Id], [Question_Group_Heading_Id]) VALUES (N'RC', N'RP', N'Recovery Planning', N'Recovery processes and procedures are executed and maintained to ensure timely restoration of systems or assets affected by cybersecurity events.', 20, 17)
 INSERT [dbo].[NCSF_CATEGORY] ([NCSF_Function_Id], [NCSF_Category_Id], [NCSF_Category_Name], [NCSF_Category_Description], [NCSF_Cat_Id], [Question_Group_Heading_Id]) VALUES (N'RC', N'IM', N'Recovery Improvements', N'Recovery planning and processes are improved by incorporating lessons learned into future activities.', 21, 34)
 INSERT [dbo].[NCSF_CATEGORY] ([NCSF_Function_Id], [NCSF_Category_Id], [NCSF_Category_Name], [NCSF_Category_Description], [NCSF_Cat_Id], [Question_Group_Heading_Id]) VALUES (N'RC', N'CO', N'Recovery Communications', N'Restoration activities are coordinated with internal and external parties, such as coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors.', 22, 9)
+INSERT [dbo].[NCSF_CATEGORY] ([NCSF_Function_Id], [NCSF_Category_Id], [NCSF_Category_Name], [NCSF_Category_Description], [NCSF_Cat_Id], [Question_Group_Heading_Id]) VALUES (N'ID', N'SC', N'Supply Chain', N'Supply Chain', 23, 82)
 SET IDENTITY_INSERT [dbo].[NCSF_CATEGORY] OFF
 ALTER TABLE [dbo].[NCSF_CATEGORY] ADD  CONSTRAINT [DF_NCSF_CATEGORY_Question_Group_Heading_Id]  DEFAULT ((50)) FOR [Question_Group_Heading_Id]
 GO

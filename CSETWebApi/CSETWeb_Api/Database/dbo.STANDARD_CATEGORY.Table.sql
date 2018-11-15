@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[STANDARD_CATEGORY]    Script Date: 6/28/2018 8:21:27 AM ******/
+/****** Object:  Table [dbo].[STANDARD_CATEGORY]    Script Date: 11/14/2018 3:57:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[STANDARD_CATEGORY](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'(DHS PED:~ ~)')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Access Agreements')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Access Control')
@@ -87,6 +88,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Awareness and T
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Awareness and Training Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Baseline Configuration')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Baseline Cyber Security Measures')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'BES Cyber System Categorization')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Boundary Defense')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Boundary Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Build and Maintain a Secure Network and Systems')
@@ -108,12 +110,13 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Conduct and Fre
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Confidentiality of Information at Rest')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Change Control')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Change Management')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Change Management and Vulnerability Assessments')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration for Least Functionality')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Management')
+GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Management Plan')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Management Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Security')
-GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Configuration Settings')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Consent')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Contact with Security Groups and Associations')
@@ -178,6 +181,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Defensive Strat
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Delivery and Removal')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Denial of Service Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Denial-of-Service Protection')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Detect')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Detect Cybersecurity Events')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Detection Processes')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Develop Cybersecurity Workforce')
@@ -194,6 +198,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Disaster Recove
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Dissemination of Privacy Program Information')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Distributed Processing and Storage')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Electronic Security Perimeter')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Electronic Security Perimeter(s)')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Electronic Security Perimeters')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Email and Web Browser Protections')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Emergency Lighting')
@@ -209,12 +214,12 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Environmental S
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Error Handling')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Escalate Cybersecurity Events and Declare Incidents')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Establish and Maintain a Common Operating Picture')
+GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Establish and Maintain Cybersecurity Architecture')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Establish and Maintain Identities')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Establish Cybersecurity Program Strategy')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Event and Incident Response, Continuity of Operations')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'External Information System Services')
-GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'External System Services')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Factory Default Settings Management')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Fail in Known State')
@@ -240,6 +245,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identification 
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identification and Authentication Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identification-Authentication')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identifier Management')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identify')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identify and Respond to Threats')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identify Dependencies')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Identity and Access Management')
@@ -249,6 +255,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Handli
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Monitoring')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Reporting')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Reporting & Response')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Reporting and Response Planning')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Response')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Response and Management')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Incident Response Assistance')
@@ -281,8 +288,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Pro
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Remnants')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security Architecture')
-INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security Measures of
-Performance')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security Measures ofPerformance')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security Measures of Performance')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security Program Plan')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Information Security Resources')
@@ -309,6 +315,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Inventory of Pe
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Least Functionality')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Least Privilege')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Legacy Smart Grid Information System Upgrades')
+GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Life Cycle Support')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Life-Cycle Support')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Limitation and Control of Network Ports')
@@ -316,7 +323,6 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Location of Inf
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Location of Smart Grid Information System Assets')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Logging')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Maintain a Vulnerability Management Program')
-GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Maintain an Information Security Policy')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Maintenance')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Maintenance Monitoring And Information Sharing')
@@ -350,7 +356,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Media Use')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Memory Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Message Authenticity')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Minimization of Personally Identifiable Information')
-INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Minimization of Pii Used in Testing, Training, and Research')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Minimization of PII Used in Testing, Training, and Research')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Mission/Business Process Definition')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Mitigation')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Mobile Code')
@@ -392,6 +398,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Perform Monitor
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Perform Secure Software Development')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Permitted Actions without Identification or Authentication')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Personnel')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Personnel & Training')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Personnel Accountability')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Personnel and Training')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Personnel Roles')
@@ -409,6 +416,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical Access
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical Access Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical and Environmental')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical and Environmental Protection')
+GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical and Environmental Protection Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical and Environmental Security')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical and Environmental Security Policy and Procedures')
@@ -416,8 +424,8 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical And Op
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical Safeguards')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical Security')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Physical Security of BES Cyber Systems')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Plan for Continuity')
-GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Plan of Action and Milestones')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Plan of Action and Milestones Process')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Planning')
@@ -425,9 +433,9 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Planning Proces
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Plans')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Platform Vulnerabilities')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Platform-Independent Applications')
-INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Polices and Procedures and Documentation Requirements')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Policies')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Policies & Procedures General')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Policies and Procedures and Documentation Requirements')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Policy Vulnerabilities')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Port and I/O Device Access')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Portable/Mobile/Wireless')
@@ -452,6 +460,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Process Isolation')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Program Management')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Proprietary Application Development')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Protect')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Protect Cardholder Data')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Protection of Audit Information')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Protection of Information at Rest')
@@ -468,6 +477,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Recovery Commun
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Recovery Improvements')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Recovery Planning')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Recovery Plans')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Recovery Plans for BES Cyber Systems')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Redress')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Reduce Cybersecurity Vulnerabilities')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Regularly Monitor and Test Networks')
@@ -478,6 +488,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Remote Maintena
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Remote Session Termination')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Removable Media')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Resource Priority')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Respond')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Respond to Incidents and Escalated Cybersecurity Events')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Response Communications')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Response Improvements')
@@ -506,6 +517,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Securing the Co
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Securing the Router')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Securing the System')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security')
+GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security - Inventory of Personally Identifiable Information')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security - Privacy Incident Response')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Alerts')
@@ -518,7 +530,6 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Assess
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Assessment and Authorization Policies and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Assessment and Authorization Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Assessment and Risk Management')
-GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Assessments')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Attributes')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Authorization')
@@ -543,6 +554,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Functi
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Impact Analysis')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Impact Level')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Management')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Management Controls')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Operation of Cyber System')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Planning Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Security Policies for Contractors and Third Parties')
@@ -606,6 +618,7 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System & Servic
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System and Comms Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System and Communication Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System and Communications Protection')
+GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System and Communications Protection Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System And Information Integrity')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System and Information Integrity Policy and Procedures')
@@ -619,13 +632,13 @@ INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Developm
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Development Life Cycle')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Hardening')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Integrity')
-GO
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Interconnections')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Lifecycle')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Maintenance Policy and Procedures')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System of Records Notices and Privacy Act Statements')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Protection')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Recovery')
+INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Security Management')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Security Plan')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'System Use Notification')
 INSERT [dbo].[STANDARD_CATEGORY] ([Standard_Category]) VALUES (N'Systems Security Management')

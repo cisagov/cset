@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[AVAILABLE_STANDARDS]    Script Date: 6/28/2018 8:21:22 AM ******/
+/****** Object:  Table [dbo].[AVAILABLE_STANDARDS]    Script Date: 11/14/2018 3:57:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,15 +16,6 @@ CREATE TABLE [dbo].[AVAILABLE_STANDARDS](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (25, N'Nerc_Cip_R5', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (26, N'Key', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (27, N'Tsa', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (28, N'Key', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (33, N'Cfats', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (43, N'CSC_V6', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (96, N'CSC_V6', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (102, N'Key', 1)
-INSERT [dbo].[AVAILABLE_STANDARDS] ([Assessment_Id], [Set_Name], [Selected]) VALUES (103, N'PCIDSS', 1)
 ALTER TABLE [dbo].[AVAILABLE_STANDARDS] ADD  CONSTRAINT [DF_AVAILABLE_STANDARDS_Selected]  DEFAULT ((0)) FOR [Selected]
 GO
 ALTER TABLE [dbo].[AVAILABLE_STANDARDS]  WITH CHECK ADD  CONSTRAINT [FK_AVAILABLE_STANDARDS_ASSESSMENTS] FOREIGN KEY([Assessment_Id])

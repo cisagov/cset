@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[CSET_VERSION]    Script Date: 6/28/2018 8:21:22 AM ******/
+/****** Object:  Table [dbo].[CSET_VERSION]    Script Date: 11/14/2018 3:57:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[CSET_VERSION](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[CSET_VERSION] ([Id], [Version_Id], [Cset_Version], [Build_Number]) VALUES (1, CAST(8.1000 AS Decimal(18, 4)), N'8.1', NULL)
+INSERT [dbo].[CSET_VERSION] ([Id], [Version_Id], [Cset_Version], [Build_Number]) VALUES (1, CAST(9.0000 AS Decimal(18, 4)), N'9.0', NULL)
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The Id is used to' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'CSET_VERSION', @level2type=N'COLUMN',@level2name=N'Id'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The Version Id is used to' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'CSET_VERSION', @level2type=N'COLUMN',@level2name=N'Version_Id'

@@ -21,7 +21,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
 {
     public static class StandardConverter
     {
-        
+
         public static async Task<ConverterResult<SET>> ToSet(this IExternalStandard externalStandard)
         {
             return await externalStandard.ToSet(new ConsoleLogger());
@@ -31,11 +31,11 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             var questionDictionary = new Dictionary<string, NEW_QUESTION>();
             var requirementList = new List<string>();
 
-            var categoryDictionary = new Dictionary<string,STANDARD_CATEGORY>();
+            var categoryDictionary = new Dictionary<string, STANDARD_CATEGORY>();
             var result = new ConverterResult<SET>(logger);
             SETS_CATEGORY category;
             int? categoryOrder = 0;
-            var setname= Regex.Replace(externalStandard.ShortName, @"\W", "_");
+            var setname = Regex.Replace(externalStandard.ShortName, @"\W", "_");
             try
             {
                 var documentImporter = new DocumentImporter();
@@ -120,7 +120,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     }
                 }
                 var questions = requirements.SelectMany(s => s.NEW_QUESTION).ToList();
-                for(var i=1; i<=questions.Count(); i++)
+                for (var i = 1; i <= questions.Count(); i++)
                 {
                     var question = questions[i - 1];
                     question.Std_Ref_Number = i;
@@ -141,68 +141,66 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             externalStandard.Summary = standard.Standard_ToolTip;
             externalStandard.Category = standard.SETS_CATEGORY.Set_Category_Name;
 
-            var requirements=new List<ExternalRequirement>();
+            var requirements = new List<ExternalRequirement>();
             //Caching for performance
             using (var db = new CSETWebEntities())
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
                 db.Configuration.LazyLoadingEnabled = false;
-                var reqIds = standard.NEW_REQUIREMENT.Select(s => s.Requirement_Id).ToList();
-                var reqs = db.NEW_REQUIREMENT.AsNoTracking().Where(s => reqIds.Contains(s.Requirement_Id));
-                var reqQuestions = reqs.Select(s=>new { s.Requirement_Id, Questions = s.NEW_QUESTION.Select(t => new { t.Simple_Question, t.Heading_Pair_Id }) }).ToDictionary(s => s.Requirement_Id,s=> s.Questions);
-                var reqHeadingIds = standard.NEW_REQUIREMENT.Select(s => s.Question_Group_Heading_Id).ToList();
-                var questionHeadings = reqQuestions.SelectMany(s => s.Value.Select(t=>t.Heading_Pair_Id)).Distinct().ToList();
-                var reqHeadings = db.QUESTION_GROUP_HEADING.AsNoTracking().Where(s => reqHeadingIds.Contains(s.Question_Group_Heading_Id)).ToDictionary(s=>s.Question_Group_Heading_Id, s=>s.Question_Group_Heading1);
+                var reqs = standard.REQUIREMENT_SETS.Select(s => s.NEW_REQUIREMENT).ToList();
+                var reqQuestions = reqs.Select(s => new { s.Requirement_Id, Questions = s.NEW_QUESTION.Select(t => new { t.Simple_Question, t.Heading_Pair_Id }) }).ToDictionary(s => s.Requirement_Id, s => s.Questions);
+                var reqHeadingIds = reqs.Select(s => s.Question_Group_Heading_Id).ToList();
+                var questionHeadings = reqQuestions.SelectMany(s => s.Value.Select(t => t.Heading_Pair_Id)).Distinct().ToList();
+                var reqHeadings = db.QUESTION_GROUP_HEADING.AsNoTracking().Where(s => reqHeadingIds.Contains(s.Question_Group_Heading_Id)).ToDictionary(s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading1);
                 var headingPairs = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.AsNoTracking().Where(s => questionHeadings.Contains(s.Heading_Pair_Id));
-                var subcategories = headingPairs.Join(db.UNIVERSAL_SUB_CATEGORIES, s => s.Universal_Sub_Category_Id, s => s.Universal_Sub_Category_Id, (s, t) => new { s.Heading_Pair_Id, category = t})
-                              .ToDictionary(s=>s.Heading_Pair_Id,s=>s.category.Universal_Sub_Category);
-                var headings= headingPairs.Join(db.QUESTION_GROUP_HEADING, s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
+                var subcategories = headingPairs.Join(db.UNIVERSAL_SUB_CATEGORIES, s => s.Universal_Sub_Category_Id, s => s.Universal_Sub_Category_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
+                              .ToDictionary(s => s.Heading_Pair_Id, s => s.category.Universal_Sub_Category);
+                var headings = headingPairs.Join(db.QUESTION_GROUP_HEADING, s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
                               .ToDictionary(s => s.Heading_Pair_Id, s => s.category.Question_Group_Heading1);
                 var reqReferences = reqs.Select(s => new
-                    {
-                        s.Requirement_Id,
-                        Resources=s.REQUIREMENT_REFERENCES.Select(t => 
-                        new ExternalResource
-                        {
-                            Destination = t.Destination_String,
-                            FileName = t.GEN_FILE.File_Name,
-                            PageNumber = t.Page_Number,
-                            SectionReference = t.Section_Ref
-                        })
-                    }).ToDictionary(t => t.Requirement_Id, t => t.Resources);
+                {
+                    s.Requirement_Id,
+                    Resources = s.REQUIREMENT_REFERENCES.Select(t =>
+                      new ExternalResource
+                      {
+                          Destination = t.Destination_String,
+                          FileName = t.GEN_FILE.File_Name,
+                          PageNumber = t.Page_Number,
+                          SectionReference = t.Section_Ref
+                      })
+                }).ToDictionary(t => t.Requirement_Id, t => t.Resources);
                 var reqSource = reqs.Select(s => new
-    {
-        s.Requirement_Id,
-        Resource = s.REQUIREMENT_SOURCE_FILES.Select(t =>
-                          new ExternalResource
-        {
-            Destination = t.Destination_String,
-            FileName = t.GEN_FILE.File_Name,
-            PageNumber = t.Page_Number,
-            SectionReference = t.Section_Ref
-        }).FirstOrDefault()
-    }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
+                {
+                    s.Requirement_Id,
+                    Resource = s.REQUIREMENT_SOURCE_FILES.Select(t =>
+                                      new ExternalResource
+                                      {
+                                          Destination = t.Destination_String,
+                                          FileName = t.GEN_FILE.File_Name,
+                                          PageNumber = t.Page_Number,
+                                          SectionReference = t.Section_Ref
+                                      }).FirstOrDefault()
+                }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
                 var reqLevels = new Dictionary<int, int?>();
                 var tempLevels = reqs.Select(s => new { s.Requirement_Id, levels = s.REQUIREMENT_LEVELS.Select(t => t.Standard_Level) }).ToList();
                 if (tempLevels.Any())
                 {
-                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => ((s.levels!=null && s.levels.Any())?s.levels?.Min(t =>
-                    {
-                        SalValues val;
-                        if (Enum.TryParse(t, out val))
+                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => ((s.levels != null && s.levels.Any()) ? s.levels?.Min(t =>
                         {
-                            return (int)val;
-                        }
-                        else
-                        {
-                            return 1;
-                        }
-                    }) :1));
-
+                            SalValues val;
+                            if (Enum.TryParse(t, out val))
+                            {
+                                return (int)val;
+                            }
+                            else
+                            {
+                                return 1;
+                            }
+                        }) : 1));
                 }
 
-                foreach (var requirement in standard.NEW_REQUIREMENT)
+                foreach (var requirement in reqs)
                 {
                     var externalRequirement = new ExternalRequirement()
                     {
@@ -233,7 +231,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     externalRequirement.Questions = new QuestionList();
                     externalRequirement.Questions.AddRange(questions);
                     string subheading = null;
-                    subcategories.TryGetValue(headingPairId,out subheading);
+                    subcategories.TryGetValue(headingPairId, out subheading);
                     if (subheading == null)
                     {
                         subheading = heading;

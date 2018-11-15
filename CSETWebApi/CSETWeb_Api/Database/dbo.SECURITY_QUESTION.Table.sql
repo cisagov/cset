@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[SECURITY_QUESTION]    Script Date: 6/28/2018 8:21:26 AM ******/
+/****** Object:  Table [dbo].[SECURITY_QUESTION]    Script Date: 11/14/2018 3:57:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -29,11 +29,6 @@ INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsC
 INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (10, N'In what town or city did your mother and father meet?', 0)
 INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (11, N'What time of the day were you born? (hh:mm)', 0)
 INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (12, N'What time of the day was your first child born? (hh:mm)', 0)
-INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (13, N'the answer to the universe', 0)
-INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (14, N'test', 1)
-INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (15, N'answer is 5', 1)
-INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (16, N'The answer to the universe and everything', 0)
-INSERT [dbo].[SECURITY_QUESTION] ([SecurityQuestionId], [SecurityQuestion], [IsCustomQuestion]) VALUES (17, N'foo', 0)
 SET IDENTITY_INSERT [dbo].[SECURITY_QUESTION] OFF
 ALTER TABLE [dbo].[SECURITY_QUESTION] ADD  CONSTRAINT [DF_SECURITY_QUESTION_IsCustomQuestion]  DEFAULT ((1)) FOR [IsCustomQuestion]
 GO

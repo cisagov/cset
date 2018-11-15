@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[REF_LIBRARY_PATH]    Script Date: 6/28/2018 8:21:25 AM ******/
+/****** Object:  Table [dbo].[REF_LIBRARY_PATH]    Script Date: 11/14/2018 3:57:25 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,6 +153,22 @@ INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) V
 INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(513 AS Numeric(38, 0)), CAST(5 AS Numeric(38, 0)), N'Other Publishers')
 INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(514 AS Numeric(38, 0)), CAST(5 AS Numeric(38, 0)), N'SANS')
 INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(515 AS Numeric(38, 0)), CAST(5 AS Numeric(38, 0)), N'US Government Other')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(516 AS Numeric(38, 0)), CAST(4 AS Numeric(38, 0)), N'Credit Card Industry Standards')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(517 AS Numeric(38, 0)), CAST(516 AS Numeric(38, 0)), N'PCI DSS Payment Card Industry (PCI) Data Security Standard')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(518 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-002-5.1a BES Cyber System Categorization
+')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(519 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-003-6 Security Management Controls')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(520 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-004-6 Personnel & Training')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(521 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-005-5 Electronic Security Perimeter(s)')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(522 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-006-5 Physical Security of BES Cyber Systems')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(523 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-006-6 Physical Security of BES Cyber Systems')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(524 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-007-6 Systems Security Management')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(525 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-008-5 Incident Reporting and Response Planning')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(526 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-009-6 Recovery Plans for BES Cyber Systems')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(527 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-010-2 Configuration Change & Vulnerability
+ Assessments')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(528 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-011-2 Information Protection')
+INSERT [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id], [Parent_Path_Id], [Path_Name]) VALUES (CAST(529 AS Numeric(38, 0)), CAST(72 AS Numeric(38, 0)), N'CIP-014-2 Physical Security')
 ALTER TABLE [dbo].[REF_LIBRARY_PATH]  WITH CHECK ADD  CONSTRAINT [FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH] FOREIGN KEY([Parent_Path_Id])
 REFERENCES [dbo].[REF_LIBRARY_PATH] ([Lib_Path_Id])
 GO

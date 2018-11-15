@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[CNSS_CIA_TYPES]    Script Date: 6/28/2018 8:21:22 AM ******/
+/****** Object:  Table [dbo].[CNSS_CIA_TYPES]    Script Date: 11/14/2018 3:57:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

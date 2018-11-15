@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[DEMOGRAPHICS]    Script Date: 6/28/2018 8:21:22 AM ******/
+/****** Object:  Table [dbo].[DEMOGRAPHICS]    Script Date: 11/14/2018 3:57:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -20,26 +20,6 @@ CREATE TABLE [dbo].[DEMOGRAPHICS](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (17, 2, 2, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (19, 2, 2, NULL, N'< $1,000,000', 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (21, 2, 2, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (22, 8, 44, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (25, 3, 84, N'Large', N'< $10,000,000', 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (26, 1, 80, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (27, 8, 45, N'Medium', N'< $1,000,000', 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (28, 1, 1, N'Large', N'> $10,000,000', 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (29, 1, 82, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (32, 1, 82, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (33, 1, 82, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (34, NULL, NULL, N'Large', NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (39, 3, 84, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (43, 2, 3, N'Medium', N'< $1,000,000', 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (47, 7, 43, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (50, 7, 43, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (51, 7, 43, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (52, 7, 43, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (53, 7, 43, NULL, NULL, 0, 0, 0)
-INSERT [dbo].[DEMOGRAPHICS] ([Assessment_Id], [SectorId], [IndustryId], [Size], [AssetValue], [NeedsPrivacy], [NeedsSupplyChain], [NeedsICS]) VALUES (54, 7, 43, NULL, NULL, 0, 0, 0)
 ALTER TABLE [dbo].[DEMOGRAPHICS] ADD  CONSTRAINT [DF_DEMOGRAPHICS_NeedsPrivacy]  DEFAULT ((0)) FOR [NeedsPrivacy]
 GO
 ALTER TABLE [dbo].[DEMOGRAPHICS] ADD  CONSTRAINT [DF_DEMOGRAPHICS_NeedsSupplyChain]  DEFAULT ((0)) FOR [NeedsSupplyChain]

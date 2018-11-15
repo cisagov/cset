@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[REQUIREMENT_QUESTIONS_SETS]    Script Date: 6/28/2018 8:21:26 AM ******/
+/****** Object:  Table [dbo].[REQUIREMENT_QUESTIONS_SETS]    Script Date: 11/14/2018 3:57:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2862,6 +2862,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (253, 4781, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (253, 4780, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (253, 14917, N'Nerc_Cip_R5')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (253, 27196, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (253, 1282, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (253, 4780, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (254, 2962, N'C800_53_R3')
@@ -2943,8 +2944,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 6405, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 3403, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 7164, N'Cnssi_1253')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 4787, N'Cor_7')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 4787, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 14453, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 12077, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (260, 15387, N'NISTIR_7628_R1')
@@ -3044,8 +3045,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (270, 4795, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 10770, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 10770, N'C800_53_R3_App_I')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 8955, N'C800_53_R4')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 8955, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 16046, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 3409, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (271, 7563, N'Cnssi_1253')
@@ -3145,8 +3146,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 11844, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 11983, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 15309, N'NISTIR_7628_R1')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 1748, N'Nrc_571')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 1748, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 12408, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (279, 4801, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (280, 2471, N'C800_53_R3')
@@ -3246,8 +3247,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 6276, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 3449, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 6226, N'Cfats')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 14270, N'Cnssi_1253_V2')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 14270, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 10776, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 26472, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (289, 4806, N'Key')
@@ -3347,8 +3348,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 7583, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 7583, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 10786, N'C800_53_R4')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 16078, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 16078, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 3429, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 10786, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (297, 12358, N'NCSF_V1')
@@ -3448,8 +3449,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (303, 26466, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (303, 4508, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (303, 12419, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (303, 4508, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (303, 4508, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (304, 15766, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (304, 3438, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (304, 7581, N'C800_53_R3_App_I')
@@ -3549,8 +3550,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (310, 12194, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (310, 1752, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (310, 12725, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (310, 4613, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (310, 4613, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (311, 15954, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (311, 7884, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (311, 7884, N'C800_53_R3_App_I')
@@ -3650,8 +3651,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 26466, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 4806, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 12350, N'NCSF_V1')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 11851, N'NEI_0809')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 11851, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 11991, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 15314, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (319, 1829, N'Nrc_571')
@@ -3751,8 +3752,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (327, 4585, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 5551, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 5551, N'C800_53_R3_App_I')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 8868, N'C800_53_R4')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 8868, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 16570, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 3454, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (328, 7855, N'Cnssi_1253')
@@ -3852,8 +3853,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (335, 4592, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (335, 12714, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (335, 4592, N'Universal')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (336, 15953, N'C800_161')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (336, 15953, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (336, 2555, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (336, 7413, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (336, 9708, N'C800_53_R4')
@@ -3953,8 +3954,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 9067, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 16652, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 6342, N'C800_82')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 3467, N'C800_82_V1')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 3467, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 7408, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 14240, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (347, 11822, N'INGAA')
@@ -4054,8 +4055,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (357, 4762, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (357, 14842, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (357, 12764, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (357, 4761, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (357, 4761, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (358, 7948, N'Tsa')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (358, 4813, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (359, 4813, N'Universal')
@@ -4155,8 +4156,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (373, 4636, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 5597, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 5597, N'C800_53_R3_App_I')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 9749, N'C800_53_R4')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 9749, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 16642, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 3483, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (374, 4637, N'Cor_7')
@@ -4256,8 +4257,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (386, 11871, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (386, 12176, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (386, 12708, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (386, 4587, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (386, 4587, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (387, 15950, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (387, 16930, N'C800_171')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (387, 3036, N'C800_53_R3')
@@ -4357,8 +4358,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (392, 12714, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (392, 4592, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (393, 3036, N'C800_53_R3')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (393, 5562, N'C800_53_R3_App_I')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (393, 5562, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (393, 9703, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (393, 16587, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (393, 6352, N'C800_82')
@@ -4458,8 +4459,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 7420, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 7420, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 9713, N'C800_53_R4')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 16606, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 16606, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 3505, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 14716, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (402, 4602, N'Key')
@@ -4559,8 +4560,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 14230, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 4610, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 14213, N'DODI_8510')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 11880, N'NEI_0809')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 11880, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 12192, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 5681, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (411, 12398, N'SP800-82 V2')
@@ -4660,8 +4661,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (421, 3522, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (421, 4625, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (421, 1842, N'Nrc_571')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (421, 4624, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (421, 4624, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (422, 5598, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (422, 5598, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (422, 9754, N'C800_53_R4')
@@ -4761,8 +4762,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 5258, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 5258, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 9054, N'C800_53_R4')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 16015, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 16015, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 3536, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 4792, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (431, 14221, N'DODI_8510')
@@ -4862,8 +4863,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 10947, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 16679, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 6265, N'C800_82')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 3695, N'C800_82_V1')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 3695, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 4365, N'Cfats')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 12307, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (441, 11914, N'NEI_0809')
@@ -4963,8 +4964,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (448, 4736, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (449, 6398, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (449, 12252, N'C800_82_V1')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (449, 4739, N'Cor_7')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (449, 4739, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (449, 4736, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (450, 15974, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (450, 7915, N'C800_53_R3')
@@ -5064,8 +5065,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (456, 5722, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (456, 12753, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (456, 4748, N'Universal')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (457, 5619, N'C800_53_R3')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (457, 5619, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (457, 5619, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (457, 9821, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (457, 16720, N'C800_53_R4_71')
@@ -5165,8 +5166,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 7521, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 16748, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 3564, N'C800_82_V1')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 11178, N'DODI_8510')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 11178, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 12218, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 15517, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (465, 1776, N'Nrc_571')
@@ -5266,8 +5267,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 16397, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 6275, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 3569, N'C800_82_V1')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 7751, N'Cnssi_1253')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 7751, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 4481, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 14551, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (473, 4480, N'Key')
@@ -5367,8 +5368,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (479, 12608, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (479, 4482, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (480, 15870, N'C800_161')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (480, 7752, N'C800_53_R3')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (480, 7752, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (480, 7752, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (480, 9486, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (480, 16399, N'C800_53_R4_71')
@@ -5468,8 +5469,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 5875, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 14918, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 12120, N'NISTIR_7628')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 15429, N'NISTIR_7628_R1')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 15429, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 1777, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 12614, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (487, 7950, N'Tsa')
@@ -5569,8 +5570,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (494, 4488, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 16921, N'C800_171')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 5465, N'C800_53_R3')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 5466, N'C800_53_R3_App_I')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 5466, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 9504, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 16416, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (495, 3591, N'C800_82_V1')
@@ -5670,8 +5671,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 7272, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 7272, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 11001, N'C800_53_R4')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 16421, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 16421, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 6381, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 3593, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (512, 4495, N'Cor_7')
@@ -5771,8 +5772,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 11011, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 16432, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 6306, N'C800_82')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 3602, N'C800_82_V1')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 3602, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 14571, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 12337, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (521, 12630, N'SP800-82 V2')
@@ -5872,8 +5873,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (530, 4544, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (530, 1850, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (530, 4544, N'Universal')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (531, 15800, N'C800_161')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (531, 15800, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (531, 10855, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (531, 10855, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (531, 10855, N'C800_53_R4')
@@ -5973,8 +5974,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (536, 15358, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (536, 1780, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (536, 12488, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (536, 7942, N'Tsa')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (536, 7942, N'Tsa')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (536, 4548, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (537, 15803, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (537, 16880, N'C800_171')
@@ -6074,8 +6075,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (543, 15360, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (543, 1784, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (543, 12394, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (543, 4551, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (543, 4551, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (544, 15807, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (544, 2945, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (544, 5345, N'C800_53_R3_App_I')
@@ -6175,8 +6176,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (552, 15361, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (552, 5782, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (552, 12476, N'SP800-82 V2')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (552, 4553, N'Universal')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (552, 4553, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (553, 15811, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (553, 2946, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (553, 9208, N'C800_53_R3_App_I')
@@ -6276,8 +6277,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 10875, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 16210, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 3641, N'C800_82_V1')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 7658, N'Cnssi_1253')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 7658, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 14391, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 4560, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (561, 14387, N'DODI_8510')
@@ -6377,8 +6378,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 15825, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 7662, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 7662, N'C800_53_R3_App_I')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 16220, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 16220, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 3643, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 10879, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (571, 4567, N'Key')
@@ -6478,8 +6479,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 10944, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 10944, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 16331, N'C800_53_R4_71')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 3650, N'C800_82_V1')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 3650, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 10944, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 11941, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (581, 6035, N'Nerc_Cip_R3')
@@ -6579,8 +6580,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 5555, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 9690, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 16576, N'C800_53_R4_71')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 6285, N'C800_82')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 6285, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 3658, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 7859, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (590, 4590, N'Cor_7')
@@ -6680,8 +6681,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 3052, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 7482, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 9791, N'C800_53_R4')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 16687, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 16687, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 3664, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 4741, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (597, 14780, N'DODI_8510')
@@ -6781,8 +6782,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (605, 12748, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (605, 4743, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (606, 15971, N'C800_161')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (606, 3684, N'C800_53_R3')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (606, 3684, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (606, 5612, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (606, 9802, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (606, 16694, N'C800_53_R4_71')
@@ -6882,8 +6883,8 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 3684, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 8933, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 9806, N'C800_53_R4')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 16697, N'C800_53_R4_71')
 GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 16697, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 12291, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 4745, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (613, 14789, N'DODI_8510')
@@ -6907,6 +6908,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 4743, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 5985, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 5985, N'Nerc_Cip_R4')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 27192, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 15517, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 1862, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (614, 12748, N'SP800-82 V2')
@@ -6982,9 +6984,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (619, 12749, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (619, 4743, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (620, 3684, N'C800_53_R3')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (620, 8933, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (620, 9808, N'C800_53_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (620, 16702, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (620, 12291, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (620, 7913, N'Cnssi_1253')
@@ -7083,9 +7085,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (631, 4870, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (631, 12363, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (631, 12159, N'NISTIR_7628')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (631, 1864, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (631, 12676, N'SP800-82 V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (631, 4870, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (632, 5518, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (632, 5518, N'C800_53_R3_App_I')
@@ -7184,9 +7186,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 4873, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 14603, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 4870, N'Key')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 2261, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 6035, N'Nerc_Cip_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 12159, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 1864, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (639, 12679, N'SP800-82 V2')
@@ -7285,9 +7287,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 5367, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 9269, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 3706, N'C800_82_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 7128, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 12058, N'NISTIR_7628')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 15376, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 12516, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (647, 4710, N'Universal')
@@ -7386,9 +7388,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 5378, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 9272, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 16250, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 3716, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 4713, N'Cor_7')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 14420, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 4712, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (655, 12054, N'NISTIR_7628')
@@ -7487,9 +7489,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (661, 1797, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (661, 12533, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (661, 4715, N'Universal')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (662, 5384, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (662, 5384, N'C800_53_R3_App_I')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (662, 9285, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (662, 16262, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (662, 3721, N'C800_82_V1')
@@ -7588,9 +7590,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (669, 5951, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (669, 1837, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (669, 12592, N'SP800-82 V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (669, 4724, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (670, 10973, N'C800_53_R3')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (670, 10973, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (670, 10973, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (670, 16376, N'C800_53_R4_71')
@@ -7689,9 +7691,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 7236, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 4731, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 14535, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 12348, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 11909, N'NEI_0809')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 5712, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 12596, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (680, 4730, N'Universal')
@@ -7790,9 +7792,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 10791, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 16086, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 6291, N'C800_82')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 3741, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 7587, N'Cnssi_1253')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 14290, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 12001, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (687, 15322, N'NISTIR_7628_R1')
@@ -7891,9 +7893,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 8962, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 16054, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 3749, N'C800_82_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 7570, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 4658, N'Cor_7')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 14261, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (699, 4657, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (700, 5271, N'C800_53_R3')
@@ -7992,9 +7994,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 7832, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 7832, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 10880, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 16221, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 3756, N'C800_82_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 22880, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 10880, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (709, 12358, N'NCSF_V1')
@@ -8093,9 +8095,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (719, 16529, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (719, 4532, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (719, 14625, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (719, 4531, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (720, 7836, N'C800_53_R3')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (720, 7836, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (720, 9366, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (720, 16497, N'C800_53_R4_71')
@@ -8194,9 +8196,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 16505, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 3776, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 11080, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 4536, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 11970, N'NEI_0809')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 12171, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 15480, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (728, 1867, N'Nrc_571')
@@ -8295,9 +8297,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 3783, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 7370, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 4539, N'Cor_7')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 14638, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 12172, N'NISTIR_7628')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 1871, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 12696, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (737, 4538, N'Universal')
@@ -8396,9 +8398,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (748, 12577, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (748, 4665, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (749, 7730, N'C800_53_R3')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (749, 7730, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (749, 10955, N'C800_53_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (749, 16347, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (749, 3790, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (749, 10955, N'DODI_8510')
@@ -8497,9 +8499,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 9429, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 16353, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 3795, N'C800_82_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 4671, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 14519, N'DODI_8510')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 4668, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 1872, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (756, 12581, N'SP800-82 V2')
@@ -8598,9 +8600,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (764, 26470, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (764, 12346, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (764, 15413, N'NISTIR_7628_R1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (764, 12583, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (764, 4673, N'Universal')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (765, 15861, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (765, 2861, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (765, 5432, N'C800_53_R3_App_I')
@@ -8699,9 +8701,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (773, 7595, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (773, 14302, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (773, 4821, N'Key')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (773, 1816, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (773, 12436, N'SP800-82 V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (773, 4821, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (774, 15776, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (774, 5296, N'C800_53_R3')
@@ -8800,9 +8802,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (780, 11860, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (780, 1818, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (780, 12439, N'SP800-82 V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (780, 4823, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (781, 7015, N'C800_53_R3')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (781, 7015, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (781, 10807, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (781, 16101, N'C800_53_R4_71')
@@ -8901,9 +8903,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 14308, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 4830, N'Key')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 12375, N'NCSF_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 6040, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 2268, N'Nerc_Cip_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 14924, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 12018, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (788, 15338, N'NISTIR_7628_R1')
@@ -9002,9 +9004,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (795, 1820, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (795, 12449, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (795, 4833, N'Universal')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (796, 4834, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (796, 4833, N'Universal')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (797, 7610, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (797, 7610, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (797, 9143, N'C800_53_R4')
@@ -9103,9 +9105,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (809, 4843, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (810, 6419, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (810, 12273, N'C800_82_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (810, 4844, N'Cor_7')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (810, 4843, N'Universal')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (811, 12347, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (811, 4845, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (812, 15783, N'C800_161')
@@ -9204,9 +9206,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 14373, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 12362, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 12040, N'NISTIR_7628')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 15360, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 1816, N'Nrc_571')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 12495, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (820, 4551, N'Universal')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (821, 11863, N'NEI_0809')
@@ -9305,9 +9307,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (866, 11892, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (866, 1416, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (867, 14235, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (867, 1416, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (868, 11892, N'NEI_0809')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (868, 1416, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (869, 11840, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (869, 11978, N'NISTIR_7628')
@@ -9406,9 +9408,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (927, 1475, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (928, 1475, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (929, 11903, N'NEI_0809')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (929, 1856, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (930, 11915, N'NEI_0809')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (930, 1856, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (931, 11917, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (931, 1478, N'Nrc_571')
@@ -9507,9 +9509,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (982, 1530, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (983, 11936, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (983, 1530, N'Nrc_571')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (984, 1732, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (985, 1732, N'Nrc_571')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (986, 12354, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (986, 1732, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (987, 9087, N'C800_53_R4')
@@ -9608,9 +9610,9 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1033, 11945, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1033, 12006, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1033, 15327, N'NISTIR_7628_R1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1033, 1582, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1034, 11944, N'NEI_0809')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1034, 1582, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1035, 11945, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1035, 1582, N'Nrc_571')
@@ -9625,6 +9627,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1039, 1823, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1040, 11821, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1040, 11950, N'NEI_0809')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1040, 27168, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1040, 1823, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1041, 11950, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1041, 1823, N'Nrc_571')
@@ -9708,10 +9711,10 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1079, 1631, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1080, 11952, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1080, 1631, N'Nrc_571')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1081, 5767, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1081, 11952, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1081, 1631, N'Nrc_571')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1082, 5767, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1082, 11952, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1082, 1631, N'Nrc_571')
@@ -9809,10 +9812,10 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1156, 1715, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1157, 1715, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1158, 1715, N'Nrc_571')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1159, 1715, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1160, 1715, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1161, 1715, N'Nrc_571')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1162, 1715, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1163, 1715, N'Nrc_571')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1164, 1715, N'Nrc_571')
@@ -9850,6 +9853,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1190, 5940, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1190, 5807, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1190, 14910, N'Nerc_Cip_R5')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1190, 27165, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1191, 5941, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1191, 5941, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1192, 2165, N'Nerc_Cip_R3')
@@ -9909,11 +9913,11 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1218, 5997, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1219, 6003, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1219, 6003, N'Nerc_Cip_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1220, 6004, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1220, 6004, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1221, 2051, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1222, 2189, N'Nerc_Cip_R3')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1222, 6006, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1223, 6009, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1223, 2233, N'Nerc_Cip_R4')
@@ -9961,6 +9965,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1240, 6032, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1240, 6032, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1240, 14925, N'Nerc_Cip_R5')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1240, 27234, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1241, 6034, N'Nerc_Cip_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1241, 2207, N'Nerc_Cip_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1241, 14925, N'Nerc_Cip_R5')
@@ -10009,12 +10014,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1259, 12393, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1260, 2903, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1260, 5253, N'C800_53_R3_App_I')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1260, 3362, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1260, 7530, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1261, 2903, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1261, 5253, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1261, 3362, N'C800_82_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1261, 7530, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1261, 14205, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1262, 2903, N'C800_53_R3')
@@ -10110,12 +10115,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1278, 9133, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1278, 16114, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1278, 3830, N'C800_82_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1278, 14313, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1278, 14311, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1278, 12393, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1279, 16845, N'C800_171')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1279, 5307, N'C800_53_R3')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1279, 5307, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1279, 9135, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1279, 16116, N'C800_53_R4_71')
@@ -10211,12 +10216,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1289, 7880, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1289, 12459, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 2930, N'C800_53_R3')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 10832, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 9102, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 16141, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 3840, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 14336, N'Cnssi_1253_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 14335, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1290, 12464, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1291, 5320, N'C800_53_R3')
@@ -10312,12 +10317,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 2943, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 5337, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 9197, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 16183, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 3620, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 7641, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 14365, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1301, 12488, N'SP800-82 V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1302, 15803, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1302, 2943, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1302, 5337, N'C800_53_R3_App_I')
@@ -10413,12 +10418,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1311, 12513, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 15831, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 5366, N'C800_53_R3')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 5366, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 9251, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 16229, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 3706, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 14402, N'DODI_8510')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 12302, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1312, 12515, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1313, 5366, N'C800_53_R3')
@@ -10514,12 +10519,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1323, 16278, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1323, 3403, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1323, 7165, N'Cnssi_1253')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1323, 14454, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1323, 12547, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1324, 5400, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1324, 5400, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1324, 9324, N'C800_53_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1324, 16284, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1324, 3378, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1324, 7170, N'Cnssi_1253')
@@ -10615,12 +10620,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1333, 14496, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1333, 12565, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 16899, N'C800_171')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 7722, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 7722, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 10945, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 16332, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 3695, N'C800_82_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 14504, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1334, 12569, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1335, 5436, N'C800_53_R3')
@@ -10716,12 +10721,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 5449, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 5449, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 9462, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 16383, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 3736, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 7242, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 14540, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 12328, N'NCSF_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1346, 12600, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1347, 5450, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1347, 5450, N'C800_53_R3_App_I')
@@ -10817,12 +10822,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1358, 12639, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 15879, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 5489, N'C800_53_R3')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 5489, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 11023, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 16446, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 3277, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 7296, N'Cnssi_1253')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 11023, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1359, 12639, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1360, 15879, N'C800_161')
@@ -10918,12 +10923,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 5508, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 10966, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 16457, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 3332, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 7316, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 14585, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1370, 12588, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1371, 3011, N'C800_53_R3')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1371, 5508, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1371, 11049, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1371, 16458, N'C800_53_R4_71')
@@ -11019,12 +11024,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 15902, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 11072, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 11072, N'C800_53_R3_App_I')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 3761, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 7827, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 14613, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 12190, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1383, 12685, N'SP800-82 V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1384, 15903, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1384, 7828, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1384, 7828, N'C800_53_R3_App_I')
@@ -11120,12 +11125,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1396, 16593, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1396, 3501, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1396, 7869, N'Cnssi_1253')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1396, 14703, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1396, 12714, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1397, 5573, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1397, 5573, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1397, 9716, N'C800_53_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1397, 16610, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1397, 3507, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1397, 7872, N'Cnssi_1253')
@@ -11221,12 +11226,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 3052, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 5611, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 9793, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 16689, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 3667, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 7909, N'Cnssi_1253')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 14782, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1412, 12747, N'SP800-82 V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1413, 3684, N'C800_53_R3')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1413, 8933, N'C800_53_R3_App_I')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1413, 11165, N'C800_53_R4')
@@ -11322,12 +11327,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1431, 12256, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1431, 14911, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1432, 9839, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1432, 16743, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1432, 6391, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1432, 12245, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1432, 12068, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1433, 6391, N'C800_82')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1433, 12245, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1434, 6391, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1434, 12245, N'C800_82_V1')
@@ -11423,12 +11428,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1471, 12260, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1472, 9354, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1472, 16300, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1472, 6408, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1472, 12262, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1472, 14476, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1473, 6411, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1473, 12265, N'C800_82_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1474, 6411, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1474, 12265, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1475, 6296, N'C800_82')
@@ -11524,12 +11529,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1519, 6367, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1519, 6367, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1520, 6368, N'C800_82')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1520, 6368, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1521, 6369, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1521, 6369, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1522, 6369, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1522, 6369, N'C800_82_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1523, 6412, N'C800_82')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1523, 12266, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1524, 6412, N'C800_82')
@@ -11625,12 +11630,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1568, 6331, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1568, 14912, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1569, 6370, N'C800_82')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1569, 6370, N'C800_82_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1570, 6223, N'Cfats')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1571, 6223, N'Cfats')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1572, 6231, N'Cfats')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1573, 6233, N'Cfats')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1574, 4389, N'Cfats')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1575, 4389, N'Cfats')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1576, 16948, N'C800_171')
@@ -11726,12 +11731,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1665, 6679, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1666, 6680, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1667, 6681, N'Components')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1668, 6682, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1669, 6683, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1670, 6684, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1671, 6685, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1672, 6687, N'Components')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1673, 6689, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1674, 6690, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1675, 6691, N'Components')
@@ -11827,12 +11832,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1766, 6818, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1767, 6822, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1768, 6824, N'Components')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1769, 6825, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1770, 6827, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1771, 6829, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1772, 6842, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1773, 6846, N'Components')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1774, 6850, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1775, 6851, N'Components')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1776, 6852, N'Components')
@@ -11928,12 +11933,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1841, 12358, N'NCSF_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1842, 8530, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1842, 15994, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1842, 22486, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1842, 14204, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1842, 14202, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1842, 9001, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1843, 8530, N'C800_53_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1843, 15992, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1843, 14203, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1843, 14200, N'DODI_8510')
@@ -12029,12 +12034,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1861, 9113, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1861, 16152, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1861, 14345, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1862, 15785, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1862, 9115, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1862, 16151, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1862, 14344, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1863, 10821, N'C800_53_R4')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1863, 16124, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1865, 9145, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1865, 16127, N'C800_53_R4_71')
@@ -12130,12 +12135,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1886, 16223, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1886, 14396, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1886, 12358, N'NCSF_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1887, 9238, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1887, 16224, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1887, 14397, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1888, 8538, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1888, 16225, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1888, 14398, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1889, 15830, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1889, 10885, N'C800_53_R4')
@@ -12231,12 +12236,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1911, 10911, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1911, 16270, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1911, 10911, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1912, 10912, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1912, 16271, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1912, 14437, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1913, 10913, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1913, 16272, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1913, 10913, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1913, 12540, N'SP800-82 V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1914, 10914, N'C800_53_R4')
@@ -12332,12 +12337,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1938, 10932, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1939, 10933, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1939, 16311, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1939, 10933, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1939, 12073, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1940, 15849, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1940, 9384, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1940, 16325, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1940, 14499, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1941, 15850, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1941, 9385, N'C800_53_R4')
@@ -12433,12 +12438,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1965, 16413, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1965, 14562, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1966, 9503, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1966, 16414, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1966, 14563, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1967, 11007, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1967, 16427, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1967, 23236, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1967, 11007, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1968, 15886, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1968, 11041, N'C800_53_R4')
@@ -12534,12 +12539,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1986, 12212, N'NISTIR_7628')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1987, 9731, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1987, 16625, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1987, 25861, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1987, 14732, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1988, 9748, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1988, 16640, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1988, 14740, N'DODI_8510')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1989, 15962, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1989, 9752, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (1989, 16646, N'C800_53_R4_71')
@@ -12635,12 +12640,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2013, 14827, N'Cnssi_1253_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2013, 14818, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2014, 11274, N'C800_53_R4')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2014, 16737, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2015, 11175, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2015, 16741, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2015, 26101, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2015, 14832, N'DODI_8510')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2016, 9840, N'C800_53_R4')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2016, 16744, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2016, 14835, N'DODI_8510')
@@ -12736,12 +12741,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2825, 11763, N'C800_53_R4_App_J')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2825, 14875, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2826, 11764, N'C800_53_R4_App_J')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2826, 14876, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2827, 11765, N'C800_53_R4_App_J')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2827, 14877, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2828, 11766, N'C800_53_R4_App_J')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2828, 14878, N'DODI_8510')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2829, 11766, N'C800_53_R4_App_J')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2829, 14878, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2830, 11767, N'C800_53_R4_App_J')
@@ -12837,12 +12842,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2873, 14900, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2874, 11791, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2875, 11792, N'FAA_MAINT')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2875, 11792, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2876, 11792, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2876, 11792, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2877, 11792, N'FAA_MAINT')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2877, 11792, N'INGAA')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2878, 11793, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2879, 11793, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2880, 11794, N'INGAA')
@@ -12938,12 +12943,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2964, 11919, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2965, 11927, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2966, 11928, N'NEI_0809')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2967, 11929, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2968, 11935, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2969, 11936, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2970, 11936, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2971, 11937, N'NEI_0809')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2972, 11947, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2973, 11953, N'NEI_0809')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (2974, 11957, N'NEI_0809')
@@ -13039,12 +13044,12 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3219, 11812, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3220, 11812, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3221, 11813, N'INGAA')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3222, 11813, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3223, 11813, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3224, 11814, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3225, 11814, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3226, 11815, N'INGAA')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3227, 11815, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3228, 11815, N'INGAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3229, 11815, N'INGAA')
@@ -13127,6 +13132,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3417, 14908, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3418, 14908, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3419, 14909, N'Nerc_Cip_R5')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3419, 27164, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3420, 14910, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3421, 14910, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3422, 14911, N'Nerc_Cip_R5')
@@ -13134,18 +13140,20 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3424, 14912, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3425, 14913, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3426, 14914, N'Nerc_Cip_R5')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3426, 27180, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3427, 14914, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3428, 14914, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3429, 14917, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3430, 14918, N'Nerc_Cip_R5')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3431, 14920, N'Nerc_Cip_R5')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3431, 27213, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3432, 14923, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3433, 14924, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3434, 14925, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3435, 14925, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3436, 14926, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3437, 14927, N'Nerc_Cip_R5')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3438, 14928, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3439, 14929, N'Nerc_Cip_R5')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3440, 14930, N'Nerc_Cip_R5')
@@ -13238,6 +13246,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3537, 15031, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3538, 15032, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3539, 15033, N'C2M2_V11')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3540, 15034, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3541, 15035, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3542, 15036, N'C2M2_V11')
@@ -13246,7 +13255,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3545, 15039, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3546, 15040, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3547, 15041, N'C2M2_V11')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3548, 15042, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3549, 15043, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3550, 15044, N'C2M2_V11')
@@ -13339,6 +13347,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3636, 15130, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3637, 15131, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3638, 15132, N'C2M2_V11')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3639, 15133, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3640, 15134, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3641, 15135, N'C2M2_V11')
@@ -13347,7 +13356,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3644, 15138, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3645, 15139, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3646, 15140, N'C2M2_V11')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3647, 15141, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3648, 15142, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3649, 15143, N'C2M2_V11')
@@ -13440,6 +13448,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3735, 15229, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3736, 15230, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3737, 15231, N'C2M2_V11')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3738, 15232, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3739, 15233, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3740, 15234, N'C2M2_V11')
@@ -13448,7 +13457,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3743, 15237, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3744, 15238, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3745, 15239, N'C2M2_V11')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3746, 15240, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3747, 15241, N'C2M2_V11')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3748, 15242, N'C2M2_V11')
@@ -13541,6 +13549,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3835, 15490, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3836, 15491, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3837, 15493, N'NISTIR_7628_R1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3838, 15495, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3839, 15496, N'NISTIR_7628_R1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3840, 15499, N'NISTIR_7628_R1')
@@ -13549,7 +13558,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3843, 14631, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3844, 14633, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3845, 14634, N'DODI_8510')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3846, 15915, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3846, 14640, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3847, 14641, N'DODI_8510')
@@ -13642,6 +13650,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3914, 14822, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3915, 14831, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3916, 14833, N'DODI_8510')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3917, 14834, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3918, 14839, N'DODI_8510')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3919, 14845, N'DODI_8510')
@@ -13650,7 +13659,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3934, 15891, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3935, 15892, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3936, 15892, N'C800_161')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3937, 15892, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3938, 15892, N'C800_161')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (3939, 15892, N'C800_161')
@@ -13743,6 +13751,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4047, 16963, N'HIPAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4048, 16963, N'HIPAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4049, 16963, N'HIPAA')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4050, 16963, N'HIPAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4051, 16963, N'HIPAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4052, 16963, N'HIPAA')
@@ -13751,7 +13760,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4055, 16964, N'HIPAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4056, 16964, N'HIPAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4057, 16964, N'HIPAA')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4058, 16850, N'C800_171')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4058, 16040, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (4059, 16854, N'C800_171')
@@ -13844,6 +13852,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5017, 17749, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5018, 17749, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5019, 17750, N'CSC_V6')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5020, 17750, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5021, 17751, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5022, 17752, N'CSC_V6')
@@ -13852,7 +13861,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5025, 17753, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5026, 17754, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5027, 17754, N'CSC_V6')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5028, 17755, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5029, 17755, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5030, 17756, N'CSC_V6')
@@ -13945,6 +13953,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5116, 17821, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5117, 17822, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5118, 17823, N'CSC_V6')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5119, 17824, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5120, 17825, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5121, 17826, N'CSC_V6')
@@ -13953,7 +13962,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5124, 17829, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5125, 17830, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5126, 17831, N'CSC_V6')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5127, 17832, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5128, 17833, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5129, 17834, N'CSC_V6')
@@ -14046,6 +14054,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5214, 17864, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5215, 17864, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5216, 17869, N'CSC_V6')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5217, 17879, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5218, 17879, N'CSC_V6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (5219, 17879, N'CSC_V6')
@@ -14054,7 +14063,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9716, 22434, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9717, 22435, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9718, 22436, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9719, 22437, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9720, 22438, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9721, 22439, N'CCI_V2')
@@ -14147,6 +14155,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9796, 16039, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9796, 22515, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9797, 16039, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9797, 22516, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9798, 22517, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9799, 22518, N'CCI_V2')
@@ -14155,7 +14164,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9802, 22521, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9803, 22522, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9804, 22523, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9805, 22524, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9806, 22525, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9807, 22526, N'CCI_V2')
@@ -14248,6 +14256,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9885, 22604, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9886, 22605, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9887, 22606, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9888, 16806, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9888, 22607, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9889, 22608, N'CCI_V2')
@@ -14256,7 +14265,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9892, 22611, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9893, 22612, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9894, 22613, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9895, 22614, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9896, 22615, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9897, 16810, N'C800_53_R4_71')
@@ -14349,6 +14357,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9978, 22697, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9979, 22698, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9980, 22699, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9981, 22700, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9982, 22701, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9983, 22702, N'CCI_V2')
@@ -14357,7 +14366,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9985, 22704, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9986, 16142, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9986, 22705, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9987, 22706, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9988, 22707, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (9989, 16148, N'C800_53_R4_71')
@@ -14450,6 +14458,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10070, 22789, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10071, 22790, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10072, 22791, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10073, 22792, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10074, 22793, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10075, 22794, N'CCI_V2')
@@ -14458,7 +14467,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10078, 16187, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10078, 22797, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10079, 22798, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10080, 22799, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10081, 16190, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10081, 22800, N'CCI_V2')
@@ -14551,6 +14559,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10166, 22885, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10167, 22886, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10168, 22887, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10169, 22888, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10170, 22889, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10171, 22890, N'CCI_V2')
@@ -14559,7 +14568,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10174, 22893, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10175, 22894, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10176, 22895, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10177, 22896, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10178, 22897, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10179, 22898, N'CCI_V2')
@@ -14652,6 +14660,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10265, 22984, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10266, 22985, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10267, 22986, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10268, 22987, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10269, 22988, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10270, 22989, N'CCI_V2')
@@ -14660,7 +14669,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10273, 22992, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10274, 22993, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10275, 22994, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10276, 22995, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10277, 22996, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10278, 22997, N'CCI_V2')
@@ -14753,6 +14761,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10358, 23077, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10359, 23078, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10360, 23079, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10361, 23080, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10362, 23081, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10363, 16334, N'C800_53_R4_71')
@@ -14761,7 +14770,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10365, 16336, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10365, 23084, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10366, 23085, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10367, 23086, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10368, 23087, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10376, 23095, N'CCI_V2')
@@ -14854,6 +14862,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10456, 23175, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10457, 23176, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10458, 23177, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10459, 23178, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10460, 23179, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10461, 23180, N'CCI_V2')
@@ -14862,7 +14871,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10464, 23183, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10465, 23184, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10466, 16386, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10466, 23185, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10467, 23186, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10468, 23187, N'CCI_V2')
@@ -14955,6 +14963,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10555, 23275, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10556, 23276, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10557, 23277, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10558, 23278, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10559, 23279, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10560, 23280, N'CCI_V2')
@@ -14963,7 +14972,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10563, 23283, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10564, 16450, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10564, 23284, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10565, 16450, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10565, 23285, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10566, 16450, N'C800_53_R4_71')
@@ -15056,6 +15064,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10644, 23367, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10645, 23368, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10646, 23369, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10647, 23370, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10648, 23371, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10649, 23372, N'CCI_V2')
@@ -15064,7 +15073,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10652, 23375, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10653, 23376, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10654, 23377, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10655, 23378, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10656, 23379, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10657, 23380, N'CCI_V2')
@@ -15157,6 +15165,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10744, 23468, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10745, 23469, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10746, 23470, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10747, 23471, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10748, 23472, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10749, 23473, N'CCI_V2')
@@ -15165,7 +15174,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10752, 23476, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10753, 23477, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10754, 23478, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10755, 23479, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10756, 23480, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10757, 23481, N'CCI_V2')
@@ -15258,6 +15266,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10836, 23560, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10837, 16553, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10837, 23561, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10838, 16553, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10838, 23562, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10839, 16553, N'C800_53_R4_71')
@@ -15266,7 +15275,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10840, 23564, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10841, 16553, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10841, 23565, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10842, 16553, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10842, 23566, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10843, 16553, N'C800_53_R4_71')
@@ -15359,6 +15367,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10925, 23649, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10926, 23650, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10927, 23651, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10928, 23652, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10929, 23653, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10930, 23654, N'CCI_V2')
@@ -15367,7 +15376,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10933, 23657, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10934, 23658, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10935, 23659, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10936, 23660, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10937, 23661, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (10938, 23662, N'CCI_V2')
@@ -15460,6 +15468,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11020, 23745, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11021, 23746, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11022, 23747, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11023, 23748, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11024, 23749, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11025, 23750, N'CCI_V2')
@@ -15468,7 +15477,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11028, 23753, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11029, 23754, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11030, 23755, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11031, 23756, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11032, 23757, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11033, 23758, N'CCI_V2')
@@ -15561,6 +15569,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11154, 23879, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11155, 23880, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11156, 23881, N'FAA')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11157, 23882, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11158, 23883, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11159, 23884, N'FAA')
@@ -15569,7 +15578,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11162, 23887, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11163, 23888, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11164, 23889, N'FAA')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11165, 23890, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11166, 23891, N'FAA')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11167, 23892, N'FAA')
@@ -15662,6 +15670,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11252, 24006, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11253, 24007, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11254, 24008, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11255, 24009, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11256, 24010, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11257, 24011, N'CCI_V2')
@@ -15670,7 +15679,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11259, 24013, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11260, 16075, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11260, 24014, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11261, 24015, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11262, 24016, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11263, 24017, N'CCI_V2')
@@ -15763,6 +15771,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11345, 24099, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11346, 24100, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11347, 16021, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11347, 24101, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11348, 24102, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11349, 24103, N'CCI_V2')
@@ -15771,7 +15780,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11352, 24106, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11353, 24107, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11354, 24108, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11355, 24109, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11356, 24110, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11357, 24111, N'CCI_V2')
@@ -15864,6 +15872,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11436, 24190, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11437, 24191, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11438, 24192, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11439, 24193, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11440, 24194, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11441, 24195, N'CCI_V2')
@@ -15872,7 +15881,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11444, 24198, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11445, 16156, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11445, 24199, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11446, 24200, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11447, 24201, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11448, 24202, N'CCI_V2')
@@ -15965,6 +15973,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11532, 24287, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11533, 24288, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11534, 24289, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11535, 24290, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11536, 24291, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11537, 24292, N'CCI_V2')
@@ -15973,7 +15982,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11540, 24295, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11541, 24296, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11542, 24297, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11543, 24298, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11544, 24299, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11545, 24300, N'CCI_V2')
@@ -16066,6 +16074,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11626, 24382, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11627, 24383, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11628, 24384, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11629, 24385, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11630, 24386, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11631, 24387, N'CCI_V2')
@@ -16074,7 +16083,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11633, 24389, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11634, 16254, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11634, 24390, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11635, 24391, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11636, 24392, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11637, 24393, N'CCI_V2')
@@ -16167,6 +16175,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11720, 16358, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11720, 24476, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11721, 24477, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11722, 24478, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11723, 24479, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11724, 16358, N'C800_53_R4_71')
@@ -16175,7 +16184,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11726, 16359, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11726, 24482, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11727, 16359, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11727, 24483, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11728, 24484, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11729, 24485, N'CCI_V2')
@@ -16268,6 +16276,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11810, 24566, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11811, 24567, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11812, 24568, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11813, 24569, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11814, 24570, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11815, 24571, N'CCI_V2')
@@ -16276,7 +16285,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11818, 24574, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11819, 24575, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11820, 24576, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11821, 24577, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11822, 24578, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11823, 24579, N'CCI_V2')
@@ -16369,6 +16377,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11910, 24666, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11911, 24667, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11912, 24668, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11913, 24669, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11914, 24670, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11915, 24671, N'CCI_V2')
@@ -16377,7 +16386,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11918, 24674, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11919, 24675, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11920, 24676, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11921, 24677, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11922, 24678, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (11923, 24679, N'CCI_V2')
@@ -16470,6 +16478,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12010, 24766, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12011, 24767, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12012, 24768, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12013, 24769, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12014, 24770, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12015, 16615, N'C800_53_R4_71')
@@ -16478,7 +16487,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12017, 24773, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12018, 24774, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12019, 24775, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12020, 24776, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12021, 24777, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12022, 24778, N'CCI_V2')
@@ -16571,6 +16579,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12105, 24861, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12106, 24862, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12107, 24863, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12108, 24864, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12109, 24865, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12110, 24866, N'CCI_V2')
@@ -16579,7 +16588,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12113, 24869, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12114, 24870, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12115, 24871, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12116, 24872, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12117, 24873, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12118, 24874, N'CCI_V2')
@@ -16672,6 +16680,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12202, 24959, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12203, 24960, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12204, 24961, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12205, 24962, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12206, 24963, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12207, 16056, N'C800_53_R4_71')
@@ -16680,7 +16689,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12209, 24966, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12210, 16001, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12210, 24967, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12211, 24968, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12212, 24969, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12213, 24970, N'CCI_V2')
@@ -16773,6 +16781,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12280, 25038, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12281, 16004, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12281, 25039, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12282, 16004, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12282, 25040, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12283, 25041, N'CCI_V2')
@@ -16781,7 +16790,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12286, 25044, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12287, 25045, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12288, 16006, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12288, 25046, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12289, 16006, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12289, 25047, N'CCI_V2')
@@ -16874,6 +16882,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12358, 25118, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12359, 25119, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12360, 25120, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12361, 25121, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12362, 25122, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12363, 25123, N'CCI_V2')
@@ -16882,7 +16891,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12366, 25126, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12367, 25127, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12368, 25129, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12369, 25130, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12370, 25131, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12371, 25132, N'CCI_V2')
@@ -16975,6 +16983,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12450, 25214, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12451, 16113, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12451, 25215, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12452, 16115, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12452, 25216, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12453, 16115, N'C800_53_R4_71')
@@ -16983,7 +16992,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12455, 16117, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12455, 25219, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12456, 25220, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12457, 25221, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12458, 25222, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12459, 25223, N'CCI_V2')
@@ -17076,6 +17084,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12538, 25302, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12539, 16216, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12539, 25303, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12540, 16217, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12540, 25304, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12541, 25305, N'CCI_V2')
@@ -17084,7 +17093,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12544, 25308, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12545, 25310, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12546, 25311, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12547, 25312, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12548, 25313, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12549, 25314, N'CCI_V2')
@@ -17177,6 +17185,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12636, 25401, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12637, 25402, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12638, 25403, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12639, 25404, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12640, 25405, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12641, 25406, N'CCI_V2')
@@ -17185,7 +17194,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12644, 25409, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12645, 25410, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12646, 25411, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12647, 25412, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12648, 25413, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12649, 25414, N'CCI_V2')
@@ -17278,6 +17286,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12732, 25500, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12733, 25501, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12734, 25502, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12735, 25503, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12736, 25504, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12737, 25505, N'CCI_V2')
@@ -17286,7 +17295,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12740, 25509, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12741, 25510, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12742, 25511, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12743, 25512, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12744, 25513, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12745, 16358, N'C800_53_R4_71')
@@ -17379,6 +17387,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12824, 25594, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12825, 25595, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12826, 25596, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12827, 25597, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12828, 25598, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12829, 25599, N'CCI_V2')
@@ -17387,7 +17396,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12832, 25602, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12833, 25603, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12834, 25604, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12835, 16415, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12835, 25605, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12836, 25606, N'CCI_V2')
@@ -17480,6 +17488,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12897, 25675, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12898, 16522, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12898, 25676, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12899, 16522, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12899, 25677, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12900, 16523, N'C800_53_R4_71')
@@ -17488,7 +17497,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12901, 25679, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12902, 25680, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12903, 25681, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12904, 25682, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12905, 16525, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12905, 25683, N'CCI_V2')
@@ -17581,6 +17589,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12965, 16544, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12965, 25743, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12966, 16544, N'C800_53_R4_71')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12966, 25745, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12967, 16544, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12967, 25746, N'CCI_V2')
@@ -17589,7 +17598,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12969, 16544, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12969, 25748, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12970, 16544, N'C800_53_R4_71')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12970, 25749, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12971, 16545, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (12971, 25750, N'CCI_V2')
@@ -17682,6 +17690,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13022, 25801, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13023, 25802, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13024, 25803, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13025, 16557, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13025, 25804, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13026, 25805, N'CCI_V2')
@@ -17690,7 +17699,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13029, 25808, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13030, 25809, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13031, 25810, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13032, 25811, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13033, 25812, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13034, 25813, N'CCI_V2')
@@ -17783,6 +17791,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13101, 25883, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13102, 25884, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13103, 25885, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13104, 25886, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13105, 25887, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13106, 16648, N'C800_53_R4_71')
@@ -17791,7 +17800,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13107, 25889, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13108, 16650, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13108, 25890, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13109, 16650, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13109, 25891, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13110, 16648, N'C800_53_R4_71')
@@ -17884,6 +17892,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13187, 16599, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13187, 25971, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13188, 25972, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13189, 25973, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13190, 16603, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13190, 25974, N'CCI_V2')
@@ -17892,7 +17901,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13193, 25977, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13194, 25978, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13195, 25979, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13196, 25980, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13197, 25981, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13198, 25982, N'CCI_V2')
@@ -17985,6 +17993,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13273, 26063, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13274, 26064, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13275, 26065, N'CCI_V2')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13276, 26066, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13277, 26067, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13278, 26068, N'CCI_V2')
@@ -17993,7 +18002,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13280, 26070, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13281, 16723, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13281, 26071, N'CCI_V2')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13282, 16723, N'C800_53_R4_71')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13282, 26072, N'CCI_V2')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13283, 26073, N'CCI_V2')
@@ -18086,6 +18094,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13362, 26153, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13363, 26154, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13364, 26154, N'APTA_Rail_V1')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13365, 26155, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13366, 26156, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13367, 26157, N'APTA_Rail_V1')
@@ -18094,7 +18103,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13370, 26160, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13371, 26161, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13372, 26163, N'APTA_Rail_V1')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13373, 26164, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13374, 26165, N'APTA_Rail_V1')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13375, 26166, N'APTA_Rail_V1')
@@ -18176,7 +18184,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13812, 26511, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13813, 26512, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13814, 26513, N'PCIDSS')
-INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13815, 26514, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13816, 26515, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13817, 26516, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13818, 26517, N'PCIDSS')
@@ -18188,6 +18195,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13824, 26523, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13825, 26524, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13826, 26525, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13827, 26527, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13828, 26528, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13829, 26529, N'PCIDSS')
@@ -18195,7 +18203,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13831, 26531, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13832, 26532, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13833, 26533, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13834, 26534, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13835, 26535, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13836, 26536, N'PCIDSS')
@@ -18289,6 +18296,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13924, 26625, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13925, 26626, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13926, 26627, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13927, 26628, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13928, 26629, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13929, 26630, N'PCIDSS')
@@ -18296,7 +18304,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13931, 26632, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13932, 26633, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13933, 26634, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13934, 26635, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13935, 26636, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (13936, 26637, N'PCIDSS')
@@ -18390,6 +18397,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14024, 26725, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14025, 26726, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14026, 26727, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14027, 26728, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14028, 26729, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14029, 26731, N'PCIDSS')
@@ -18397,7 +18405,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14031, 26733, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14032, 26734, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14033, 26735, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14034, 26736, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14035, 26737, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14036, 26738, N'PCIDSS')
@@ -18491,6 +18498,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14124, 26829, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14125, 26830, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14126, 26831, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14127, 26833, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14128, 26834, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14129, 26835, N'PCIDSS')
@@ -18498,7 +18506,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14131, 26837, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14132, 26838, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14133, 26839, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14134, 26840, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14135, 26841, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14136, 26842, N'PCIDSS')
@@ -18563,6 +18570,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14195, 26901, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14196, 26902, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14197, 26903, N'PCIDSS')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14198, 27211, N'NERC_CIP_R6')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14198, 26904, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14199, 26905, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14200, 26906, N'PCIDSS')
@@ -18591,6 +18599,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14223, 26929, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14224, 26930, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14225, 26931, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14226, 26932, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14227, 26933, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14228, 26934, N'PCIDSS')
@@ -18599,7 +18608,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14231, 26937, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14232, 26938, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14233, 26939, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14234, 26940, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14235, 26941, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14236, 26942, N'PCIDSS')
@@ -18692,6 +18700,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14323, 27030, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14324, 27031, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14325, 27032, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14326, 27033, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14327, 27034, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14328, 27035, N'PCIDSS')
@@ -18700,7 +18709,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14331, 27038, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14332, 27039, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14333, 27040, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14334, 27041, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14335, 27042, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14336, 27043, N'PCIDSS')
@@ -18793,6 +18801,7 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14423, 27131, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14424, 27132, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14425, 27133, N'PCIDSS')
+GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14426, 27134, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14427, 27135, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14428, 27136, N'PCIDSS')
@@ -18801,7 +18810,6 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14431, 27139, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14432, 27140, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14433, 27141, N'PCIDSS')
-GO
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14434, 27142, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14435, 27143, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14436, 27144, N'PCIDSS')
@@ -18817,6 +18825,228 @@ INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14446, 27154, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14447, 27155, N'PCIDSS')
 INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14448, 27156, N'PCIDSS')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14449, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14450, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14451, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14452, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14453, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14454, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14455, 27157, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14456, 27158, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14457, 27159, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14458, 27160, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14459, 27161, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14460, 27161, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14461, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14462, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14463, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14464, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14465, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14466, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14467, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14468, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14469, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14470, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14471, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14472, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14473, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14474, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14475, 27162, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14476, 27163, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14477, 27163, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14478, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14479, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14480, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14481, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14482, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14483, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14484, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14485, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14486, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14487, 27169, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14488, 27170, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14489, 27171, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14490, 27172, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14491, 27172, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14492, 27172, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14493, 27172, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14494, 27172, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14495, 27173, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14496, 27174, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14497, 27175, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14498, 27176, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14499, 27177, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14500, 27177, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14501, 27177, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14502, 27177, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14503, 27178, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14504, 27179, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14505, 27181, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14506, 27182, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14507, 27183, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14508, 27184, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14509, 27185, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14510, 27186, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14511, 27187, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14512, 27188, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14513, 27189, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14514, 27190, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14515, 27191, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14516, 27193, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14517, 27194, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14518, 27195, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14519, 27197, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14520, 27198, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14521, 27199, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14522, 27200, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14523, 27201, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14524, 27202, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14525, 27203, N'NERC_CIP_R6')
+GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14526, 27204, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14527, 27205, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14528, 27206, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14529, 27207, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14530, 27208, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14531, 27209, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14532, 27210, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14533, 27212, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14534, 27214, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14535, 27215, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14536, 27216, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14537, 27217, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14538, 27218, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14539, 27219, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14540, 27220, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14541, 27221, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14542, 27222, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14543, 27223, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14544, 27224, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14545, 27225, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14546, 27226, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14547, 27227, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14548, 27227, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14549, 27227, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14550, 27227, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14551, 27228, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14552, 27228, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14553, 27228, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14554, 27229, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14555, 27230, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14556, 27231, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14557, 27232, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14558, 27233, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14559, 27235, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14560, 27236, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14561, 27236, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14562, 27236, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14563, 27237, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14564, 27238, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14565, 27239, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14566, 27240, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14567, 27241, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14568, 27242, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14569, 27243, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14570, 27244, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14571, 27245, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14572, 27246, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14573, 27247, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14574, 27248, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14575, 27249, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14576, 27249, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14577, 27249, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14578, 27249, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14579, 27250, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14580, 27250, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14581, 27250, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14582, 27251, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14583, 27252, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14584, 27253, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14585, 27254, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14586, 27255, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14587, 27256, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14588, 27257, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14589, 27258, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14590, 27259, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14591, 27260, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14592, 27261, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14593, 27262, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14594, 27262, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14595, 27262, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14596, 27262, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14597, 27263, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14598, 27263, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14599, 27263, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14600, 27264, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14601, 27265, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14602, 27265, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14603, 27265, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14604, 27265, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14605, 27265, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14606, 27265, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14607, 27266, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14608, 27267, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14609, 27268, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14610, 27268, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14611, 27268, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14612, 27268, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14613, 27269, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14614, 27269, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14615, 27269, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14616, 27270, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14617, 27271, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14618, 27272, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14619, 27273, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14620, 27274, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14621, 27274, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14622, 27275, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14623, 27276, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14624, 27277, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14625, 27278, N'NERC_CIP_R6')
+GO
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14626, 27279, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14627, 27280, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14628, 27281, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14629, 27282, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14630, 27283, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14631, 27284, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14632, 27285, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14633, 27286, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14634, 27287, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14635, 27288, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14636, 27289, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14637, 27290, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14638, 27291, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14639, 27292, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14640, 27293, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14641, 27294, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14642, 27295, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14643, 27295, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14644, 27295, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14645, 27295, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14646, 27296, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14647, 27297, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14648, 27297, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14649, 27297, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14650, 27297, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14651, 27297, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14652, 27298, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14653, 27299, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14654, 27300, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (14655, 27301, N'NERC_CIP_R6')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15450, 28163, N'C800_171')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15469, 28188, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15470, 28189, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15471, 28190, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15472, 28191, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15473, 28192, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15474, 28193, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15475, 28194, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15476, 28195, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15477, 28196, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15478, 28197, N'NCSF_V1')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15481, 28203, N'PCIDSS')
+INSERT [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Requirement_Id], [Set_Name]) VALUES (15482, 28205, N'PCIDSS')
 ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS]  WITH CHECK ADD  CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_QUESTION] FOREIGN KEY([Question_Id])
 REFERENCES [dbo].[NEW_QUESTION] ([Question_Id])
 ON DELETE CASCADE

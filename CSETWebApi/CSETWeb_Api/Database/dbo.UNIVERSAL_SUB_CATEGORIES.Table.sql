@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[UNIVERSAL_SUB_CATEGORIES]    Script Date: 6/28/2018 8:21:27 AM ******/
+/****** Object:  Table [dbo].[UNIVERSAL_SUB_CATEGORIES]    Script Date: 11/14/2018 3:57:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[UNIVERSAL_SUB_CATEGORIES](
 GO
 SET IDENTITY_INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ON 
 
-INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'', 1168)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Access Agreements', 1)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Access and Roles', 4214)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Access and Roles Policies and Procedures', 4215)
@@ -115,8 +114,8 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Business Process Definition', 432)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cabling', 59)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Card  Data Storage', 4225)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Card Data Storage', 4285)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cardholder Data Policies and Procedures', 4226)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cardholder Data Storage', 4224)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'CDA Accounts', 1567)
@@ -198,6 +197,8 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Asset Physical Access Controls', 1532)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Intrusion Incident Handling Policies and Procedures', 1608)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Intrusion Monitoring and Detection Policies and Procedures', 1607)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Security Plan', 4293)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Security Policies', 4294)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Security Program Manager', 444)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Security Response Team', 445)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Cyber Security Specialist', 446)
@@ -212,11 +213,12 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Data Quality and Integrity', 4019)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Data Recovery Capability', 1934)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Data Retention and Disposal', 1175)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Data Security', 5295)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Data Transmission Encryption', 4231)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Data Transmission Encryption Policies and Procedures', 4232)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Default Passwords and Accounts', 4229)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Defense-in-Depth', 102)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Defensive Strategy', 103)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Delivery and Removal', 1773)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Denial of Service Protection', 735)
@@ -315,9 +317,9 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Honeypots', 157)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Https', 3855)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'ICS/IT Cybersecurity Team', 473)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identification and Authentication', 708)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identification And Authentication (Non-Organizational Users)', 3794)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identification And Authentication (Organizational Users)', 3790)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identification and Authentication Policies and Procedures', 4240)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identification And Authentication Policy And Procedures', 3789)
@@ -325,6 +327,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identify and Respond to Threats', 1748)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identify Dependencies', 1758)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identify Security Vulnerabilities', 4239)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Identity Management, Authentication and Access Control', 5294)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'IDS/IPS', 164)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Improvements', 1620)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Handling', 166)
@@ -336,6 +339,8 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Assistance', 3797)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response General', 474)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Plan', 475)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Plan Review', 4287)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Plan Testing', 4288)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Policy And Procedures', 3795)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Support', 476)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Incident Response Testing', 170)
@@ -354,6 +359,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Leakage', 3994)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Output Filtering', 1790)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Protection Processes and Procedures', 1616)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Protection Program', 4289)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Security Architecture', 3808)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Security Coordination and Responsibilities', 1535)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Information Security Measures Of Performance', 3814)
@@ -412,13 +418,13 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Manage Asset Inventory', 1690)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Manage Changes to Assets', 1744)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Manage Dependency Risk', 1759)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Management Activities', 1745)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Management Policies', 481)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Management Practices', 1676)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Management Responsibility', 4151)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Mechanisms Supporting Itemized or Tiered Consent', 1180)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Media Access', 214)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Media Disposal', 482)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Media Distribution', 4243)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Media Downgrading', 720)
@@ -489,6 +495,8 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Personnel/Asset Tracking', 261)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Access', 1678)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Access Authorizations', 3803)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Access Control
+', 5297)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Access Control', 264)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Access Control to Control Systems and Control Networks', 1549)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Access Protection', 3858)
@@ -501,6 +509,8 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Security', 266)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Security Attachments', 4157)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Security Plan', 486)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Security Plan Review', 4291)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Security Plans', 4292)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Physical Separation for SCSZ Data Transmission', 4150)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Plan', 267)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Plan Contents', 268)
@@ -510,6 +520,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Plan Of Action And Milestones Process', 3812)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Planning', 3998)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Platform-Independent Applications', 4002)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Polices and Procedures and Documentation Requirements', 1948)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Policies & Procedures General', 759)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Policy', 270)
@@ -519,7 +530,6 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Portable Computing Devices', 4246)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Portable Devices', 274)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Portable Media', 275)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Portable/Mobile/Wireless', 763)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Position Risk Designation', 3820)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Power Equip/Cabling', 277)
@@ -546,6 +556,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Protect Card Payment Devices', 4249)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Protection of Audit Information', 487)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Protection of Information at Rest', 736)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Protective Technology', 5296)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Provenance Policy And Procedures', 1800)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Public Access Access Protections', 1569)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Public Key Infrastructure Certificates', 3832)
@@ -558,6 +569,9 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Re-Validate PII', 1170)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Real-time or Layered Notice', 1188)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Recover', 1680)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Recovery Plan', 4295)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Recovery Plan Review', 4296)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Recovery Plan Testing', 4297)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Recovery Plans', 1627)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Redress', 1182)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Reduce Cybersecurity Vulnerabilities', 1749)
@@ -579,7 +593,9 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Responsibility for Security of Cardholder Data', 4254)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Responsibility Vendor Product Management', 4164)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Assessment', 1776)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Assessment Identification', 4298)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Assessment Policy And Procedures', 3823)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Assessment Verification', 4299)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Based Assessment Consideration', 492)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Management', 303)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Risk Management Strategy', 493)
@@ -605,6 +621,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security - Inventory of Personally Identifiable Information', 4033)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security - Privacy Incident Response', 4034)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Alerts', 322)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Alerts, Advisories, And Directives', 3839)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Assessment and Authorization Policy and Procedures', 1770)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Assessments', 323)
@@ -620,7 +637,6 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Capabilities', 329)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Categorization', 494)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Compliance Validation', 4162)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Concept Of Operations', 4027)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Design and Operation of Cyber System', 1539)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Security Design of Cyber System', 1540)
@@ -682,6 +698,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Specific Plans', 499)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Sponsor Cybersecurity Program', 1765)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Supply Chain Protection', 500)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Supply Chain Risk Management', 5293)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Sys Asset Location', 364)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System and Communications Protection', 1679)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System And Communications Protection Policy And Procedures', 3830)
@@ -705,6 +722,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System Monitoring', 371)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System of Records Notices and Privacy Act Statements', 1189)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System Procurement Standards', 1538)
+GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System Restoration and Recovery', 1605)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System Security Plan', 372)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'System Use Notification', 373)
@@ -721,7 +739,6 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Testing, Training, and Monitoring', 725)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Thin Nodes', 380)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Third-Party Personnel Security', 3821)
-GO
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Third-Party Security', 383)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Threat and Vulnerability Management', 504)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Threat Awareness Program', 727)
@@ -734,6 +751,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Training  Requirements', 391)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Training Program', 4152)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Training Records', 393)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Transient Assets & Removable Media', 4300)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Transmission Confidentiality', 4009)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Transmission Confidentiality and Integrity', 1784)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Transmission Integrity', 394)
@@ -774,10 +792,12 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Visitor Control', 408)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Visitor Identification', 4272)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Visitor Records', 409)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Visitors', 4290)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'VLANs', 410)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Voice Over Internet Protocol', 3833)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'VoIP', 411)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'VPNs', 412)
+INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Vulnerability Assessment', 4301)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Vulnerability Scanning', 415)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Vulnerability Scans', 4274)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Water Damage Protection', 1570)
@@ -793,7 +813,7 @@ INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Su
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Wireless Security', 4165)
 INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id]) VALUES (N'Workstation and Host Specific Policies', 1572)
 SET IDENTITY_INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] OFF
-/****** Object:  Index [IX_UNIVERSAL_SUB_CATEGORIES]    Script Date: 6/28/2018 8:21:31 AM ******/
+/****** Object:  Index [IX_UNIVERSAL_SUB_CATEGORIES]    Script Date: 11/14/2018 3:57:31 PM ******/
 ALTER TABLE [dbo].[UNIVERSAL_SUB_CATEGORIES] ADD  CONSTRAINT [IX_UNIVERSAL_SUB_CATEGORIES] UNIQUE NONCLUSTERED 
 (
 	[Universal_Sub_Category_Id] ASC

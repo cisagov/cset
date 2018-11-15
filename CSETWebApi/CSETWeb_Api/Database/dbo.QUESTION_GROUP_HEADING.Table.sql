@@ -1,6 +1,6 @@
 USE [CSETWeb]
 GO
-/****** Object:  Table [dbo].[QUESTION_GROUP_HEADING]    Script Date: 6/28/2018 8:21:25 AM ******/
+/****** Object:  Table [dbo].[QUESTION_GROUP_HEADING]    Script Date: 11/14/2018 3:57:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,6 +89,7 @@ INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Uni
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'Securing the System', N'C13', 3, 45)
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'Security Assessment and Authorization', N'A9', 2, 71)
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'Software', N'N', 3, 47)
+INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'Supply Chain', N'Sup', 4, 82)
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'System and Communications Protection', N'A10', 2, 72)
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'System and Information Integrity', N'A11', 2, 73)
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'System and Services Acquisition', N'Y', 3, 48)
@@ -98,7 +99,7 @@ INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Uni
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'User Authentication', N'C14', 1, 52)
 INSERT [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading], [Std_Ref], [Universal_Weight], [Question_Group_Heading_Id]) VALUES (N'Vulnerability Assessment and Management', N'VA', 1, 78)
 SET IDENTITY_INSERT [dbo].[QUESTION_GROUP_HEADING] OFF
-/****** Object:  Index [IX_QUESTION_GROUP_HEADING_1]    Script Date: 6/28/2018 8:21:31 AM ******/
+/****** Object:  Index [IX_QUESTION_GROUP_HEADING_1]    Script Date: 11/14/2018 3:57:31 PM ******/
 ALTER TABLE [dbo].[QUESTION_GROUP_HEADING] ADD  CONSTRAINT [IX_QUESTION_GROUP_HEADING_1] UNIQUE NONCLUSTERED 
 (
 	[Question_Group_Heading_Id] ASC
