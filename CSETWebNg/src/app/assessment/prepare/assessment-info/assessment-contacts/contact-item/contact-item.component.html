@@ -29,10 +29,15 @@
         <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
       </select>
       <span style="white-space: nowrap">
-        <button type="button" class="btn btn-xs glyphicon glyphicon-pencil" (click)="editContact()"></button>
-        <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-check" (click)="openEmailDialog()" *ngIf="false"></button>
-        <button type="button" class="btn btn-xs btn-primary glyphicon glyphicon-envelope" (click)="openEmailDialog()" *ngIf="!auth.isLocal"></button>
-        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
+        <button type="button" class="btn btn-xs btn-secondary" (click)="editContact()">
+          <img src="./assets/images/icons/pencil.svg" style="height: 1.5rem;" />
+        </button>
+        <button type="button" class="btn btn-xs btn-primary" (click)="openEmailDialog()" *ngIf="!auth.isLocal">
+          <img src="./assets/images/icons/envelope.svg" style="height: 1.5rem;" />
+        </button>
+        <button type="button" class="btn btn-xs btn-danger" (click)="removeContact()">
+          <img src="./assets/images/icons/delete-forever.svg" style="height: 1.5rem;" />
+        </button>
       </span>
     </div>
   </ng-template>
