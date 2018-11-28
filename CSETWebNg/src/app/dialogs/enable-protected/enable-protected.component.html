@@ -32,7 +32,7 @@
       <span><label for="unlock">Please enter your unlock code</label>&nbsp;
         <input type=text name="discard" size="3" maxlength="3"> -
         <input type="text" name="unlock" id="unload" placeholder="Unlock Code" [(ngModel)]="unlockCode" style="width: 25%;">
-        <button class="ml-3 btn btn-default btn-primary" (click)="enableFeature()">Enable Feature</button>
+        <button class="ml-3 btn btn-primary" (click)="enableFeature()">Enable Feature</button>
       </span>
     </div>
     <table style="margin: 1em;">
@@ -49,6 +49,6 @@
     {{message}}
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
-    <button class="btn btn-default btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-secondary" (click)="close()">Close</button>
   </mat-dialog-actions>
 </div>

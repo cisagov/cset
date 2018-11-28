@@ -48,7 +48,7 @@
       </div>
       <div [class.display-none]="questionsSvc.isFilterEngaged()">
         <!-- this is the header answer block -->
-        <div class="btn-group answer-group" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
           <label class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'"
             (click)="setBlockAnswer('Y')">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio" autocomplete="off"
@@ -91,7 +91,7 @@
       </div>
 
       <div>
-        <div class="btn-group answer-group" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
           <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'" (click)="storeAnswer(q, 'Y')">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer === 'Y'">Yes
           </label>

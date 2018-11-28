@@ -56,7 +56,8 @@
       <div *ngFor="let s of cat.Standards" class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
           <div>
-            <input type="checkbox" id="{{s.Code}}" name="{{s.Code}}" (change)="submit(s, $event)" [checked]="s.Selected">
+            <input type="checkbox" id="{{s.Code}}" name="{{s.Code}}" class="mt-1"
+                (change)="submit(s, $event)" [checked]="s.Selected">
             <label for="{{s.Code}}" [class.recommended-standard]="s.Recommended">
               {{s.FullName}}
               <ng-template [ngIf]="s.Recommended">
@@ -64,7 +65,8 @@
               </ng-template>
             </label>
           </div>
-          <i class="glyphicon glyphicon-menu-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)"></i>
+          <!-- <i class="glyphicon glyphicon-menu-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)">V</i> -->
+          <mat-icon class="m-0 p-0 fs-medium-1 expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)">expand_more</mat-icon>
         </div>
         <div class="cyber-standard-description" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
           {{s.Description}}
