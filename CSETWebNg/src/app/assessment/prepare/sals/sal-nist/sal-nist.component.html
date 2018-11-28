@@ -133,21 +133,21 @@
             {{model.Type_Value}} : {{model.NIST_Number}}</label>
         </td>
         <td>
-          <a class="specialFactorsLink" *ngIf='model.Confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
+          <a class="special-factors-link" *ngIf='model.Confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
             (click)="changeSpecialFactor(model, 'C')">
             {{salsSvc.getDisplayLevel(model.Confidentiality_Value)}}
           </a>
           <ng-template #basicC>{{salsSvc.getDisplayLevel(model.Confidentiality_Value)}}</ng-template>
         </td>
         <td>
-          <a class="specialFactorsLink" *ngIf='model.Integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
+          <a class="special-factors-link" *ngIf='model.Integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
             (click)="changeSpecialFactor(model, 'I')">
             {{salsSvc.getDisplayLevel(model.Integrity_Value)}}
           </a>
           <ng-template #basicI>{{salsSvc.getDisplayLevel(model.Integrity_Value)}}</ng-template>
         </td>
         <td>
-          <a class="specialFactorsLink" *ngIf='model.Availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
+          <a class="special-factors-link" *ngIf='model.Availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
             (click)="changeSpecialFactor(model, 'A')">{{salsSvc.getDisplayLevel(model.Availability_Value)}}</a>
           <ng-template #basicA>
             {{salsSvc.getDisplayLevel(model.Availability_Value)}}

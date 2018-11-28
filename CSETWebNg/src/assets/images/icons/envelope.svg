@@ -1,4 +1,15 @@
 <?xml version="1.0" ?>
-<svg height="24px" version="1.1" viewBox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="miu" stroke="none" stroke-width="1"><g id="Artboard-1" transform="translate(-251.000000, -335.000000)"><g id="slice" transform="translate(215.000000, 119.000000)"/><path d="M273.292692,355 L252.71095,355 L252.71095,355 L260.041535,347.665728 L263,349.929598 L265.960528,347.664149 L273.292692,355 Z M274,354.293095 L274,341.512204 L274,341.512204 L266.761657,347.051112 L274,354.293095 Z M252,354.296739 L252,341.512204 L259.240407,347.052691 L252,354.296739 L252,354.296739 Z M274,340.253884 L274,339 L252,339 L252,340.253884 L263,348.68741 L274,340.253884 Z" fill="#fff" 
-    id="common-email-envelope-mail-glyph"/>
-</g></g></svg>
+<svg height="24px" version="1.1" viewBox="0 0 24 24" width="24px" 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" 
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title/>
+    <desc/>
+    <defs/>
+    <g fill="none" fill-rule="evenodd" id="miu" stroke="none" stroke-width="1">
+        <g id="Artboard-1" transform="translate(-251.000000, -335.000000)">
+            <g id="slice" transform="translate(215.000000, 119.000000)"/>
+            <path d="M273.292692,355 L252.71095,355 L252.71095,355 L260.041535,347.665728 L263,349.929598 L265.960528,347.664149 L273.292692,355 Z M274,354.293095 L274,341.512204 L274,341.512204 L266.761657,347.051112 L274,354.293095 Z M252,354.296739 L252,341.512204 L259.240407,347.052691 L252,354.296739 L252,354.296739 Z M274,340.253884 L274,339 L252,339 L252,340.253884 L263,348.68741 L274,340.253884 Z" fill="#fff" id="common-email-envelope-mail-glyph"/>
+        </g>
+    </g>
+</svg>

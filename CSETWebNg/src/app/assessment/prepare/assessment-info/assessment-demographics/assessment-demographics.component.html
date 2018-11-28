@@ -31,7 +31,7 @@
                 <option *ngFor="let sector of sectorsList" [value]="sector.SectorId">{{sector.SectorName}}</option>
             </select>
         </div>
-
+        
         <div class="form-group">
             <label for="industry">Industry</label>
             <select class="form-control" id="industry" name="industry" [(ngModel)]="demographicData.IndustryId"
