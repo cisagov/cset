@@ -31,13 +31,13 @@
                         Assessment</button>
                     <label *ngIf="authSvc.isLocal" class="m-0 c-gray-900 btn btn-secondary align-items-center flex-00a"
                         matTooltip="Import an assessment from an external CSET file. (.cset or .csetw)">
-                        <span class="mr-1 fs-base-6 glyphicon glyphicon-import"></span>
+                        <img src="./assets/images/icons/import.svg" style="height: 1.3rem;" class="mr-1" />
                         <label for="importFile" class="m-0">Import</label>
                         <input type="file" class="display-none" id="importFile" multiple accept=".cset, .csetw" (change)="importAssessmentFile($event)">
                     </label>
                     <label *ngIf="!authSvc.isLocal" class="m-0 btn btn-secondary align-items-center flex-00a"
-                        matTooltip="Import an assessment from an external CSET file. (.csetw)">
-                        <span class="mr-1 fs-base-6 glyphicon glyphicon-import"></span>
+                        matTooltip="Import an assessment from an external CSET file. (.csetw)">                        
+                        <img src="./assets/images/icons/import.svg" style="height: 1.3rem;" class="mr-1" />
                         <label for="importFile" class="m-0">Import</label>
                         <input type="file" class="display-none" id="importFile" multiple accept=".csetw" (change)="importAssessmentFile($event)">
                     </label>
@@ -85,7 +85,7 @@
                         <td>
                             <button class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="clickDownloadLink(assessment.AssessmentId)"
                                 matTooltip="Export a copy of this assessment to another location (.csetw).">
-                                <i class="mr-1 fs-base-6 glyphicon glyphicon-export"></i>
+                                <img src="./assets/images/icons/export.svg" style="height: 1.3rem;" class="mr-1" />
                                 <span class="icon-link-button-text-dark">Export</span>
                             </button>
                         </td>

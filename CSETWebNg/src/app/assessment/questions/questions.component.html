@@ -43,7 +43,7 @@
         </button>
       </div>
 
-      <div *ngIf="!browserIsIE()">
+      <div *ngIf="!browserIsIE()" class="mt-2">
         <input type="checkbox" id="auto_load_supp" name="auto_load_supp" [(ngModel)]="autoLoadSupplementalInfo"
           (change)="persistAutoLoadSetting()">
         <label for="auto_load_supp" style="margin: 0 5px;">Auto-load Supplemental</label>

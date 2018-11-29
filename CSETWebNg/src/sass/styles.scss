@@ -838,7 +838,7 @@ ul.nav-tabs li.active button {
   color: $secondary-color;
   fill: $secondary-color;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: auto;
 }
 
@@ -867,7 +867,7 @@ ul.nav-tabs li button {
   color: $gray-100;
   fill: $gray-100;
   font-weight: 300;
-  font-size: 1.0rem;
+  font-size: 1.2rem;
 }
 
 ul.nav-tabs li button:focus,
@@ -2048,6 +2048,10 @@ table.assessment-documents th {
   margin-bottom: $spacer * .5 !important;
 }
 
+.mb-2r {
+  margin-bottom: 2rem !important;
+}
+
 .mb-3 {
   margin-bottom: $spacer * 1 !important;
 }
@@ -2268,9 +2272,18 @@ table.assessment-documents th {
   width: 100% !important;
 }
 
+.w-a {
+  width: auto !important;
+}
+
 .h-100 {
   height: 100% !important;
 }
+
+.h-a {
+  height: auto !important;
+}
+
 
 // Flex Box Styles
 /////////////////////////////////////////////
