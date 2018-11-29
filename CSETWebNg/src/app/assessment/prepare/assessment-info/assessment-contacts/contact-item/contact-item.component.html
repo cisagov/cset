@@ -30,18 +30,18 @@
       </select>
       <span style="white-space: nowrap">
         <button type="button" class="btn btn-xs btn-secondary" (click)="editContact()">
-          <img src="./assets/images/icons/pencil.svg" style="height: 1.5rem;" />
+          <img src="./assets/images/icons/pencil.svg" style="height: 1.0rem;" />
         </button>
         <button type="button" class="btn btn-xs btn-primary" (click)="openEmailDialog()" *ngIf="!auth.isLocal">
-          <img src="./assets/images/icons/envelope.svg" style="height: 1.5rem;" />
+          <img src="./assets/images/icons/envelope.svg" style="height: 1.0rem;" />
         </button>
         <button type="button" class="btn btn-xs btn-danger" (click)="removeContact()">
-          <img src="./assets/images/icons/delete-forever.svg" style="height: 1.5rem;" />
+          <img src="./assets/images/icons/delete-forever.svg" style="height: 1.0rem;" />
         </button>
       </span>
     </div>
   </ng-template>
-  <span class="glyphicon glyphicon-user" *ngIf="contact.IsFirst"></span>
+  <img src="./assets/images/icons/user.svg" style="height: 1.0rem;" *ngIf="contact.IsFirst" />
   <div *ngIf="!showControls()"> {{contact.AssessmentRole}} </div>
 
 
@@ -79,8 +79,12 @@
       </span>
       <span *ngIf="!showControls()">{{contact.AssessmentRole}}</span>
       <span style="white-space: nowrap">
-        <button type="submit" class="btn btn-xs btn-success glyphicon glyphicon-save"></button>
-        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
+        <button type="submit" class="btn btn-xs btn-success">
+          <img src="./assets/images/icons/save-arrow.svg" style="height: 1.0rem;" />
+        </button>
+        <button type="button" class="btn btn-xs btn-danger" (click)="removeContact()">
+          <img src="./assets/images/icons/delete-forever.svg" style="height: 1.0rem;" />
+        </button>
       </span>
 
       <div *ngIf="f.submitted && !fName.valid" class="alert alert-danger">First Name is required</div>

@@ -73,18 +73,18 @@ export class AppComponent implements OnInit {
     }
 
     // initialize footer behavior
-    $(document).click(function (e) {
-      if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("in")) {
+    $(document).click(function (e) {    
+      if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("show")) {
         $('#collapseFooter').collapse('toggle');
       }
     });
 
-    $('#collapseFooter').on('shown.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
+    $(document).on('shown.bs.collapse', '#collapseFooter', function () {
+      $("#footerExpander").addClass("expand-flip");
     });
 
-    $('#collapseFooter').on('hidden.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
+    $(document).on('hidden.bs.collapse', '#collapseFooter', function () {
+      $("#footerExpander").removeClass("expand-flip");
     });
 
     this.setupShortCutKeys();

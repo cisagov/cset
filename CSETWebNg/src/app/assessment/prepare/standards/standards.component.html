@@ -31,8 +31,9 @@
       </p>
       <div class="d-flex flex-wrap justify-content-start align-items-start flex-00a">
         <button class="btn btn-link p-0 mr-1" (click)="doBasicAssessment()">I want to do a basic assessment instead</button>
-        <i class="c-secondary glyphicon glyphicon-question-sign fs-base-8" matTooltip="Start an assessment with a basic standard selected"
-          matTooltipPosition="below"></i>
+          <img src="./assets/images/icons/question-mark-circle.svg" class="fs-base-8" style="height: 1.5rem"  
+            matTooltip="Start an assessment with a basic standard selected"
+            matTooltipPosition="below" />
       </div>
     </div>
 
@@ -65,8 +66,7 @@
               </ng-template>
             </label>
           </div>
-          <!-- <i class="glyphicon glyphicon-menu-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)">V</i> -->
-          <mat-icon class="m-0 p-0 fs-medium-1 expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)">expand_more</mat-icon>
+          <img src="./assets/images/icons/menu-down.svg" style="height: .6rem;" class="expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)" />
         </div>
         <div class="cyber-standard-description" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
           {{s.Description}}
