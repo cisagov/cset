@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="contact-list-item d-flex align-items-center flex-00a">
   <ng-template #contact_display [ngIf]="editMode">
     <div>{{contact.FirstName}} {{contact.LastName}}</div>
@@ -29,8 +29,10 @@
         <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
       </select>
       <span style="white-space: nowrap">
-        <button type="button" class="btn btn-xs btn-secondary" (click)="editContact()">
-          <img src="./assets/images/icons/pencil.svg" style="height: 1.0rem;" />
+        <button type="button" class="btn btn-xs btn-secondary" (click)="editContact()">          
+          <svg class="h-1r w-a" height="36" width="36" viewBox="0 0 36 36">
+            <path d="m33.588284,7.388284l-2.932,2.944l-5.135,-5.129l2.932,-2.947c0.495,-0.494 1.281,-0.507 1.759,-0.029l3.407,3.403c0.48,0.479 0.465,1.264 -0.031,1.758m-28.913,25.094l-1.498,-1.509l1.429,-4.569l2.344,2.343l2.372,2.37l-4.647,1.365zm29.949,-27.902l-3.403,-3.402c-0.495,-0.496 -1.157,-0.77 -1.86,-0.77c-0.717,0 -1.398,0.282 -1.913,0.799l-2.24,2.239l0,-0.001l-21.431,21.464l-3.369,10.499l10.425,-3.204l20.515,-20.524l3.249,-3.243c0.523,-0.524 0.811,-1.22 0.811,-1.958c-0.002,-0.72 -0.28,-1.395 -0.784,-1.899" />
+          </svg>
         </button>
         <button type="button" class="btn btn-xs btn-primary" (click)="openEmailDialog()" *ngIf="!auth.isLocal">
           <img src="./assets/images/icons/envelope.svg" style="height: 1.0rem;" />

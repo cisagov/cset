@@ -373,7 +373,8 @@ td.tint2 {
     padding-bottom: 1em;
 }
 
-@media print{
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-}
+// Angular 7 will not compile with this present
+// @media print{
+//     -webkit-print-color-adjust: exact;
+//     print-color-adjust: exact;
+// }

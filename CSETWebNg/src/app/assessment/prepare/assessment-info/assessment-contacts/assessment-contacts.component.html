@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div *ngIf="contacts">
   <h3>Assessment Contacts</h3>
   <div class="list-group">
@@ -27,8 +27,17 @@
       (edit)="editContact(contact)" (create)="createContact(contact)" (remove)="removeContact(contact, i)">
     </app-contact-item>
     <span class="btn-group" *ngIf="showControls()">
-      <button class="btn btn-group glyphicon-plus" (click)="newContact()" [disabled]="adding==1" > &nbsp;Add Contact</button>
-      <button *ngIf="false" style="border-left:1px solid black" class="btn btn-group glyphicon-envelope" (click)="openEmailDialog()">&nbsp;Email Contacts</button>
+      <button class="btn btn-secondary btn-group" (click)="newContact()" [disabled]="adding==1">
+        <svg class="h-1r w-a mt-1 mr-2" width="36" height="36" viewBox="0 0 36 36">
+          <g transform="matrix(0.35222834 0 0 0.35222834 -19.30915 -30.414886)">
+            <rect y="127.1" x="54.8" height="20.4" width="102.4" stroke-width="0.3" />
+            <rect y="86.2" x="95.7" height="102.3" width="20.8" stroke-width="0.2" />
+          </g>
+        </svg>
+        Add Contact
+      </button>
+      <button *ngIf="false" style="border-left:1px solid black" class="btn btn-group glyphicon-envelope" (click)="openEmailDialog()">&nbsp;Email
+        Contacts</button>
     </span>
     <div *ngIf="!showControls()" style="padding-left: 5%;" class="text-info small">
       <p>You are not authorized to make changes to the contacts on this assessment.</p>
@@ -36,4 +45,3 @@
     </div>
   </div>
 </div>
-
