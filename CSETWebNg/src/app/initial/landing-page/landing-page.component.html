@@ -57,7 +57,7 @@
                     <div class="spinner-size-50"></div>
                 </div>
             </div>
-            <div *ngIf="sortedAssessments?.length > 0" class="mb-4 d-flex flex-column flex-11a oy-auto height-0 ">
+            <div *ngIf="sortedAssessments?.length > 0" class="mb-4 d-flex flex-column flex-11a oy-auto h-0 ">
                 <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary">
                     <th mat-sort-header="assessment">Assessment Name</th>
                     <th mat-sort-header="date" style="width:15%;">Last Modified</th>

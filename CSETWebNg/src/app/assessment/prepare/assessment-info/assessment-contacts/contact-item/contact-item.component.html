@@ -29,10 +29,10 @@
         <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
       </select>
       <span style="white-space: nowrap">
-        <button type="button" class="btn btn-xs glyphicon glyphicon-pencil" (click)="editContact()"></button>
-        <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-check" (click)="openEmailDialog()" *ngIf="false"></button>
-        <button type="button" class="btn btn-xs btn-primary glyphicon glyphicon-envelope" (click)="openEmailDialog()" *ngIf="!auth.isLocal"></button>
-        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
+        <button type="button" class="btn btn-sm glyphicon glyphicon-pencil" (click)="editContact()"></button>
+        <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-check" (click)="openEmailDialog()" *ngIf="false"></button>
+        <button type="button" class="btn btn-sm btn-primary glyphicon glyphicon-envelope" (click)="openEmailDialog()" *ngIf="!auth.isLocal"></button>
+        <button type="button" class="btn btn-sm btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
       </span>
     </div>
   </ng-template>
@@ -74,8 +74,8 @@
       </span>
       <span *ngIf="!showControls()">{{contact.AssessmentRole}}</span>
       <span style="white-space: nowrap">
-        <button type="submit" class="btn btn-xs btn-success glyphicon glyphicon-save"></button>
-        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
+        <button type="submit" class="btn btn-sm btn-success glyphicon glyphicon-save"></button>
+        <button type="button" class="btn btn-sm btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
       </span>
 
       <div *ngIf="f.submitted && !fName.valid" class="alert alert-danger">First Name is required</div>

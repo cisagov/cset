@@ -23,7 +23,7 @@
 <h3>Demographics</h3>
 <form>
     <div class="row" style="margin: 0 0px">
-        <div class="form-group">
+        <div class="form-control">
             <label for="sector">Sector</label>
             <select class="form-control" id="sector" name="sector" (change)="onSelectSector($event.target.value)"
                 [(ngModel)]="demographicData.SectorId">
@@ -32,7 +32,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-control">
             <label for="industry">Industry</label>
             <select class="form-control" id="industry" name="industry" [(ngModel)]="demographicData.IndustryId"
                 (change)="update($event)">
@@ -41,7 +41,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-control">
             <div class="d-flex justify-content-between align-items-start flex-11a">
                 <div class="d-flex flex-column justify-content-start align-items-start flex-11a">
                     <label for="assetValue">What is the gross value of the asset you are trying to protect?</label>

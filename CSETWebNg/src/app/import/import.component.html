@@ -33,8 +33,8 @@
                                 <h5>{{set.Name}}</h5>
                                 <div class="d-flex mt-2">
                                         <span class="flex-11a">
-                                                <button (click)="clickXMLLink(set.SetName)" class="btn btn-default mr-1">XML</button>
-                                                <button (click)="clickJSONLink(set.SetName)" class="btn btn-default">JSON</button>
+                                                <button (click)="clickXMLLink(set.SetName)" class="btn btn-secondary mr-1">XML</button>
+                                                <button (click)="clickJSONLink(set.SetName)" class="btn btn-secondary">JSON</button>
                                             </span>
                                         <span class="flex-01a">
                                                 <button (click)="loadJSONLink(set.SetName)" class="btn btn-success">Load to editor</button>
@@ -75,14 +75,14 @@
                     </div>
                         <h4 class="d-flex" style="align-items:center">Module Code
                             <div class="btn-group ml-3 flex-11a" role="group" aria-label="...">
-                                <button (click)="switchToJson()" type="button" class="btn btn-default" [ngClass]="{'active': this.lang=='json'}">JSON</button>
-                                <button (click)="switchToXml()" type="button" class="btn btn-default" [ngClass]="{'active': this.lang=='xml'}">XML</button>
+                                <button (click)="switchToJson()" type="button" class="btn btn-secondary" [ngClass]="{'active': this.lang=='json'}">JSON</button>
+                                <button (click)="switchToXml()" type="button" class="btn btn-secondary" [ngClass]="{'active': this.lang=='xml'}">XML</button>
                             </div>
 
                             <span class="flex-01a" style="font-size:12px;font-weight:normal;display:inline-block">
                                 Schema: <a style="font-size:12px;font-weight:normal;" role="button" (click)="getXSD()">XML</a> | <a style="font-size:12px;font-weight:normal;" role="button" (click)="getJsonSchema()">JSON</a>
                             </span>
-                            <button class="btn btn-default flex-01a ml-3" type="button" (click)="this.fullScreen()">
+                            <button class="btn btn-secondary flex-01a ml-3" type="button" (click)="this.fullScreen()">
                                 <span class="glyphicon" [ngClass]="{'glyphicon-resize-small':getFullScreen(), 'glyphicon-resize-full':!getFullScreen()}"></span>
                             </button>
                         </h4>
@@ -154,7 +154,7 @@
                                             [(ngModel)]="this.items[item.file.name].shortName" required /></td>
 
                                     <td nowrap  style="vertical-align:middle" >
-                                        <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()" *ngIf="!item.isUploading">
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()" *ngIf="!item.isUploading">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </td>

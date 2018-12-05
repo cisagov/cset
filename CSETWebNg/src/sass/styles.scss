@@ -90,7 +90,7 @@ label[required]::after {
   width: 300px;
   height: 300px;
   z-index: -1;
-  bottom: 50px;
+  bottom: 80px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -115,13 +115,29 @@ label[required]::after {
 }
 
 /* --- footer --- */
-.footer {
-  flex-shrink: 0;
-}
+// .footer {
+//   flex-shrink: 0;
+// }
 
 /* -- footer styling -- */
-.footer a {
-  cursor: pointer;
+// .footer a {
+//   cursor: pointer;
+// }
+
+// Accordion / Footer
+///////////////////////////////////////////////////////////////////////
+.footer .card {
+  border: none;
+  flex: 1 1 auto;
+}
+.footer .card-header {
+  padding: 0rem;
+}
+.footer .card-body {
+  padding: 0rem;
+}
+.footer .btn-link {
+  color: $white;
 }
 
 .footer-section-1 {
@@ -146,6 +162,14 @@ label[required]::after {
 .footer-section-2 a {
   color: $gray-50;
 }
+
+.footer .bg-primary {
+  background-color: $primary-900 !important;
+}
+.footer .card-header:first-child {
+  border-radius: 0rem;
+}
+
 
 .f1-head {
   margin: .5rem 0;
@@ -328,7 +352,7 @@ table.td-align-top td {
 }
 
 .btn.disabled.btn-primary,
-.btn[disabled].btn-primary {
+.btn:disabled.btn-primary {
   cursor: not-allowed;
   box-shadow: none;
   opacity: 1;
@@ -502,8 +526,8 @@ table.td-align-top td {
   color: $primary-color;
 }
 
-.btn-level:not([disabled]):not(.disabled).active,
-.btn-level:not([disabled]):not(.disabled):active,
+.btn-level:not(.disabled).active,
+.btn-level:not(.disabled):active,
 .show > .btn-level.dropdown-toggle {
   background-color: $secondary-color;
   color: $white;
@@ -788,6 +812,12 @@ th.data-table {
 }
 
 /* --- Navigation --- */
+
+.navbar-toggler-menu-icon:before {
+  font-family: "Material Icons";
+  content: '\e5d2';
+}
+
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:focus {
   background-color: $primary-450;
@@ -898,10 +928,6 @@ ul.nav-tabs li button > svg {
   padding: 5px;
 }
 
-.navbar a {
-  color: $white;
-}
-
 .navbar-toggle {
   padding: 5px;
 }
@@ -927,7 +953,7 @@ ul.nav-tabs li button > svg {
 .navbar .navbar-nav > li > a:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .navbar-brand {
@@ -981,7 +1007,7 @@ ul.mat-tree-node {
 
 // Previous app.component Styles moved to here
 //////////////////////////////////////////////////////////////////////////////////////////
-.help-block {
+.form-text {
   font-size: 12px;
 }
 
@@ -1848,6 +1874,13 @@ table.assessment-documents th {
 }
 
 
+// Status Create
+///////////////////////////////////////////////////////////////////////
+.status-create-upload-progress {
+  width:50%;
+  background-color: $secondary-color;
+}
+
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -1858,13 +1891,48 @@ table.assessment-documents th {
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
+
+// Bootstrap Overrides
+///////////////////////////////////////////////////////////////////////
+
+.no-gutters {
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
 
 
 
 // Atomic Styles
 //////////////////////////////////////////////////////////////////////////////////////////
-.height-0 {
+
+.h-0 {
   height: 0;
 }
 
@@ -1908,468 +1976,33 @@ table.assessment-documents th {
   border-radius: 0;
 }
 
-// Default Margin and Padding
-/////////////////////////////////////////////
-.ml-25px {
-  margin-left: 25px;
-}
-
-.m-0 {
-  margin: $spacer * 0 !important;
-}
-
-.m-1 {
-  margin: $spacer * .25 !important;
-}
-
-.m-2 {
-  margin: $spacer * .5 !important;
-}
-
-.m-3 {
-  margin: $spacer * 1 !important;
-}
-
-.m-4 {
-  margin: $spacer * 1.5 !important;
-}
-
-.m-5 {
-  margin: $spacer * 3 !important;
-}
-
-.ml-0 {
-  margin-left: $spacer * 0 !important;
-}
-
-.ml-1 {
-  margin-left: $spacer * .25 !important;
-}
-
-.ml-2 {
-  margin-left: $spacer * .5 !important;
-}
-
-.ml-3 {
-  margin-left: $spacer * 1 !important;
-}
-
-.ml-4 {
-  margin-left: $spacer * 1.5 !important;
-}
-
-.ml-5 {
-  margin-left: $spacer * 3 !important;
-}
-
-.mr-0 {
-  margin-right: $spacer * 0 !important;
-}
-
-.mr-1 {
-  margin-right: $spacer * .25 !important;
-}
-
-.mr-2 {
-  margin-right: $spacer * .5 !important;
-}
-
-.mr-3 {
-  margin-right: $spacer * 1 !important;
-}
-
-.mr-4 {
-  margin-right: $spacer * 1.5 !important;
-}
-
-.mr-5 {
-  margin-right: $spacer * 3 !important;
-}
-
-.mx-1 {
-  margin-right: $spacer * .25 !important;
-  margin-left: $spacer * .25 !important;
-}
-
-.mx-2 {
-  margin-right: $spacer * .5 !important;
-  margin-left: $spacer * .5 !important;
-}
-
-.mx-3 {
-  margin-right: $spacer * 1 !important;
-  margin-left: $spacer * 1 !important;
-}
-
-.mx-4 {
-  margin-right: $spacer * 1.5 !important;
-  margin-left: $spacer * 1.5 !important;
-}
-
-.mx-5 {
-  margin-right: $spacer * 3 !important;
-  margin-left: $spacer * 3 !important;
-}
-
-.mt-0 {
-  margin-top: $spacer * 0 !important;
-}
-
-.mt-1 {
-  margin-top: $spacer * .25 !important;
-}
-
-.mt-2 {
-  margin-top: $spacer * .5 !important;
-}
-
-.mt-3 {
-  margin-top: $spacer * 1 !important;
-}
-
-.mt-4 {
-  margin-top: $spacer * 1.5 !important;
-}
-
-.mt-5 {
-  margin-top: $spacer * 3 !important;
-}
-
-.mb-0 {
-  margin-bottom: $spacer * 0 !important;
-}
-
-.mb-1 {
-  margin-bottom: $spacer * .25 !important;
-}
-
-.mb-2 {
-  margin-bottom: $spacer * .5 !important;
-}
-
-.mb-3 {
-  margin-bottom: $spacer * 1 !important;
-}
-
-.mb-4 {
-  margin-bottom: $spacer * 1.5 !important;
-}
-
-.mb-5 {
-  margin-bottom: $spacer * 3 !important;
-}
-
-.my-0 {
-  margin-top: $spacer * 0 !important;
-  margin-bottom: $spacer * 0 !important;
-}
-
-.my-1 {
-  margin-top: $spacer * .25 !important;
-  margin-bottom: $spacer * .25 !important;
-}
 
-.my-2 {
-  margin-top: $spacer * .5 !important;
-  margin-bottom: $spacer * .5 !important;
+// Material Icons
+//////////////////////////////////////////////////////
+.m-chevron-down::before {
+  content: '\e5cf';
 }
-
-.my-3 {
-  margin-top: $spacer * 1 !important;
-  margin-bottom: $spacer * 1 !important;
-}
-
-.my-4 {
-  margin-top: $spacer * 1.5 !important;
-  margin-bottom: $spacer * 1.5 !important;
-}
-
-.my-5 {
-  margin-top: $spacer * 3 !important;
-  margin-bottom: $spacer * 3 !important;
-}
-
-.p-0 {
-  padding: $spacer * 0 !important;
-}
-
-.p-1 {
-  padding: $spacer * .25 !important;
-}
-
-.p-2 {
-  padding: $spacer * .5 !important;
-}
-
-.p-3 {
-  padding: $spacer * 1 !important;
-}
-
-.p-4 {
-  padding: $spacer * 1.5 !important;
-}
-
-.p-5 {
-  padding: $spacer * 3 !important;
-}
-
-.pl-0 {
-  padding-left: $spacer * 0 !important;
-}
-
-.pl-1 {
-  padding-left: $spacer * .25 !important;
-}
-
-.pl-2 {
-  padding-left: $spacer * .5 !important;
-}
-
-.pl-3 {
-  padding-left: $spacer * 1 !important;
-}
-
-.pl-4 {
-  padding-left: $spacer * 1.5 !important;
-}
-
-.pl-5 {
-  padding-left: $spacer * 3 !important;
-}
-
-.pr-0 {
-  padding-right: $spacer * 0 !important;
-}
-
-.pr-1 {
-  padding-right: $spacer * .25 !important;
-}
-
-.pr-2 {
-  padding-right: $spacer * .5 !important;
-}
-
-.pr-3 {
-  padding-right: $spacer * 1 !important;
-}
-
-.pr-4 {
-  padding-right: $spacer * 1.5 !important;
-}
-
-.pr-5 {
-  padding-right: $spacer * 3 !important;
-}
-
-.px-1 {
-  padding-right: $spacer * .25 !important;
-  padding-left: $spacer * .25 !important;
-}
-
-.px-2 {
-  padding-right: $spacer * .5 !important;
-  padding-left: $spacer * .5 !important;
-}
-
-.px-3 {
-  padding-right: $spacer * 1 !important;
-  padding-left: $spacer * 1 !important;
-}
-
-.px-4 {
-  padding-right: $spacer * 1.5 !important;
-  padding-left: $spacer * 1.5 !important;
-}
-
-.px-5 {
-  padding-right: $spacer * 3 !important;
-  padding-left: $spacer * 3 !important;
-}
-
-.pt-0 {
-  padding-top: $spacer * 0 !important;
-}
-
-.pt-1 {
-  padding-top: $spacer * .25 !important;
-}
-
-.pt-2 {
-  padding-top: $spacer * .5 !important;
+.m-chevron-up::before {
+  content: '\e5ce';
 }
-
-.pt-3 {
-  padding-top: $spacer * 1 !important;
-}
-
-.pt-4 {
-  padding-top: $spacer * 1.5 !important;
-}
-
-.pt-5 {
-  padding-top: $spacer * 3 !important;
-}
-
-.pb-0 {
-  padding-bottom: $spacer * 0 !important;
-}
-
-.pb-1 {
-  padding-bottom: $spacer * .25 !important;
+.m-build::before {
+  content: '\e869';
 }
 
-.pb-2 {
-  padding-bottom: $spacer * .5 !important;
-}
-
-.pb-3 {
-  padding-bottom: $spacer * 1 !important;
-}
 
-.pb-4 {
-  padding-bottom: $spacer * 1.5 !important;
-}
 
-.pb-5 {
-  padding-bottom: $spacer * 3 !important;
-}
 
-.py-1 {
-  padding-top: $spacer * .25 !important;
-  padding-bottom: $spacer * .25 !important;
-}
 
-.py-2 {
-  padding-top: $spacer * .5 !important;
-  padding-bottom: $spacer * .5 !important;
-}
 
-.py-3 {
-  padding-top: $spacer * 1 !important;
-  padding-bottom: $spacer * 1 !important;
-}
 
-.py-4 {
-  padding-top: $spacer * 1.5 !important;
-  padding-bottom: $spacer * 1.5 !important;
-}
 
-.py-5 {
-  padding-top: $spacer * 3 !important;
-  padding-bottom: $spacer * 3 !important;
-}
 
 .b-none {
   border: none;
 }
 
-.w-100 {
-  width: 100% !important;
-}
 
-.h-100 {
-  height: 100% !important;
-}
-
-// Flex Box Styles
-/////////////////////////////////////////////
-.d-flex {
-  display: flex !important;
-}
-
-.flex-row {
-  flex-direction: row !important;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse !important;
-}
-
-.flex-column {
-  flex-direction: column !important;
-}
-
-.flex-column-reverse {
-  flex-direction: column-reverse !important;
-}
-
-.flex-wrap {
-  flex-wrap: wrap !important;
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap !important;
-}
-
-.justify-content-start {
-  justify-content: flex-start !important;
-}
-
-.justify-content-end {
-  justify-content: flex-end !important;
-}
-
-.justify-content-center {
-  justify-content: center !important;
-}
-
-.justify-content-between {
-  justify-content: space-between !important;
-}
-
-.justify-content-around {
-  justify-content: space-around !important;
-}
-
-.justify-content-evenly {
-  justify-content: space-evenly !important;
-}
-
-.justify-content-stretch {
-  justify-content: stretch !important;
-}
-
-
-.align-items-start {
-  align-items: flex-start !important;
-}
-
-.align-items-end {
-  align-items: flex-end !important;
-}
-
-.align-items-center {
-  align-items: center !important;
-}
-
-.align-items-baseline {
-  align-items: baseline !important;
-}
-
-.align-items-stretch {
-  align-items: stretch !important;
-}
-
-.align-content-start {
-  align-content: flex-start !important;
-}
-
-.align-content-end {
-  align-content: flex-end !important;
-}
-
-.align-content-center {
-  align-content: center !important;
-}
-
-.align-content-between {
-  align-content: space-between !important;
-}
-
-.align-content-around {
-  align-content: space-around !important;
-}
-
+// Flex
 .flex-11a {
   flex: 1 1 auto !important;
 }
@@ -2486,6 +2119,14 @@ table.assessment-documents th {
 
 .bgc-gray-100 {
   background-color: $gray-100;
+}
+
+.c-gray-150 {
+  color: $gray-150;
+}
+
+.bgc-gray-150 {
+  background-color: $gray-150;
 }
 
 .c-gray-200 {

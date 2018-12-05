@@ -51,6 +51,7 @@ declare var $: any;
 export class AppComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
+  isFooterVisible: boolean = false;
 
   constructor(
     public auth: AuthenticationService,
@@ -73,19 +74,19 @@ export class AppComponent implements OnInit {
     }
 
     // initialize footer behavior
-    $(document).click(function (e) {
-      if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("in")) {
-        $('#collapseFooter').collapse('toggle');
-      }
-    });
+    // $(document).click(function (e) {
+    //   if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("in")) {
+    //     $('#collapseFooter').collapse('toggle');
+    //   }
+    // });
 
-    $('#collapseFooter').on('shown.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
-    });
+    // $('#collapseFooter').on('shown.bs.collapse', function () {
+    //   $("#footerExpander").removeClass("m-chevron-up").addClass("m-chevron-down");
+    // });
 
-    $('#collapseFooter').on('hidden.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
-    });
+    // $('#collapseFooter').on('hidden.bs.collapse', function () {
+    //   $("#footerExpander").removeClass("m-chevron-down").addClass("m-chevron-up");
+    // });
 
     this.setupShortCutKeys();
   }
@@ -285,5 +286,9 @@ export class AppComponent implements OnInit {
     }
 
     return this.router.url !== '/resource-library';
+  }
+
+  toggleFooter() {
+    this.isFooterVisible = !this.isFooterVisible;
   }
 }

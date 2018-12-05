@@ -24,12 +24,12 @@
 <form #f="ngForm">
     <div>
         <div>
-            <div class="form-group p-0 col-md-6">
+            <div class="form-control p-0 col-md-6">
                 <label required for="name">Assessment Name</label>
                 <input type="text" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
                     (ngModelChange)="assessment.AssessmentName" (change)="update($event)">
             </div>
-            <div class="form-group p-0 col-md-6 pl-2">
+            <div class="form-control p-0 col-md-6 pl-2">
                 <label for="date">Assessment Date</label>
                 <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.AssessmentDate"
                     [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()" (ngModelChange)="update($event)">
@@ -37,17 +37,17 @@
             </div>
         </div>
         <div>
-            <div class="form-group p-0 col-md-12">
+            <div class="form-control p-0 col-md-12">
                 <label for="facility">Facility Name</label>
                 <input type="text" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.FacilityName" (change)="update($event)">
             </div>
         </div>
         <div>
-            <div class="form-group p-0 col-md-6">
+            <div class="form-control p-0 col-md-6">
                 <label for="citySite">City Or Site Name</label>
                 <input type="text" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.CityOrSiteName" (change)="update($event)">
             </div>
-            <div class="form-group p-0 col-md-6 pl-2">
+            <div class="form-control p-0 col-md-6 pl-2">
                 <label for="stateProvRegion">State/Province/Region</label>
                 <input type="text" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.StateProvRegion" (change)="update($event)">
             </div>
