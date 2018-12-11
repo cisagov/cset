@@ -25,6 +25,7 @@ SOFTWARE.
 @import './mixins';
 @import './sal';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'cset-font-styles.css';
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -71,6 +72,7 @@ h4 {
   margin-top: 0;
 }
 
+
 .heading-color {
   color: $primary-color;
 }
@@ -101,6 +103,8 @@ label[required]::after {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
+
+
 .z-10 {
   z-index: 10;
 }
@@ -126,6 +130,8 @@ label[required]::after {
 
 // Accordion / Footer
 ///////////////////////////////////////////////////////////////////////
+
+
 .footer .card {
   border: none;
   flex: 1 1 auto;
@@ -136,21 +142,19 @@ label[required]::after {
 .footer .card-body {
   padding: 0rem;
 }
-.footer .btn-link {
+
+.footer .btn-link,
+.footer-section-1 a {
+  color: $gray-150;
+}
+
+.footer-section-1 a:hover {
   color: $white;
 }
 
 .footer-section-1 {
   background-color: $primary-color;
   color: $gray-150;
-}
-
-.footer-section-1 a {
-  color: $gray-150;
-}
-
-.footer-section-1 .glyphicon {
-  margin-right: 10px;
 }
 
 .footer-section-2 {
@@ -161,6 +165,19 @@ label[required]::after {
 
 .footer-section-2 a {
   color: $gray-50;
+}
+
+.cset-footer-expand-button {
+  color: $gray-150;
+  background-color: transparent;
+  border: none;
+}
+.cset-footer-expand-button:hover,
+.cset-footer-expand-button:focus,
+.footer .btn-link:hover,
+.footer .btn-link:focus {
+  text-decoration: none;
+  color: $white;
 }
 
 .footer .bg-primary {
@@ -795,27 +812,12 @@ th.data-table {
 
 // Header / Navbar
 /////////////////////////////////////////////
-.nav .open > a {
-  background-color: transparent;
-}
-
-.local-install {
-  background-color: $local-install-background-color;
+.header-help {
   color: $gray-100;
-  font-weight: 600;
 }
 
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
-  min-height: auto;
-}
-
-/* --- Navigation --- */
-
-.navbar-toggler-menu-icon:before {
-  font-family: "Material Icons";
-  content: '\e5d2';
+.logo-fill {
+  fill: $gray-50;
 }
 
 .nav-pills > li.active > a,
@@ -827,12 +829,14 @@ th.data-table {
   background-color: $primary-350;
 }
 
-.header-help {
-  color: $gray-100;
+.nav .open > a {
+  background-color: transparent;
 }
 
-.logo-fill {
-  fill: $gray-50;
+.local-install {
+  background-color: $local-install-background-color;
+  color: $gray-100;
+  font-weight: 600;
 }
 
 .nav > li > a:focus,
@@ -867,53 +871,57 @@ ul.nav-tabs li.active {
 ul.nav-tabs li.active button {
   color: $secondary-color;
   fill: $secondary-color;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.2rem;
   cursor: auto;
-}
-
-ul.nav-tabs li.active button > svg {
-  width: 30px;
-  height: 30px;
 }
 
 ul.nav-tabs li.active button span:hover,
 ul.nav-tabs li.active button:focus,
 ul.nav-tabs li.active button:hover {
   color: $primary-color;
-  fill: $primary-color;
   text-decoration: none;
-}
-
-ul.nav-tabs li.active button > svg .tab-icon-fill {
-  fill: $white;
-}
-
-ul.nav-tabs li button > svg .tab-icon-fill {
-  fill: $secondary-color;
 }
 
 ul.nav-tabs li button {
   color: $gray-100;
-  fill: $gray-100;
-  font-weight: 300;
+  font-weight: 500;
   font-size: 1.0rem;
 }
 
 ul.nav-tabs li button:focus,
 ul.nav-tabs li button:hover {
   color: $white;
-  fill: $white;
 }
-// ul.nav-tabs li button span:hover,
-// ul.nav-tabs li button span:focus {
-//   text-decoration: underline;
-// }
 
-ul.nav-tabs li button > svg {
-  //display: none;
-  width: 18px;
-  height: 18px;
+ul.nav-tabs li.active button .tab-icon {
+  font-size: 1.6rem;
+}
+
+
+.fs-head-lock {
+  font-size: 2rem;
+}
+.fs-head-logo {
+  font-size: 4rem;
+}
+
+/* --- Navbar --- */
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+  min-height: auto;
+}
+
+.navbar-toggler-icon {
+  font-family: "Material Icons";
+  display: flex;
+  align-items: center;
+  flex: 0 0  auto;
+  padding: 5px;
+}
+.navbar-toggler-icon:before {
+  content: '\e5d2';
 }
 
 .navbar .navbar-nav .dropdown-menu {
@@ -927,16 +935,9 @@ ul.nav-tabs li button > svg {
   line-height: 20px;
   padding: 5px;
 }
-
-.navbar-toggle {
-  padding: 5px;
-}
-
-.navbar-toggle div {
-  width: 25px;
-  height: 2px;
-  background-color: $white;
-  margin: 4px 0;
+.navbar-brand {
+  padding: 0rem;
+  margin-top: -15px;
 }
 
 .dropdown-menu > li > a {
@@ -948,21 +949,40 @@ ul.nav-tabs li button > svg {
   color: $white;
 }
 
-.navbar .navbar-nav .dropdown-menu > li:not([disabled]):not(.disabled) > a:hover,
-.navbar .navbar-nav > li > a:focus,
-.navbar .navbar-nav > li > a:hover {
+.navbar .rll:hover,
+.navbar .rll:focus,
+.navbar a:focus,
+.navbar a:hover {
   color: $white;
   background-color: transparent;
   text-decoration: none;
 }
 
-.navbar-brand {
-  padding: 5px;
+.navbar a.dropdown-item:focus,
+.navbar a.dropdown-item:hover
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:hover {
+  color: $primary-color;
+  background-color:$white;
+  text-decoration: none;
+}
+.navbar .dropdown-item,
+.navbar .dropdown-item {
+  color: $gray-150;
+  background-color:transparent;
+  text-decoration: none;
 }
 
-.collapse-margin {
-  margin-top: 1px;
+.navbar .dropdown-item.disabled-menu-item,
+.navbar .dropdown-item.disabled-menu-item:focus,
+.navbar .dropdown-item.disabled-menu-item:hover {
+  color: $primary-250;
+  background-color: transparent;
+  cursor: auto;
 }
+
+
+
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
@@ -1015,13 +1035,11 @@ ul.mat-tree-node {
   float: right;
 }
 
-.menu-icon {
-  transform: translate(0, 60%) scale(1.75);
-}
+// .menu-icon {
+//   transform: translate(0, 60%) scale(1.75);
+// }
 
-.disabled-item {
-  color: $primary-250;
-}
+
 
 #accordion {
   // position: fixed;

@@ -83,7 +83,7 @@
                                 Schema: <a style="font-size:12px;font-weight:normal;" role="button" (click)="getXSD()">XML</a> | <a style="font-size:12px;font-weight:normal;" role="button" (click)="getJsonSchema()">JSON</a>
                             </span>
                             <button class="btn btn-secondary flex-01a ml-3" type="button" (click)="this.fullScreen()">
-                                <span class="glyphicon" [ngClass]="{'glyphicon-resize-small':getFullScreen(), 'glyphicon-resize-full':!getFullScreen()}"></span>
+                                <span [ngClass]="{'cset-icons-resize-small':getFullScreen(), 'cset-icons-resize-full':!getFullScreen()}"></span>
                             </button>
                         </h4>
                         <div class="mb-2">Please specify the code for your new module below.  You can either begin typing below, drop a file onto the editor, load an existing module, or copy and paste text below. To get suggestions, type CTRL-Spacebar.</div>
@@ -137,8 +137,8 @@
                             <ng-container *ngFor="let item of uploader.queue; index as i">
                                 <tr [ngClass]="{'danger': item.isError, 'success': item.isSuccess }" >
                                     <td style="vertical-align:middle">
-                                        <span class="glyphicon glyphicon-ok-circle text-success pr-1" title="The file was uploaded successfully" *ngIf="item.isSuccess"></span>
-                                        <span class="glyphicon glyphicon-warning-sign text-danger pr-1" title="There was an error uploading the file.  Please try again."  *ngIf="item.isError"></span>
+                                        <span class="cset-icons-check-circle text-success pr-1" title="The file was uploaded successfully" *ngIf="item.isSuccess"></span>
+                                        <span class="cset-icons-exclamation-triangle text-danger pr-1" title="There was an error uploading the file.  Please try again."  *ngIf="item.isError"></span>
                                         <strong>{{ item?.file?.name }}</strong>
                                         <div class="progress" style="margin-bottom: 0;"  *ngIf="item.isUploading">
                                                 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
@@ -155,7 +155,7 @@
 
                                     <td nowrap  style="vertical-align:middle" >
                                         <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()" *ngIf="!item.isUploading">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                            <span class="cset-icons-close-x"></span>
                                         </button>
                                     </td>
                                 </tr>
@@ -169,7 +169,7 @@
                     <span class="spinner-container" style="display:inline-block" *ngIf="state=='Processing'">
                             <div class="spinner" style="max-width: 20px; max-height: 20px;"></div>
                     </span>
-                    <span class="glyphicon glyphicon-upload mr-1" *ngIf="state!='Processing'"></span>
+                    <span class="cset-icons-export mr-1" *ngIf="state!='Processing'"></span>
                     <span *ngIf="state=='Failed'">Resubmit</span>
                     <span *ngIf="state=='Processing'">Processing</span>
                     <span *ngIf="state=='Ready'">Submit</span>

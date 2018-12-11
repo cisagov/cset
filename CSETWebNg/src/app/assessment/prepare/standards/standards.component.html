@@ -31,7 +31,7 @@
       </p>
       <div class="d-flex flex-wrap justify-content-start align-items-start flex-00a">
         <button class="btn btn-link p-0 mr-1" (click)="doBasicAssessment()">I want to do a basic assessment instead</button>
-        <i class="c-secondary glyphicon glyphicon-question-sign fs-base-8" matTooltip="Start an assessment with a basic standard selected"
+        <i class="c-secondary cset-icons-question-mark-circle fs-base-8" matTooltip="Start an assessment with a basic standard selected"
           matTooltipPosition="below"></i>
       </div>
     </div>
@@ -64,7 +64,7 @@
               </ng-template>
             </label>
           </div>
-          <i class="glyphicon glyphicon-menu-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)"></i>
+          <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)"></i>
         </div>
         <div class="cyber-standard-description" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
           {{s.Description}}
