@@ -22,7 +22,7 @@
 --------------------------> 
 <div class="d-flex flex-column flex-11a mb-3">
     <h4>Overall SAL</h4>
-    <div class="btn-group" data-toggle="buttons">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"
                 (click)="saveLevel(level.value,'std')">

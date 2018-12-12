@@ -379,6 +379,7 @@ table.td-align-top td {
   background-color: $secondary-color;
   border-color: $secondary-color;
   color: $white;
+  fill: $white;
 }
 
 .btn-secondary > Label {
@@ -387,6 +388,11 @@ table.td-align-top td {
 
 .btn-secondary:hover > Label {
   color: $white;
+  fill: $white;
+}
+
+.btn-secondary:disabled {
+  fill: $white;
 }
 
 .btn-primary,
@@ -1051,6 +1057,11 @@ ul.mat-tree-node {
   border-radius: 0;
 }
 
+.panel-title {
+  margin: 0;
+  text-align: center;
+}
+
 .panel-title a {
   width: 100%;
   display: block;
@@ -1172,8 +1183,9 @@ ul.mat-tree-node {
   background-image: icon(openbookicon, $primary-color);
 }
 
-a.specialFactorsLink {
+a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   text-decoration: underline dotted;
+  color: $link-color-dark;
 }
 
 .nist-sal-info-types td {
@@ -2020,9 +2032,18 @@ table.assessment-documents th {
 }
 .b-secondary {
   border: 2px solid $secondary-color;
+.w-a {
+  width: auto !important;
+}
 }
 .b-primary-200 {
   border: 2px solid $primary-200;
+.h-1r {
+  height: 1rem !important;
+}
+.h-a {
+  height: auto !important;
+}
 }
 .b-light {
   border: 2px solid $gray-200;

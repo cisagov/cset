@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <!-- <div class="d-flex flex-11a"> -->
     <div class="p-0 d-flex flex-column flex-11a">
         <!-- <p>{{this.authSvc.userToken()}}</p> -->
@@ -54,11 +54,11 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div *ngIf="sortedAssessments == null">
-                <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-                    <div class="spinner-size-50"></div>
-                </div>
+        <div *ngIf="sortedAssessments == null">
+            <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+                <div class="spinner-size-50"></div>
             </div>
             <div *ngIf="sortedAssessments?.length > 0" class="mb-4 d-flex flex-column flex-11a oy-auto h-0 ">
                 <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary">
@@ -99,5 +99,5 @@
                 <p>There are no assessments available.</p>
             </div>
 
-        </div>
     </div>
+</div>
