@@ -26,11 +26,14 @@
     <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
       (edit)="editContact(contact)" (create)="createContact(contact)" (remove)="removeContact(contact, i)">
     </app-contact-item>
-    <span class="btn-group" *ngIf="showControls()">
-      <button class="btn btn-group cset-icons-plus" (click)="newContact()" [disabled]="adding==1" > &nbsp;Add Contact</button>
-      <button *ngIf="false" style="border-left:1px solid black" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">&nbsp;Email Contacts</button>
+    <span class="mt-2 btn-group" *ngIf="showControls()">
+      <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
+          <span class="cset-icons-plus fs-base mr-2"></span>
+          <span>Add Contact</span>
+      </button>
+      <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">Email Contacts</button>
     </span>
-    <div *ngIf="!showControls()" style="padding-left: 5%;" class="text-info small">
+    <div *ngIf="!showControls()" class="text-info small">
       <p>You are not authorized to make changes to the contacts on this assessment.</p>
       <p>Please contact an administrator for this assessment to make changes, or to gain administrative access.</p>
     </div>

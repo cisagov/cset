@@ -245,3 +245,6 @@
 .cset-icons-exclamation-triangle:before {
   content: "\27";
 }
+.cset-icons-export-up:before {
+  content: "\28";
+}

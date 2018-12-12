@@ -330,26 +330,18 @@ table.td-align-top td {
   }
 }
 
-.contact-list-item {
-  display: flex;
-  border: none;
-  padding: 2px 0;
-}
+// .contact-list-item {
+//   display: flex;
+//   border: none;
+//   padding: 2px 0;
+// }
 
-.contact-list-item div {
-  width: 32%;
-  flex: 1;
-  word-wrap: break-word;
-  margin: 3px;
-}
-
-.contact-controls > * {
-  margin-right: 3px;
-}
-
-.contact-add-fields > * {
-  margin-right: 3px;
-}
+// .contact-list-item div {
+//   width: 32%;
+//   flex: 1;
+//   word-wrap: break-word;
+//   margin: 3px;
+// }
 
 /* override a few bootstrap classes */
 .form-control {
@@ -1034,12 +1026,6 @@ ul.mat-tree-node {
 .cset-user {
   float: right;
 }
-
-// .menu-icon {
-//   transform: translate(0, 60%) scale(1.75);
-// }
-
-
 
 #accordion {
   // position: fixed;
@@ -1790,10 +1776,6 @@ mat-sidenav {
 }
 
 
-.terms-handshake-icon {
-  width:30px;
-}
-
 .mat-dialog-header {
   color: $gray-100;
   background-color: $primary-color;
@@ -1873,7 +1855,15 @@ table.assessment-documents th {
 }
 ///////////////////////////////////////////////////////////////////////
 
-
+.icon-button {
+  background-color: transparent;
+  color: $secondary-color;
+  border: none;
+}
+.icon-button:hover,
+.icon-button:focus {
+  color: $primary-color;
+}
 
 .sticky-sal {
   position: -webkit-sticky;
@@ -1891,6 +1881,9 @@ table.assessment-documents th {
   padding: 1em;
 }
 
+.alert-danger {
+  border-radius: .4rem;
+}
 
 // Status Create
 ///////////////////////////////////////////////////////////////////////
@@ -1993,6 +1986,9 @@ table.assessment-documents th {
 .br-0 {
   border-radius: 0;
 }
+.br-standard {
+  border-radius: .4rem;
+}
 
 
 // Material Icons
@@ -2017,6 +2013,16 @@ table.assessment-documents th {
 
 .b-none {
   border: none;
+}
+
+.b-primary {
+  border: 2px solid $primary-color;
+}
+.b-secondary {
+  border: 2px solid $secondary-color;
+}
+.b-light {
+  border: 2px solid $gray-200;
 }
 
 
@@ -2097,6 +2103,9 @@ table.assessment-documents th {
 
 .bgc-primary {
   background-color: $primary-color;
+}
+.bgc-primary-100 {
+  background-color: $primary-100;
 }
 
 .fill-primary {
@@ -2213,40 +2222,58 @@ table.assessment-documents th {
 
 // Fonts
 /////////////////////////////////////////////
+.fs-small {
+  font-size: .9rem !important;
+  line-height: 1rem;
+}
+.fs-smaller {
+  font-size: .8rem !important;
+  line-height: .9rem;
+}
+
 .fs-base {
   font-size: 1rem !important;
+  line-height: 1.1rem;
 }
 
 .fs-base-1 {
   font-size: 1.1rem !important;
+  line-height: 1.2rem;
 }
 
 .fs-base-2 {
   font-size: 1.2rem !important;
+  line-height: 1.3rem;
 }
 
 .fs-base-3 {
   font-size: 1.3rem !important;
+  line-height: 1.4rem;
 }
 
 .fs-base-4 {
   font-size: 1.4rem !important;
+  line-height: 1.5rem;
 }
 
 .fs-base-5 {
   font-size: 1.5rem !important;
+  line-height: 1.6rem;
 }
 
 .fs-base-6 {
   font-size: 1.6rem !important;
+  line-height: 1.7rem;
 }
 
 .fs-base-7 {
   font-size: 1.7rem !important;
+  line-height: 1.8rem;
 }
 
 .fs-base-8 {
   font-size: 1.8rem !important;
+  line-height: 1.9rem;
 }
 
 .fs-medium {
@@ -2267,6 +2294,10 @@ table.assessment-documents th {
 
 .fs-50px {
   font-size: 50px !important;
+}
+
+.fw-400 {
+  font-weight: 400 !important;
 }
 
 .fw-500 {

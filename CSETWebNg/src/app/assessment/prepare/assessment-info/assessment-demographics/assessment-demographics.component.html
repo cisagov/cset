@@ -19,44 +19,38 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <h3>Demographics</h3>
 <form>
-    <div class="row" style="margin: 0 0px">
-        <div class="form-control">
-            <label for="sector">Sector</label>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="sector">Sector</label>
             <select class="form-control" id="sector" name="sector" (change)="onSelectSector($event.target.value)"
                 [(ngModel)]="demographicData.SectorId">
                 <option value="0">--Select Sector--</option>
                 <option *ngFor="let sector of sectorsList" [value]="sector.SectorId">{{sector.SectorName}}</option>
             </select>
         </div>
-
-        <div class="form-control">
-            <label for="industry">Industry</label>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="industry">Industry</label>
             <select class="form-control" id="industry" name="industry" [(ngModel)]="demographicData.IndustryId"
                 (change)="update($event)">
                 <option value="0">--Select Industry--</option>
                 <option *ngFor="let industry of industryList" [value]="industry.IndustryId">{{industry.IndustryName}}</option>
             </select>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="assetValue">What is the gross value of the asset you are trying to protect?</label>
+        <select class="form-control" id="assetValue" name="assetValue" (change)="changeAssetValue($event)">
+            <option *ngFor="let asset of assetValues" [value]="asset.DemographicsAssetId" [selected]="asset.DemographicsAssetId === demographicData.AssetValue">{{asset.AssetValue}}</option>
+        </select>
+    </div>
 
-        <div class="form-control">
-            <div class="d-flex justify-content-between align-items-start flex-11a">
-                <div class="d-flex flex-column justify-content-start align-items-start flex-11a">
-                    <label for="assetValue">What is the gross value of the asset you are trying to protect?</label>
-                    <select class="form-control" id="assetValue" name="assetValue" (change)="changeAssetValue($event)">
-                        <option *ngFor="let asset of assetValues" [value]="asset.DemographicsAssetId" [selected]="asset.DemographicsAssetId === demographicData.AssetValue">{{asset.AssetValue}}</option>
-                    </select>
-                </div>
-                <div class="ml-3"></div>
-                <div class="d-flex flex-column justify-content-start align-items-start flex-11a">
-                    <label for="size">What is the relative expected effort for this assessment?</label>
-                    <select class="form-control" id="size" name="size" (change)="changeSize($event)">
-                        <option *ngFor="let s of sizeList" [value]="s.DemographicId" [selected]="s.DemographicId === demographicData.Size">{{s.Description}}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+    <div class="form-group">
+        <label for="size">What is the relative expected effort for this assessment?</label>
+        <select class="form-control" id="size" name="size" (change)="changeSize($event)">
+            <option *ngFor="let s of sizeList" [value]="s.DemographicId" [selected]="s.DemographicId === demographicData.Size">{{s.Description}}</option>
+        </select>
     </div>
 </form>
