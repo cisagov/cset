@@ -21,7 +21,7 @@
   SOFTWARE. 
 --------------------------> 
 <div *ngIf="contacts">
-  <h3>Assessment Contacts</h3>
+  <h4>Contacts</h4>
   <div class="list-group">
     <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
       (edit)="editContact(contact)" (create)="createContact(contact)" (remove)="removeContact(contact, i)">

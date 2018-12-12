@@ -2021,6 +2021,9 @@ table.assessment-documents th {
 .b-secondary {
   border: 2px solid $secondary-color;
 }
+.b-primary-200 {
+  border: 2px solid $primary-200;
+}
 .b-light {
   border: 2px solid $gray-200;
 }
@@ -2106,6 +2109,9 @@ table.assessment-documents th {
 }
 .bgc-primary-100 {
   background-color: $primary-100;
+}
+.bgc-primary-50 {
+  background-color: $primary-50;
 }
 
 .fill-primary {
