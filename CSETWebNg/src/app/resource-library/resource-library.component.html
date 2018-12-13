@@ -44,7 +44,7 @@
       <span class="c-gray-900 rl-title mt-4 mb-3 ml-4 d-flex justify-content-start align-items-baseline flex-00a">
         <h3 class="mb-0 mt-0">Resource Library</h3>
       </span>
-      <mat-tree class="ml-4 pr-2 oy-auto bgc-trans height-0 d-flex flex-column flex-11a" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
+      <mat-tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
         <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="d-flex flex-column justify-content-start align-items-start flex-11a">
           <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" *ngIf="node?.value" class="d-flex justify-content-start flex-00a">
             <span class="menu-link fs-base-8">
@@ -102,7 +102,7 @@
         </form>
       </div>
 
-      <div class="ml-4 mt-4 pr-2 oy-auto height-0 d-flex flex-column flex-11a">
+      <div class="ml-4 mt-4 pr-2 oy-auto h-0 d-flex flex-column flex-11a">
         <h3 *ngIf="results" class="mb-0">Results:</h3>
         <p *ngIf="results && !(results.length > 0)">There are no documents in the resource library that match your
           search. Please adjust your search keywords and try again.</p>

@@ -25,6 +25,7 @@ SOFTWARE.
 @import './mixins';
 @import './sal';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'cset-font-styles.css';
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -71,6 +72,7 @@ h4 {
   margin-top: 0;
 }
 
+
 .heading-color {
   color: $primary-color;
 }
@@ -90,7 +92,7 @@ label[required]::after {
   width: 300px;
   height: 300px;
   z-index: -1;
-  bottom: 50px;
+  bottom: 80px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -100,6 +102,8 @@ label[required]::after {
 .bg-semi-trans {
   background-color: rgba(255, 255, 255, 0.6);
 }
+
+
 
 .z-10 {
   z-index: 10;
@@ -115,26 +119,42 @@ label[required]::after {
 }
 
 /* --- footer --- */
-.footer {
-  flex-shrink: 0;
-}
+// .footer {
+//   flex-shrink: 0;
+// }
 
 /* -- footer styling -- */
-.footer a {
-  cursor: pointer;
+// .footer a {
+//   cursor: pointer;
+// }
+
+// Accordion / Footer
+///////////////////////////////////////////////////////////////////////
+
+
+.footer .card {
+  border: none;
+  flex: 1 1 auto;
+}
+.footer .card-header {
+  padding: 0rem;
+}
+.footer .card-body {
+  padding: 0rem;
+}
+
+.footer .btn-link,
+.footer-section-1 a {
+  color: $gray-150;
+}
+
+.footer-section-1 a:hover {
+  color: $white;
 }
 
 .footer-section-1 {
   background-color: $primary-color;
   color: $gray-150;
-}
-
-.footer-section-1 a {
-  color: $gray-150;
-}
-
-.footer-section-1 .glyphicon {
-  margin-right: 10px;
 }
 
 .footer-section-2 {
@@ -146,6 +166,27 @@ label[required]::after {
 .footer-section-2 a {
   color: $gray-50;
 }
+
+.cset-footer-expand-button {
+  color: $gray-150;
+  background-color: transparent;
+  border: none;
+}
+.cset-footer-expand-button:hover,
+.cset-footer-expand-button:focus,
+.footer .btn-link:hover,
+.footer .btn-link:focus {
+  text-decoration: none;
+  color: $white;
+}
+
+.footer .bg-primary {
+  background-color: $primary-900 !important;
+}
+.footer .card-header:first-child {
+  border-radius: 0rem;
+}
+
 
 .f1-head {
   margin: .5rem 0;
@@ -289,26 +330,18 @@ table.td-align-top td {
   }
 }
 
-.contact-list-item {
-  display: flex;
-  border: none;
-  padding: 2px 0;
-}
+// .contact-list-item {
+//   display: flex;
+//   border: none;
+//   padding: 2px 0;
+// }
 
-.contact-list-item div {
-  width: 32%;
-  flex: 1;
-  word-wrap: break-word;
-  margin: 3px;
-}
-
-.contact-controls > * {
-  margin-right: 3px;
-}
-
-.contact-add-fields > * {
-  margin-right: 3px;
-}
+// .contact-list-item div {
+//   width: 32%;
+//   flex: 1;
+//   word-wrap: break-word;
+//   margin: 3px;
+// }
 
 /* override a few bootstrap classes */
 .form-control {
@@ -328,7 +361,7 @@ table.td-align-top td {
 }
 
 .btn.disabled.btn-primary,
-.btn[disabled].btn-primary {
+.btn:disabled.btn-primary {
   cursor: not-allowed;
   box-shadow: none;
   opacity: 1;
@@ -508,8 +541,8 @@ table.td-align-top td {
   color: $primary-color;
 }
 
-.btn-level:not([disabled]):not(.disabled).active,
-.btn-level:not([disabled]):not(.disabled):active,
+.btn-level:not(.disabled).active,
+.btn-level:not(.disabled):active,
 .show > .btn-level.dropdown-toggle {
   background-color: $secondary-color;
   color: $white;
@@ -777,23 +810,14 @@ th.data-table {
 
 // Header / Navbar
 /////////////////////////////////////////////
-.nav .open > a {
-  background-color: transparent;
-}
-
-.local-install {
-  background-color: $local-install-background-color;
+.header-help {
   color: $gray-100;
-  font-weight: 600;
 }
 
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
-  min-height: auto;
+.logo-fill {
+  fill: $gray-50;
 }
 
-/* --- Navigation --- */
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:focus {
   background-color: $primary-450;
@@ -803,12 +827,14 @@ th.data-table {
   background-color: $primary-350;
 }
 
-.header-help {
-  color: $gray-100;
+.nav .open > a {
+  background-color: transparent;
 }
 
-.logo-fill {
-  fill: $gray-50;
+.local-install {
+  background-color: $local-install-background-color;
+  color: $gray-100;
+  font-weight: 600;
 }
 
 .nav > li > a:focus,
@@ -843,53 +869,57 @@ ul.nav-tabs li.active {
 ul.nav-tabs li.active button {
   color: $secondary-color;
   fill: $secondary-color;
-  font-weight: 500;
-  font-size: 1.5rem;
+  font-weight: 600;
+  font-size: 1.2rem;
   cursor: auto;
-}
-
-ul.nav-tabs li.active button > svg {
-  width: 30px;
-  height: 30px;
 }
 
 ul.nav-tabs li.active button span:hover,
 ul.nav-tabs li.active button:focus,
 ul.nav-tabs li.active button:hover {
   color: $primary-color;
-  fill: $primary-color;
   text-decoration: none;
-}
-
-ul.nav-tabs li.active button > svg .tab-icon-fill {
-  fill: $white;
-}
-
-ul.nav-tabs li button > svg .tab-icon-fill {
-  fill: $secondary-color;
 }
 
 ul.nav-tabs li button {
   color: $gray-100;
-  fill: $gray-100;
-  font-weight: 300;
-  font-size: 1.2rem;
+  font-weight: 500;
+  font-size: 1.0rem;
 }
 
 ul.nav-tabs li button:focus,
 ul.nav-tabs li button:hover {
   color: $white;
-  fill: $white;
 }
-// ul.nav-tabs li button span:hover,
-// ul.nav-tabs li button span:focus {
-//   text-decoration: underline;
-// }
 
-ul.nav-tabs li button > svg {
-  //display: none;
-  width: 18px;
-  height: 18px;
+ul.nav-tabs li.active button .tab-icon {
+  font-size: 1.6rem;
+}
+
+
+.fs-head-lock {
+  font-size: 2rem;
+}
+.fs-head-logo {
+  font-size: 4rem;
+}
+
+/* --- Navbar --- */
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+  min-height: auto;
+}
+
+.navbar-toggler-icon {
+  font-family: "Material Icons";
+  display: flex;
+  align-items: center;
+  flex: 0 0  auto;
+  padding: 5px;
+}
+.navbar-toggler-icon:before {
+  content: '\e5d2';
 }
 
 .navbar .navbar-nav .dropdown-menu {
@@ -903,20 +933,9 @@ ul.nav-tabs li button > svg {
   line-height: 20px;
   padding: 5px;
 }
-
-.navbar a {
-  color: $white;
-}
-
-.navbar-toggle {
-  padding: 5px;
-}
-
-.navbar-toggle div {
-  width: 25px;
-  height: 2px;
-  background-color: $white;
-  margin: 4px 0;
+.navbar-brand {
+  padding: 0rem;
+  margin-top: -15px;
 }
 
 .dropdown-menu > li > a {
@@ -928,21 +947,40 @@ ul.nav-tabs li button > svg {
   color: $white;
 }
 
-.navbar .navbar-nav .dropdown-menu > li:not([disabled]):not(.disabled) > a:hover,
-.navbar .navbar-nav > li > a:focus,
-.navbar .navbar-nav > li > a:hover {
+.navbar .rll:hover,
+.navbar .rll:focus,
+.navbar a:focus,
+.navbar a:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
-.navbar-brand {
-  padding: 5px;
+.navbar a.dropdown-item:focus,
+.navbar a.dropdown-item:hover
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:hover {
+  color: $primary-color;
+  background-color:$white;
+  text-decoration: none;
+}
+.navbar .dropdown-item,
+.navbar .dropdown-item {
+  color: $gray-150;
+  background-color:transparent;
+  text-decoration: none;
 }
 
-.collapse-margin {
-  margin-top: 1px;
+.navbar .dropdown-item.disabled-menu-item,
+.navbar .dropdown-item.disabled-menu-item:focus,
+.navbar .dropdown-item.disabled-menu-item:hover {
+  color: $primary-250;
+  background-color: transparent;
+  cursor: auto;
 }
+
+
+
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
@@ -987,20 +1025,12 @@ ul.mat-tree-node {
 
 // Previous app.component Styles moved to here
 //////////////////////////////////////////////////////////////////////////////////////////
-.help-block {
+.form-text {
   font-size: 12px;
 }
 
 .cset-user {
   float: right;
-}
-
-.menu-icon {
-  transform: translate(0, 60%) scale(1.75);
-}
-
-.disabled-item {
-  color: $primary-250;
 }
 
 #accordion {
@@ -1758,10 +1788,6 @@ mat-sidenav {
 }
 
 
-.terms-handshake-icon {
-  width:30px;
-}
-
 .mat-dialog-header {
   color: $gray-100;
   background-color: $primary-color;
@@ -1841,7 +1867,15 @@ table.assessment-documents th {
 }
 ///////////////////////////////////////////////////////////////////////
 
-
+.icon-button {
+  background-color: transparent;
+  color: $secondary-color;
+  border: none;
+}
+.icon-button:hover,
+.icon-button:focus {
+  color: $primary-color;
+}
 
 .sticky-sal {
   position: -webkit-sticky;
@@ -1859,6 +1893,16 @@ table.assessment-documents th {
   padding: 1em;
 }
 
+.alert-danger {
+  border-radius: .4rem;
+}
+
+// Status Create
+///////////////////////////////////////////////////////////////////////
+.status-create-upload-progress {
+  width:50%;
+  background-color: $secondary-color;
+}
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -1870,13 +1914,48 @@ table.assessment-documents th {
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
+
+// Bootstrap Overrides
+///////////////////////////////////////////////////////////////////////
+
+.no-gutters {
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
 
 
 
 // Atomic Styles
 //////////////////////////////////////////////////////////////////////////////////////////
-.height-0 {
+
+.h-0 {
   height: 0;
 }
 
@@ -1919,486 +1998,59 @@ table.assessment-documents th {
 .br-0 {
   border-radius: 0;
 }
-
-// Default Margin and Padding
-/////////////////////////////////////////////
-.ml-25px {
-  margin-left: 25px;
-}
-
-.m-0 {
-  margin: $spacer * 0 !important;
-}
-
-.m-1 {
-  margin: $spacer * .25 !important;
-}
-
-.m-2 {
-  margin: $spacer * .5 !important;
-}
-
-.m-3 {
-  margin: $spacer * 1 !important;
-}
-
-.m-4 {
-  margin: $spacer * 1.5 !important;
-}
-
-.m-5 {
-  margin: $spacer * 3 !important;
-}
-
-.ml-0 {
-  margin-left: $spacer * 0 !important;
-}
-
-.ml-1 {
-  margin-left: $spacer * .25 !important;
-}
-
-.ml-2 {
-  margin-left: $spacer * .5 !important;
-}
-
-.ml-3 {
-  margin-left: $spacer * 1 !important;
-}
-
-.ml-4 {
-  margin-left: $spacer * 1.5 !important;
-}
-
-.ml-5 {
-  margin-left: $spacer * 3 !important;
-}
-
-.mr-0 {
-  margin-right: $spacer * 0 !important;
-}
-
-.mr-1 {
-  margin-right: $spacer * .25 !important;
-}
-
-.mr-2 {
-  margin-right: $spacer * .5 !important;
-}
-
-.mr-3 {
-  margin-right: $spacer * 1 !important;
-}
-
-.mr-4 {
-  margin-right: $spacer * 1.5 !important;
-}
-
-.mr-5 {
-  margin-right: $spacer * 3 !important;
-}
-
-.mx-1 {
-  margin-right: $spacer * .25 !important;
-  margin-left: $spacer * .25 !important;
-}
-
-.mx-2 {
-  margin-right: $spacer * .5 !important;
-  margin-left: $spacer * .5 !important;
-}
-
-.mx-3 {
-  margin-right: $spacer * 1 !important;
-  margin-left: $spacer * 1 !important;
-}
-
-.mx-4 {
-  margin-right: $spacer * 1.5 !important;
-  margin-left: $spacer * 1.5 !important;
-}
-
-.mx-5 {
-  margin-right: $spacer * 3 !important;
-  margin-left: $spacer * 3 !important;
-}
-
-.mt-0 {
-  margin-top: $spacer * 0 !important;
-}
-
-.mt-1 {
-  margin-top: $spacer * .25 !important;
-}
-
-.mt-2 {
-  margin-top: $spacer * .5 !important;
-}
-
-.mt-3 {
-  margin-top: $spacer * 1 !important;
-}
-
-.mt-4 {
-  margin-top: $spacer * 1.5 !important;
-}
-
-.mt-5 {
-  margin-top: $spacer * 3 !important;
-}
-
-.mb-0 {
-  margin-bottom: $spacer * 0 !important;
-}
-
-.mb-1 {
-  margin-bottom: $spacer * .25 !important;
-}
-
-.mb-2 {
-  margin-bottom: $spacer * .5 !important;
-}
-
-.mb-2r {
-  margin-bottom: 2rem !important;
-}
-
-.mb-3 {
-  margin-bottom: $spacer * 1 !important;
-}
-
-.mb-4 {
-  margin-bottom: $spacer * 1.5 !important;
-}
-
-.mb-5 {
-  margin-bottom: $spacer * 3 !important;
-}
-
-.my-0 {
-  margin-top: $spacer * 0 !important;
-  margin-bottom: $spacer * 0 !important;
-}
-
-.my-1 {
-  margin-top: $spacer * .25 !important;
-  margin-bottom: $spacer * .25 !important;
-}
-
-.my-2 {
-  margin-top: $spacer * .5 !important;
-  margin-bottom: $spacer * .5 !important;
-}
-
-.my-3 {
-  margin-top: $spacer * 1 !important;
-  margin-bottom: $spacer * 1 !important;
-}
-
-.my-4 {
-  margin-top: $spacer * 1.5 !important;
-  margin-bottom: $spacer * 1.5 !important;
-}
-
-.my-5 {
-  margin-top: $spacer * 3 !important;
-  margin-bottom: $spacer * 3 !important;
-}
-
-.p-0 {
-  padding: $spacer * 0 !important;
-}
-
-.p-1 {
-  padding: $spacer * .25 !important;
-}
-
-.p-2 {
-  padding: $spacer * .5 !important;
-}
-
-.p-3 {
-  padding: $spacer * 1 !important;
-}
-
-.p-4 {
-  padding: $spacer * 1.5 !important;
-}
-
-.p-5 {
-  padding: $spacer * 3 !important;
-}
-
-.pl-0 {
-  padding-left: $spacer * 0 !important;
-}
-
-.pl-1 {
-  padding-left: $spacer * .25 !important;
-}
-
-.pl-2 {
-  padding-left: $spacer * .5 !important;
-}
-
-.pl-3 {
-  padding-left: $spacer * 1 !important;
-}
-
-.pl-4 {
-  padding-left: $spacer * 1.5 !important;
-}
-
-.pl-5 {
-  padding-left: $spacer * 3 !important;
-}
-
-.pr-0 {
-  padding-right: $spacer * 0 !important;
-}
-
-.pr-1 {
-  padding-right: $spacer * .25 !important;
-}
-
-.pr-2 {
-  padding-right: $spacer * .5 !important;
-}
-
-.pr-3 {
-  padding-right: $spacer * 1 !important;
-}
-
-.pr-4 {
-  padding-right: $spacer * 1.5 !important;
-}
-
-.pr-5 {
-  padding-right: $spacer * 3 !important;
-}
-
-.px-1 {
-  padding-right: $spacer * .25 !important;
-  padding-left: $spacer * .25 !important;
-}
-
-.px-2 {
-  padding-right: $spacer * .5 !important;
-  padding-left: $spacer * .5 !important;
-}
-
-.px-3 {
-  padding-right: $spacer * 1 !important;
-  padding-left: $spacer * 1 !important;
-}
-
-.px-4 {
-  padding-right: $spacer * 1.5 !important;
-  padding-left: $spacer * 1.5 !important;
-}
-
-.px-5 {
-  padding-right: $spacer * 3 !important;
-  padding-left: $spacer * 3 !important;
-}
-
-.pt-0 {
-  padding-top: $spacer * 0 !important;
+.br-standard {
+  border-radius: .4rem;
 }
 
-.pt-1 {
-  padding-top: $spacer * .25 !important;
-}
-
-.pt-2 {
-  padding-top: $spacer * .5 !important;
-}
-
-.pt-3 {
-  padding-top: $spacer * 1 !important;
-}
-
-.pt-4 {
-  padding-top: $spacer * 1.5 !important;
-}
-
-.pt-5 {
-  padding-top: $spacer * 3 !important;
-}
 
-.pb-0 {
-  padding-bottom: $spacer * 0 !important;
+// Material Icons
+//////////////////////////////////////////////////////
+.m-chevron-down::before {
+  content: '\e5cf';
 }
-
-.pb-1 {
-  padding-bottom: $spacer * .25 !important;
+.m-chevron-up::before {
+  content: '\e5ce';
 }
-
-.pb-2 {
-  padding-bottom: $spacer * .5 !important;
+.m-build::before {
+  content: '\e869';
 }
 
-.pb-3 {
-  padding-bottom: $spacer * 1 !important;
-}
 
-.pb-4 {
-  padding-bottom: $spacer * 1.5 !important;
-}
 
-.pb-5 {
-  padding-bottom: $spacer * 3 !important;
-}
 
-.py-1 {
-  padding-top: $spacer * .25 !important;
-  padding-bottom: $spacer * .25 !important;
-}
 
-.py-2 {
-  padding-top: $spacer * .5 !important;
-  padding-bottom: $spacer * .5 !important;
-}
 
-.py-3 {
-  padding-top: $spacer * 1 !important;
-  padding-bottom: $spacer * 1 !important;
-}
 
-.py-4 {
-  padding-top: $spacer * 1.5 !important;
-  padding-bottom: $spacer * 1.5 !important;
-}
 
-.py-5 {
-  padding-top: $spacer * 3 !important;
-  padding-bottom: $spacer * 3 !important;
-}
 
 .b-none {
   border: none;
 }
 
-.w-100 {
-  width: 100% !important;
+.b-primary {
+  border: 2px solid $primary-color;
 }
-
+.b-secondary {
+  border: 2px solid $secondary-color;
 .w-a {
   width: auto !important;
 }
-
-.h-100 {
-  height: 100% !important;
 }
-
+.b-primary-200 {
+  border: 2px solid $primary-200;
 .h-1r {
   height: 1rem !important;
 }
-
 .h-a {
   height: auto !important;
 }
-
-
-// Flex Box Styles
-/////////////////////////////////////////////
-.d-flex {
-  display: flex !important;
 }
-
-.flex-row {
-  flex-direction: row !important;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse !important;
-}
-
-.flex-column {
-  flex-direction: column !important;
-}
-
-.flex-column-reverse {
-  flex-direction: column-reverse !important;
-}
-
-.flex-wrap {
-  flex-wrap: wrap !important;
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap !important;
-}
-
-.justify-content-start {
-  justify-content: flex-start !important;
-}
-
-.justify-content-end {
-  justify-content: flex-end !important;
-}
-
-.justify-content-center {
-  justify-content: center !important;
-}
-
-.justify-content-between {
-  justify-content: space-between !important;
-}
-
-.justify-content-around {
-  justify-content: space-around !important;
-}
-
-.justify-content-evenly {
-  justify-content: space-evenly !important;
-}
-
-.justify-content-stretch {
-  justify-content: stretch !important;
+.b-light {
+  border: 2px solid $gray-200;
 }
 
 
-.align-items-start {
-  align-items: flex-start !important;
-}
-
-.align-items-end {
-  align-items: flex-end !important;
-}
-
-.align-items-center {
-  align-items: center !important;
-}
-
-.align-items-baseline {
-  align-items: baseline !important;
-}
-
-.align-items-stretch {
-  align-items: stretch !important;
-}
-
-.align-content-start {
-  align-content: flex-start !important;
-}
-
-.align-content-end {
-  align-content: flex-end !important;
-}
-
-.align-content-center {
-  align-content: center !important;
-}
-
-.align-content-between {
-  align-content: space-between !important;
-}
-
-.align-content-around {
-  align-content: space-around !important;
-}
-
+// Flex
 .flex-11a {
   flex: 1 1 auto !important;
 }
@@ -2476,6 +2128,12 @@ table.assessment-documents th {
 .bgc-primary {
   background-color: $primary-color;
 }
+.bgc-primary-100 {
+  background-color: $primary-100;
+}
+.bgc-primary-50 {
+  background-color: $primary-50;
+}
 
 .fill-primary {
   fill: $primary-color;
@@ -2515,6 +2173,14 @@ table.assessment-documents th {
 
 .bgc-gray-100 {
   background-color: $gray-100;
+}
+
+.c-gray-150 {
+  color: $gray-150;
+}
+
+.bgc-gray-150 {
+  background-color: $gray-150;
 }
 
 .c-gray-200 {
@@ -2583,40 +2249,58 @@ table.assessment-documents th {
 
 // Fonts
 /////////////////////////////////////////////
+.fs-small {
+  font-size: .9rem !important;
+  line-height: 1rem;
+}
+.fs-smaller {
+  font-size: .8rem !important;
+  line-height: .9rem;
+}
+
 .fs-base {
   font-size: 1rem !important;
+  line-height: 1.1rem;
 }
 
 .fs-base-1 {
   font-size: 1.1rem !important;
+  line-height: 1.2rem;
 }
 
 .fs-base-2 {
   font-size: 1.2rem !important;
+  line-height: 1.3rem;
 }
 
 .fs-base-3 {
   font-size: 1.3rem !important;
+  line-height: 1.4rem;
 }
 
 .fs-base-4 {
   font-size: 1.4rem !important;
+  line-height: 1.5rem;
 }
 
 .fs-base-5 {
   font-size: 1.5rem !important;
+  line-height: 1.6rem;
 }
 
 .fs-base-6 {
   font-size: 1.6rem !important;
+  line-height: 1.7rem;
 }
 
 .fs-base-7 {
   font-size: 1.7rem !important;
+  line-height: 1.8rem;
 }
 
 .fs-base-8 {
   font-size: 1.8rem !important;
+  line-height: 1.9rem;
 }
 
 .fs-medium {
@@ -2637,6 +2321,10 @@ table.assessment-documents th {
 
 .fs-50px {
   font-size: 50px !important;
+}
+
+.fw-400 {
+  font-weight: 400 !important;
 }
 
 .fw-500 {

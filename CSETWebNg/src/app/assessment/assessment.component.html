@@ -26,74 +26,32 @@
   <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
     <div class="d-flex justify-content-start flex-11a">
       <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
-        <li class="d-flex align-items-center flex-00a {{expandNav? 'nav-tab' : 'nav-tab-collapsed'}}" class.active="false"
+        <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}" class.active="false"
           (click)="toggleNav()">
-          <a class="c-gray-100 d-flex justify-content-start align-items-center flex-00a" matTooltip="Expand/Collapse options"
-            matTooltipPosition="below">
-            <mat-icon class="m-0 p-0 fs-medium-1 h-a w-a">{{expandNav? 'chevron_left' : 'chevron_right'}}</mat-icon>
+          <a class="c-gray-100 d-flex justify-content-start align-items-center flex-00a" matTooltip="Expand/Collapse options" matTooltipPosition="below">
+            <!-- <mat-icon class="m-0 p-0 fs--1">{{expandNav? 'chevron_left' : 'chevron_right'}}</mat-icon> -->
+            <span class="fs-base-1 m-0 mx-2" [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
           </a>
         </li>
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'" (click)="assessSvc.currentTab = 'prepare'">
           <button class="btn bgc-trans d-flex align-items-center flex-00a" data-toggle="tab" routerLink="prepare">
-            <svg version="1.1" id="prepareIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-              x="0px" y="0px" width="25px" height="25px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;"
-              xml:space="preserve">
-              <path d="M50,100c27.6,0,50-22.4,50-50c0-27.6-22.4-50-50-50C22.4,0,0,22.4,0,50C0,77.6,22.4,99.9,50,100z" />
-              <polygon class="tab-icon-fill" points="47.3,56.8 44.6,69.1 57,66.4 59.9,63.5 50.3,53.8 " />
-              <path class="tab-icon-fill" d="M72.8,31.3l-4.7,4.7V25c0-2.5-2.1-4.6-4.6-4.6h-7.9c-0.1-2.9-3.3-0.8-5-3.6c-1.9-3.3-10.5-3.3-12.4,0
-            c-1.6,2.8-4.9,0.7-5,3.6h-7.9c-2.5,0-4.6,2.1-4.6,4.6v51.2c0,2.5,2.1,4.6,4.6,4.6h38.1c2.5,0,4.6-2.1,4.6-4.6V55.2l14.3-14.3
-            L72.8,31.3z M44.4,15.8c1.2,0,2.2,1,2.2,2.2c0,1.2-1,2.2-2.2,2.2s-2.2-1-2.2-2.2l0,0C42.2,16.8,43.2,15.8,44.4,15.8z M63.8,76.3
-            c0,0.2-0.1,0.3-0.3,0.3H25.4c-0.2,0-0.3-0.1-0.3-0.3V25c0-0.2,0.1-0.3,0.3-0.3h7.9v0.6c0,1.1,0.9,2,2,2h18.5c1.1,0,2-0.9,2-2
-            c0,0,0,0,0,0v-0.6h7.9c0.2,0,0.3,0.1,0.3,0.3v15.2L52.2,51.8l9.7,9.6l1.9-1.9L63.8,76.3z" />
-              <path class="tab-icon-fill" d="M81.8,25.1c-1.5,0-2.9,0.5-4.1,1.4l-2.8,2.8l9.6,9.6l2.8-2.8c2.3-3,1.7-7.4-1.4-9.6
-            C84.7,25.6,83.2,25.1,81.8,25.1L81.8,25.1z" />
-            </svg>
-            <span class="nav-tab-text ml-1">Prepare</span>
+            <span class="tab-icon cset-icons-clipboard-pencil mr-2" id="prepareIcon"></span>
+            <span class="nav-tab-text">Prepare</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'" (click)="assessSvc.currentTab = 'questions'">
-          <!-- matTooltip="{{ assessSvc.applicationMode === 'R' ? 'Complete an assessment using requirements from selected standards' : 'Complete an assessment using simple questions' }}"
-          matTooltipPosition="right"-->
           <button class="btn bgc-trans d-flex align-items-center flex-00a" data-toggle="tab" routerLink="questions">
-            <!-- width="25px" height="25px" -->
-            <svg *ngIf="assessSvc.applicationMode === 'Q'" version="1.1" id="questionsIcon" xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 28 28" style="enable-background:new 0 0 25 25;"
-              xml:space="preserve">
-              <path d="M14,28c7.7,0,14-6.3,14-14S21.7,0,14,0S0,6.3,0,14S6.3,28,14,28z" />
-              <g>
-                <path class="tab-icon-fill" d="M15.2,18h-2.6c0-0.4,0-0.6,0-0.7c0-0.8,0.1-1.5,0.4-2.1s0.8-1.2,1.7-1.8c0.8-0.7,1.4-1.1,1.5-1.3 c0.3-0.3,0.4-0.7,0.4-1.1c0-0.6-0.2-1-0.7-1.4c-0.5-0.4-1.1-0.6-1.8-0.6c-0.7,0-1.4,0.2-1.9,0.6c-0.5,0.4-0.8,1-1,1.9l-2.7-0.3 C8.6,9.9,9.1,8.8,10,8c1-0.8,2.3-1.3,3.8-1.3c1.7,0,3,0.4,4,1.3c1,0.9,1.5,1.9,1.5,3c0,0.6-0.2,1.2-0.6,1.8 c-0.3,0.6-1.1,1.3-2.3,2.3c-0.6,0.5-1,0.9-1.1,1.2C15.2,16.7,15.1,17.2,15.2,18z M12.5,21.9V19h2.9v2.9H12.5z" />
-              </g>
-            </svg>
-
-            <!-- width="25px" height="25px" -->
-            <svg *ngIf="assessSvc.applicationMode === 'R'" matTooltip="Requirements" alt="Requirements" version="1.1"
-              id="requirementsIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-              y="0px" viewBox="0 0 28 28" style="enable-background:new 0 0 28 28;" xml:space="preserve">
-              <path d="M14,28c7.7,0,14-6.3,14-14S21.7,0,14,0S0,6.3,0,14S6.3,28,14,28z" />
-              <g>
-                <path class="tab-icon-fill" style="transform: scale(.5) translate(10px,12px)" d="M5.833,0.002L5.833,22.22C5.833,22.22 10.09,22.023 12.64,22.743 15.189,23.465 16.439,24.12 16.439,24.12L16.439,3.805C16.439,3.805 15.322,1.378 13.228,0.658 11.135,-0.064 5.833,0.002 5.833,0.002 M21.804,0.658C19.743,1.378,18.56,3.805,18.56,3.805L18.56,24.12C18.56,24.12 19.872,23.465 22.383,22.743 24.892,22.023 29.166,22.22 29.166,22.22L29.166,0.002C29.166,0.002,23.862,-0.064,21.804,0.658 M35,3.871L35,27.853C35,28.687,34.266,29.117,33.448,29.117L23.133,29.117C22.41,31.275 20.265,32 17.728,32 15.192,32 13.046,31.275 12.321,29.117L1.686,29.117C0.866,29.117,0,28.687,0,27.853L0,3.871C0,3.037,0.866,2.147,1.686,2.147L3.712,2.147 3.712,23.396C3.712,24.231,4.305,24.802,5.122,24.802L11.491,24.802C15.405,25.341 16.571,27.725 17.642,27.707 18.743,27.686 20.23,25.341 24.186,24.802L29.989,24.802C30.81,24.802,31.288,24.231,31.288,23.396L31.288,2.147 33.448,2.147C34.266,2.147,35,3.037,35,3.871" />
-              </g>
-            </svg>
-
-            <span class="nav-tab-text ml-1">{{ this.assessSvc.applicationMode === 'Q' ? 'Questions' : 'Requirements' }}</span>
+            <span class="tab-icon cset-icons-question-mark mr-2" *ngIf="assessSvc.applicationMode === 'Q'" id="questionsIcon" alt="Questions mode icon"></span>
+            <span class="tab-icon cset-icons-books-stack-2 mr-2" *ngIf="assessSvc.applicationMode === 'R'" id="requirementsIcon" alt="Requirements mode icon"></span>
+            <span class="nav-tab-text">{{ this.assessSvc.applicationMode === 'Q' ? 'Questions' : 'Requirements' }}</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'" (click)="assessSvc.currentTab = 'results'">
-          <!-- matTooltip="Get assessment results" matTooltipPosition="right"
-            width="25" height="25"
-          -->
           <button class="btn bgc-trans d-flex align-items-center flex-00a" data-toggle="tab" routerLink="results">
-            <svg alt="Results" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
-              <g label="Layer 1" groupmode="layer" id="layer1" transform="translate(-13.040176,-145.31921)">
-                <circle id="path815" cx="53.040176" cy="185.31921" r="40" />
-                <rect class="tab-icon-fill" id="rect817" width="11.717261" height="30.390049" x="46.150894" y="174.64839" />
-                <rect class="tab-icon-fill" id="rect819" width="11.717261" height="17.922398" x="32.316963" y="187.11606" />
-                <rect class="tab-icon-fill" id="rect821" width="11.699897" height="44.710327" x="59.947216" y="160.40382" />
-              </g>
-            </svg>
-            <span class="nav-tab-text ml-1">Results</span>
+              <span class="tab-icon cset-icons-results mr-2"></span>
+              <span class="nav-tab-text">Results</span>
           </button>
         </li>
       </ul>
@@ -137,7 +95,7 @@
         </mat-tree>
       </mat-sidenav>
       <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a">
-        <div class="oy-auto height-0 d-flex flex-column flex-11a" id="sidenav-content">
+        <div class="oy-auto h-0 d-flex flex-column flex-11a" id="sidenav-content">
           <router-outlet></router-outlet>
         </div>
       </mat-sidenav-content>

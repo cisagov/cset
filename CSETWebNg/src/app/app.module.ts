@@ -124,6 +124,9 @@ import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
     imports: [
@@ -151,6 +154,7 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         MatProgressBarModule,
         MatListModule,
         FileUploadModule,
+        NgbModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',

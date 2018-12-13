@@ -21,7 +21,7 @@
   SOFTWARE. 
 --------------------------> 
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3 class="wrap-text">Cybersecurity Standard Selection</h3>
+  <h4 class="wrap-text">Cybersecurity Standards Selection</h4>
 
   <div class="d-flex flex-wrap align-items-start flex-00a">
     <div class="mr-2 d-flex justify-content-start flex-column flex-1150">
@@ -31,9 +31,8 @@
       </p>
       <div class="d-flex flex-wrap justify-content-start align-items-start flex-00a">
         <button class="btn btn-link p-0 mr-1" (click)="doBasicAssessment()">I want to do a basic assessment instead</button>
-          <img src="./assets/images/icons/question-mark-circle.svg" class="fs-base-8" style="height: 1.5rem"  
-            matTooltip="Start an assessment with a basic standard selected"
-            matTooltipPosition="below" />
+        <i class="c-secondary cset-icons-question-mark-circle fs-base-8" matTooltip="Start an assessment with a basic standard selected"
+          matTooltipPosition="below"></i>
       </div>
     </div>
 
@@ -66,7 +65,7 @@
               </ng-template>
             </label>
           </div>
-          <img src="./assets/images/icons/menu-down.svg" style="height: .6rem;" class="expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)" />
+          <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)"></i>
         </div>
         <div class="cyber-standard-description" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
           {{s.Description}}

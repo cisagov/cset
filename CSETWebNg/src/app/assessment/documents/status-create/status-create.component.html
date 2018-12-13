@@ -22,7 +22,7 @@
 --------------------------> 
 <form [formGroup]='statusCreateForm' #statusNgForm='ngForm' (submit)='handleSubmit($event, statusNgForm, statusCreateForm)'>
 
-  <div class="form-group">
+  <div class="form-control">
       <label for="file">Choose File</label>
           <input #myInput type="file"
                  id="file"
@@ -50,5 +50,5 @@
 
 
 Progress:
-<div style='width:50%;background-color:#007cae;'><span *ngIf='uploadProgress > 25'>%</span></div>
+<div class="status-create-upload-progress"><span *ngIf='uploadProgress > 25'>%</span></div>
 
