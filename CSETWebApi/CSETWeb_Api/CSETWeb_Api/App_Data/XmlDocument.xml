@@ -854,6 +854,37 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:CSETWeb_Api.Controllers.StandardBuilderController">
+            <summary>
+            Houses all API calls used by the StandardBuilder logic.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetCustomSetsList">
+            <summary>
+            Returns a list of 'stock' standards, plus any custom standards
+            owned by the current user.  Stock standards are marked as non-editable,
+            while custom standards are editable.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetSetDetail(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.UpdateSetDetail(CSETWeb_Api.BusinessLogic.Models.SetDetail)">
+            <summary>
+            Saves the set information and returns the setname (key) of the record.
+            </summary>
+            <param name="setDetail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.CloneSet(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

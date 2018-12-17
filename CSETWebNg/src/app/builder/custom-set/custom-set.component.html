@@ -1,0 +1,47 @@
+<div class="white-panel d-flex flex-column justify-content-start flex-11a">
+  <div>
+    <h3>
+      Set Detail
+    </h3>
+    <p>
+      These are the instructions for this page, namely how to create a standard or question set.  There may not be 
+      much text here; it depends on how much guidance is needed for an organization to build a custom standard.  
+      There should probably be some text explaining about creating a dummy standard in order to organize
+      questions in a custom question set.
+    </p>
+    <p>
+      If you are building a Standard, manage the requirements by clicking Requirements.  The Questions View path will 
+      show how the structure of the related questions will look when viewed in 'question mode' CSET.  
+    </p>
+    <div class="d-flex flex-row mt-3 mb-3">
+      <button class="btn btn-primary mr-3" (click)="this.builderSvc.navReqList(setDetail.SetName)">
+        Requirements
+      </button>
+      <button class="btn btn-primary">
+        Questions View
+      </button>
+    </div>
+    <div class="form-group p-0 col-md-12">
+        <label required for="name">Standard Name</label>
+        <input type="text" class="form-control" id="fullname" name="fullname" required focusOnInit="true" [(ngModel)]="setDetail.FullName"
+            (ngModelChange)="setDetail.FullName" (change)="update($event)">
+    </div>
+    <div class="form-group p-0 col-md-12">
+        <label required for="name">Short Name</label>
+        <input type="text" class="form-control" id="shortname" name="shortname" required [(ngModel)]="setDetail.ShortName"
+            (ngModelChange)="setDetail.ShortName" (change)="update($event)">
+    </div>
+    <div class="form-group p-0 col-md-12">
+        <label required for="name">Description</label>
+        <textarea id="description" class="form-control" type="text" [(ngModel)]="setDetail.Description" (change)="update($event)"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="industry">Category</label>
+        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.SetCategory" (change)="update($event)">
+            <option value="0">--Select Category--</option>
+            <option *ngFor="let category of setDetail.CategoryList" [value]="category.Id">{{category.CategoryName}}</option>
+        </select>
+    </div>
+  </div>
+</div>

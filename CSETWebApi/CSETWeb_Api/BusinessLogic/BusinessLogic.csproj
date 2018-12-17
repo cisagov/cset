@@ -176,6 +176,7 @@
     <Compile Include="BusinessManagers\InformationTabData\FrameworkInfoData.cs" />
     <Compile Include="BusinessManagers\NoSuchUserException.cs" />
     <Compile Include="BusinessManagers\SalManager.cs" />
+    <Compile Include="BusinessManagers\StandardBuilderManager.cs" />
     <Compile Include="Common\HtmlFromXamlConverter.cs" />
     <Compile Include="BusinessManagers\InformationTabData\InformationTabBuilder.cs" />
     <Compile Include="BusinessManagers\InformationTabData\QuestionDetailsContentViewModel.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="ImportAssessment\Models\AllGeneralJsonModels.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
+    <Compile Include="Models\StandardBuilder.cs" />
     <Compile Include="Models\ConsoleLogger.cs" />
     <Compile Include="Models\ContactDetail.cs" />
     <Compile Include="Models\ContactSearchParameters.cs" />

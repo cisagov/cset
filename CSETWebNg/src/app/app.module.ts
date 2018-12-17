@@ -24,10 +24,12 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatDialogModule, MatDividerModule,
-  MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-  MatTooltipModule, MatTreeModule } from '@angular/material';
+import {
+    MatAutocompleteModule, MatDialogModule, MatDividerModule,
+    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
+    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
+    MatTooltipModule, MatTreeModule
+} from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
@@ -124,6 +126,10 @@ import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
+import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
+import { SetBuilderService } from './services/set-builder.service';
+import { CustomSetComponent } from './builder/custom-set/custom-set.component';
+import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
 
 @NgModule({
     imports: [
@@ -223,8 +229,11 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         ImportComponent,
         UploadExportComponent,
         KeyboardShortcutsComponent,
-        LicenseComponent
-      ],
+        LicenseComponent,
+        SetListComponent,
+        CustomSetComponent,
+        RequirementListComponent
+    ],
     providers: [
         ConfigService,
         {
@@ -252,29 +261,31 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         NavigationService,
         FileUploadClientService,
         AnalysisService,
-        EnableFeatureService
+        EnableFeatureService,
+        SetBuilderService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-      EmailComponent,
-      EditUserComponent,
-      EjectionComponent,
-      AlertComponent,
-      ConfirmComponent,
-      ChangePasswordComponent,
-      AboutComponent,
-      AdvisoryComponent,
-      OkayComponent,
-      TermsOfUseComponent,
-      FindingsComponent,
-      EnableProtectedComponent,
-      QuestionFiltersComponent,
-      AssessmentDocumentsComponent,
-      UploadExportComponent,
-      InlineParameterComponent,
-      GlobalParametersComponent,
-      KeyboardShortcutsComponent,
-      LicenseComponent
+        EmailComponent,
+        EditUserComponent,
+        EjectionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        ChangePasswordComponent,
+        AboutComponent,
+        AdvisoryComponent,
+        OkayComponent,
+        TermsOfUseComponent,
+        FindingsComponent,
+        EnableProtectedComponent,
+        QuestionFiltersComponent,
+        AssessmentDocumentsComponent,
+        UploadExportComponent,
+        InlineParameterComponent,
+        GlobalParametersComponent,
+        KeyboardShortcutsComponent,
+        LicenseComponent,
+        SetListComponent
     ]
 })
 
