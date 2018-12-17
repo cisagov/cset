@@ -128,7 +128,7 @@ import { SetListComponent } from './builder/custom-set-list/custom-set-list.comp
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/custom-set/custom-set.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbAccordion, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -228,7 +228,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ImportComponent,
         UploadExportComponent,
         KeyboardShortcutsComponent,
-        LicenseComponent
+        LicenseComponent,
+        SetListComponent,
+        CustomSetComponent,
+        RequirementListComponent,
+        NgbAccordion,
+        NgbPanel
       ],
     providers: [
         ConfigService,
@@ -257,7 +262,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         NavigationService,
         FileUploadClientService,
         AnalysisService,
-        EnableFeatureService
+        EnableFeatureService,
+        SetBuilderService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
