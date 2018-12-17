@@ -21,28 +21,26 @@
   SOFTWARE. 
 --------------------------> 
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h4 class="wrap-text">Cybersecurity Standards Selection</h4>
+  <h3 class="wrap-text">Cybersecurity Standards Selection</h3>
 
   <div class="d-flex flex-wrap align-items-start flex-00a">
     <div class="mr-2 d-flex justify-content-start flex-column flex-1150">
-      <p>
+      <p class="m-0">
         Select a standard from the list below to define the questions you will answer during the assessment. Standards
         in bold text are recommended based on your demographic information.
       </p>
       <div class="d-flex flex-wrap justify-content-start align-items-start flex-00a">
-        <button class="btn btn-link p-0 mr-1" (click)="doBasicAssessment()">I want to do a basic assessment instead</button>
-        <i class="c-secondary cset-icons-question-mark-circle fs-base-8" matTooltip="Start an assessment with a basic standard selected"
-          matTooltipPosition="below"></i>
+        <button class="btn btn-link p-0 mr-1" (click)="doBasicAssessment()" matTooltip="Start an assessment with a basic standard selected">I want to do a basic assessment instead</button>
       </div>
     </div>
 
-    <div class="bgc-secondary c-gray-100 p-2" style="border-radius: 4px; margin: 0 4px;">
+    <div class="bgc-secondary c-gray-50 p-2 mt-2 mt-md-0" style="border-radius: 4px; margin: 0 4px;">
       <div style="white-space: nowrap">Requirements</div>
       <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
         standards?.RequirementCount }}</div>
     </div>
 
-    <div class="bgc-secondary c-gray-100 p-2" style="border-radius: 4px; margin: 0 4px;">
+    <div class="bgc-secondary c-gray-50 p-2 mt-2 mt-md-0" style="border-radius: 4px; margin: 0 4px;">
       <div style="white-space: nowrap">Questions</div>
       <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
         standards?.QuestionCount }}</div>
@@ -67,7 +65,7 @@
           </div>
           <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)"></i>
         </div>
-        <div class="cyber-standard-description" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
+        <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
           {{s.Description}}
         </div>
 

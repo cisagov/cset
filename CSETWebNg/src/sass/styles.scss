@@ -167,6 +167,13 @@ label[required]::after {
   color: $gray-50;
 }
 
+
+.footer .card .card-header h5 {
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+
 .cset-footer-expand-button {
   color: $gray-150;
   background-color: transparent;
@@ -1025,9 +1032,6 @@ ul.mat-tree-node {
 
 // Previous app.component Styles moved to here
 //////////////////////////////////////////////////////////////////////////////////////////
-.form-text {
-  font-size: 12px;
-}
 
 .cset-user {
   float: right;
@@ -1135,6 +1139,13 @@ ul.mat-tree-node {
   color: $gray-100;
 }
 
+hr.landing {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: $gray-200;
+}
+
 // Contact Item
 ///////////////////////////////////////////////////////////////////////
 .contact-item-hr {
@@ -1237,14 +1248,6 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   color: $gray-800;
 }
 
-.cyber-standard-description {
-  padding: 10px 2em;
-  font-style: italic;
-  border: 1px solid $primary-250;
-  border-radius: .5em;
-  margin-bottom: 1.3em;
-}
-
 .standard-item > div > label.recommended-standard {
   font-weight: bold;
 }
@@ -1270,6 +1273,9 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   -moz-transition: opacity .6s;
   -webkit-transition: opacity .6s;
   transition: opacity .6s;
+  padding: .5rem;
+  margin-top: .5rem;
+  margin-bottom: 1rem;
 }
 
 .closed-desc {
@@ -1905,6 +1911,8 @@ table.assessment-documents th {
 }
 
 
+
+
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -2080,6 +2088,9 @@ table.assessment-documents th {
 }
 .flex-1150 {
   flex: 1 1 50% !important;
+}
+.flex-1125 {
+  flex: 1 1 25% !important;
 }
 
 // Colors
@@ -2321,6 +2332,37 @@ table.assessment-documents th {
 
 .fs-50px {
   font-size: 50px !important;
+}
+
+.landing-icon {
+  font-size: 25px;
+}
+// @media (max-width: 576px) {
+//   .landing-icon-sm {
+//     font-size: 25px;
+//   } 
+// }
+.landing-button-text {
+  font-size: 1rem !important;
+  line-height: 1.1rem;;
+}
+// @media (max-width: 576px) {
+//   .landing-button-text-sm {
+//     font-size: 1rem !important;
+//     line-height: 1.1rem;;
+//   } 
+// }
+
+@media (min-width: 992px) {
+  .lp-btn-mw-lg {
+    max-width: 350px;
+  }
+}
+
+
+
+.fst-italic {
+  font-style: italic;
 }
 
 .fw-400 {

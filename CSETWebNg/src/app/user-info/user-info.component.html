@@ -19,50 +19,80 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div>
-  <form name="form" (change)="send()" #UserInfoForm="ngForm">
+-------------------------->
+<form name="form" (change)="send()" #UserInfoForm="ngForm">
 
-    <div class="form-control" [ngClass]="{ 'has-error': submitted && !firstName.valid }">
-      <label required for="firstName">First Name</label>
-      <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
-        required />
-      <div *ngIf="submitted && !firstName.valid" class="alert alert-danger">First Name is required</div>
+  <div class="form-group" [ngClass]="{ 'has-error': submitted && !firstName.valid }">
+    <label required for="firstName">First Name</label>
+    <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
+      required />
+    <div *ngIf="submitted && !firstName.valid" class="alert alert-danger">First Name is required</div>
+  </div>
+
+  <div class="form-group" [ngClass]="{ 'has-error': submitted && !lastName.valid }">
+    <label required for="lastName">Last Name</label>
+    <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
+      required />
+    <div *ngIf="submitted && !lastName.valid" class="alert alert-danger">Last Name is required</div>
+  </div>
+
+  <div class="form-group" [ngClass]="{ 'has-error': submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
+    <label required for="email">Email</label>
+    <input type="email" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
+      appEmailValidator />
+    <div class="alert alert-danger" *ngIf="submitted">
+      <div *ngIf="email?.errors?.required">Email is required</div>
+      <div *ngIf="email?.errors?.notValidEmail">Not a valid email</div>
+    </div>
+  </div>
+
+  <div class="form-group" [ngClass]="{ 'has-error': submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
+    <label required for="confirmEmail">Confirm Email</label>
+    <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
+      #confirmEmail="ngModel" appConfirmEqualValidator="email" appEmailValidator />
+    <div class="alert alert-danger" *ngIf="submitted">
+      <div *ngIf="confirmEmail?.errors?.required">Email is required</div>
+      <div *ngIf="confirmEmail?.errors?.notValidEmail">Not a valid email</div>
+      <div *ngIf="confirmEmail?.errors?.notEqual">Emails do not match</div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4>Security Questions</h4>
+    <div class="fs-base mb-3">Providing security questions is optional but allows you to recover your password should
+      you forget it.
     </div>
 
-    <div class="form-control" [ngClass]="{ 'has-error': submitted && !lastName.valid }">
-      <label required for="lastName">Last Name</label>
-      <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
-        required />
-      <div *ngIf="submitted && !lastName.valid" class="alert alert-danger">Last Name is required</div>
-    </div>
-
-    <div class="form-control" [ngClass]="{ 'has-error': submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
-      <label required for="email">Email</label>
-      <input type="email" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
-        appEmailValidator />
-      <div class="alert alert-danger" *ngIf="submitted">
-        <div *ngIf="email?.errors?.required">Email is required</div>
-        <div *ngIf="email?.errors?.notValidEmail">Not a valid email</div>
+    <form #f="ngForm">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="mb-1 fw-600" for="securityQuestion1">Security Question 1</label>
+          <select class="form-control" id="securityQuestion1" name="securityQuestion1" [(ngModel)]="model.SecurityQuestion1">
+            <option *ngFor="let question of SecurityQuestions" [attr.selected]="question.SecurityQuestion === model.SecurityQuestion1">{{question.SecurityQuestion}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="mb-1 fw-600" for="SecurityAnswer1">Security Answer 1</label>
+          <input type="text" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.SecurityAnswer1"
+            placeholder="Answer">
+        </div>
       </div>
-    </div>
-
-    <div class="form-control" [ngClass]="{ 'has-error': submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
-      <label required for="confirmEmail">Confirm Email</label>
-      <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
-        #confirmEmail="ngModel" appConfirmEqualValidator="email" appEmailValidator />
-      <div class="alert alert-danger" *ngIf="submitted">
-        <div *ngIf="confirmEmail?.errors?.required">Email is required</div>
-        <div *ngIf="confirmEmail?.errors?.notValidEmail">Not a valid email</div>
-        <div *ngIf="confirmEmail?.errors?.notEqual">Emails do not match</div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="mb-1 fw-600" for="SecurityQuestion2">Security Question 2</label>
+          <input type="text" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
+            name="SecurityQuestion2" [(ngModel)]="model.SecurityQuestion2">
+        </div>
+        <div class="form-group col-md-6">
+          <label class="mb-1 fw-600" for="SecurityAnswer2">Security Answer 2</label>
+          <input type="text" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
+            [(ngModel)]="model.SecurityAnswer2">
+        </div>
       </div>
-    </div>
+    </form>
 
-    <div class="form-control">
-      <div class="form-text">Providing security questions is optional but will allow you to recover your password should you forget it.
-      </div>
 
-      <table class="paddingBetweenCols">
+    <!-- <table class="paddingBetweenCols">
         <th>Security Question</th>
         <th>Security Answer</th>
         <tr>
@@ -86,7 +116,6 @@
               [(ngModel)]="model.SecurityAnswer2">
           </td>
         </tr>
-      </table>
-    </div>
-  </form>
-</div>
+      </table> -->
+  </div>
+</form>

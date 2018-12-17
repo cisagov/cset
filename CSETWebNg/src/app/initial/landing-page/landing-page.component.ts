@@ -116,6 +116,8 @@ export class LandingPageComponent implements OnInit {
     }
     this.assessSvc.getAssessments().subscribe(
       (data: UserAssessment[]) => {
+        console.log("here are the assessments");
+        console.log(data);
         this.sortedAssessments = data;
       },
       error =>
