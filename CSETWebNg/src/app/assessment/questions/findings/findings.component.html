@@ -20,51 +20,51 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<mat-dialog-content>
+<mat-dialog-content class="py-3">
   <div class="item bigitem">
     <h2>Discovery Details</h2>
     <p>The question discovery section is for advanced users that want to collect extra infromation about specific questions
       in the assessment.</p>
 
-    <div class="form-control">
+    <div class="form-group">
       <label for="title" class="form-label">Title</label>
       <input id="title" type="text" class="form-control" [(ngModel)]="finding.Summary">
     </div>
 
-    <div class="form-control">
+    <div class="form-group">
       <label for="importance" class="form-label">Importance</label>
       <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.Importance_Id" (change)="updateImportance($event.target.value)">
         <option *ngFor="let import of importances" [value]="import?.Importance_Id">{{import?.Value}}</option>
       </select>
     </div>
 
-    <div class="form-control">
+    <div class="form-group">
       <label for="date" class="form-label">Resolution Date</label>
       <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="finding.Resolution_Date" [matDatepicker]="picker"
         (focus)="picker.open()" (click)="picker.open()" (change)="update()">
       <mat-datepicker #picker></mat-datepicker>
     </div>
 
-    <div class="form-control">
+    <div class="form-group">
       <label for="issue" class="form-label">Issue</label>
       <textarea id="issue" class="form-control" type="text" [(ngModel)]="finding.Issue"></textarea>
     </div>
-    <div class="form-control">
+    <div class="form-group">
       <label for="impact" class="form-label">Impacts</label>
       <textarea id="impact" class="form-control" type="text" [(ngModel)]="finding.Impact"></textarea>
     </div>
-    <div class="form-control">
+    <div class="form-group">
       <label for="recommendations" class="form-label">Recommendations</label>
       <textarea id="recommendations" class="form-control" type="text" [(ngModel)]="finding.Recommendations"></textarea>
     </div>
-    <div class="form-control">
+    <div class="form-group">
       <label for="vulnerabilities" class="form-label">Vulnerabilities</label>
       <textarea id="vulnerabilities" class="form-control" type="text" [(ngModel)]="finding.Vulnerabilities"></textarea>
     </div>
   </div>
 
   <!-- interested parties -->
-  <div class="form-control">
+  <div class="form-group">
     <label for="contacts" class="form-label">Individuals Responsible</label>
 
     <div style="padding-left: .5em;">

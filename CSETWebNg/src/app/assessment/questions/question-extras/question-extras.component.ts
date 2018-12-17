@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { AlertComponent } from '../../../dialogs/alert/alert.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 // tslint:disable-next-line:max-line-length
 import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
@@ -52,6 +52,7 @@ export class QuestionExtrasComponent implements OnInit {
   expanded = false;
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC'.
   answer: Answer;
+  dialogRef: MatDialogRef<OkayComponent>;
 
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
@@ -376,7 +377,9 @@ export class QuestionExtrasComponent implements OnInit {
         });
         msg += "</ul>";
 
-        this.dialog.open(AlertComponent, { data: { messageText: msg } });
+        //this.dialog.open(OkayComponent, { data: { messageText: msg } });
+        this.dialogRef = this.dialog.open(OkayComponent, {data: {messageText: msg}});
+        this.dialogRef.componentInstance.hasHeader = true;
       });
   }
 

@@ -19,24 +19,23 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="cset-icons-key-shield fs-base-6 mr-2"></span>
-    <!-- <svg width="25" height="25" x="0px" y="0px" viewBox="0 0 28 36" xml:space="preserve">
-      <path class="fill-white" d="M9.508,22.68L12.258,17.423C10.818,16.776 9.819,15.354 9.819,13.699 9.819,11.437 11.691,9.6 14,9.6 16.311,9.6 18.184,11.437 18.184,13.699 18.184,15.354 17.181,16.776 15.745,17.423L18.493,22.68z M27.473,5.78L27.473,4.549C27.473,4.549 23.582,4.856 20.382,3.769 15.879,2.239 14.004,0 14.004,0L13.999,0.012 13.997,0.01 13.997,0.017C13.931,0.183 12.122,2.229 7.619,3.759 4.419,4.847 0.525,4.539 0.525,4.539 0.525,4.539 -1.414,16.28 2.159,23.847 5.677,31.299 13.994,35.008 14.011,35L14.014,34.998C14.472,34.763 22.322,31.309 25.842,23.857 29.415,16.289 27.473,5.78 27.473,5.78" />
-    </svg> -->
-    <span class="ml-2">Protected Features</span>
+    <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
+    <span>Protected Features</span>
   </div>
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div>
-      <span><label for="unlock">Please enter your unlock code</label>&nbsp;
-        <input type=text name="discard" size="3" maxlength="3"> -
-        <input type="text" name="unlock" id="unload" placeholder="Unlock Code" [(ngModel)]="unlockCode" style="width: 25%;">
-        <button class="ml-3 btn btn-primary" (click)="enableFeature()">Enable Feature</button>
-      </span>
+    <div class="d-flex flex-column justify-content-start align-items-start flex-11a">
+      <label for="unlock">Please enter your unlock code</label>
+      <div class="d-flex justify-content-start align-items-center flex-11a">
+        <input class="form-control flex-1125" type=text name="discard" size="3" maxlength="3">
+        <span>-</span>
+        <input class="form-control" type="text" name="unlock" id="unload" placeholder="Unlock Code" [(ngModel)]="unlockCode">
+        <button class="m-0 ml-3 btn btn-primary" (click)="enableFeature()">Enable Feature</button>
+      </div>
     </div>
-    <table style="margin: 1em;">
+    <table class="my-2" *ngIf="module && module.Full_Name.length > 0">
       <tr>
         <th style="width:25%">Module Name</th>
         <th style="width: 75%">Module Full Name</th>
@@ -46,8 +45,7 @@
         <td>{{module.Full_Name}}</td>
       </tr>
     </table>
-    <br>
-    {{message}}
+    <span class="mt-2" *ngIf="message && message.length > 0">{{message}}</span>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
     <button class="btn btn-secondary" (click)="close()">Close</button>
