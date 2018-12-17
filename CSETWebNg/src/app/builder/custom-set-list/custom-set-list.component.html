@@ -52,7 +52,10 @@
             <button class="btn btn-primary" (click)="this.cloneSet(s.SetName)">clone</button>
           </td>
           <td>
-            <button class="btn btn-primary" (click)="this.deleteSet(s.SetName)">delete</button>
+            <button type="button" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a"(click)="this.deleteSet(s.SetName)">
+              <span class="cset-icons-trash-can fs-base-2"></span>
+              <span class="d-none d-md-flex fs-smaller">Remove</span>
+            </button>
           </td>
         </tr>
       </table>

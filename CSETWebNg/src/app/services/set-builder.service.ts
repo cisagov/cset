@@ -80,4 +80,9 @@ export class SetBuilderService {
             )
             .subscribe();
     }
+
+    navQuestionList() {
+        const setName = sessionStorage.getItem('setName');
+        this.router.navigate(['question-list', setName]);
+    }
 }

@@ -129,6 +129,7 @@ import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/custom-set/custom-set.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
 import { NgbModule, NgbAccordion, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
+import { QuestionListComponent } from './builder/question-list/question-list.component';
 
 @NgModule({
     imports: [
@@ -233,7 +234,8 @@ import { NgbModule, NgbAccordion, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
         CustomSetComponent,
         RequirementListComponent,
         NgbAccordion,
-        NgbPanel
+        NgbPanel,
+        QuestionListComponent
       ],
     providers: [
         ConfigService,
