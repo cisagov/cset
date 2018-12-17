@@ -22,7 +22,7 @@
 --------------------------> 
 <div class="p-4 pb-0 d-flex flex-column flex-00a">
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
+    <div class="form-control" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
       <label required for="firstName">First Name</label>
       <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
         required />
@@ -30,7 +30,7 @@
         required</div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
+    <div class="form-control" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
       <label required for="lastName">Last Name</label>
       <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
         required />
@@ -38,7 +38,7 @@
         required</div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
+    <div class="form-control" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
       <label required for="email">Email</label>
       <input type="email" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
         email />
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
+    <div class="form-control" [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
       <label required for="confirmEmail">Confirm Email</label>
       <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
         #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
@@ -59,8 +59,8 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="help-block">Providing security questions is optional but will allow you to recover your password should you forget it.
+    <div class="form-control">
+      <div class="form-text">Providing security questions is optional but will allow you to recover your password should you forget it.
       </div>
       <table class="paddingBetweenCols">
         <th>Security Question</th>

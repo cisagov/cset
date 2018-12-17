@@ -35,7 +35,7 @@
           <span class="fs-base-1">Requires Review</span>
         </span>
         <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
-        <img src="./assets/images/icons/menu-down.svg" style="height: .6rem;" class="q-expand" [class.expand-flip]="mySubCategory.Expanded" />
+        <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.Expanded"></i>
       </div>
     </div>
     <div class="header-question" *ngIf="mySubCategory.HeaderQuestionText !== null 

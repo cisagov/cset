@@ -24,12 +24,10 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-    MatAutocompleteModule, MatDialogModule, MatDividerModule,
-    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-    MatTooltipModule, MatTreeModule
-} from '@angular/material';
+import { MatAutocompleteModule, MatDialogModule, MatDividerModule,
+  MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
+  MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
+  MatTooltipModule, MatTreeModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
@@ -130,6 +128,7 @@ import { SetListComponent } from './builder/custom-set-list/custom-set-list.comp
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/custom-set/custom-set.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -229,11 +228,8 @@ import { RequirementListComponent } from './builder/requirement-list/requirement
         ImportComponent,
         UploadExportComponent,
         KeyboardShortcutsComponent,
-        LicenseComponent,
-        SetListComponent,
-        CustomSetComponent,
-        RequirementListComponent
-    ],
+        LicenseComponent
+      ],
     providers: [
         ConfigService,
         {
@@ -261,31 +257,29 @@ import { RequirementListComponent } from './builder/requirement-list/requirement
         NavigationService,
         FileUploadClientService,
         AnalysisService,
-        EnableFeatureService,
-        SetBuilderService
+        EnableFeatureService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-        EmailComponent,
-        EditUserComponent,
-        EjectionComponent,
-        AlertComponent,
-        ConfirmComponent,
-        ChangePasswordComponent,
-        AboutComponent,
-        AdvisoryComponent,
-        OkayComponent,
-        TermsOfUseComponent,
-        FindingsComponent,
-        EnableProtectedComponent,
-        QuestionFiltersComponent,
-        AssessmentDocumentsComponent,
-        UploadExportComponent,
-        InlineParameterComponent,
-        GlobalParametersComponent,
-        KeyboardShortcutsComponent,
-        LicenseComponent,
-        SetListComponent
+      EmailComponent,
+      EditUserComponent,
+      EjectionComponent,
+      AlertComponent,
+      ConfirmComponent,
+      ChangePasswordComponent,
+      AboutComponent,
+      AdvisoryComponent,
+      OkayComponent,
+      TermsOfUseComponent,
+      FindingsComponent,
+      EnableProtectedComponent,
+      QuestionFiltersComponent,
+      AssessmentDocumentsComponent,
+      UploadExportComponent,
+      InlineParameterComponent,
+      GlobalParametersComponent,
+      KeyboardShortcutsComponent,
+      LicenseComponent
     ]
 })
 

@@ -221,5 +221,9 @@ export class ContactItemComponent implements OnInit {
     }
     return false;
   }
+
+  contactRoleSelected(assessmentRoleId) {
+    this.contact.AssessmentRoleId = assessmentRoleId;
+  }
 }
 
