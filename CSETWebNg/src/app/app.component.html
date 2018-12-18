@@ -64,7 +64,7 @@
 
     <!-- Collapse Content -->
     <div class="collapse navbar-collapse" id="csetNavbarCollapse">
-      <div class="navbar-nav dropdown" *ngIf="this.router.url!='/resource-library'">
+      <div class="navbar-nav dropdown" *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule'">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
           id="toolsDropdownMenuLink">
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
@@ -72,28 +72,28 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
           <button class="dropdown-item fs-base d-flex align-items-center flex-00a" (click)="enableProtectedFeature()">
-            <span class="cset-icons-key-shield fs-base-1 mr-2"></span>
+            <span class="cset-icons-key-shield fs-base mr-2"></span>
             <span>Enable Protected Features</span>
           </button>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item fs-base d-flex align-items-center flex-00a" [ngClass]="{'disabled-menu-item' : !isAssessment()}"
             (click)="isAssessment() ? showAssessDocs() : null">
-            <span class="cset-icons-books-stack-1 fs-base-1 mr-2"></span>
+            <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
             <span>Assessment Documents</span>
           </button>
           <button class="dropdown-item fs-base d-flex align-items-center flex-00a" [ngClass]="{'disabled-menu-item' : !isAssessment()}"
             (click)="isAssessment() ? editParameters() : null">
-            <span class="cset-icons-puzzle fs-base-1 mr-2"></span>
+            <span class="cset-icons-puzzle fs-base mr-2"></span>
             <span>Parameter Editor</span>
           </button>
           <a class="dropdown-item fs-base d-flex align-items-center flex-00a" [ngClass]="{'disabled-menu-item' : !isAssessment()}"
             (click)="isAssessment() ? exportToExcel() : null" target="_blank" href="#">
-            <span class="cset-icons-export-excel fs-base-1 mr-2"></span>
+            <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export Assessment to Excel</span>
           </a>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item fs-base d-flex align-items-center flex-00a" [routerLink]="['/importModule']">
-            <span class="cset-icons-module fs-base-1 mr-2"></span>
+            <span class="cset-icons-module fs-base mr-2"></span>
             <span>Import Modules</span>
           </button>
           <a class="dropdown-item fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=set-builder" target="csetSetBuilder">            
@@ -105,7 +105,7 @@
 
       <div class="navbar-nav">
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=resource-library"
-          target="csetResourceLibrary" *ngIf="this.router.url!='/resource-library'">
+          target="csetResourceLibrary" *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule'">
           <span class="cset-icons-library fs-base-4 mr-2"></span>
           <span>Resource Library</span>
         </a>
@@ -119,39 +119,39 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank" href="{{docUrl}}htmlhelp/index.htm">
-            <span class="cset-icons-book-open fs-base-1 mr-2"></span>
+            <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>User Guide</span>
           </a>
           <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf">
-            <span class="cset-icons-pdf-doc fs-base-1 mr-2"></span>
+            <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>User Guide (PDF)</span>
           </a>
           <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank" href="{{docUrl}}AccessibilityFeatures/index.htm">
-            <span class="cset-icons-accessibility-doc fs-base-1 mr-2"></span>
+            <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
           </a>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="showKeyboardShortcuts()">
-            <span class="cset-icons-keyboard-shortcuts-key fs-base-1 mr-2"></span>
+            <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
             <span>Keyboard Shortcuts</span>
           </button>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="termsOfUse()">
-            <span class="cset-icons-handshake fs-base-1 mr-2"></span>
+            <span class="cset-icons-handshake fs-base mr-2"></span>
             <span>Terms of Use</span>
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="about()">
-            <span class="cset-icons-cset-lock fs-base-1 mr-2"></span>
+            <span class="cset-icons-cset-lock fs-base mr-2"></span>
             <span>About CSET</span>
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="advisory()">
-            <span class="cset-icons-advisory fs-base-1 mr-2"></span>
+            <span class="cset-icons-advisory fs-base mr-2"></span>
             <span>Advisory</span>
           </button>
         </div>
       </div>
 
       <!-- USER PROFILE -->
-      <div class="navbar-nav dropdown" *ngIf="this.router.url !== '/resource-library'">
+      <div class="navbar-nav dropdown" *ngIf="this.router.url !== '/resource-library' && this.router.url!='/importModule'">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
           *ngIf="auth.userToken()">
           <span class="cset-icons-profile fs-base-4 mr-2"></span>
@@ -162,21 +162,21 @@
         <div class="dropdown-menu dropdown-menu-right">
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="editUser()">
-            <span class="cset-icons-profile fs-base-1 mr-2"></span>
+            <span class="cset-icons-profile fs-base mr-2"></span>
             <span>User Profile</span>
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="goHome()">
-            <span class="cset-icons-clipboard-check fs-base-1 mr-2"></span>
+            <span class="cset-icons-clipboard-check fs-base mr-2"></span>
             <span>My Assessments</span>
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="resetPassword()">
-            <span class="cset-icons-key fs-base-1 mr-2"></span>
+            <span class="cset-icons-key fs-base mr-2"></span>
             <span>Change Password</span>
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="auth.logout()">
-            <span class="cset-icons-logout fs-base-1 mr-2"></span>
+            <span class="cset-icons-logout fs-base mr-2"></span>
             <span>Logout</span>
           </button>
         </div>
@@ -195,11 +195,11 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" activeIds="ngb-panel-0" class="footer row no-gutters" (click)="toggleFooter()"
+  <ngb-accordion #acc="ngbAccordion" type="primary" activeIds="ngb-panel-0" class="footer row no-gutters"  
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
-    <ngb-panel id="toggle-1">
+    <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>
-        <button class="cset-footer-expand-button fs-base mr-2" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterVisible, 'cset-icons-chevron-up flex-00a': !isFooterVisible}"></button>
+        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterVisible, 'cset-icons-chevron-up flex-00a': !isFooterVisible}" (click)="toggleFooter()"></button>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="footer-section-1 bgc-primary px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">

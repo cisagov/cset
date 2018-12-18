@@ -47,7 +47,7 @@ export class ImportFormData {
   selector: 'app-import',
   templateUrl: './import.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+  host: { class: 'd-flex flex-11a w-100' }
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
