@@ -35,7 +35,7 @@
         <button class="m-0 ml-3 btn btn-primary" (click)="enableFeature()">Enable Feature</button>
       </div>
     </div>
-    <table class="my-2" *ngIf="module && module.Full_Name.length > 0">
+    <table class="my-2" *ngIf="modulesList?.length > 0">
       <tr>
         <th style="width:25%">Module Name</th>
         <th style="width: 75%">Module Full Name</th>
