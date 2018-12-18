@@ -1007,13 +1007,6 @@ ul.mat-tree-node {
 
 // Resource Library
 /////////////////////////////////////////////
-.rl hr {
-  border: none;
-  height: 1px;
-  width: 100%;
-  background-color: $gray-400;
-}
-
 .rl .search-btn {
   line-height: 14px;
 }
@@ -1137,13 +1130,6 @@ ul.mat-tree-node {
 ////////////////////////////////////////////////////////////////////////
 .mat-sort-header-arrow {
   color: $gray-100;
-}
-
-hr.landing {
-  border: none;
-  height: 2px;
-  width: 100%;
-  background-color: $gray-200;
 }
 
 // Contact Item
@@ -1581,11 +1567,6 @@ mat-sidenav {
   margin: 1px;
 }
 
-.hr-sal {
-  border: 0;
-  border-top: 1px solid $secondary-color;
-}
-
 .about .icon2 {
   display: inline-block;
   font-size: 0;
@@ -1737,14 +1718,6 @@ mat-sidenav {
   border-top: 1px solid $gray-200;
   width: 100%;
   background-color: $gray-200;
-  margin-left: 0;
-}
-
-.about hr.hr-logo {
-  border: none;
-  width: 100%;
-  margin-top: 10px;
-  border-top: 3px solid $primary-color;
   margin-left: 0;
 }
 
@@ -1911,10 +1884,45 @@ table.assessment-documents th {
 }
 
 
+// Horizontal Rules
+///////////////////////////////////////////////////////////////////////
+.rl hr {
+  border: none;
+  height: 1px;
+  width: 100%;
+  background-color: $gray-400;
+}
+hr.landing {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: $gray-200;
+}
+.hr-sal {
+  border: none;
+  border-top: 1px solid $secondary-color;
+}
+.about hr.hr-logo {
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+  border-top: 3px solid $primary-color;
+  margin-left: 0;
+}
+hr.ranked-questions {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: $primary-100;
+}
+
+// Ranked Questions
+///////////////////////////////////////////////////////////////////////
+.rq-label-min-width {
+  min-width: 96px;
+}
 
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
