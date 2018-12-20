@@ -47,9 +47,11 @@ a {
   cursor: pointer;
 }
 
+.btn-link,
 .btn-link-dark {
   color: $link-color-dark;
   font-weight: 500;
+  border: none;
 }
 
 .btn-link-dark:hover,
@@ -471,6 +473,25 @@ table.td-align-top td {
   background-color: $alt-color;
   color: $active-text-color;
 }
+
+
+.btn-mfr {
+  background-color: $primary-50;
+  border-color: $gray-800;
+  color: $primary-color;
+}
+.btn-mfr:hover,
+.btn-mfr.answer-selected:hover {
+  background-color: $primary-700;
+  color: $white;
+}
+
+.btn-mfr.answer-selected {
+  background-color: $warn-color;
+  color: $gray-900;
+}
+
+
 
 .btn-sal-select {
   background-color: transparent;
@@ -1435,6 +1456,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-bottom: 1px solid $gray-50;
 }
 
+
 // Question Extras
 ///////////////////////////////////////////////////////////////////////
 .extras-block {
@@ -1456,11 +1478,6 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-top: 1px solid $primary-550;
   padding: 10px;
   margin-bottom: 1em;
-}
-
-.button-ribbon {
-  margin-left: .5em;
-  margin-bottom: 10px;
 }
 
 .extras-button {
@@ -1490,12 +1507,12 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   cursor: pointer;
 }
 
-.pencil {
-  background-color: transparent;
-  fill: $primary-color;
-  transform: scale(.5);
-  cursor: pointer;
-}
+// .pencil {
+//   background-color: transparent;
+//   fill: $primary-color;
+//   transform: scale(.5);
+//   cursor: pointer;
+// }
 
 // Questions Component
 ///////////////////////////////////////////////////////////////////////
@@ -1856,6 +1873,16 @@ table.assessment-documents th {
   color: $primary-color;
 }
 
+.icon-button-light {
+  background-color: transparent;
+  color: $gray-150;
+  border: none;
+}
+.icon-button-light:hover,
+.icon-button-light:focus {
+  color: $white;
+}
+
 .sticky-sal {
   position: -webkit-sticky;
   /* Safari */
@@ -2158,6 +2185,10 @@ hr.ranked-questions {
 }
 .bgc-primary-50 {
   background-color: $primary-50;
+}
+
+.c-warning {
+  color: $warn-color;
 }
 
 .fill-primary {

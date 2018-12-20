@@ -26,13 +26,13 @@
   <ul class="nav nav-tabs d-flex flex-00a">
     <li [class.active]="selectedPane === 'search'" (click)="selectedPane = 'search'" class="d-flex align-items-center flex-00a">
       <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Search the resource library">
-        <i class="material-icons">search</i>
+        <span class="mr-2 fs-base-6 cset-icons-magnify-glass"></span>
         <span class="nav-tab-text ml-1">Search</span>
       </button>
     </li>
     <li [class.active]="selectedPane === 'browse'" (click)="selectedPane = 'browse'" class="d-flex align-items-center flex-00a">
       <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Browse the resource library">
-        <i class="material-icons">visibility</i>
+        <span class="mr-2 fs-base-6 cset-icons-browse"></span>
         <span class="nav-tab-text ml-1">Browse</span>
       </button>
     </li>
@@ -46,30 +46,27 @@
       </span>
       <mat-tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
         <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="d-flex flex-column justify-content-start align-items-start flex-11a">
-          <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" *ngIf="node?.value" class="d-flex justify-content-start flex-00a">
-            <span class="menu-link fs-base-8">
+          <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" *ngIf="node?.value" class="mt-2 d-flex justify-content-start flex-00a">
+            <h4><span class="btn-link">
               {{node?.label}}
-            </span>
+            </span></h4>
           </a>
-          <button class="fs-base-8 btn btn-link menu-link mb-2 p-0 d-flex justify-content-start flex-00a" *ngIf="!node?.value"
+          <button class="fs-base-2 btn btn-link mb-2 p-0 d-flex justify-content-start flex-00a" *ngIf="!node?.value"
             (click)="displayDocumentContent(node?.DocId)">{{node?.label}}</button>
           <span class="mb-3 d-flex justify-content-start flex-11a">{{node?.HeadingText}}</span>
         </mat-tree-node>
         <mat-nested-tree-node *matTreeNodeDef="let node; when: navSvc?.hasNestedChild">
           <div class="d-flex justify-content-start flex-00a">
-            <button class="btn btn-link menu-link p-0 b-none" matIconButton matTreeNodeToggle *ngIf="!navSvc?.disableCollapse">
-              <span class="menu-link fs-base-8">
-                <i class="fs-base-3 material-icons">
-                  {{navSvc?.treeControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </i>
-              </span>
+            <button class="fs-smaller btn btn-link mr-2 p-0 b-none" matIconButton matTreeNodeToggle *ngIf="!navSvc?.disableCollapse">
+              <span class="cset-icons-chevron-down" *ngIf="navSvc?.treeControl?.isExpanded(node)"></span>
+              <span class="cset-icons-chevron-right" *ngIf="!navSvc?.treeControl?.isExpanded(node)"></span>
             </button>
             <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" *ngIf="node?.value">
-              <span class="fs-base-8 menu-link">
+              <span class="fs-base-2 btn-link">
                 {{node?.label}}
               </span>
             </a>
-            <button class="fs-base-8 btn btn-link menu-link p-0" *ngIf="!node?.value" matIconButton matTreeNodeToggle>{{node?.label}}</button>
+            <button class="fs-base-2 btn btn-link p-0 mt-2" *ngIf="!node?.value" matIconButton matTreeNodeToggle>{{node?.label}}</button>
           </div>
           <ul class="mat-tree-node" *ngIf="navSvc?.treeControl?.isExpanded(node)">
             <ng-container matTreeNodeOutlet></ng-container>
@@ -92,7 +89,8 @@
 
           <button type="submit" class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
             matTooltip="Search the resource library" (click)="search(searchTerm)">
-            <mat-icon class="mr-1">search</mat-icon>Search
+            <span class="mr-2 fs-base-2 cset-icons-magnify-glass"></span>
+            <span>Search</span>
           </button>
 
           <button class="btn bgc-trans m-0 ml-1 p-0 close-button-position-bandaid" mat-button *ngIf="searchTerm"
@@ -109,12 +107,12 @@
         <div *ngFor="let result of results" class="pr-4 flex-00a">
           <hr />
           <div class="mb-2" *ngIf="isProcurementOrCatalog(result.PathDoc); else normal_title">
-            <span *ngIf="result.HeadingTitle" class="btn-link fs-base-8 cursor-pointer" (click)="displayDocumentContent(result.PathDoc)">{{result.HeadingTitle}}</span>
+            <span *ngIf="result.HeadingTitle" class="btn-link fs-base-2 cursor-pointer" (click)="displayDocumentContent(result.PathDoc)">{{result.HeadingTitle}}</span>
           </div>
           <ng-template #normal_title>
             <!-- <h4 *ngIf="result.HeadingTitle">{{result.HeadingTitle}}</h4> -->
             <a *ngIf="result.PathDoc.indexOf('?id=') < 0" target="_blank" href="{{docUrl}}{{result.FileName}}">
-              <span class="fs-base-8 btn-link mb-3">{{result.HeadingTitle}} </span>
+              <h4><span class="btn-link mb-3">{{result.HeadingTitle}}</span></h4>
             </a>
           </ng-template>
 

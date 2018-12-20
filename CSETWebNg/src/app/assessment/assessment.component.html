@@ -28,10 +28,9 @@
       <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
         <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}" class.active="false"
           (click)="toggleNav()">
-          <a class="c-gray-100 d-flex justify-content-start align-items-center flex-00a" matTooltip="Expand/Collapse options" matTooltipPosition="below">
-            <!-- <mat-icon class="m-0 p-0 fs--1">{{expandNav? 'chevron_left' : 'chevron_right'}}</mat-icon> -->
-            <span class="fs-base-1 m-0 mx-2" [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
-          </a>
+          <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a" matTooltip="Expand/Collapse options" matTooltipPosition="below">
+            <span class="fs-base-1 m-0" [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
+          </button>
         </li>
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">

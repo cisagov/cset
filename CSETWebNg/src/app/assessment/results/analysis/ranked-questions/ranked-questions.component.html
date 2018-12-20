@@ -22,9 +22,9 @@
 -------------------------->
 
 <div class="white-panel oy-auto h-0  d-flex justify-content-start flex-column flex-11a">
-  <h3 class="mb-2 flex-00a">Ranked Questions</h3>
+  <h3 class="mb-2 flex-00a">Control Priorities</h3>
   <p class="mb-3 w-100">
-    Information on question ranking can be found in the <a href="{{docUrl}}htmlhelp/results_ranked_questions_screen.htm"
+    Information on ranking can be found in the <a href="{{docUrl}}htmlhelp/results_ranked_questions_screen.htm"
       target="blank">User Guide</a>.
   </p>
   <div *ngIf="!initialized" class="d-flex flex-11a w-100">
@@ -70,12 +70,10 @@
               <span id="rq-question-reference-text" name="rq-question-reference-text" class="fs-base">{{row.QuestionRef}}</span>
             </div>
           </div>
-          <!-- {{row.QuestionText | KeepHtml}} -->
-          <span id="rq-question-text" class="fs-base w-100" [innerHTML]="row.QuestionText | KeepHTML"></span>
+          <span id="rq-question-text" class="fs-base w-100" [innerHTML]="row.QuestionText | safe"></span>
         </div>
       </div>
     </div>
-    <!-- <hr class="ranked-questions my-4"> -->
   </div>
 
   <div class="mt-3 mb-3 d-flex justify-content-between flex-00a">
