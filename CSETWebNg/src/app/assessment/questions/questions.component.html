@@ -70,16 +70,16 @@
   </div>
 
   <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0" class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <i class="p-2 material-icons fs-50px">warning</i>
-    <span class="fs-base-8 p-2 d-flex flex-column justify-content-center flex-11a">
+    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
       There are no questions visible for the current filters or search criteria. Please change your selections and try
       again.
     </span>
   </div>
 
   <div *ngIf="questionGroups?.length === 0" class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <i class="p-2 material-icons fs-50px">warning</i>
-    <span class="fs-base-8 p-2 d-flex flex-column justify-content-center flex-11a">
+    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
       There are no applicable questions/requirements to display. Check the assessment's SAL level and Standards
       selection.
     </span>

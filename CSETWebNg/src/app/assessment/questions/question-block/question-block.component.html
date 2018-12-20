@@ -30,9 +30,9 @@
         <span *ngIf="mySubCategory.SubCategoryHeadingText != ''">{{ mySubCategory.SubCategoryHeadingText }}</span>
       </div>
       <div class="d-flex justify-content-end align-items-center flex-00a">
-        <span [class.display-hidden]="!mySubCategory.HasReviewItems" class="d-flex justify-content-end align-items-center flex-00a" matTooltip="An answer in this group requires further review.">
-          <i class="mr-1 material-icons fs-base-6">check</i>
-          <span class="fs-base-1">Requires Review</span>
+        <span [class.display-hidden]="!mySubCategory.HasReviewItems" class="d-flex justify-content-center align-items-center flex-00a" matTooltip="One or more controls in this category requires further review.">
+          <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+          <span class="mb-1 fs-small">Requires Review</span>
         </span>
         <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
         <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.Expanded"></i>
@@ -104,7 +104,14 @@
           <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'" (click)="storeAnswer(q, 'A')">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer === 'A'">Alt
           </label>
+
+          <!-- Mark For Review Flag  --> 
+          <label class="mr-0 ml-2 btn form-check-label btn-mfr"  [class.answer-selected]="q.MarkForReview === true" (click)="saveMFR(q);" matTooltip="This control requires further review.">
+              <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" checked="{{q.MarkForReview === true}}" >
+              <span class="cset-icons-flag-dark fs-base"></span>
+          </label>
         </div>
+
         <div *ngIf="q.Answer == 'A'">
           <textarea autosize class="form-control" style="height: 80px; width: 100%; min-height: 72px;" placeholder="Description, explanation and/or justification for alternate answer"
             [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>

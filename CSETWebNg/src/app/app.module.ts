@@ -101,7 +101,6 @@ import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
-import { EscapeHtmlPipe } from './helpers/KeepHTML.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -202,7 +201,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         OkayComponent,
         FindingsComponent,
         SafePipe,
-        EscapeHtmlPipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
