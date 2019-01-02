@@ -81,8 +81,66 @@ export class SetBuilderService {
             .subscribe();
     }
 
+    navReqList() {
+        const setName = sessionStorage.getItem('setName');
+        this.router.navigate(['/', 'requirement-list', setName]);
+    }
+
     navQuestionList() {
         const setName = sessionStorage.getItem('setName');
-        this.router.navigate(['question-list', setName]);
+        this.router.navigate(['/', 'question-list', setName]);
+    }
+
+    navAddQuestion() {
+        const setName = sessionStorage.getItem('setName');
+        this.router.navigate(['/', 'add-question', setName]);
+    }
+
+    getQuestionList() {
+        return this.http.get(this.apiUrl + 'builder/GetQuestionsForSet?setName=' + sessionStorage.getItem('setName'));
+    }
+
+    getCategories() {
+        return this.http.get(this.apiUrl + 'builder/GetCategories');
+    }
+
+    getSubcategories(categoryId: number) {
+        console.log(categoryId);
+        return this.http.get(this.apiUrl + 'builder/GetSubcategories?categoryId=' + categoryId);
+    }
+
+    existsQuestionText(questionText: string) {
+        return this.http.post(this.apiUrl + 'builder/ExistsQuestionText',
+            JSON.stringify(questionText),
+            headers);
+    }
+
+    addQuestion(newQuestionText: string, category: number, subcategory: number) {
+        const setName = sessionStorage.getItem('setName');
+        const req = {
+            SetName: setName,
+            NewQuestionText: newQuestionText,
+            NewQuestionCategory: category,
+            NewQuestionSubcategory: subcategory
+        };
+        return this.http
+            .post(
+                this.apiUrl + 'builder/AddCustomQuestionToSet',
+                JSON.stringify(req),
+                headers
+            );
+    }
+
+    removeQuestion(setName: string, questionID: number) {
+        const req = {
+            SetName: setName,
+            QuestionID: questionID
+        };
+        return this.http
+            .post(
+                this.apiUrl + 'builder/RemoveQuestionFromSet',
+                JSON.stringify(req),
+                headers
+            );
     }
 }

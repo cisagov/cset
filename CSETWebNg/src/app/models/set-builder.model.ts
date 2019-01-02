@@ -30,3 +30,8 @@ export interface SetDetail {
     IsCustom?: boolean;
     IsDisplayed?: boolean;
 }
+
+export interface CategoryEntry {
+    ID?: number;
+    Text?: string;
+}

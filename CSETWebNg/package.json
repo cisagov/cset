@@ -49,6 +49,7 @@
     "ng-sidebar": "^7.1.0",
     "ng2-file-upload": "^1.3.0",
     "ng2-ion-range-slider": "^2.0.0",
+    "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.0",
     "node-sass": "^4.10.0",
     "npm": "^6.4.0",

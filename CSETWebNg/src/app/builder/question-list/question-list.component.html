@@ -1,3 +1,69 @@
-<p>
-  question-list works!
-</p>
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel d-flex flex-column justify-content-start flex-11a">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <div>
+    <h3>
+      Questions
+    </h3>
+    <p>
+      I built a custom questionnaire in CSET 8.1. No Requirements were built or attached to.
+      The SETS and NEW_QUESTION records were bridged, and that's it.
+    </p>
+
+    <button class="btn btn-primary" (click)="navAddQuestion()">Add Question</button>
+
+    <div *ngFor="let q of questionList" class="b-primary-200 br-standard" style="margin: .3em 0; padding: .3em">
+      <div class="d-flex flex-row justify-content-between">
+        <div class="mr-1">
+          {{ q.Category }}
+        </div>
+        <div class="mr-1">
+            {{ q.Subcategory }}
+          </div>
+        <div class="mr-1">
+          {{ q.Level }}
+        </div>
+        <div>
+          {{ q.Title }}
+        </div>
+      </div>
+      <div class="d-flex align-items-center flex-11a">
+        <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
+          {{ q.QuestionText }}
+        </div>
+        <span class="d-flex align-items-end justify-content-between flex-00a">
+          <button *ngIf="q.IsCustom" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button">
+            <span class="cset-icons-pencil fs-base-2"></span>
+            <span class="d-none d-md-flex fs-smaller">Change</span>
+          </button>
+          <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeQuestion(q)">
+            <span class="cset-icons-trash-can fs-base-2"></span>
+            <span class="d-none d-md-flex fs-smaller">Remove</span>
+          </button>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>

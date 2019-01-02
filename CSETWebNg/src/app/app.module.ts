@@ -130,6 +130,9 @@ import { CustomSetComponent } from './builder/custom-set/custom-set.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
 import { NgbModule, NgbAccordion, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionListComponent } from './builder/question-list/question-list.component';
+import { RouterModule } from '@angular/router';
+import { BuilderBreadcrumbsComponent } from './builder/builder-breadcrumbs/builder-breadcrumbs.component';
+import { AddQuestionComponent } from './builder/add-question/add-question.component';
 
 @NgModule({
     imports: [
@@ -157,6 +160,7 @@ import { QuestionListComponent } from './builder/question-list/question-list.com
         MatProgressBarModule,
         MatListModule,
         FileUploadModule,
+        RouterModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -235,7 +239,9 @@ import { QuestionListComponent } from './builder/question-list/question-list.com
         RequirementListComponent,
         NgbAccordion,
         NgbPanel,
-        QuestionListComponent
+        QuestionListComponent,
+        BuilderBreadcrumbsComponent,
+        AddQuestionComponent
       ],
     providers: [
         ConfigService,

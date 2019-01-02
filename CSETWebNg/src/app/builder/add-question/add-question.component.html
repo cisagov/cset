@@ -1,0 +1,88 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel d-flex flex-column justify-content-start flex-11a">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+
+  <h3>
+    Add Question
+  </h3>
+
+  <p>
+    If the question is being added to a requirement, the requirement text will display here
+    to provide context for the question. If the question is being added for a questions-only set,
+    this paragraph will not be displayed, because there is no context.
+  </p>
+
+  <div class="mb-3 p-3 b-primary-200 br-standard">
+
+    <h5>Write New Question</h5>
+
+    <p>
+      If you wish to add a custom question to the set, enter it here.
+    </p>
+
+    <textarea id="txtNewQuestionEntry" [(ngModel)]="newQuestionText" class="form-control mb-3 h-4" type="text"></textarea>
+    <div *ngIf="isNewQuestionEmpty">
+      <div class="alert alert-danger">Question text is required</div>
+    </div>
+    <div *ngIf="isDupeQuestion">
+        <div class="alert alert-danger">The question text duplicates an existing question.  Search for and use the existing question.</div>
+      </div>
+
+    <div class="d-flex flex-row">
+      <div class="form-group mr-2">
+        <label for="category">Category</label>
+        <select class="form-control" id="category" name="category" [(ngModel)]="selectedCatId" (change)="changeCategory($event.target.value)">
+            <option value="0">--Select Category--</option>
+          <option *ngFor="let category of categories" [value]="category.ID">{{category.Text}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="subcategory">Subcategory</label>
+        <select class="form-control" id="subcategory" name="subcategory" [(ngModel)]="selectedSubcatId">
+            <option value="0">--Select Subcategory--</option>
+          <option *ngFor="let subcategory of subcategories" [value]="subcategory.ID">{{subcategory.Text}}</option>
+        </select>
+      </div>
+    </div>
+    <div *ngIf="isCatOrSubcatEmpty">
+        <div class="alert alert-danger">Category and Subcategory are required</div>
+      </div>
+    <button class="btn btn-primary" (click)="addCustomQuestion($event)">Add New Question</button>
+  </div>
+
+  <div class="mb-3 p-3 b-primary-200 br-standard">
+
+    <h5>
+      Search for Existing Question
+    </h5>
+    <p>
+      Enter keywords to locate candidate questions. If a suitable candidate question
+      is available, click Add to include it in your set.
+    </p>
+
+    <input id="txtSearchQuestionText" class="form-control mb-3" type="text">
+  </div>
+
+</div>

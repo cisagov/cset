@@ -67,5 +67,86 @@ namespace CSETWeb_Api.Controllers
             StandardBuilderManager m = new StandardBuilderManager();
             return m.CloneSet(setName);
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet]
+        [Route("api/builder/GetQuestionsForSet")]
+        public List<QuestionDetail> GetQuestionsForSet([FromUri] string setName)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            List<QuestionDetail> response = m.GetQuestionsForSet(setName);
+
+            return response;
+        }
+
+
+        [HttpPost]
+        [Route("api/builder/ExistsQuestionText")]
+        public bool ExistsQuestionText([FromBody] string questionText)
+        {
+            // Don't let null be added as question text
+            if (questionText == null)
+            {
+                return true;
+            }
+
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.ExistsQuestionText(questionText);
+        }
+
+
+        /// <summary>
+        /// Creates a new custom question from the supplied text.
+        /// </summary>
+        /// <param name="request"></param>
+        [HttpPost]
+        [Route("api/builder/AddCustomQuestionToSet")]
+        public void AddCustomQuestionToSet([FromBody] SetQuestion request)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.AddCustomQuestionToSet(request);
+        }
+
+
+        /// <summary>
+        /// Adds a 'base' or 'stock' question to the Set.
+        /// </summary>
+        /// <param name="request"></param>
+        [HttpPost]
+        [Route("api/builder/AddQuestionToSet")]
+        public void AddQuestionToSet([FromBody] SetQuestion request)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.AddQuestionToSet(request);
+        }
+
+
+        [HttpPost]
+        [Route("api/builder/RemoveQuestionFromSet")]
+        public void RemoveQuestionFromSet([FromBody] SetQuestion request)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.RemoveQuestionFromSet(request);
+        }
+
+
+        [HttpGet]
+        [Route("api/builder/GetCategories")]
+        public List<CategoryEntry> GC()
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetCategories();
+        }
+
+        [HttpGet]
+        [Route("api/builder/GetSubcategories")]
+        public List<CategoryEntry> GSC([FromUri] int categoryId)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetSubcategories(categoryId);
+        }
     }
 }

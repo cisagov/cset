@@ -885,6 +885,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetQuestionsForSet(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddCustomQuestionToSet(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
+            <summary>
+            Creates a new custom question from the supplied text.
+            </summary>
+            <param name="request"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddQuestionToSet(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
+            <summary>
+            Adds a 'base' or 'stock' question to the Set.
+            </summary>
+            <param name="request"></param>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

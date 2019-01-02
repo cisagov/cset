@@ -21,6 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+    <app-builder-breadcrumbs></app-builder-breadcrumbs>
   <div>
     <h3>
       Standard And Question Set Builder
@@ -31,7 +32,7 @@
     <p>
       If you wish to build a question set, create a single standard and attach all questions to it.
     </p>
-    <button class="btn btn-primary" (click)="this.builderSvc.newCustomSet()">
+    <button class="btn btn-primary" (click)="this.setBuilderSvc.newCustomSet()">
       New Standard/Question Set
     </button>
 
@@ -44,7 +45,7 @@
       <table>
         <tr *ngFor="let s of setDetailList">
           <td>
-            <button class="btn btn-link" (click)="this.builderSvc.loadCustomSet(s.SetName)">
+            <button class="btn btn-link" (click)="this.setBuilderSvc.loadCustomSet(s.SetName)">
               {{s.FullName}}
             </button>
           </td>

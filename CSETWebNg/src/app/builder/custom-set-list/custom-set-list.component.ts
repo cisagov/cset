@@ -34,7 +34,7 @@ export class SetListComponent implements OnInit {
 
   setDetailList: SetDetail[];
 
-  constructor(private builderSvc: SetBuilderService, private router: Router) {
+  constructor(private setBuilderSvc: SetBuilderService, private router: Router) {
   }
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class SetListComponent implements OnInit {
   }
 
   getStandards() {
-    this.builderSvc.getCustomSetList().subscribe(
+    this.setBuilderSvc.getCustomSetList().subscribe(
       (response: SetDetail[]) => {
         this.setDetailList = response;
       },
@@ -55,7 +55,7 @@ export class SetListComponent implements OnInit {
   }
 
   cloneSet(setName: string) {
-    this.builderSvc.cloneCustomSet(setName).subscribe((response: SetDetail) => {
+    this.setBuilderSvc.cloneCustomSet(setName).subscribe((response: SetDetail) => {
       sessionStorage.setItem('setName', response.SetName);
       this.router.navigate(['/custom-set', response.SetName]);
     });
