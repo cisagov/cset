@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, QuestionResult } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -115,13 +115,14 @@ export class SetBuilderService {
             headers);
     }
 
-    addQuestion(newQuestionText: string, category: number, subcategory: number) {
+    addQuestion(newQuestionText: string, category: number, subcategory: number, salLevels: string[]) {
         const setName = sessionStorage.getItem('setName');
         const req = {
             SetName: setName,
             NewQuestionText: newQuestionText,
-            NewQuestionCategory: category,
-            NewQuestionSubcategory: subcategory
+            QuestionCategory: category,
+            QuestionSubcategory: subcategory,
+            SalLevels: salLevels
         };
         return this.http
             .post(
@@ -131,6 +132,28 @@ export class SetBuilderService {
             );
     }
 
+    /**
+     *
+     */
+    addExistingQuestion(q: QuestionResult) {
+        const setName = sessionStorage.getItem('setName');
+        const req = {
+            SetName: setName,
+            QuestionID: q.QuestionID,
+            SalLevels: q.SalLevels
+        };
+
+        return this.http
+            .post(
+                this.apiUrl + 'builder/AddQuestionToSet',
+                JSON.stringify(req),
+                headers
+            );
+    }
+
+    /**
+     *
+     */
     removeQuestion(setName: string, questionID: number) {
         const req = {
             SetName: setName,
@@ -140,6 +163,38 @@ export class SetBuilderService {
             .post(
                 this.apiUrl + 'builder/RemoveQuestionFromSet',
                 JSON.stringify(req),
+                headers
+            );
+    }
+
+    /**
+     *
+     */
+    searchQuestions(searchTerms: string) {
+        const searchParms: QuestionSearch = {
+            SearchTerms: searchTerms,
+            SetName: sessionStorage.getItem('setName')
+        };
+
+        return this.http
+            .post(
+                this.apiUrl + 'builder/SearchQuestions',
+                searchParms,
+                headers
+            );
+    }
+
+    setQuestionSalLevel(questionID: number, level: string, state: boolean) {
+        const salParms = {
+            QuestionID: questionID,
+            SetName: sessionStorage.getItem('setName'),
+            State: state,
+            Level: level
+        };
+        return this.http
+            .post(
+                this.apiUrl + 'builder/SetQuestionSalLevel',
+                salParms,
                 headers
             );
     }

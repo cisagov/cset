@@ -7,6 +7,8 @@ using DataLayer;
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Models;
 using System.Data.Entity.Migrations;
+using System.Text.RegularExpressions;
+
 
 
 namespace CSETWeb_Api.BusinessManagers
@@ -174,11 +176,10 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// 
         /// </summary>
-        public List<QuestionDetail> GetQuestionsForSet(string setName)
+        public QuestionListResponse GetQuestionsForSet(string setName)
         {
             using (var db = new CSETWebEntities())
             {
-                //var dbSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
                 List<NEW_QUESTION_SETS> dbQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == setName).ToList();
 
                 List<QuestionDetail> response = new List<QuestionDetail>();
@@ -188,15 +189,52 @@ namespace CSETWeb_Api.BusinessManagers
                     q.QuestionID = nqs.NEW_QUESTION.Question_Id;
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
                     PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.Subcategory);
-                    q.Level = nqs.NEW_QUESTION.UNIVERSAL_SAL_LEVEL1.Full_Name_Sal;
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
+                    q.IsCustom = nqs.SET.Is_Custom;
+
+
+                    // Get the SAL levels for this question-set
+                    var sals = db.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id).ToList();                               
+                    foreach (NEW_QUESTION_LEVELS l in sals)
+                    {
+                        q.SalLevels.Add(l.Universal_Sal_Level);
+                    }
 
                     q.IsCustom = false;
 
                     response.Add(q);
                 }
 
-                return response;
+                List<QuestionDetail> list = response.OrderBy(x => x.Category).ThenBy(x => x.Subcategory).ToList();
+
+                QuestionListResponse ql = new QuestionListResponse();
+                string currentCategory = string.Empty;
+                QuestionListCategory cat = null;
+                string currentSubcategory = string.Empty;
+                QuestionListSubcategory subcat = null;
+                foreach (QuestionDetail q in list)
+                {
+                    if (q.Category != currentCategory)
+                    {
+                        cat = new QuestionListCategory();
+                        ql.Categories.Add(cat);
+                        cat.CategoryName = q.Category;
+                        currentCategory = q.Category;
+                    }
+
+
+                    if (q.Subcategory != currentSubcategory)
+                    {
+                        subcat = new QuestionListSubcategory();
+                        cat.Subcategories.Add(subcat);
+                        subcat.SubcategoryName = q.Subcategory;
+                        currentSubcategory = q.Subcategory;
+                    }
+
+                    subcat.Questions.Add(q);                   
+                }
+
+                return ql;
             }
         }
 
@@ -265,6 +303,11 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="request"></param>
         public void AddCustomQuestionToSet(SetQuestion request)
         {
+            if (string.IsNullOrEmpty(request.NewQuestionText))
+            {
+                return;
+            }
+
             using (var db = new CSETWebEntities())
             {
                 NEW_QUESTION q = new NEW_QUESTION();
@@ -278,7 +321,7 @@ namespace CSETWeb_Api.BusinessManagers
                 q.Weight = 0;
                 q.Original_Set_Name = request.SetName;
 
-                int headingPairId = GetHeadingPairId(request.NewQuestionCategory, request.NewQuestionSubcategory);
+                int headingPairId = GetHeadingPairId(request.QuestionCategory, request.QuestionSubcategory);
                 q.Heading_Pair_Id = headingPairId;
 
                 db.NEW_QUESTION.Add(q);
@@ -292,6 +335,18 @@ namespace CSETWeb_Api.BusinessManagers
                 };
 
                 db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
+
+
+                foreach (string level in request.SalLevels)
+                {
+                    NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
+                    {
+                        New_Question_Set_Id = nqs.New_Question_Set_Id,
+                        Universal_Sal_Level = level
+                    };
+
+                    db.NEW_QUESTION_LEVELS.Add(nql);
+                }
 
 
 
@@ -344,6 +399,39 @@ namespace CSETWeb_Api.BusinessManagers
 
                 db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
                 db.SaveChanges();
+
+
+
+
+                // SAL levels
+                var nqls = db.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id);
+                foreach (NEW_QUESTION_LEVELS l in nqls)
+                {
+                    db.NEW_QUESTION_LEVELS.Remove(l);
+                }
+                db.SaveChanges();
+
+                foreach (string l in request.SalLevels)
+                {
+                    NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
+                    {
+                        New_Question_Set_Id = nqs.New_Question_Set_Id,
+                        Universal_Sal_Level = l
+                    };
+
+                    db.NEW_QUESTION_LEVELS.Add(nql);
+                }
+                db.SaveChanges();
+
+
+                //REQUIREMENT_QUESTIONS_SETS rqs = new REQUIREMENT_QUESTIONS_SETS
+                //{
+                //    Question_Id = request.QuestionID,
+                //    Set_Name = request.SetName,
+                //    Requirement_Id = 0
+                //};
+
+                //db.SaveChanges();
             }
         }
 
@@ -427,6 +515,175 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Find all questions based on the supplied search terms.  
+        /// Exclude any questions that are already attached to the Set.
+        /// </summary>
+        /// <param name="questionText"></param>
+        /// <returns></returns>
+        public List<QuestionDetail> SearchQuestions(QuestionSearch searchParms)
+        {
+            List<QuestionDetail> candidateQuestions = new List<QuestionDetail>();
+
+            using (var db = new CSETWebEntities())
+            {
+                // Build a list of all questionIDs that are currently in the set
+                List<int> includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
+                    .Select(q => q.Question_Id).ToList();
+
+
+                // First, look for an exact string match within the question
+                var hits = from q in db.NEW_QUESTION
+                           join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                           join cat in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals cat.Question_Group_Heading_Id
+                           join subcat in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals subcat.Universal_Sub_Category_Id
+                           where q.Simple_Question.Contains(searchParms.SearchTerms)
+                           select new { q, cat, subcat };
+
+                foreach (var hit in hits.ToList())
+                {
+                    if (!includedQuestions.Contains(hit.q.Question_Id) && !EncryptedQuestionText(hit.q.Simple_Question))
+                    {
+                        QuestionDetail candidate = new QuestionDetail
+                        {
+                            QuestionID = hit.q.Question_Id,
+                            QuestionText = QuestionsManager.FormatLineBreaks(hit.q.Simple_Question),
+                            Category = hit.cat.Question_Group_Heading1,
+                            Subcategory = hit.subcat.Universal_Sub_Category,
+                        };
+
+                        // Get the default SAL levels as defined in the question's original set
+                        var sals = from nqs in db.NEW_QUESTION_SETS
+                                   join nql in db.NEW_QUESTION_LEVELS on nqs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                                   where nqs.Set_Name == hit.q.Original_Set_Name && nqs.Question_Id == hit.q.Question_Id
+                                   select nql.Universal_Sal_Level;
+
+                        foreach (string s in sals.ToList())
+                        {
+                            candidate.SalLevels.Add(s);
+                        }
+
+                        candidateQuestions.Add(candidate);
+                            
+                    }
+                }
+
+
+                // Then, include a multi-part LIKE search with the supplied words (search terms)
+                StringBuilder sbWhereClause = new StringBuilder();
+
+                List<string> searchTerms = new List<string>();
+
+                // pull out any quoted literals as a single term
+                string pattern = "\"(.*?)\"";
+                MatchCollection m = Regex.Matches(searchParms.SearchTerms, pattern, RegexOptions.IgnoreCase);
+                foreach (Match match in m)
+                {
+                    searchTerms.Add(match.Value.Replace("\"", ""));
+                }
+
+                // remove quoted literals so we can split the rest into words
+                searchParms.SearchTerms = Regex.Replace(searchParms.SearchTerms, pattern, "");
+
+                searchTerms.AddRange(new List<string>(searchParms.SearchTerms.Split(' ')));
+                foreach (string term in searchTerms)
+                {
+                    if (term != "")
+                    {
+                        sbWhereClause.AppendFormat("[Simple_Question] like '%{0}%' and ", term.Replace('*', '%'));
+                    }
+                }
+
+                string whereClause = sbWhereClause.ToString();
+                whereClause = whereClause.Substring(0, whereClause.Length - 5);
+
+                var hits2 = db.NEW_QUESTION.SqlQuery("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
+
+                var hits3 = from q in hits2
+                           join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                           join cat in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals cat.Question_Group_Heading_Id
+                           join subcat in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals subcat.Universal_Sub_Category_Id
+                           where q.Simple_Question.Contains(searchParms.SearchTerms)
+                           select new { q, cat, subcat };
+
+                foreach (var hit in hits3)
+                {
+                    if (!candidateQuestions.Exists(q => q.QuestionID == hit.q.Question_Id))
+                    {
+                        if (!includedQuestions.Contains(hit.q.Question_Id) && !EncryptedQuestionText(hit.q.Simple_Question))
+                        {
+                            candidateQuestions.Add(new QuestionDetail
+                            {
+                                QuestionID = hit.q.Question_Id,
+                                QuestionText = QuestionsManager.FormatLineBreaks(hit.q.Simple_Question),
+                                Category = hit.cat.Question_Group_Heading1,
+                                Subcategory = hit.subcat.Universal_Sub_Category
+                            });
+                        }
+                    }
+                }
+            }
+
+            return candidateQuestions;
+        }
+
+
+        /// <summary>
+        /// Sets or removes a single SAL level for a question in a set.
+        /// </summary>
+        /// <param name="salParms"></param>
+        public void SetQuestionSalLevel(SalParms salParms)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                NEW_QUESTION_SETS nqs = db.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefault();
+
+                NEW_QUESTION_LEVELS nql = db.NEW_QUESTION_LEVELS.Where(x => 
+                    x.New_Question_Set_Id == nqs.New_Question_Set_Id
+                    && x.Universal_Sal_Level == salParms.Level).FirstOrDefault();
+
+                if (salParms.State)
+                {
+                    // add the level if it doesn't exist
+                    if (nql == null)
+                    {
+                        nql = new NEW_QUESTION_LEVELS() {
+                            New_Question_Set_Id = nqs.New_Question_Set_Id,
+                            Universal_Sal_Level = salParms.Level
+                        };
+                        db.NEW_QUESTION_LEVELS.AddOrUpdate(nql);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    // remove the level
+                    if (nql != null)
+                    {
+                        db.NEW_QUESTION_LEVELS.Remove(nql);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Try to determine if this an encrypted question.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private bool EncryptedQuestionText(string text)
+        {
+            if (!text.Contains(" ") && text.Length > 10)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

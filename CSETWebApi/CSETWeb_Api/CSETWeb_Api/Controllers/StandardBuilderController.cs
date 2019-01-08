@@ -74,10 +74,10 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/builder/GetQuestionsForSet")]
-        public List<QuestionDetail> GetQuestionsForSet([FromUri] string setName)
+        public QuestionListResponse GetQuestionsForSet([FromUri] string setName)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            List<QuestionDetail> response = m.GetQuestionsForSet(setName);
+            QuestionListResponse response = m.GetQuestionsForSet(setName);
 
             return response;
         }
@@ -147,6 +147,22 @@ namespace CSETWeb_Api.Controllers
         {
             StandardBuilderManager m = new StandardBuilderManager();
             return m.GetSubcategories(categoryId);
+        }
+
+        [HttpPost]
+        [Route("api/builder/SearchQuestions")]
+        public List<QuestionDetail> SearchQuestions([FromBody] QuestionSearch searchParms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.SearchQuestions(searchParms);
+        }
+
+        [HttpPost]
+        [Route("api/builder/SetQuestionSalLevel")]
+        public void SetQuestionSalLevel([FromBody] SalParms salParms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.SetQuestionSalLevel(salParms);
         }
     }
 }

@@ -482,6 +482,14 @@ table.td-align-top td {
   background-color: $primary-450;
 }
 
+.sal-checkboxes input {
+  margin-right: 2px;
+}
+
+.sal-checkboxes label {
+  margin-right: 1rem;
+}
+
 /* round the inside corners of the 'inside' buttons of the group */
 .answer-group.btn-group > .btn {
   border-radius: 4px !important;
@@ -1409,6 +1417,11 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-bottom: 1px solid $gray-250;
   padding: 3px 0;
 }
+
+.no-bottom-border {
+  border-bottom: none;
+}
+
 @media screen and (max-width: 990px) {
   .header-question {
     flex-direction: column;

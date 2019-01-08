@@ -46,14 +46,15 @@
       <div class="alert alert-danger">Question text is required</div>
     </div>
     <div *ngIf="isDupeQuestion">
-        <div class="alert alert-danger">The question text duplicates an existing question.  Search for and use the existing question.</div>
-      </div>
+      <div class="alert alert-danger">The question text duplicates an existing question. Search for and use the
+        existing question.</div>
+    </div>
 
     <div class="d-flex flex-row">
       <div class="form-group mr-2">
         <label for="category">Category</label>
         <select class="form-control" id="category" name="category" [(ngModel)]="selectedCatId" (change)="changeCategory($event.target.value)">
-            <option value="0">--Select Category--</option>
+          <option value="0">--Select Category--</option>
           <option *ngFor="let category of categories" [value]="category.ID">{{category.Text}}</option>
         </select>
       </div>
@@ -61,28 +62,112 @@
       <div class="form-group">
         <label for="subcategory">Subcategory</label>
         <select class="form-control" id="subcategory" name="subcategory" [(ngModel)]="selectedSubcatId">
-            <option value="0">--Select Subcategory--</option>
+          <option value="0">--Select Subcategory--</option>
           <option *ngFor="let subcategory of subcategories" [value]="subcategory.ID">{{subcategory.Text}}</option>
         </select>
       </div>
     </div>
     <div *ngIf="isCatOrSubcatEmpty">
-        <div class="alert alert-danger">Category and Subcategory are required</div>
+      <div class="alert alert-danger">Category and Subcategory are required</div>
+    </div>
+    <div>
+      <div class="ml-3">
+        <label class="mr-3"><input type="checkbox" [(ngModel)]="customSalL" />Low</label>
+        <label class="mr-3"><input type="checkbox" [(ngModel)]="customSalM" />Moderate</label>
+        <label class="mr-3"><input type="checkbox" [(ngModel)]="customSalH" />High</label>
+        <label class="mr-3"><input type="checkbox" [(ngModel)]="customSalVH" />Very High</label>
       </div>
+      <div *ngIf="isSalSelectionEmpty" class="alert alert-danger">At least one SAL level is required</div>
+    </div>
     <button class="btn btn-primary" (click)="addCustomQuestion($event)">Add New Question</button>
   </div>
 
   <div class="mb-3 p-3 b-primary-200 br-standard">
-
     <h5>
       Search for Existing Question
     </h5>
     <p>
       Enter keywords to locate candidate questions. If a suitable candidate question
-      is available, click Add to include it in your set.
+      is available, select the applicable SAL levels for the question and click Add to include it in your set.
     </p>
 
-    <input id="txtSearchQuestionText" class="form-control mb-3" type="text">
+    <div class="d-flex flex-row mb-3">
+      <input id="txtSearchQuestionText" class="form-control" type="text" name="searchTerms" id="searchTerms"
+        [(ngModel)]="searchTerms" (keydown.enter)="search()">
+      <div>
+        <button type="submit" class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
+          matTooltip="Search questions" (click)="search()">
+          <mat-icon class="mr-1">search</mat-icon>Search
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="searchPerformed">
+
+      <div class="m-2" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
+      <div class="m-2" *ngIf="searchHits.length === 1">1 question was found</div>
+
+      <hr *ngIf="searchHits.length > 0" class="hr-sal" />
+
+      <div *ngFor="let q of searchHits; let i = index">
+        <div class="d-flex flex-row justify-content-between">
+          <div class="ml-2 mr-3">
+            <div [innerHTML]="q.QuestionText" class="mb-2">
+            </div>
+            <div>
+              <strong>Category:</strong> {{q.Category}}
+            </div>
+            <div>
+              <strong>Subcategory:</strong> {{q.Subcategory}}
+            </div>
+
+            <h6 class="mt-3">
+              SAL Levels
+            </h6>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" ngbCheckboxGroup>
+              <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label" (click)="toggleSAL(q, 'L')">
+                <input ngbButton class="form-check-input" type="checkbox" autocomplete="off" id="SAL-L-{{q.QuestionID}}"
+                  name="SAL-L-{{q.QuestionID}}" [checked]="hasSAL(q, 'L')" />Low</label>
+              <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label" (click)="toggleSAL(q, 'M')">
+                <input ngbButton class="form-check-input" type="checkbox" autocomplete="off" id="SAL-M-{{q.QuestionID}}"
+                  name="SAL-M-{{q.QuestionID}}" [ngModel]="hasSAL(q, 'M')" />Moderate</label>
+              <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label" (click)="toggleSAL(q, 'H')">
+                <input ngbButton class="form-check-input" type="checkbox" autocomplete="off" id="SAL-H-{{q.QuestionID}}"
+                  name="SAL-H-{{q.QuestionID}}" [checked]="hasSAL(q, 'H')" />High</label>
+              <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label" (click)="toggleSAL(q, 'VH')">
+                <input ngbButton class="form-check-input" type="checkbox" autocomplete="off" id="SAL-VH-{{q.QuestionID}}"
+                  name="SAL-VH-{{q.QuestionID}}" [checked]="hasSAL(q, 'VH')" />Very
+                High</label>
+            </div>
+            <div class="btn-group btn-group-toggle" ngbCheckboxGroup>
+              <label ngbButtonLabel class="btn btn-level btn-rounded">
+                <input ngbButton type="checkbox" id="SAL-L-{{q.QuestionID}}" name="SAL-L-{{q.QuestionID}}" [(ngModel)]="q.Sal['L']" />Low</label>
+              <label ngbButtonLabel class="btn btn-level btn-rounded">
+                <input ngbButton type="checkbox" id="SAL-M-{{q.QuestionID}}" name="SAL-M-{{q.QuestionID}}" [(ngModel)]="q.Sal['M']" />Moderate</label>
+              <label ngbButtonLabel class="btn btn-level btn-rounded">
+                <input ngbButton type="checkbox" id="SAL-H-{{q.QuestionID}}" name="SAL-H-{{q.QuestionID}}" [(ngModel)]="q.Sal['H']" />High</label>
+              <label ngbButtonLabel class="btn btn-level btn-rounded">
+                <input ngbButton type="checkbox" id="SAL-VH-{{q.QuestionID}}" name="SAL-VH-{{q.QuestionID}}"
+                  [(ngModel)]="q.Sal['VH']" />Very
+                High</label>
+            </div>
+
+            <div>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L')" />Low</label>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M')" />Moderate</label>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H')" />High</label>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH')" />Very High</label>
+            </div>
+            <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
+          </div>
+          <div>
+            <button class="btn btn-primary" (click)="selectExistingQuestion(q)">+</button>
+          </div>
+        </div>
+
+        <hr *ngIf="i < searchHits.length - 1" class="hr-sal" />
+      </div>
+    </div>
   </div>
 
 </div>

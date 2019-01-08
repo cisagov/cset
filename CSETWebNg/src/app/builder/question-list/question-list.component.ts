@@ -26,6 +26,7 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { MatDialog } from '@angular/material';
+import { QuestionResult } from '../../models/set-builder.model';
 
 @Component({
   selector: 'app-question-list',
@@ -33,7 +34,7 @@ import { MatDialog } from '@angular/material';
 })
 export class QuestionListComponent implements OnInit {
 
-  questionList: any;
+  questionResponse: any;
 
   constructor(
     private setBuilderSvc: SetBuilderService,
@@ -42,7 +43,7 @@ export class QuestionListComponent implements OnInit {
 
   ngOnInit() {
     this.setBuilderSvc.getQuestionList().subscribe(data => {
-      this.questionList = data;
+      this.questionResponse = data;
     });
   }
 
@@ -67,8 +68,9 @@ export class QuestionListComponent implements OnInit {
   dropQuestion(question) {
     console.log(question);
 
-    this.questionList.splice(
-      this.questionList.findIndex(x => x.QuestionID === question.QuestionID), 1);
+    // TODO:  find the question in the structure and remove it
+    // this.questionResponse.splice(
+    //   this.questionList.findIndex(x => x.QuestionID === question.QuestionID), 1);
 
     const setName = sessionStorage.getItem('setName');
 
@@ -86,4 +88,38 @@ export class QuestionListComponent implements OnInit {
     );
   }
 
+  /**
+   *
+   */
+  hasSAL(q: QuestionResult, level: string): boolean {
+    return (q.SalLevels.indexOf(level) >= 0);
+  }
+
+  /**
+   * Includes/removes the level from the list of applicable SAL levels for the question.
+   */
+  toggleSAL(q: QuestionResult, level: string, e: Event) {
+    let state = false;
+
+    const a = q.SalLevels.indexOf(level);
+    if (a === -1) {
+      q.SalLevels.push(level);
+      state = true;
+    } else {
+      q.SalLevels = q.SalLevels.filter(x => x !== level);
+      state = false;
+    }
+
+    this.setBuilderSvc.setQuestionSalLevel(q.QuestionID, level, state).subscribe();
+  }
+
+  /**
+   * Indicates if no SAL levels are currently selected for the question.
+   */
+  missingSAL(q: QuestionResult) {
+    if (q.SalLevels.length === 0) {
+      return true;
+    }
+    return false;
+  }
 }

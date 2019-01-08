@@ -35,3 +35,28 @@ export interface CategoryEntry {
     ID?: number;
     Text?: string;
 }
+
+/**
+ * For submitting a question search request.
+ * SetName is included to avoid returning questions already
+ * in the Set.
+ */
+export interface QuestionSearch {
+    SearchTerms?: string;
+    SetName?: string;
+}
+
+/**
+ * Used when searching questions to add to a set.
+ */
+export interface QuestionResult {
+    QuestionID?: number;
+    QuestionText?: string;
+    SelectedForAdd?: boolean;
+    CategoryId?: number;
+    SubcategoryId?: number;
+    SalLevels?: string[];
+
+    // This is just an experiment to bind to Bootstrap checkboxes.  Not working yet.
+    Sal: { [level: string]: boolean };
+}

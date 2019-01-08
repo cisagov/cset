@@ -361,7 +361,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-        private string FormatLineBreaks(string s)
+        public static string FormatLineBreaks(string s)
         {
             return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
         }
