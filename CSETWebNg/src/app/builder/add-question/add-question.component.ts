@@ -47,8 +47,9 @@ export class AddQuestionComponent implements OnInit {
   categories: CategoryEntry[];
   subcategories: CategoryEntry[];
   selectedCatId: number = 0;
-  selectedSubcatId: number = 0;
+  subcatText: string;
 
+  searching = false;
   searchTerms: string;
   searchPerformed = false;
   searchHits: QuestionResult[] = null;
@@ -57,42 +58,17 @@ export class AddQuestionComponent implements OnInit {
   constructor(private setBuilderSvc: SetBuilderService) { }
 
   ngOnInit() {
-    this.getCategories();
+    this.getCategoriesAndSubcategories();
   }
 
-  getCategories() {
-    this.setBuilderSvc.getCategories().subscribe(
-      (data: CategoryEntry[]) => {
-        this.categories = data;
-
-        // populate Subcategory dropdown based on Category
-        this.changeCategory(this.selectedCatId);
+  getCategoriesAndSubcategories() {
+    this.setBuilderSvc.getCategoriesAndSubcategories().subscribe(
+      (data: any) => {
+        this.categories = data.Categories;
+        this.subcategories = data.Subcategories;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
     );
-  }
-
-  /**
-   * When the user changes the selected category, get the list of corresponding subcategories.
-   * @param categoryId
-   */
-  changeCategory(categoryId: number) {
-    if (!categoryId) {
-      return;
-    }
-    if (categoryId === 0) {
-      return;
-    }
-
-    this.setBuilderSvc.getSubcategories(categoryId).subscribe(
-      (data: CategoryEntry[]) => {
-        this.subcategories = data;
-        this.selectedSubcatId = 0;
-      },
-      error => {
-        console.log('Error Getting Subcategories: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error Getting Subcategories (cont): ' + (<Error>error).stack);
-      });
   }
 
   /**
@@ -103,7 +79,7 @@ export class AddQuestionComponent implements OnInit {
     this.newQuestionText = this.newQuestionText.trim();
 
     this.isNewQuestionEmpty = (this.newQuestionText.length === 0);
-    this.isCatOrSubcatEmpty = this.selectedCatId === 0 || this.selectedSubcatId === 0;
+    this.isCatOrSubcatEmpty = this.selectedCatId === 0 || this.subcatText.trim().length === 0;
     this.isSalSelectionEmpty = !this.customSalL && !this.customSalM && !this.customSalH && !this.customSalVH;
     this.isDupeQuestion = false;
 
@@ -125,10 +101,10 @@ export class AddQuestionComponent implements OnInit {
       if (this.customSalM) { salLevels.push("M"); }
       if (this.customSalH) { salLevels.push("H"); }
       if (this.customSalVH) { salLevels.push("VH"); }
-      this.setBuilderSvc.addQuestion(this.newQuestionText, this.selectedCatId, this.selectedSubcatId, salLevels).subscribe(() => {
-        // navigate back to the questions list
-        this.setBuilderSvc.navQuestionList();
-      });
+      this.setBuilderSvc.addQuestion(this.newQuestionText, this.selectedCatId, this.subcatText, salLevels).subscribe(() => {
+          // navigate back to the questions list
+          this.setBuilderSvc.navQuestionList();
+        });
     });
   }
 
@@ -136,10 +112,12 @@ export class AddQuestionComponent implements OnInit {
    * Search questions to find matches to the specified terms.
    */
   search() {
+    this.searching = true;
     this.searchTerms = this.searchTerms.trim();
     this.setBuilderSvc.searchQuestions(this.searchTerms).subscribe((result: any[]) => {
       this.searchPerformed = true;
       this.searchHits = result;
+      this.searching = false;
       this.searchHits.forEach(q => {
         q.Sal = {};
         q.Sal['L'] = false;

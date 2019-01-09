@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div class="white-panel d-flex flex-column justify-content-start flex-11a oy-auto" style="height: 99%">
   <app-builder-breadcrumbs></app-builder-breadcrumbs>
   <div>
     <h3>
@@ -33,13 +33,28 @@
 
     <button class="btn btn-primary" (click)="navAddQuestion()">Add Question</button>
 
+    <div *ngIf="!initialized">
+      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+    <div *ngIf="!!questionResponse && questionResponse.Categories.length === 0" class="mt-3 mb-3">
+      No questions defined
+    </div>
+
     <div *ngFor="let cat of questionResponse?.Categories">
       <div class="group-heading mt-3">{{cat.CategoryName}}</div>
 
       <div *ngFor="let subcat of cat.Subcategories">
-        <div class="subcat-header flat-bottom">{{subcat.SubcategoryName}}</div>
+        <div class="subcat-header flat-bottom">
+          <div class="sub-head-2">
+            {{subcat.SubcategoryName}}
+          </div>
+        </div>
 
-        <div *ngFor="let q of subcat.Questions; let i = index" class="question-row d-flex flex-column p-3" [class.no-bottom-border]="i == (subcat.Questions.length - 1)">
+        <div *ngFor="let q of subcat.Questions; let i = index" class="question-row d-flex flex-column p-3"
+          [class.no-bottom-border]="i == (subcat.Questions.length - 1)">
           <div>
             {{ q.Title }}
           </div>
@@ -62,10 +77,10 @@
           <div class="w-100">
             <!-- SAL controls -->
             <div class="sal-checkboxes">
-              <label class="mr-3"><input type="checkbox" [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L')" />Low</label>
-              <label class="mr-3"><input type="checkbox" [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M')" />Moderate</label>
-              <label class="mr-3"><input type="checkbox" [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H')" />High</label>
-              <label class="mr-3"><input type="checkbox" [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH')" />Very
+              <label><input type="checkbox" [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L')" />Low</label>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M')" />Moderate</label>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H')" />High</label>
+              <label><input type="checkbox" [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH')" />Very
                 High</label>
             </div>
             <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>

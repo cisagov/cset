@@ -100,13 +100,8 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/GetQuestionsForSet?setName=' + sessionStorage.getItem('setName'));
     }
 
-    getCategories() {
-        return this.http.get(this.apiUrl + 'builder/GetCategories');
-    }
-
-    getSubcategories(categoryId: number) {
-        console.log(categoryId);
-        return this.http.get(this.apiUrl + 'builder/GetSubcategories?categoryId=' + categoryId);
+    getCategoriesAndSubcategories() {
+        return this.http.get(this.apiUrl + 'builder/GetCategoriesAndSubcategories');
     }
 
     existsQuestionText(questionText: string) {
@@ -115,13 +110,13 @@ export class SetBuilderService {
             headers);
     }
 
-    addQuestion(newQuestionText: string, category: number, subcategory: number, salLevels: string[]) {
+    addQuestion(newQuestionText: string, category: number, subcategoryText: string, salLevels: string[]) {
         const setName = sessionStorage.getItem('setName');
         const req = {
             SetName: setName,
             NewQuestionText: newQuestionText,
-            QuestionCategory: category,
-            QuestionSubcategory: subcategory,
+            QuestionCategoryID: category,
+            QuestionSubcategoryText: subcategoryText,
             SalLevels: salLevels
         };
         return this.http
@@ -154,7 +149,8 @@ export class SetBuilderService {
     /**
      *
      */
-    removeQuestion(setName: string, questionID: number) {
+    removeQuestion(questionID: number) {
+        const setName = sessionStorage.getItem('setName');
         const req = {
             SetName: setName,
             QuestionID: questionID

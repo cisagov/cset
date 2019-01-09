@@ -313,16 +313,14 @@ namespace CSETWeb_Api.BusinessManagers
                 NEW_QUESTION q = new NEW_QUESTION();
                 q.Simple_Question = request.NewQuestionText;
 
-                // std_ref + std_ref_number must be unique
+                // TODO:  std_ref + std_ref_number must be unique
                 q.Std_Ref = DateTime.Now.Millisecond.ToString();
                 q.Std_Ref_Number = 0;
 
                 q.Universal_Sal_Level = "L";
                 q.Weight = 0;
                 q.Original_Set_Name = request.SetName;
-
-                int headingPairId = GetHeadingPairId(request.QuestionCategory, request.QuestionSubcategory);
-                q.Heading_Pair_Id = headingPairId;
+                q.Heading_Pair_Id = GetHeadingPairId(request.QuestionCategoryID, request.QuestionSubcategoryText);
 
                 db.NEW_QUESTION.Add(q);
                 db.SaveChanges();
@@ -363,23 +361,55 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
-        /// 
+        /// Finds a record for the category/subcategory combination.
+        /// If there isn't a record, one is created.
+        /// If the user typed a new subcategory name, a new subcategory is created
+        /// and used for the combination.
         /// </summary>
         /// <returns></returns>
-        private int GetHeadingPairId(int catId, int subcatId)
+        private int GetHeadingPairId(int categoryId, string subcatText)
         {
+            int subcatID = 0;
+
             using (var db = new CSETWebEntities())
             {
-                var h = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Question_Group_Heading_Id == catId
-                        && x.Universal_Sub_Category_Id == subcatId).FirstOrDefault();
-
-                if (h != null)
+                var subcat = db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == subcatText).FirstOrDefault();
+                if (subcat != null)
                 {
-                    return h.Heading_Pair_Id;
-                }
-            }
+                    subcatID = subcat.Universal_Sub_Category_Id;
 
-            return 0;
+                    var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Question_Group_Heading_Id == categoryId
+                        && x.Universal_Sub_Category_Id == subcatID).FirstOrDefault();
+                    if (usch != null)
+                    {
+                        return usch.Heading_Pair_Id;
+                    }
+                }
+                else
+                {
+                    // The subcategory name is new -- create a new subcategory
+                    UNIVERSAL_SUB_CATEGORIES sc = new UNIVERSAL_SUB_CATEGORIES
+                    {
+                        Universal_Sub_Category = subcatText
+                    };
+                    db.UNIVERSAL_SUB_CATEGORIES.Add(sc);
+                    db.SaveChanges();
+
+                    subcatID = sc.Universal_Sub_Category_Id;
+                }
+
+
+                // The USCH combination is not yet defined -- create a new USCH
+                UNIVERSAL_SUB_CATEGORY_HEADINGS u1 = new UNIVERSAL_SUB_CATEGORY_HEADINGS
+                {
+                    Question_Group_Heading_Id = categoryId,
+                    Universal_Sub_Category_Id = subcatID
+                };
+                db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(u1);
+                db.SaveChanges();
+
+                return u1.Heading_Pair_Id;
+            }
         }
 
 
@@ -461,57 +491,41 @@ namespace CSETWeb_Api.BusinessManagers
         /// Should we ignore categories that aren't paired with any subcategories
         /// in the UNIVERSAL_SUB_CATEGORY_HEADINGS table?
         /// </summary>
-        public List<CategoryEntry> GetCategories()
+        public CategoriesAndSubcategories GetCategoriesAndSubcategories()
         {
-            List<CategoryEntry> response = new List<CategoryEntry>();
+            CategoriesAndSubcategories response = new CategoriesAndSubcategories();
+            List<CategoryEntry> categoryList = new List<CategoryEntry>();
 
             using (var db = new CSETWebEntities())
             {
-                var cats = from qgh in db.QUESTION_GROUP_HEADING
-                           join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on qgh.Question_Group_Heading_Id equals usch.Question_Group_Heading_Id
-                           where usch.Question_Group_Heading_Id > 0
-                           select qgh;
-                foreach (var c in cats.Distinct().ToList())
+                var categories = db.QUESTION_GROUP_HEADING.ToList();
+                foreach (var c in categories)
                 {
                     CategoryEntry entry = new CategoryEntry
                     {
                         Text = c.Question_Group_Heading1,
                         ID = c.Question_Group_Heading_Id
                     };
-                    response.Add(entry);
+                    categoryList.Add(entry);
                 }
-            }
 
-            return response;
-        }
+                response.Categories = categoryList;
 
 
-        /// <summary>
-        /// Returns a list of all Subcategories for the specified Question Group Heading (Category).
-        /// </summary>
-        /// <returns></returns>
-        public List<CategoryEntry> GetSubcategories(int categoryId)
-        {
-            List<CategoryEntry> response = new List<CategoryEntry>();
+                List<CategoryEntry> subcategoryList = new List<CategoryEntry>();
 
-            using (var db = new CSETWebEntities())
-            {
-                var query = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
-                            from usc in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
-                            where usch.Question_Group_Heading_Id == categoryId
-                            select new CategoryEntry
-                            {
-                                ID = usc.Universal_Sub_Category_Id,
-                                Text = usc.Universal_Sub_Category
-                            };
-
-                foreach (var s in query.ToList())
+                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.ToList();
+                foreach (var s in subcategories)
                 {
-                    CategoryEntry entry = new CategoryEntry();
-                    entry.Text = s.Text;
-                    entry.ID = s.ID;
-                    response.Add(entry);
+                    CategoryEntry entry = new CategoryEntry
+                    {
+                        Text = s.Universal_Sub_Category,
+                        ID = s.Universal_Sub_Category_Id
+                    };
+                    subcategoryList.Add(entry);
                 }
+
+                response.Subcategories = subcategoryList;
             }
 
             return response;

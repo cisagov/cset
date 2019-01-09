@@ -35,6 +35,7 @@ import { QuestionResult } from '../../models/set-builder.model';
 export class QuestionListComponent implements OnInit {
 
   questionResponse: any;
+  initialized = false;
 
   constructor(
     private setBuilderSvc: SetBuilderService,
@@ -44,6 +45,7 @@ export class QuestionListComponent implements OnInit {
   ngOnInit() {
     this.setBuilderSvc.getQuestionList().subscribe(data => {
       this.questionResponse = data;
+      this.initialized = true;
     });
   }
 
@@ -64,17 +66,32 @@ export class QuestionListComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Finds the question in the structure and removes it.
+   */
   dropQuestion(question) {
-    console.log(question);
+    this.questionResponse.Categories.forEach((cat: any, indexCat: number) => {
+      cat.Subcategories.forEach((subcat: any, indexSubcat: number) => {
+        const i = subcat.Questions.findIndex((x: any) => x.QuestionID === question.QuestionID);
+        if (i >= 0) {
 
-    // TODO:  find the question in the structure and remove it
-    // this.questionResponse.splice(
-    //   this.questionList.findIndex(x => x.QuestionID === question.QuestionID), 1);
+          // remove question
+          subcat.Questions.splice(i, 1);
 
-    const setName = sessionStorage.getItem('setName');
+          // remove empty subcategory
+          if (subcat.Questions.length === 0) {
+            cat.Subcategories.splice(indexSubcat, 1);
+          }
 
-    this.setBuilderSvc.removeQuestion(setName, question.QuestionID).subscribe(
+          // remove empty category
+          if (cat.Subcategories.length === 0) {
+            this.questionResponse.Categories.splice(indexCat, 1);
+          }
+        }
+      });
+    });
+
+    this.setBuilderSvc.removeQuestion(question.QuestionID).subscribe(
       (response: {}) => { },
       error => {
         this.dialog

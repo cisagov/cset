@@ -82,8 +82,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public string SetName;
         public int QuestionID;
-        public int QuestionCategory;
-        public int QuestionSubcategory;
+        public int QuestionCategoryID;
+
+        /// <summary>
+        /// The name of a new subcategory.
+        /// </summary>
+        public string QuestionSubcategoryText;
 
         public List<string> SalLevels;
 
@@ -91,6 +95,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// Used when creating a new question from text.
         /// </summary>
         public string NewQuestionText;
+    }
+
+    public class CategoriesAndSubcategories
+    {
+        public List<CategoryEntry> Categories;
+        public List<CategoryEntry> Subcategories;
     }
 
     public class CategoryEntry

@@ -134,19 +134,11 @@ namespace CSETWeb_Api.Controllers
 
 
         [HttpGet]
-        [Route("api/builder/GetCategories")]
-        public List<CategoryEntry> GC()
+        [Route("api/builder/GetCategoriesAndSubcategories")]
+        public CategoriesAndSubcategories GetCategoriesAndSubcategories()
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            return m.GetCategories();
-        }
-
-        [HttpGet]
-        [Route("api/builder/GetSubcategories")]
-        public List<CategoryEntry> GSC([FromUri] int categoryId)
-        {
-            StandardBuilderManager m = new StandardBuilderManager();
-            return m.GetSubcategories(categoryId);
+            return m.GetCategoriesAndSubcategories();
         }
 
         [HttpPost]
