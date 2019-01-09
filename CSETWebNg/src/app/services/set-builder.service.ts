@@ -180,6 +180,9 @@ export class SetBuilderService {
             );
     }
 
+    /**
+     *
+     */
     setQuestionSalLevel(questionID: number, level: string, state: boolean) {
         const salParms = {
             QuestionID: questionID,
@@ -191,6 +194,22 @@ export class SetBuilderService {
             .post(
                 this.apiUrl + 'builder/SetQuestionSalLevel',
                 salParms,
+                headers
+            );
+    }
+
+    /**
+     *
+     */
+    updateQuestionText(q: QuestionResult) {
+        const parms = {
+            QuestionID: q.QuestionID,
+            QuestionText: q.QuestionText
+        };
+        return this.http
+            .post(
+                this.apiUrl + 'builder/UpdateQuestionText',
+                parms,
                 headers
             );
     }

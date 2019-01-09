@@ -190,7 +190,9 @@ namespace CSETWeb_Api.BusinessManagers
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
                     PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.Subcategory);
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
-                    q.IsCustom = nqs.SET.Is_Custom;
+
+                    // Look at the original set to determine if the question is 'custom' and can be edited
+                    q.IsCustom = db.SETS.Where(x => x.Set_Name == nqs.NEW_QUESTION.Original_Set_Name).FirstOrDefault().Is_Custom;
 
 
                     // Get the SAL levels for this question-set
@@ -199,8 +201,6 @@ namespace CSETWeb_Api.BusinessManagers
                     {
                         q.SalLevels.Add(l.Universal_Sal_Level);
                     }
-
-                    q.IsCustom = false;
 
                     response.Add(q);
                 }
@@ -681,6 +681,48 @@ namespace CSETWeb_Api.BusinessManagers
                         db.SaveChanges();
                     }
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Updates the question text.  Only questions originally attached
+        /// to a 'custom' set can have their text updated.
+        /// </summary>
+        public void UpdateQuestionText(int questionID, string text)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                // is this a custom question?
+                var query = from q in db.NEW_QUESTION
+                            join s in db.SETS on q.Original_Set_Name equals s.Set_Name
+                            where q.Question_Id == questionID
+                            select s;
+
+                var origSet = query.FirstOrDefault();
+
+                // if the question's original set does not exist (this should never happen), do nothing.
+                if (origSet == null)
+                {
+                    return;
+                }
+
+                // if the question's original set is not 'custom', do nothing.
+                if (!origSet.Is_Custom)
+                {
+                    return;
+                }
+
+                // update text
+                var question = db.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefault();
+                if (question == null)
+                {
+                    return;
+                }
+
+                question.Simple_Question = text;
+                db.NEW_QUESTION.AddOrUpdate(question);
+                db.SaveChanges();
             }
         }
 

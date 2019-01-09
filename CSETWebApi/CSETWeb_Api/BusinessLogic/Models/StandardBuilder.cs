@@ -118,4 +118,10 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public bool State;
         public string Level;
     }
+
+    public class QuestionTextUpdateParms
+    {
+        public int QuestionID;
+        public string QuestionText;
+    }
 }

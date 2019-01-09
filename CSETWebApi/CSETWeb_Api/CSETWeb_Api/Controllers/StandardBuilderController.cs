@@ -151,10 +151,18 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/builder/SetQuestionSalLevel")]
-        public void SetQuestionSalLevel([FromBody] SalParms salParms)
+        public void SetQuestionSalLevel([FromBody] SalParms parms)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            m.SetQuestionSalLevel(salParms);
+            m.SetQuestionSalLevel(parms);
+        }
+
+        [HttpPost]
+        [Route("api/builder/UpdateQuestionText")]
+        public void UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.UpdateQuestionText(parms.QuestionID, parms.QuestionText);
         }
     }
 }

@@ -36,6 +36,7 @@ export class QuestionListComponent implements OnInit {
 
   questionResponse: any;
   initialized = false;
+  questionBeingEdited: QuestionResult = null;
 
   constructor(
     private setBuilderSvc: SetBuilderService,
@@ -53,7 +54,25 @@ export class QuestionListComponent implements OnInit {
     this.setBuilderSvc.navAddQuestion();
   }
 
-  removeQuestion(q) {
+  /**
+   *
+   */
+  startQuestionEdit(q: QuestionResult, e: Event) {
+    this.questionBeingEdited = q;
+  }
+
+  /**
+   *
+   */
+  endQuestionEdit(q: QuestionResult) {
+    this.questionBeingEdited = null;
+    this.setBuilderSvc.updateQuestionText(q).subscribe();
+  }
+
+  /**
+   *
+   */
+  removeQuestion(q: QuestionResult) {
     // confirm
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
@@ -69,10 +88,10 @@ export class QuestionListComponent implements OnInit {
   /**
    * Finds the question in the structure and removes it.
    */
-  dropQuestion(question) {
+  dropQuestion(q: QuestionResult) {
     this.questionResponse.Categories.forEach((cat: any, indexCat: number) => {
       cat.Subcategories.forEach((subcat: any, indexSubcat: number) => {
-        const i = subcat.Questions.findIndex((x: any) => x.QuestionID === question.QuestionID);
+        const i = subcat.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
         if (i >= 0) {
 
           // remove question
@@ -91,7 +110,7 @@ export class QuestionListComponent implements OnInit {
       });
     });
 
-    this.setBuilderSvc.removeQuestion(question.QuestionID).subscribe(
+    this.setBuilderSvc.removeQuestion(q.QuestionID).subscribe(
       (response: {}) => { },
       error => {
         this.dialog
@@ -99,7 +118,7 @@ export class QuestionListComponent implements OnInit {
           .afterClosed()
           .subscribe();
         console.log(
-          "Error removing assessment contact: " + JSON.stringify(question)
+          "Error removing assessment contact: " + JSON.stringify(q)
         );
       }
     );
@@ -110,6 +129,16 @@ export class QuestionListComponent implements OnInit {
    */
   hasSAL(q: QuestionResult, level: string): boolean {
     return (q.SalLevels.indexOf(level) >= 0);
+  }
+
+  /**
+   * Indicates if no SAL levels are currently selected for the question.
+   */
+  missingSAL(q: QuestionResult) {
+    if (q.SalLevels.length === 0) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -128,15 +157,5 @@ export class QuestionListComponent implements OnInit {
     }
 
     this.setBuilderSvc.setQuestionSalLevel(q.QuestionID, level, state).subscribe();
-  }
-
-  /**
-   * Indicates if no SAL levels are currently selected for the question.
-   */
-  missingSAL(q: QuestionResult) {
-    if (q.SalLevels.length === 0) {
-      return true;
-    }
-    return false;
   }
 }
