@@ -164,5 +164,13 @@ namespace CSETWeb_Api.Controllers
             StandardBuilderManager m = new StandardBuilderManager();
             m.UpdateQuestionText(parms.QuestionID, parms.QuestionText);
         }
+
+        [HttpGet]
+        [Route("api/builder/IsQuestionInUse")]
+        public bool IsQuestionInUse([FromUri] int questionID)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.IsQuestionInUse(questionID);
+        }
     }
 }

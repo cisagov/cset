@@ -20,9 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div class="white-panel d-flex flex-column justify-content-start flex-11a w-100">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
-  <div>
+  <div class="w-100">
     <h3>
       Standard And Question Set Builder
     </h3>
@@ -36,15 +36,15 @@
       New Standard/Question Set
     </button>
 
-    <div *ngIf="setDetailList === null">
+    <div *ngIf="!setDetailList">
       <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
         <div class="spinner-size-50"></div>
       </div>
     </div>
-    <div *ngIf="setDetailList?.length > 0">
-      <table>
+    <div *ngIf="setDetailList?.length > 0" class="w-100">
+      <table class="w-100">
         <tr *ngFor="let s of setDetailList">
-          <td>
+          <td class="w-100">
             <button class="btn btn-link" (click)="this.setBuilderSvc.loadCustomSet(s.SetName)">
               {{s.FullName}}
             </button>

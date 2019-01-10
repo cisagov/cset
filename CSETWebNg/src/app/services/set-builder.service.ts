@@ -54,7 +54,6 @@ export class SetBuilderService {
      * @param setName
      */
     cloneCustomSet(setName: string) {
-        console.log('service cloneCustomSet');
         return this.http.get(this.apiUrl + 'builder/CloneSet?setName=' + setName);
     }
 
@@ -212,5 +211,9 @@ export class SetBuilderService {
                 parms,
                 headers
             );
+    }
+
+    isQuestionInUse(q: QuestionResult) {
+        return this.http.get(this.apiUrl + 'builder/IsQuestionInUse?questionID=' + q.QuestionID);
     }
 }

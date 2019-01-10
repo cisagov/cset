@@ -47,7 +47,7 @@ declare var $: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class AppComponent implements OnInit {
   docUrl: string;
@@ -75,27 +75,27 @@ export class AppComponent implements OnInit {
       }
     }
 
-        // initialize footer behavior
-        // $(document).click(function (e) {    
-        //   if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("show")) {
-        //     $('#collapseFooter').collapse('toggle');
-        //   }
-        // });
-    
-        // $(document).on('shown.bs.collapse', '#collapseFooter', function () {
-        //   $("#footerExpander").addClass("expand-flip");
-        // });
-    
-        // $(document).on('hidden.bs.collapse', '#collapseFooter', function () {
-        //   $("#footerExpander").removeClass("expand-flip");
-        // });
+    // initialize footer behavior
+    // $(document).click(function (e) {
+    //   if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("show")) {
+    //     $('#collapseFooter').collapse('toggle');
+    //   }
+    // });
 
-        
-        // $(document).click(function (e) {    
-        //   if ($(e.target).closest('.footer').length === 0 ) {
-        //     $('#footerExpanderButton').collapse('toggleFooter');
-        //   }
-        // });
+    // $(document).on('shown.bs.collapse', '#collapseFooter', function () {
+    //   $("#footerExpander").addClass("expand-flip");
+    // });
+
+    // $(document).on('hidden.bs.collapse', '#collapseFooter', function () {
+    //   $("#footerExpander").removeClass("expand-flip");
+    // });
+
+
+    // $(document).click(function (e) {
+    //   if ($(e.target).closest('.footer').length === 0 ) {
+    //     $('#footerExpanderButton').collapse('toggleFooter');
+    //   }
+    // });
 
 
     this.setupShortCutKeys();
@@ -106,6 +106,19 @@ export class AppComponent implements OnInit {
       localStorage.removeItem("returnPath");
       this.router.navigate([rpath], { queryParamsHandling: "preserve" });
     }
+  }
+
+  isSetBuilder(rpath: string) {
+    if (!rpath) {
+      return false;
+    }
+    if (rpath === '/set-builder'
+      || rpath.startsWith('/custom-set')
+      || rpath.startsWith('/question-list')
+      || rpath.startsWith('/add-question')) {
+      return true;
+    }
+    return false;
   }
 
 
@@ -299,16 +312,16 @@ export class AppComponent implements OnInit {
   }
 
   toggleFooter() {
-      this.isFooterVisible = !this.isFooterVisible;
-      //this.accordion.toggle('footerPanel');
-      // if (this.accordion.isExpanded('footerPanel') == true) {
-      //   this.accordion.collapse('footerPanel');
-      // }
-      // else {
-      //   this.accordion.expand('footerPanel');
-      // }
-      
-      
+    this.isFooterVisible = !this.isFooterVisible;
+    // this.accordion.toggle('footerPanel');
+    // if (this.accordion.isExpanded('footerPanel') == true) {
+    //   this.accordion.collapse('footerPanel');
+    // }
+    // else {
+    //   this.accordion.expand('footerPanel');
+    // }
+
+
   }
   // collapseFooterIfOpen() {
   //   if (this.accordion.isExpanded('footerPanel') == true) {

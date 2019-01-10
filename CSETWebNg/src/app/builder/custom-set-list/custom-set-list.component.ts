@@ -28,7 +28,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-custom-set-list',
-  templateUrl: './custom-set-list.component.html'
+  templateUrl: './custom-set-list.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: {class: 'd-flex flex-column flex-11a w-100'}
 })
 export class SetListComponent implements OnInit {
 

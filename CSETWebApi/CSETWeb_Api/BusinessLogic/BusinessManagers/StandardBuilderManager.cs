@@ -188,10 +188,10 @@ namespace CSETWeb_Api.BusinessManagers
                     QuestionDetail q = new QuestionDetail();
                     q.QuestionID = nqs.NEW_QUESTION.Question_Id;
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
-                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.Subcategory);
+                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.Subcategory, ref q.SubHeading);
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
 
-                    // Look at the original set to determine if the question is 'custom' and can be edited
+                    // Look at the question's original set to determine if the question is 'custom' and can be edited
                     q.IsCustom = db.SETS.Where(x => x.Set_Name == nqs.NEW_QUESTION.Original_Set_Name).FirstOrDefault().Is_Custom;
 
 
@@ -228,6 +228,7 @@ namespace CSETWeb_Api.BusinessManagers
                         subcat = new QuestionListSubcategory();
                         cat.Subcategories.Add(subcat);
                         subcat.SubcategoryName = q.Subcategory;
+                        subcat.SubHeading = q.SubHeading;
                         currentSubcategory = q.Subcategory;
                     }
 
@@ -244,17 +245,18 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat, ref string subcat)
+        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat, ref string subcat, ref string subheading)
         {
             var query = from h in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                         from h1 in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == h.Question_Group_Heading_Id)
                         from h2 in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == h.Universal_Sub_Category_Id)
                         where h.Heading_Pair_Id == headingPairId
-                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category };
+                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category, h.Sub_Heading_Question_Description };
 
             var result = query.FirstOrDefault();
             cat = result.Question_Group_Heading1;
             subcat = result.Universal_Sub_Category;
+            subheading = result.Sub_Heading_Question_Description;
         }
 
 
@@ -559,7 +561,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 foreach (var hit in hits.ToList())
                 {
-                    if (!includedQuestions.Contains(hit.q.Question_Id) && !EncryptedQuestionText(hit.q.Simple_Question))
+                    if (!includedQuestions.Contains(hit.q.Question_Id) && !IsTextEncrypted(hit.q.Simple_Question))
                     {
                         QuestionDetail candidate = new QuestionDetail
                         {
@@ -580,8 +582,7 @@ namespace CSETWeb_Api.BusinessManagers
                             candidate.SalLevels.Add(s);
                         }
 
-                        candidateQuestions.Add(candidate);
-                            
+                        candidateQuestions.Add(candidate);                            
                     }
                 }
 
@@ -627,7 +628,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (!candidateQuestions.Exists(q => q.QuestionID == hit.q.Question_Id))
                     {
-                        if (!includedQuestions.Contains(hit.q.Question_Id) && !EncryptedQuestionText(hit.q.Simple_Question))
+                        if (!includedQuestions.Contains(hit.q.Question_Id) && !IsTextEncrypted(hit.q.Simple_Question))
                         {
                             candidateQuestions.Add(new QuestionDetail
                             {
@@ -728,11 +729,36 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// Returns a boolean indicating if the question is used by multiple SETs
+        /// or has been answered in any ASSESSMENT.
+        /// </summary>
+        /// <param name="questionID"></param>
+        /// <returns></returns>
+        public bool IsQuestionInUse(int questionID)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                if (db.NEW_QUESTION_SETS.Where(x => x.Question_Id == questionID).Count() > 1)
+                {
+                    return true;
+                }
+
+                if (db.ANSWERs.Where(x => x.Question_Or_Requirement_Id == questionID).Count() > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
         /// Try to determine if this an encrypted question.
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private bool EncryptedQuestionText(string text)
+        private bool IsTextEncrypted(string text)
         {
             if (!text.Contains(" ") && text.Length > 10)
             {

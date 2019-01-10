@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, ViewChild } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
@@ -37,6 +37,9 @@ export class QuestionListComponent implements OnInit {
   questionResponse: any;
   initialized = false;
   questionBeingEdited: QuestionResult = null;
+  editedQuestionInUse = false;
+
+  @ViewChild('editQ') editControl;
 
   constructor(
     private setBuilderSvc: SetBuilderService,
@@ -55,16 +58,33 @@ export class QuestionListComponent implements OnInit {
   }
 
   /**
+   * Converts linebreak characters to HTML <br> tag.
+   */
+  formatLinebreaks(text: string) {
+    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  }
+
+  /**
    *
    */
-  startQuestionEdit(q: QuestionResult, e: Event) {
+  startQuestionEdit(q: QuestionResult) {
     this.questionBeingEdited = q;
+
+    setTimeout(() => {
+      this.editControl.nativeElement.focus();
+      this.editControl.nativeElement.setSelectionRange(0, 0);
+    }, 20);
+
+    this.setBuilderSvc.isQuestionInUse(q).subscribe((inUse: boolean) => {
+      this.editedQuestionInUse = inUse;
+    });
   }
 
   /**
    *
    */
   endQuestionEdit(q: QuestionResult) {
+    this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
     this.setBuilderSvc.updateQuestionText(q).subscribe();
   }

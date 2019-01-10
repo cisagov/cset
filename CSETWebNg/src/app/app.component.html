@@ -29,7 +29,7 @@
   <!-- Navbar -->
   <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
     <!-- Brand -->
-    <span [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
+    <span [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isSetBuilder()) }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a">
@@ -64,7 +64,8 @@
 
     <!-- Collapse Content -->
     <div class="collapse navbar-collapse" id="csetNavbarCollapse">
-      <div class="navbar-nav dropdown" *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule'">
+      <div class="navbar-nav dropdown" 
+        *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isSetBuilder(this.router.url)">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
           id="toolsDropdownMenuLink">
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
@@ -105,7 +106,8 @@
 
       <div class="navbar-nav">
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=resource-library"
-          target="csetResourceLibrary" *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule'">
+          target="csetResourceLibrary" 
+          *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isSetBuilder(this.router.url)">
           <span class="cset-icons-library fs-base-4 mr-2"></span>
           <span>Resource Library</span>
         </a>
@@ -151,7 +153,8 @@
       </div>
 
       <!-- USER PROFILE -->
-      <div class="navbar-nav dropdown" *ngIf="this.router.url !== '/resource-library' && this.router.url!='/importModule'">
+      <div class="navbar-nav dropdown" 
+        *ngIf="this.router.url !== '/resource-library' && this.router.url !== '/importModule' && !isSetBuilder(this.router.url)">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
           *ngIf="auth.userToken()">
           <span class="cset-icons-profile fs-base-4 mr-2"></span>

@@ -51,6 +51,16 @@
           <div class="sub-head-2">
             {{subcat.SubcategoryName}}
           </div>
+          <div *ngIf="!!subcat.SubHeading">
+            <button class="btn btn-link-subtle fs-small">
+              {{subcat.SubHeading}} <span class="cset-icons-pencil fs-small"></span>
+            </button>
+          </div>
+          <div *ngIf="!subcat.SubHeading">
+            <button class="btn btn-link-subtle font-italic fs-small">
+              Click to add subcategory question <span class="cset-icons-pencil fs-small"></span>
+            </button>
+          </div>
         </div>
 
         <div *ngFor="let q of subcat.Questions; let i = index" class="question-row d-flex flex-column p-3"
@@ -60,16 +70,19 @@
           </div>
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
             <div class="d-flex flex-column mb-3 mr-3 w-100">
-              <div *ngIf="questionBeingEdited !== q">
-                {{ q.QuestionText }}
+              <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.QuestionText)">
               </div>
               <div *ngIf="questionBeingEdited === q" class="w-100">
-                <textarea id="Q_{{q.QuestionID}}" type="text" class="form-control w-100 text-left" [(ngModel)]="q.QuestionText"
-                (blur)="endQuestionEdit(q)"></textarea>
+                <div class="alert alert-danger" *ngIf="editedQuestionInUse">
+                  This question is in use in other standards/question sets or assessments.
+                  Do not change the meaning of the question text.
+                </div>
+                <textarea id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
+                  [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">
-              <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q, $event)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+              <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
                 <span class="cset-icons-pencil fs-base-2"></span>
                 <span class="d-none d-md-flex fs-smaller">Change</span>
               </button>

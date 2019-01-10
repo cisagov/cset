@@ -64,6 +64,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
     public class QuestionListSubcategory
     {
         public string SubcategoryName;
+        public string SubHeading;
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
     }
 
@@ -73,6 +74,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string QuestionText;
         public string Category;
         public string Subcategory;
+        public string SubHeading;
         public string Title;
         public bool IsCustom;
         public List<string> SalLevels = new List<string>();
