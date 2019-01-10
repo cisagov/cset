@@ -188,7 +188,7 @@ namespace CSETWeb_Api.BusinessManagers
                     QuestionDetail q = new QuestionDetail();
                     q.QuestionID = nqs.NEW_QUESTION.Question_Id;
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
-                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.Subcategory, ref q.SubHeading);
+                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
 
                     // Look at the question's original set to determine if the question is 'custom' and can be edited
@@ -226,6 +226,7 @@ namespace CSETWeb_Api.BusinessManagers
                     if (q.Subcategory != currentSubcategory)
                     {
                         subcat = new QuestionListSubcategory();
+                        subcat.PairID = q.PairID;
                         cat.Subcategories.Add(subcat);
                         subcat.SubcategoryName = q.Subcategory;
                         subcat.SubHeading = q.SubHeading;
@@ -245,17 +246,19 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat, ref string subcat, ref string subheading)
+        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat, 
+            ref int pairID, ref string subcat, ref string subheading)
         {
             var query = from h in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                         from h1 in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == h.Question_Group_Heading_Id)
                         from h2 in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == h.Universal_Sub_Category_Id)
                         where h.Heading_Pair_Id == headingPairId
-                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category, h.Sub_Heading_Question_Description };
+                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category, h.Heading_Pair_Id, h.Sub_Heading_Question_Description };
 
             var result = query.FirstOrDefault();
             cat = result.Question_Group_Heading1;
             subcat = result.Universal_Sub_Category;
+            pairID = result.Heading_Pair_Id;
             subheading = result.Sub_Heading_Question_Description;
         }
 
@@ -750,6 +753,33 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Updates the question text.  Only questions originally attached
+        /// to a 'custom' set can have their text updated.
+        /// </summary>
+        public void UpdateHeadingText(int pairID, string text)
+        {
+            using (var db = new CSETWebEntities())
+            {
+
+                //  TODO:::  ARE ALL HEADING UPDATES ALLOWED?  ARE THERE ANY THAT ARE NOT?
+
+
+
+                var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefault();
+
+                if (usch == null)
+                {
+                    return;
+                }
+
+                usch.Sub_Heading_Question_Description = string.IsNullOrEmpty(text) ? null : text;
+                db.UNIVERSAL_SUB_CATEGORY_HEADINGS.AddOrUpdate(usch);
+                db.SaveChanges();
+            }
         }
 
 

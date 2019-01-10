@@ -28,7 +28,9 @@ import { ChartLegendLabelItem } from 'chart.js';
 
 @Component({
   selector: 'app-add-question',
-  templateUrl: './add-question.component.html'
+  templateUrl: './add-question.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class AddQuestionComponent implements OnInit {
 

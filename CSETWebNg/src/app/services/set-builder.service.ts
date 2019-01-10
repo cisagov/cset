@@ -216,4 +216,20 @@ export class SetBuilderService {
     isQuestionInUse(q: QuestionResult) {
         return this.http.get(this.apiUrl + 'builder/IsQuestionInUse?questionID=' + q.QuestionID);
     }
+
+    /**
+     *
+     */
+    updateHeadingText(subcat) {
+        const parms = {
+            PairID: subcat.PairID,
+            HeadingText: subcat.SubHeading
+        };
+        return this.http
+            .post(
+                this.apiUrl + 'builder/UpdateHeadingText',
+                parms,
+                headers
+            );
+    }
 }

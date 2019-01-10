@@ -20,49 +20,47 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a w-100">
-    <app-builder-breadcrumbs></app-builder-breadcrumbs>
-  <div class="w-100">
-    <h3>
-      Standard And Question Set Builder
-    </h3>
-    <p>
-      This tool allows you to define your own custom standard or question set for an assessment.
-    </p>
-    <p>
-      If you wish to build a question set, create a single standard and attach all questions to it.
-    </p>
-    <button class="btn btn-primary" (click)="this.setBuilderSvc.newCustomSet()">
-      New Standard/Question Set
-    </button>
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <h3>
+    Standard And Question Set Builder
+  </h3>
+  <p>
+    This tool allows you to define your own custom standard or question set for an assessment.
+  </p>
+  <p>
+    If you wish to build a question set, create a single standard and attach all questions to it.
+  </p>
+  <button class="btn btn-primary" (click)="this.setBuilderSvc.newCustomSet()">
+    New Standard/Question Set
+  </button>
 
-    <div *ngIf="!setDetailList">
-      <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-        <div class="spinner-size-50"></div>
-      </div>
+  <div *ngIf="!setDetailList">
+    <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+      <div class="spinner-size-50"></div>
     </div>
-    <div *ngIf="setDetailList?.length > 0" class="w-100">
-      <table class="w-100">
-        <tr *ngFor="let s of setDetailList">
-          <td class="w-100">
-            <button class="btn btn-link" (click)="this.setBuilderSvc.loadCustomSet(s.SetName)">
-              {{s.FullName}}
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-primary" (click)="this.cloneSet(s.SetName)">clone</button>
-          </td>
-          <td>
-            <button type="button" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a"(click)="this.deleteSet(s.SetName)">
-              <span class="cset-icons-trash-can fs-base-2"></span>
-              <span class="d-none d-md-flex fs-smaller">Remove</span>
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div *ngIf="setDetailList?.length == 0" class="mt-3 mb-4">
-      <p>There are no custom sets available.</p>
-    </div>
+  </div>
+  <div *ngIf="setDetailList?.length > 0" class="w-100">
+    <table class="w-100">
+      <tr *ngFor="let s of setDetailList">
+        <td class="w-100">
+          <button class="btn btn-link" (click)="this.setBuilderSvc.loadCustomSet(s.SetName)">
+            {{s.FullName}}
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="this.cloneSet(s.SetName)">clone</button>
+        </td>
+        <td>
+          <button type="button" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="this.deleteSet(s.SetName)">
+            <span class="cset-icons-trash-can fs-base-2"></span>
+            <span class="d-none d-md-flex fs-smaller">Remove</span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="setDetailList?.length == 0" class="mt-3 mb-4">
+    <p>There are no custom sets available.</p>
   </div>
 </div>

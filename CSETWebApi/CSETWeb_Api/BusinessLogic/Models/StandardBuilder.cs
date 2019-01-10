@@ -63,6 +63,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     public class QuestionListSubcategory
     {
+        public int PairID;
         public string SubcategoryName;
         public string SubHeading;
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
@@ -73,6 +74,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int QuestionID;
         public string QuestionText;
         public string Category;
+
+        /// <summary>
+        /// The primary key of the UNIVERSAL_SUBCATEGORY_HEADING
+        /// </summary>
+        public int PairID;
+
         public string Subcategory;
         public string SubHeading;
         public string Title;
@@ -125,5 +132,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public int QuestionID;
         public string QuestionText;
+    }
+
+    public class HeadingUpdateParms
+    {
+        public int PairID;
+        public string HeadingText;
     }
 }

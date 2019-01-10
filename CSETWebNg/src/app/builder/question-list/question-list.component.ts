@@ -30,16 +30,24 @@ import { QuestionResult } from '../../models/set-builder.model';
 
 @Component({
   selector: 'app-question-list',
-  templateUrl: './question-list.component.html'
+  templateUrl: './question-list.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class QuestionListComponent implements OnInit {
 
   questionResponse: any;
   initialized = false;
+
   questionBeingEdited: QuestionResult = null;
+  originalQuestionText: string = null;
   editedQuestionInUse = false;
 
-  @ViewChild('editQ') editControl;
+  headingBeingEdited: any = null;
+  originalHeading: string = null;
+
+  @ViewChild('editQ') editQControl;
+  @ViewChild('editH') editHControl;
 
   constructor(
     private setBuilderSvc: SetBuilderService,
@@ -69,10 +77,11 @@ export class QuestionListComponent implements OnInit {
    */
   startQuestionEdit(q: QuestionResult) {
     this.questionBeingEdited = q;
+    this.originalQuestionText = q.QuestionText;
 
     setTimeout(() => {
-      this.editControl.nativeElement.focus();
-      this.editControl.nativeElement.setSelectionRange(0, 0);
+      this.editQControl.nativeElement.focus();
+      this.editQControl.nativeElement.setSelectionRange(0, 0);
     }, 20);
 
     this.setBuilderSvc.isQuestionInUse(q).subscribe((inUse: boolean) => {
@@ -87,6 +96,12 @@ export class QuestionListComponent implements OnInit {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
     this.setBuilderSvc.updateQuestionText(q).subscribe();
+  }
+
+  abandonQuestionEdit(q: QuestionResult) {
+    q.QuestionText = this.originalQuestionText;
+    this.editedQuestionInUse = false;
+    this.questionBeingEdited = null;
   }
 
   /**
@@ -177,5 +192,38 @@ export class QuestionListComponent implements OnInit {
     }
 
     this.setBuilderSvc.setQuestionSalLevel(q.QuestionID, level, state).subscribe();
+  }
+
+  /**
+   *
+   */
+  startHeadingEdit(subcat) {
+    this.originalHeading = subcat.SubHeading;
+    this.headingBeingEdited = subcat;
+
+    setTimeout(() => {
+      this.editHControl.nativeElement.focus();
+      this.editHControl.nativeElement.setSelectionRange(0, 0);
+    }, 20);
+  }
+
+  /**
+   *
+   */
+  endHeadingEdit(subcat) {
+    this.headingBeingEdited = null;
+    this.originalHeading = null;
+
+    // push to API ...
+    this.setBuilderSvc.updateHeadingText(subcat).subscribe();
+  }
+
+  /**
+   *
+   */
+  abandonHeadingEdit(subcat) {
+    subcat.SubHeading = this.originalHeading;
+    this.originalHeading = null;
+    this.headingBeingEdited = null;
   }
 }

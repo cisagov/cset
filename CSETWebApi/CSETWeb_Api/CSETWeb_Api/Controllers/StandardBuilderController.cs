@@ -141,6 +141,7 @@ namespace CSETWeb_Api.Controllers
             return m.GetCategoriesAndSubcategories();
         }
 
+
         [HttpPost]
         [Route("api/builder/SearchQuestions")]
         public List<QuestionDetail> SearchQuestions([FromBody] QuestionSearch searchParms)
@@ -148,6 +149,7 @@ namespace CSETWeb_Api.Controllers
             StandardBuilderManager m = new StandardBuilderManager();
             return m.SearchQuestions(searchParms);
         }
+
 
         [HttpPost]
         [Route("api/builder/SetQuestionSalLevel")]
@@ -157,6 +159,7 @@ namespace CSETWeb_Api.Controllers
             m.SetQuestionSalLevel(parms);
         }
 
+
         [HttpPost]
         [Route("api/builder/UpdateQuestionText")]
         public void UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
@@ -165,12 +168,22 @@ namespace CSETWeb_Api.Controllers
             m.UpdateQuestionText(parms.QuestionID, parms.QuestionText);
         }
 
+
         [HttpGet]
         [Route("api/builder/IsQuestionInUse")]
         public bool IsQuestionInUse([FromUri] int questionID)
         {
             StandardBuilderManager m = new StandardBuilderManager();
             return m.IsQuestionInUse(questionID);
+        }
+
+
+        [HttpPost]
+        [Route("api/builder/UpdateHeadingText")]
+        public void UpdateHeadingText([FromBody] HeadingUpdateParms parms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.UpdateHeadingText(parms.PairID, parms.HeadingText);
         }
     }
 }
