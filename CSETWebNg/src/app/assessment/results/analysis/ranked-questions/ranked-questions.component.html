@@ -19,39 +19,65 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 
-  <div class="white-panel oy-auto h-0  d-flex flex-column flex-11a">
-    <h3 class="mb-3 flex-10a">Ranked Questions</h3>
-    <p class="flex-10a">
-      Information on question ranking can be found in the <a href="{{docUrl}}htmlhelp/results_ranked_questions_screen.htm" target="blank">User Guide</a>.
-    </p>
-    <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+<div class="white-panel oy-auto h-0  d-flex justify-content-start flex-column flex-11a">
+  <h3 class="mb-2 flex-00a">Control Priorities</h3>
+  <p class="mb-3 w-100">
+    Information on ranking can be found in the <a href="{{docUrl}}htmlhelp/results_ranked_questions_screen.htm"
+      target="blank">User Guide</a>.
+  </p>
+  <div *ngIf="!initialized" class="d-flex flex-11a w-100">
+    <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  <div class="mb-4 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized" *ngFor="let row of this.dataRows">
+    <div class="b-secondary br-standard d-flex flex-column justify-content-between flex-00a o-hidden">
+      <!-- Row 1 -->
+      <div class="p-3 bgc-primary-50 c-gray-900 d-flex justify-content-between flex-11a">
+        <!-- Col 1  -->
+        <div class="d-flex flex-column justify-content-start flex-11a">
+          <div class="mb-2 d-flex justify-content-start flex-11a">
+            <label id="rq-standard-label" for="rq-category-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Standard:</label>
+            <span id="rq-category-text" class="fs-base">{{row.Standard}}</span>
+          </div>
+          <div class="mb-2 d-flex justify-content-start flex-11a">
+            <label id="rq-category-label" for="rq-category-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Category:</label>
+            <span id="rq-category-text" class="fs-base">{{row.Category}}</span>
+          </div>
+          <div class="d-flex justify-content-start flex-11a">
+            <label id="rq-answer-label" for="rq-answer-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Answer:</label>
+            <span id="rq-answer-text" name="rq-answer-text" class="fs-base">{{row.displayAnswer}}</span>
+          </div>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="px-3 d-flex flex-column justify-content-center align-items-center flex-00a">
+          <label id="m-0 rq-rank-label" for="rq-rank-text" class="mb-2 fs-base fw-600">Rank</label>
+          <span id="rq-rank-text" class="fs-base-8 fw-600">{{row.Rank}}</span>
+        </div>
       </div>
-    </div>
-    <div class="data flex-10a" [hidden]="!initialized">
-      <table class="table flex-11a" style="table-layout: fixed; word-break: normal">
-        <th class="align-center">Rank</th>
-        <th>Standard</th>
-        <th>Category</th>
-        <th class="align-center">#</th>
-        <th style="width: 35%">Question</th>
-        <th class="align-center">Answer</th>
-        <tr *ngFor="let row of dataRows">
-          <td class="align-center">{{row.Rank}}</td>
-          <td>{{row.Standard}}</td>
-          <td>{{row.Category}}</td>
-          <td class="align-center">{{row.QuestionRef}}</td>
-          <td [innerHTML]="row.QuestionText"></td>
-          <td class="align-center">{{row.AnswerText}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="mt-3 mb-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navBack()">Back</button>
-      <button class="btn btn-primary" (click)="navNext()">Next</button>
+
+      <!-- Row 2 -->
+      <div class="bgc-primary-100 c-gray-900 d-flex justify-content-start flex-11a">
+        <div class="px-3 py-4 d-flex flex-column justify-content-start flex-11a w-100">
+          <div class="d-flex justify-content-between flex-11a">
+            <label id="rq-question-label" for="rq-question-group-text" class="rq-label-min-width m-0 mb-1 fs-base fw-600">Question</label>
+            <div class="mb-2 d-flex justify-content-start flex-00a">
+              <label id="rq-question-reference-label" for="rq-question-reference-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Reference
+                #</label>
+              <span id="rq-question-reference-text" name="rq-question-reference-text" class="fs-base">{{row.QuestionRef}}</span>
+            </div>
+          </div>
+          <span id="rq-question-text" class="fs-base w-100" [innerHTML]="row.QuestionText | safe"></span>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div class="mt-3 mb-3 d-flex justify-content-between flex-00a">
+    <button id="rq-back-button" class="btn btn-primary" (click)="navBack()">Back</button>
+    <button id="rq-next-button" class="btn btn-primary" (click)="navNext()">Next</button>
+  </div>
+</div>

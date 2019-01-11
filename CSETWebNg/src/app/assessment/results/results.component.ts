@@ -56,7 +56,7 @@ export class ResultsComponent implements OnInit {
     const magic = this.navSvc.getMagic();
     this.navSvc.setTree([
       { label: 'Analysis Dashboard', value: 'dashboard', children: [
-        { label: 'Ranked Questions', value: 'ranked-questions', children: [] },
+        { label: 'Control Priorities', value: 'ranked-questions', children: [] },
         // { label: 'Overall Ranked Categories', value: 'overall-ranked-categories', children: [] },
         { label: 'Standards Summary', value: 'standards-summary', children: [
           { label: 'Ranked Categories', value: 'standards-ranked', children: [] },

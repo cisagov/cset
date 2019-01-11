@@ -248,3 +248,21 @@
 .cset-icons-export-up:before {
   content: "\28";
 }
+.cset-icons-review:before {
+  content: "\29";
+}
+.cset-icons-copy:before {
+  content: "\2a";
+}
+.cset-icons-hamburger:before {
+  content: "\2b";
+}
+.cset-icons-bell:before {
+  content: "\2c";
+}
+.cset-icons-flag-light:before {
+  content: "\2d";
+}
+.cset-icons-flag-dark:before {
+  content: "\2e";
+}

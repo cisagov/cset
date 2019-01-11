@@ -47,9 +47,11 @@ a {
   cursor: pointer;
 }
 
+.btn-link,
 .btn-link-dark {
   color: $link-color-dark;
   font-weight: 500;
+  border: none;
 }
 
 .btn-link-dark:hover,
@@ -494,6 +496,25 @@ table.td-align-top td {
   background-color: $alt-color;
   color: $active-text-color;
 }
+
+
+.btn-mfr {
+  background-color: $primary-50;
+  border-color: $gray-800;
+  color: $primary-color;
+}
+.btn-mfr:hover,
+.btn-mfr.answer-selected:hover {
+  background-color: $primary-700;
+  color: $white;
+}
+
+.btn-mfr.answer-selected {
+  background-color: $warn-color;
+  color: $gray-900;
+}
+
+
 
 .btn-sal-select {
   background-color: transparent;
@@ -1038,13 +1059,6 @@ ul.mat-tree-node {
 
 // Resource Library
 /////////////////////////////////////////////
-.rl hr {
-  border: none;
-  height: 1px;
-  width: 100%;
-  background-color: $gray-400;
-}
-
 .rl .search-btn {
   line-height: 14px;
 }
@@ -1168,13 +1182,6 @@ ul.mat-tree-node {
 ////////////////////////////////////////////////////////////////////////
 .mat-sort-header-arrow {
   color: $gray-100;
-}
-
-hr.landing {
-  border: none;
-  height: 2px;
-  width: 100%;
-  background-color: $gray-200;
 }
 
 // Contact Item
@@ -1485,6 +1492,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-bottom: 1px solid $gray-50;
 }
 
+
 // Question Extras
 ///////////////////////////////////////////////////////////////////////
 .extras-block {
@@ -1506,11 +1514,6 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-top: 1px solid $primary-550;
   padding: 10px;
   margin-bottom: 1em;
-}
-
-.button-ribbon {
-  margin-left: .5em;
-  margin-bottom: 10px;
 }
 
 .extras-button {
@@ -1540,12 +1543,12 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   cursor: pointer;
 }
 
-.pencil {
-  background-color: transparent;
-  fill: $primary-color;
-  transform: scale(.5);
-  cursor: pointer;
-}
+// .pencil {
+//   background-color: transparent;
+//   fill: $primary-color;
+//   transform: scale(.5);
+//   cursor: pointer;
+// }
 
 // Questions Component
 ///////////////////////////////////////////////////////////////////////
@@ -1615,11 +1618,6 @@ mat-sidenav {
 .assess-compenent .mat-icon,
 .assess-compenent img {
   margin: 1px;
-}
-
-.hr-sal {
-  border: 0;
-  border-top: 1px solid $secondary-color;
 }
 
 .about .icon2 {
@@ -1776,14 +1774,6 @@ mat-sidenav {
   margin-left: 0;
 }
 
-.about hr.hr-logo {
-  border: none;
-  width: 100%;
-  margin-top: 10px;
-  border-top: 3px solid $primary-color;
-  margin-left: 0;
-}
-
 .about .homeland-security {
   font-family: Joanna, 'Times New Roman', Times, serif;
   font-size: 36px;
@@ -1919,6 +1909,16 @@ table.assessment-documents th {
   color: $primary-color;
 }
 
+.icon-button-light {
+  background-color: transparent;
+  color: $gray-150;
+  border: none;
+}
+.icon-button-light:hover,
+.icon-button-light:focus {
+  color: $white;
+}
+
 .sticky-sal {
   position: -webkit-sticky;
   /* Safari */
@@ -1947,10 +1947,45 @@ table.assessment-documents th {
 }
 
 
+// Horizontal Rules
+///////////////////////////////////////////////////////////////////////
+.rl hr {
+  border: none;
+  height: 1px;
+  width: 100%;
+  background-color: $gray-400;
+}
+hr.landing {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: $gray-200;
+}
+.hr-sal {
+  border: none;
+  border-top: 1px solid $secondary-color;
+}
+.about hr.hr-logo {
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+  border-top: 3px solid $primary-color;
+  margin-left: 0;
+}
+hr.ranked-questions {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: $primary-100;
+}
+
+// Ranked Questions
+///////////////////////////////////////////////////////////////////////
+.rq-label-min-width {
+  min-width: 96px;
+}
 
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -2074,6 +2109,7 @@ table.assessment-documents th {
 .b-primary {
   border: 2px solid $primary-color;
 }
+
 .b-secondary {
   border: 2px solid $secondary-color;
 }
@@ -2189,6 +2225,10 @@ table.assessment-documents th {
 }
 .bgc-primary-50 {
   background-color: $primary-50;
+}
+
+.c-warning {
+  color: $warn-color;
 }
 
 .fill-primary {
