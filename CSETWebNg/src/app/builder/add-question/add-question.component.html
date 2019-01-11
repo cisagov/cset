@@ -40,8 +40,8 @@
       If you wish to add a custom question to the set, enter it here.
     </p>
 
-    <textarea id="txtNewQuestionEntry" [(ngModel)]="newQuestionText" class="form-control mb-3 h-4" type="text"></textarea>
-    <div *ngIf="isNewQuestionEmpty">
+    <textarea id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4" type="text"></textarea>
+    <div *ngIf="isCustomQuestionEmpty">
       <div class="alert alert-danger">Question text is required</div>
     </div>
     <div *ngIf="isDupeQuestion">

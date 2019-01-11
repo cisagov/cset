@@ -25,7 +25,8 @@ namespace DataLayer
         public int Question_Group_Heading_Id { get; set; }
         public int Universal_Sub_Category_Id { get; set; }
         public int Heading_Pair_Id { get; set; }
+        public string Set_Name { get; set; }
+    
+        public virtual SET SETS { get; set; }
     }
 }
-
-

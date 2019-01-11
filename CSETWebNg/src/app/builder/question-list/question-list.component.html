@@ -51,18 +51,22 @@
           <div class="sub-head-2">
             {{subcat.SubcategoryName}}
           </div>
-          <div *ngIf="!!subcat.SubHeading && headingBeingEdited != subcat">
+          <div *ngIf="!!subcat.SubHeading && subcat.IsSubHeadingEditable && headingBeingEdited != subcat">
             <button class="btn btn-link-subtle fs-small" (click)="startHeadingEdit(subcat)">
               {{subcat.SubHeading}} <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
-          <div *ngIf="!subcat.SubHeading && headingBeingEdited != subcat">
+          <div *ngIf="!subcat.IsSubHeadingEditable" class="fs-small heading-color">
+              {{subcat.SubHeading}}
+          </div>
+          <div *ngIf="!subcat.SubHeading && subcat.IsSubHeadingEditable && headingBeingEdited != subcat">
             <button class="btn btn-link-subtle font-italic fs-small" (click)="startHeadingEdit(subcat)">
               Click to add subcategory question <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
           <div *ngIf="headingBeingEdited === subcat" class="w-100">
-            <textarea #editH [(ngModel)]="subcat.SubHeading" (keydown.esc)="abandonHeadingEdit(subcat)" (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-left"></textarea>
+            <textarea #editH [(ngModel)]="subcat.SubHeading" (keydown.esc)="abandonHeadingEdit(subcat)" (blur)="endHeadingEdit(subcat)"
+              class="form-control w-100 text-left"></textarea>
           </div>
         </div>
 
@@ -80,8 +84,8 @@
                   This question is in use in other standards/question sets or assessments.
                   Do not change the meaning of the question text.
                 </div>
-                <textarea id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" 
-                  class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+                <textarea id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
+                  (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">

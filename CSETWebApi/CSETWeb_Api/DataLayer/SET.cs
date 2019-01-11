@@ -35,6 +35,7 @@ namespace DataLayer
             this.NEW_QUESTION = new HashSet<NEW_QUESTION>();
             this.NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
             this.NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
+            this.UNIVERSAL_SUB_CATEGORY_HEADINGS = new HashSet<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
         }
     
         public string Set_Name { get; set; }
@@ -83,7 +84,7 @@ namespace DataLayer
         public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
     }
 }
-
-

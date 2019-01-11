@@ -169,7 +169,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         private string GenerateNewSetName()
         {
-            return "SET_" + DateTime.Now.ToString("yyyy-MM-dd.HH:mm:ss");
+            return "SET." + DateTime.Now.ToString("yyyyMMdd.HHmmss");
         }
 
 
@@ -188,7 +188,8 @@ namespace CSETWeb_Api.BusinessManagers
                     QuestionDetail q = new QuestionDetail();
                     q.QuestionID = nqs.NEW_QUESTION.Question_Id;
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
-                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, ref q.Category, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
+                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, 
+                        ref q.Category, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
 
                     // Look at the question's original set to determine if the question is 'custom' and can be edited
@@ -205,32 +206,45 @@ namespace CSETWeb_Api.BusinessManagers
                     response.Add(q);
                 }
 
-                List<QuestionDetail> list = response.OrderBy(x => x.Category).ThenBy(x => x.Subcategory).ToList();
+                List<QuestionDetail> list = response.OrderBy(x => x.Category).ThenBy(x => x.Subcategory).ThenBy(x => x.PairID).ToList();
+
+                List<int> customPairingsForThisSet = db.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                    .Where(x => x.Set_Name == setName).Select(x => x.Heading_Pair_Id).ToList();
 
                 QuestionListResponse ql = new QuestionListResponse();
                 string currentCategory = string.Empty;
                 QuestionListCategory cat = null;
-                string currentSubcategory = string.Empty;
+
+                // In case there are two subcategories with the same name but different pair IDs, they should be rendered separately.
+                int currentSubcategoryPairID = -1;
                 QuestionListSubcategory subcat = null;
+
                 foreach (QuestionDetail q in list)
                 {
                     if (q.Category != currentCategory)
                     {
-                        cat = new QuestionListCategory();
+                        cat = new QuestionListCategory
+                        {
+                            CategoryName = q.Category
+                        };
+
                         ql.Categories.Add(cat);
-                        cat.CategoryName = q.Category;
                         currentCategory = q.Category;
                     }
 
 
-                    if (q.Subcategory != currentSubcategory)
+                    if (q.PairID != currentSubcategoryPairID)
                     {
-                        subcat = new QuestionListSubcategory();
-                        subcat.PairID = q.PairID;
+                        subcat = new QuestionListSubcategory
+                        {
+                            PairID = q.PairID,
+                            SubcategoryName = q.Subcategory,
+                            SubHeading = q.SubHeading,
+                            IsSubHeadingEditable = customPairingsForThisSet.Contains(q.PairID)
+                        };
+
                         cat.Subcategories.Add(subcat);
-                        subcat.SubcategoryName = q.Subcategory;
-                        subcat.SubHeading = q.SubHeading;
-                        currentSubcategory = q.Subcategory;
+                        currentSubcategoryPairID = q.PairID;
                     }
 
                     subcat.Questions.Add(q);                   
@@ -253,7 +267,8 @@ namespace CSETWeb_Api.BusinessManagers
                         from h1 in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == h.Question_Group_Heading_Id)
                         from h2 in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == h.Universal_Sub_Category_Id)
                         where h.Heading_Pair_Id == headingPairId
-                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category, h.Heading_Pair_Id, h.Sub_Heading_Question_Description };
+                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category,
+                            h.Heading_Pair_Id, h.Sub_Heading_Question_Description, h.Set_Name };
 
             var result = query.FirstOrDefault();
             cat = result.Question_Group_Heading1;
@@ -308,7 +323,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="request"></param>
         public void AddCustomQuestionToSet(SetQuestion request)
         {
-            if (string.IsNullOrEmpty(request.NewQuestionText))
+            if (string.IsNullOrEmpty(request.CustomQuestionText))
             {
                 return;
             }
@@ -316,7 +331,7 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSETWebEntities())
             {
                 NEW_QUESTION q = new NEW_QUESTION();
-                q.Simple_Question = request.NewQuestionText;
+                q.Simple_Question = request.CustomQuestionText;
 
                 // TODO:  std_ref + std_ref_number must be unique
                 q.Std_Ref = DateTime.Now.Millisecond.ToString();
@@ -325,7 +340,7 @@ namespace CSETWeb_Api.BusinessManagers
                 q.Universal_Sal_Level = "L";
                 q.Weight = 0;
                 q.Original_Set_Name = request.SetName;
-                q.Heading_Pair_Id = GetHeadingPairId(request.QuestionCategoryID, request.QuestionSubcategoryText);
+                q.Heading_Pair_Id = GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName);
 
                 db.NEW_QUESTION.Add(q);
                 db.SaveChanges();
@@ -366,33 +381,25 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
-        /// Finds a record for the category/subcategory combination.
-        /// If there isn't a record, one is created.
-        /// If the user typed a new subcategory name, a new subcategory is created
-        /// and used for the combination.
+        /// Finds or creates a set-specific UNIVERSAL_SUB_CATEGORY_HEADING
+        /// for the category/subcategory/set.
         /// </summary>
         /// <returns></returns>
-        private int GetHeadingPairId(int categoryId, string subcatText)
+        private int GetHeadingPair(int categoryId, string subcatText, string setName)
         {
             int subcatID = 0;
 
             using (var db = new CSETWebEntities())
             {
+                // Either find or create the subcategory
                 var subcat = db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == subcatText).FirstOrDefault();
                 if (subcat != null)
                 {
                     subcatID = subcat.Universal_Sub_Category_Id;
-
-                    var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Question_Group_Heading_Id == categoryId
-                        && x.Universal_Sub_Category_Id == subcatID).FirstOrDefault();
-                    if (usch != null)
-                    {
-                        return usch.Heading_Pair_Id;
-                    }
                 }
                 else
                 {
-                    // The subcategory name is new -- create a new subcategory
+                    // The subcategory name is new (entered by user) -- create a new subcategory
                     UNIVERSAL_SUB_CATEGORIES sc = new UNIVERSAL_SUB_CATEGORIES
                     {
                         Universal_Sub_Category = subcatText
@@ -403,17 +410,27 @@ namespace CSETWeb_Api.BusinessManagers
                     subcatID = sc.Universal_Sub_Category_Id;
                 }
 
+                // See if we have this pairing for our set
+                var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Question_Group_Heading_Id == categoryId
+                    && x.Universal_Sub_Category_Id == subcatID
+                    && x.Set_Name == setName).FirstOrDefault();
 
-                // The USCH combination is not yet defined -- create a new USCH
-                UNIVERSAL_SUB_CATEGORY_HEADINGS u1 = new UNIVERSAL_SUB_CATEGORY_HEADINGS
+                if (usch != null)
+                {
+                    return usch.Heading_Pair_Id;
+                }
+
+                // Create a new set-specific USCH record
+                usch = new UNIVERSAL_SUB_CATEGORY_HEADINGS
                 {
                     Question_Group_Heading_Id = categoryId,
-                    Universal_Sub_Category_Id = subcatID
+                    Universal_Sub_Category_Id = subcatID,
+                    Set_Name = setName
                 };
-                db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(u1);
+                db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(usch);
                 db.SaveChanges();
 
-                return u1.Heading_Pair_Id;
+                return usch.Heading_Pair_Id;
             }
         }
 

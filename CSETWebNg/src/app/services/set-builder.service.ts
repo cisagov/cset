@@ -109,11 +109,11 @@ export class SetBuilderService {
             headers);
     }
 
-    addQuestion(newQuestionText: string, category: number, subcategoryText: string, salLevels: string[]) {
+    addCustomQuestion(customQuestionText: string, category: number, subcategoryText: string, salLevels: string[]) {
         const setName = sessionStorage.getItem('setName');
         const req = {
             SetName: setName,
-            NewQuestionText: newQuestionText,
+            CustomQuestionText: customQuestionText,
             QuestionCategoryID: category,
             QuestionSubcategoryText: subcategoryText,
             SalLevels: salLevels

@@ -31,9 +31,11 @@
   <p>
     If you wish to build a question set, create a single standard and attach all questions to it.
   </p>
-  <button class="btn btn-primary" (click)="this.setBuilderSvc.newCustomSet()">
-    New Standard/Question Set
-  </button>
+  <div>
+    <button class="btn btn-primary" (click)="this.setBuilderSvc.newCustomSet()">
+      New Standard/Question Set
+    </button>
+  </div>
 
   <div *ngIf="!setDetailList">
     <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">

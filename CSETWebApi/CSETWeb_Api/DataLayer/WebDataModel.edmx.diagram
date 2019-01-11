@@ -239,6 +239,7 @@
         <AssociationConnector Association="CSETWebModel.FK_USERS_USER_DETAIL_INFORMATION" />
         <AssociationConnector Association="CSETWebModel.FK_USER_SECURITY_QUESTIONS_USERS" />
         <EntityTypeShape EntityType="CSETWebModel.JWT" Width="1.5" PointX="3.375" PointY="6.75" />
+        <AssociationConnector Association="CSETWebModel.FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

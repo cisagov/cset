@@ -66,6 +66,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int PairID;
         public string SubcategoryName;
         public string SubHeading;
+
+        /// <summary>
+        /// Only subheadings on custom question pairs are editable.
+        /// </summary>
+        public bool IsSubHeadingEditable;
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
     }
 
@@ -76,12 +81,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Category;
 
         /// <summary>
-        /// The primary key of the UNIVERSAL_SUBCATEGORY_HEADING
+        /// The primary key of the UNIVERSAL_SUBCATEGORY_HEADING.
         /// </summary>
         public int PairID;
-
         public string Subcategory;
         public string SubHeading;
+
         public string Title;
         public bool IsCustom;
         public List<string> SalLevels = new List<string>();
@@ -94,7 +99,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int QuestionCategoryID;
 
         /// <summary>
-        /// The name of a new subcategory.
+        /// The name of a new subcategory.  Only used when the user has invented 
+        /// a new subcategory name.
         /// </summary>
         public string QuestionSubcategoryText;
 
@@ -103,7 +109,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// <summary>
         /// Used when creating a new question from text.
         /// </summary>
-        public string NewQuestionText;
+        public string CustomQuestionText;
     }
 
     public class CategoriesAndSubcategories

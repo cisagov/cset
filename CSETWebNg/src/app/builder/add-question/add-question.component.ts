@@ -34,9 +34,9 @@ import { ChartLegendLabelItem } from 'chart.js';
 })
 export class AddQuestionComponent implements OnInit {
 
-  newQuestionText: string = '';
+  customQuestionText: string = '';
   isDupeQuestion = false;
-  isNewQuestionEmpty = false;
+  isCustomQuestionEmpty = false;
   isCatOrSubcatEmpty = false;
   isSalSelectionEmpty = false;
 
@@ -78,22 +78,22 @@ export class AddQuestionComponent implements OnInit {
    */
   addCustomQuestion() {
     // validate that they typed something
-    this.newQuestionText = this.newQuestionText.trim();
+    this.customQuestionText = this.customQuestionText.trim();
 
-    this.isNewQuestionEmpty = (this.newQuestionText.length === 0);
+    this.isCustomQuestionEmpty = (this.customQuestionText.length === 0);
     this.isCatOrSubcatEmpty = this.selectedCatId === 0 || this.subcatText.trim().length === 0;
     this.isSalSelectionEmpty = !this.customSalL && !this.customSalM && !this.customSalH && !this.customSalVH;
     this.isDupeQuestion = false;
 
-    if (this.isNewQuestionEmpty || this.isCatOrSubcatEmpty || this.isSalSelectionEmpty) {
+    if (this.isCustomQuestionEmpty || this.isCatOrSubcatEmpty || this.isSalSelectionEmpty) {
       return;
     }
 
     // check to see if this question text already exists in the database.
-    this.setBuilderSvc.existsQuestionText(this.newQuestionText).subscribe(result => {
+    this.setBuilderSvc.existsQuestionText(this.customQuestionText).subscribe(result => {
       this.isDupeQuestion = result as boolean;
       if (this.isDupeQuestion) {
-        this.isNewQuestionEmpty = false;
+        this.isCustomQuestionEmpty = false;
         return;
       }
 
@@ -103,7 +103,7 @@ export class AddQuestionComponent implements OnInit {
       if (this.customSalM) { salLevels.push("M"); }
       if (this.customSalH) { salLevels.push("H"); }
       if (this.customSalVH) { salLevels.push("VH"); }
-      this.setBuilderSvc.addQuestion(this.newQuestionText, this.selectedCatId, this.subcatText, salLevels).subscribe(() => {
+      this.setBuilderSvc.addCustomQuestion(this.customQuestionText, this.selectedCatId, this.subcatText, salLevels).subscribe(() => {
           // navigate back to the questions list
           this.setBuilderSvc.navQuestionList();
         });

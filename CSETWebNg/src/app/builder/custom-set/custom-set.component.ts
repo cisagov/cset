@@ -43,10 +43,11 @@ export class CustomSetComponent implements OnInit {
     const setName = sessionStorage.getItem('setName');
     this.setBuilderSvc.getSetDetail(setName).subscribe((response) => {
       this.setDetail = response;
+      sessionStorage.setItem('setName', this.setDetail.SetName);
     });
   }
 
-  update(e) {
+  update(e: Event) {
     this.setBuilderSvc.updateSetDetails(this.setDetail);
   }
 }
