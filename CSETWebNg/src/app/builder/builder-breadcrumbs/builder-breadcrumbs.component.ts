@@ -21,75 +21,29 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, AfterContentInit } from '@angular/core';
+import { Router, UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-builder-breadcrumbs',
   templateUrl: './builder-breadcrumbs.component.html'
 })
-export class BuilderBreadcrumbsComponent implements OnInit {
+export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
-  json: IDataNode;
-  currentPage: IDataNode;
+  json: IBreadcrumb;
+  breadcrumbs: IBreadcrumb[] = [];
+
 
   constructor(private router: Router) { }
 
-  ngOnInit() {
+  ngAfterContentInit() {
     this.initializeStructure();
+    this.displayCrumbs();
   }
+
 
   displayCrumbs() {
-
-    // find the current entry in the structure
-    if (this.router.url === this.json.navPath) {
-      return "Home";
-    }
-
-    // console.log(this.router.url);
-
-
-    // recurse parent to parent
-    const dddd = this.findNode(this.router.url, this.json);
-    // console.log(dddd);
-
-    if (!dddd) {
-      return "Home?";
-    }
-  }
-
-  findNode(path, currentNode) {
-    let i = 0;
-    let currentChild: IDataNode = null;
-    let result: any = null;
-
-    const urlTree = this.router.parseUrl(path);
-
-    // console.log('parsed URL:');
-    // console.log(this.router.parseUrl(path));
-
-
-    if (path === currentNode.navPath) {
-      return currentNode;
-    } else if (urlTree.root.segments[0] === currentNode.navPath) {
-      return currentNode;
-    } else {
-
-      for (i = 0; i < currentNode.children.length; i += 1) {
-        currentChild = currentNode.children[i];
-
-        // Search in the current child
-        result = this.findNode(path, currentChild);
-
-        // Return the result if the node has been found
-        if (result !== false) {
-          return result;
-        }
-      }
-
-      // The node has not been found and we have no more options
-      return false;
-    }
+    // build the list of 'crumbs' to display on the template
   }
 
 
@@ -99,26 +53,26 @@ export class BuilderBreadcrumbsComponent implements OnInit {
   initializeStructure() {
     this.json = {
       "displayName": "Home",
-      "navPath": "/set-builder",
+      "navPath": "set-builder",
       "children": [
         {
           "displayName": "Set Detail",
-          "navPath": "/custom-set",
+          "navPath": "custom-set",
           "children": [
             {
               "displayName": "Question List",
-              "navPath": "questionList",
+              "navPath": "question-list",
               "children": [
                 {
-                  "displayName": "Question",
-                  "navPath": "",
+                  "displayName": "Add Question",
+                  "navPath": "add-question",
                   "children": []
                 }
               ]
             },
             {
               "displayName": "Requirement List",
-              "navPath": "",
+              "navPath": "requirement-list",
               "children": [
                 {
                   "displayName": "Requirement Detail",
@@ -135,8 +89,8 @@ export class BuilderBreadcrumbsComponent implements OnInit {
 }
 
 
-interface IDataNode {
+interface IBreadcrumb {
   displayName: string;
   navPath: string;
-  children: Array<IDataNode>;
+  children: Array<IBreadcrumb>;
 }

@@ -1,0 +1,24 @@
+<Page>
+    <DisplayName>Home</DisplayName>
+    <NavPath>set-builder</NavPath>
+    <Children>
+        <Page>
+            <DisplayName>Set Detail</DisplayName>
+            <NavPath>custom-set</NavPath>
+            <Children>
+                <Page>
+                    <DisplayName>Question List</DisplayName>
+                    <NavPath>question-list</NavPath>
+                    <Children>
+                        <Page>
+                            <DisplayName>Add Question</DisplayName>
+                            <NavPath>add-question</NavPath>
+                            <Children>
+                            </Children>
+                        </Page>
+                    </Children>
+                </Page>
+            </Children>
+        </Page>
+    </Children>
+</Page>

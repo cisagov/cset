@@ -60,3 +60,17 @@ export interface QuestionResult {
     // This is just an experiment to bind to Bootstrap checkboxes.  Not working yet.
     Sal: { [level: string]: boolean };
 }
+
+/**
+ *
+ */
+export interface RequirementResult {
+    RequirementID?: number;
+    RequirementTitle: string;
+    RequirementText?: string;
+}
+
+
+export interface Category {
+    CategoryName?: string;
+}

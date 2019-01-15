@@ -28,7 +28,8 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 List<SetDetail> list = new List<SetDetail>();
 
-                var s = db.SETS.Where(x => x.Is_Custom).ToList();
+                // TODO: remove the NERC from this condition!!!
+                var s = db.SETS.Where(x => x.Is_Custom || x.Set_Name == "NERC_CIP_R6").ToList();
                 foreach (SET set in s)
                 {
                     SetDetail sr = new SetDetail
@@ -115,6 +116,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 copy.Set_Name = GenerateNewSetName();
                 copy.Full_Name = dbSet.Full_Name + " (copy)";
+                copy.Is_Custom = true;
 
                 db.SETS.AddOrUpdate(copy);
                 db.SaveChanges();
@@ -188,7 +190,7 @@ namespace CSETWeb_Api.BusinessManagers
                     QuestionDetail q = new QuestionDetail();
                     q.QuestionID = nqs.NEW_QUESTION.Question_Id;
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
-                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db, 
+                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db,
                         ref q.Category, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
 
@@ -197,7 +199,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                     // Get the SAL levels for this question-set
-                    var sals = db.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id).ToList();                               
+                    var sals = db.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id).ToList();
                     foreach (NEW_QUESTION_LEVELS l in sals)
                     {
                         q.SalLevels.Add(l.Universal_Sal_Level);
@@ -247,7 +249,7 @@ namespace CSETWeb_Api.BusinessManagers
                         currentSubcategoryPairID = q.PairID;
                     }
 
-                    subcat.Questions.Add(q);                   
+                    subcat.Questions.Add(q);
                 }
 
                 return ql;
@@ -260,15 +262,21 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat, 
+        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat,
             ref int pairID, ref string subcat, ref string subheading)
         {
             var query = from h in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                         from h1 in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == h.Question_Group_Heading_Id)
                         from h2 in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == h.Universal_Sub_Category_Id)
                         where h.Heading_Pair_Id == headingPairId
-                        select new { h1.Question_Group_Heading1, h2.Universal_Sub_Category,
-                            h.Heading_Pair_Id, h.Sub_Heading_Question_Description, h.Set_Name };
+                        select new
+                        {
+                            h1.Question_Group_Heading1,
+                            h2.Universal_Sub_Category,
+                            h.Heading_Pair_Id,
+                            h.Sub_Heading_Question_Description,
+                            h.Set_Name
+                        };
 
             var result = query.FirstOrDefault();
             cat = result.Question_Group_Heading1;
@@ -509,6 +517,31 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<CategoryEntry> GetStandardCategories()
+        {
+            List<CategoryEntry> categoryList = new List<CategoryEntry>();
+
+            using (var db = new CSETWebEntities())
+            {
+                var standardCategories = db.STANDARD_CATEGORY.ToList();
+                foreach (var c in standardCategories)
+                {
+                    CategoryEntry entry = new CategoryEntry
+                    {
+                        Text = c.Standard_Category1
+                    };
+                    categoryList.Add(entry);
+                }
+            }
+
+            return categoryList;
+        }
+
+
+        /// <summary>
         /// Returns a list of all Question Group Headings (Categories).
         /// Should we ignore categories that aren't paired with any subcategories
         /// in the UNIVERSAL_SUB_CATEGORY_HEADINGS table?
@@ -602,7 +635,7 @@ namespace CSETWeb_Api.BusinessManagers
                             candidate.SalLevels.Add(s);
                         }
 
-                        candidateQuestions.Add(candidate);                            
+                        candidateQuestions.Add(candidate);
                     }
                 }
 
@@ -638,11 +671,11 @@ namespace CSETWeb_Api.BusinessManagers
                 var hits2 = db.NEW_QUESTION.SqlQuery("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
 
                 var hits3 = from q in hits2
-                           join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                           join cat in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals cat.Question_Group_Heading_Id
-                           join subcat in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals subcat.Universal_Sub_Category_Id
-                           where q.Simple_Question.Contains(searchParms.SearchTerms)
-                           select new { q, cat, subcat };
+                            join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                            join cat in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals cat.Question_Group_Heading_Id
+                            join subcat in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals subcat.Universal_Sub_Category_Id
+                            where q.Simple_Question.Contains(searchParms.SearchTerms)
+                            select new { q, cat, subcat };
 
                 foreach (var hit in hits3)
                 {
@@ -676,7 +709,7 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 NEW_QUESTION_SETS nqs = db.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefault();
 
-                NEW_QUESTION_LEVELS nql = db.NEW_QUESTION_LEVELS.Where(x => 
+                NEW_QUESTION_LEVELS nql = db.NEW_QUESTION_LEVELS.Where(x =>
                     x.New_Question_Set_Id == nqs.New_Question_Set_Id
                     && x.Universal_Sal_Level == salParms.Level).FirstOrDefault();
 
@@ -685,7 +718,8 @@ namespace CSETWeb_Api.BusinessManagers
                     // add the level if it doesn't exist
                     if (nql == null)
                     {
-                        nql = new NEW_QUESTION_LEVELS() {
+                        nql = new NEW_QUESTION_LEVELS()
+                        {
                             New_Question_Set_Id = nqs.New_Question_Set_Id,
                             Universal_Sal_Level = salParms.Level
                         };
@@ -813,6 +847,91 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Returns a structure of categories/subcategories/requirements for the standard.
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <returns></returns>
+        public StandardsResponse GetStandardStructure(string setName)
+        {
+            StandardsResponse response = new StandardsResponse();
+
+            
+
+
+
+
+            List<NEW_REQUIREMENT> reqs = new List<NEW_REQUIREMENT>();
+
+            using (var db = new CSETWebEntities())
+            {
+                var set = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
+                response.SetFullName = set.Full_Name;
+                response.SetShortName = set.Short_Name;
+
+
+                var q = from rs in db.REQUIREMENT_SETS
+                        from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
+                        from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                        from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+                        where rs.Set_Name == setName
+                        select new { r, rs, s };
+                var results = q.Distinct()
+                    .OrderBy(x => x.s.Short_Name)
+                    .ThenBy(x => x.rs.Requirement_Sequence)
+                    .Select(x => x.r);
+
+
+                reqs.AddRange(results);
+
+
+                string currentCategory = string.Empty;
+                RequirementListCategory cat = null;
+                string currentSubcategory = string.Empty;
+                RequirementListSubcategory subcat = null;
+
+
+                foreach (NEW_REQUIREMENT rq in reqs)
+                {
+                    RequirementDetail r = new RequirementDetail()
+                    {
+                        RequirementID = rq.Requirement_Id,
+                        Title = rq.Requirement_Title,
+                        RequirementText = rq.Requirement_Text
+                    };
+            
+
+                    if (rq.Standard_Category != currentCategory)
+                    {
+                        cat = new RequirementListCategory
+                        {
+                            CategoryName = rq.Standard_Category
+                        };
+
+                        response.Categories.Add(cat);
+                        currentCategory = rq.Standard_Category;
+                    }
+
+
+                    if (rq.Standard_Sub_Category != currentSubcategory)
+                    {
+                        subcat = new RequirementListSubcategory
+                        {
+                            SubcategoryName = rq.Standard_Sub_Category
+                        };
+
+                        cat.Subcategories.Add(subcat);
+                        currentSubcategory = rq.Standard_Sub_Category;
+                    }
+
+                    subcat.Requirements.Add(r);
+                }
+            }
+
+            return response;
         }
     }
 }

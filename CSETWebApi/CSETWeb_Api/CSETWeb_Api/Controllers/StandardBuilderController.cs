@@ -134,6 +134,15 @@ namespace CSETWeb_Api.Controllers
 
 
         [HttpGet]
+        [Route("api/builder/GetStandardCategories")]
+        public List<CategoryEntry> GetStandardCategories()
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetStandardCategories();
+        }
+
+
+        [HttpGet]
         [Route("api/builder/GetCategoriesAndSubcategories")]
         public CategoriesAndSubcategories GetCategoriesAndSubcategories()
         {
@@ -184,6 +193,18 @@ namespace CSETWeb_Api.Controllers
         {
             StandardBuilderManager m = new StandardBuilderManager();
             m.UpdateHeadingText(parms.PairID, parms.HeadingText);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet]
+        [Route("api/builder/GetStandardStructure")]
+        public StandardsResponse GetStandardStructure([FromUri] string setName)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetStandardStructure(setName);
         }
     }
 }

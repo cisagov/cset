@@ -20,9 +20,28 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <div>
+    <h3>
+      Requirement Detail
+    </h3>
 
-<ol class="breadcrumb">  
-  <li *ngFor="let breadcrumb of breadcrumbs">
-    <a [routerLink]="[breadcrumb.navPath, '']">{{ breadcrumb.displayName }}</a>
-  </li>
-</ol>
+    <div class="b">
+      Category, Subcategory
+    </div>
+
+    <div class="form-group p-0 col-md-12">
+      <label required for="requirementTitle">Identifier/Title</label>
+      <input type="text" class="form-control" id="requirementTitle" name="requirementTitle" required focusOnInit="true"
+        [(ngModel)]="requirement.Title" (ngModelChange)="requirement.Title" (change)="updateTitle($event)">
+    </div>
+    <div class="form-group p-0 col-md-12">
+      <label required for="requirementText">Requirement Text</label>
+      <textarea id="description" class="form-control" type="text" id="requirementText" name="requirementText"
+        [(ngModel)]="requirement.requirementText" (change)="updateText($event)"></textarea>
+    </div>
+
+
+  </div>
+</div>

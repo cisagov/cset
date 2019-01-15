@@ -902,6 +902,11 @@
             </summary>
             <param name="request"></param>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetStandardStructure(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

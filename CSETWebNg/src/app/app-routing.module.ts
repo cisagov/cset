@@ -59,6 +59,7 @@ import { CustomSetComponent } from './builder/custom-set/custom-set.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
 import { QuestionListComponent } from './builder/question-list/question-list.component';
 import { AddQuestionComponent } from './builder/add-question/add-question.component';
+import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -135,15 +136,26 @@ const appRoutes: Routes = [
     component: SetListComponent,
     children: []
   },
-  { path: 'custom-set/:id',
+  {
+    path: 'custom-set/:id',
     component: CustomSetComponent,
   },
-  { path: 'requirement-list/:id',
-    component: RequirementListComponent },
-  { path: 'question-list/:id',
-    component: QuestionListComponent },
-    { path: 'add-question/:id',
-    component: AddQuestionComponent },
+  {
+    path: 'requirement-list/:id',
+    component: RequirementListComponent
+  },
+  {
+    path: 'requirement-detail/:id',
+    component: RequirementDetailComponent
+  },
+  {
+    path: 'question-list/:id',
+    component: QuestionListComponent
+  },
+  {
+    path: 'add-question/:id',
+    component: AddQuestionComponent
+  },
   { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];

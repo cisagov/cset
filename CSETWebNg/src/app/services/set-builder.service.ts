@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, QuestionResult } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, QuestionResult, RequirementResult } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -231,5 +231,16 @@ export class SetBuilderService {
                 parms,
                 headers
             );
+    }
+
+    /**
+     * Returns the Standard structure.
+     */
+    getStandard() {
+        return this.http.get(this.apiUrl + 'builder/GetStandardStructure?setName=' + sessionStorage.getItem('setName'));
+    }
+
+    navRequirementDetail(r: RequirementResult) {
+        this.router.navigate(['/requirement-detail', r.RequirementID]);
     }
 }

@@ -133,6 +133,7 @@ import { QuestionListComponent } from './builder/question-list/question-list.com
 import { RouterModule } from '@angular/router';
 import { BuilderBreadcrumbsComponent } from './builder/builder-breadcrumbs/builder-breadcrumbs.component';
 import { AddQuestionComponent } from './builder/add-question/add-question.component';
+import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 
 @NgModule({
     imports: [
@@ -241,7 +242,8 @@ import { AddQuestionComponent } from './builder/add-question/add-question.compon
         NgbPanel,
         QuestionListComponent,
         BuilderBreadcrumbsComponent,
-        AddQuestionComponent
+        AddQuestionComponent,
+        RequirementDetailComponent
       ],
     providers: [
         ConfigService,

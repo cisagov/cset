@@ -145,4 +145,36 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int PairID;
         public string HeadingText;
     }
+
+    ////////////////////////////////////////////////////////////
+    /// 
+    /// Classes related to Standards and Requirements
+    /// 
+    ////////////////////////////////////////////////////////////
+
+    public class StandardsResponse
+    {
+        public string SetFullName;
+        public string SetShortName;
+        public List<RequirementListCategory> Categories = new List<RequirementListCategory>();
+    }
+
+    public class RequirementListCategory
+    {
+        public string CategoryName;
+        public List<RequirementListSubcategory> Subcategories = new List<RequirementListSubcategory>();
+    }
+
+    public class RequirementListSubcategory
+    {
+        public string SubcategoryName;
+        public List<RequirementDetail> Requirements = new List<RequirementDetail>();
+    }
+
+    public class RequirementDetail
+    {
+        public int RequirementID;
+        public string Title;
+        public string RequirementText;
+    }
 }
