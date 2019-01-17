@@ -546,13 +546,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// Should we ignore categories that aren't paired with any subcategories
         /// in the UNIVERSAL_SUB_CATEGORY_HEADINGS table?
         /// </summary>
-        public CategoriesAndSubcategories GetCategoriesAndSubcategories()
+        public CategoriesSubcategoriesGroupHeadings GetCategoriesSubcategoriesGroupHeadings()
         {
-            CategoriesAndSubcategories response = new CategoriesAndSubcategories();
-            List<CategoryEntry> categoryList = new List<CategoryEntry>();
+            CategoriesSubcategoriesGroupHeadings response = new CategoriesSubcategoriesGroupHeadings();
+
 
             using (var db = new CSETWebEntities())
             {
+                List<CategoryEntry> categoryList = new List<CategoryEntry>();
                 var categories = db.QUESTION_GROUP_HEADING.ToList();
                 foreach (var c in categories)
                 {
@@ -568,7 +569,6 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                 List<CategoryEntry> subcategoryList = new List<CategoryEntry>();
-
                 var subcategories = db.UNIVERSAL_SUB_CATEGORIES.ToList();
                 foreach (var s in subcategories)
                 {
@@ -581,6 +581,21 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 response.Subcategories = subcategoryList;
+
+
+                List<CategoryEntry> groupHeadingsList = new List<CategoryEntry>();
+                var groupHeadings = db.QUESTION_GROUP_HEADING.ToList();
+                foreach (var h in groupHeadings)
+                {
+                    CategoryEntry entry = new CategoryEntry
+                    {
+                        Text = h.Question_Group_Heading1,
+                        ID = h.Question_Group_Heading_Id
+                    };
+                    groupHeadingsList.Add(entry);
+                }
+
+                response.GroupHeadings = groupHeadingsList;
             }
 
             return response;
@@ -859,11 +874,6 @@ namespace CSETWeb_Api.BusinessManagers
         {
             StandardsResponse response = new StandardsResponse();
 
-            
-
-
-
-
             List<NEW_REQUIREMENT> reqs = new List<NEW_REQUIREMENT>();
 
             using (var db = new CSETWebEntities())
@@ -876,7 +886,6 @@ namespace CSETWeb_Api.BusinessManagers
                 var q = from rs in db.REQUIREMENT_SETS
                         from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
                         from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                        from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
                         where rs.Set_Name == setName
                         select new { r, rs, s };
                 var results = q.Distinct()
@@ -896,13 +905,13 @@ namespace CSETWeb_Api.BusinessManagers
 
                 foreach (NEW_REQUIREMENT rq in reqs)
                 {
-                    RequirementDetail r = new RequirementDetail()
+                    Requirement r = new Requirement()
                     {
                         RequirementID = rq.Requirement_Id,
                         Title = rq.Requirement_Title,
                         RequirementText = rq.Requirement_Text
                     };
-            
+
 
                     if (rq.Standard_Category != currentCategory)
                     {
@@ -932,6 +941,104 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Creates a NEW_REQUIREMENT record for the set.  Creates new category/subcategory records as needed.
+        /// </summary>
+        /// <param name="parms"></param>
+        public Requirement CreateRequirement(Requirement parms)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                // Create the category if not already defined
+                var existingCategory = db.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefault();
+                if (existingCategory == null)
+                {
+                    STANDARD_CATEGORY newCategory = new STANDARD_CATEGORY()
+                    {
+                        Standard_Category1 = parms.Category
+                    };
+                    db.STANDARD_CATEGORY.Add(newCategory);
+                }
+
+                // Create the subcategory if not already defined
+                var existingSubcategory = db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == parms.Subcategory).FirstOrDefault();
+                if (existingSubcategory == null)
+                {
+                    UNIVERSAL_SUB_CATEGORIES newSubcategory = new UNIVERSAL_SUB_CATEGORIES()
+                    {
+                        Universal_Sub_Category = parms.Subcategory
+                    };
+                    db.UNIVERSAL_SUB_CATEGORIES.Add(newSubcategory);
+                }
+
+                db.SaveChanges();
+
+
+                NEW_REQUIREMENT req = new NEW_REQUIREMENT
+                {
+                    Requirement_Title = parms.Title,
+                    Requirement_Text = parms.RequirementText,
+                    Standard_Category = parms.Category,
+                    Standard_Sub_Category = parms.Subcategory,
+                    Question_Group_Heading_Id = parms.QuestionGroupHeadingID,
+                    Original_Set_Name = parms.SetName
+                };
+
+                db.NEW_REQUIREMENT.Add(req);
+                db.SaveChanges();
+
+                parms.RequirementID = req.Requirement_Id;
+
+
+                REQUIREMENT_SETS rs = new REQUIREMENT_SETS
+                {
+                    Requirement_Id = req.Requirement_Id,
+                    Set_Name = parms.SetName,
+                    Requirement_Sequence = 1
+                };
+
+                db.REQUIREMENT_SETS.Add(rs);
+                db.SaveChanges();
+            }
+
+            return parms;
+        }
+
+
+        /// <summary>
+        /// Gets a Requirement for the specified Set and ID
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <param name="reqID"></param>
+        /// <returns></returns>
+        public Requirement GetRequirement(string setName, int reqID)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var q = from rs in db.REQUIREMENT_SETS
+                        from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
+                        from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                        where rs.Set_Name == setName && rs.Requirement_Id == reqID
+                        select r;
+
+                var result = q.FirstOrDefault();
+
+                Requirement requirement = new Requirement
+                {
+                    Category = result.Standard_Category,
+                    Subcategory = result.Standard_Sub_Category,
+                    Title = result.Requirement_Title,
+                    RequirementID = result.Requirement_Id,
+                    RequirementText = result.Requirement_Text,
+                    QuestionGroupHeadingID = result.Question_Group_Heading_Id,
+                    SetName = setName
+                };
+
+                return requirement;
+            }
         }
     }
 }

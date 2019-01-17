@@ -27,21 +27,43 @@
       Requirement Detail
     </h3>
 
-    <div class="b">
-      Category, Subcategory
+    <div class="form-group p-0 col-md-12">
+      <label>Category</label>
+      <div>
+        {{r?.Category}}
+      </div>
+    </div>
+    
+    <div class="form-group p-0 col-md-12">
+        <label>Subategory</label>
+        <div>
+          {{r?.Subcategory}}
+        </div>
     </div>
 
     <div class="form-group p-0 col-md-12">
       <label required for="requirementTitle">Identifier/Title</label>
       <input type="text" class="form-control" id="requirementTitle" name="requirementTitle" required focusOnInit="true"
-        [(ngModel)]="requirement.Title" (ngModelChange)="requirement.Title" (change)="updateTitle($event)">
+        [ngModel]="r?.Title" (ngModelChange)="r.Title = $event">
     </div>
+
     <div class="form-group p-0 col-md-12">
       <label required for="requirementText">Requirement Text</label>
       <textarea id="description" class="form-control" type="text" id="requirementText" name="requirementText"
-        [(ngModel)]="requirement.requirementText" (change)="updateText($event)"></textarea>
+        [ngModel]="r?.RequirementText" (ngModelChange)="r.RequirementText = $event"></textarea>
     </div>
 
+    <div class="w-100">
+        <!-- SAL controls -->
+        <div class="sal-checkboxes">
+          <label><input type="checkbox" [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L')" />Low</label>
+          <label><input type="checkbox" [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M')" />Moderate</label>
+          <label><input type="checkbox" [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H')" />High</label>
+          <label><input type="checkbox" [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH')" />Very
+            High</label>
+        </div>
+        <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
+      </div>
 
   </div>
 </div>

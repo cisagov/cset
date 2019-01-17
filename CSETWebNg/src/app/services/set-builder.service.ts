@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, QuestionResult, RequirementResult } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, QuestionResult, RequirementResult, Requirement } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -22,6 +22,14 @@ export class SetBuilderService {
         this.apiUrl = this.configSvc.apiUrl;
     }
 
+    activeRequirement: Requirement;
+
+    /**
+     * Converts linebreak characters to HTML <br> tag.
+     */
+    formatLinebreaks(text: string) {
+        return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    }
 
     /**
      * Returns a collection of custom standards.
@@ -99,8 +107,8 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/GetQuestionsForSet?setName=' + sessionStorage.getItem('setName'));
     }
 
-    getCategoriesAndSubcategories() {
-        return this.http.get(this.apiUrl + 'builder/GetCategoriesAndSubcategories');
+    getCategoriesSubcategoriesGroupHeadings() {
+        return this.http.get(this.apiUrl + 'builder/GetCategoriesSubcategoriesGroupHeadings');
     }
 
     existsQuestionText(questionText: string) {
@@ -240,7 +248,27 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/GetStandardStructure?setName=' + sessionStorage.getItem('setName'));
     }
 
-    navRequirementDetail(r: RequirementResult) {
+    navRequirementDetail(r: Requirement) {
+        this.activeRequirement = r;
         this.router.navigate(['/requirement-detail', r.RequirementID]);
+    }
+
+    /**
+     * Calls the API with details of a new Requirement to create.
+     */
+    createRequirement(r: Requirement) {
+        r.SetName = sessionStorage.getItem('setName');
+        return this.http
+            .post(
+                this.apiUrl + 'builder/CreateRequirement',
+                r,
+                headers
+            );
+    }
+
+    getRequirement(requirementID: number) {
+        return this.http.get(this.apiUrl
+            + 'builder/GetRequirement?setName=' + sessionStorage.getItem('setName')
+            + '&reqID=' + requirementID);
     }
 }

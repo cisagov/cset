@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Category } from '../../models/set-builder.model';
 import { RequirementResult, CategoryEntry } from '../../models/set-builder.model';
+import { AddRequirementComponent } from '../../dialogs/add-requirement/add-requirement/add-requirement.component';
 
 @Component({
   selector: 'app-requirement-list',
@@ -15,6 +16,7 @@ export class RequirementListComponent implements OnInit {
   initialized = false;
   requirementResponse: any;
 
+  addReqDialogRef: MatDialogRef<AddRequirementComponent>;
 
   // pageMode: string = null;
   categories: CategoryEntry[];
@@ -41,7 +43,7 @@ export class RequirementListComponent implements OnInit {
       this.initialized = true;
     });
 
-    this.setBuilderSvc.getCategoriesAndSubcategories().subscribe(
+    this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
         this.categories = data.Categories;
         this.subcategories = data.Subcategories;
@@ -55,21 +57,27 @@ export class RequirementListComponent implements OnInit {
    * Converts linebreak characters to HTML <br> tag.
    */
   formatLinebreaks(text: string) {
-    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+   return this.setBuilderSvc.formatLinebreaks(text);
   }
 
   /**
    *
    */
   editRequirement(r: RequirementResult) {
-    this.setBuilderSvc.navRequirementDetail(r);
+
+    // get full req from API
+    this.setBuilderSvc.getRequirement(r.RequirementID).subscribe(req => {
+      this.setBuilderSvc.navRequirementDetail(req);
+    });
+
+
   }
 
   /**
    *
    */
   addCategory() {
-    this.focusCategory = {CategoryName: ''};
+    this.focusCategory = { CategoryName: '' };
 
     setTimeout(() => {
       this.editCatControl.nativeElement.focus();
@@ -122,5 +130,30 @@ export class RequirementListComponent implements OnInit {
     this.focusCategory = null;
     this.focusSubcategory = null;
     this.newSubcategory = null;
+  }
+
+  /**
+  * Launches the add requirement dialog.
+  */
+  addRequirementDialog() {
+    this.addReqDialogRef = this.dialog.open(AddRequirementComponent);
+    this.addReqDialogRef
+      .afterClosed()
+      .subscribe((data) => {
+
+        // if data was returned they clicked Create.  Otherwise they clicked Cancel
+        if (data) {
+          this.setBuilderSvc.createRequirement(data).subscribe(r => {
+            this.addReqDialogRef = undefined;
+
+            this.setBuilderSvc.navRequirementDetail(r);
+          },
+            error => console.log(error.message)
+          );
+
+        } else {
+          // canceled out of dialog
+        }
+      });
   }
 }

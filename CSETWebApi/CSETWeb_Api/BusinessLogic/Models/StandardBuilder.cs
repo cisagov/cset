@@ -112,10 +112,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string CustomQuestionText;
     }
 
-    public class CategoriesAndSubcategories
+    public class CategoriesSubcategoriesGroupHeadings
     {
         public List<CategoryEntry> Categories;
         public List<CategoryEntry> Subcategories;
+        public List<CategoryEntry> GroupHeadings;
     }
 
     public class CategoryEntry
@@ -168,12 +169,16 @@ namespace CSETWeb_Api.BusinessLogic.Models
     public class RequirementListSubcategory
     {
         public string SubcategoryName;
-        public List<RequirementDetail> Requirements = new List<RequirementDetail>();
+        public List<Requirement> Requirements = new List<Requirement>();
     }
 
-    public class RequirementDetail
+    public class Requirement
     {
         public int RequirementID;
+        public string SetName;
+        public string Category;
+        public string Subcategory;
+        public int QuestionGroupHeadingID;
         public string Title;
         public string RequirementText;
     }

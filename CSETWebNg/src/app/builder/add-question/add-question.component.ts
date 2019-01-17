@@ -52,7 +52,8 @@ export class AddQuestionComponent implements OnInit {
   subcatText: string;
 
   searching = false;
-  searchTerms: string;
+  searchTerms: string = '';
+  searchError = false;
   searchPerformed = false;
   searchHits: QuestionResult[] = null;
   selectedQuestionId: number;
@@ -60,11 +61,7 @@ export class AddQuestionComponent implements OnInit {
   constructor(private setBuilderSvc: SetBuilderService) { }
 
   ngOnInit() {
-    this.getCategoriesAndSubcategories();
-  }
-
-  getCategoriesAndSubcategories() {
-    this.setBuilderSvc.getCategoriesAndSubcategories().subscribe(
+    this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
         this.categories = data.Categories;
         this.subcategories = data.Subcategories;
@@ -72,6 +69,7 @@ export class AddQuestionComponent implements OnInit {
       error => console.log('Categories load Error: ' + (<Error>error).message)
     );
   }
+
 
   /**
    * Creates a new question for the set.
@@ -114,8 +112,18 @@ export class AddQuestionComponent implements OnInit {
    * Search questions to find matches to the specified terms.
    */
   search() {
+    this.searchError = false;
     this.searching = true;
     this.searchTerms = this.searchTerms.trim();
+
+    console.log(this.searchTerms.length);
+
+    if (this.searchTerms.length === 0) {
+      this.searching = false;
+      this.searchError = true;
+      return;
+    }
+
     this.setBuilderSvc.searchQuestions(this.searchTerms).subscribe((result: any[]) => {
       this.searchPerformed = true;
       this.searchHits = result;

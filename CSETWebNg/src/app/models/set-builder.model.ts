@@ -74,3 +74,14 @@ export interface RequirementResult {
 export interface Category {
     CategoryName?: string;
 }
+
+
+export interface Requirement {
+    RequirementID?: number;
+    SetName?: string;
+    Category?: string;
+    Subcategory?: string;
+    QuestionGroupHeadingID?: number;
+    Title?: string;
+    RequirementText?: string;
+}

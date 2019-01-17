@@ -34,7 +34,8 @@ import { CreateUser } from '../../models/user.model';
 export class EditUserComponent implements OnInit {
   model: CreateUser = {};
 
-  constructor(private dialog: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private dialog: MatDialogRef<EditUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

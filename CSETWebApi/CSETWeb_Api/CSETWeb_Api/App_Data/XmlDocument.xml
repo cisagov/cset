@@ -907,6 +907,21 @@
             
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.CreateRequirement(CSETWeb_Api.BusinessLogic.Models.Requirement)">
+            <summary>
+            Creates a new Requirement.  Returns the ID.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetRequirement(System.String,System.Int32)">
+            <summary>
+            Returns the Requirement for the setname and requirement ID.
+            </summary>
+            <param name="setName"></param>
+            <param name="reqID"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

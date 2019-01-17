@@ -143,11 +143,11 @@ namespace CSETWeb_Api.Controllers
 
 
         [HttpGet]
-        [Route("api/builder/GetCategoriesAndSubcategories")]
-        public CategoriesAndSubcategories GetCategoriesAndSubcategories()
+        [Route("api/builder/GetCategoriesSubcategoriesGroupHeadings")]
+        public CategoriesSubcategoriesGroupHeadings GetCategoriesSubcategoriesGroupHeadings()
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            return m.GetCategoriesAndSubcategories();
+            return m.GetCategoriesSubcategoriesGroupHeadings();
         }
 
 
@@ -205,6 +205,35 @@ namespace CSETWeb_Api.Controllers
         {
             StandardBuilderManager m = new StandardBuilderManager();
             return m.GetStandardStructure(setName);
+        }
+
+
+        /// <summary>
+        /// Creates a new Requirement.  Returns the ID.
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/builder/CreateRequirement")]
+        public Requirement CreateRequirement([FromBody] Requirement parms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.CreateRequirement(parms);
+        }
+
+
+        /// <summary>
+        /// Returns the Requirement for the setname and requirement ID.
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <param name="reqID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/builder/GetRequirement")]
+        public Requirement GetRequirement([FromUri] string setName, [FromUri] int reqID)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetRequirement(setName, reqID);
         }
     }
 }

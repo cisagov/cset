@@ -134,6 +134,7 @@ import { RouterModule } from '@angular/router';
 import { BuilderBreadcrumbsComponent } from './builder/builder-breadcrumbs/builder-breadcrumbs.component';
 import { AddQuestionComponent } from './builder/add-question/add-question.component';
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
+import { AddRequirementComponent } from './dialogs/add-requirement/add-requirement/add-requirement.component';
 
 @NgModule({
     imports: [
@@ -243,7 +244,8 @@ import { RequirementDetailComponent } from './builder/requirement-detail/require
         QuestionListComponent,
         BuilderBreadcrumbsComponent,
         AddQuestionComponent,
-        RequirementDetailComponent
+        RequirementDetailComponent,
+        AddRequirementComponent
       ],
     providers: [
         ConfigService,
@@ -295,7 +297,8 @@ import { RequirementDetailComponent } from './builder/requirement-detail/require
       InlineParameterComponent,
       GlobalParametersComponent,
       KeyboardShortcutsComponent,
-      LicenseComponent
+      LicenseComponent,
+      AddRequirementComponent
     ]
 })
 

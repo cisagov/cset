@@ -37,6 +37,8 @@
       No requirements defined
     </div>
 
+    <button class="btn btn-primary mb-4" (click)="addRequirementDialog()">Create Requirement</button>
+
     <div *ngFor="let cat of requirementResponse?.Categories">
       <div class="group-heading mt-3">
         {{cat.CategoryName}}
@@ -75,27 +77,6 @@
         <div *ngIf="!subcat.Requirements || subcat.Requirements?.length === 0" class="font-italic m-4">
           There are no requirements defined for this subcategory
         </div>
-
-        <button class="btn btn-primary mb-4">Add Requirement</button>
       </div>
-
-      <button class="btn btn-primary mb-4" *ngIf="focusSubcategory === null" (click)="addSubcategory(cat)">Add Subcategory</button>
-      <div *ngIf="focusSubcategory !== null && category == cat">
-          <input #editSubcat type="text" class="form-control" id="newSubcategory" name="newSubcategory" list="subcatoptions" [(ngModel)]="newSubcategory"
-          (keydown.enter)="saveSubcategory(cat)" (blur)="saveSubcategory(cat)" (keydown.esc)="newSubcategory = null; saveSubcategory();">
-          <datalist id="subcatoptions">
-            <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.ID" [value]="subcategory.Text"></option>
-          </datalist>
-        </div>
-    </div>
-
-    <button class="btn btn-primary mb-4" *ngIf="focusCategory === null" (click)="addCategory()">Add Category</button>
-    <div *ngIf="focusCategory !== null">
-      <input #editCat type="text" class="form-control" id="newCategory" name="newCategory" list="catoptions" [(ngModel)]="newCategory"
-      (keydown.enter)="saveCategory()" (blur)="saveCategory()" (keydown.esc)="newCategory = null; saveCategory();">
-      <datalist id="catoptions">
-        <option *ngFor="let category of categories" [attr.data-value]="category.ID" [value]="category.Text"></option>
-      </datalist>
     </div>
   </div>
-</div>

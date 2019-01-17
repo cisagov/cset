@@ -61,9 +61,8 @@
 
       <div class="form-group">
         <label>Subcategory
-          <input type="text" id="subcategory" name="subcategory" [(ngModel)]="subcatText" list="subcatoptions"
-            class="form-control" />
-          <datalist id="subcatoptions" >
+          <input type="text" id="subcategory" name="subcategory" [(ngModel)]="subcatText" list="subcatoptions" class="form-control" />
+          <datalist id="subcatoptions">
             <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.ID" [value]="subcategory.Text"></option>
           </datalist>
         </label>
@@ -94,8 +93,11 @@
     </p>
 
     <div class="d-flex flex-row mb-3">
-      <input id="txtSearchQuestionText" class="form-control" type="text" name="searchTerms" id="searchTerms"
-        [(ngModel)]="searchTerms" (keydown.enter)="search()">
+      <div class="d-flex flex-column w-100">
+        <input id="txtSearchQuestionText" class="form-control" type="text" name="searchTerms" id="searchTerms"
+          [(ngModel)]="searchTerms" (keydown.enter)="search()">
+        <div *ngIf="searchError && searchTerms.trim().length === 0" class="alert alert-danger">Enter search keywords</div>
+      </div>
       <div>
         <button type="submit" class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
           matTooltip="Search questions" (click)="search()">
