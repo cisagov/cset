@@ -1,2 +1,4 @@
 *.log
 dist
+/CSETWebApi/CSETWeb_Api/AddCSETUser/bin
+/CSETWebApi/CSETWeb_Api/AddCSETUser/publish
