@@ -84,4 +84,5 @@ export interface Requirement {
     QuestionGroupHeadingID?: number;
     Title?: string;
     RequirementText?: string;
+    SalLevels?: string[];
 }

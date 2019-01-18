@@ -57,7 +57,7 @@
             </button>
           </div>
           <div *ngIf="!subcat.IsSubHeadingEditable" class="fs-small heading-color">
-              {{subcat.SubHeading}}
+            {{subcat.SubHeading}}
           </div>
           <div *ngIf="!subcat.SubHeading && subcat.IsSubHeadingEditable && headingBeingEdited != subcat">
             <button class="btn btn-link-subtle font-italic fs-small" (click)="startHeadingEdit(subcat)">
@@ -100,20 +100,24 @@
             </span>
           </div>
           <div class="w-100">
-            <!-- SAL controls -->
-            <div class="sal-checkboxes">
-              <label><input type="checkbox" [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L')" />Low</label>
-              <label><input type="checkbox" [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M')" />Moderate</label>
-              <label><input type="checkbox" [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H')" />High</label>
-              <label><input type="checkbox" [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH')" />Very
-                High</label>
+            <div class="btn-group btn-group-toggle">
+              <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
+                <input type="checkbox" id="SAL-L-{{q.QuestionID}}" name="SAL-L-{{q.QuestionID}}" [checked]="hasSAL(q, 'L')"
+                  (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
+              <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'M')">
+                <input type="checkbox" id="SAL-M-{{q.QuestionID}}" name="SAL-M-{{q.QuestionID}}" [checked]="hasSAL(q, 'M')"
+                  (click)="toggleSAL(q, 'M', $event)" data-toggle="toggle" />Moderate</label>
+              <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'H')">
+                <input type="checkbox" id="SAL-H-{{q.QuestionID}}" name="SAL-H-{{q.QuestionID}}" [checked]="hasSAL(q, 'H')"
+                  (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
+              <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'VH')">
+                <input type="checkbox" id="SAL-VH-{{q.QuestionID}}" name="SAL-VH-{{q.QuestionID}}" [checked]="hasSAL(q, 'VH')"
+                  (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very High</label>
             </div>
             <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>

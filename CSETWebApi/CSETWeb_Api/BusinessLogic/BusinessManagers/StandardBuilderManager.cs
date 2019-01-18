@@ -714,11 +714,68 @@ namespace CSETWeb_Api.BusinessManagers
         }
 
 
+
         /// <summary>
-        /// Sets or removes a single SAL level for a question in a set.
+        /// Sets or removes a single SAL level for a requirement or question.
         /// </summary>
         /// <param name="salParms"></param>
-        public void SetQuestionSalLevel(SalParms salParms)
+        public void SetSalLevel(SalParms salParms)
+        {
+            if (salParms.RequirementID != 0)
+            {
+                SetRequirementSalLevel(salParms);
+            }
+            if (salParms.QuestionID != 0)
+            {
+                SetQuestionSalLevel(salParms);
+            }
+        }
+
+
+        /// <summary>
+        /// Sets or removes a single SAL level for a requirement.
+        /// </summary>
+        /// <param name="salParms"></param>
+        private void SetRequirementSalLevel(SalParms salParms)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                REQUIREMENT_LEVELS level = db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == salParms.RequirementID
+                    && x.Standard_Level == salParms.Level).FirstOrDefault();
+
+                if (salParms.State)
+                {
+                    // add the level if it doesn't exist
+                    if (level == null)
+                    {
+                        level = new REQUIREMENT_LEVELS()
+                        {
+                            Requirement_Id = salParms.RequirementID,
+                            Standard_Level = salParms.Level,
+                            Level_Type = "NST"
+                        };
+                        db.REQUIREMENT_LEVELS.AddOrUpdate(level);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    // remove the level
+                    if (level != null)
+                    {
+                        db.REQUIREMENT_LEVELS.Remove(level);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Sets or removes a single SAL level for a question.
+        /// </summary>
+        /// <param name="salParms"></param>
+        private void SetQuestionSalLevel(SalParms salParms)
         {
             using (var db = new CSETWebEntities())
             {
@@ -912,7 +969,15 @@ namespace CSETWeb_Api.BusinessManagers
                         RequirementText = rq.Requirement_Text
                     };
 
+                    // Get the SAL levels for this requirement
+                    var sals = db.REQUIREMENT_LEVELS.Where(l => l.Requirement_Id == rq.Requirement_Id).ToList();
+                    foreach (REQUIREMENT_LEVELS l in sals)
+                    {
+                        r.SalLevels.Add(l.Standard_Level);
+                    }
 
+
+                    // Group into Category/Subcategory structure
                     if (rq.Standard_Category != currentCategory)
                     {
                         cat = new RequirementListCategory
@@ -1036,6 +1101,13 @@ namespace CSETWeb_Api.BusinessManagers
                     QuestionGroupHeadingID = result.Question_Group_Heading_Id,
                     SetName = setName
                 };
+
+                // Get the SAL levels for this requirement
+                var sals = db.REQUIREMENT_LEVELS.Where(l => l.Requirement_Id == requirement.RequirementID).ToList();
+                foreach (REQUIREMENT_LEVELS l in sals)
+                {
+                    requirement.SalLevels.Add(l.Standard_Level);
+                }
 
                 return requirement;
             }

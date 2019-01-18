@@ -161,11 +161,11 @@ namespace CSETWeb_Api.Controllers
 
 
         [HttpPost]
-        [Route("api/builder/SetQuestionSalLevel")]
-        public void SetQuestionSalLevel([FromBody] SalParms parms)
+        [Route("api/builder/SetSalLevel")]
+        public void SetSalLevel([FromBody] SalParms parms)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            m.SetQuestionSalLevel(parms);
+            m.SetSalLevel(parms);
         }
 
 

@@ -190,8 +190,9 @@ export class SetBuilderService {
     /**
      *
      */
-    setQuestionSalLevel(questionID: number, level: string, state: boolean) {
+    setSalLevel(requirementID: number, questionID: number, level: string, state: boolean) {
         const salParms = {
+            RequirementID: requirementID,
             QuestionID: questionID,
             SetName: sessionStorage.getItem('setName'),
             State: state,
@@ -199,7 +200,7 @@ export class SetBuilderService {
         };
         return this.http
             .post(
-                this.apiUrl + 'builder/SetQuestionSalLevel',
+                this.apiUrl + 'builder/SetSalLevel',
                 salParms,
                 headers
             );

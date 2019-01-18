@@ -33,37 +33,47 @@
         {{r?.Category}}
       </div>
     </div>
-    
+
     <div class="form-group p-0 col-md-12">
-        <label>Subategory</label>
-        <div>
-          {{r?.Subcategory}}
-        </div>
+      <label>Subategory</label>
+      <div>
+        {{r?.Subcategory}}
+      </div>
     </div>
 
     <div class="form-group p-0 col-md-12">
       <label required for="requirementTitle">Identifier/Title</label>
       <input type="text" class="form-control" id="requirementTitle" name="requirementTitle" required focusOnInit="true"
-        [ngModel]="r?.Title" (ngModelChange)="r.Title = $event">
+        [ngModel]="r?.Title" (ngModelChange)="updateTitle($event)">
+      <div *ngIf="">Title is required</div>
     </div>
 
     <div class="form-group p-0 col-md-12">
       <label required for="requirementText">Requirement Text</label>
-      <textarea id="description" class="form-control" type="text" id="requirementText" name="requirementText"
-        [ngModel]="r?.RequirementText" (ngModelChange)="r.RequirementText = $event"></textarea>
+      <textarea id="description" class="form-control" type="text" id="requirementText" name="requirementText" [ngModel]="r?.RequirementText"
+        (ngModelChange)="updateDescription($event)"></textarea>
     </div>
 
-    <div class="w-100">
-        <!-- SAL controls -->
-        <div class="sal-checkboxes">
-          <label><input type="checkbox" [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L')" />Low</label>
-          <label><input type="checkbox" [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M')" />Moderate</label>
-          <label><input type="checkbox" [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H')" />High</label>
-          <label><input type="checkbox" [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH')" />Very
-            High</label>
-        </div>
-        <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
+    <div class="form-group p-0 col-md-12">
+      <h4>SAL</h4>
+      <div class="btn-group btn-group-toggle">
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'L')">
+          <input type="checkbox" id="SAL-L-{{r?.RequirementID}}" name="SAL-L-{{r?.RequirementID}}" [checked]="hasSAL(r, 'L')"
+            (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" />Low</label>
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'M')">
+          <input type="checkbox" id="SAL-M-{{r?.RequirementID}}" name="SAL-M-{{r?.RequirementID}}" [checked]="hasSAL(r, 'M')"
+            (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" />Moderate</label>
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'H')">
+          <input type="checkbox" id="SAL-H-{{r?.RequirementID}}" name="SAL-H-{{r?.RequirementID}}" [checked]="hasSAL(r, 'H')"
+            (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" />High</label>
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'VH')">
+          <input type="checkbox" id="SAL-VH-{{r?.RequirementID}}" name="SAL-VH-{{r?.RequirementID}}" [checked]="hasSAL(r, 'VH')"
+            (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" />Very High</label>
       </div>
+      <div *ngIf="missingSAL(r)" class="alert alert-danger">At least one SAL level is required</div>
+    </div>
+
+
 
   </div>
 </div>

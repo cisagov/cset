@@ -168,11 +168,15 @@ export class AddQuestionComponent implements OnInit {
   /**
    * Includes/removes the level from the list of applicable SAL levels for the question.
    */
-  toggleSAL(q: QuestionResult, level: string, e: Event) {
+  toggleSAL(q: QuestionResult, level: string, e) {
+    const checked = e.target.checked;
     const a = q.SalLevels.indexOf(level);
-    if (a === -1) {
-      q.SalLevels.push(level);
-    } else {
+
+    if (checked) {
+      if (a <= 0) {
+        q.SalLevels.push(level);
+      }
+    } else if (a >= 0) {
       q.SalLevels = q.SalLevels.filter(x => x !== level);
     }
   }

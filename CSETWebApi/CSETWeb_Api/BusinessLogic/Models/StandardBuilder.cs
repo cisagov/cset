@@ -128,6 +128,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
     public class SalParms
     {
         public string SetName;
+        public int RequirementID;
         public int QuestionID;
 
         // Whether the level should be applied (true) or removed (false)
@@ -181,5 +182,6 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int QuestionGroupHeadingID;
         public string Title;
         public string RequirementText;
+        public List<string> SalLevels = new List<string>();
     }
 }
