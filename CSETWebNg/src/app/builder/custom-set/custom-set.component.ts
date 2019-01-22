@@ -36,6 +36,8 @@ export class CustomSetComponent implements OnInit {
 
   setDetail: SetDetail = {};
 
+  submitted = false;
+
   constructor(private setBuilderSvc: SetBuilderService,
     private router: Router) { }
 
@@ -49,5 +51,35 @@ export class CustomSetComponent implements OnInit {
 
   update(e: Event) {
     this.setBuilderSvc.updateSetDetails(this.setDetail);
+  }
+
+  isSetReady() {
+    if (!this.setDetail) {
+      return false;
+    }
+    if (!this.setDetail.SetName) {
+      return false;
+    }
+    return true;
+  }
+
+  navReqList() {
+    // validate
+    this.submitted = true;
+    if (!this.isSetReady()) {
+      return;
+    }
+
+    this.setBuilderSvc.navReqList();
+  }
+
+  navQuestionList() {
+    // validate
+    this.submitted = true;
+    if (!this.isSetReady()) {
+      return;
+    }
+
+    this.setBuilderSvc.navQuestionList();
   }
 }

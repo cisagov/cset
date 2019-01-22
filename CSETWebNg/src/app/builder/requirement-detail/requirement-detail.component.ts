@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Requirement } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+
 
 @Component({
   selector: 'app-requirement-detail',
@@ -11,11 +13,36 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RequirementDetailComponent implements OnInit {
 
-  r: Requirement;
-  rBackup: Requirement;
+  r: Requirement = {};
+  rBackup: Requirement = {};
 
   titleEmpty = false;
   textEmpty = false;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '25rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    uploadUrl: 'v1/images', // if needed
+    customClasses: [ // optional
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ]
+  };
 
 
   constructor(private setBuilderSvc: SetBuilderService,
@@ -27,12 +54,10 @@ export class RequirementDetailComponent implements OnInit {
 
     // if the service doesn't know it, try to get it from the URI
     if (!this.r) {
-      this.setBuilderSvc.getRequirement(this.route.snapshot.params['id']).subscribe(result => {
+      this.setBuilderSvc.getRequirement(this.route.snapshot.params['id']).subscribe((result: Requirement) => {
         this.r = result;
         this.rBackup = this.r;
         this.setBuilderSvc.activeRequirement = this.r;
-
-        console.log(this.r.SalLevels['L']);
       });
     }
   }
@@ -42,23 +67,37 @@ export class RequirementDetailComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
-  updateTitleAndDescription(e: Event) {
+  updateRequirement(e: Event) {
     this.titleEmpty = (this.r.Title.trim().length === 0);
     this.textEmpty = (this.r.RequirementText.trim().length === 0);
 
+    // Don't allow either of these fields to be blanked out.
+    if (this.titleEmpty) {
+      this.r.Title = this.rBackup.Title;
+    }
+    if (this.textEmpty) {
+      this.r.RequirementText = this.rBackup.RequirementText;
+    }
     if (this.titleEmpty || this.textEmpty) {
-
-      // TODO:  revert
-
       return;
     }
 
     // call API
-
+    this.setBuilderSvc.updateRequirement(this.r).subscribe();
   }
 
+  /**
+   * Not all 'blur' events are firing.  If focus is in the editor and you
+   * click the cursor out onto the page, there's no blur event.
+   * This needs to be figured out.
+   */
+  onBlur(e: Event) {
+    console.log('onBlur: ');
+    console.log(e);
+    this.updateRequirement(e);
+  }
 
   /**
   *

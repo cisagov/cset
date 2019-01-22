@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
-import { CategoryEntry, QuestionResult } from '../../models/set-builder.model';
+import { CategoryEntry, Question } from '../../models/set-builder.model';
 import { ChartLegendLabelItem } from 'chart.js';
 
 @Component({
@@ -46,16 +46,16 @@ export class AddQuestionComponent implements OnInit {
   customSalH = false;
   customSalVH = false;
 
-  categories: CategoryEntry[];
+  groupheadings: CategoryEntry[];
   subcategories: CategoryEntry[];
-  selectedCatId: number = 0;
+  selectedGHId: number = 0;
   subcatText: string;
 
   searching = false;
   searchTerms: string = '';
   searchError = false;
   searchPerformed = false;
-  searchHits: QuestionResult[] = null;
+  searchHits: Question[] = null;
   selectedQuestionId: number;
 
   constructor(private setBuilderSvc: SetBuilderService) { }
@@ -63,7 +63,7 @@ export class AddQuestionComponent implements OnInit {
   ngOnInit() {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
-        this.categories = data.Categories;
+        this.groupheadings = data.Categories;
         this.subcategories = data.Subcategories;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
@@ -79,7 +79,7 @@ export class AddQuestionComponent implements OnInit {
     this.customQuestionText = this.customQuestionText.trim();
 
     this.isCustomQuestionEmpty = (this.customQuestionText.length === 0);
-    this.isCatOrSubcatEmpty = this.selectedCatId === 0 || this.subcatText.trim().length === 0;
+    this.isCatOrSubcatEmpty = this.selectedGHId === 0 || this.subcatText.trim().length === 0;
     this.isSalSelectionEmpty = !this.customSalL && !this.customSalM && !this.customSalH && !this.customSalVH;
     this.isDupeQuestion = false;
 
@@ -101,7 +101,7 @@ export class AddQuestionComponent implements OnInit {
       if (this.customSalM) { salLevels.push("M"); }
       if (this.customSalH) { salLevels.push("H"); }
       if (this.customSalVH) { salLevels.push("VH"); }
-      this.setBuilderSvc.addCustomQuestion(this.customQuestionText, this.selectedCatId, this.subcatText, salLevels).subscribe(() => {
+      this.setBuilderSvc.addCustomQuestion(this.customQuestionText, this.selectedGHId, this.subcatText, salLevels).subscribe(() => {
           // navigate back to the questions list
           this.setBuilderSvc.navQuestionList();
         });
@@ -145,7 +145,7 @@ export class AddQuestionComponent implements OnInit {
   /**
    * Add the question to the set.
    */
-  selectExistingQuestion(q: QuestionResult) {
+  selectExistingQuestion(q: Question) {
     // make sure they selected a SAL
     this.selectedQuestionId = q.QuestionID;
     if (this.missingSAL(q)) {
@@ -161,14 +161,14 @@ export class AddQuestionComponent implements OnInit {
   /**
    *
    */
-  hasSAL(q: QuestionResult, level: string): boolean {
+  hasSAL(q: Question, level: string): boolean {
     return (q.SalLevels.indexOf(level) >= 0);
   }
 
   /**
    * Includes/removes the level from the list of applicable SAL levels for the question.
    */
-  toggleSAL(q: QuestionResult, level: string, e) {
+  toggleSAL(q: Question, level: string, e) {
     const checked = e.target.checked;
     const a = q.SalLevels.indexOf(level);
 
@@ -184,7 +184,7 @@ export class AddQuestionComponent implements OnInit {
   /**
    * Indicates if no SAL levels are currently selected for the question.
    */
-  missingSAL(q: QuestionResult) {
+  missingSAL(q: Question) {
     if (!q) {
       return false;
     }

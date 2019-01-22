@@ -64,7 +64,7 @@
 
       <div class="form-group">
           <label for="requirementText">Requirement Text</label>
-          <textarea required #requirementText="ngModel" id="requirementText" name="requirementText" [(ngModel)]="model.RequirementText" class="form-control"></textarea>
+          <textarea appAutoSize required #requirementText="ngModel" id="requirementText" name="requirementText" [(ngModel)]="model.RequirementText" class="form-control"></textarea>
           <div *ngIf="submitted && !requirementText.valid" class="m-0 mt-2 alert alert-danger">Requirement Text is required</div>
         </div>
 

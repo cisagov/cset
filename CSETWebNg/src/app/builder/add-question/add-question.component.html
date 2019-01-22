@@ -35,12 +35,11 @@
   <div class="mb-3 p-3 b-primary-200 br-standard">
 
     <h5>Write New Question</h5>
-
     <p>
       If you wish to add a custom question to the set, enter it here.
     </p>
 
-    <textarea id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4" type="text"></textarea>
+    <textarea appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4" type="text"></textarea>
     <div *ngIf="isCustomQuestionEmpty">
       <div class="alert alert-danger">Question text is required</div>
     </div>
@@ -49,17 +48,18 @@
         existing question.</div>
     </div>
 
+    <h5>Categorization</h5>
     <div class="d-flex flex-row">
       <div class="form-group mr-2">
-        <label>Category
-          <select class="form-control" id="category" name="category" [(ngModel)]="selectedCatId">
-            <option value="0">--Select Category--</option>
-            <option *ngFor="let category of categories" [value]="category.ID">{{category.Text}}</option>
+        <label>Question Group Heading
+          <select class="form-control" id="category" name="category" [(ngModel)]="selectedGHId">
+            <option value="0">--Select Heading--</option>
+            <option *ngFor="let groupheading of groupheadings" [value]="groupheading.ID">{{groupheading.Text}}</option>
           </select>
         </label>
       </div>
 
-      <div class="form-group">
+      <div class="form-group">        
         <label>Subcategory
           <input type="text" id="subcategory" name="subcategory" [(ngModel)]="subcatText" list="subcatoptions" class="form-control" />
           <datalist id="subcatoptions">
@@ -69,9 +69,11 @@
       </div>
     </div>
     <div *ngIf="isCatOrSubcatEmpty">
-      <div class="alert alert-danger">Category and Subcategory are required</div>
+      <div class="alert alert-danger">Question Group Heading and Subcategory are required</div>
     </div>
-    <div>
+    <div class="mb-3">
+      <h5>Security Assurance Level</h5>
+      <p>Select all applicable levels.</p>
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="customSalL">
           <input type="checkbox" id="SAL-L-{{q?.QuestionID}}" name="SAL-L-{{q?.QuestionID}}" [checked]="customSalL"
@@ -122,8 +124,8 @@
 
     <div *ngIf="searchPerformed && !searching">
 
-      <div class="m-2" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
-      <div class="m-2" *ngIf="searchHits.length === 1">1 question was found</div>
+      <div class="m-2 alert alert-info" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
+      <div class="m-2 alert alert-info" *ngIf="searchHits.length === 1">1 question was found</div>
 
       <hr *ngIf="searchHits.length > 0" class="hr-sal" />
 
@@ -140,8 +142,9 @@
             </div>
 
             <h6 class="mt-3 font-weight-bold">
-              SAL Levels
+                Security Assurance Level
             </h6>
+            <p>Select all applicable levels.</p>
             <div class="w-100">
               <div class="btn-group btn-group-toggle">
                 <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">

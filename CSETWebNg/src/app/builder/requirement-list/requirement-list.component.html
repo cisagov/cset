@@ -22,10 +22,16 @@
 -------------------------->
 <div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
   <app-builder-breadcrumbs></app-builder-breadcrumbs>
-  <div>
+  <div class="">
     <h3>
-      {{requirementResponse?.SetFullName}}
+      Requirement Listing
     </h3>
+    <div class="card p-3 mb-3">
+      <h4>
+        {{requirementResponse?.SetFullName}}
+      </h4>
+      <p class="font-italic">{{requirementResponse?.SetDescription}}</p>
+    </div>
 
     <div *ngIf="!initialized">
       <div class="spinner-container" style="margin-left: auto; margin-right: auto;">

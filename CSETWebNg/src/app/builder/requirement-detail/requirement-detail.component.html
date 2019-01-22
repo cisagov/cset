@@ -44,18 +44,19 @@
     <div class="form-group p-0 col-md-12">
       <label required for="requirementTitle">Identifier/Title</label>
       <input type="text" class="form-control" id="requirementTitle" name="requirementTitle" required focusOnInit="true"
-        [ngModel]="r?.Title" (ngModelChange)="updateTitle($event)">
+        [(ngModel)]="r.Title" (change)="updateRequirement($event)">
       <div *ngIf="">Title is required</div>
     </div>
 
-    <div class="form-group p-0 col-md-12">
-      <label required for="requirementText">Requirement Text</label>
-      <textarea id="description" class="form-control" type="text" id="requirementText" name="requirementText" [ngModel]="r?.RequirementText"
-        (ngModelChange)="updateDescription($event)"></textarea>
+    <div class="form-group p-0 col-md-12 mb-5">
+      <label required for="requirementText">Standard-Specific Requirement</label>
+      <textarea appAutoSize id="description" class="form-control" type="text" id="requirementText" name="requirementText"
+        [(ngModel)]="r.RequirementText" (change)="updateRequirement($event)"></textarea>
     </div>
 
-    <div class="form-group p-0 col-md-12">
-      <h4>SAL</h4>
+    <div class="form-group p-0 col-md-12 mb-5">
+      <h4>Security Assurance Level</h4>
+      <p>Select all applicable levels.</p>
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'L')">
           <input type="checkbox" id="SAL-L-{{r?.RequirementID}}" name="SAL-L-{{r?.RequirementID}}" [checked]="hasSAL(r, 'L')"
@@ -73,7 +74,60 @@
       <div *ngIf="missingSAL(r)" class="alert alert-danger">At least one SAL level is required</div>
     </div>
 
+    <div class="mb-5">
+      <h4>Supplemental Information</h4>
+      <p class="keyboard">HTML markup (such as tables) can be edited directly by clicking the <kbd>&lt;/&gt;</kbd>
+        button.</p>
+      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" (blur)="updateRequirement($event)"></angular-editor>
+    </div>
+
+    <div class="form-group p-0 col-md-12 mb-5">
+      <h4>References</h4>
+      <ul>
+        <li *ngFor="let ref of references">ABC</li>
+      </ul>
+    </div>
+
+    <div class="form-group p-0 col-md-12 mb-5">
+      <h4>Related Questions</h4>
+      <p>Questions may be added to the requirement. When the standard is reviewed in CSET
+        the assessors may choose to answer questions instead of the requirement.
+      </p>
 
 
+      <div *ngFor="let q of r.Questions; let i = index" class="question-row d-flex flex-column p-3"
+        [class.no-bottom-border]="i == (r.Questions.length - 1)">
+        <div>
+          {{ q.Title }}
+        </div>
+        <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
+          <div class="d-flex flex-column mb-3 mr-3 w-100">
+            <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.QuestionText)">
+            </div>
+            <div *ngIf="questionBeingEdited === q" class="w-100">
+              <div class="alert alert-danger" *ngIf="editedQuestionInUse">
+                This question is in use in other standards/question sets or assessments.
+                Do not change the meaning of the question text.
+              </div>
+              <textarea appAutoSize id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
+                (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+            </div>
+          </div>
+          <span class="d-flex align-items-end justify-content-between flex-00a">
+            <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+              <span class="cset-icons-pencil fs-base-2"></span>
+              <span class="d-none d-md-flex fs-smaller">Change</span>
+            </button>
+            <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeQuestion(q)">
+              <span class="cset-icons-trash-can fs-base-2"></span>
+              <span class="d-none d-md-flex fs-smaller">Remove</span>
+            </button>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <button (click)="setBuilderSvc.navReqList();" class="btn btn-primary">Back to Requirement List</button>
   </div>
 </div>

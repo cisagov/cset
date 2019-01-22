@@ -49,7 +49,7 @@ export interface QuestionSearch {
 /**
  * Used when searching questions to add to a set.
  */
-export interface QuestionResult {
+export interface Question {
     QuestionID?: number;
     QuestionText?: string;
     SelectedForAdd?: boolean;
@@ -85,4 +85,6 @@ export interface Requirement {
     Title?: string;
     RequirementText?: string;
     SalLevels?: string[];
+    SupplementalInfo?: string;
+    Questions?: Question[];
 }

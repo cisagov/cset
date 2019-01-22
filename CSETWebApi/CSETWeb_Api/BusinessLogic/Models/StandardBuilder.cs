@@ -158,6 +158,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public string SetFullName;
         public string SetShortName;
+        public string SetDescription;
         public List<RequirementListCategory> Categories = new List<RequirementListCategory>();
     }
 
@@ -183,5 +184,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Title;
         public string RequirementText;
         public List<string> SalLevels = new List<string>();
+        public string SupplementalInfo;
+        public List<QuestionDetail> Questions = new List<QuestionDetail>();
+    }
+
+    public class Supplemental
+    {
+        public int RequirementID;
+        public string Markup;
     }
 }

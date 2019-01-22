@@ -26,7 +26,7 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { MatDialog } from '@angular/material';
-import { QuestionResult } from '../../models/set-builder.model';
+import { Question } from '../../models/set-builder.model';
 
 @Component({
   selector: 'app-question-list',
@@ -39,7 +39,7 @@ export class QuestionListComponent implements OnInit {
   questionResponse: any;
   initialized = false;
 
-  questionBeingEdited: QuestionResult = null;
+  questionBeingEdited: Question = null;
   originalQuestionText: string = null;
   editedQuestionInUse = false;
 
@@ -75,7 +75,7 @@ export class QuestionListComponent implements OnInit {
   /**
    *
    */
-  startQuestionEdit(q: QuestionResult) {
+  startQuestionEdit(q: Question) {
     this.questionBeingEdited = q;
     this.originalQuestionText = q.QuestionText;
 
@@ -92,13 +92,13 @@ export class QuestionListComponent implements OnInit {
   /**
    *
    */
-  endQuestionEdit(q: QuestionResult) {
+  endQuestionEdit(q: Question) {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
     this.setBuilderSvc.updateQuestionText(q).subscribe();
   }
 
-  abandonQuestionEdit(q: QuestionResult) {
+  abandonQuestionEdit(q: Question) {
     q.QuestionText = this.originalQuestionText;
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
@@ -107,7 +107,7 @@ export class QuestionListComponent implements OnInit {
   /**
    *
    */
-  removeQuestion(q: QuestionResult) {
+  removeQuestion(q: Question) {
     // confirm
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
@@ -123,7 +123,7 @@ export class QuestionListComponent implements OnInit {
   /**
    * Finds the question in the structure and removes it.
    */
-  dropQuestion(q: QuestionResult) {
+  dropQuestion(q: Question) {
     this.questionResponse.Categories.forEach((cat: any, indexCat: number) => {
       cat.Subcategories.forEach((subcat: any, indexSubcat: number) => {
         const i = subcat.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
@@ -162,14 +162,14 @@ export class QuestionListComponent implements OnInit {
   /**
    *
    */
-  hasSAL(q: QuestionResult, level: string): boolean {
+  hasSAL(q: Question, level: string): boolean {
     return (q.SalLevels.indexOf(level) >= 0);
   }
 
   /**
    * Indicates if no SAL levels are currently selected for the question.
    */
-  missingSAL(q: QuestionResult) {
+  missingSAL(q: Question) {
     if (q.SalLevels.length === 0) {
       return true;
     }
@@ -179,7 +179,7 @@ export class QuestionListComponent implements OnInit {
   /**
    * Includes/removes the level from the list of applicable SAL levels for the question.
    */
-  toggleSAL(q: QuestionResult, level: string, e) {
+  toggleSAL(q: Question, level: string, e) {
     let state = false;
     const checked = e.target.checked;
     const a = q.SalLevels.indexOf(level);

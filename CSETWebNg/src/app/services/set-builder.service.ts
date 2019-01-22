@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, QuestionResult, RequirementResult, Requirement } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, Question, RequirementResult, Requirement } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -88,7 +88,13 @@ export class SetBuilderService {
             .subscribe();
     }
 
+
+
+    /**********************
+     * Navigational services
+    ***********************/
     navReqList() {
+        this.activeRequirement = null;
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/', 'requirement-list', setName]);
     }
@@ -137,7 +143,7 @@ export class SetBuilderService {
     /**
      *
      */
-    addExistingQuestion(q: QuestionResult) {
+    addExistingQuestion(q: Question) {
         const setName = sessionStorage.getItem('setName');
         const req = {
             SetName: setName,
@@ -209,7 +215,7 @@ export class SetBuilderService {
     /**
      *
      */
-    updateQuestionText(q: QuestionResult) {
+    updateQuestionText(q: Question) {
         const parms = {
             QuestionID: q.QuestionID,
             QuestionText: q.QuestionText
@@ -222,7 +228,7 @@ export class SetBuilderService {
             );
     }
 
-    isQuestionInUse(q: QuestionResult) {
+    isQuestionInUse(q: Question) {
         return this.http.get(this.apiUrl + 'builder/IsQuestionInUse?questionID=' + q.QuestionID);
     }
 
@@ -267,9 +273,25 @@ export class SetBuilderService {
             );
     }
 
+    /**
+     *
+     */
     getRequirement(requirementID: number) {
         return this.http.get(this.apiUrl
             + 'builder/GetRequirement?setName=' + sessionStorage.getItem('setName')
             + '&reqID=' + requirementID);
+    }
+
+    /**
+     * Sends the Requirement to the API.
+     */
+    updateRequirement(r: Requirement) {
+        r.SetName = sessionStorage.getItem('setName');
+        return this.http
+            .post(
+                this.apiUrl + 'builder/UpdateRequirement',
+                r,
+                headers
+            );
     }
 }

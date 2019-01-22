@@ -922,6 +922,13 @@
             <param name="reqID"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.UpdateRequirement(CSETWeb_Api.BusinessLogic.Models.Requirement)">
+            <summary>
+            Updates an existing Requirement.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

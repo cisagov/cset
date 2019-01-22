@@ -235,5 +235,18 @@ namespace CSETWeb_Api.Controllers
             StandardBuilderManager m = new StandardBuilderManager();
             return m.GetRequirement(setName, reqID);
         }
+
+        /// <summary>
+        /// Updates an existing Requirement.
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/builder/UpdateRequirement")]
+        public Requirement UpdateRequirement([FromBody] Requirement parms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.UpdateRequirement(parms);
+        }
     }
 }

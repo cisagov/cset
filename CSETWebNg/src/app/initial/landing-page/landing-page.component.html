@@ -25,7 +25,7 @@
     <!-- <p>{{this.authSvc.userToken()}}</p> -->
     <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a ">
 
-        <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
+        <ng-container *ngIf="!!sortedAssessments && sortedAssessments?.length > 0; else noAssessmentsElseBlock">
             <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
             <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
                 <div class="d-flex justify-content-between flex-00a">
@@ -60,7 +60,7 @@
             </div>
         </ng-container>
         <ng-template #noAssessmentsElseBlock>
-            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">Welcome to CSET</h2>
+            <h2 class="mt-0" *ngIf="sortedAssessments.length == 0">Welcome to CSET</h2>
             <p>To get started, select from one of the options below:</p>
             <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
                 <div class="flex-row d-flex flex-00a">

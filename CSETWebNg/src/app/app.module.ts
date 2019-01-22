@@ -35,7 +35,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { IonRangeSliderModule } from 'ng2-ion-range-slider';
-import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -97,6 +96,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validator.directive';
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
+import { AutoSizeDirective } from './helpers/auto-size.directive';
 import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
@@ -135,6 +135,7 @@ import { BuilderBreadcrumbsComponent } from './builder/builder-breadcrumbs/build
 import { AddQuestionComponent } from './builder/add-question/add-question.component';
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 import { AddRequirementComponent } from './dialogs/add-requirement/add-requirement/add-requirement.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
     imports: [
@@ -154,7 +155,6 @@ import { AddRequirementComponent } from './dialogs/add-requirement/add-requireme
         MatTooltipModule,
         IonRangeSliderModule,
         MatSidenavModule,
-        TextareaAutosizeModule,
         MatTreeModule,
         MatIconModule,
         MatDividerModule,
@@ -162,6 +162,7 @@ import { AddRequirementComponent } from './dialogs/add-requirement/add-requireme
         MatProgressBarModule,
         MatListModule,
         FileUploadModule,
+        AngularEditorModule,
         RouterModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
@@ -190,6 +191,7 @@ import { AddRequirementComponent } from './dialogs/add-requirement/add-requireme
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
+        AutoSizeDirective,
         SalGenComponent,
         SalNistComponent,
         SalsComponent,

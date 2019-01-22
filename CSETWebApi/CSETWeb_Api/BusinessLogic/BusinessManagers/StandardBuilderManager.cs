@@ -938,6 +938,7 @@ namespace CSETWeb_Api.BusinessManagers
                 var set = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
                 response.SetFullName = set.Full_Name;
                 response.SetShortName = set.Short_Name;
+                response.SetDescription = set.Standard_ToolTip;
 
 
                 var q = from rs in db.REQUIREMENT_SETS
@@ -1099,7 +1100,8 @@ namespace CSETWeb_Api.BusinessManagers
                     RequirementID = result.Requirement_Id,
                     RequirementText = result.Requirement_Text,
                     QuestionGroupHeadingID = result.Question_Group_Heading_Id,
-                    SetName = setName
+                    SetName = setName,
+                    SupplementalInfo = result.Supplemental_Info
                 };
 
                 // Get the SAL levels for this requirement
@@ -1109,8 +1111,72 @@ namespace CSETWeb_Api.BusinessManagers
                     requirement.SalLevels.Add(l.Standard_Level);
                 }
 
+                // Get the questions for this requirement
+                var relatedQuestions = db.REQUIREMENT_QUESTIONS_SETS
+                    .Where(x => x.Requirement_Id == requirement.RequirementID && x.Set_Name == setName).ToList();
+
+                foreach (var q1 in relatedQuestions)
+                {
+                    requirement.Questions.Add(new QuestionDetail()
+                    {
+                        QuestionID = q1.Question_Id,
+                        QuestionText = q1.NEW_QUESTION.Simple_Question,
+                        IsCustom = db.SETS.Where(x => x.Set_Name == q1.NEW_QUESTION.Original_Set_Name).FirstOrDefault().Is_Custom
+                    });
+                }
+
                 return requirement;
             }
+        }
+
+
+        /// <summary>
+        /// Updates the NEW_REQUIREMENT record for the set.  Creates new category/subcategory records as needed.
+        /// </summary>
+        /// <param name="parms"></param>
+        public Requirement UpdateRequirement(Requirement parms)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                // Create the category if not already defined
+                var existingCategory = db.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefault();
+                if (existingCategory == null)
+                {
+                    STANDARD_CATEGORY newCategory = new STANDARD_CATEGORY()
+                    {
+                        Standard_Category1 = parms.Category
+                    };
+                    db.STANDARD_CATEGORY.Add(newCategory);
+                }
+
+                // Create the subcategory if not already defined
+                var existingSubcategory = db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == parms.Subcategory).FirstOrDefault();
+                if (existingSubcategory == null)
+                {
+                    UNIVERSAL_SUB_CATEGORIES newSubcategory = new UNIVERSAL_SUB_CATEGORIES()
+                    {
+                        Universal_Sub_Category = parms.Subcategory
+                    };
+                    db.UNIVERSAL_SUB_CATEGORIES.Add(newSubcategory);
+                }
+
+                db.SaveChanges();
+
+                NEW_REQUIREMENT req = db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == parms.RequirementID).FirstOrDefault();
+                req.Requirement_Title = parms.Title;
+                req.Requirement_Text = parms.RequirementText;
+                req.Standard_Category = parms.Category;
+                req.Standard_Sub_Category = parms.Subcategory;
+                req.Question_Group_Heading_Id = parms.QuestionGroupHeadingID;
+                req.Original_Set_Name = parms.SetName;
+                req.Supplemental_Info = parms.SupplementalInfo;
+
+
+                db.NEW_REQUIREMENT.AddOrUpdate(req);
+                db.SaveChanges();
+            }
+
+            return parms;
         }
     }
 }
