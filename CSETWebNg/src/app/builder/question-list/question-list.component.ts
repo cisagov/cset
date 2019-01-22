@@ -61,10 +61,6 @@ export class QuestionListComponent implements OnInit {
     });
   }
 
-  navAddQuestion() {
-    this.setBuilderSvc.navAddQuestion();
-  }
-
   /**
    * Converts linebreak characters to HTML <br> tag.
    */

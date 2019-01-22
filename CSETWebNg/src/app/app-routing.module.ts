@@ -55,7 +55,7 @@ import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
 import { ImportComponent } from './import/import.component';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
-import { CustomSetComponent } from './builder/custom-set/custom-set.component';
+import { CustomSetComponent } from './builder/set-detail/set-detail.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
 import { QuestionListComponent } from './builder/question-list/question-list.component';
 import { AddQuestionComponent } from './builder/add-question/add-question.component';
@@ -132,12 +132,12 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: 'set-builder',
+    path: 'set-list',
     component: SetListComponent,
     children: []
   },
   {
-    path: 'custom-set/:id',
+    path: 'set-detail/:id',
     component: CustomSetComponent,
   },
   {

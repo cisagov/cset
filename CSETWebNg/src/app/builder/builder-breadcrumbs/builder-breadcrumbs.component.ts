@@ -53,11 +53,11 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
   initializeStructure() {
     this.json = {
       "displayName": "Home",
-      "navPath": "set-builder",
+      "navPath": "set-list",
       "children": [
         {
           "displayName": "Set Detail",
-          "navPath": "custom-set",
+          "navPath": "set-detail",
           "children": [
             {
               "displayName": "Question List",

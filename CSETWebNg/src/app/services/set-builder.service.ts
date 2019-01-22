@@ -23,6 +23,7 @@ export class SetBuilderService {
     }
 
     activeRequirement: Requirement;
+    activeQuestion: Question;
 
     /**
      * Converts linebreak characters to HTML <br> tag.
@@ -45,7 +46,7 @@ export class SetBuilderService {
     newCustomSet() {
         // navigate to the detail page with an empty key
         sessionStorage.setItem('setName', '');
-        this.router.navigate(['/custom-set', '']);
+        this.router.navigate(['/set-detail', '']);
     }
 
     /**
@@ -54,7 +55,7 @@ export class SetBuilderService {
      */
     loadCustomSet(setName: string) {
         sessionStorage.setItem('setName', setName);
-        this.router.navigate(['/custom-set', setName]);
+        this.router.navigate(['/set-detail', setName]);
     }
 
     /**
@@ -93,6 +94,18 @@ export class SetBuilderService {
     /**********************
      * Navigational services
     ***********************/
+    navSetList() {
+        this.activeRequirement = null;
+        sessionStorage.setItem('setName', null);
+        this.router.navigate(['/', 'set-list']);
+    }
+
+    navSetDetail() {
+        this.activeRequirement = null;
+        const setName = sessionStorage.getItem('setName');
+        this.router.navigate(['/', 'set-detail', setName]);
+    }
+
     navReqList() {
         this.activeRequirement = null;
         const setName = sessionStorage.getItem('setName');
@@ -100,6 +113,7 @@ export class SetBuilderService {
     }
 
     navQuestionList() {
+        this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/', 'question-list', setName]);
     }
@@ -108,6 +122,9 @@ export class SetBuilderService {
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/', 'add-question', setName]);
     }
+
+
+
 
     getQuestionList() {
         return this.http.get(this.apiUrl + 'builder/GetQuestionsForSet?setName=' + sessionStorage.getItem('setName'));

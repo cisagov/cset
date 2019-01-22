@@ -214,6 +214,13 @@ namespace CSETWeb_Api.BusinessManagers
                     .Where(x => x.Set_Name == setName).Select(x => x.Heading_Pair_Id).ToList();
 
                 QuestionListResponse ql = new QuestionListResponse();
+
+                var set = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
+                ql.SetFullName = set.Full_Name;
+                ql.SetShortName = set.Short_Name;
+                ql.SetDescription = set.Standard_ToolTip;
+
+
                 string currentCategory = string.Empty;
                 QuestionListCategory cat = null;
 

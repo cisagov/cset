@@ -1,10 +1,10 @@
 <Page>
     <DisplayName>Home</DisplayName>
-    <NavPath>set-builder</NavPath>
+    <NavPath>set-list</NavPath>
     <Children>
         <Page>
             <DisplayName>Set Detail</DisplayName>
-            <NavPath>custom-set</NavPath>
+            <NavPath>set-detail</NavPath>
             <Children>
                 <Page>
                     <DisplayName>Question List</DisplayName>

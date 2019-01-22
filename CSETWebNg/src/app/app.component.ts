@@ -112,8 +112,8 @@ export class AppComponent implements OnInit {
     if (!rpath) {
       return false;
     }
-    if (rpath === '/set-builder'
-      || rpath.startsWith('/custom-set')
+    if (rpath === '/set-list'
+      || rpath.startsWith('/set-detail')
       || rpath.startsWith('/requirement-list')
       || rpath.startsWith('/requirement-detail')
       || rpath.startsWith('/question-list')

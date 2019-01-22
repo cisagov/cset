@@ -59,7 +59,7 @@ export class SetListComponent implements OnInit {
   cloneSet(setName: string) {
     this.setBuilderSvc.cloneCustomSet(setName).subscribe((response: SetDetail) => {
       sessionStorage.setItem('setName', response.SetName);
-      this.router.navigate(['/custom-set', response.SetName]);
+      this.router.navigate(['/set-detail', response.SetName]);
     });
   }
 

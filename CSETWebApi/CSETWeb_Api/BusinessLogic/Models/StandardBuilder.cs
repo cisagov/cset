@@ -52,6 +52,9 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     public class QuestionListResponse
     {
+        public string SetFullName;
+        public string SetShortName;
+        public string SetDescription;
         public List<QuestionListCategory> Categories = new List<QuestionListCategory>();
     }
 

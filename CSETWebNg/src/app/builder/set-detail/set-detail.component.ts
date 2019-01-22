@@ -27,8 +27,8 @@ import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-custom-set',
-  templateUrl: './custom-set.component.html',
+  selector: 'app-set-detail',
+  templateUrl: './set-detail.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })

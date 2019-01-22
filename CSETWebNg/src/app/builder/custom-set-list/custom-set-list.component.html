@@ -32,7 +32,7 @@
     If you wish to build a question set, create a single standard and attach all questions to it.
   </p>
   <div>
-    <button class="btn btn-primary" (click)="this.setBuilderSvc.newCustomSet()">
+    <button class="btn btn-primary" (click)="setBuilderSvc.newCustomSet()">
       New Standard/Question Set
     </button>
   </div>
@@ -46,7 +46,7 @@
     <table class="w-100">
       <tr *ngFor="let s of setDetailList">
         <td class="w-100">
-          <button class="btn btn-link" (click)="this.setBuilderSvc.loadCustomSet(s.SetName)">
+          <button class="btn btn-link" (click)="setBuilderSvc.loadCustomSet(s.SetName)">
             {{s.FullName}}
           </button>
         </td>
