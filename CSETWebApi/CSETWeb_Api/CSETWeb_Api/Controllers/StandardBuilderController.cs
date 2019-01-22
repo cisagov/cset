@@ -103,33 +103,33 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         [HttpPost]
-        [Route("api/builder/AddCustomQuestionToSet")]
-        public void AddCustomQuestionToSet([FromBody] SetQuestion request)
+        [Route("api/builder/AddCustomQuestion")]
+        public void AddCustomQuestion([FromBody] SetQuestion request)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            m.AddCustomQuestionToSet(request);
+            m.AddCustomQuestion(request);
         }
 
 
         /// <summary>
-        /// Adds a 'base' or 'stock' question to the Set.
+        /// Adds a 'base' or 'stock' question to the Requirement or Set.
         /// </summary>
         /// <param name="request"></param>
         [HttpPost]
-        [Route("api/builder/AddQuestionToSet")]
-        public void AddQuestionToSet([FromBody] SetQuestion request)
+        [Route("api/builder/AddQuestion")]
+        public void AddQuestion([FromBody] SetQuestion request)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            m.AddQuestionToSet(request);
+            m.AddQuestion(request);
         }
 
 
         [HttpPost]
-        [Route("api/builder/RemoveQuestionFromSet")]
-        public void RemoveQuestionFromSet([FromBody] SetQuestion request)
+        [Route("api/builder/RemoveQuestion")]
+        public void RemoveQuestion([FromBody] SetQuestion request)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            m.RemoveQuestionFromSet(request);
+            m.RemoveQuestion(request);
         }
 
 

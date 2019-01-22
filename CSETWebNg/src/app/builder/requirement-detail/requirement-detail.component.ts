@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Requirement } from '../../models/set-builder.model';
+import { Requirement, Question } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { MatDialog } from '@angular/material';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 
 @Component({
@@ -46,20 +48,23 @@ export class RequirementDetailComponent implements OnInit {
 
 
   constructor(private setBuilderSvc: SetBuilderService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.r = this.setBuilderSvc.activeRequirement;
-    this.rBackup = this.r;
-
-    // if the service doesn't know it, try to get it from the URI
-    if (!this.r) {
-      this.setBuilderSvc.getRequirement(this.route.snapshot.params['id']).subscribe((result: Requirement) => {
-        this.r = result;
-        this.rBackup = this.r;
-        this.setBuilderSvc.activeRequirement = this.r;
-      });
+    let requirementID = 0;
+    if (!!this.setBuilderSvc.activeRequirement) {
+      requirementID = this.setBuilderSvc.activeRequirement.RequirementID;
+    } else {
+      // if the service doesn't know it, try to get it from the URI
+      requirementID = this.route.snapshot.params['id'];
     }
+
+    this.setBuilderSvc.getRequirement(requirementID).subscribe((result: Requirement) => {
+      this.r = result;
+      this.rBackup = this.r;
+      this.setBuilderSvc.activeRequirement = this.r;
+    });
   }
 
   formatLinebreaks(text: string) {
@@ -106,7 +111,7 @@ export class RequirementDetailComponent implements OnInit {
     if (!r) {
       return false;
     }
-    return (r.SalLevels.indexOf(level) >= 0);
+    return (!!r.SalLevels && r.SalLevels.indexOf(level) >= 0);
   }
 
   /**
@@ -137,9 +142,47 @@ export class RequirementDetailComponent implements OnInit {
     if (!r) {
       return false;
     }
+    if (!r.SalLevels) {
+      return true;
+    }
     if (r.SalLevels.length === 0) {
       return true;
     }
     return false;
+  }
+
+  addQuestion() {
+    // set the requirement as 'active' in the service
+    this.setBuilderSvc.activeRequirement = this.r;
+    // navigate to add-question
+    this.setBuilderSvc.navAddQuestion();
+  }
+
+  removeQuestion(q: Question) {
+    // confirm
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to remove the question from the requirement?";
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dropQuestion(q);
+      }
+    });
+  }
+
+
+  /**
+   * Remove the question from the requirement
+   */
+  dropQuestion(q: Question) {
+    console.log('requirement-detail removeQuestion: ' + q.QuestionID);
+    this.setBuilderSvc.removeQuestion(q.QuestionID).subscribe(() => {
+      console.log('back from removeQuestion!');
+
+      // remove the deleted question from the collection
+      const i = this.r.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
+      this.r.Questions.splice(i, 1);
+    });
   }
 }

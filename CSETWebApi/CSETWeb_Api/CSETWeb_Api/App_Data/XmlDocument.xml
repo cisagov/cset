@@ -890,15 +890,15 @@
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddCustomQuestionToSet(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddCustomQuestion(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
             <summary>
             Creates a new custom question from the supplied text.
             </summary>
             <param name="request"></param>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddQuestionToSet(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddQuestion(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
             <summary>
-            Adds a 'base' or 'stock' question to the Set.
+            Adds a 'base' or 'stock' question to the Requirement or Set.
             </summary>
             <param name="request"></param>
         </member>

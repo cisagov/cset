@@ -59,7 +59,7 @@
                 </div>
             </div>
         </ng-container>
-        <ng-template #noAssessmentsElseBlock>
+        <ng-template #noAssessmentsElseBlock *ngIf="!!sortedAssessments">
             <h2 class="mt-0" *ngIf="sortedAssessments.length == 0">Welcome to CSET</h2>
             <p>To get started, select from one of the options below:</p>
             <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">

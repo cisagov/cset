@@ -96,20 +96,29 @@ export class SetBuilderService {
     ***********************/
     navSetList() {
         this.activeRequirement = null;
+        this.activeQuestion = null;
         sessionStorage.setItem('setName', null);
         this.router.navigate(['/', 'set-list']);
     }
 
     navSetDetail() {
         this.activeRequirement = null;
+        this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/', 'set-detail', setName]);
     }
 
     navReqList() {
         this.activeRequirement = null;
+        this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/', 'requirement-list', setName]);
+    }
+
+    navRequirementDetail(r: Requirement) {
+        this.activeRequirement = r;
+        this.activeQuestion = null;
+        this.router.navigate(['/requirement-detail', r.RequirementID]);
     }
 
     navQuestionList() {
@@ -147,11 +156,17 @@ export class SetBuilderService {
             CustomQuestionText: customQuestionText,
             QuestionCategoryID: category,
             QuestionSubcategoryText: subcategoryText,
-            SalLevels: salLevels
+            SalLevels: salLevels,
+            RequirementID: 0
         };
+
+        if (!!this.activeRequirement) {
+            req.RequirementID = this.activeRequirement.RequirementID;
+        }
+
         return this.http
             .post(
-                this.apiUrl + 'builder/AddCustomQuestionToSet',
+                this.apiUrl + 'builder/AddCustomQuestion',
                 JSON.stringify(req),
                 headers
             );
@@ -165,12 +180,17 @@ export class SetBuilderService {
         const req = {
             SetName: setName,
             QuestionID: q.QuestionID,
-            SalLevels: q.SalLevels
+            SalLevels: q.SalLevels,
+            RequirementID: 0
         };
+
+        if (!!this.activeRequirement) {
+            req.RequirementID = this.activeRequirement.RequirementID;
+        }
 
         return this.http
             .post(
-                this.apiUrl + 'builder/AddQuestionToSet',
+                this.apiUrl + 'builder/AddQuestion',
                 JSON.stringify(req),
                 headers
             );
@@ -183,11 +203,17 @@ export class SetBuilderService {
         const setName = sessionStorage.getItem('setName');
         const req = {
             SetName: setName,
-            QuestionID: questionID
+            QuestionID: questionID,
+            RequirementID: 0
         };
+
+        if (!!this.activeRequirement) {
+            req.RequirementID = this.activeRequirement.RequirementID;
+        }
+
         return this.http
             .post(
-                this.apiUrl + 'builder/RemoveQuestionFromSet',
+                this.apiUrl + 'builder/RemoveQuestion',
                 JSON.stringify(req),
                 headers
             );
@@ -199,8 +225,13 @@ export class SetBuilderService {
     searchQuestions(searchTerms: string) {
         const searchParms: QuestionSearch = {
             SearchTerms: searchTerms,
-            SetName: sessionStorage.getItem('setName')
+            SetName: sessionStorage.getItem('setName'),
+            RequirementID: 0
         };
+
+        if (!!this.activeRequirement) {
+            searchParms.RequirementID = this.activeRequirement.RequirementID;
+        }
 
         return this.http
             .post(
@@ -270,11 +301,6 @@ export class SetBuilderService {
      */
     getStandard() {
         return this.http.get(this.apiUrl + 'builder/GetStandardStructure?setName=' + sessionStorage.getItem('setName'));
-    }
-
-    navRequirementDetail(r: Requirement) {
-        this.activeRequirement = r;
-        this.router.navigate(['/requirement-detail', r.RequirementID]);
     }
 
     /**

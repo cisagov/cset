@@ -336,7 +336,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// Creates a new custom question from the supplied text.
         /// </summary>
         /// <param name="request"></param>
-        public void AddCustomQuestionToSet(SetQuestion request)
+        public void AddCustomQuestion(SetQuestion request)
         {
             if (string.IsNullOrEmpty(request.CustomQuestionText))
             {
@@ -361,6 +361,21 @@ namespace CSETWeb_Api.BusinessManagers
                 db.SaveChanges();
 
 
+                if (request.RequirementID > 0)
+                {
+                    // Add question to requirement
+                    REQUIREMENT_QUESTIONS_SETS rqs = new REQUIREMENT_QUESTIONS_SETS
+                    {
+                        Question_Id = q.Question_Id,
+                        Set_Name = request.SetName,
+                        Requirement_Id = request.RequirementID
+                    };
+
+                    db.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
+                }
+
+
+                // Add question to set
                 NEW_QUESTION_SETS nqs = new NEW_QUESTION_SETS
                 {
                     Question_Id = q.Question_Id,
@@ -381,14 +396,97 @@ namespace CSETWeb_Api.BusinessManagers
                     db.NEW_QUESTION_LEVELS.Add(nql);
                 }
 
+                db.SaveChanges();
+            }
+        }
 
 
-                REQUIREMENT_QUESTIONS_SETS rqs = new REQUIREMENT_QUESTIONS_SETS
+        /// <summary>
+        /// Adds an existing question to a set or requirement.
+        /// </summary>
+        /// <param name="request"></param>
+        public void AddQuestion(SetQuestion request)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                if (request.RequirementID > 0)
                 {
-                    Question_Id = q.Question_Id,
-                    Set_Name = request.SetName,
-                    Requirement_Id = 0
+                    // Attach the question to a Requirement
+                    REQUIREMENT_QUESTIONS_SETS rqs = new REQUIREMENT_QUESTIONS_SETS
+                    {
+                        Question_Id = request.QuestionID,
+                        Set_Name = request.SetName,
+                        Requirement_Id = request.RequirementID
+                    };
+
+                    db.REQUIREMENT_QUESTIONS_SETS.AddOrUpdate(rqs);
+                    db.SaveChanges();
+                }
+
+
+                // Attach this question to the Set
+                NEW_QUESTION_SETS nqs = new NEW_QUESTION_SETS
+                {
+                    Question_Id = request.QuestionID,
+                    Set_Name = request.SetName
                 };
+
+                db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
+                db.SaveChanges();
+
+
+                // SAL levels
+                var nqls = db.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id);
+                foreach (NEW_QUESTION_LEVELS l in nqls)
+                {
+                    db.NEW_QUESTION_LEVELS.Remove(l);
+                }
+                db.SaveChanges();
+
+                foreach (string l in request.SalLevels)
+                {
+                    NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
+                    {
+                        New_Question_Set_Id = nqs.New_Question_Set_Id,
+                        Universal_Sal_Level = l
+                    };
+
+                    db.NEW_QUESTION_LEVELS.Add(nql);
+                }
+                db.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// Detaches the specified question from the Set or Requirement.
+        /// </summary>
+        /// <param name="request"></param>
+        public void RemoveQuestion(SetQuestion request)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                if (request.RequirementID == 0)
+                {
+                    // Set-level question
+                    var nqs = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
+                    if (nqs == null)
+                    {
+                        return;
+                    }
+                    db.NEW_QUESTION_SETS.Remove(nqs);
+                }
+                else
+                {
+                    // Requirement-related question
+                    var rqs = db.REQUIREMENT_QUESTIONS_SETS
+                        .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
+                    if (rqs == null)
+                    {
+                        return;
+                    }
+                    db.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
+                }
 
                 db.SaveChanges();
             }
@@ -446,79 +544,6 @@ namespace CSETWeb_Api.BusinessManagers
                 db.SaveChanges();
 
                 return usch.Heading_Pair_Id;
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        public void AddQuestionToSet(SetQuestion request)
-        {
-            using (var db = new CSETWebEntities())
-            {
-                NEW_QUESTION_SETS nqs = new NEW_QUESTION_SETS
-                {
-                    Question_Id = request.QuestionID,
-                    Set_Name = request.SetName
-                };
-
-                db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
-                db.SaveChanges();
-
-
-
-
-                // SAL levels
-                var nqls = db.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id);
-                foreach (NEW_QUESTION_LEVELS l in nqls)
-                {
-                    db.NEW_QUESTION_LEVELS.Remove(l);
-                }
-                db.SaveChanges();
-
-                foreach (string l in request.SalLevels)
-                {
-                    NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
-                    {
-                        New_Question_Set_Id = nqs.New_Question_Set_Id,
-                        Universal_Sal_Level = l
-                    };
-
-                    db.NEW_QUESTION_LEVELS.Add(nql);
-                }
-                db.SaveChanges();
-
-
-                //REQUIREMENT_QUESTIONS_SETS rqs = new REQUIREMENT_QUESTIONS_SETS
-                //{
-                //    Question_Id = request.QuestionID,
-                //    Set_Name = request.SetName,
-                //    Requirement_Id = 0
-                //};
-
-                //db.SaveChanges();
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        public void RemoveQuestionFromSet(SetQuestion request)
-        {
-            using (var db = new CSETWebEntities())
-            {
-                var nqs = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
-                if (nqs == null)
-                {
-                    return;
-                }
-
-                db.NEW_QUESTION_SETS.Remove(nqs);
-                db.SaveChanges();
             }
         }
 
@@ -621,9 +646,20 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSETWebEntities())
             {
-                // Build a list of all questionIDs that are currently in the set
-                List<int> includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
-                    .Select(q => q.Question_Id).ToList();
+                List<int> includedQuestions = new List<int>();
+                if (searchParms.RequirementID > 0)
+                {
+                    // Build a list of all questionIDs that are currently on the Requirement
+                    includedQuestions = db.REQUIREMENT_QUESTIONS_SETS
+                        .Where(x => x.Set_Name == searchParms.SetName && x.Requirement_Id == searchParms.RequirementID)
+                        .Select(q => q.Question_Id).ToList();
+                }
+                else
+                {
+                    // Build a list of all questionIDs that are currently in the set
+                    includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
+                        .Select(q => q.Question_Id).ToList();
+                }
 
 
                 // First, look for an exact string match within the question
@@ -719,7 +755,6 @@ namespace CSETWeb_Api.BusinessManagers
 
             return candidateQuestions;
         }
-
 
 
         /// <summary>

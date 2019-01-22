@@ -38,12 +38,14 @@ export interface CategoryEntry {
 
 /**
  * For submitting a question search request.
+ * RequirementID is included if the search is for a "related question".
  * SetName is included to avoid returning questions already
  * in the Set.
  */
 export interface QuestionSearch {
     SearchTerms?: string;
     SetName?: string;
+    RequirementID?: number;
 }
 
 /**

@@ -95,16 +95,22 @@ export class AddQuestionComponent implements OnInit {
         return;
       }
 
-      // push it to the API
       const salLevels: string[] = [];
       if (this.customSalL) { salLevels.push("L"); }
       if (this.customSalM) { salLevels.push("M"); }
       if (this.customSalH) { salLevels.push("H"); }
       if (this.customSalVH) { salLevels.push("VH"); }
+
+
+      // push it to the API
       this.setBuilderSvc.addCustomQuestion(this.customQuestionText, this.selectedGHId, this.subcatText, salLevels).subscribe(() => {
+        if (!!this.setBuilderSvc.activeRequirement) {
+          this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement);
+        } else {
           // navigate back to the questions list
           this.setBuilderSvc.navQuestionList();
-        });
+        }
+      });
     });
   }
 
@@ -115,8 +121,6 @@ export class AddQuestionComponent implements OnInit {
     this.searchError = false;
     this.searching = true;
     this.searchTerms = this.searchTerms.trim();
-
-    console.log(this.searchTerms.length);
 
     if (this.searchTerms.length === 0) {
       this.searching = false;
@@ -153,8 +157,12 @@ export class AddQuestionComponent implements OnInit {
     }
 
     this.setBuilderSvc.addExistingQuestion(q).subscribe(() => {
-      // navigate back to the questions list
-      this.setBuilderSvc.navQuestionList();
+      if (!!this.setBuilderSvc.activeRequirement) {
+        this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement);
+      } else {
+        // navigate back to the questions list
+        this.setBuilderSvc.navQuestionList();
+      }
     });
   }
 

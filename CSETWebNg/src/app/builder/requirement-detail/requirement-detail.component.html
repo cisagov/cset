@@ -94,9 +94,11 @@
         the assessors may choose to answer questions instead of the requirement.
       </p>
 
+      <button id="addQuestion" (click)="addQuestion()" class="btn btn-primary">Add Question</button>
+
 
       <div *ngFor="let q of r.Questions; let i = index" class="question-row d-flex flex-column p-3"
-        [class.no-bottom-border]="i == (r.Questions.length - 1)">
+        [class.no-bottom-border]="i == (r.Questions?.length - 1)">
         <div>
           {{ q.Title }}
         </div>
@@ -125,9 +127,12 @@
           </span>
         </div>
       </div>
-
+      <div *ngIf="r.Questions?.length === 0" class="mt-3 mb-3">
+        No questions are defined for this requirement.
+      </div>
     </div>
-
-    <button (click)="setBuilderSvc.navReqList();" class="btn btn-link">&laquo; Back to Requirement Listing</button>
+    <div class="d-flex flex-row mt-3 mb-3">
+      <button (click)="setBuilderSvc.navReqList();" class="btn btn-link">&laquo; Back to Requirement Listing</button>
+    </div>
   </div>
 </div>

@@ -48,6 +48,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public string SearchTerms;
         public string SetName;
+        public int RequirementID;
     }
 
     public class QuestionListResponse
@@ -97,7 +98,16 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     public class SetQuestion
     {
+        /// <summary>
+        /// SetName is specified when the question is attached to the set
+        /// </summary>
         public string SetName;
+
+        /// <summary>
+        /// RequirementID is specified when the question is attached to a requirement.
+        /// </summary>
+        public int RequirementID;
+
         public int QuestionID;
         public int QuestionCategoryID;
 
@@ -107,12 +117,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// </summary>
         public string QuestionSubcategoryText;
 
-        public List<string> SalLevels;
-
         /// <summary>
         /// Used when creating a new question from text.
         /// </summary>
         public string CustomQuestionText;
+
+        public List<string> SalLevels;
     }
 
     public class CategoriesSubcategoriesGroupHeadings
