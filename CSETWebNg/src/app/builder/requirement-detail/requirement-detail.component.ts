@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Requirement, Question } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,6 +20,12 @@ export class RequirementDetailComponent implements OnInit {
 
   titleEmpty = false;
   textEmpty = false;
+
+  questionBeingEdited: Question = null;
+  originalQuestionText: string = null;
+  editedQuestionInUse = false;
+
+  @ViewChild('editQ') editQControl;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -184,5 +190,37 @@ export class RequirementDetailComponent implements OnInit {
       const i = this.r.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
       this.r.Questions.splice(i, 1);
     });
+  }
+
+  /**
+   *
+   */
+  startQuestionEdit(q: Question) {
+    this.questionBeingEdited = q;
+    this.originalQuestionText = q.QuestionText;
+
+    setTimeout(() => {
+      this.editQControl.nativeElement.focus();
+      this.editQControl.nativeElement.setSelectionRange(0, 0);
+    }, 20);
+
+    this.setBuilderSvc.isQuestionInUse(q).subscribe((inUse: boolean) => {
+      this.editedQuestionInUse = inUse;
+    });
+  }
+
+  /**
+   *
+   */
+  endQuestionEdit(q: Question) {
+    this.editedQuestionInUse = false;
+    this.questionBeingEdited = null;
+    this.setBuilderSvc.updateQuestionText(q).subscribe();
+  }
+
+  abandonQuestionEdit(q: Question) {
+    q.QuestionText = this.originalQuestionText;
+    this.editedQuestionInUse = false;
+    this.questionBeingEdited = null;
   }
 }

@@ -129,8 +129,8 @@
 
     <div *ngIf="searchPerformed && !searching">
 
-      <div class="m-2 alert alert-info" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
-      <div class="m-2 alert alert-info" *ngIf="searchHits.length === 1">1 question was found</div>
+      <div class="alert alert-info m-2" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
+      <div class="alert alert-info m-2" *ngIf="searchHits.length === 1">1 question was found</div>
 
       <hr *ngIf="searchHits.length > 0" class="hr-sal" />
 
