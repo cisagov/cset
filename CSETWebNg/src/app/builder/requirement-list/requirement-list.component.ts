@@ -4,6 +4,8 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { Category } from '../../models/set-builder.model';
 import { RequirementResult, CategoryEntry } from '../../models/set-builder.model';
 import { AddRequirementComponent } from '../../dialogs/add-requirement/add-requirement/add-requirement.component';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { AlertComponent } from '../../dialogs/alert/alert.component';
 
 @Component({
   selector: 'app-requirement-list',
@@ -38,6 +40,13 @@ export class RequirementListComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.populatePage();
+  }
+
+  /**
+   *
+   */
+  populatePage() {
     this.setBuilderSvc.getStandard().subscribe(data => {
       this.requirementResponse = data;
       this.initialized = true;
@@ -64,11 +73,48 @@ export class RequirementListComponent implements OnInit {
    *
    */
   editRequirement(r: RequirementResult) {
-
-    // get full req from API
+    // navigate to the requirement detail page
     this.setBuilderSvc.getRequirement(r.RequirementID).subscribe(req => {
       this.setBuilderSvc.navRequirementDetail(req);
     });
+  }
+
+  /**
+   *
+   */
+  removeRequirement(r: RequirementResult) {
+    // confirm
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to remove the requirement?";
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dropRequirement(r);
+      }
+    });
+  }
+
+  /**
+   *
+   */
+  dropRequirement(r: RequirementResult) {
+    // call API with delete request
+    this.setBuilderSvc.removeRequirement(r).subscribe(
+      (response: {}) => {
+        // refresh page
+        this.populatePage();
+      },
+      error => {
+        this.dialog
+          .open(AlertComponent, { data: "Error removing requirement from set" })
+          .afterClosed()
+          .subscribe();
+        console.log(
+          "Error removing requirement: " + JSON.stringify(r)
+        );
+      }
+    );
   }
 
   /**

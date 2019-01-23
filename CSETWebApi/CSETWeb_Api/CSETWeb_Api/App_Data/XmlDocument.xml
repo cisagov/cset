@@ -929,6 +929,13 @@
             <param name="parms"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.RemoveRequirement(CSETWeb_Api.BusinessLogic.Models.Requirement)">
+            <summary>
+            Removes an existing Requirement from the Set.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

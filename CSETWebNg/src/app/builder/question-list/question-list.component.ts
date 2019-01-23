@@ -55,6 +55,10 @@ export class QuestionListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.populatePage();
+  }
+
+  populatePage() {
     this.setBuilderSvc.getQuestionList().subscribe(data => {
       this.questionResponse = data;
       this.initialized = true;
@@ -117,39 +121,21 @@ export class QuestionListComponent implements OnInit {
   }
 
   /**
-   * Finds the question in the structure and removes it.
+   * Removes the question.
    */
   dropQuestion(q: Question) {
-    this.questionResponse.Categories.forEach((cat: any, indexCat: number) => {
-      cat.Subcategories.forEach((subcat: any, indexSubcat: number) => {
-        const i = subcat.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
-        if (i >= 0) {
-
-          // remove question
-          subcat.Questions.splice(i, 1);
-
-          // remove empty subcategory
-          if (subcat.Questions.length === 0) {
-            cat.Subcategories.splice(indexSubcat, 1);
-          }
-
-          // remove empty category
-          if (cat.Subcategories.length === 0) {
-            this.questionResponse.Categories.splice(indexCat, 1);
-          }
-        }
-      });
-    });
-
     this.setBuilderSvc.removeQuestion(q.QuestionID).subscribe(
-      (response: {}) => { },
+      (response: {}) => {
+        // refresh page
+        this.populatePage();
+      },
       error => {
         this.dialog
           .open(AlertComponent, { data: "Error removing question from set" })
           .afterClosed()
           .subscribe();
         console.log(
-          "Error removing assessment contact: " + JSON.stringify(q)
+          "Error removing question: " + JSON.stringify(q)
         );
       }
     );

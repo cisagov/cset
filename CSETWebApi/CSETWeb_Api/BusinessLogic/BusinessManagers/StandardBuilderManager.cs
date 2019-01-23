@@ -1220,5 +1220,35 @@ namespace CSETWeb_Api.BusinessManagers
 
             return parms;
         }
+
+
+        /// <summary>
+        /// Removes the NEW_REQUIREMENT record from the set.
+        /// 
+        /// TODO:  Actually delete the NEW_REQUIREMENT record?
+        /// </summary>
+        /// <param name="parms"></param>
+        public void RemoveRequirement(Requirement parms)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var bridge = db.REQUIREMENT_SETS.Where(x => x.Set_Name == parms.SetName && x.Requirement_Id == parms.RequirementID).FirstOrDefault();
+                if (bridge == null)
+                {
+                    return;
+                }
+
+                db.REQUIREMENT_SETS.Remove(bridge);
+
+                var req = db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == parms.RequirementID).FirstOrDefault();
+                if (req == null)
+                {
+                    return;
+                }
+
+                db.NEW_REQUIREMENT.Remove(req);
+                db.SaveChanges();
+            }
+        }
     }
 }

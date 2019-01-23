@@ -248,5 +248,18 @@ namespace CSETWeb_Api.Controllers
             StandardBuilderManager m = new StandardBuilderManager();
             return m.UpdateRequirement(parms);
         }
+
+        /// <summary>
+        /// Removes an existing Requirement from the Set.
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/builder/RemoveRequirement")]
+        public void RemoveRequirement([FromBody] Requirement parms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.RemoveRequirement(parms);
+        }
     }
 }

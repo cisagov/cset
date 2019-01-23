@@ -337,4 +337,17 @@ export class SetBuilderService {
                 headers
             );
     }
+
+    /**
+     * Removes the requirement from the set.
+     */
+    removeRequirement(r: Requirement) {
+        r.SetName = sessionStorage.getItem('setName');
+        return this.http
+            .post(
+                this.apiUrl + 'builder/RemoveRequirement',
+                r,
+                headers
+            );
+    }
 }
