@@ -136,6 +136,7 @@ import { AddQuestionComponent } from './builder/add-question/add-question.compon
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 import { AddRequirementComponent } from './dialogs/add-requirement/add-requirement/add-requirement.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AddReferenceComponent } from './dialogs/add-reference/add-reference.component';
 
 @NgModule({
     imports: [
@@ -247,7 +248,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
         BuilderBreadcrumbsComponent,
         AddQuestionComponent,
         RequirementDetailComponent,
-        AddRequirementComponent
+        AddRequirementComponent,
+        AddReferenceComponent
       ],
     providers: [
         ConfigService,
@@ -300,7 +302,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
       GlobalParametersComponent,
       KeyboardShortcutsComponent,
       LicenseComponent,
-      AddRequirementComponent
+      AddRequirementComponent,
+      AddReferenceComponent
     ]
 })
 

@@ -78,7 +78,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
     }
 
-    public class QuestionDetail
+       public class QuestionDetail
     {
         public int QuestionID;
         public string QuestionText;
@@ -198,6 +198,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string RequirementText;
         public List<string> SalLevels = new List<string>();
         public string SupplementalInfo;
+        public List<ReferenceDoc> ReferenceDocs = new List<ReferenceDoc>();
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
     }
 
@@ -205,5 +206,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public int RequirementID;
         public string Markup;
+    }
+
+    public class ReferenceDoc
+    {
+        public string Title;
+        public string FileName;
+        public string SectionRef;
+        public bool IsUploaded;
     }
 }

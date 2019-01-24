@@ -261,5 +261,13 @@ namespace CSETWeb_Api.Controllers
             StandardBuilderManager m = new StandardBuilderManager();
             m.RemoveRequirement(parms);
         }
+
+        [HttpGet]
+        [Route("api/builder/GetReferenceDocs")]
+        public object GetReferenceDocs()
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetReferenceDocs();
+        }
     }
 }

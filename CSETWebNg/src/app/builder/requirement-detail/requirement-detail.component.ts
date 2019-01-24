@@ -1,10 +1,34 @@
+////////////////////////////////
+//
+//   Copyright 2018 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Requirement, Question } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { AddReferenceComponent } from '../../dialogs/add-reference/add-reference.component';
 
 
 @Component({
@@ -20,6 +44,8 @@ export class RequirementDetailComponent implements OnInit {
 
   titleEmpty = false;
   textEmpty = false;
+
+  addRefDialogRef: MatDialogRef<AddReferenceComponent>;
 
   questionBeingEdited: Question = null;
   originalQuestionText: string = null;
@@ -156,6 +182,29 @@ export class RequirementDetailComponent implements OnInit {
     }
     return false;
   }
+
+  addReference() {
+    const addRefDialogRef = this.dialog.open(AddReferenceComponent);
+    this.addRefDialogRef
+    .afterClosed()
+    .subscribe((data) => {
+
+      // if data was returned they clicked Create.  Otherwise they clicked Cancel
+      if (data) {
+        // this.setBuilderSvc.createRequirement(data).subscribe(r => {
+        //   this.addReqDialogRef = undefined;
+
+        //   this.setBuilderSvc.navRequirementDetail(r);
+        // },
+        //   error => console.log(error.message)
+        // );
+
+      } else {
+        // canceled out of dialog
+      }
+    });
+  }
+
 
   addQuestion() {
     // set the requirement as 'active' in the service

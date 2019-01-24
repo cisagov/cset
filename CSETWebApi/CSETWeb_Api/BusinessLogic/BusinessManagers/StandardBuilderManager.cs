@@ -385,6 +385,7 @@ namespace CSETWeb_Api.BusinessManagers
                 db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
 
 
+                // Define SALs
                 foreach (string level in request.SalLevels)
                 {
                     NEW_QUESTION_LEVELS nql = new NEW_QUESTION_LEVELS
@@ -466,17 +467,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSETWebEntities())
             {
-                if (request.RequirementID == 0)
-                {
-                    // Set-level question
-                    var nqs = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
-                    if (nqs == null)
-                    {
-                        return;
-                    }
-                    db.NEW_QUESTION_SETS.Remove(nqs);
-                }
-                else
+                if (request.RequirementID != 0)
                 {
                     // Requirement-related question
                     var rqs = db.REQUIREMENT_QUESTIONS_SETS
@@ -487,6 +478,14 @@ namespace CSETWeb_Api.BusinessManagers
                     }
                     db.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
                 }
+
+                // Set-level question
+                var nqs = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
+                if (nqs == null)
+                {
+                    return;
+                }
+                db.NEW_QUESTION_SETS.Remove(nqs);
 
                 db.SaveChanges();
             }
@@ -1153,6 +1152,11 @@ namespace CSETWeb_Api.BusinessManagers
                     requirement.SalLevels.Add(l.Standard_Level);
                 }
 
+
+                // Get the Reference documents for this requirement
+                requirement.ReferenceDocs = new List<ReferenceDoc>();
+
+
                 // Get the questions for this requirement
                 var relatedQuestions = db.REQUIREMENT_QUESTIONS_SETS
                     .Where(x => x.Requirement_Id == requirement.RequirementID && x.Set_Name == setName).ToList();
@@ -1249,6 +1253,23 @@ namespace CSETWeb_Api.BusinessManagers
                 db.NEW_REQUIREMENT.Remove(req);
                 db.SaveChanges();
             }
+        }
+
+
+        /// <summary>
+        /// Returns a collection of reference documents.
+        /// </summary>
+        /// <returns></returns>
+        public object GetReferenceDocs()
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var genFileList = db.GEN_FILE.ToList();
+
+                int a = 1;
+            }
+
+            return new object();
         }
     }
 }

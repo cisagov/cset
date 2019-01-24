@@ -88,5 +88,13 @@ export interface Requirement {
     RequirementText?: string;
     SalLevels?: string[];
     SupplementalInfo?: string;
+    ReferenceDocs?: ReferenceDoc[];   // This will change to a Reference interface type
     Questions?: Question[];
+}
+
+export interface ReferenceDoc {
+    Title: string;
+    FileName: string;
+    SectionRef: string;
+    IsUploaded: boolean;
 }
