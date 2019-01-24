@@ -31,12 +31,16 @@
 
       <div class="form-group">
         <label for="category">Select Or Upload Reference Document</label>
-        <input required #editDoc #docField="ngModel" type="text" class="form-control" id="document" name="document"
-          list="docoptions" [(ngModel)]="model.FileID">
+        <input required #editDoc type="text" class="form-control" id="document" name="document"
+          list="docoptions" >
         <datalist id="docoptions">
           <option *ngFor="let d of documents" [attr.data-value]="d.ID" [value]="d.Text"></option>
         </datalist>
         <div *ngIf="submitted && !docField.valid" class="m-0 mt-2 alert alert-danger">Document is required</div>
+
+        <button class="btn btn-primary add" (click)="openFileBrowser($event)">Add a document</button>
+            <input type="hidden" [value]="setBuilderSvc.activeRequirement.RequirementID">
+            <input id="docUpload_r{{ setBuilderSvc.activeRequirement.RequirementID }}" type="file" (change)="fileSelect($event)" class="display-none">
       </div>
 
       <div class="form-group">

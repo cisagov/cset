@@ -21,61 +21,68 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FileUploadClientService } from '../../services/file-client.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-add-reference',
-  templateUrl: './add-reference.component.html',
+  selector: 'app-standard-documents',
+  templateUrl: './standard-documents.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AddReferenceComponent implements OnInit {
+export class StandardDocumentsComponent implements OnInit {
+
+  setName: string;
+  standardTitle: string;
+  filter: string = '';
+  filteredDocuments: RefDoc[] = [];
 
   constructor(
     private setBuilderSvc: SetBuilderService,
-    public fileSvc: FileUploadClientService,
-    private dialog: MatDialogRef<AddReferenceComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.setName = this.route.snapshot.params['id'];
+    this.setBuilderSvc.getSetDetail(this.setName).subscribe((result: any) => {
+      this.standardTitle = result.FullName;
+    });
+
+    this.applyFilter();
+  }
+
+  applyFilter() {
+    this.setBuilderSvc.getReferenceDocuments(this.filter).subscribe((result: RefDoc[]) => {
+      this.filteredDocuments = [];
+      result.forEach(element => {
+        this.filteredDocuments.push(element);
+      });
+    });
   }
 
   /**
-   * Programatically clicks the corresponding file upload element.
-   * @param event
+   *
    */
-  openFileBrowser(event: any) {
-    console.log('openFileBrowser');
-    event.preventDefault();
-    const element: HTMLElement = document.getElementById('docUpload_r' + this.setBuilderSvc.activeRequirement.RequirementID) as HTMLElement;
-    element.click();
-  }
+  selectDoc(doc: RefDoc, e) {
+    if (e.target.checked) {
+      // call the API to create a bridge
+      console.log('check on');
+    } else {
+      // call the API to delete the bridge
+      console.log('check off');
+    }
 
-  /**
-   * Uploads the selected file to the API.
-   * @param e The 'file' event
-   */
-  fileSelect(e) {
-    const options = {};
-    options['requirementId'] = this.setBuilderSvc.activeRequirement.RequirementID;
 
-    this.fileSvc.uploadReferenceDoc(e.target.files[0], options)
-      .subscribe(resp => {
-        // refresh the document list
-        // this.extras.Documents = resp.body;
-      }
-      );
-  }
+    this.setBuilderSvc.selectDocumentForSet(this.setName, doc.ID, e.target.checked).subscribe();
 
-  create() {
 
   }
+}
 
-  cancel() {
-    this.dialog.close();
-  }
+export interface RefDoc {
+  ID: number;
+  Title: string;
+  FileName: string;
+  Selected: boolean;
 }

@@ -1260,16 +1260,50 @@ namespace CSETWeb_Api.BusinessManagers
         /// Returns a collection of reference documents.
         /// </summary>
         /// <returns></returns>
-        public object GetReferenceDocs()
+        public List<ReferenceDoc> GetReferenceDocs(string filter)
         {
-            using (var db = new CSETWebEntities())
+            if (filter == null)
             {
-                var genFileList = db.GEN_FILE.ToList();
-
-                int a = 1;
+                filter = "";
             }
 
-            return new object();
+            List<ReferenceDoc> list = new List<ReferenceDoc>();
+            using (var db = new CSETWebEntities())
+            {
+                var genFileList = db.GEN_FILE.Where(x => x.Title.Contains(filter))
+                    .OrderBy(x => x.Title).ToList();
+
+                foreach (GEN_FILE gf in genFileList)
+                {
+                    list.Add(new ReferenceDoc
+                    {
+                        ID = gf.Gen_File_Id,
+                        FileName = gf.File_Name,
+                        Title = gf.Title
+
+                    });
+                }
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SelectReferenceDoc()
+        {
+            int g = 1;
+        }
+
+
+        /// <summary>
+        /// Saves the physical document and defines it in the database.
+        /// </summary>
+        public void UploadReferenceDoc()
+        {
+            var a = 1;
         }
     }
 }

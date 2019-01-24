@@ -936,6 +936,23 @@
             <param name="parms"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetReferenceDocs(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.SelectReferenceDoc">
+            <summary>
+            Attaches or detaches a reference document from the set.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.UploadReferenceDoc">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

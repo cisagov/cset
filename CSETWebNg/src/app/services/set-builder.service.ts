@@ -132,6 +132,11 @@ export class SetBuilderService {
         this.router.navigate(['/', 'add-question', setName]);
     }
 
+    navStandardDocuments() {
+        const setName = sessionStorage.getItem('setName');
+        this.router.navigate(['/', 'standard-documents', setName]);
+    }
+
 
 
 
@@ -349,5 +354,24 @@ export class SetBuilderService {
                 r,
                 headers
             );
+    }
+
+    /**
+     * Gets the list of reference documents whose title
+     * matches the filter parameters.
+     */
+    getReferenceDocuments(text: string) {
+        return this.http
+            .get(this.apiUrl + 'builder/GetReferenceDocs?filter=' + text,
+            headers);
+    }
+
+    selectDocumentForSet(setName: string, docId: number, checked: boolean) {
+        console.log('selectDocumentForSet');
+        const parms = { setName: setName, docId: docId, checked: checked };
+        return this.http
+            .post(this.apiUrl + 'builder/SelectReferenceDoc',
+            parms,
+            headers);
     }
 }

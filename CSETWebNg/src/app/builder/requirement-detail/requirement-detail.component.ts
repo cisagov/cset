@@ -184,7 +184,9 @@ export class RequirementDetailComponent implements OnInit {
   }
 
   addReference() {
+    console.log('addReference');
     const addRefDialogRef = this.dialog.open(AddReferenceComponent);
+    console.log(addRefDialogRef);
     this.addRefDialogRef
     .afterClosed()
     .subscribe((data) => {

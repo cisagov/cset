@@ -84,12 +84,9 @@
     <div class="form-group p-0 col-md-12 mb-5">
       <h4>References</h4>
       <p>Documents that define the standard or provide additional information for the requirement are attached here.</p>
-      <button class="btn btn-primary" (click)="addReference()">
-          <span class="cset-icons-plus fs-base mr-2"></span>
-          Add Reference
-        </button>
+      <button id="documents" (click)="setBuilderSvc.navStandardDocuments()" class="btn btn-primary">Standard Documents</button>      
       <ul>
-        <li *ngFor="let ref of r.References">ABC</li>
+        <li *ngFor="let ref of r.References"></li>
       </ul>
       <div *ngIf="r.ReferenceDocs?.length === 0" class="alert alert-info mt-3 mb-3">
         No reference documents are defined for this requirement.

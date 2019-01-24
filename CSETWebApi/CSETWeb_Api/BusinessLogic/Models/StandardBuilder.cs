@@ -210,6 +210,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     public class ReferenceDoc
     {
+        public int ID;
         public string Title;
         public string FileName;
         public string SectionRef;

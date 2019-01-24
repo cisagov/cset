@@ -71,9 +71,6 @@ export class FileUploadClientService {
    * @param extraData
    */
   fileUpload(fileItem: File, extraData?: object): any {
-
-
-
     const apiCreateEndpoint = this.configSvc.apiUrl + 'files/blob/create/';
     const formData: FormData = new FormData();
 
@@ -158,6 +155,27 @@ export class FileUploadClientService {
   list(): Observable<any> {
     const listEndpoint = this.configSvc.apiUrl + 'files/';
     return this.http.get(listEndpoint);
+  }
+
+  /**
+   *
+   */
+  uploadReferenceDoc(fileItem: File, extraData?: object): any {
+    const apiCreateEndpoint = this.configSvc.apiUrl + 'builder/UploadReferenceDoc';
+    const formData: FormData = new FormData();
+
+    formData.append('fileItem', fileItem, fileItem.name);
+    if (extraData) {
+      for (const key of Object.keys(extraData)) {
+        // iterate and set other form data
+        formData.append(key, extraData[key]);
+      }
+    }
+
+    const req = new HttpRequest('POST', apiCreateEndpoint, formData, {
+      reportProgress: true // for progress data
+    });
+    return this.http.request(req);
   }
 }
 

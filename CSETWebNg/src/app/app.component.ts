@@ -115,6 +115,8 @@ export class AppComponent implements OnInit {
     if (rpath === '/set-list'
       || rpath.startsWith('/set-detail')
       || rpath.startsWith('/requirement-list')
+      || rpath.startsWith('/standard-documents')
+      || rpath.startsWith('/document-detail')
       || rpath.startsWith('/requirement-detail')
       || rpath.startsWith('/question-list')
       || rpath.startsWith('/add-question')) {

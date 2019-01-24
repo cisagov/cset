@@ -60,6 +60,7 @@ import { RequirementListComponent } from './builder/requirement-list/requirement
 import { QuestionListComponent } from './builder/question-list/question-list.component';
 import { AddQuestionComponent } from './builder/add-question/add-question.component';
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
+import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -139,6 +140,10 @@ const appRoutes: Routes = [
   {
     path: 'set-detail/:id',
     component: CustomSetComponent,
+  },
+  {
+    path: 'standard-documents/:id',
+    component: StandardDocumentsComponent
   },
   {
     path: 'requirement-list/:id',
