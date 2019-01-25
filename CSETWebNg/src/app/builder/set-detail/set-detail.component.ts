@@ -55,11 +55,9 @@ export class CustomSetComponent implements OnInit {
 
   isSetReady() {
     if (!this.setDetail) {
-      console.log('1');
       return false;
     }
     if (!this.setDetail.SetName) {
-      console.log('2');
       return false;
     }
     if (!this.setDetail.FullName || this.setDetail.FullName.length === 0
@@ -67,9 +65,6 @@ export class CustomSetComponent implements OnInit {
       || !this.setDetail.Description || this.setDetail.Description.length === 0) {
       return false;
     }
-
-
-    console.log('3: ');
     return true;
   }
 
