@@ -229,9 +229,13 @@ export class AuthenticationService {
         sessionStorage.setItem('email', info.PrimaryEmail);
     }
 
+    /**
+     * Temporary diagnostic method.  To be removed.
+     */
     userDebug() {
         if (this.email() === 'mckenzie.willmore@inl.gov'
-            || this.email() === 'randall.woods@inl.gov') {
+            || this.email() === 'randall.woods@inl.gov'
+            || this.email() === 'barry.hansen@inl.gov') {
             return true;
         }
         return false;

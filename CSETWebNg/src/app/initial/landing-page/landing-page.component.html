@@ -23,9 +23,9 @@
 <!-- <div class="d-flex flex-11a"> -->
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <!-- <p>{{this.authSvc.userToken()}}</p> -->
-    <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a ">
+    <div *ngIf="!!sortedAssessments" class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a">
 
-        <ng-container *ngIf="!!sortedAssessments && sortedAssessments?.length > 0; else noAssessmentsElseBlock">
+        <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
             <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
             <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
                 <div class="d-flex justify-content-between flex-00a">
@@ -59,8 +59,8 @@
                 </div>
             </div>
         </ng-container>
-        <ng-template #noAssessmentsElseBlock *ngIf="!!sortedAssessments">
-            <h2 class="mt-0" *ngIf="sortedAssessments.length == 0">Welcome to CSET</h2>
+        <ng-template #noAssessmentsElseBlock>
+            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">Welcome to CSET</h2>
             <p>To get started, select from one of the options below:</p>
             <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
                 <div class="flex-row d-flex flex-00a">
@@ -104,8 +104,8 @@
         </ng-template>
     </div>
 
-    <div *ngIf="sortedAssessments == null">
-        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+    <div *ngIf="!sortedAssessments">
+        <div class="spinner-container m-0 mt-5 d-flex justify-content-center align-items-center flex-11a">
             <div class="spinner-size-50"></div>
         </div>
     </div>
