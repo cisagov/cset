@@ -50,7 +50,7 @@ export class CustomSetComponent implements OnInit {
   }
 
   update(e: Event) {
-    this.setBuilderSvc.updateSetDetails(this.setDetail);
+    this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
 
   isSetReady() {

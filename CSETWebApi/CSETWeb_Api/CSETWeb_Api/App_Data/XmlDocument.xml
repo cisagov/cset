@@ -885,6 +885,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.DeleteSet(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetQuestionsForSet(System.String)">
             <summary>
             

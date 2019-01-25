@@ -74,10 +74,8 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/GetSetDetail?setName=' + sessionStorage.getItem('setName'));
     }
 
-
     /**
      *
-     * @param set
      */
     updateSetDetails(set: SetDetail) {
         return this.http
@@ -85,8 +83,19 @@ export class SetBuilderService {
                 this.apiUrl + 'builder/UpdateSetDetail',
                 JSON.stringify(set),
                 headers
-            )
-            .subscribe();
+            );
+    }
+
+    /**
+     *
+     */
+    deleteSet(setName: string) {
+        return this.http
+            .post(
+                this.apiUrl + 'builder/DeleteSet',
+                JSON.stringify(setName),
+                headers
+            );
     }
 
 
@@ -363,7 +372,7 @@ export class SetBuilderService {
     getReferenceDocuments(text: string) {
         return this.http
             .get(this.apiUrl + 'builder/GetReferenceDocs?filter=' + text,
-            headers);
+                headers);
     }
 
     selectDocumentForSet(setName: string, docId: number, checked: boolean) {
@@ -371,7 +380,7 @@ export class SetBuilderService {
         const parms = { setName: setName, docId: docId, checked: checked };
         return this.http
             .post(this.apiUrl + 'builder/SelectReferenceDoc',
-            parms,
-            headers);
+                parms,
+                headers);
     }
 }

@@ -25,18 +25,24 @@ import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
+import { AlertComponent } from "../../dialogs/alert/alert.component";
+import { MatDialog } from '@angular/material';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 @Component({
   selector: 'app-custom-set-list',
   templateUrl: './custom-set-list.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class SetListComponent implements OnInit {
 
   setDetailList: SetDetail[];
 
-  constructor(private setBuilderSvc: SetBuilderService, private router: Router) {
+  constructor(
+    private setBuilderSvc: SetBuilderService,
+    private router: Router,
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -63,4 +69,37 @@ export class SetListComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes the set after confirmation.
+   */
+  deleteSet(s: SetDetail) {
+    // confirm
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to delete '" + s.FullName + "?'";
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dropSet(s.SetName);
+      }
+    });
+  }
+
+  dropSet(setName: string) {
+    this.setBuilderSvc.deleteSet(setName).subscribe(
+      (response: {}) => {
+        // refresh page
+        this.getStandards();
+      },
+      error => {
+        this.dialog
+          .open(AlertComponent, { data: "Error deleting set" })
+          .afterClosed()
+          .subscribe();
+        console.log(
+          "Error deleting set: " + setName
+        );
+      }
+    );
+  }
 }

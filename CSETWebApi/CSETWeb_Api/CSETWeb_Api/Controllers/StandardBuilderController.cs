@@ -72,6 +72,17 @@ namespace CSETWeb_Api.Controllers
             return m.CloneSet(setName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpPost]
+        [Route("api/builder/DeleteSet")]
+        public void DeleteSet([FromBody] string setName)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.DeleteSet(setName);
+        }
+
 
         /// <summary>
         /// 

@@ -129,6 +129,33 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// 
         /// </summary>
+        public void DeleteSet(string setName)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var dbSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
+
+                if (dbSet == null)
+                {
+                    return;
+                }
+
+                // Don't allow a non-custom set to be deleted
+                if (!dbSet.Is_Custom)
+                {
+                    return;
+                }
+
+
+                db.SETS.Remove(dbSet);
+                db.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="set"></param>
         /// <returns></returns>
         public string SaveSetDetail(SetDetail set)
