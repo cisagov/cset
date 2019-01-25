@@ -69,6 +69,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   ngOnInit() { }
+  
 
   /**
  * Shows/hides the "expand" section.

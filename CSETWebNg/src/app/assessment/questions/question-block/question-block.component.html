@@ -85,6 +85,7 @@
                 [innerHTML]="applyTokensToText(q)" 
                 (click)="questionTextClicked(q, $event)">
             </div>
+            <span *ngIf="authSvc.userDebug()" class="debug-highlight">{{ q.QuestionId }}</span>
             <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"></app-question-extras>
           </div>
         </div>

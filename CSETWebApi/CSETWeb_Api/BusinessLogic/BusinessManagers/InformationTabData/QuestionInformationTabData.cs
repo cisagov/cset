@@ -102,7 +102,7 @@ namespace CSET_Main.Questions.InformationTabData
         public bool IsComponent { get; set; }
 
         public List<String> SetsList { get; set; }
-        public List<String> QuestionsList { get; set; }
+        public List<RelatedQuestion> QuestionsList { get; set; }
 
         private bool showNoQuestionInformation;
         public bool ShowNoQuestionInformation
@@ -139,7 +139,7 @@ namespace CSET_Main.Questions.InformationTabData
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
             RequirementTabData tabData = new RequirementTabData();
-            String shortStandardName = set.Short_Name;
+            string shortStandardName = set.Short_Name;
             HeaderName = shortStandardName;
             Question_or_Requirement_Id = infoData.QuestionID;
 
@@ -150,7 +150,7 @@ namespace CSET_Main.Questions.InformationTabData
                               select u.Full_Name_Sal).FirstOrDefault();
 
             // Gets requirements for the current standard (Set)
-            IEnumerable<NEW_REQUIREMENT> requires=null;
+            IEnumerable<NEW_REQUIREMENT> requires = null;
             if (set.Is_Custom)
             {
                 //Legacy only
@@ -169,12 +169,13 @@ namespace CSET_Main.Questions.InformationTabData
                            where b.Question_Id == infoData.QuestionID && b.Set_Name == set.Set_Name
                            select a;
             }
-            
+
             requirement = requires.FirstOrDefault();
             if (requirement != null)
             {
                 tabData.Set_Name = set.Set_Name;
                 tabData.Text = FormatRequirementText(requirement.Requirement_Text);
+                tabData.RequirementID = requirement.Requirement_Id;
                 if (!IsComponent)
                     RequirementFrameworkTitle = requirement.Requirement_Title;
 
@@ -222,8 +223,14 @@ namespace CSET_Main.Questions.InformationTabData
             Question_or_Requirement_Id = requirement.Requirement_Id;
 
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
-            this.QuestionsList = controlContext.NEW_QUESTION.Where(t => t.NEW_REQUIREMENT.Select(s => s.Requirement_Id).Contains(requirementData.RequirementID)).Select(x => x.Simple_Question).ToList();
+            this.QuestionsList = controlContext.NEW_QUESTION.Where(t => t.NEW_REQUIREMENT.Select(s => s.Requirement_Id).Contains(requirementData.RequirementID))
+                .Select(x => new RelatedQuestion
+                {
+                    QuestionID = x.Question_Id,
+                    QuestionText = x.Simple_Question
+                }).ToList();
             RequirementTabData tabData = new RequirementTabData();
+            tabData.RequirementID = requirement.Requirement_Id;
             tabData.Text = FormatRequirementText(requirement.Requirement_Text);
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
@@ -326,8 +333,7 @@ namespace CSET_Main.Questions.InformationTabData
 
         public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSETWebEntities controlContext)
         {
-
-            QuestionsList = new List<String>();
+            QuestionsList = new List<RelatedQuestion>();
             IsCustomQuestion = frameworkData.IsCustomQuestion;
             References = frameworkData.References;
             if (!IsComponent)
@@ -356,15 +362,21 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == frameworkData.RequirementID).Select(t => new
                 {
+                    Question_or_Requirement_Id = t.Requirement_Id,
                     Text = FormatRequirementText(t.Requirement_Text),
                     SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info),
-                    Questions = t.NEW_QUESTION.Select(s => s.Simple_Question),
+                    Questions = t.NEW_QUESTION.Select(s => new RelatedQuestion
+                    {
+                        QuestionID = s.Question_Id,
+                        QuestionText = s.Simple_Question
+                    }),
                     LevelName = t.REQUIREMENT_LEVELS.Select(s => s.STANDARD_SPECIFIC_LEVEL).OrderBy(s => s.Level_Order).Select(s => s.Full_Name).FirstOrDefault()
                 }).FirstOrDefault();
                 if (requirement != null)
                 {
                     QuestionsList = requirement.Questions.ToList();
                     this.LevelName = requirement.LevelName;
+                    tabData.RequirementID = requirement.Question_or_Requirement_Id;
                     tabData.Text = requirement.Text;
                     tabData.SupplementalInfo = FormatSupplementalInfo(requirement.SupplementalInfo);
 
@@ -417,7 +429,7 @@ namespace CSET_Main.Questions.InformationTabData
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.GEN_FILE.Title, s.GEN_FILE.File_Name, s.Section_Ref, IsSource = false, s.GEN_FILE.Is_Uploaded })
                 ).ToList();
             // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded=s.Is_Uploaded??false });
+            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
             SourceDocumentsList = sourceDocuments.ToList();
 
             // Help Documents
