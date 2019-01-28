@@ -19,6 +19,9 @@ namespace CSETWeb_Api.Models
     {
         public List<QuestionGroup> QuestionGroups;
         public string ApplicationMode;
+
+        public int QuestionCount;
+        public int RequirementCount;
     }
 
     /// <summary>

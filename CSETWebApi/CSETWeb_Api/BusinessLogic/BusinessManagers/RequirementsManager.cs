@@ -168,6 +168,10 @@ namespace CSETWeb_Api.BusinessManagers
                 QuestionGroups = groupList,
                 ApplicationMode = this.applicationMode
             };
+
+            resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+            resp.RequirementCount = this.NumberOfRequirements();
+
             return resp;
         }
 

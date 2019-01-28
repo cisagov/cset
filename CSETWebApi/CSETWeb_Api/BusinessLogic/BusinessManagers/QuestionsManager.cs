@@ -265,9 +265,15 @@ namespace CSETWeb_Api.BusinessManagers
                 sc.Questions.Add(qa);
             }
 
-            QuestionResponse resp = new QuestionResponse();
-            resp.QuestionGroups = groupList;
-            resp.ApplicationMode = this.applicationMode;
+            QuestionResponse resp = new QuestionResponse
+            {
+                QuestionGroups = groupList,
+                ApplicationMode = this.applicationMode
+            };
+
+            resp.QuestionCount = this.NumberOfQuestions();
+            resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
+
             return resp;
         }
 
