@@ -138,6 +138,7 @@ import { AddRequirementComponent } from './dialogs/add-requirement/add-requireme
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AddReferenceComponent } from './dialogs/add-reference/add-reference.component';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
+import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 
 @NgModule({
     imports: [
@@ -251,7 +252,8 @@ import { StandardDocumentsComponent } from './builder/standard-documents/standar
         RequirementDetailComponent,
         AddRequirementComponent,
         AddReferenceComponent,
-        StandardDocumentsComponent
+        StandardDocumentsComponent,
+        RefDocumentComponent
       ],
     providers: [
         ConfigService,

@@ -21,8 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
+import { FileUploadClientService } from '../../services/file-client.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -38,20 +39,27 @@ export class StandardDocumentsComponent implements OnInit {
   filter: string = '';
   filteredDocuments: RefDoc[] = [];
 
+
   constructor(
     private setBuilderSvc: SetBuilderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public fileSvc: FileUploadClientService
   ) { }
 
+  /**
+   *
+   */
   ngOnInit() {
     this.setName = this.route.snapshot.params['id'];
     this.setBuilderSvc.getSetDetail(this.setName).subscribe((result: any) => {
       this.standardTitle = result.FullName;
+      this.applyFilter();
     });
-
-    this.applyFilter();
   }
 
+  /**
+   * Gets a filtered list of documents for display from the API.
+   */
   applyFilter() {
     this.setBuilderSvc.getReferenceDocuments(this.filter).subscribe((result: RefDoc[]) => {
       this.filteredDocuments = [];
@@ -62,21 +70,40 @@ export class StandardDocumentsComponent implements OnInit {
   }
 
   /**
-   *
+   * Event handler triggered when user selects or deselects a document.
    */
-  selectDoc(doc: RefDoc, e) {
-    if (e.target.checked) {
-      // call the API to create a bridge
-      console.log('check on');
-    } else {
-      // call the API to delete the bridge
-      console.log('check off');
-    }
+  selectDoc(doc: RefDoc) {
+    this.setBuilderSvc.selectDocumentForSet(this.setName, doc).subscribe();
+  }
 
+  /**
+   * Programatically clicks the corresponding file upload element.
+   * @param event
+   */
+  openFileBrowser(event: any) {
+    event.preventDefault();
+    const element: HTMLElement = document.getElementById('docUpload') as HTMLElement;
+    element.click();
+  }
 
-    this.setBuilderSvc.selectDocumentForSet(this.setName, doc.ID, e.target.checked).subscribe();
+  /**
+   * Uploads the selected file to the API.
+   * @param e The 'file' event
+   */
+  fileSelect(e) {
+    const options = {};
+    this.fileSvc.uploadReferenceDoc(e.target.files[0], options)
+      .subscribe(resp => {
+        console.log('uploadReferenceDoc complete');
+        console.log(resp);
+        const newFileID: number = parseInt(resp.body, 10);
 
+        // newFileID = 3872;
 
+        // Now that the file is saved, navigate to its detail page
+        this.setBuilderSvc.navRefDocDetail(newFileID);
+      }
+      );
   }
 }
 

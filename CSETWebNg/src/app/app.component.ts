@@ -113,13 +113,13 @@ export class AppComponent implements OnInit {
       return false;
     }
     if (rpath === '/set-list'
-      || rpath.startsWith('/set-detail')
-      || rpath.startsWith('/requirement-list')
-      || rpath.startsWith('/standard-documents')
-      || rpath.startsWith('/document-detail')
-      || rpath.startsWith('/requirement-detail')
-      || rpath.startsWith('/question-list')
-      || rpath.startsWith('/add-question')) {
+      || rpath.indexOf('/set-detail') > -1
+      || rpath.indexOf('/requirement-list') > -1
+      || rpath.indexOf('/standard-documents') > -1
+      || rpath.indexOf('/document-detail') > -1
+      || rpath.indexOf('/requirement-detail') > -1
+      || rpath.indexOf('/question-list') > -1
+      || rpath.indexOf('/add-question') > -1) {
       return true;
     }
     return false;

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
 import { SetDetail, QuestionSearch, Question, RequirementResult, Requirement } from '../models/set-builder.model';
+import { RefDoc } from '../builder/standard-documents/standard-documents.component';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -121,7 +122,8 @@ export class SetBuilderService {
         this.activeRequirement = null;
         this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
-        this.router.navigate(['/', 'requirement-list', setName]);
+        console.log('navReqList - about to navigate');
+        this.router.navigate(['/requirement-list', setName]);
     }
 
     navRequirementDetail(r: Requirement) {
@@ -133,7 +135,7 @@ export class SetBuilderService {
     navQuestionList() {
         this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
-        this.router.navigate(['/', 'question-list', setName]);
+        this.router.navigate(['/question-list', setName]);
     }
 
     navAddQuestion() {
@@ -144,6 +146,11 @@ export class SetBuilderService {
     navStandardDocuments() {
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/', 'standard-documents', setName]);
+    }
+
+    navRefDocDetail(newFileID: number) {
+        console.log('navRefDocDetail - ' + newFileID);
+        this.router.navigate(['/', 'ref-document', newFileID]);
     }
 
 
@@ -371,16 +378,20 @@ export class SetBuilderService {
      */
     getReferenceDocuments(text: string) {
         return this.http
-            .get(this.apiUrl + 'builder/GetReferenceDocs?filter=' + text,
+            .get(this.apiUrl + 'builder/GetReferenceDocs?setName=' + sessionStorage.getItem('setName') + '&filter=' + text,
                 headers);
     }
 
-    selectDocumentForSet(setName: string, docId: number, checked: boolean) {
-        console.log('selectDocumentForSet');
-        const parms = { setName: setName, docId: docId, checked: checked };
+    /**
+     * Sends a list of currently-selected gen file IDs to the API.
+     */
+    selectDocumentForSet(setName: string, doc: RefDoc) {
+        const parms = { setName: setName, doc: doc };
         return this.http
-            .post(this.apiUrl + 'builder/SelectReferenceDoc',
+            .post(this.apiUrl + 'builder/SelectSetFile',
                 parms,
                 headers);
     }
+
+
 }

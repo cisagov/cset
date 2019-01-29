@@ -1,13 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.Helpers;
 using DataLayer;
-using BusinessLogic.Models;
-using CSETWeb_Api.BusinessLogic.Models;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data.Entity.Migrations;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Web.Http;
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -1285,9 +1300,10 @@ namespace CSETWeb_Api.BusinessManagers
 
         /// <summary>
         /// Returns a collection of reference documents.
+        /// Reference documents attached to the set are marked as selected.
         /// </summary>
         /// <returns></returns>
-        public List<ReferenceDoc> GetReferenceDocs(string filter)
+        public List<ReferenceDoc> GetReferenceDocs(string setName, string filter)
         {
             if (filter == null)
             {
@@ -1297,22 +1313,50 @@ namespace CSETWeb_Api.BusinessManagers
             List<ReferenceDoc> list = new List<ReferenceDoc>();
             using (var db = new CSETWebEntities())
             {
-                var genFileList = db.GEN_FILE.Where(x => x.Title.Contains(filter))
-                    .OrderBy(x => x.Title).ToList();
+                var genFileList = db.GEN_FILE.Where(x => x.Title.Contains(filter)).ToList().OrderBy(x => x.Title).ToList();
 
-                foreach (GEN_FILE gf in genFileList)
+                var selectedFiles = db.SET_FILES.Where(x => x.SetName == setName).ToList().Select(y => y.Gen_File_Id);
+
+                foreach (var f in genFileList)
                 {
                     list.Add(new ReferenceDoc
                     {
-                        ID = gf.Gen_File_Id,
-                        FileName = gf.File_Name,
-                        Title = gf.Title
-
+                        ID = f.Gen_File_Id,
+                        FileName = f.File_Name,
+                        Title = f.Title,
+                        Selected = selectedFiles.Contains(f.Gen_File_Id)
                     });
                 }
             }
 
             return list;
+        }
+
+
+        /// <summary>
+        /// Creates or deletes the SET_FILE row tying the document to the set.
+        /// </summary>
+        public void SelectSetFile(SetFileSelection parms)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                if (parms.Doc.Selected)
+                {
+                    SET_FILES sf = new SET_FILES
+                    {
+                        SetName = parms.SetName,
+                        Gen_File_Id = parms.Doc.ID
+                    };
+                    db.SET_FILES.Add(sf);
+                }
+                else
+                {
+                    var setFile = db.SET_FILES.Where(x => x.SetName == parms.SetName && x.Gen_File_Id == parms.Doc.ID).FirstOrDefault();
+                    db.SET_FILES.Remove(setFile);
+                }
+
+                db.SaveChanges();
+            }
         }
 
 
@@ -1327,10 +1371,40 @@ namespace CSETWeb_Api.BusinessManagers
 
         /// <summary>
         /// Saves the physical document and defines it in the database.
+        /// Returns the ID of the new GEN_FILE row.
         /// </summary>
-        public void UploadReferenceDoc()
+        public int RecordDocInDB(string setName, string filename, string contentType, int fileSize)
         {
-            var a = 1;
+            using (var db = new CSETWebEntities())
+            {
+                // Determine file type ID
+                var type = db.FILE_TYPE.Where(x => x.Mime_Type == contentType).FirstOrDefault();
+                // TODO:  what if not supported?
+
+
+                GEN_FILE gf = new GEN_FILE
+                {
+                    File_Name = filename,
+                    Title = "(no title)",
+                    File_Type_Id = type.File_Type_Id,
+                    File_Size = fileSize,
+                    Doc_Num = "NONE",
+                    Short_Name = "(no short name)"
+                };
+                db.GEN_FILE.Add(gf);
+                db.SaveChanges();
+
+
+                SET_FILES sf = new SET_FILES
+                {
+                    SetName = setName,
+                    Gen_File_Id = gf.Gen_File_Id
+                };
+                db.SET_FILES.Add(sf);
+                db.SaveChanges();
+
+                return gf.Gen_File_Id;
+            }            
         }
     }
 }

@@ -208,6 +208,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Markup;
     }
 
+    public class SetFileSelection
+    {
+        public string SetName;
+        public ReferenceDoc Doc;
+    }
+
     public class ReferenceDoc
     {
         public int ID;
@@ -215,5 +221,6 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string FileName;
         public string SectionRef;
         public bool IsUploaded;
+        public bool Selected;
     }
 }

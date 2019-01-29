@@ -941,7 +941,7 @@
             <param name="parms"></param>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetReferenceDocs(System.String)">
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetReferenceDocs(System.String,System.String)">
             <summary>
             
             </summary>
@@ -951,6 +951,13 @@
             <summary>
             Attaches or detaches a reference document from the set.
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.SelectSetFiles(CSETWeb_Api.BusinessLogic.Models.SetFileSelection)">
+            <summary>
+            Refreshes the list of GEN_FILEs associated with a SET.
+            The entire list of applicable files must be sent.
+            </summary>
+            <param name="parms"></param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.UploadReferenceDoc">
             <summary>

@@ -21,23 +21,19 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
-import { SetBuilderService } from '../../services/set-builder.service';
-// import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-add-reference',
-  templateUrl: './add-reference.component.html',
+  selector: 'app-ref-document',
+  templateUrl: './ref-document.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AddReferenceComponent implements OnInit {
+export class RefDocumentComponent implements OnInit {
 
-  constructor(
-    private setBuilderSvc: SetBuilderService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }
+
 }

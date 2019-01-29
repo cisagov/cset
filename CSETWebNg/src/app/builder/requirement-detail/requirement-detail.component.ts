@@ -84,6 +84,7 @@ export class RequirementDetailComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
+    console.log('requirement-detail ngOnInit');
     let requirementID = 0;
     if (!!this.setBuilderSvc.activeRequirement) {
       requirementID = this.setBuilderSvc.activeRequirement.RequirementID;

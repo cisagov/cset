@@ -284,11 +284,12 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetReferenceDocs")]
-        public List<ReferenceDoc> GetReferenceDocs([FromUri] string filter)
+        public List<ReferenceDoc> GetReferenceDocs([FromUri] string setName, [FromUri] string filter)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            return m.GetReferenceDocs(filter);
+            return m.GetReferenceDocs(setName, filter);
         }
+
 
         /// <summary>
         /// Attaches or detaches a reference document from the set.
@@ -302,12 +303,26 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
+        /// Refreshes the list of GEN_FILEs associated with a SET.
+        /// The entire list of applicable files must be sent.
+        /// </summary>
+        /// <param name="parms"></param>
+        [HttpPost]
+        [Route("api/builder/SelectSetFile")]
+        public void SelectSetFiles(SetFileSelection parms)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.SelectSetFile(parms);
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [Route("api/builder/UploadReferenceDoc")]
-        public async Task<HttpResponseMessage> UploadReferenceDoc()
+        public int UploadReferenceDoc()
         {
             HttpRequestMessage request = this.Request;
             if (!request.Content.IsMimeMultipartContent())
@@ -315,11 +330,10 @@ namespace CSETWeb_Api.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string fileHash;
             try
             {
                 var streamProvider = new InMemoryMultipartFormDataStreamProvider();
-                await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
+                Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
 
 
                 //access form data
@@ -339,67 +353,35 @@ namespace CSETWeb_Api.Controllers
 
 
                         string title = streamProvider.FormData["title"];
+                        string setName = streamProvider.FormData["setName"];
 
+                        int fileSize = 0;
 
                         using (BinaryReader br = new BinaryReader(fs))
                         {
                             byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                            fileSize = bytes.Length;
 
                             using (FileStream fsw = File.Create(physicalFilePath, bytes.Length))
                             {
-                                fsw.Write(bytes, 0, bytes.Length);
+                                fsw.Write(bytes, 0, fileSize);
                             }
-
-
-
-
-                            //// Hash the file so that we can determine if it is already attached to another question
-                            //using (var md5 = MD5.Create())
-                            //{
-                            //    var hash = md5.ComputeHash(bytes);
-                            //    fileHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-                            //}
-
-                            //// Find or create the Answer for the document to be associated with.  
-                            //// If they are attaching a document to a question that has not yet been answered,
-                            //// the answerId will not be sent in the request.
-                            //int questionId = int.Parse(streamProvider.FormData["questionId"]);
-
-                            //int answerId;
-                            //bool isAnswerIdProvided = int.TryParse(streamProvider.FormData["answerId"], out answerId);
-                            //string title = streamProvider.FormData["title"];
-
-                            //if (!isAnswerIdProvided)
-                            //{
-                            //    QuestionsManager qm = new QuestionsManager(assessmentId);
-                            //    Answer answer = new Answer();
-                            //    answer.QuestionId = questionId;
-                            //    answer.AnswerText = "U";
-                            //    answerId = qm.StoreAnswer(answer);
-                            //}
-                            //var dm = new DocumentManager(assessmentId);
-                            //using (CSETWebEntities db = new CSETWebEntities())
-                            //{
-                            //    dm.AddDocument(title, filename, contentType, fileHash, answerId, bytes);
-                            //}
-
-                            // Return a current picture of this answer's documents
-                            return null; // Request.CreateResponse(dm.GetDocumentsForAnswer(answerId));
                         }
+
+
+                        // Create a GEN_FILE entry, and a SET_FILES entry.
+                        StandardBuilderManager m = new StandardBuilderManager();
+                        return m.RecordDocInDB(setName, filename, contentType, fileSize);
                     }
                 }
             }
             catch (System.Exception e)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                throw e;
+                // throw Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
 
-
-            StandardBuilderManager m = new StandardBuilderManager();
-            m.UploadReferenceDoc();
-
-
-            return null;
+            return 0;
         }
     }
 }

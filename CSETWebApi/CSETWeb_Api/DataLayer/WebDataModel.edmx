@@ -965,6 +965,15 @@
           <Property Name="SecurityQuestion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IsCustomQuestion" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="SET_FILES">
+          <Key>
+            <PropertyRef Name="SetName" />
+            <PropertyRef Name="Gen_File_Id" />
+          </Key>
+          <Property Name="SetName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gen_File_Id" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="SETS">
           <Key>
             <PropertyRef Name="Set_Name" />
@@ -2736,6 +2745,34 @@ warning 6035: The relationship 'FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING' has c
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SET_FILES_GEN_FILE">
+          <End Role="GEN_FILE" Type="Self.GEN_FILE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SET_FILES" Type="Self.SET_FILES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GEN_FILE">
+              <PropertyRef Name="Gen_File_Id" />
+            </Principal>
+            <Dependent Role="SET_FILES">
+              <PropertyRef Name="Gen_File_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SET_FILES_SETS">
+          <End Role="SETS" Type="Self.SETS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SET_FILES" Type="Self.SET_FILES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SETS">
+              <PropertyRef Name="Set_Name" />
+            </Principal>
+            <Dependent Role="SET_FILES">
+              <PropertyRef Name="SetName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SETS_Sets_Category">
           <End Role="SETS_CATEGORY" Type="Self.SETS_CATEGORY" Multiplicity="0..1" />
           <End Role="SETS" Type="Self.SETS" Multiplicity="*" />
@@ -3151,6 +3188,7 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <EntitySet Name="SECTOR_INDUSTRY" EntityType="Self.SECTOR_INDUSTRY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SECTOR_STANDARD_RECOMMENDATIONS" EntityType="Self.SECTOR_STANDARD_RECOMMENDATIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SECURITY_QUESTION" EntityType="Self.SECURITY_QUESTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SET_FILES" EntityType="Self.SET_FILES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SETS" EntityType="Self.SETS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SETS_CATEGORY" EntityType="Self.SETS_CATEGORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SHAPE_TYPES" EntityType="Self.SHAPE_TYPES" Schema="dbo" store:Type="Tables" />
@@ -3675,6 +3713,14 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <AssociationSet Name="FK_SECTOR_STANDARD_RECOMMENDATIONS_SETS" Association="Self.FK_SECTOR_STANDARD_RECOMMENDATIONS_SETS">
             <End Role="SETS" EntitySet="SETS" />
             <End Role="SECTOR_STANDARD_RECOMMENDATIONS" EntitySet="SECTOR_STANDARD_RECOMMENDATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SET_FILES_GEN_FILE" Association="Self.FK_SET_FILES_GEN_FILE">
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+            <End Role="SET_FILES" EntitySet="SET_FILES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SET_FILES_SETS" Association="Self.FK_SET_FILES_SETS">
+            <End Role="SETS" EntitySet="SETS" />
+            <End Role="SET_FILES" EntitySet="SET_FILES" />
           </AssociationSet>
           <AssociationSet Name="FK_SETS_Sets_Category" Association="Self.FK_SETS_Sets_Category">
             <End Role="SETS_CATEGORY" EntitySet="SETS_CATEGORY" />
@@ -4403,6 +4449,15 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
             <End Role="SET" EntitySet="SETS" />
             <End Role="UNIVERSAL_SUB_CATEGORY_HEADINGS" EntitySet="UNIVERSAL_SUB_CATEGORY_HEADINGS" />
           </AssociationSet>
+          <EntitySet Name="SET_FILES" EntityType="CSETWebModel.SET_FILES" />
+          <AssociationSet Name="FK_SET_FILES_GEN_FILE" Association="CSETWebModel.FK_SET_FILES_GEN_FILE">
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+            <End Role="SET_FILES" EntitySet="SET_FILES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SET_FILES_SETS" Association="CSETWebModel.FK_SET_FILES_SETS">
+            <End Role="SET" EntitySet="SETS" />
+            <End Role="SET_FILES" EntitySet="SET_FILES" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ANSWER">
           <Key>
@@ -4798,6 +4853,7 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <NavigationProperty Name="REF_LIBRARY_PATH" Relationship="CSETWebModel.GEN_FILE_LIB_PATH_CORL" FromRole="GEN_FILE" ToRole="REF_LIBRARY_PATH" />
           <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Is_Uploaded" Type="Boolean" />
+          <NavigationProperty Name="SET_FILES" Relationship="CSETWebModel.FK_SET_FILES_GEN_FILE" FromRole="GEN_FILE" ToRole="SET_FILES" />
         </EntityType>
         <EntityType Name="GLOBAL_PROPERTIES">
           <Key>
@@ -5216,6 +5272,7 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <NavigationProperty Name="NEW_REQUIREMENT" Relationship="CSETWebModel.FK_NEW_REQUIREMENT_SETS" FromRole="SET" ToRole="NEW_REQUIREMENT" />
           <NavigationProperty Name="NEW_QUESTION_SETS" Relationship="CSETWebModel.FK_NEW_QUESTION_SETS_SETS" FromRole="SET" ToRole="NEW_QUESTION_SETS" />
           <NavigationProperty Name="UNIVERSAL_SUB_CATEGORY_HEADINGS" Relationship="CSETWebModel.FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS" FromRole="SET" ToRole="UNIVERSAL_SUB_CATEGORY_HEADINGS" />
+          <NavigationProperty Name="SET_FILES" Relationship="CSETWebModel.FK_SET_FILES_SETS" FromRole="SET" ToRole="SET_FILES" />
         </EntityType>
         <EntityType Name="SETS_CATEGORY">
           <Key>
@@ -7488,6 +7545,45 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SET_FILES">
+          <Key>
+            <PropertyRef Name="SetName" />
+            <PropertyRef Name="Gen_File_Id" />
+          </Key>
+          <Property Name="SetName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gen_File_Id" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GEN_FILE" Relationship="CSETWebModel.FK_SET_FILES_GEN_FILE" FromRole="SET_FILES" ToRole="GEN_FILE" />
+          <NavigationProperty Name="SETS" Relationship="CSETWebModel.FK_SET_FILES_SETS" FromRole="SET_FILES" ToRole="SET" />
+        </EntityType>
+        <Association Name="FK_SET_FILES_GEN_FILE">
+          <End Type="CSETWebModel.GEN_FILE" Role="GEN_FILE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CSETWebModel.SET_FILES" Role="SET_FILES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GEN_FILE">
+              <PropertyRef Name="Gen_File_Id" />
+            </Principal>
+            <Dependent Role="SET_FILES">
+              <PropertyRef Name="Gen_File_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SET_FILES_SETS">
+          <End Type="CSETWebModel.SET" Role="SET" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CSETWebModel.SET_FILES" Role="SET_FILES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SET">
+              <PropertyRef Name="Set_Name" />
+            </Principal>
+            <Dependent Role="SET_FILES">
+              <PropertyRef Name="SetName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9013,6 +9109,15 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SET_FILES">
+            <EntityTypeMapping TypeName="CSETWebModel.SET_FILES">
+              <MappingFragment StoreEntitySet="SET_FILES">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Gen_File_Id" ColumnName="Gen_File_Id" />
+                <ScalarProperty Name="SetName" ColumnName="SetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <!--<AssociationSetMapping Name="NEW_QUESTION_LEVELS1" TypeName="CSETWebModel.NEW_QUESTION_LEVELS1" StoreEntitySet="NEW_QUESTION_LEVELS">
             <EndProperty Name="UNIVERSAL_SAL_LEVEL">
               <ScalarProperty Name="Universal_Sal_Level1" ColumnName="Universal_Sal_Level" />
