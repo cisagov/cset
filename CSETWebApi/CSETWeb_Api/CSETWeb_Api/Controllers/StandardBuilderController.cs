@@ -279,7 +279,7 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Returns a list of reference docs attached to the set after applying the filter.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -292,13 +292,37 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// Attaches or detaches a reference document from the set.
+        /// Returns the list of reference docs attached to the set.
         /// </summary>
-        [HttpPost]
-        [Route("api/builder/SelectReferenceDoc")]
-        public void SelectReferenceDoc()
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/builder/GetReferenceDocsForSet")]
+        public List<ReferenceDoc> GetReferenceDocs([FromUri] string setName)
         {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetReferenceDocsForSet(setName);
+        }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/builder/GetReferenceDocDetail")]
+        public ReferenceDoc GetReferenceDocDetail([FromUri] int id)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.GetReferenceDocDetail(id);
+        }
+
+
+        [HttpPost]
+        [Route("api/builder/UpdateReferenceDocDetail")]
+        public void UpdateReferenceDocDetail([FromBody] ReferenceDoc doc)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            m.UpdateReferenceDocDetail(doc);
         }
 
 
@@ -313,6 +337,20 @@ namespace CSETWeb_Api.Controllers
         {
             StandardBuilderManager m = new StandardBuilderManager();
             m.SelectSetFile(parms);
+        }
+
+
+        /// <summary>
+        /// Adds or deletes the source or resource doc/bookmark from the requirement.
+        /// The 'isSourceRef' argument specifies whether the document is a 'source' document.
+        /// The 'add' argument specifies whether the document is being added or removed from the requirement.
+        /// </summary>
+        [HttpGet]
+        [Route("api/builder/AddDeleteRefDocToRequirement")]
+        public ReferenceDocLists AddDeleteRefDocToRequirement([FromUri] int reqId, [FromUri] int docId, bool isSourceRef, [FromUri] string bookmark, [FromUri] bool add)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            return m.AddDeleteRefDocToRequirement(reqId, docId, isSourceRef, bookmark, add);
         }
 
 

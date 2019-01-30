@@ -76,13 +76,16 @@
         </div>
 
         <div *ngFor="let q of subcat.Questions; let i = index" class="question-row d-flex flex-column p-3"
-          [class.no-bottom-border]="i == (subcat.Questions.length - 1)">
+          [class.no-bottom-border]="i == (subcat.Questions.length - 1)"
+          [class.mb-4]="i == (subcat.Questions.length - 1)">
           <div>
             {{ q.Title }}
           </div>
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
             <div class="d-flex flex-column mb-3 mr-3 w-100">
-              <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.QuestionText)">
+              <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
+                <div class="font-weight-bold mr-2">{{q.DisplayNumber}}</div>
+                <div [innerHTML]="formatLinebreaks(q.QuestionText)"></div>
               </div>
               <div *ngIf="questionBeingEdited === q" class="w-100">
                 <div class="alert alert-danger" *ngIf="editedQuestionInUse">
@@ -96,7 +99,7 @@
             <span class="d-flex align-items-end justify-content-between flex-00a">
               <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
                 <span class="cset-icons-pencil fs-base-2"></span>
-                <span class="d-none d-md-flex fs-smaller">Change</span>
+                <span class="d-none d-md-flex fs-smaller">Edit</span>
               </button>
               <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeQuestion(q)">
                 <span class="cset-icons-trash-can fs-base-2"></span>

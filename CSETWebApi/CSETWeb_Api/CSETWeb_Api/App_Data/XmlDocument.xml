@@ -943,14 +943,21 @@
         </member>
         <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetReferenceDocs(System.String,System.String)">
             <summary>
-            
+            Returns a list of reference docs attached to the set after applying the filter.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.SelectReferenceDoc">
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetReferenceDocs(System.String)">
             <summary>
-            Attaches or detaches a reference document from the set.
+            Returns the list of reference docs attached to the set.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.GetReferenceDocDetail(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.SelectSetFiles(CSETWeb_Api.BusinessLogic.Models.SetFileSelection)">
             <summary>
@@ -958,6 +965,13 @@
             The entire list of applicable files must be sent.
             </summary>
             <param name="parms"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddDeleteRefDocToRequirement(System.Int32,System.Int32,System.Boolean,System.String,System.Boolean)">
+            <summary>
+            Adds or deletes the source or resource doc/bookmark from the requirement.
+            The 'isSourceRef' argument specifies whether the document is a 'source' document.
+            The 'add' argument specifies whether the document is being added or removed from the requirement.
+            </summary>
         </member>
         <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.UploadReferenceDoc">
             <summary>

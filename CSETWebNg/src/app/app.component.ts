@@ -116,7 +116,7 @@ export class AppComponent implements OnInit {
       || rpath.indexOf('/set-detail') > -1
       || rpath.indexOf('/requirement-list') > -1
       || rpath.indexOf('/standard-documents') > -1
-      || rpath.indexOf('/document-detail') > -1
+      || rpath.indexOf('/ref-document') > -1
       || rpath.indexOf('/requirement-detail') > -1
       || rpath.indexOf('/question-list') > -1
       || rpath.indexOf('/add-question') > -1) {

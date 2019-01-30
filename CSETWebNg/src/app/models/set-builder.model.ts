@@ -88,13 +88,31 @@ export interface Requirement {
     RequirementText?: string;
     SalLevels?: string[];
     SupplementalInfo?: string;
-    ReferenceDocs?: ReferenceDoc[];   // This will change to a Reference interface type
+    SourceDocs?: ReferenceDoc[];
+    ResourceDocs?: ReferenceDoc[];
     Questions?: Question[];
 }
 
-export interface ReferenceDoc {
-    Title: string;
-    FileName: string;
-    SectionRef: string;
-    IsUploaded: boolean;
+export interface RefDocLists {
+    SourceDocs: ReferenceDoc[];
+    ResourceDocs: ReferenceDoc[];
 }
+
+export interface ReferenceDoc {
+    ID: number;
+    Title?: string;
+    FileName?: string;
+    Name?: string;
+    ShortName?: string;
+    DocumentNumber?: string;
+    PublishDate?: Date;
+    DocumentVersion?: string;
+    SourceType?: string;
+    Summary?: string;
+    Description?: string;
+    Comments?: string;
+    Selected?: boolean;
+    IsCustom?: boolean;
+    SectionRef?: string;
+  }
+

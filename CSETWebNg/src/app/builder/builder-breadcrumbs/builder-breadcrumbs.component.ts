@@ -44,6 +44,10 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
   displayCrumbs() {
     // build the list of 'crumbs' to display on the template
+
+    // DUMMY ENTRY - until I get this finished, here's a basic Home link:
+    const b: IBreadcrumb = { displayName: 'Home', navPath: '/set-list', children: [] };
+    this.breadcrumbs.push(b);
   }
 
 
@@ -53,7 +57,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
   initializeStructure() {
     this.json = {
       "displayName": "Home",
-      "navPath": "set-list",
+      "navPath": "/set-list",
       "children": [
         {
           "displayName": "Set Detail",

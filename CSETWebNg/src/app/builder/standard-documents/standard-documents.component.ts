@@ -25,6 +25,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { ActivatedRoute } from '@angular/router';
+import { ReferenceDoc } from '../../models/set-builder.model';
 
 @Component({
   selector: 'app-standard-documents',
@@ -37,7 +38,12 @@ export class StandardDocumentsComponent implements OnInit {
   setName: string;
   standardTitle: string;
   filter: string = '';
-  filteredDocuments: RefDoc[] = [];
+  filteredDocuments: ReferenceDoc[] = [];
+
+  /**
+   * Indicates whether to show just the checked documents or all
+   */
+  showChecked = false;
 
 
   constructor(
@@ -57,14 +63,25 @@ export class StandardDocumentsComponent implements OnInit {
     });
   }
 
+  toggleShowChecked() {
+    this.showChecked = !this.showChecked;
+    this.applyFilter();
+  }
+
   /**
    * Gets a filtered list of documents for display from the API.
    */
   applyFilter() {
-    this.setBuilderSvc.getReferenceDocuments(this.filter).subscribe((result: RefDoc[]) => {
+    this.setBuilderSvc.getReferenceDocuments(this.filter).subscribe((result: ReferenceDoc[]) => {
       this.filteredDocuments = [];
       result.forEach(element => {
-        this.filteredDocuments.push(element);
+        if (this.showChecked) {
+          if (element.Selected) {
+            this.filteredDocuments.push(element);
+          }
+        } else {
+          this.filteredDocuments.push(element);
+        }
       });
     });
   }
@@ -72,7 +89,7 @@ export class StandardDocumentsComponent implements OnInit {
   /**
    * Event handler triggered when user selects or deselects a document.
    */
-  selectDoc(doc: RefDoc) {
+  selectDoc(doc: ReferenceDoc) {
     this.setBuilderSvc.selectDocumentForSet(this.setName, doc).subscribe();
   }
 
@@ -98,8 +115,6 @@ export class StandardDocumentsComponent implements OnInit {
         console.log(resp);
         const newFileID: number = parseInt(resp.body, 10);
 
-        // newFileID = 3872;
-
         // Now that the file is saved, navigate to its detail page
         this.setBuilderSvc.navRefDocDetail(newFileID);
       }
@@ -107,9 +122,3 @@ export class StandardDocumentsComponent implements OnInit {
   }
 }
 
-export interface RefDoc {
-  ID: number;
-  Title: string;
-  FileName: string;
-  Selected: boolean;
-}

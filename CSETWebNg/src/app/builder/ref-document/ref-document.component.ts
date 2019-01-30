@@ -22,6 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { ReferenceDoc } from '../../models/set-builder.model';
+import { SetBuilderService } from '../../services/set-builder.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ref-document',
@@ -31,9 +34,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RefDocumentComponent implements OnInit {
 
-  constructor() { }
+  doc: ReferenceDoc = { ID: 0 };
+
+  constructor(
+    private setBuilderSvc: SetBuilderService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    const docID = this.route.snapshot.params['id'];
+    this.setBuilderSvc.getDocumentDetail(docID).subscribe((result: ReferenceDoc) => {
+      this.doc = result;
+    });
+  }
+
+  /**
+   *
+   */
+  update(e: Event) {
+    this.setBuilderSvc.updateDocumentDetail(this.doc).subscribe(() => {
+    });
   }
 
 }

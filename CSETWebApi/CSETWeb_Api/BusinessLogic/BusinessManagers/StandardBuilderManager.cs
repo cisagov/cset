@@ -44,7 +44,7 @@ namespace CSETWeb_Api.BusinessManagers
                 List<SetDetail> list = new List<SetDetail>();
 
                 // TODO: remove the NERC from this condition!!!
-                var s = db.SETS.Where(x => x.Is_Custom || x.Set_Name == "NERC_CIP_R6").ToList();
+                var s = db.SETS.Where(x => x.Is_Custom || x.Set_Name == "NCSF_V1").ToList();
                 foreach (SET set in s)
                 {
                     SetDetail sr = new SetDetail
@@ -233,7 +233,7 @@ namespace CSETWeb_Api.BusinessManagers
                     q.QuestionID = nqs.NEW_QUESTION.Question_Id;
                     q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
                     PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db,
-                        ref q.Category, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
+                        ref q.QuestionGroupHeading, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
                     q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
 
                     // Look at the question's original set to determine if the question is 'custom' and can be edited
@@ -250,7 +250,7 @@ namespace CSETWeb_Api.BusinessManagers
                     response.Add(q);
                 }
 
-                List<QuestionDetail> list = response.OrderBy(x => x.Category).ThenBy(x => x.Subcategory).ThenBy(x => x.PairID).ToList();
+                List<QuestionDetail> list = response.OrderBy(x => x.QuestionGroupHeading).ThenBy(x => x.Subcategory).ThenBy(x => x.PairID).ToList();
 
                 List<int> customPairingsForThisSet = db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                     .Where(x => x.Set_Name == setName).Select(x => x.Heading_Pair_Id).ToList();
@@ -263,24 +263,27 @@ namespace CSETWeb_Api.BusinessManagers
                 ql.SetDescription = set.Standard_ToolTip;
 
 
-                string currentCategory = string.Empty;
+                string currentQGH = string.Empty;
                 QuestionListCategory cat = null;
 
                 // In case there are two subcategories with the same name but different pair IDs, they should be rendered separately.
                 int currentSubcategoryPairID = -1;
                 QuestionListSubcategory subcat = null;
 
+                int displayNumber = 0;
+
                 foreach (QuestionDetail q in list)
                 {
-                    if (q.Category != currentCategory)
+                    if (q.QuestionGroupHeading != currentQGH)
                     {
                         cat = new QuestionListCategory
                         {
-                            CategoryName = q.Category
+                            CategoryName = q.QuestionGroupHeading
                         };
 
                         ql.Categories.Add(cat);
-                        currentCategory = q.Category;
+                        currentQGH = q.QuestionGroupHeading;
+                        displayNumber = 0;
                     }
 
 
@@ -298,6 +301,7 @@ namespace CSETWeb_Api.BusinessManagers
                         currentSubcategoryPairID = q.PairID;
                     }
 
+                    q.DisplayNumber = ++displayNumber;
                     subcat.Questions.Add(q);
                 }
 
@@ -719,7 +723,7 @@ namespace CSETWeb_Api.BusinessManagers
                         {
                             QuestionID = hit.q.Question_Id,
                             QuestionText = QuestionsManager.FormatLineBreaks(hit.q.Simple_Question),
-                            Category = hit.cat.Question_Group_Heading1,
+                            QuestionGroupHeading = hit.cat.Question_Group_Heading1,
                             Subcategory = hit.subcat.Universal_Sub_Category,
                         };
 
@@ -786,7 +790,7 @@ namespace CSETWeb_Api.BusinessManagers
                             {
                                 QuestionID = hit.q.Question_Id,
                                 QuestionText = QuestionsManager.FormatLineBreaks(hit.q.Simple_Question),
-                                Category = hit.cat.Question_Group_Heading1,
+                                QuestionGroupHeading = hit.cat.Question_Group_Heading1,
                                 Subcategory = hit.subcat.Universal_Sub_Category
                             });
                         }
@@ -1175,6 +1179,11 @@ namespace CSETWeb_Api.BusinessManagers
 
                 var result = q.FirstOrDefault();
 
+                if (result == null)
+                {
+                    return null;
+                }
+
                 Requirement requirement = new Requirement
                 {
                     Category = result.Standard_Category,
@@ -1196,7 +1205,10 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                 // Get the Reference documents for this requirement
-                requirement.ReferenceDocs = new List<ReferenceDoc>();
+                var allDocs = GetReferencesForRequirement(requirement.RequirementID);
+                requirement.SourceDocs = allDocs.SourceDocs;
+                requirement.ResourceDocs = allDocs.ResourceDocs;
+
 
 
                 // Get the questions for this requirement
@@ -1214,6 +1226,69 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 return requirement;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns two lists -- reference documents that are 'source' 
+        /// and 'resource'.
+        /// </summary>
+        /// <param name="reqID"></param>
+        /// <returns></returns>
+        private ReferenceDocLists GetReferencesForRequirement(int reqID)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                // Get all "source" documents
+                List<ReferenceDoc> sourceList = new List<ReferenceDoc>();
+                var sources = db.REQUIREMENT_SOURCE_FILES.Where(x => x.Requirement_Id == reqID).ToList();
+                foreach (REQUIREMENT_SOURCE_FILES reff in sources)
+                {
+                    sourceList.Add(new ReferenceDoc
+                    {
+                        SectionRef = reff.Section_Ref,
+                        ID = reff.Gen_File_Id,
+                        Title = reff.GEN_FILE.Title,
+                        Name = reff.GEN_FILE.Name,
+                        ShortName = reff.GEN_FILE.Short_Name,
+                        FileName = reff.GEN_FILE.File_Name,
+                        DocumentNumber = reff.GEN_FILE.Doc_Num,
+                        DocumentVersion = reff.GEN_FILE.Doc_Version,
+                        PublishDate = reff.GEN_FILE.Publish_Date,
+                        Summary = reff.GEN_FILE.Summary,
+                        Description = reff.GEN_FILE.Description,
+                        Comments = reff.GEN_FILE.Comments,
+                    });
+                }
+
+                // Get all "resource" documents
+                List<ReferenceDoc> resourceList = new List<ReferenceDoc>();
+                var resources = db.REQUIREMENT_REFERENCES.Where(x => x.Requirement_Id == reqID).ToList();
+                foreach (REQUIREMENT_REFERENCES reff in resources)
+                {
+                    resourceList.Add(new ReferenceDoc
+                    {
+                        SectionRef = reff.Section_Ref,
+                        ID = reff.Gen_File_Id,
+                        Title = reff.GEN_FILE.Title,
+                        Name = reff.GEN_FILE.Name,
+                        ShortName = reff.GEN_FILE.Short_Name,
+                        FileName = reff.GEN_FILE.File_Name,
+                        DocumentNumber = reff.GEN_FILE.Doc_Num,
+                        DocumentVersion = reff.GEN_FILE.Doc_Version,
+                        PublishDate = reff.GEN_FILE.Publish_Date,
+                        Summary = reff.GEN_FILE.Summary,
+                        Description = reff.GEN_FILE.Description,
+                        Comments = reff.GEN_FILE.Comments,
+                    });
+                }
+
+                // Package the two lists together
+                ReferenceDocLists response = new ReferenceDocLists();
+                response.SourceDocs = sourceList;
+                response.ResourceDocs = resourceList;
+                return response;
             }
         }
 
@@ -1324,12 +1399,154 @@ namespace CSETWeb_Api.BusinessManagers
                         ID = f.Gen_File_Id,
                         FileName = f.File_Name,
                         Title = f.Title,
-                        Selected = selectedFiles.Contains(f.Gen_File_Id)
+                        Selected = selectedFiles.Contains(f.Gen_File_Id),
+
+                        IsCustom = (f.Gen_File_Id > 3866)
+
                     });
                 }
             }
 
             return list;
+        }
+
+
+        /// <summary>
+        /// Returns the list of reference docs attached to the set. 
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <returns></returns>
+        public List<ReferenceDoc> GetReferenceDocsForSet(string setName)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                // Because SET_FILES is a new table in CSET 9.1, older standards
+                // won't have any entries.  We will create entries for all
+                // reference documents.
+                // CreateSetFilesRecords(setName);
+
+
+                var query = from sf in db.SET_FILES
+                            join gf in db.GEN_FILE on sf.Gen_File_Id equals gf.Gen_File_Id
+                            where sf.SetName == setName
+                            select gf;
+                var files = query.ToList();
+
+                List<ReferenceDoc> list = new List<ReferenceDoc>();
+                foreach (GEN_FILE f in files)
+                {
+                    ReferenceDoc doc = new ReferenceDoc
+                    {
+                        Title = f.Title,
+                        FileName = f.File_Name,
+                        ID = f.Gen_File_Id
+                    };
+
+                    list.Add(doc);
+                }
+
+                return list;
+            }
+        }
+
+
+        /// <summary>
+        /// Creates SET_FILES records for older sets that do not have any
+        /// entries.  If any SET_FILES entries exist, then do nothing.
+        /// 
+        /// Not yet finished -- since users won't be editing legacy sets.
+        /// </summary>
+        private void CreateSetFilesRecords(string setName)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                if (db.SET_FILES.Where(x => x.SetName == setName).Count() > 0)
+                {
+                    return;
+                }
+
+                List<SET_FILES> list = new List<SET_FILES>();
+
+                var q = from rs in db.REQUIREMENT_SETS
+                        where rs.Set_Name == setName
+                        select rs.Requirement_Id;
+
+                var allRequirementIDs = q.ToList();
+
+                var q2 = db.REQUIREMENT_SOURCE_FILES.Where(x => allRequirementIDs.Contains(x.Requirement_Id)).ToList();
+
+                var q3 = db.REQUIREMENT_REFERENCES.Where(x => allRequirementIDs.Contains(x.Requirement_Id)).ToList();
+
+                var a = 1;
+
+                // var sourceList = db.REQUIREMENT_SOURCE_FILES.Where(x => x.Requirement_Id)
+
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ReferenceDoc GetReferenceDocDetail(int id)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var dbDoc = db.GEN_FILE.Where(x => x.Gen_File_Id == id).FirstOrDefault();
+                ReferenceDoc doc = new ReferenceDoc
+                {
+                    ID = dbDoc.Gen_File_Id,
+                    Title = dbDoc.Title,
+                    FileName = dbDoc.File_Name,
+                    Name = dbDoc.Name,
+                    ShortName = dbDoc.Short_Name,
+                    DocumentNumber = dbDoc.Doc_Num,
+                    PublishDate = dbDoc.Publish_Date,
+                    DocumentVersion = dbDoc.Doc_Version,
+                    Summary = dbDoc.Summary,
+                    Description = dbDoc.Description,
+                    Comments = dbDoc.Comments
+                };
+
+
+                doc.IsCustom = (doc.ID > 3866);
+                // How can we define 'custom' files?
+
+
+                return doc;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateReferenceDocDetail(ReferenceDoc doc)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var dbDoc = db.GEN_FILE.Where(x => x.Gen_File_Id == doc.ID).FirstOrDefault();
+                if (dbDoc == null)
+                {
+                    return;
+                }
+
+                dbDoc.Title = string.IsNullOrEmpty(doc.Title) ? "(no title)" : doc.Title;
+                dbDoc.Name = string.IsNullOrEmpty(doc.Name) ? "(no name)" : doc.Name;
+                dbDoc.Short_Name = doc.ShortName;
+                dbDoc.Doc_Num = doc.DocumentNumber;
+                dbDoc.Publish_Date = doc.PublishDate;
+                dbDoc.Doc_Version = doc.DocumentVersion;
+                // dbDoc.Source_Type = doc.sourcetype
+                dbDoc.Summary = doc.Summary;
+                dbDoc.Description = doc.Description;
+                dbDoc.Comments = doc.Comments;
+
+                db.GEN_FILE.AddOrUpdate(dbDoc);
+                db.SaveChanges();
+            }
         }
 
 
@@ -1361,11 +1578,85 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
-        /// 
+        /// Either add or delete the reference document to the requirement.
+        /// Returns the new list.
         /// </summary>
-        public void SelectReferenceDoc()
+        public ReferenceDocLists AddDeleteRefDocToRequirement(int requirementId, int docId, bool isSourceRef, string bookmark, bool add)
         {
-            int g = 1;
+            if (bookmark == null)
+            {
+                bookmark = string.Empty;
+            }
+
+            using (var db = new CSETWebEntities())
+            {
+                if (isSourceRef)
+                {
+                    var reqref = db.REQUIREMENT_SOURCE_FILES
+                            .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
+
+                    if (add)
+                    {
+                        if (reqref == null)
+                        {
+                            // Create a new one
+                            reqref = new REQUIREMENT_SOURCE_FILES
+                            {
+                                Gen_File_Id = docId,
+                                Requirement_Id = requirementId,
+                                Section_Ref = bookmark.TrimStart('#')
+                            };
+                            db.REQUIREMENT_SOURCE_FILES.Add(reqref);
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        // Delete reference
+                        if (reqref != null)
+                        {
+                            db.REQUIREMENT_SOURCE_FILES.Remove(reqref);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    var reqref = db.REQUIREMENT_REFERENCES
+                            .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
+
+                    if (add)
+                    {
+                        if (reqref == null)
+                        {
+                            // Create a new one
+                            reqref = new REQUIREMENT_REFERENCES
+                            {
+                                Gen_File_Id = docId,
+                                Requirement_Id = requirementId,
+                                Section_Ref = bookmark.TrimStart('#')
+                            };
+                            db.REQUIREMENT_REFERENCES.Add(reqref);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            // reference record already exists
+                        }
+                    }
+                    else
+                    {
+                        // Delete reference
+                        if (reqref != null)
+                        {
+                            db.REQUIREMENT_REFERENCES.Remove(reqref);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            return GetReferencesForRequirement(requirementId);
         }
 
 
@@ -1404,7 +1695,7 @@ namespace CSETWeb_Api.BusinessManagers
                 db.SaveChanges();
 
                 return gf.Gen_File_Id;
-            }            
+            }
         }
     }
 }

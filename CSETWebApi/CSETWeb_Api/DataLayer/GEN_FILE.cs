@@ -26,6 +26,7 @@ namespace DataLayer
             this.REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             this.REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
             this.REF_LIBRARY_PATH = new HashSet<REF_LIBRARY_PATH>();
+            this.SET_FILES = new HashSet<SET_FILES>();
         }
     
         public int Gen_File_Id { get; set; }
@@ -53,7 +54,7 @@ namespace DataLayer
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SET_FILES> SET_FILES { get; set; }
     }
 }
-
-

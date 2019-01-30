@@ -82,7 +82,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public int QuestionID;
         public string QuestionText;
-        public string Category;
+        public string QuestionGroupHeading;
 
         /// <summary>
         /// The primary key of the UNIVERSAL_SUBCATEGORY_HEADING.
@@ -91,6 +91,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Subcategory;
         public string SubHeading;
 
+        public int DisplayNumber;
         public string Title;
         public bool IsCustom;
         public List<string> SalLevels = new List<string>();
@@ -198,7 +199,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string RequirementText;
         public List<string> SalLevels = new List<string>();
         public string SupplementalInfo;
-        public List<ReferenceDoc> ReferenceDocs = new List<ReferenceDoc>();
+        public List<ReferenceDoc> SourceDocs = new List<ReferenceDoc>();
+        public List<ReferenceDoc> ResourceDocs = new List<ReferenceDoc>();
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
     }
 
@@ -214,13 +216,32 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public ReferenceDoc Doc;
     }
 
+    public class ReferenceDocLists
+    {
+        public List<ReferenceDoc> SourceDocs;
+        public List<ReferenceDoc> ResourceDocs;
+    }
+
     public class ReferenceDoc
     {
         public int ID;
-        public string Title;
         public string FileName;
+        public string Title;
+        public string Name;
+        public string ShortName;
+        public string DocumentNumber;
+        public string DocumentVersion;
+        public DateTime? PublishDate;
+        public string Summary;
+        public string Description;
+        public string Comments;
         public string SectionRef;
         public bool IsUploaded;
         public bool Selected;
+
+        /// <summary>
+        /// To distinguish the documents whose information can be edited.
+        /// </summary>
+        public bool IsCustom;
     }
 }

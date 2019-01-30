@@ -2,8 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, Question, RequirementResult, Requirement } from '../models/set-builder.model';
-import { RefDoc } from '../builder/standard-documents/standard-documents.component';
+import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -25,6 +24,8 @@ export class SetBuilderService {
 
     activeRequirement: Requirement;
     activeQuestion: Question;
+
+    standardDocumentsNavOrigin: string;
 
     /**
      * Converts linebreak characters to HTML <br> tag.
@@ -108,14 +109,14 @@ export class SetBuilderService {
         this.activeRequirement = null;
         this.activeQuestion = null;
         sessionStorage.setItem('setName', null);
-        this.router.navigate(['/', 'set-list']);
+        this.router.navigate(['/set-list']);
     }
 
     navSetDetail() {
         this.activeRequirement = null;
         this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
-        this.router.navigate(['/', 'set-detail', setName]);
+        this.router.navigate(['/set-detail', setName]);
     }
 
     navReqList() {
@@ -140,17 +141,20 @@ export class SetBuilderService {
 
     navAddQuestion() {
         const setName = sessionStorage.getItem('setName');
-        this.router.navigate(['/', 'add-question', setName]);
+        this.router.navigate(['/add-question', setName]);
     }
 
-    navStandardDocuments() {
+    navStandardDocuments(origin) {
+        // Remember where we are navigating from
+        this.standardDocumentsNavOrigin = origin;
+
         const setName = sessionStorage.getItem('setName');
-        this.router.navigate(['/', 'standard-documents', setName]);
+        this.router.navigate(['/standard-documents', setName]);
     }
 
     navRefDocDetail(newFileID: number) {
         console.log('navRefDocDetail - ' + newFileID);
-        this.router.navigate(['/', 'ref-document', newFileID]);
+        this.router.navigate(['/ref-document', newFileID]);
     }
 
 
@@ -385,7 +389,7 @@ export class SetBuilderService {
     /**
      * Sends a list of currently-selected gen file IDs to the API.
      */
-    selectDocumentForSet(setName: string, doc: RefDoc) {
+    selectDocumentForSet(setName: string, doc: ReferenceDoc) {
         const parms = { setName: setName, doc: doc };
         return this.http
             .post(this.apiUrl + 'builder/SelectSetFile',
@@ -393,5 +397,42 @@ export class SetBuilderService {
                 headers);
     }
 
+    /**
+     * Gets only documents associated with the set
+     */
+    getReferenceDocumentsForSet() {
+        return this.http
+            .get(this.apiUrl + 'builder/GetReferenceDocsForSet?setName=' + sessionStorage.getItem('setName'),
+                headers);
+    }
 
+    /**
+     * Returns detail of the specified GEN_FILE.
+     */
+    getDocumentDetail(id: number) {
+        return this.http
+            .get(this.apiUrl + 'builder/GetReferenceDocDetail?id=' + id,
+                headers);
+    }
+
+    /**
+     * Pushes the detail for updating GEN_FILE.
+     */
+    updateDocumentDetail(doc: ReferenceDoc) {
+        return this.http
+            .post(this.apiUrl + 'builder/UpdateReferenceDocDetail',
+                doc,
+                headers);
+    }
+
+
+    /**
+     * Adds or deletes a reference document from a requirement.
+     */
+    AddDeleteRefDocToRequirement(reqId: number, docId: number, isSource: boolean, bookmark: string, adddelete: boolean) {
+        return this.http
+        .get(this.apiUrl + 'builder/AddDeleteRefDocToRequirement?reqId='
+            + reqId + '&docId=' + docId + '&isSourceRef=' + isSource + '&bookmark=' + bookmark + '&add=' + adddelete,
+            headers);
+    }
 }

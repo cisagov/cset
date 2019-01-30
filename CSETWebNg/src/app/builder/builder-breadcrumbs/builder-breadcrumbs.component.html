@@ -23,6 +23,6 @@
 
 <ol class="breadcrumb">  
   <li *ngFor="let breadcrumb of breadcrumbs">
-    <a [routerLink]="[breadcrumb.navPath, '']">{{ breadcrumb.displayName }}</a>
+    <button (click)="this.router.navigate([breadcrumb.navPath]);" class="btn btn-link">{{ breadcrumb.displayName }}</button>
   </li>
 </ol>

@@ -31,27 +31,45 @@
     </h5>
     <div class="d-flex flex-row w-100 justify-content-between align-items-start">
       <p class="mr-3">Select or upload any reference documents applicable to the standard. This will
-        make them available for attaching to the requirements in the standard.  Enter a string in the 
+        make them available for attaching to the requirements in the standard. Enter a string in the
         Filter field to narrow down candidates.
       </p>
       <button class="btn btn-primary add" (click)="openFileBrowser($event)">Add a document</button>
       <!-- <input type="hidden" [value]="setBuilderSvc.activeRequirement.RequirementID"> -->
       <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
     </div>
-    <div class="form-group">
-      <label for="docTitleFilter">Filter</label>
-      <input type="text" id="docTitleFilter" name="docTitleFilter" class="form-control" [(ngModel)]="filter"
-        (ngModelChange)="applyFilter()">
+    <div class="form-row align-items-end">
+      <div class="form-group col-md-8">
+        <label for="docTitleFilter">Filter</label>
+        <input type="text" id="docTitleFilter" name="docTitleFilter" class="form-control" [(ngModel)]="filter"
+          (ngModelChange)="applyFilter()">
+      </div>
+      <div class="form-check m-3">
+        <input type="checkbox" class="form-check-input" id="showOnlyChecked" name="showOnlyChecked" [checked]="showChecked"
+          (change)="toggleShowChecked()">
+        <label class="form-check-label" for="showOnlyChecked">Show Selected Items</label>
+      </div>
     </div>
 
     <table class="assessment-summary">
       <th></th>
       <th>Title</th>
+      <th></th>
       <th>File Name</th>
       <tr *ngFor="let doc of filteredDocuments">
         <td class="align-top"><input type="checkbox" [(ngModel)]="doc.Selected" (ngModelChange)="selectDoc(doc)"></td>
-        <td>{{ doc.Title }}</td>
-        <td>{{ doc.FileName }}</td>
+        <td class="d-flex align-items-start justify-content-between flex-00a">
+            {{ doc.Title }}
+        </td>
+        <td>
+          <button *ngIf="doc.IsCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.ID)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ml-4 mr-4">
+            <span class="cset-icons-pencil fs-base-2"></span>
+            <span class="d-none d-md-flex fs-smaller">Edit</span>
+          </button>
+        </td>
+        <td>
+          {{ doc.FileName }}
+        </td>
       </tr>
     </table>
     <div *ngIf="filteredDocuments.length === 0" class="alert alert-info">

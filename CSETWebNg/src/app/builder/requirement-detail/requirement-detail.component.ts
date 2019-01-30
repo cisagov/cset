@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Requirement, Question } from '../../models/set-builder.model';
+import { Requirement, Question, ReferenceDoc, RefDocLists } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -45,11 +45,21 @@ export class RequirementDetailComponent implements OnInit {
   titleEmpty = false;
   textEmpty = false;
 
-  addRefDialogRef: MatDialogRef<AddReferenceComponent>;
-
   questionBeingEdited: Question = null;
   originalQuestionText: string = null;
   editedQuestionInUse = false;
+
+  sourceDocs: ReferenceDoc[] = [];
+
+  refDocOptions: ReferenceDoc[] = [];
+  newSourceDocID = 0;
+  newSourceSectionRef = '';
+  sourceDocMissing = false;
+
+  resourceDocs: ReferenceDoc[] = [];
+  newResourceDocID = 0;
+  newResourceSectionRef = '';
+  resourceDocMissing = false;
 
   @ViewChild('editQ') editQControl;
 
@@ -84,7 +94,6 @@ export class RequirementDetailComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log('requirement-detail ngOnInit');
     let requirementID = 0;
     if (!!this.setBuilderSvc.activeRequirement) {
       requirementID = this.setBuilderSvc.activeRequirement.RequirementID;
@@ -97,6 +106,11 @@ export class RequirementDetailComponent implements OnInit {
       this.r = result;
       this.rBackup = this.r;
       this.setBuilderSvc.activeRequirement = this.r;
+    });
+
+    this.setBuilderSvc.getReferenceDocumentsForSet().subscribe((docs: ReferenceDoc[]) => {
+      this.refDocOptions = docs;
+      console.log(docs);
     });
   }
 
@@ -184,28 +198,40 @@ export class RequirementDetailComponent implements OnInit {
     return false;
   }
 
-  addReference() {
-    console.log('addReference');
-    const addRefDialogRef = this.dialog.open(AddReferenceComponent);
-    console.log(addRefDialogRef);
-    this.addRefDialogRef
-    .afterClosed()
-    .subscribe((data) => {
-
-      // if data was returned they clicked Create.  Otherwise they clicked Cancel
-      if (data) {
-        // this.setBuilderSvc.createRequirement(data).subscribe(r => {
-        //   this.addReqDialogRef = undefined;
-
-        //   this.setBuilderSvc.navRequirementDetail(r);
-        // },
-        //   error => console.log(error.message)
-        // );
-
+  /**
+   * Adds or deletes a reference
+   * @param reqId
+   * @param docId
+   * @param sectionRef
+   * @param adddelete
+   */
+  addDeleteReference(reqId: number, docId: number, isSourceDoc: boolean, sectionRef: string, adddelete: boolean) {
+    if (docId === 0) {
+      if (isSourceDoc) {
+        this.sourceDocMissing = true;
       } else {
-        // canceled out of dialog
+        this.resourceDocMissing = true;
       }
-    });
+      return;
+    }
+
+    this.sourceDocMissing = false;
+    this.resourceDocMissing = false;
+
+    if (sectionRef.startsWith("#")) {
+      sectionRef = sectionRef.substring(1);
+    }
+
+    this.setBuilderSvc.AddDeleteRefDocToRequirement(reqId, docId, isSourceDoc, sectionRef, adddelete)
+      .subscribe((lists: RefDocLists) => {
+        this.r.SourceDocs = lists.SourceDocs;
+        this.newSourceDocID = 0;
+        this.newSourceSectionRef = '';
+
+        this.r.ResourceDocs = lists.ResourceDocs;
+        this.newResourceDocID = 0;
+        this.newResourceSectionRef = '';
+      });
   }
 
 
