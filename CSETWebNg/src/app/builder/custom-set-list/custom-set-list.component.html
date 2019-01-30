@@ -47,7 +47,7 @@
     <table class="w-100">
       <tr *ngFor="let s of setDetailList">
         <td class="w-100">
-          <button class="btn btn-link" (click)="setBuilderSvc.loadCustomSet(s.SetName)">
+          <button class="btn btn-link" (click)="setBuilderSvc.navSetDetail2(s.SetName)">
             {{s.FullName}}
           </button>
         </td>
@@ -57,7 +57,7 @@
         <td>
           <button type="button" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="this.deleteSet(s)">
             <span class="cset-icons-trash-can fs-base-2"></span>
-            <span class="d-none d-md-flex fs-smaller">Remove</span>
+            <span class="d-none d-md-flex fs-smaller">Delete</span>
           </button>
         </td>
       </tr>

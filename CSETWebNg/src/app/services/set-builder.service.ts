@@ -55,9 +55,9 @@ export class SetBuilderService {
      *
      * @param setName
      */
-    loadCustomSet(setName: string) {
+    navSetDetail2(setName: string) {
         sessionStorage.setItem('setName', setName);
-        this.router.navigate(['/set-detail', setName]);
+        this.navSetDetail();
     }
 
     /**

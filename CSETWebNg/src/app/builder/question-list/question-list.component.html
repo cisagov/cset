@@ -27,9 +27,11 @@
       Question Listing
     </h3>
     <div class="card p-3 mb-3">
-      <h4>
-        {{questionResponse?.SetFullName}}
-      </h4>
+      <button class="btn btn-link text-left" (click)="setBuilderSvc.navSetDetail()">
+        <h4>
+          {{questionResponse?.SetFullName}}
+        </h4>
+      </button>
       <p class="font-italic">{{questionResponse?.SetDescription}}</p>
     </div>
 
@@ -76,8 +78,7 @@
         </div>
 
         <div *ngFor="let q of subcat.Questions; let i = index" class="question-row d-flex flex-column p-3"
-          [class.no-bottom-border]="i == (subcat.Questions.length - 1)"
-          [class.mb-4]="i == (subcat.Questions.length - 1)">
+          [class.no-bottom-border]="i == (subcat.Questions.length - 1)" [class.mb-4]="i == (subcat.Questions.length - 1)">
           <div>
             {{ q.Title }}
           </div>

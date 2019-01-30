@@ -27,9 +27,11 @@
       Requirement Listing
     </h3>
     <div class="card p-3 mb-3">
-      <h4>
-        {{requirementResponse?.SetFullName}}
-      </h4>
+      <button class="btn btn-link text-left" (click)="setBuilderSvc.navSetDetail()">
+        <h4>
+          {{requirementResponse?.SetFullName}}
+        </h4>
+      </button>
       <p class="font-italic">{{requirementResponse?.SetDescription}}</p>
     </div>
 
