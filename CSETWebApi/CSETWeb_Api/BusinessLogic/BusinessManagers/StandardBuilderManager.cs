@@ -44,7 +44,7 @@ namespace CSETWeb_Api.BusinessManagers
                 List<SetDetail> list = new List<SetDetail>();
 
                 // TODO: remove the NERC from this condition!!!
-                var s = db.SETS.Where(x => x.Is_Custom || x.Set_Name == "NCSF_V1").ToList();
+                var s = db.SETS.Where(x => x.Is_Custom).ToList();
                 foreach (SET set in s)
                 {
                     SetDetail sr = new SetDetail
