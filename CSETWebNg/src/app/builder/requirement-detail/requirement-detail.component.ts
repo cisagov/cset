@@ -301,4 +301,8 @@ export class RequirementDetailComponent implements OnInit {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
   }
+
+  navStandardDocuments() {
+    this.setBuilderSvc.navStandardDocuments('requirement-detail', this.r.RequirementID.toString());
+  }
 }

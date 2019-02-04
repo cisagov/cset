@@ -105,7 +105,7 @@ export class AddQuestionComponent implements OnInit {
       // push it to the API
       this.setBuilderSvc.addCustomQuestion(this.customQuestionText, this.selectedGHId, this.subcatText, salLevels).subscribe(() => {
         if (!!this.setBuilderSvc.activeRequirement) {
-          this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement);
+          this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.RequirementID);
         } else {
           // navigate back to the questions list
           this.setBuilderSvc.navQuestionList();
@@ -158,7 +158,7 @@ export class AddQuestionComponent implements OnInit {
 
     this.setBuilderSvc.addExistingQuestion(q).subscribe(() => {
       if (!!this.setBuilderSvc.activeRequirement) {
-        this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement);
+        this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.RequirementID);
       } else {
         // navigate back to the questions list
         this.setBuilderSvc.navQuestionList();

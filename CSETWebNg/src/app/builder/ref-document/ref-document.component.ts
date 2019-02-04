@@ -34,6 +34,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RefDocumentComponent implements OnInit {
 
+  docID: number;
   doc: ReferenceDoc = { ID: 0 };
 
   constructor(
@@ -41,9 +42,18 @@ export class RefDocumentComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
+  /**
+   *
+   */
   ngOnInit() {
-    const docID = this.route.snapshot.params['id'];
-    this.setBuilderSvc.getDocumentDetail(docID).subscribe((result: ReferenceDoc) => {
+    this.docID = this.route.snapshot.params['id'];
+    console.log('ref-doc init.  docID = ' + this.docID);
+    if (isNaN(this.docID)) {
+      return;
+    }
+
+    this.setBuilderSvc.getDocumentDetail(this.docID).subscribe((result: ReferenceDoc) => {
+      console.log(result);
       this.doc = result;
     });
   }
@@ -56,4 +66,10 @@ export class RefDocumentComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   */
+  navStandardDocuments() {
+    this.setBuilderSvc.navStandardDocuments('', this.docID);
+  }
 }

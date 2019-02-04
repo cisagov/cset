@@ -26,6 +26,7 @@ export class SetBuilderService {
     activeQuestion: Question;
 
     standardDocumentsNavOrigin: string;
+    standardDocumentsNavOriginID: string;
 
     /**
      * Converts linebreak characters to HTML <br> tag.
@@ -100,6 +101,17 @@ export class SetBuilderService {
             );
     }
 
+    /**
+     * Gets questions with this "original set name".
+     */
+    getQuestionsOriginatingFromSet(setName: string) {
+        return this.http
+            .get(
+                this.apiUrl + 'builder/GetQuestionsOriginatingFromSet?setName=' + setName,
+                headers
+            );
+    }
+
 
 
     /**********************
@@ -127,10 +139,12 @@ export class SetBuilderService {
         this.router.navigate(['/requirement-list', setName]);
     }
 
-    navRequirementDetail(r: Requirement) {
-        this.activeRequirement = r;
-        this.activeQuestion = null;
-        this.router.navigate(['/requirement-detail', r.RequirementID]);
+    navRequirementDetail(reqID: number) {
+        this.getRequirement(reqID).subscribe((r: Requirement) => {
+            this.activeRequirement = r;
+            this.activeQuestion = null;
+            this.router.navigate(['/requirement-detail', r.RequirementID]);
+        });
     }
 
     navQuestionList() {
@@ -144,9 +158,12 @@ export class SetBuilderService {
         this.router.navigate(['/add-question', setName]);
     }
 
-    navStandardDocuments(origin) {
-        // Remember where we are navigating from
-        this.standardDocumentsNavOrigin = origin;
+    navStandardDocuments(origin, id) {
+        if (origin !== '') {
+            // Remember where we are navigating from (unless 'back'-ing from ref-document)
+            this.standardDocumentsNavOrigin = origin;
+            this.standardDocumentsNavOriginID = id;
+        }
 
         const setName = sessionStorage.getItem('setName');
         this.router.navigate(['/standard-documents', setName]);

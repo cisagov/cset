@@ -311,6 +311,26 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// Returns a list of questions whose 'original_set_name' is the one specified.
+        /// This is used to know which questions will be affected if a set is 
+        /// deleted.
+        /// </summary>
+        /// <param name="setName"></param>
+        public List<int> GetQuestionsOriginatingFromSet(string setName)
+        {
+            using (var db = new CSETWebEntities())
+            {
+                var query = db.NEW_QUESTION.Where(x => x.Original_Set_Name == setName).ToList();
+                List<int> qList = new List<int>();
+                foreach (NEW_QUESTION q in query)
+                {
+                    qList.Add(q.Question_Id);
+                }
+                return qList;
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name=""></param>

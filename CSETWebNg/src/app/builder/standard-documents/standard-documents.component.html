@@ -38,6 +38,9 @@
       <!-- <input type="hidden" [value]="setBuilderSvc.activeRequirement.RequirementID"> -->
       <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
     </div>
+
+    <button class="btn btn-link" (click)="navBack()">&laquo; Back</button>
+
     <div class="form-row align-items-end">
       <div class="form-group col-md-8">
         <label for="docTitleFilter">Filter</label>

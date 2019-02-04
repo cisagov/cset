@@ -73,15 +73,40 @@ export class SetListComponent implements OnInit {
    * Deletes the set after confirmation.
    */
   deleteSet(s: SetDetail) {
-    // confirm
-    const dialogRef = this.dialog.open(ConfirmComponent);
-    dialogRef.componentInstance.confirmMessage =
-      "Are you sure you want to delete '" + s.FullName + "?'";
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dropSet(s.SetName);
+    // See if any questions originated from this set
+    this.setBuilderSvc.getQuestionsOriginatingFromSet(s.SetName).subscribe((resp: number[]) => {
+
+      // Prevent the deletion if the set spawned questions.
+      if (resp.length > 0) {
+        let msg = null;
+
+        if (resp.length === 1) {
+          msg = 'There is 1 question that were created for this set.  You cannot delete the set.';
+        } else {
+          msg = 'There are ' + resp.length + ' questions that were created for this set.  You cannot delete the set.';
+        }
+
+        this.dialog.open(AlertComponent, {
+          data: {
+            messageText: msg
+          }
+        });
+        return;
       }
+
+
+      // confirm deletion
+      const dialogRef = this.dialog.open(ConfirmComponent);
+      dialogRef.componentInstance.confirmMessage =
+        "Are you sure you want to delete '" + s.FullName + "?'";
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.dropSet(s.SetName);
+        }
+      });
+
     });
   }
 

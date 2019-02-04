@@ -111,14 +111,35 @@ export class StandardDocumentsComponent implements OnInit {
     const options = {};
     this.fileSvc.uploadReferenceDoc(e.target.files[0], options)
       .subscribe(resp => {
-        console.log('uploadReferenceDoc complete');
+        console.log('uploadReferenceDoc complete - resp: ' + resp);
         console.log(resp);
-        const newFileID: number = parseInt(resp.body, 10);
 
-        // Now that the file is saved, navigate to its detail page
-        this.setBuilderSvc.navRefDocDetail(newFileID);
-      }
-      );
+        if (!!resp.body) {
+          const newFileID: number = parseInt(resp.body, 10);
+
+          // Now that the file is saved, navigate to its detail page
+          this.setBuilderSvc.navRefDocDetail(newFileID);
+        }
+      });
+  }
+
+  /**
+   * This page might have been reached from a couple of locations.
+   * Determine where we came from and go back there.
+   * 'ref-document' or 'set-detail'
+   */
+  navBack() {
+    const origin = this.setBuilderSvc.standardDocumentsNavOrigin;
+    if (origin === 'set-detail') {
+      this.setBuilderSvc.navSetDetail();
+    }
+    if (origin === 'ref-document') {
+      const id = this.setBuilderSvc.standardDocumentsNavOriginID;
+      this.setBuilderSvc.navRefDocDetail(+id);
+    }
+    if (origin === 'requirement-detail') {
+      const id = this.setBuilderSvc.standardDocumentsNavOriginID;
+      this.setBuilderSvc.navRequirementDetail(+id);
+    }
   }
 }
-

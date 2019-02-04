@@ -98,6 +98,23 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        /// <summary>
+        /// Returns a list of questions whose 'original_set_name' is the one specified.
+        /// This is used to know which questions will be affected if a set is 
+        /// deleted.
+        /// </summary>
+        /// <param name="setName"></param>
+        [HttpGet]
+        [Route("api/builder/GetQuestionsOriginatingFromSet")]
+        public List<int> GetQuestionsOriginatingFromSet([FromUri] string setName)
+        {
+            StandardBuilderManager m = new StandardBuilderManager();
+            List<int> response = m.GetQuestionsOriginatingFromSet(setName);
+
+            return response;
+        }
+
+
         [HttpPost]
         [Route("api/builder/ExistsQuestionText")]
         public bool ExistsQuestionText([FromBody] string questionText)

@@ -24,7 +24,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { SetBuilderService } from '../../services/set-builder.service';
-import { Category } from '../../models/set-builder.model';
+import { Category, Requirement } from '../../models/set-builder.model';
 import { RequirementResult, CategoryEntry } from '../../models/set-builder.model';
 import { AddRequirementComponent } from '../../dialogs/add-requirement/add-requirement/add-requirement.component';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
@@ -98,8 +98,8 @@ export class RequirementListComponent implements OnInit {
    */
   editRequirement(r: RequirementResult) {
     // navigate to the requirement detail page
-    this.setBuilderSvc.getRequirement(r.RequirementID).subscribe(req => {
-      this.setBuilderSvc.navRequirementDetail(req);
+    this.setBuilderSvc.getRequirement(r.RequirementID).subscribe((req: Requirement) => {
+      this.setBuilderSvc.navRequirementDetail(req.RequirementID);
     });
   }
 
@@ -211,10 +211,10 @@ export class RequirementListComponent implements OnInit {
 
         // if data was returned they clicked Create.  Otherwise they clicked Cancel
         if (data) {
-          this.setBuilderSvc.createRequirement(data).subscribe(r => {
+          this.setBuilderSvc.createRequirement(data).subscribe((r: Requirement) => {
             this.addReqDialogRef = undefined;
 
-            this.setBuilderSvc.navRequirementDetail(r);
+            this.setBuilderSvc.navRequirementDetail(r.RequirementID);
           },
             error => console.log(error.message)
           );

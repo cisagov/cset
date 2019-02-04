@@ -87,8 +87,9 @@
       <p>Documents that define the standard or provide additional information for the requirement are attached here.
         Specifying a PDF bookmark will automatically open the PDF to that bookmark when referenced from CSET.
       </p>
+      <p>If the dropdown list is empty, click 'Manage Documents' to make reference documents available to the set.</p>
       <div class="w-100 align-items-end">
-        <button id="documents" (click)="setBuilderSvc.navStandardDocuments('requirement-detail')" class="btn btn-primary">Manage
+        <button id="documents" (click)="navStandardDocuments()" class="btn btn-primary">Manage
           Documents</button>
       </div>
       <table class="builder-requirement-docs">
