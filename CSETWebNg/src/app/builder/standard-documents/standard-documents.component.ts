@@ -111,9 +111,6 @@ export class StandardDocumentsComponent implements OnInit {
     const options = {};
     this.fileSvc.uploadReferenceDoc(e.target.files[0], options)
       .subscribe(resp => {
-        console.log('uploadReferenceDoc complete - resp: ' + resp);
-        console.log(resp);
-
         if (!!resp.body) {
           const newFileID: number = parseInt(resp.body, 10);
 

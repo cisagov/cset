@@ -43,7 +43,6 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 List<SetDetail> list = new List<SetDetail>();
 
-                // TODO: remove the NERC from this condition!!!
                 var s = db.SETS.Where(x => x.Is_Custom).ToList();
                 foreach (SET set in s)
                 {
@@ -994,11 +993,6 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSETWebEntities())
             {
-
-                //  TODO:::  ARE ALL HEADING UPDATES ALLOWED?  ARE THERE ANY THAT ARE NOT?
-
-
-
                 var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefault();
 
                 if (usch == null)
@@ -1440,12 +1434,6 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSETWebEntities())
             {
-                // Because SET_FILES is a new table in CSET 9.1, older standards
-                // won't have any entries.  We will create entries for all
-                // reference documents.
-                // CreateSetFilesRecords(setName);
-
-
                 var query = from sf in db.SET_FILES
                             join gf in db.GEN_FILE on sf.Gen_File_Id equals gf.Gen_File_Id
                             where sf.SetName == setName
@@ -1466,41 +1454,6 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 return list;
-            }
-        }
-
-
-        /// <summary>
-        /// Creates SET_FILES records for older sets that do not have any
-        /// entries.  If any SET_FILES entries exist, then do nothing.
-        /// 
-        /// Not yet finished -- since users won't be editing legacy sets.
-        /// </summary>
-        private void CreateSetFilesRecords(string setName)
-        {
-            using (var db = new CSETWebEntities())
-            {
-                if (db.SET_FILES.Where(x => x.SetName == setName).Count() > 0)
-                {
-                    return;
-                }
-
-                List<SET_FILES> list = new List<SET_FILES>();
-
-                var q = from rs in db.REQUIREMENT_SETS
-                        where rs.Set_Name == setName
-                        select rs.Requirement_Id;
-
-                var allRequirementIDs = q.ToList();
-
-                var q2 = db.REQUIREMENT_SOURCE_FILES.Where(x => allRequirementIDs.Contains(x.Requirement_Id)).ToList();
-
-                var q3 = db.REQUIREMENT_REFERENCES.Where(x => allRequirementIDs.Contains(x.Requirement_Id)).ToList();
-
-                var a = 1;
-
-                // var sourceList = db.REQUIREMENT_SOURCE_FILES.Where(x => x.Requirement_Id)
-
             }
         }
 
@@ -1688,16 +1641,21 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSETWebEntities())
             {
-                // Determine file type ID
+                // Determine file type ID.  Store null if not known.
+                int? fileType = null;
+
                 var type = db.FILE_TYPE.Where(x => x.Mime_Type == contentType).FirstOrDefault();
-                // TODO:  what if not supported?
+                if (type != null)
+                {
+                    fileType = (int)type.File_Type_Id;
+                }
 
 
                 GEN_FILE gf = new GEN_FILE
                 {
                     File_Name = filename,
                     Title = "(no title)",
-                    File_Type_Id = type.File_Type_Id,
+                    File_Type_Id = fileType,
                     File_Size = fileSize,
                     Doc_Num = "NONE",
                     Short_Name = "(no short name)"
