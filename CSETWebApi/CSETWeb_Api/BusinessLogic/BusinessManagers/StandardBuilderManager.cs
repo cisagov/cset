@@ -1160,11 +1160,22 @@ namespace CSETWeb_Api.BusinessManagers
                 parms.RequirementID = req.Requirement_Id;
 
 
+                // Determine a new sequence number
+                int sequence = 1;
+                var seqList = db.REQUIREMENT_SETS
+                    .Where(x => x.Set_Name == parms.SetName)
+                    .Select(x => x.Requirement_Sequence).ToList();
+                if (seqList.Count > 0)
+                {
+                    sequence = seqList.Max() + 1;
+                }
+
+
                 REQUIREMENT_SETS rs = new REQUIREMENT_SETS
                 {
                     Requirement_Id = req.Requirement_Id,
                     Set_Name = parms.SetName,
-                    Requirement_Sequence = 1
+                    Requirement_Sequence = sequence
                 };
 
                 db.REQUIREMENT_SETS.Add(rs);
