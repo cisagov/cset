@@ -1,22 +1,22 @@
 <Top>
-    <Page displayname="Home" navpath="set-list">
-        <Page displayname="Set Detail" navpath="set-detail">
-            <Page displayname="Question List" navpath="question-list">
+    <Page displayname="Home" navpath="set-list" >
+        <Page displayname="Set Detail" navpath="set-detail" >
+            <Page displayname="Question List" navpath="question-list" >
                 <Page displayname="Add Question" navpath="add-question" />
             </Page>
-            <Page displayname="Requirement List" navpath="requirement-list">
-                <Page displayname="Add Requirement" navpath="add-requirement" />
-                <Page displayname="Requirement Detail" navpath="requirement-detail">
-                    <Page displayname="Add Question" navpath="add-question">
+            <Page displayname="Requirement List" navpath="requirement-list" >
+                <Page displayname="Add Requirement" navpath="add-requirement"  />
+                <Page displayname="Requirement Detail" navpath="requirement-detail" >
+                    <Page displayname="Add Question" navpath="add-question" >
                     </Page>
-                    <Page displayname="Manage Documents" navpath="standard-documents">
-                        <Page displayname="Reference Document" navpath="ref-document">
+                    <Page displayname="Manage Documents" navpath="standard-documents" >
+                        <Page displayname="Reference Document" navpath="ref-document" >
                         </Page>
                     </Page>
                 </Page>
             </Page>
-            <Page displayname="Manage Documents" navpath="standard-documents">
-                <Page displayname="Reference Document" navpath="ref-document">
+            <Page displayname="Manage Documents" navpath="standard-documents" >
+                <Page displayname="Reference Document" navpath="ref-document" >
                 </Page>
             </Page>
         </Page>

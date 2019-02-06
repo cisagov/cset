@@ -22,7 +22,7 @@ export class SetBuilderService {
         this.apiUrl = this.configSvc.apiUrl;
     }
 
-    public myXml: Document;
+    public navXml: Document;
 
     activeRequirement: Requirement;
     activeQuestion: Question;

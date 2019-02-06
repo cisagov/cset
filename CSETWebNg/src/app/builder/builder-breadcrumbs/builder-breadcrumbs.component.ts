@@ -44,12 +44,11 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
   }
 
   ngAfterContentInit() {
-    if (!this.setBuilderSvc.myXml) {
+    if (!this.setBuilderSvc.navXml) {
       // read XML and populate my local document
       this.setBuilderSvc.ReadBreadcrumbXml().subscribe((x: any) => {
         const oParser = new DOMParser();
-        this.setBuilderSvc.myXml = oParser.parseFromString(x, "application/xml");
-
+        this.setBuilderSvc.navXml = oParser.parseFromString(x, "application/xml");
         this.displayCrumbs();
       });
     } else {
@@ -61,7 +60,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
    * Renders the breadcrumb trail based on the current route.
    */
   displayCrumbs() {
-
+    // get the id parameter in the route (if it exists)
     const params = this.activatedRoute.snapshot.params.id;
 
     // now get the path without params (assuming that params are the last segment)
@@ -69,23 +68,20 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
     if (justPath[justPath.length - 1].path === params) {
       justPath.pop();
     }
-
     const justPathString = justPath.join('');
 
-    // Determine if our current page is one that can be reached from multiple places.
-    // If it is, we have an 'origin' page.
-    let originPath = null;
-    if (!!this.setBuilderSvc.navOrigin) {
-      originPath = this.setBuilderSvc.navOrigin;
-      this.setBuilderSvc.navOrigin = null;
+    // Find the target page we just landed on, set it current and set any parm.
+    let targetPage = this.findPage(justPathString);
+    if (targetPage !== null) {
+      this.resetCurrentPage();
+      (<Element>targetPage).setAttribute("current", "true");
+
+      if (!!params) {
+        (<Element>targetPage).setAttribute("parm", params);
+      }
     }
 
-    let targetPage = this.findPage(justPathString, originPath);
-    if (targetPage !== null && !!params) {
-      (<Element>targetPage).setAttribute("parm", params);
-    }
-
-    // No such navpath known - just render a Home link as a safety
+    // If we can't find the specified page, just render a Home link as a safety
     if (!targetPage) {
       const bHome: IBreadcrumb = { displayName: 'Home', navPath: '/set-list', parms: '' };
       this.breadcrumbs.push(bHome);
@@ -94,6 +90,8 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
       this.breadcrumbs.push(bHere);
       return;
     }
+
+    console.log(this.setBuilderSvc.navXml);
 
     // walk up the tree, building a stack
     const stack = [];
@@ -115,25 +113,60 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
   }
 
   /**
-   *
+   * Turn off all "current" attributes
    */
-  findPage(curPage: string, originPage: string) {
+  resetCurrentPage() {
+    const result = this.setBuilderSvc.navXml
+      .evaluate('/Top//Page[@current="true"]',
+        this.setBuilderSvc.navXml, null,
+        XPathResult.ANY_TYPE, null);
+
+    const e = result.iterateNext();
+    if (!!e) {
+      (<Element>e).setAttribute("current", "false");
+    }
+  }
+
+  /**
+   * See if the target page exists in multiple places in the tree
+   * If so, find the one that is a child of the 'current' page
+   */
+  findPage(curPage: string) {
 
     let xPath = '/Top//Page[@navpath="' + curPage + '"]';
+    let result = this.setBuilderSvc.navXml
+      .evaluate(xPath,
+        this.setBuilderSvc.navXml, null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
-    // if there's an origin page, make sure we use it to find the right page
-    if (!!originPage && originPage !== curPage) {
-      xPath = '/Top//Page[@navpath="' + originPage + '"]/Page[@navpath="' + curPage + '"]';
+    // if there's a single occurrence of the page, return it.
+    if (result.snapshotLength === 1) {
+      return result.snapshotItem(0);
+    }
+
+    // find the version of the target page that is a child of the 'current' page
+    xPath = '/Top//Page[@current="true"]/Page[@navpath="' + curPage + '"]';
+    result = this.setBuilderSvc.navXml
+      .evaluate(xPath,
+        this.setBuilderSvc.navXml, null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    if (result.snapshotLength > 0) {
+      return result.snapshotItem(0);
+    }
+
+    // find the version of the target page that is a parent of the 'current' page
+    xPath = '/Top//Page[@navpath="' + curPage + '" and .//Page/@current="true"]';
+    result = this.setBuilderSvc.navXml
+      .evaluate(xPath,
+        this.setBuilderSvc.navXml, null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    if (result.snapshotLength > 0) {
+      return result.snapshotItem(0);
     }
 
     console.log(xPath);
 
-    // find the current page in the tree
-    const result = this.setBuilderSvc.myXml
-      .evaluate(xPath,
-        this.setBuilderSvc.myXml, null,
-        XPathResult.ANY_TYPE, null);
-    return result.iterateNext();
+    return null;
   }
 
   /**

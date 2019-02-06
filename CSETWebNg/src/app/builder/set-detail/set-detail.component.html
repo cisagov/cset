@@ -27,26 +27,18 @@
       Set Detail
     </h3>
     <p>
-      These are the instructions for this page, namely how to create a standard or question set. There may not be
-      much text here; it depends on how much guidance is needed for an organization to build a custom standard.
-      There should probably be some text explaining about creating a dummy standard in order to organize
-      questions in a custom question set.
+      A Set may be based on an industry standard, or may simply be a collection of questions.
+      Sets based on standards will normally take the Requirements path in order to transfer 
+      the requirements into the Set.  
     </p>
     <p>
       If you are building a Standard, manage the requirements by clicking Requirements. The Questions path will
       show how the structure of the related questions will look when viewed in 'question mode' CSET.
     </p>
-    <div class="d-flex flex-row mt-3 mb-3 justify-content-end">
-      <button class="btn btn-primary mr-2" [disabled]="!isSetReady()" (click)="this.navReqList()">
-        <span class="cset-icons-books-stack-2"></span>
-        Requirements
-      </button>
-      <button class="btn btn-primary mr-2" [disabled]="!isSetReady()" (click)="navQuestionList()">
-        <span class="cset-icons-question-mark"></span>
-        Questions
-      </button>
-      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail')">Manage Documents</button>
-    </div>
+    <p>
+      It is a good practice to attach any related documents to the Set.  Click Manage Documents to upload and attach 
+      documents.  
+    </p>
     <form #f="ngForm" name="form">
       <div class="form-group p-0 col-md-12">
         <label required for="fullname">Standard Name</label>
