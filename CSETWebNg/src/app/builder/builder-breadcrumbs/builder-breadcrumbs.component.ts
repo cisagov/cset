@@ -22,7 +22,8 @@
 //
 ////////////////////////////////
 import { Component, AfterContentInit } from '@angular/core';
-import { Router, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SetBuilderService } from '../../services/set-builder.service';
 
 @Component({
   selector: 'app-builder-breadcrumbs',
@@ -30,71 +31,128 @@ import { Router, UrlSegment } from '@angular/router';
 })
 export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
-  json: IBreadcrumb;
   breadcrumbs: IBreadcrumb[] = [];
+  activatedRoute: ActivatedRoute;
 
 
-  constructor(private router: Router) { }
+  constructor(
+    public router: Router,
+    private ar: ActivatedRoute,
+    private setBuilderSvc: SetBuilderService
+  ) {
+    this.activatedRoute = ar;
+  }
 
   ngAfterContentInit() {
-    this.initializeStructure();
-    this.displayCrumbs();
+    if (!this.setBuilderSvc.myXml) {
+      // read XML and populate my local document
+      this.setBuilderSvc.ReadBreadcrumbXml().subscribe((x: any) => {
+        const oParser = new DOMParser();
+        this.setBuilderSvc.myXml = oParser.parseFromString(x, "application/xml");
+
+        this.displayCrumbs();
+      });
+    } else {
+      this.displayCrumbs();
+    }
   }
-
-
-  displayCrumbs() {
-    // build the list of 'crumbs' to display on the template
-
-    // DUMMY ENTRY - until I get this finished, here's a basic Home link:
-    const b: IBreadcrumb = { displayName: 'Home', navPath: '/set-list', children: [] };
-    this.breadcrumbs.push(b);
-  }
-
 
   /**
-   * Builds the nav structure.
+   * Renders the breadcrumb trail based on the current route.
    */
-  initializeStructure() {
-    this.json = {
-      "displayName": "Home",
-      "navPath": "/set-list",
-      "children": [
-        {
-          "displayName": "Set Detail",
-          "navPath": "set-detail",
-          "children": [
-            {
-              "displayName": "Question List",
-              "navPath": "question-list",
-              "children": [
-                {
-                  "displayName": "Add Question",
-                  "navPath": "add-question",
-                  "children": []
-                }
-              ]
-            },
-            {
-              "displayName": "Requirement List",
-              "navPath": "requirement-list",
-              "children": [
-                {
-                  "displayName": "Requirement Detail",
-                  "navPath": "",
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    };
+  displayCrumbs() {
+
+    const params = this.activatedRoute.snapshot.params.id;
+
+    // now get the path without params (assuming that params are the last segment)
+    const justPath = this.activatedRoute.snapshot.url;
+    if (justPath[justPath.length - 1].path === params) {
+      justPath.pop();
+    }
+
+    const justPathString = justPath.join('');
+
+    // Determine if our current page is one that can be reached from multiple places.
+    // If it is, we have an 'origin' page.
+    let originPath = null;
+    if (!!this.setBuilderSvc.navOrigin) {
+      originPath = this.setBuilderSvc.navOrigin;
+      this.setBuilderSvc.navOrigin = null;
+    }
+
+    let targetPage = this.findPage(justPathString, originPath);
+    if (targetPage !== null && !!params) {
+      (<Element>targetPage).setAttribute("parm", params);
+    }
+
+    // No such navpath known - just render a Home link as a safety
+    if (!targetPage) {
+      const bHome: IBreadcrumb = { displayName: 'Home', navPath: '/set-list', parms: '' };
+      this.breadcrumbs.push(bHome);
+
+      const bHere: IBreadcrumb = { displayName: '', navPath: '', parms: '' };
+      this.breadcrumbs.push(bHere);
+      return;
+    }
+
+    // walk up the tree, building a stack
+    const stack = [];
+    while (!!targetPage && targetPage.nodeName === 'Page') {
+      stack.push(<Element>targetPage);
+      targetPage = targetPage.parentNode;
+    }
+
+    // pull off the stack, building a nav list
+    let crumb: IBreadcrumb = null;
+    while (stack.length > 0) {
+      const bbb: Element = stack.pop();
+      crumb = { displayName: bbb.getAttribute('displayname'), navPath: bbb.getAttribute('navpath'), parms: null };
+      if (!!bbb.getAttribute('parm')) {
+        crumb.parms = bbb.getAttribute('parm');
+      }
+      this.breadcrumbs.push(crumb);
+    }
+  }
+
+  /**
+   *
+   */
+  findPage(curPage: string, originPage: string) {
+
+    let xPath = '/Top//Page[@navpath="' + curPage + '"]';
+
+    // if there's an origin page, make sure we use it to find the right page
+    if (!!originPage && originPage !== curPage) {
+      xPath = '/Top//Page[@navpath="' + originPage + '"]/Page[@navpath="' + curPage + '"]';
+    }
+
+    console.log(xPath);
+
+    // find the current page in the tree
+    const result = this.setBuilderSvc.myXml
+      .evaluate(xPath,
+        this.setBuilderSvc.myXml, null,
+        XPathResult.ANY_TYPE, null);
+    return result.iterateNext();
+  }
+
+  /**
+   * Build a navigation object based on the path and any parms
+   */
+  navToCrumb(crumb: IBreadcrumb) {
+    const ppp = ['/', crumb.navPath];
+    if (!!crumb.parms && crumb.parms.length > 0) {
+      ppp.push(crumb.parms);
+    }
+    this.router.navigate(ppp);
   }
 }
 
-
+/**
+ *
+ */
 interface IBreadcrumb {
   displayName: string;
   navPath: string;
-  children: Array<IBreadcrumb>;
+  parms: string;
 }

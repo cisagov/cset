@@ -110,7 +110,6 @@ export class RequirementDetailComponent implements OnInit {
 
     this.setBuilderSvc.getReferenceDocumentsForSet().subscribe((docs: ReferenceDoc[]) => {
       this.refDocOptions = docs;
-      console.log(docs);
     });
   }
 
@@ -146,8 +145,6 @@ export class RequirementDetailComponent implements OnInit {
    * This needs to be figured out.
    */
   onBlur(e: Event) {
-    console.log('onBlur: ');
-    console.log(e);
     this.updateRequirement(e);
   }
 
@@ -238,6 +235,7 @@ export class RequirementDetailComponent implements OnInit {
   addQuestion() {
     // set the requirement as 'active' in the service
     this.setBuilderSvc.activeRequirement = this.r;
+    this.setBuilderSvc.navOrigin = 'requirement-detail';
     // navigate to add-question
     this.setBuilderSvc.navAddQuestion();
   }
@@ -260,10 +258,7 @@ export class RequirementDetailComponent implements OnInit {
    * Remove the question from the requirement
    */
   dropQuestion(q: Question) {
-    console.log('requirement-detail removeQuestion: ' + q.QuestionID);
     this.setBuilderSvc.removeQuestion(q.QuestionID).subscribe(() => {
-      console.log('back from removeQuestion!');
-
       // remove the deleted question from the collection
       const i = this.r.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
       this.r.Questions.splice(i, 1);

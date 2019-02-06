@@ -63,7 +63,6 @@ export class RequirementListComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log('requirement-list ngOnInit');
     this.populatePage();
   }
 

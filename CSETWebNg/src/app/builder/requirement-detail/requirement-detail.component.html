@@ -27,18 +27,21 @@
       Requirement Detail
     </h3>
 
-    <div class="form-group p-0 col-md-12">
-      <label>Category</label>
-      <div>
-        {{r?.Category}}
+    <div class="form-row ml-0 mr-0">
+      <div class="form-group p-0 col-md-6">
+        <label>Category</label>
+        <div class="font-weight-bold">
+          {{r?.Category}}
+        </div>
       </div>
-    </div>
 
-    <div class="form-group p-0 col-md-12">
-      <label>Subategory</label>
-      <div>
-        {{r?.Subcategory}}
+      <div class="form-group p-0 col-md-6">
+        <label>Subategory</label>
+        <div class="font-weight-bold">
+          {{r?.Subcategory}}
+        </div>
       </div>
+
     </div>
 
     <div class="form-group p-0 col-md-12">
@@ -76,7 +79,7 @@
 
     <div class="mb-5">
       <h4>Supplemental Information</h4>
-      <p class="keyboard">HTML markup (such as tables) can be edited directly by clicking the <kbd>&lt;/&gt;</kbd>
+      <p class="keyboard">HTML markup can be edited directly by clicking the <kbd>&lt;/&gt;</kbd>
         button.</p>
       <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" (blur)="updateRequirement($event)"></angular-editor>
     </div>
@@ -85,7 +88,8 @@
     <div class="form-group p-0 col-md-12 mb-5">
       <h4>References</h4>
       <p>Documents that define the standard or provide additional information for the requirement are attached here.
-        If the document is a PDF with bookmarks, specifying a relevant bookmark will allow CSET to open the PDF to the target location.
+        If the document is a PDF with bookmarks, specifying a relevant bookmark will allow CSET to open the PDF to the
+        target location.
       </p>
       <p>To add documents to the dropdown lists, click 'Manage Documents.'</p>
 
@@ -106,8 +110,8 @@
             {{ref.SectionRef}}
           </td>
           <td>
-            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.RequirementID, ref.ID, true, ref.SectionRef, false)" matTooltip="Delete reference">
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, ref.ID, true, ref.SectionRef, false)"
+              matTooltip="Delete reference">
               <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
             </button>
           </td>
@@ -124,48 +128,48 @@
             <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newSourceSectionRef">
           </td>
           <td>
-            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.RequirementID, newSourceDocID, true, newSourceSectionRef, true)" matTooltip="Add reference">
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, newSourceDocID, true, newSourceSectionRef, true)"
+              matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>
           </td>
         </tr>
         <tr>
-            <th class="pt-2">Resource Documents</th>
-            <th class="pt-2">Bookmark</th>
-          </tr>
-          <tr *ngFor="let ref of r.ResourceDocs">
-            <td>
-              {{ref.Title}}
-            </td>
-            <td>
-              {{ref.SectionRef}}
-            </td>
-            <td>
-              <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                (click)="addDeleteReference(r.RequirementID, ref.ID, false, ref.SectionRef, false)" matTooltip="Delete reference">
-                <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="pr-2">
-              <select id="newResourceDoc" name="newResourceDoc" class="form-control" [(ngModel)]="newResourceDocID">
-                <option value=""></option>
-                <option *ngFor="let o of refDocOptions" [value]="o.ID">{{ o.Title }}</option>
-              </select>
-              <div class="alert alert-danger" *ngIf="resourceDocMissing">A document is required.</div>
-            </td>
-            <td>
-              <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newResourceSectionRef">
-            </td>
-            <td>
-              <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                (click)="addDeleteReference(r.RequirementID, newResourceDocID, false, newResourceSectionRef, true)" matTooltip="Add reference">
-                <span class="cset-icons-plus fs-base-2 mr-2"></span>
-              </button>
-            </td>
-          </tr>
+          <th class="pt-2">Resource Documents</th>
+          <th class="pt-2">Bookmark</th>
+        </tr>
+        <tr *ngFor="let ref of r.ResourceDocs">
+          <td>
+            {{ref.Title}}
+          </td>
+          <td>
+            {{ref.SectionRef}}
+          </td>
+          <td>
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, ref.ID, false, ref.SectionRef, false)"
+              matTooltip="Delete reference">
+              <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td class="pr-2">
+            <select id="newResourceDoc" name="newResourceDoc" class="form-control" [(ngModel)]="newResourceDocID">
+              <option value=""></option>
+              <option *ngFor="let o of refDocOptions" [value]="o.ID">{{ o.Title }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="resourceDocMissing">A document is required.</div>
+          </td>
+          <td>
+            <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newResourceSectionRef">
+          </td>
+          <td>
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, newResourceDocID, false, newResourceSectionRef, true)"
+              matTooltip="Add reference">
+              <span class="cset-icons-plus fs-base-2 mr-2"></span>
+            </button>
+          </td>
+        </tr>
       </table>
     </div>
 

@@ -21,8 +21,12 @@
   SOFTWARE. 
 -------------------------->
 
-<ol class="breadcrumb">  
-  <li *ngFor="let breadcrumb of breadcrumbs">
-    <button (click)="this.router.navigate([breadcrumb.navPath]);" class="btn btn-link">{{ breadcrumb.displayName }}</button>
+<ol class="breadcrumb">
+  <li *ngFor="let breadcrumb of breadcrumbs; let i = index">
+    <button *ngIf="i < breadcrumbs.length - 1" (click)="navToCrumb(breadcrumb)" class="btn btn-link">
+      {{ breadcrumb.displayName }}
+    </button>
+    <span *ngIf="i < breadcrumbs.length - 1" class="ml-1 mr-1">&raquo;</span>
+    <span *ngIf="i === breadcrumbs.length - 1" class="btn disabled">{{ breadcrumb.displayName }}</span>
   </li>
 </ol>

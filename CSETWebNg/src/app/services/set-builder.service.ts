@@ -22,8 +22,12 @@ export class SetBuilderService {
         this.apiUrl = this.configSvc.apiUrl;
     }
 
+    public myXml: Document;
+
     activeRequirement: Requirement;
     activeQuestion: Question;
+
+    navOrigin: string;
 
     standardDocumentsNavOrigin: string;
     standardDocumentsNavOriginID: string;
@@ -135,7 +139,6 @@ export class SetBuilderService {
         this.activeRequirement = null;
         this.activeQuestion = null;
         const setName = sessionStorage.getItem('setName');
-        console.log('navReqList - about to navigate');
         this.router.navigate(['/requirement-list', setName]);
     }
 
@@ -161,6 +164,7 @@ export class SetBuilderService {
     navStandardDocuments(origin, id) {
         if (origin !== '') {
             // Remember where we are navigating from (unless 'back'-ing from ref-document)
+            this.navOrigin = origin;
             this.standardDocumentsNavOrigin = origin;
             this.standardDocumentsNavOriginID = id;
         }
@@ -170,8 +174,17 @@ export class SetBuilderService {
     }
 
     navRefDocDetail(newFileID: number) {
-        console.log('navRefDocDetail - ' + newFileID);
+        this.navOrigin = 'standard-documents';
         this.router.navigate(['/ref-document', newFileID]);
+    }
+
+    /**
+     * The idea behind this is to create a 'smart' navigation method that can
+     * deduce the correct navigation path and parameters, based on knowledge of
+     * the application.
+     */
+    navBreadcrumb(navPath: string) {
+        console.log('navBreadcrumb! ' + navPath);
     }
 
 
@@ -448,8 +461,19 @@ export class SetBuilderService {
      */
     AddDeleteRefDocToRequirement(reqId: number, docId: number, isSource: boolean, bookmark: string, adddelete: boolean) {
         return this.http
-        .get(this.apiUrl + 'builder/AddDeleteRefDocToRequirement?reqId='
-            + reqId + '&docId=' + docId + '&isSourceRef=' + isSource + '&bookmark=' + bookmark + '&add=' + adddelete,
-            headers);
+            .get(this.apiUrl + 'builder/AddDeleteRefDocToRequirement?reqId='
+                + reqId + '&docId=' + docId + '&isSourceRef=' + isSource + '&bookmark=' + bookmark + '&add=' + adddelete,
+                headers);
+    }
+
+    /**
+     * Returns an Observable that gets the breadcrumbs.xml file in the assets folder.
+     */
+    ReadBreadcrumbXml() {
+        return this.http.get('assets/breadcrumbs.xml',
+            {
+                headers: new HttpHeaders().set('Content-Type', 'text/xml'),
+                responseType: 'text'
+            });
     }
 }
