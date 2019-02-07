@@ -171,13 +171,15 @@
             <table class="reference-table" *ngIf="tab != null">
                 <tr *ngIf="tab?.SourceDocumentsList?.length > 0" class="font-weight-bold">
                     <td>Source Documents</td>
+                    <td>Section</td>
                 </tr>
                 <tr *ngFor="let reference of tab?.SourceDocumentsList">
                     <td><a href="{{documentUrl(reference)}}" target="_blank">{{reference.Title}}</a></td>
                     <td>{{reference.Section_Ref}}</td>
                 </tr>
                 <tr *ngIf="tab?.ResourceDocumentList?.length > 0" class="font-weight-bold">
-                    <td>Other Reference Documents</td>
+                    <td>Help Documents</td>
+                    <td>Section</td>
                 </tr>
                 <tr *ngFor="let reference of tab?.ResourceDocumentList">
                     <td><a href="{{documentUrl(reference)}}" target="_blank">{{reference.Title}}</a></td>

@@ -81,7 +81,8 @@
       <h4>Supplemental Information</h4>
       <p class="keyboard">HTML markup can be edited directly by clicking the <kbd>&lt;/&gt;</kbd>
         button.</p>
-      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)"></angular-editor>
+      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" 
+        (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)" (ngModelChange)="alert('changed!')"></angular-editor>
     </div>
 
 
@@ -135,7 +136,7 @@
           </td>
         </tr>
         <tr>
-          <th class="pt-2">Resource Documents</th>
+          <th class="pt-2">Help Documents</th>
           <th class="pt-2">Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.ResourceDocs">

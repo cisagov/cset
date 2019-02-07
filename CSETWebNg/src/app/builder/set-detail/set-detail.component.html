@@ -28,16 +28,24 @@
     </h3>
     <p>
       A Module may be based on an industry standard, or may simply be a collection of questions.
-      Modules based on standards will normally take the Requirements path in order to transfer 
-      the requirements into the Set.  
+      Modules based on standards will normally take the Requirements path in order to transfer
+      the requirements into the Set.
     </p>
     <p>
-      If you are building a Standard, manage the requirements by clicking Requirements. The Questions path will
+      If you are building a Standard, manage the requirements by clicking
+      <button class="btn-link p-0" [disabled]="!isSetReady()" (click)="setBuilderSvc.navReqList()">
+        Requirements
+      </button>. The
+      <button class="btn-link p-0" [disabled]="!isSetReady()" (click)="setBuilderSvc.navQuestionList()">
+        Questions
+      </button>
+      path will
       show how the structure of the related questions will look when viewed in 'question mode' CSET.
     </p>
     <p>
-      It is a good practice to attach any related documents to the Module.  Click Manage Documents to upload and attach 
-      documents.  
+      It is a good practice to attach any related documents to the Module. Click
+      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail')">Manage Documents</button>
+      to upload and attach files.
     </p>
     <form #f="ngForm" name="form">
       <div class="form-group p-0 col-md-12">
@@ -67,7 +75,7 @@
       </div>
     </form>
 
-   
+
 
     <div class="d-flex flex-row mt-3 mb-3 justify-content-end">
       <button class="btn btn-primary mr-2" [disabled]="!isSetReady()" (click)="setBuilderSvc.navReqList()">
@@ -78,7 +86,8 @@
         <span class="cset-icons-question-mark"></span>
         Questions
       </button>
-       <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail')">Manage Documents</button>
+      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail')">Manage
+        Documents</button>
     </div>
 
     <div class="d-flex flex-row mt-3 mb-3">

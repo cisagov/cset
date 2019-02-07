@@ -24,10 +24,12 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatDialogModule, MatDividerModule,
-  MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-  MatTooltipModule, MatTreeModule } from '@angular/material';
+import {
+    MatAutocompleteModule, MatDialogModule, MatDividerModule,
+    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
+    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
+    MatTooltipModule, MatTreeModule
+} from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
@@ -128,7 +130,7 @@ import { SetListComponent } from './builder/custom-set-list/custom-set-list.comp
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
-import { NgbModule, NgbAccordion, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionListComponent } from './builder/question-list/question-list.component';
 import { RouterModule } from '@angular/router';
 import { BuilderBreadcrumbsComponent } from './builder/builder-breadcrumbs/builder-breadcrumbs.component';
@@ -167,6 +169,7 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
+        NgbModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -244,8 +247,6 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         SetListComponent,
         CustomSetComponent,
         RequirementListComponent,
-        NgbAccordion,
-        NgbPanel,
         QuestionListComponent,
         BuilderBreadcrumbsComponent,
         AddQuestionComponent,
@@ -254,7 +255,7 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         AddReferenceComponent,
         StandardDocumentsComponent,
         RefDocumentComponent
-      ],
+    ],
     providers: [
         ConfigService,
         {
@@ -287,27 +288,27 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-      EmailComponent,
-      EditUserComponent,
-      EjectionComponent,
-      AlertComponent,
-      ConfirmComponent,
-      ChangePasswordComponent,
-      AboutComponent,
-      AdvisoryComponent,
-      OkayComponent,
-      TermsOfUseComponent,
-      FindingsComponent,
-      EnableProtectedComponent,
-      QuestionFiltersComponent,
-      AssessmentDocumentsComponent,
-      UploadExportComponent,
-      InlineParameterComponent,
-      GlobalParametersComponent,
-      KeyboardShortcutsComponent,
-      LicenseComponent,
-      AddRequirementComponent,
-      AddReferenceComponent
+        EmailComponent,
+        EditUserComponent,
+        EjectionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        ChangePasswordComponent,
+        AboutComponent,
+        AdvisoryComponent,
+        OkayComponent,
+        TermsOfUseComponent,
+        FindingsComponent,
+        EnableProtectedComponent,
+        QuestionFiltersComponent,
+        AssessmentDocumentsComponent,
+        UploadExportComponent,
+        InlineParameterComponent,
+        GlobalParametersComponent,
+        KeyboardShortcutsComponent,
+        LicenseComponent,
+        AddRequirementComponent,
+        AddReferenceComponent
     ]
 })
 

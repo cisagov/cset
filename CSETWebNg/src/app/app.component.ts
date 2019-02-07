@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -39,7 +39,7 @@ import { CreateUser } from './models/user.model';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
-import { NgbPanelChangeEvent, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 
 @Component({
@@ -49,7 +49,7 @@ declare var $: any;
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -75,30 +75,14 @@ export class AppComponent implements OnInit {
       }
     }
 
-    // initialize footer behavior
-    // $(document).click(function (e) {
-    //   if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("show")) {
-    //     $('#collapseFooter').collapse('toggle');
-    //   }
-    // });
-
-    // $(document).on('shown.bs.collapse', '#collapseFooter', function () {
-    //   $("#footerExpander").addClass("expand-flip");
-    // });
-
-    // $(document).on('hidden.bs.collapse', '#collapseFooter', function () {
-    //   $("#footerExpander").removeClass("expand-flip");
-    // });
-
-
-    // $(document).click(function (e) {
-    //   if ($(e.target).closest('.footer').length === 0 ) {
-    //     $('#footerExpanderButton').collapse('toggleFooter');
-    //   }
-    // });
-
-
     this.setupShortCutKeys();
+  }
+
+  ngAfterViewInit() {
+
+    setTimeout(() => {
+      this.isFooterOpen();
+    }, 200);
   }
 
   hasPath(rpath: string) {
@@ -315,22 +299,10 @@ export class AppComponent implements OnInit {
     return this.router.url !== '/resource-library';
   }
 
-  toggleFooter() {
-    this.isFooterVisible = !this.isFooterVisible;
-    // this.accordion.toggle('footerPanel');
-    // if (this.accordion.isExpanded('footerPanel') == true) {
-    //   this.accordion.collapse('footerPanel');
-    // }
-    // else {
-    //   this.accordion.expand('footerPanel');
-    // }
-
-
+  isFooterOpen() {
+    if (!!this.accordion) {
+      return this.accordion.isExpanded('footerPanel');
+    }
+    return false;
   }
-  // collapseFooterIfOpen() {
-  //   if (this.accordion.isExpanded('footerPanel') == true) {
-  //     this.accordion.collapse('footerPanel');
-  //     this.isFooterVisible = !this.isFooterVisible;
-  //   }
-  // }
 }
