@@ -81,21 +81,21 @@
       <p>Select all applicable levels.</p>
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="customSalL">
-          <input type="checkbox" id="SAL-L-{{q?.QuestionID}}" name="SAL-L-{{q?.QuestionID}}" [checked]="customSalL"
+          <input type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL"
             (click)="customSalL = !customSalL" data-toggle="toggle" />Low</label>
         <label class="btn btn-level btn-rounded" [class.active]="customSalM">
-          <input type="checkbox" id="SAL-M-{{q?.QuestionID}}" name="SAL-M-{{q?.QuestionID}}" [checked]="customSalM"
+          <input type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM"
             (click)="customSalM = !customSalM" data-toggle="toggle" />Moderate</label>
         <label class="btn btn-level btn-rounded" [class.active]="customSalH">
-          <input type="checkbox" id="SAL-H-{{q?.QuestionID}}" name="SAL-H-{{q?.QuestionID}}" [checked]="customSalH"
+          <input type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH"
             (click)="customSalH = !customSalH" data-toggle="toggle" />High</label>
         <label class="btn btn-level btn-rounded" [class.active]="customSalVH">
-          <input type="checkbox" id="SAL-VH-{{q?.QuestionID}}" name="SAL-VH-{{q?.QuestionID}}" [checked]="customSalVH"
+          <input type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH"
             (click)="customSalVH = !customSalVH" data-toggle="toggle" />Very High</label>
       </div>
       <div *ngIf="isSalSelectionEmpty" class="alert alert-danger">At least one SAL level is required</div>
     </div>
-    <button class="btn btn-primary" (click)="addCustomQuestion($event)">Add New Question</button>
+    <button class="btn btn-primary" (click)="addCustomQuestion()">Add New Question</button>
   </div>
 
   <div class="mb-3 p-3 b-primary-200 br-standard">

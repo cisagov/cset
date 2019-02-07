@@ -40,7 +40,7 @@ export class SetListComponent implements OnInit {
   setDetailList: SetDetail[];
 
   constructor(
-    private setBuilderSvc: SetBuilderService,
+    public setBuilderSvc: SetBuilderService,
     private router: Router,
     private dialog: MatDialog) {
   }

@@ -138,7 +138,6 @@ import { AddQuestionComponent } from './builder/add-question/add-question.compon
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 import { AddRequirementComponent } from './dialogs/add-requirement/add-requirement/add-requirement.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { AddReferenceComponent } from './dialogs/add-reference/add-reference.component';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 
@@ -252,7 +251,6 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         AddQuestionComponent,
         RequirementDetailComponent,
         AddRequirementComponent,
-        AddReferenceComponent,
         StandardDocumentsComponent,
         RefDocumentComponent
     ],
@@ -307,8 +305,7 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         GlobalParametersComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
-        AddRequirementComponent,
-        AddReferenceComponent
+        AddRequirementComponent
     ]
 })
 

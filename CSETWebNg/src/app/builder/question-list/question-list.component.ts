@@ -50,7 +50,7 @@ export class QuestionListComponent implements OnInit {
   @ViewChild('editH') editHControl;
 
   constructor(
-    private setBuilderSvc: SetBuilderService,
+    public setBuilderSvc: SetBuilderService,
     private dialog: MatDialog
   ) { }
 

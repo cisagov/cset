@@ -28,7 +28,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
-import { AddReferenceComponent } from '../../dialogs/add-reference/add-reference.component';
 
 
 @Component({
@@ -89,7 +88,7 @@ export class RequirementDetailComponent implements OnInit {
   };
 
 
-  constructor(private setBuilderSvc: SetBuilderService,
+  constructor(public setBuilderSvc: SetBuilderService,
     private route: ActivatedRoute,
     private dialog: MatDialog) { }
 

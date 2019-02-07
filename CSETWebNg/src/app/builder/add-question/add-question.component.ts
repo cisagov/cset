@@ -58,7 +58,7 @@ export class AddQuestionComponent implements OnInit {
   searchHits: Question[] = null;
   selectedQuestionId: number;
 
-  constructor(private setBuilderSvc: SetBuilderService) { }
+  constructor(public setBuilderSvc: SetBuilderService) { }
 
   ngOnInit() {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(

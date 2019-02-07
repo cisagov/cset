@@ -44,7 +44,7 @@
     </p>
     <p>
       It is a good practice to attach any related documents to the Module. Click
-      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail')">Manage Documents</button>
+      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage Documents</button>
       to upload and attach files.
     </p>
     <form #f="ngForm" name="form">
@@ -86,7 +86,7 @@
         <span class="cset-icons-question-mark"></span>
         Questions
       </button>
-      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail')">Manage
+      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
         Documents</button>
     </div>
 

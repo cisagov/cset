@@ -38,7 +38,7 @@ export class CustomSetComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private setBuilderSvc: SetBuilderService,
+  constructor(public setBuilderSvc: SetBuilderService,
     private router: Router) { }
 
   ngOnInit() {

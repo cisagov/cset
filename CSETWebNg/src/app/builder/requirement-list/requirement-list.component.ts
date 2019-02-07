@@ -59,7 +59,7 @@ export class RequirementListComponent implements OnInit {
    * @param setBuilderSvc
    * @param dialog
    */
-  constructor(private setBuilderSvc: SetBuilderService,
+  constructor(public setBuilderSvc: SetBuilderService,
     private dialog: MatDialog) { }
 
   ngOnInit() {

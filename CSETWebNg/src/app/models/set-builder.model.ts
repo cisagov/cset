@@ -29,6 +29,7 @@ export interface SetDetail {
     SetCategory?: number;
     IsCustom?: boolean;
     IsDisplayed?: boolean;
+    CategoryList?: Category[];
 }
 
 export interface CategoryEntry {
@@ -74,6 +75,7 @@ export interface RequirementResult {
 
 
 export interface Category {
+    Id?: number;
     CategoryName?: string;
 }
 
