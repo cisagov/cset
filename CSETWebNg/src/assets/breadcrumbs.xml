@@ -1,6 +1,6 @@
 <Top>
     <Page displayname="Home" navpath="set-list" >
-        <Page displayname="Set Detail" navpath="set-detail" >
+        <Page displayname="Module Detail" navpath="set-detail" >
             <Page displayname="Question List" navpath="question-list" >
                 <Page displayname="Add Question" navpath="add-question" />
             </Page>

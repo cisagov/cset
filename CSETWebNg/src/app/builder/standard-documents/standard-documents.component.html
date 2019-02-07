@@ -34,7 +34,10 @@
         make them available for attaching to the requirements in the standard. Enter a string in the
         Filter field to narrow down candidates.
       </p>
-      <button class="btn btn-primary add" (click)="openFileBrowser($event)">Add a document</button>
+      <button class="btn btn-primary add" (click)="openFileBrowser($event)">
+          <span class="cset-icons-import fs-base-1 mr-2"></span>
+          Import a Document
+      </button>
       <!-- <input type="hidden" [value]="setBuilderSvc.activeRequirement.RequirementID"> -->
       <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
     </div>

@@ -24,11 +24,11 @@
   <app-builder-breadcrumbs></app-builder-breadcrumbs>
   <div>
     <h3>
-      Set Detail
+      Module Detail
     </h3>
     <p>
-      A Set may be based on an industry standard, or may simply be a collection of questions.
-      Sets based on standards will normally take the Requirements path in order to transfer 
+      A Module may be based on an industry standard, or may simply be a collection of questions.
+      Modules based on standards will normally take the Requirements path in order to transfer 
       the requirements into the Set.  
     </p>
     <p>
@@ -36,12 +36,12 @@
       show how the structure of the related questions will look when viewed in 'question mode' CSET.
     </p>
     <p>
-      It is a good practice to attach any related documents to the Set.  Click Manage Documents to upload and attach 
+      It is a good practice to attach any related documents to the Module.  Click Manage Documents to upload and attach 
       documents.  
     </p>
     <form #f="ngForm" name="form">
       <div class="form-group p-0 col-md-12">
-        <label required for="fullname">Standard Name</label>
+        <label required for="fullname">Module Name</label>
         <input type="text" class="form-control" id="fullname" name="fullname" required #fullname="ngModel" focusOnInit="true"
           [(ngModel)]="setDetail.FullName" (ngModelChange)="setDetail.FullName" (change)="update($event)">
         <div *ngIf="f.submitted && !fullname.valid" class="m-0 mt-2 alert alert-danger">Full Name is required</div>
@@ -83,7 +83,7 @@
 
     <div class="d-flex flex-row mt-3 mb-3">
       <button class="btn btn-link mr-3" (click)="setBuilderSvc.navSetList()">
-        &laquo; Back to Set List
+        &laquo; Back to Module List
       </button>
     </div>
   </div>
