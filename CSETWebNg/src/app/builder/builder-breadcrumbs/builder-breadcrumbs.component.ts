@@ -91,8 +91,6 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
       return;
     }
 
-    console.log(this.setBuilderSvc.navXml);
-
     // walk up the tree, building a stack
     const stack = [];
     while (!!targetPage && targetPage.nodeName === 'Page') {
@@ -163,8 +161,6 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
     if (result.snapshotLength > 0) {
       return result.snapshotItem(0);
     }
-
-    console.log(xPath);
 
     return null;
   }
