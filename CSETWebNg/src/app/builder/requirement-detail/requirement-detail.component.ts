@@ -24,9 +24,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Requirement, Question, ReferenceDoc, RefDocLists } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 
