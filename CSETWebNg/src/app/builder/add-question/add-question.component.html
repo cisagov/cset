@@ -81,17 +81,17 @@
       <p>Select all applicable levels.</p>
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="customSalL">
-          <input type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL"
-            (click)="customSalL = !customSalL" data-toggle="toggle" />Low</label>
+          <input type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL" (click)="customSalL = !customSalL"
+            data-toggle="toggle" />Low</label>
         <label class="btn btn-level btn-rounded" [class.active]="customSalM">
-          <input type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM"
-            (click)="customSalM = !customSalM" data-toggle="toggle" />Moderate</label>
+          <input type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM" (click)="customSalM = !customSalM"
+            data-toggle="toggle" />Moderate</label>
         <label class="btn btn-level btn-rounded" [class.active]="customSalH">
-          <input type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH"
-            (click)="customSalH = !customSalH" data-toggle="toggle" />High</label>
+          <input type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH" (click)="customSalH = !customSalH"
+            data-toggle="toggle" />High</label>
         <label class="btn btn-level btn-rounded" [class.active]="customSalVH">
-          <input type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH"
-            (click)="customSalVH = !customSalVH" data-toggle="toggle" />Very High</label>
+          <input type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH" (click)="customSalVH = !customSalVH"
+            data-toggle="toggle" />Very High</label>
       </div>
       <div *ngIf="isSalSelectionEmpty" class="alert alert-danger">At least one SAL level is required</div>
     </div>
@@ -100,11 +100,13 @@
 
   <div class="mb-3 p-3 b-primary-200 br-standard">
     <h5>
-      Search for Existing Question
+      Search for Existing Questions
     </h5>
     <p>
-      Enter keywords to locate candidate questions. If a suitable candidate question
-      is available, select the applicable SAL levels for the question and click Add to include it in your set.
+      Enter keywords to locate candidate questions. If suitable candidate questions
+      are available, select the + button next to the question, make sure the SAL levels 
+      for each question are correct.  Then click 'Add Selected Questions' to include them 
+      in your Module or Requirement.
     </p>
 
     <div class="d-flex flex-row mb-3">
@@ -128,6 +130,11 @@
     </div>
 
     <div *ngIf="searchPerformed && !searching">
+
+      <div *ngIf="searchHits.length > 0" class="text-right">
+        <button class="btn btn-primary" [disabled]="selectedQuestionIds.length === 0" (click)="addSelectedQuestions()">Add Selected Questions</button>
+      </div>
+
 
       <div class="alert alert-info m-2" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
       <div class="alert alert-info m-2" *ngIf="searchHits.length === 1">1 question was found</div>
@@ -169,7 +176,12 @@
             </div>
           </div>
           <div>
-            <button class="btn btn-primary" (click)="selectExistingQuestion(q)">+</button>
+            <div class="btn-group btn-group-toggle">
+              <label class="btn btn-level btn-rounded" [class.active]="isQuestionSelected(q)">
+                <input type="checkbox" id="Q-SELECTED-{{q.QuestionID}}" name="Q-SELECTED-{{q.QuestionID}}" 
+                  [checked]="isQuestionSelected(q)" (click)="markSelected(q, $event)"
+                  data-toggle="toggle" />+</label>
+            </div>
           </div>
         </div>
 

@@ -909,9 +909,9 @@
             </summary>
             <param name="request"></param>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddQuestion(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
+        <member name="M:CSETWeb_Api.Controllers.StandardBuilderController.AddQuestion(CSETWeb_Api.BusinessLogic.Models.AddQuestionsRequest)">
             <summary>
-            Adds a 'base' or 'stock' question to the Requirement or Set.
+            Adds 'base' or 'stock' questions to the Requirement or Set.
             </summary>
             <param name="request"></param>
         </member>

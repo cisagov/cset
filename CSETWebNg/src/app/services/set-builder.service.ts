@@ -228,14 +228,24 @@ export class SetBuilderService {
     }
 
     /**
-     *
+     * Send all selected questions to the API.
      */
-    addExistingQuestion(q: Question) {
+    addExistingQuestions(qs: Question[]) {
         const setName = sessionStorage.getItem('setName');
+
+        const questions = [];
+        qs.forEach(element => {
+            questions.push(
+                {
+                    QuestionID: element.QuestionID,
+                    SalLevels: element.SalLevels
+                }
+            );
+        });
+
         const req = {
             SetName: setName,
-            QuestionID: q.QuestionID,
-            SalLevels: q.SalLevels,
+            QuestionList: questions,
             RequirementID: 0
         };
 
@@ -245,7 +255,7 @@ export class SetBuilderService {
 
         return this.http
             .post(
-                this.apiUrl + 'builder/AddQuestion',
+                this.apiUrl + 'builder/AddQuestions',
                 JSON.stringify(req),
                 headers
             );

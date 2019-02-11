@@ -144,15 +144,25 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// Adds a 'base' or 'stock' question to the Requirement or Set.
+        /// Adds 'base' or 'stock' questions to the Requirement or Set.
         /// </summary>
         /// <param name="request"></param>
         [HttpPost]
-        [Route("api/builder/AddQuestion")]
-        public void AddQuestion([FromBody] SetQuestion request)
+        [Route("api/builder/AddQuestions")]
+        public void AddQuestion([FromBody] AddQuestionsRequest request)
         {
             StandardBuilderManager m = new StandardBuilderManager();
-            m.AddQuestion(request);
+            foreach (QuestionAdd add in request.QuestionList)
+            {
+                SetQuestion r = new SetQuestion
+                {
+                    SetName = request.SetName,
+                    RequirementID = request.RequirementID,
+                    QuestionID = add.QuestionID,
+                    SalLevels = add.SalLevels
+                };
+                m.AddQuestion(r);
+            }
         }
 
 

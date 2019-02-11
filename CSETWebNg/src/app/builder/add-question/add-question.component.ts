@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { CategoryEntry, Question } from '../../models/set-builder.model';
-import { ChartLegendLabelItem } from 'chart.js';
 
 @Component({
   selector: 'app-add-question',
@@ -57,6 +56,8 @@ export class AddQuestionComponent implements OnInit {
   searchPerformed = false;
   searchHits: Question[] = null;
   selectedQuestionId: number;
+  selectedQuestionIds: number[] = [];
+
 
   constructor(public setBuilderSvc: SetBuilderService) { }
 
@@ -147,23 +148,51 @@ export class AddQuestionComponent implements OnInit {
   }
 
   /**
+   * Mark the existing question for selection.
+   */
+  markSelected(q: Question, e: any) {
+    if (e.target.checked) {
+      this.selectedQuestionIds.push(q.QuestionID);
+    } else {
+      this.selectedQuestionIds.splice(this.selectedQuestionIds.findIndex(function (x) {
+        return x === q.QuestionID;
+      }), 1);
+    }
+  }
+
+  /**
+   * xxx
+   */
+  isQuestionSelected(q) {
+    return this.selectedQuestionIds.findIndex(function (x) {
+      return x === q.QuestionID;
+    }) >= 0;
+  }
+
+  /**
    * Add the question to the set.
    */
-  selectExistingQuestion(q: Question) {
+  addSelectedQuestions() {
     // make sure they selected a SAL
-    this.selectedQuestionId = q.QuestionID;
-    if (this.missingSAL(q)) {
-      return;
-    }
+    const selectedQs = [];
 
-    this.setBuilderSvc.addExistingQuestion(q).subscribe(() => {
-      if (!!this.setBuilderSvc.activeRequirement) {
-        this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.RequirementID);
-      } else {
-        // navigate back to the questions list
-        this.setBuilderSvc.navQuestionList();
+    this.selectedQuestionIds.forEach(qid => {
+      const qqq = this.searchHits.find(qq => qq.QuestionID === qid);
+      if (this.missingSAL(qqq)) {
+        return;
       }
+      selectedQs.push(qqq);
     });
+
+    this.setBuilderSvc.addExistingQuestions(selectedQs)
+        .subscribe(() => {
+          if (!!this.setBuilderSvc.activeRequirement) {
+            this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.RequirementID);
+          } else {
+            // navigate back to the questions list
+            this.setBuilderSvc.navQuestionList();
+          }
+        });
   }
 
   /**
@@ -196,7 +225,7 @@ export class AddQuestionComponent implements OnInit {
     if (!q) {
       return false;
     }
-    if (this.selectedQuestionId === q.QuestionID && q.SalLevels.length === 0) {
+    if ((!!this.selectedQuestionIds.find(qid => qid === q.QuestionID)) && q.SalLevels.length === 0) {
       return true;
     }
     return false;

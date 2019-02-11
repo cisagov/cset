@@ -36,7 +36,7 @@
       </div>
 
       <div class="form-group p-0 col-md-6">
-        <label>Subategory</label>
+        <label>Subcategory</label>
         <div class="font-weight-bold">
           {{r?.Subcategory}}
         </div>
@@ -79,7 +79,7 @@
 
     <div class="mb-5">
       <h4>Supplemental Information</h4>
-      <p class="keyboard">HTML markup can be edited directly by clicking the <kbd>&lt;/&gt;</kbd>
+      <p class="keyboard">HTML markup can be edited directly by clicking the <kbd><i class="fa fa-code"></i></kbd>
         button.</p>
       <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" 
         (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)"></angular-editor>

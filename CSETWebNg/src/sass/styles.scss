@@ -197,6 +197,12 @@ label[required]::after {
   display: flex;
   justify-content: center;
   flex: 1 1 auto;
+  cursor: pointer;
+}
+
+.footer .card .card-header h5 button:first-child {
+  width: 100%;
+  cursor: inherit;
 }
 
 .cset-footer-expand-button {

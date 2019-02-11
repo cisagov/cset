@@ -203,7 +203,7 @@
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
     <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>
-        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
+        <button id="footerExpanderButton" class="cset-footer-expand-button" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="footer-section-1 bgc-primary px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">

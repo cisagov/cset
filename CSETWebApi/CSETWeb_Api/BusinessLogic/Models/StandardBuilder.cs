@@ -8,7 +8,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 {
     public class SetListResponse
     {
-        public List<SetDetail> SetList;        
+        public List<SetDetail> SetList;
     }
 
     public class SetDetail
@@ -78,7 +78,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public List<QuestionDetail> Questions = new List<QuestionDetail>();
     }
 
-       public class QuestionDetail
+    public class QuestionDetail
     {
         public int QuestionID;
         public string QuestionText;
@@ -95,6 +95,30 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Title;
         public bool IsCustom;
         public List<string> SalLevels = new List<string>();
+    }
+
+    public class AddQuestionsRequest
+    {
+        /// <summary>
+        /// SetName is specified when the question is attached to the set
+        /// </summary>
+        public string SetName;
+
+        /// <summary>
+        /// RequirementID is specified when the question is attached to a requirement.
+        /// </summary>
+        public int RequirementID;
+
+        /// <summary>
+        /// A list of question and SAL for connecting questions to sets and requirements.
+        /// </summary>
+        public List<QuestionAdd> QuestionList;
+    }
+
+    public class QuestionAdd
+    {
+        public int QuestionID;
+        public List<string> SalLevels;
     }
 
     public class SetQuestion
