@@ -117,25 +117,68 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public SetDetail CloneSet(string setName)
         {
-            // clone the SETS record
             using (var db = new CSETWebEntities())
             {
-                var dbSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
-                if (dbSet == null)
+                // clone the SETS record
+                var origSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
+                if (origSet == null)
                 {
                     return null;
                 }
 
-                var copy = (SET)db.Entry(dbSet).CurrentValues.ToObject();
+                var copySet = (SET)db.Entry(origSet).CurrentValues.ToObject();
 
-                copy.Set_Name = GenerateNewSetName();
-                copy.Full_Name = dbSet.Full_Name + " (copy)";
-                copy.Is_Custom = true;
+                copySet.Set_Name = GenerateNewSetName();
+                copySet.Full_Name = origSet.Full_Name + " (copy)";
+                copySet.Is_Custom = true;
 
-                db.SETS.AddOrUpdate(copy);
+                db.SETS.AddOrUpdate(copySet);
                 db.SaveChanges();
 
-                return GetSetDetail(copy.Set_Name);
+
+                // Clone NEW_REQUIREMENT
+                var dbReq = db.NEW_REQUIREMENT.Where(x => x.SET.Set_Name == setName).ToList();
+                foreach (NEW_REQUIREMENT origReq in dbReq)
+                {
+                    var copyReq = (NEW_REQUIREMENT)db.Entry(origReq).CurrentValues.ToObject();
+                    copyReq.SET = copySet;
+
+                    db.NEW_REQUIREMENT.Add(copyReq);
+                    db.SaveChanges();
+
+
+                    // Clone REQUIREMENT_SETS
+                    var dbReqSets = db.REQUIREMENT_SETS
+                        .Where(x => x.Requirement_Id == origReq.Requirement_Id && x.Set_Name == origSet.Set_Name).ToList();
+                    foreach (REQUIREMENT_SETS origReqSet in dbReqSets)
+                    {
+                        var copyReqSet = (REQUIREMENT_SETS)db.Entry(origReqSet).CurrentValues.ToObject();
+                        copyReqSet.Set_Name = copySet.Set_Name;
+                        copyReqSet.Requirement_Id = copyReq.Requirement_Id;
+
+                        db.REQUIREMENT_SETS.Add(copyReqSet);                        
+                    }
+                    db.SaveChanges();
+
+
+
+                    // Clone SAL levels for requirement
+                    var dbReqLevel = db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == origReq.Requirement_Id).ToList();
+                    foreach (REQUIREMENT_LEVELS lev in dbReqLevel)
+                    {
+                        var copyLevel = (REQUIREMENT_LEVELS)db.Entry(lev).CurrentValues.ToObject();
+                        copyLevel.Requirement_Id = copyReq.Requirement_Id;
+
+                        db.REQUIREMENT_LEVELS.Add(copyLevel);
+                        db.SaveChanges();
+                    }
+
+
+                }
+
+
+
+                return GetSetDetail(copySet.Set_Name);
             }
         }
 
