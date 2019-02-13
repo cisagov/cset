@@ -6,15 +6,15 @@
 //////////////////////////////// 
 using CSET_Main.Data.ControlData;
 using System.Collections.Generic;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Questions.InformationTabData
 {
     public class InformationTabBuilder
     {
-        public CSETWebEntities DataContext { get; }
+        public CsetwebContext DataContext { get; }
 
-        public InformationTabBuilder(CSETWebEntities context)
+        public InformationTabBuilder(CsetwebContext context)
         {
             this.DataContext = context;
         }

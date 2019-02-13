@@ -8,7 +8,8 @@ using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
+using DataLayerCore.Model;
 using Hangfire;
 using Hangfire.Server;
 using System;
@@ -34,7 +35,7 @@ namespace CSETWeb_Api.Helpers
                 try
                 {
 
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CsetwebContext())
                     {
                         db.SETS.Add(result.Result);
                         foreach (var question in result.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s=>s.Question_Id!=0).ToList())

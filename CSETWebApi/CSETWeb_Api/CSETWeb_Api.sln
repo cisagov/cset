@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWeb_ApiTests", "CSETWeb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportCSV", "ExportCSV\ExportCSV.csproj", "{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayerCore", "DataLayerCore\DataLayerCore.csproj", "{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,14 @@ Global
 		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.localhost|Any CPU.Build.0 = localhost|Any CPU
 		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F0DD06E-EB8C-4B13-BD4B-20A267F96537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.localdb|Any CPU.ActiveCfg = Release|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.localdb|Any CPU.Build.0 = Release|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.localhost|Any CPU.ActiveCfg = Release|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.localhost|Any CPU.Build.0 = Release|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

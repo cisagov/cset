@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -24,7 +24,7 @@ namespace CSETWeb_Api.Controllers
     [CSETAuthorize]
     public class DemographicsController : ApiController
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CsetwebContext db = new CsetwebContext();
 
         /// <summary>
         /// Assessment demographics.

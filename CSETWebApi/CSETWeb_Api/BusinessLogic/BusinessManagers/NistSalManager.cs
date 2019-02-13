@@ -7,7 +7,7 @@
 using CSET_Main.SALS;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers.sals;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace CSETWeb_Api.Controllers
 
         internal void CreateInitialList(object assessmentId)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 string sql =
                 "if exists(select * from STANDARD_SELECTION where Assessment_Id = @id) and not exists(select * from NIST_SAL_INFO_TYPES where assessment_id = @id)  " +
@@ -63,7 +63,7 @@ namespace CSETWeb_Api.Controllers
         {
             TinyMapper.Bind<NIST_SAL_INFO_TYPES, NistSalModel>();
             CreateInitialList(assessmentId);
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 List<NistSalModel> rlist = new List<NistSalModel>();
                 foreach (NIST_SAL_INFO_TYPES t in db.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId))
@@ -81,7 +81,7 @@ namespace CSETWeb_Api.Controllers
                 config.Ignore(x => x.Assessment_Id);
             });
 
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 NIST_SAL_INFO_TYPES update = db.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentid && x.Type_Value == updateValue.Type_Value).FirstOrDefault();
                 TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, update);
@@ -101,7 +101,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         public List<NistQuestionsAnswers> GetNistQuestions(int assessmentId)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 // if we don't have answers yet, clone them and default all answers to 'no'
                 var existingAnswers = db.NIST_SAL_QUESTION_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList();
@@ -133,7 +133,7 @@ namespace CSETWeb_Api.Controllers
 
         public Sals SaveNistQuestions(int assessmentid, NistQuestionsAnswers answer)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 var dbAnswer = db.NIST_SAL_QUESTION_ANSWERS.Where(x => x.Assessment_Id == assessmentid && x.Question_Id == answer.Question_Id).FirstOrDefault();
                 if (dbAnswer == null)
@@ -148,7 +148,7 @@ namespace CSETWeb_Api.Controllers
 
         public NistSpecialFactor GetSpecialFactors(int assessmentId)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
 
                 NistSpecialFactor rval = new NistSpecialFactor();
@@ -160,14 +160,14 @@ namespace CSETWeb_Api.Controllers
 
         public Sals SaveNistSpecialFactor(int assessmentId, NistSpecialFactor updateValue)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 updateValue.SaveToDb(assessmentId, db);
                 return CalculateOveralls(assessmentId, db);
             }
         }
 
-        public Sals CalculatedNist(int assessmentId, CSETWebEntities db)
+        public Sals CalculatedNist(int assessmentId, CsetwebContext db)
         {
             NistProcessingLogic nistProcessing = new NistProcessingLogic();
             nistProcessing.CalcLevels(assessmentId, db);
@@ -181,7 +181,7 @@ namespace CSETWeb_Api.Controllers
             return rval;
         }
 
-        private Sals CalculateOveralls(int assessmentId, CSETWebEntities db)
+        private Sals CalculateOveralls(int assessmentId, CsetwebContext db)
         {
             Sals rval = CalculatedNist(assessmentId, db);           
             STANDARD_SELECTION sTANDARD_SELECTION = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();

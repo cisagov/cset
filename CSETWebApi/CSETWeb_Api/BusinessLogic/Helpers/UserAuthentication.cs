@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Microsoft.Win32;
 using CSETWeb_Api.BusinessManagers;
 using System.IO;
@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Helpers
             USER loginUser = null;
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 loginUser = db.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
 
@@ -92,7 +92,7 @@ namespace CSETWeb_Api.Helpers
 
 
             primaryEmailSO = "localuser@myorg.org";
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)

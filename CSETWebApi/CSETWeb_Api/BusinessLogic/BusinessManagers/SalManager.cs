@@ -7,7 +7,7 @@
 using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 
@@ -19,7 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             try
             {
-                using (CSETWebEntities db = new CSETWebEntities())
+                using (CsetwebContext db = new CsetwebContext())
                 {
                     TinyMapper.Bind<STANDARD_SELECTION, Sals>();
                     TinyMapper.Bind<Sals, STANDARD_SELECTION>();

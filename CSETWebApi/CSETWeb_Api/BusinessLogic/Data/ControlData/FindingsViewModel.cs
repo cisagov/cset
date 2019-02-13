@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -24,9 +24,9 @@ namespace CSETWeb_Api.Data.ControlData
 */
 
         private int answer_id = 0;
-        private CSETWebEntities assessmentContext;
+        private CsetwebContext assessmentContext;
 
-        public FindingsViewModel(CSETWebEntities assessmentContext,int assessment_id, int answer_id)
+        public FindingsViewModel(CsetwebContext assessmentContext,int assessment_id, int answer_id)
         {
             this.assessment_id = assessment_id; 
             this.answer_id = answer_id;

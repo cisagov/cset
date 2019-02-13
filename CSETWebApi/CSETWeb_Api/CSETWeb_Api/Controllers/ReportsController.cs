@@ -109,7 +109,7 @@ namespace CSETWeb_Api.Controllers
 
         protected string GetApplicationMode(int assessmentId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var mode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
 

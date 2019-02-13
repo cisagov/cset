@@ -7,7 +7,7 @@
 using CSET_Main.Common;
 using CSET_Main.Data.ControlData;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
@@ -48,7 +48,7 @@ namespace CSETWeb_Api.Controllers
             Searcher searcher = new IndexSearcher(reader);
             Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
             CSETGlobalProperties props = new CSETGlobalProperties();
-            using (CSETWebEntities context = new CSETWebEntities()) {
+            using (CsetwebContext context = new CsetwebContext()) {
                 SearchDocs search = new SearchDocs(props, new ResourceLibraryRepository(context, props));
                 return search.Search(searchRequest);
             }
@@ -58,7 +58,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/ResourceLibrary/tree")]
         public List<SimpleNode> GetTree()
         {
-            using (CSETWebEntities context = new CSETWebEntities()) {
+            using (CsetwebContext context = new CsetwebContext()) {
                 IResourceLibraryRepository resource = new ResourceLibraryRepository(context,new CSETGlobalProperties());
                 return resource.GetTreeNodes();
             }

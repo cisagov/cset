@@ -16,7 +16,7 @@ using System.Text;
 using System.Web.Http;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -229,7 +229,7 @@ namespace CSETWeb_Api.Helpers
         /// <returns></returns>
         private static string GetSecret()
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 var jwtKey = db.JWT.OrderBy(x => x.Generated).FirstOrDefault();
                 if (jwtKey != null)

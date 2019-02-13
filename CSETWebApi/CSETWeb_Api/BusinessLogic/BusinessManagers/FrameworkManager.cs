@@ -7,7 +7,7 @@
 using System.Data.Entity.Migrations;
 using System.Linq;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -26,7 +26,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             FrameworkResponse resp = new FrameworkResponse();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 // get any existing answers for this assessment
                 var answers = db.FRAMEWORK_TIER_TYPE_ANSWER.Where(ans => ans.Assessment_Id == assessmentId);
@@ -101,7 +101,7 @@ namespace CSETWeb_Api.BusinessManagers
         public void PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier)
         {
             // save to FRAMEWORK_TIER_TYPE_ANSWER table
-            var db = new DataLayer.CSETWebEntities();
+            var db = new CsetwebContext();
 
             var answer = db.FRAMEWORK_TIER_TYPE_ANSWER.Where(x => x.Assessment_Id == assessmentId && x.TierType == selectedTier.TierType).FirstOrDefault();
 

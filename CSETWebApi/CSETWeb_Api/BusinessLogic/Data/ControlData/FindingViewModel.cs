@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace CSETWeb_Api.Data.ControlData
      */
     public class FindingViewModel
     {
-        private CSETWebEntities context;
+        private CsetwebContext context;
 
         private FINDING dbFinding;
         private Finding webFinding;
@@ -32,7 +32,7 @@ namespace CSETWeb_Api.Data.ControlData
         /// </summary>
         /// <param name="f">source finding</param>
         /// <param name="context">the data context to work on</param>
-        public FindingViewModel(Finding f, CSETWebEntities context)
+        public FindingViewModel(Finding f, CsetwebContext context)
         {
             //get all the contacts in this assessment
             //get all the contexts on this finding
@@ -77,7 +77,7 @@ namespace CSETWeb_Api.Data.ControlData
         /// </summary>
         /// <param name="finding_Id"></param>
         /// <param name="context"></param>
-        public FindingViewModel(int finding_Id, CSETWebEntities context)
+        public FindingViewModel(int finding_Id, CsetwebContext context)
         {
             this.finding_Id = finding_Id;
             this.context = context;

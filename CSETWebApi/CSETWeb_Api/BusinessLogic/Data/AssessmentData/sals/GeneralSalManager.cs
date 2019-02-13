@@ -7,7 +7,7 @@
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +17,7 @@ namespace CSETWeb_Api.Controllers.sal
 {
     public class GeneralSalManager
     {
-        private CSETWebEntities db;
+        private CsetwebContext db;
 
         private Dictionary<double, string> SALThresholdDictionary { get; set; }
 
@@ -25,7 +25,7 @@ namespace CSETWeb_Api.Controllers.sal
         /// Constructor
         /// </summary>
         /// <param name="db"></param>
-        public GeneralSalManager(CSETWebEntities db)
+        public GeneralSalManager(CsetwebContext db)
         {
             InitializeSALThresholds();
             this.db = db;

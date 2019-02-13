@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.DocumentLibrary;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

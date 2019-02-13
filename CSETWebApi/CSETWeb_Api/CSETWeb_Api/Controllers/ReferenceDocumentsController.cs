@@ -7,7 +7,8 @@
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -41,7 +42,7 @@ namespace CSETWeb_Api.Controllers
                 }
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-                using (var db = new CSETWebEntities())
+                using (var db = new CsetwebContext())
                 {
                     var doc = db.GEN_FILE.FirstOrDefault(s => s.File_Name == fileName && s.Is_Uploaded == true);
                     var stream = new MemoryStream(doc.Data);
@@ -89,7 +90,7 @@ namespace CSETWeb_Api.Controllers
                 var extension = Path.GetExtension(genFile.File_Name).Substring(1);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
 
-                using (CSETWebEntities db = new CSETWebEntities())
+                using (CsetwebContext db = new CsetwebContext())
                 {
                     var existingFiles = db.GEN_FILE.Where(s => s.File_Name == genFile.File_Name && (s.Is_Uploaded??false)).ToList();
                     if (existingFiles.Any(s => s.Doc_Num == genFile.Doc_Num))

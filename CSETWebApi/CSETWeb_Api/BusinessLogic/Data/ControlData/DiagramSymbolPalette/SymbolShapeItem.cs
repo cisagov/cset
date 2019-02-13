@@ -7,7 +7,7 @@
 using System;
 using CSET_Main.Common.EnumHelper;
 using CSETWeb_Api.Diagram;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 {

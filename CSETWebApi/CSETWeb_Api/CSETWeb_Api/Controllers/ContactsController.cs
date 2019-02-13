@@ -15,7 +15,7 @@ using System.Web.Http;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.Models;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic;
@@ -210,7 +210,7 @@ namespace CSETWeb_Api.Controllers
                         Subject = inviteParms.Subject,
                         AssessmentId = assessmentId
                     });
-                    using (CSETWebEntities db = new CSETWebEntities())
+                    using (CsetwebContext db = new CsetwebContext())
                     {
                         var invited = db.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefault();
                         invited.Invited = true;
@@ -269,7 +269,7 @@ namespace CSETWeb_Api.Controllers
 
             // If an edit is happening to a brand-new user, it is possible that the UI does not yet
             // know its UserId. In that case we will attempt to determine it via the primary email.
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
                 if (userBeingUpdated.UserId == 0)
                 {
@@ -304,7 +304,7 @@ namespace CSETWeb_Api.Controllers
             else
             {
                 // Updating myself
-                using (CSETWebEntities context = new CSETWebEntities())
+                using (CsetwebContext context = new CsetwebContext())
                 {
                     // update user detail                    
                     var user = context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();

@@ -24,7 +24,8 @@ using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using DataAccess;
 using DataAccess.Model;
-using DataLayer;
+using DataLayerCore.Model;
+using DataLayerCore.Model;
 
 namespace WebAPIFileUploadExample.Controllers
 {
@@ -95,7 +96,7 @@ namespace WebAPIFileUploadExample.Controllers
                                 answerId = qm.StoreAnswer(answer);
                             }
                             var dm = new DocumentManager(assessmentId);
-                            using (CSETWebEntities db = new CSETWebEntities())
+                            using (CsetwebContext db = new CsetwebContext())
                             {   
                                 dm.AddDocument(title, filename, contentType, fileHash, answerId, bytes);
                             }

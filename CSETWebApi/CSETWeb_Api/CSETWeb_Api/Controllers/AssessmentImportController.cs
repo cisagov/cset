@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Specialized;
 using System.IO;
@@ -119,7 +119,7 @@ namespace CSETWeb_Api.Controllers
                 var streamProvider = new InMemoryMultipartFormDataStreamProvider();
                 await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
 
-                using (CSETWebEntities web = new CSETWebEntities())
+                using (CsetwebContext web = new CsetwebContext())
                 {
                     //access form data
                     NameValueCollection formData = streamProvider.FormData;

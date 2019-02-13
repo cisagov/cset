@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             QUESTION_GROUP_HEADING questionGroupHeading=null;
             UNIVERSAL_SUB_CATEGORY_HEADINGS subcategory = null;
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 try
                 {
@@ -96,7 +96,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 result.LogError(String.Format("Subheading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
             }
             externalRequirement.Category = string.IsNullOrWhiteSpace(externalRequirement.Category) ? externalRequirement.Heading : externalRequirement.Category;
-            using (var db = new CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var category = db.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.Category);
                 if (category == null)
@@ -187,7 +187,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 NEW_QUESTION newQuestion = null;
                 var set = new NEW_QUESTION_SETS() { Set_Name = setName, NEW_QUESTION_LEVELS = new List<NEW_QUESTION_LEVELS>() };
-                using (var db = new CSETWebEntities())
+                using (var db = new CsetwebContext())
                 {
                     newQuestion = db.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
                     if (newQuestion != null)

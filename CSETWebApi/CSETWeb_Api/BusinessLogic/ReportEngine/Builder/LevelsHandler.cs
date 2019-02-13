@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using CSET_Main.Data;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.ReportEngine.Builder
 {

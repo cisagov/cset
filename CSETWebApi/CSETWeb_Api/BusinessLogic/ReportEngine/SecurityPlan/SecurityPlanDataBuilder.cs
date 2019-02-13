@@ -10,7 +10,7 @@
 //using System.Collections.Generic;
 //using System.Data;
 //using System.Linq;
-//using DataLayer;
+//using DataLayerCore.Model;
 //using CSETWeb_Api.BusinessLogic;
 //using CSETWeb_Api.BusinessManagers;
 //using CSETWeb_Api.Models;
@@ -24,11 +24,11 @@
 
 //        private static Dictionary<int, String> level_To_Full_Name = null;
 //        private Dictionary<string, string> entity_to_set_full_name;
-//        private CSETWebEntities context; 
+//        private CsetwebContext context; 
         
 //        public SecurityPlanDataBuilder()
 //        {
-//            this.context = new CSETWebEntities();
+//            this.context = new CsetwebContext();
 //        }
 
         

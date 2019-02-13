@@ -10,7 +10,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using static CSETWeb_Api.BusinessLogic.ReportEngine.BasicReportData;
 using CSETWeb_Api.BusinessLogic.Helpers;
@@ -42,14 +42,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public QuestionResponse GetRequirementsList()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 RequirementsPass req = GetControls(db);
                 return BuildResponse(req.Requirements.ToList(), req.Answers.ToList());
             }
         }
 
-        private RequirementsPass GetControls(CSETWebEntities db)
+        private RequirementsPass GetControls(CsetwebContext db)
         {
             var q = from rs in db.REQUIREMENT_SETS
                     from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
@@ -182,7 +182,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int NumberOfRequirements()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var q = from rs in db.REQUIREMENT_SETS
                         from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
@@ -227,7 +227,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             ParameterSubstitution ps = new ParameterSubstitution();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 // get the 'base' parameter values (parameter_name) for the requirement
                 var qBaseLevel = from p in db.PARAMETERS
@@ -278,7 +278,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             ParameterSubstitution ps = new ParameterSubstitution();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 // Get the list of requirement IDs
                 List<RequirementPlus> reqs = GetControls(db).Requirements.ToList();
@@ -324,7 +324,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public ParameterToken SaveAssessmentParameter(int parameterId, string newText)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 // If an empty value is supplied, delete the PARAMETER_VALUES row.
                 if (string.IsNullOrEmpty(newText))
@@ -392,7 +392,7 @@ namespace CSETWeb_Api.BusinessManagers
                 answerId = StoreAnswer(ans);
             }
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 // If an empty value is supplied, delete the PARAMETER_VALUES row.
                 if (string.IsNullOrEmpty(newText))

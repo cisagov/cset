@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.Questions.POCO;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,9 +20,9 @@ namespace CSET_Main.Questions.Slice
 
         private Dictionary<String, List<QuestionPoco>> dictionaryCNSSICategory;        
         private Boolean createQuestionPoco;
-        private CSETWebEntities DataContext { get; }
+        private CsetwebContext DataContext { get; }
 
-        public RequirementsPocoBuilder(CSETWebEntities datacontext)
+        public RequirementsPocoBuilder(CsetwebContext datacontext)
         {
             this.DataContext = datacontext;
             this.dictionaryCNSSICategory = new Dictionary<string, List<QuestionPoco>>();          

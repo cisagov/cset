@@ -13,7 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Hangfire;

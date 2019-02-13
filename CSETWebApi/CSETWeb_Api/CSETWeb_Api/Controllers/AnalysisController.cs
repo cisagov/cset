@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +18,7 @@ using CSETWeb_Api.Common;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -42,7 +43,7 @@ namespace CSETWeb_Api.Controllers
 
             RequirementsManager rm = new RequirementsManager(assessmentId);
 
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
                 var rankedQuestionList = context.usp_GetRankedQuestions(assessmentId).ToList();
 
@@ -63,7 +64,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
 
             FirstPage rval = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -159,7 +160,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -226,7 +227,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -280,7 +281,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetStandardSummaryOverall()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
                 return GetStandardsSummaryMultiple(context, assessmentId);
             }
@@ -295,7 +296,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetStandardsSummary()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {   
                 if (context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Count() > 1)
                 {
@@ -306,7 +307,7 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        private ChartData getStandardsSummarySingle(CSETWebEntities context, int assessmentId)
+        private ChartData getStandardsSummarySingle(CsetwebContext context, int assessmentId)
         {
             ChartData summary = null;
 
@@ -375,7 +376,7 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        private ChartData GetStandardsSummaryMultiple(CSETWebEntities context, int assessmentId)
+        private ChartData GetStandardsSummaryMultiple(CsetwebContext context, int assessmentId)
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
@@ -435,7 +436,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -469,7 +470,7 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = new ChartData();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -545,7 +546,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -592,7 +593,7 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -626,7 +627,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -660,7 +661,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -695,7 +696,7 @@ namespace CSETWeb_Api.Controllers
         public List<usp_getNetworkWarnings> GetNetworkWarnings()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CsetwebContext context = new CsetwebContext())
             {
 
                 var command = new SqlCommand()
@@ -721,7 +722,7 @@ namespace CSETWeb_Api.Controllers
 
         private string GetAssessmentMode(int assessmentId)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 string applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();

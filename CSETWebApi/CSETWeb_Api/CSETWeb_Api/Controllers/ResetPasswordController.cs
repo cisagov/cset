@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -26,7 +26,7 @@ namespace CSETWeb_Api.Controllers
     public class ResetPasswordController : ApiController
     {
         private Regex emailvalidator = new Regex(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
-        private CSETWebEntities db = new CSETWebEntities();
+        private CsetwebContext db = new CsetwebContext();
 
 
 

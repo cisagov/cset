@@ -7,7 +7,7 @@
 using BusinessLogic.Models;
 using CSET_Main.Common.EnumHelper;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 var documentImporter = new DocumentImporter();
                 var set = result.Result;
-                using (var db = new CSETWebEntities())
+                using (var db = new CsetwebContext())
                 {
                     var existingSet = db.SETS.FirstOrDefault(s => s.Set_Name == setname);
                     if (existingSet != null)
@@ -143,7 +143,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
 
             var requirements = new List<ExternalRequirement>();
             //Caching for performance
-            using (var db = new CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;

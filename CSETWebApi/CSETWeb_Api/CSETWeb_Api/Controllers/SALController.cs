@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
-using DataLayer;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -23,13 +22,14 @@ using CSET_Main.Data.AssessmentData;
 using CSET_Main.Data.ControlData;
 using System.Net.Http;
 using CSETWeb_Api.BusinessLogic.Models;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
     [CSETAuthorize]
     public class SALController : ApiController
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CsetwebContext db = new CsetwebContext();
 
         /// <summary>
         /// 

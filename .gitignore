@@ -1,3 +1,7 @@
 *.log
 dist
 CSETStandAlone.exe
+/CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Release
+/CSETWebApi/CSETWeb_Api/AddCSETUser/publish
+/CSETWebApi/CSETWeb_Api/AddCSETUser/bin/Debug
+/CSETWebApi/CSETWeb_Api/AddCSETUser/bin/Release

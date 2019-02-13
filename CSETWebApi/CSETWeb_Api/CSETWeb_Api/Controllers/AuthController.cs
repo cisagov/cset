@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 using BusinessLogic.Helpers;
 
 namespace CSETWeb_Api.Controllers

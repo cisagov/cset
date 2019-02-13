@@ -8,7 +8,7 @@ using CSET_Main.Common;
 using CSET_Main.Common.EnumHelper;
 using CSET_Main.DocumentLibrary;
 using CSET_Main.Framework;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +33,7 @@ namespace CSET_Main.Questions.POCO
                     return ProfileQuestionData.UniversalCategory;
                 else if (NEW_REQUIREMENT != null)
                 {
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CsetwebContext())
                     {
                         return db.QUESTION_GROUP_HEADING
                             .First(h => h.Question_Group_Heading_Id == NEW_REQUIREMENT.Question_Group_Heading_Id)
@@ -42,7 +42,7 @@ namespace CSET_Main.Questions.POCO
                 }
                 else if (Question != null)
                 {
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CsetwebContext())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
@@ -82,7 +82,7 @@ namespace CSET_Main.Questions.POCO
                 else if (Question != null)
                 {
                     //return Question.Question_Group_Heading;
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CsetwebContext())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
@@ -846,12 +846,12 @@ namespace CSET_Main.Questions.POCO
         {
             if(!IsRequirement)
             {
-                SortSet = set==null?Question.SET:set.SET;
+                SortSet = set==null?Question.SETS:set.SETS;
                 NEW_REQUIREMENT = set==null?Question.NEW_REQUIREMENT.FirstOrDefault():set.NEW_REQUIREMENT;
             }
         }
 
-        public SET SortSet
+        public SETS SortSet
         {
             get;set;
         }

@@ -9,7 +9,7 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId)
         {
-            using (CSETWebEntities web = new CSETWebEntities())
+            using (CsetwebContext web = new CsetwebContext())
             {
                 //* read from db and set as memory stream here.
                 using (Stream fs = new MemoryStream(zipFileFromDatabase))

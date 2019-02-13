@@ -19,14 +19,15 @@ using System.Web.Http.Description;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Controllers.sal;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 
 namespace CSETWeb_Api.Controllers.Sal
 {
     public class GeneralSalController : ApiController
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CsetwebContext db = new CsetwebContext();
 
 
         [Route("api/GeneralSal/Descriptions")]
@@ -100,7 +101,7 @@ namespace CSETWeb_Api.Controllers.Sal
             {
                 int assessmentid = Auth.AssessmentForUser();
                 ws.assessmentid = assessmentid;
-                using (CSETWebEntities db = new CSETWebEntities())
+                using (CsetwebContext db = new CsetwebContext())
                 {
                     GeneralSalManager salManager = new GeneralSalManager(db);
                     string salvalue = salManager.SaveWeightAndCalculate(ws);
@@ -124,7 +125,7 @@ namespace CSETWeb_Api.Controllers.Sal
 
             try
             {
-                using (CSETWebEntities db = new CSETWebEntities())
+                using (CsetwebContext db = new CsetwebContext())
                 {
                     GeneralSalManager salManager = new GeneralSalManager(db);
 

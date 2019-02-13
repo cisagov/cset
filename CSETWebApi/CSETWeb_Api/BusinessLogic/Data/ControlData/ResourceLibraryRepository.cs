@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using BusinessLogic.Helpers;
 
@@ -25,11 +25,11 @@ namespace CSET_Main.Data.ControlData
         public Dictionary<int, ResourceNode> ResourceModelDictionary{get; private set;}
 
         private CSET_Main.Common.ICSETGlobalProperties globalProperties;
-        private CSETWebEntities controlContextHolder;
+        private CsetwebContext controlContextHolder;
         private string pdfDirectory;
         private string xpsDirectory;
 
-        public ResourceLibraryRepository(CSETWebEntities controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
+        public ResourceLibraryRepository(CsetwebContext controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
         {           
             this.controlContextHolder = controlContextHolder;
             this.globalProperties = globalProperties;

@@ -7,7 +7,7 @@
 using CSET_Main.Data;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -21,9 +21,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
     {   
         private Dictionary<int, String> questionGroupHeadings;
         private Dictionary<int, String> universalSubHeadings;
-        private CSETWebEntities entitites;
+        private CsetwebContext entitites;
 
-        public ExportAssessment(CSETWebEntities entities)
+        public ExportAssessment(CsetwebContext entities)
         {
             this.entitites = entities;
             

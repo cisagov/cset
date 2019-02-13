@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
 using System.Diagnostics;
 using CSET_Main.Questions.ComponentOverride;
-using DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
 using CSET_Main.Questions.QuestionList;
 using CSET_Main.Data.AssessmentData;
@@ -120,13 +120,13 @@ namespace CSET_Main.Questions.InformationTabData
 
         }
 
-        public void BuildQuestionTab(QuestionInfoData infoData, SET set, CSETWebEntities controlContext)
+        public void BuildQuestionTab(QuestionInfoData infoData, SET set, CsetwebContext controlContext)
         {
             ShowRequirementFrameworkTitle = true;
             BuildFromNewQuestion(infoData, set, controlContext);
         }
 
-        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SET set, CSETWebEntities controlContext)
+        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SET set, CsetwebContext controlContext)
         {
             BuildFromNewQuestion(questionInfoData, set, controlContext);
             ShowRelatedFrameworkCategory = true;
@@ -134,7 +134,7 @@ namespace CSET_Main.Questions.InformationTabData
             RelatedFrameworkCategory = questionInfoData.Category;
         }
 
-        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SET set, CSETWebEntities controlContext)
+        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SET set, CsetwebContext controlContext)
         {
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
@@ -205,7 +205,7 @@ namespace CSET_Main.Questions.InformationTabData
 
 
 
-        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CSETWebEntities controlContext)
+        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CsetwebContext controlContext)
         {
             ShowRequirementFrameworkTitle = true;
 
@@ -324,7 +324,7 @@ namespace CSET_Main.Questions.InformationTabData
             BuildDocuments(requirementData.RequirementID, controlContext);
         }
 
-        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSETWebEntities controlContext)
+        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CsetwebContext controlContext)
         {
 
             QuestionsList = new List<String>();
@@ -358,8 +358,8 @@ namespace CSET_Main.Questions.InformationTabData
                 {
                     Text = FormatRequirementText(t.Requirement_Text),
                     SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info),
-                    Questions = t.NEW_QUESTION.Select(s => s.Simple_Question),
-                    LevelName = t.REQUIREMENT_LEVELS.Select(s => s.STANDARD_SPECIFIC_LEVEL).OrderBy(s => s.Level_Order).Select(s => s.Full_Name).FirstOrDefault()
+                    Questions = t.REQUIREMENT_QUESTIONS.Select(nq => nq.Question_).Select(s => s.Simple_Question),
+                    LevelName = t.REQUIREMENT_LEVELS.Select(s => s.Standard_LevelNavigation).OrderBy(s => s.Level_Order).Select(s => s.Full_Name).FirstOrDefault()
                 }).FirstOrDefault();
                 if (requirement != null)
                 {
@@ -378,7 +378,7 @@ namespace CSET_Main.Questions.InformationTabData
             RequirementsData = tabData;
         }
 
-        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CSETWebEntities controlContext)
+        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CsetwebContext controlContext)
         {
             try
             {
@@ -388,7 +388,7 @@ namespace CSET_Main.Questions.InformationTabData
                 ComponentVisibility = true;
                 // Build multiServiceComponent types list if any
                 ComponentTypes.Clear();
-                int salLevel = question.UNIVERSAL_SAL_LEVEL1.Sal_Level_Order;
+                int salLevel = controlContext.UNIVERSAL_SAL_LEVEL.Where(x => x.Universal_Sal_Level1 ==  question.Universal_Sal_Level).First().Sal_Level_Order;
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
@@ -411,7 +411,7 @@ namespace CSET_Main.Questions.InformationTabData
             }
         }
 
-        private void BuildDocuments(int requirement_ID, CSETWebEntities controlContext)
+        private void BuildDocuments(int requirement_ID, CsetwebContext controlContext)
         {
             var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.GEN_FILE.Title, s.GEN_FILE.File_Name, s.Section_Ref, IsSource = true, s.GEN_FILE.Is_Uploaded }).Concat(
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.GEN_FILE.Title, s.GEN_FILE.File_Name, s.Section_Ref, IsSource = false, s.GEN_FILE.Is_Uploaded })
@@ -427,7 +427,7 @@ namespace CSET_Main.Questions.InformationTabData
         }
 
 
-        internal void SetFrameworkQuestions(int requirement_ID, CSETWebEntities controlEntity)
+        internal void SetFrameworkQuestions(int requirement_ID, CsetwebContext controlEntity)
         {
             this.FrameworkQuestions.Clear();
 

@@ -8,7 +8,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
 using System;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Linq;
 using System.Collections.Generic;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
@@ -42,7 +42,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
         public Tuple<int, Dictionary<int, DOCUMENT_FILE>> RunImport(UploadAssessmentModel model,
             int currentUserId, string primaryEmail
-            , CSETWebEntities db)
+            , CsetwebContext db)
         {
             //create the new assessment
             //copy each of the items to the table 

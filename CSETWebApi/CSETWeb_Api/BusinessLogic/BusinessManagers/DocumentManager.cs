@@ -10,7 +10,7 @@ using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Web;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Text;
 using CSETWeb_Api.Models;
 
@@ -24,7 +24,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// The database context.
         /// </summary>
-        private CSETWebEntities db;
+        private CsetwebContext db;
 
         /// <summary>
         /// The current assessment.
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public DocumentManager(int assessmentId)
         {
-            this.db = new DataLayer.CSETWebEntities();
+            this.db = new CsetwebContext();
             this.assessmentId = assessmentId;
         }
 

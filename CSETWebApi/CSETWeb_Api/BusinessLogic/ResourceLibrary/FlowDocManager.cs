@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Common;
 
 namespace CSETWeb_Api.BusinessManagers
@@ -20,7 +20,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             string flowDoc = string.Empty;
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 if (type.ToLower() == "cat")
                 {

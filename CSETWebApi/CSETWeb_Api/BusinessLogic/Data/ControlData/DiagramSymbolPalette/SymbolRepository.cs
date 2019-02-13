@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -38,7 +38,7 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
         //private SymbolShapeItem defaultShape;
         //      private CSET_Main.Common.ICSETGlobalProperties globalProperties;
 
-        public SymbolRepository(CSETWebEntities context)
+        public SymbolRepository(CsetwebContext context)
         {
             // This gets all Component Symbols or NodeTypes/Service Types from the database
             foreach (COMPONENT_SYMBOLS symbolItemData in context.COMPONENT_SYMBOLS.Include(x => x.SYMBOL_GROUPS).OrderBy(x => x.Display_Name))

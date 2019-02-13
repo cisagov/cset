@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -43,7 +43,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 IQueryable<QuestionPlusHeaders> query = null;
 
@@ -169,7 +169,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid)
         {
-            using (CSETWebEntities datacontext = new CSETWebEntities()) {
+            using (CsetwebContext datacontext = new CsetwebContext()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
                     new StandardSpecficLevelRepository(datacontext),
                     new InformationTabBuilder(datacontext),
@@ -280,7 +280,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int NumberOfQuestions()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 if (_setNames.Count == 1)
                 {
@@ -328,7 +328,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             // SUB_CATEGORY_ANSWERS
-            var db = new DataLayer.CSETWebEntities();
+            var db = new CsetwebContext();
 
 
             // Get the USCH so that we will know the Heading_Pair_Id

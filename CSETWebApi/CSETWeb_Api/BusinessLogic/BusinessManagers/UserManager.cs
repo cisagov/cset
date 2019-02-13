@@ -12,7 +12,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Controllers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 
 namespace CSETWeb_Api.BusinessManagers
@@ -51,7 +51,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // create new records for USER and USER_DETAIL_INFORMATION
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var u = new DataLayer.USER()
                 {
@@ -83,7 +83,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="user"></param>
         public void UpdateUser(int userid,string PrimaryEmail, CreateUser user)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CsetwebContext db = new CsetwebContext())
             {
                 var dbuser = db.USERS.Where(x => x.UserId == userid).FirstOrDefault();
                 TinyMapper.Map(user, dbuser);
@@ -163,7 +163,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public UserDetail GetUserDetail(string email)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var result = db.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefault();
 
@@ -192,7 +192,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public CreateUser GetUserInfo(int userId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 
@@ -245,7 +245,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public UserDetail GetUserDetail(int userId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 
@@ -271,7 +271,7 @@ namespace CSETWeb_Api.BusinessManagers
 
     public class UserQuestionWrapper
     {
-        public USER user { get; set; }
+        public USERS user { get; set; }
         public USER_SECURITY_QUESTIONS questions { get; set; }
         
     }

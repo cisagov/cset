@@ -69,7 +69,7 @@ namespace CSETWeb_Api.Helpers
                 Throw401();
             }
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 int hits = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId).Count();
                 if (hits == 0)
@@ -99,7 +99,7 @@ namespace CSETWeb_Api.Helpers
                 Throw401();
             }
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var myAdminConnections = db.ASSESSMENT_CONTACTS.Where(
                         ac => ac.UserId == userId
@@ -125,7 +125,7 @@ namespace CSETWeb_Api.Helpers
             TokenManager tm = new TokenManager();
             int userId = Auth.GetUserId();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CsetwebContext())
             {
                 var adminConnections = db.ASSESSMENT_CONTACTS.Where(                        
                         ac => ac.Assessment_Id == assessmentId 
