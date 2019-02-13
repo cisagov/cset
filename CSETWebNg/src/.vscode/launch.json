@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ng serve",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:46000/#",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:/./*": "${webRoot}/*",
+        "webpack:/src/*": "${webRoot}/src/*",
+        "webpack:/*": "*",
+        "webpack:/./~/*": "${workspaceFolder}/node_modules/*"
+      }
+    }
+  ]
+}

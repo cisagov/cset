@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="002b028fb167464c9fcb42ac3753fad4" Name="Diagram1">
+        <EntityTypeShape EntityType="CSETWebModel.GEN_FILE" Width="1.5" PointX="7.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSETWebModel.REF_LIBRARY_PATH" Width="3.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CSETWebModel.FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH" ManuallyRouted="false" />
+        <AssociationConnector Association="CSETWebModel.GEN_FILE_LIB_PATH_CORL" />
+        <EntityTypeShape EntityType="CSETWebModel.CATALOG_RECOMMENDATIONS_DATA" Width="1.5" PointX="8" PointY="7" />
+        <EntityTypeShape EntityType="CSETWebModel.CATALOG_RECOMMENDATIONS_HEADINGS" Width="1.5" PointX="5.75" PointY="8.375" />
+        <EntityTypeShape EntityType="CSETWebModel.FILE_REF_KEYS" Width="1.5" PointX="5.375" PointY="2.375" />
+        <EntityTypeShape EntityType="CSETWebModel.PROCUREMENT_LANGUAGE_DATA" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="CSETWebModel.PROCUREMENT_LANGUAGE_HEADINGS" Width="1.5" PointX="0.75" PointY="6" />
+        <AssociationConnector Association="CSETWebModel.FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS" />
+        <AssociationConnector Association="CSETWebModel.FK_GEN_FILE_FILE_REF_KEYS" />
+        <AssociationConnector Association="CSETWebModel.FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS" />
+        <EntityTypeShape EntityType="CSETWebModel.FILE_KEYWORDS" Width="1.5" PointX="9.5" PointY="2.375" />
+        <AssociationConnector Association="CSETWebModel.FILE_KEYWORDS_GEN_FILE_FK" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,53 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="white-panel oy-auto height-0 d-flex flex-column flex-11a">
+  <h3>Ranked Categories</h3>
+  <div id="chart">
+    <canvas id="stdRankCanvas">{{chart}}</canvas>
+  </div>
+  <div *ngIf="!initialized">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  <div class="data" [hidden]="!initialized">
+    <table class="table" style="table-layout: fixed">
+      <th style="width: 50%"></th>
+      <th>Rank</th>
+      <th class="align-right">Failed</th>
+      <th class="align-right">Total</th>
+      <th class="align-right">Percent</th>
+      <tr *ngFor="let row of dataRows">
+        <td>{{row.title}}</td>
+        <td>{{row.rank}}</td>
+        <td class="align-right">{{row.failed}}</td>
+        <td class="align-right">{{row.total}}</td>
+        <td class="align-right">{{row.percent}}%</td>
+      </tr>
+    </table>
+  </div>
+  <div class="mt-3 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary" (click)="navBack()">Back</button>
+    <button class="btn btn-primary" (click)="navNext()">Next</button>
+  </div>
+</div>

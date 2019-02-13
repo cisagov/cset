@@ -1,0 +1,54 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <svg width="25" height="25" x="0px" y="0px" viewBox="0 0 28 36" xml:space="preserve">
+      <path class="fill-white" d="M9.508,22.68L12.258,17.423C10.818,16.776 9.819,15.354 9.819,13.699 9.819,11.437 11.691,9.6 14,9.6 16.311,9.6 18.184,11.437 18.184,13.699 18.184,15.354 17.181,16.776 15.745,17.423L18.493,22.68z M27.473,5.78L27.473,4.549C27.473,4.549 23.582,4.856 20.382,3.769 15.879,2.239 14.004,0 14.004,0L13.999,0.012 13.997,0.01 13.997,0.017C13.931,0.183 12.122,2.229 7.619,3.759 4.419,4.847 0.525,4.539 0.525,4.539 0.525,4.539 -1.414,16.28 2.159,23.847 5.677,31.299 13.994,35.008 14.011,35L14.014,34.998C14.472,34.763 22.322,31.309 25.842,23.857 29.415,16.289 27.473,5.78 27.473,5.78" />
+    </svg>
+    <span class="ml-2">Protected Features</span>
+  </div>
+  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+    <div>
+      <span><label for="unlock">Please enter your unlock code</label>&nbsp;
+        <input type=text name="discard" size="3" maxlength="3"> -
+        <input type="text" name="unlock" id="unload" placeholder="Unlock Code" [(ngModel)]="unlockCode" style="width: 25%;">
+        <button class="ml-3 btn btn-default btn-primary" (click)="enableFeature()">Enable Feature</button>
+      </span>
+    </div>
+    <table style="margin: 1em;">
+      <tr>
+        <th style="width:25%">Module Name</th>
+        <th style="width: 75%">Module Full Name</th>
+      </tr>
+      <tr *ngFor="let module of modulesList">
+        <td>{{module.Short_Name}}</td>
+        <td>{{module.Full_Name}}</td>
+      </tr>
+    </table>
+    <br>
+    {{message}}
+  </mat-dialog-content>
+  <mat-dialog-actions class="p-3 pt-0 mb-0">
+    <button class="btn btn-default btn-secondary" (click)="close()">Close</button>
+  </mat-dialog-actions>
+</div>

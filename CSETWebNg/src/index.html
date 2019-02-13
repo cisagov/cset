@@ -1,0 +1,112 @@
+<!----------------------
+
+   Copyright 2018 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<!DOCTYPE html>
+<html class="d-flex flex-column flex-11a h-100 w-100">
+
+<head>
+    <meta charset="utf-8">
+    <script>
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                sessionStorage.setItem("isAPI_together_With_Web", "true");
+                var jsonResponse = JSON.parse(xhttp.responseText);
+                // console.log(jsonResponse);
+                sessionStorage.setItem("appAPIURL", jsonResponse.apiUrl);
+            }
+            else if (this.readyState == 4) {
+                sessionStorage.setItem("isAPI_together_With_Web", "false");
+            }
+        };
+        xhttp.onerror = function () {
+            alert('returned error');
+        }
+        xhttp.open("GET", "api/assets/config.json", false);
+        xhttp.send();
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        if (typeof (Storage) !== "undefined") {
+            var redirectid = getParameterByName("assessment_id");
+            var returnPath = getParameterByName("returnPath");
+            // console.log("redirectid=" + redirectid);
+            // console.log("returnPath=" + returnPath);
+            if (redirectid != null)
+                localStorage.setItem("redirectid", redirectid);
+            if (returnPath != null)
+                localStorage.setItem("returnPath", returnPath);
+        } else {
+            // Sorry! No Web Storage support..
+        }
+    </script>
+    <title>CSET</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?">
+    <!-- polyfill(s) for older browsers -->
+    <script src="assets/shim.min.js"></script>
+    <!-- <script src="https://unpkg.com/reflect-metadata@0.1.12"></script> -->
+    <!-- <script src="https://unpkg.com/systemjs@0.19.27/dist/system.src.js"></script> -->
+</head>
+
+<body class="d-flex flex-column flex-11a h-100 w-100">
+    <app-root class="bgc-page d-flex flex-column flex-11a w-100">
+        <style>
+            app-root {
+                position: fixed;
+                height: 100%;
+                width: 100%;
+            }
+
+            .centered {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -194px;
+                margin-left: -194px;
+            }
+        </style>
+        <img src="assets/images/logo_dhs_388px.png" class="centered" />
+    </app-root>
+</body>
+<script>
+$(document).ready(function(){
+		$('body').on('click', 'ul.dropdown-menu [data-toggle=dropdown]', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			$(this).parent().siblings().removeClass('open');
+			$(this).parent().toggleClass('open');
+		});
+    });
+</script>
+</html>
+

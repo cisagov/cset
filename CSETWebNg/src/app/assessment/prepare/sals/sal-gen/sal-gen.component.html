@@ -1,0 +1,55 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="d-flex flex-column flex-11a mb-3">
+    <h4>Overall SAL</h4>
+    <div class="btn-group" data-toggle="buttons">
+        <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"
+                (click)="saveLevel(level.value,'std')">
+                <input class="form-check-input" type="radio" autocomplete="off" name="sal_main" [checked]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level">
+                {{level.value}}
+            </label>
+        </ng-template>
+    </div>
+</div>
+
+<div class="mb-3">
+    Answer the following questions to help determine the SAL for your assessment by selecting the potential impacts on
+    people and/or economic factors in the event your system is compromised.
+</div>
+
+<div *ngFor="let slider of sliders" class="mb-4">
+    <div class="mb-3">
+        <label class="mb-3 fw-500 fs-base-6 bgc-gray-100 p-2">{{slider.OnSite.Sal_Description}}</label>
+        <ion-range-slider #sliderElement type="single" [min]="slider.OnSite.min" [max]="slider.OnSite.max" to_shadow="true"
+            grid="true" force_edges="true" [from]="slider.OnSite.Slider_Value" grid_num="10" [prefix]="slider.OnSite.prefix"
+            [postfix]="slider.OnSite.postfix" [values]="slider.OnSite.values" decorate_both="false" (onChange)="myOnChange($event,slider.OnSite.Sal_Name)"
+            (onFinish)="myOnFinish($event,slider.OnSite.Sal_Name)">
+        </ion-range-slider>
+        <ion-range-slider #sliderElement type="single" [min]="slider.OffSite.min" [max]="slider.OffSite.max" to_shadow="true"
+            grid="true" force_edges="true" [from]="slider.OffSite.Slider_Value" grid_num="10" [prefix]="slider.OffSite.prefix"
+            [postfix]="slider.OffSite.postfix" [values]="slider.OffSite.values" decorate_both="false" (onChange)="myOnChange($event,slider.OffSite.Sal_Name)"
+            (onFinish)="myOnFinish($event,slider.OffSite.Sal_Name)">
+        </ion-range-slider>
+    </div>
+</div>

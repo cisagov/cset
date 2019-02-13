@@ -1,0 +1,318 @@
+1
+ CSET Help
+ index.htm
+2
+ Table of Contents
+ table_of_contents.htm
+3
+ Introduction to CSET
+ introduction_to_cset.htm
+4
+ Introduction
+ introduction.htm
+5
+ Overview
+ overview.htm
+6
+ Disclaimer
+ disclaimer.htm
+7
+ System Basics
+ system_basics.htm
+8
+ System Requirements
+ system_requirements.htm
+9
+ Installation Procedure
+ installation_procedure.htm
+10
+ Stand-alone Install
+ stand_alone_install.htm
+11
+ Using the Stand-alone
+ using_the_stand_alone.htm
+12
+ Enterprise Install
+ enterprise_install.htm
+13
+ Evaluation Preparation
+ evaluation_preparation.htm
+14
+ Register a User Account
+ register_a_user_account.htm
+15
+ Import/Export a CSET Assessment
+ import_export_a_cset_assessment.htm
+16
+ Importing a .csetw File
+ importing_a__csetw_file.htm
+17
+ Importing a .cset File
+ importing_a__cset_file.htm
+18
+ Exporting a CSET Assessment
+ exporting_a_cset_assessment.htm
+19
+ Title Bar
+ title_bar.htm
+20
+ Tools Menu
+ tools_menu.htm
+21
+ Assessment Documents
+ document_manager_window.htm
+22
+ Parameter Editor
+ parameter_editor_window.htm
+23
+ Protected Features
+ protected_features_window.htm
+24
+ Export to Excel
+ export_to_excel.htm
+25
+ Advanced: Import Module
+ advanced__import_module.htm
+26
+ Resource Library
+ resource_library_window.htm
+27
+ Search Screen
+ search_screen.htm
+28
+ Browse Screen
+ browse_screen.htm
+29
+ User Profile
+ user_profile_1.htm
+30
+ User Profile
+ user_profile_2.htm
+31
+ Change Password
+ change_password.htm
+32
+ Help Menu
+ help_menu.htm
+33
+ Accessibility Document
+ accessibility_document.htm
+34
+ Keyboard Shortcuts
+ keyboard_shortcuts.htm
+35
+ Terms of Use
+ terms_of_use.htm
+36
+ About CSET
+ about_cset.htm
+37
+ Advisory
+ advisory.htm
+38
+ Operation Menus
+ operation_menus.htm
+39
+ Preparation Menu
+ preparation_menu.htm
+40
+ Questions Menu
+ questions_menu.htm
+41
+ Results Menu
+ results_menu.htm
+42
+ Main CSET Window Sections
+ main_cset_window_sections.htm
+43
+ Prepare Section
+ prepare_section.htm
+44
+ CSET Landing Page
+ prepare_start_new_assessment.htm
+45
+ Assessment Details
+ prepare_assessment_info.htm
+46
+ Contacts Management
+ contacts_management.htm
+47
+ Sector and Demographic Information Screen
+ prepare_demographics_selection.htm
+48
+ Security Assurance Level (SAL) Selection
+ prepare_sal_selection.htm
+49
+ Standard SAL Selection
+ sal_window_simple_selection.htm
+50
+ General SAL Selection
+ sal_window_general_selection.htm
+51
+ General SAL – Injury
+ general_sal___injury.htm
+52
+ General SAL - Hospital
+ general_sal___hospital.htm
+53
+ General SAL - Death
+ general_sal___death.htm
+54
+ General SAL - Capital Assets
+ general_sal___capital_assets.htm
+55
+ General SAL - Economic Impact
+ general_sal___economic_impact.htm
+56
+ General SAL - Environmental Cleanup
+ general_sal___environmental_cleanup.htm
+57
+ General SAL Considerations
+ general_sal_considerations.htm
+58
+ FIPS 199 SAL Selection
+ sal_window_fips_selection.htm
+59
+ Cybersecurity Standard Selection
+ prepare_standard_selection.htm
+60
+ CSET Standards and Groupings
+ cset_standards_and_groupings.htm
+61
+ C2M2 Maturity Indicator Levels
+ c2m2_maturity_indicator_levels.htm
+62
+ CFATS Tiers
+ cfats_tiers.htm
+63
+ Cybersecurity Framework Description
+ cybersecurity_framework_description.htm
+64
+ Framework Implementation Tiers
+ framework_implementation_tiers.htm
+65
+ Mode Selection
+ prepare_mode_selection.htm
+66
+ Assessment Modes
+ assessment_modes_1.htm
+67
+ Assessment Section
+ assessment_section.htm
+68
+ Assessment Screen
+ questions_screen.htm
+69
+ Assessment Modes
+ assessment_modes_2.htm
+70
+ Assessment Screen Questions Mode
+ assessment_screen_questions_mode.htm
+71
+ Assessment Screen Requirements Mode
+ assessment_screen_requirements_mode.htm
+72
+ Assessment Categories
+ assessment_categories.htm
+73
+ Question Details, Resources, and Comments
+ question_details__resources__and_comments.htm
+74
+ Details Section Question Mode
+ details_section_question_mode.htm
+75
+ Details Section Requirements Mode
+ details_section_requirements_mode.htm
+76
+ Supplemental Section
+ supplemental_section.htm
+77
+ Comments Section
+ comments_section.htm
+78
+ Documents Section
+ documents_section.htm
+79
+ Questions List
+ document_questions_list_window.htm
+80
+ References Section
+ references_section.htm
+81
+ Discoveries Section
+ discoveries_section.htm
+82
+ Question Discoveries
+ questions_discoveries_window.htm
+83
+ Question Filter
+ question_filter.htm
+84
+ Results Section
+ results_section.htm
+85
+ Analysis Screen
+ analysis_screen.htm
+86
+ Dashboard in Questions/Requirements Mode
+ dashboard_in_questions_requirements_mode.htm
+87
+ Ranked Questions
+ results_ranked_questions_screen.htm
+88
+ Overall Ranked Categories
+ results_overall_ranked_categories_screen.htm
+89
+ Standards Analysis
+ standards_analysis.htm
+90
+ Standards Summary
+ results_standards_summary_screen.htm
+91
+ Standards Ranked Categories
+ results_standards_ranked_categories_screen.htm
+92
+ Standards Results By Category Single Standard
+ results_standards_results_by_category_screen.htm
+93
+ Standards Results by Category Multiple Standards
+ standards_results_by_category_multiple_standards.htm
+94
+ Category Rankings
+ category_rankings.htm
+95
+ Reports Section
+ reports_screen.htm
+96
+ Executive Summary, Overview, and Comments Screen
+ executive_summary__overview__and_comments_screen.htm
+97
+ Report Builder
+ report_builder.htm
+98
+ Executive Summary Report
+ executive_summary_report.htm
+99
+ Site Summary Report
+ site_summary_report.htm
+100
+ Site Detail Report
+ site_detail_report.htm
+101
+ Site Cyber Security Plan
+ site_cyber_security_plan.htm
+102
+ Discoveries Tear Out Sheets
+ discoveries_tear_out_sheets.htm
+103
+ Initiation Scenarios
+ initiation_scenarios.htm
+104
+ Glossary
+ glossary.htm
+105
+ Frequently Asked Questions (FAQs)
+ frequently_asked_questions__faqs_.htm
+106
+ CSET Revision History
+ cset_revision_history.htm

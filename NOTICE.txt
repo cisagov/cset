@@ -1,0 +1,52 @@
+################################################ 
+# 
+#   Copyright 2018 Battelle Energy Alliance, LLC  
+# 
+#  Permission is hereby granted, free of charge, to any person obtaining a copy 
+#  of this software and associated documentation files (the "Software"), to deal 
+#  in the Software without restriction, including without limitation the rights 
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+#  copies of the Software, and to permit persons to whom the Software is 
+#  furnished to do so, subject to the following conditions: 
+# 
+#  The above copyright notice and this permission notice shall be included in all 
+#  copies or substantial portions of the Software. 
+# 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+#  SOFTWARE. 
+################################################ 
+
+The following dependencies are required to build CSET. You will be required to aquire them via nuget 
+inorder to build this software.  They are not distributed with this source. 
+
+OSS	License Location
+Antlr3.Runtime, Version=3.5.0.2	ANTLR 3 License [The BSD License] Copyright (c) 2010 Terence Parr All rights reserved. http://www.antlr3.org/license.html
+Bootstrap Bootstrap The MIT License (MIT) Copyright (c) 2011-2018 Twitter, Inc. https://github.com/twbs/bootstrap/blob/master/LICENSE
+EntityFramework.SqlServer, Version=6.0.0.0	Entity Framework 6 Runtime License https://docs.microsoft.com/en-us/ef/ef6/resources/licenses/ef6/enu
+Hangfire.Console, Version=1.4.2.0	HangFire LGPL https://github.com/HangfireIO/HangfireIO.github.io/blob/master/licenses.md 
+Hangfire.Core, Version=1.6.20.0	https://www.hangfire.io/licenses.html
+Hangfire.SqlServer, Version=1.6.20.0	https://www.hangfire.io/licenses.html
+ICSharpCode.SharpZipLib, Version=0.86.0.518	https://github.com/icsharpcode/SharpZipLib/blob/master/LICENSE.txt
+JQuery Lucene.Net, Version=2.9.2.1	JQuery MIT https://jquery.org/license/ Lucene Apache 2.0 http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Analyzers, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Core, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.FastVectorHighlighter, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Highlighter, Version=2.3.2.1	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Memory, Version=1.0.0.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Queries, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Regex, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.SimpleFacetedSearch, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.Snowball, Version=2.0.0.1	http://www.apache.org/licenses/LICENSE-2.0
+Lucene.Net.Contrib.SpellChecker, Version=3.0.3.0	http://www.apache.org/licenses/LICENSE-2.0
+Newtonsoft.Json, Version=11.0.0.0	Newtonsoft MIT https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
+Owin, Version=1.0.0.0	https://github.com/owin-contrib/owin-hosting/blob/master/LICENSE.txt
+Swashbuckle.Core, Version=1.0.0.0	Swashbuckle BSD 3.0 Revised Clause https://github.com/domaindrivendev/Swashbuckle/blob/master/LICENSE
+TinyMapper, Version=2.0.0.40	TinyMapper MIT https://github.com/TinyMapper/TinyMapper/blob/master/LICENSE
+WebActivatorEx, Version=2.0.0.0	WebActivator Microsoft Public License https://www.nuget.org/packages/webactivatorex/2.0.0 
+WebGrease, Version=1.6.5135.21930 	WebGrease Microsoft Public License https://www.nuget.org/packages/WebGrease/
+

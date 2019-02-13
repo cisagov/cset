@@ -1,0 +1,51 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+  <div class="white-panel oy-auto height-0 d-flex flex-column flex-11a">
+    <h3 class="d-flex flex-column flex-00a">Executive Summary</h3>
+    <div class="d-flex flex-column flex-00a">
+      <textarea class="overview-textarea-height" name="summary" id="summary" placeholder="Please provide an executive summary."
+      [(ngModel)]="o.ExecutiveSummary" (change)="update($event)"></textarea>
+    </div>
+    <hr>
+    <h3 class="d-flex flex-column flex-00a">Overview</h3>
+    <div class="d-flex flex-column flex-00a">
+      High Level Assessment Description: Please provide a description of the assessment process and work performed for senior management.
+      This information will be included in your reports. This is not intended to be analysis of the assessment results as
+      requested in the executive summary.
+      <textarea class="overview-textarea-height" name="overview" id="overview" placeholder="Please provide a description of the assessment process and work performed."
+        [(ngModel)]="o.AssessmentDescription" (change)="update($event)"></textarea>
+    </div>
+    <hr>
+    <h3 class="d-flex flex-column flex-00a">Comments</h3>
+    <div class="d-flex flex-column flex-00a">
+      Comments: Please provide general comments, if any, to include in the reports. These comments are not included in the Executive
+      Summary Report, but are included in the remaining reports.
+      <textarea class="overview-textarea-height" name="comments" id="comments" placeholder="Please provide general comments, if any, to include in the reports."
+         [(ngModel)]="o.AdditionalNotesAndComments" (change)="update($event)"></textarea>
+    </div>
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="navBack()">Back</button>
+      <button class="btn btn-primary" (click)="navNext()">Next</button>
+    </div>
+  </div>
+

@@ -1,0 +1,96 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <i class="glyphicon glyphicon-filter fs-medium"></i>
+    <span class="ml-2 mt-1">Question Filters</span>
+  </div>
+
+  <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <div class="question-filters pr-3">
+      <div>
+        <input placeholder="Search" class="form-control" [value]="questionsSvc.searchString" (keyup)="updateSearchString($event)" />
+      </div>
+      <hr style="margin: 10px 0 3px 0" />
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
+        <label for="cbSelectAll">
+          Select/Deselect All
+        </label>
+      </div>
+      <hr style="margin: 3px 0" />
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('Y')" id="cbShowY" name="cbShowY" (click)="updateFilters($event, 'Y')">
+        <label for="cbShowY">
+          Show YES answered questions
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('N')" id="cbShowN" name="cbShowN" (click)="updateFilters($event, 'N')">
+        <label for="cbShowN">
+          Show NO answered questions
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('NA')" id="cbShowNA" name="cbShowNA" (click)="updateFilters($event, 'NA')">
+        <label for="cbShowNA">
+          Show NA answered questions
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('A')" id="cbShowA" name="cbShowA" (click)="updateFilters($event, 'A')">
+        <label for="cbShowA">
+          Show ALT answered questions
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
+        <label for="cbShowU">
+          Show unanswered questions
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
+        <label for="cbShowComments">
+          Show questions with comments
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
+        <label for="cbShowMarked">
+          Show questions marked for review
+        </label>
+      </div>
+      <div>
+        <input type="checkbox" [checked]="questionsSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
+        <label for="cbShowDisc">
+          Show questions with discoveries
+        </label>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-11a">
+    <button class="btn btn-secondary" (click)="close()">OK</button>
+  </mat-dialog-actions>
+</div>

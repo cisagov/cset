@@ -1,0 +1,1619 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A87CB253-7A73-4C66-84E7-ABAA68723B7B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSETWeb_Api</RootNamespace>
+    <AssemblyName>CSETWeb_Api</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.Console, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Console.1.4.2\lib\net45\Hangfire.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.6.20\lib\net45\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.6.20\lib\net45\Hangfire.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=2.9.2.1, Culture=neutral, PublicKeyToken=402f1553d5c332e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Analyzers, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Analyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Core, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Highlighter, Version=2.3.2.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Highlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Queries, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Queries.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Regex, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Regex.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SimpleFacetedSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Snowball, Version=2.0.0.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SpellChecker, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.2.4\lib\net451\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.2.4\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.2.4\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NJsonSchema, Version=9.10.75.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\NJsonSchema.9.10.75\lib\net45\NJsonSchema.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.2.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.2\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.6\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TinyMapper.2.0.8\lib\net45\TinyMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\XmlDocument.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="CSETWeb_Api.csproj.user" />
+    <Content Include="DeleteMe.html" />
+    <Content Include="Documents\05-00993 r0 Common Vulnerability.pdf" />
+    <Content Include="Documents\14 cfr 121.pdf" />
+    <Content Include="Documents\14 CFR Parts 43.11.pdf" />
+    <Content Include="Documents\14CFR Part 121.380.pdf" />
+    <Content Include="Documents\14CFR Part 135.439.pdf" />
+    <Content Include="Documents\14CFR Part 43.3.pdf" />
+    <Content Include="Documents\14cfr121-368.pdf" />
+    <Content Include="Documents\192_Master_192-114_highlight.pdf" />
+    <Content Include="Documents\193_Master_with_Highlights.pdf" />
+    <Content Include="Documents\2011-26729.pdf" />
+    <Content Include="Documents\2013-27313.pdf" />
+    <Content Include="Documents\21_Steps-SCADA.pdf" />
+    <Content Include="Documents\5 CFR 731-106.pdf" />
+    <Content Include="Documents\5 CFR 930 Subpart C.pdf" />
+    <Content Include="Documents\520001_vol1.pdf" />
+    <Content Include="Documents\520001_vol2.pdf" />
+    <Content Include="Documents\520001_vol3.pdf" />
+    <Content Include="Documents\520001_vol4.pdf" />
+    <Content Include="Documents\520002r.pdf" />
+    <Content Include="Documents\520019p.pdf" />
+    <Content Include="Documents\851001_2014.pdf" />
+    <Content Include="Documents\8900.1_04_015_001.pdf" />
+    <Content Include="Documents\a130trans4.pdf" />
+    <Content Include="Documents\AC 20-173.pdf" />
+    <Content Include="Documents\AcceptableUsePolicy_SANS.docx" />
+    <Content Include="Documents\AcceptableUsePolicy_SANS.pdf" />
+    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\colorschememapping.xml" />
+    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\filelist.xml" />
+    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\header.htm" />
+    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\themedata.thmx" />
+    <Content Include="Documents\AccessibilityFeatures\index.htm" />
+    <Content Include="Documents\AcqAssessPolicy_SANS.docx" />
+    <Content Include="Documents\AcqAssessPolicy_SANS.pdf" />
+    <Content Include="Documents\Active Directory.pdf" />
+    <Content Include="Documents\Active_D_protocols.pdf" />
+    <Content Include="Documents\AC_120-76C.pdf" />
+    <Content Include="Documents\AC_20-115C.pdf" />
+    <Content Include="Documents\AC_20-153B.pdf" />
+    <Content Include="Documents\AC_20-171.pdf" />
+    <Content Include="Documents\AC_91-21_1C.pdf" />
+    <Content Include="Documents\ApplicationDocuments\AccessibilityFeatures.xps" />
+    <Content Include="Documents\ApplicationDocuments\Advisory.xps" />
+    <Content Include="Documents\ApplicationDocuments\FIPS199Language.html" />
+    <Content Include="Documents\ApplicationDocuments\FIPS199Language.xps" />
+    <Content Include="Documents\APTA-SS-CCS-RP-002-13.pdf" />
+    <Content Include="Documents\AP_BaselineExport_LLL_20160209.pdf" />
+    <Content Include="Documents\ARACasisp-T1-20150203R.pdf" />
+    <Content Include="Documents\ASPPolicy_SANS.docx" />
+    <Content Include="Documents\ASPPolicy_SANS.pdf" />
+    <Content Include="Documents\ASPStandards_SANS.docx" />
+    <Content Include="Documents\ASPStandards_SANS.pdf" />
+    <Content Include="Documents\Best Practices for Storage Networks I732-012R-2007 - NSA.pdf" />
+    <Content Include="Documents\BluetoothSecPolicy_SANS.docx" />
+    <Content Include="Documents\BluetoothSecPolicy_SANS.pdf" />
+    <Content Include="Documents\C-5200.5.pdf" />
+    <Content Include="Documents\C2M2-v1-1_cor.pdf" />
+    <Content Include="Documents\cag.pdf" />
+    <Content Include="Documents\CaseStudy-001_CSSC.pdf" />
+    <Content Include="Documents\CaseStudy-002.pdf" />
+    <Content Include="Documents\Catalog of Recommendations Ver 7.pdf" />
+    <Content Include="Documents\CCI List.pdf" />
+    <Content Include="Documents\CCPART1V3.1R1.pdf" />
+    <Content Include="Documents\CCPART2V3.1R2.pdf" />
+    <Content Include="Documents\CCPART3V3.1R2.pdf" />
+    <Content Include="Documents\cdDocs\ReadMe.pdf" />
+    <Content Include="Documents\cdDocs\UserGuide.pdf" />
+    <Content Include="Documents\CERT Cyber Taxonomy.pdf" />
+    <Content Include="Documents\CFATS_6CFR27_Part III.pdf" />
+    <Content Include="Documents\CFATS_6CFR27_Part II_App A.pdf" />
+    <Content Include="Documents\CFATS_RBPS.pdf" />
+    <Content Include="Documents\ChainOfCustody_SANS.pdf" />
+    <Content Include="Documents\ChangeMgtPlan_template_HHS.docx" />
+    <Content Include="Documents\ChangeMgtPlan_template_HHS.pdf" />
+    <Content Include="Documents\CIP-002-2.pdf" />
+    <Content Include="Documents\CIP-002-3 dest.pdf" />
+    <Content Include="Documents\CIP-002-4.pdf" />
+    <Content Include="Documents\CIP-002-5.1.pdf" />
+    <Content Include="Documents\CIP-002-5.1a.pdf" />
+    <Content Include="Documents\CIP-003-1.pdf" />
+    <Content Include="Documents\CIP-003-3 dest.pdf" />
+    <Content Include="Documents\CIP-003-4.pdf" />
+    <Content Include="Documents\CIP-003-5.pdf" />
+    <Content Include="Documents\CIP-003-6.pdf" />
+    <Content Include="Documents\CIP-004-2.pdf" />
+    <Content Include="Documents\CIP-004-3 dest.pdf" />
+    <Content Include="Documents\CIP-004-4.pdf" />
+    <Content Include="Documents\CIP-004-5.1.pdf" />
+    <Content Include="Documents\CIP-004-6.pdf" />
+    <Content Include="Documents\CIP-005-1.pdf" />
+    <Content Include="Documents\CIP-005-2.pdf" />
+    <Content Include="Documents\CIP-005-3 dest.pdf" />
+    <Content Include="Documents\CIP-005-4.pdf" />
+    <Content Include="Documents\CIP-005-5.pdf" />
+    <Content Include="Documents\CIP-006-1.pdf" />
+    <Content Include="Documents\CIP-006-2.pdf" />
+    <Content Include="Documents\CIP-006-3 dest.pdf" />
+    <Content Include="Documents\CIP-006-4.pdf" />
+    <Content Include="Documents\CIP-006-5.pdf" />
+    <Content Include="Documents\CIP-006-6.pdf" />
+    <Content Include="Documents\CIP-007-1.pdf" />
+    <Content Include="Documents\CIP-007-2.pdf" />
+    <Content Include="Documents\CIP-007-3 dest.pdf" />
+    <Content Include="Documents\CIP-007-4.pdf" />
+    <Content Include="Documents\CIP-007-5.pdf" />
+    <Content Include="Documents\CIP-007-6.pdf" />
+    <Content Include="Documents\CIP-008-1.pdf" />
+    <Content Include="Documents\CIP-008-2.pdf" />
+    <Content Include="Documents\CIP-008-3 dest.pdf" />
+    <Content Include="Documents\CIP-008-4.pdf" />
+    <Content Include="Documents\CIP-008-5.pdf" />
+    <Content Include="Documents\CIP-009-1.pdf" />
+    <Content Include="Documents\CIP-009-2.pdf" />
+    <Content Include="Documents\CIP-009-3 dest.pdf" />
+    <Content Include="Documents\CIP-009-4.pdf" />
+    <Content Include="Documents\CIP-009-5.pdf" />
+    <Content Include="Documents\CIP-009-6.pdf" />
+    <Content Include="Documents\CIP-010-1.pdf" />
+    <Content Include="Documents\CIP-010-2.pdf" />
+    <Content Include="Documents\CIP-011-1.pdf" />
+    <Content Include="Documents\CIP-011-2.pdf" />
+    <Content Include="Documents\CIP-014-2.pdf" />
+    <Content Include="Documents\cisco-ios-switch-security-configuration-guide.pdf" />
+    <Content Include="Documents\CNSSI ICS Overlay V1.pdf" />
+    <Content Include="Documents\CNSSI_1253_Final_201403271.pdf" />
+    <Content Include="Documents\CNSSI_ICS-PIT_Overlay.pdf" />
+    <Content Include="Documents\cnssp_15_fs.pdf" />
+    <Content Include="Documents\COBIT4.1.pdf" />
+    <Content Include="Documents\COBIT5.pdf" />
+    <Content Include="Documents\Community Cyber Security Maturity Model_2007f.pdf" />
+    <Content Include="Documents\ContingencyPlan-IT_template_HHS.docx" />
+    <Content Include="Documents\ContingencyPlan-IT_template_HHS.pdf" />
+    <Content Include="Documents\ContingencyPlan-system_template_HHS.docx" />
+    <Content Include="Documents\ContingencyPlan-system_template_HHS.pdf" />
+    <Content Include="Documents\ContingencyPlan_template_NIST.docx" />
+    <Content Include="Documents\ContingencyPlan_template_NIST.pdf" />
+    <Content Include="Documents\COOP_Template_DHS.pdf" />
+    <Content Include="Documents\COOP_Template_FEMA.docx" />
+    <Content Include="Documents\COOP_Template_FEMA.pdf" />
+    <Content Include="Documents\COR Ver6.pdf" />
+    <Content Include="Documents\CSC-MASTER-VER 6.0 CIS Critical Security Controls 10.15.2015.pdf" />
+    <Content Include="Documents\CSC-MASTER-VER50-2-27-2014.pdf" />
+    <Content Include="Documents\CSC_NCSD_Cyber_StormII_final09.pdf" />
+    <Content Include="Documents\CSET_Manual.chm" />
+    <Content Include="Documents\CyberSecDefenseStrategies.pdf" />
+    <Content Include="Documents\CybersecProcurementLanguage-EnergyDeliverySystems_040714_fin.pdf" />
+    <Content Include="Documents\CyberSecurityPlan-RG5.71.pdf" />
+    <Content Include="Documents\d05434.pdf" />
+    <Content Include="Documents\Data-Agg-120605.pdf" />
+    <Content Include="Documents\DatabaseCredentials_SANS.docx" />
+    <Content Include="Documents\DatabaseCredentials_SANS.pdf" />
+    <Content Include="Documents\dcid6-9.pdf" />
+    <Content Include="Documents\Defense_in_Depth_Oct09.pdf" />
+    <Content Include="Documents\DHS Bulletin_Feb 2005 R2.pdf" />
+    <Content Include="Documents\Diagram bugs CSET.pdf" />
+    <Content Include="Documents\DialInAccessPolicy_SANS.docx" />
+    <Content Include="Documents\DialInAccessPolicy_SANS.pdf" />
+    <Content Include="Documents\DigitalCertificates.pdf" />
+    <Content Include="Documents\DisasterPreparedness_DHS.pdf" />
+    <Content Include="Documents\DisasterPreparedness_Florida.pdf" />
+    <Content Include="Documents\DisasterPreparedness_Nascio.pdf" />
+    <Content Include="Documents\DisasterRecovery2_SANS.pdf" />
+    <Content Include="Documents\DNS-recursion033006.pdf" />
+    <Content Include="Documents\document.pdf" />
+    <Content Include="Documents\DOD8551.pdf" />
+    <Content Include="Documents\DODI 855201.pdf" />
+    <Content Include="Documents\DODI-8500.2.pdf" />
+    <Content Include="Documents\EE Source Requirements.pdf" />
+    <Content Include="Documents\EncryptionPolicy_SANS.docx" />
+    <Content Include="Documents\EncryptionPolicy_SANS.pdf" />
+    <Content Include="Documents\EndUserEncrypKeyProt_SANS.pdf" />
+    <Content Include="Documents\Energy_Control_Sys_Security_Stds-DOE.pdf" />
+    <Content Include="Documents\EquipDisposalPolicy_SANS.docx" />
+    <Content Include="Documents\EquipDisposalPolicy_SANS.pdf" />
+    <Content Include="Documents\fcd1.pdf" />
+    <Content Include="Documents\Final_CNSSI_1253.pdf" />
+    <Content Include="Documents\FIPS 140-1.pdf" />
+    <Content Include="Documents\FIPS 140-2.pdf" />
+    <Content Include="Documents\FIPS 197.pdf" />
+    <Content Include="Documents\FIPS 199.pdf" />
+    <Content Include="Documents\FIPS 201-1-chng1.pdf" />
+    <Content Include="Documents\FIPS-200-final-march.pdf" />
+    <Content Include="Documents\FISMA2002-final.pdf" />
+    <Content Include="Documents\Forensics_RP.pdf" />
+    <Content Include="Documents\GAO-09-432T_10Mar09.pdf" />
+    <Content Include="Documents\GES_IG_0708.pdf" />
+    <Content Include="Documents\GES_IG_1_0702.pdf" />
+    <Content Include="Documents\GES_IG_2_0703.pdf" />
+    <Content Include="Documents\GES_IG_3_0703.pdf" />
+    <Content Include="Documents\GES_Networks_0505.pdf" />
+    <Content Include="Documents\GES_R&amp;R_artifact.pdf" />
+    <Content Include="Documents\Guide-to-Increased-Security-ICS.pdf" />
+    <Content Include="Documents\Hardening_Network_Infrastructure_FS.pdf" />
+    <Content Include="Documents\help\CSETHelp.chm" />
+    <Content Include="Documents\help\CSET_Help_File_Title_Mappings.docx" />
+    <Content Include="Documents\HIPAA.pdf" />
+    <Content Include="Documents\HSPD-7.pdf" />
+    <Content Include="Documents\htmlhelp\about_cset.htm" />
+    <Content Include="Documents\htmlhelp\accessibility_document.htm" />
+    <Content Include="Documents\htmlhelp\advanced__import_module.htm" />
+    <Content Include="Documents\htmlhelp\advisory.htm" />
+    <Content Include="Documents\htmlhelp\analysis_screen.htm" />
+    <Content Include="Documents\htmlhelp\assessment_categories.htm" />
+    <Content Include="Documents\htmlhelp\assessment_modes_1.htm" />
+    <Content Include="Documents\htmlhelp\assessment_modes_2.htm" />
+    <Content Include="Documents\htmlhelp\assessment_screen_questions_mode.htm" />
+    <Content Include="Documents\htmlhelp\assessment_screen_requirements_mode.htm" />
+    <Content Include="Documents\htmlhelp\assessment_section.htm" />
+    <Content Include="Documents\htmlhelp\browse_screen.htm" />
+    <Content Include="Documents\htmlhelp\c2m2_maturity_indicator_levels.htm" />
+    <Content Include="Documents\htmlhelp\category_rankings.htm" />
+    <Content Include="Documents\htmlhelp\cfats_tiers.htm" />
+    <Content Include="Documents\htmlhelp\change_password.htm" />
+    <Content Include="Documents\htmlhelp\comments_section.htm" />
+    <Content Include="Documents\htmlhelp\contacts_management.htm" />
+    <Content Include="Documents\htmlhelp\cset_revision_history.htm" />
+    <Content Include="Documents\htmlhelp\cset_standards_and_groupings.htm" />
+    <Content Include="Documents\htmlhelp\css\all.css" />
+    <Content Include="Documents\htmlhelp\css\csethelp.css" />
+    <Content Include="Documents\htmlhelp\css\printed.css" />
+    <Content Include="Documents\htmlhelp\custom.css" />
+    <Content Include="Documents\htmlhelp\cybersecurity_framework_description.htm" />
+    <Content Include="Documents\htmlhelp\dashboard_in_questions_requirements_mode.htm" />
+    <Content Include="Documents\htmlhelp\details_section_question_mode.htm" />
+    <Content Include="Documents\htmlhelp\details_section_requirements_mode.htm" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0030.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0031.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0032.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0033.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0034.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0035.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0036.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0037.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0038.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0039.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0041.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0042.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0043.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0044.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0045.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0046.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0047.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0048.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0049.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004a.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004b.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004c.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004d.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004e.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004f.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0050.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0051.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0052.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0053.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0054.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0055.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0056.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0057.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0058.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0059.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu005a.txt" />
+    <Content Include="Documents\htmlhelp\de_search\0xu005f.txt" />
+    <Content Include="Documents\htmlhelp\de_search\ids.txt" />
+    <Content Include="Documents\htmlhelp\de_search\prefixes.txt" />
+    <Content Include="Documents\htmlhelp\de_style.css" />
+    <Content Include="Documents\htmlhelp\disclaimer.htm" />
+    <Content Include="Documents\htmlhelp\discoveries_section.htm" />
+    <Content Include="Documents\htmlhelp\discoveries_tear_out_sheets.htm" />
+    <Content Include="Documents\htmlhelp\documents_section.htm" />
+    <Content Include="Documents\htmlhelp\document_manager_window.htm" />
+    <Content Include="Documents\htmlhelp\document_questions_list_window.htm" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_about_cset_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_accessibility_document_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_10.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_11.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_12.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_13.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_14.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_15.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_16.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_17.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_7.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_8.png" />
+    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_9.png" />
+    <Content Include="Documents\htmlhelp\drex_advisory_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_analysis_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_analysis_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_analysis_screen_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_analysis_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_modes_1_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_modes_1_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_browse_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_browse_screen_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_browse_screen_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_browse_screen_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_browse_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_1.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_10.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_11.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_12.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_13.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_2.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_3.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_4.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_5.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_6.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_7.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_8.png" />
+    <Content Include="Documents\htmlhelp\drex_bullet_9.png" />
+    <Content Include="Documents\htmlhelp\drex_c2m2_maturity_indicator_levels_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_c2m2_maturity_indicator_levels_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_category_rankings_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_category_rankings_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_category_rankings_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_change_password_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_cybersecurity_framework_description_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_cybersecurity_framework_description_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_requirements_mode_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_requirements_mode_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_discoveries_section_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_discoveries_section_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_discoveries_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_document_manager_window_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_document_questions_list_window_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_evaluation_preparation_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_executive_summary__overview__and_comments_screen_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_exporting_a_cset_assessment_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_export_to_excel_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_file_list" />
+    <Content Include="Documents\htmlhelp\drex_framework_implementation_tiers_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_framework_implementation_tiers_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_help_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_importing_a__csetw_file_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_importing_a__cset_file_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_index_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_keyboard_shortcuts_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_overview_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_overview_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_preparation_menu_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_preparation_menu_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_preparation_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_preparation_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_start_new_assessment_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_start_new_assessment_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_protected_features_window_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_protected_features_window_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_protected_features_window_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_protected_features_window_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_protected_features_window_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_9.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_menu_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_menu_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_10.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_11.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_12.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_13.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_9.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_question_filter_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_question_filter_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_references_section_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_references_section_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_references_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_register_a_user_account_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_register_a_user_account_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_report_builder_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_resource_library_window_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_results_menu_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_results_menu_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_results_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_results_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_results_overall_ranked_categories_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_results_standards_ranked_categories_screen_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_results_standards_results_by_category_screen_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_results_standards_summary_screen_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_fips_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_general_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_sal_window_simple_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_search_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_search_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_search_screen_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_search_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_standards_results_by_category_multiple_standards_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_10.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_7.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_8.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_9.png" />
+    <Content Include="Documents\htmlhelp\drex_supplemental_section_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_supplemental_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_terms_of_use_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_title_bar_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_title_bar_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_title_bar_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_title_bar_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_title_bar_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_title_bar_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_user_profile_1_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_user_profile_1_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_user_profile_1_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_user_profile_1_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_user_profile_1_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_user_profile_2_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_using_the_stand_alone_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_using_the_stand_alone_custom_2.png" />
+    <Content Include="Documents\htmlhelp\enterprise_install.htm" />
+    <Content Include="Documents\htmlhelp\evaluation_preparation.htm" />
+    <Content Include="Documents\htmlhelp\executive_summary_report.htm" />
+    <Content Include="Documents\htmlhelp\executive_summary__overview__and_comments_screen.htm" />
+    <Content Include="Documents\htmlhelp\exporting_a_cset_assessment.htm" />
+    <Content Include="Documents\htmlhelp\export_to_excel.htm" />
+    <Content Include="Documents\htmlhelp\framework_implementation_tiers.htm" />
+    <Content Include="Documents\htmlhelp\frequently_asked_questions__faqs_.htm" />
+    <Content Include="Documents\htmlhelp\general_sal_considerations.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___capital_assets.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___death.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___economic_impact.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___environmental_cleanup.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___hospital.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___injury.htm" />
+    <Content Include="Documents\htmlhelp\glossary.htm" />
+    <Content Include="Documents\htmlhelp\help_menu.htm" />
+    <Content Include="Documents\htmlhelp\importing_a__csetw_file.htm" />
+    <Content Include="Documents\htmlhelp\importing_a__cset_file.htm" />
+    <Content Include="Documents\htmlhelp\import_export_a_cset_assessment.htm" />
+    <Content Include="Documents\htmlhelp\index.htm" />
+    <Content Include="Documents\htmlhelp\initiation_scenarios.htm" />
+    <Content Include="Documents\htmlhelp\installation_procedure.htm" />
+    <Content Include="Documents\htmlhelp\introduction.htm" />
+    <Content Include="Documents\htmlhelp\introduction_to_cset.htm" />
+    <Content Include="Documents\htmlhelp\i\blocks\interface-icons\delicious_logo.png" />
+    <Content Include="Documents\htmlhelp\i\blocks\interface-icons\digg-button.png" />
+    <Content Include="Documents\htmlhelp\i\blocks\interface-icons\interface-icons-sprite-8.png" />
+    <Content Include="Documents\htmlhelp\i\blocks\interface-icons\interface-icons-sprite.png" />
+    <Content Include="Documents\htmlhelp\i\blocks\search\loading.gif" />
+    <Content Include="Documents\htmlhelp\i\blocks\splitter\splitter-sprite.png" />
+    <Content Include="Documents\htmlhelp\i\blocks\tree\sprite.png" />
+    <Content Include="Documents\htmlhelp\i\blocks\work-zone\header-bg.png" />
+    <Content Include="Documents\htmlhelp\i\null.gif" />
+    <Content Include="Documents\htmlhelp\i\Thumbs.db" />
+    <Content Include="Documents\htmlhelp\js\all.js" />
+    <Content Include="Documents\htmlhelp\js\all2.js" />
+    <Content Include="Documents\htmlhelp\js\drexplain.data.index.js" />
+    <Content Include="Documents\htmlhelp\js\oembed.js" />
+    <Content Include="Documents\htmlhelp\js\socialscript.js" />
+    <Content Include="Documents\htmlhelp\js\tooltips.js" />
+    <Content Include="Documents\htmlhelp\keyboard_shortcuts.htm" />
+    <Content Include="Documents\htmlhelp\main_cset_window_sections.htm" />
+    <Content Include="Documents\htmlhelp\operation_menus.htm" />
+    <Content Include="Documents\htmlhelp\overview.htm" />
+    <Content Include="Documents\htmlhelp\parameter_editor_window.htm" />
+    <Content Include="Documents\htmlhelp\preparation_menu.htm" />
+    <Content Include="Documents\htmlhelp\prepare_assessment_info.htm" />
+    <Content Include="Documents\htmlhelp\prepare_demographics_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_mode_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_sal_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_section.htm" />
+    <Content Include="Documents\htmlhelp\prepare_standard_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_start_new_assessment.htm" />
+    <Content Include="Documents\htmlhelp\protected_features_window.htm" />
+    <Content Include="Documents\htmlhelp\questions_discoveries_window.htm" />
+    <Content Include="Documents\htmlhelp\questions_menu.htm" />
+    <Content Include="Documents\htmlhelp\questions_screen.htm" />
+    <Content Include="Documents\htmlhelp\question_details__resources__and_comments.htm" />
+    <Content Include="Documents\htmlhelp\question_filter.htm" />
+    <Content Include="Documents\htmlhelp\references_section.htm" />
+    <Content Include="Documents\htmlhelp\register_a_user_account.htm" />
+    <Content Include="Documents\htmlhelp\reports_screen.htm" />
+    <Content Include="Documents\htmlhelp\report_builder.htm" />
+    <Content Include="Documents\htmlhelp\resource_library_window.htm" />
+    <Content Include="Documents\htmlhelp\results_menu.htm" />
+    <Content Include="Documents\htmlhelp\results_overall_ranked_categories_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_ranked_questions_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_section.htm" />
+    <Content Include="Documents\htmlhelp\results_standards_ranked_categories_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_standards_results_by_category_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_standards_summary_screen.htm" />
+    <Content Include="Documents\htmlhelp\sal_window_fips_selection.htm" />
+    <Content Include="Documents\htmlhelp\sal_window_general_selection.htm" />
+    <Content Include="Documents\htmlhelp\sal_window_simple_selection.htm" />
+    <Content Include="Documents\htmlhelp\search_screen.htm" />
+    <Content Include="Documents\htmlhelp\sitemap.xml" />
+    <Content Include="Documents\htmlhelp\sitemap_index.xml" />
+    <Content Include="Documents\htmlhelp\site_cyber_security_plan.htm" />
+    <Content Include="Documents\htmlhelp\site_detail_report.htm" />
+    <Content Include="Documents\htmlhelp\site_summary_report.htm" />
+    <Content Include="Documents\htmlhelp\standards_analysis.htm" />
+    <Content Include="Documents\htmlhelp\standards_results_by_category_multiple_standards.htm" />
+    <Content Include="Documents\htmlhelp\stand_alone_install.htm" />
+    <Content Include="Documents\htmlhelp\supplemental_section.htm" />
+    <Content Include="Documents\htmlhelp\system_basics.htm" />
+    <Content Include="Documents\htmlhelp\system_requirements.htm" />
+    <Content Include="Documents\htmlhelp\table_of_contents.htm" />
+    <Content Include="Documents\htmlhelp\terms_of_use.htm" />
+    <Content Include="Documents\htmlhelp\title_bar.htm" />
+    <Content Include="Documents\htmlhelp\tools_menu.htm" />
+    <Content Include="Documents\htmlhelp\user_profile_1.htm" />
+    <Content Include="Documents\htmlhelp\user_profile_2.htm" />
+    <Content Include="Documents\htmlhelp\using_the_stand_alone.htm" />
+    <Content Include="Documents\I332-005R-2005 - IDS Guidelines - NSA.pdf" />
+    <Content Include="Documents\I733-009R-2008 - NSA.pdf" />
+    <Content Include="Documents\I733-032R-2006 - NSA.pdf" />
+    <Content Include="Documents\I733-042R-2008 - NSA DB.pdf" />
+    <Content Include="Documents\icd-704.pdf" />
+    <Content Include="Documents\ICS Handbook v4.pdf" />
+    <Content Include="Documents\ICS_RefModel.pdf" />
+    <Content Include="Documents\IH_CommunicationLog_SANS.pdf" />
+    <Content Include="Documents\IH_Contacts_SANS.pdf" />
+    <Content Include="Documents\IH_Containment_SANS.pdf" />
+    <Content Include="Documents\IH_Eradication_SANS.pdf" />
+    <Content Include="Documents\IH_Identification_SANS.pdf" />
+    <Content Include="Documents\IH_Survey_SANS.pdf" />
+    <Content Include="Documents\IMAF_10tn025.pdf" />
+    <Content Include="Documents\IncidentResponsePlan_template_HHS.docx" />
+    <Content Include="Documents\IncidentResponsePlan_template_HHS.pdf" />
+    <Content Include="Documents\IndustrialCyberSecurity.pdf" />
+    <Content Include="Documents\InfoSecControlEffectiveness_SANS.pdf" />
+    <Content Include="Documents\InfoSecPolicy Dev_1331_SANS.pdf" />
+    <Content Include="Documents\InfoSecurityBasics.pdf" />
+    <Content Include="Documents\InfoSensitivityPolicy_SANS.docx" />
+    <Content Include="Documents\InfoSensitivityPolicy_SANS.pdf" />
+    <Content Include="Documents\InfoSysSecurityPlan-abqspin.docx" />
+    <Content Include="Documents\InfoSysSecurityPlan-abqspin.pdf" />
+    <Content Include="Documents\INGAAControlSystemsCyberSecurityGuidelines.pdf" />
+    <Content Include="Documents\Insiderthreat_06tr026.pdf" />
+    <Content Include="Documents\Insiderthreat_08tr009.pdf" />
+    <Content Include="Documents\Insiderthreat_11tn006.pdf" />
+    <Content Include="Documents\Insiderthreat_CSG-V3.pdf" />
+    <Content Include="Documents\Insiderthreat_ForeignTheftIP.pdf" />
+    <Content Include="Documents\Insiderthreat_gov2008.pdf" />
+    <Content Include="Documents\Insiderthreat_it2008.pdf" />
+    <Content Include="Documents\Insiderthreat_IUC_March 2009P.pdf" />
+    <Content Include="Documents\Insiderthreat_MERIT.pdf" />
+    <Content Include="Documents\Insiderthreat_programmers_1208.pdf" />
+    <Content Include="Documents\Insiderthreat_TBP0210.pdf" />
+    <Content Include="Documents\iOS8_Hardening_Guide.pdf" />
+    <Content Include="Documents\IP Camera.pdf" />
+    <Content Include="Documents\IP Phone.pdf" />
+    <Content Include="Documents\IPIH_Checklist_SANS.pdf" />
+    <Content Include="Documents\IPIH_Contacts_SANS.pdf" />
+    <Content Include="Documents\IPIH_Containment_SANS.pdf" />
+    <Content Include="Documents\IPIH_Eradication_SANS.pdf" />
+    <Content Include="Documents\IPIH_Identification_SANS.pdf" />
+    <Content Include="Documents\IPv6 Malware-Tunneling.pdf" />
+    <Content Include="Documents\IPv6-IPv4-threats.pdf" />
+    <Content Include="Documents\ISA 62443-2009.pdf" />
+    <Content Include="Documents\ISA 62443-2013.pdf" />
+    <Content Include="Documents\ISASecurityGuide.pdf" />
+    <Content Include="Documents\ISO 15408.pdf" />
+    <Content Include="Documents\ISO 27001.pdf" />
+    <Content Include="Documents\ISO-IEC 27001 2013.pdf" />
+    <Content Include="Documents\ISS_Nebraska.pdf" />
+    <Content Include="Documents\KeyMgtPlan_Template_PSWN.pdf" />
+    <Content Include="Documents\LabSecPolicy_SANS.docx" />
+    <Content Include="Documents\LabSecPolicy_SANS.pdf" />
+    <Content Include="Documents\list.txt" />
+    <Content Include="Documents\m03-18.pdf" />
+    <Content Include="Documents\m05-08.pdf" />
+    <Content Include="Documents\m06-16.pdf" />
+    <Content Include="Documents\m07-16.pdf" />
+    <Content Include="Documents\m08-09.pdf" />
+    <Content Include="Documents\m10-06.pdf" />
+    <Content Include="Documents\m10-22.pdf" />
+    <Content Include="Documents\m10-23.pdf" />
+    <Content Include="Documents\m11-11.pdf" />
+    <Content Include="Documents\m11-33.pdf" />
+    <Content Include="Documents\MalwareThreatsMitigation.pdf" />
+    <Content Include="Documents\Medical-Components.pdf" />
+    <Content Include="Documents\MitigationsForVulnerabilitiesCSNetsISA.pdf" />
+    <Content Include="Documents\Mitigation_Strategies_2014.pdf" />
+    <Content Include="Documents\MultiProtocol.pdf" />
+    <Content Include="Documents\National_Cyberspace_Strategy.pdf" />
+    <Content Include="Documents\national_emergency_communications_plan.pdf" />
+    <Content Include="Documents\NEI 08-09 Rev 6.pdf" />
+    <Content Include="Documents\NERC_Glossary_of_Terms_2010April20.pdf" />
+    <Content Include="Documents\Network Monitor_11tr005.pdf" />
+    <Content Include="Documents\NIPP_Plan.pdf" />
+    <Content Include="Documents\NIPP_SSP-banking.pdf" />
+    <Content Include="Documents\NIPP_SSP-chemical-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-commercial-facilities-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-communications-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-critical-manufacturing-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-dams-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-defense-industrial-base.pdf" />
+    <Content Include="Documents\NIPP_SSP-energy-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-food-ag-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-information-tech-2010.pdf" />
+    <Content Include="Documents\NIPP_SSP-national-monuments-icons.pdf" />
+    <Content Include="Documents\NIPP_SSP-transportation.pdf" />
+    <Content Include="Documents\NIPP_SSP-water.pdf" />
+    <Content Include="Documents\NISCC Firewall Guide.pdf" />
+    <Content Include="Documents\NIST Cybersecurity-Framework-021214-final.pdf" />
+    <Content Include="Documents\NIST Doc Guide.pdf" />
+    <Content Include="Documents\NIST IR-7275_Draft R4.pdf" />
+    <Content Include="Documents\NIST IR-7298 Draft rev1.pdf" />
+    <Content Include="Documents\NIST IR-7328_Draft.pdf" />
+    <Content Include="Documents\NIST IR-7511_Draft 2.pdf" />
+    <Content Include="Documents\NIST IR-7517_Draft.pdf" />
+    <Content Include="Documents\NIST IR-7622_Draft.pdf" />
+    <Content Include="Documents\NIST IR-7669_Draft.pdf" />
+    <Content Include="Documents\NIST IR-7693_Draft.pdf" />
+    <Content Include="Documents\NIST IR-7694_Draft.pdf" />
+    <Content Include="Documents\NIST IR-7756_Draft.pdf" />
+    <Content Include="Documents\NIST SP800-53 R4.pdf" />
+    <Content Include="Documents\NIST SP800-53 R4.pdf.txt" />
+    <Content Include="Documents\NIST SP800-60 V1.pdf" />
+    <Content Include="Documents\NIST.CSWP.04162018.pdf" />
+    <Content Include="Documents\NIST.IR.7622.pdf" />
+    <Content Include="Documents\NIST.SP.800-161.pdf" />
+    <Content Include="Documents\NIST.SP.800-171.pdf" />
+    <Content Include="Documents\NIST.SP.800-171r1.pdf" />
+    <Content Include="Documents\NIST.SP.800-82r1.pdf" />
+    <Content Include="Documents\nistir-7628_rev1_vol1_final.pdf" />
+    <Content Include="Documents\nistir-7628_vol1.pdf" />
+    <Content Include="Documents\nist_draft_sp800-81r1.pdf" />
+    <Content Include="Documents\NPPD-CyberEcosystem-WP-03-23-2011.pdf" />
+    <Content Include="Documents\NRC Reg Guide 5-71.pdf" />
+    <Content Include="Documents\NRC_10CFR2.390Public.pdf" />
+    <Content Include="Documents\NRC_10CFR73.21Protection.pdf" />
+    <Content Include="Documents\NRC_10CFR73.2Definitions.pdf" />
+    <Content Include="Documents\NRC_10CFR73.55Requirements.pdf" />
+    <Content Include="Documents\NRC_10CFR73.56Personnel.pdf" />
+    <Content Include="Documents\NSA 04-040R-02.pdf" />
+    <Content Include="Documents\NSA C4-057R-00.pdf" />
+    <Content Include="Documents\OIG-10-111_Aug10.pdf" />
+    <Content Include="Documents\OMB m02-01.pdf" />
+    <Content Include="Documents\OMB m03-22.pdf" />
+    <Content Include="Documents\OMB m04-04.pdf" />
+    <Content Include="Documents\OMB m04-25.pdf" />
+    <Content Include="Documents\OMB m05-24.pdf" />
+    <Content Include="Documents\OMB m06-19.pdf" />
+    <Content Include="Documents\OMB m07-11.pdf" />
+    <Content Include="Documents\OMB m07-18.pdf" />
+    <Content Include="Documents\OMB m08-22.pdf" />
+    <Content Include="Documents\OMB m08-23.pdf" />
+    <Content Include="Documents\OPC Security WP1.pdf" />
+    <Content Include="Documents\OPC Security WP2.pdf" />
+    <Content Include="Documents\OPC Security WP3.pdf" />
+    <Content Include="Documents\Order_8110.49_Chg_1.pdf" />
+    <Content Include="Documents\OSImodel.pdf" />
+    <Content Include="Documents\PasswordPolicy_SANS.docx" />
+    <Content Include="Documents\PasswordPolicy_SANS.pdf" />
+    <Content Include="Documents\PatchMgtGuide.pdf" />
+    <Content Include="Documents\PatchMgt_RP_Final.pdf" />
+    <Content Include="Documents\PCI_DSS_v3-2.pdf" />
+    <Content Include="Documents\pdf0205-startwithsecurity.pdf" />
+    <Content Include="Documents\PED Best Practices.pdf" />
+    <Content Include="Documents\PenetrationTesting.pdf" />
+    <Content Include="Documents\PerfBestPractices.pdf" />
+    <Content Include="Documents\PersonalCommDevice_SANS.docx" />
+    <Content Include="Documents\PersonalCommDevice_SANS.pdf" />
+    <Content Include="Documents\Personnel_Guide_0904.pdf" />
+    <Content Include="Documents\Phishing_Trends_0511.pdf" />
+    <Content Include="Documents\Physical_Strategy.pdf" />
+    <Content Include="Documents\PLAW-107publ347.pdf" />
+    <Content Include="Documents\PLAW-108publ447.pdf" />
+    <Content Include="Documents\PMP_template_HHS.docx" />
+    <Content Include="Documents\PMP_template_HHS.pdf" />
+    <Content Include="Documents\PolicyRuleReport.pdf" />
+    <Content Include="Documents\Policy_Primer_SANS.pdf" />
+    <Content Include="Documents\Port monitor_10tr010.pdf" />
+    <Content Include="Documents\Power Over Ethernet POE.pdf" />
+    <Content Include="Documents\PrivacyGuidelines20061204.pdf" />
+    <Content Include="Documents\PRIVACY_ACT_1974USC552a.pdf" />
+    <Content Include="Documents\Procurement_Language_Rev4_100809.pdf" />
+    <Content Include="Documents\protective_distribution_systems.pdf" />
+    <Content Include="Documents\Radio-Components.pdf" />
+    <Content Include="Documents\ri200215r1.pdf" />
+    <Content Include="Documents\RiskAssessPolicy_SANS.docx" />
+    <Content Include="Documents\RiskAssessPolicy_SANS.pdf" />
+    <Content Include="Documents\RiskMgtPlan_template_HHS.docx" />
+    <Content Include="Documents\RiskMgtPlan_template_HHS.pdf" />
+    <Content Include="Documents\Roadmap_EnergySector.pdf" />
+    <Content Include="Documents\RP_ICS_Incident_Response_100609.pdf" />
+    <Content Include="Documents\Safe_Social_Networking.pdf" />
+    <Content Include="Documents\SecApproach_template_HHS.docx" />
+    <Content Include="Documents\SecApproach_template_HHS.pdf" />
+    <Content Include="Documents\SecIncidentRpt_UCDavis.pdf" />
+    <Content Include="Documents\SecMetricsGuide_SANS.pdf" />
+    <Content Include="Documents\SecPlanTemplate_QIT.pdf" />
+    <Content Include="Documents\SecPlan_CoSN.pdf" />
+    <Content Include="Documents\SecPlan_USG.docx" />
+    <Content Include="Documents\SecPlan_USG.pdf" />
+    <Content Include="Documents\SecPlan_WirelessSys_PSWN.pdf" />
+    <Content Include="Documents\SecPolicyFramework_2005_1002C.pdf" />
+    <Content Include="Documents\SecPolicyRoadMap_494_SANS.pdf" />
+    <Content Include="Documents\SecureInternetAccess.pdf" />
+    <Content Include="Documents\securely-deploying-android-devices-33799.pdf" />
+    <Content Include="Documents\SecuringModems.pdf" />
+    <Content Include="Documents\Security for Wireless Networks - DSD IAD.pdf" />
+    <Content Include="Documents\Security Information and Event Management System.pdf" />
+    <Content Include="Documents\Security Requirements for Network Devices - AU DSD.pdf" />
+    <Content Include="Documents\Security-issues-countermeasure-voip-1701.pdf" />
+    <Content Include="Documents\SEPP_transportation.docx" />
+    <Content Include="Documents\SEPP_transportation.pdf" />
+    <Content Include="Documents\ServerMalwareProtection_SANS.docx" />
+    <Content Include="Documents\ServerMalwareProtection_SANS.pdf" />
+    <Content Include="Documents\ServerSecurity_SANS.docx" />
+    <Content Include="Documents\ServerSecurity_SANS.pdf" />
+    <Content Include="Documents\skipnameresolution.pdf" />
+    <Content Include="Documents\Social-Networking_Security-Risks.pdf" />
+    <Content Include="Documents\SP800-100-Mar07-2007.pdf" />
+    <Content Include="Documents\SP800-111.pdf" />
+    <Content Include="Documents\SP800-113.pdf" />
+    <Content Include="Documents\SP800-114.pdf" />
+    <Content Include="Documents\SP800-115 Security Testing.pdf" />
+    <Content Include="Documents\SP800-116.pdf" />
+    <Content Include="Documents\SP800-117.pdf" />
+    <Content Include="Documents\SP800-118_Draft.pdf" />
+    <Content Include="Documents\SP800-119.pdf" />
+    <Content Include="Documents\SP800-12.pdf" />
+    <Content Include="Documents\SP800-121.pdf" />
+    <Content Include="Documents\SP800-122.pdf" />
+    <Content Include="Documents\SP800-123.pdf" />
+    <Content Include="Documents\SP800-124.pdf" />
+    <Content Include="Documents\SP800-126_R1.pdf" />
+    <Content Include="Documents\SP800-128_Draft.pdf" />
+    <Content Include="Documents\SP800-130_Draft.pdf" />
+    <Content Include="Documents\SP800-131A.pdf" />
+    <Content Include="Documents\SP800-132.pdf" />
+    <Content Include="Documents\SP800-135.pdf" />
+    <Content Include="Documents\SP800-137_Draft.pdf" />
+    <Content Include="Documents\SP800-142.pdf" />
+    <Content Include="Documents\SP800-144_Draft.pdf" />
+    <Content Include="Documents\SP800-145_Draft.pdf" />
+    <Content Include="Documents\SP800-146_Draft.pdf" />
+    <Content Include="Documents\SP800-147.pdf" />
+    <Content Include="Documents\SP800-15.pdf" />
+    <Content Include="Documents\SP800-153 Wireless.pdf" />
+    <Content Include="Documents\SP800-16.pdf" />
+    <Content Include="Documents\SP800-18.pdf" />
+    <Content Include="Documents\SP800-23.pdf" />
+    <Content Include="Documents\SP800-27.pdf" />
+    <Content Include="Documents\SP800-28.pdf" />
+    <Content Include="Documents\SP800-30.pdf" />
+    <Content Include="Documents\SP800-32.pdf" />
+    <Content Include="Documents\SP800-34-rev1.pdf" />
+    <Content Include="Documents\SP800-35.pdf" />
+    <Content Include="Documents\SP800-36.pdf" />
+    <Content Include="Documents\SP800-37-rev1-final.pdf" />
+    <Content Include="Documents\SP800-39.pdf" />
+    <Content Include="Documents\SP800-40.pdf" />
+    <Content Include="Documents\SP800-41-rev1.pdf" />
+    <Content Include="Documents\SP800-42.pdf" />
+    <Content Include="Documents\SP800-44v2 Web Server.pdf" />
+    <Content Include="Documents\SP800-45v2.pdf" />
+    <Content Include="Documents\SP800-46r1.pdf" />
+    <Content Include="Documents\SP800-47.pdf" />
+    <Content Include="Documents\SP800-48 wireless 802.11.pdf" />
+    <Content Include="Documents\SP800-48r1.pdf" />
+    <Content Include="Documents\SP800-50.pdf" />
+    <Content Include="Documents\SP800-52.pdf" />
+    <Content Include="Documents\SP800-53-rev3-Annex1.pdf" />
+    <Content Include="Documents\SP800-53-rev3-Annex2.pdf" />
+    <Content Include="Documents\SP800-53-rev3-Annex3.pdf" />
+    <Content Include="Documents\SP800-53-rev4-ipd.pdf" />
+    <Content Include="Documents\SP800-53A_R1.pdf" />
+    <Content Include="Documents\SP800-53_R3_errata_05-01-2010.pdf" />
+    <Content Include="Documents\SP800-55-rev1.pdf" />
+    <Content Include="Documents\SP800-56A_Rev1.pdf" />
+    <Content Include="Documents\SP800-56B.pdf" />
+    <Content Include="Documents\SP800-56C.pdf" />
+    <Content Include="Documents\SP800-57-Part2 Encryption Management.pdf" />
+    <Content Include="Documents\SP800-57.pdf" />
+    <Content Include="Documents\SP800-58.pdf" />
+    <Content Include="Documents\SP800-60_Vol2-Rev1.pdf" />
+    <Content Include="Documents\SP800-61rev1.pdf" />
+    <Content Include="Documents\SP800-63-Rev1_Draft.pdf" />
+    <Content Include="Documents\SP800-63.pdf" />
+    <Content Include="Documents\SP800-64.pdf" />
+    <Content Include="Documents\SP800-65.pdf" />
+    <Content Include="Documents\SP800-70-2.pdf" />
+    <Content Include="Documents\SP800-70r1.pdf" />
+    <Content Include="Documents\SP800-73.pdf" />
+    <Content Include="Documents\SP800-76-2_Draft.pdf" />
+    <Content Include="Documents\SP800-76.pdf" />
+    <Content Include="Documents\SP800-77.pdf" />
+    <Content Include="Documents\SP800-78-3.pdf" />
+    <Content Include="Documents\SP800-79-1.pdf" />
+    <Content Include="Documents\SP800-81.pdf" />
+    <Content Include="Documents\SP800-82-Rev2 IPD.PDF" />
+    <Content Include="Documents\SP800-82.pdf" />
+    <Content Include="Documents\SP800-83.pdf" />
+    <Content Include="Documents\SP800-84.pdf" />
+    <Content Include="Documents\SP800-85B-1_Draft.pdf" />
+    <Content Include="Documents\SP800-88_rev1.pdf" />
+    <Content Include="Documents\SP800-92.pdf" />
+    <Content Include="Documents\SP800-94.pdf" />
+    <Content Include="Documents\SP800-95.pdf" />
+    <Content Include="Documents\SP800-96-091106.pdf" />
+    <Content Include="Documents\SP800-97.pdf" />
+    <Content Include="Documents\SP800-98.pdf" />
+    <Content Include="Documents\sp800_164_draft.pdf" />
+    <Content Include="Documents\Spyware Overview.pdf" />
+    <Content Include="Documents\SQL_Inject_200901.pdf" />
+    <Content Include="Documents\SQUARE_10tn022.pdf" />
+    <Content Include="Documents\SQUARE_10tn027.pdf" />
+    <Content Include="Documents\SQUARE_Acquisition.pdf" />
+    <Content Include="Documents\SSPGuidance_DHS.pdf" />
+    <Content Include="Documents\SSPTemplate_HHS.docx" />
+    <Content Include="Documents\SSPTemplate_HHS.pdf" />
+    <Content Include="Documents\SSPTemplate_Moderate_NIST.docx" />
+    <Content Include="Documents\SSPTemplate_Moderate_NIST.pdf" />
+    <Content Include="Documents\StateCommPlan_Template_DHS.docx" />
+    <Content Include="Documents\StateCommPlan_Template_DHS.pdf" />
+    <Content Include="Documents\STE-Plan_Template_NIST.docx" />
+    <Content Include="Documents\STE-Plan_Template_NIST.pdf" />
+    <Content Include="Documents\Strategy for Securing Control Systems.pdf" />
+    <Content Include="Documents\Survivability_10tn013.pdf" />
+    <Content Include="Documents\Task Planning.pdf" />
+    <Content Include="Documents\TechWriting_SecPolicy_SANS.pdf" />
+    <Content Include="Documents\TIP-10-105-01_Mobile Devices.pdf" />
+    <Content Include="Documents\TIP-11-075-01_System Integrity.pdf" />
+    <Content Include="Documents\TIP-11-103-01_Coreflood.pdf" />
+    <Content Include="Documents\Trojan-Recovery.pdf" />
+    <Content Include="Documents\tsa guide.pdf" />
+    <Content Include="Documents\UK End_User_Devices_Security_Guidance_-_Apple_iOS_9.pdf" />
+    <Content Include="Documents\Understanding_VOIP.pdf" />
+    <Content Include="Documents\U_Apple_iOS_9_V1R2_Configuration_Tables.pdf" />
+    <Content Include="Documents\U_INS_generic_v8r1.6_Checklist_20100827.pdf" />
+    <Content Include="Documents\VisitorAccessPolicy_SANS.docx" />
+    <Content Include="Documents\VisitorAccessPolicy_SANS.pdf" />
+    <Content Include="Documents\Web Link.pdf" />
+    <Content Include="Documents\Windows Server Update Services.pdf" />
+    <Content Include="Documents\Wireless Modem.pdf" />
+    <Content Include="Documents\Wireless-Security.pdf" />
+    <Content Include="Documents\WirelessCommunication_SANS.docx" />
+    <Content Include="Documents\WirelessCommunication_SANS.pdf" />
+    <Content Include="Documents\WirelessComStandard_SANS.docx" />
+    <Content Include="Documents\WirelessComStandard_SANS.pdf" />
+    <Content Include="Documents\WorkstationSecurity_SANS.docx" />
+    <Content Include="Documents\WorkstationSecurity_SANS.pdf" />
+    <Content Include="Documents\XSS_Cross-Site Scripting_10-24-07_Final.pdf" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <None Include="Data\sql16dev1.csetweb v %28localdb%29_v11.0.CSETWeb 2.scp" />
+    <None Include="Data\sql16dev1.CSETWeb v %28localdb%29_v11.0.CSETWeb.sdc" />
+    <Content Include="LuceneIndex\segments.gen">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\segments_2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_0.cfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_2.fnm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_2.frq">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_2.nrm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_2.prx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_2.tii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LuceneIndex\_2.tis">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\14 cfr 121.docx" />
+    <Content Include="Documents\ApplicationDocuments\FIPS199Language.mht" />
+    <Content Include="Documents\Word\AccessibilityFeatures.docx" />
+    <Content Include="Documents\Word\Advisory.docx" />
+    <Content Include="Documents\Word\CSET 6.0 UserGuide.docx" />
+    <Content Include="Documents\Word\CSET 6.0 UserGuide_01-08-14.docx" />
+    <Content Include="Documents\Word\CSET 6.1 Tech Release Notes.docx" />
+    <Content Include="Documents\Word\CSET 6.1 UserGuide_06-04.docx" />
+    <Content Include="Documents\Word\CSET 6.1 UserGuide_06-29.docx" />
+    <Content Include="Documents\Word\CSET 6.1 UserGuide_07-15.docx" />
+    <Content Include="Documents\Word\CSET 6.2 UserGuide_12-22.docx" />
+    <Content Include="Documents\Word\CSET 7.1 Tech Release Notes.docx" />
+    <Content Include="Documents\Word\CSET 8.0 Tech Release Notes.docx" />
+    <Content Include="Documents\Word\CSET 9.0 Tech Release Notes.docx" />
+    <Content Include="Documents\Word\CSET5AccessibilityTestDocument.docx" />
+    <Content Include="Documents\Word\FIPS199Language.docx" />
+    <Content Include="Documents\Word\Keyboard_Shortcuts.docx" />
+    <Content Include="Documents\Word\ReadMe.docx" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\runlocal.pubxml" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AnalysisController.cs" />
+    <Compile Include="Controllers\AngularConfigController.cs" />
+    <Compile Include="Controllers\AssessmentController.cs" />
+    <Compile Include="Controllers\AssessmentImportController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DemographicsController.cs" />
+    <Compile Include="Controllers\DiagnosticController.cs" />
+    <Compile Include="Controllers\ExcelExportController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\FileDownloadController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
+    <Compile Include="Controllers\FrameworkController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\ProtectedFeatureController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\ReferenceDocumentsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\ResetPasswordController.cs" />
+    <Compile Include="Controllers\ResourceLibraryController.cs" />
+    <Compile Include="Controllers\SALController.cs" />
+    <Compile Include="Controllers\sal\GeneralSalController.cs" />
+    <Compile Include="Controllers\SchemaController.cs" />
+    <Compile Include="Controllers\StandardsController.cs" />
+    <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CSETAuthorizeEarlyAttribute.cs" />
+    <Compile Include="Helpers\CSETAuthorizeAttribute.cs" />
+    <Compile Include="Helpers\ElmahWrapper.cs" />
+    <Compile Include="Helpers\HangfireExecutor.cs" />
+    <Compile Include="Helpers\HangfireLogger.cs" />
+    <Compile Include="Helpers\InMemoryMultipartFormDataStreamProvider.cs" />
+    <Compile Include="Helpers\PropertyHelpers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Version\VersionHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\uploads\" />
+    <Folder Include="assets\" />
+    <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
+    <Folder Include="Documents\htmlhelp\spell\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.localdb.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.localhost.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{92bc0676-f3fc-4299-8483-39410d177ec7}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CryptoBuffer\CryptoBuffer.csproj">
+      <Project>{4e44142d-08e2-4f40-9532-896e1f00018c}</Project>
+      <Name>CryptoBuffer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+      <Project>{227f840d-ec18-4431-a4e8-061bd351e6cc}</Project>
+      <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExportCSV\ExportCSV.csproj">
+      <Project>{6f0dd06e-eb8c-4b13-bd4b-20a267f96537}</Project>
+      <Name>ExportCSV</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Controllers\typescript\CopyAndPaste.ts" />
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'localdb|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'localhost|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>46000</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:46000/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
+  <!-- the step to copy the config file first avoids a 'File is being used by another process' error -->
+  <Target Name="BeforeBuild">
+    <Copy SourceFiles="Web.config" DestinationFiles="Web.temp.config" OverwriteReadOnlyFiles="True" />
+    <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+  </Target>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="Web.temp.config" DestinationFiles="Web.config" OverwriteReadOnlyFiles="True" />
+    <Delete Files="Web.temp.config" />
+  </Target>
+</Project>

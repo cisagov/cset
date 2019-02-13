@@ -1,0 +1,84 @@
+<!----------------------
+
+   Copyright 2018 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<mat-dialog-content>
+  <div class="item bigitem">
+    <h2>Discovery Details</h2>
+    <p>The question discovery section is for advanced users that want to collect extra infromation about specific questions
+      in the assessment.</p>
+
+    <div class="form-group">
+      <label for="title" class="form-label">Title</label>
+      <input id="title" type="text" class="form-control" [(ngModel)]="finding.Summary">
+    </div>
+
+    <div class="form-group">
+      <label for="importance" class="form-label">Importance</label>
+      <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.Importance_Id" (change)="updateImportance($event.target.value)">
+        <option *ngFor="let import of importances" [value]="import?.Importance_Id">{{import?.Value}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="date" class="form-label">Resolution Date</label>
+      <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="finding.Resolution_Date" [matDatepicker]="picker"
+        (focus)="picker.open()" (click)="picker.open()" (change)="update()">
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+
+    <div class="form-group">
+      <label for="issue" class="form-label">Issue</label>
+      <textarea id="issue" class="form-control" type="text" [(ngModel)]="finding.Issue"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="impact" class="form-label">Impacts</label>
+      <textarea id="impact" class="form-control" type="text" [(ngModel)]="finding.Impact"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="recommendations" class="form-label">Recommendations</label>
+      <textarea id="recommendations" class="form-control" type="text" [(ngModel)]="finding.Recommendations"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="vulnerabilities" class="form-label">Vulnerabilities</label>
+      <textarea id="vulnerabilities" class="form-control" type="text" [(ngModel)]="finding.Vulnerabilities"></textarea>
+    </div>
+  </div>
+
+  <!-- interested parties -->
+  <div class="form-group">
+    <label for="contacts" class="form-label">Individuals Responsible</label>
+
+    <div style="padding-left: .5em;">
+
+      <div *ngFor="let contact of finding.Finding_Contacts" class="indiv-responsible">
+        <input type="checkbox" id="{{contact.Assessment_Contact_Id}}" [(ngModel)]="contact.Selected">
+        <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
+      </div>
+
+      <a (click)="clearMulti()">clear</a>
+    </div>
+
+  </div>
+
+  <button class="btn btn-primary" (click)="update()">Close</button>
+
+</mat-dialog-content>

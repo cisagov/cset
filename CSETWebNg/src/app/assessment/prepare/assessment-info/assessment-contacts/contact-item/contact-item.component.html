@@ -1,0 +1,87 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="contact-list-item d-flex align-items-center flex-00a">
+  <ng-template #contact_display [ngIf]="editMode">
+    <div>{{contact.FirstName}} {{contact.LastName}}</div>
+    <div>{{contact.PrimaryEmail}}</div>
+    <div *ngIf="showControls()" class="contact-controls">
+      <select name="role" id="role" [(ngModel)]="contact.AssessmentRoleId" (change)="changeRole()">
+        <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
+      </select>
+      <span style="white-space: nowrap">
+        <button type="button" class="btn btn-xs glyphicon glyphicon-pencil" (click)="editContact()"></button>
+        <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-check" (click)="openEmailDialog()" *ngIf="false"></button>
+        <button type="button" class="btn btn-xs btn-primary glyphicon glyphicon-envelope" (click)="openEmailDialog()" *ngIf="!auth.isLocal"></button>
+        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
+      </span>
+    </div>
+  </ng-template>
+  <span class="glyphicon glyphicon-user" *ngIf="contact.IsFirst"></span>
+  <div *ngIf="!showControls()"> {{contact.AssessmentRole}} </div>
+
+
+
+  <ng-template #contact_search [ngIf]="!editMode">
+    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (input)="search()" class="contact-add-fields">
+      <input type="text" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel" placeholder="First Name"
+        (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactFName" required>
+      <mat-autocomplete #autoContactFName="matAutocomplete">
+        <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.FirstName">
+          {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
+        </mat-option>
+      </mat-autocomplete>
+
+      <input type="text" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel" placeholder="Last Name"
+        (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactLName" required>
+      <mat-autocomplete #autoContactLName="matAutocomplete">
+        <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.LastName">
+          {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
+        </mat-option>
+      </mat-autocomplete>
+
+      <input type="email" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel" placeholder="Email Address"
+        (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContact" email>
+
+      <mat-autocomplete #autoContact="matAutocomplete">
+        <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.PrimaryEmail">
+          {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
+        </mat-option>
+      </mat-autocomplete>
+      <span *ngIf="showControls()">
+        <select name="role" id="role" [(ngModel)]="contact.AssessmentRoleId">
+          <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
+        </select>
+      </span>
+      <span *ngIf="!showControls()">{{contact.AssessmentRole}}</span>
+      <span style="white-space: nowrap">
+        <button type="submit" class="btn btn-xs btn-success glyphicon glyphicon-save"></button>
+        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
+      </span>
+
+      <div *ngIf="f.submitted && !fName.valid" class="alert alert-danger">First Name is required</div>
+      <div *ngIf="f.submitted && !lName.valid" class="alert alert-danger">Last Name is required</div>
+      <div *ngIf="f.submitted && !email.valid" class="alert alert-danger">Valid email address is required</div>
+    </form>
+  </ng-template>
+</div>
+<hr class="contact-item-hr">

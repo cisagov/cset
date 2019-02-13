@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CSETWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CATALOG_RECOMMENDATIONS_DATA">
+          <Key>
+            <PropertyRef Name="Data_Id" />
+          </Key>
+          <Property Name="Data_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Req_Oracle_Id" Type="int" />
+          <Property Name="Parent_Heading_Id" Type="int" />
+          <Property Name="Heading" Type="nvarchar(max)" />
+          <Property Name="Heading_Html" Type="nvarchar(max)" />
+          <Property Name="Section_Long_Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="Section_Short_Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="Topic_Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Section_Short_Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Requirement_Text" Type="nvarchar(max)" />
+          <Property Name="Supplemental_Guidance" Type="nvarchar(max)" />
+          <Property Name="Supplemental_Guidance_Html" Type="nvarchar(max)" />
+          <Property Name="Requirement" Type="nvarchar(max)" />
+          <Property Name="Requirement_Html" Type="nvarchar(max)" />
+          <Property Name="Enhancement" Type="nvarchar(max)" />
+          <Property Name="Enhancement_Html" Type="nvarchar(max)" />
+          <Property Name="Flow_Document" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CATALOG_RECOMMENDATIONS_HEADINGS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Heading_Num" Type="int" Nullable="false" />
+          <Property Name="Heading_Name" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FILE_KEYWORDS">
+          <Key>
+            <PropertyRef Name="Gen_File_Id" />
+            <PropertyRef Name="Keyword" />
+          </Key>
+          <Property Name="Gen_File_Id" Type="int" Nullable="false" />
+          <Property Name="Keyword" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FILE_REF_KEYS">
+          <Key>
+            <PropertyRef Name="Doc_Num" />
+          </Key>
+          <Property Name="Doc_Num" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GEN_FILE">
+          <Key>
+            <PropertyRef Name="Gen_File_Id" />
+          </Key>
+          <Property Name="Gen_File_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="File_Type_Id" Type="numeric" Precision="38" Scale="0" />
+          <Property Name="File_Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="File_Size" Type="float" />
+          <Property Name="Doc_Num" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Short_Name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Publish_Date" Type="datetime" />
+          <Property Name="Doc_Version" Type="varchar" MaxLength="20" />
+          <Property Name="Summary" Type="varchar" MaxLength="2000" />
+          <Property Name="Source_Type" Type="varchar" MaxLength="50" />
+          <Property Name="Data" Type="varbinary(max)" />
+          <Property Name="Is_Uploaded" Type="bit" />
+        </EntityType>
+        <EntityType Name="GEN_FILE_LIB_PATH_CORL">
+          <Key>
+            <PropertyRef Name="Gen_File_Id" />
+            <PropertyRef Name="Lib_Path_Id" />
+          </Key>
+          <Property Name="Gen_File_Id" Type="int" Nullable="false" />
+          <Property Name="Lib_Path_Id" Type="numeric" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PROCUREMENT_LANGUAGE_DATA">
+          <Key>
+            <PropertyRef Name="Procurement_Id" />
+          </Key>
+          <Property Name="Procurement_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Parent_Heading_Id" Type="int" />
+          <Property Name="Section_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Topic_Name" Type="nvarchar(max)" />
+          <Property Name="Heading" Type="nvarchar(max)" />
+          <Property Name="Basis" Type="nvarchar(max)" />
+          <Property Name="Language_Guidance" Type="nvarchar(max)" />
+          <Property Name="Procurement_Language" Type="nvarchar(max)" />
+          <Property Name="Fatmeasures" Type="nvarchar(max)" />
+          <Property Name="Satmeasures" Type="nvarchar(max)" />
+          <Property Name="Maintenance_Guidance" Type="nvarchar(max)" />
+          <Property Name="References_Doc" Type="nvarchar(max)" />
+          <Property Name="Flow_Document" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PROCUREMENT_LANGUAGE_HEADINGS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Heading_Num" Type="int" />
+          <Property Name="Heading_Name" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_LIBRARY_PATH">
+          <Key>
+            <PropertyRef Name="Lib_Path_Id" />
+          </Key>
+          <Property Name="Lib_Path_Id" Type="numeric" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="Parent_Path_Id" Type="numeric" Precision="38" Scale="0" />
+          <Property Name="Path_Name" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <Association Name="FILE_KEYWORDS_GEN_FILE_FK">
+          <End Role="GEN_FILE" Type="Self.GEN_FILE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FILE_KEYWORDS" Type="Self.FILE_KEYWORDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GEN_FILE">
+              <PropertyRef Name="Gen_File_Id" />
+            </Principal>
+            <Dependent Role="FILE_KEYWORDS">
+              <PropertyRef Name="Gen_File_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS">
+          <End Role="CATALOG_RECOMMENDATIONS_HEADINGS" Type="Self.CATALOG_RECOMMENDATIONS_HEADINGS" Multiplicity="0..1" />
+          <End Role="CATALOG_RECOMMENDATIONS_DATA" Type="Self.CATALOG_RECOMMENDATIONS_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATALOG_RECOMMENDATIONS_HEADINGS">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CATALOG_RECOMMENDATIONS_DATA">
+              <PropertyRef Name="Parent_Heading_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GEN_FILE_FILE_REF_KEYS">
+          <End Role="FILE_REF_KEYS" Type="Self.FILE_REF_KEYS" Multiplicity="1" />
+          <End Role="GEN_FILE" Type="Self.GEN_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILE_REF_KEYS">
+              <PropertyRef Name="Doc_Num" />
+            </Principal>
+            <Dependent Role="GEN_FILE">
+              <PropertyRef Name="Doc_Num" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE">
+          <End Role="GEN_FILE" Type="Self.GEN_FILE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GEN_FILE_LIB_PATH_CORL" Type="Self.GEN_FILE_LIB_PATH_CORL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GEN_FILE">
+              <PropertyRef Name="Gen_File_Id" />
+            </Principal>
+            <Dependent Role="GEN_FILE_LIB_PATH_CORL">
+              <PropertyRef Name="Gen_File_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH">
+          <End Role="REF_LIBRARY_PATH" Type="Self.REF_LIBRARY_PATH" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GEN_FILE_LIB_PATH_CORL" Type="Self.GEN_FILE_LIB_PATH_CORL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_LIBRARY_PATH">
+              <PropertyRef Name="Lib_Path_Id" />
+            </Principal>
+            <Dependent Role="GEN_FILE_LIB_PATH_CORL">
+              <PropertyRef Name="Lib_Path_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS">
+          <End Role="PROCUREMENT_LANGUAGE_HEADINGS" Type="Self.PROCUREMENT_LANGUAGE_HEADINGS" Multiplicity="0..1" />
+          <End Role="PROCUREMENT_LANGUAGE_DATA" Type="Self.PROCUREMENT_LANGUAGE_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROCUREMENT_LANGUAGE_HEADINGS">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PROCUREMENT_LANGUAGE_DATA">
+              <PropertyRef Name="Parent_Heading_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH">
+          <End Role="REF_LIBRARY_PATH" Type="Self.REF_LIBRARY_PATH" Multiplicity="0..1" />
+          <End Role="REF_LIBRARY_PATH1" Type="Self.REF_LIBRARY_PATH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_LIBRARY_PATH">
+              <PropertyRef Name="Lib_Path_Id" />
+            </Principal>
+            <Dependent Role="REF_LIBRARY_PATH1">
+              <PropertyRef Name="Parent_Path_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CSETWebModelStoreContainer">
+          <EntitySet Name="CATALOG_RECOMMENDATIONS_DATA" EntityType="Self.CATALOG_RECOMMENDATIONS_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATALOG_RECOMMENDATIONS_HEADINGS" EntityType="Self.CATALOG_RECOMMENDATIONS_HEADINGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FILE_KEYWORDS" EntityType="Self.FILE_KEYWORDS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FILE_REF_KEYS" EntityType="Self.FILE_REF_KEYS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GEN_FILE" EntityType="Self.GEN_FILE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GEN_FILE_LIB_PATH_CORL" EntityType="Self.GEN_FILE_LIB_PATH_CORL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROCUREMENT_LANGUAGE_DATA" EntityType="Self.PROCUREMENT_LANGUAGE_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROCUREMENT_LANGUAGE_HEADINGS" EntityType="Self.PROCUREMENT_LANGUAGE_HEADINGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REF_LIBRARY_PATH" EntityType="Self.REF_LIBRARY_PATH" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FILE_KEYWORDS_GEN_FILE_FK" Association="Self.FILE_KEYWORDS_GEN_FILE_FK">
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+            <End Role="FILE_KEYWORDS" EntitySet="FILE_KEYWORDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS" Association="Self.FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS">
+            <End Role="CATALOG_RECOMMENDATIONS_HEADINGS" EntitySet="CATALOG_RECOMMENDATIONS_HEADINGS" />
+            <End Role="CATALOG_RECOMMENDATIONS_DATA" EntitySet="CATALOG_RECOMMENDATIONS_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GEN_FILE_FILE_REF_KEYS" Association="Self.FK_GEN_FILE_FILE_REF_KEYS">
+            <End Role="FILE_REF_KEYS" EntitySet="FILE_REF_KEYS" />
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE" Association="Self.FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE">
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+            <End Role="GEN_FILE_LIB_PATH_CORL" EntitySet="GEN_FILE_LIB_PATH_CORL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH" Association="Self.FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH">
+            <End Role="REF_LIBRARY_PATH" EntitySet="REF_LIBRARY_PATH" />
+            <End Role="GEN_FILE_LIB_PATH_CORL" EntitySet="GEN_FILE_LIB_PATH_CORL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS" Association="Self.FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS">
+            <End Role="PROCUREMENT_LANGUAGE_HEADINGS" EntitySet="PROCUREMENT_LANGUAGE_HEADINGS" />
+            <End Role="PROCUREMENT_LANGUAGE_DATA" EntitySet="PROCUREMENT_LANGUAGE_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH" Association="Self.FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH">
+            <End Role="REF_LIBRARY_PATH" EntitySet="REF_LIBRARY_PATH" />
+            <End Role="REF_LIBRARY_PATH1" EntitySet="REF_LIBRARY_PATH" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CSETWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GEN_FILE">
+          <Key>
+            <PropertyRef Name="Gen_File_Id" />
+          </Key>
+          <Property Name="Gen_File_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="File_Type_Id" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="File_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="File_Size" Type="Double" />
+          <Property Name="Doc_Num" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Short_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Publish_Date" Type="DateTime" Precision="3" />
+          <Property Name="Doc_Version" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Summary" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Source_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Is_Uploaded" Type="Boolean" />
+          <NavigationProperty Name="REF_LIBRARY_PATH" Relationship="CSETWebModel.GEN_FILE_LIB_PATH_CORL" FromRole="GEN_FILE" ToRole="REF_LIBRARY_PATH" />
+          <NavigationProperty Name="FILE_REF_KEYS" Relationship="CSETWebModel.FK_GEN_FILE_FILE_REF_KEYS" FromRole="GEN_FILE" ToRole="FILE_REF_KEYS" />
+          <NavigationProperty Name="FILE_KEYWORDS" Relationship="CSETWebModel.FILE_KEYWORDS_GEN_FILE_FK" FromRole="GEN_FILE" ToRole="FILE_KEYWORDS" />
+        </EntityType>
+        <EntityType Name="REF_LIBRARY_PATH">
+          <Key>
+            <PropertyRef Name="Lib_Path_Id" />
+          </Key>
+          <Property Name="Lib_Path_Id" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="Parent_Path_Id" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="Path_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REF_LIBRARY_PATH1" Relationship="Self.FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH" FromRole="REF_LIBRARY_PATH" ToRole="REF_LIBRARY_PATH1" />
+          <NavigationProperty Name="REF_LIBRARY_PATH2" Relationship="Self.FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH" FromRole="REF_LIBRARY_PATH1" ToRole="REF_LIBRARY_PATH" />
+          <NavigationProperty Name="GEN_FILE" Relationship="CSETWebModel.GEN_FILE_LIB_PATH_CORL" FromRole="REF_LIBRARY_PATH" ToRole="GEN_FILE" />
+        </EntityType>
+        <Association Name="FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH">
+          <End Role="REF_LIBRARY_PATH" Type="Self.REF_LIBRARY_PATH" Multiplicity="0..1" />
+          <End Role="REF_LIBRARY_PATH1" Type="Self.REF_LIBRARY_PATH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_LIBRARY_PATH">
+              <PropertyRef Name="Lib_Path_Id" />
+            </Principal>
+            <Dependent Role="REF_LIBRARY_PATH1">
+              <PropertyRef Name="Parent_Path_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CSETWebEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GEN_FILE" EntityType="Self.GEN_FILE" />
+          <EntitySet Name="REF_LIBRARY_PATH" EntityType="Self.REF_LIBRARY_PATH" />
+          <AssociationSet Name="FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH" Association="Self.FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH">
+            <End Role="REF_LIBRARY_PATH" EntitySet="REF_LIBRARY_PATH" />
+            <End Role="REF_LIBRARY_PATH1" EntitySet="REF_LIBRARY_PATH" />
+          </AssociationSet>
+          <AssociationSet Name="GEN_FILE_LIB_PATH_CORL" Association="CSETWebModel.GEN_FILE_LIB_PATH_CORL">
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+            <End Role="REF_LIBRARY_PATH" EntitySet="REF_LIBRARY_PATH" />
+          </AssociationSet>
+          <EntitySet Name="CATALOG_RECOMMENDATIONS_DATA" EntityType="CSETWebModel.CATALOG_RECOMMENDATIONS_DATA" />
+          <EntitySet Name="CATALOG_RECOMMENDATIONS_HEADINGS" EntityType="CSETWebModel.CATALOG_RECOMMENDATIONS_HEADINGS" />
+          <EntitySet Name="FILE_REF_KEYS" EntityType="CSETWebModel.FILE_REF_KEYS" />
+          <EntitySet Name="PROCUREMENT_LANGUAGE_DATA" EntityType="CSETWebModel.PROCUREMENT_LANGUAGE_DATA" />
+          <EntitySet Name="PROCUREMENT_LANGUAGE_HEADINGS" EntityType="CSETWebModel.PROCUREMENT_LANGUAGE_HEADINGS" />
+          <AssociationSet Name="FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS" Association="CSETWebModel.FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS">
+            <End Role="CATALOG_RECOMMENDATIONS_HEADINGS" EntitySet="CATALOG_RECOMMENDATIONS_HEADINGS" />
+            <End Role="CATALOG_RECOMMENDATIONS_DATA" EntitySet="CATALOG_RECOMMENDATIONS_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GEN_FILE_FILE_REF_KEYS" Association="CSETWebModel.FK_GEN_FILE_FILE_REF_KEYS">
+            <End Role="FILE_REF_KEYS" EntitySet="FILE_REF_KEYS" />
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS" Association="CSETWebModel.FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS">
+            <End Role="PROCUREMENT_LANGUAGE_HEADINGS" EntitySet="PROCUREMENT_LANGUAGE_HEADINGS" />
+            <End Role="PROCUREMENT_LANGUAGE_DATA" EntitySet="PROCUREMENT_LANGUAGE_DATA" />
+          </AssociationSet>
+          <EntitySet Name="FILE_KEYWORDS" EntityType="CSETWebModel.FILE_KEYWORDS" />
+          <AssociationSet Name="FILE_KEYWORDS_GEN_FILE_FK" Association="CSETWebModel.FILE_KEYWORDS_GEN_FILE_FK">
+            <End Role="GEN_FILE" EntitySet="GEN_FILE" />
+            <End Role="FILE_KEYWORDS" EntitySet="FILE_KEYWORDS" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="GEN_FILE_LIB_PATH_CORL">
+          <End Type="CSETWebModel.GEN_FILE" Role="GEN_FILE" Multiplicity="*" />
+          <End Type="CSETWebModel.REF_LIBRARY_PATH" Role="REF_LIBRARY_PATH" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CATALOG_RECOMMENDATIONS_DATA">
+          <Key>
+            <PropertyRef Name="Data_Id" />
+          </Key>
+          <Property Name="Data_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Req_Oracle_Id" Type="Int32" />
+          <Property Name="Parent_Heading_Id" Type="Int32" />
+          <Property Name="Heading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Heading_Html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Section_Long_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Section_Short_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Topic_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Section_Short_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Requirement_Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Supplemental_Guidance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Supplemental_Guidance_Html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Requirement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Requirement_Html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Enhancement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Enhancement_Html" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Flow_Document" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CATALOG_RECOMMENDATIONS_HEADINGS" Relationship="CSETWebModel.FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS" FromRole="CATALOG_RECOMMENDATIONS_DATA" ToRole="CATALOG_RECOMMENDATIONS_HEADINGS" />
+        </EntityType>
+        <EntityType Name="CATALOG_RECOMMENDATIONS_HEADINGS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Heading_Num" Type="Int32" Nullable="false" />
+          <Property Name="Heading_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CATALOG_RECOMMENDATIONS_DATA" Relationship="CSETWebModel.FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS" FromRole="CATALOG_RECOMMENDATIONS_HEADINGS" ToRole="CATALOG_RECOMMENDATIONS_DATA" />
+        </EntityType>
+        <EntityType Name="FILE_REF_KEYS">
+          <Key>
+            <PropertyRef Name="Doc_Num" />
+          </Key>
+          <Property Name="Doc_Num" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GEN_FILE" Relationship="CSETWebModel.FK_GEN_FILE_FILE_REF_KEYS" FromRole="FILE_REF_KEYS" ToRole="GEN_FILE" />
+        </EntityType>
+        <EntityType Name="PROCUREMENT_LANGUAGE_DATA">
+          <Key>
+            <PropertyRef Name="Procurement_Id" />
+          </Key>
+          <Property Name="Procurement_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Parent_Heading_Id" Type="Int32" />
+          <Property Name="Section_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Topic_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Heading" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Basis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Language_Guidance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Procurement_Language" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Fatmeasures" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Satmeasures" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Maintenance_Guidance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="References_Doc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Flow_Document" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PROCUREMENT_LANGUAGE_HEADINGS" Relationship="CSETWebModel.FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS" FromRole="PROCUREMENT_LANGUAGE_DATA" ToRole="PROCUREMENT_LANGUAGE_HEADINGS" />
+        </EntityType>
+        <EntityType Name="PROCUREMENT_LANGUAGE_HEADINGS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Heading_Num" Type="Int32" />
+          <Property Name="Heading_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PROCUREMENT_LANGUAGE_DATA" Relationship="CSETWebModel.FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS" FromRole="PROCUREMENT_LANGUAGE_HEADINGS" ToRole="PROCUREMENT_LANGUAGE_DATA" />
+        </EntityType>
+        <Association Name="FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS">
+          <End Type="CSETWebModel.CATALOG_RECOMMENDATIONS_HEADINGS" Role="CATALOG_RECOMMENDATIONS_HEADINGS" Multiplicity="0..1" />
+          <End Type="CSETWebModel.CATALOG_RECOMMENDATIONS_DATA" Role="CATALOG_RECOMMENDATIONS_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATALOG_RECOMMENDATIONS_HEADINGS">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CATALOG_RECOMMENDATIONS_DATA">
+              <PropertyRef Name="Parent_Heading_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GEN_FILE_FILE_REF_KEYS">
+          <End Type="CSETWebModel.FILE_REF_KEYS" Role="FILE_REF_KEYS" Multiplicity="1" />
+          <End Type="CSETWebModel.GEN_FILE" Role="GEN_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILE_REF_KEYS">
+              <PropertyRef Name="Doc_Num" />
+            </Principal>
+            <Dependent Role="GEN_FILE">
+              <PropertyRef Name="Doc_Num" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS">
+          <End Type="CSETWebModel.PROCUREMENT_LANGUAGE_HEADINGS" Role="PROCUREMENT_LANGUAGE_HEADINGS" Multiplicity="0..1" />
+          <End Type="CSETWebModel.PROCUREMENT_LANGUAGE_DATA" Role="PROCUREMENT_LANGUAGE_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROCUREMENT_LANGUAGE_HEADINGS">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PROCUREMENT_LANGUAGE_DATA">
+              <PropertyRef Name="Parent_Heading_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FILE_KEYWORDS">
+          <Key>
+            <PropertyRef Name="Gen_File_Id" />
+            <PropertyRef Name="Keyword" />
+          </Key>
+          <Property Name="Gen_File_Id" Type="Int32" Nullable="false" />
+          <Property Name="Keyword" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GEN_FILE" Relationship="CSETWebModel.FILE_KEYWORDS_GEN_FILE_FK" FromRole="FILE_KEYWORDS" ToRole="GEN_FILE" />
+        </EntityType>
+        <Association Name="FILE_KEYWORDS_GEN_FILE_FK">
+          <End Type="CSETWebModel.GEN_FILE" Role="GEN_FILE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CSETWebModel.FILE_KEYWORDS" Role="FILE_KEYWORDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GEN_FILE">
+              <PropertyRef Name="Gen_File_Id" />
+            </Principal>
+            <Dependent Role="FILE_KEYWORDS">
+              <PropertyRef Name="Gen_File_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CSETWebModelStoreContainer" CdmEntityContainer="CSETWebEntities">
+          <EntitySetMapping Name="GEN_FILE">
+            <EntityTypeMapping TypeName="CSETWebModel.GEN_FILE">
+              <MappingFragment StoreEntitySet="GEN_FILE">
+                <ScalarProperty Name="Gen_File_Id" ColumnName="Gen_File_Id" />
+                <ScalarProperty Name="File_Type_Id" ColumnName="File_Type_Id" />
+                <ScalarProperty Name="File_Name" ColumnName="File_Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="File_Size" ColumnName="File_Size" />
+                <ScalarProperty Name="Doc_Num" ColumnName="Doc_Num" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Short_Name" ColumnName="Short_Name" />
+                <ScalarProperty Name="Publish_Date" ColumnName="Publish_Date" />
+                <ScalarProperty Name="Doc_Version" ColumnName="Doc_Version" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Source_Type" ColumnName="Source_Type" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Is_Uploaded" ColumnName="Is_Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_LIBRARY_PATH">
+            <EntityTypeMapping TypeName="CSETWebModel.REF_LIBRARY_PATH">
+              <MappingFragment StoreEntitySet="REF_LIBRARY_PATH">
+                <ScalarProperty Name="Lib_Path_Id" ColumnName="Lib_Path_Id" />
+                <ScalarProperty Name="Parent_Path_Id" ColumnName="Parent_Path_Id" />
+                <ScalarProperty Name="Path_Name" ColumnName="Path_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="GEN_FILE_LIB_PATH_CORL" TypeName="CSETWebModel.GEN_FILE_LIB_PATH_CORL" StoreEntitySet="GEN_FILE_LIB_PATH_CORL">
+            <EndProperty Name="REF_LIBRARY_PATH">
+              <ScalarProperty Name="Lib_Path_Id" ColumnName="Lib_Path_Id" />
+            </EndProperty>
+            <EndProperty Name="GEN_FILE">
+              <ScalarProperty Name="Gen_File_Id" ColumnName="Gen_File_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="CATALOG_RECOMMENDATIONS_DATA">
+            <EntityTypeMapping TypeName="CSETWebModel.CATALOG_RECOMMENDATIONS_DATA">
+              <MappingFragment StoreEntitySet="CATALOG_RECOMMENDATIONS_DATA">
+                <ScalarProperty Name="Flow_Document" ColumnName="Flow_Document" />
+                <ScalarProperty Name="Enhancement_Html" ColumnName="Enhancement_Html" />
+                <ScalarProperty Name="Enhancement" ColumnName="Enhancement" />
+                <ScalarProperty Name="Requirement_Html" ColumnName="Requirement_Html" />
+                <ScalarProperty Name="Requirement" ColumnName="Requirement" />
+                <ScalarProperty Name="Supplemental_Guidance_Html" ColumnName="Supplemental_Guidance_Html" />
+                <ScalarProperty Name="Supplemental_Guidance" ColumnName="Supplemental_Guidance" />
+                <ScalarProperty Name="Requirement_Text" ColumnName="Requirement_Text" />
+                <ScalarProperty Name="Section_Short_Name" ColumnName="Section_Short_Name" />
+                <ScalarProperty Name="Topic_Name" ColumnName="Topic_Name" />
+                <ScalarProperty Name="Section_Short_Number" ColumnName="Section_Short_Number" />
+                <ScalarProperty Name="Section_Long_Number" ColumnName="Section_Long_Number" />
+                <ScalarProperty Name="Heading_Html" ColumnName="Heading_Html" />
+                <ScalarProperty Name="Heading" ColumnName="Heading" />
+                <ScalarProperty Name="Parent_Heading_Id" ColumnName="Parent_Heading_Id" />
+                <ScalarProperty Name="Req_Oracle_Id" ColumnName="Req_Oracle_Id" />
+                <ScalarProperty Name="Data_Id" ColumnName="Data_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATALOG_RECOMMENDATIONS_HEADINGS">
+            <EntityTypeMapping TypeName="CSETWebModel.CATALOG_RECOMMENDATIONS_HEADINGS">
+              <MappingFragment StoreEntitySet="CATALOG_RECOMMENDATIONS_HEADINGS">
+                <ScalarProperty Name="Heading_Name" ColumnName="Heading_Name" />
+                <ScalarProperty Name="Heading_Num" ColumnName="Heading_Num" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FILE_REF_KEYS">
+            <EntityTypeMapping TypeName="CSETWebModel.FILE_REF_KEYS">
+              <MappingFragment StoreEntitySet="FILE_REF_KEYS">
+                <ScalarProperty Name="Doc_Num" ColumnName="Doc_Num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROCUREMENT_LANGUAGE_DATA">
+            <EntityTypeMapping TypeName="CSETWebModel.PROCUREMENT_LANGUAGE_DATA">
+              <MappingFragment StoreEntitySet="PROCUREMENT_LANGUAGE_DATA">
+                <ScalarProperty Name="Flow_Document" ColumnName="Flow_Document" />
+                <ScalarProperty Name="References_Doc" ColumnName="References_Doc" />
+                <ScalarProperty Name="Maintenance_Guidance" ColumnName="Maintenance_Guidance" />
+                <ScalarProperty Name="Satmeasures" ColumnName="Satmeasures" />
+                <ScalarProperty Name="Fatmeasures" ColumnName="Fatmeasures" />
+                <ScalarProperty Name="Procurement_Language" ColumnName="Procurement_Language" />
+                <ScalarProperty Name="Language_Guidance" ColumnName="Language_Guidance" />
+                <ScalarProperty Name="Basis" ColumnName="Basis" />
+                <ScalarProperty Name="Heading" ColumnName="Heading" />
+                <ScalarProperty Name="Topic_Name" ColumnName="Topic_Name" />
+                <ScalarProperty Name="Section_Number" ColumnName="Section_Number" />
+                <ScalarProperty Name="Parent_Heading_Id" ColumnName="Parent_Heading_Id" />
+                <ScalarProperty Name="Procurement_Id" ColumnName="Procurement_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROCUREMENT_LANGUAGE_HEADINGS">
+            <EntityTypeMapping TypeName="CSETWebModel.PROCUREMENT_LANGUAGE_HEADINGS">
+              <MappingFragment StoreEntitySet="PROCUREMENT_LANGUAGE_HEADINGS">
+                <ScalarProperty Name="Heading_Name" ColumnName="Heading_Name" />
+                <ScalarProperty Name="Heading_Num" ColumnName="Heading_Num" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FILE_KEYWORDS">
+            <EntityTypeMapping TypeName="CSETWebModel.FILE_KEYWORDS">
+              <MappingFragment StoreEntitySet="FILE_KEYWORDS">
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+                <ScalarProperty Name="Gen_File_Id" ColumnName="Gen_File_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

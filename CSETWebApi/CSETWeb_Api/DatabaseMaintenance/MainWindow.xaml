@@ -1,0 +1,10 @@
+﻿<Window x:Class="DatabaseMaintenance.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Database Maintenance" Height="150" Width="400">
+    <Grid>
+        <TextBlock Name="Message" HorizontalAlignment="Center" VerticalAlignment="Center">
+            
+        </TextBlock>
+    </Grid>
+</Window>
