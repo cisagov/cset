@@ -40,6 +40,7 @@ import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -62,7 +63,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleSvc: Title
   ) { }
 
 
@@ -92,7 +94,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  isSetBuilder(rpath: string) {
+  /**
+   * Indicates if the user is currently within the Module Builder pages.
+   * TODO:  Hard-coded paths could be replaced by asking the BreadcrumbComponent
+   * or the SetBuilderService for Module Builder paths.
+   */
+  isModuleBuilder(rpath: string) {
     if (!rpath) {
       return false;
     }
@@ -111,8 +118,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   goHome() {
-    this.assessSvc.dropAssessment();
-    this.router.navigate(['/home']);
+    if (this.isModuleBuilder(this.router.url)) {
+      this.router.navigate(['/set-list']);
+    } else {
+      this.assessSvc.dropAssessment();
+      this.router.navigate(['/home']);
+    }
   }
 
   about() {

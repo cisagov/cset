@@ -24,6 +24,7 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SetBuilderService } from '../../services/set-builder.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-builder-breadcrumbs',
@@ -38,12 +39,16 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
   constructor(
     public router: Router,
     private ar: ActivatedRoute,
-    private setBuilderSvc: SetBuilderService
+    private setBuilderSvc: SetBuilderService,
+    private titleSvc: Title
   ) {
     this.activatedRoute = ar;
   }
 
   ngAfterContentInit() {
+    // Because this component is only used in the Module Builder, set the browser title here.
+    this.titleSvc.setTitle("Module Builder - CSET");
+
     if (!this.setBuilderSvc.navXml) {
       // read XML and populate my local document
       this.setBuilderSvc.ReadBreadcrumbXml().subscribe((x: any) => {
