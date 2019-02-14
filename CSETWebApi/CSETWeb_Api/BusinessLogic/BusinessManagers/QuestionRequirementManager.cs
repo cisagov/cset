@@ -6,12 +6,12 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -132,7 +132,7 @@ namespace CSETWeb_Api.BusinessManagers
             if (standardSelection != null)
             {
                 standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
-                db.STANDARD_SELECTION.AddOrUpdate(standardSelection);
+                db.STANDARD_SELECTION.AddOrUpdate(ref standardSelection,x=> x.Assessment_Id);
                 db.SaveChanges();
             }
 
@@ -172,12 +172,12 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (answer != null)
             {
-                dbAnswer = db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId && x.Question_Or_Requirement_Id == answer.QuestionId).FirstOrDefault();
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Or_Requirement_Id == answer.QuestionId).FirstOrDefault();
             }
 
             if (dbAnswer == null)
             {
-                dbAnswer = new DataLayer.ANSWER();
+                dbAnswer = new ANSWER();
             }
 
             dbAnswer.Assessment_Id = _assessmentId;
@@ -189,7 +189,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Comment = answer.Comment;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
 
-            db.ANSWERs.AddOrUpdate(dbAnswer);
+            db.ANSWER.AddOrUpdate(dbAnswer);
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);

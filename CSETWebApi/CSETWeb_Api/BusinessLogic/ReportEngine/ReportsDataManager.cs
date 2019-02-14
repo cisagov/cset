@@ -7,19 +7,13 @@
 using BusinessLogic.Helpers;
 using CSET_Main.Analysis.Analyzers;
 using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.Common;
 using CSETWeb_Api.Controllers;
-using CSETWeb_Api.Helpers.sals;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -369,10 +363,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             using (var db = new CsetwebContext())
             {
                 var findings = (from a in db.FINDING_CONTACT
-                                join b in db.FINDINGs on a.Finding_Id equals b.Finding_Id
-                                join c in db.ANSWERs on b.Answer_Id equals c.Answer_Id
+                                join b in db.FINDING on a.Finding_Id equals b.Finding_Id
+                                join c in db.ANSWER on b.Answer_Id equals c.Answer_Id
                                 join d in db.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                                join i in db.IMPORTANCEs on b.Importance_Id equals i.Importance_Id
+                                join i in db.IMPORTANCE on b.Importance_Id equals i.Importance_Id
                                 where c.Assessment_Id == _assessmentId
                                 orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
                                 select new { a, b, d, i.Value }).ToList();

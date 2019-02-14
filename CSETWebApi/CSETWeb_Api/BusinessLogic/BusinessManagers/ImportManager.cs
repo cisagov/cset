@@ -65,7 +65,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     foreach (var standard in model.CustomStandards)
                     {
                         var sets = web.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
-                        SET set = null;
+                        SETS set = null;
                         StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
                         var setJson = setReader.ReadToEnd();
                         var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);

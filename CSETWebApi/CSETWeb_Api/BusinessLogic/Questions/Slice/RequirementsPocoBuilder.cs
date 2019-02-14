@@ -28,7 +28,7 @@ namespace CSET_Main.Questions.Slice
             this.dictionaryCNSSICategory = new Dictionary<string, List<QuestionPoco>>();          
         }
 
-        public void BuildRequirementQuestionPocos(UNIVERSAL_SAL_LEVEL selectedSalLevel, List<SET> listActiveStandards)
+        public void BuildRequirementQuestionPocos(UNIVERSAL_SAL_LEVEL selectedSalLevel, List<SETS> listActiveStandards)
         {
             createQuestionPoco = true;
             InitAndBuildRequirementQuestionPocos(selectedSalLevel, listActiveStandards);            
@@ -36,7 +36,7 @@ namespace CSET_Main.Questions.Slice
 
         
 
-        private void InitAndBuildRequirementQuestionPocos(UNIVERSAL_SAL_LEVEL sal, List<SET> sets)
+        private void InitAndBuildRequirementQuestionPocos(UNIVERSAL_SAL_LEVEL sal, List<SETS> sets)
         {
             Requirements = new Dictionary<int, Requirement_And_Set>();
             dictionaryCNSSICategory.Clear();           

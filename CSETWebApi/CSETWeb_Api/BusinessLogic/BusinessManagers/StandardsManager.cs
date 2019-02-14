@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using System.Web;
 using CSETWeb_Api.Controllers;
@@ -49,7 +49,7 @@ namespace CSETWeb_Api.BusinessManagers
                             from s in db.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
                                 && !set.Is_Deprecated
                                 && (!set.IsEncryptedModule 
-                                || (set.IsEncryptedModule && set.IsEncryptedModuleOpen))
+                                || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen??true)))
                                 )
                             select new { s, sc.Set_Category_Name };
 

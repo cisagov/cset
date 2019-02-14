@@ -88,7 +88,7 @@ namespace CSETWeb_Api.Controllers
         private void AddNewlyEnabledModule(CsetwebContext context)
         {
             var sets2 = context.SETS.Where(x => x.Set_Name == "FAA");
-            foreach (SET sts in sets2)
+            foreach (SETS sts in sets2)
             {
                 sts.IsEncryptedModuleOpen = true;                
             }

@@ -18,7 +18,7 @@ namespace CSETWeb_Api.BusinessLogic
 {
     /// <summary>
     /// Manages all email notifications.
-    /// NOTE IMPORTANT YOU MUST SET THE CONFIGURATION MANAGER 
+    /// NOTE IMPORTANT YOU MUST SETS THE CONFIGURATION MANAGER 
     /// before calling this class.
     /// 
     /// See the Global.asax.cs file for the implementation currently.

@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -215,7 +215,7 @@ namespace CSETWeb_Api.Controllers
             List<Importance> rlist = new List<Importance>();
             using (CsetwebContext context = new CsetwebContext())
             {
-                foreach (IMPORTANCE import in context.IMPORTANCEs)
+                foreach (IMPORTANCE import in context.IMPORTANCE)
                 {
                     rlist.Add(TinyMapper.Map<Importance>(import));
                 }

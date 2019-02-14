@@ -22,17 +22,17 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
     public static class StandardConverter
     {
 
-        public static async Task<ConverterResult<SET>> ToSet(this IExternalStandard externalStandard)
+        public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard)
         {
             return await externalStandard.ToSet(new ConsoleLogger());
         }
-        public static async Task<ConverterResult<SET>> ToSet(this IExternalStandard externalStandard, ILogger logger)
+        public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard, ILogger logger)
         {
             var questionDictionary = new Dictionary<string, NEW_QUESTION>();
             var requirementList = new List<string>();
 
             var categoryDictionary = new Dictionary<string, STANDARD_CATEGORY>();
-            var result = new ConverterResult<SET>(logger);
+            var result = new ConverterResult<SETS>(logger);
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.ShortName, @"\W", "_");
@@ -133,7 +133,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             }
             return result;
         }
-        public static ExternalStandard ToExternalStandard(this SET standard)
+        public static ExternalStandard ToExternalStandard(this SETS standard)
         {
             var externalStandard = new ExternalStandard();
             externalStandard.ShortName = standard.Short_Name;

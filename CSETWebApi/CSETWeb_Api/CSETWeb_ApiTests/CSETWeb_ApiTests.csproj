@@ -122,10 +122,6 @@
       <Project>{A87CB253-7A73-4C66-84E7-ABAA68723B7B}</Project>
       <Name>CSETWeb_Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
-      <Project>{227f840d-ec18-4431-a4e8-061bd351e6cc}</Project>
-      <Name>DataLayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

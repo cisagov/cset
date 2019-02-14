@@ -179,7 +179,7 @@ namespace CSET_Main.ReportEngine.Builder
         //        var selectedSets = context.REPORT_STANDARDS_SELECTION.Where(s => s.Is_Selected).Select(s => s.Report_Set_Entity_Name).ToList();
         //        standardQuestions = standardQuestions.Where(s => selectedSets.Contains(s.Key)).ToDictionary(s => s.Key, s => s.Value);
         //        // Create Standard Questions Data for Detail Report
-        //        Dictionary<String, SET> sets = setRepository.SetsDictionary;
+        //        Dictionary<String, SETS> sets = setRepository.SetsDictionary;
         //        // Add standard document sections for each standard.
         //        if (standardQuestions != null)
         //        {
@@ -211,7 +211,7 @@ namespace CSET_Main.ReportEngine.Builder
         //                    isLast = 0;
         //                }
         //                var row = standardsTable.NewRow();
-        //                SET set = sets[pair.Key];
+        //                SETS set = sets[pair.Key];
         //                string standardFullName = set.Full_Name;
         //                row["StandardFullName"] = standardFullName;
         //                string setName = set.Set_Name.Replace(' ', '_');
@@ -394,16 +394,16 @@ namespace CSET_Main.ReportEngine.Builder
                 row["Real_Property_Unique_Id"] = info.Real_Property_Unique_Id;
                 if (info.eMass_Document_Id.HasValue)
                 {
-                    indexCtr = info.DOCUMENT_FILE.Path.LastIndexOf("\\");
+                    indexCtr = info.eMass_Document_.Path.LastIndexOf("\\");
                     if (indexCtr < 0)
                     {
-                        row["eMass_Document_Path"] = info.DOCUMENT_FILE.Path;
+                        row["eMass_Document_Path"] = info.eMass_Document_.Path;
                     }
                     else
                     {
-                        row["eMass_Document_Path"] = info.DOCUMENT_FILE.Path.Substring(indexCtr + 1);
+                        row["eMass_Document_Path"] = info.eMass_Document_.Path.Substring(indexCtr + 1);
                     }
-                    row["eMass_Document_Title"] = info.DOCUMENT_FILE.Title;
+                    row["eMass_Document_Title"] = info.eMass_Document_.Title;
                 }
                 else
                 {

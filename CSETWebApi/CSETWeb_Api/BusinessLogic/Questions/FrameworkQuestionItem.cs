@@ -39,13 +39,13 @@ namespace CSET_Main.Questions.QuestionList
 
         public QUESTION_GROUP_HEADING QuestionGroupHeading { get; set; }
 
-        public SET SetName { get; set; }
+        public SETS SetName { get; set; }
 
         public NEW_QUESTION Question { get; set; }
 
-        internal Dictionary<string, SET> GetSetAsDictionary()
+        internal Dictionary<string, SETS> GetSetAsDictionary()
         {
-            return new Dictionary<string, SET> { { SetName.Set_Name, SetName } };
+            return new Dictionary<string, SETS> { { SetName.Set_Name, SetName } };
         }
 
         public string CategoryAndQuestionNumber { get; set; }

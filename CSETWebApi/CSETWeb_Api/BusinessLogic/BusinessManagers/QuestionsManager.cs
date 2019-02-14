@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using DataLayerCore.Model;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using CSETWeb_Api.Models;
 using CSET_Main.Views.Questions.QuestionDetails;
@@ -103,15 +103,15 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && !x.Is_Requirement)
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              from c in db.FINDINGs.Where(x=> x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              from c in db.FINDING.Where(x=> x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c!=null };
 
                 // Set the Discovery/Finding indicator 
                 //foreach (var aaa in answers.ToList())
                 //{
-                //    if (db.FINDINGs.Any(x => x.Answer_Id == aaa.a.Answer_Id))
+                //    if (db.FINDING.Any(x => x.Answer_Id == aaa.a.Answer_Id))
                 //    {
                 //        aaa.FindingsExist = true;
                 //    }
@@ -342,7 +342,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (subCatAnswer == null)
             {
-                subCatAnswer = new DataLayer.SUB_CATEGORY_ANSWERS();
+                subCatAnswer = new SUB_CATEGORY_ANSWERS();
             }
 
             subCatAnswer.Assessement_Id = _assessmentId;

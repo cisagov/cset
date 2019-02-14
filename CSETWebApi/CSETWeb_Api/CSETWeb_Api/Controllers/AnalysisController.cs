@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public List<DataLayer.usp_GetRankedQuestions_Result> GetRankedQuestions()
+        public List<usp_GetRankedQuestions_Result> GetRankedQuestions()
         {
             int assessmentId = Auth.AssessmentForUser();
 

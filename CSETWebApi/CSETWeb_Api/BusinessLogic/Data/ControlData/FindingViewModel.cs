@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -38,18 +39,18 @@ namespace CSETWeb_Api.Data.ControlData
             //get all the contexts on this finding
             this.webFinding = f;
             this.context = context;
-            this.dbFinding = context.FINDINGs.Include("FINDING_CONTACT").Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id).FirstOrDefault();
+            this.dbFinding = context.FINDING.Include("FINDING_CONTACT").Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id).FirstOrDefault();
             if (dbFinding == null)
             {
-                var finding = context.FINDINGs.Create();
+                var finding = new FINDING();                
                 finding.Answer_Id = f.Answer_Id;
                 this.dbFinding = finding;
-                context.FINDINGs.Add(finding);
+                context.FINDING.Add(finding);
             }
             TinyMapper.Map(f, this.dbFinding);
             int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
 
-            this.dbFinding.IMPORTANCE = context.IMPORTANCEs.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
+            this.dbFinding.Importance_ = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
 
             if (f.Finding_Contacts != null)
             {
@@ -81,7 +82,7 @@ namespace CSETWeb_Api.Data.ControlData
         {
             this.finding_Id = finding_Id;
             this.context = context;
-            this.dbFinding = context.FINDINGs.Where(x=>  x.Finding_Id == finding_Id).FirstOrDefault();
+            this.dbFinding = context.FINDING.Where(x=>  x.Finding_Id == finding_Id).FirstOrDefault();
             if (dbFinding == null)
             {
                 throw new ApplicationException("Cannot find finding_id" + finding_Id);
@@ -91,7 +92,7 @@ namespace CSETWeb_Api.Data.ControlData
         public void Delete()
         {
             dbFinding.FINDING_CONTACT.ToList().ForEach(s => context.FINDING_CONTACT.Remove(s));
-            context.FINDINGs.Remove(dbFinding);
+            context.FINDING.Remove(dbFinding);
             context.SaveChanges();
         }
 

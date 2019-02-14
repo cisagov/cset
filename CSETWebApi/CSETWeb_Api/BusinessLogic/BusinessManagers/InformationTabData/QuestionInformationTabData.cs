@@ -120,13 +120,13 @@ namespace CSET_Main.Questions.InformationTabData
 
         }
 
-        public void BuildQuestionTab(QuestionInfoData infoData, SET set, CsetwebContext controlContext)
+        public void BuildQuestionTab(QuestionInfoData infoData, SETS set, CsetwebContext controlContext)
         {
             ShowRequirementFrameworkTitle = true;
             BuildFromNewQuestion(infoData, set, controlContext);
         }
 
-        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SET set, CsetwebContext controlContext)
+        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set, CsetwebContext controlContext)
         {
             BuildFromNewQuestion(questionInfoData, set, controlContext);
             ShowRelatedFrameworkCategory = true;
@@ -134,7 +134,7 @@ namespace CSET_Main.Questions.InformationTabData
             RelatedFrameworkCategory = questionInfoData.Category;
         }
 
-        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SET set, CsetwebContext controlContext)
+        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CsetwebContext controlContext)
         {
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
@@ -155,7 +155,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 //Legacy only
                 var tempRequires = new List<NEW_REQUIREMENT>();
-                foreach (var setName in set.CUSTOM_STANDARD_BASE_STANDARD.Select(s => s.Base_Standard).ToList())
+                foreach (var setName in set.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation.Select(s => s.Base_Standard).ToList())
                 {
                     tempRequires = tempRequires.Concat(question.NEW_REQUIREMENT.Where(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName)).ToList()).ToList();
                 }
@@ -209,14 +209,15 @@ namespace CSET_Main.Questions.InformationTabData
         {
             ShowRequirementFrameworkTitle = true;
 
-            try
-            {
-                controlContext.Database.Connection.Open();
-            }
-            catch (Exception e)
-            {
-                //CSETLogger.Fatal(e.Message, e);
-            }
+            //TODO why are we checking the database state here?
+            //try
+            //{
+            //    controlContext.Database.Connection.Open();
+            //}
+            //catch (Exception e)
+            //{
+            //    //CSETLogger.Fatal(e.Message, e);
+            //}
 
             NEW_REQUIREMENT requirement = requirementData.Requirement;
             Question_or_Requirement_Id = requirement.Requirement_Id;
@@ -231,7 +232,7 @@ namespace CSET_Main.Questions.InformationTabData
             RequirementsData = tabData;
             int requirement_id = requirement.Requirement_Id;
             var questions = requirement.NEW_QUESTION;
-            SET set;
+            SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {
                 set = controlContext.SETS.Where(x => x.Set_Name == requirementData.SetName).FirstOrDefault();
@@ -437,7 +438,7 @@ namespace CSET_Main.Questions.InformationTabData
 
             var newQuestionItems = (from nr in controlEntity.NEW_REQUIREMENT
                                     from newquestions in nr.NEW_QUESTION
-                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS.Include(x => x.SET) on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
+                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS.Include(x => x.SETS) on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
                                     join level in controlEntity.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
                                     join subheading in controlEntity.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id
                                     join questionGroupHeading in controlEntity.QUESTION_GROUP_HEADING on subheading.Question_Group_Heading_Id equals questionGroupHeading.Question_Group_Heading_Id
@@ -459,7 +460,7 @@ namespace CSET_Main.Questions.InformationTabData
                 questionItem.SALLevel = item.Level;
                 questionItem.QuestionGroupHeading = item.QuestionGroupHeading;
 
-                SET set = item.QuestionSets.OrderBy(x => x.SET.Order_Framework_Standards).Select(x => x.SET).FirstOrDefault();
+                SETS set = item.QuestionSets.OrderBy(x => x.SETS.Order_Framework_Standards).Select(x => x.SETS).FirstOrDefault();
                 questionItem.Standard = set.Short_Name;
                 questionItem.SetName = set;
                 questionItem.Question = item.Question;

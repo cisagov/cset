@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.ReportEngine.Builder;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,10 +24,10 @@ namespace ExportCSV
     /// 
     public class CSETtoExcelDataMappings
     {
-        private CSETWebEntities assessmentEntity;
+        private CsetwebContext assessmentEntity;
         private int assessment_id;
 
-        public CSETtoExcelDataMappings(int assessment_id ,CSETWebEntities assessmentEntity)
+        public CSETtoExcelDataMappings(int assessment_id ,CsetwebContext assessmentEntity)
         {
             this.assessmentEntity = assessmentEntity;
             this.assessment_id = assessment_id;
@@ -43,7 +43,7 @@ namespace ExportCSV
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
             IEnumerable<QuestionExport> list;
 
-            List<ANSWER> answers = assessmentEntity.ANSWERs.ToList<ANSWER>();
+            List<ANSWER> answers = assessmentEntity.ANSWER.ToList<ANSWER>();
 
             // Determine whether the assessment is questions based or requirements based
             var applicationMode = assessmentEntity.STANDARD_SELECTION.Where(a => a.Assessment_Id == this.assessment_id).FirstOrDefault().Application_Mode;

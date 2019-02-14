@@ -53,7 +53,7 @@ namespace CSETWeb_Api.BusinessManagers
             // create new records for USER and USER_DETAIL_INFORMATION
             using (var db = new CsetwebContext())
             {
-                var u = new DataLayer.USER()
+                var u = new USERS()
                 {
                     PrimaryEmail = userDetail.Email,
                     FirstName = userDetail.FirstName,
@@ -177,7 +177,7 @@ namespace CSETWeb_Api.BusinessManagers
                     UserId = result.UserId,
                     Email = result.PrimaryEmail,
                     IsSuperUser = result.IsSuperUser,
-                    PasswordResetRequired = result.PasswordResetRequired,
+                    PasswordResetRequired = result.PasswordResetRequired??true,
                     FirstName = result.FirstName,
                     LastName = result.LastName
                 };
@@ -261,7 +261,7 @@ namespace CSETWeb_Api.BusinessManagers
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     IsSuperUser = user.IsSuperUser,
-                    PasswordResetRequired = user.PasswordResetRequired
+                    PasswordResetRequired = user.PasswordResetRequired??true
                 };
 
                 return ud;

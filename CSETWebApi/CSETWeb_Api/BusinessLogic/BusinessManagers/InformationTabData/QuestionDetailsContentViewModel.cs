@@ -159,7 +159,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             if (questionId != null)
             {
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWERs.Where(a => a.Question_Or_Requirement_Id == questionId && a.Assessment_Id == assessmentId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
@@ -175,7 +175,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Component_Id = 0,
                         Is_Component = false
                     };
-                    DataContext.ANSWERs.Add(newAnswer);
+                    DataContext.ANSWER.Add(newAnswer);
                 }
                 var qp = new QuestionPoco(newAnswer, newqp);
                 qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
@@ -235,7 +235,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             //{
             //    var rlist = DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == questionId).ToList();
             //    var tmpreq = (from r in DataContext.NEW_REQUIREMENT
-            //                  join a in DataContext.ANSWERs on r.Requirement_Id equals a.Question_Or_Requirement_Id
+            //                  join a in DataContext.ANSWER on r.Requirement_Id equals a.Question_Or_Requirement_Id
             //                  where r.Requirement_Id == questionId && a.Assessment_Id == assessmentId && a.Is_Requirement == true
             //                  select new QuestionPoco(a, r, levelManager.GetRequirementLevel(rlist)));
             //}

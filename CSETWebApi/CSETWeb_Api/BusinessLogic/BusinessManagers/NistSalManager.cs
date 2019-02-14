@@ -110,7 +110,7 @@ namespace CSETWeb_Api.Controllers
                     // Create default answer rows based on the question set
                     foreach (var question in db.NIST_SAL_QUESTIONS.ToList())
                     {
-                        var ans = new DataLayer.NIST_SAL_QUESTION_ANSWERS()
+                        var ans = new NIST_SAL_QUESTION_ANSWERS()
                         {
                             Assessment_Id = assessmentId,
                             Question_Id = question.Question_Id,

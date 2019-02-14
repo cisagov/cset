@@ -7,7 +7,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using DataLayer;
+using DataLayerCore;
+using DataLayerCore.Model;
 
 namespace ExportCSV
 {
@@ -16,10 +17,10 @@ namespace ExportCSV
   
         public MemoryStream ExportToCSV(int assessment_id)
         {
-            using (CSETWebEntities assessmentEntity = new CSETWebEntities())
+            using (CsetwebContext assessmentEntity = new CsetwebContext())
             {
                 var stream = new MemoryStream();
-                var answerslist = assessmentEntity.ANSWERs;
+                var answerslist = assessmentEntity.ANSWER;
                 if (answerslist.Count() <= 0)
                     return stream;
                 CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, assessmentEntity);

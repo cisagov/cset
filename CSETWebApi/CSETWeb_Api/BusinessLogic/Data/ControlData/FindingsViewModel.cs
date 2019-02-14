@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace CSETWeb_Api.Data.ControlData
         public List<Finding> AllFindings()
         {
             List<Finding> findings = new List<Finding>();            
-            foreach (FINDING f in assessmentContext.FINDINGs.Include("IMPORTANCE").Include("FINDING_CONTACT")
+            foreach (FINDING f in assessmentContext.FINDING.Include("IMPORTANCE").Include("FINDING_CONTACT")
                 .Where(x => x.Answer_Id == this.answer_id)                
                 .ToList())
             {
@@ -59,14 +60,14 @@ namespace CSETWeb_Api.Data.ControlData
                 webF.Finding_Id = f.Finding_Id;
                 webF.Answer_Id = this.answer_id;
                 TinyMapper.Map(f, webF);
-                if (f.IMPORTANCE == null)
+                if (f.Importance_ == null)
                     webF.Importance = new Importance()
                     {
                         Importance_Id = 1,
                         Value = Constants.SAL_LOW
                     };
                 else
-                    webF.Importance = TinyMapper.Map<Importance>(f.IMPORTANCE);
+                    webF.Importance = TinyMapper.Map<Importance>(f.Importance_);
 
                 foreach(FINDING_CONTACT fc in f.FINDING_CONTACT)
                 {
@@ -85,7 +86,7 @@ namespace CSETWeb_Api.Data.ControlData
             Finding webF;
             if (finding_id != 0)
             {
-                FINDING f = assessmentContext.FINDINGs
+                FINDING f = assessmentContext.FINDING
                     .Include("FINDING_CONTACT")                    
                     .Where(x => x.Finding_Id == finding_id)
                     .FirstOrDefault();
@@ -108,7 +109,7 @@ namespace CSETWeb_Api.Data.ControlData
                 };
                 
 
-                assessmentContext.FINDINGs.Add(f);
+                assessmentContext.FINDING.Add(f);
                 assessmentContext.SaveChanges();
                 webF = TinyMapper.Map<Finding>(f);
                 webF.Finding_Contacts = new List<FindingContact>();

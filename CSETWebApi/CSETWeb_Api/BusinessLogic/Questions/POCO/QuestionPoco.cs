@@ -372,7 +372,7 @@ namespace CSET_Main.Questions.POCO
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null&&IsComponent==false)
-                    return String.Join(", ",Question.NEW_REQUIREMENT.Where(s=>DictionaryStandards.Keys.Contains(s.SET.Set_Name)&&s.SET.SETS_CATEGORY!=null&&s.SET.SETS_CATEGORY.Set_Category_Id!=9).OrderBy(s=>s.SET.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
+                    return String.Join(", ",Question.NEW_REQUIREMENT.Where(s=>DictionaryStandards.Keys.Contains(s.SETS.Set_Name)&&s.SETS.SETS_CATEGORY!=null&&s.SETS.SETS_CATEGORY.Set_Category_Id!=9).OrderBy(s=>s.SETS.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
                 else
                     return "";
             }
@@ -878,7 +878,7 @@ namespace CSET_Main.Questions.POCO
             
         }
 
-        public Dictionary<String, SET> DictionaryStandards { get; set; }
+        public Dictionary<String, SETS> DictionaryStandards { get; set; }
 
         //If true then QuestionInformationTabData just shows the category and not the question number associated with it. 
         public bool IsFrameworkRelatedQuestion { get; set; }
@@ -897,7 +897,7 @@ namespace CSET_Main.Questions.POCO
           
         }
 
-        public QuestionPoco(ANSWER answer, SET set, ProfileQuestion profileQuestion)
+        public QuestionPoco(ANSWER answer, SETS set, ProfileQuestion profileQuestion)
             : this(answer)
         {
             this.ProfileQuestionData = profileQuestion;
@@ -906,7 +906,7 @@ namespace CSET_Main.Questions.POCO
 
         private QuestionPoco(ANSWER answer, bool setParams=true)
         {
-            this.DictionaryStandards = new Dictionary<String, SET>();
+            this.DictionaryStandards = new Dictionary<String, SETS>();
             this.Answer = answer;
             this.setDocumentIds = answer.DOCUMENT_FILE.Select(x => x.Document_Id).ToHashSet();
             DocumentCount = setDocumentIds.Count;
@@ -915,9 +915,9 @@ namespace CSET_Main.Questions.POCO
             QuestionAnswer = EnumHelper.GetEnumValueFromDescription<AnswerEnum>(Answer.Answer_Text);
         }
 
-        public void SetStandards(IEnumerable<SET> sets)
+        public void SetStandards(IEnumerable<SETS> sets)
         {
-            foreach (SET set in sets)
+            foreach (SETS set in sets)
             {
                 this.DictionaryStandards[set.Set_Name] = set;
             }
@@ -929,16 +929,16 @@ namespace CSET_Main.Questions.POCO
         /// Requirement questions should only have one set(i.e. Standard).  So just return first item in dictionary
         /// </summary>
         /// <returns></returns>
-        public SET GetRequirementSet()
+        public SETS GetRequirementSet()
         {
-            SET s;
+            SETS s;
             if(SetName!=null)
             if (DictionaryStandards.TryGetValue(SetName, out s))
             {
                 return s;
             }
             
-            foreach (SET si in DictionaryStandards.Values)
+            foreach (SETS si in DictionaryStandards.Values)
             {
                 return si;
             }
@@ -948,7 +948,7 @@ namespace CSET_Main.Questions.POCO
             Debug.Assert(false, "There is no sets in dictionary for requirement questionPoco.");
             return null; 
         }
-        internal ICollection<SET> GetRequirementSets()
+        internal ICollection<SETS> GetRequirementSets()
         {
             return DictionaryStandards.Values;
         }
@@ -1105,12 +1105,12 @@ namespace CSET_Main.Questions.POCO
                 return shortSupplemental;
             }
         }
-        internal void AddSet(SET set)
+        internal void AddSet(SETS set)
         {
             this.DictionaryStandards[set.Set_Name] = set;
         }
       
-        internal void AddSetAndSetStandardName(SET set)
+        internal void AddSetAndSetStandardName(SETS set)
         {
             AddSet(set);
             SetStandardName();

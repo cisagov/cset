@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,7 +19,7 @@ using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.Models;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -327,7 +327,7 @@ namespace CSETWeb_Api.Controllers
                     var sq = context.USER_SECURITY_QUESTIONS.Where(x => x.UserId == userid).FirstOrDefault();
                     if (sq == null)
                     {
-                        sq = new DataLayer.USER_SECURITY_QUESTIONS
+                        sq = new USER_SECURITY_QUESTIONS
                         {
                             UserId = userid
                         };
@@ -354,7 +354,7 @@ namespace CSETWeb_Api.Controllers
                     // delete or add/update the record
                     if (sq.SecurityQuestion1 != null || sq.SecurityQuestion2 != null)
                     {
-                        context.USER_SECURITY_QUESTIONS.AddOrUpdate(sq);
+                        context.USER_SECURITY_QUESTIONS.AddOrUpdate(ref sq, x=> x.UserId);
                     }
                     else
                     {

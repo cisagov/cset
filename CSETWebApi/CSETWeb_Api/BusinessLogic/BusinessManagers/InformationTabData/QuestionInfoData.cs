@@ -16,7 +16,7 @@ namespace CSET_Main.Questions.InformationTabData
 {
     public class QuestionInfoData:BaseQuestionInfoData
     {       
-        public Dictionary<String, SET> Sets { get; set; }
+        public Dictionary<String, SETS> Sets { get; set; }
     }
 }
 

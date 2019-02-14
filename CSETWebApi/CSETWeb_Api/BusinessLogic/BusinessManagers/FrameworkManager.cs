@@ -4,10 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -107,14 +108,14 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (answer == null)
             {
-                answer = new DataLayer.FRAMEWORK_TIER_TYPE_ANSWER();
+                answer = new FRAMEWORK_TIER_TYPE_ANSWER();
             }
 
             answer.Assessment_Id = assessmentId;
             answer.TierType = selectedTier.TierType;
             answer.Tier = selectedTier.TierName;            
 
-            db.FRAMEWORK_TIER_TYPE_ANSWER.AddOrUpdate(answer);
+            db.FRAMEWORK_TIER_TYPE_ANSWER.AddOrUpdate(ref answer, x=> new { x.Assessment_Id, x.TierType });
             db.SaveChanges();
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
         }

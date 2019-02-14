@@ -6,13 +6,13 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Web;
 using DataLayerCore.Model;
 using System.Text;
 using CSETWeb_Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -50,7 +50,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<Document> list = new List<Document>();
 
-            var files = db.ANSWERs.Include("DOCUMENT_FILE").Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILE.ToList();
+            var files = db.ANSWER.Include("DOCUMENT_FILE").Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILE.ToList();
 
             if (files == null)
             {
@@ -90,7 +90,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             doc.Title = title;
 
-            db.DOCUMENT_FILE.AddOrUpdate(doc);
+            db.DOCUMENT_FILE.AddOrUpdate(ref doc,x=> x.Document_Id);
             db.SaveChanges();
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
@@ -113,12 +113,11 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // Detach the document from the Answer
-            doc.ANSWERs.Remove(db.ANSWERs.Where(ans => ans.Assessment_Id == this.assessmentId
-            && ans.Answer_Id == answerId).FirstOrDefault());
+            doc.DOCUMENT_ANSWERS.Remove(db.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answerId).FirstOrDefault());
 
 
             // If we just detached the document from its only Answer, delete the whole document record
-            var otherAnswersForThisDoc = db.ANSWERs.Where(ans => ans.Assessment_Id == this.assessmentId
+            var otherAnswersForThisDoc = db.ANSWER.Where(ans => ans.Assessment_Id == this.assessmentId
                                          && ans.Answer_Id != answerId
                                         && ans.DOCUMENT_FILE.Select(x => x.Document_Id).Contains(id)).ToList();
 
@@ -138,7 +137,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="id">The document ID</param>
         public List<int> GetQuestionsForDocument(int id)
         {
-            var ans = db.DOCUMENT_FILE.Include("ANSWERS").Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs.ToList();
+            var ans = db.DOCUMENT_FILE.Include("ANSWERS").Where(d => d.Document_Id == id).FirstOrDefault().ANSWER.ToList();
 
             List<int> qlist = new List<int>();
 
@@ -189,11 +188,11 @@ namespace CSETWeb_Api.BusinessManagers
                 doc.Name = fileName;
             }
 
-            var answer = db.ANSWERs.Where(a => a.Answer_Id == answerId).FirstOrDefault();
-            doc.ANSWERs.Add(answer);
-
-            db.DOCUMENT_FILE.AddOrUpdate(doc);
+            var answer = db.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
+            db.DOCUMENT_FILE.AddOrUpdate(ref doc, x=> x.Document_Id);
             db.SaveChanges();
+            DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id }; 
+            db.DOCUMENT_ANSWERS.AddOrUpdate(ref temp,x=> new { x.Document_Id, x.Answer_Id });
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
 
@@ -224,7 +223,7 @@ namespace CSETWeb_Api.BusinessManagers
             var dfQuery =
                 from df in db.DOCUMENT_FILE
                 where (
-                    from ans in df.ANSWERs
+                    from ans in df.ANSWER
                     where answerIds.Contains(ans.Answer_Id)
                     select ans
                 ).Any()

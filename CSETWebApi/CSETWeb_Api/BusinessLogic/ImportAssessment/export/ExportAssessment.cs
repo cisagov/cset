@@ -8,6 +8,7 @@ using CSET_Main.Data;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -57,9 +58,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             {
                model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<jASSESSMENT_CONTACTS>(item));
             }
-            foreach (var c in entitites.ANSWERs.Include("FINDINGs").Where(x=> x.Assessment_Id == _assessmentId)) {
+            foreach (var c in entitites.ANSWER.Include("FINDING").Where(x=> x.Assessment_Id == _assessmentId)) {
                 model.jANSWER.Add(TinyMapper.Map<jANSWER>(c));
-                foreach (var f in c.FINDINGs) {
+                foreach (var f in c.FINDING) {
                     model.jFINDING.Add(TinyMapper.Map<jFINDING>(c));
                     foreach (var fc in f.FINDING_CONTACT) {
                         model.jFINDING_CONTACT.Add(TinyMapper.Map<jFINDING_CONTACT>(c));
@@ -74,9 +75,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             foreach (var c in entitites.CUSTOM_QUESTIONAIRES) { model.jCUSTOM_QUESTIONAIRES.Add(TinyMapper.Map<jCUSTOM_QUESTIONAIRES>(c)); }
             foreach (var c in entitites.CUSTOM_QUESTIONAIRE_QUESTIONS) { model.jCUSTOM_QUESTIONAIRE_QUESTIONS.Add(TinyMapper.Map<jCUSTOM_QUESTIONAIRE_QUESTIONS>(c)); }
             foreach (var c in entitites.DEMOGRAPHICS.Where(x => x.Assessment_Id == _assessmentId)) { model.jDEMOGRAPHICS.Add(TinyMapper.Map<jDEMOGRAPHICS>(c)); }
-            foreach (var c in entitites.DOCUMENT_FILE.Include("Answers").Where(x => x.Assessment_Id == _assessmentId)) {
+            foreach (var c in entitites.DOCUMENT_FILE.Include("Answer").Where(x => x.Assessment_Id == _assessmentId)) {
                 model.jDOCUMENT_FILE.Add(TinyMapper.Map<jDOCUMENT_FILE>(c));
-                foreach (var a in c.ANSWERs)
+                foreach (var a in c.ANSWER)
                 {
                     model.jDOCUMENT_ANSWERS.Add(new jDOCUMENT_ANSWERS()
                     {
@@ -96,7 +97,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             foreach (var c in entitites.NIST_SAL_INFO_TYPES.Where(x=> x.Selected==true && x.Assessment_Id == _assessmentId)) { model.jNIST_SAL_INFO_TYPES.Add(TinyMapper.Map<jNIST_SAL_INFO_TYPES>(c)); }
             foreach (var c in entitites.NIST_SAL_QUESTIONS) { model.jNIST_SAL_QUESTION_ANSWERS.Add(TinyMapper.Map<jNIST_SAL_QUESTION_ANSWERS>(c)); }
             var parameterslist = from a in entitites.ASSESSMENTS
-                                 join an in entitites.ANSWERs on a.Assessment_Id equals an.Assessment_Id
+                                 join an in entitites.ANSWER on a.Assessment_Id equals an.Assessment_Id
                                  join p in entitites.PARAMETER_VALUES on an.Answer_Id equals p.Answer_Id
                                  where a.Assessment_Id == _assessmentId
                                  select p; 
@@ -125,7 +126,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             //TinyMapper.Bind<CUSTOM_BASE_STANDARDS, jCUSTOM_BASE_STANDARDS>(config =>
             //{
             //});
-            TinyMapper.Bind<DEMOGRAPHIC, jDEMOGRAPHICS>();
+            TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
 
             //TinyMapper.Bind<CUSTOM_STANDARD_BASE_STANDARD, jCUSTOM_STANDARD_BASE_STANDARD>(config =>
             //{

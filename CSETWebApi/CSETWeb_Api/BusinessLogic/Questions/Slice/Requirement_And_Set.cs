@@ -20,7 +20,7 @@ namespace CSET_Main.Questions.Slice
         public QuestionPoco Question { get; set; }
 
 
-        public SET Set { get; set; }
+        public SETS Set { get; set; }
 
         public string Set_Name_Short { get { return Set.Short_Name; } }
 

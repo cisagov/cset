@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWeb_Api", "CSETWeb_Api\CSETWeb_Api.csproj", "{A87CB253-7A73-4C66-84E7-ABAA68723B7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{227F840D-EC18-4431-A4E8-061BD351E6CC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{92BC0676-F3FC-4299-8483-39410D177EC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBuffer", "CryptoBuffer\CryptoBuffer.csproj", "{4E44142D-08E2-4F40-9532-896E1F00018C}"
@@ -33,14 +31,6 @@ Global
 		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.localhost|Any CPU.Build.0 = localhost|Any CPU
 		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A87CB253-7A73-4C66-84E7-ABAA68723B7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localdb|Any CPU.Build.0 = localdb|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.localhost|Any CPU.Build.0 = localhost|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{227F840D-EC18-4431-A4E8-061BD351E6CC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92BC0676-F3FC-4299-8483-39410D177EC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92BC0676-F3FC-4299-8483-39410D177EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92BC0676-F3FC-4299-8483-39410D177EC7}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
