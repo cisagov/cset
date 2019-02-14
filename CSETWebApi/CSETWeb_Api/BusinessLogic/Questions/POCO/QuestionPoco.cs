@@ -280,7 +280,7 @@ namespace CSET_Main.Questions.POCO
         {
             get
             {
-                return Answer.DOCUMENT_FILE;
+                return (ICollection<DOCUMENT_FILE>) Answer.DOCUMENT_FILE;
             }
         }
 
@@ -372,7 +372,7 @@ namespace CSET_Main.Questions.POCO
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null&&IsComponent==false)
-                    return String.Join(", ",Question.NEW_REQUIREMENT.Where(s=>DictionaryStandards.Keys.Contains(s.SETS.Set_Name)&&s.SETS.SETS_CATEGORY!=null&&s.SETS.SETS_CATEGORY.Set_Category_Id!=9).OrderBy(s=>s.SETS.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
+                    return String.Join(", ",Question.NEW_REQUIREMENT.Where(s=>DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name)&&s.Original_Set_NameNavigation.Set_Category_!=null&&s.Original_Set_NameNavigation.Set_Category_.Set_Category_Id!=9).OrderBy(s=>s.Original_Set_NameNavigation.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
                 else
                     return "";
             }
@@ -846,8 +846,8 @@ namespace CSET_Main.Questions.POCO
         {
             if(!IsRequirement)
             {
-                SortSet = set==null?Question.SETS:set.SETS;
-                NEW_REQUIREMENT = set==null?Question.NEW_REQUIREMENT.FirstOrDefault():set.NEW_REQUIREMENT;
+                SortSet = set == null ? Question.Original_Set_NameNavigation : set.Set_NameNavigation;
+                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENT.FirstOrDefault() : set.Requirement_;
             }
         }
 
@@ -1059,7 +1059,7 @@ namespace CSET_Main.Questions.POCO
                         {
                             if (item.Value.Is_Custom)
                             {
-                                var standards = item.Value.CUSTOM_STANDARD_BASE_STANDARD.Select(s => s.Base_Standard).ToList();
+                                var standards = item.Value.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation.Select(s => s.Base_Standard).ToList();
                                 standardList = standardList.Concat(standards).ToList();
                             }
                             standardList.Add(item.Key);

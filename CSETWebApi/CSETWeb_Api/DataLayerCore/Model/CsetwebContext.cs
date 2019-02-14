@@ -152,7 +152,6 @@ namespace DataLayerCore.Model
             modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
             modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
             ///END OF ADDED LINE CODE
-
             modelBuilder.Entity<ADDRESS>(entity =>
             {
                 entity.HasKey(e => new { e.AddressType, e.Id })
@@ -451,6 +450,12 @@ namespace DataLayerCore.Model
                     .HasForeignKey<COMPONENT_SYMBOLS>(d => d.Diagram_Type_Xml)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_COMPONENT_SYMBOLS_CSET_DIAGRAM_TYPES");
+
+                entity.HasOne(d => d.Symbol_Group_)
+                    .WithMany(p => p.COMPONENT_SYMBOLS)
+                    .HasForeignKey(d => d.Symbol_Group_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_COMPONENT_SYMBOLS_SYMBOL_GROUPS");
             });
 
             modelBuilder.Entity<COMPONENT_SYMBOLS_GM_TO_CSET>(entity =>
@@ -1942,6 +1947,13 @@ namespace DataLayerCore.Model
                     .HasPrincipalKey(p => p.Heading_Pair_Id)
                     .HasForeignKey(d => d.Heading_Pair_Id)
                     .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_UNIVERSAL_SUB_CATEGORY_HEADINGS");
+            });
+
+            modelBuilder.Entity<SYMBOL_GROUPS>(entity =>
+            {
+                entity.Property(e => e.Symbol_Group_Name).IsUnicode(false);
+
+                entity.Property(e => e.Symbol_Group_Title).IsUnicode(false);
             });
 
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>

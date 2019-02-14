@@ -74,18 +74,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             }
             return gf;
         }
-        public async Task<GEN_FILE> LookupGenFileAsync(string p)
-        {
-            GEN_FILE gf;
-            using (var db = new CsetwebContext())
-            {
-                gf=   await db.GEN_FILE.Where(h => h.File_Name == p)
-                                                           .OrderByDescending(h => h.Gen_File_Id)
-                                                           .FirstOrDefaultAsync();
-
-            }
-            return gf;
-        }
+     
     }
 }
 

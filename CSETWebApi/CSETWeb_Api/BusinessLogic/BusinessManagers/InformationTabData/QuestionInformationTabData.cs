@@ -18,6 +18,7 @@ using CSET_Main.Questions.POCO;
 using CSET_Main.Questions.QuestionList;
 using CSET_Main.Data.AssessmentData;
 using CSET_Main.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSET_Main.Questions.InformationTabData
 {
@@ -414,8 +415,8 @@ namespace CSET_Main.Questions.InformationTabData
 
         private void BuildDocuments(int requirement_ID, CsetwebContext controlContext)
         {
-            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.GEN_FILE.Title, s.GEN_FILE.File_Name, s.Section_Ref, IsSource = true, s.GEN_FILE.Is_Uploaded }).Concat(
-                controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.GEN_FILE.Title, s.GEN_FILE.File_Name, s.Section_Ref, IsSource = false, s.GEN_FILE.Is_Uploaded })
+            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded }).Concat(
+                controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
             // Source Documents        
             var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded=s.Is_Uploaded??false });
@@ -438,7 +439,7 @@ namespace CSET_Main.Questions.InformationTabData
 
             var newQuestionItems = (from nr in controlEntity.NEW_REQUIREMENT
                                     from newquestions in nr.NEW_QUESTION
-                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS.Include(x => x.SETS) on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
+                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS.Include("SETS") on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
                                     join level in controlEntity.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
                                     join subheading in controlEntity.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id
                                     join questionGroupHeading in controlEntity.QUESTION_GROUP_HEADING on subheading.Question_Group_Heading_Id equals questionGroupHeading.Question_Group_Heading_Id
@@ -460,7 +461,7 @@ namespace CSET_Main.Questions.InformationTabData
                 questionItem.SALLevel = item.Level;
                 questionItem.QuestionGroupHeading = item.QuestionGroupHeading;
 
-                SETS set = item.QuestionSets.OrderBy(x => x.SETS.Order_Framework_Standards).Select(x => x.SETS).FirstOrDefault();
+                SETS set = item.QuestionSets.OrderBy(x => x.Set_NameNavigation.Order_Framework_Standards).Select(x => x.Set_NameNavigation).FirstOrDefault();
                 questionItem.Standard = set.Short_Name;
                 questionItem.SetName = set;
                 questionItem.Question = item.Question;

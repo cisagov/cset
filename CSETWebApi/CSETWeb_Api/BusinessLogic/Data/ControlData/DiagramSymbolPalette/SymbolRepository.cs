@@ -42,7 +42,7 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
         public SymbolRepository(CsetwebContext context)
         {
             // This gets all Component Symbols or NodeTypes/Service Types from the database
-            foreach (COMPONENT_SYMBOLS symbolItemData in context.COMPONENT_SYMBOLS.Include(x => x.SYMBOL_GROUPS).OrderBy(x => x.Display_Name))
+            foreach (COMPONENT_SYMBOLS symbolItemData in context.COMPONENT_SYMBOLS.Include(x => x.Symbol_Group_).OrderBy(x => x.Display_Name))
             {
                 // Populate the DataTemplate files (for the vectors) into a Dictionary from the Component Symbols table. 
                 // TODO: Handle possible null for file name

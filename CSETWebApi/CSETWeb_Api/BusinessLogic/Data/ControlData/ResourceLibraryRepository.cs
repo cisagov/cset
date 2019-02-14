@@ -119,7 +119,7 @@ namespace CSET_Main.Data.ControlData
                         }
                         else
                         {
-                            Debug.Assert(false, "Invalid document type: " + doc.FILE_TYPE.File_Type1);
+                            Debug.Assert(false, "Invalid document type: " + doc.File_Type_.File_Type1);
                         }
                     }
                     foreach (ResourceNode rn in listItems.OrderBy(x => x.TreeTextNode)) {

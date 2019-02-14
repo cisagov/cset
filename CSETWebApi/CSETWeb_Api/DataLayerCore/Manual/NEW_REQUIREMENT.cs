@@ -1,24 +1,24 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataLayerCore.Model
 {
-    public partial class NEW_QUESTION 
+    public partial class NEW_REQUIREMENT
     {
-        public IQueryable<NEW_REQUIREMENT> NEW_REQUIREMENT
+        public IQueryable<NEW_QUESTION> NEW_QUESTION
         {
             get
             {
 
                 CsetwebContext context = new CsetwebContext();
-                context.REQUIREMENT_QUESTIONS.Include("NEW_REQUIREMENT");
+                context.REQUIREMENT_QUESTIONS.Include("NEW_QUESTION");
                 var NewRs = from a in context.REQUIREMENT_QUESTIONS
-                            join b in context.NEW_REQUIREMENT on a.Requirement_Id equals b.Requirement_Id
-                            where a.Question_Id == this.Question_Id
+                            join b in context.NEW_QUESTION on a.Question_Id equals b.Question_Id
+                            where a.Requirement_Id == this.Requirement_Id
                             select b;
                 return NewRs;
 
@@ -30,13 +30,15 @@ namespace DataLayerCore.Model
         {
             get
             {
+
                 CsetwebContext context = new CsetwebContext();
-                context.REQUIREMENT_QUESTIONS.Include("NEW_QUESTION_SETS");
-                var NewRs = from a in context.NEW_QUESTION_SETS
+                context.REQUIREMENT_SETS.Include("SETS");
+                var NewRs = from a in context.REQUIREMENT_SETS
                             join b in context.SETS on a.Set_Name equals b.Set_Name
-                            where a.Question_Id == this.Question_Id
+                            where a.Requirement_Id == this.Requirement_Id
                             select b;
                 return NewRs;
+
             }
             private set { }
         }

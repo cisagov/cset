@@ -44,6 +44,9 @@ namespace DataLayerCore.Model
         [ForeignKey("Diagram_Type_Xml")]
         [InverseProperty("COMPONENT_SYMBOLS")]
         public virtual DIAGRAM_TYPES_XML Diagram_Type_XmlNavigation { get; set; }
+        [ForeignKey("Symbol_Group_Id")]
+        [InverseProperty("COMPONENT_SYMBOLS")]
+        public virtual SYMBOL_GROUPS Symbol_Group_ { get; set; }
         public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
         public virtual ICollection<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
         [InverseProperty("IdNavigation")]

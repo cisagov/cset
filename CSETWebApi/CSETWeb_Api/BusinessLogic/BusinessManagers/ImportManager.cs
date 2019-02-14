@@ -10,6 +10,7 @@ using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = docModel.ToGenFile();
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                            genFile.FILE_TYPE = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                            genFile.File_Type_ = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
 
                             try
                             {
@@ -99,7 +100,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                                 foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s => s.Question_Id != 0).ToList())
                                 {
-                                    web.Entry(question).State = System.Data.Entity.EntityState.Unchanged;
+                                    web.Entry(question).State = EntityState.Unchanged;
                                 }
                                 try
                                 {

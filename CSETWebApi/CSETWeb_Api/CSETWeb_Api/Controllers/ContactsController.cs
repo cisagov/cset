@@ -4,22 +4,20 @@
 // 
 // 
 //////////////////////////////// 
+using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic;
+using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.Helpers;
+using CSETWeb_Api.Models;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CSETWeb_Api.Models;
-using CSETWeb_Api.Helpers;
-using CSETWeb_Api.BusinessManagers;
-using DataLayerCore.Model;
-using CSETWeb_Api.BusinessLogic.Models;
-using BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.Controllers
 {

@@ -425,7 +425,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbParameterValues.Parameter_Value = newText;
                 
 
-                db.PARAMETER_VALUES.AddOrUpdate(dbParameterValues);
+                db.PARAMETER_VALUES.AddOrUpdate(ref dbParameterValues, x=> new { x.Answer_Id, x.Parameter_Id });
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(_assessmentId);

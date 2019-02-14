@@ -189,7 +189,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Comment = answer.Comment;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
 
-            db.ANSWER.AddOrUpdate(dbAnswer);
+            db.ANSWER.AddOrUpdate(ref dbAnswer, x=> x.Answer_Id);
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);
