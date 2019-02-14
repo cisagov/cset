@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><span>
-<doc>
+﻿<?xml version="1.0" encoding="utf-8"?><doc>
   <assembly>
     <name>System.Numerics.Vectors</name>
   </assembly>
@@ -100,7 +99,7 @@
     <member name="M:System.Numerics.Matrix3x2.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Matrix3x2.GetDeterminant">
       <summary>Calculates the determinant for this matrix.</summary>
@@ -298,7 +297,7 @@
       <summary>Creates a view matrix.</summary>
       <param name="cameraPosition">The position of the camera.</param>
       <param name="cameraTarget">The target towards which the camera is pointing.</param>
-      <param name="cameraUpVector">The direction that is &quot;up&quot; from the camera's point of view.</param>
+      <param name="cameraUpVector">The direction that is &amp;quot;up&amp;quot; from the camera&amp;#39;s point of view.</param>
       <returns>The view matrix.</returns>
     </member>
     <member name="M:System.Numerics.Matrix4x4.CreateOrthographic(System.Single,System.Single,System.Single,System.Single)">
@@ -326,7 +325,11 @@
       <param name="nearPlaneDistance">The distance to the near view plane.</param>
       <param name="farPlaneDistance">The distance to the far view plane.</param>
       <returns>The perspective projection matrix.</returns>
-      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is less than or equal to zero.   -or-  <paramref name="farPlaneDistance">farPlaneDistance</paramref> is less than or equal to zero.   -or-  <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is greater than or equal to <paramref name="farPlaneDistance">farPlaneDistance</paramref>.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="farPlaneDistance">farPlaneDistance</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is greater than or equal to <paramref name="farPlaneDistance">farPlaneDistance</paramref>.</exception>
     </member>
     <member name="M:System.Numerics.Matrix4x4.CreatePerspectiveFieldOfView(System.Single,System.Single,System.Single,System.Single)">
       <summary>Creates a perspective projection matrix based on a field of view, aspect ratio, and near and far view plane distances.</summary>
@@ -335,7 +338,14 @@
       <param name="nearPlaneDistance">The distance to the near view plane.</param>
       <param name="farPlaneDistance">The distance to the far view plane.</param>
       <returns>The perspective projection matrix.</returns>
-      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="fieldOfView">fieldOfView</paramref> is less than or equal to zero.   -or-  <paramref name="fieldOfView">fieldOfView</paramref> is greater than or equal to <see cref="F:System.Math.PI"></see>.  <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is less than or equal to zero.   -or-  <paramref name="farPlaneDistance">farPlaneDistance</paramref> is less than or equal to zero.   -or-  <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is greater than or equal to <paramref name="farPlaneDistance">farPlaneDistance</paramref>.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="fieldOfView">fieldOfView</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="fieldOfView">fieldOfView</paramref> is greater than or equal to <see cref="System.Math.PI"></see>.  
+ <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="farPlaneDistance">farPlaneDistance</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is greater than or equal to <paramref name="farPlaneDistance">farPlaneDistance</paramref>.</exception>
     </member>
     <member name="M:System.Numerics.Matrix4x4.CreatePerspectiveOffCenter(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
       <summary>Creates a customized perspective projection matrix.</summary>
@@ -346,7 +356,11 @@
       <param name="nearPlaneDistance">The distance to the near view plane.</param>
       <param name="farPlaneDistance">The distance to the far view plane.</param>
       <returns>The perspective projection matrix.</returns>
-      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is less than or equal to zero.   -or-  <paramref name="farPlaneDistance">farPlaneDistance</paramref> is less than or equal to zero.   -or-  <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is greater than or equal to <paramref name="farPlaneDistance">farPlaneDistance</paramref>.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="farPlaneDistance">farPlaneDistance</paramref> is less than or equal to zero.  
+ -or-  
+ <paramref name="nearPlaneDistance">nearPlaneDistance</paramref> is greater than or equal to <paramref name="farPlaneDistance">farPlaneDistance</paramref>.</exception>
     </member>
     <member name="M:System.Numerics.Matrix4x4.CreateReflection(System.Numerics.Plane)">
       <summary>Creates a matrix that reflects the coordinate system about a specified plane.</summary>
@@ -464,7 +478,7 @@
     <member name="M:System.Numerics.Matrix4x4.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Matrix4x4.GetDeterminant">
       <summary>Calculates the determinant of the current 4x4 matrix.</summary>
@@ -651,8 +665,8 @@
     </member>
     <member name="M:System.Numerics.Plane.#ctor(System.Numerics.Vector3,System.Single)">
       <summary>Creates a <see cref="T:System.Numerics.Plane"></see> object from a specified normal and the distance along the normal from the origin.</summary>
-      <param name="normal">The plane's normal vector.</param>
-      <param name="d">The plane's distance from the origin along its normal vector.</param>
+      <param name="normal">The plane&amp;#39;s normal vector.</param>
+      <param name="d">The plane&amp;#39;s distance from the origin along its normal vector.</param>
     </member>
     <member name="M:System.Numerics.Plane.#ctor(System.Single,System.Single,System.Single,System.Single)">
       <summary>Creates a <see cref="T:System.Numerics.Plane"></see> object from the X, Y, and Z components of its normal, and its distance from the origin on that normal.</summary>
@@ -693,7 +707,7 @@
     <member name="M:System.Numerics.Plane.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Plane.Equals(System.Numerics.Plane)">
       <summary>Returns a value that indicates whether this instance and another plane object are equal.</summary>
@@ -709,7 +723,7 @@
       <returns></returns>
     </member>
     <member name="M:System.Numerics.Plane.Normalize(System.Numerics.Plane)">
-      <summary>Creates a new <see cref="T:System.Numerics.Plane"></see> object whose normal vector is the source plane's normal vector normalized.</summary>
+      <summary>Creates a new <see cref="T:System.Numerics.Plane"></see> object whose normal vector is the source plane&amp;#39;s normal vector normalized.</summary>
       <param name="value">The source plane.</param>
       <returns>The normalized plane.</returns>
     </member>
@@ -727,7 +741,7 @@
     </member>
     <member name="M:System.Numerics.Plane.ToString">
       <summary>Returns the string representation of this plane object.</summary>
-      <returns>A string that represents this <see cref="T:System.Numerics.Plane"></see> object.</returns>
+      <returns>A string that represents this <see cref="System.Numerics.Plane"></see> object.</returns>
     </member>
     <member name="M:System.Numerics.Plane.Transform(System.Numerics.Plane,System.Numerics.Matrix4x4)">
       <summary>Transforms a normalized plane by a 4x4 matrix.</summary>
@@ -811,7 +825,7 @@
     <member name="M:System.Numerics.Quaternion.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Quaternion.GetHashCode">
       <summary>Returns the hash code for this instance.</summary>
@@ -965,7 +979,9 @@
       <param name="values">A numeric array.</param>
       <param name="index">The starting index position from which to create the vector.</param>
       <exception cref="T:System.ArgumentNullException"><paramref name="values">values</paramref> is null.</exception>
-      <exception cref="T:System.IndexOutOfRangeException"><paramref name="index">index</paramref> is less than zero.   -or-   The length of <paramref name="values">values</paramref> minus <paramref name="index">index</paramref> is less than <see cref="P:System.Numerics.Vector`1.Count"></see>.</exception>
+      <exception cref="T:System.IndexOutOfRangeException"><paramref name="index">index</paramref> is less than zero.  
+ -or-  
+ The length of <paramref name="values">values</paramref> minus <paramref name="index">index</paramref> is less than <see cref="System.Numerics.Vector`1.Count"></see>.</exception>
     </member>
     <member name="M:System.Numerics.Vector`1.CopyTo(`0[])">
       <summary>Copies the vector instance to a specified destination array.</summary>
@@ -1004,7 +1020,9 @@
       <summary>Gets the element at a specified index.</summary>
       <param name="index">The index of the element to return.</param>
       <returns>The element at index <paramref name="index">index</paramref>.</returns>
-      <exception cref="T:System.IndexOutOfRangeException"><paramref name="index">index</paramref> is less than zero.   -or-  <paramref name="index">index</paramref> is greater than or equal to <see cref="P:System.Numerics.Vector`1.Count"></see>.</exception>
+      <exception cref="T:System.IndexOutOfRangeException"><paramref name="index">index</paramref> is less than zero.  
+ -or-  
+ <paramref name="index">index</paramref> is greater than or equal to <see cref="System.Numerics.Vector`1.Count"></see>.</exception>
     </member>
     <member name="P:System.Numerics.Vector`1.One">
       <summary>Returns a vector containing all ones.</summary>
@@ -1046,52 +1064,52 @@
       <param name="right">The second vector.</param>
       <returns>The vector that results from the bitwise XOr of the elements in <paramref name="left">left</paramref> and <paramref name="right">right</paramref>.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.UInt64})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.UInt64}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.UInt64"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.UInt32})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.UInt32}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.UInt32"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.UInt16})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.UInt16}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.UInt16"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.Single})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.Single}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.Single"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.SByte})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.SByte}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.SByte"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.Double})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.Double}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.Double"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.Int32})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.Int32}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.Int32"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.Int16})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.Int16}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.Int16"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.Byte})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.Byte}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.Byte"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
     </member>
-    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T} to System.Numerics.Vector{System.Int64})">
+    <member name="M:System.Numerics.Vector`1.op_Explicit(System.Numerics.Vector{T})~System.Numerics.Vector{System.Int64}">
       <summary>Reinterprets the bits of the specified vector into a vector of type <see cref="T:System.Int64"></see>.</summary>
       <param name="value">The vector to reinterpret.</param>
       <returns>The reinterpreted vector.</returns>
@@ -1121,9 +1139,9 @@
       <returns>The scaled vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector`1.op_OnesComplement(System.Numerics.Vector{`0})">
-      <summary>Returns a new vector whose elements are obtained by taking the one's complement of a specified vector's elements.</summary>
+      <summary>Returns a new vector whose elements are obtained by taking the one&amp;#39;s complement of a specified vector&amp;#39;s elements.</summary>
       <param name="value">The source vector.</param>
-      <returns>The one's complement vector.</returns>
+      <returns>The one&amp;#39;s complement vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector`1.op_Subtraction(System.Numerics.Vector{`0},System.Numerics.Vector{`0})">
       <summary>Subtracts the second vector from the first.</summary>
@@ -1159,7 +1177,7 @@
       <summary>Provides a collection of static convenience methods for creating, manipulating, combining, and converting generic vectors.</summary>
     </member>
     <member name="M:System.Numerics.Vector.Abs``1(System.Numerics.Vector{``0})">
-      <summary>Returns a new vector whose elements are the absolute values of the given vector's elements.</summary>
+      <summary>Returns a new vector whose elements are the absolute values of the given vector&amp;#39;s elements.</summary>
       <param name="value">The source vector.</param>
       <typeparam name="T">The vector type. T can be any primitive numeric type.</typeparam>
       <returns>The absolute value vector.</returns>
@@ -1307,7 +1325,7 @@
       <returns></returns>
     </member>
     <member name="M:System.Numerics.Vector.Divide``1(System.Numerics.Vector{``0},System.Numerics.Vector{``0})">
-      <summary>Returns a new vector whose values are the result of dividing the first vector's elements by the corresponding elements in the second vector.</summary>
+      <summary>Returns a new vector whose values are the result of dividing the first vector&amp;#39;s elements by the corresponding elements in the second vector.</summary>
       <param name="left">The first vector.</param>
       <param name="right">The second vector.</param>
       <typeparam name="T">The vector type. T can be any primitive numeric type.</typeparam>
@@ -1626,13 +1644,13 @@
       <returns>The negated vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector.OnesComplement``1(System.Numerics.Vector{``0})">
-      <summary>Returns a new vector whose elements are obtained by taking the one's complement of a specified vector's elements.</summary>
+      <summary>Returns a new vector whose elements are obtained by taking the one&amp;#39;s complement of a specified vector&amp;#39;s elements.</summary>
       <param name="value">The source vector.</param>
       <typeparam name="T">The vector type. T can be any primitive numeric type.</typeparam>
       <returns>The resulting vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector.SquareRoot``1(System.Numerics.Vector{``0})">
-      <summary>Returns a new vector whose elements are the square roots of a specified vector's elements.</summary>
+      <summary>Returns a new vector whose elements are the square roots of a specified vector&amp;#39;s elements.</summary>
       <param name="value">The source vector.</param>
       <typeparam name="T">The vector type. T can be any primitive numeric type.</typeparam>
       <returns>The square root vector.</returns>
@@ -1699,7 +1717,7 @@
       <param name="y">The value to assign to the <see cref="F:System.Numerics.Vector2.Y"></see> field.</param>
     </member>
     <member name="M:System.Numerics.Vector2.Abs(System.Numerics.Vector2)">
-      <summary>Returns a vector whose elements are the absolute values of each of the specified vector's elements.</summary>
+      <summary>Returns a vector whose elements are the absolute values of each of the specified vector&amp;#39;s elements.</summary>
       <param name="value">A vector.</param>
       <returns>The absolute value vector.</returns>
     </member>
@@ -1729,7 +1747,9 @@
       <param name="index">The index at which to copy the first element of the vector.</param>
       <exception cref="T:System.ArgumentNullException"><paramref name="array">array</paramref> is null.</exception>
       <exception cref="T:System.ArgumentException">The number of elements in the current instance is greater than in the array.</exception>
-      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index">index</paramref> is less than zero.   -or-  <paramref name="index">index</paramref> is greater than or equal to the array length.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index">index</paramref> is less than zero.  
+ -or-  
+ <paramref name="index">index</paramref> is greater than or equal to the array length.</exception>
       <exception cref="T:System.RankException"><paramref name="array">array</paramref> is multidimensional.</exception>
     </member>
     <member name="M:System.Numerics.Vector2.Distance(System.Numerics.Vector2,System.Numerics.Vector2)">
@@ -1765,7 +1785,7 @@
     <member name="M:System.Numerics.Vector2.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Vector2.Equals(System.Numerics.Vector2)">
       <summary>Returns a value that indicates whether this instance and another vector are equal.</summary>
@@ -1778,11 +1798,11 @@
     </member>
     <member name="M:System.Numerics.Vector2.Length">
       <summary>Returns the length of the vector.</summary>
-      <returns>The vector's length.</returns>
+      <returns>The vector&amp;#39;s length.</returns>
     </member>
     <member name="M:System.Numerics.Vector2.LengthSquared">
       <summary>Returns the length of the vector squared.</summary>
-      <returns>The vector's length squared.</returns>
+      <returns>The vector&amp;#39;s length squared.</returns>
     </member>
     <member name="M:System.Numerics.Vector2.Lerp(System.Numerics.Vector2,System.Numerics.Vector2,System.Single)">
       <summary>Performs a linear interpolation between two vectors based on the given weighting.</summary>
@@ -1901,7 +1921,7 @@
       <returns>The reflected vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector2.SquareRoot(System.Numerics.Vector2)">
-      <summary>Returns a vector whose elements are the square root of each of a specified vector's elements.</summary>
+      <summary>Returns a vector whose elements are the square root of each of a specified vector&amp;#39;s elements.</summary>
       <param name="value">A vector.</param>
       <returns>The square root vector.</returns>
     </member>
@@ -1995,7 +2015,7 @@
       <param name="z">The value to assign to the <see cref="F:System.Numerics.Vector3.Z"></see> field.</param>
     </member>
     <member name="M:System.Numerics.Vector3.Abs(System.Numerics.Vector3)">
-      <summary>Returns a vector whose elements are the absolute values of each of the specified vector's elements.</summary>
+      <summary>Returns a vector whose elements are the absolute values of each of the specified vector&amp;#39;s elements.</summary>
       <param name="value">A vector.</param>
       <returns>The absolute value vector.</returns>
     </member>
@@ -2025,7 +2045,9 @@
       <param name="index">The index at which to copy the first element of the vector.</param>
       <exception cref="T:System.ArgumentNullException"><paramref name="array">array</paramref> is null.</exception>
       <exception cref="T:System.ArgumentException">The number of elements in the current instance is greater than in the array.</exception>
-      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index">index</paramref> is less than zero.   -or-  <paramref name="index">index</paramref> is greater than or equal to the array length.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index">index</paramref> is less than zero.  
+ -or-  
+ <paramref name="index">index</paramref> is greater than or equal to the array length.</exception>
       <exception cref="T:System.RankException"><paramref name="array">array</paramref> is multidimensional.</exception>
     </member>
     <member name="M:System.Numerics.Vector3.Cross(System.Numerics.Vector3,System.Numerics.Vector3)">
@@ -2072,7 +2094,7 @@
     <member name="M:System.Numerics.Vector3.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Vector3.GetHashCode">
       <summary>Returns the hash code for this instance.</summary>
@@ -2080,11 +2102,11 @@
     </member>
     <member name="M:System.Numerics.Vector3.Length">
       <summary>Returns the length of this vector object.</summary>
-      <returns>The vector's length.</returns>
+      <returns>The vector&amp;#39;s length.</returns>
     </member>
     <member name="M:System.Numerics.Vector3.LengthSquared">
       <summary>Returns the length of the vector squared.</summary>
-      <returns>The vector's length squared.</returns>
+      <returns>The vector&amp;#39;s length squared.</returns>
     </member>
     <member name="M:System.Numerics.Vector3.Lerp(System.Numerics.Vector3,System.Numerics.Vector3,System.Single)">
       <summary>Performs a linear interpolation between two vectors based on the given weighting.</summary>
@@ -2203,7 +2225,7 @@
       <returns>The reflected vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector3.SquareRoot(System.Numerics.Vector3)">
-      <summary>Returns a vector whose elements are the square root of each of a specified vector's elements.</summary>
+      <summary>Returns a vector whose elements are the square root of each of a specified vector&amp;#39;s elements.</summary>
       <param name="value">A vector.</param>
       <returns>The square root vector.</returns>
     </member>
@@ -2300,7 +2322,7 @@
       <param name="w">The value to assign to the <see cref="F:System.Numerics.Vector4.W"></see> field.</param>
     </member>
     <member name="M:System.Numerics.Vector4.Abs(System.Numerics.Vector4)">
-      <summary>Returns a vector whose elements are the absolute values of each of the specified vector's elements.</summary>
+      <summary>Returns a vector whose elements are the absolute values of each of the specified vector&amp;#39;s elements.</summary>
       <param name="value">A vector.</param>
       <returns>The absolute value vector.</returns>
     </member>
@@ -2330,7 +2352,9 @@
       <param name="index">The index at which to copy the first element of the vector.</param>
       <exception cref="T:System.ArgumentNullException"><paramref name="array">array</paramref> is null.</exception>
       <exception cref="T:System.ArgumentException">The number of elements in the current instance is greater than in the array.</exception>
-      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index">index</paramref> is less than zero.   -or-  <paramref name="index">index</paramref> is greater than or equal to the array length.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index">index</paramref> is less than zero.  
+ -or-  
+ <paramref name="index">index</paramref> is greater than or equal to the array length.</exception>
       <exception cref="T:System.RankException"><paramref name="array">array</paramref> is multidimensional.</exception>
     </member>
     <member name="M:System.Numerics.Vector4.Distance(System.Numerics.Vector4,System.Numerics.Vector4)">
@@ -2371,7 +2395,7 @@
     <member name="M:System.Numerics.Vector4.Equals(System.Object)">
       <summary>Returns a value that indicates whether this instance and a specified object are equal.</summary>
       <param name="obj">The object to compare with the current instance.</param>
-      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false```. If &lt;code data-dev-comment-type=&quot;paramref&quot;&gt;obj&lt;/code&gt; isnull, the method returnsfalse`.</returns>
+      <returns>true if the current instance and <paramref name="obj">obj</paramref> are equal; otherwise, false. If <paramref name="obj">obj</paramref> is null, the method returns false.</returns>
     </member>
     <member name="M:System.Numerics.Vector4.GetHashCode">
       <summary>Returns the hash code for this instance.</summary>
@@ -2379,11 +2403,11 @@
     </member>
     <member name="M:System.Numerics.Vector4.Length">
       <summary>Returns the length of this vector object.</summary>
-      <returns>The vector's length.</returns>
+      <returns>The vector&amp;#39;s length.</returns>
     </member>
     <member name="M:System.Numerics.Vector4.LengthSquared">
       <summary>Returns the length of the vector squared.</summary>
-      <returns>The vector's length squared.</returns>
+      <returns>The vector&amp;#39;s length squared.</returns>
     </member>
     <member name="M:System.Numerics.Vector4.Lerp(System.Numerics.Vector4,System.Numerics.Vector4,System.Single)">
       <summary>Performs a linear interpolation between two vectors based on the given weighting.</summary>
@@ -2434,7 +2458,7 @@
     </member>
     <member name="P:System.Numerics.Vector4.One">
       <summary>Gets a vector whose 4 elements are equal to one.</summary>
-      <returns>Returns <see cref="T:System.Numerics.Vector4"></see>.</returns>
+      <returns>Returns <see cref="System.Numerics.Vector4"></see>.</returns>
     </member>
     <member name="M:System.Numerics.Vector4.op_Addition(System.Numerics.Vector4,System.Numerics.Vector4)">
       <summary>Adds two vectors together.</summary>
@@ -2496,7 +2520,7 @@
       <returns>The negated vector.</returns>
     </member>
     <member name="M:System.Numerics.Vector4.SquareRoot(System.Numerics.Vector4)">
-      <summary>Returns a vector whose elements are the square root of each of a specified vector's elements.</summary>
+      <summary>Returns a vector whose elements are the square root of each of a specified vector&amp;#39;s elements.</summary>
       <param name="value">A vector.</param>
       <returns>The square root vector.</returns>
     </member>
@@ -2594,4 +2618,4 @@
       <returns>A vector whose four elements are equal to zero (that is, it returns the vector (0,0,0,0).</returns>
     </member>
   </members>
-</doc></span>
+</doc>

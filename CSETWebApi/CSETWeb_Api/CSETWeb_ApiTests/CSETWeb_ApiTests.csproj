@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSETWeb_ApiTests</RootNamespace>
     <AssemblyName>CSETWeb_ApiTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -121,6 +121,10 @@
     <ProjectReference Include="..\CSETWeb_Api\CSETWeb_Api.csproj">
       <Project>{A87CB253-7A73-4C66-84E7-ABAA68723B7B}</Project>
       <Name>CSETWeb_Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj">
+      <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
+      <Name>DataLayerCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

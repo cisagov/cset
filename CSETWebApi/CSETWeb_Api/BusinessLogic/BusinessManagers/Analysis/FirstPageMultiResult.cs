@@ -22,4 +22,41 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
             set { result2 = value; Count++; }
         }
     }
+    public class RankedCategoriesMultiResult : MultiResultBase
+    {
+        private List<usp_getRankedCategories> result1;
+        public List<usp_getRankedCategories> Result1
+        {
+            get { return result1; }
+            set { result1 = value; Count++; }
+        }
+    }
+    public class OverallRankedCategoriesMultiResult : MultiResultBase
+    {
+        private List<usp_getRankedCategories> result1;
+        public List<usp_getRankedCategories> Result1
+        {
+            get { return result1; }
+            set { result1 = value; Count++; }
+        }
+    }
+    public class StandardSummaryOverallMultiResult : MultiResultBase
+    {
+        private List<DataRowsPie> result1;
+        public List<DataRowsPie> Result1
+        {
+            get { return result1; }
+            set { result1 = value; Count++; }
+        }
+    }
+
+    public class StandardSummaryMultiResult : MultiResultBase
+    {
+        private List<DataRowsPie> result1;
+        public List<DataRowsPie> Result1
+        {
+            get { return result1; }
+            set { result1 = value; Count++; }
+        }
+    }
 }

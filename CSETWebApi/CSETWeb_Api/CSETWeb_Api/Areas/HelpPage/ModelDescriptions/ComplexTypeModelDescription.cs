@@ -1,9 +1,3 @@
-//////////////////////////////// 
-// 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
 using System.Collections.ObjectModel;
 
 namespace CSETWeb_Api.Areas.HelpPage.ModelDescriptions
@@ -18,4 +12,3 @@ namespace CSETWeb_Api.Areas.HelpPage.ModelDescriptions
         public Collection<ParameterDescription> Properties { get; private set; }
     }
 }
-

@@ -47,7 +47,7 @@ namespace CSETWeb_Api.Controllers
                     var doc = db.GEN_FILE.FirstOrDefault(s => s.File_Name == fileName && s.Is_Uploaded == true);
                     var stream = new MemoryStream(doc.Data);
                     result.Content = new StreamContent(stream);
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(doc.FILE_TYPE.Mime_Type);
+                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(doc.File_Type_.Mime_Type);
                     return result;
 
                 }
@@ -104,7 +104,7 @@ namespace CSETWeb_Api.Controllers
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new Exception("Document could not be added.  Please change the file name and try again"));
                     }
-                    genFile.FILE_TYPE=db.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                    genFile.File_Type_=db.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
                     try
                     {
                         db.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });

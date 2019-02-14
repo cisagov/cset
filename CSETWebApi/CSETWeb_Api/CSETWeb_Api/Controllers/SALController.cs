@@ -4,25 +4,22 @@
 // 
 // 
 //////////////////////////////// 
+using CSET_Main.Data.AssessmentData;
+using CSET_Main.Data.ControlData;
+using CSET_Main.SALS;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using CSETWeb_Api.Helpers.sals;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Nelibur.ObjectMapper;
-using System;
-using CSETWeb_Api.Helpers.sals;
-using System.Web;
-using System.Collections.Generic;
-using CSET_Main.SALS;
-using CSET_Main.Data.AssessmentData;
-using CSET_Main.Data.ControlData;
-using System.Net.Http;
-using CSETWeb_Api.BusinessLogic.Models;
-using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {

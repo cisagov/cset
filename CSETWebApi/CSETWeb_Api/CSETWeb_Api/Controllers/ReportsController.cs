@@ -8,6 +8,7 @@ using CSETWeb_Api.BusinessLogic.ReportEngine;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

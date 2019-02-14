@@ -14,12 +14,12 @@ using System.Web;
 using System.Web.Http;
 using System.Linq;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http.Description;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.Controllers
 {

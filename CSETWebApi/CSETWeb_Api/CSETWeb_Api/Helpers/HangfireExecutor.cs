@@ -7,19 +7,14 @@
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessManagers;
-using DataLayerCore.Model;
 using DataLayerCore.Model;
 using Hangfire;
 using Hangfire.Server;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -40,22 +35,22 @@ namespace CSETWeb_Api.Helpers
                         db.SETS.Add(result.Result);
                         foreach (var question in result.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s=>s.Question_Id!=0).ToList())
                         {
-                            db.Entry(question).State = System.Data.Entity.EntityState.Unchanged;
+                            db.Entry(question).State = EntityState.Unchanged;
                         }
                         await db.SaveChangesAsync();
                     }
                 }
-                catch (DbEntityValidationException e)
-                {
-                    foreach(var error in e.EntityValidationErrors)
-                    {
-                        foreach(var validationError in error.ValidationErrors)
-                        {
-                            result.LogError(validationError.ErrorMessage);
-                        }
-                    }
-                    throw new Exception(String.Join("\r\n", result.ErrorMessages));
-                }
+                //catch (DbEntityValidationException e)
+                //{
+                //    foreach(var error in e.EntityValidationErrors)
+                //    {
+                //        foreach(var validationError in error.ValidationErrors)
+                //        {
+                //            result.LogError(validationError.ErrorMessage);
+                //        }
+                //    }
+                //    throw new Exception(String.Join("\r\n", result.ErrorMessages));
+                //}
                 catch(SqlException e)
                 {
                     result.LogError(e.Message);

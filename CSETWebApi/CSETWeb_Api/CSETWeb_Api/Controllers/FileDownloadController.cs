@@ -8,7 +8,9 @@ using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Export;
 using CSETWeb_Api.Helpers;
+using DataAccess;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Http;
-using System.Data.Entity;
-using System.Text;
-using DataAccess;
-using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
