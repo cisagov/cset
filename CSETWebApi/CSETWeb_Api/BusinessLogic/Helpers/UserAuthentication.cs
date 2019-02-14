@@ -33,7 +33,7 @@ namespace CSETWeb_Api.Helpers
                 return null;
             }
 
-            USER loginUser = null;
+            USERS loginUser = null;
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
             using (var db = new CsetwebContext())
@@ -65,7 +65,7 @@ namespace CSETWeb_Api.Helpers
                 UserFirstName = loginUser.FirstName,
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
-                PasswordResetRequired = loginUser.PasswordResetRequired
+                PasswordResetRequired = loginUser.PasswordResetRequired ?? true
             };
 
             return resp;

@@ -4,21 +4,18 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
+using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using CSETWeb_Api.Common;
-using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.BusinessManagers.Analysis;
-using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
-using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -64,20 +61,23 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
 
             FirstPage rval = null;
+
             using (CsetwebContext context = new CsetwebContext())
             {
+                
+                var results = new { Overalls = nul}
+                context.LoadStoredProc("[dbo].[usp_GetFirstPage]")
+              .WithSqlParam("assessment_id", assessmentId)
+              .ExecuteStoredProc((handler) =>
+              {
+                  var fooResults = handler.ReadToList<GetCombinedOveralls>();
+                  handler.NextResult();
+                  var barResults = handler.ReadToList<usp_getRankedCategories>();
+                  
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_GetFirstPage]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
+               });
 
-                var results = context.MultipleResults(command)
-                    .With<GetCombinedOveralls>()
-                    .With<usp_getRankedCategories>()
-                    .Execute();
+              
 
                 if (results.Count >= 2)
                 {

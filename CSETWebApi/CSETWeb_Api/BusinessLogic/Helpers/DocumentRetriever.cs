@@ -61,6 +61,9 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             //}
 
         }
+
+        
+
         public GEN_FILE LookupGenFile(string p)
         {
             GEN_FILE gf;
@@ -74,7 +77,22 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             }
             return gf;
         }
-     
+
+        internal int LookupGenFileId(string fileName)
+        {
+            
+            using (var db = new CsetwebContext())
+            {
+                GEN_FILE gf = (from h in db.GEN_FILE
+                      where h.File_Name == fileName
+                      orderby h.Gen_File_Id descending
+                      select h).FirstOrDefault();
+                if (gf == null)
+                    return 0;
+                return gf.Gen_File_Id;
+            }
+            
+        }
     }
 }
 

@@ -4,19 +4,15 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Http.Description;
-using CSETWeb_Api.BusinessManagers;
 
 
 namespace CSETWeb_Api.Controllers
@@ -31,7 +27,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         public DemographicsController() : base()
         {
-            db.Configuration.ProxyCreationEnabled = false;
+           
         }
 
         /// <summary>
@@ -69,7 +65,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/Demographics/Sectors")]
         public async Task<List<Sector>> GetSECTORs()
         {
-            List<SECTOR> list = await db.SECTORs.ToListAsync<SECTOR>();
+            List<SECTOR> list = await db.SECTOR.ToListAsync<SECTOR>();
             var tmplist = list.OrderBy(s => s.SectorName).ToList();
 
             var otherItem = list.Find(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
