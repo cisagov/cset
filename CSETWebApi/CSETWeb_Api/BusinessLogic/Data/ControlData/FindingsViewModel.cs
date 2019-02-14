@@ -25,9 +25,9 @@ namespace CSETWeb_Api.Data.ControlData
 */
 
         private int answer_id = 0;
-        private CsetwebContext assessmentContext;
+        private CSET_Context assessmentContext;
 
-        public FindingsViewModel(CsetwebContext assessmentContext,int assessment_id, int answer_id)
+        public FindingsViewModel(CSET_Context assessmentContext,int assessment_id, int answer_id)
         {
             this.assessment_id = assessment_id; 
             this.answer_id = answer_id;

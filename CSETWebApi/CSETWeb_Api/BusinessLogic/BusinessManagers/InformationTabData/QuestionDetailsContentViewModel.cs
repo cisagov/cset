@@ -87,7 +87,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         /// <summary>
         /// 
         /// </summary>
-        private CsetwebContext DataContext { get; }
+        private CSET_Context DataContext { get; }
 
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         public QuestionDetailsContentViewModel(
                                                 IStandardSpecficLevelRepository levelManager,
                                                 InformationTabBuilder informationTabBuilder,
-                                                CsetwebContext datacontext)
+                                                CSET_Context datacontext)
         {
             this.DataContext = datacontext;
             //this.symbolRepository = symbolRepository;

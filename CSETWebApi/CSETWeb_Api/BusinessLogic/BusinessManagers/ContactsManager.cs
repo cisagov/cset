@@ -43,7 +43,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             List<ContactDetail> list = new List<ContactDetail>();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var query = (from cc in db.ASSESSMENT_CONTACTS
                              where cc.Assessment_Id == assessmentId
@@ -100,7 +100,7 @@ namespace CSETWeb_Api.BusinessManagers
             if (searchParms.PrimaryEmail == null) searchParms.PrimaryEmail = string.Empty;
 
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var email = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
                 if (email == null)
@@ -159,7 +159,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public ContactDetail AddContactToAssessment(int assessmentId, int userId, int roleid, bool invited)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 USERS user = db.USERS.Where(x => x.UserId == userId).First();
 
@@ -214,7 +214,7 @@ namespace CSETWeb_Api.BusinessManagers
             NotificationManager nm = new NotificationManager();
 
             ASSESSMENT_CONTACTS existingContact = null;
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 // See if the Contact already exists
                 existingContact = db.ASSESSMENT_CONTACTS.Where(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -312,7 +312,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public void UpdateContact(ContactDetail contact)
         {
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
                 var ac = context.ASSESSMENT_CONTACTS.Where(x => x.UserId == contact.UserId
                     && x.Assessment_Id == contact.AssessmentId).FirstOrDefault();
@@ -355,7 +355,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int? GetUserRoleOnAssessment(int userId, int assessmentId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var contact = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId).FirstOrDefault();
                 if (contact != null)
@@ -373,7 +373,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public List<ContactDetail> RemoveContact(int userId, int assessmentId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var user = (from cc in db.ASSESSMENT_CONTACTS
                             where cc.UserId == userId && cc.Assessment_Id == assessmentId
@@ -397,7 +397,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="assessmentId"></param>
         public void MarkContactInvited(int userId, int assessmentId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var assessmentContact = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId)
                     .FirstOrDefault();
@@ -428,7 +428,7 @@ namespace CSETWeb_Api.BusinessManagers
                 return;
             }
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 // we can expect to find this record for the current user and assessment.
                 var ac = db.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == (int)assessmentId && x.UserId == userId).FirstOrDefault();
@@ -456,7 +456,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public object GetAllRoles()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var roles = from ar in db.ASSESSMENT_ROLES
                             select new { ar.AssessmentRoleId, ar.AssessmentRole };

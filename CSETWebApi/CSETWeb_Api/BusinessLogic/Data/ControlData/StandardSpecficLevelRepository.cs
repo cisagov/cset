@@ -20,9 +20,9 @@ namespace CSET_Main.Data.ControlData
         private Dictionary<string, string> fullNameToStandardLevel = new Dictionary<string, string>();
         private int maxLevel;
 
-        private CsetwebContext Context { get; }
+        private CSET_Context Context { get; }
 
-        public StandardSpecficLevelRepository(CsetwebContext context)
+        public StandardSpecficLevelRepository(CSET_Context context)
         {
             this.Context = context;
             SetStandardLevelLookup();

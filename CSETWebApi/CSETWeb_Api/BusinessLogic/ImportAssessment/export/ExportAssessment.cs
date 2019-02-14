@@ -22,9 +22,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
     {   
         private Dictionary<int, String> questionGroupHeadings;
         private Dictionary<int, String> universalSubHeadings;
-        private CsetwebContext entitites;
+        private CSET_Context entitites;
 
-        public ExportAssessment(CsetwebContext entities)
+        public ExportAssessment(CSET_Context entities)
         {
             this.entitites = entities;
             

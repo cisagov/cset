@@ -27,7 +27,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             FrameworkResponse resp = new FrameworkResponse();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 // get any existing answers for this assessment
                 var answers = db.FRAMEWORK_TIER_TYPE_ANSWER.Where(ans => ans.Assessment_Id == assessmentId);
@@ -102,7 +102,7 @@ namespace CSETWeb_Api.BusinessManagers
         public void PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier)
         {
             // save to FRAMEWORK_TIER_TYPE_ANSWER table
-            var db = new CsetwebContext();
+            var db = new CSET_Context();
 
             var answer = db.FRAMEWORK_TIER_TYPE_ANSWER.Where(x => x.Assessment_Id == assessmentId && x.TierType == selectedTier.TierType).FirstOrDefault();
 

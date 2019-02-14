@@ -17,7 +17,7 @@ namespace ExportCSV
   
         public MemoryStream ExportToCSV(int assessment_id)
         {
-            using (CsetwebContext assessmentEntity = new CsetwebContext())
+            using (CSET_Context assessmentEntity = new CSET_Context())
             {
                 var stream = new MemoryStream();
                 var answerslist = assessmentEntity.ANSWER;

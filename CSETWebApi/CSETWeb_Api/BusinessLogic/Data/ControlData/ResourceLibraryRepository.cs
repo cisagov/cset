@@ -25,11 +25,11 @@ namespace CSET_Main.Data.ControlData
         public Dictionary<int, ResourceNode> ResourceModelDictionary{get; private set;}
 
         private CSET_Main.Common.ICSETGlobalProperties globalProperties;
-        private CsetwebContext controlContextHolder;
+        private CSET_Context controlContextHolder;
         private string pdfDirectory;
         private string xpsDirectory;
 
-        public ResourceLibraryRepository(CsetwebContext controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
+        public ResourceLibraryRepository(CSET_Context controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
         {           
             this.controlContextHolder = controlContextHolder;
             this.globalProperties = globalProperties;

@@ -31,7 +31,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId)
         {
-            using (CsetwebContext web = new CsetwebContext())
+            using (CSET_Context web = new CSET_Context())
             {
                 //* read from db and set as memory stream here.
                 using (Stream fs = new MemoryStream(zipFileFromDatabase))

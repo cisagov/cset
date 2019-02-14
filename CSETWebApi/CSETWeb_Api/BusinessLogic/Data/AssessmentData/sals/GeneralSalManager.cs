@@ -17,7 +17,7 @@ namespace CSETWeb_Api.Controllers.sal
 {
     public class GeneralSalManager
     {
-        private CsetwebContext db;
+        private CSET_Context db;
 
         private Dictionary<double, string> SALThresholdDictionary { get; set; }
 
@@ -25,7 +25,7 @@ namespace CSETWeb_Api.Controllers.sal
         /// Constructor
         /// </summary>
         /// <param name="db"></param>
-        public GeneralSalManager(CsetwebContext db)
+        public GeneralSalManager(CSET_Context db)
         {
             InitializeSALThresholds();
             this.db = db;

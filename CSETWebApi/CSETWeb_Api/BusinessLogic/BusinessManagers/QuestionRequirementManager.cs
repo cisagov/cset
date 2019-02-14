@@ -55,7 +55,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="assessmentId"></param>
         protected QuestionRequirementManager(int assessmentId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 _assessmentId = assessmentId;
                 InitializeApplicationMode(db);
@@ -70,7 +70,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// Sets a Q or R that is returned to the client.
         /// </summary>
         /// <returns></returns>
-        protected void InitializeApplicationMode(CsetwebContext db)
+        protected void InitializeApplicationMode(CSET_Context db)
         {   
             applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
@@ -96,7 +96,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// Determines the assessment's SAL standard level (letter code)
         /// </summary>
         /// <returns></returns>
-        protected void InitializeSalLevel(CsetwebContext db)
+        protected void InitializeSalLevel(CSET_Context db)
         {
             
             var querySalLevel = from usl in db.UNIVERSAL_SAL_LEVEL
@@ -112,7 +112,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// Creates a list of standards selected for the assessment.
         /// </summary>
         /// <returns></returns>
-        protected void InitializeStandardsForAssessment(CsetwebContext db)
+        protected void InitializeStandardsForAssessment(CSET_Context db)
         {
             List<string> result = new List<string>();            
             var sets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId && x.Selected)
@@ -127,7 +127,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="mode"></param>
         public void SetApplicationMode(string mode)
         {
-            var db = new CsetwebContext();
+            var db = new CSET_Context();
             var standardSelection = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
             if (standardSelection != null)
             {
@@ -146,7 +146,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="answer"></param>
         public int StoreAnswer(Answer answer)
         {
-            var db = new CsetwebContext();
+            var db = new CSET_Context();
 
             // Find the Question or Requirement
             var question = db.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();

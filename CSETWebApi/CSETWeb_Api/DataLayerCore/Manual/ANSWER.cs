@@ -13,7 +13,7 @@ namespace DataLayerCore.Model
             get
             {
 
-                CsetwebContext context = new CsetwebContext();
+                CSET_Context context = new CSET_Context();
                 
                 var NewRs = from a in context.DOCUMENT_ANSWERS
                             join b in context.DOCUMENT_FILE on a.Document_Id equals b.Document_Id

@@ -20,9 +20,9 @@ namespace CSET_Main.Questions.Slice
 
         private Dictionary<String, List<QuestionPoco>> dictionaryCNSSICategory;        
         private Boolean createQuestionPoco;
-        private CsetwebContext DataContext { get; }
+        private CSET_Context DataContext { get; }
 
-        public RequirementsPocoBuilder(CsetwebContext datacontext)
+        public RequirementsPocoBuilder(CSET_Context datacontext)
         {
             this.DataContext = datacontext;
             this.dictionaryCNSSICategory = new Dictionary<string, List<QuestionPoco>>();          

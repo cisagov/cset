@@ -26,7 +26,7 @@ namespace CSETWeb_Api.Controllers
     public class ResetPasswordController : ApiController
     {
         private Regex emailvalidator = new Regex(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
-        private CsetwebContext db = new CsetwebContext();
+        private CSET_Context db = new CSET_Context();
 
 
 

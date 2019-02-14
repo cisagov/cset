@@ -24,7 +24,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// The database context.
         /// </summary>
-        private CsetwebContext db;
+        private CSET_Context db;
 
         /// <summary>
         /// The current assessment.
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public DocumentManager(int assessmentId)
         {
-            this.db = new CsetwebContext();
+            this.db = new CSET_Context();
             this.assessmentId = assessmentId;
         }
 

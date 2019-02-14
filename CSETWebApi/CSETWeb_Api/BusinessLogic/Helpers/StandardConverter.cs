@@ -40,7 +40,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 var documentImporter = new DocumentImporter();
                 var set = result.Result;
-                using (var db = new CsetwebContext())
+                using (var db = new CSET_Context())
                 {
                     var existingSet = db.SETS.FirstOrDefault(s => s.Set_Name == setname);
                     if (existingSet != null)
@@ -143,7 +143,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
 
             var requirements = new List<ExternalRequirement>();
             //Caching for performance
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 //db.Configuration.ProxyCreationEnabled = false;
                 //db.Configuration.AutoDetectChangesEnabled = false;

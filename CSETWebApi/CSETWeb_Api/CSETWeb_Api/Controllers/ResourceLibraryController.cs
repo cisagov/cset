@@ -48,7 +48,7 @@ namespace CSETWeb_Api.Controllers
             Searcher searcher = new IndexSearcher(reader);
             Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
             CSETGlobalProperties props = new CSETGlobalProperties();
-            using (CsetwebContext context = new CsetwebContext()) {
+            using (CSET_Context context = new CSET_Context()) {
                 SearchDocs search = new SearchDocs(props, new ResourceLibraryRepository(context, props));
                 return search.Search(searchRequest);
             }
@@ -58,7 +58,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/ResourceLibrary/tree")]
         public List<SimpleNode> GetTree()
         {
-            using (CsetwebContext context = new CsetwebContext()) {
+            using (CSET_Context context = new CSET_Context()) {
                 IResourceLibraryRepository resource = new ResourceLibraryRepository(context,new CSETGlobalProperties());
                 return resource.GetTreeNodes();
             }

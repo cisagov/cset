@@ -43,7 +43,7 @@ namespace CSET_Main.ReportEngine.Builder
             
         }
 
-        public List<DataTable> GetNistTables(CsetwebContext context, int assessment_id)
+        public List<DataTable> GetNistTables(CSET_Context context, int assessment_id)
         {
             List<DataTable> nistTables = new List<DataTable>();
 

@@ -20,7 +20,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             string flowDoc = string.Empty;
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 if (type.ToLower() == "cat")
                 {

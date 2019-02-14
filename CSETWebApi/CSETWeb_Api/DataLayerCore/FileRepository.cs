@@ -16,10 +16,10 @@ namespace DataAccess
     [LifecycleTransient]
     public class FileRepository : IFileRepository, IDisposable
     {
-        private CsetwebContext _context;
+        private CSET_Context _context;
         public FileRepository()
         {
-            _context = new CsetwebContext();
+            _context = new CSET_Context();
         }
 
         public IEnumerable<FileDescriptionShort> AddFileDescriptions(FileResult fileResult)

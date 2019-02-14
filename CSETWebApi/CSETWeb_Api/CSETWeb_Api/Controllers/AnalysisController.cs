@@ -40,7 +40,7 @@ namespace CSETWeb_Api.Controllers
 
             RequirementsManager rm = new RequirementsManager(assessmentId);
 
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
                 var rankedQuestionList = context.usp_GetRankedQuestions(assessmentId).ToList();
 
@@ -62,9 +62,8 @@ namespace CSETWeb_Api.Controllers
 
             FirstPage rval = null;
 
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
-
                 var results = new FirstPageMultiResult();
                 context.LoadStoredProc("[dbo].[usp_GetFirstPage]")
               .WithSqlParam("assessment_id", assessmentId)
@@ -160,7 +159,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -227,7 +226,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -281,7 +280,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetStandardSummaryOverall()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
                 return GetStandardsSummaryMultiple(context, assessmentId);
             }
@@ -296,7 +295,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetStandardsSummary()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {   
                 if (context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Count() > 1)
                 {
@@ -307,7 +306,7 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        private ChartData getStandardsSummarySingle(CsetwebContext context, int assessmentId)
+        private ChartData getStandardsSummarySingle(CSET_Context context, int assessmentId)
         {
             ChartData summary = null;
 
@@ -376,7 +375,7 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        private ChartData GetStandardsSummaryMultiple(CsetwebContext context, int assessmentId)
+        private ChartData GetStandardsSummaryMultiple(CSET_Context context, int assessmentId)
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
@@ -436,7 +435,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -470,7 +469,7 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = new ChartData();
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -546,7 +545,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -593,7 +592,7 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -627,7 +626,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -661,7 +660,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -696,7 +695,7 @@ namespace CSETWeb_Api.Controllers
         public List<usp_getNetworkWarnings> GetNetworkWarnings()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
 
                 var command = new SqlCommand()
@@ -722,7 +721,7 @@ namespace CSETWeb_Api.Controllers
 
         private string GetAssessmentMode(int assessmentId)
         {
-            using (CsetwebContext db = new CsetwebContext())
+            using (CSET_Context db = new CSET_Context())
             {
                 string applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();

@@ -119,7 +119,7 @@ namespace CSETWeb_Api.Controllers
                 var streamProvider = new InMemoryMultipartFormDataStreamProvider();
                 await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
 
-                using (CsetwebContext web = new CsetwebContext())
+                using (CSET_Context web = new CSET_Context())
                 {
                     //access form data
                     NameValueCollection formData = streamProvider.FormData;

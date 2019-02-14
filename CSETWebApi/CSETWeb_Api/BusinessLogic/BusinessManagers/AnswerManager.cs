@@ -33,7 +33,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         public List<int> ActiveAnswerIds()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var ss = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
                 if (ss == null)
@@ -64,7 +64,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             List<int> list = new List<int>();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 List<string> mySets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Set_Name).ToList();
 
@@ -117,7 +117,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             List<int> list = new List<int>();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 List<string> mySets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Set_Name).ToList();
 

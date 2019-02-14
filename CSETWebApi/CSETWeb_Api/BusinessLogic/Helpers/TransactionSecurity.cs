@@ -229,7 +229,7 @@ namespace CSETWeb_Api.Helpers
         /// <returns></returns>
         private static string GetSecret()
         {
-            using (CsetwebContext db = new CsetwebContext())
+            using (CSET_Context db = new CSET_Context())
             {
                 var jwtKey = db.JWT.OrderBy(x => x.Generated).FirstOrDefault();
                 if (jwtKey != null)

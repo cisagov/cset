@@ -44,7 +44,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 IQueryable<QuestionPlusHeaders> query = null;
 
@@ -170,7 +170,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid)
         {
-            using (CsetwebContext datacontext = new CsetwebContext()) {
+            using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
                     new StandardSpecficLevelRepository(datacontext),
                     new InformationTabBuilder(datacontext),
@@ -281,7 +281,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int NumberOfQuestions()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 if (_setNames.Count == 1)
                 {
@@ -329,7 +329,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             // SUB_CATEGORY_ANSWERS
-            var db = new CsetwebContext();
+            var db = new CSET_Context();
 
 
             // Get the USCH so that we will know the Heading_Pair_Id

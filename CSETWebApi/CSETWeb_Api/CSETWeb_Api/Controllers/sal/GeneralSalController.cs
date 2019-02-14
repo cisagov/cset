@@ -27,7 +27,7 @@ namespace CSETWeb_Api.Controllers.Sal
 {
     public class GeneralSalController : ApiController
     {
-        private CsetwebContext db = new CsetwebContext();
+        private CSET_Context db = new CSET_Context();
 
 
         [Route("api/GeneralSal/Descriptions")]
@@ -101,7 +101,7 @@ namespace CSETWeb_Api.Controllers.Sal
             {
                 int assessmentid = Auth.AssessmentForUser();
                 ws.assessmentid = assessmentid;
-                using (CsetwebContext db = new CsetwebContext())
+                using (CSET_Context db = new CSET_Context())
                 {
                     GeneralSalManager salManager = new GeneralSalManager(db);
                     string salvalue = salManager.SaveWeightAndCalculate(ws);
@@ -125,7 +125,7 @@ namespace CSETWeb_Api.Controllers.Sal
 
             try
             {
-                using (CsetwebContext db = new CsetwebContext())
+                using (CSET_Context db = new CSET_Context())
                 {
                     GeneralSalManager salManager = new GeneralSalManager(db);
 

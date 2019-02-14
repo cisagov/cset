@@ -27,7 +27,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 db.FillEmptyQuestionsForAnalysis(_assessmentId);
 
@@ -97,7 +97,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
-            using(var db = new CsetwebContext())
+            using(var db = new CSET_Context())
             {
                 var dblist = from a in db.AVAILABLE_STANDARDS
                              join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
@@ -138,7 +138,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
         {   
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {   
                 return db.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
             }
@@ -152,7 +152,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<QuestionsWithAlternateJustifi> GetQuestionsWithAlternateJustification()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 
                 var dblist = from a in db.AVAILABLE_STANDARDS
@@ -178,7 +178,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<QuestionsWithComments> getQuestionsWithCommentsOrMarkedForReview()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 
                 var dblist = from a in db.AVAILABLE_STANDARDS
@@ -203,7 +203,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 RequirementsManager rm = new RequirementsManager(_assessmentId);
 
@@ -228,7 +228,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<DocumentLibraryTable> GetDocumentLibrary()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
                 var docs = from a in db.DOCUMENT_FILE
@@ -248,7 +248,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
-            using (var db = new CsetwebContext()) {
+            using (var db = new CSET_Context()) {
                 
                 NistSalManager manager = new NistSalManager();
                 Models.Sals sals =  manager.CalculatedNist(_assessmentId, db);
@@ -279,7 +279,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
                 var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
@@ -298,7 +298,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public BasicReportData.OverallSALTable GetSals()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var sals = (from a in db.STANDARD_SELECTION
                            join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
@@ -343,7 +343,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public BasicReportData.INFORMATION GetInformation()
         {
             
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
                 return TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
@@ -360,7 +360,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<Individual> GetFindingIndividuals()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var findings = (from a in db.FINDING_CONTACT
                                 join b in db.FINDING on a.Finding_Id equals b.Finding_Id
@@ -406,7 +406,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public GenSALTable GetGenSals()
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var gensalnames =  db.GEN_SAL_NAMES.ToList();
                 var actualvalues = (from a in db.GENERAL_SAL.Where(x => x.Assessment_Id == this._assessmentId)

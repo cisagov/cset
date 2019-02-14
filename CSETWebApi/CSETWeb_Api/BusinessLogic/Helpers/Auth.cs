@@ -70,7 +70,7 @@ namespace CSETWeb_Api.Helpers
                 Throw401();
             }
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 int hits = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId).Count();
                 if (hits == 0)
@@ -100,7 +100,7 @@ namespace CSETWeb_Api.Helpers
                 Throw401();
             }
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var myAdminConnections = db.ASSESSMENT_CONTACTS.Where(
                         ac => ac.UserId == userId
@@ -126,7 +126,7 @@ namespace CSETWeb_Api.Helpers
             TokenManager tm = new TokenManager();
             int userId = Auth.GetUserId();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var adminConnections = db.ASSESSMENT_CONTACTS.Where(                        
                         ac => ac.Assessment_Id == assessmentId 

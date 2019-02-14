@@ -20,7 +20,7 @@ namespace CSETWeb_Api.Helpers
 {
     public class UserAccountSecurityManager
     {
-        private CsetwebContext db = new CsetwebContext();
+        private CSET_Context db = new CSET_Context();
 
         /// <summary>
         /// Creates a new user and sends them an email containing a temporary password.

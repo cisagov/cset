@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Helpers
             USERS loginUser = null;
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 loginUser = db.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
 
@@ -66,6 +66,7 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
                 PasswordResetRequired = loginUser.PasswordResetRequired ?? true
+
             };
 
             return resp;
@@ -92,7 +93,7 @@ namespace CSETWeb_Api.Helpers
 
 
             primaryEmailSO = "localuser@myorg.org";
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)

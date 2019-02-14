@@ -47,14 +47,14 @@ namespace CSETWeb_Api.Helpers.sals
 
         private Dictionary<String, ASSESSMENT_SELECTED_LEVELS> dictionarySelectedLevels;
 
-        private CsetwebContext db;
+        private CSET_Context db;
 
         public int Selected_Sal_Level_Order { get; private set; }
 
         private String selectedSalLevel;
 
 
-        public LevelManager(int id, CsetwebContext db)
+        public LevelManager(int id, CSET_Context db)
         {
             this.db = db;
             this.dictionarySelectedLevels = new Dictionary<string, ASSESSMENT_SELECTED_LEVELS>();            

@@ -35,7 +35,7 @@ namespace CSETWeb_Api.Helpers
                 try
                 {
 
-                    using (var db = new CsetwebContext())
+                    using (var db = new CSET_Context())
                     {
                         db.SETS.Add(result.Result);
                         foreach (var question in result.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s=>s.Question_Id!=0).ToList())

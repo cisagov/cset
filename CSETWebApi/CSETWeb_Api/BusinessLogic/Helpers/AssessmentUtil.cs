@@ -23,7 +23,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 try
                 {
-                    var db = new CsetwebContext();
+                    var db = new CSET_Context();
                     var assess = db.ASSESSMENTS.First(a => a.Assessment_Id == assessmentId);
                     assess.LastAccessedDate = nowUTC;
                     db.SaveChanges();

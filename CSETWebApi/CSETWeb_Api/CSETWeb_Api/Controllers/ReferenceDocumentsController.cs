@@ -42,7 +42,7 @@ namespace CSETWeb_Api.Controllers
                 }
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-                using (var db = new CsetwebContext())
+                using (var db = new CSET_Context())
                 {
                     var doc = db.GEN_FILE.FirstOrDefault(s => s.File_Name == fileName && s.Is_Uploaded == true);
                     var stream = new MemoryStream(doc.Data);
@@ -90,7 +90,7 @@ namespace CSETWeb_Api.Controllers
                 var extension = Path.GetExtension(genFile.File_Name).Substring(1);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
 
-                using (CsetwebContext db = new CsetwebContext())
+                using (CSET_Context db = new CSET_Context())
                 {
                     var existingFiles = db.GEN_FILE.Where(s => s.File_Name == genFile.File_Name && (s.Is_Uploaded??false)).ToList();
                     if (existingFiles.Any(s => s.Doc_Num == genFile.Doc_Num))

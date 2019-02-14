@@ -14,7 +14,7 @@ namespace DataLayerCore.Model
             get
             {
 
-                CsetwebContext context = new CsetwebContext();
+                CSET_Context context = new CSET_Context();
                 context.REQUIREMENT_QUESTIONS.Include("NEW_QUESTION");
                 var NewRs = from a in context.REQUIREMENT_QUESTIONS
                             join b in context.NEW_QUESTION on a.Question_Id equals b.Question_Id
@@ -31,7 +31,7 @@ namespace DataLayerCore.Model
             get
             {
 
-                CsetwebContext context = new CsetwebContext();
+                CSET_Context context = new CSET_Context();
                 context.REQUIREMENT_SETS.Include("SETS");
                 var NewRs = from a in context.REQUIREMENT_SETS
                             join b in context.SETS on a.Set_Name equals b.Set_Name

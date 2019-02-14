@@ -33,7 +33,7 @@ namespace CSET_Main.Questions.POCO
                     return ProfileQuestionData.UniversalCategory;
                 else if (NEW_REQUIREMENT != null)
                 {
-                    using (var db = new CsetwebContext())
+                    using (var db = new CSET_Context())
                     {
                         return db.QUESTION_GROUP_HEADING
                             .First(h => h.Question_Group_Heading_Id == NEW_REQUIREMENT.Question_Group_Heading_Id)
@@ -42,7 +42,7 @@ namespace CSET_Main.Questions.POCO
                 }
                 else if (Question != null)
                 {
-                    using (var db = new CsetwebContext())
+                    using (var db = new CSET_Context())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
@@ -82,7 +82,7 @@ namespace CSET_Main.Questions.POCO
                 else if (Question != null)
                 {
                     //return Question.Question_Group_Heading;
-                    using (var db = new CsetwebContext())
+                    using (var db = new CSET_Context())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id

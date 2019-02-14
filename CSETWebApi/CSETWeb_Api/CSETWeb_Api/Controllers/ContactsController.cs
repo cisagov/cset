@@ -208,7 +208,7 @@ namespace CSETWeb_Api.Controllers
                         Subject = inviteParms.Subject,
                         AssessmentId = assessmentId
                     });
-                    using (CsetwebContext db = new CsetwebContext())
+                    using (CSET_Context db = new CSET_Context())
                     {
                         var invited = db.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefault();
                         invited.Invited = true;
@@ -267,7 +267,7 @@ namespace CSETWeb_Api.Controllers
 
             // If an edit is happening to a brand-new user, it is possible that the UI does not yet
             // know its UserId. In that case we will attempt to determine it via the primary email.
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
                 if (userBeingUpdated.UserId == 0)
                 {
@@ -302,7 +302,7 @@ namespace CSETWeb_Api.Controllers
             else
             {
                 // Updating myself
-                using (CsetwebContext context = new CsetwebContext())
+                using (CSET_Context context = new CSET_Context())
                 {
                     // update user detail                    
                     var user = context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();

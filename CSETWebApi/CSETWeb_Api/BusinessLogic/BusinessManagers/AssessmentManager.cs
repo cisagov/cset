@@ -85,7 +85,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<Assessment> list = new List<Assessment>();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var query = (from uu in db.USERS
                              join ac in db.ASSESSMENT_CONTACTS on uu.UserId equals ac.UserId
@@ -141,7 +141,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             AssessmentDetail assessment = new AssessmentDetail();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var query = (from ii in db.INFORMATION
                              join aa in db.ASSESSMENTS on ii.Id equals aa.Assessment_Id
@@ -184,7 +184,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            var db = new DataLayerCore.Model.CsetwebContext();
+            var db = new DataLayerCore.Model.CSET_Context();
 
             // Add or update the ASSESSMENT record
             var dbAssessment = new ASSESSMENTS()
@@ -197,6 +197,7 @@ namespace CSETWeb_Api.BusinessManagers
             };
 
             db.ASSESSMENTS.AddOrUpdate(ref dbAssessment, x=> x.Assessment_Id);
+
             db.SaveChanges();
             assessmentId = dbAssessment.Assessment_Id;
 
@@ -214,6 +215,7 @@ namespace CSETWeb_Api.BusinessManagers
             };
 
             db.INFORMATION.AddOrUpdate(ref dbInfo, x=> x.Id);
+
             db.SaveChanges();
 
 
@@ -236,7 +238,7 @@ namespace CSETWeb_Api.BusinessManagers
                 AssessmentId = assessmentId
             };
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var query = from ddd in db.DEMOGRAPHICS
                             from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
@@ -266,7 +268,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int SaveDemographics(Demographics demographics)
         {
-            var db = new CsetwebContext();
+            var db = new CSET_Context();
 
             // Convert Size and AssetValue from their keys to the strings they are stored as
             string assetValue = db.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
@@ -313,7 +315,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             int currentUserId = Auth.GetUserId();
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 int countAC = db.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
                 && ac.UserId == currentUserId).Count();

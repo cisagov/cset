@@ -39,7 +39,7 @@ namespace CSETWeb_Api.BusinessManagers
             List<string> selectedSets = new List<string>();
 
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 // Build a list of standards already selected for this assessment
                 selectedSets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Select(x => x.Set_Name).ToList();
@@ -90,7 +90,7 @@ namespace CSETWeb_Api.BusinessManagers
 
         public bool GetFramework(int assessmentId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 return db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "NCSF_V1" && x.Selected)
                     .FirstOrDefault() ==null ? false:true;                                
@@ -115,7 +115,7 @@ namespace CSETWeb_Api.BusinessManagers
                 return list;
             }
 
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 // Convert Size and AssetValue from their keys to the strings they are stored as
                 string assetValue = db.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
@@ -147,7 +147,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public QuestionRequirementCounts PersistSelectedStandards(int assessmentId, List<string> selectedStandards)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_STANDARDS.RemoveRange(result);

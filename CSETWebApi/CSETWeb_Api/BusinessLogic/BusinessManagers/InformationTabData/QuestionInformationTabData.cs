@@ -121,13 +121,13 @@ namespace CSET_Main.Questions.InformationTabData
 
         }
 
-        public void BuildQuestionTab(QuestionInfoData infoData, SETS set, CsetwebContext controlContext)
+        public void BuildQuestionTab(QuestionInfoData infoData, SETS set, CSET_Context controlContext)
         {
             ShowRequirementFrameworkTitle = true;
             BuildFromNewQuestion(infoData, set, controlContext);
         }
 
-        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set, CsetwebContext controlContext)
+        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set, CSET_Context controlContext)
         {
             BuildFromNewQuestion(questionInfoData, set, controlContext);
             ShowRelatedFrameworkCategory = true;
@@ -135,7 +135,8 @@ namespace CSET_Main.Questions.InformationTabData
             RelatedFrameworkCategory = questionInfoData.Category;
         }
 
-        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CsetwebContext controlContext)
+
+        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CSET_Context controlContext)
         {
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
@@ -206,7 +207,7 @@ namespace CSET_Main.Questions.InformationTabData
 
 
 
-        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CsetwebContext controlContext)
+        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CSET_Context controlContext)
         {
             ShowRequirementFrameworkTitle = true;
 
@@ -326,7 +327,7 @@ namespace CSET_Main.Questions.InformationTabData
             BuildDocuments(requirementData.RequirementID, controlContext);
         }
 
-        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CsetwebContext controlContext)
+        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSET_Context controlContext)
         {
 
             QuestionsList = new List<String>();
@@ -380,7 +381,7 @@ namespace CSET_Main.Questions.InformationTabData
             RequirementsData = tabData;
         }
 
-        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CsetwebContext controlContext)
+        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CSET_Context controlContext)
         {
             try
             {
@@ -413,7 +414,7 @@ namespace CSET_Main.Questions.InformationTabData
             }
         }
 
-        private void BuildDocuments(int requirement_ID, CsetwebContext controlContext)
+        private void BuildDocuments(int requirement_ID, CSET_Context controlContext)
         {
             var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded }).Concat(
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
@@ -429,7 +430,7 @@ namespace CSET_Main.Questions.InformationTabData
         }
 
 
-        internal void SetFrameworkQuestions(int requirement_ID, CsetwebContext controlEntity)
+        internal void SetFrameworkQuestions(int requirement_ID, CSET_Context controlEntity)
         {
             this.FrameworkQuestions.Clear();
 

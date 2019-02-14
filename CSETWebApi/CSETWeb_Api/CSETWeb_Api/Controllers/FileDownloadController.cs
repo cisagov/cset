@@ -46,7 +46,7 @@ namespace CSETWeb_Api.Controllers
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
                 foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
                 {
@@ -68,7 +68,7 @@ namespace CSETWeb_Api.Controllers
             int _assessmentId = Auth.AssessmentForUser(token);            
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             string filename = ".csetw";
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {
                 string assessmentName = context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault().Assessment_Name; 
                 if(assessmentName!=null)

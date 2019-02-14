@@ -249,7 +249,7 @@ namespace CSET_Main.Common
                  * performance on this pair of requests is really bad.
                  * putting this into a dictionary to reduce the footprint.
                  */
-                using (CsetwebContext data = new CsetwebContext())
+                using (CSET_Context data = new CSET_Context())
                 {
 
                     IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
@@ -339,7 +339,7 @@ namespace CSET_Main.Common
                 }
                 else
                 {
-                    using (CsetwebContext data = new CsetwebContext())
+                    using (CSET_Context data = new CSET_Context())
                     {
                         IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
                         if (query.ToList().Count > 0)

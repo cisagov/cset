@@ -21,7 +21,7 @@ namespace CSETWeb_Api.Data.ControlData
      */
     public class FindingViewModel
     {
-        private CsetwebContext context;
+        private CSET_Context context;
 
         private FINDING dbFinding;
         private Finding webFinding;
@@ -33,7 +33,7 @@ namespace CSETWeb_Api.Data.ControlData
         /// </summary>
         /// <param name="f">source finding</param>
         /// <param name="context">the data context to work on</param>
-        public FindingViewModel(Finding f, CsetwebContext context)
+        public FindingViewModel(Finding f, CSET_Context context)
         {
             //get all the contacts in this assessment
             //get all the contexts on this finding
@@ -78,7 +78,7 @@ namespace CSETWeb_Api.Data.ControlData
         /// </summary>
         /// <param name="finding_Id"></param>
         /// <param name="context"></param>
-        public FindingViewModel(int finding_Id, CsetwebContext context)
+        public FindingViewModel(int finding_Id, CSET_Context context)
         {
             this.finding_Id = finding_Id;
             this.context = context;

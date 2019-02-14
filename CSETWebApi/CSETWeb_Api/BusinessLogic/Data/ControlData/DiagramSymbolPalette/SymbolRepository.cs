@@ -39,7 +39,7 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
         //private SymbolShapeItem defaultShape;
         //      private CSET_Main.Common.ICSETGlobalProperties globalProperties;
 
-        public SymbolRepository(CsetwebContext context)
+        public SymbolRepository(CSET_Context context)
         {
             // This gets all Component Symbols or NodeTypes/Service Types from the database
             foreach (COMPONENT_SYMBOLS symbolItemData in context.COMPONENT_SYMBOLS.Include(x => x.Symbol_Group_).OrderBy(x => x.Display_Name))

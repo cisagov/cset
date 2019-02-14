@@ -50,7 +50,7 @@ namespace CSET_Main.SALS
             return SALLevelNIST.StringValueToLevel[level];
         }
 
-        private List<NistSpecialFactor> GetSpecialFactors(int assessmentId, CsetwebContext db)
+        private List<NistSpecialFactor> GetSpecialFactors(int assessmentId, CSET_Context db)
         {   
             var topList = db.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId && x.Selected == true).ToList();
             List<NistSpecialFactor> rvalue = new List<NistSpecialFactor>();
@@ -72,7 +72,7 @@ namespace CSET_Main.SALS
             return rvalue;
         }
 
-        private List<NISTQuestionPoco> GetNISTQuestionPocos(int assessmentId, CsetwebContext db)
+        private List<NISTQuestionPoco> GetNISTQuestionPocos(int assessmentId, CSET_Context db)
         {
 
             var list = from a in db.NIST_SAL_QUESTION_ANSWERS
@@ -83,7 +83,7 @@ namespace CSET_Main.SALS
             return list.ToList();    
         }
 
-        public void CalcLevels(int assessmentId, CsetwebContext db)
+        public void CalcLevels(int assessmentId, CSET_Context db)
         {
             var infoTypes = GetSpecialFactors(assessmentId, db);
             var questions = GetNISTQuestionPocos(assessmentId, db);

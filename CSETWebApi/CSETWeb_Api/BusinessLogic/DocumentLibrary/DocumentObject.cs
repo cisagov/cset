@@ -47,7 +47,7 @@ namespace CSET_Main.DocumentLibrary
             set { Doc.Document_Id = value; }
         }
 
-        private CsetwebContext assessmentContext;
+        private CSET_Context assessmentContext;
         private DOCUMENT_FILE doc;
         public DOCUMENT_FILE Doc
         {
@@ -68,7 +68,7 @@ namespace CSET_Main.DocumentLibrary
             this.Doc = new DOCUMENT_FILE();
         }
 
-        public DocumentObject(CsetwebContext assessmentContext, DOCUMENT_FILE doc)
+        public DocumentObject(CSET_Context assessmentContext, DOCUMENT_FILE doc)
         {
             this.assessmentContext = assessmentContext;
             this.doc = doc;

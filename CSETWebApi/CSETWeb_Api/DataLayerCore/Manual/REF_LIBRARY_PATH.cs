@@ -14,7 +14,7 @@ namespace DataLayerCore.Model
             get
             {
 
-                CsetwebContext context = new CsetwebContext();
+                CSET_Context context = new CSET_Context();
                 context.GEN_FILE_LIB_PATH_CORL.Include("GEN_FILE");
                 var NewRs = from a in context.GEN_FILE_LIB_PATH_CORL
                             join b in context.GEN_FILE on a.Gen_File_Id equals b.Gen_File_Id

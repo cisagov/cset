@@ -96,7 +96,7 @@ namespace WebAPIFileUploadExample.Controllers
                                 answerId = qm.StoreAnswer(answer);
                             }
                             var dm = new DocumentManager(assessmentId);
-                            using (CsetwebContext db = new CsetwebContext())
+                            using (CSET_Context db = new CSET_Context())
                             {   
                                 dm.AddDocument(title, filename, contentType, fileHash, answerId, bytes);
                             }

@@ -12,9 +12,9 @@ namespace CSET_Main.Framework
 {
     public class RankingManager
     {
-        private CsetwebContext ControlDataRepository;
+        private CSET_Context ControlDataRepository;
 
-        public RankingManager(CsetwebContext controlDataRepository)
+        public RankingManager(CSET_Context controlDataRepository)
         {
             this.ControlDataRepository = controlDataRepository;
         }

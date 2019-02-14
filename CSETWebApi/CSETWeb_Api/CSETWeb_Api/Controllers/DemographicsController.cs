@@ -20,7 +20,7 @@ namespace CSETWeb_Api.Controllers
     [CSETAuthorize]
     public class DemographicsController : ApiController
     {
-        private CsetwebContext db = new CsetwebContext();
+        private CSET_Context db = new CSET_Context();
 
         /// <summary>
         /// Assessment demographics.

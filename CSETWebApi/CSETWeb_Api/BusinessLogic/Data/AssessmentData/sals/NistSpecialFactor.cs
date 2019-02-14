@@ -33,7 +33,7 @@ namespace CSET_Main.SALS
         public SALLevelNIST Availability_Value { get; set; }
 
 
-        public void loadFromDb(int assessmentId, CsetwebContext db)
+        public void loadFromDb(int assessmentId, CSET_Context db)
         {
             NistProcessingLogic nistProcessing = new NistProcessingLogic();
             List<CNSS_CIA_JUSTIFICATIONS> ciavalues = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == assessmentId).ToList<CNSS_CIA_JUSTIFICATIONS>();
@@ -67,7 +67,7 @@ namespace CSET_Main.SALS
         /// </summary>
         /// <param name="id"></param>
         /// <param name="db"></param>
-        public void SaveToDb(int id, CsetwebContext db)
+        public void SaveToDb(int id, CSET_Context db)
         {
             NistProcessingLogic nistProcessing = new NistProcessingLogic();
             var dblist = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == id).AsEnumerable<CNSS_CIA_JUSTIFICATIONS>();
@@ -103,7 +103,7 @@ namespace CSET_Main.SALS
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(id);
         }
 
-        private CNSS_CIA_JUSTIFICATIONS getOrCreateNew(String ciaType, int id, Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues, CsetwebContext db)
+        private CNSS_CIA_JUSTIFICATIONS getOrCreateNew(String ciaType, int id, Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues, CSET_Context db)
         {
             CNSS_CIA_JUSTIFICATIONS cnvalu;
             if (dbValues.TryGetValue(ciaType, out cnvalu))

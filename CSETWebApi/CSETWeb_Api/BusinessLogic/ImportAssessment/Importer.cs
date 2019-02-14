@@ -44,7 +44,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
         public Tuple<int, Dictionary<int, DOCUMENT_FILE>> RunImport(UploadAssessmentModel model,
             int currentUserId, string primaryEmail
-            , CsetwebContext db)
+            , CSET_Context db)
         {
             //create the new assessment
             //copy each of the items to the table 

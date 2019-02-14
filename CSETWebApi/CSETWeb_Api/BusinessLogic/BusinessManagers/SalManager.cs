@@ -19,7 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             try
             {
-                using (CsetwebContext db = new CsetwebContext())
+                using (CSET_Context db = new CSET_Context())
                 {
                     TinyMapper.Bind<STANDARD_SELECTION, Sals>();
                     TinyMapper.Bind<Sals, STANDARD_SELECTION>();

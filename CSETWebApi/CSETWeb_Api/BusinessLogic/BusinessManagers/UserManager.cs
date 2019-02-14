@@ -51,7 +51,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // create new records for USER and USER_DETAIL_INFORMATION
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var u = new USERS()
                 {
@@ -83,7 +83,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="user"></param>
         public void UpdateUser(int userid,string PrimaryEmail, CreateUser user)
         {
-            using (CsetwebContext db = new CsetwebContext())
+            using (CSET_Context db = new CSET_Context())
             {
                 var dbuser = db.USERS.Where(x => x.UserId == userid).FirstOrDefault();
                 TinyMapper.Map(user, dbuser);
@@ -163,7 +163,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public UserDetail GetUserDetail(string email)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var result = db.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefault();
 
@@ -192,7 +192,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public CreateUser GetUserInfo(int userId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 
@@ -245,7 +245,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public UserDetail GetUserDetail(int userId)
         {
-            using (var db = new CsetwebContext())
+            using (var db = new CSET_Context())
             {
                 var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 

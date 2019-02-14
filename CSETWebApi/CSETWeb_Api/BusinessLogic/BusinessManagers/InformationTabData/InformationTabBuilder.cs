@@ -12,9 +12,9 @@ namespace CSET_Main.Questions.InformationTabData
 {
     public class InformationTabBuilder
     {
-        public CsetwebContext DataContext { get; }
+        public CSET_Context DataContext { get; }
 
-        public InformationTabBuilder(CsetwebContext context)
+        public InformationTabBuilder(CSET_Context context)
         {
             this.DataContext = context;
         }

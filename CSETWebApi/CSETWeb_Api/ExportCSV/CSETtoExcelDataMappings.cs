@@ -24,10 +24,10 @@ namespace ExportCSV
     /// 
     public class CSETtoExcelDataMappings
     {
-        private CsetwebContext assessmentEntity;
+        private CSET_Context assessmentEntity;
         private int assessment_id;
 
-        public CSETtoExcelDataMappings(int assessment_id ,CsetwebContext assessmentEntity)
+        public CSETtoExcelDataMappings(int assessment_id , CSET_Context assessmentEntity)
         {
             this.assessmentEntity = assessmentEntity;
             this.assessment_id = assessment_id;

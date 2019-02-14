@@ -47,7 +47,7 @@ namespace CSET_Main.ReportEngine.Builder
         //public ReportData BuildReport(ReportConfig Config, int assessment_id)
         //{
         //    ReportData reportData = new ReportData();
-        //    using (CsetwebContext context = new CsetwebContext())
+        //    using (CSET_Context context = new CSET_Context())
         //    {
         //        reportData.Config = Config;
         //        // Data for Reports
@@ -353,7 +353,7 @@ namespace CSET_Main.ReportEngine.Builder
         /// Populates a datatable with the INFORMATION data
         /// </summary>
         /// <returns></returns>
-        protected DataTable BuildInformationTable(CsetwebContext context)
+        protected DataTable BuildInformationTable(CSET_Context context)
         {
 
             int indexCtr = 0;
@@ -662,7 +662,7 @@ namespace CSET_Main.ReportEngine.Builder
         /// </summary>
         /// <param name="nistSalDataList"></param>
         /// <returns></returns>
-        //private DataTable BuildCNSSSalTable(CsetwebContext assessmentFileEntities, MainSalControlViewModel nistDataObject)
+        //private DataTable BuildCNSSSalTable(CSET_Context assessmentFileEntities, MainSalControlViewModel nistDataObject)
         //{
         //    DataTable table = new DataTable();
         //    table.TableName = "CNSSSALTable";
@@ -700,7 +700,7 @@ namespace CSET_Main.ReportEngine.Builder
         //    return table;
         //}
 
-        private DataTable BuildCNSSSALJustificationTable(CsetwebContext assessmentFileEntities)
+        private DataTable BuildCNSSSALJustificationTable(CSET_Context assessmentFileEntities)
         {
             DataTable table = new DataTable();
             table.TableName = "CNSSSALJustificationsTable";
