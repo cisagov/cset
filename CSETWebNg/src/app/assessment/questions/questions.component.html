@@ -22,8 +22,8 @@
 -------------------------->
 <div class="white-panel">
   <div id="top"></div>
-  <div class="d-flex flex-row flex-wrap justify-content-between flex-11a mb-4">
-    <div class="btn-group" data-toggle="buttons">
+  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <label class="btn btn-app-mode form-check-label" [class.active]="assessSvc.applicationMode == 'Q'" (click)="setMode('Q')">
         <input name="app_mode" class="form-check-input" type="radio" autocomplete="off" [checked]="assessSvc.applicationMode == 'Q'">Questions
         Mode
@@ -39,11 +39,11 @@
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse All</button>
         <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
         <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
-          <i class="glyphicon glyphicon-filter"></i>
+          <i class="cset-icons-filter"></i>
         </button>
       </div>
 
-      <div *ngIf="!browserIsIE()">
+      <div *ngIf="!browserIsIE()" class="mt-2">
         <input type="checkbox" id="auto_load_supp" name="auto_load_supp" [(ngModel)]="autoLoadSupplementalInfo"
           (change)="persistAutoLoadSetting()">
         <label for="auto_load_supp" style="margin: 0 5px;">Auto-load Supplemental</label>
@@ -70,16 +70,16 @@
   </div>
 
   <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0" class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <i class="p-2 material-icons fs-50px">warning</i>
-    <span class="fs-base-8 p-2 d-flex flex-column justify-content-center flex-11a">
+    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
       There are no questions visible for the current filters or search criteria. Please change your selections and try
       again.
     </span>
   </div>
 
   <div *ngIf="questionGroups?.length === 0" class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <i class="p-2 material-icons fs-50px">warning</i>
-    <span class="fs-base-8 p-2 d-flex flex-column justify-content-center flex-11a">
+    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
       There are no applicable questions/requirements to display. Check the assessment's SAL level and Standards
       selection.
     </span>

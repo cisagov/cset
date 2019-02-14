@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -39,6 +39,7 @@ import { CreateUser } from './models/user.model';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
+import { NgbPanelChangeEvent, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 
 @Component({
@@ -51,6 +52,8 @@ declare var $: any;
 export class AppComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
+  isFooterVisible: boolean = false;
+  @ViewChild('acc') accordion: NgbAccordion;
 
   constructor(
     public auth: AuthenticationService,
@@ -72,20 +75,28 @@ export class AppComponent implements OnInit {
       }
     }
 
-    // initialize footer behavior
-    $(document).click(function (e) {
-      if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("in")) {
-        $('#collapseFooter').collapse('toggle');
-      }
-    });
+        // initialize footer behavior
+        // $(document).click(function (e) {    
+        //   if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("show")) {
+        //     $('#collapseFooter').collapse('toggle');
+        //   }
+        // });
+    
+        // $(document).on('shown.bs.collapse', '#collapseFooter', function () {
+        //   $("#footerExpander").addClass("expand-flip");
+        // });
+    
+        // $(document).on('hidden.bs.collapse', '#collapseFooter', function () {
+        //   $("#footerExpander").removeClass("expand-flip");
+        // });
 
-    $('#collapseFooter').on('shown.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
-    });
+        
+        // $(document).click(function (e) {    
+        //   if ($(e.target).closest('.footer').length === 0 ) {
+        //     $('#footerExpanderButton').collapse('toggleFooter');
+        //   }
+        // });
 
-    $('#collapseFooter').on('hidden.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
-    });
 
     this.setupShortCutKeys();
   }
@@ -286,4 +297,23 @@ export class AppComponent implements OnInit {
 
     return this.router.url !== '/resource-library';
   }
+
+  toggleFooter() {
+      this.isFooterVisible = !this.isFooterVisible;
+      //this.accordion.toggle('footerPanel');
+      // if (this.accordion.isExpanded('footerPanel') == true) {
+      //   this.accordion.collapse('footerPanel');
+      // }
+      // else {
+      //   this.accordion.expand('footerPanel');
+      // }
+      
+      
+  }
+  // collapseFooterIfOpen() {
+  //   if (this.accordion.isExpanded('footerPanel') == true) {
+  //     this.accordion.collapse('footerPanel');
+  //     this.isFooterVisible = !this.isFooterVisible;
+  //   }
+  // }
 }

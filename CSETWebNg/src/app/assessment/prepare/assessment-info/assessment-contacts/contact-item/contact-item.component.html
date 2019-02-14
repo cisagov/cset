@@ -19,69 +19,102 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="contact-list-item d-flex align-items-center flex-00a">
+-------------------------->
+<div class="d-flex align-items-center flex-11a" [ngClass]="{'bgc-primary-50 c-gray-900 b-primary-200 br-standard':!showControls()}">
+  <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div>{{contact.FirstName}} {{contact.LastName}}</div>
-    <div>{{contact.PrimaryEmail}}</div>
-    <div *ngIf="showControls()" class="contact-controls">
-      <select name="role" id="role" [(ngModel)]="contact.AssessmentRoleId" (change)="changeRole()">
-        <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
-      </select>
-      <span style="white-space: nowrap">
-        <button type="button" class="btn btn-xs glyphicon glyphicon-pencil" (click)="editContact()"></button>
-        <button type="button" class="btn btn-xs btn-success glyphicon glyphicon-check" (click)="openEmailDialog()" *ngIf="false"></button>
-        <button type="button" class="btn btn-xs btn-primary glyphicon glyphicon-envelope" (click)="openEmailDialog()" *ngIf="!auth.isLocal"></button>
-        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
-      </span>
+    <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
+      <span class="m-0 fs-base-1 fw-600">{{contact.FirstName}} {{contact.LastName}}</span>
+      <span class="fs-small fw-400">{{contact.PrimaryEmail}}</span>
+      <span class="fs-small fw-400"> {{contact.AssessmentRole}} </span>
     </div>
+    <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
+      <button type="button" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()">
+        <span class="cset-icons-pencil fs-base-2"></span>
+        <span class="d-none d-md-flex fs-smaller">Change</span>
+      </button>
+      <button type="button" class="p-0 px-3 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()"
+        *ngIf="!auth.isLocal">
+        <span class="cset-icons-envelope fs-base-2"></span>
+        <span class="d-none d-md-flex fs-smaller">Email</span></button>
+      <button type="button" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()">
+        <span class="cset-icons-trash-can fs-base-2"></span>
+        <span class="d-none d-md-flex fs-smaller">Remove</span>
+      </button>
+    </span>
+    <span class="pr-3 fw-600" *ngIf="!showControls()">Assessment Owner</span>
   </ng-template>
-  <span class="glyphicon glyphicon-user" *ngIf="contact.IsFirst"></span>
-  <div *ngIf="!showControls()"> {{contact.AssessmentRole}} </div>
 
-
-
+  <!-- Edit Mode -->
   <ng-template #contact_search [ngIf]="!editMode">
-    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (input)="search()" class="contact-add-fields">
-      <input type="text" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel" placeholder="First Name"
-        (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactFName" required>
-      <mat-autocomplete #autoContactFName="matAutocomplete">
-        <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.FirstName">
-          {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
-        </mat-option>
-      </mat-autocomplete>
+    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (input)="search()" class="my-2 p-3 b-light br-standard d-flex flex-column flex-11a">
+      <div class="d-flex justify-content-start align-items-center flex-11a">
+        <div class="d-flex flex-column flex-11a">
+          <div class="d-flex flex-wrap flex-11a">
 
-      <input type="text" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel" placeholder="Last Name"
-        (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactLName" required>
-      <mat-autocomplete #autoContactLName="matAutocomplete">
-        <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.LastName">
-          {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
-        </mat-option>
-      </mat-autocomplete>
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="fName">First Name</label>
+              <input class="form-control" type="text" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel"
+                placeholder="First Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactFName"
+                required>
+              <mat-autocomplete #autoContactFName="matAutocomplete">
+                <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.FirstName">
+                  {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
+                </mat-option>
+              </mat-autocomplete>
+              <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">First name is required</div>
+            </div>
 
-      <input type="email" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel" placeholder="Email Address"
-        (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContact" email>
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="lName">Last Name</label>
+              <input class="form-control" type="text" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel"
+                placeholder="Last Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactLName"
+                required>
+              <mat-autocomplete #autoContactLName="matAutocomplete">
+                <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.LastName">
+                  {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
+                </mat-option>
+              </mat-autocomplete>
+              <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">Last name is required</div>
+            </div>
+          </div>
 
-      <mat-autocomplete #autoContact="matAutocomplete">
-        <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.PrimaryEmail">
-          {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
-        </mat-option>
-      </mat-autocomplete>
-      <span *ngIf="showControls()">
-        <select name="role" id="role" [(ngModel)]="contact.AssessmentRoleId">
-          <option [value]="role.AssessmentRoleId" *ngFor="let role of roles">{{role.AssessmentRole}}</option>
-        </select>
-      </span>
-      <span *ngIf="!showControls()">{{contact.AssessmentRole}}</span>
-      <span style="white-space: nowrap">
-        <button type="submit" class="btn btn-xs btn-success glyphicon glyphicon-save"></button>
-        <button type="button" class="btn btn-xs btn-danger glyphicon glyphicon-trash" (click)="removeContact()"></button>
-      </span>
+          <div class="form-group d-flex flex-column flex-11a">
+            <label class="mb-1" for="email">Email</label>
+            <input class="form-control" type="email" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel"
+              placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContact" email>
+            <mat-autocomplete #autoContact="matAutocomplete">
+              <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.PrimaryEmail">
+                {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
+              </mat-option>
+            </mat-autocomplete>
+            <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email addresss.</div>
+          </div>
 
-      <div *ngIf="f.submitted && !fName.valid" class="alert alert-danger">First Name is required</div>
-      <div *ngIf="f.submitted && !lName.valid" class="alert alert-danger">Last Name is required</div>
-      <div *ngIf="f.submitted && !email.valid" class="alert alert-danger">Valid email address is required</div>
+          <!-- Role Buttons -->
+          <div class="form-group d-flex flex-column flex-11a">
+            <label class="mb-1" for="role">Role</label>
+            <div class="btn-group btn-group-toggle" id="role" data-toggle="buttons" ngbRadioGroup name="contactRoles"
+              [(ngModel)]="contact.AssessmentRoleId">
+              <label ngbButtonLabel class="btn btn-secondary active" *ngFor="let role of roles" (click)="contactRoleSelected(role.AssessmentRoleId)">
+                <input ngbButton type="radio" name="contact-role" [value]="role.AssessmentRoleId">
+                {{role.AssessmentRole}}
+              </label>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between align-items-center flex-00a">
+            <button type="submit" class="m-0  p-2 btn btn-primary d-flex align-items-center flex-00a">
+              <!-- <span class="mr-2 cset-icons-floppy-disk fs-base-2"></span> -->
+              Save
+            </button>
+            <button type="button" class="m-0 p-2 btn btn-secondary d-flex align-items-center flex-00a" (click)="abandonEdit()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
   </ng-template>
 </div>
-<hr class="contact-item-hr">

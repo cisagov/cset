@@ -19,8 +19,8 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div id="white-panel" class="oy-auto height-0 w-100 p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
+-------------------------->
+<div id="white-panel" class="oy-auto h-0 p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
   <div class="p-0 d-flex flex-column flex-10a w-100">
 
     <!-- CSET Logo and Name -->
@@ -49,15 +49,16 @@
 
     <div class="mr-4 ml-4 p-3 bgc-secondary c-white">
       <div *ngIf="mode === 'LOCAL'">
-        Running in local stand-alone mode.
+        CSET is running locally. No login is required.
       </div>
       <div *ngIf="mode === 'LOGIN'">
         Enter your email address and password to login.
       </div>
       <div *ngIf="mode === 'SIGNUP'">
-        Enter your name and email address to register.
+        Enter your name and email address to register a new CSET account.
       </div>
     </div>
+
     <div *ngIf="mode === 'LOCAL'">
       <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
         <div class="d-flex flex-nowrap pl-3 pr-3">
@@ -71,20 +72,16 @@
 
     <div class="m-4 d-flex flex-column justify-content-between flex-00a" *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
       <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate class="d-flex flex-column justify-content-between flex-00a">
-        <div class="has-error" *ngIf="incorrect">
+        <div *ngIf="incorrect">
           <div class="alert alert-danger">Incorrect Username or Password</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-          <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #email="ngModel"
-            required email focusOnInit="true" />
-          <div *ngIf="f.submitted && !email.valid" class="alert alert-danger">Valid email address is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-          <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="model.password"
-            #password="ngModel" required />
-          <div *ngIf="f.submitted && !password.valid" class="alert alert-danger">Password is required</div>
-        </div>
-        <div class="d-flex justify-content-between flex-00a">
+        <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #email="ngModel"
+          required email focusOnInit="true" />
+        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+        <input type="password" class="form-control mt-2" name="password" placeholder="Password" [(ngModel)]="model.password"
+          #password="ngModel" required />
+        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+        <div class="mt-2 d-flex justify-content-between flex-00a">
           <div class="d-flex flex-nowrap flex-00a">
             <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
             <div class="spinner-container" *ngIf="loading">
@@ -106,9 +103,12 @@
     <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
       <p class="c-gray-600 mb-4 w-100">
         The Cyber Security Evaluation Tool (CSET®) is a Department of Homeland Security (DHS) product that assists
-        organizations in protecting their key national cyber assets. It was developed under the direction of the DHS National
-        Cybersecurity Assessments and Technical Services team (NCATS) by cybersecurity experts. This tool provides users with a
-        systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes
+        organizations in protecting their key national cyber assets. It was developed under the direction of the DHS
+        National
+        Cybersecurity Assessments and Technical Services team (NCATS) by cybersecurity experts. This tool provides
+        users with a
+        systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It
+        includes
         both high-level and detailed questions related to all industrial control and IT systems.​​
       </p>
       <img class="mt-4" width="150" height="150" src="./assets/images/DHSLogo.svg">

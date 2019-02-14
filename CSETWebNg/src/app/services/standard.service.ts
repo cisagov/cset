@@ -64,8 +64,8 @@ export class StandardService {
     this.frameworkSelected = framework;
 
     const tree = [
-      {children: [], label: 'Assessment Details', value: 'info'},
-      {children: [], label: 'Security Assurance Levels (SAL)', value: 'sal'},
+      {children: [], label: 'Assessment Information', value: 'info'},
+      {children: [], label: 'Security Assurance Level (SAL)', value: 'sal'},
       {children: [], label: 'Cybersecurity Standards Selection', value: 'standards'}
     ];
 

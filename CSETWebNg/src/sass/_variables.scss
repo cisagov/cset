@@ -43,11 +43,11 @@ $primary-500: map-get($primary, 500);
 $primary-550: map-get($primary, 550);
 $primary-600: map-get($primary, 600);
 $primary-650: map-get($primary, 650);
-$primary-700: map-get($primary, 700); // Main Dark Primary
+$primary-700: map-get($primary, 700); 
 $primary-750: map-get($primary, 750);
 $primary-800: map-get($primary, 800);
 $primary-850: map-get($primary, 850);
-$primary-900: map-get($primary, 900);
+$primary-900: map-get($primary, 900); // Main Dark Primary
 
 $primary-color: $primary-900;
 $secondary-color: map-get($primary, 450);
@@ -83,6 +83,7 @@ $active-text-color: $white;
 // Greens
 $yes-color: #006000;
 $yes-hover-color: #004d00;
+$warn-color: #eae894; 
 
 // Reds
 $no-color: #990000;
@@ -96,4 +97,19 @@ $local-install-background-color: #B06C23;
 $bg-debug-highlight: #fbe1c2;
 $bc-filters-engaged:#F9CE15;
 
+
 $spacer: 18px;
+
+// Triad Colors based on primary 500:
+//------------------------------------
+// Dk Blue: #082737
+// Red: #913238
+// Yellow:#D0CC28
+// Dk Yellow: #514F0C
+
+// Compound Colors based on primary 500:
+//------------------------------------
+// Blue: #1A2DB7
+// Purple: #96A1EA
+// Brown: #916647
+// Orange: #B7451A

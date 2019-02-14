@@ -1120,12 +1120,14 @@
           <Key>
             <PropertyRef Name="Question_Group_Heading_Id" />
             <PropertyRef Name="Universal_Sub_Category_Id" />
+            <PropertyRef Name="Set_Name" />
           </Key>
           <Property Name="Sub_Heading_Question_Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="Display_Radio_Buttons" Type="bit" StoreGeneratedPattern="Computed" />
           <Property Name="Question_Group_Heading_Id" Type="int" Nullable="false" />
           <Property Name="Universal_Sub_Category_Id" Type="int" Nullable="false" />
           <Property Name="Heading_Pair_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Set_Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="USER_DETAIL_INFORMATION">
           <Key>
@@ -2931,6 +2933,18 @@ warning 6035: The relationship 'FK_SUB_CATEGORY_ANSWERS_UNIVERSAL_SUB_CATEGORY_H
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_QUESTION_GROUP_HEADING' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_QUESTION_GROUP_HEADING" />-->
+        <Association Name="FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS">
+          <End Role="SETS" Type="Self.SETS" Multiplicity="1" />
+          <End Role="UNIVERSAL_SUB_CATEGORY_HEADINGS" Type="Self.UNIVERSAL_SUB_CATEGORY_HEADINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SETS">
+              <PropertyRef Name="Set_Name" />
+            </Principal>
+            <Dependent Role="UNIVERSAL_SUB_CATEGORY_HEADINGS">
+              <PropertyRef Name="Set_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB_CATEGORIES' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB_CATEGORIES" />-->
@@ -3718,6 +3732,10 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
             <End Role="ASSESSMENTS" EntitySet="ASSESSMENTS" />
             <End Role="SUB_CATEGORY_ANSWERS" EntitySet="SUB_CATEGORY_ANSWERS" />
           </AssociationSet>
+          <AssociationSet Name="FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS" Association="Self.FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS">
+            <End Role="SETS" EntitySet="SETS" />
+            <End Role="UNIVERSAL_SUB_CATEGORY_HEADINGS" EntitySet="UNIVERSAL_SUB_CATEGORY_HEADINGS" />
+          </AssociationSet>
           <AssociationSet Name="FK_USER_SECURITY_QUESTIONS_USERS" Association="Self.FK_USER_SECURITY_QUESTIONS_USERS">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="USER_SECURITY_QUESTIONS" EntitySet="USER_SECURITY_QUESTIONS" />
@@ -4379,8 +4397,12 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
             <Parameter Name="assessment_Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="usp_GetRankedQuestions" ReturnType="Collection(CSETWebModel.usp_GetRankedQuestions_Result)">
-            <Parameter Name="assessment_id" Mode="In" Type="Int32" />
+          <Parameter Name="assessment_id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS" Association="CSETWebModel.FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS">
+            <End Role="SET" EntitySet="SETS" />
+            <End Role="UNIVERSAL_SUB_CATEGORY_HEADINGS" EntitySet="UNIVERSAL_SUB_CATEGORY_HEADINGS" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ANSWER">
           <Key>
@@ -5193,6 +5215,7 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <NavigationProperty Name="NEW_QUESTION" Relationship="CSETWebModel.FK_NEW_QUESTION_SETS" FromRole="SET" ToRole="NEW_QUESTION" />
           <NavigationProperty Name="NEW_REQUIREMENT" Relationship="CSETWebModel.FK_NEW_REQUIREMENT_SETS" FromRole="SET" ToRole="NEW_REQUIREMENT" />
           <NavigationProperty Name="NEW_QUESTION_SETS" Relationship="CSETWebModel.FK_NEW_QUESTION_SETS_SETS" FromRole="SET" ToRole="NEW_QUESTION_SETS" />
+          <NavigationProperty Name="UNIVERSAL_SUB_CATEGORY_HEADINGS" Relationship="CSETWebModel.FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS" FromRole="SET" ToRole="UNIVERSAL_SUB_CATEGORY_HEADINGS" />
         </EntityType>
         <EntityType Name="SETS_CATEGORY">
           <Key>
@@ -6348,12 +6371,15 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <Key>
             <PropertyRef Name="Question_Group_Heading_Id" />
             <PropertyRef Name="Universal_Sub_Category_Id" />
+            <PropertyRef Name="Set_Name" />
           </Key>
           <Property Name="Sub_Heading_Question_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Display_Radio_Buttons" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Question_Group_Heading_Id" Type="Int32" Nullable="false" />
           <Property Name="Universal_Sub_Category_Id" Type="Int32" Nullable="false" />
           <Property Name="Heading_Pair_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Set_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SETS" Relationship="CSETWebModel.FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS" FromRole="UNIVERSAL_SUB_CATEGORY_HEADINGS" ToRole="SET" />
         </EntityType>
         <Association Name="FK_SUB_CATEGORY_ANSWERS_Answer_Lookup">
           <End Type="CSETWebModel.ANSWER_LOOKUP" Role="ANSWER_LOOKUP" Multiplicity="1" />
@@ -7450,6 +7476,18 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <Property Type="String" Name="QuestionRef" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="QuestionOrRequirementID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS">
+          <End Type="CSETWebModel.SET" Role="SET" Multiplicity="1" />
+          <End Type="CSETWebModel.UNIVERSAL_SUB_CATEGORY_HEADINGS" Role="UNIVERSAL_SUB_CATEGORY_HEADINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SET">
+              <PropertyRef Name="Set_Name" />
+            </Principal>
+            <Dependent Role="UNIVERSAL_SUB_CATEGORY_HEADINGS">
+              <PropertyRef Name="Set_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8512,6 +8550,7 @@ warning 6035: The relationship 'FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB
           <EntitySetMapping Name="UNIVERSAL_SUB_CATEGORY_HEADINGS">
             <EntityTypeMapping TypeName="CSETWebModel.UNIVERSAL_SUB_CATEGORY_HEADINGS">
               <MappingFragment StoreEntitySet="UNIVERSAL_SUB_CATEGORY_HEADINGS">
+                <ScalarProperty Name="Set_Name" ColumnName="Set_Name" />
                 <ScalarProperty Name="Heading_Pair_Id" ColumnName="Heading_Pair_Id" />
                 <ScalarProperty Name="Universal_Sub_Category_Id" ColumnName="Universal_Sub_Category_Id" />
                 <ScalarProperty Name="Question_Group_Heading_Id" ColumnName="Question_Group_Heading_Id" />

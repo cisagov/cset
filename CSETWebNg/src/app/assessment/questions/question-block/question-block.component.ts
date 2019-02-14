@@ -45,7 +45,7 @@ export class QuestionBlockComponent implements OnInit {
   @Output() answerChanged = new EventEmitter();
 
   dialogRef: MatDialogRef<InlineParameterComponent>;
-
+  answer: Answer;
 
   constructor(public questionsSvc: QuestionsService, private dialog: MatDialog) { }
 
@@ -281,4 +281,33 @@ export class QuestionBlockComponent implements OnInit {
     return "break-all";
   }
 
+
+
+  /**
+   *
+   */
+  saveMFR(q: Question) {
+    this.answerChanged.emit(null);
+    q.MarkForReview = !q.MarkForReview; // Toggle Bind
+    
+    const newAnswer: Answer = {
+      QuestionId: q.QuestionId,
+      QuestionNumber: q.DisplayNumber,
+      AnswerText: q.Answer,
+      AltAnswerText: q.AltAnswerText,
+      Comment: '',
+      MarkForReview: q.MarkForReview
+    };
+
+    this.refreshReviewIndicator();
+    this.questionsSvc.storeAnswer(newAnswer).subscribe();
+
+    // this.questionsSvc.storeAnswer(newAnswer).subscribe(
+    //   (response: number) => {
+    //     q.Answer_Id = response;
+    //   },
+    //   error => console.log('Error saving answer: ' + (<Error>error).message)
+    // );
+    
+  }
 }

@@ -1224,10 +1224,10 @@ patchTimer(_global, 'request', 'cancel', 'AnimationFrame');
 patchTimer(_global, 'mozRequest', 'mozCancel', 'AnimationFrame');
 patchTimer(_global, 'webkitRequest', 'webkitCancel', 'AnimationFrame');
 for (var i = 0; i < blockingMethods.length; i++) {
-    var name = blockingMethods[i];
-    patchMethod(_global, name, function (delegate, symbol, name) {
+    var name1 = blockingMethods[i];
+    patchMethod(_global, name1, function (delegate, symbol, name1) {
         return function (s, args) {
-            return Zone.current.run(delegate, _global, args, name);
+            return Zone.current.run(delegate, _global, args, name1);
         };
     });
 }
