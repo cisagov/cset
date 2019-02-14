@@ -64,15 +64,15 @@ namespace CSETWeb_Api.Controllers
 
             using (CsetwebContext context = new CsetwebContext())
             {
-                
-                var results = new { Overalls = nul}
+
+                var results = new FirstPageMultiResult();
                 context.LoadStoredProc("[dbo].[usp_GetFirstPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
-                  var fooResults = handler.ReadToList<GetCombinedOveralls>();
+                  results.Result1 =  handler.ReadToList<GetCombinedOveralls>().ToList();
                   handler.NextResult();
-                  var barResults = handler.ReadToList<usp_getRankedCategories>();
+                  results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
                   
 
                });
@@ -85,7 +85,7 @@ namespace CSETWeb_Api.Controllers
                     List<String> labels = new List<String>();
                     ChartData stand = null;
                     ChartData comp = null;
-                    foreach (GetCombinedOveralls c in results[0])
+                    foreach (GetCombinedOveralls c in results.Result1)
                     {
                         // Questions or Requirements are included only if we are in that 'mode'
                         // Do not include 'Framework' entry.
@@ -124,7 +124,7 @@ namespace CSETWeb_Api.Controllers
                     ChartData red = new ChartData();
 
                     int rcount = 0;
-                    foreach (usp_getRankedCategories c in results[1])
+                    foreach (usp_getRankedCategories c in results.Result2)
                     {
                         if (rcount < 5)
                         {

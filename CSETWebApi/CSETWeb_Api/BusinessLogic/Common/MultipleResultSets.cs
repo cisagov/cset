@@ -29,7 +29,7 @@
 //    ///     .With<Dog>()
 //    ///     .Execute();
 //    /// </summary>
-//public static class MultipleResultSets
+//    public static class MultipleResultSets
 //    {
 //        public static MultipleResultSetWrapper MultipleResults(this DbContext db, SqlCommand storedProcedure)
 //        {
