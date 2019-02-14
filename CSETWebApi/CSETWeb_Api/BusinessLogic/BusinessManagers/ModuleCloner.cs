@@ -53,21 +53,18 @@ namespace CSETWeb_Api.BusinessManagers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="copySet"></param>
         private void CloneRequirements(SET copySet)
         {
             using (var db = new CSETWebEntities())
             {
-                // Clone NEW_REQUIREMENT
+                // Iterate through all of the original requirements
                 var dbReq = db.NEW_REQUIREMENT.Where(x => x.SET.Set_Name == this.origSetName).ToList();
                 foreach (NEW_REQUIREMENT origReq in dbReq)
                 {
-                    var copyReq = (NEW_REQUIREMENT)db.Entry(origReq).CurrentValues.ToObject();
-                    copyReq.SET = copySet;
-
-                    db.NEW_REQUIREMENT.Add(copyReq);
-                    db.SaveChanges();
-
-
                     // Clone REQUIREMENT_SETS
                     var dbReqSets = db.REQUIREMENT_SETS
                         .Where(x => x.Requirement_Id == origReq.Requirement_Id && x.Set_Name == this.origSetName).ToList();
@@ -75,23 +72,71 @@ namespace CSETWeb_Api.BusinessManagers
                     {
                         var copyReqSet = (REQUIREMENT_SETS)db.Entry(origReqSet).CurrentValues.ToObject();
                         copyReqSet.Set_Name = copySet.Set_Name;
-                        copyReqSet.Requirement_Id = copyReq.Requirement_Id;
+                        copyReqSet.Requirement_Id = origReq.Requirement_Id;
 
                         db.REQUIREMENT_SETS.Add(copyReqSet);
                     }
-                    db.SaveChanges();
 
 
                     // Clone SAL levels for requirement
-                    var dbReqLevel = db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == origReq.Requirement_Id).ToList();
-                    foreach (REQUIREMENT_LEVELS origLevel in dbReqLevel)
+                    var dbRL = db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == origReq.Requirement_Id).ToList();
+                    foreach (REQUIREMENT_LEVELS origLevel in dbRL)
                     {
-                        var copyLevel = (REQUIREMENT_LEVELS)db.Entry(origLevel).CurrentValues.ToObject();
-                        copyLevel.Requirement_Id = copyReq.Requirement_Id;
+                        var copyLevel = new REQUIREMENT_LEVELS
+                        {
+                            Requirement_Id = origReq.Requirement_Id,
+                            Standard_Level = origLevel.Standard_Level,
+                            Level_Type = origLevel.Level_Type,
+                            Id = origLevel.Id
+                        };
 
                         db.REQUIREMENT_LEVELS.Add(copyLevel);
-                        db.SaveChanges();
                     }
+
+
+                    // Clone REQUIREMENT_QUESTIONS_SETS
+                    var dbRQS = db.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == origSetName).ToList();
+                    foreach (REQUIREMENT_QUESTIONS_SETS origRQS in dbRQS)
+                    {
+                        var copyRQS = new REQUIREMENT_QUESTIONS_SETS
+                        {
+                            Requirement_Id = origReq.Requirement_Id,
+                            Set_Name = copySet.Set_Name,
+                            Question_Id = origRQS.Question_Id
+                        };
+
+                        db.REQUIREMENT_QUESTIONS_SETS.Add(copyRQS);
+                    }
+
+                    // Clone NEW_QUESTIONS_SETS
+                    var dbQS = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == origSetName).ToList();
+                    foreach (NEW_QUESTION_SETS origQS in dbQS)
+                    {
+                        var copyQS = new NEW_QUESTION_SETS
+                        {
+                            // identity column PK will be set by DBMS
+                            New_Question_Set_Id = 0,
+                            Question_Id = origQS.Question_Id,
+                            Set_Name = copySet.Set_Name
+                        };
+
+                        db.NEW_QUESTION_SETS.Add(copyQS);
+                        db.SaveChanges();
+
+
+                        // Clone NEW_QUESTION_LEVELS for the new NEW_QUESTIONS_SETS just created
+                        var dbQL = db.NEW_QUESTION_LEVELS.Where(x => x.New_Question_Set_Id == origQS.New_Question_Set_Id).ToList();
+                        foreach (NEW_QUESTION_LEVELS origQL in dbQL)
+                        {
+                            var copyQL = (NEW_QUESTION_LEVELS)db.Entry(origQL).CurrentValues.ToObject();
+                            copyQL.New_Question_Set_Id = copyQS.New_Question_Set_Id;
+
+                            db.NEW_QUESTION_LEVELS.Add(copyQL);
+                        }
+                    }
+
+
+                    db.SaveChanges();
                 }
             }
         }
