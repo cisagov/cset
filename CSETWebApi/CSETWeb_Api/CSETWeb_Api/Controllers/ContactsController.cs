@@ -352,7 +352,7 @@ namespace CSETWeb_Api.Controllers
                     // delete or add/update the record
                     if (sq.SecurityQuestion1 != null || sq.SecurityQuestion2 != null)
                     {
-                        context.USER_SECURITY_QUESTIONS.AddOrUpdate(ref sq, x=> x.UserId);
+                        context.USER_SECURITY_QUESTIONS.AddOrUpdate( sq, x=> x.UserId);
                     }
                     else
                     {

@@ -17,7 +17,8 @@ namespace DataLayerCore.Model
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class VIEW_QUESTIONS_STATUS
     {
         public int Question_Or_Requirement_Id { get; set; }
@@ -28,6 +29,7 @@ namespace DataLayerCore.Model
         public Nullable<bool> HasDiscovery { get; set; }
         public int findingnum { get; set; }
         public int Assessment_Id { get; set; }
+        [Key]
         public int Answer_Id { get; set; }
     }
 }

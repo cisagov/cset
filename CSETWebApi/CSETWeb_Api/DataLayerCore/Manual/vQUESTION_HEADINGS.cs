@@ -17,9 +17,11 @@ namespace DataLayerCore.Model
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class vQUESTION_HEADINGS
     {
+        [Key]
         public int Heading_Pair_Id { get; set; }
         public string Question_Group_Heading { get; set; }
         public string Universal_Sub_Category { get; set; }

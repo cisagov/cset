@@ -271,7 +271,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     Set = question.SetName==null?null:question.DictionaryStandards[question.SetName],
                     Sets = question.DictionaryStandards,
                     Question=question.Question,
-                    Requirement=question.NEW_REQUIREMENT??question.Question.NEW_REQUIREMENT.FirstOrDefault(t=>t.REQUIREMENT_SETS.Select(s=>s.Set_Name).Contains(question.SetName??question.DictionaryStandards.Keys.FirstOrDefault()))
+                    Requirement=question.NEW_REQUIREMENT??question.Question.NEW_REQUIREMENTs().FirstOrDefault(t=>t.REQUIREMENT_SETS.Select(s=>s.Set_Name).Contains(question.SetName??question.DictionaryStandards.Keys.FirstOrDefault()))
                 };                
                 list = informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
             }

@@ -77,7 +77,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             foreach (var c in entitites.DEMOGRAPHICS.Where(x => x.Assessment_Id == _assessmentId)) { model.jDEMOGRAPHICS.Add(TinyMapper.Map<jDEMOGRAPHICS>(c)); }
             foreach (var c in entitites.DOCUMENT_FILE.Include("Answer").Where(x => x.Assessment_Id == _assessmentId)) {
                 model.jDOCUMENT_FILE.Add(TinyMapper.Map<jDOCUMENT_FILE>(c));
-                foreach (var a in c.ANSWER)
+                foreach (var a in c.ANSWERs())
                 {
                     model.jDOCUMENT_ANSWERS.Add(new jDOCUMENT_ANSWERS()
                     {

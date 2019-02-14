@@ -159,7 +159,7 @@ namespace CSET_Main.Questions.InformationTabData
                 var tempRequires = new List<NEW_REQUIREMENT>();
                 foreach (var setName in set.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation.Select(s => s.Base_Standard).ToList())
                 {
-                    tempRequires = tempRequires.Concat(question.NEW_REQUIREMENT.Where(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName)).ToList()).ToList();
+                    tempRequires = tempRequires.Concat(question.NEW_REQUIREMENTs().Where(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName)).ToList()).ToList();
                 }
                 requires = tempRequires;
             }
@@ -225,15 +225,14 @@ namespace CSET_Main.Questions.InformationTabData
             Question_or_Requirement_Id = requirement.Requirement_Id;
 
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
-            this.QuestionsList = controlContext.NEW_QUESTION.Where(t => t.NEW_REQUIREMENT.Select(s => s.Requirement_Id).Contains(requirementData.RequirementID)).Select(x => x.Simple_Question).ToList();
+            this.QuestionsList = controlContext.NEW_QUESTION.Where(t => t.NEW_REQUIREMENTs().Select(s => s.Requirement_Id).Contains(requirementData.RequirementID)).Select(x => x.Simple_Question).ToList();
             RequirementTabData tabData = new RequirementTabData();
             tabData.Text = FormatRequirementText(requirement.Requirement_Text);
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
 
             RequirementsData = tabData;
-            int requirement_id = requirement.Requirement_Id;
-            var questions = requirement.NEW_QUESTION;
+            int requirement_id = requirement.Requirement_Id;            
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {
@@ -439,7 +438,7 @@ namespace CSET_Main.Questions.InformationTabData
 
 
             var newQuestionItems = (from nr in controlEntity.NEW_REQUIREMENT
-                                    from newquestions in nr.NEW_QUESTION
+                                    from newquestions in nr.NEW_QUESTIONs()
                                     join newquestionSets in controlEntity.NEW_QUESTION_SETS.Include("SETS") on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
                                     join level in controlEntity.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
                                     join subheading in controlEntity.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id

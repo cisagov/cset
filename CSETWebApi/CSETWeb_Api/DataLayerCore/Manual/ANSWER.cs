@@ -8,21 +8,15 @@ namespace DataLayerCore.Model
 {
     public partial class ANSWER
     {
-        public IQueryable<DOCUMENT_FILE> DOCUMENT_FILE
-        {
-            get
-            {
-
-                CSET_Context context = new CSET_Context();
+        public IQueryable<DOCUMENT_FILE> DOCUMENT_FILEs()
+        {   
+            CSET_Context context = new CSET_Context();
                 
-                var NewRs = from a in context.DOCUMENT_ANSWERS
-                            join b in context.DOCUMENT_FILE on a.Document_Id equals b.Document_Id
-                            where a.Answer_Id == this.Answer_Id
-                            select b;
-                return NewRs;
-
-            }
-            private set { }
+            var NewRs = from a in context.DOCUMENT_ANSWERS
+                        join b in context.DOCUMENT_FILE on a.Document_Id equals b.Document_Id
+                        where a.Answer_Id == this.Answer_Id
+                        select b;
+            return NewRs;
         }
     }
 }

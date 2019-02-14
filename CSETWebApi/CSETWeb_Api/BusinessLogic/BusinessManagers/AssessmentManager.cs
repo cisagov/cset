@@ -196,7 +196,7 @@ namespace CSETWeb_Api.BusinessManagers
                 LastAccessedDate = assessment.LastModifiedDate
             };
 
-            db.ASSESSMENTS.AddOrUpdate(ref dbAssessment, x=> x.Assessment_Id);
+            db.ASSESSMENTS.AddOrUpdate( dbAssessment, x=> x.Assessment_Id);
 
             db.SaveChanges();
             assessmentId = dbAssessment.Assessment_Id;
@@ -214,7 +214,7 @@ namespace CSETWeb_Api.BusinessManagers
                 Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments                
             };
 
-            db.INFORMATION.AddOrUpdate(ref dbInfo, x=> x.Id);
+            db.INFORMATION.AddOrUpdate( dbInfo, x=> x.Id);
 
             db.SaveChanges();
 
@@ -295,7 +295,7 @@ namespace CSETWeb_Api.BusinessManagers
                 AssetValue = assetValue
             };
 
-            db.DEMOGRAPHICS.AddOrUpdate(ref dbDemographics, x=> x.Assessment_Id);
+            db.DEMOGRAPHICS.AddOrUpdate( dbDemographics, x=> x.Assessment_Id);
             db.SaveChanges();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
 

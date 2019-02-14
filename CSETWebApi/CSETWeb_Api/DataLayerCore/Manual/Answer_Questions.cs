@@ -10,9 +10,11 @@ namespace DataLayerCore.Model
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Answer_Questions
     {
+        [Key]
         public int Answer_Id { get; set; }
         public int Assessment_Id { get; set; }
         public Nullable<bool> Mark_For_Review { get; set; }

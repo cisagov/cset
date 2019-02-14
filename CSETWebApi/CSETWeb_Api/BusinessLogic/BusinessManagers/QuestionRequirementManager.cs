@@ -132,7 +132,7 @@ namespace CSETWeb_Api.BusinessManagers
             if (standardSelection != null)
             {
                 standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
-                db.STANDARD_SELECTION.AddOrUpdate(ref standardSelection,x=> x.Assessment_Id);
+                db.STANDARD_SELECTION.AddOrUpdate( standardSelection,x=> x.Assessment_Id);
                 db.SaveChanges();
             }
 
@@ -189,7 +189,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Comment = answer.Comment;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
 
-            db.ANSWER.AddOrUpdate(ref dbAnswer, x=> x.Answer_Id);
+            db.ANSWER.AddOrUpdate( dbAnswer, x=> x.Answer_Id);
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);

@@ -133,6 +133,10 @@
     <Compile Include="Attributes\LifecycleSingletonAttribute.cs" />
     <Compile Include="Attributes\LifecycleTransientAttribute.cs" />
     <Compile Include="CoreHelpers.cs" />
+    <Compile Include="extensions\DbContextExtensions.cs" />
+    <Compile Include="extensions\DbSetExtensions.cs" />
+    <Compile Include="extensions\IQueryableExtensions.cs" />
+    <Compile Include="extensions\IQueryableExtensionsForGeneratedSql.cs" />
     <Compile Include="FileRepository.cs" />
     <Compile Include="IFileRepository.cs" />
     <Compile Include="Manual\ANSWER.cs" />

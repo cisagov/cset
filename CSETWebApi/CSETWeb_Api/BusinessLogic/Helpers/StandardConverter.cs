@@ -98,7 +98,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                                 }
 
                             }
-                            foreach (var question in requirementResult.Result.NEW_QUESTION.ToList())
+                            foreach (var question in requirementResult.Result.NEW_QUESTIONs().ToList())
                             {
                                 NEW_QUESTION existingQuestion;
                                 if (questionDictionary.TryGetValue(question.Simple_Question, out existingQuestion))
@@ -119,7 +119,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                         }
                     }
                 }
-                var questions = requirements.SelectMany(s => s.NEW_QUESTION).ToList();
+                var questions = requirements.SelectMany(s => s.NEW_QUESTIONs()).ToList();
                 for (var i = 1; i <= questions.Count(); i++)
                 {
                     var question = questions[i - 1];
@@ -149,7 +149,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 //db.Configuration.AutoDetectChangesEnabled = false;
                 //db.Configuration.LazyLoadingEnabled = false;
                 var reqs = standard.REQUIREMENT_SETS.Select(s => s.Requirement_).ToList();
-                var reqQuestions = reqs.Select(s => new { s.Requirement_Id, Questions = s.NEW_QUESTION.Select(t => new { t.Simple_Question, t.Heading_Pair_Id }) }).ToDictionary(s => s.Requirement_Id, s => s.Questions);
+                var reqQuestions = reqs.Select(s => new { s.Requirement_Id, Questions = s.NEW_QUESTIONs().Select(t => new { t.Simple_Question, t.Heading_Pair_Id }) }).ToDictionary(s => s.Requirement_Id, s => s.Questions);
                 var reqHeadingIds = reqs.Select(s => s.Question_Group_Heading_Id).ToList();
                 var questionHeadings = reqQuestions.SelectMany(s => s.Value.Select(t => t.Heading_Pair_Id)).Distinct().ToList();
                 var reqHeadings = db.QUESTION_GROUP_HEADING.Where(s => reqHeadingIds.Contains(s.Question_Group_Heading_Id)).ToDictionary(s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading1);

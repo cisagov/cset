@@ -16,6 +16,7 @@ namespace DataLayerCore.Model
         [Required]
         [StringLength(150)]
         public string PrimaryEmail { get; set; }
+        [Key]
         public int UserId { get; set; }
         [Required]
         [StringLength(250)]

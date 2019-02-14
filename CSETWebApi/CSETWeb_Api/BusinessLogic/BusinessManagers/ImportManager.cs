@@ -98,7 +98,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 web.SETS.Add(setResult.Result);
 
-                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s => s.Question_Id != 0).ToList())
+                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
                                 {
                                     web.Entry(question).State = EntityState.Unchanged;
                                 }

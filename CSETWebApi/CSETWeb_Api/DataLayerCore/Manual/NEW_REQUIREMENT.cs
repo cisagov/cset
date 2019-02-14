@@ -9,11 +9,8 @@ namespace DataLayerCore.Model
 {
     public partial class NEW_REQUIREMENT
     {
-        public IQueryable<NEW_QUESTION> NEW_QUESTION
+        public IQueryable<NEW_QUESTION> NEW_QUESTIONs()
         {
-            get
-            {
-
                 CSET_Context context = new CSET_Context();
                 context.REQUIREMENT_QUESTIONS.Include("NEW_QUESTION");
                 var NewRs = from a in context.REQUIREMENT_QUESTIONS
@@ -21,26 +18,17 @@ namespace DataLayerCore.Model
                             where a.Requirement_Id == this.Requirement_Id
                             select b;
                 return NewRs;
-
-            }
-            private set { }
         }
 
-        public IQueryable<SETS> SETS
+        public IQueryable<SETS> SETs()
         {
-            get
-            {
-
-                CSET_Context context = new CSET_Context();
-                context.REQUIREMENT_SETS.Include("SETS");
-                var NewRs = from a in context.REQUIREMENT_SETS
-                            join b in context.SETS on a.Set_Name equals b.Set_Name
-                            where a.Requirement_Id == this.Requirement_Id
-                            select b;
-                return NewRs;
-
-            }
-            private set { }
+            CSET_Context context = new CSET_Context();
+            context.REQUIREMENT_SETS.Include("SETS");
+            var NewRs = from a in context.REQUIREMENT_SETS
+                        join b in context.SETS on a.Set_Name equals b.Set_Name
+                        where a.Requirement_Id == this.Requirement_Id
+                        select b;
+            return NewRs;
         }
     }
 }

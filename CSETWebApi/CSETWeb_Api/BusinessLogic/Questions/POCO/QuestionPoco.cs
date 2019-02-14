@@ -279,7 +279,7 @@ namespace CSET_Main.Questions.POCO
         {
             get
             {
-                return (ICollection<DOCUMENT_FILE>) Answer.DOCUMENT_FILE;
+                return (ICollection<DOCUMENT_FILE>) Answer.DOCUMENT_FILEs();
             }
         }
 
@@ -371,7 +371,7 @@ namespace CSET_Main.Questions.POCO
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null&&IsComponent==false)
-                    return String.Join(", ",Question.NEW_REQUIREMENT.Where(s=>DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name)&&s.Original_Set_NameNavigation.Set_Category_!=null&&s.Original_Set_NameNavigation.Set_Category_.Set_Category_Id!=9).OrderBy(s=>s.Original_Set_NameNavigation.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
+                    return String.Join(", ",Question.NEW_REQUIREMENTs().Where(s=>DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name)&&s.Original_Set_NameNavigation.Set_Category_!=null&&s.Original_Set_NameNavigation.Set_Category_.Set_Category_Id!=9).OrderBy(s=>s.Original_Set_NameNavigation.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
                 else
                     return "";
             }
@@ -846,7 +846,7 @@ namespace CSET_Main.Questions.POCO
             if(!IsRequirement)
             {
                 SortSet = set == null ? Question.Original_Set_NameNavigation : set.Set_NameNavigation;
-                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENT.FirstOrDefault() : set.Requirement_;
+                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs().FirstOrDefault() : set.Requirement_;
             }
         }
 
@@ -907,7 +907,7 @@ namespace CSET_Main.Questions.POCO
         {
             this.DictionaryStandards = new Dictionary<String, SETS>();
             this.Answer = answer;
-            this.setDocumentIds = answer.DOCUMENT_FILE.Select(x => x.Document_Id).ToHashSet();
+            this.setDocumentIds = answer.DOCUMENT_FILEs().Select(x => x.Document_Id).ToHashSet();
             DocumentCount = setDocumentIds.Count;
             if(setParams)
                 this.Parameters = new ObservableCollection<ParameterContainer>();
@@ -1052,7 +1052,7 @@ namespace CSET_Main.Questions.POCO
                     var requirements = new List<NEW_REQUIREMENT>();
                     NEW_REQUIREMENT standardRequirement=null;
                     var standardList = new List<string>();
-                    if(Question?.NEW_REQUIREMENT!=null)
+                    if(Question?.NEW_REQUIREMENTs()!=null)
                     {
                         foreach (var item in DictionaryStandards)
                         {
@@ -1065,7 +1065,7 @@ namespace CSET_Main.Questions.POCO
                         }
                         foreach (var setName in standardList)
                         {
-                            standardRequirement = Question?.NEW_REQUIREMENT?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info)&&t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
+                            standardRequirement = Question?.NEW_REQUIREMENTs()?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info)&&t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
                             if (standardRequirement!=null)
                             {
                                 break;
@@ -1074,7 +1074,7 @@ namespace CSET_Main.Questions.POCO
                     }
                     var supplemental = ProfileQuestionData?.SupplementalInfo ??
                         (standardRequirement ??
-                        Question?.NEW_REQUIREMENT?.FirstOrDefault() ?? 
+                        Question?.NEW_REQUIREMENTs()?.FirstOrDefault() ?? 
                         NEW_REQUIREMENT)?.Supplemental_Info.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
                     if (String.IsNullOrEmpty(supplemental))
                     {

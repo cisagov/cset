@@ -180,7 +180,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAC.AssessmentRoleId = roleid;
                 dbAC.Invited = invited;
 
-                db.ASSESSMENT_CONTACTS.AddOrUpdate(ref dbAC, x => x.Assessment_Contact_Id);
+                db.ASSESSMENT_CONTACTS.AddOrUpdate( dbAC, x => x.Assessment_Contact_Id);
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(assessmentId);
@@ -239,7 +239,7 @@ namespace CSETWeb_Api.BusinessManagers
                         c.UserId = user.UserId;
                     }
 
-                    db.ASSESSMENT_CONTACTS.AddOrUpdate(ref c, x=> x.Assessment_Contact_Id);
+                    db.ASSESSMENT_CONTACTS.AddOrUpdate( c, x=> x.Assessment_Contact_Id);
 
 
                     // If there was no USER record for this new Contact, create one
@@ -404,7 +404,7 @@ namespace CSETWeb_Api.BusinessManagers
                 if (assessmentContact != null)
                 {
                     assessmentContact.Invited = true;
-                    db.ASSESSMENT_CONTACTS.AddOrUpdate(ref assessmentContact, x=> x.Assessment_Contact_Id);
+                    db.ASSESSMENT_CONTACTS.AddOrUpdate( assessmentContact, x=> x.Assessment_Contact_Id);
                     db.SaveChangesAsync();
                 }
             }
@@ -445,7 +445,7 @@ namespace CSETWeb_Api.BusinessManagers
                 ac.FirstName = u.FirstName;
                 ac.LastName = u.LastName;
 
-                db.ASSESSMENT_CONTACTS.AddOrUpdate(ref ac, x=> x.Assessment_Contact_Id);
+                db.ASSESSMENT_CONTACTS.AddOrUpdate( ac, x=> x.Assessment_Contact_Id);
                 db.SaveChanges();
             }
         }
