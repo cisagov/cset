@@ -48,7 +48,6 @@ Global
 		{4E44142D-08E2-4F40-9532-896E1F00018C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E44142D-08E2-4F40-9532-896E1F00018C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.localdb|Any CPU.ActiveCfg = localdb|Any CPU
 		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.localhost|Any CPU.ActiveCfg = localhost|Any CPU
 		{18E1CAF3-160E-49A7-B0FA-52DBBECFED5B}.localhost|Any CPU.Build.0 = localhost|Any CPU

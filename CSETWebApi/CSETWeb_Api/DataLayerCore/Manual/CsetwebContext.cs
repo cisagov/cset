@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
+using System;
+using System.Collections.Generic;
 
 namespace DataLayerCore.Model
 {
@@ -214,7 +208,7 @@ namespace DataLayerCore.Model
 
         public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)
         {
-            if (assessment_id.HasValue)
+            if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_GetRankedQuestions_Result> myrval = null;
