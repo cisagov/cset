@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -13,11 +11,8 @@ namespace DataLayerCore.Model
         }
 
         public int AssessmentRoleId { get; set; }
-        [Required]
-        [StringLength(50)]
         public string AssessmentRole { get; set; }
 
-        [InverseProperty("AssessmentRole")]
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
     }
 }

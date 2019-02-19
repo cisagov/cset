@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -13,12 +11,7 @@ namespace DataLayerCore.Model
             UNIVERSAL_SUB_CATEGORY_HEADINGS = new HashSet<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
         }
 
-        [Key]
-        [Column("Question_Group_Heading")]
-        [StringLength(250)]
         public string Question_Group_Heading1 { get; set; }
-        [Required]
-        [StringLength(10)]
         public string Std_Ref { get; set; }
         public int Universal_Weight { get; set; }
         public int Question_Group_Heading_Id { get; set; }

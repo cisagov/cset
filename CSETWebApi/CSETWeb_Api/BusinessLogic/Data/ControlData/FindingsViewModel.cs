@@ -52,8 +52,9 @@ namespace CSETWeb_Api.Data.ControlData
             List<Finding> findings = new List<Finding>();            
 
             var xxx = assessmentContext.FINDING
-                // .Include("IMPORTANCE").Include("FINDING_CONTACT")
                 .Where(x => x.Answer_Id == this.answer_id)
+                .Include(i => i.Importance_)
+                .Include(k => k.FINDING_CONTACT)
                 .ToList();
 
             foreach (FINDING f in xxx)
@@ -91,8 +92,8 @@ namespace CSETWeb_Api.Data.ControlData
             if (finding_id != 0)
             {
                 FINDING f = assessmentContext.FINDING
-                    .Include("FINDING_CONTACT")                    
                     .Where(x => x.Finding_Id == finding_id)
+                    .Include(fc => fc.FINDING_CONTACT)
                     .FirstOrDefault();
 
                 webF = TinyMapper.Map<Finding>(f);

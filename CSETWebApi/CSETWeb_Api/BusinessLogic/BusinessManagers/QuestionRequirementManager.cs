@@ -172,7 +172,9 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (answer != null)
             {
-                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Or_Requirement_Id == answer.QuestionId).FirstOrDefault();
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId 
+                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Is_Requirement == isRequirement).FirstOrDefault();
             }
 
             if (dbAnswer == null)
@@ -189,7 +191,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Comment = answer.Comment;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
 
-            db.ANSWER.AddOrUpdate( dbAnswer, x=> x.Answer_Id);
+            db.ANSWER.AddOrUpdate(dbAnswer, x=> x.Answer_Id);
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);

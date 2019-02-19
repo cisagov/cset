@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -14,10 +12,8 @@ namespace DataLayerCore.Model
 
         public int Question_Id { get; set; }
         public int Question_Number { get; set; }
-        [StringLength(7000)]
         public string Question_Text { get; set; }
 
-        [InverseProperty("Question_")]
         public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
     }
 }

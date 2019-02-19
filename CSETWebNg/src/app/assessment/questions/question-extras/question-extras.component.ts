@@ -68,7 +68,9 @@ export class QuestionExtrasComponent implements OnInit {
     public authSvc: AuthenticationService) { }
 
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.saveAnswer();
+  }
 
   /**
  * Shows/hides the "expand" section.
@@ -192,8 +194,6 @@ export class QuestionExtrasComponent implements OnInit {
    * @param findid
    */
   addEditDiscovery(findid) {
-    this.saveAnswer();
-
     // TODO Always send an empty one for now.
     // At some juncture we need to change this to
     // either send the finding to be edited or

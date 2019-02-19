@@ -38,7 +38,6 @@ namespace CSETWeb_Api.Helpers
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
             using (var db = new CSET_Context())
             {
-                var deleteme = db.USERS.Where(x => x.PrimaryEmail == login.Email).ToList();
                 loginUser = db.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
 
                 if (loginUser == null)

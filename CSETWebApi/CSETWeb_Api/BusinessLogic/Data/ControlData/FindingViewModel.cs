@@ -39,7 +39,10 @@ namespace CSETWeb_Api.Data.ControlData
             //get all the contexts on this finding
             this.webFinding = f;
             this.context = context;
-            this.dbFinding = context.FINDING.Include("FINDING_CONTACT").Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id).FirstOrDefault();
+            this.dbFinding = context.FINDING
+                .Include(x => x.FINDING_CONTACT)
+                .Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id)
+                .FirstOrDefault();
             if (dbFinding == null)
             {
                 var finding = new FINDING();                

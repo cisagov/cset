@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -13,13 +11,9 @@ namespace DataLayerCore.Model
             GEN_SAL_WEIGHTS = new HashSet<GEN_SAL_WEIGHTS>();
         }
 
-        [Key]
-        [StringLength(50)]
         public string Sal_Name { get; set; }
 
-        [InverseProperty("Sal_NameNavigation")]
         public virtual ICollection<GENERAL_SAL> GENERAL_SAL { get; set; }
-        [InverseProperty("Sal_Name1")]
         public virtual ICollection<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
     }
 }

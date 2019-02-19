@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -14,11 +12,8 @@ namespace DataLayerCore.Model
 
         public int Id { get; set; }
         public int Heading_Num { get; set; }
-        [Required]
-        [StringLength(200)]
         public string Heading_Name { get; set; }
 
-        [InverseProperty("Parent_Heading_")]
         public virtual ICollection<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
     }
 }
