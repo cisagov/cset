@@ -350,7 +350,14 @@ namespace CSETWeb_Api.BusinessManagers
             subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
             subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
 
-            db.SUB_CATEGORY_ANSWERS.AddOrUpdate( subCatAnswer, x=> new { x.Assessement_Id, x.Heading_Pair_Id, x.Component_Id, x.Is_Component });
+            if (db.SUB_CATEGORY_ANSWERS.Find(subCatAnswer.Assessement_Id, subCatAnswer.Heading_Pair_Id, subCatAnswer.Component_Id, subCatAnswer.Is_Component) == null)
+            {
+                db.SUB_CATEGORY_ANSWERS.Add(subCatAnswer);
+            }
+            else
+            {
+                db.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);
+            }
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);

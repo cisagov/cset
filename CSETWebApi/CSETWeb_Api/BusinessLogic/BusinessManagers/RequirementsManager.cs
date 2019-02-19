@@ -358,7 +358,14 @@ namespace CSETWeb_Api.BusinessManagers
                 pa.Parameter_ID = parameterId;
                 pa.Parameter_Value_Assessment = newText;
 
-                db.PARAMETER_ASSESSMENT.AddOrUpdate( pa,x=> new { x.Assessment_ID, x.Parameter_ID });
+                if (db.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
+                {
+                    db.PARAMETER_ASSESSMENT.Add(pa);
+                }
+                else
+                {
+                    db.PARAMETER_ASSESSMENT.Update(pa);
+                }
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(_assessmentId);
@@ -423,9 +430,16 @@ namespace CSETWeb_Api.BusinessManagers
                 dbParameterValues.Parameter_Id = parameterId;
                 dbParameterValues.Parameter_Is_Default = false;
                 dbParameterValues.Parameter_Value = newText;
-                
 
-                db.PARAMETER_VALUES.AddOrUpdate( dbParameterValues, x=> new { x.Answer_Id, x.Parameter_Id });
+
+                if (db.PARAMETER_VALUES.Find(dbParameterValues.Answer_Id, dbParameterValues.Parameter_Id) == null)
+                {
+                    db.PARAMETER_VALUES.Add(dbParameterValues);
+                }
+                else
+                {
+                    db.PARAMETER_VALUES.Update(dbParameterValues);
+                }
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(_assessmentId);

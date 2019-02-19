@@ -152,7 +152,7 @@ namespace CSET_Main.Questions.InformationTabData
                               select u.Full_Name_Sal).FirstOrDefault();
 
             // Gets requirements for the current standard (Set)
-            IEnumerable<NEW_REQUIREMENT> requires=null;
+            IEnumerable<NEW_REQUIREMENT> requires = null;
             if (set.Is_Custom)
             {
                 //Legacy only
@@ -171,7 +171,7 @@ namespace CSET_Main.Questions.InformationTabData
                            where b.Question_Id == infoData.QuestionID && b.Set_Name == set.Set_Name
                            select a;
             }
-            
+
             requirement = requires.FirstOrDefault();
             if (requirement != null)
             {
@@ -211,28 +211,27 @@ namespace CSET_Main.Questions.InformationTabData
         {
             ShowRequirementFrameworkTitle = true;
 
-            //TODO why are we checking the database state here?
-            //try
-            //{
-            //    controlContext.Database.Connection.Open();
-            //}
-            //catch (Exception e)
-            //{
-            //    //CSETLogger.Fatal(e.Message, e);
-            //}
-
             NEW_REQUIREMENT requirement = requirementData.Requirement;
             Question_or_Requirement_Id = requirement.Requirement_Id;
 
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
-            this.QuestionsList = controlContext.NEW_QUESTION.Where(t => t.NEW_REQUIREMENTs().Select(s => s.Requirement_Id).Contains(requirementData.RequirementID)).Select(x => x.Simple_Question).ToList();
+
+            // Get related questions
+            var query = from rq in controlContext.REQUIREMENT_QUESTIONS
+                      join q in controlContext.NEW_QUESTION on rq.Question_Id equals q.Question_Id
+                      where rq.Requirement_Id == requirementData.RequirementID
+                      select q.Simple_Question;
+
+            this.QuestionsList = query.ToList();
+
+
             RequirementTabData tabData = new RequirementTabData();
             tabData.Text = FormatRequirementText(requirement.Requirement_Text);
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
 
             RequirementsData = tabData;
-            int requirement_id = requirement.Requirement_Id;            
+            int requirement_id = requirement.Requirement_Id;
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {
@@ -314,9 +313,15 @@ namespace CSET_Main.Questions.InformationTabData
             }
             else
             {
-                var parameters = requirementData.Requirement.REQUIREMENT_LEVELS.Select(s => new Tuple<string, int>(levelManager.GetStandard(s.Standard_Level), levelManager.GetLevelOrder(s.Standard_Level))).OrderBy(s => s.Item2).FirstOrDefault();
-                if (parameters != null)
-                    this.LevelName = levelManager.GetFullName(parameters.Item1, parameters.Item2);
+                var firstReqLevel = controlContext.REQUIREMENT_LEVELS
+                    .Where(l => l.Requirement_Id == requirementData.RequirementID)
+                    .OrderBy(o => levelManager.GetLevelOrder(o.Standard_Level))
+                    .FirstOrDefault();
+                if (firstReqLevel != null)
+                {
+                    this.LevelName = levelManager.GetFullName(levelManager.GetStandard(firstReqLevel.Standard_Level), 
+                        levelManager.GetLevelOrder(firstReqLevel.Standard_Level));
+                }
             }
 
 
@@ -390,7 +395,7 @@ namespace CSET_Main.Questions.InformationTabData
                 ComponentVisibility = true;
                 // Build multiServiceComponent types list if any
                 ComponentTypes.Clear();
-                int salLevel = controlContext.UNIVERSAL_SAL_LEVEL.Where(x => x.Universal_Sal_Level1 ==  question.Universal_Sal_Level).First().Sal_Level_Order;
+                int salLevel = controlContext.UNIVERSAL_SAL_LEVEL.Where(x => x.Universal_Sal_Level1 == question.Universal_Sal_Level).First().Sal_Level_Order;
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
@@ -419,7 +424,7 @@ namespace CSET_Main.Questions.InformationTabData
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
             // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded=s.Is_Uploaded??false });
+            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
             SourceDocumentsList = sourceDocuments.ToList();
 
             // Help Documents

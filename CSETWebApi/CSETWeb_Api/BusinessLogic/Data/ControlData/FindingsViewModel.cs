@@ -50,9 +50,13 @@ namespace CSETWeb_Api.Data.ControlData
         public List<Finding> AllFindings()
         {
             List<Finding> findings = new List<Finding>();            
-            foreach (FINDING f in assessmentContext.FINDING.Include("IMPORTANCE").Include("FINDING_CONTACT")
-                .Where(x => x.Answer_Id == this.answer_id)                
-                .ToList())
+
+            var xxx = assessmentContext.FINDING
+                // .Include("IMPORTANCE").Include("FINDING_CONTACT")
+                .Where(x => x.Answer_Id == this.answer_id)
+                .ToList();
+
+            foreach (FINDING f in xxx)
             {
                 Finding webF = new Finding();
                 webF.Finding_Contacts = new List<FindingContact>();

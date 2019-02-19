@@ -105,7 +105,10 @@
             <div *ngIf="!tab?.ShowRequirementStandards" [innerHTML]="tab?.RequirementsData?.Text | safe: 'html'"></div>
 
             <div *ngIf="tab?.QuestionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:</div>
-            <div *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ" style="margin-bottom: 5px;"></div>
+            <ul *ngIf="tab?.QuestionsList?.length > 0" class="related-questions">
+                <li *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ"></li>
+            </ul>
+            <!-- <div *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ" style="margin-bottom: 5px;"></div> -->
         </div>
 
 
@@ -137,20 +140,19 @@
                         </div>
                     </td>
                     <td style="height:20px">
-                        <div>{{doc.FileName}}</div>
+                        <label>{{doc.FileName}}</label>
                     </td>
-                    <td>
+                    <td class="pb-2">
                         <svg (click)="showRelatedQuestions(doc)" viewBox="0 0 31 35" xmlns="http://www.w3.org/2000/svg"
-                            style="cursor: pointer; width: 21px; height: 25px; transform: scale(1.4); top: -8px; margin-right: -5px; position: relative;">
+                            style="cursor: pointer; width: 21px; height: 25px; transform: scale(1.4); margin-right: -5px; vertical-align: bottom;">
                             <path fill="#285464" stroke="transparent" stroke-width="0" transform="scale(.4)" d="M31.159,41.824C33.864,39.722 36.056,36.832 37.732,33.154 39.41,29.475 40.248,25.646 40.248,21.666 40.248,16.702 38.884,12.762 36.156,9.844 33.427,6.926 30.086,5.467 26.128,5.467 22.818,5.467 19.632,6.433 16.569,8.368 13.505,10.302 11.056,13.137 9.223,16.87 7.39,20.604 6.473,24.674 6.473,29.079 6.473,34.601 8.195,38.872 11.638,41.891 14.322,44.239 17.194,45.413 20.259,45.413 22.695,45.413 24.887,45.033 26.832,44.272 24.797,42.417 22.707,40.929 20.56,39.811L22.941,35.719C24.394,36.345 25.709,37.09 26.883,37.95 28.056,38.811 29.481,40.102 31.159,41.824 M35.183,46.05C36.838,48.017,39.074,49.919,41.891,51.752L38.973,55.642C36,53.697 33.327,51.338 30.958,48.565 27.626,50.131 24.451,50.913 21.432,50.913 19.017,50.913 16.368,50.455 13.483,49.538 10.598,48.622 8.183,47.235 6.238,45.379 4.293,43.523 2.767,41.137 1.66,38.219 0.554,35.301 0,32.075 0,28.542 0,24.271 0.816,20.179 2.448,16.266 3.812,13.047 5.585,10.268 7.765,7.931 9.945,5.595 12.331,3.79 14.926,2.514 18.346,0.838 22.047,0 26.027,0 32.153,0 37.145,1.995 41.003,5.986 44.86,9.977 46.789,15.327 46.789,22.035 46.789,26.977 45.76,31.533 43.703,35.703 41.645,39.873 38.806,43.322 35.183,46.05" />
                         </svg>
                         <svg (click)="deleteDocument(doc)" class="delete_trashcan_icon" xmlns="http://www.w3.org/2000/svg"
-                            style="height: 36px; width: 36px; position: relative; top: -10px;">
+                            style="height: 36px; width: 36px; position: relative; vertical-align: bottom;">
                             <path d="M25.39,1.892L17.679,1.892 17.679,1.702C17.679,0.762,16.902,0,15.943,0L11.058,0C10.099,0,9.321,0.762,9.321,1.702L9.321,1.892 1.61,1.892C0.691,1.892,0,2.701,0,3.603L0,5.675 27,5.675 27,3.603C27,2.701,26.309,1.892,25.39,1.892 M21.857,10.405L17.679,10.405 17.679,31.531 21.857,31.531z M15.429,10.405L11.25,10.405 11.25,31.531 15.429,31.531z M9,10.405L4.821,10.405 4.821,31.531 9,31.531z M25.705,7.568L24.429,33.297C24.429,34.237,23.652,35,22.693,35L4.308,35C3.349,35,2.571,34.237,2.571,33.297L1.296,7.568z" />
                         </svg>
-
                         <button (click)="download(doc)" class="cset-icons-import" style="color: #285464; transform: scale(1.3); 
-                        vertical-align: top; cursor: pointer;  background-color:transparent; border: none;    outline:none;"
+                            vertical-align: bottom; cursor: pointer; background-color:transparent; border: none; outline:none;"
                             matTooltip="Copy this document to another location."></button>
                     </td>
                 </tr>

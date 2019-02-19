@@ -50,7 +50,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<Document> list = new List<Document>();
 
-            var files = db.ANSWER.Include("DOCUMENT_FILE").Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILEs().ToList();
+            var files = db.ANSWER
+                .Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILEs().ToList();
 
             if (files == null)
             {
@@ -191,8 +192,18 @@ namespace CSETWeb_Api.BusinessManagers
             var answer = db.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
             db.DOCUMENT_FILE.AddOrUpdate( doc, x=> x.Document_Id);
             db.SaveChanges();
+
             DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id }; 
-            db.DOCUMENT_ANSWERS.AddOrUpdate( temp,x=> new { x.Document_Id, x.Answer_Id });
+            if (db.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
+            {
+                db.DOCUMENT_ANSWERS.Add(temp);
+            }
+            else
+            {
+                db.DOCUMENT_ANSWERS.Update(temp);
+            }
+            db.SaveChanges();
+
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
 

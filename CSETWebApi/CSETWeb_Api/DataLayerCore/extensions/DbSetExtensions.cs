@@ -17,11 +17,15 @@ namespace DataLayerCore.Model
                 .GetValue(dbSet);
         }
 
-        private static MemberExpression GetCorrectPropertyName<T>(Expression<Func<T, Object>> expression)
+        private static MemberExpression GetMemberExpression<T>(Expression<Func<T, Object>> expression)
         {
             if (expression.Body is MemberExpression)
             {
                 return ((MemberExpression)expression.Body);
+            }
+            else if (expression.Body is NewExpression)
+            {
+                throw new Exception("NewExpression not yet supported");
             }
             else
             {
@@ -30,22 +34,22 @@ namespace DataLayerCore.Model
             }
         }
 
-        public static Expression<Func<T, bool>> ConvertToWhereClause<T>(this Expression<Func<T, object>> exp, T obj) where T: class,new()
+        public static Expression<Func<T, bool>> ConvertToWhereClause<T>(this Expression<Func<T, object>> exp, T obj) 
+            where T: class, new()
         {
-            var memberExp = GetCorrectPropertyName(exp);
-            
+            var memberExp = GetMemberExpression(exp);            
              
             var objPropExp = Expression.PropertyOrField(Expression.Constant(obj), memberExp.Member.Name);
             var equalExp = Expression.Equal(memberExp, objPropExp);
             var exp2 = Expression.Lambda<Func<T, bool>>(equalExp, exp.Parameters);
             return exp2;
-
         }
 
         public static void AddOrUpdate<T>(this DbSet<T> dbSet,T data, params Expression<Func<T, object>>[] wheres) where T : class, new()
         {
-            AddOrUpdate(dbSet,new List<T>{data},wheres);
+            AddOrUpdate(dbSet, new List<T>{data}, wheres);
         }
+
         public static void AddOrUpdate<T>(this DbSet<T> dbSet, List<T> data, params Expression<Func<T, object>>[] wheres) where T : class, new()
         {
             var context = dbSet.GetContext();

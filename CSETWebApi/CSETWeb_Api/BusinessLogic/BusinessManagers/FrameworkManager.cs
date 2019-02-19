@@ -115,8 +115,16 @@ namespace CSETWeb_Api.BusinessManagers
             answer.TierType = selectedTier.TierType;
             answer.Tier = selectedTier.TierName;            
 
-            db.FRAMEWORK_TIER_TYPE_ANSWER.AddOrUpdate( answer, x=> new { x.Assessment_Id, x.TierType });
+            if (db.FRAMEWORK_TIER_TYPE_ANSWER.Find(answer.Assessment_Id, answer.TierType) == null)
+            {
+                db.FRAMEWORK_TIER_TYPE_ANSWER.Add(answer);
+            }
+            else
+            {
+                db.FRAMEWORK_TIER_TYPE_ANSWER.Update(answer);
+            }
             db.SaveChanges();
+
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
         }
     }

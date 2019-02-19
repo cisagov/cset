@@ -38,30 +38,24 @@ namespace CSETWeb_Api.Controllers.Sal
 
             List<GenSalPairs> result = new List<GenSalPairs>();
 
-            var value = from d in db.GENERAL_SAL_DESCRIPTIONS
-                        join g in (
-                            (from GENERAL_SAL in db.GENERAL_SAL
-                             where      GENERAL_SAL.Assessment_Id == assessmentid
-                             select new
+            var sliders = from d in db.GENERAL_SAL_DESCRIPTIONS
+                             from g in db.GENERAL_SAL.Where(g => g.Assessment_Id == assessmentid && g.Sal_Name == d.Sal_Name).DefaultIfEmpty()
+                             orderby d.Sal_Order
+                             select new GenSalCategory
                              {
-                                 GENERAL_SAL
-                             })) on d.Sal_Name equals g.GENERAL_SAL.Sal_Name into g_join
-                        from g in g_join.DefaultIfEmpty()
-                        orderby d.Sal_Order
-                        select new
-                        {
-                            d = d,                            
-                            Slider_Value = (int?)g.GENERAL_SAL.Slider_Value
-                        };
+                                 d = d,
+                                 SliderValue = (int?)g.Slider_Value
+                             };
+
             bool first = true;
             GenSalPairs pair = null;
-            foreach (var d in value.ToList())
+
+            foreach (var slider in sliders.ToList())
             {
-                
-                GeneralSalDescriptionsWeights s = TinyMapper.Map<GeneralSalDescriptionsWeights>(d.d);                
+                GeneralSalDescriptionsWeights s = TinyMapper.Map<GeneralSalDescriptionsWeights>(slider.d);
                 if (first)
                 {
-                     pair = new GenSalPairs();
+                    pair = new GenSalPairs();
                     pair.OnSite = s;
                     result.Add(pair);
                 }
@@ -70,16 +64,16 @@ namespace CSETWeb_Api.Controllers.Sal
                     pair.OffSite = s;
                 }
                 first = !first;
-                
+
                 s.values = new List<string>();
-                s.Slider_Value = d.Slider_Value??0;
-                foreach (GEN_SAL_WEIGHTS w in db.GEN_SAL_WEIGHTS.Where(x => String.Equals(x.Sal_Name, d.d.Sal_Name)))
+                s.Slider_Value = slider.SliderValue ?? 0;
+                foreach (GEN_SAL_WEIGHTS w in db.GEN_SAL_WEIGHTS.Where(x => String.Equals(x.Sal_Name, slider.d.Sal_Name)))
                 {
                     s.GEN_SAL_WEIGHTS.Add(TinyMapper.Map<GenSalWeights>(w));
-                    s.values.Add(" "+ w.Display+" ");
+                    s.values.Add(" " + w.Display + " ");
                 }
-                
             }
+
             return result;
         }
 
@@ -106,7 +100,7 @@ namespace CSETWeb_Api.Controllers.Sal
             }
             catch (DbUpdateException dbe)
             {
-                return (IHttpActionResult)CSETWeb_Api.Helpers.ElmahWrapper.LogAndReportException(dbe, Request, HttpContext.Current);                
+                return (IHttpActionResult)CSETWeb_Api.Helpers.ElmahWrapper.LogAndReportException(dbe, Request, HttpContext.Current);
             }
         }
 
@@ -165,6 +159,13 @@ namespace CSETWeb_Api.Controllers.Sal
         {
             return db.GENERAL_SAL.Count(e => e.Assessment_Id == id) > 0;
         }
+    }
+
+
+    public class GenSalCategory
+    {
+        public GENERAL_SAL_DESCRIPTIONS d;
+        public int? SliderValue;
     }
 }
 
