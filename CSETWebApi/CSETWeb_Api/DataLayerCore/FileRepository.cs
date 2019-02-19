@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DataAccess.Attributes;
-//using DataAccess.Model;
+using DataAccess.Model;
 using DataLayerCore.Model;
 
 namespace DataAccess

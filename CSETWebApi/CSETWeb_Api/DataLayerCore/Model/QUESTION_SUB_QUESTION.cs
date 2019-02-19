@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -10,6 +12,8 @@ namespace DataLayerCore.Model
         public int Question_Group_Id { get; set; }
         public int List_Order { get; set; }
 
+        [ForeignKey("Question_Id")]
+        [InverseProperty("QUESTION_SUB_QUESTION")]
         public virtual NEW_QUESTION Question_ { get; set; }
     }
 }

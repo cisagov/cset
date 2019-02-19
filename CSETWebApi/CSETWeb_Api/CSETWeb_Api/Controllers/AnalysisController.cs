@@ -429,7 +429,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CsetwebContext context = new CsetwebContext())
+            using (CSET_Context context = new CSET_Context())
             {   
                 context.LoadStoredProc("[dbo].[usp_getComponentsSummary]")
                          .WithSqlParam("assessment_Id", assessmentId)

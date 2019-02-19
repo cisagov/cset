@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -15,8 +17,12 @@ namespace DataLayerCore.Model
         public int? Reference_Doc_Id { get; set; }
         public string Reference_Sections { get; set; }
 
+        [ForeignKey("Reference_Doc_Id")]
+        [InverseProperty("REFERENCES_DATA")]
         public virtual REFERENCE_DOCS Reference_Doc_ { get; set; }
+        [InverseProperty("Reference_")]
         public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
+        [InverseProperty("Reference_")]
         public virtual ICollection<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
     }
 }

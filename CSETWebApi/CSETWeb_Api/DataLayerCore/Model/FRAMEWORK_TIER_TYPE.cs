@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -10,8 +12,11 @@ namespace DataLayerCore.Model
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
         }
 
+        [Key]
+        [StringLength(50)]
         public string TierType { get; set; }
 
+        [InverseProperty("TierTypeNavigation")]
         public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
     }
 }

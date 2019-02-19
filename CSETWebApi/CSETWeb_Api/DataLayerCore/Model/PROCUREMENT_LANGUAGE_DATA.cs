@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -14,6 +16,7 @@ namespace DataLayerCore.Model
 
         public int Procurement_Id { get; set; }
         public int? Parent_Heading_Id { get; set; }
+        [StringLength(50)]
         public string Section_Number { get; set; }
         public string Topic_Name { get; set; }
         public string Heading { get; set; }
@@ -26,9 +29,14 @@ namespace DataLayerCore.Model
         public string References_Doc { get; set; }
         public string Flow_Document { get; set; }
 
+        [ForeignKey("Parent_Heading_Id")]
+        [InverseProperty("PROCUREMENT_LANGUAGE_DATA")]
         public virtual PROCUREMENT_LANGUAGE_HEADINGS Parent_Heading_ { get; set; }
+        [InverseProperty("Dependencies_")]
         public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYDependencies_ { get; set; }
+        [InverseProperty("Procurement_")]
         public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYProcurement_ { get; set; }
+        [InverseProperty("Procurement_")]
         public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
     }
 }

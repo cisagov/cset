@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -10,12 +12,21 @@ namespace DataLayerCore.Model
             VISIO_MAPPING = new HashSet<VISIO_MAPPING>();
         }
 
+        [Key]
+        [StringLength(100)]
         public string Specific_Type { get; set; }
+        [StringLength(50)]
         public string Diagram_Type_XML { get; set; }
+        [StringLength(100)]
         public string Object_Type { get; set; }
 
+        [ForeignKey("Diagram_Type_XML")]
+        [InverseProperty("DIAGRAM_TYPES")]
         public virtual DIAGRAM_TYPES_XML Diagram_Type_XMLNavigation { get; set; }
+        [ForeignKey("Object_Type")]
+        [InverseProperty("DIAGRAM_TYPES")]
         public virtual DIAGRAM_OBJECT_TYPES Object_TypeNavigation { get; set; }
+        [InverseProperty("Specific_TypeNavigation")]
         public virtual ICollection<VISIO_MAPPING> VISIO_MAPPING { get; set; }
     }
 }

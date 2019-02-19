@@ -1557,6 +1557,7 @@
     <Folder Include="assets\" />
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
+    <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

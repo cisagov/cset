@@ -142,7 +142,6 @@
     <Compile Include="Manual\ANSWER.cs" />
     <Compile Include="Manual\Answer_Questions.cs" />
     <Compile Include="Manual\Answer_Questions_No_Components.cs" />
-    <Compile Include="Manual\CsetwebContext.cs" />
     <Compile Include="Manual\CSET_Context.cs" />
     <Compile Include="Manual\DOCUMENT_FILE.cs" />
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
@@ -153,6 +152,9 @@
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
     <Compile Include="Manual\vParameter.cs" />
     <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
+    <Compile Include="ModelDataAccess\FileDescription.cs" />
+    <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
+    <Compile Include="ModelDataAccess\FileResult.cs" />
     <Compile Include="Model\ADDRESS.cs" />
     <Compile Include="Model\AggregatedCounter.cs" />
     <Compile Include="Model\ANSWER.cs" />

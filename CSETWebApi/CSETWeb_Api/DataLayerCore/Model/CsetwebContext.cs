@@ -167,37 +167,21 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.AddressType, e.Id })
                     .HasName("PK_ADDRESS_1");
 
-                entity.Property(e => e.AddressType)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.AddressType).IsUnicode(false);
 
-                entity.Property(e => e.City)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.City).IsUnicode(false);
 
-                entity.Property(e => e.Country)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Country).IsUnicode(false);
 
-                entity.Property(e => e.Line1)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Line1).IsUnicode(false);
 
-                entity.Property(e => e.Line2)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Line2).IsUnicode(false);
 
-                entity.Property(e => e.PrimaryEmail)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.PrimaryEmail).IsUnicode(false);
 
-                entity.Property(e => e.State)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.State).IsUnicode(false);
 
-                entity.Property(e => e.Zip)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Zip).IsUnicode(false);
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithMany(p => p.ADDRESS)
@@ -214,23 +198,13 @@ namespace DataLayerCore.Model
                     .HasName("IX_ANSWER")
                     .IsUnique();
 
-                entity.Property(e => e.Alternate_Justification).HasColumnType("ntext");
-
                 entity.Property(e => e.Answer_Text)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('U')");
 
-                entity.Property(e => e.Comment).HasColumnType("ntext");
+                entity.Property(e => e.Component_Guid).IsUnicode(false);
 
-                entity.Property(e => e.Component_Guid)
-                    .HasMaxLength(36)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Custom_Question_Guid)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.ANSWER)
@@ -250,14 +224,10 @@ namespace DataLayerCore.Model
                     .HasName("PK_Answer_Lookup");
 
                 entity.Property(e => e.Answer_Text)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Answer_Full_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Answer_Full_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<ASSESSMENTS>(entity =>
@@ -265,9 +235,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Assessment_Id)
                     .HasName("PK_Aggregation_1");
 
-                entity.Property(e => e.Alias)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Alias).IsUnicode(false);
 
                 entity.Property(e => e.AssessmentCreatedDate).HasDefaultValueSql("(getdate())");
 
@@ -284,19 +252,11 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_CONTACTS>(entity =>
             {
-                entity.HasKey(e => e.Assessment_Contact_Id);
+                entity.Property(e => e.FirstName).IsUnicode(false);
 
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.LastName).IsUnicode(false);
 
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PrimaryEmail)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.PrimaryEmail).IsUnicode(false);
 
                 entity.HasOne(d => d.AssessmentRole)
                     .WithMany(p => p.ASSESSMENT_CONTACTS)
@@ -320,9 +280,7 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Diagram_Component_Type });
 
-                entity.Property(e => e.Diagram_Component_Type)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
             });
 
             modelBuilder.Entity<ASSESSMENT_ROLES>(entity =>
@@ -330,24 +288,16 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.AssessmentRoleId)
                     .HasName("PK_ASSESSMENT_ROLES_1");
 
-                entity.Property(e => e.AssessmentRole)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.AssessmentRole).IsUnicode(false);
             });
 
             modelBuilder.Entity<ASSESSMENT_SELECTED_LEVELS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Level_Name });
 
-                entity.Property(e => e.Level_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Level_Name).IsUnicode(false);
 
-                entity.Property(e => e.Standard_Specific_Sal_Level)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_Specific_Sal_Level).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENT_SELECTED_LEVELS)
@@ -364,9 +314,7 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Set_Name });
 
-                entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.AVAILABLE_STANDARDS)
@@ -381,31 +329,15 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<AggregatedCounter>(entity =>
             {
-                entity.ToTable("AggregatedCounter", "HangFire");
-
                 entity.HasIndex(e => new { e.Value, e.Key })
                     .HasName("UX_HangFire_CounterAggregated_Key")
                     .IsUnique();
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
             {
                 entity.HasKey(e => e.Data_Id)
                     .HasName("PK_Catalog_Recommendations_Data");
-
-                entity.Property(e => e.Section_Long_Number).HasMaxLength(50);
-
-                entity.Property(e => e.Section_Short_Name).HasMaxLength(150);
-
-                entity.Property(e => e.Section_Short_Number).HasMaxLength(50);
-
-                entity.Property(e => e.Topic_Name).HasMaxLength(150);
 
                 entity.HasOne(d => d.Parent_Heading_)
                     .WithMany(p => p.CATALOG_RECOMMENDATIONS_DATA)
@@ -415,29 +347,18 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_HEADINGS>(entity =>
             {
-                entity.Property(e => e.Heading_Name)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.Heading_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<CNSS_CIA_JUSTIFICATIONS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.CIA_Type });
 
-                entity.Property(e => e.CIA_Type)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.CIA_Type).IsUnicode(false);
 
-                entity.Property(e => e.DropDownValueLevel)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DropDownValueLevel).IsUnicode(false);
 
-                entity.Property(e => e.Justification)
-                    .IsRequired()
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Justification).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.CNSS_CIA_JUSTIFICATIONS)
@@ -452,10 +373,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<CNSS_CIA_TYPES>(entity =>
             {
-                entity.HasKey(e => e.CIA_Type);
-
                 entity.Property(e => e.CIA_Type)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -466,7 +384,6 @@ namespace DataLayerCore.Model
                     .HasName("PK_ComponentFamily");
 
                 entity.Property(e => e.Component_Family_Name)
-                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -476,13 +393,9 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Question_Id, e.Component_Type })
                     .HasName("PK_Component_Questions");
 
-                entity.Property(e => e.Component_Type)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Component_Type).IsUnicode(false);
 
-                entity.Property(e => e.Seq)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Seq).IsUnicode(false);
 
                 entity.HasOne(d => d.Component_TypeNavigation)
                     .WithMany(p => p.COMPONENT_QUESTIONS)
@@ -501,9 +414,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Question_Id, e.Requirement_id, e.Component_Type })
                     .HasName("PK_STANDARD_COMPONENT_QUESTIONS");
 
-                entity.Property(e => e.Component_Type)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Component_Type).IsUnicode(false);
 
                 entity.HasOne(d => d.Component_TypeNavigation)
                     .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
@@ -528,41 +439,23 @@ namespace DataLayerCore.Model
                     .HasName("IX_COMPONENT_SYMBOLS")
                     .IsUnique();
 
-                entity.Property(e => e.Abbreviation)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
+                entity.Property(e => e.Abbreviation).IsUnicode(false);
 
-                entity.Property(e => e.Component_Family_Name)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Component_Family_Name).IsUnicode(false);
 
-                entity.Property(e => e.Diagram_Type_Xml)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Diagram_Type_Xml).IsUnicode(false);
 
                 entity.Property(e => e.Display_Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.File_Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.File_Name).IsUnicode(false);
 
                 entity.Property(e => e.Long_Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Component_Family_NameNavigation)
                     .WithMany(p => p.COMPONENT_SYMBOLS)
@@ -584,10 +477,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<COMPONENT_SYMBOLS_GM_TO_CSET>(entity =>
             {
-                entity.HasKey(e => e.GM_FingerType);
-
                 entity.Property(e => e.GM_FingerType)
-                    .HasMaxLength(200)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
@@ -602,17 +492,9 @@ namespace DataLayerCore.Model
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Build_Number)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Build_Number).IsUnicode(false);
 
-                entity.Property(e => e.Cset_Version1)
-                    .IsRequired()
-                    .HasColumnName("Cset_Version")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Version_Id).HasColumnType("decimal(18, 4)");
+                entity.Property(e => e.Cset_Version1).IsUnicode(false);
             });
 
             modelBuilder.Entity<CUSTOM_BASE_STANDARDS>(entity =>
@@ -620,13 +502,9 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Custom_Questionaire_Name, e.Base_Standard })
                     .HasName("PK_CUSTOM_BASE_STANDARDS_1");
 
-                entity.Property(e => e.Custom_Questionaire_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Custom_Questionaire_Name).IsUnicode(false);
 
-                entity.Property(e => e.Base_Standard)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Base_Standard).IsUnicode(false);
 
                 entity.HasOne(d => d.Custom_Questionaire_NameNavigation)
                     .WithMany(p => p.CUSTOM_BASE_STANDARDS)
@@ -636,30 +514,20 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<CUSTOM_QUESTIONAIRES>(entity =>
             {
-                entity.HasKey(e => e.Custom_Questionaire_Name);
-
                 entity.Property(e => e.Custom_Questionaire_Name)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(800)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
 
-                entity.Property(e => e.Set_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<CUSTOM_QUESTIONAIRE_QUESTIONS>(entity =>
             {
                 entity.HasKey(e => new { e.Custom_Questionaire_Name, e.Question_Id });
 
-                entity.Property(e => e.Custom_Questionaire_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Custom_Questionaire_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Custom_Questionaire_NameNavigation)
                     .WithMany(p => p.CUSTOM_QUESTIONAIRE_QUESTIONS)
@@ -669,17 +537,9 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<CUSTOM_STANDARD_BASE_STANDARD>(entity =>
             {
-                entity.HasKey(e => e.Custom_Standard_Base_Standard_Id);
+                entity.Property(e => e.Base_Standard).IsUnicode(false);
 
-                entity.Property(e => e.Base_Standard)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Custom_Questionaire_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Custom_Questionaire_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Base_StandardNavigation)
                     .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation)
@@ -695,31 +555,17 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<Counter>(entity =>
             {
-                entity.ToTable("Counter", "HangFire");
-
                 entity.HasIndex(e => new { e.Value, e.Key })
                     .HasName("IX_HangFire_Counter_Key");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
             {
-                entity.HasKey(e => e.Assessment_Id);
-
                 entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
 
-                entity.Property(e => e.AssetValue)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.AssetValue).IsUnicode(false);
 
-                entity.Property(e => e.Size)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Size).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithOne(p => p.DEMOGRAPHICS)
@@ -750,10 +596,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<DEMOGRAPHICS_ASSET_VALUES>(entity =>
             {
-                entity.HasKey(e => e.AssetValue);
-
                 entity.Property(e => e.AssetValue)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
@@ -766,56 +609,37 @@ namespace DataLayerCore.Model
                     .HasName("PK_DemographicsSize");
 
                 entity.Property(e => e.Size)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.DemographicId).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
             });
 
             modelBuilder.Entity<DIAGRAM_OBJECT_TYPES>(entity =>
             {
-                entity.HasKey(e => e.Object_Type);
-
                 entity.Property(e => e.Object_Type)
-                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<DIAGRAM_TEMPLATES>(entity =>
             {
-                entity.Property(e => e.Is_Read_Only)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Is_Read_Only).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Is_Visible)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Template_Name).HasMaxLength(150);
+                entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<DIAGRAM_TYPES>(entity =>
             {
-                entity.HasKey(e => e.Specific_Type);
-
                 entity.Property(e => e.Specific_Type)
-                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Diagram_Type_XML)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Diagram_Type_XML).IsUnicode(false);
 
-                entity.Property(e => e.Object_Type)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.Object_Type).IsUnicode(false);
 
                 entity.HasOne(d => d.Diagram_Type_XMLNavigation)
                     .WithMany(p => p.DIAGRAM_TYPES)
@@ -834,7 +658,6 @@ namespace DataLayerCore.Model
                     .HasName("PK_CSET_DIAGRAM_TYPES");
 
                 entity.Property(e => e.Diagram_Type_XML)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -859,29 +682,15 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Document_Id)
                     .HasName("PK__document_file__00000000000001C8");
 
-                entity.Property(e => e.ContentType)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.ContentType).IsUnicode(false);
 
-                entity.Property(e => e.CreatedTimestamp).HasColumnType("datetime");
+                entity.Property(e => e.FileMd5).IsUnicode(false);
 
-                entity.Property(e => e.FileMd5)
-                    .HasMaxLength(32)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Path).IsUnicode(false);
 
-                entity.Property(e => e.Path)
-                    .HasMaxLength(3990)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Title)
-                    .HasMaxLength(3990)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UpdatedTimestamp).HasColumnType("datetime");
+                entity.Property(e => e.Title).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.DOCUMENT_FILE)
@@ -901,9 +710,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Gen_File_Id, e.Keyword })
                     .HasName("FILE_KEYWORDS_PK");
 
-                entity.Property(e => e.Keyword)
-                    .HasMaxLength(60)
-                    .IsUnicode(false);
+                entity.Property(e => e.Keyword).IsUnicode(false);
 
                 entity.HasOne(d => d.Gen_File_)
                     .WithMany(p => p.FILE_KEYWORDS)
@@ -913,10 +720,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<FILE_REF_KEYS>(entity =>
             {
-                entity.HasKey(e => e.Doc_Num);
-
                 entity.Property(e => e.Doc_Num)
-                    .HasMaxLength(40)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -926,27 +730,15 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.File_Type_Id)
                     .HasName("SYS_C0014416");
 
-                entity.Property(e => e.File_Type_Id).HasColumnType("numeric(38, 0)");
+                entity.Property(e => e.Description).IsUnicode(false);
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.File_Type1).IsUnicode(false);
 
-                entity.Property(e => e.File_Type1)
-                    .IsRequired()
-                    .HasColumnName("File_Type")
-                    .HasMaxLength(60)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Mime_Type)
-                    .HasMaxLength(80)
-                    .IsUnicode(false);
+                entity.Property(e => e.Mime_Type).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINDING>(entity =>
             {
-                entity.HasKey(e => e.Finding_Id);
-
                 entity.Property(e => e.Impact).IsUnicode(false);
 
                 entity.Property(e => e.Issue).IsUnicode(false);
@@ -988,35 +780,22 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<FRAMEWORK_TIERS>(entity =>
             {
-                entity.HasKey(e => e.Tier);
-
                 entity.Property(e => e.Tier)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.FullName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.FullName).IsUnicode(false);
             });
 
             modelBuilder.Entity<FRAMEWORK_TIER_DEFINITIONS>(entity =>
             {
                 entity.HasKey(e => new { e.Tier, e.TierType });
 
-                entity.Property(e => e.Tier)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Tier).IsUnicode(false);
 
-                entity.Property(e => e.TierType)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.TierType).IsUnicode(false);
 
-                entity.Property(e => e.TierQuestion)
-                    .IsRequired()
-                    .HasMaxLength(1024)
-                    .IsUnicode(false);
+                entity.Property(e => e.TierQuestion).IsUnicode(false);
 
                 entity.HasOne(d => d.TierNavigation)
                     .WithMany(p => p.FRAMEWORK_TIER_DEFINITIONS)
@@ -1026,10 +805,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<FRAMEWORK_TIER_TYPE>(entity =>
             {
-                entity.HasKey(e => e.TierType);
-
                 entity.Property(e => e.TierType)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -1038,14 +814,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.TierType });
 
-                entity.Property(e => e.TierType)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.TierType).IsUnicode(false);
 
-                entity.Property(e => e.Tier)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Tier).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER)
@@ -1069,9 +840,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Sal_Name })
                     .HasName("PK_GENERAL_SAL_1");
 
-                entity.Property(e => e.Sal_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Sal_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.GENERAL_SAL)
@@ -1086,25 +855,15 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<GENERAL_SAL_DESCRIPTIONS>(entity =>
             {
-                entity.HasKey(e => e.Sal_Name);
-
                 entity.Property(e => e.Sal_Name)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Sal_Description)
-                    .IsRequired()
-                    .HasMaxLength(1024)
-                    .IsUnicode(false);
+                entity.Property(e => e.Sal_Description).IsUnicode(false);
 
-                entity.Property(e => e.postfix)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.postfix).IsUnicode(false);
 
-                entity.Property(e => e.prefix)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.prefix).IsUnicode(false);
             });
 
             modelBuilder.Entity<GEN_FILE>(entity =>
@@ -1112,54 +871,27 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Gen_File_Id)
                     .HasName("SYS_C0014438");
 
-                entity.Property(e => e.Comments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Comments).IsUnicode(false);
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
 
                 entity.Property(e => e.Doc_Num)
-                    .IsRequired()
-                    .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('NONE')");
 
-                entity.Property(e => e.Doc_Version)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                entity.Property(e => e.Doc_Version).IsUnicode(false);
 
-                entity.Property(e => e.File_Name)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.File_Name).IsUnicode(false);
 
-                entity.Property(e => e.File_Type_Id).HasColumnType("numeric(38, 0)");
+                entity.Property(e => e.Name).IsUnicode(false);
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Short_Name).IsUnicode(false);
 
-                entity.Property(e => e.Publish_Date).HasColumnType("datetime");
+                entity.Property(e => e.Source_Type).IsUnicode(false);
 
-                entity.Property(e => e.Short_Name)
-                    .IsRequired()
-                    .HasMaxLength(60)
-                    .IsUnicode(false);
+                entity.Property(e => e.Summary).IsUnicode(false);
 
-                entity.Property(e => e.Source_Type)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Summary)
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Title).IsUnicode(false);
 
                 entity.HasOne(d => d.Doc_NumNavigation)
                     .WithMany(p => p.GEN_FILE)
@@ -1178,8 +910,6 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Gen_File_Id, e.Lib_Path_Id })
                     .HasName("TABLE3_PK");
 
-                entity.Property(e => e.Lib_Path_Id).HasColumnType("numeric(38, 0)");
-
                 entity.HasOne(d => d.Gen_File_)
                     .WithMany(p => p.GEN_FILE_LIB_PATH_CORL)
                     .HasForeignKey(d => d.Gen_File_Id)
@@ -1193,10 +923,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<GEN_SAL_NAMES>(entity =>
             {
-                entity.HasKey(e => e.Sal_Name);
-
                 entity.Property(e => e.Sal_Name)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -1209,16 +936,9 @@ namespace DataLayerCore.Model
                     .HasName("IX_GEN_SAL_WEIGHTS")
                     .IsUnique();
 
-                entity.Property(e => e.Sal_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Sal_Name).IsUnicode(false);
 
-                entity.Property(e => e.Display)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Weight).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Display).IsUnicode(false);
 
                 entity.HasOne(d => d.Sal_NameNavigation)
                     .WithMany(p => p.GEN_SAL_WEIGHTS)
@@ -1238,19 +958,14 @@ namespace DataLayerCore.Model
                     .HasName("PK_GlobalProperties");
 
                 entity.Property(e => e.Property)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Property_Value)
-                    .HasMaxLength(7500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Property_Value).IsUnicode(false);
             });
 
             modelBuilder.Entity<Hash>(entity =>
             {
-                entity.ToTable("Hash", "HangFire");
-
                 entity.HasIndex(e => new { e.ExpireAt, e.Key })
                     .HasName("IX_HangFire_Hash_Key");
 
@@ -1260,14 +975,6 @@ namespace DataLayerCore.Model
                 entity.HasIndex(e => new { e.Key, e.Field })
                     .HasName("UX_HangFire_Hash_Key_Field")
                     .IsUnique();
-
-                entity.Property(e => e.Field)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<IMPORTANCE>(entity =>
@@ -1275,42 +982,12 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Importance_Id)
                     .HasName("PK_IMPORTANCE_1");
 
-                entity.Property(e => e.Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Value).IsUnicode(false);
             });
 
             modelBuilder.Entity<INFORMATION>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Additional_Contacts).HasColumnType("ntext");
-
-                entity.Property(e => e.Additional_Notes_And_Comments).HasMaxLength(4000);
-
-                entity.Property(e => e.Assessment_Description).HasMaxLength(4000);
-
-                entity.Property(e => e.Assessment_Name)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Assessor_Email).HasMaxLength(100);
-
-                entity.Property(e => e.Assessor_Name).HasMaxLength(100);
-
-                entity.Property(e => e.Assessor_Phone).HasMaxLength(100);
-
-                entity.Property(e => e.City_Or_Site_Name).HasMaxLength(100);
-
-                entity.Property(e => e.Enterprise_Evaluation_Summary).HasColumnType("ntext");
-
-                entity.Property(e => e.Executive_Summary).HasColumnType("ntext");
-
-                entity.Property(e => e.Facility_Name).HasMaxLength(100);
-
-                entity.Property(e => e.Real_Property_Unique_Id).HasMaxLength(70);
-
-                entity.Property(e => e.State_Province_Or_Region).HasMaxLength(100);
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.INFORMATION)
@@ -1326,47 +1003,24 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<JWT>(entity =>
             {
-                entity.HasKey(e => e.Secret);
-
                 entity.Property(e => e.Secret)
-                    .HasMaxLength(200)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
-
-                entity.Property(e => e.Generated).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Job>(entity =>
             {
-                entity.ToTable("Job", "HangFire");
-
                 entity.HasIndex(e => e.StateName)
                     .HasName("IX_HangFire_Job_StateName");
 
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_Job_ExpireAt");
-
-                entity.Property(e => e.Arguments).IsRequired();
-
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.InvocationData).IsRequired();
-
-                entity.Property(e => e.StateName).HasMaxLength(20);
             });
 
             modelBuilder.Entity<JobParameter>(entity =>
             {
-                entity.ToTable("JobParameter", "HangFire");
-
                 entity.HasIndex(e => new { e.JobId, e.Name })
                     .HasName("IX_HangFire_JobParameter_JobIdAndName");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(40);
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.JobParameter)
@@ -1376,16 +1030,8 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<JobQueue>(entity =>
             {
-                entity.ToTable("JobQueue", "HangFire");
-
                 entity.HasIndex(e => new { e.Queue, e.FetchedAt })
                     .HasName("IX_HangFire_JobQueue_QueueAndFetchedAt");
-
-                entity.Property(e => e.FetchedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Queue)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<LEVEL_NAMES>(entity =>
@@ -1394,42 +1040,26 @@ namespace DataLayerCore.Model
                     .HasName("PK_Level_Names");
 
                 entity.Property(e => e.Level_Name)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<List>(entity =>
             {
-                entity.ToTable("List", "HangFire");
-
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_List_ExpireAt");
 
                 entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
                     .HasName("IX_HangFire_List_Key");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Value).HasColumnType("nvarchar(max)");
             });
 
             modelBuilder.Entity<NAVIGATION_STATE>(entity =>
             {
-                entity.HasKey(e => e.Name);
-
                 entity.Property(e => e.Name)
-                    .HasMaxLength(500)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.IsAvailable)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.IsAvailable).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<NCSF_CATEGORY>(entity =>
@@ -1441,25 +1071,13 @@ namespace DataLayerCore.Model
                     .HasName("IX_NCSF_Category")
                     .IsUnique();
 
-                entity.Property(e => e.NCSF_Category_Description)
-                    .IsRequired()
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.NCSF_Category_Description).IsUnicode(false);
 
-                entity.Property(e => e.NCSF_Category_Id)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                entity.Property(e => e.NCSF_Category_Id).IsUnicode(false);
 
-                entity.Property(e => e.NCSF_Category_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.NCSF_Category_Name).IsUnicode(false);
 
-                entity.Property(e => e.NCSF_Function_Id)
-                    .IsRequired()
-                    .HasMaxLength(2)
-                    .IsUnicode(false);
+                entity.Property(e => e.NCSF_Function_Id).IsUnicode(false);
 
                 entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValueSql("((50))");
 
@@ -1471,28 +1089,18 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
             {
-                entity.HasKey(e => e.NCSF_Function_ID);
-
                 entity.Property(e => e.NCSF_Function_ID)
-                    .HasMaxLength(2)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.NCSF_Function_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.NCSF_Function_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<NERC_RISK_RANKING>(entity =>
             {
-                entity.HasKey(e => e.Compliance_Risk_Rank);
-
                 entity.Property(e => e.Compliance_Risk_Rank).ValueGeneratedNever();
 
-                entity.Property(e => e.Violation_Risk_Factor)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Violation_Risk_Factor).IsUnicode(false);
 
                 entity.HasOne(d => d.Question_)
                     .WithMany(p => p.NERC_RISK_RANKING)
@@ -1520,32 +1128,19 @@ namespace DataLayerCore.Model
                     .HasName("IX_NEW_QUESTION")
                     .IsUnique();
 
-                entity.Property(e => e.Original_Set_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Original_Set_Name).IsUnicode(false);
 
-                entity.Property(e => e.Question_Hash)
-                    .HasMaxLength(32)
-                    .HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))");
+                entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))");
 
-                entity.Property(e => e.Simple_Question)
-                    .HasMaxLength(7338)
-                    .IsUnicode(false);
+                entity.Property(e => e.Simple_Question).IsUnicode(false);
 
-                entity.Property(e => e.Std_Ref)
-                    .IsRequired()
-                    .HasMaxLength(55)
-                    .IsUnicode(false);
+                entity.Property(e => e.Std_Ref).IsUnicode(false);
 
                 entity.Property(e => e.Std_Ref_Id)
-                    .HasMaxLength(106)
                     .IsUnicode(false)
                     .HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([varchar](50),[Std_Ref_Number],(0)) end)");
 
                 entity.Property(e => e.Universal_Sal_Level)
-                    .IsRequired()
-                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('none')");
 
@@ -1568,9 +1163,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Universal_Sal_Level, e.New_Question_Set_Id })
                     .HasName("PK_NEW_QUESTION_LEVELS_1");
 
-                entity.Property(e => e.Universal_Sal_Level)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Universal_Sal_Level).IsUnicode(false);
 
                 entity.HasOne(d => d.New_Question_Set_)
                     .WithMany(p => p.NEW_QUESTION_LEVELS)
@@ -1593,10 +1186,7 @@ namespace DataLayerCore.Model
                     .HasName("IX_NEW_QUESTION_SETS")
                     .IsUnique();
 
-                entity.Property(e => e.Set_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Question_)
                     .WithMany(p => p.NEW_QUESTION_SETS)
@@ -1611,40 +1201,23 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<NEW_REQUIREMENT>(entity =>
             {
-                entity.HasKey(e => e.Requirement_Id);
-
                 entity.Property(e => e.Implementation_Recommendations).IsUnicode(false);
 
-                entity.Property(e => e.Original_Set_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Original_Set_Name).IsUnicode(false);
 
-                entity.Property(e => e.Requirement_Text)
-                    .IsRequired()
-                    .IsUnicode(false);
+                entity.Property(e => e.Requirement_Text).IsUnicode(false);
 
-                entity.Property(e => e.Requirement_Title)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Requirement_Title).IsUnicode(false);
 
-                entity.Property(e => e.Standard_Category)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_Category).IsUnicode(false);
 
-                entity.Property(e => e.Standard_Sub_Category)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_Sub_Category).IsUnicode(false);
 
-                entity.Property(e => e.Supp_Hash)
-                    .HasMaxLength(32)
-                    .HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Supplemental_Info],(8000))),(0)))");
+                entity.Property(e => e.Supp_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Supplemental_Info],(8000))),(0)))");
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);
 
-                entity.Property(e => e.Text_Hash)
-                    .HasMaxLength(20)
-                    .HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Requirement_Text]),(0)))");
+                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Requirement_Text]),(0)))");
 
                 entity.HasOne(d => d.NCSF_Cat_)
                     .WithMany(p => p.NEW_REQUIREMENT)
@@ -1676,41 +1249,23 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Type_Value })
                     .HasName("PK_NIST_SAL");
 
-                entity.Property(e => e.Type_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Type_Value).IsUnicode(false);
 
-                entity.Property(e => e.Area)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Area).IsUnicode(false);
 
-                entity.Property(e => e.Availability_Special_Factor)
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Availability_Special_Factor).IsUnicode(false);
 
-                entity.Property(e => e.Availability_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Availability_Value).IsUnicode(false);
 
-                entity.Property(e => e.Confidentiality_Special_Factor)
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Confidentiality_Special_Factor).IsUnicode(false);
 
-                entity.Property(e => e.Confidentiality_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Confidentiality_Value).IsUnicode(false);
 
-                entity.Property(e => e.Integrity_Special_Factor)
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Integrity_Special_Factor).IsUnicode(false);
 
-                entity.Property(e => e.Integrity_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Integrity_Value).IsUnicode(false);
 
-                entity.Property(e => e.NIST_Number)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.NIST_Number).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.NIST_SAL_INFO_TYPES)
@@ -1720,44 +1275,25 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<NIST_SAL_INFO_TYPES_DEFAULTS>(entity =>
             {
-                entity.HasKey(e => e.Type_Value);
-
                 entity.Property(e => e.Type_Value)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Area)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Area).IsUnicode(false);
 
-                entity.Property(e => e.Availability_Special_Factor)
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Availability_Special_Factor).IsUnicode(false);
 
-                entity.Property(e => e.Availability_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Availability_Value).IsUnicode(false);
 
-                entity.Property(e => e.Confidentiality_Special_Factor)
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Confidentiality_Special_Factor).IsUnicode(false);
 
-                entity.Property(e => e.Confidentiality_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Confidentiality_Value).IsUnicode(false);
 
-                entity.Property(e => e.Integrity_Special_Factor)
-                    .HasMaxLength(1500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Integrity_Special_Factor).IsUnicode(false);
 
-                entity.Property(e => e.Integrity_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Integrity_Value).IsUnicode(false);
 
-                entity.Property(e => e.NIST_Number)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.NIST_Number).IsUnicode(false);
             });
 
             modelBuilder.Entity<NIST_SAL_QUESTIONS>(entity =>
@@ -1767,9 +1303,7 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Question_Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Question_Text)
-                    .HasMaxLength(7000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Question_Text).IsUnicode(false);
             });
 
             modelBuilder.Entity<NIST_SAL_QUESTION_ANSWERS>(entity =>
@@ -1777,8 +1311,6 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Question_Id });
 
                 entity.Property(e => e.Question_Answer)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('No')");
 
@@ -1803,10 +1335,7 @@ namespace DataLayerCore.Model
                     .HasName("IX_Parameters")
                     .IsUnique();
 
-                entity.Property(e => e.Parameter_Name)
-                    .IsRequired()
-                    .HasMaxLength(350)
-                    .IsUnicode(false);
+                entity.Property(e => e.Parameter_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<PARAMETER_ASSESSMENT>(entity =>
@@ -1814,10 +1343,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Parameter_ID, e.Assessment_ID })
                     .HasName("PK_ASSESSMENT_PARAMETERS");
 
-                entity.Property(e => e.Parameter_Value_Assessment)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Parameter_Value_Assessment).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.PARAMETER_ASSESSMENT)
@@ -1850,10 +1376,7 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Answer_Id, e.Parameter_Id });
 
-                entity.Property(e => e.Parameter_Value)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Parameter_Value).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_)
                     .WithMany(p => p.PARAMETER_VALUES)
@@ -1888,9 +1411,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Procurement_Id)
                     .HasName("PK_Procurement_Language_Data");
 
-                entity.Property(e => e.Section_Number)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Section_Number).IsUnicode(false);
 
                 entity.HasOne(d => d.Parent_Heading_)
                     .WithMany(p => p.PROCUREMENT_LANGUAGE_DATA)
@@ -1900,10 +1421,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<PROCUREMENT_LANGUAGE_HEADINGS>(entity =>
             {
-                entity.Property(e => e.Heading_Name)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.Heading_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<PROCUREMENT_REFERENCES>(entity =>
@@ -1926,8 +1444,6 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<QUESTION_GROUP_HEADING>(entity =>
             {
-                entity.HasKey(e => e.Question_Group_Heading1);
-
                 entity.HasIndex(e => e.Question_Group_Heading1)
                     .HasName("IX_Question_Group_Heading")
                     .IsUnique();
@@ -1936,17 +1452,11 @@ namespace DataLayerCore.Model
                     .HasName("IX_QUESTION_GROUP_HEADING_1")
                     .IsUnique();
 
-                entity.Property(e => e.Question_Group_Heading1)
-                    .HasColumnName("Question_Group_Heading")
-                    .HasMaxLength(250)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Question_Group_Heading1).ValueGeneratedNever();
 
                 entity.Property(e => e.Question_Group_Heading_Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Std_Ref)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Std_Ref).IsUnicode(false);
             });
 
             modelBuilder.Entity<QUESTION_GROUP_TYPE>(entity =>
@@ -1958,24 +1468,13 @@ namespace DataLayerCore.Model
                     .HasName("IX_QUESTION_GROUP_TYPE")
                     .IsUnique();
 
-                entity.Property(e => e.Group_Header)
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Group_Header).IsUnicode(false);
 
-                entity.Property(e => e.Group_Name)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Group_Name).IsUnicode(false);
 
-                entity.Property(e => e.Scoring_Group)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Scoring_Group).IsUnicode(false);
 
-                entity.Property(e => e.Scoring_Type)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Scoring_Type).IsUnicode(false);
             });
 
             modelBuilder.Entity<QUESTION_SUB_QUESTION>(entity =>
@@ -1994,21 +1493,11 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.RecentFileId)
                     .HasName("PK_RECENT_FILES_1");
 
-                entity.Property(e => e.AssessmentName)
-                    .HasMaxLength(512)
-                    .IsUnicode(false);
+                entity.Property(e => e.AssessmentName).IsUnicode(false);
 
-                entity.Property(e => e.FilePath)
-                    .IsRequired()
-                    .HasMaxLength(1024)
-                    .IsUnicode(false);
+                entity.Property(e => e.FilePath).IsUnicode(false);
 
-                entity.Property(e => e.Filename)
-                    .IsRequired()
-                    .HasMaxLength(900)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastOpenedTime).HasColumnType("datetime");
+                entity.Property(e => e.Filename).IsUnicode(false);
             });
 
             modelBuilder.Entity<RECOMMENDATIONS_REFERENCES>(entity =>
@@ -2045,13 +1534,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Reference_Doc_Id)
                     .HasName("PK_Reference_Docs");
 
-                entity.Property(e => e.Date_Last_Checked).HasColumnType("datetime");
-
-                entity.Property(e => e.Date_Updated).HasColumnType("datetime");
-
-                entity.Property(e => e.Doc_Short)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Doc_Short).IsUnicode(false);
             });
 
             modelBuilder.Entity<REF_LIBRARY_PATH>(entity =>
@@ -2059,13 +1542,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Lib_Path_Id)
                     .HasName("REF_LIBRARY_PATH_PK");
 
-                entity.Property(e => e.Lib_Path_Id).HasColumnType("numeric(38, 0)");
-
-                entity.Property(e => e.Parent_Path_Id).HasColumnType("numeric(38, 0)");
-
-                entity.Property(e => e.Path_Name)
-                    .HasMaxLength(60)
-                    .IsUnicode(false);
+                entity.Property(e => e.Path_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Parent_Path_)
                     .WithMany(p => p.InverseParent_Path_)
@@ -2075,18 +1552,11 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<REPORT_DETAIL_SECTIONS>(entity =>
             {
-                entity.HasKey(e => e.Report_Section_Id);
-
                 entity.Property(e => e.Report_Section_Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Display_Name)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Display_Name).IsUnicode(false);
 
-                entity.Property(e => e.Tool_Tip)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.Tool_Tip).IsUnicode(false);
             });
 
             modelBuilder.Entity<REPORT_DETAIL_SECTION_SELECTION>(entity =>
@@ -2107,14 +1577,9 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<REPORT_OPTIONS>(entity =>
             {
-                entity.HasKey(e => e.Report_Option_Id);
-
                 entity.Property(e => e.Report_Option_Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Display_Name)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Display_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<REPORT_OPTIONS_SELECTION>(entity =>
@@ -2137,9 +1602,7 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Assesment_Id, e.Report_Set_Entity_Name });
 
-                entity.Property(e => e.Report_Set_Entity_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Report_Set_Entity_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Assesment_)
                     .WithMany(p => p.REPORT_STANDARDS_SELECTION)
@@ -2156,13 +1619,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Requirement_Id, e.Standard_Level, e.Level_Type });
 
-                entity.Property(e => e.Standard_Level)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_Level).IsUnicode(false);
 
-                entity.Property(e => e.Level_Type)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
+                entity.Property(e => e.Level_Type).IsUnicode(false);
 
                 entity.HasOne(d => d.Level_TypeNavigation)
                     .WithMany(p => p.REQUIREMENT_LEVELS)
@@ -2183,16 +1642,11 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<REQUIREMENT_LEVEL_TYPE>(entity =>
             {
-                entity.HasKey(e => e.Level_Type);
-
                 entity.Property(e => e.Level_Type)
-                    .HasMaxLength(5)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Level_Type_Full_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Level_Type_Full_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<REQUIREMENT_QUESTIONS>(entity =>
@@ -2216,9 +1670,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Question_Id, e.Set_Name })
                     .HasName("PK_REQUIREMENT_QUESTIONS_SETS_1");
 
-                entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Question_)
                     .WithMany(p => p.REQUIREMENT_QUESTIONS_SETS)
@@ -2240,13 +1692,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Requirement_Id, e.Gen_File_Id, e.Section_Ref });
 
-                entity.Property(e => e.Section_Ref)
-                    .HasMaxLength(850)
-                    .IsUnicode(false);
+                entity.Property(e => e.Section_Ref).IsUnicode(false);
 
-                entity.Property(e => e.Destination_String)
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Destination_String).IsUnicode(false);
 
                 entity.HasOne(d => d.Gen_File_)
                     .WithMany(p => p.REQUIREMENT_REFERENCES)
@@ -2264,9 +1712,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Requirement_Id, e.Set_Name })
                     .HasName("PK_QUESTION_SETS");
 
-                entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Requirement_)
                     .WithMany(p => p.REQUIREMENT_SETS)
@@ -2283,13 +1729,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Requirement_Id, e.Gen_File_Id, e.Section_Ref });
 
-                entity.Property(e => e.Section_Ref)
-                    .HasMaxLength(850)
-                    .IsUnicode(false);
+                entity.Property(e => e.Section_Ref).IsUnicode(false);
 
-                entity.Property(e => e.Destination_String)
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Destination_String).IsUnicode(false);
 
                 entity.HasOne(d => d.Gen_File_)
                     .WithMany(p => p.REQUIREMENT_SOURCE_FILES)
@@ -2308,7 +1750,6 @@ namespace DataLayerCore.Model
                     .HasName("PK_SAL_DETERMINATION_TYPES_1");
 
                 entity.Property(e => e.Sal_Determination_Type)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -2319,10 +1760,7 @@ namespace DataLayerCore.Model
                     .HasName("IX_SECTOR")
                     .IsUnique();
 
-                entity.Property(e => e.SectorName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.SectorName).IsUnicode(false);
             });
 
             modelBuilder.Entity<SECTOR_INDUSTRY>(entity =>
@@ -2333,10 +1771,7 @@ namespace DataLayerCore.Model
                     .HasName("IX_SECTOR_INDUSTRY")
                     .IsUnique();
 
-                entity.Property(e => e.IndustryName)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.IndustryName).IsUnicode(false);
 
                 entity.HasOne(d => d.Sector)
                     .WithMany(p => p.SECTOR_INDUSTRY)
@@ -2348,17 +1783,11 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Sector_Id, e.Industry_Id, e.Organization_Size, e.Asset_Value, e.Set_Name });
 
-                entity.Property(e => e.Organization_Size)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Organization_Size).IsUnicode(false);
 
-                entity.Property(e => e.Asset_Value)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Asset_Value).IsUnicode(false);
 
-                entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Sector_)
                     .WithMany(p => p.SECTOR_STANDARD_RECOMMENDATIONS)
@@ -2373,59 +1802,32 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<SECURITY_QUESTION>(entity =>
             {
-                entity.HasKey(e => e.SecurityQuestionId);
+                entity.Property(e => e.IsCustomQuestion).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.IsCustomQuestion)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.SecurityQuestion)
-                    .IsRequired()
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.SecurityQuestion).IsUnicode(false);
             });
 
             modelBuilder.Entity<SETS>(entity =>
             {
-                entity.HasKey(e => e.Set_Name);
-
                 entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Date).HasColumnType("datetime");
+                entity.Property(e => e.Full_Name).IsUnicode(false);
 
-                entity.Property(e => e.Full_Name)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.IsEncryptedModuleOpen).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.IsEncryptedModuleOpen)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Is_Displayed).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Is_Displayed)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Old_Std_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Old_Std_Name).IsUnicode(false);
 
                 entity.Property(e => e.Short_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('NO SHORT NAME')");
 
-                entity.Property(e => e.Standard_ToolTip)
-                    .HasMaxLength(800)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_ToolTip).IsUnicode(false);
 
-                entity.Property(e => e.Upgrade_Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Upgrade_Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Set_Category_)
                     .WithMany(p => p.SETS)
@@ -2440,22 +1842,16 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Set_Category_Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Set_Category_Name)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Category_Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<SET_FILES>(entity =>
             {
                 entity.HasKey(e => new { e.SetName, e.Gen_File_Id });
 
-                entity.Property(e => e.SetName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.SetName).IsUnicode(false);
 
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Comment).IsUnicode(false);
 
                 entity.HasOne(d => d.Gen_File_)
                     .WithMany(p => p.SET_FILES)
@@ -2474,23 +1870,14 @@ namespace DataLayerCore.Model
                     .HasName("PK_Shape_Types");
 
                 entity.Property(e => e.Diagram_Type_XML)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.DisplayName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DisplayName).IsUnicode(false);
 
-                entity.Property(e => e.Telerik_Shape_Type)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Telerik_Shape_Type).IsUnicode(false);
 
-                entity.Property(e => e.Visio_Shape_Type)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Visio_Shape_Type).IsUnicode(false);
 
                 entity.HasOne(d => d.Diagram_Type_XMLNavigation)
                     .WithOne(p => p.SHAPE_TYPES)
@@ -2502,22 +1889,13 @@ namespace DataLayerCore.Model
             modelBuilder.Entity<SP80053_FAMILY_ABBREVIATIONS>(entity =>
             {
                 entity.Property(e => e.ID)
-                    .HasMaxLength(2)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
-
-                entity.Property(e => e.Standard_Category)
-                    .IsRequired()
-                    .HasMaxLength(250);
             });
 
             modelBuilder.Entity<STANDARD_CATEGORY>(entity =>
             {
-                entity.HasKey(e => e.Standard_Category1);
-
                 entity.Property(e => e.Standard_Category1)
-                    .HasColumnName("Standard_Category")
-                    .HasMaxLength(250)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
             });
@@ -2526,15 +1904,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Standard_Category, e.Set_Name });
 
-                entity.Property(e => e.Standard_Category)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_Category).IsUnicode(false);
 
-                entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Standard_Category_Sequence1).HasColumnName("Standard_Category_Sequence");
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Set_NameNavigation)
                     .WithMany(p => p.STANDARD_CATEGORY_SEQUENCE)
@@ -2549,29 +1921,19 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<STANDARD_SELECTION>(entity =>
             {
-                entity.HasKey(e => e.Assessment_Id);
-
                 entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Application_Mode)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Questions Based')");
 
-                entity.Property(e => e.Last_Sal_Determination_Type)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Last_Sal_Determination_Type).IsUnicode(false);
 
                 entity.Property(e => e.Selected_Sal_Level)
-                    .IsRequired()
-                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Low')");
 
-                entity.Property(e => e.Sort_Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Sort_Set_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithOne(p => p.STANDARD_SELECTION)
@@ -2596,13 +1958,9 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Set_Name, e.Doc_Num })
                     .HasName("PK_Standard_Source_File");
 
-                entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Set_Name).IsUnicode(false);
 
-                entity.Property(e => e.Doc_Num)
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
+                entity.Property(e => e.Doc_Num).IsUnicode(false);
 
                 entity.HasOne(d => d.Doc_NumNavigation)
                     .WithMany(p => p.STANDARD_SOURCE_FILE)
@@ -2617,27 +1975,17 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<STANDARD_SPECIFIC_LEVEL>(entity =>
             {
-                entity.HasKey(e => e.Standard_Level);
-
                 entity.Property(e => e.Standard_Level)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Display_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('No Display Name')");
 
-                entity.Property(e => e.Full_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Full_Name).IsUnicode(false);
 
                 entity.Property(e => e.Standard)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('No Standard')");
             });
@@ -2646,13 +1994,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Universal_Sal_Level, e.Standard_Level });
 
-                entity.Property(e => e.Universal_Sal_Level)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Universal_Sal_Level).IsUnicode(false);
 
-                entity.Property(e => e.Standard_Level)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Standard_Level).IsUnicode(false);
 
                 entity.HasOne(d => d.Standard_LevelNavigation)
                     .WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP)
@@ -2669,10 +2013,7 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Assessement_Id, e.Heading_Pair_Id, e.Component_Id, e.Is_Component });
 
-                entity.Property(e => e.Answer_Text)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.SUB_CATEGORY_ANSWERS)
@@ -2694,15 +2035,9 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<SYMBOL_GROUPS>(entity =>
             {
-                entity.Property(e => e.Symbol_Group_Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Symbol_Group_Name).IsUnicode(false);
 
-                entity.Property(e => e.Symbol_Group_Title)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Symbol_Group_Title).IsUnicode(false);
             });
 
             modelBuilder.Entity<Schema>(entity =>
@@ -2710,26 +2045,16 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Version)
                     .HasName("PK_HangFire_Schema");
 
-                entity.ToTable("Schema", "HangFire");
-
                 entity.Property(e => e.Version).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Server>(entity =>
             {
-                entity.ToTable("Server", "HangFire");
-
-                entity.Property(e => e.Id)
-                    .HasMaxLength(100)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.LastHeartbeat).HasColumnType("datetime");
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Set>(entity =>
             {
-                entity.ToTable("Set", "HangFire");
-
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_Set_ExpireAt");
 
@@ -2739,32 +2064,12 @@ namespace DataLayerCore.Model
 
                 entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
                     .HasName("IX_HangFire_Set_Key");
-
-                entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Key)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(256);
             });
 
             modelBuilder.Entity<State>(entity =>
             {
-                entity.ToTable("State", "HangFire");
-
                 entity.HasIndex(e => e.JobId)
                     .HasName("IX_HangFire_State_JobId");
-
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.Reason).HasMaxLength(100);
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.State)
@@ -2778,47 +2083,34 @@ namespace DataLayerCore.Model
                     .HasName("UNIVERSAL_AREA_PK");
 
                 entity.Property(e => e.Universal_Area_Name)
-                    .HasMaxLength(60)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Comments)
-                    .HasMaxLength(2000)
-                    .IsUnicode(false);
+                entity.Property(e => e.Comments).IsUnicode(false);
 
                 entity.Property(e => e.Universal_Area_Number).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<UNIVERSAL_SAL_LEVEL>(entity =>
             {
-                entity.HasKey(e => e.Universal_Sal_Level1);
-
                 entity.HasIndex(e => e.Full_Name_Sal)
                     .HasName("IX_UNIVERSAL_SAL_LEVEL")
                     .IsUnique();
 
                 entity.Property(e => e.Universal_Sal_Level1)
-                    .HasColumnName("Universal_Sal_Level")
-                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Full_Name_Sal)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                entity.Property(e => e.Full_Name_Sal).IsUnicode(false);
             });
 
             modelBuilder.Entity<UNIVERSAL_SUB_CATEGORIES>(entity =>
             {
-                entity.HasKey(e => e.Universal_Sub_Category);
-
                 entity.HasIndex(e => e.Universal_Sub_Category_Id)
                     .HasName("IX_UNIVERSAL_SUB_CATEGORIES")
                     .IsUnique();
 
                 entity.Property(e => e.Universal_Sub_Category)
-                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
@@ -2835,15 +2127,12 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.Set_Name)
-                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Standards')");
 
                 entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CONVERT([bit],case when [sub_heading_question_description] IS NULL OR len(rtrim(ltrim([sub_heading_question_description])))=(0) OR charindex('?',[sub_heading_question_description])=(0) then (0) else (1) end,(0)))");
 
                 entity.Property(e => e.Heading_Pair_Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Sub_Heading_Question_Description).HasMaxLength(1000);
 
                 entity.HasOne(d => d.Question_Group_Heading_)
                     .WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
@@ -2875,32 +2164,17 @@ namespace DataLayerCore.Model
                     .HasName("IX_USERS")
                     .IsUnique();
 
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.FirstName).IsUnicode(false);
 
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.LastName).IsUnicode(false);
 
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Password).IsUnicode(false);
 
-                entity.Property(e => e.PasswordResetRequired)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PrimaryEmail)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.PrimaryEmail).IsUnicode(false);
 
-                entity.Property(e => e.Salt)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Salt).IsUnicode(false);
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithMany(p => p.USERS)
@@ -2917,47 +2191,25 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.CellPhone)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.CellPhone).IsUnicode(false);
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.FirstName).IsUnicode(false);
 
-                entity.Property(e => e.HomePhone)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.HomePhone).IsUnicode(false);
 
-                entity.Property(e => e.ImagePath)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.ImagePath).IsUnicode(false);
 
-                entity.Property(e => e.JobTitle)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.JobTitle).IsUnicode(false);
 
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.LastName).IsUnicode(false);
 
-                entity.Property(e => e.OfficePhone)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.OfficePhone).IsUnicode(false);
 
-                entity.Property(e => e.Organization)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Organization).IsUnicode(false);
 
-                entity.Property(e => e.PrimaryEmail)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.PrimaryEmail).IsUnicode(false);
 
-                entity.Property(e => e.SecondaryEmail)
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.SecondaryEmail).IsUnicode(false);
             });
 
             modelBuilder.Entity<USER_SECURITY_QUESTIONS>(entity =>
@@ -2967,21 +2219,13 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.UserId).ValueGeneratedNever();
 
-                entity.Property(e => e.SecurityAnswer1)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.SecurityAnswer1).IsUnicode(false);
 
-                entity.Property(e => e.SecurityAnswer2)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.SecurityAnswer2).IsUnicode(false);
 
-                entity.Property(e => e.SecurityQuestion1)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.SecurityQuestion1).IsUnicode(false);
 
-                entity.Property(e => e.SecurityQuestion2)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.SecurityQuestion2).IsUnicode(false);
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.USER_SECURITY_QUESTIONS)
@@ -2993,13 +2237,9 @@ namespace DataLayerCore.Model
             {
                 entity.HasKey(e => new { e.Specific_Type, e.Stencil_Name });
 
-                entity.Property(e => e.Specific_Type)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.Specific_Type).IsUnicode(false);
 
-                entity.Property(e => e.Stencil_Name)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.Stencil_Name).IsUnicode(false);
 
                 entity.HasOne(d => d.Specific_TypeNavigation)
                     .WithMany(p => p.VISIO_MAPPING)
@@ -3012,15 +2252,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Weight1)
                     .HasName("PK_QUESTION_WEIGHT");
 
-                entity.Property(e => e.Weight1)
-                    .HasColumnName("Weight")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Category_Normalized_Weight).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.Question_Normalized_Weight).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.Requirement_Normalized_Weight).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Weight1).ValueGeneratedNever();
             });
         }
     }

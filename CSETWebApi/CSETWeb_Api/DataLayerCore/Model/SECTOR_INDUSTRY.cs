@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
@@ -12,8 +14,12 @@ namespace DataLayerCore.Model
 
         public int SectorId { get; set; }
         public int IndustryId { get; set; }
+        [Required]
+        [StringLength(150)]
         public string IndustryName { get; set; }
 
+        [ForeignKey("SectorId")]
+        [InverseProperty("SECTOR_INDUSTRY")]
         public virtual SECTOR Sector { get; set; }
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
     }
