@@ -69,7 +69,6 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   ngOnInit() {
-    this.saveAnswer();
   }
 
   /**
@@ -194,6 +193,8 @@ export class QuestionExtrasComponent implements OnInit {
    * @param findid
    */
   addEditDiscovery(findid) {
+    this.saveAnswer();
+
     // TODO Always send an empty one for now.
     // At some juncture we need to change this to
     // either send the finding to be edited or
@@ -220,6 +221,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.Findings = response;
+            this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
@@ -256,6 +258,7 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
         this.extras.Findings.splice(deleteIndex, 1);
+        this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
       }
     });
   }
