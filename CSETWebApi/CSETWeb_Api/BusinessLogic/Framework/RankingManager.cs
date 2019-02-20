@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Linq;
 
@@ -12,9 +12,9 @@ namespace CSET_Main.Framework
 {
     public class RankingManager
     {
-        private CSETWebEntities ControlDataRepository;
+        private CSET_Context ControlDataRepository;
 
-        public RankingManager(CSETWebEntities controlDataRepository)
+        public RankingManager(CSET_Context controlDataRepository)
         {
             this.ControlDataRepository = controlDataRepository;
         }

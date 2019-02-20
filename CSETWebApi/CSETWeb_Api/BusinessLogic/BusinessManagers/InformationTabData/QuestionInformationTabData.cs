@@ -13,11 +13,12 @@ using System.Collections.ObjectModel;
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
 using System.Diagnostics;
 using CSET_Main.Questions.ComponentOverride;
-using DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
 using CSET_Main.Questions.QuestionList;
 using CSET_Main.Data.AssessmentData;
 using CSET_Main.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSET_Main.Questions.InformationTabData
 {
@@ -429,7 +430,7 @@ namespace CSET_Main.Questions.InformationTabData
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.GEN_FILE.Title, s.GEN_FILE.File_Name, s.Section_Ref, IsSource = false, s.GEN_FILE.Is_Uploaded })
                 ).ToList();
             // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded=s.Is_Uploaded??false });
             SourceDocumentsList = sourceDocuments.ToList();
 
             // Help Documents

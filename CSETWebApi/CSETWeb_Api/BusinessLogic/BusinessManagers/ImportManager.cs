@@ -9,7 +9,8 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId)
         {
-            using (CSETWebEntities web = new CSETWebEntities())
+            using (CSET_Context web = new CSET_Context())
             {
                 //* read from db and set as memory stream here.
                 using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -48,7 +49,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = docModel.ToGenFile();
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                            genFile.FILE_TYPE = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                            genFile.File_Type_ = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
 
                             try
                             {
@@ -65,7 +66,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     foreach (var standard in model.CustomStandards)
                     {
                         var sets = web.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
-                        SET set = null;
+                        SETS set = null;
                         StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
                         var setJson = setReader.ReadToEnd();
                         var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);
@@ -97,9 +98,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 web.SETS.Add(setResult.Result);
 
-                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s => s.Question_Id != 0).ToList())
+                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
                                 {
-                                    web.Entry(question).State = System.Data.Entity.EntityState.Unchanged;
+                                    web.Entry(question).State = EntityState.Unchanged;
                                 }
                                 try
                                 {

@@ -172,8 +172,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid)
         {
-            using (CSETWebEntities datacontext = new CSETWebEntities())
-            {
+            using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
                     new StandardSpecficLevelRepository(datacontext),
                     new InformationTabBuilder(datacontext),
@@ -222,6 +221,7 @@ namespace CSETWeb_Api.BusinessManagers
                     // start numbering again in new group
                     displayNumber = 0;
                 }
+                
 
 
 

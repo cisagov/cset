@@ -1,9 +1,3 @@
-//////////////////////////////// 
-// 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
 using System;
 
 namespace CSETWeb_Api.Areas.HelpPage
@@ -45,4 +39,3 @@ namespace CSETWeb_Api.Areas.HelpPage
         }
     }
 }
-

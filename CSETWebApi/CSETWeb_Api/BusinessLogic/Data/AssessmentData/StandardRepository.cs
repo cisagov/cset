@@ -10,7 +10,7 @@ using CSETWeb_Api.Helpers.sals;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using DataLayer;
+using DataLayerCore.Model;
 using BusinessLogic.Helpers;
 
 namespace CSET_Main.Data.AssessmentData

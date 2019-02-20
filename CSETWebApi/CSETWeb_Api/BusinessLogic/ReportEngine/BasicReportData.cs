@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {

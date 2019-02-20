@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,7 +16,7 @@ using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 
 namespace CSETWeb_Api.Controllers
@@ -59,7 +59,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         protected string GetApplicationMode(int assessmentId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var mode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
 
@@ -179,7 +179,7 @@ namespace CSETWeb_Api.Controllers
         public List<Finding> AllDiscoveries([FromUri] int Answer_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 FindingsViewModel fm = new FindingsViewModel(context, assessmentId, Answer_Id);
                 return fm.AllFindings();
@@ -191,7 +191,7 @@ namespace CSETWeb_Api.Controllers
         public Finding GetFinding([FromUri] int Answer_Id, int Finding_id, int Question_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 if (Answer_Id == 0)
                 {
@@ -213,9 +213,9 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             List<Importance> rlist = new List<Importance>();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
-                foreach (IMPORTANCE import in context.IMPORTANCEs)
+                foreach (IMPORTANCE import in context.IMPORTANCE)
                 {
                     rlist.Add(TinyMapper.Map<Importance>(import));
                 }
@@ -228,7 +228,7 @@ namespace CSETWeb_Api.Controllers
         public void DeleteFinding([FromBody] int Finding_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 FindingViewModel fm = new FindingViewModel(Finding_Id, context);
                 fm.Delete();
@@ -240,7 +240,7 @@ namespace CSETWeb_Api.Controllers
         public void SaveDiscovery([FromBody] Finding finding)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 FindingViewModel fm = new FindingViewModel(finding, context);
                 fm.Save();

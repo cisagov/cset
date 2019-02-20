@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace CSET_Main.Questions.InformationTabData
 {
     public class BaseQuestionInfoData
     {
-        public SET Set { get; set; }
+        public SETS Set { get; set; }
         public int QuestionID { get; set; }
         public NEW_QUESTION Question { get; set; }
         public NEW_REQUIREMENT Requirement { get; set; }

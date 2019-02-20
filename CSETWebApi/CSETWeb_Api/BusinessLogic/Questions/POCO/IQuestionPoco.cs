@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.DocumentLibrary;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -27,7 +27,7 @@ namespace CSET_Main.Questions.POCO
         string Comment { get; set; }
         int Component_Id { get; }
         string DefaultSetName { get; set; }
-        Dictionary<string, SET> DictionaryStandards { get; set; }
+        Dictionary<string, SETS> DictionaryStandards { get; set; }
         int DocumentCount { get; set; }
         ICollection<DOCUMENT_FILE> DocumentLibrary { get; }
         int FindingCount { get; set; }
@@ -88,7 +88,7 @@ namespace CSET_Main.Questions.POCO
         string SetName { get; set; }
         string ShortSupplemental { get; }
         int SortOrder { get; set; }
-        SET SortSet { get; set; }
+        SETS SortSet { get; set; }
         string StandardName { get; }
         string StandardNameAnalysis { get; }
         string Text { get; set; }
@@ -101,10 +101,10 @@ namespace CSET_Main.Questions.POCO
         void ClearRequirement();
         string GetQuestionDocumentLabel();
         QuestionPocoTypeEnum GetQuestionType();
-        SET GetRequirementSet();
+        SETS GetRequirementSet();
         void SetAnswer(AnswerEnum answerValue);
         void SetRequirementForSet(REQUIREMENT_SETS set);
-        void SetStandards(IEnumerable<SET> sets);
+        void SetStandards(IEnumerable<SETS> sets);
     }
 }
 

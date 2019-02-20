@@ -54,6 +54,9 @@ namespace CSETWeb_Api.Controllers
             {
                 string contents = File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/assets/config.json"));
                 var jObject = JObject.Parse(contents);
+                if (jObject["override"] != null)
+                    if ((jObject["override"]).ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
+                        return jObject;
                 // get the base appURL 
                 // then change it to include the new port.
                 string findString = jObject["appUrl"].ToString();

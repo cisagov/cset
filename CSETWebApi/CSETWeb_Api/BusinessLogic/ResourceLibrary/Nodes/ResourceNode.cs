@@ -16,7 +16,7 @@ using CSET_Main.Common;
 
 
 using CSET_Main.Data;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace ResourceLibrary.Nodes
 {

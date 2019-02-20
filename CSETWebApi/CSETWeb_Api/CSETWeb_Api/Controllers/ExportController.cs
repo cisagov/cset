@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,9 +23,9 @@ namespace CSETWeb_Api.Controllers
         {
             return await Task.Run(() =>
             {
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
-                    var sets = db.SETS.Where(s => s.Is_Displayed).ToList()
+                    var sets = db.SETS.Where(s => s.Is_Displayed??true).ToList()
                                         .Select(s => new { Name = s.Full_Name, SetName = s.Set_Name }).OrderBy(s => s.Name)
                                         .ToList();
                     return Request.CreateResponse(sets);
@@ -38,9 +38,9 @@ namespace CSETWeb_Api.Controllers
         {
             return await Task.Run(() =>
             {
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
-                    var set = db.SETS.Where(s => s.Is_Displayed && s.Set_Name == setName).FirstOrDefault().ToExternalStandard();
+                    var set = db.SETS.Where(s => s.Is_Displayed??true && s.Set_Name == setName).FirstOrDefault().ToExternalStandard();
                     return Request.CreateResponse(set);
                 }
             });

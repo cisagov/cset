@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         public List<int> ActiveAnswerIds()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var ss = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
                 if (ss == null)
@@ -63,14 +64,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             List<int> list = new List<int>();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<string> mySets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Set_Name).ToList();
 
                 if (mySets.Count == 1)
                 {
                     var query = from q in db.NEW_QUESTION
-                                from ans in db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId
+                                from ans in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                                                             && x.Question_Or_Requirement_Id == q.Question_Id)
                                 from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
                                 from l in db.NEW_QUESTION_LEVELS.Where(x => x.New_Question_Set_Id == qs.New_Question_Set_Id)
@@ -87,7 +88,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 else
                 {
                     var query = from q in db.NEW_QUESTION
-                                from ans in db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId
+                                from ans in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                                                             && x.Question_Or_Requirement_Id == q.Question_Id)
                                 from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
                                 from nql in db.NEW_QUESTION_LEVELS.Where(x => x.New_Question_Set_Id == qs.New_Question_Set_Id)
@@ -116,14 +117,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             List<int> list = new List<int>();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<string> mySets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Set_Name).ToList();
 
                 var query = from rs in db.REQUIREMENT_SETS
                             from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
                             from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                            from ans in db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId
+                            from ans in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                                                         && x.Question_Or_Requirement_Id == r.Requirement_Id)
                             from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
                             from ss in db.STANDARD_SELECTION.Where(x => x.Assessment_Id == ans.Assessment_Id)

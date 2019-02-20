@@ -1,11 +1,10 @@
 ﻿using CSETWeb_Api.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataLayer;
+using DataLayerCore.Model;
 
 
 namespace CSETWeb_Api.BusinessLogic.Helpers
@@ -24,7 +23,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 try
                 {
-                    var db = new DataLayer.CSETWebEntities();
+                    var db = new CSET_Context();
                     var assess = db.ASSESSMENTS.First(a => a.Assessment_Id == assessmentId);
                     assess.LastAccessedDate = nowUTC;
                     db.SaveChanges();

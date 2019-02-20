@@ -4,11 +4,10 @@
 // 
 // 
 //////////////////////////////// 
-using CSET_Main.Common;
+
 using CSET_Main.Common.EnumHelper;
-using CSET_Main.DocumentLibrary;
 using CSET_Main.Framework;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +32,7 @@ namespace CSET_Main.Questions.POCO
                     return ProfileQuestionData.UniversalCategory;
                 else if (NEW_REQUIREMENT != null)
                 {
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CSET_Context())
                     {
                         return db.QUESTION_GROUP_HEADING
                             .First(h => h.Question_Group_Heading_Id == NEW_REQUIREMENT.Question_Group_Heading_Id)
@@ -42,7 +41,7 @@ namespace CSET_Main.Questions.POCO
                 }
                 else if (Question != null)
                 {
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CSET_Context())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
@@ -82,7 +81,7 @@ namespace CSET_Main.Questions.POCO
                 else if (Question != null)
                 {
                     //return Question.Question_Group_Heading;
-                    using (var db = new CSETWebEntities())
+                    using (var db = new CSET_Context())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
@@ -280,7 +279,7 @@ namespace CSET_Main.Questions.POCO
         {
             get
             {
-                return Answer.DOCUMENT_FILE;
+                return (ICollection<DOCUMENT_FILE>) Answer.DOCUMENT_FILEs();
             }
         }
 
@@ -372,7 +371,7 @@ namespace CSET_Main.Questions.POCO
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null&&IsComponent==false)
-                    return String.Join(", ",Question.NEW_REQUIREMENT.Where(s=>DictionaryStandards.Keys.Contains(s.SET.Set_Name)&&s.SET.SETS_CATEGORY!=null&&s.SET.SETS_CATEGORY.Set_Category_Id!=9).OrderBy(s=>s.SET.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
+                    return String.Join(", ",Question.NEW_REQUIREMENTs().Where(s=>DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name)&&s.Original_Set_NameNavigation.Set_Category_!=null&&s.Original_Set_NameNavigation.Set_Category_.Set_Category_Id!=9).OrderBy(s=>s.Original_Set_NameNavigation.Set_Name).ThenBy(s=>s.Requirement_Title).Select(s=>s.Requirement_Title).Distinct());
                 else
                     return "";
             }
@@ -846,12 +845,12 @@ namespace CSET_Main.Questions.POCO
         {
             if(!IsRequirement)
             {
-                SortSet = set==null?Question.SET:set.SET;
-                NEW_REQUIREMENT = set==null?Question.NEW_REQUIREMENT.FirstOrDefault():set.NEW_REQUIREMENT;
+                SortSet = set == null ? Question.Original_Set_NameNavigation : set.Set_NameNavigation;
+                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs().FirstOrDefault() : set.Requirement_;
             }
         }
 
-        public SET SortSet
+        public SETS SortSet
         {
             get;set;
         }
@@ -878,7 +877,7 @@ namespace CSET_Main.Questions.POCO
             
         }
 
-        public Dictionary<String, SET> DictionaryStandards { get; set; }
+        public Dictionary<String, SETS> DictionaryStandards { get; set; }
 
         //If true then QuestionInformationTabData just shows the category and not the question number associated with it. 
         public bool IsFrameworkRelatedQuestion { get; set; }
@@ -897,7 +896,7 @@ namespace CSET_Main.Questions.POCO
           
         }
 
-        public QuestionPoco(ANSWER answer, SET set, ProfileQuestion profileQuestion)
+        public QuestionPoco(ANSWER answer, SETS set, ProfileQuestion profileQuestion)
             : this(answer)
         {
             this.ProfileQuestionData = profileQuestion;
@@ -906,18 +905,18 @@ namespace CSET_Main.Questions.POCO
 
         private QuestionPoco(ANSWER answer, bool setParams=true)
         {
-            this.DictionaryStandards = new Dictionary<String, SET>();
+            this.DictionaryStandards = new Dictionary<String, SETS>();
             this.Answer = answer;
-            this.setDocumentIds = answer.DOCUMENT_FILE.Select(x => x.Document_Id).ToHashSet();
+            this.setDocumentIds = answer.DOCUMENT_FILEs().Select(x => x.Document_Id).ToHashSet();
             DocumentCount = setDocumentIds.Count;
             if(setParams)
                 this.Parameters = new ObservableCollection<ParameterContainer>();
             QuestionAnswer = EnumHelper.GetEnumValueFromDescription<AnswerEnum>(Answer.Answer_Text);
         }
 
-        public void SetStandards(IEnumerable<SET> sets)
+        public void SetStandards(IEnumerable<SETS> sets)
         {
-            foreach (SET set in sets)
+            foreach (SETS set in sets)
             {
                 this.DictionaryStandards[set.Set_Name] = set;
             }
@@ -929,16 +928,16 @@ namespace CSET_Main.Questions.POCO
         /// Requirement questions should only have one set(i.e. Standard).  So just return first item in dictionary
         /// </summary>
         /// <returns></returns>
-        public SET GetRequirementSet()
+        public SETS GetRequirementSet()
         {
-            SET s;
+            SETS s;
             if(SetName!=null)
             if (DictionaryStandards.TryGetValue(SetName, out s))
             {
                 return s;
             }
             
-            foreach (SET si in DictionaryStandards.Values)
+            foreach (SETS si in DictionaryStandards.Values)
             {
                 return si;
             }
@@ -948,7 +947,7 @@ namespace CSET_Main.Questions.POCO
             Debug.Assert(false, "There is no sets in dictionary for requirement questionPoco.");
             return null; 
         }
-        internal ICollection<SET> GetRequirementSets()
+        internal ICollection<SETS> GetRequirementSets()
         {
             return DictionaryStandards.Values;
         }
@@ -1053,20 +1052,20 @@ namespace CSET_Main.Questions.POCO
                     var requirements = new List<NEW_REQUIREMENT>();
                     NEW_REQUIREMENT standardRequirement=null;
                     var standardList = new List<string>();
-                    if(Question?.NEW_REQUIREMENT!=null)
+                    if(Question?.NEW_REQUIREMENTs()!=null)
                     {
                         foreach (var item in DictionaryStandards)
                         {
                             if (item.Value.Is_Custom)
                             {
-                                var standards = item.Value.CUSTOM_STANDARD_BASE_STANDARD.Select(s => s.Base_Standard).ToList();
+                                var standards = item.Value.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation.Select(s => s.Base_Standard).ToList();
                                 standardList = standardList.Concat(standards).ToList();
                             }
                             standardList.Add(item.Key);
                         }
                         foreach (var setName in standardList)
                         {
-                            standardRequirement = Question?.NEW_REQUIREMENT?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info)&&t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
+                            standardRequirement = Question?.NEW_REQUIREMENTs()?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info)&&t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
                             if (standardRequirement!=null)
                             {
                                 break;
@@ -1075,7 +1074,7 @@ namespace CSET_Main.Questions.POCO
                     }
                     var supplemental = ProfileQuestionData?.SupplementalInfo ??
                         (standardRequirement ??
-                        Question?.NEW_REQUIREMENT?.FirstOrDefault() ?? 
+                        Question?.NEW_REQUIREMENTs()?.FirstOrDefault() ?? 
                         NEW_REQUIREMENT)?.Supplemental_Info.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
                     if (String.IsNullOrEmpty(supplemental))
                     {
@@ -1105,12 +1104,12 @@ namespace CSET_Main.Questions.POCO
                 return shortSupplemental;
             }
         }
-        internal void AddSet(SET set)
+        internal void AddSet(SETS set)
         {
             this.DictionaryStandards[set.Set_Name] = set;
         }
       
-        internal void AddSetAndSetStandardName(SET set)
+        internal void AddSetAndSetStandardName(SETS set)
         {
             AddSet(set);
             SetStandardName();

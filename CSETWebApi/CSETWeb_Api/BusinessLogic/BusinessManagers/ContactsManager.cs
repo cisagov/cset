@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using System.Web;
 using BusinessLogic.Helpers;
@@ -15,7 +15,8 @@ using CSETWeb_Api.BusinessLogic;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -42,7 +43,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             List<ContactDetail> list = new List<ContactDetail>();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var query = (from cc in db.ASSESSMENT_CONTACTS
                              where cc.Assessment_Id == assessmentId
@@ -99,7 +100,7 @@ namespace CSETWeb_Api.BusinessManagers
             if (searchParms.PrimaryEmail == null) searchParms.PrimaryEmail = string.Empty;
 
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var email = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
                 if (email == null)
@@ -158,15 +159,15 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public ContactDetail AddContactToAssessment(int assessmentId, int userId, int roleid, bool invited)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
-                USER user = db.USERS.Where(x => x.UserId == userId).First();
+                USERS user = db.USERS.Where(x => x.UserId == userId).First();
 
                 var dbAC = db.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId && ac.UserId == user.UserId).FirstOrDefault();
 
                 if (dbAC == null)
                 {
-                    dbAC = new DataLayer.ASSESSMENT_CONTACTS
+                    dbAC = new ASSESSMENT_CONTACTS
                     {
                         Assessment_Id = assessmentId,
                         UserId = user.UserId,
@@ -179,7 +180,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAC.AssessmentRoleId = roleid;
                 dbAC.Invited = invited;
 
-                db.ASSESSMENT_CONTACTS.AddOrUpdate(dbAC);
+                db.ASSESSMENT_CONTACTS.AddOrUpdate( dbAC, x => x.Assessment_Contact_Id);
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(assessmentId);
@@ -213,14 +214,14 @@ namespace CSETWeb_Api.BusinessManagers
             NotificationManager nm = new NotificationManager();
 
             ASSESSMENT_CONTACTS existingContact = null;
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // See if the Contact already exists
                 existingContact = db.ASSESSMENT_CONTACTS.Where(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (existingContact == null)
                 {
                     // Create Contact
-                    var c = new DataLayer.ASSESSMENT_CONTACTS()
+                    var c = new ASSESSMENT_CONTACTS()
                     {
                         FirstName = newContact.FirstName,
                         LastName = newContact.LastName,
@@ -230,7 +231,7 @@ namespace CSETWeb_Api.BusinessManagers
                     };
 
                     // Include the userid if such a user exists
-                    DataLayer.USER user = db.USERS.Where(u => !string.IsNullOrEmpty(u.PrimaryEmail)
+                    USERS user = db.USERS.Where(u => !string.IsNullOrEmpty(u.PrimaryEmail)
                         && u.PrimaryEmail == newContact.PrimaryEmail)
                         .FirstOrDefault();
                     if (user != null)
@@ -238,7 +239,7 @@ namespace CSETWeb_Api.BusinessManagers
                         c.UserId = user.UserId;
                     }
 
-                    db.ASSESSMENT_CONTACTS.AddOrUpdate(c);
+                    db.ASSESSMENT_CONTACTS.AddOrUpdate( c, x=> x.Assessment_Contact_Id);
 
 
                     // If there was no USER record for this new Contact, create one
@@ -311,7 +312,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public void UpdateContact(ContactDetail contact)
         {
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 var ac = context.ASSESSMENT_CONTACTS.Where(x => x.UserId == contact.UserId
                     && x.Assessment_Id == contact.AssessmentId).FirstOrDefault();
@@ -354,7 +355,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int? GetUserRoleOnAssessment(int userId, int assessmentId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var contact = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId).FirstOrDefault();
                 if (contact != null)
@@ -372,7 +373,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public List<ContactDetail> RemoveContact(int userId, int assessmentId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var user = (from cc in db.ASSESSMENT_CONTACTS
                             where cc.UserId == userId && cc.Assessment_Id == assessmentId
@@ -396,14 +397,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="assessmentId"></param>
         public void MarkContactInvited(int userId, int assessmentId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var assessmentContact = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId)
                     .FirstOrDefault();
                 if (assessmentContact != null)
                 {
                     assessmentContact.Invited = true;
-                    db.ASSESSMENT_CONTACTS.AddOrUpdate(assessmentContact);
+                    db.ASSESSMENT_CONTACTS.AddOrUpdate( assessmentContact, x=> x.Assessment_Contact_Id);
                     db.SaveChangesAsync();
                 }
             }
@@ -427,7 +428,7 @@ namespace CSETWeb_Api.BusinessManagers
                 return;
             }
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // we can expect to find this record for the current user and assessment.
                 var ac = db.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == (int)assessmentId && x.UserId == userId).FirstOrDefault();
@@ -444,7 +445,7 @@ namespace CSETWeb_Api.BusinessManagers
                 ac.FirstName = u.FirstName;
                 ac.LastName = u.LastName;
 
-                db.ASSESSMENT_CONTACTS.AddOrUpdate(ac);
+                db.ASSESSMENT_CONTACTS.AddOrUpdate( ac, x=> x.Assessment_Contact_Id);
                 db.SaveChanges();
             }
         }
@@ -455,7 +456,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public object GetAllRoles()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var roles = from ar in db.ASSESSMENT_ROLES
                             select new { ar.AssessmentRoleId, ar.AssessmentRole };

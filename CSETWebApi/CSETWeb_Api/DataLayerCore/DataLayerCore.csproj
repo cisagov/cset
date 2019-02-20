@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayerCore</RootNamespace>
+    <AssemblyName>DataLayerCore</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Design, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\lib\net461\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.6.0\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async, Version=3.2.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Interactive.Async.3.2.0\lib\net46\System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.0.10.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.0.10\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.2\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddOrUpdateExtension.cs" />
+    <Compile Include="Attributes\LifecycleSingletonAttribute.cs" />
+    <Compile Include="Attributes\LifecycleTransientAttribute.cs" />
+    <Compile Include="CoreHelpers.cs" />
+    <Compile Include="extensions\DbContextExtensions.cs" />
+    <Compile Include="extensions\DbSetExtensions.cs" />
+    <Compile Include="extensions\IQueryableExtensions.cs" />
+    <Compile Include="extensions\IQueryableExtensionsForGeneratedSql.cs" />
+    <Compile Include="FileRepository.cs" />
+    <Compile Include="IFileRepository.cs" />
+    <Compile Include="Manual\ANSWER.cs" />
+    <Compile Include="Manual\Answer_Questions.cs" />
+    <Compile Include="Manual\Answer_Questions_No_Components.cs" />
+    <Compile Include="Manual\CSET_Context.cs" />
+    <Compile Include="Manual\DOCUMENT_FILE.cs" />
+    <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
+    <Compile Include="Manual\NEW_REQUIREMENT.cs" />
+    <Compile Include="Manual\REF_LIBRARY_PATH.cs" />
+    <Compile Include="Manual\usp_GetOverallRankedCategoriesPage_Result.cs" />
+    <Compile Include="Manual\usp_GetRankedQuestions_Result.cs" />
+    <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
+    <Compile Include="Manual\vParameter.cs" />
+    <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
+    <Compile Include="ModelDataAccess\FileDescription.cs" />
+    <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
+    <Compile Include="ModelDataAccess\FileResult.cs" />
+    <Compile Include="Model\ADDRESS.cs" />
+    <Compile Include="Model\AggregatedCounter.cs" />
+    <Compile Include="Model\ANSWER.cs" />
+    <Compile Include="Model\ANSWER_LOOKUP.cs" />
+    <Compile Include="Model\ASSESSMENTS.cs" />
+    <Compile Include="Model\ASSESSMENTS_REQUIRED_DOCUMENTATION.cs" />
+    <Compile Include="Model\ASSESSMENT_CONTACTS.cs" />
+    <Compile Include="Model\ASSESSMENT_DIAGRAM_COMPONENTS.cs" />
+    <Compile Include="Model\Assessment_IRP.cs" />
+    <Compile Include="Model\ASSESSMENT_IRP_HEADER.cs" />
+    <Compile Include="Model\ASSESSMENT_ROLES.cs" />
+    <Compile Include="Model\ASSESSMENT_SELECTED_LEVELS.cs" />
+    <Compile Include="Model\AVAILABLE_STANDARDS.cs" />
+    <Compile Include="Model\CATALOG_RECOMMENDATIONS_DATA.cs" />
+    <Compile Include="Model\CATALOG_RECOMMENDATIONS_HEADINGS.cs" />
+    <Compile Include="Model\CNSS_CIA_JUSTIFICATIONS.cs" />
+    <Compile Include="Model\CNSS_CIA_TYPES.cs" />
+    <Compile Include="Model\COMPONENT_FAMILY.cs" />
+    <Compile Include="Model\COMPONENT_QUESTIONS.cs" />
+    <Compile Include="Model\COMPONENT_STANDARD_QUESTIONS.cs" />
+    <Compile Include="Model\COMPONENT_SYMBOLS.cs" />
+    <Compile Include="Model\COMPONENT_SYMBOLS_GM_TO_CSET.cs" />
+    <Compile Include="Model\Counter.cs" />
+    <Compile Include="Model\CSETWebContext.cs" />
+    <Compile Include="Model\CSET_VERSION.cs" />
+    <Compile Include="Model\CUSTOM_BASE_STANDARDS.cs" />
+    <Compile Include="Model\CUSTOM_QUESTIONAIRES.cs" />
+    <Compile Include="Model\CUSTOM_QUESTIONAIRE_QUESTIONS.cs" />
+    <Compile Include="Model\CUSTOM_STANDARD_BASE_STANDARD.cs" />
+    <Compile Include="Model\DEMOGRAPHICS.cs" />
+    <Compile Include="Model\DEMOGRAPHICS_ASSET_VALUES.cs" />
+    <Compile Include="Model\DEMOGRAPHICS_SIZE.cs" />
+    <Compile Include="Model\DIAGRAM_OBJECT_TYPES.cs" />
+    <Compile Include="Model\DIAGRAM_TEMPLATES.cs" />
+    <Compile Include="Model\DIAGRAM_TYPES.cs" />
+    <Compile Include="Model\DIAGRAM_TYPES_XML.cs" />
+    <Compile Include="Model\DOCUMENT_ANSWERS.cs" />
+    <Compile Include="Model\DOCUMENT_FILE.cs" />
+    <Compile Include="Model\Domain.cs" />
+    <Compile Include="Model\DomainStandardCategory.cs" />
+    <Compile Include="Model\FILE_KEYWORDS.cs" />
+    <Compile Include="Model\FILE_REF_KEYS.cs" />
+    <Compile Include="Model\FILE_TYPE.cs" />
+    <Compile Include="Model\FINDING.cs" />
+    <Compile Include="Model\FINDING_CONTACT.cs" />
+    <Compile Include="Model\FRAMEWORK_TIERS.cs" />
+    <Compile Include="Model\FRAMEWORK_TIER_DEFINITIONS.cs" />
+    <Compile Include="Model\FRAMEWORK_TIER_TYPE.cs" />
+    <Compile Include="Model\FRAMEWORK_TIER_TYPE_ANSWER.cs" />
+    <Compile Include="Model\GENERAL_SAL.cs" />
+    <Compile Include="Model\GENERAL_SAL_DESCRIPTIONS.cs" />
+    <Compile Include="Model\GEN_FILE.cs" />
+    <Compile Include="Model\GEN_FILE_LIB_PATH_CORL.cs" />
+    <Compile Include="Model\GEN_SAL_NAMES.cs" />
+    <Compile Include="Model\GEN_SAL_WEIGHTS.cs" />
+    <Compile Include="Model\GLOBAL_PROPERTIES.cs" />
+    <Compile Include="Model\Hash.cs" />
+    <Compile Include="Model\IMPORTANCE.cs" />
+    <Compile Include="Model\INFORMATION.cs" />
+    <Compile Include="Model\IRP.cs" />
+    <Compile Include="Model\IRP_HEADER.cs" />
+    <Compile Include="Model\Job.cs" />
+    <Compile Include="Model\JobParameter.cs" />
+    <Compile Include="Model\JobQueue.cs" />
+    <Compile Include="Model\JWT.cs" />
+    <Compile Include="Model\LEVEL_NAMES.cs" />
+    <Compile Include="Model\List.cs" />
+    <Compile Include="Model\NAVIGATION_STATE.cs" />
+    <Compile Include="Model\NCSF_CATEGORY.cs" />
+    <Compile Include="Model\NCSF_FUNCTIONS.cs" />
+    <Compile Include="Model\NERC_RISK_RANKING.cs" />
+    <Compile Include="Model\NEW_QUESTION.cs" />
+    <Compile Include="Model\NEW_QUESTION_LEVELS.cs" />
+    <Compile Include="Model\NEW_QUESTION_SETS.cs" />
+    <Compile Include="Model\NEW_REQUIREMENT.cs" />
+    <Compile Include="Model\NIST_SAL_INFO_TYPES.cs" />
+    <Compile Include="Model\NIST_SAL_INFO_TYPES_DEFAULTS.cs" />
+    <Compile Include="Model\NIST_SAL_QUESTIONS.cs" />
+    <Compile Include="Model\NIST_SAL_QUESTION_ANSWERS.cs" />
+    <Compile Include="Model\PARAMETERS.cs" />
+    <Compile Include="Model\PARAMETER_ASSESSMENT.cs" />
+    <Compile Include="Model\PARAMETER_REQUIREMENTS.cs" />
+    <Compile Include="Model\PARAMETER_VALUES.cs" />
+    <Compile Include="Model\PROCUREMENT_DEPENDENCY.cs" />
+    <Compile Include="Model\PROCUREMENT_LANGUAGE_DATA.cs" />
+    <Compile Include="Model\PROCUREMENT_LANGUAGE_HEADINGS.cs" />
+    <Compile Include="Model\PROCUREMENT_REFERENCES.cs" />
+    <Compile Include="Model\QUESTION_GROUP_HEADING.cs" />
+    <Compile Include="Model\QUESTION_GROUP_TYPE.cs" />
+    <Compile Include="Model\QUESTION_SUB_QUESTION.cs" />
+    <Compile Include="Model\RECENT_FILES.cs" />
+    <Compile Include="Model\RECOMMENDATIONS_REFERENCES.cs" />
+    <Compile Include="Model\REFERENCES_DATA.cs" />
+    <Compile Include="Model\REFERENCE_DOCS.cs" />
+    <Compile Include="Model\REF_LIBRARY_PATH.cs" />
+    <Compile Include="Model\REPORT_DETAIL_SECTIONS.cs" />
+    <Compile Include="Model\REPORT_DETAIL_SECTION_SELECTION.cs" />
+    <Compile Include="Model\REPORT_OPTIONS.cs" />
+    <Compile Include="Model\REPORT_OPTIONS_SELECTION.cs" />
+    <Compile Include="Model\REPORT_STANDARDS_SELECTION.cs" />
+    <Compile Include="Model\REQUIRED_DOCUMENTATION.cs" />
+    <Compile Include="Model\REQUIRED_DOCUMENTATION_HEADERS.cs" />
+    <Compile Include="Model\REQUIREMENT_LEVELS.cs" />
+    <Compile Include="Model\REQUIREMENT_LEVEL_TYPE.cs" />
+    <Compile Include="Model\REQUIREMENT_QUESTIONS.cs" />
+    <Compile Include="Model\REQUIREMENT_QUESTIONS_SETS.cs" />
+    <Compile Include="Model\REQUIREMENT_REFERENCES.cs" />
+    <Compile Include="Model\REQUIREMENT_SETS.cs" />
+    <Compile Include="Model\REQUIREMENT_SOURCE_FILES.cs" />
+    <Compile Include="Model\SAL_DETERMINATION_TYPES.cs" />
+    <Compile Include="Model\Schema.cs" />
+    <Compile Include="Model\SECTOR.cs" />
+    <Compile Include="Model\SECTOR_INDUSTRY.cs" />
+    <Compile Include="Model\SECTOR_STANDARD_RECOMMENDATIONS.cs" />
+    <Compile Include="Model\SECURITY_QUESTION.cs" />
+    <Compile Include="Model\Server.cs" />
+    <Compile Include="Model\Set.cs" />
+    <Compile Include="Model\SETS.cs" />
+    <Compile Include="Model\SETS_CATEGORY.cs" />
+    <Compile Include="Model\SET_FILES.cs" />
+    <Compile Include="Model\SHAPE_TYPES.cs" />
+    <Compile Include="Model\SP80053_FAMILY_ABBREVIATIONS.cs" />
+    <Compile Include="Model\STANDARD_CATEGORY.cs" />
+    <Compile Include="Model\STANDARD_CATEGORY_SEQUENCE.cs" />
+    <Compile Include="Model\STANDARD_SELECTION.cs" />
+    <Compile Include="Model\STANDARD_SOURCE_FILE.cs" />
+    <Compile Include="Model\STANDARD_SPECIFIC_LEVEL.cs" />
+    <Compile Include="Model\STANDARD_TO_UNIVERSAL_MAP.cs" />
+    <Compile Include="Model\State.cs" />
+    <Compile Include="Model\SUB_CATEGORY_ANSWERS.cs" />
+    <Compile Include="Model\SYMBOL_GROUPS.cs" />
+    <Compile Include="Model\UNIVERSAL_AREA.cs" />
+    <Compile Include="Model\UNIVERSAL_SAL_LEVEL.cs" />
+    <Compile Include="Model\UNIVERSAL_SUB_CATEGORIES.cs" />
+    <Compile Include="Model\UNIVERSAL_SUB_CATEGORY_HEADINGS.cs" />
+    <Compile Include="Model\USERS.cs" />
+    <Compile Include="Model\USER_DETAIL_INFORMATION.cs" />
+    <Compile Include="Model\USER_SECURITY_QUESTIONS.cs" />
+    <Compile Include="Model\VISIO_MAPPING.cs" />
+    <Compile Include="Model\WEIGHT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="efpt.config.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props'))" />
+  </Target>
+</Project>

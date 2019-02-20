@@ -221,6 +221,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.Findings = response;
+            this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
@@ -257,6 +258,7 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
         this.extras.Findings.splice(deleteIndex, 1);
+        this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
       }
     });
   }

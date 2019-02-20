@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -20,10 +20,10 @@ namespace CSET_Main.Data.AssessmentData
         public const String REQUIREMENTS_BASED_APPLICATION_MODE = "Requirements Based";
         public const String NIST_FRAMEWORK_MODE = "Cybersecurity Framework Based";
         public const String NIST_OLD_MODE_ASSESSMENT = "NIST Framework Mode";//This only for assessments created between 6.0 and 6.1
-        private CSETWebEntities DataContext;
+        private CSET_Context DataContext;
         private STANDARD_SELECTION standard;
 
-        public AssessmentModeData(CSETWebEntities assessmentContextHolder, int assessmentId)
+        public AssessmentModeData(CSET_Context assessmentContextHolder, int assessmentId)
         {
             this.DataContext = assessmentContextHolder;
             this.standard = this.DataContext.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();

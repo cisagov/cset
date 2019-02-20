@@ -5,9 +5,8 @@
 // 
 //////////////////////////////// 
 using Elmah;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -31,28 +30,28 @@ namespace CSETWeb_Api.Helpers
             return request.CreateResponse(HttpStatusCode.BadRequest, exceptionMessage);
         }
 
-        public static HttpResponseMessage LogAndReportDbEntityValidationException(DbEntityValidationException ex, HttpRequestMessage request)
-        {
-            return LogAndReportDbEntityValidationException(ex, request, HttpContext.Current);
-        }
+        //public static HttpResponseMessage LogAndReportDbEntityValidationException(DbEntityValidationException ex, HttpRequestMessage request)
+        //{
+        //    return LogAndReportDbEntityValidationException(ex, request, HttpContext.Current);
+        //}
 
-        public static HttpResponseMessage LogAndReportDbEntityValidationException(DbEntityValidationException ex, HttpRequestMessage request, HttpContext context)
-        {
-            // Retrieve the error messages as a list of strings.
-            var errorMessages = ex.EntityValidationErrors
-                .SelectMany(x => x.ValidationErrors)
-                .Select(x => x.ErrorMessage);
+        //public static HttpResponseMessage LogAndReportDbEntityValidationException(DbEntityValidationException ex, HttpRequestMessage request, HttpContext context)
+        //{
+        //    // Retrieve the error messages as a list of strings.
+        //    var errorMessages = ex.EntityValidationErrors
+        //        .SelectMany(x => x.ValidationErrors)
+        //        .Select(x => x.ErrorMessage);
 
-            // Join the list to a single string.
-            var fullErrorMessage = string.Join("; ", errorMessages);
+        //    // Join the list to a single string.
+        //    var fullErrorMessage = string.Join("; ", errorMessages);
 
-            // Combine the original exception message with the new one.
-            var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+        //    // Combine the original exception message with the new one.
+        //    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
-            WriteToMemory(ex, context);
-            WriteToMemory(new Exception(exceptionMessage), context);
-            return request.CreateResponse(HttpStatusCode.InternalServerError);
-        }
+        //    WriteToMemory(ex, context);
+        //    WriteToMemory(new Exception(exceptionMessage), context);
+        //    return request.CreateResponse(HttpStatusCode.InternalServerError);
+        //}
         public static HttpResponseMessage LogAndReportException(Exception e, HttpRequestMessage request, HttpContext context)
         {
             WriteToMemory(e, context);

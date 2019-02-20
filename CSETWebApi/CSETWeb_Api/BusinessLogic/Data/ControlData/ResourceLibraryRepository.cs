@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using BusinessLogic.Helpers;
 
@@ -25,11 +25,11 @@ namespace CSET_Main.Data.ControlData
         public Dictionary<int, ResourceNode> ResourceModelDictionary{get; private set;}
 
         private CSET_Main.Common.ICSETGlobalProperties globalProperties;
-        private CSETWebEntities controlContextHolder;
+        private CSET_Context controlContextHolder;
         private string pdfDirectory;
         private string xpsDirectory;
 
-        public ResourceLibraryRepository(CSETWebEntities controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
+        public ResourceLibraryRepository(CSET_Context controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
         {           
             this.controlContextHolder = controlContextHolder;
             this.globalProperties = globalProperties;
@@ -119,7 +119,7 @@ namespace CSET_Main.Data.ControlData
                         }
                         else
                         {
-                            Debug.Assert(false, "Invalid document type: " + doc.FILE_TYPE.File_Type1);
+                            Debug.Assert(false, "Invalid document type: " + doc.File_Type_.File_Type1);
                         }
                     }
                     foreach (ResourceNode rn in listItems.OrderBy(x => x.TreeTextNode)) {

@@ -8,7 +8,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
 using System;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Linq;
 using System.Collections.Generic;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
@@ -16,6 +16,9 @@ using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
 using BusinessLogic.Helpers;
 using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 {
@@ -35,14 +38,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             TinyMapper.Bind<INFORMATION, INFORMATION>(config =>
             {
                 config.Ignore(x => x.Id);
-                config.Ignore(x => x.DOCUMENT_FILE);
-                config.Ignore(x => x.ASSESSMENT);
+                config.Ignore(x => x.IdNavigation);                
             });
         }
 
         public Tuple<int, Dictionary<int, DOCUMENT_FILE>> RunImport(UploadAssessmentModel model,
             int currentUserId, string primaryEmail
-            , CSETWebEntities db)
+            , CSET_Context db)
         {
             //create the new assessment
             //copy each of the items to the table 
@@ -94,7 +96,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     {
                         var item = TinyMapper.Map<ADDRESS>(b);
                         item.AddressType = "Imported";
-                        db.ADDRESSes.Add(item);
+                        db.ADDRESS.Add(item);
                     }
                     db.SaveChanges();
                 }
@@ -112,13 +114,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 InternalStore = model.jANSWER,
                 TableName = "ANSWER",
                 CommitBatchSize = 1000,
-                ConnectionString = db.Database.Connection.ConnectionString
+                ConnectionString = ((Microsoft.EntityFrameworkCore.DbContext)db).Database.GetDbConnection().ConnectionString
             };
             objBulk.Commit();
 
 
-            oldAnswerId = db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.Old_Answer_Id ?? 0, y => y.Answer_Id);
-            oldIdNewAnswer = db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.Old_Answer_Id ?? 0, y => y);
+            oldAnswerId = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.Old_Answer_Id ?? 0, y => y.Answer_Id);
+            oldIdNewAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.Old_Answer_Id ?? 0, y => y);
 
 
             if (model.jSTANDARD_SELECTION.Count > 0)
@@ -171,7 +173,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
             foreach (var a in model.jDEMOGRAPHICS)
             {
-                var item = TinyMapper.Map<DEMOGRAPHIC>(a);
+                var item = TinyMapper.Map<DEMOGRAPHICS>(a);
                 item.Assessment_Id = _assessmentId;
                 if ((a.IndustryId == 0) || (a.SectorId == 0))
                 {
@@ -196,7 +198,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             foreach (var a in model.jDOCUMENT_ANSWERS)
             {
                 var item = oldIdToNewDocument[a.Document_Id];
-                item.ANSWERs.Add(oldIdNewAnswer[a.Answer_Id]);
+                db.DOCUMENT_ANSWERS.Add(new DOCUMENT_ANSWERS() { Answer_Id = oldIdNewAnswer[a.Answer_Id].Answer_Id, Document_Id = item.Document_Id });                
             }
             Dictionary<int, FINDING> idToFinding = new Dictionary<int, FINDING>();
             foreach (var a in model.jFINDING)
@@ -205,7 +207,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 item.Importance_Id = item.Importance_Id == 0 ? 1 : item.Importance_Id;
                 item.Answer_Id = oldAnswerId[a.Answer_Id];
                 idToFinding.Add(a.Finding_Id, item);
-                db.FINDINGs.Add(item);
+                db.FINDING.Add(item);
             }
             var AcontactID = db.ASSESSMENT_CONTACTS.Where(x => x.UserId == currentUserId).FirstOrDefault();
             if (AcontactID != null)//if we dont have a current user we are in trouble

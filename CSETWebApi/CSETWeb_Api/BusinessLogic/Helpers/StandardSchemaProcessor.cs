@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using NJsonSchema;
 using NJsonSchema.Generation;
 using NJsonSchema.Generation.TypeMappers;
@@ -26,7 +26,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             if(context.Type == typeof(ExternalStandard))
             {
                 var schema = context.Schema.Properties.Where(s => s.Key ==PropertyHelpers.GetPropertyName(()=>new ExternalStandard().Category)).FirstOrDefault().Value;
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
                     var categories = db.SETS_CATEGORY.Select(s => s.Set_Category_Name).Distinct().OrderBy(s => s).ToList();
                     categories.ForEach(s => schema.Enumeration.Add(s));

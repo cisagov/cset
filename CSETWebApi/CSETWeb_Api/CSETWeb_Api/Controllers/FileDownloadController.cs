@@ -9,7 +9,8 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Export;
 using CSETWeb_Api.Helpers;
 using DataAccess;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Http;
-using System.Data.Entity;
-using System.Text;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -45,7 +45,7 @@ namespace CSETWeb_Api.Controllers
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
                 {
@@ -67,7 +67,7 @@ namespace CSETWeb_Api.Controllers
             int _assessmentId = Auth.AssessmentForUser(token);            
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             string filename = ".csetw";
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 string assessmentName = context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault().Assessment_Name; 
                 if(assessmentName!=null)

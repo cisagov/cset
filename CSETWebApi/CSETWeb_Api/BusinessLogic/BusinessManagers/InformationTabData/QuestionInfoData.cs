@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.Data;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace CSET_Main.Questions.InformationTabData
 {
     public class QuestionInfoData:BaseQuestionInfoData
     {       
-        public Dictionary<String, SET> Sets { get; set; }
+        public Dictionary<String, SETS> Sets { get; set; }
     }
 }
 

@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -46,7 +46,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             //            genFile.File_Name = Path.GetFileName(uri.LocalPath);
             //        }
             //    }
-            //    using(var db=new CSETWebEntities())
+            //    using(var db=new CSET_Context())
             //    {
             //        genFile.File_Size = docFile.Content.Headers.ContentLength;
             //        var extension = Path.GetExtension(genFile.File_Name);
@@ -61,10 +61,13 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             //}
 
         }
+
+        
+
         public GEN_FILE LookupGenFile(string p)
         {
             GEN_FILE gf;
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             { 
                gf  = (from h in db.GEN_FILE
                       where h.File_Name == p
@@ -74,17 +77,21 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             }
             return gf;
         }
-        public async Task<GEN_FILE> LookupGenFileAsync(string p)
-        {
-            GEN_FILE gf;
-            using (var db = new CSETWebEntities())
-            {
-                gf=   await db.GEN_FILE.Where(h => h.File_Name == p)
-                                                           .OrderByDescending(h => h.Gen_File_Id)
-                                                           .FirstOrDefaultAsync();
 
+        internal int LookupGenFileId(string fileName)
+        {            
+            using (var db = new CSET_Context())
+
+            {
+                GEN_FILE gf = (from h in db.GEN_FILE
+                      where h.File_Name == fileName
+                      orderby h.Gen_File_Id descending
+                      select h).FirstOrDefault();
+                if (gf == null)
+                    return 0;
+                return gf.Gen_File_Id;
             }
-            return gf;
+            
         }
     }
 }

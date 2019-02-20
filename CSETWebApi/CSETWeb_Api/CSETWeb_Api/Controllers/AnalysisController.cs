@@ -4,20 +4,18 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
+using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using CSETWeb_Api.Common;
-using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.BusinessManagers.Analysis;
-using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -36,13 +34,13 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public List<DataLayer.usp_GetRankedQuestions_Result> GetRankedQuestions()
+        public List<usp_GetRankedQuestions_Result> GetRankedQuestions()
         {
             int assessmentId = Auth.AssessmentForUser();
 
             RequirementsManager rm = new RequirementsManager(assessmentId);
 
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 var rankedQuestionList = context.usp_GetRankedQuestions(assessmentId).ToList();
 
@@ -63,20 +61,20 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
 
             FirstPage rval = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+
+            using (CSET_Context context = new CSET_Context())
             {
+                var results = new FirstPageMultiResult();
+                context.LoadStoredProc("[dbo].[usp_GetFirstPage]")
+                  .WithSqlParam("assessment_id", assessmentId)
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      results.Result1 =  handler.ReadToList<GetCombinedOveralls>().ToList();
+                      handler.NextResult();
+                      results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
+                   });
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_GetFirstPage]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<GetCombinedOveralls>()
-                    .With<usp_getRankedCategories>()
-                    .Execute();
+              
 
                 if (results.Count >= 2)
                 {
@@ -84,7 +82,7 @@ namespace CSETWeb_Api.Controllers
                     List<String> labels = new List<String>();
                     ChartData stand = null;
                     ChartData comp = null;
-                    foreach (GetCombinedOveralls c in results[0])
+                    foreach (GetCombinedOveralls c in results.Result1)
                     {
                         // Questions or Requirements are included only if we are in that 'mode'
                         // Do not include 'Framework' entry.
@@ -123,7 +121,7 @@ namespace CSETWeb_Api.Controllers
                     ChartData red = new ChartData();
 
                     int rcount = 0;
-                    foreach (usp_getRankedCategories c in results[1])
+                    foreach (usp_getRankedCategories c in results.Result2)
                     {
                         if (rcount < 5)
                         {
@@ -159,19 +157,19 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_GetRankedCategoriesPage]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
+                var results = new RankedCategoriesMultiResult();
+                context.LoadStoredProc("[dbo].[usp_GetRankedCategoriesPage]")
+              .WithSqlParam("assessment_id", assessmentId)
+              .ExecuteStoredProc((handler) =>
+              {
+                  results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
+                  
+              });
 
-                var results = context.MultipleResults(command)
-                    .With<usp_getRankedCategories>()
-                    .Execute();
+                
 
                 if (results.Count >= 1)
                 {
@@ -185,7 +183,7 @@ namespace CSETWeb_Api.Controllers
                     };
 
                     red = new ChartData();
-                    foreach (usp_getRankedCategories c in results[0])
+                    foreach (usp_getRankedCategories c in results.Result1)
                     {
                         red.data.Add((double)c.prc);
                         red.Labels.Add(c.Question_Group_Heading);
@@ -226,19 +224,17 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
+                var results = new RankedCategoriesMultiResult();
+                context.LoadStoredProc("[dbo].[usp_GetOverallRankedCategoriesPage]")
+              .WithSqlParam("assessment_id", assessmentId)
+              .ExecuteStoredProc((handler) =>
+              {
+                  results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_GetOverallRankedCategoriesPage]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getRankedCategories>()
-                    .Execute();
+              });
+             
 
                 if (results.Count >= 1)
                 {
@@ -254,7 +250,7 @@ namespace CSETWeb_Api.Controllers
                     red = new ChartData();
                     red.DataRows = new List<DataRows>();
                     int i = 1;
-                    foreach (usp_getRankedCategories c in results[0])
+                    foreach (usp_getRankedCategories c in results.Result1)
                     {
                         red.data.Add((double)(c.prc ?? 0));
                         red.Labels.Add(c.Question_Group_Heading);
@@ -280,7 +276,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetStandardSummaryOverall()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 return GetStandardsSummaryMultiple(context, assessmentId);
             }
@@ -295,7 +291,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetStandardsSummary()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {   
                 if (context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Count() > 1)
                 {
@@ -306,21 +302,19 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        private ChartData getStandardsSummarySingle(CSETWebEntities context, int assessmentId)
+        private ChartData getStandardsSummarySingle(CSET_Context context, int assessmentId)
         {
             ChartData summary = null;
 
-            var command = new SqlCommand()
-            {
-                CommandText = "[dbo].[usp_getStandardSummaryOverall]",
-                CommandType = CommandType.StoredProcedure
-            };
-            command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
+            var results = new StandardSummaryOverallMultiResult();
+            context.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+          .WithSqlParam("assessment_id", assessmentId)
+          .ExecuteStoredProc((handler) =>
+          {
+              results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
-            var results = context.MultipleResults(command)
-                .With<DataRowsPie>()
-                .Execute();
-
+          });
+         
             if (results.Count >= 1)
             {
                 List<double> data = new List<double>();
@@ -330,7 +324,7 @@ namespace CSETWeb_Api.Controllers
                 summary = new ChartData();
                 Labels = new List<string>();
                 Dictionary<string, ChartData> charts = new Dictionary<string, ChartData>();
-                foreach (DataRowsPie c in results[0])
+                foreach (DataRowsPie c in results.Result1)
                 {
                     ChartData next;
                     if (!charts.TryGetValue(c.Answer_Full_Name, out next))
@@ -375,26 +369,26 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        private ChartData GetStandardsSummaryMultiple(CSETWebEntities context, int assessmentId)
+        private ChartData GetStandardsSummaryMultiple(CSET_Context context, int assessmentId)
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
             myChartData.Colors = new List<string>();
 
-            var command = new SqlCommand()
-            {
-                CommandText = "[dbo].[usp_getStandardsSummaryPage]",
-                CommandType = CommandType.StoredProcedure
-            };
-            command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
 
-            var results = context.MultipleResults(command)
-                .With<DataRowsPie>()
-                .Execute();
+            var results = new StandardSummaryOverallMultiResult();
+            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
+          .WithSqlParam("assessment_id", assessmentId)
+          .ExecuteStoredProc((handler) =>
+          {
+              results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
+          });
+
+          
             if (results.Count >= 1)
             {
-                List<DataRowsPie> answerRow = (List<DataRowsPie>)results[0];
+                List<DataRowsPie> answerRow = (List<DataRowsPie>)results.Result1;
 
                 // Build the results in a defined answer order
                 AddAnswerToStandardsSummary(answerRow, "Y", myChartData);
@@ -435,29 +429,20 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
-            {
-
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getComponentsSummary]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getComponentsSummmary>()
-                    .Execute();
-
-                if (results.Count >= 1)
-                {
-                    red = new ChartData();
-                    foreach (usp_getComponentsSummmary c in results[0])
-                    {
-                        red.data.Add((double)c.value);
-                        red.Labels.Add(c.Answer_Full_Name);
-                    }
-                }
+            using (CSET_Context context = new CSET_Context())
+            {   
+                context.LoadStoredProc("[dbo].[usp_getComponentsSummary]")
+                         .WithSqlParam("assessment_Id", assessmentId)
+                         .ExecuteStoredProc((handler) =>
+                         {
+                             var fooResults = handler.ReadToList<usp_getComponentsSummmary>();
+                             red = new ChartData();
+                             foreach (usp_getComponentsSummmary c in fooResults)
+                             {
+                                 red.data.Add((double)c.value);
+                                 red.Labels.Add(c.Answer_Full_Name);
+                             }
+                         });
             }
 
             return red;
@@ -469,71 +454,63 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = new ChartData();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
-
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getStandardsResultsByCategory]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getStandardsResultsByCategory>()
-                    .Execute();
-
-                if (results.Count >= 1)
-                {
-                    var labels = (from usp_getStandardsResultsByCategory an in results[0]
-                                  orderby an.Question_Group_Heading
-                                  select an.Question_Group_Heading).Distinct().ToList();
-
-                    red.DataRows = new List<DataRows>();
-                    foreach (string c in labels)
-                    {
-                        //    red.data.Add((double) c.prc);
-                        red.Labels.Add(c);
-                        //    red.DataRows.Add(new DataRows()
-                        //    {
-                        //        failed =c.yaCount,
-                        //        percent = c.prc,
-                        //        total = c.Actualcr,
-                        //        title = c.Question_Group_Heading                            
-                        //   });
-
-                    }
-
-                    ColorsList colors = new ColorsList();
-
-                    var sets = (from usp_getStandardsResultsByCategory an in results[0]
-                                select new { an.Set_Name, an.Short_Name }).Distinct();
-                    foreach (var set in sets)
-                    {
-
-                        ChartData nextChartData = new ChartData();
-                        red.multipleDataSets.Add(nextChartData);
-                        nextChartData.DataRows = new List<DataRows>();
-                        var nextSet = (from usp_getStandardsResultsByCategory an in results[0]
-                                       where an.Set_Name == set.Set_Name
-                                       orderby an.Question_Group_Heading
-                                       select an).ToList();
-                        nextChartData.label = set.Short_Name;
-                        nextChartData.backgroundColor = colors.getNext(set.Set_Name);
-                        foreach (usp_getStandardsResultsByCategory c in nextSet)
+                context.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
+                        .WithSqlParam("assessment_Id", assessmentId)
+                        .ExecuteStoredProc((handler) =>
                         {
-                            nextChartData.data.Add((double)c.prc);
-                            nextChartData.Labels.Add(c.Question_Group_Heading);
-                            nextChartData.DataRows.Add(new DataRows()
+                            var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
+                            var labels = (from usp_getStandardsResultsByCategory an in result
+                                          orderby an.Question_Group_Heading
+                                          select an.Question_Group_Heading).Distinct().ToList();
+
+                            red.DataRows = new List<DataRows>();
+                            foreach (string c in labels)
                             {
-                                failed = c.yaCount,
-                                percent = c.prc,
-                                total = c.Actualcr,
-                                title = c.Question_Group_Heading
-                            });
-                        }
-                    }
-                }
+                                //    red.data.Add((double) c.prc);
+                                red.Labels.Add(c);
+                                //    red.DataRows.Add(new DataRows()
+                                //    {
+                                //        failed =c.yaCount,
+                                //        percent = c.prc,
+                                //        total = c.Actualcr,
+                                //        title = c.Question_Group_Heading                            
+                                //   });
+
+                            }
+
+                            ColorsList colors = new ColorsList();
+
+                            var sets = (from usp_getStandardsResultsByCategory an in result
+                                        select new { an.Set_Name, an.Short_Name }).Distinct();
+                            foreach (var set in sets)
+                            {
+
+                                ChartData nextChartData = new ChartData();
+                                red.multipleDataSets.Add(nextChartData);
+                                nextChartData.DataRows = new List<DataRows>();
+                                var nextSet = (from usp_getStandardsResultsByCategory an in result
+                                               where an.Set_Name == set.Set_Name
+                                               orderby an.Question_Group_Heading
+                                               select an).ToList();
+                                nextChartData.label = set.Short_Name;
+                                nextChartData.backgroundColor = colors.getNext(set.Set_Name);
+                                foreach (usp_getStandardsResultsByCategory c in nextSet)
+                                {
+                                    nextChartData.data.Add((double)c.prc);
+                                    nextChartData.Labels.Add(c.Question_Group_Heading);
+                                    nextChartData.DataRows.Add(new DataRows()
+                                    {
+                                        failed = c.yaCount,
+                                        percent = c.prc,
+                                        total = c.Actualcr,
+                                        title = c.Question_Group_Heading
+                                    });
+                                }
+                            }
+
+                        });
             }
 
             return red;
@@ -545,42 +522,34 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
+                context.LoadStoredProc("[dbo].[usp_getStandardsRankedCategories]")
+                      .WithSqlParam("assessment_Id", assessmentId)
+                      .ExecuteStoredProc((handler) =>
+                      {
+                          var result = handler.ReadToList<usp_getStandardsRankedCategories>();
+                          List<double> data = new List<double>();
+                          List<DataRows> rows = new List<DataRows>();
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getStandardsRankedCategories]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
+                          red = new ChartData();
+                          red.DataRows = new List<DataRows>();
+                          foreach (usp_getStandardsRankedCategories c in result)
+                          {
+                              red.data.Add((double)(c.prc ?? 0));
+                              red.Labels.Add(c.Question_Group_Heading);
+                              red.DataRows.Add(new DataRows()
+                              {
+                                  failed = c.nuCount ?? 0,
+                                  title = c.Question_Group_Heading,
+                                  percent = c.Percent ?? 0,
+                                  total = c.qc ?? 0,
+                                  rank = c.prc ?? 0
 
-                var results = context.MultipleResults(command)
-                    .With<usp_getStandardsRankedCategories>()
-                    .Execute();
+                              });
+                          }
+                      });
 
-                if (results.Count >= 1)
-                {
-                    List<double> data = new List<double>();
-                    List<DataRows> rows = new List<DataRows>();
-
-                    red = new ChartData();
-                    red.DataRows = new List<DataRows>();
-                    foreach (usp_getStandardsRankedCategories c in results[0])
-                    {
-                        red.data.Add((double)(c.prc ?? 0));
-                        red.Labels.Add(c.Question_Group_Heading);
-                        red.DataRows.Add(new DataRows()
-                        {
-                            failed = c.nuCount ?? 0,
-                            title = c.Question_Group_Heading,
-                            percent = c.Percent ?? 0,
-                            total = c.qc ?? 0,
-                            rank = c.prc ?? 0
-
-                        });
-                    }
-                }
             }
 
             return red;
@@ -592,30 +561,21 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
+                context.LoadStoredProc("[dbo].[usp_getComponentsResultsByCategory]")
+                      .WithSqlParam("assessment_Id", assessmentId)
+                      .ExecuteStoredProc((handler) =>
+                      {
+                          var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
+                          red = new ChartData();
+                          foreach (usp_getComponentsResultsByCategory c in result)
+                          {
+                              red.data.Add((double)c.prc);
+                              red.Labels.Add(c.Question_Group_Heading);
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getComponentsResultsByCategory]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getComponentsResultsByCategory>()
-                    .Execute();
-
-                if (results.Count >= 1)
-                {
-                    red = new ChartData();
-                    foreach (usp_getComponentsResultsByCategory c in results[0])
-                    {
-                        red.data.Add((double)c.prc);
-                        red.Labels.Add(c.Question_Group_Heading);
-
-                    }
-                }
+                          }
+                      });
             }
 
             return red;
@@ -626,30 +586,21 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
-
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getComponentsRankedCategories]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getComponentsRankedCategories>()
-                    .Execute();
-
-                if (results.Count >= 1)
-                {
-                    red = new ChartData();
-                    foreach (usp_getComponentsRankedCategories c in results[0])
+                context.LoadStoredProc("[dbo].[usp_getComponentsRankedCategories]")
+                    .WithSqlParam("assessment_Id", assessmentId)
+                    .ExecuteStoredProc((handler) =>
                     {
-                        red.data.Add((double)c.prc);
-                        red.Labels.Add(c.Question_Group_Heading);
+                        var result = handler.ReadToList<usp_getComponentsRankedCategories>();
+                        red = new ChartData();
+                        foreach (usp_getComponentsRankedCategories c in result)
+                        {
+                            red.data.Add((double)c.prc);
+                            red.Labels.Add(c.Question_Group_Heading);
 
-                    }
-                }
+                        }
+                    });
             }
 
             return red;
@@ -660,30 +611,21 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             ChartData red = null;
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
+                context.LoadStoredProc("[dbo].[usp_getComponentTypes]")
+                   .WithSqlParam("assessment_Id", assessmentId)
+                   .ExecuteStoredProc((handler) =>
+                   {
+                       var result = handler.ReadToList<usp_getComponentTypes>();
+                       red = new ChartData();
+                       foreach (usp_getComponentTypes c in result)
+                       {
+                           red.data.Add((double)c.Value);
+                           red.Labels.Add(c.component_type);
 
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getComponentTypes]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getComponentTypes>()
-                    .Execute();
-
-                if (results.Count >= 1)
-                {
-                    red = new ChartData();
-                    foreach (usp_getComponentTypes c in results[0])
-                    {
-                        red.data.Add((double)c.Value);
-                        red.Labels.Add(c.component_type);
-
-                    }
-                }
+                       }
+                   });            
             }
 
             return red;
@@ -695,25 +637,20 @@ namespace CSETWeb_Api.Controllers
         public List<usp_getNetworkWarnings> GetNetworkWarnings()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
-
-                var command = new SqlCommand()
-                {
-                    CommandText = "[dbo].[usp_getNetworkWarnings]",
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.Add(new SqlParameter("@assessment_Id", assessmentId));
-
-                var results = context.MultipleResults(command)
-                    .With<usp_getNetworkWarnings>()
-                    .Execute();
                 List<usp_getNetworkWarnings> wlist = new List<usp_getNetworkWarnings>();
-                foreach (usp_getNetworkWarnings w in results[0])
+                context.LoadStoredProc("[dbo].[usp_getNetworkWarnings]")
+                .WithSqlParam("assessment_Id", assessmentId)
+                .ExecuteStoredProc((handler) =>
                 {
-                    wlist.Add(w);
-                }
-
+                    var result = handler.ReadToList<usp_getNetworkWarnings>();
+                    
+                    foreach (usp_getNetworkWarnings w in result)
+                    {
+                        wlist.Add(w);
+                    }
+                });
                 return wlist;
             }
         }
@@ -721,7 +658,7 @@ namespace CSETWeb_Api.Controllers
 
         private string GetAssessmentMode(int assessmentId)
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            using (CSET_Context db = new CSET_Context())
             {
                 string applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();

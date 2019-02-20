@@ -1553,6 +1553,14 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   cursor: pointer;
 }
 
+ul.related-questions {
+  padding-inline-start: 20px;
+}
+
+ul.related-questions li {
+  margin-bottom: .5em;
+}
+
 // .pencil {
 //   background-color: transparent;
 //   fill: $primary-color;

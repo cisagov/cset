@@ -9,10 +9,10 @@ using CSETWeb_Api.BusinessLogic;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace CSETWeb_Api.Helpers
 {
     public class UserAccountSecurityManager
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CSET_Context db = new CSET_Context();
 
         /// <summary>
         /// Creates a new user and sends them an email containing a temporary password.

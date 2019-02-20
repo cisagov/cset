@@ -11,7 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using DataLayer;
+using DataLayerCore.Model;
 using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.Controllers
@@ -23,7 +23,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/EnableProtectedFeature/Features/")]
         public List<EnabledModule> getFeatures()
         {   
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 return (from a in context.SETS.Where(x => x.IsEncryptedModule == true && x.IsEncryptedModuleOpen == true)
                             select new EnabledModule() { Short_Name =  a.Short_Name, Full_Name= a.Full_Name }).ToList();
@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Controllers
         {
             try
             {
-                using (CSETWebEntities context = new CSETWebEntities())
+                using (CSET_Context context = new CSET_Context())
                 {
 
                     ColumnSetEncryption columnencryptor = new ColumnSetEncryption(unlock, "451f0b54b51f");
@@ -85,10 +85,10 @@ namespace CSETWeb_Api.Controllers
         
         }
 
-        private void AddNewlyEnabledModule(CSETWebEntities context)
+        private void AddNewlyEnabledModule(CSET_Context context)
         {
             var sets2 = context.SETS.Where(x => x.Set_Name == "FAA");
-            foreach (SET sts in sets2)
+            foreach (SETS sts in sets2)
             {
                 sts.IsEncryptedModuleOpen = true;                
             }

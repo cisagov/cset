@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -249,7 +249,7 @@ namespace CSET_Main.Common
                  * performance on this pair of requests is really bad.
                  * putting this into a dictionary to reduce the footprint.
                  */
-                using (CSETWebEntities data = new CSETWebEntities())
+                using (CSET_Context data = new CSET_Context())
                 {
 
                     IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
@@ -339,7 +339,7 @@ namespace CSET_Main.Common
                 }
                 else
                 {
-                    using (CSETWebEntities data = new CSETWebEntities())
+                    using (CSET_Context data = new CSET_Context())
                     {
                         IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
                         if (query.ToList().Count > 0)
