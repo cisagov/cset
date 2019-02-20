@@ -138,7 +138,8 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="id">The document ID</param>
         public List<int> GetQuestionsForDocument(int id)
         {
-            var ans = db.DOCUMENT_FILE.Include("ANSWERS").Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs().ToList();
+            var ans = db.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS)
+                .Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs().ToList();
 
             List<int> qlist = new List<int>();
 
@@ -168,6 +169,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             // first see if the document already exists on any question in this Assessment, based on the filename and hash
             var doc = db.DOCUMENT_FILE.Where(f => f.FileMd5 == fileHash
+                && f.Name == fileName
                 && f.Assessment_Id == this.assessmentId).FirstOrDefault();
             if (doc == null)
             {

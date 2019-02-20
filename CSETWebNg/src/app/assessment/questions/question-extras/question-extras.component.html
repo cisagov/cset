@@ -133,7 +133,7 @@
                 <tr *ngFor="let doc of extras?.Documents" style="box-sizing: content-box;height:20px;">
                     <td style="height:20px">
                         <div>
-                            <label *ngIf="!doc.isEdit" (click)="startEdit(doc)" from="name">{{doc.Title}}</label>
+                            <label *ngIf="!doc.isEdit" (click)="startEdit(doc)" from="name" class="cursor-pointer">{{doc.Title}}</label>
                             <input *ngIf="doc.isEdit" focusOnInit="true" (keydown.enter)="renameDocument(doc)" (blur)="renameDocument(doc)"
                                 (keydown.esc)="abandonEdit(doc)" type="text" id="document_title" style="width: 100%;"
                                 [(ngModel)]="doc.Title">
