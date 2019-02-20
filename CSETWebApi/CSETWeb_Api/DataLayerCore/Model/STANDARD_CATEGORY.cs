@@ -9,6 +9,7 @@ namespace DataLayerCore.Model
     {
         public STANDARD_CATEGORY()
         {
+            DomainStandardCategory = new HashSet<DomainStandardCategory>();
             NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
             STANDARD_CATEGORY_SEQUENCE = new HashSet<STANDARD_CATEGORY_SEQUENCE>();
         }
@@ -18,6 +19,8 @@ namespace DataLayerCore.Model
         [StringLength(250)]
         public string Standard_Category1 { get; set; }
 
+        [InverseProperty("Standard_CategoryNavigation")]
+        public virtual ICollection<DomainStandardCategory> DomainStandardCategory { get; set; }
         [InverseProperty("Standard_CategoryNavigation")]
         public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
         [InverseProperty("Standard_CategoryNavigation")]

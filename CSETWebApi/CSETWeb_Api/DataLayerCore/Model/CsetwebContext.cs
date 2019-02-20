@@ -19,12 +19,15 @@ namespace DataLayerCore.Model
         public virtual DbSet<ANSWER> ANSWER { get; set; }
         public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
         public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
+        public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
+        public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
         public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
         public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         public virtual DbSet<AggregatedCounter> AggregatedCounter { get; set; }
+        public virtual DbSet<Assessment_IRP> Assessment_IRP { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
@@ -49,6 +52,8 @@ namespace DataLayerCore.Model
         public virtual DbSet<DIAGRAM_TYPES_XML> DIAGRAM_TYPES_XML { get; set; }
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
+        public virtual DbSet<Domain> Domain { get; set; }
+        public virtual DbSet<DomainStandardCategory> DomainStandardCategory { get; set; }
         public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
         public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
@@ -68,6 +73,8 @@ namespace DataLayerCore.Model
         public virtual DbSet<Hash> Hash { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
+        public virtual DbSet<IRP> IRP { get; set; }
+        public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<JWT> JWT { get; set; }
         public virtual DbSet<Job> Job { get; set; }
         public virtual DbSet<JobParameter> JobParameter { get; set; }
@@ -107,6 +114,8 @@ namespace DataLayerCore.Model
         public virtual DbSet<REPORT_OPTIONS> REPORT_OPTIONS { get; set; }
         public virtual DbSet<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; }
         public virtual DbSet<REPORT_STANDARDS_SELECTION> REPORT_STANDARDS_SELECTION { get; set; }
+        public virtual DbSet<REQUIRED_DOCUMENTATION> REQUIRED_DOCUMENTATION { get; set; }
+        public virtual DbSet<REQUIRED_DOCUMENTATION_HEADERS> REQUIRED_DOCUMENTATION_HEADERS { get; set; }
         public virtual DbSet<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
         public virtual DbSet<REQUIREMENT_LEVEL_TYPE> REQUIREMENT_LEVEL_TYPE { get; set; }
         public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
@@ -243,11 +252,36 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
 
+                entity.Property(e => e.Assets).IsUnicode(false);
+
+                entity.Property(e => e.Charter).IsUnicode(false);
+
+                entity.Property(e => e.CreditUnionName).IsUnicode(false);
+
                 entity.HasOne(d => d.AssessmentCreator)
                     .WithMany(p => p.ASSESSMENTS)
                     .HasForeignKey(d => d.AssessmentCreatorId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ASSESSMENTS_USERS");
+            });
+
+            modelBuilder.Entity<ASSESSMENTS_REQUIRED_DOCUMENTATION>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Documentation_Id });
+
+                entity.Property(e => e.Answer)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('N')");
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_ASSESSMENTS");
+
+                entity.HasOne(d => d.Documentation_)
+                    .WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION)
+                    .HasForeignKey(d => d.Documentation_Id)
+                    .HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_REQUIRED_DOCUMENTATION");
             });
 
             modelBuilder.Entity<ASSESSMENT_CONTACTS>(entity =>
@@ -281,6 +315,26 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Diagram_Component_Type });
 
                 entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
+            {
+                entity.HasKey(e => e.HEADER_RISK_LEVEL_ID)
+                    .HasName("PK__ASSESSME__5A008FB576A7ABB8");
+
+                entity.Property(e => e.HEADER_RISK_LEVEL_ID).ValueGeneratedNever();
+
+                entity.HasOne(d => d.ASSESSMENT_)
+                    .WithMany(p => p.ASSESSMENT_IRP_HEADER)
+                    .HasForeignKey(d => d.ASSESSMENT_ID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
+
+                entity.HasOne(d => d.IRP_HEADER_)
+                    .WithMany(p => p.ASSESSMENT_IRP_HEADER)
+                    .HasForeignKey(d => d.IRP_HEADER_ID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
             });
 
             modelBuilder.Entity<ASSESSMENT_ROLES>(entity =>
@@ -332,6 +386,26 @@ namespace DataLayerCore.Model
                 entity.HasIndex(e => new { e.Value, e.Key })
                     .HasName("UX_HangFire_CounterAggregated_Key")
                     .IsUnique();
+            });
+
+            modelBuilder.Entity<Assessment_IRP>(entity =>
+            {
+                entity.HasKey(e => e.Answer_Id)
+                    .HasName("PK__Assessme__36918F380D1C2E80");
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.Assessment_IRP)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
+
+                entity.HasOne(d => d.IRP_)
+                    .WithMany(p => p.Assessment_IRP)
+                    .HasForeignKey(d => d.IRP_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
@@ -705,6 +779,32 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_DOCUMENT_FILE_DEMOGRAPHICS");
             });
 
+            modelBuilder.Entity<Domain>(entity =>
+            {
+                entity.HasKey(e => e.DomainName)
+                    .HasName("PK__Domain__64C17FF122A2788A");
+
+                entity.Property(e => e.DomainName)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<DomainStandardCategory>(entity =>
+            {
+                entity.HasKey(e => e.DominId)
+                    .HasName("PK__DomainSt__3434BB980CC533F3");
+
+                entity.Property(e => e.DomainName).IsUnicode(false);
+
+                entity.Property(e => e.Standard_Category).IsUnicode(false);
+
+                entity.HasOne(d => d.Standard_CategoryNavigation)
+                    .WithMany(p => p.DomainStandardCategory)
+                    .HasForeignKey(d => d.Standard_Category)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_domain_standardCategory");
+            });
+
             modelBuilder.Entity<FILE_KEYWORDS>(entity =>
             {
                 entity.HasKey(e => new { e.Gen_File_Id, e.Keyword })
@@ -1001,6 +1101,38 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_INFORMATION_DOCUMENT_FILE1");
             });
 
+            modelBuilder.Entity<IRP>(entity =>
+            {
+                entity.Property(e => e.IRP_ID).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.Risk_1_Description).IsUnicode(false);
+
+                entity.Property(e => e.Risk_2_Description).IsUnicode(false);
+
+                entity.Property(e => e.Risk_3_Description).IsUnicode(false);
+
+                entity.Property(e => e.Risk_4_Description).IsUnicode(false);
+
+                entity.Property(e => e.Risk_5_Description).IsUnicode(false);
+
+                entity.Property(e => e.Validation_Approach).IsUnicode(false);
+
+                entity.HasOne(d => d.Header_)
+                    .WithMany(p => p.IRP)
+                    .HasForeignKey(d => d.Header_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_IRP_IRP_HEADER");
+            });
+
+            modelBuilder.Entity<IRP_HEADER>(entity =>
+            {
+                entity.Property(e => e.IRP_Header_Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Header).IsUnicode(false);
+            });
+
             modelBuilder.Entity<JWT>(entity =>
             {
                 entity.Property(e => e.Secret)
@@ -1201,6 +1333,8 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<NEW_REQUIREMENT>(entity =>
             {
+                entity.Property(e => e.ExaminationApproach).IsUnicode(false);
+
                 entity.Property(e => e.Implementation_Recommendations).IsUnicode(false);
 
                 entity.Property(e => e.Original_Set_Name).IsUnicode(false);
@@ -1613,6 +1747,27 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.REPORT_STANDARDS_SELECTION)
                     .HasForeignKey(d => d.Report_Set_Entity_Name)
                     .HasConstraintName("FK_REPORT_STANDARDS_SELECTION_SETS");
+            });
+
+            modelBuilder.Entity<REQUIRED_DOCUMENTATION>(entity =>
+            {
+                entity.Property(e => e.Document_Description).IsUnicode(false);
+
+                entity.Property(e => e.Number).IsUnicode(false);
+
+                entity.HasOne(d => d.RDH_)
+                    .WithMany(p => p.REQUIRED_DOCUMENTATION)
+                    .HasForeignKey(d => d.RDH_Id)
+                    .HasConstraintName("FK_REQUIRED_DOCUMENTATION_REQUIRED_DOCUMENTATION_HEADERS");
+            });
+
+            modelBuilder.Entity<REQUIRED_DOCUMENTATION_HEADERS>(entity =>
+            {
+                entity.HasIndex(e => e.Requirement_Documentation_Header)
+                    .HasName("IX_REQUIRED_DOCUMENTATION_HEADERS")
+                    .IsUnique();
+
+                entity.Property(e => e.Requirement_Documentation_Header).IsUnicode(false);
             });
 
             modelBuilder.Entity<REQUIREMENT_LEVELS>(entity =>

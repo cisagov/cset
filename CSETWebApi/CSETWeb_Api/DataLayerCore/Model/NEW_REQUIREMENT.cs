@@ -44,6 +44,7 @@ namespace DataLayerCore.Model
         public byte[] Supp_Hash { get; set; }
         public int? Ranking { get; set; }
         public int Question_Group_Heading_Id { get; set; }
+        public string ExaminationApproach { get; set; }
 
         [ForeignKey("NCSF_Cat_Id")]
         [InverseProperty("NEW_REQUIREMENT")]
