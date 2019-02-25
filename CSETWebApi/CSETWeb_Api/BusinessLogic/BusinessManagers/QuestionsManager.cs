@@ -4,9 +4,8 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using CSETWeb_Api.Models;
 using CSET_Main.Views.Questions.QuestionDetails;
@@ -14,6 +13,8 @@ using CSET_Main.Data.ControlData;
 using CSET_Main.Questions.InformationTabData;
 using Nelibur.ObjectMapper;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using DataLayerCore;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -43,7 +44,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 IQueryable<QuestionPlusHeaders> query = null;
 
@@ -106,9 +107,9 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && !x.Is_Requirement)
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              from c in db.FINDINGs.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
 
                 // Set the Discovery/Finding indicator 
@@ -290,7 +291,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int NumberOfQuestions()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 if (_setNames.Count == 1)
                 {
@@ -338,7 +339,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             // SUB_CATEGORY_ANSWERS
-            var db = new DataLayer.CSETWebEntities();
+            var db = new CSET_Context();
 
 
             // Get the USCH so that we will know the Heading_Pair_Id
@@ -352,7 +353,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (subCatAnswer == null)
             {
-                subCatAnswer = new DataLayer.SUB_CATEGORY_ANSWERS();
+                subCatAnswer = new SUB_CATEGORY_ANSWERS();
             }
 
             subCatAnswer.Assessement_Id = _assessmentId;

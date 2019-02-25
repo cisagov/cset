@@ -2330,12 +2330,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.PrimaryEmail).IsUnicode(false);
 
                 entity.Property(e => e.Salt).IsUnicode(false);
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.USERS)
-                    .HasForeignKey(d => d.Id)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_USERS_USER_DETAIL_INFORMATION");
             });
 
             modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using DataLayerCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -26,7 +27,7 @@ namespace CSETWeb_Api.BusinessManagers
             this.origSetName = setName;
             this.newSetName = newSetName;
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // clone the SETS record
                 var origSet = db.SETS.Where(x => x.Set_Name == this.origSetName).FirstOrDefault();
@@ -35,7 +36,7 @@ namespace CSETWeb_Api.BusinessManagers
                     return false;
                 }
 
-                var copySet = (SET)db.Entry(origSet).CurrentValues.ToObject();
+                var copySet = (SETS)db.Entry(origSet).CurrentValues.ToObject();
 
                 copySet.Set_Name = this.newSetName;
                 copySet.Full_Name = origSet.Full_Name + " (copy)";
@@ -57,12 +58,16 @@ namespace CSETWeb_Api.BusinessManagers
         /// 
         /// </summary>
         /// <param name="copySet"></param>
-        private void CloneRequirements(SET copySet)
+        private void CloneRequirements(SETS copySet)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Iterate through all of the original requirements
-                var dbReq = db.NEW_REQUIREMENT.Where(x => x.SET.Set_Name == this.origSetName).ToList();
+                var dbReq = db.NEW_REQUIREMENT
+                    .Include(x => x.REQUIREMENT_SETS)
+                    .Include(yz => yz.SETs())
+                    .Where(z => z.SETs().FirstOrDefault().Set_Name == this.origSetName)
+                    .ToList();
                 foreach (NEW_REQUIREMENT origReq in dbReq)
                 {
                     // Clone REQUIREMENT_SETS

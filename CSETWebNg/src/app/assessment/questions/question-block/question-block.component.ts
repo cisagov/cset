@@ -26,7 +26,7 @@ import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../mode
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
-import { AuthenticationService } from '../../../services/authentication.service';
+import { ConfigService } from '../../../services/config.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -51,7 +51,7 @@ export class QuestionBlockComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     private dialog: MatDialog,
-    public authSvc: AuthenticationService
+    public configSvc: ConfigService
   ) { }
 
   ngOnInit() {

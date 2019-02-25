@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
-
-
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -22,12 +20,12 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<SetDetail> GetCustomSetList()
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<SetDetail> list = new List<SetDetail>();
 
                 var s = db.SETS.Where(x => x.Is_Custom).ToList();
-                foreach (SET set in s)
+                foreach (SETS set in s)
                 {
                     SetDetail sr = new SetDetail
                     {
@@ -36,7 +34,7 @@ namespace CSETWeb_Api.BusinessManagers
                         ShortName = set.Short_Name,
                         SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
                         IsCustom = set.Is_Custom,
-                        IsDisplayed = set.Is_Displayed,
+                        IsDisplayed = set.Is_Displayed ?? false,
 
                         Clonable = true,
                         Deletable = true
@@ -56,7 +54,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="setName"></param>
         public SetDetail GetSetDetail(string setName)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var dbSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
 
@@ -78,7 +76,7 @@ namespace CSETWeb_Api.BusinessManagers
                     set.SetCategory = dbSet.Set_Category_Id == null ? 0 : (int)dbSet.Set_Category_Id;
                     set.ShortName = dbSet.Short_Name;
                     set.IsCustom = dbSet.Is_Custom;
-                    set.IsDisplayed = dbSet.Is_Displayed;
+                    set.IsDisplayed = dbSet.Is_Displayed?? false;
                 }
 
 
@@ -119,7 +117,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public void DeleteSet(string setName)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var dbSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
 
@@ -148,7 +146,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public string SaveSetDetail(SetDetail set)
         {
-            CSETWebEntities db = new CSETWebEntities();
+            CSET_Context db = new CSET_Context();
 
             if (string.IsNullOrEmpty(set.FullName))
             {
@@ -162,7 +160,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // Add or update the ASSESSMENT record
-            var dbSet = new DataLayer.SET()
+            var dbSet = new SETS()
             {
                 Set_Name = set.SetName,
                 Full_Name = set.FullName,
@@ -195,7 +193,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public QuestionListResponse GetQuestionsForSet(string setName)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<NEW_QUESTION_SETS> dbQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == setName).ToList();
 
@@ -203,14 +201,14 @@ namespace CSETWeb_Api.BusinessManagers
                 foreach (NEW_QUESTION_SETS nqs in dbQuestions)
                 {
                     QuestionDetail q = new QuestionDetail();
-                    q.QuestionID = nqs.NEW_QUESTION.Question_Id;
-                    q.QuestionText = nqs.NEW_QUESTION.Simple_Question;
-                    PopulateCategorySubcategory(nqs.NEW_QUESTION.Heading_Pair_Id, db,
+                    q.QuestionID = nqs.Question_.Question_Id;
+                    q.QuestionText = nqs.Question_.Simple_Question;
+                    PopulateCategorySubcategory(nqs.Question_.Heading_Pair_Id, db,
                         ref q.QuestionGroupHeading, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
-                    q.Title = GetTitle(nqs.NEW_QUESTION.Question_Id, db);
+                    q.Title = GetTitle(nqs.Question_.Question_Id, db);
 
                     // Look at the question's original set to determine if the question is 'custom' and can be edited
-                    q.IsCustom = db.SETS.Where(x => x.Set_Name == nqs.NEW_QUESTION.Original_Set_Name).FirstOrDefault().Is_Custom;
+                    q.IsCustom = db.SETS.Where(x => x.Set_Name == nqs.Question_.Original_Set_Name).FirstOrDefault().Is_Custom;
 
 
                     // Get the SAL levels for this question-set
@@ -291,7 +289,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="setName"></param>
         public List<int> GetQuestionsOriginatingFromSet(string setName)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var query = db.NEW_QUESTION.Where(x => x.Original_Set_Name == setName).ToList();
                 List<int> qList = new List<int>();
@@ -308,7 +306,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        private void PopulateCategorySubcategory(int headingPairId, CSETWebEntities db, ref string cat,
+        private void PopulateCategorySubcategory(int headingPairId, CSET_Context db, ref string cat,
             ref int pairID, ref string subcat, ref string subheading)
         {
             var query = from h in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
@@ -338,7 +336,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="db"></param>
         /// <returns></returns>
-        private string GetTitle(int questionId, CSETWebEntities db)
+        private string GetTitle(int questionId, CSET_Context db)
         {
             var query = from rqs in db.REQUIREMENT_QUESTIONS_SETS
                         from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rqs.Requirement_Id)
@@ -364,7 +362,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public bool ExistsQuestionText(string questionText)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 return (db.NEW_QUESTION.Where(q => q.Simple_Question == questionText).Count() > 0);
             }
@@ -382,7 +380,7 @@ namespace CSETWeb_Api.BusinessManagers
                 return;
             }
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 NEW_QUESTION q = new NEW_QUESTION();
                 q.Simple_Question = request.CustomQuestionText;
@@ -447,7 +445,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="request"></param>
         public void AddQuestion(SetQuestion request)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 if (request.RequirementID > 0)
                 {
@@ -504,7 +502,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="request"></param>
         public void RemoveQuestion(SetQuestion request)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 if (request.RequirementID != 0)
                 {
@@ -540,7 +538,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             int subcatID = 0;
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Either find or create the subcategory
                 var subcat = db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == subcatText).FirstOrDefault();
@@ -594,7 +592,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<CategoryEntry> categoryList = new List<CategoryEntry>();
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var standardCategories = db.STANDARD_CATEGORY.ToList();
                 foreach (var c in standardCategories)
@@ -621,7 +619,7 @@ namespace CSETWeb_Api.BusinessManagers
             CategoriesSubcategoriesGroupHeadings response = new CategoriesSubcategoriesGroupHeadings();
 
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<CategoryEntry> categoryList = new List<CategoryEntry>();
                 var categories = db.QUESTION_GROUP_HEADING.ToList();
@@ -682,7 +680,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<QuestionDetail> candidateQuestions = new List<QuestionDetail>();
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<int> includedQuestions = new List<int>();
                 if (searchParms.RequirementID > 0)
@@ -764,7 +762,7 @@ namespace CSETWeb_Api.BusinessManagers
                 string whereClause = sbWhereClause.ToString();
                 whereClause = whereClause.Substring(0, whereClause.Length - 5);
 
-                var hits2 = db.NEW_QUESTION.SqlQuery("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
+                var hits2 = db.NEW_QUESTION.FromSql("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
 
                 var hits3 = from q in hits2
                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
@@ -818,7 +816,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="salParms"></param>
         private void SetRequirementSalLevel(SalParms salParms)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 REQUIREMENT_LEVELS level = db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == salParms.RequirementID
                     && x.Standard_Level == salParms.Level).FirstOrDefault();
@@ -857,7 +855,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="salParms"></param>
         private void SetQuestionSalLevel(SalParms salParms)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 NEW_QUESTION_SETS nqs = db.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefault();
 
@@ -898,7 +896,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public void UpdateQuestionText(int questionID, string text)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // is this a custom question?
                 var query = from q in db.NEW_QUESTION
@@ -942,14 +940,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public bool IsQuestionInUse(int questionID)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 if (db.NEW_QUESTION_SETS.Where(x => x.Question_Id == questionID).Count() > 1)
                 {
                     return true;
                 }
 
-                if (db.ANSWERs.Where(x => x.Question_Or_Requirement_Id == questionID).Count() > 0)
+                if (db.ANSWER.Where(x => x.Question_Or_Requirement_Id == questionID).Count() > 0)
                 {
                     return true;
                 }
@@ -965,7 +963,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public void UpdateHeadingText(int pairID, string text)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefault();
 
@@ -1008,7 +1006,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             List<NEW_REQUIREMENT> reqs = new List<NEW_REQUIREMENT>();
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var set = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
                 response.SetFullName = set.Full_Name;
@@ -1091,7 +1089,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="parms"></param>
         public Requirement CreateRequirement(Requirement parms)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Create the category if not already defined
                 var existingCategory = db.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefault();
@@ -1168,7 +1166,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public Requirement GetRequirement(string setName, int reqID)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var q = from rs in db.REQUIREMENT_SETS
                         from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
@@ -1219,8 +1217,8 @@ namespace CSETWeb_Api.BusinessManagers
                     requirement.Questions.Add(new QuestionDetail()
                     {
                         QuestionID = q1.Question_Id,
-                        QuestionText = q1.NEW_QUESTION.Simple_Question,
-                        IsCustom = db.SETS.Where(x => x.Set_Name == q1.NEW_QUESTION.Original_Set_Name).FirstOrDefault().Is_Custom
+                        QuestionText = q1.Question_.Simple_Question,
+                        IsCustom = db.SETS.Where(x => x.Set_Name == q1.Question_.Original_Set_Name).FirstOrDefault().Is_Custom
                     });
                 }
 
@@ -1237,7 +1235,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         private ReferenceDocLists GetReferencesForRequirement(int reqID)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Get all "source" documents
                 List<ReferenceDoc> sourceList = new List<ReferenceDoc>();
@@ -1248,16 +1246,16 @@ namespace CSETWeb_Api.BusinessManagers
                     {
                         SectionRef = reff.Section_Ref,
                         ID = reff.Gen_File_Id,
-                        Title = reff.GEN_FILE.Title,
-                        Name = reff.GEN_FILE.Name,
-                        ShortName = reff.GEN_FILE.Short_Name,
-                        FileName = reff.GEN_FILE.File_Name,
-                        DocumentNumber = reff.GEN_FILE.Doc_Num,
-                        DocumentVersion = reff.GEN_FILE.Doc_Version,
-                        PublishDate = reff.GEN_FILE.Publish_Date,
-                        Summary = reff.GEN_FILE.Summary,
-                        Description = reff.GEN_FILE.Description,
-                        Comments = reff.GEN_FILE.Comments,
+                        Title = reff.Gen_File_.Title,
+                        Name = reff.Gen_File_.Name,
+                        ShortName = reff.Gen_File_.Short_Name,
+                        FileName = reff.Gen_File_.File_Name,
+                        DocumentNumber = reff.Gen_File_.Doc_Num,
+                        DocumentVersion = reff.Gen_File_.Doc_Version,
+                        PublishDate = reff.Gen_File_.Publish_Date,
+                        Summary = reff.Gen_File_.Summary,
+                        Description = reff.Gen_File_.Description,
+                        Comments = reff.Gen_File_.Comments,
                     });
                 }
 
@@ -1270,16 +1268,16 @@ namespace CSETWeb_Api.BusinessManagers
                     {
                         SectionRef = reff.Section_Ref,
                         ID = reff.Gen_File_Id,
-                        Title = reff.GEN_FILE.Title,
-                        Name = reff.GEN_FILE.Name,
-                        ShortName = reff.GEN_FILE.Short_Name,
-                        FileName = reff.GEN_FILE.File_Name,
-                        DocumentNumber = reff.GEN_FILE.Doc_Num,
-                        DocumentVersion = reff.GEN_FILE.Doc_Version,
-                        PublishDate = reff.GEN_FILE.Publish_Date,
-                        Summary = reff.GEN_FILE.Summary,
-                        Description = reff.GEN_FILE.Description,
-                        Comments = reff.GEN_FILE.Comments,
+                        Title = reff.Gen_File_.Title,
+                        Name = reff.Gen_File_.Name,
+                        ShortName = reff.Gen_File_.Short_Name,
+                        FileName = reff.Gen_File_.File_Name,
+                        DocumentNumber = reff.Gen_File_.Doc_Num,
+                        DocumentVersion = reff.Gen_File_.Doc_Version,
+                        PublishDate = reff.Gen_File_.Publish_Date,
+                        Summary = reff.Gen_File_.Summary,
+                        Description = reff.Gen_File_.Description,
+                        Comments = reff.Gen_File_.Comments,
                     });
                 }
 
@@ -1298,7 +1296,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="parms"></param>
         public Requirement UpdateRequirement(Requirement parms)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Create the category if not already defined
                 var existingCategory = db.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefault();
@@ -1350,7 +1348,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="parms"></param>
         public void RemoveRequirement(Requirement parms)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var bridge = db.REQUIREMENT_SETS.Where(x => x.Set_Name == parms.SetName && x.Requirement_Id == parms.RequirementID).FirstOrDefault();
                 if (bridge == null)
@@ -1385,7 +1383,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             List<ReferenceDoc> list = new List<ReferenceDoc>();
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var genFileList = db.GEN_FILE.Where(x => x.Title.Contains(filter)).ToList().OrderBy(x => x.Title).ToList();
 
@@ -1417,7 +1415,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<ReferenceDoc> GetReferenceDocsForSet(string setName)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var query = from sf in db.SET_FILES
                             join gf in db.GEN_FILE on sf.Gen_File_Id equals gf.Gen_File_Id
@@ -1450,7 +1448,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public ReferenceDoc GetReferenceDocDetail(int id)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var dbDoc = db.GEN_FILE.Where(x => x.Gen_File_Id == id).FirstOrDefault();
                 ReferenceDoc doc = new ReferenceDoc
@@ -1483,7 +1481,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public void UpdateReferenceDocDetail(ReferenceDoc doc)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var dbDoc = db.GEN_FILE.Where(x => x.Gen_File_Id == doc.ID).FirstOrDefault();
                 if (dbDoc == null)
@@ -1513,7 +1511,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public void SelectSetFile(SetFileSelection parms)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 if (parms.Doc.Selected)
                 {
@@ -1546,7 +1544,7 @@ namespace CSETWeb_Api.BusinessManagers
                 bookmark = string.Empty;
             }
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 if (isSourceRef)
                 {
@@ -1624,7 +1622,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public int RecordDocInDB(string setName, string filename, string contentType, int fileSize)
         {
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Determine file type ID.  Store null if not known.
                 int? fileType = null;

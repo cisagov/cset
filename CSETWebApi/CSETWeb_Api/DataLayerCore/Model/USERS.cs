@@ -32,9 +32,6 @@ namespace DataLayerCore.Model
         public string LastName { get; set; }
         public Guid? Id { get; set; }
 
-        [ForeignKey("Id")]
-        [InverseProperty("USERS")]
-        public virtual USER_DETAIL_INFORMATION IdNavigation { get; set; }
         [InverseProperty("User")]
         public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }
         [InverseProperty("AssessmentCreator")]
