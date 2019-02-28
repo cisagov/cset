@@ -1385,7 +1385,9 @@ namespace CSETWeb_Api.BusinessManagers
             List<ReferenceDoc> list = new List<ReferenceDoc>();
             using (var db = new CSET_Context())
             {
-                var genFileList = db.GEN_FILE.Where(x => x.Title.Contains(filter)).ToList().OrderBy(x => x.Title).ToList();
+                var genFileList = db.GEN_FILE
+                    .Include(x => x.GEN_FILE_LIB_PATH_CORL)
+                    .Where(x => x.Title.Contains(filter)).ToList().OrderBy(x => x.Title).ToList();
 
                 var selectedFiles = db.SET_FILES.Where(x => x.SetName == setName).ToList().Select(y => y.Gen_File_Id);
 
@@ -1417,20 +1419,21 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var query = from sf in db.SET_FILES
+
+                var query = from sf in db.SET_FILES 
                             join gf in db.GEN_FILE on sf.Gen_File_Id equals gf.Gen_File_Id
                             where sf.SetName == setName
-                            select gf;
+                            select  new { gf };
                 var files = query.ToList();
 
                 List<ReferenceDoc> list = new List<ReferenceDoc>();
-                foreach (GEN_FILE f in files)
+                foreach (var f in files)
                 {
                     ReferenceDoc doc = new ReferenceDoc
                     {
-                        Title = f.Title,
-                        FileName = f.File_Name,
-                        ID = f.Gen_File_Id
+                        Title = f.gf.Title,
+                        FileName = f.gf.File_Name,
+                        ID = f.gf.Gen_File_Id
                     };
 
                     list.Add(doc);
