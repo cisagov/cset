@@ -146,7 +146,6 @@
     <Compile Include="Manual\DOCUMENT_FILE.cs" />
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
     <Compile Include="Manual\NEW_REQUIREMENT.cs" />
-    <Compile Include="Manual\REF_LIBRARY_PATH.cs" />
     <Compile Include="Manual\usp_GetOverallRankedCategoriesPage_Result.cs" />
     <Compile Include="Manual\usp_GetRankedQuestions_Result.cs" />
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
