@@ -76,7 +76,7 @@ namespace CSETWeb_Api.BusinessManagers
                     set.SetCategory = dbSet.Set_Category_Id == null ? 0 : (int)dbSet.Set_Category_Id;
                     set.ShortName = dbSet.Short_Name;
                     set.IsCustom = dbSet.Is_Custom;
-                    set.IsDisplayed = dbSet.Is_Displayed?? false;
+                    set.IsDisplayed = dbSet.Is_Displayed ?? false;
                 }
 
 
@@ -171,7 +171,7 @@ namespace CSETWeb_Api.BusinessManagers
                 Is_Displayed = set.IsDisplayed
             };
 
-            db.SETS.AddOrUpdate(dbSet);
+            db.SETS.Add(dbSet);
             db.SaveChanges();
 
             return dbSet.Set_Name;
@@ -195,7 +195,9 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                List<NEW_QUESTION_SETS> dbQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == setName).ToList();
+                List<NEW_QUESTION_SETS> dbQuestions = db.NEW_QUESTION_SETS
+                    .Include(x => x.Question_)
+                    .Where(x => x.Set_Name == setName).ToList();
 
                 List<QuestionDetail> response = new List<QuestionDetail>();
                 foreach (NEW_QUESTION_SETS nqs in dbQuestions)
@@ -419,7 +421,9 @@ namespace CSETWeb_Api.BusinessManagers
                     Set_Name = request.SetName
                 };
 
-                db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
+                db.NEW_QUESTION_SETS.Add(nqs);
+
+                db.SaveChanges();
 
 
                 // Define SALs
@@ -457,7 +461,7 @@ namespace CSETWeb_Api.BusinessManagers
                         Requirement_Id = request.RequirementID
                     };
 
-                    db.REQUIREMENT_QUESTIONS_SETS.AddOrUpdate(rqs);
+                    db.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
                     db.SaveChanges();
                 }
 
@@ -469,7 +473,7 @@ namespace CSETWeb_Api.BusinessManagers
                     Set_Name = request.SetName
                 };
 
-                db.NEW_QUESTION_SETS.AddOrUpdate(nqs);
+                db.NEW_QUESTION_SETS.Add(nqs);
                 db.SaveChanges();
 
 
@@ -701,10 +705,10 @@ namespace CSETWeb_Api.BusinessManagers
                 // First, look for an exact string match within the question
                 var hits = from q in db.NEW_QUESTION
                            join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                           join cat in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals cat.Question_Group_Heading_Id
+                           join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
                            join subcat in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals subcat.Universal_Sub_Category_Id
                            where q.Simple_Question.Contains(searchParms.SearchTerms)
-                           select new { q, cat, subcat };
+                           select new { q, qgh, subcat };
 
                 foreach (var hit in hits.ToList())
                 {
@@ -714,7 +718,7 @@ namespace CSETWeb_Api.BusinessManagers
                         {
                             QuestionID = hit.q.Question_Id,
                             QuestionText = QuestionsManager.FormatLineBreaks(hit.q.Simple_Question),
-                            QuestionGroupHeading = hit.cat.Question_Group_Heading1,
+                            QuestionGroupHeading = hit.qgh.Question_Group_Heading1,
                             Subcategory = hit.subcat.Universal_Sub_Category,
                         };
 
@@ -832,7 +836,7 @@ namespace CSETWeb_Api.BusinessManagers
                             Standard_Level = salParms.Level,
                             Level_Type = "NST"
                         };
-                        db.REQUIREMENT_LEVELS.AddOrUpdate(level);
+                        db.REQUIREMENT_LEVELS.Add(level);
                         db.SaveChanges();
                     }
                 }
@@ -873,7 +877,7 @@ namespace CSETWeb_Api.BusinessManagers
                             New_Question_Set_Id = nqs.New_Question_Set_Id,
                             Universal_Sal_Level = salParms.Level
                         };
-                        db.NEW_QUESTION_LEVELS.AddOrUpdate(nql);
+                        db.NEW_QUESTION_LEVELS.Add(nql);
                         db.SaveChanges();
                     }
                 }
@@ -926,7 +930,8 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 question.Simple_Question = text;
-                db.NEW_QUESTION.AddOrUpdate(question);
+
+                db.NEW_QUESTION.Update(question);
                 db.SaveChanges();
             }
         }
@@ -973,7 +978,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 usch.Sub_Heading_Question_Description = string.IsNullOrEmpty(text) ? null : text;
-                db.UNIVERSAL_SUB_CATEGORY_HEADINGS.AddOrUpdate(usch);
+                db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Update(usch);
                 db.SaveChanges();
             }
         }
@@ -1210,6 +1215,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 // Get the questions for this requirement
                 var relatedQuestions = db.REQUIREMENT_QUESTIONS_SETS
+                    .Include(x => x.Question_)
                     .Where(x => x.Requirement_Id == requirement.RequirementID && x.Set_Name == setName).ToList();
 
                 foreach (var q1 in relatedQuestions)
@@ -1239,7 +1245,9 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 // Get all "source" documents
                 List<ReferenceDoc> sourceList = new List<ReferenceDoc>();
-                var sources = db.REQUIREMENT_SOURCE_FILES.Where(x => x.Requirement_Id == reqID).ToList();
+                var sources = db.REQUIREMENT_SOURCE_FILES
+                    .Include(x => x.Gen_File_)
+                    .Where(x => x.Requirement_Id == reqID).ToList();
                 foreach (REQUIREMENT_SOURCE_FILES reff in sources)
                 {
                     sourceList.Add(new ReferenceDoc
@@ -1261,7 +1269,9 @@ namespace CSETWeb_Api.BusinessManagers
 
                 // Get all "resource" documents
                 List<ReferenceDoc> resourceList = new List<ReferenceDoc>();
-                var resources = db.REQUIREMENT_REFERENCES.Where(x => x.Requirement_Id == reqID).ToList();
+                var resources = db.REQUIREMENT_REFERENCES
+                    .Include(x => x.Gen_File_)
+                    .Where(x => x.Requirement_Id == reqID).ToList();
                 foreach (REQUIREMENT_REFERENCES reff in resources)
                 {
                     resourceList.Add(new ReferenceDoc
@@ -1332,7 +1342,7 @@ namespace CSETWeb_Api.BusinessManagers
                 req.Supplemental_Info = parms.SupplementalInfo;
 
 
-                db.NEW_REQUIREMENT.AddOrUpdate(req);
+                db.NEW_REQUIREMENT.Update(req);
                 db.SaveChanges();
             }
 
@@ -1420,10 +1430,10 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
 
-                var query = from sf in db.SET_FILES 
+                var query = from sf in db.SET_FILES
                             join gf in db.GEN_FILE on sf.Gen_File_Id equals gf.Gen_File_Id
                             where sf.SetName == setName
-                            select  new { gf };
+                            select new { gf };
                 var files = query.ToList();
 
                 List<ReferenceDoc> list = new List<ReferenceDoc>();
@@ -1503,7 +1513,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbDoc.Description = doc.Description;
                 dbDoc.Comments = doc.Comments;
 
-                db.GEN_FILE.AddOrUpdate(dbDoc);
+                db.GEN_FILE.Update(dbDoc);
                 db.SaveChanges();
             }
         }

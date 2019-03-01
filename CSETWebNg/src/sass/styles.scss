@@ -351,12 +351,14 @@ table.td-align-top td {
 
 .reference-table {
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: .8em;
 }
 
 .reference-table td,
 .reference-table th {
-  padding-right: 10px;
+  vertical-align: top;
+  padding-right: .8em;
+  padding-bottom: .8em;
 }
 
 .builder-requirement-docs td {
