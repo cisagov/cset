@@ -29,7 +29,7 @@
   <!-- Navbar -->
   <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
     <!-- Brand -->
-    <span [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
+    <span [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a">
@@ -64,7 +64,8 @@
 
     <!-- Collapse Content -->
     <div class="collapse navbar-collapse" id="csetNavbarCollapse">
-      <div class="navbar-nav dropdown" *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule'">
+      <div class="navbar-nav dropdown" 
+        *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
           id="toolsDropdownMenuLink">
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
@@ -96,12 +97,17 @@
             <span class="cset-icons-module fs-base mr-2"></span>
             <span>Import Modules</span>
           </button>
+          <a class="dropdown-item fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=set-list" target="csetSetBuilder">            
+              <span class="cset-icons-module fs-base mr-2"></span>
+              <span >Module Builder</span>            
+          </a>
         </div>
       </div>
 
       <div class="navbar-nav">
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=resource-library"
-          target="csetResourceLibrary" *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule'">
+          target="csetResourceLibrary" 
+          *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
           <span class="cset-icons-library fs-base-4 mr-2"></span>
           <span>Resource Library</span>
         </a>
@@ -147,7 +153,8 @@
       </div>
 
       <!-- USER PROFILE -->
-      <div class="navbar-nav dropdown" *ngIf="this.router.url !== '/resource-library' && this.router.url!='/importModule'">
+      <div class="navbar-nav dropdown" 
+        *ngIf="this.router.url !== '/resource-library' && this.router.url !== '/importModule' && !isModuleBuilder(this.router.url)">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
           *ngIf="auth.userToken()">
           <span class="cset-icons-profile fs-base-4 mr-2"></span>
@@ -192,11 +199,11 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" activeIds="ngb-panel-0" class="footer row no-gutters"  
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"  
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
     <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>
-        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterVisible, 'cset-icons-chevron-up flex-00a': !isFooterVisible}" (click)="toggleFooter()"></button>
+        <button id="footerExpanderButton" class="cset-footer-expand-button" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="footer-section-1 bgc-primary px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">

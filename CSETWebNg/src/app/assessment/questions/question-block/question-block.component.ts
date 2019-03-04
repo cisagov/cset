@@ -26,6 +26,7 @@ import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../mode
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
+import { ConfigService } from '../../../services/config.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -47,7 +48,11 @@ export class QuestionBlockComponent implements OnInit {
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
 
-  constructor(public questionsSvc: QuestionsService, private dialog: MatDialog) { }
+  constructor(
+    public questionsSvc: QuestionsService,
+    private dialog: MatDialog,
+    public configSvc: ConfigService
+  ) { }
 
   ngOnInit() {
     this.refreshReviewIndicator();
@@ -289,7 +294,7 @@ export class QuestionBlockComponent implements OnInit {
   saveMFR(q: Question) {
     this.answerChanged.emit(null);
     q.MarkForReview = !q.MarkForReview; // Toggle Bind
-    
+
     const newAnswer: Answer = {
       QuestionId: q.QuestionId,
       QuestionNumber: q.DisplayNumber,
@@ -308,6 +313,6 @@ export class QuestionBlockComponent implements OnInit {
     //   },
     //   error => console.log('Error saving answer: ' + (<Error>error).message)
     // );
-    
+
   }
 }

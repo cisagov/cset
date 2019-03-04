@@ -67,6 +67,29 @@ a {
   color: $black;
 }
 
+.btn-link-subtle {
+  font-weight: 400;
+  color: $primary-color;
+  background-color: transparent;
+}
+.btn-link-subtle:hover {
+  color: $primary-color;
+  text-decoration: underline dotted;
+  background-color: transparent;
+  border-color: transparent;
+}
+.btn-link-subtle:focus,
+.btn-link-subtle.focus {
+  text-decoration: underline dotted;
+  border-color: transparent;
+  box-shadow: none;
+}
+.btn-link-subtle:disabled,
+.btn-link-subtle.disabled {
+  color: #6c757d;
+  pointer-events: none;
+}
+
 h2,
 h3,
 h4 {
@@ -174,6 +197,12 @@ label[required]::after {
   display: flex;
   justify-content: center;
   flex: 1 1 auto;
+  cursor: pointer;
+}
+
+.footer .card .card-header h5 button:first-child {
+  width: 100%;
+  cursor: inherit;
 }
 
 .cset-footer-expand-button {
@@ -322,12 +351,18 @@ table.td-align-top td {
 
 .reference-table {
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: .8em;
 }
 
 .reference-table td,
 .reference-table th {
-  padding-right: 10px;
+  vertical-align: top;
+  padding-right: .8em;
+  padding-bottom: .8em;
+}
+
+.builder-requirement-docs td {
+  vertical-align: top;
 }
 
 .login-logo {
@@ -503,6 +538,14 @@ table.td-align-top td {
   background-color: $primary-450;
 }
 
+.sal-checkboxes input {
+  margin-right: 2px;
+}
+
+.sal-checkboxes label {
+  margin-right: 1rem;
+}
+
 /* round the inside corners of the 'inside' buttons of the group */
 .answer-group.btn-group > .btn {
   border-radius: 4px !important;
@@ -657,7 +700,7 @@ ul.mat-tree-node {
 
 .debug-highlight {
   background-color: $bg-debug-highlight;
-  padding: 3px;
+  padding: 3px 8px;
 }
 
 /* --- spinner styles -- */
@@ -1121,7 +1164,7 @@ ul.mat-tree-node {
   padding-left: 10px;
 }
 
-.keyboard-shortcuts kbd {
+.keyboard-shortcuts kbd, .keyboard kbd {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -1416,6 +1459,11 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-bottom: 1px solid $gray-250;
   padding: 3px 0;
 }
+
+.no-bottom-border {
+  border-bottom: none;
+}
+
 @media screen and (max-width: 990px) {
   .header-question {
     flex-direction: column;
@@ -2106,6 +2154,10 @@ hr.ranked-questions {
   border: 2px solid $gray-200;
 }
 
+.b-validate {
+  border: 2px solid $validation-color;
+}
+
 
 // Flex
 .flex-11a {
@@ -2399,6 +2451,11 @@ hr.ranked-questions {
   font-size: 1rem !important;
   line-height: 1.1rem;;
 }
+
+.angular-editor-textarea {
+  background-color: #fff !important;
+}
+
 // @media (max-width: 576px) {
 //   .landing-button-text-sm {
 //     font-size: 1rem !important;

@@ -22,7 +22,6 @@ namespace DataLayerCore.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // TODO:  Does the connection string format differ from the old CSETWebEntities string?
                 string connectionString = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
                 optionsBuilder.UseSqlServer(connectionString);
             }

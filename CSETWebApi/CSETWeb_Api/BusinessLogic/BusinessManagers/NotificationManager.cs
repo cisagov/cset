@@ -178,7 +178,7 @@ namespace CSETWeb_Api.BusinessLogic
 #if DEBUG
             // Override the recipient if configured for debug
             string debugRecipient = ConfigurationManager.GetAppSetting("DEBUG EMAIL RECIPIENT");
-            if (debugRecipient != null)
+            if (!string.IsNullOrEmpty(debugRecipient))
             {
                 mail.To.RemoveAt(0);
                 mail.To.Add(new MailAddress(debugRecipient));

@@ -1,0 +1,99 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <div>
+    <h3>
+      Module Detail
+    </h3>
+    <p>
+      A Module may be based on an industry standard, or may simply be a collection of questions.
+      Modules based on standards will normally take the Requirements path in order to transfer
+      the requirements into the Set.
+    </p>
+    <p>
+      If you are building a Standard, manage the requirements by clicking
+      <button class="btn-link p-0" [disabled]="!isSetReady()" (click)="setBuilderSvc.navReqList()">
+        Requirements
+      </button>. The
+      <button class="btn-link p-0" [disabled]="!isSetReady()" (click)="setBuilderSvc.navQuestionList()">
+        Questions
+      </button>
+      path will
+      show how the structure of the related questions will look when viewed in 'question mode' CSET.
+    </p>
+    <p>
+      It is a good practice to attach any related documents to the Module. Click
+      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage Documents</button>
+      to upload and attach files.
+    </p>
+    <form #f="ngForm" name="form">
+      <div class="form-group p-0 col-md-12">
+        <label required for="fullname">Module Name</label>
+        <input type="text" class="form-control" id="fullname" name="fullname" required #fullname="ngModel" focusOnInit="true"
+          [(ngModel)]="setDetail.FullName" (ngModelChange)="setDetail.FullName" (change)="update($event)">
+        <div *ngIf="f.submitted && !fullname.valid" class="m-0 mt-2 alert alert-danger">Full Name is required</div>
+      </div>
+      <div class="form-group p-0 col-md-12">
+        <label required for="shortname">Short Name</label>
+        <input type="text" class="form-control" id="shortname" name="shortname" required #shortname="ngModel"
+          [(ngModel)]="setDetail.ShortName" (ngModelChange)="setDetail.ShortName" (change)="update($event)">
+        <div *ngIf="f.submitted && !shortname.valid" class="m-0 mt-2 alert alert-danger">Short Name is required</div>
+      </div>
+      <div class="form-group p-0 col-md-12">
+        <label required for="name">Description</label>
+        <textarea appAutoSize id="description" name="description" class="form-control" type="text" [(ngModel)]="setDetail.Description"
+          (change)="update($event)"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="industry">Category</label>
+        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.SetCategory" (change)="update($event)">
+          <option value="0">--Select Category--</option>
+          <option *ngFor="let category of setDetail.CategoryList" [value]="category.Id">{{category.CategoryName}}</option>
+        </select>
+      </div>
+    </form>
+
+
+
+    <div class="d-flex flex-row mt-3 mb-3 justify-content-end">
+      <button class="btn btn-primary mr-2" [disabled]="!isSetReady()" (click)="setBuilderSvc.navReqList()">
+        <span class="cset-icons-books-stack-2"></span>
+        Requirements
+      </button>
+      <button class="btn btn-primary mr-2" [disabled]="!isSetReady()" (click)="setBuilderSvc.navQuestionList()">
+        <span class="cset-icons-question-mark"></span>
+        Questions
+      </button>
+      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
+        Documents</button>
+    </div>
+
+    <div class="d-flex flex-row mt-3 mb-3">
+      <button class="btn btn-link mr-3" (click)="setBuilderSvc.navSetList()">
+        &laquo; Back to Module List
+      </button>
+    </div>
+  </div>
+</div>

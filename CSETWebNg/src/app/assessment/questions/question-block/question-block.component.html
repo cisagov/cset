@@ -85,6 +85,7 @@
                 [innerHTML]="applyTokensToText(q)" 
                 (click)="questionTextClicked(q, $event)">
             </div>
+            <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ q.QuestionId }}</span>
             <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"></app-question-extras>
           </div>
         </div>
@@ -112,8 +113,8 @@
           </label>
         </div>
 
-        <div *ngIf="q.Answer == 'A'">
-          <textarea autosize class="form-control" style="height: 80px; width: 100%; min-height: 72px;" placeholder="Description, explanation and/or justification for alternate answer"
+        <div *ngIf="q.Answer === 'A'">
+          <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;" placeholder="Description, explanation and/or justification for alternate answer"
             [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
         </div>
       </div>

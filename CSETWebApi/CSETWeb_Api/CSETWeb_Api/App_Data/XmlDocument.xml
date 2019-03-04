@@ -854,6 +854,139 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:CSETWeb_Api.Controllers.ModuleBuilderController">
+            <summary>
+            Houses all API calls used by the ModuleBuilder logic.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetCustomSetsList">
+            <summary>
+            Returns a list of 'stock' modules (standards + question sets), plus any custom modules
+            owned by the current user.  Stock modules are marked as non-editable,
+            while custom modules are editable.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetSetDetail(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.UpdateSetDetail(CSETWeb_Api.BusinessLogic.Models.SetDetail)">
+            <summary>
+            Saves the set information and returns the setname (key) of the record.
+            </summary>
+            <param name="setDetail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CloneSet(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.DeleteSet(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetQuestionsForSet(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetQuestionsOriginatingFromSet(System.String)">
+            <summary>
+            Returns a list of questions whose 'original_set_name' is the one specified.
+            This is used to know which questions will be affected if a set is 
+            deleted.
+            </summary>
+            <param name="setName"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.AddCustomQuestion(CSETWeb_Api.BusinessLogic.Models.SetQuestion)">
+            <summary>
+            Creates a new custom question from the supplied text.
+            </summary>
+            <param name="request"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.AddQuestion(CSETWeb_Api.BusinessLogic.Models.AddQuestionsRequest)">
+            <summary>
+            Adds 'base' or 'stock' questions to the Requirement or Set.
+            </summary>
+            <param name="request"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetStandardStructure(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CreateRequirement(CSETWeb_Api.BusinessLogic.Models.Requirement)">
+            <summary>
+            Creates a new Requirement.  Returns the ID.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetRequirement(System.String,System.Int32)">
+            <summary>
+            Returns the Requirement for the setname and requirement ID.
+            </summary>
+            <param name="setName"></param>
+            <param name="reqID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.UpdateRequirement(CSETWeb_Api.BusinessLogic.Models.Requirement)">
+            <summary>
+            Updates an existing Requirement.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.RemoveRequirement(CSETWeb_Api.BusinessLogic.Models.Requirement)">
+            <summary>
+            Removes an existing Requirement from the Set.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetReferenceDocs(System.String,System.String)">
+            <summary>
+            Returns a list of reference docs attached to the set after applying the filter.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetReferenceDocs(System.String)">
+            <summary>
+            Returns the list of reference docs attached to the set.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetReferenceDocDetail(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.SelectSetFiles(CSETWeb_Api.BusinessLogic.Models.SetFileSelection)">
+            <summary>
+            Refreshes the list of GEN_FILEs associated with a SET.
+            The entire list of applicable files must be sent.
+            </summary>
+            <param name="parms"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.AddDeleteRefDocToRequirement(System.Int32,System.Int32,System.Boolean,System.String,System.Boolean)">
+            <summary>
+            Adds or deletes the source or resource doc/bookmark from the requirement.
+            The 'isSourceRef' argument specifies whether the document is a 'source' document.
+            The 'add' argument specifies whether the document is being added or removed from the requirement.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.UploadReferenceDoc">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 

@@ -86,4 +86,12 @@ export class ConfigService {
               }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
     }
   }
+
+  /**
+   * Returns a boolean indicating if the app is configured to show
+   * question and requirement IDs for debugging purposes.
+   */
+  showQuestionAndRequirementIDs() {
+    return this.config.showQuestionAndRequirementIDs || false;
+  }
 }

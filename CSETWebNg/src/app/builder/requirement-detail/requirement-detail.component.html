@@ -1,0 +1,227 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <div>
+    <h3>
+      Requirement Detail
+    </h3>
+
+    <div class="form-row ml-0 mr-0">
+      <div class="form-group p-0 col-md-6">
+        <label>Category</label>
+        <div class="font-weight-bold">
+          {{r?.Category}}
+        </div>
+      </div>
+
+      <div class="form-group p-0 col-md-6">
+        <label>Subcategory</label>
+        <div class="font-weight-bold">
+          {{r?.Subcategory}}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group p-0 col-md-12">
+      <label required for="requirementTitle">Identifier/Title</label>
+      <input type="text" class="form-control" id="requirementTitle" name="requirementTitle" required focusOnInit="true"
+        [(ngModel)]="r.Title" (change)="updateRequirement($event)">
+      <div *ngIf="">Title is required</div>
+    </div>
+
+    <div class="form-group p-0 col-md-12 mb-5">
+      <label required for="requirementText">Standard-Specific Requirement</label>
+      <textarea appAutoSize id="description" class="form-control" type="text" id="requirementText" name="requirementText"
+        [(ngModel)]="r.RequirementText" (change)="updateRequirement($event)"></textarea>
+    </div>
+
+    <div class="form-group p-0 col-md-12 mb-5">
+      <h4>Security Assurance Level</h4>
+      <p>Select all applicable levels.</p>
+      <div class="btn-group btn-group-toggle">
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'L')">
+          <input type="checkbox" id="SAL-L-{{r?.RequirementID}}" name="SAL-L-{{r?.RequirementID}}" [checked]="hasSAL(r, 'L')"
+            (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" />Low</label>
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'M')">
+          <input type="checkbox" id="SAL-M-{{r?.RequirementID}}" name="SAL-M-{{r?.RequirementID}}" [checked]="hasSAL(r, 'M')"
+            (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" />Moderate</label>
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'H')">
+          <input type="checkbox" id="SAL-H-{{r?.RequirementID}}" name="SAL-H-{{r?.RequirementID}}" [checked]="hasSAL(r, 'H')"
+            (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" />High</label>
+        <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'VH')">
+          <input type="checkbox" id="SAL-VH-{{r?.RequirementID}}" name="SAL-VH-{{r?.RequirementID}}" [checked]="hasSAL(r, 'VH')"
+            (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" />Very High</label>
+      </div>
+      <div *ngIf="missingSAL(r)" class="alert alert-danger">At least one SAL level is required</div>
+    </div>
+
+    <div class="mb-5">
+      <h4>Supplemental Information</h4>
+      <p class="keyboard">HTML markup can be edited directly by clicking the <kbd><i class="fa fa-code"></i></kbd>
+        button.</p>
+      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" 
+        (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)"></angular-editor>
+    </div>
+
+
+    <div class="form-group p-0 col-md-12 mb-5">
+      <h4>References</h4>
+      <p>Documents that define the standard or provide additional information for the requirement are attached here.
+        If the document is a PDF with bookmarks, specifying a relevant bookmark will allow CSET to open the PDF to the
+        target location.
+      </p>
+      <p>To add documents to the dropdown lists, click 'Manage Documents.'</p>
+
+      <div class="w-100 align-items-end">
+        <button id="documents" (click)="navStandardDocuments()" class="btn btn-primary">Manage
+          Documents</button>
+      </div>
+      <table class="builder-requirement-docs">
+        <tr>
+          <th>Source Documents</th>
+          <th>Bookmark</th>
+        </tr>
+        <tr *ngFor="let ref of r.SourceDocs">
+          <td>
+            {{ref.Title}}
+          </td>
+          <td>
+            {{ref.SectionRef}}
+          </td>
+          <td>
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, ref.ID, true, ref.SectionRef, false)"
+              matTooltip="Delete reference">
+              <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td class="pr-2">
+            <select id="newSourceDoc" name="newSourceDoc" class="form-control" [(ngModel)]="newSourceDocID">
+              <option value=""></option>
+              <option *ngFor="let o of refDocOptions" [value]="o.ID">{{ o.Title }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="sourceDocMissing">A document is required.</div>
+          </td>
+          <td>
+            <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newSourceSectionRef">
+          </td>
+          <td>
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, newSourceDocID, true, newSourceSectionRef, true)"
+              matTooltip="Add reference">
+              <span class="cset-icons-plus fs-base-2 mr-2"></span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <th class="pt-2">Help Documents</th>
+          <th class="pt-2">Bookmark</th>
+        </tr>
+        <tr *ngFor="let ref of r.ResourceDocs">
+          <td>
+            {{ref.Title}}
+          </td>
+          <td>
+            {{ref.SectionRef}}
+          </td>
+          <td>
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, ref.ID, false, ref.SectionRef, false)"
+              matTooltip="Delete reference">
+              <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td class="pr-2">
+            <select id="newResourceDoc" name="newResourceDoc" class="form-control" [(ngModel)]="newResourceDocID">
+              <option value=""></option>
+              <option *ngFor="let o of refDocOptions" [value]="o.ID">{{ o.Title }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="resourceDocMissing">A document is required.</div>
+          </td>
+          <td>
+            <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newResourceSectionRef">
+          </td>
+          <td>
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, newResourceDocID, false, newResourceSectionRef, true)"
+              matTooltip="Add reference">
+              <span class="cset-icons-plus fs-base-2 mr-2"></span>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+    <div class="form-group p-0 col-md-12 mb-5">
+      <h4>Related Questions</h4>
+      <p>Questions may be added to the requirement. When the standard is reviewed in CSET
+        the assessors may choose to answer questions instead of the requirement.
+      </p>
+
+      <button id="addQuestion" (click)="addQuestion()" class="btn btn-primary">
+        <span class="cset-icons-plus fs-base mr-2"></span>
+        Add Question
+      </button>
+
+      <div *ngFor="let q of r.Questions; let i = index" class="question-row d-flex flex-column p-3"
+        [class.no-bottom-border]="i == (r.Questions?.length - 1)">
+        <div>
+          {{ q.Title }}
+        </div>
+        <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
+          <div class="d-flex flex-column mb-3 mr-3 w-100">
+            <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.QuestionText)">
+            </div>
+            <div *ngIf="questionBeingEdited === q" class="w-100">
+              <div class="alert alert-danger" *ngIf="editedQuestionInUse">
+                This question is in use in other standards/question sets or assessments.
+                Do not change the meaning of the question text.
+              </div>
+              <textarea appAutoSize id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
+                (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+            </div>
+          </div>
+          <span class="d-flex align-items-end justify-content-between flex-00a">
+            <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+              <span class="cset-icons-pencil fs-base-2"></span>
+              <span class="d-none d-md-flex fs-smaller">Change</span>
+            </button>
+            <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeQuestion(q)">
+              <span class="cset-icons-trash-can fs-base-2"></span>
+              <span class="d-none d-md-flex fs-smaller">Remove</span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div *ngIf="r.Questions?.length === 0" class="alert alert-info mt-3 mb-3">
+        No questions are defined for this requirement.
+      </div>
+    </div>
+    <div class="d-flex flex-row mt-3 mb-3">
+      <button (click)="setBuilderSvc.navReqList();" class="btn btn-link">&laquo; Back to Requirement Listing</button>
+    </div>
+  </div>
+</div>

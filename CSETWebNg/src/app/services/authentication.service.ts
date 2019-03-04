@@ -66,37 +66,37 @@ export class AuthenticationService {
     }
 
     checkLocal() {
-      return this.http.post(this.apiUrl + 'auth/login/standalone',
-        JSON.stringify({TzOffset: new Date().getTimezoneOffset()}), headers)
-        .toPromise().then(
-          (response: LoginResponse) => {
-            if (response.Email === null || response.Email === undefined) {
-              this.isLocal = false;
-            } else {
-              this.isLocal = true;
-              this.storeUserData(response);
-            }
-          },
-          error => {
-            console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
-            this.isLocal = false;
-          });
+        return this.http.post(this.apiUrl + 'auth/login/standalone',
+            JSON.stringify({ TzOffset: new Date().getTimezoneOffset() }), headers)
+            .toPromise().then(
+                (response: LoginResponse) => {
+                    if (response.Email === null || response.Email === undefined) {
+                        this.isLocal = false;
+                    } else {
+                        this.isLocal = true;
+                        this.storeUserData(response);
+                    }
+                },
+                error => {
+                    console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
+                    this.isLocal = false;
+                });
     }
 
     storeUserData(user: LoginResponse) {
-      sessionStorage.removeItem('userToken');
-      sessionStorage.setItem('userToken', user.Token);
-      sessionStorage.setItem('firstName', user.UserFirstName);
-      sessionStorage.setItem('lastName', user.UserLastName);
-      sessionStorage.setItem('resetPassword', '' + user.PasswordResetRequired);
-      sessionStorage.setItem('superUser', '' + user.IsSuperUser);
-      sessionStorage.setItem('userId', '' + user.UserId);
-      sessionStorage.setItem('email', user.Email);
-      sessionStorage.setItem('developer', String(false));
+        sessionStorage.removeItem('userToken');
+        sessionStorage.setItem('userToken', user.Token);
+        sessionStorage.setItem('firstName', user.UserFirstName);
+        sessionStorage.setItem('lastName', user.UserLastName);
+        sessionStorage.setItem('resetPassword', '' + user.PasswordResetRequired);
+        sessionStorage.setItem('superUser', '' + user.IsSuperUser);
+        sessionStorage.setItem('userId', '' + user.UserId);
+        sessionStorage.setItem('email', user.Email);
+        sessionStorage.setItem('developer', String(false));
 
 
-      // schedule the first token refresh event
-      this.scheduleTokenRefresh(this.http, user.Token);
+        // schedule the first token refresh event
+        this.scheduleTokenRefresh(this.http, user.Token);
     }
 
     login(email: string, password: string) {
@@ -106,9 +106,9 @@ export class AuthenticationService {
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify({ Email: email, Password: password, TzOffset: new Date().getTimezoneOffset() }), headers).pipe(
                 map((user: LoginResponse) => {
-                  // store user details and jwt token in local storage to keep user logged in between page refreshes
-                  this.storeUserData(user);
-                  return user;
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    this.storeUserData(user);
+                    return user;
                 }));
     }
 
@@ -176,7 +176,7 @@ export class AuthenticationService {
         return this.http.get(this.apiUrl + 'auth/token?expSeconds=30');
     }
     getShortLivedTokenForAssessment(assessment_id: number) {
-      return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30');
+        return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30');
     }
 
     changePassword(data: ChangePassword) {

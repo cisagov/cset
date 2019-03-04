@@ -1,0 +1,97 @@
+<!---------------------- 
+
+   Copyright 2018 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <div class="">
+    <h3>
+      Requirement Listing
+    </h3>
+    <div class="card p-3 mb-3">
+      <button class="btn btn-link text-left pl-0" (click)="setBuilderSvc.navSetDetail()">
+        <h4>
+          {{requirementResponse?.SetFullName}}
+        </h4>
+      </button>
+      <p class="font-italic">{{requirementResponse?.SetDescription}}</p>
+    </div>
+
+    <div *ngIf="!initialized">
+      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+    <div *ngIf="!!requirementResponse && requirementResponse.Categories.length === 0" class="alert alert-info mt-3 mb-3">
+      No requirements defined
+    </div>
+
+    <button class="btn btn-primary mb-4" (click)="addRequirementDialog()">
+      <span class="cset-icons-plus fs-base mr-2"></span>
+      Create Requirement
+    </button>
+
+    <div *ngFor="let cat of requirementResponse?.Categories">
+      <div class="group-heading mt-3">
+        {{cat.CategoryName}}
+      </div>
+
+      <div *ngFor="let subcat of cat.Subcategories">
+        <div class="subcat-header flat-bottom">
+          <div class="sub-head-2">
+            {{subcat.SubcategoryName}}
+          </div>
+        </div>
+
+        <div *ngFor="let r of subcat.Requirements; let i = index" class="question-row d-flex flex-column p-3"
+          [class.no-bottom-border]="i == (subcat.Requirements.length - 1)">
+          <div class="font-weight-bold">
+            {{ r.Title }}
+          </div>
+          <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
+            <div class="d-flex flex-column mb-3 mr-3 w-100">
+              <div [innerHTML]="formatLinebreaks(r.RequirementText)">
+              </div>
+            </div>
+            <span class="d-flex align-items-end justify-content-between flex-00a">
+              <button type="button" (click)="editRequirement(r)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+                <span class="cset-icons-pencil fs-base-2"></span>
+                <span class="d-none d-md-flex fs-smaller">Edit</span>
+              </button>
+              <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeRequirement(r)">
+                <span class="cset-icons-trash-can fs-base-2"></span>
+                <span class="d-none d-md-flex fs-smaller">Delete</span>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="!subcat.Requirements || subcat.Requirements?.length === 0" class="alert alert-info mt-3 mb-3">
+          There are no requirements defined for this subcategory
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row mt-3 mb-3">
+      <button id="btnBack" class="btn btn-link" (click)="setBuilderSvc.navSetDetail()">&laquo; Back to Module Detail</button>
+    </div>
+  </div>

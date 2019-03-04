@@ -23,7 +23,7 @@
 <!-- <div class="d-flex flex-11a"> -->
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <!-- <p>{{this.authSvc.userToken()}}</p> -->
-    <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a ">
+    <div *ngIf="!!sortedAssessments" class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a">
 
         <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
             <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
@@ -104,8 +104,8 @@
         </ng-template>
     </div>
 
-    <div *ngIf="sortedAssessments == null">
-        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+    <div *ngIf="!sortedAssessments">
+        <div class="spinner-container m-0 mt-5 d-flex justify-content-center align-items-center flex-11a">
             <div class="spinner-size-50"></div>
         </div>
     </div>

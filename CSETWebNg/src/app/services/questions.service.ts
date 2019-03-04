@@ -59,7 +59,7 @@ export class QuestionsService {
   autoLoadSupplementalSetting: boolean;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue.toLowerCase() === 'true');
+    this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
   }
 
   /**

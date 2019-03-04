@@ -35,12 +35,14 @@ import { StandardService } from '../../services/standard.service';
   selector: 'app-questions',
   templateUrl: './questions.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionsComponent implements OnInit {
   @ViewChild('questionBlock') questionBlock;
   // applicationMode: string;
   questionGroups: QuestionGroup[] = null;
+
+  setHasRequirements = false;
 
   autoLoadSupplementalInfo: boolean;
 
@@ -52,31 +54,33 @@ export class QuestionsComponent implements OnInit {
    * @param navSvc
    * @param assessSvc
    */
-  constructor(public questionsSvc: QuestionsService,
+  constructor(
+    public questionsSvc: QuestionsService,
     private navSvc: NavigationService,
     public assessSvc: AssessmentService,
     private stdSvc: StandardService,
     private router: Router,
-    private dialog: MatDialog) {
-      const magic = this.navSvc.getMagic();
-      this.navSvc.setTree([
-        { label: 'Please wait', value: '', children: [] },
-        { label: 'Loading questions', value: '', children: [] }
-      ], magic);
+    private dialog: MatDialog
+  ) {
+    const magic = this.navSvc.getMagic();
+    this.navSvc.setTree([
+      { label: 'Please wait', value: '', children: [] },
+      { label: 'Loading questions', value: '', children: [] }
+    ], magic);
 
-      this.autoLoadSupplementalInfo = this.questionsSvc.autoLoadSupplementalSetting;
+    this.autoLoadSupplementalInfo = this.questionsSvc.autoLoadSupplementalSetting;
 
-      // if running in IE, turn off the auto load feature
-      if (this.browserIsIE()) {
-        this.autoLoadSupplementalInfo = false;
-      }
+    // if running in IE, turn off the auto load feature
+    if (this.browserIsIE()) {
+      this.autoLoadSupplementalInfo = false;
+    }
 
-      if (!this.assessSvc.applicationMode) {
-        this.assessSvc.applicationMode = 'Q';
-        this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-      } else {
-        this.loadQuestions();
-      }
+    if (!this.assessSvc.applicationMode) {
+      this.assessSvc.applicationMode = 'Q';
+      this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+    } else {
+      this.loadQuestions();
+    }
   }
 
   ngOnInit() {
@@ -124,6 +128,7 @@ export class QuestionsComponent implements OnInit {
         this.questionGroups = data.QuestionGroups;
         this.questionsSvc.questionGroups = this.questionGroups;
         this.assessSvc.applicationMode = data.ApplicationMode;
+        this.setHasRequirements = (data.RequirementCount > 0);
 
         this.refreshQuestionVisibility(magic);
       },

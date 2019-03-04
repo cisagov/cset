@@ -10,7 +10,6 @@ namespace DataLayerCore.Model
         public USER_DETAIL_INFORMATION()
         {
             ADDRESS = new HashSet<ADDRESS>();
-            USERS = new HashSet<USERS>();
         }
 
         public Guid Id { get; set; }
@@ -39,7 +38,5 @@ namespace DataLayerCore.Model
 
         [InverseProperty("IdNavigation")]
         public virtual ICollection<ADDRESS> ADDRESS { get; set; }
-        [InverseProperty("IdNavigation")]
-        public virtual ICollection<USERS> USERS { get; set; }
     }
 }

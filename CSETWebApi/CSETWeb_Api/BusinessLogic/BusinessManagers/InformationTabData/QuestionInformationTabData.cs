@@ -103,7 +103,7 @@ namespace CSET_Main.Questions.InformationTabData
         public bool IsComponent { get; set; }
 
         public List<String> SetsList { get; set; }
-        public List<String> QuestionsList { get; set; }
+        public List<RelatedQuestion> QuestionsList { get; set; }
 
         private bool showNoQuestionInformation;
         public bool ShowNoQuestionInformation
@@ -135,13 +135,12 @@ namespace CSET_Main.Questions.InformationTabData
             RelatedFrameworkCategory = questionInfoData.Category;
         }
 
-
         private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CSET_Context controlContext)
         {
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
             RequirementTabData tabData = new RequirementTabData();
-            String shortStandardName = set.Short_Name;
+            string shortStandardName = set.Short_Name;
             HeaderName = shortStandardName;
             Question_or_Requirement_Id = infoData.QuestionID;
 
@@ -177,6 +176,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 tabData.Set_Name = set.Set_Name;
                 tabData.Text = FormatRequirementText(requirement.Requirement_Text);
+                tabData.RequirementID = requirement.Requirement_Id;
                 if (!IsComponent)
                     RequirementFrameworkTitle = requirement.Requirement_Title;
 
@@ -218,20 +218,26 @@ namespace CSET_Main.Questions.InformationTabData
 
             // Get related questions
             var query = from rq in controlContext.REQUIREMENT_QUESTIONS
-                      join q in controlContext.NEW_QUESTION on rq.Question_Id equals q.Question_Id
-                      where rq.Requirement_Id == requirementData.RequirementID
-                      select q.Simple_Question;
+                        join q in controlContext.NEW_QUESTION on rq.Question_Id equals q.Question_Id
+                        where rq.Requirement_Id == requirementData.RequirementID
+                        select new RelatedQuestion
+                        {
+                            QuestionID = q.Question_Id,
+                            QuestionText = q.Simple_Question
+                        };
 
             this.QuestionsList = query.ToList();
 
 
             RequirementTabData tabData = new RequirementTabData();
+            tabData.RequirementID = requirement.Requirement_Id;
             tabData.Text = FormatRequirementText(requirement.Requirement_Text);
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
 
             RequirementsData = tabData;
             int requirement_id = requirement.Requirement_Id;
+            // var questions = requirement.NEW_QUESTION;
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {
@@ -313,15 +319,9 @@ namespace CSET_Main.Questions.InformationTabData
             }
             else
             {
-                var firstReqLevel = controlContext.REQUIREMENT_LEVELS
-                    .Where(l => l.Requirement_Id == requirementData.RequirementID)
-                    .OrderBy(o => levelManager.GetLevelOrder(o.Standard_Level))
-                    .FirstOrDefault();
-                if (firstReqLevel != null)
-                {
-                    this.LevelName = levelManager.GetFullName(levelManager.GetStandard(firstReqLevel.Standard_Level), 
-                        levelManager.GetLevelOrder(firstReqLevel.Standard_Level));
-                }
+                var parameters = requirementData.Requirement.REQUIREMENT_LEVELS.Select(s => new Tuple<string, int>(levelManager.GetStandard(s.Standard_Level), levelManager.GetLevelOrder(s.Standard_Level))).OrderBy(s => s.Item2).FirstOrDefault();
+                if (parameters != null)
+                    this.LevelName = levelManager.GetFullName(parameters.Item1, parameters.Item2);
             }
 
 
@@ -333,8 +333,7 @@ namespace CSET_Main.Questions.InformationTabData
 
         public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSET_Context controlContext)
         {
-
-            QuestionsList = new List<String>();
+            QuestionsList = new List<RelatedQuestion>();
             IsCustomQuestion = frameworkData.IsCustomQuestion;
             References = frameworkData.References;
             if (!IsComponent)
@@ -363,15 +362,21 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == frameworkData.RequirementID).Select(t => new
                 {
+                    Question_or_Requirement_Id = t.Requirement_Id,
                     Text = FormatRequirementText(t.Requirement_Text),
                     SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info),
-                    Questions = t.REQUIREMENT_QUESTIONS.Select(nq => nq.Question_).Select(s => s.Simple_Question),
+                    Questions = t.NEW_QUESTIONs().Select(s => new RelatedQuestion
+                    {
+                        QuestionID = s.Question_Id,
+                        QuestionText = s.Simple_Question
+                    }),
                     LevelName = t.REQUIREMENT_LEVELS.Select(s => s.Standard_LevelNavigation).OrderBy(s => s.Level_Order).Select(s => s.Full_Name).FirstOrDefault()
                 }).FirstOrDefault();
                 if (requirement != null)
                 {
                     QuestionsList = requirement.Questions.ToList();
                     this.LevelName = requirement.LevelName;
+                    tabData.RequirementID = requirement.Question_or_Requirement_Id;
                     tabData.Text = requirement.Text;
                     tabData.SupplementalInfo = FormatSupplementalInfo(requirement.SupplementalInfo);
 
@@ -444,7 +449,7 @@ namespace CSET_Main.Questions.InformationTabData
 
             var newQuestionItems = (from nr in controlEntity.NEW_REQUIREMENT
                                     from newquestions in nr.NEW_QUESTIONs()
-                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS.Include("SETS") on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
+                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
                                     join level in controlEntity.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
                                     join subheading in controlEntity.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id
                                     join questionGroupHeading in controlEntity.QUESTION_GROUP_HEADING on subheading.Question_Group_Heading_Id equals questionGroupHeading.Question_Group_Heading_Id

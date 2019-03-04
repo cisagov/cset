@@ -68,8 +68,8 @@ export class QuestionExtrasComponent implements OnInit {
     public authSvc: AuthenticationService) { }
 
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
 
   /**
  * Shows/hides the "expand" section.
@@ -107,6 +107,13 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
+
+        // add questionIDs to related questions for debug if configured to do so
+        if (this.configSvc.showQuestionAndRequirementIDs()) {
+          this.tab.QuestionsList.forEach((q: any) => {
+            q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+          });
+        }
       }
     );
   }
@@ -380,7 +387,6 @@ export class QuestionExtrasComponent implements OnInit {
         });
         msg += "</ul>";
 
-        //this.dialog.open(OkayComponent, { data: { messageText: msg } });
         this.dialogRef = this.dialog.open(OkayComponent, {data: {messageText: msg}});
         this.dialogRef.componentInstance.hasHeader = true;
       });

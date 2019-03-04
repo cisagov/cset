@@ -24,6 +24,8 @@
 export interface QuestionResponse {
     QuestionGroups: QuestionGroup[];
     ApplicationMode: string;
+    QuestionCount: number;
+    RequirementCount: number;
 }
 
 export interface QuestionGroup {
