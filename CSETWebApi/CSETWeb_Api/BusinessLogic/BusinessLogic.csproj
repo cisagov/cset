@@ -249,7 +249,7 @@
     <Compile Include="BusinessManagers\ModuleCloner.cs" />
     <Compile Include="BusinessManagers\NoSuchUserException.cs" />
     <Compile Include="BusinessManagers\SalManager.cs" />
-    <Compile Include="BusinessManagers\StandardBuilderManager.cs" />
+    <Compile Include="BusinessManagers\ModuleBuilderManager.cs" />
     <Compile Include="Common\HtmlFromXamlConverter.cs" />
     <Compile Include="BusinessManagers\InformationTabData\InformationTabBuilder.cs" />
     <Compile Include="BusinessManagers\InformationTabData\QuestionDetailsContentViewModel.cs" />
