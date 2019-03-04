@@ -232,19 +232,16 @@ namespace CSETWeb_Api.BusinessManagers
                 answerIds = rm.GetActiveAnswerIds();
             }
 
+            List<int> docIDs = db.DOCUMENT_ANSWERS
+                .Where(x => answerIds.Contains(x.Answer_Id))
+                .Select(y => y.Document_Id)
+                .ToList();
 
-            var dfQuery =
-                from df in db.DOCUMENT_FILE
-                where (
-                    from ans in df.ANSWERs()
-                    where answerIds.Contains(ans.Answer_Id)
-                    select ans
-                ).Any()
-                select df;
+            var files = from df in db.DOCUMENT_FILE
+                        where docIDs.Contains(df.Document_Id)
+                        select df;
 
-            var files = dfQuery.ToList();
-
-            if (files == null || files.Count == 0)
+            if (files == null || files.Count() == 0)
             {
                 return list;
             }
