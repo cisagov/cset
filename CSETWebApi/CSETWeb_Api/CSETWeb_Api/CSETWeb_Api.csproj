@@ -1535,7 +1535,7 @@
     <Compile Include="Controllers\SALController.cs" />
     <Compile Include="Controllers\sal\GeneralSalController.cs" />
     <Compile Include="Controllers\SchemaController.cs" />
-    <Compile Include="Controllers\StandardBuilderController.cs" />
+    <Compile Include="Controllers\ModuleBuilderController.cs" />
     <Compile Include="Controllers\StandardsController.cs" />
     <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

@@ -55,7 +55,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
-        /// 
+        /// Clones requirements and their connecting rows into a new Set.
         /// </summary>
         /// <param name="copySet"></param>
         private void CloneRequirements(SETS copySet)
@@ -63,12 +63,18 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 // Iterate through all of the original requirements
-                var dbReq = db.NEW_REQUIREMENT
+
+                //var q = from rs in db.REQUIREMENT_SETS
+                //        from nr in db.NEW_REQUIREMENT.Where()
+
+
+                var reqList = db.NEW_REQUIREMENT
                     .Include(x => x.REQUIREMENT_SETS)
                     .Include(yz => yz.SETs())
                     .Where(z => z.SETs().FirstOrDefault().Set_Name == this.origSetName)
                     .ToList();
-                foreach (NEW_REQUIREMENT origReq in dbReq)
+
+                foreach (NEW_REQUIREMENT origReq in reqList)
                 {
                     // Clone REQUIREMENT_SETS
                     var dbReqSets = db.REQUIREMENT_SETS

@@ -339,7 +339,7 @@
     <Compile Include="ImportAssessment\Models\AllGeneralJsonModels.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
-    <Compile Include="Models\StandardBuilder.cs" />
+    <Compile Include="Models\ModuleBuilder.cs" />
     <Compile Include="Models\ConsoleLogger.cs" />
     <Compile Include="Models\ContactDetail.cs" />
     <Compile Include="Models\ContactSearchParameters.cs" />

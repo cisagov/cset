@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore;
 namespace CSETWeb_Api.BusinessManagers
 {
     /// <summary>
-    /// 
+    /// Provides logic to administer new custom Modules (Standards/Question Sets).
     /// </summary>
-    public class StandardBuilderManager
+    public class ModuleBuilderManager
     {
         /// <summary>
         /// 
@@ -24,7 +24,10 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 List<SetDetail> list = new List<SetDetail>();
 
-                var s = db.SETS.Where(x => x.Is_Custom).ToList();
+                var s = db.SETS
+                    // .Where(x => x.Is_Custom)
+                    .OrderBy(x => x.Full_Name)
+                    .ToList();
                 foreach (SETS set in s)
                 {
                     SetDetail sr = new SetDetail
@@ -159,22 +162,38 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            // Add or update the ASSESSMENT record
-            var dbSet = new SETS()
+            // Add or update the SETS record
+            var dbSet = db.SETS.Where(x => x.Set_Name == set.SetName).FirstOrDefault();
+            if (dbSet == null)
             {
-                Set_Name = set.SetName,
-                Full_Name = set.FullName,
-                Short_Name = set.ShortName,
-                Standard_ToolTip = set.Description,
-                Set_Category_Id = set.SetCategory == 0 ? null : set.SetCategory,
-                Is_Custom = set.IsCustom,
-                Is_Displayed = set.IsDisplayed
-            };
+                dbSet = new SETS()
+                {
+                    Set_Name = set.SetName,
+                    Full_Name = set.FullName,
+                    Short_Name = set.ShortName,
+                    Standard_ToolTip = set.Description,
+                    Set_Category_Id = set.SetCategory == 0 ? null : set.SetCategory,
+                    Is_Custom = set.IsCustom,
+                    Is_Displayed = set.IsDisplayed
+                };
 
-            db.SETS.Add(dbSet);
+                db.SETS.Add(dbSet);
+            }
+            else
+            {
+                dbSet.Full_Name = set.FullName;
+                dbSet.Short_Name = set.ShortName;
+                dbSet.Standard_ToolTip = set.Description;
+                dbSet.Set_Category_Id = set.SetCategory == 0 ? null : set.SetCategory;
+                dbSet.Is_Custom = set.IsCustom;
+                dbSet.Is_Displayed = set.IsDisplayed;
+
+                db.SETS.Update(dbSet);
+            }
+           
             db.SaveChanges();
 
-            return dbSet.Set_Name;
+            return set.SetName;
         }
 
 
@@ -1005,9 +1024,9 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="setName"></param>
         /// <returns></returns>
-        public StandardsResponse GetStandardStructure(string setName)
+        public ModuleResponse GetModuleStructure(string setName)
         {
-            StandardsResponse response = new StandardsResponse();
+            ModuleResponse response = new ModuleResponse();
 
             List<NEW_REQUIREMENT> reqs = new List<NEW_REQUIREMENT>();
 

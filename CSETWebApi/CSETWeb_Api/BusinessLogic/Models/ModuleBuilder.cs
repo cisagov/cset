@@ -188,11 +188,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     ////////////////////////////////////////////////////////////
     /// 
-    /// Classes related to Standards and Requirements
+    /// Classes related to Modules, Standards and Requirements
     /// 
     ////////////////////////////////////////////////////////////
 
-    public class StandardsResponse
+    public class ModuleResponse
     {
         public string SetFullName;
         public string SetShortName;

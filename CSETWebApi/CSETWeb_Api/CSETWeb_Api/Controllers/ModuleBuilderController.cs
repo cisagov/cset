@@ -15,21 +15,21 @@ using CSETWeb_Api.Helpers;
 namespace CSETWeb_Api.Controllers
 {
     /// <summary>
-    /// Houses all API calls used by the StandardBuilder logic.
+    /// Houses all API calls used by the ModuleBuilder logic.
     /// </summary>
-    public class StandardBuilderController : ApiController
+    public class ModuleBuilderController : ApiController
     {
         /// <summary>
-        /// Returns a list of 'stock' standards, plus any custom standards
-        /// owned by the current user.  Stock standards are marked as non-editable,
-        /// while custom standards are editable.
+        /// Returns a list of 'stock' modules (standards + question sets), plus any custom modules
+        /// owned by the current user.  Stock modules are marked as non-editable,
+        /// while custom modules are editable.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetCustomSets")]
         public List<SetDetail> GetCustomSetsList()
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetCustomSetList();
         }
 
@@ -41,7 +41,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetSetDetail")]
         public SetDetail GetSetDetail([FromUri] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetSetDetail(setName);
         }
 
@@ -55,7 +55,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/UpdateSetDetail")]
         public string UpdateSetDetail([FromBody]SetDetail setDetail)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.SaveSetDetail(setDetail);
         }
 
@@ -68,7 +68,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/CloneSet")]
         public SetDetail CloneSet([FromUri] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.CloneSet(setName);
         }
 
@@ -79,7 +79,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/DeleteSet")]
         public void DeleteSet([FromBody] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.DeleteSet(setName);
         }
 
@@ -91,7 +91,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetQuestionsForSet")]
         public QuestionListResponse GetQuestionsForSet([FromUri] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             QuestionListResponse response = m.GetQuestionsForSet(setName);
 
             return response;
@@ -108,7 +108,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetQuestionsOriginatingFromSet")]
         public List<int> GetQuestionsOriginatingFromSet([FromUri] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             List<int> response = m.GetQuestionsOriginatingFromSet(setName);
 
             return response;
@@ -125,7 +125,7 @@ namespace CSETWeb_Api.Controllers
                 return true;
             }
 
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.ExistsQuestionText(questionText);
         }
 
@@ -138,7 +138,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/AddCustomQuestion")]
         public void AddCustomQuestion([FromBody] SetQuestion request)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.AddCustomQuestion(request);
         }
 
@@ -151,7 +151,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/AddQuestions")]
         public void AddQuestion([FromBody] AddQuestionsRequest request)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             foreach (QuestionAdd add in request.QuestionList)
             {
                 SetQuestion r = new SetQuestion
@@ -170,7 +170,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/RemoveQuestion")]
         public void RemoveQuestion([FromBody] SetQuestion request)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.RemoveQuestion(request);
         }
 
@@ -179,7 +179,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetStandardCategories")]
         public List<CategoryEntry> GetStandardCategories()
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetStandardCategories();
         }
 
@@ -188,7 +188,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetCategoriesSubcategoriesGroupHeadings")]
         public CategoriesSubcategoriesGroupHeadings GetCategoriesSubcategoriesGroupHeadings()
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetCategoriesSubcategoriesGroupHeadings();
         }
 
@@ -197,7 +197,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/SearchQuestions")]
         public List<QuestionDetail> SearchQuestions([FromBody] QuestionSearch searchParms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.SearchQuestions(searchParms);
         }
 
@@ -206,7 +206,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/SetSalLevel")]
         public void SetSalLevel([FromBody] SalParms parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.SetSalLevel(parms);
         }
 
@@ -215,7 +215,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/UpdateQuestionText")]
         public void UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.UpdateQuestionText(parms.QuestionID, parms.QuestionText);
         }
 
@@ -224,7 +224,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/IsQuestionInUse")]
         public bool IsQuestionInUse([FromUri] int questionID)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.IsQuestionInUse(questionID);
         }
 
@@ -233,7 +233,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/UpdateHeadingText")]
         public void UpdateHeadingText([FromBody] HeadingUpdateParms parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.UpdateHeadingText(parms.PairID, parms.HeadingText);
         }
 
@@ -243,10 +243,10 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/builder/GetStandardStructure")]
-        public StandardsResponse GetStandardStructure([FromUri] string setName)
+        public ModuleResponse GetStandardStructure([FromUri] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
-            return m.GetStandardStructure(setName);
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            return m.GetModuleStructure(setName);
         }
 
 
@@ -259,7 +259,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/CreateRequirement")]
         public Requirement CreateRequirement([FromBody] Requirement parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.CreateRequirement(parms);
         }
 
@@ -274,7 +274,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetRequirement")]
         public Requirement GetRequirement([FromUri] string setName, [FromUri] int reqID)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetRequirement(setName, reqID);
         }
 
@@ -287,7 +287,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/UpdateRequirement")]
         public Requirement UpdateRequirement([FromBody] Requirement parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.UpdateRequirement(parms);
         }
 
@@ -300,7 +300,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/RemoveRequirement")]
         public void RemoveRequirement([FromBody] Requirement parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.RemoveRequirement(parms);
         }
 
@@ -313,7 +313,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetReferenceDocs")]
         public List<ReferenceDoc> GetReferenceDocs([FromUri] string setName, [FromUri] string filter)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetReferenceDocs(setName, filter);
         }
 
@@ -326,7 +326,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetReferenceDocsForSet")]
         public List<ReferenceDoc> GetReferenceDocs([FromUri] string setName)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetReferenceDocsForSet(setName);
         }
 
@@ -339,7 +339,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/GetReferenceDocDetail")]
         public ReferenceDoc GetReferenceDocDetail([FromUri] int id)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.GetReferenceDocDetail(id);
         }
 
@@ -348,7 +348,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/UpdateReferenceDocDetail")]
         public void UpdateReferenceDocDetail([FromBody] ReferenceDoc doc)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.UpdateReferenceDocDetail(doc);
         }
 
@@ -362,7 +362,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/SelectSetFile")]
         public void SelectSetFiles(SetFileSelection parms)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             m.SelectSetFile(parms);
         }
 
@@ -376,7 +376,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/AddDeleteRefDocToRequirement")]
         public ReferenceDocLists AddDeleteRefDocToRequirement([FromUri] int reqId, [FromUri] int docId, bool isSourceRef, [FromUri] string bookmark, [FromUri] bool add)
         {
-            StandardBuilderManager m = new StandardBuilderManager();
+            ModuleBuilderManager m = new ModuleBuilderManager();
             return m.AddDeleteRefDocToRequirement(reqId, docId, isSourceRef, bookmark, add);
         }
 
@@ -435,7 +435,7 @@ namespace CSETWeb_Api.Controllers
 
 
                         // Create a GEN_FILE entry, and a SET_FILES entry.
-                        StandardBuilderManager m = new StandardBuilderManager();
+                        ModuleBuilderManager m = new ModuleBuilderManager();
                         return m.RecordDocInDB(setName, filename, contentType, fileSize);
                     }
                 }

@@ -53,6 +53,9 @@ export class CustomSetComponent implements OnInit {
     this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
 
+  /**
+   * Ideally this should ensure that the Description exists, but 
+   */
   isSetReady() {
     if (!this.setDetail) {
       return false;
