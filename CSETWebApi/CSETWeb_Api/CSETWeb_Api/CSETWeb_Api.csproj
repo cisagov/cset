@@ -1517,6 +1517,7 @@
     <Compile Include="Controllers\AssessmentImportController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DemographicsController.cs" />
     <Compile Include="Controllers\DiagnosticController.cs" />
     <Compile Include="Controllers\ExcelExportController.cs" />
@@ -1526,10 +1527,13 @@
     <Compile Include="Controllers\FrameworkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\IRP2Controller.cs" />
+    <Compile Include="Controllers\MaturityController.cs" />
     <Compile Include="Controllers\ProtectedFeatureController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReferenceDocumentsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\RequiredDocumentationController.cs" />
     <Compile Include="Controllers\ResetPasswordController.cs" />
     <Compile Include="Controllers\ResourceLibraryController.cs" />
     <Compile Include="Controllers\SALController.cs" />
@@ -1559,6 +1563,9 @@
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
     <Folder Include="Model\" />
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\IRP2\" />
+    <Folder Include="Views\RequiredDocumentation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

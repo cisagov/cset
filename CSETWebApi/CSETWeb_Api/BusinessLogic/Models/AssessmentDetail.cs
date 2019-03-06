@@ -25,6 +25,10 @@ namespace CSETWeb_Api.Models
         public string CityOrSiteName;
         public string StateProvRegion;
 
+        public string Charter;
+        public string CreditUnion;
+        public string Assets;
+
         /// <summary>
         /// The last time the Assessment was altered.
         /// </summary>

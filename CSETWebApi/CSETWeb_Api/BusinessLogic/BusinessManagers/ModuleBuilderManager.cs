@@ -26,6 +26,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 var s = db.SETS
                     // .Where(x => x.Is_Custom)
+                    .Where(x => !x.Is_Deprecated)
                     .OrderBy(x => x.Full_Name)
                     .ToList();
                 foreach (SETS set in s)

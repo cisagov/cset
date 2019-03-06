@@ -8,7 +8,6 @@ using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
-using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -92,7 +91,7 @@ namespace CSETWeb_Api.Controllers
 
                 using (CSET_Context db = new CSET_Context())
                 {
-                    var existingFiles = db.GEN_FILE.Where(s => s.File_Name == genFile.File_Name && (s.Is_Uploaded??false)).ToList();
+                    var existingFiles = db.GEN_FILE.Where(s => s.File_Name == genFile.File_Name && (s.Is_Uploaded ?? false)).ToList();
                     if (existingFiles.Any(s => s.Doc_Num == genFile.Doc_Num))
                     {
                         var existingFile = existingFiles.FirstOrDefault(s => s.Doc_Num == genFile.Doc_Num);
@@ -100,11 +99,11 @@ namespace CSETWeb_Api.Controllers
                         await db.SaveChangesAsync();
                         return response;
                     }
-                    else if(existingFiles.Any())
+                    else if (existingFiles.Any())
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new Exception("Document could not be added.  Please change the file name and try again"));
                     }
-                    genFile.File_Type_=db.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                    genFile.File_Type_ = db.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
                     try
                     {
                         db.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
@@ -120,7 +119,7 @@ namespace CSETWeb_Api.Controllers
 
                 return response;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
 

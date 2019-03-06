@@ -8,7 +8,6 @@ using CSET_Main.Data.ControlData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
 using System.Collections.ObjectModel;
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
 using System.Diagnostics;

@@ -4,16 +4,9 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-
 using System.Linq;
-using System.Web;
-using CSETWeb_Api.Controllers;
 using CSETWeb_Api.Models;
-using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.Helpers;
 
@@ -96,6 +89,14 @@ namespace CSETWeb_Api.BusinessManagers
                     .FirstOrDefault() ==null ? false:true;                                
             }
 
+        }
+
+        public bool GetACET(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                return !(db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "ACET_V1" && x.Selected).FirstOrDefault() == null);
+            }
         }
 
 

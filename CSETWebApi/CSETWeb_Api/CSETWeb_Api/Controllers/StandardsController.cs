@@ -57,6 +57,17 @@ namespace CSETWeb_Api.Controllers
             return new StandardsManager().GetFramework(assessmentId);
         }
 
+        /// <summary>
+        /// Persists the current Standards selection in the database.
+        /// </summary>
+        [HttpGet]
+        [Route("api/standard/IsACET")]
+        public bool GetACETSelected()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            return new StandardsManager().GetACET(assessmentId);
+        }
+
         ///// <summary>
         ///// Returns the number of questions that are relevant for the selected standards.
         ///// 

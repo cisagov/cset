@@ -6,13 +6,8 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using DataLayerCore.Model;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CSETWeb_Api.BusinessLogic.Helpers

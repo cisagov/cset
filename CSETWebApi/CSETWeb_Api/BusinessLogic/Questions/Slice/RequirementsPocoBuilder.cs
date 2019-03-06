@@ -8,7 +8,6 @@ using CSET_Main.Questions.POCO;
 using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace CSET_Main.Questions.Slice

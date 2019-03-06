@@ -8,13 +8,7 @@ using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Markup;
 
 namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 {

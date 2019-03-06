@@ -739,6 +739,23 @@
             Import new standards into CSET
             </summary>
         </member>
+        <member name="T:CSETWeb_Api.Controllers.IRP2Controller">
+            <summary>
+            why is it IRP2 and not just IRP?
+            because Visual Studio is a steaming pile of garbage and it sees a ghost file where none exists.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.IRP2Controller.GetIRPList">
+            <summary>
+            Returns a list of all available documentation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.IRP2Controller.PersistSelectedIRP(CSETWeb_Api.BusinessLogic.Models.IRPModel)">
+            <summary>
+            Persists the selected required docs value to the database.
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
             <summary>
             Returns a list of all applicable Questions or Requirements for the assessment.
@@ -825,6 +842,22 @@
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.SaveAnswerParameter(CSETWeb_Api.Models.ParameterToken)">
             <summary>
             Persists an answer-level ("in-line", "local") Parameter change.
+            </summary>
+        </member>
+        <member name="T:CSETWeb_Api.Controllers.RequiredDocumentationController">
+            <summary>
+            Manages ASET Required Documentation for assessments.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.RequiredDocumentationController.GetRequiredDocumentsList">
+            <summary>
+            Returns a list of all available documentation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.RequiredDocumentationController.PersistSelectedRequiredDocuments(CSETWeb_Api.BusinessLogic.Models.RequiredDocument)">
+            <summary>
+            Persists the selected required docs value to the database.
             </summary>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ResetPasswordController.PostChangePassword(CSETWeb_Api.BusinessLogic.Models.ChangePassword)">
@@ -1004,6 +1037,11 @@
             </summary>
         </member>
         <member name="M:CSETWeb_Api.Controllers.StandardsController.GetFrameworkSelected">
+            <summary>
+            Persists the current Standards selection in the database.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardsController.GetACETSelected">
             <summary>
             Persists the current Standards selection in the database.
             </summary>

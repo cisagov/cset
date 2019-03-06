@@ -25,7 +25,6 @@ using CSETWeb_Api.Models;
 using DataAccess;
 using DataAccess.Model;
 using DataLayerCore.Model;
-using DataLayerCore.Model;
 
 namespace WebAPIFileUploadExample.Controllers
 {

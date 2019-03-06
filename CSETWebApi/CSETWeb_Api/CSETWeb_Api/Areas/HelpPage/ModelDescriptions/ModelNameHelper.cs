@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2018 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using System;
 using System.Globalization;
 using System.Linq;
@@ -34,3 +40,4 @@ namespace CSETWeb_Api.Areas.HelpPage.ModelDescriptions
         }
     }
 }
+

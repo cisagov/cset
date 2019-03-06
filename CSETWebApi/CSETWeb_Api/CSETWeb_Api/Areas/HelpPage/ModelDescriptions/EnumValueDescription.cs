@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2018 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 namespace CSETWeb_Api.Areas.HelpPage.ModelDescriptions
 {
     public class EnumValueDescription
@@ -9,3 +15,4 @@ namespace CSETWeb_Api.Areas.HelpPage.ModelDescriptions
         public string Value { get; set; }
     }
 }
+

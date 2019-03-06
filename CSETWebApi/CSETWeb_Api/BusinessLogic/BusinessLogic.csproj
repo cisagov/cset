@@ -174,7 +174,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -222,6 +221,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessManagers\Analysis\ACETDashboardManager.cs" />
     <Compile Include="BusinessManagers\Analysis\ChartData.cs" />
     <Compile Include="BusinessManagers\Analysis\ColorsList.cs" />
     <Compile Include="BusinessManagers\Analysis\DataRowsPie.cs" />
@@ -237,6 +237,7 @@
     <Compile Include="BusinessManagers\Analysis\usp_getStandardsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\AnswerManager.cs" />
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
+    <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
@@ -246,8 +247,11 @@
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\FrameworkInfoData.cs" />
+    <Compile Include="BusinessManagers\IRPManager.cs" />
+    <Compile Include="BusinessManagers\MaturityManager.cs" />
     <Compile Include="BusinessManagers\ModuleCloner.cs" />
     <Compile Include="BusinessManagers\NoSuchUserException.cs" />
+    <Compile Include="BusinessManagers\RequiredDocumentationManager.cs" />
     <Compile Include="BusinessManagers\SalManager.cs" />
     <Compile Include="BusinessManagers\ModuleBuilderManager.cs" />
     <Compile Include="Common\HtmlFromXamlConverter.cs" />
@@ -337,8 +341,14 @@
     <Compile Include="ImportAssessment\export\ExportAssessment.cs" />
     <Compile Include="ImportAssessment\Importer.cs" />
     <Compile Include="ImportAssessment\Models\AllGeneralJsonModels.cs" />
+    <Compile Include="Models\ACETDashboard.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
+    <Compile Include="Models\IRP.cs" />
+    <Compile Include="Models\MaturityAnswers.cs" />
+    <Compile Include="Models\MaturityAssessment.cs" />
+    <Compile Include="Models\MaturityComponent.cs" />
+    <Compile Include="Models\MaturityDomain.cs" />
     <Compile Include="Models\ModuleBuilder.cs" />
     <Compile Include="Models\ConsoleLogger.cs" />
     <Compile Include="Models\ContactDetail.cs" />
@@ -358,7 +368,9 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\PasswordModels.cs" />
     <Compile Include="Models\QuestionModels.cs" />
+    <Compile Include="Models\RequiredDocumentation.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\SalAnswers.cs" />
     <Compile Include="Models\Sals.cs" />
     <Compile Include="Models\Standard.cs" />
     <Compile Include="ImportAssessment\Models\UploadAssessmentModel.cs" />

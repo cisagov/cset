@@ -108,8 +108,6 @@ export class AuthenticationService {
         sessionStorage.clear();
         sessionStorage.setItem('email', email);
 
-        console.log(this.configSvc.config.appCode);
-
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(
                 {
