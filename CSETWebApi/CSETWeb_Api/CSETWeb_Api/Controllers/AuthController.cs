@@ -76,6 +76,7 @@ namespace CSETWeb_Api.Controllers
             TokenManager tm = new TokenManager();
             int currentUserId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? currentAssessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            string scope = tm.Payload(Constants.Token_Scope);
 
             // If the 'refresh' parm was sent, this is a pure refresh
             if (refresh != "*default*")
@@ -101,7 +102,8 @@ namespace CSETWeb_Api.Controllers
                 currentUserId,
                 tm.Payload(Constants.Token_TimezoneOffsetKey),
                 expSeconds,
-                currentAssessmentId);
+                currentAssessmentId,
+                scope);
 
             TokenResponse resp = new TokenResponse
             {

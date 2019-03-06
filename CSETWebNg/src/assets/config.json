@@ -1,4 +1,5 @@
 {
+    "appCode": "CSET",
     "appUrl": "https://csetac.inl.gov/",
     "apiUrl": "https://csetac.inl.gov/api/",
     "docUrl": "https://csetac.inl.gov/Documents/",

@@ -10,6 +10,7 @@ namespace DataLayerCore.Model
         public NEW_REQUIREMENT()
         {
             COMPONENT_STANDARD_QUESTIONS = new HashSet<COMPONENT_STANDARD_QUESTIONS>();
+            FINANCIAL_REQUIREMENTS = new HashSet<FINANCIAL_REQUIREMENTS>();
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             PARAMETER_REQUIREMENTS = new HashSet<PARAMETER_REQUIREMENTS>();
             REQUIREMENT_LEVELS = new HashSet<REQUIREMENT_LEVELS>();
@@ -58,6 +59,8 @@ namespace DataLayerCore.Model
         public virtual STANDARD_CATEGORY Standard_CategoryNavigation { get; set; }
         [InverseProperty("Requirement_")]
         public virtual ICollection<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
+        [InverseProperty("Requirement_")]
+        public virtual ICollection<FINANCIAL_REQUIREMENTS> FINANCIAL_REQUIREMENTS { get; set; }
         [InverseProperty("Requirement_")]
         public virtual ICollection<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
         [InverseProperty("Requirement_")]

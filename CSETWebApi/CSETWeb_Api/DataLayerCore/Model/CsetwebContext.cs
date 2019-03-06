@@ -54,9 +54,22 @@ namespace DataLayerCore.Model
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<Domain> Domain { get; set; }
         public virtual DbSet<DomainStandardCategory> DomainStandardCategory { get; set; }
+        public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
         public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
         public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
+        public virtual DbSet<FINANCIAL_ASSESSMENT_FACTORS> FINANCIAL_ASSESSMENT_FACTORS { get; set; }
+        public virtual DbSet<FINANCIAL_COMPONENTS> FINANCIAL_COMPONENTS { get; set; }
+        public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
+        public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
+        public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
+        public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
+        public virtual DbSet<FINANCIAL_HOURS_COMPONENT> FINANCIAL_HOURS_COMPONENT { get; set; }
+        public virtual DbSet<FINANCIAL_MATURITY> FINANCIAL_MATURITY { get; set; }
+        public virtual DbSet<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; }
+        public virtual DbSet<FINANCIAL_REQUIREMENTS> FINANCIAL_REQUIREMENTS { get; set; }
+        public virtual DbSet<FINANCIAL_REVIEWTYPE> FINANCIAL_REVIEWTYPE { get; set; }
+        public virtual DbSet<FINANCIAL_TIERS> FINANCIAL_TIERS { get; set; }
         public virtual DbSet<FINDING> FINDING { get; set; }
         public virtual DbSet<FINDING_CONTACT> FINDING_CONTACT { get; set; }
         public virtual DbSet<FRAMEWORK_TIERS> FRAMEWORK_TIERS { get; set; }
@@ -675,6 +688,8 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.DemographicsAssetId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Standard).IsUnicode(false);
             });
 
             modelBuilder.Entity<DEMOGRAPHICS_SIZE>(entity =>
@@ -805,6 +820,13 @@ namespace DataLayerCore.Model
                     .HasConstraintName("fk_domain_standardCategory");
             });
 
+            modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
+            {
+                entity.HasKey(e => new { e.Set_Name, e.Question_Id });
+
+                entity.Property(e => e.Set_Name).IsUnicode(false);
+            });
+
             modelBuilder.Entity<FILE_KEYWORDS>(entity =>
             {
                 entity.HasKey(e => new { e.Gen_File_Id, e.Keyword })
@@ -835,6 +857,173 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.File_Type1).IsUnicode(false);
 
                 entity.Property(e => e.Mime_Type).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<FINANCIAL_ASSESSMENT_FACTORS>(entity =>
+            {
+                entity.HasIndex(e => e.AssessmentFactor)
+                    .HasName("IX_FINANCIAL_ASSESSMENT_FACTORS")
+                    .IsUnique();
+
+                entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<FINANCIAL_COMPONENTS>(entity =>
+            {
+                entity.HasIndex(e => e.FinComponent)
+                    .HasName("IX_FINANCIAL_COMPONENTS")
+                    .IsUnique();
+
+                entity.Property(e => e.FinComponentId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<FINANCIAL_DETAILS>(entity =>
+            {
+                entity.HasKey(e => e.StmtNumber)
+                    .HasName("PK_FINANCIAL_TIERS");
+
+                entity.Property(e => e.StmtNumber).ValueGeneratedNever();
+
+                entity.HasOne(d => d.AssessmentFactor)
+                    .WithMany(p => p.FINANCIAL_DETAILS)
+                    .HasForeignKey(d => d.AssessmentFactorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_ASSESSMENT_FACTORS");
+
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.FINANCIAL_DETAILS)
+                    .HasForeignKey(d => d.DomainId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_DOMAINS");
+
+                entity.HasOne(d => d.FinComponent)
+                    .WithMany(p => p.FINANCIAL_DETAILS)
+                    .HasForeignKey(d => d.FinComponentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_COMPONENTS");
+
+                entity.HasOne(d => d.Maturity)
+                    .WithMany(p => p.FINANCIAL_DETAILS)
+                    .HasForeignKey(d => d.MaturityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_MATURITY");
+            });
+
+            modelBuilder.Entity<FINANCIAL_DOMAINS>(entity =>
+            {
+                entity.HasIndex(e => e.Domain)
+                    .HasName("IX_FINANCIAL_DOMAINS")
+                    .IsUnique();
+
+                entity.Property(e => e.DomainId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<FINANCIAL_FFIEC_MAPPINGS>(entity =>
+            {
+                entity.HasKey(e => new { e.StmtNumber, e.FFIECBookletsMapping })
+                    .HasName("PK_FINANCIAL_FFIEC_MAPPINGS_1");
+
+                entity.HasOne(d => d.StmtNumberNavigation)
+                    .WithMany(p => p.FINANCIAL_FFIEC_MAPPINGS)
+                    .HasForeignKey(d => d.StmtNumber)
+                    .HasConstraintName("FK_FINANCIAL_FFIEC_MAPPINGS_FINANCIAL_DETAILS");
+            });
+
+            modelBuilder.Entity<FINANCIAL_HOURS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Component, e.ReviewType })
+                    .HasName("PK_FINANCIAL_ASSESSMENT_HOURS");
+
+                entity.Property(e => e.Component).IsUnicode(false);
+
+                entity.Property(e => e.ReviewType).IsUnicode(false);
+
+                entity.Property(e => e.OtherSpecifyValue).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.FINANCIAL_HOURS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_FINANCIAL_HOURS_ASSESSMENTS");
+
+                entity.HasOne(d => d.ComponentNavigation)
+                    .WithMany(p => p.FINANCIAL_HOURS)
+                    .HasForeignKey(d => d.Component)
+                    .HasConstraintName("FK_FINANCIAL_HOURS_FINANCIAL_HOURS_COMPONENT");
+
+                entity.HasOne(d => d.ReviewTypeNavigation)
+                    .WithMany(p => p.FINANCIAL_HOURS)
+                    .HasForeignKey(d => d.ReviewType)
+                    .HasConstraintName("FK_FINANCIAL_HOURS_FINANCIAL_REVIEWTYPE");
+            });
+
+            modelBuilder.Entity<FINANCIAL_HOURS_COMPONENT>(entity =>
+            {
+                entity.Property(e => e.Component)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.FINANCIAL_HOURS_COMPONENT)
+                    .HasForeignKey(d => d.DomainId)
+                    .HasConstraintName("FK_FINANCIAL_HOURS_COMPONENT_FINANCIAL_DOMAINS");
+            });
+
+            modelBuilder.Entity<FINANCIAL_MATURITY>(entity =>
+            {
+                entity.HasIndex(e => e.MaturityLevel)
+                    .HasName("IX_FINANCIAL_MATURITY")
+                    .IsUnique();
+
+                entity.Property(e => e.MaturityId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<FINANCIAL_QUESTIONS>(entity =>
+            {
+                entity.HasKey(e => new { e.StmtNumber, e.Question_Id })
+                    .HasName("PK_FINANCIAL_QUESTIONS_1");
+
+                entity.HasOne(d => d.Question_)
+                    .WithMany(p => p.FINANCIAL_QUESTIONS)
+                    .HasForeignKey(d => d.Question_Id)
+                    .HasConstraintName("FK_FINANCIAL_QUESTIONS_NEW_QUESTION");
+
+                entity.HasOne(d => d.StmtNumberNavigation)
+                    .WithMany(p => p.FINANCIAL_QUESTIONS)
+                    .HasForeignKey(d => d.StmtNumber)
+                    .HasConstraintName("FK_FINANCIAL_QUESTIONS_FINANCIAL_DETAILS");
+            });
+
+            modelBuilder.Entity<FINANCIAL_REQUIREMENTS>(entity =>
+            {
+                entity.HasKey(e => new { e.StmtNumber, e.Requirement_Id });
+
+                entity.HasOne(d => d.Requirement_)
+                    .WithMany(p => p.FINANCIAL_REQUIREMENTS)
+                    .HasForeignKey(d => d.Requirement_Id)
+                    .HasConstraintName("FK_FINANCIAL_REQUIREMENTS_NEW_REQUIREMENT");
+
+                entity.HasOne(d => d.StmtNumberNavigation)
+                    .WithMany(p => p.FINANCIAL_REQUIREMENTS)
+                    .HasForeignKey(d => d.StmtNumber)
+                    .HasConstraintName("FK_FINANCIAL_REQUIREMENTS_FINANCIAL_DETAILS");
+            });
+
+            modelBuilder.Entity<FINANCIAL_REVIEWTYPE>(entity =>
+            {
+                entity.Property(e => e.ReviewType)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<FINANCIAL_TIERS>(entity =>
+            {
+                entity.HasKey(e => new { e.StmtNumber, e.Label })
+                    .HasName("PK_FINANCIAL_TIERS_1");
+
+                entity.HasOne(d => d.StmtNumberNavigation)
+                    .WithMany(p => p.FINANCIAL_TIERS)
+                    .HasForeignKey(d => d.StmtNumber)
+                    .HasConstraintName("FK_FINANCIAL_TIERS_FINANCIAL_DETAILS");
             });
 
             modelBuilder.Entity<FINDING>(entity =>
@@ -1288,6 +1477,12 @@ namespace DataLayerCore.Model
                     .HasForeignKey(d => d.Original_Set_Name)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NEW_QUESTION_SETS");
+
+                entity.HasOne(d => d.Universal_Sal_LevelNavigation)
+                    .WithMany(p => p.NEW_QUESTION)
+                    .HasForeignKey(d => d.Universal_Sal_Level)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_NEW_QUESTION_UNIVERSAL_SAL_LEVEL");
             });
 
             modelBuilder.Entity<NEW_QUESTION_LEVELS>(entity =>

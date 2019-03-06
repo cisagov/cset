@@ -57,6 +57,7 @@ namespace DataLayerCore.Model
         public bool IsEncryptedModule { get; set; }
         [Required]
         public bool? IsEncryptedModuleOpen { get; set; }
+        public bool IsACET { get; set; }
 
         [ForeignKey("Set_Category_Id")]
         [InverseProperty("SETS")]

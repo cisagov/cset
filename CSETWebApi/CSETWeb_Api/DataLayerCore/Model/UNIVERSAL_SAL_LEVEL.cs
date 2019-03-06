@@ -9,6 +9,7 @@ namespace DataLayerCore.Model
     {
         public UNIVERSAL_SAL_LEVEL()
         {
+            NEW_QUESTION = new HashSet<NEW_QUESTION>();
             NEW_QUESTION_LEVELS = new HashSet<NEW_QUESTION_LEVELS>();
             STANDARD_SELECTION = new HashSet<STANDARD_SELECTION>();
             STANDARD_TO_UNIVERSAL_MAP = new HashSet<STANDARD_TO_UNIVERSAL_MAP>();
@@ -23,6 +24,8 @@ namespace DataLayerCore.Model
         [StringLength(10)]
         public string Full_Name_Sal { get; set; }
 
+        [InverseProperty("Universal_Sal_LevelNavigation")]
+        public virtual ICollection<NEW_QUESTION> NEW_QUESTION { get; set; }
         [InverseProperty("Universal_Sal_LevelNavigation")]
         public virtual ICollection<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
         public virtual ICollection<STANDARD_SELECTION> STANDARD_SELECTION { get; set; }

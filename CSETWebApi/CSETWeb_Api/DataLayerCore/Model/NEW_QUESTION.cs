@@ -11,6 +11,7 @@ namespace DataLayerCore.Model
         {
             COMPONENT_QUESTIONS = new HashSet<COMPONENT_QUESTIONS>();
             COMPONENT_STANDARD_QUESTIONS = new HashSet<COMPONENT_STANDARD_QUESTIONS>();
+            FINANCIAL_QUESTIONS = new HashSet<FINANCIAL_QUESTIONS>();
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
             QUESTION_SUB_QUESTION = new HashSet<QUESTION_SUB_QUESTION>();
@@ -45,10 +46,15 @@ namespace DataLayerCore.Model
         [ForeignKey("Original_Set_Name")]
         [InverseProperty("NEW_QUESTION")]
         public virtual SETS Original_Set_NameNavigation { get; set; }
+        [ForeignKey("Universal_Sal_Level")]
+        [InverseProperty("NEW_QUESTION")]
+        public virtual UNIVERSAL_SAL_LEVEL Universal_Sal_LevelNavigation { get; set; }
         [InverseProperty("Question_")]
         public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
         [InverseProperty("Question_")]
         public virtual ICollection<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
+        [InverseProperty("Question_")]
+        public virtual ICollection<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; }
         [InverseProperty("Question_")]
         public virtual ICollection<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
         [InverseProperty("Question_")]

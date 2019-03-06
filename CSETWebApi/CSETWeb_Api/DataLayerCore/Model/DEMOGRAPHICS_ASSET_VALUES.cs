@@ -17,6 +17,8 @@ namespace DataLayerCore.Model
         [StringLength(50)]
         public string AssetValue { get; set; }
         public int? ValueOrder { get; set; }
+        [StringLength(50)]
+        public string Standard { get; set; }
 
         [InverseProperty("AssetValueNavigation")]
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }

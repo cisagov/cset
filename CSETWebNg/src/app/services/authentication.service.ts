@@ -67,7 +67,12 @@ export class AuthenticationService {
 
     checkLocal() {
         return this.http.post(this.apiUrl + 'auth/login/standalone',
-            JSON.stringify({ TzOffset: new Date().getTimezoneOffset() }), headers)
+            JSON.stringify(
+                {
+                    TzOffset: new Date().getTimezoneOffset(),
+                    Scope: this.configSvc.config.appCode
+                }
+            ), headers)
             .toPromise().then(
                 (response: LoginResponse) => {
                     if (response.Email === null || response.Email === undefined) {
@@ -103,8 +108,17 @@ export class AuthenticationService {
         sessionStorage.clear();
         sessionStorage.setItem('email', email);
 
+        console.log(this.configSvc.config.appCode);
+
         return this.http.post(this.apiUrl + 'auth/login',
-            JSON.stringify({ Email: email, Password: password, TzOffset: new Date().getTimezoneOffset() }), headers).pipe(
+            JSON.stringify(
+                {
+                    Email: email,
+                    Password: password,
+                    TzOffset: new Date().getTimezoneOffset(),
+                    Scope: this.configSvc.config.appCode
+                }
+            ), headers).pipe(
                 map((user: LoginResponse) => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     this.storeUserData(user);

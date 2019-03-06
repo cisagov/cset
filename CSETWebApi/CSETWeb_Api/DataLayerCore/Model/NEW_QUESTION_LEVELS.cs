@@ -10,6 +10,7 @@ namespace DataLayerCore.Model
         public int New_Question_Set_Id { get; set; }
         [StringLength(10)]
         public string Universal_Sal_Level { get; set; }
+        public int? IgnoreMe { get; set; }
 
         [ForeignKey("New_Question_Set_Id")]
         [InverseProperty("NEW_QUESTION_LEVELS")]

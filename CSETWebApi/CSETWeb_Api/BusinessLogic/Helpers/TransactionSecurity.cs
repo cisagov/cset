@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Helpers
         /// </param>
         /// <param name="assesmentId">Optionally brands the new token with an assessment ID in the payload</param>
         /// <returns></returns>
-        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId)
+        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, string appCode)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
@@ -73,7 +73,7 @@ namespace CSETWeb_Api.Helpers
                 { "exp", Utilities.UnixTime() + secondsUntilExpiry },
                 { Constants.Token_UserId, userId },
                 { Constants.Token_TimezoneOffsetKey, tzOffset },
-                { "scope", "CSET"}
+                { "scope", appCode}
             };
 
             

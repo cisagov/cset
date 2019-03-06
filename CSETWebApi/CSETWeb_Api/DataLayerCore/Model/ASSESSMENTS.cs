@@ -17,6 +17,7 @@ namespace DataLayerCore.Model
             Assessment_IRP = new HashSet<Assessment_IRP>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
+            FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
             PARAMETER_ASSESSMENT = new HashSet<PARAMETER_ASSESSMENT>();
@@ -66,6 +67,8 @@ namespace DataLayerCore.Model
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         [InverseProperty("Assessment_")]

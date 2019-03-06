@@ -103,14 +103,19 @@ namespace CSETWeb_Api.Controllers
         [Route("api/Demographics/AssetValues")]
         public async Task<List<DemographicsAssetValue>> GetAssetValues()
         {
-            List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await db.DEMOGRAPHICS_ASSET_VALUES.ToListAsync<DEMOGRAPHICS_ASSET_VALUES>();
+            TokenManager tm = new TokenManager();            
+            string scope = tm.Payload("scope");
+
+            List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await db.DEMOGRAPHICS_ASSET_VALUES
+                .Where(x => x.Standard == scope)
+                .ToListAsync();
             return assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList();
         }
 
         [Route("api/Demographics/Size")]
         public async Task<List<AssessmentSize>> GetSize()
         {
-            List<DEMOGRAPHICS_SIZE> assetValues = await db.DEMOGRAPHICS_SIZE.ToListAsync<DEMOGRAPHICS_SIZE>();
+            List<DEMOGRAPHICS_SIZE> assetValues = await db.DEMOGRAPHICS_SIZE.ToListAsync();
             return assetValues.OrderBy(a => a.ValueOrder).Select(s => new AssessmentSize() { DemographicId = s.DemographicId, Description = s.Description, Size = s.Size }).ToList();
         }
         #endregion

@@ -69,7 +69,7 @@ namespace DataLayerCore.Model
 
         public virtual int FillEmptyQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
-            if (assessment_Id.HasValue)
+            if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             int myrval = 0;
@@ -86,7 +86,7 @@ namespace DataLayerCore.Model
 
         public virtual IList<usp_GetOverallRankedCategoriesPage_Result> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
         {
-            if (assessment_id.HasValue)
+            if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_GetOverallRankedCategoriesPage_Result> myrval = null;
