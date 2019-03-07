@@ -103,6 +103,8 @@ namespace CSETWeb_Api.Controllers
         [Route("api/Demographics/AssetValues")]
         public async Task<List<DemographicsAssetValue>> GetAssetValues()
         {
+            // RKW - Get the calling application (scope) to filter the appropriate asset values.
+            //       The scope was set by the calling app during the login transaction and is stored in the JWT.
             TokenManager tm = new TokenManager();            
             string scope = tm.Payload("scope");
 

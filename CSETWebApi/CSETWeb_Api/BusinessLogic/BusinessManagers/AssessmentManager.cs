@@ -164,6 +164,10 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
+                    assessment.Charter = result.aa.Charter;
+                    assessment.CreditUnion = result.aa.CreditUnionName;
+                    assessment.Assets = result.aa.Assets;
+                    
                     // Fields located on the Overview page
                     assessment.ExecutiveSummary = result.ii.Executive_Summary;
                     assessment.AssessmentDescription = result.ii.Assessment_Description;
@@ -193,7 +197,10 @@ namespace CSETWeb_Api.BusinessManagers
                 AssessmentCreatedDate = assessment.CreatedDate,
                 AssessmentCreatorId = assessment.CreatorId,
                 Assessment_Date = assessment.AssessmentDate??DateTime.Now,
-                LastAccessedDate = assessment.LastModifiedDate
+                LastAccessedDate = assessment.LastModifiedDate,
+                Charter = assessment.Charter,
+                CreditUnionName = assessment.CreditUnion,
+                Assets = assessment.Assets
             };
 
             db.ASSESSMENTS.AddOrUpdate( dbAssessment, x=> x.Assessment_Id);
