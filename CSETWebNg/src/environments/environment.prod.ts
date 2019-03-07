@@ -27,7 +27,7 @@ export const environment = {
   apiUrl: '',
   docUrl: '',
   reportsUrl: '',
-  version: '9.0.0',
+  version: '9.0.1',
   helpContactEmail: '',
   helpContactPhone: ''
 };

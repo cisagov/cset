@@ -9,7 +9,6 @@ namespace DataLayerCore.Model
     {
         public STANDARD_CATEGORY()
         {
-            DomainStandardCategory = new HashSet<DomainStandardCategory>();
             NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
             STANDARD_CATEGORY_SEQUENCE = new HashSet<STANDARD_CATEGORY_SEQUENCE>();
         }

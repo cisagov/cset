@@ -6,9 +6,6 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
@@ -115,6 +112,57 @@ namespace DataLayerCore.Model
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetRankedQuestions_Result>();
+                     });
+            return myrval;
+        }
+
+
+        public virtual IList<usp_MaturityDetailsCalculations_Result> usp_MaturityDetailsCalculations(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_MaturityDetailsCalculations_Result> myrval = null;
+            this.LoadStoredProc("usp_MaturityDetailsCalculations")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_MaturityDetailsCalculations_Result>();
+                     });
+            return myrval;
+        }
+
+
+        public virtual IList<usp_StatementsReviewed_Result> usp_StatementsReviewed(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_StatementsReviewed_Result> myrval = null;
+            this.LoadStoredProc("usp_StatementsReviewed")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_StatementsReviewed_Result>();
+                     });
+            return myrval;
+        }
+
+
+        public virtual IList<usp_StatementsReviewedTabTotals_Result> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_StatementsReviewedTabTotals_Result> myrval = null;
+            this.LoadStoredProc("usp_StatementsReviewedTabTotals")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_StatementsReviewedTabTotals_Result>();
                      });
             return myrval;
         }

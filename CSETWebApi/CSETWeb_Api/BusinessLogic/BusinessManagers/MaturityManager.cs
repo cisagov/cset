@@ -16,7 +16,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             using (var db = new DataLayerCore.Model.CSET_Context())
             {
- //RKW                var data = db.usp_MaturityDetailsCalculations(assessmentId).ToList();
+                var data = db.usp_MaturityDetailsCalculations(assessmentId).ToList();
                 //I lost a couple of hours worth of work on this 
                 //and it is no where to be found in TFS
                 //I'm going to leave it until I have a good idea what is going on.

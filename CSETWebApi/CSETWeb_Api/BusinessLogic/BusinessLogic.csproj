@@ -221,6 +221,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessManagers\AdminTab\AdminSaveData.cs" />
+    <Compile Include="BusinessManagers\AdminTab\AdminTabData.cs" />
+    <Compile Include="BusinessManagers\AdminTab\AdminTabManager.cs" />
     <Compile Include="BusinessManagers\Analysis\ACETDashboardManager.cs" />
     <Compile Include="BusinessManagers\Analysis\ChartData.cs" />
     <Compile Include="BusinessManagers\Analysis\ColorsList.cs" />

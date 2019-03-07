@@ -1,0 +1,64 @@
+﻿//////////////////////////////// 
+// 
+//   Copyright 2018 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
+using DataLayerCore.Model;
+using System.Linq;
+
+namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
+{
+    public class AdminTabManager
+    {
+        public AdminTabData getTabData(int assessmentId)
+        {
+            AdminTabData rvalue = new AdminTabData();
+            using (var db = new CSET_Context())
+            {
+                var stmtCounts = db.usp_StatementsReviewed(assessmentId).ToList<usp_StatementsReviewed_Result>();
+
+                var totals = db.usp_StatementsReviewedTabTotals(assessmentId).ToList<usp_StatementsReviewedTabTotals_Result>();
+                foreach (var row in stmtCounts)
+                {
+                    rvalue.DetailData.Add(new FINANCIAL_HOURS_OVERRIDE(row));
+                }
+                foreach (var row in totals)
+                {
+                    rvalue.ReviewTotals.Add(new ReviewTotals() { Total = row.Totals, ReviewType = row.ReviewType });
+                    rvalue.GrandTotal = row.GrandTotal ?? 0;
+                }
+            }
+            return rvalue;
+        }
+
+        public void SaveData(int assessmentId, AdminSaveData save)
+        {
+            using (var db = new CSET_Context())
+            {
+                var item = db.FINANCIAL_HOURS.Where(x => x.Assessment_Id == assessmentId && x.Component == save.Component && x.ReviewType == save.ReviewType).FirstOrDefault();
+                if (item == null)
+                {
+                    db.FINANCIAL_HOURS.Add(new FINANCIAL_HOURS()
+                    {
+                        Assessment_Id = assessmentId,
+                        Component = save.Component,
+                        ReviewType = save.ReviewType,
+                        Hours = save.Hours,
+                        OtherSpecifyValue = save.OtherSpecifyValue,
+                        ReviewedCountOverride = save.ReviewedCountOverride == 0 ? null : save.ReviewedCountOverride
+                    });
+                    db.SaveChanges();
+                }
+                else
+                {
+                    item.Hours = save.Hours;
+                    item.OtherSpecifyValue = save.OtherSpecifyValue;
+                    item.ReviewedCountOverride = save.ReviewedCountOverride==0?null:save.ReviewedCountOverride;
+                    db.SaveChanges();
+                }
+            }
+        }
+    }
+}
