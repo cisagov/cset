@@ -20,9 +20,12 @@ namespace CSETWeb_Api.Controllers
     public class ModuleBuilderController : ApiController
     {
         /// <summary>
-        /// Returns a list of 'stock' modules (standards + question sets), plus any custom modules
-        /// owned by the current user.  Stock modules are marked as non-editable,
-        /// while custom modules are editable.
+        /// Returns a list of custom modules.
+        /// 
+        /// In the future, we may want to return all modules to allow the user
+        /// to clone a 'stock' module.  Currently we cannot prevent the user
+        /// from overwriting stock requirements or questions, so that functionality
+        /// is turned off.
         /// </summary>
         /// <returns></returns>
         [HttpGet]

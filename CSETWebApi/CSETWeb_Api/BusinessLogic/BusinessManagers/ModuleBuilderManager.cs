@@ -25,7 +25,7 @@ namespace CSETWeb_Api.BusinessManagers
                 List<SetDetail> list = new List<SetDetail>();
 
                 var s = db.SETS
-                    // .Where(x => x.Is_Custom)
+                    .Where(x => x.Is_Custom)
                     .Where(x => !x.Is_Deprecated)
                     .OrderBy(x => x.Full_Name)
                     .ToList();
@@ -136,7 +136,7 @@ namespace CSETWeb_Api.BusinessManagers
                     return;
                 }
 
-
+                // This should cascade delete everything
                 db.SETS.Remove(dbSet);
                 db.SaveChanges();
             }
