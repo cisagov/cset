@@ -16,7 +16,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
         }
         public List<FINANCIAL_HOURS_OVERRIDE> DetailData { get; set; }
         public List<ReviewTotals> ReviewTotals { get; set; }
-        public Decimal GrandTotal { get; set; }        
+        public Decimal GrandTotal { get; set; }
+        public List<usp_financial_attributes_result> Attributes { get; set; }
     }
 
     public class ReviewTotals

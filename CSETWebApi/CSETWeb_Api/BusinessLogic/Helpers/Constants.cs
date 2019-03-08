@@ -398,6 +398,13 @@ namespace BusinessLogic.Helpers
         public const string Integrity = "Integrity";
 
         public const string SIMPLE_SAL = "Simple";
+        //Maturity Levels
+        public const string IncompleteMaturity = "Incomplete";
+        public const string BaselineMaturity = "Baseline";
+        public const string EvolvinMaturity = "Evolving";
+        public const string IntermediateMaturity = "Intermediate";
+        public const string AdvancedMaturity = "Advanced";
+        public const string InnovativeMaturity = "Innovative";
     }
     
 

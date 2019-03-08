@@ -105,7 +105,15 @@ namespace CSETWeb_Api.Helpers
             }
         }
 
-        public async Task<bool> ResetPassword(String email, String subject) {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="subject"></param>
+        /// <param name="appCode"></param>
+        /// <returns></returns>
+        public async Task<bool> ResetPassword(string email, string subject, string appCode) {
             /**
              * get the user and make sure they exist
              * set the reset password flag
@@ -132,7 +140,7 @@ namespace CSETWeb_Api.Helpers
                 user.Salt = salt;
 
 
-                NotificationManager nm = new NotificationManager();
+                NotificationManager nm = new NotificationManager(appCode);
                 nm.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject);
                 
 

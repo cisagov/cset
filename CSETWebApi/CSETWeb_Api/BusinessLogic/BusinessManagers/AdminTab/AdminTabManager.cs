@@ -29,6 +29,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
                     rvalue.ReviewTotals.Add(new ReviewTotals() { Total = row.Totals, ReviewType = row.ReviewType });
                     rvalue.GrandTotal = row.GrandTotal ?? 0;
                 }
+                rvalue.Attributes = db.usp_financial_attributes(assessmentId).ToList();
             }
             return rvalue;
         }
@@ -60,5 +61,34 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
                 }
             }
         }
+
+        public void SaveDataAttribute(int assessmentId, AttributePair att)
+        {
+            using (var db = new CSET_Context())
+            {
+                var item = db.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentId && x.AttributeName == att.AttributeName).FirstOrDefault();
+                if (item == null)
+                {
+                    db.FINANCIAL_ASSESSMENT_VALUES.Add(new FINANCIAL_ASSESSMENT_VALUES()
+                    {
+                        Assessment_Id = assessmentId,
+                        AttributeName = att.AttributeName,
+                        AttributeValue = att.AttributeValue
+                    });
+                    db.SaveChanges();
+                }
+                else
+                {   
+                    item.AttributeValue = att.AttributeValue;
+                    db.SaveChanges();
+                }
+            }
+        }
+    }
+
+    public class AttributePair
+    {
+        public string AttributeName { get; set; }
+        public string AttributeValue { get; set; }
     }
 }

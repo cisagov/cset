@@ -241,13 +241,13 @@ export class QuestionExtrasComponent implements OnInit {
    */
   deleteDiscovery(findingToDelete) {
 
-    // Build a message whether the discovery has a title or not
-    let msg = "Are you sure you want to delete discovery '"
+    // Build a message whether the observation has a title or not
+    let msg = "Are you sure you want to delete observation '"
       + findingToDelete.Summary
       + "?'";
 
     if (findingToDelete.Summary === null) {
-      msg = "Are you sure you want to delete this discovery?";
+      msg = "Are you sure you want to delete this observation?";
     }
 
 

@@ -9,7 +9,7 @@ namespace DataLayerCore.Model
     {
         public IRP()
         {
-            Assessment_IRP = new HashSet<Assessment_IRP>();
+            ASSESSMENT_IRP = new HashSet<ASSESSMENT_IRP>();
         }
 
         [Key]
@@ -35,6 +35,6 @@ namespace DataLayerCore.Model
         [InverseProperty("IRP")]
         public virtual IRP_HEADER Header_ { get; set; }
         [InverseProperty("IRP_")]
-        public virtual ICollection<Assessment_IRP> Assessment_IRP { get; set; }
+        public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
     }
 }

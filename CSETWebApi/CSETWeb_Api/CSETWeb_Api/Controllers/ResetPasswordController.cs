@@ -167,7 +167,8 @@ namespace CSETWeb_Api.Controllers
 
 
         [HttpPost]
-        public async Task<IHttpActionResult> PostResetPassword([FromBody] SecurityQuestionAnswer answer)
+        [Route("api/ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword([FromBody] SecurityQuestionAnswer answer)
         {
             try
             {
@@ -183,7 +184,7 @@ namespace CSETWeb_Api.Controllers
                 if (IsSecurityAnswerCorrect(answer))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager();
-                    bool rval = await resetter.ResetPassword(answer.PrimaryEmail, "Password Reset");
+                    bool rval = await resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
                     if (rval)
                         return StatusCode(HttpStatusCode.OK);
                     else
@@ -221,7 +222,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/ResetPassword/SecurityQuestions")]
         [HttpGet]
         [ResponseType(typeof(List<SecurityQuestions>))]
-        public async Task<IHttpActionResult> GetSecurityQuestions([FromUri]string email)
+        public async Task<IHttpActionResult> GetSecurityQuestions([FromUri] string email, [FromUri] string appCode)
         {
             try
             {
@@ -238,10 +239,12 @@ namespace CSETWeb_Api.Controllers
                                                            }).ToListAsync<SecurityQuestions>();
                 //note that you don't have to provide a security question
                 //it will just reset if you don't 
-                if (questions.Count <= 0)
+                if (questions.Count == 0 
+                    || (questions[0].SecurityQuestion1 == null && questions[0].SecurityQuestion2 == null))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager();
-                    bool rval = await resetter.ResetPassword(email, "Password Reset");
+                    bool rval = await resetter.ResetPassword(email, "Password Reset", appCode);
+                    return Ok(new List<SecurityQuestions>());
                 }
 
 

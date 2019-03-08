@@ -38,18 +38,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             Validation_Approach = irp.Validation_Approach
                         };
 
-                        Assessment_IRP answer = db.Assessment_IRP.FirstOrDefault(i => i.IRP_.IRP_ID == irp.IRP_ID &&
+                        ASSESSMENT_IRP answer = db.ASSESSMENT_IRP.FirstOrDefault(i => i.IRP_.IRP_ID == irp.IRP_ID &&
                             i.Assessment_.Assessment_Id == assessmentId);
                         if (answer == null)
                         {
-                            answer = new Assessment_IRP()
+                            answer = new ASSESSMENT_IRP()
                             {
                                 Response = 0,
                                 Comment = ""
                             };
                             answer.IRP_ = db.IRP.FirstOrDefault(i => i.IRP_ID == irp.IRP_ID);
                             answer.Assessment_ = db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-                            db.Assessment_IRP.Add(answer);
+                            db.ASSESSMENT_IRP.Add(answer);
                         }
                         tempIRP.Response = answer.Response.Value;
                         tempIRP.Comment = answer.Comment;
@@ -71,7 +71,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                Assessment_IRP answer = db.Assessment_IRP.FirstOrDefault(i => i.IRP_Id == irp.IRP_Id &&
+                ASSESSMENT_IRP answer = db.ASSESSMENT_IRP.FirstOrDefault(i => i.IRP_Id == irp.IRP_Id &&
                     i.Assessment_.Assessment_Id == assessmentId);
                 if (answer != null)
                 {
@@ -80,13 +80,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
                 else
                 {
-                    answer = new Assessment_IRP()
+                    answer = new ASSESSMENT_IRP()
                     {
                         Response = irp.Response,
                         Comment = irp.Comment,
                     };
                     answer.Assessment_ = db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-                    db.Assessment_IRP.Add(answer);
+                    db.ASSESSMENT_IRP.Add(answer);
                 }
                 db.SaveChanges();
             }

@@ -17,6 +17,6 @@ namespace DataLayerCore.Model
         public string MaturityLevel { get; set; }
         public string Answer_Text { get; set; }
         public int acount { get; set; }
-        public decimal AnswerPercent { get; set; }
+        public double AnswerPercent { get; set; }
     }
 }

@@ -40,7 +40,7 @@ export class QuestionsService {
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
-   *   Discoveries - D
+   *   Discoveries (Observations) - D
    */
   public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D'];
 

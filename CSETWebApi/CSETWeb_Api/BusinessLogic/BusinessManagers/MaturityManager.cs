@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using CSETWeb_Api.BusinessLogic.Models;
+using DataLayerCore.Model;
+using BusinessLogic.Helpers;
+
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
@@ -10,127 +13,131 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public MaturityManager()
         { }
 
-        public IEnumerable<MaturityAnswers> GetMaturityAnswers(int assessmentId) {
+        public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
+        {
 
-            
 
-            using (var db = new DataLayerCore.Model.CSET_Context())
+
+            using (var db = new CSET_Context())
             {
                 var data = db.usp_MaturityDetailsCalculations(assessmentId).ToList();
-                //I lost a couple of hours worth of work on this 
-                //and it is no where to be found in TFS
-                //I'm going to leave it until I have a good idea what is going on.
-                //return CalculateComponentValues(data); 
-                return null;
+                return CalculateComponentValues(data);
             }
 
         }
 
-        public List<MaturityDomain> CalculateComponentValues(IEnumerable<MaturityAnswers> maturity)
+        public List<MaturityDomain> CalculateComponentValues(List<usp_MaturityDetailsCalculations_Result> maturity)
         {
-            using (var db = new DataLayerCore.Model.CSET_Context())
+            using (var db = new CSET_Context())
             {
                 var maturityDomains = new List<MaturityDomain>();
-                var domains = db.FINANCIAL_DOMAINS;
-                var standardCategories = db.FINANCIAL_DETAILS;
+                var domains = db.FINANCIAL_DOMAINS.ToList();
+                var standardCategories = db.FINANCIAL_DETAILS.ToList();
                 var sub_categories = from m in maturity
-                                     group new { m.DomainName, m.AssessmentFactor, m.Component }
-                                      by new { m.DomainName, m.AssessmentFactor, m.Component } into mk
+                                     group new { m.Domain, m.AssessmentFactor, m.FinComponent }
+                                      by new { m.Domain, m.AssessmentFactor, m.FinComponent } into mk
                                      select new
                                      {
-                                         mk.Key.DomainName,
+                                         mk.Key.Domain,
                                          mk.Key.AssessmentFactor,
-                                         mk.Key.Component
+                                         mk.Key.FinComponent
                                      };
 
                 foreach (var d in domains)
                 {
+
                     var maturityDomain = new MaturityDomain
                     {
                         DomainName = d.Domain,
                         Assessments = new List<MaturityAssessment>(),
-                        Sequence = maturity.FirstOrDefault(x => x.DomainName == d.Domain).Sequence
+                        Sequence = (int)maturity.FirstOrDefault(x => x.Domain == d.Domain).grouporder
                     };
-                    foreach (var s in standardCategories)
+                    var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Domain).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
+                    foreach (var s in partial_sub_categoy)
                     {
 
-                        if (d.Domain == s.Domain.Domain)
+
+                        var maturityAssessment = new MaturityAssessment
                         {
-                            var maturityAssessment = new MaturityAssessment
+                            AssessmentFactor = s,
+                            Components = new List<MaturityComponent>(),
+                            Sequence = (int)maturity.FirstOrDefault(x => x.AssessmentFactor == s).grouporder
+
+                        };
+                        var assessmentCategories = sub_categories.Where(x => x.AssessmentFactor == s);
+                        foreach (var c in assessmentCategories)
+                        {
+
+                            var component = new MaturityComponent
                             {
-                                AssessmentFactor = s.AssessmentFactor.AssessmentFactor,
-                                Components = new List<MaturityComponent>(),
-                                Sequence = maturity.FirstOrDefault(x => x.AssessmentFactor == s.AssessmentFactor.AssessmentFactor).Sequence
+                                ComponentName = c.FinComponent,
+                                Sequence = (int)maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).grouporder
 
                             };
-                            foreach (var c in sub_categories)
+                            var baseline = new SalAnswers
                             {
-                                if (c.AssessmentFactor == s.AssessmentFactor.AssessmentFactor)
-                                {
-                                    var component = new MaturityComponent
-                                    {
-                                        ComponentName = c.Component,
-                                        Sequence = maturity.FirstOrDefault(x => x.Component == c.Component).Sequence
 
-                                    };
-                                    var low = new SalAnswers
-                                    {
+                                Answered = Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100)
 
-                                        Answered = maturity.Where(x => x.Component == c.Component && x.SalLevel == "L").Count(x => x.Answer != "Y" || x.Answer != "A") == 0 ? 0 :
-                                            Convert.ToInt32((double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "L").Count(x => x.Answer == "Y" || x.Answer == "A") / (double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "L").Count() * 100)
+                            };
+                            var evolving = new SalAnswers
+                            {
 
-                                    };
-                                    var moderate = new SalAnswers
-                                    {
+                                Answered = Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()).AnswerPercent * 100)
 
-                                        Answered = maturity.Where(x => x.Component == c.Component && x.SalLevel == "M").Count(x => x.Answer != "Y" || x.Answer != "A") == 0 ? 0 :
-                                       Convert.ToInt32(((double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "M").Count(x => x.Answer == "Y" || x.Answer == "A") / (double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "M").Count()) * 100)
+                            };
+                            var intermediate = new SalAnswers
+                            {
 
-                                    };
-                                    var high = new SalAnswers
-                                    {
+                                Answered = Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100)
 
-                                        Answered = maturity.Where(x => x.Component == c.Component && x.SalLevel == "H").Count(x => x.Answer != "Y" || x.Answer != "A") == 0 ? 0 :
-                                            Convert.ToInt32(((double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "H").Count(x => x.Answer == "Y" || x.Answer == "A") / (double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "H").Count()) * 100)
+                            };
+                            var advanced = new SalAnswers
+                            {
 
-                                    };
-                                    var veryHigh = new SalAnswers
-                                    {
+                                Answered = Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100)
 
-                                        Answered = maturity.Where(x => x.Component == c.Component && x.SalLevel == "VH").Count(x => x.Answer != "Y" || x.Answer != "A") == 0 ? 0 :
-                                            Convert.ToInt32(((double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "VH").Count(x => x.Answer == "Y" || x.Answer == "A") / (double)maturity.Where(x => x.Component == c.Component && x.SalLevel == "VH").Count()) * 100)
+                            };
+                            var innovative = new SalAnswers
+                            {
 
-                                    };
-                                    component.Baseline = low.Answered;
-                                    component.Intermediate = moderate.Answered;
-                                    component.Advanced = high.Answered;
-                                    component.Innovative = veryHigh.Answered;
-                                    component.AssessedMaturityLevel = low.Answered < 100 ? "Incomplete" :
-                                                                            moderate.Answered < 100 ? "Baseline" :
-                                                                                high.Answered < 100 ? "Intermediate" :
-                                                                                    veryHigh.Answered < 100 ? "Advanced" :
-                                                                                        "Innovative";
+                                Answered = Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100)
 
-                                    maturityAssessment.Components.Add(component);
-                                }
-                            }
+                            };
+                            component.Baseline = baseline.Answered;
+                            component.Evolving = evolving.Answered;
+                            component.Intermediate = intermediate.Answered;
+                            component.Advanced = advanced.Answered;
+                            component.Innovative = innovative.Answered;
+                            component.AssessedMaturityLevel = baseline.Answered < 100 ? Constants.IncompleteMaturity :
+                                                                    evolving.Answered < 100 ? Constants.BaselineMaturity :
+                                                                        intermediate.Answered < 100 ? Constants.EvolvinMaturity :
+                                                                            advanced.Answered < 100 ? Constants.IntermediateMaturity :
+                                                                                innovative.Answered < 100 ? Constants.AdvancedMaturity :
+                                                                                "Innovative";
 
-                            maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == "Incomplete") ? "Incomplete" :
-                                                                           maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == "BaseLine") ? "BaseLine" :
-                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == "Intermediate") ? "Intermediate" :
-                                                                                   maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == "Advanced") ? "Advanced" :
-                                                                                       "Innovative";
-                            maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
-                            maturityDomain.Assessments.Add(maturityAssessment);
+                            maturityAssessment.Components.Add(component);
+
                         }
+
+                        maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
+                                                                       maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
+                                                                           maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.EvolvinMaturity) ? Constants.EvolvinMaturity :
+                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
+                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.AdvancedMaturity) ? Constants.BaselineMaturity :
+                                                                                   "Innovative";
+                        maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
+                        maturityDomain.Assessments.Add(maturityAssessment);
+
 
 
                     }
 
-                    maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == "Incomplete") ? "Incomplete" :
-                                                                           maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == "BaseLine") ? "BaseLine" :
-                                                                               maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == "Intermediate") ? "Intermediate" :
-                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == "Advanced") ? "Advanced" :
+                    maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
+                                                                           maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
+                                                                               maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.EvolvinMaturity) ? Constants.EvolvinMaturity :
+                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
+                                                                                    maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.AdvancedMaturity) ? Constants.BaselineMaturity :
                                                                                        "Innovative";
                     maturityDomain.Assessments = maturityDomain.Assessments.OrderBy(x => x.Sequence).ToList();
                     maturityDomains.Add(maturityDomain);

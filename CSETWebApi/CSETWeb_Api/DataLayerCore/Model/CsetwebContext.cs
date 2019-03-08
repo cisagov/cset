@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DataLayerCore.Model
 {
-    public partial class CSETWebContext : DbContext
+    public partial class CsetwebContext : DbContext
     {
-        public CSETWebContext()
+        public CsetwebContext()
         {
         }
 
-        public CSETWebContext(DbContextOptions<CSETWebContext> options)
+        public CsetwebContext(DbContextOptions<CsetwebContext> options)
             : base(options)
         {
         }
@@ -22,12 +22,11 @@ namespace DataLayerCore.Model
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
+        public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
         public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
         public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
-        public virtual DbSet<AggregatedCounter> AggregatedCounter { get; set; }
-        public virtual DbSet<Assessment_IRP> Assessment_IRP { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
@@ -42,7 +41,6 @@ namespace DataLayerCore.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
-        public virtual DbSet<Counter> Counter { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
@@ -52,13 +50,13 @@ namespace DataLayerCore.Model
         public virtual DbSet<DIAGRAM_TYPES_XML> DIAGRAM_TYPES_XML { get; set; }
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
-        public virtual DbSet<Domain> Domain { get; set; }
-        public virtual DbSet<DomainStandardCategory> DomainStandardCategory { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
         public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
         public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
         public virtual DbSet<FINANCIAL_ASSESSMENT_FACTORS> FINANCIAL_ASSESSMENT_FACTORS { get; set; }
+        public virtual DbSet<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
+        public virtual DbSet<FINANCIAL_ATTRIBUTES> FINANCIAL_ATTRIBUTES { get; set; }
         public virtual DbSet<FINANCIAL_COMPONENTS> FINANCIAL_COMPONENTS { get; set; }
         public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
         public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
@@ -83,17 +81,12 @@ namespace DataLayerCore.Model
         public virtual DbSet<GEN_SAL_NAMES> GEN_SAL_NAMES { get; set; }
         public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
-        public virtual DbSet<Hash> Hash { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<JWT> JWT { get; set; }
-        public virtual DbSet<Job> Job { get; set; }
-        public virtual DbSet<JobParameter> JobParameter { get; set; }
-        public virtual DbSet<JobQueue> JobQueue { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
-        public virtual DbSet<List> List { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
@@ -154,10 +147,6 @@ namespace DataLayerCore.Model
         public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
-        public virtual DbSet<Schema> Schema { get; set; }
-        public virtual DbSet<Server> Server { get; set; }
-        public virtual DbSet<Set> Set { get; set; }
-        public virtual DbSet<State> State { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
         public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
         public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
@@ -168,21 +157,16 @@ namespace DataLayerCore.Model
         public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
         public virtual DbSet<WEIGHT> WEIGHT { get; set; }
 
-        // Unable to generate entity type for table 'dbo.RequirementsCustomFramework'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.RequirementsSetsCustomFramework'. Please see the warning messages.
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=CSETWeb;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity<ADDRESS>(entity =>
             {
@@ -330,6 +314,26 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
             });
 
+            modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
+            {
+                entity.HasKey(e => e.Answer_Id)
+                    .HasName("PK__Assessme__36918F380D1C2E80");
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.ASSESSMENT_IRP)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
+
+                entity.HasOne(d => d.IRP_)
+                    .WithMany(p => p.ASSESSMENT_IRP)
+                    .HasForeignKey(d => d.IRP_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
+            });
+
             modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
             {
                 entity.HasKey(e => e.HEADER_RISK_LEVEL_ID)
@@ -392,33 +396,6 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.AVAILABLE_STANDARDS)
                     .HasForeignKey(d => d.Set_Name)
                     .HasConstraintName("FK_AVAILABLE_STANDARDS_SETS");
-            });
-
-            modelBuilder.Entity<AggregatedCounter>(entity =>
-            {
-                entity.HasIndex(e => new { e.Value, e.Key })
-                    .HasName("UX_HangFire_CounterAggregated_Key")
-                    .IsUnique();
-            });
-
-            modelBuilder.Entity<Assessment_IRP>(entity =>
-            {
-                entity.HasKey(e => e.Answer_Id)
-                    .HasName("PK__Assessme__36918F380D1C2E80");
-
-                entity.Property(e => e.Comment).IsUnicode(false);
-
-                entity.HasOne(d => d.Assessment_)
-                    .WithMany(p => p.Assessment_IRP)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
-
-                entity.HasOne(d => d.IRP_)
-                    .WithMany(p => p.Assessment_IRP)
-                    .HasForeignKey(d => d.IRP_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
@@ -640,12 +617,6 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
             });
 
-            modelBuilder.Entity<Counter>(entity =>
-            {
-                entity.HasIndex(e => new { e.Value, e.Key })
-                    .HasName("IX_HangFire_Counter_Key");
-            });
-
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
             {
                 entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
@@ -794,32 +765,6 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_DOCUMENT_FILE_DEMOGRAPHICS");
             });
 
-            modelBuilder.Entity<Domain>(entity =>
-            {
-                entity.HasKey(e => e.DomainName)
-                    .HasName("PK__Domain__64C17FF122A2788A");
-
-                entity.Property(e => e.DomainName)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<DomainStandardCategory>(entity =>
-            {
-                entity.HasKey(e => e.DominId)
-                    .HasName("PK__DomainSt__3434BB980CC533F3");
-
-                entity.Property(e => e.DomainName).IsUnicode(false);
-
-                entity.Property(e => e.Standard_Category).IsUnicode(false);
-
-                entity.HasOne(d => d.Standard_CategoryNavigation)
-                    .WithMany(p => p.DomainStandardCategory)
-                    .HasForeignKey(d => d.Standard_Category)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_domain_standardCategory");
-            });
-
             modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
             {
                 entity.HasKey(e => new { e.Set_Name, e.Question_Id });
@@ -866,6 +811,32 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<FINANCIAL_ASSESSMENT_VALUES>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.AttributeName });
+
+                entity.Property(e => e.AttributeName).IsUnicode(false);
+
+                entity.Property(e => e.AttributeValue).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.FINANCIAL_ASSESSMENT_VALUES)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_FINANCIAL_ASSESSMENT_VALUES_ASSESSMENTS");
+
+                entity.HasOne(d => d.AttributeNameNavigation)
+                    .WithMany(p => p.FINANCIAL_ASSESSMENT_VALUES)
+                    .HasForeignKey(d => d.AttributeName)
+                    .HasConstraintName("FK_FINANCIAL_ASSESSMENT_VALUES_FINANCIAL_ATTRIBUTES");
+            });
+
+            modelBuilder.Entity<FINANCIAL_ATTRIBUTES>(entity =>
+            {
+                entity.Property(e => e.AttributeName)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<FINANCIAL_COMPONENTS>(entity =>
@@ -1253,19 +1224,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Property_Value).IsUnicode(false);
             });
 
-            modelBuilder.Entity<Hash>(entity =>
-            {
-                entity.HasIndex(e => new { e.ExpireAt, e.Key })
-                    .HasName("IX_HangFire_Hash_Key");
-
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_Hash_ExpireAt");
-
-                entity.HasIndex(e => new { e.Key, e.Field })
-                    .HasName("UX_HangFire_Hash_Key_Field")
-                    .IsUnique();
-            });
-
             modelBuilder.Entity<IMPORTANCE>(entity =>
             {
                 entity.HasKey(e => e.Importance_Id)
@@ -1329,32 +1287,6 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<Job>(entity =>
-            {
-                entity.HasIndex(e => e.StateName)
-                    .HasName("IX_HangFire_Job_StateName");
-
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_Job_ExpireAt");
-            });
-
-            modelBuilder.Entity<JobParameter>(entity =>
-            {
-                entity.HasIndex(e => new { e.JobId, e.Name })
-                    .HasName("IX_HangFire_JobParameter_JobIdAndName");
-
-                entity.HasOne(d => d.Job)
-                    .WithMany(p => p.JobParameter)
-                    .HasForeignKey(d => d.JobId)
-                    .HasConstraintName("FK_HangFire_JobParameter_Job");
-            });
-
-            modelBuilder.Entity<JobQueue>(entity =>
-            {
-                entity.HasIndex(e => new { e.Queue, e.FetchedAt })
-                    .HasName("IX_HangFire_JobQueue_QueueAndFetchedAt");
-            });
-
             modelBuilder.Entity<LEVEL_NAMES>(entity =>
             {
                 entity.HasKey(e => e.Level_Name)
@@ -1363,15 +1295,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Level_Name)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<List>(entity =>
-            {
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_List_ExpireAt");
-
-                entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
-                    .HasName("IX_HangFire_List_Key");
             });
 
             modelBuilder.Entity<NAVIGATION_STATE>(entity =>
@@ -2390,43 +2313,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Symbol_Group_Title).IsUnicode(false);
             });
 
-            modelBuilder.Entity<Schema>(entity =>
-            {
-                entity.HasKey(e => e.Version)
-                    .HasName("PK_HangFire_Schema");
-
-                entity.Property(e => e.Version).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<Server>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<Set>(entity =>
-            {
-                entity.HasIndex(e => new { e.Id, e.ExpireAt })
-                    .HasName("IX_HangFire_Set_ExpireAt");
-
-                entity.HasIndex(e => new { e.Key, e.Value })
-                    .HasName("UX_HangFire_Set_KeyAndValue")
-                    .IsUnique();
-
-                entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
-                    .HasName("IX_HangFire_Set_Key");
-            });
-
-            modelBuilder.Entity<State>(entity =>
-            {
-                entity.HasIndex(e => e.JobId)
-                    .HasName("IX_HangFire_State_JobId");
-
-                entity.HasOne(d => d.Job)
-                    .WithMany(p => p.State)
-                    .HasForeignKey(d => d.JobId)
-                    .HasConstraintName("FK_HangFire_State_Job");
-            });
-
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>
             {
                 entity.HasKey(e => e.Universal_Area_Name)
@@ -2598,6 +2484,10 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Weight1).ValueGeneratedNever();
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

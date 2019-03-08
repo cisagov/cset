@@ -62,7 +62,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
 
                     foreach (IRP irp in header.IRP)
                     {
-                        Assessment_IRP answer = irp.Assessment_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
+                        ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
                         if (answer != null && answer.Response != 0)
                         {
                             summary.RiskCount[answer.Response.Value - 1]++;
@@ -78,23 +78,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                 db.SaveChanges();
             }
 
-            //MaturityManager matManager = new MaturityManager();
-            //List<MaturityDomain> domains = matManager.CalculateComponentValues(matManager.GetMaturityAnswers(assessmentId));
-            //for(int i = 0; i < domains.Count; i++)
-            //{
-            //    result.Domains[i] = new DashboardDomain() {
-            //        Maturity = domains[i].DomainMaturity,
-            //        Name = domains[i].DomainName
-            //    };
-            //}
-            result.Domains = new List<DashboardDomain>(5);
-            for (int i = 0; i < 5; i++)
+            result.Domains = new List<DashboardDomain>();
+            MaturityManager matManager = new MaturityManager();
+            List<MaturityDomain> domains = matManager.GetMaturityAnswers(assessmentId);
+            foreach (var d in domains)
             {
-                result.Domains.Add(new DashboardDomain()
+                result.Domains.Add(new DashboardDomain
                 {
-                    Maturity = "Incomplete",
-                    Name = "Domain " + (i + 1)
+                    Maturity = d.DomainMaturity,
+                    Name = d.DomainName
                 });
+
             }
 
             return result;

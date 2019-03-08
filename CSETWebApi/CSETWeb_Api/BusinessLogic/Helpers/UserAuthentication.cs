@@ -17,6 +17,7 @@ using DataLayerCore.Model;
 using Microsoft.Win32;
 using CSETWeb_Api.BusinessManagers;
 using System.IO;
+using System.Security.Principal;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -92,7 +93,9 @@ namespace CSETWeb_Api.Helpers
             }
 
 
-            primaryEmailSO = "localuser@myorg.org";
+            String name = WindowsIdentity.GetCurrent().Name;
+            name = string.IsNullOrWhiteSpace(name)?"Local":name;
+           primaryEmailSO = name + "@myorg.org";
             using (var db = new CSET_Context())
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
@@ -102,8 +105,8 @@ namespace CSETWeb_Api.Helpers
                     UserDetail ud = new UserDetail()
                     {
                         Email = primaryEmailSO,
-                        FirstName = "Local",
-                        LastName = "User"
+                        FirstName = name,
+                        LastName =  ""
                     };
                     UserCreateResponse userCreateResponse = um.CreateUser(ud);
 
@@ -129,8 +132,8 @@ namespace CSETWeb_Api.Helpers
             {
                 Token = token,
                 Email = primaryEmailSO,
-                UserFirstName = "Local",
-                UserLastName = "User",
+                UserFirstName = name,
+                UserLastName = "",
                 IsSuperUser = false,
                 PasswordResetRequired = false
             };

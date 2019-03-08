@@ -208,7 +208,7 @@ export class AuthenticationService {
     }
 
     getSecurityQuestionsList(email: string) {
-        return this.http.get(this.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email);
+        return this.http.get(this.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.config.appCode);
     }
 
     getSecurityQuestionsPotentialList() {

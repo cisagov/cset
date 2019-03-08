@@ -26,6 +26,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'app-reset-pass',
@@ -51,6 +52,7 @@ export class ResetPassComponent {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private configSvc: ConfigService,
         private auth: AuthenticationService,
         private emailSvc: EmailService) { }
 
@@ -97,13 +99,15 @@ export class ResetPassComponent {
     /**
      * Send the question and answer along with the user's email for validation
      * and if valid, sending of an email.
+     * Send the AppCode also, because the user is not currently logged in, so there is no JWT.
      */
     resetPassword() {
         this.loading = true;
         const ans: SecurityQuestionAnswer = {
             PrimaryEmail: this.model.email,
             QuestionText: this.securityQuestion,
-            AnswerText: this.securityAnswer
+            AnswerText: this.securityAnswer,
+            AppCode: this.configSvc.config.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)

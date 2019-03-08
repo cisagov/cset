@@ -44,7 +44,7 @@ export class DiscoveryTearoutsComponent implements OnInit {
   public constructor(private titleService: Title, private reportSvc: ReportService) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Discoveries Tear Out Sheets - CSET");
+    this.titleService.setTitle("Observations Tear Out Sheets - CSET");
 
     this.reportSvc.getReport('discoveries').subscribe(
       (r: any) => {

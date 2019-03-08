@@ -12,7 +12,7 @@ using Snickler.EFCore;
 
 namespace DataLayerCore.Model
 {
-    public class CSET_Context : CSETWebContext
+    public class CSET_Context : CsetwebContext
     {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -163,6 +163,22 @@ namespace DataLayerCore.Model
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_StatementsReviewedTabTotals_Result>();
+                     });
+            return myrval;
+        }
+
+        public virtual IList<usp_financial_attributes_result> usp_financial_attributes(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_financial_attributes_result> myrval = null;
+            this.LoadStoredProc("usp_financial_attributes")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_financial_attributes_result>();
                      });
             return myrval;
         }

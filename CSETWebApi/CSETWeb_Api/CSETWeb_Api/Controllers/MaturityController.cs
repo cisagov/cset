@@ -12,7 +12,7 @@ namespace CSETWeb_Api.Controllers
     [CSETAuthorize]
     public class MaturityController : ApiController
     {
-        
+
         [HttpGet]
         [Route("api/getMaturityResults")]
         public IHttpActionResult GetMaturityResults()
@@ -20,8 +20,8 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             MaturityManager manager = new MaturityManager();
             var maturity = manager.GetMaturityAnswers(assessmentId);
-            var domainMaturities = manager.CalculateComponentValues(maturity);
-            return Ok(domainMaturities);
+
+            return Ok(maturity);
         }
     }
 }

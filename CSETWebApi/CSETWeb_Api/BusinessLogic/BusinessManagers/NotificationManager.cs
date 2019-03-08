@@ -52,14 +52,38 @@ namespace CSETWeb_Api.BusinessLogic
             ConfigurationManager = manager;
         }
 
+
         /// <summary>
-        /// Constructor.
+        /// Creates an instance of NotificationManager that
+        /// uses the scope embedded in the JWT.
         /// </summary>
         public NotificationManager()
         {
             TokenManager tm = new TokenManager();
             this.Scope = tm.Payload("scope");
 
+            Initialize();
+        }
+
+
+        /// <summary>
+        /// Creates an instance of NotificationManager with a 
+        /// specified scope/appCode.
+        /// </summary>
+        /// <param name="appCode"></param>
+        public NotificationManager(string appCode)
+        {
+            this.Scope = appCode;
+
+            Initialize();
+        }
+
+
+        /// <summary>
+        /// Performs initialization common to any instantiation.
+        /// </summary>
+        private void Initialize()
+        {
             // Populate the app display names.
             this.appDisplayName.Add("CSET", "CSET");
             this.appDisplayName.Add("ACET", "ACET");

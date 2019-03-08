@@ -32,6 +32,7 @@ export interface SecurityQuestionAnswer {
     QuestionText?: string;
     AnswerText?: string;
     PrimaryEmail?: string;
+    AppCode?: string;
 }
 
 export interface ChangePassword {

@@ -12,11 +12,12 @@ namespace DataLayerCore.Model
             ANSWER = new HashSet<ANSWER>();
             ASSESSMENTS_REQUIRED_DOCUMENTATION = new HashSet<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
+            ASSESSMENT_IRP = new HashSet<ASSESSMENT_IRP>();
             ASSESSMENT_IRP_HEADER = new HashSet<ASSESSMENT_IRP_HEADER>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
-            Assessment_IRP = new HashSet<Assessment_IRP>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
+            FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
@@ -57,16 +58,18 @@ namespace DataLayerCore.Model
         public virtual ICollection<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         [InverseProperty("ASSESSMENT_")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Assessment_")]
-        public virtual ICollection<Assessment_IRP> Assessment_IRP { get; set; }
-        [InverseProperty("Assessment_")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
         [InverseProperty("Assessment_")]

@@ -4,17 +4,15 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayerCore.Model;
-using System.Collections.Generic;
-using System.Linq;
-using CSETWeb_Api.Models;
-using CSET_Main.Views.Questions.QuestionDetails;
 using CSET_Main.Data.ControlData;
 using CSET_Main.Questions.InformationTabData;
-using Nelibur.ObjectMapper;
+using CSET_Main.Views.Questions.QuestionDetails;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using DataLayerCore;
+using CSETWeb_Api.Models;
 using DataLayerCore.Model;
+using Nelibur.ObjectMapper;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWeb_Api.BusinessManagers
 {

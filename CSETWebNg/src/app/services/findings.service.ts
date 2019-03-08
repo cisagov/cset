@@ -59,7 +59,6 @@ export class FindingsService {
    * retrieves all the discoveries
    */
   getAllDiscoveries(answer_id: number) {
-    console.log('getAllDiscoveries: ' + answer_id);
     const qstring = 'AnswerAllDiscoveries?Answer_Id=' + answer_id;
     return this.http.post(this.configSvc.apiUrl + qstring, headers);
   }
