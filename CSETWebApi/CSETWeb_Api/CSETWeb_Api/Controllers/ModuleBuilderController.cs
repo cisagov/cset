@@ -80,10 +80,10 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/builder/DeleteSet")]
-        public void DeleteSet([FromBody] string setName)
+        public DeleteModuleResponse DeleteSet([FromBody] string setName)
         {
             ModuleBuilderManager m = new ModuleBuilderManager();
-            m.DeleteSet(setName);
+            return m.DeleteSet(setName);
         }
 
 

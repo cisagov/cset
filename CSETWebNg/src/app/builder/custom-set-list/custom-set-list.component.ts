@@ -112,7 +112,21 @@ export class SetListComponent implements OnInit {
 
   dropSet(setName: string) {
     this.setBuilderSvc.deleteSet(setName).subscribe(
-      (response: {}) => {
+      (response: any) => {
+        // display any messages
+        if (response.ErrorMessages.length > 0) {
+          let msg: string = "";
+          response.ErrorMessages.forEach(element => {
+            msg += element + "<br>";
+          });
+
+          this.dialog.open(AlertComponent, {
+            data: {
+              messageText: msg
+            }
+          });
+        }
+
         // refresh page
         this.getStandards();
       },

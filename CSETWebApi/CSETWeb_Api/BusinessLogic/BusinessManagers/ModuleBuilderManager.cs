@@ -119,27 +119,49 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// 
         /// </summary>
-        public void DeleteSet(string setName)
+        public DeleteModuleResponse DeleteSet(string setName)
         {
+            DeleteModuleResponse resp = new DeleteModuleResponse();
+
             using (var db = new CSET_Context())
             {
                 var dbSet = db.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
 
                 if (dbSet == null)
                 {
-                    return;
+                    return resp;
                 }
 
                 // Don't allow a non-custom set to be deleted
                 if (!dbSet.Is_Custom)
                 {
-                    return;
+                    return resp;
                 }
 
+                // See if the set to be deleted is the original set for other sets' requirements.
+                // If so, don't allow the delete.
+                var query = from req in db.NEW_REQUIREMENT
+                          join rs in db.REQUIREMENT_SETS on req.Requirement_Id equals rs.Requirement_Id
+                          where req.Original_Set_Name == setName
+                          && rs.Set_Name != req.Original_Set_Name
+                          select req;
+
+                if (query.ToList().Count > 0)
+                {                    
+                    resp.ErrorMessages.Add("Cannot perform delete. " +
+                        "One or more of this Module's requirements " +
+                        "are referenced by other Modules.");
+                    return resp;
+                }
+
+
                 // This should cascade delete everything
+                // db.NEW_REQUIREMENT.Remove();
                 db.SETS.Remove(dbSet);
                 db.SaveChanges();
             }
+
+            return resp;
         }
 
 
