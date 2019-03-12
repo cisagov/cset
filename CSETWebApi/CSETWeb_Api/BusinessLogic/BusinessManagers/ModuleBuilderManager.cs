@@ -155,8 +155,21 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
 
-                // This should cascade delete everything
-                // db.NEW_REQUIREMENT.Remove();
+                // Delete the Requirements first.  Waiting to let the SET delete cascade to the Requirements
+                // seems to get hung up on the Original_Set_Name FK.
+                query = from req in db.NEW_REQUIREMENT
+                        join rs in db.REQUIREMENT_SETS on req.Requirement_Id equals rs.Requirement_Id
+                        where rs.Set_Name == setName
+                        select req;
+
+                foreach (NEW_REQUIREMENT r in query.ToList())
+                {
+                    db.NEW_REQUIREMENT.Remove(r);
+                }
+                db.SaveChanges();
+
+
+                // This should cascade delete everything else
                 db.SETS.Remove(dbSet);
                 db.SaveChanges();
             }
