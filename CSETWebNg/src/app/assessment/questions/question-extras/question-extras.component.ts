@@ -40,7 +40,7 @@ import { Finding } from './../findings/findings.model';
   selector: 'app-question-extras',
   templateUrl: './question-extras.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionExtrasComponent implements OnInit {
 
@@ -355,8 +355,8 @@ export class QuestionExtrasComponent implements OnInit {
 
   documentUrl(document: CustomDocument) {
     return (document.Is_Uploaded ?
-              this.configSvc.apiUrl + '/ReferenceDocuments/'
-            : this.configSvc.docUrl)
+      this.configSvc.apiUrl + '/ReferenceDocuments/'
+      : this.configSvc.docUrl)
       + document.File_Name + '#' + document.Section_Ref;
   }
   /**
@@ -387,7 +387,7 @@ export class QuestionExtrasComponent implements OnInit {
         });
         msg += "</ul>";
 
-        this.dialogRef = this.dialog.open(OkayComponent, {data: {messageText: msg}});
+        this.dialogRef = this.dialog.open(OkayComponent, { data: { title: "Related Questions", iconClass: " ", messageText: msg } });
         this.dialogRef.componentInstance.hasHeader = true;
       });
   }
@@ -403,8 +403,8 @@ export class QuestionExtrasComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-        const url = this.fileSvc.downloadUrl + doc.Document_Id + "?token=" + response.Token;
-        window.open(url, "_blank");
+      const url = this.fileSvc.downloadUrl + doc.Document_Id + "?token=" + response.Token;
+      window.open(url, "_blank");
     });
   }
 

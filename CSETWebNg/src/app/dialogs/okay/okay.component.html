@@ -22,8 +22,8 @@
 --------------------------> 
 <div class="ok-dialog d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a" *ngIf="hasHeader">
-    <span class="mr-3 fs-base-6 cset-icons-bell"></span>
-    <span>Notification</span>
+    <span class="mr-3 fs-base-6 {{iconClass}}"></span>
+    <span>{{dialogTitle}}</span>
   </div>
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
     <div class="pr-3" *ngIf="data.messageText" [innerHTML]="data.messageText | safe"> 
