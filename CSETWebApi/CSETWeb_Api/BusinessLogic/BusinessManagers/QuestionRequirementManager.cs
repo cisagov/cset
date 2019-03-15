@@ -190,6 +190,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x=> x.Answer_Id);
             db.SaveChanges();

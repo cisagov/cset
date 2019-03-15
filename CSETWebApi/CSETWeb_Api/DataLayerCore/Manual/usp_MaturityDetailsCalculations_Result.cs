@@ -18,5 +18,6 @@ namespace DataLayerCore.Model
         public string Answer_Text { get; set; }
         public int acount { get; set; }
         public double AnswerPercent { get; set; }
+        public bool Complete { get; set; }
     }
 }

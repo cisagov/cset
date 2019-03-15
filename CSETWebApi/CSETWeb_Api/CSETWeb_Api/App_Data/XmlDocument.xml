@@ -764,13 +764,6 @@
             by sending in the 'group' argument.  I'm not sure we need this yet. 
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetApplicationMode(System.Int32)">
-            <summary>
-            Determines if the assessment is question or requirements based.
-            </summary>
-            <param name="assessmentId"></param>
-            <returns></returns>
-        </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.SetMode(System.String)">
             <summary>
             Sets the application mode to be question or requirements based.
@@ -781,6 +774,13 @@
             <summary>
             Gets the application mode (question or requirements based).
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetApplicationMode(System.Int32)">
+            <summary>
+            Determines if the assessment is question or requirements based.
+            </summary>
+            <param name="assessmentId"></param>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.StoreAnswer(CSETWeb_Api.Models.Answer)">
             <summary>

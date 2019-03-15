@@ -77,6 +77,7 @@ export class AssessmentComponent implements OnInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'prepare';
+    this.navSvc.activeResultsView = null;
   }
 
   selectItem(target: string) {

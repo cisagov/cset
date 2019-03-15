@@ -7,6 +7,7 @@
 using CSET_Main.Data.AssessmentData;
 using CSET_Main.Data.ControlData;
 using CSET_Main.SALS;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Helpers.sals;
@@ -57,7 +58,7 @@ namespace CSETWeb_Api.Controllers
                     };
                     sTANDARD_SELECTION = TinyMapper.Map<STANDARD_SELECTION>(rsal);
                     sTANDARD_SELECTION.Assessment_Id = asssessmentId;
-                    sTANDARD_SELECTION.Application_Mode = AssessmentModeData.QUESTIONS_BASED_APPLICATION_MODE;
+                    sTANDARD_SELECTION.Application_Mode = AssessmentModeData.DetermineDefaultApplicationMode();
                     db.STANDARD_SELECTION.Add(sTANDARD_SELECTION);
                     db.SaveChanges();
                 }

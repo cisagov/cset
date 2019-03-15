@@ -484,6 +484,21 @@ namespace CSET_Main.Questions.POCO
             }
         }
 
+        public bool? Reviewed
+        {
+            get
+            {
+                return Answer.Reviewed;
+            }
+            set
+            {
+                if (Answer.Reviewed != value)
+                {
+                    Answer.Reviewed = value;
+                }
+            }
+        }
+
         public bool IsComment
         {
             get

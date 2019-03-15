@@ -205,6 +205,7 @@
     <Compile Include="Model\FINANCIAL_DETAILS.cs" />
     <Compile Include="Model\FINANCIAL_DOMAINS.cs" />
     <Compile Include="Model\FINANCIAL_FFIEC_MAPPINGS.cs" />
+    <Compile Include="Model\FINANCIAL_GROUPS.cs" />
     <Compile Include="Model\FINANCIAL_HOURS.cs" />
     <Compile Include="Model\FINANCIAL_HOURS_COMPONENT.cs" />
     <Compile Include="Model\FINANCIAL_MATURITY.cs" />

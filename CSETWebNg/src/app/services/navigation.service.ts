@@ -47,6 +47,7 @@ export class NavigationService {
   treeControl: NestedTreeControl<NavTree> = new NestedTreeControl<NavTree>(x => observableOf(x.children));
   disableCollapse: boolean;
   private magic: string;
+  activeResultsView: string;
 
   constructor() {}
 
@@ -71,6 +72,7 @@ export class NavigationService {
   }
 
   selectItem(value: string) {
+    this.activeResultsView = value;
     this.itemSelected.emit(value);
   }
 }

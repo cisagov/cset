@@ -10,4 +10,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
         public Nullable<int> ReviewedCountOverride { get; set; }
         public string OtherSpecifyValue { get; set; }
     }
+
+    public class AdminSaveResponse
+    {
+        public int DocumentationTotal { get; set; }
+        public int InterviewTotal { get; set; }
+        public int GrandTotal { get; set; }
+        public int ReviewedTotal { get; set; }
+    }
 }

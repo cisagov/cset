@@ -54,6 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
+
   @ViewChild('acc') accordion: NgbAccordion;
 
   constructor(

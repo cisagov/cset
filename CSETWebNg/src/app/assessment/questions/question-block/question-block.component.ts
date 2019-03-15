@@ -51,8 +51,7 @@ export class QuestionBlockComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     private dialog: MatDialog,
-    public configSvc: ConfigService
-  ) { }
+    public configSvc: ConfigService) { }
 
   ngOnInit() {
     this.refreshReviewIndicator();
@@ -201,7 +200,8 @@ export class QuestionBlockComponent implements OnInit {
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
         Comment: q.Comment,
-        MarkForReview: q.MarkForReview
+        MarkForReview: q.MarkForReview,
+        Reviewed: q.Reviewed
       };
 
       subCatAnswers.Answers.push(answer);
@@ -236,7 +236,8 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      MarkForReview: q.MarkForReview
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed
     };
 
     this.refreshReviewIndicator();
@@ -259,7 +260,8 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      MarkForReview: q.MarkForReview
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed
     };
 
     this.refreshReviewIndicator();
@@ -301,18 +303,11 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: '',
-      MarkForReview: q.MarkForReview
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed
     };
 
     this.refreshReviewIndicator();
     this.questionsSvc.storeAnswer(newAnswer).subscribe();
-
-    // this.questionsSvc.storeAnswer(newAnswer).subscribe(
-    //   (response: number) => {
-    //     q.Answer_Id = response;
-    //   },
-    //   error => console.log('Error saving answer: ' + (<Error>error).message)
-    // );
-
   }
 }

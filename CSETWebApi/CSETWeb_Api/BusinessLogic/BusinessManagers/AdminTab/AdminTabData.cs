@@ -40,12 +40,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
 
         public usp_StatementsReviewed_Result Data { get { return r; } }
 
+        /// <summary>
+        /// The number of answers marked as Reviewed by the assessor.
+        /// </summary>
         public int StatementsReviewed
         {
             get
             {
-                return 0;
-                return r.ReviewedCountOverride == null ? r.acount??0 : r.ReviewedCountOverride??0;
+                return (r.ReviewedCount == null) ? 0 : (int)r.ReviewedCount;
             }
         }
      

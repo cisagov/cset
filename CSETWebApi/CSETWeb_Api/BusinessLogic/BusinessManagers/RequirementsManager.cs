@@ -151,7 +151,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
                     Comment = answer?.a.Comment,
-                    MarkForReview = answer?.a.Mark_For_Review ?? false
+                    MarkForReview = answer?.a.Mark_For_Review ?? false,
+                    Reviewed = answer?.a.Reviewed ?? false
                 };
                 if (answer != null)
                 {

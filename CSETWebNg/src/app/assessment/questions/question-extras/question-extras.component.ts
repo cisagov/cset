@@ -129,6 +129,17 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
+   *
+   * @param q
+   */
+  storeReviewed(e: any) {
+    this.defaultEmptyAnswer();
+    this.myQuestion.Reviewed = e.target.checked;
+    this.answer.Reviewed = this.myQuestion.Reviewed;
+    this.saveAnswer();
+  }
+
+  /**
    * Creates an Answer if one does not already exist.
    */
   defaultEmptyAnswer() {
@@ -139,7 +150,8 @@ export class QuestionExtrasComponent implements OnInit {
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
         Comment: '',
-        MarkForReview: false
+        MarkForReview: false,
+        Reviewed: false
       };
 
       this.answer = newAnswer;
@@ -156,6 +168,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.AnswerText = this.myQuestion.Answer;
     this.answer.AltAnswerText = this.myQuestion.AltAnswerText;
     this.answer.MarkForReview = this.myQuestion.MarkForReview;
+    this.answer.Reviewed = this.myQuestion.Reviewed;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
@@ -387,7 +400,10 @@ export class QuestionExtrasComponent implements OnInit {
         });
         msg += "</ul>";
 
-        this.dialogRef = this.dialog.open(OkayComponent, { data: { title: "Related Questions", iconClass: " ", messageText: msg } });
+        this.dialogRef = this.dialog.open(OkayComponent,
+          {
+            data: { title: "Related Questions", iconClass: "cset2-icons-q", messageText: msg }
+          });
         this.dialogRef.componentInstance.hasHeader = true;
       });
   }

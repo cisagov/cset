@@ -254,7 +254,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Answer_Id = answer?.a?.Answer_Id,
                     AltAnswerText = answer?.a?.Alternate_Justification,
                     Comment = answer?.a?.Comment,
-                    MarkForReview = answer?.a.Mark_For_Review ?? false
+                    MarkForReview = answer?.a.Mark_For_Review ?? false,
+                    Reviewed = answer?.a.Reviewed ?? false
                 };
                 if (answer != null)
                 {

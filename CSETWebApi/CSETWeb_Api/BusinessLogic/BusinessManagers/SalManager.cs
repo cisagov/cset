@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.BusinessLogic.Models;
-using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     standardSelection = TinyMapper.Map<STANDARD_SELECTION>(sals);
                     standardSelection.Assessment_Id = assessmentId;
-                    standardSelection.Application_Mode = AssessmentModeData.QUESTIONS_BASED_APPLICATION_MODE;
+                    standardSelection.Application_Mode = AssessmentModeData.DetermineDefaultApplicationMode();
 
                     db.STANDARD_SELECTION.Add(standardSelection);
                     db.SaveChanges();

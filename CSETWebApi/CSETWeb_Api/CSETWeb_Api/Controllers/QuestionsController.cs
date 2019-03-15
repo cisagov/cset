@@ -14,9 +14,11 @@ using CSET_Main.Views.Questions.QuestionDetails;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
+using CSET_Main.Data.AssessmentData;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -52,29 +54,6 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// Determines if the assessment is question or requirements based.
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        protected string GetApplicationMode(int assessmentId)
-        {
-            using (var db = new CSET_Context())
-            {
-                var mode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
-
-                if (mode == null)
-                {
-                    // default to Questions mode
-                    mode = "Q";
-                    SetMode(mode);
-                }
-
-                return mode;
-            }
-        }
-
-
-        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>
@@ -87,6 +66,7 @@ namespace CSETWeb_Api.Controllers
             qm.SetApplicationMode(mode);
         }
 
+
         /// <summary>
         /// Gets the application mode (question or requirements based).
         /// </summary>
@@ -97,15 +77,38 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             QuestionsManager qm = new QuestionsManager(assessmentId);
             string mode = GetApplicationMode(assessmentId).Trim().Substring(0, 1);
+
             if (String.IsNullOrEmpty(mode))
             {
-                SetMode("Q");
-                return "Q";
-            } else
+                mode = AssessmentModeData.DetermineDefaultApplicationModeAbbrev();
+                SetMode(mode);
+            }
+
+            return mode;
+        }
+
+
+        /// <summary>
+        /// Determines if the assessment is question or requirements based.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        protected string GetApplicationMode(int assessmentId)
+        {
+            using (var db = new CSET_Context())
             {
+                var mode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
+
+                if (mode == null)
+                {
+                    mode = AssessmentModeData.DetermineDefaultApplicationModeAbbrev();
+                    SetMode(mode);
+                }
+
                 return mode;
             }
         }
+
 
 
         /// <summary>

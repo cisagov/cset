@@ -24,16 +24,16 @@
 import { Component, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
-  Router
+  Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
 } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavigationService } from '../../services/navigation.service';
+import { NavigationService, NavTree } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {
   constructor(
@@ -42,6 +42,26 @@ export class ResultsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+
+    // Store the active results view based on the new navigation target
+    this.router.events.subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationEnd) {
+        const tree: UrlTree = this.router.parseUrl(event.urlAfterRedirects);
+        const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+        const s: UrlSegment[] = g.segments;
+
+        // Grab the segment following /results/ and set that as the active results view
+        for (let i: number = 0; i < s.length; i++) {
+          if (s[i].path === 'results') {
+            if (s.length >= (i + 2)) {
+              this.navSvc.activeResultsView = s[i + 1].path;
+              break;
+            }
+          }
+        }
+      }
+    });
+
     this.populateTree();
   }
 
@@ -50,25 +70,34 @@ export class ResultsComponent implements OnInit {
     this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route });
     });
+
+    // Jump to the previously active view (if known)
+    if (!!this.navSvc.activeResultsView) {
+      this.navSvc.selectItem(this.navSvc.activeResultsView);
+    }
   }
 
   populateTree() {
     const magic = this.navSvc.getMagic();
     this.navSvc.setTree([
-      { label: 'Analysis Dashboard', value: 'dashboard', children: [
-        { label: 'Control Priorities', value: 'ranked-questions', children: [] },
-        // { label: 'Overall Ranked Categories', value: 'overall-ranked-categories', children: [] },
-        { label: 'Standards Summary', value: 'standards-summary', children: [
-          { label: 'Ranked Categories', value: 'standards-ranked', children: [] },
-          { label: 'Results by Category', value: 'standards-results', children: [] }
-        ] },
-        // { label: 'Components Summary', value: 'components-summary', children: [
-        //   { label: 'Ranked Categories', value: 'components-ranked', children: [] },
-        //   { label: 'Results by Category', value: 'components-results', children: [] },
-        //   { label: 'Component Types', value: 'components-types', children: [] },
-        //   { label: 'Network Warnings', value: 'components-warnings', children: [] }
-        // ] },
-      ] },
+      {
+        label: 'Analysis Dashboard', value: 'dashboard', children: [
+          { label: 'Control Priorities', value: 'ranked-questions', children: [] },
+          // { label: 'Overall Ranked Categories', value: 'overall-ranked-categories', children: [] },
+          {
+            label: 'Standards Summary', value: 'standards-summary', children: [
+              { label: 'Ranked Categories', value: 'standards-ranked', children: [] },
+              { label: 'Results by Category', value: 'standards-results', children: [] }
+            ]
+          },
+          // { label: 'Components Summary', value: 'components-summary', children: [
+          //   { label: 'Ranked Categories', value: 'components-ranked', children: [] },
+          //   { label: 'Results by Category', value: 'components-results', children: [] },
+          //   { label: 'Component Types', value: 'components-types', children: [] },
+          //   { label: 'Network Warnings', value: 'components-warnings', children: [] }
+          // ] },
+        ]
+      },
       { label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] },
       { label: 'Reports', value: 'reports', children: [] }
     ], magic);

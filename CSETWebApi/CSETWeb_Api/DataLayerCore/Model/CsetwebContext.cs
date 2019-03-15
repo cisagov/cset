@@ -61,6 +61,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
         public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
         public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
+        public virtual DbSet<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
         public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
         public virtual DbSet<FINANCIAL_HOURS_COMPONENT> FINANCIAL_HOURS_COMPONENT { get; set; }
         public virtual DbSet<FINANCIAL_MATURITY> FINANCIAL_MATURITY { get; set; }
@@ -855,29 +856,10 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.StmtNumber).ValueGeneratedNever();
 
-                entity.HasOne(d => d.AssessmentFactor)
+                entity.HasOne(d => d.FinancialGroup)
                     .WithMany(p => p.FINANCIAL_DETAILS)
-                    .HasForeignKey(d => d.AssessmentFactorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_ASSESSMENT_FACTORS");
-
-                entity.HasOne(d => d.Domain)
-                    .WithMany(p => p.FINANCIAL_DETAILS)
-                    .HasForeignKey(d => d.DomainId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_DOMAINS");
-
-                entity.HasOne(d => d.FinComponent)
-                    .WithMany(p => p.FINANCIAL_DETAILS)
-                    .HasForeignKey(d => d.FinComponentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_COMPONENTS");
-
-                entity.HasOne(d => d.Maturity)
-                    .WithMany(p => p.FINANCIAL_DETAILS)
-                    .HasForeignKey(d => d.MaturityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_MATURITY");
+                    .HasForeignKey(d => d.FinancialGroupId)
+                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_GROUPS");
             });
 
             modelBuilder.Entity<FINANCIAL_DOMAINS>(entity =>
@@ -898,6 +880,33 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.FINANCIAL_FFIEC_MAPPINGS)
                     .HasForeignKey(d => d.StmtNumber)
                     .HasConstraintName("FK_FINANCIAL_FFIEC_MAPPINGS_FINANCIAL_DETAILS");
+            });
+
+            modelBuilder.Entity<FINANCIAL_GROUPS>(entity =>
+            {
+                entity.HasIndex(e => new { e.DomainId, e.AssessmentFactorId, e.FinComponentId, e.MaturityId })
+                    .HasName("IX_FINANCIAL_GROUPS")
+                    .IsUnique();
+
+                entity.HasOne(d => d.AssessmentFactor)
+                    .WithMany(p => p.FINANCIAL_GROUPS)
+                    .HasForeignKey(d => d.AssessmentFactorId)
+                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_ASSESSMENT_FACTORS");
+
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.FINANCIAL_GROUPS)
+                    .HasForeignKey(d => d.DomainId)
+                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_DOMAINS");
+
+                entity.HasOne(d => d.FinComponent)
+                    .WithMany(p => p.FINANCIAL_GROUPS)
+                    .HasForeignKey(d => d.FinComponentId)
+                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_COMPONENTS");
+
+                entity.HasOne(d => d.Maturity)
+                    .WithMany(p => p.FINANCIAL_GROUPS)
+                    .HasForeignKey(d => d.MaturityId)
+                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_MATURITY");
             });
 
             modelBuilder.Entity<FINANCIAL_HOURS>(entity =>

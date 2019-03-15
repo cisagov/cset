@@ -76,7 +76,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             };
                             var baseline = new SalAnswers
                             {
-
+                                UnAnswered = !maturity.FirstOrDefault(x=>x.FinComponent == c.FinComponent).Complete,
                                 Answered = Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100)
 
                             };
@@ -109,7 +109,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             component.Intermediate = intermediate.Answered;
                             component.Advanced = advanced.Answered;
                             component.Innovative = innovative.Answered;
-                            component.AssessedMaturityLevel = baseline.Answered < 100 ? Constants.IncompleteMaturity :
+                            component.AssessedMaturityLevel = baseline.UnAnswered ? Constants.IncompleteMaturity : 
+                                                                baseline.Answered < 100 ? Constants.SubBaselineMaturity :
                                                                     evolving.Answered < 100 ? Constants.BaselineMaturity :
                                                                         intermediate.Answered < 100 ? Constants.EvolvinMaturity :
                                                                             advanced.Answered < 100 ? Constants.IntermediateMaturity :

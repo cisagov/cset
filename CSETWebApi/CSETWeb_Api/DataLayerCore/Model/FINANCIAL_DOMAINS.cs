@@ -9,7 +9,7 @@ namespace DataLayerCore.Model
     {
         public FINANCIAL_DOMAINS()
         {
-            FINANCIAL_DETAILS = new HashSet<FINANCIAL_DETAILS>();
+            FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
             FINANCIAL_HOURS_COMPONENT = new HashSet<FINANCIAL_HOURS_COMPONENT>();
         }
 
@@ -20,7 +20,7 @@ namespace DataLayerCore.Model
         public int DomainId { get; set; }
 
         [InverseProperty("Domain")]
-        public virtual ICollection<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
+        public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
         [InverseProperty("Domain")]
         public virtual ICollection<FINANCIAL_HOURS_COMPONENT> FINANCIAL_HOURS_COMPONENT { get; set; }
     }

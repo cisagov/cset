@@ -5,6 +5,8 @@
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
+using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using DataLayerCore.Model;
 using System;
 using System.Diagnostics;
@@ -30,7 +32,7 @@ namespace CSET_Main.Data.AssessmentData
             if (this.standard == null)
                 this.standard = new STANDARD_SELECTION()
                 {
-                    Application_Mode = QUESTIONS_BASED_APPLICATION_MODE,
+                    Application_Mode = DetermineDefaultApplicationMode(),
                     Assessment_Id = assessmentId,
                     Selected_Sal_Level = Constants.SAL_LOW
                 };
@@ -104,6 +106,39 @@ namespace CSET_Main.Data.AssessmentData
                 return standard.Sort_Set_Name;
             else
                 return String.Empty;
+        }
+
+
+        /// <summary>
+        /// Normally default to Questions mode, 
+        /// but ACET should default to Requirements mode.
+        /// </summary>
+        /// <returns></returns>
+        public static string DetermineDefaultApplicationMode()
+        {
+            string defaultMode = QUESTIONS_BASED_APPLICATION_MODE;
+
+            // ACET defaults to Requirements mode
+            TokenManager tm = new TokenManager();
+            string scope = tm.Payload("scope");
+
+            if (scope == "ACET")
+            {
+                defaultMode = REQUIREMENTS_BASED_APPLICATION_MODE;
+            }
+
+            return defaultMode;
+        }
+
+
+        /// <summary>
+        /// Returns the first character of the default application mode,
+        /// 'Q' or 'R'.
+        /// </summary>
+        /// <returns></returns>
+        public static string DetermineDefaultApplicationModeAbbrev()
+        {
+            return DetermineDefaultApplicationMode().Substring(0, 1);
         }
     }
 }

@@ -13,7 +13,11 @@ namespace DataLayerCore.Model
         public string Component { get; set; }
         public string ReviewType { get; set; }
         public decimal Hours { get; set; }
-        public int? ReviewedCountOverride { get; set; }
+
+        /// <summary>
+        /// Answers marked as having been reviewed by the assessor.
+        /// </summary>
+        public int? ReviewedCount { get; set; }
         public string OtherSpecifyValue { get; set; }
         public int? DomainId { get; set; }
         public int PresentationOrder { get; set; }

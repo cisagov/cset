@@ -60,9 +60,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                         db.ASSESSMENT_IRP_HEADER.Add(headerInfo);
                     }
 
-                    foreach (IRP irp in header.IRP)
+                    List<IRP> irps = db.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                    foreach (IRP irp in irps)
                     {
-                        ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
+                        ASSESSMENT_IRP answer = db.ASSESSMENT_IRP.FirstOrDefault(a => a.IRP_Id == irp.IRP_ID && a.Assessment_Id == assessmentId);
+                        //ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
                         if (answer != null && answer.Response != 0)
                         {
                             summary.RiskCount[answer.Response.Value - 1]++;

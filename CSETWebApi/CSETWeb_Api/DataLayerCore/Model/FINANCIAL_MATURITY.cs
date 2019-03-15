@@ -9,7 +9,7 @@ namespace DataLayerCore.Model
     {
         public FINANCIAL_MATURITY()
         {
-            FINANCIAL_DETAILS = new HashSet<FINANCIAL_DETAILS>();
+            FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
         }
 
         [Key]
@@ -19,6 +19,6 @@ namespace DataLayerCore.Model
         public string MaturityLevel { get; set; }
 
         [InverseProperty("Maturity")]
-        public virtual ICollection<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
+        public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace DataLayerCore.Model
     {
         public int Assessment_Id { get; set; }
         public string AttributeName { get; set; }
-        public string AttribueValue { get; set; }
+        public string AttributeValue { get; set; }
     }
 }

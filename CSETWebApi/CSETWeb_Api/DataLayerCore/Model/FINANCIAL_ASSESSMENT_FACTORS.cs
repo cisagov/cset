@@ -9,7 +9,7 @@ namespace DataLayerCore.Model
     {
         public FINANCIAL_ASSESSMENT_FACTORS()
         {
-            FINANCIAL_DETAILS = new HashSet<FINANCIAL_DETAILS>();
+            FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
         }
 
         [Key]
@@ -20,6 +20,6 @@ namespace DataLayerCore.Model
         public int AssessmentFactorWeight { get; set; }
 
         [InverseProperty("AssessmentFactor")]
-        public virtual ICollection<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
+        public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
     }
 }

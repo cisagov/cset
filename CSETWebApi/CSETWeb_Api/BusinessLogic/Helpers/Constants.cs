@@ -400,6 +400,7 @@ namespace BusinessLogic.Helpers
         public const string SIMPLE_SAL = "Simple";
         //Maturity Levels
         public const string IncompleteMaturity = "Incomplete";
+        public const string SubBaselineMaturity = "Sub Baseline";
         public const string BaselineMaturity = "Baseline";
         public const string EvolvinMaturity = "Evolving";
         public const string IntermediateMaturity = "Intermediate";

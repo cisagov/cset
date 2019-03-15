@@ -18,10 +18,7 @@ namespace DataLayerCore.Model
         [StringLength(255)]
         public string Label { get; set; }
         public int StmtNumber { get; set; }
-        public int DomainId { get; set; }
-        public int AssessmentFactorId { get; set; }
-        public int FinComponentId { get; set; }
-        public int MaturityId { get; set; }
+        public int FinancialGroupId { get; set; }
         [Column("Binary Criteria ID")]
         public double? Binary_Criteria_ID { get; set; }
         [Column("Maturity Target")]
@@ -49,18 +46,9 @@ namespace DataLayerCore.Model
         [StringLength(255)]
         public string FFIEC_Booklets_Mapping { get; set; }
 
-        [ForeignKey("AssessmentFactorId")]
+        [ForeignKey("FinancialGroupId")]
         [InverseProperty("FINANCIAL_DETAILS")]
-        public virtual FINANCIAL_ASSESSMENT_FACTORS AssessmentFactor { get; set; }
-        [ForeignKey("DomainId")]
-        [InverseProperty("FINANCIAL_DETAILS")]
-        public virtual FINANCIAL_DOMAINS Domain { get; set; }
-        [ForeignKey("FinComponentId")]
-        [InverseProperty("FINANCIAL_DETAILS")]
-        public virtual FINANCIAL_COMPONENTS FinComponent { get; set; }
-        [ForeignKey("MaturityId")]
-        [InverseProperty("FINANCIAL_DETAILS")]
-        public virtual FINANCIAL_MATURITY Maturity { get; set; }
+        public virtual FINANCIAL_GROUPS FinancialGroup { get; set; }
         [InverseProperty("StmtNumberNavigation")]
         public virtual ICollection<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
         [InverseProperty("StmtNumberNavigation")]

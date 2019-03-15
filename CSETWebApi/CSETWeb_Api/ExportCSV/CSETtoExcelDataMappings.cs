@@ -63,6 +63,7 @@ namespace ExportCSV
                            Simple_Question = q.Simple_Question,
                            Answer_Text = a.Answer_Text,
                            Mark_For_Review = a.Mark_For_Review,
+                           Reviewed = a.Reviewed,
                            Is_Requirement = a.Is_Requirement,
                            Is_Component = a.Is_Component,
                            Is_Framework = a.Is_Framework,
@@ -91,6 +92,7 @@ namespace ExportCSV
                            Simple_Question = q.Requirement_Text,
                            Answer_Text = a.Answer_Text,
                            Mark_For_Review = a.Mark_For_Review,
+                           Reviewed = a.Reviewed,
                            Is_Requirement = a.Is_Requirement,
                            Is_Component = a.Is_Component,
                            Is_Framework = a.Is_Framework,
@@ -117,6 +119,7 @@ namespace ExportCSV
                             Simple_Question = q.Simple_Question,
                             Answer_Text = a.Answer_Text,
                             Mark_For_Review = a.Mark_For_Review,
+                            Reviewed = a.Reviewed,
                             Is_Requirement = a.Is_Requirement,
                             Is_Component = a.Is_Component,
                             Is_Framework = a.Is_Framework,
@@ -309,6 +312,7 @@ namespace ExportCSV
         public String Simple_Question { get; set; }
         public String Answer_Text { get; set; }
         public Boolean? Mark_For_Review { get; set; }
+        public Boolean? Reviewed { get; set; }
         public Boolean? Is_Question { get { return !Is_Requirement; } }
         public Boolean? Is_Requirement { get; set; }
         public Boolean? Is_Component { get; set; }

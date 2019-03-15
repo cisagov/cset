@@ -66,6 +66,11 @@ namespace CSETWeb_Api.Models
         public string AltAnswerText;
         public string Comment;
         public bool MarkForReview;
+        /// <summary>
+        /// Indicates an answer that has been reviewed.  
+        /// This field was added for NCUA/ACET support.
+        /// </summary>
+        public bool Reviewed;
         public bool HasComment { get; set; }        
         public bool HasDocument { get; set; }
         public int docnum { get; set; }
@@ -92,6 +97,12 @@ namespace CSETWeb_Api.Models
         public string AltAnswerText;
         public string Comment;
         public bool MarkForReview;
+
+        /// <summary>
+        /// Indicates an answer that has been reviewed.  
+        /// This field was added for NCUA/ACET support.
+        /// </summary>
+        public bool Reviewed;
     }
 
 

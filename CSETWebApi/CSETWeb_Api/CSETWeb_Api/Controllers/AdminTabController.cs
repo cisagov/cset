@@ -11,27 +11,25 @@ using System.Web.Http;
 namespace CSETWeb_Api.Controllers
 {
 
-    //[CSETAuthorize]
+    [CSETAuthorize]
     public class AdminTabController : ApiController
     {
         [HttpPost,HttpGet]
         [Route("api/admintab/Data")]
         public AdminTabData GetList()
         {
-            //int assessmentId = Auth.AssessmentForUser();                        
-            int assessmentId = 84;
+            int assessmentId = Auth.AssessmentForUser();                                    
             AdminTabManager manager = new AdminTabManager();
             return manager.getTabData(assessmentId);            
         }
 
         [HttpPost]
         [Route("api/admintab/save")]
-        public void SaveData([FromBody]AdminSaveData save)
+        public AdminSaveResponse SaveData([FromBody]AdminSaveData save)
         {
             int assessmentId = Auth.AssessmentForUser();                       
             AdminTabManager manager = new AdminTabManager();
-            manager.SaveData(assessmentId, save);
-
+            return manager.SaveData(assessmentId, save);
         }
 
 
@@ -39,8 +37,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/admintab/saveattribute")]
         public void SaveDataAttribute([FromBody] AttributePair attribute)
         {
-            //int assessmentId = Auth.AssessmentForUser();
-            int assessmentId = 84;
+            int assessmentId = Auth.AssessmentForUser();            
             AdminTabManager manager = new AdminTabManager();
             manager.SaveDataAttribute(assessmentId, attribute);
 

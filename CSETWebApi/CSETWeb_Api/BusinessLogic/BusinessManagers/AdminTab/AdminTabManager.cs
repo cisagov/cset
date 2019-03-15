@@ -34,7 +34,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
             return rvalue;
         }
 
-        public void SaveData(int assessmentId, AdminSaveData save)
+        public AdminSaveResponse SaveData(int assessmentId, AdminSaveData save)
         {
             using (var db = new CSET_Context())
             {
@@ -56,9 +56,36 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
                 {
                     item.Hours = save.Hours;
                     item.OtherSpecifyValue = save.OtherSpecifyValue;
-                    item.ReviewedCountOverride = save.ReviewedCountOverride==0?null:save.ReviewedCountOverride;
+                    item.ReviewedCountOverride = save.ReviewedCountOverride == 0 ? null : save.ReviewedCountOverride;
                     db.SaveChanges();
                 }
+
+
+                // Get totals for AdminSaveResponse
+                AdminSaveResponse resp = new AdminSaveResponse
+                {
+                    DocumentationTotal = 0,
+                    InterviewTotal = 0,
+                    GrandTotal = 0,
+                    ReviewedTotal = 0
+                };
+                AdminTabData d = getTabData(assessmentId);
+                foreach (var t in d.ReviewTotals)
+                {
+                    switch (t.ReviewType.ToLower())
+                    {
+                        case "documentation":
+                            resp.DocumentationTotal += (int)t.Total;
+                            break;
+                        case "interview process":
+                            resp.InterviewTotal += (int)t.Total;
+                            break;
+                    }                    
+                };
+                resp.GrandTotal = (int)d.GrandTotal;
+                //resp.ReviewedTotal = ???;
+
+                return resp;
             }
         }
 
@@ -78,7 +105,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
                     db.SaveChanges();
                 }
                 else
-                {   
+                {
                     item.AttributeValue = att.AttributeValue;
                     db.SaveChanges();
                 }
