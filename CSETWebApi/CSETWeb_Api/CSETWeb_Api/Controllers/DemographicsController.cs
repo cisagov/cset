@@ -109,7 +109,7 @@ namespace CSETWeb_Api.Controllers
             string scope = tm.Payload("scope");
 
             List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await db.DEMOGRAPHICS_ASSET_VALUES
-                .Where(x => x.Standard == scope)
+                .Where(x => x.AppCode == scope)
                 .ToListAsync();
             return assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList();
         }

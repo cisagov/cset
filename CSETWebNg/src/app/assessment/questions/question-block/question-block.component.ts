@@ -200,8 +200,7 @@ export class QuestionBlockComponent implements OnInit {
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
         Comment: q.Comment,
-        MarkForReview: q.MarkForReview,
-        Reviewed: q.Reviewed
+        MarkForReview: q.MarkForReview
       };
 
       subCatAnswers.Answers.push(answer);
@@ -236,8 +235,7 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
+      MarkForReview: q.MarkForReview
     };
 
     this.refreshReviewIndicator();
@@ -260,8 +258,7 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
+      MarkForReview: q.MarkForReview
     };
 
     this.refreshReviewIndicator();
@@ -303,8 +300,7 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: '',
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
+      MarkForReview: q.MarkForReview
     };
 
     this.refreshReviewIndicator();

@@ -129,17 +129,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   *
-   * @param q
-   */
-  storeReviewed(e: any) {
-    this.defaultEmptyAnswer();
-    this.myQuestion.Reviewed = e.target.checked;
-    this.answer.Reviewed = this.myQuestion.Reviewed;
-    this.saveAnswer();
-  }
-
-  /**
    * Creates an Answer if one does not already exist.
    */
   defaultEmptyAnswer() {
@@ -150,8 +139,7 @@ export class QuestionExtrasComponent implements OnInit {
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
         Comment: '',
-        MarkForReview: false,
-        Reviewed: false
+        MarkForReview: false
       };
 
       this.answer = newAnswer;
@@ -168,7 +156,6 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.AnswerText = this.myQuestion.Answer;
     this.answer.AltAnswerText = this.myQuestion.AltAnswerText;
     this.answer.MarkForReview = this.myQuestion.MarkForReview;
-    this.answer.Reviewed = this.myQuestion.Reviewed;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);

@@ -29,12 +29,13 @@ import { EmailService } from '../../services/email.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material';
 import { ChangeDetectorRef } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 
 export class RegisterComponent implements OnInit {
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private auth: AuthenticationService,
+    private configSvc: ConfigService,
     private emailSvc: EmailService,
     private dialog: MatDialog
   ) { }
@@ -69,6 +71,9 @@ export class RegisterComponent implements OnInit {
     }
     // save a reference to the dialog - it disappears on error
     const dialogRef = this.dialog;
+
+    // tell the API which app we are, for emailing purposes.
+    this.model.AppCode = this.configSvc.config.appCode;
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {

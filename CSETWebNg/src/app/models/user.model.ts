@@ -47,6 +47,7 @@ export interface CreateUser {
   SecurityAnswer1?: string;
   SecurityQuestion2?: string;
   SecurityAnswer2?: string;
+  AppCode?: string;
 }
 
 export interface PotentialQuestions {

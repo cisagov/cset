@@ -9,6 +9,7 @@ using System.Linq;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -41,8 +42,8 @@ namespace CSETWeb_Api.BusinessManagers
                 var query = from sc in db.SETS_CATEGORY
                             from s in db.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
                                 && !set.Is_Deprecated
-                                && (!set.IsEncryptedModule 
-                                || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen??true)))
+                                && (!set.IsEncryptedModule
+                                || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? true)))
                                 )
                             select new { s, sc.Set_Category_Name };
 
@@ -86,7 +87,7 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 return db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "NCSF_V1" && x.Selected)
-                    .FirstOrDefault() ==null ? false:true;                                
+                    .FirstOrDefault() == null ? false : true;
             }
 
         }
@@ -186,12 +187,28 @@ namespace CSETWeb_Api.BusinessManagers
         /// Returns a list of 'default' standards for a 'basic' assessment.
         /// This has been decided to be the 'Key' set, rather than using the demographics
         /// to look up sets in the SECTOR_STANDARD_RECOMMENDATIONS table as before.
+        /// 
+        /// If the calling app is CSET, default to 'Key'.
+        /// If the calling app is ACET, default to 'ACET_V1'.
+        /// 
         /// </summary>
         /// <returns></returns>
         private List<string> GetDefaultStandardsList()
         {
+            TokenManager tm = new TokenManager();
+            var appCode = tm.Payload("scope");
+
             List<string> basicStandards = new List<string>();
-            basicStandards.Add("Key");
+
+            switch (appCode.ToLower())
+            {
+                case "cset":
+                    basicStandards.Add("Key");
+                    break;
+                case "acet":
+                    basicStandards.Add("ACET_V1");
+                    break;
+            }
 
             return basicStandards;
         }

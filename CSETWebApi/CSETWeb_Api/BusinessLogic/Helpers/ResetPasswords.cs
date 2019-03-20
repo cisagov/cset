@@ -54,7 +54,7 @@ namespace CSETWeb_Api.Helpers
                 await db.SaveChangesAsync();
                 
                 // Send the new temp password to the user
-                NotificationManager nm = new NotificationManager();
+                NotificationManager nm = new NotificationManager(info.AppCode);
                 nm.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword);
 
                 return true;

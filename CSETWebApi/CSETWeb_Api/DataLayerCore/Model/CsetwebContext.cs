@@ -18,6 +18,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<ADDRESS> ADDRESS { get; set; }
         public virtual DbSet<ANSWER> ANSWER { get; set; }
         public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
+        public virtual DbSet<APP_CODE> APP_CODE { get; set; }
         public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
@@ -235,6 +236,15 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Answer_Full_Name).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<APP_CODE>(entity =>
+            {
+                entity.Property(e => e.AppCode)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Description).IsUnicode(false);
             });
 
             modelBuilder.Entity<ASSESSMENTS>(entity =>
@@ -659,9 +669,14 @@ namespace DataLayerCore.Model
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.AppCode).IsUnicode(false);
+
                 entity.Property(e => e.DemographicsAssetId).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Standard).IsUnicode(false);
+                entity.HasOne(d => d.AppCodeNavigation)
+                    .WithMany(p => p.DEMOGRAPHICS_ASSET_VALUES)
+                    .HasForeignKey(d => d.AppCode)
+                    .HasConstraintName("FK_DEMOGRAPHICS_ASSET_VALUES_APP_CODE");
             });
 
             modelBuilder.Entity<DEMOGRAPHICS_SIZE>(entity =>

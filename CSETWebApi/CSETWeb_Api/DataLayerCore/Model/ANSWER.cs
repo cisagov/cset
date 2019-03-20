@@ -20,7 +20,6 @@ namespace DataLayerCore.Model
         public int Question_Or_Requirement_Id { get; set; }
         public int Component_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
-        public bool? Reviewed { get; set; }
         [Column(TypeName = "ntext")]
         public string Comment { get; set; }
         [Column(TypeName = "ntext")]
@@ -36,6 +35,7 @@ namespace DataLayerCore.Model
         public string Custom_Question_Guid { get; set; }
         public bool Is_Framework { get; set; }
         public int? Old_Answer_Id { get; set; }
+        public bool? Reviewed { get; set; }
 
         [ForeignKey("Answer_Text")]
         [InverseProperty("ANSWER")]
