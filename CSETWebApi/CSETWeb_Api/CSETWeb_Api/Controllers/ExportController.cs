@@ -43,8 +43,13 @@ namespace CSETWeb_Api.Controllers
                 {
                     var set = db.SETS
                     .Include(s => s.Set_Category_)
-                    .Where(s => s.Is_Displayed ?? true && s.Set_Name == setName).FirstOrDefault().ToExternalStandard();
-                    return Request.CreateResponse(set);
+                    .Include(s => s.REQUIREMENT_SETS)
+                    .ThenInclude(r => r.Requirement_)
+                    .ThenInclude(rf => rf.REQUIREMENT_REFERENCES)
+                    .ThenInclude(gf => gf.Gen_File_)
+                    .Where(s => (s.Is_Displayed ?? false) && (s.Set_Name == setName)).FirstOrDefault();
+
+                    return Request.CreateResponse(set.ToExternalStandard());
                 }
             });
         }

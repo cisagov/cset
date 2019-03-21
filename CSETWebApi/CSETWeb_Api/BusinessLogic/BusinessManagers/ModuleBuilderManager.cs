@@ -466,6 +466,15 @@ namespace CSETWeb_Api.BusinessManagers
                     };
 
                     db.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
+
+
+                    REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
+                    {
+                        Question_Id = request.QuestionID,
+                        Requirement_Id = request.RequirementID
+                    };
+
+                    db.REQUIREMENT_QUESTIONS.Add(rq);
                 }
 
 
@@ -517,6 +526,17 @@ namespace CSETWeb_Api.BusinessManagers
                     };
 
                     db.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
+
+
+                    REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
+                    {
+                        Question_Id = request.QuestionID,
+                        Requirement_Id = request.RequirementID
+                    };
+
+                    db.REQUIREMENT_QUESTIONS.Add(rq);
+
+
                     db.SaveChanges();
                 }
 
