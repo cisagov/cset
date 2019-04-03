@@ -100,8 +100,10 @@ export class UploadExportComponent implements OnInit {
 
     // convert the progress map into an array
     const allProgressObservables = [];
-    for (const key of this.progress) {
-      allProgressObservables.push(this.progress[key].progress);
+    for (const key in this.progress) {
+      if (this.progress.hasOwnProperty(key)) {
+        allProgressObservables.push(this.progress[key].progress);
+      }
     }
 
     // Adjust the state variables
