@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSETWeb_Api.BusinessLogic.Models
+namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0
 {
     /// <summary>
     /// this is the general framework for what I need 

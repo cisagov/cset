@@ -42,7 +42,9 @@ namespace DataLayerCore.Model
         public string Charter { get; set; }
         [StringLength(100)]
         public string Assets { get; set; }
-
+        public int? IRPTotalOverride { get; set; }
+        [StringLength(150)]
+        public string IRPTotalOverrideReason { get; set; }
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
@@ -60,7 +62,7 @@ namespace DataLayerCore.Model
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
-        [InverseProperty("ASSESSMENT_")]
+        [InverseProperty("Assessment_")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }

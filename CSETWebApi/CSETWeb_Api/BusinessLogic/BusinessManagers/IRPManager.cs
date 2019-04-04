@@ -23,12 +23,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         header = header.Header
                     };
 
-                    foreach (IRP irp in db.IRP)
+                    foreach (IRP irp in db.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
                     {
                         IRPModel tempIRP = new IRPModel()
                         {
                             IRP_Id = irp.IRP_ID,
-                            Item_Number = irp.Item_Number.HasValue ? irp.Item_Number.Value : 0,
+                            Item_Number = irp.Item_Number ?? 0,
                             Description = irp.Description,
                             Risk_1_Description = irp.Risk_1_Description,
                             Risk_2_Description = irp.Risk_2_Description,
@@ -38,17 +38,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             Validation_Approach = irp.Validation_Approach
                         };
 
-                        ASSESSMENT_IRP answer = db.ASSESSMENT_IRP.FirstOrDefault(i => i.IRP_.IRP_ID == irp.IRP_ID &&
-                            i.Assessment_.Assessment_Id == assessmentId);
+                        // Get the existing answer or create a blank 
+                        ASSESSMENT_IRP answer = db.ASSESSMENT_IRP.FirstOrDefault(ans =>
+                            ans.IRP_Id == irp.IRP_ID &&
+                            ans.Assessment_.Assessment_Id == assessmentId);
                         if (answer == null)
                         {
                             answer = new ASSESSMENT_IRP()
                             {
+                                Assessment_Id = assessmentId,
+                                IRP_Id = irp.IRP_ID,
                                 Response = 0,
                                 Comment = ""
                             };
-                            answer.IRP_ = db.IRP.FirstOrDefault(i => i.IRP_ID == irp.IRP_ID);
-                            answer.Assessment_ = db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+
                             db.ASSESSMENT_IRP.Add(answer);
                         }
                         tempIRP.Response = answer.Response.Value;

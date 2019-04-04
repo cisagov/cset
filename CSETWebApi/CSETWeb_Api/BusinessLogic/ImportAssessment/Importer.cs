@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,7 +11,7 @@ using System;
 using DataLayerCore.Model;
 using System.Linq;
 using System.Collections.Generic;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
 using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
 using BusinessLogic.Helpers;
@@ -36,6 +36,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             //then copy from the intermediary to destination
             //and permit updates.
 
+            // RKW 22-MAR-19 - this was crashing with a StackOverflowException.  
             //TinyMapper.Bind<INFORMATION, INFORMATION>(config =>
             //{
             //    config.Ignore(x => x.Id);
@@ -194,14 +195,21 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = TinyMapper.Map<DOCUMENT_FILE>(a);
                 oldIdToNewDocument.Add(a.Document_Id, item);
                 item.Assessment_Id = _assessmentId;
+                item.Document_Id = 0;
                 db.DOCUMENT_FILE.Add(item);
             }
             db.SaveChanges();
+
             foreach (var a in model.jDOCUMENT_ANSWERS)
             {
                 var item = oldIdToNewDocument[a.Document_Id];
-                db.DOCUMENT_ANSWERS.Add(new DOCUMENT_ANSWERS() { Answer_Id = oldIdNewAnswer[a.Answer_Id].Answer_Id, Document_Id = item.Document_Id });
+                db.DOCUMENT_ANSWERS.Add(new DOCUMENT_ANSWERS()
+                {
+                    Answer_Id = oldIdNewAnswer[a.Answer_Id].Answer_Id,
+                    Document_Id = item.Document_Id
+                });
             }
+
             Dictionary<int, FINDING> idToFinding = new Dictionary<int, FINDING>();
             foreach (var a in model.jFINDING)
             {
@@ -340,16 +348,55 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 if (item.Heading_Pair_Id > 0)
                     db.SUB_CATEGORY_ANSWERS.Add(item);
             }
+
+            //
+            // NCUA data
+            //
+            foreach (var a in model.jASSESSMENTS_REQUIRED_DOCUMENTATION)
+            {
+                var item = TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION>(a);
+                item.Assessment_Id = _assessmentId;
+                db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(item);
+            }
+
+            foreach (var a in model.jFINANCIAL_ASSESSMENT_VALUES)
+            {
+                var item = TinyMapper.Map<FINANCIAL_ASSESSMENT_VALUES>(a);
+                item.Assessment_Id = _assessmentId;
+                db.FINANCIAL_ASSESSMENT_VALUES.Add(item);
+            }
+
+            foreach (var a in model.jFINANCIAL_HOURS)
+            {
+                var item = TinyMapper.Map<FINANCIAL_HOURS>(a);
+                item.Assessment_Id = _assessmentId;
+                db.FINANCIAL_HOURS.Add(item);
+            }
+
+            foreach (var a in model.jASSESSMENT_IRP_HEADER)
+            {
+                var item = TinyMapper.Map<ASSESSMENT_IRP_HEADER>(a);
+                item.Assessment_Id = _assessmentId;
+                db.ASSESSMENT_IRP_HEADER.Add(item);
+            }
+
+            foreach (var a in model.jASSESSMENT_IRP)
+            {
+                var item = TinyMapper.Map<ASSESSMENT_IRP>(a);
+                item.Assessment_Id = _assessmentId;
+                item.Answer_Id = 0;
+                db.ASSESSMENT_IRP.Add(item);
+            }
+
+
             try
             {
-
                 db.SaveChanges();
             }
             catch (Exception e)
             {
                 throw e;
             }
-
 
 
             return new Tuple<int, Dictionary<int, DOCUMENT_FILE>>(_assessmentId, oldIdToNewDocument);

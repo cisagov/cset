@@ -35,7 +35,7 @@ namespace DataLayerCore.Model
         public string Custom_Question_Guid { get; set; }
         public bool Is_Framework { get; set; }
         public int? Old_Answer_Id { get; set; }
-        public bool? Reviewed { get; set; }
+        public bool Reviewed { get; set; }
 
         [ForeignKey("Answer_Text")]
         [InverseProperty("ANSWER")]

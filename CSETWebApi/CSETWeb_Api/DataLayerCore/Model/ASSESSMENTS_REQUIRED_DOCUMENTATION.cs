@@ -12,6 +12,8 @@ namespace DataLayerCore.Model
         [Required]
         [StringLength(50)]
         public string Answer { get; set; }
+        [StringLength(1024)]
+        public string Comment { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("ASSESSMENTS_REQUIRED_DOCUMENTATION")]

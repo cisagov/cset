@@ -50,13 +50,9 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string HeaderText;
         public int[] RiskCount;
         public int RiskSum;
-        //public int Risk1Count;
-        //public int Risk2Count;
-        //public int Risk3Count;
-        //public int Risk4Count;
-        //public int Risk5Count;
         public int RiskLevel;
         public int RiskLevelId;
+        public string Comment;
 
         public IRPSummary()
         {

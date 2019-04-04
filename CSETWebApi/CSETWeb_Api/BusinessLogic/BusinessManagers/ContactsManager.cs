@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -210,6 +210,8 @@ namespace CSETWeb_Api.BusinessManagers
         public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
             int assessmentId = Auth.AssessmentForUser();
+            TokenManager tm = new TokenManager();
+            string app_code = tm.Payload(Constants.Token_Scope);
 
             NotificationManager nm = new NotificationManager();
 
@@ -262,7 +264,7 @@ namespace CSETWeb_Api.BusinessManagers
                             // Send this brand-new user an email with their temporary password (if they have an email)
                             if (!string.IsNullOrEmpty(userDetail.Email))
                             {
-                                if (!UserAuthentication.IsLocalInstallation())
+                                if (!UserAuthentication.IsLocalInstallation(app_code))
                                 {
                                     nm.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword);
                                 }
@@ -286,7 +288,7 @@ namespace CSETWeb_Api.BusinessManagers
             // Tell the user that they have been invited to participate in an Assessment (if they have an email) 
             if (!string.IsNullOrEmpty(newContact.PrimaryEmail))
             {
-                if (!UserAuthentication.IsLocalInstallation())
+                if (!UserAuthentication.IsLocalInstallation(app_code))
                 {
                     nm.InviteToAssessment(newContact);
                 }
