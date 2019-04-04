@@ -40,18 +40,20 @@
         Questions
       </button>
       path will
-      show how the structure of the related questions will look when viewed in 'question mode' CSET.
+      show the structure of the related questions when in 'questions mode' of the assessment.
     </p>
     <p>
       It is a good practice to attach any related documents to the Module. Click
-      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage Documents</button>
+      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
+        Documents</button>
       to upload and attach files.
     </p>
     <form #f="ngForm" name="form">
       <div class="form-group p-0 col-md-12">
         <label required for="fullname">Module Name</label>
-        <input type="text" class="form-control" id="fullname" name="fullname" required #fullname="ngModel" focusOnInit="true"
-          [(ngModel)]="setDetail.FullName" (ngModelChange)="setDetail.FullName" (change)="update($event)">
+        <input type="text" class="form-control" id="fullname" name="fullname" required #fullname="ngModel"
+          focusOnInit="true" [(ngModel)]="setDetail.FullName" (ngModelChange)="setDetail.FullName"
+          (change)="update($event)">
         <div *ngIf="f.submitted && !fullname.valid" class="m-0 mt-2 alert alert-danger">Full Name is required</div>
       </div>
       <div class="form-group p-0 col-md-12">
@@ -62,15 +64,17 @@
       </div>
       <div class="form-group p-0 col-md-12">
         <label required for="name">Description</label>
-        <textarea appAutoSize id="description" name="description" class="form-control" type="text" [(ngModel)]="setDetail.Description"
-          (change)="update($event)"></textarea>
+        <textarea appAutoSize id="description" name="description" class="form-control" type="text"
+          [(ngModel)]="setDetail.Description" (change)="update($event)"></textarea>
       </div>
 
       <div class="form-group">
         <label for="industry">Category</label>
-        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.SetCategory" (change)="update($event)">
+        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.SetCategory"
+          (change)="update($event)">
           <option value="0">--Select Category--</option>
-          <option *ngFor="let category of setDetail.CategoryList" [value]="category.Id">{{category.CategoryName}}</option>
+          <option *ngFor="let category of setDetail.CategoryList" [value]="category.Id">{{category.CategoryName}}
+          </option>
         </select>
       </div>
     </form>
@@ -86,7 +90,8 @@
         <span class="cset-icons-question-mark"></span>
         Questions
       </button>
-      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
+      <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()"
+        (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
         Documents</button>
     </div>
 
