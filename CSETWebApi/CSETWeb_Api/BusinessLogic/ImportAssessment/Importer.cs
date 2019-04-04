@@ -30,16 +30,18 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             TinyMapper.Bind<jINFORMATION, INFORMATION>(config =>
             {
                 config.Ignore(x => x.eMass_Document_Id);
+                config.Ignore(x => x.Id);
             });
             //copy the incoming information to an intermediary
             //then copy from the intermediary to destination
             //and permit updates.
 
-            TinyMapper.Bind<INFORMATION, INFORMATION>(config =>
-            {
-                config.Ignore(x => x.Id);
-                config.Ignore(x => x.IdNavigation);                
-            });
+            //TinyMapper.Bind<INFORMATION, INFORMATION>(config =>
+            //{
+            //    config.Ignore(x => x.Id);
+            //    config.Ignore(x => x.IdNavigation);
+            //    config.Ignore(x => x.ASSESSMENT);
+            //});
         }
 
         public Tuple<int, Dictionary<int, DOCUMENT_FILE>> RunImport(UploadAssessmentModel model,
@@ -198,7 +200,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             foreach (var a in model.jDOCUMENT_ANSWERS)
             {
                 var item = oldIdToNewDocument[a.Document_Id];
-                db.DOCUMENT_ANSWERS.Add(new DOCUMENT_ANSWERS() { Answer_Id = oldIdNewAnswer[a.Answer_Id].Answer_Id, Document_Id = item.Document_Id });                
+                db.DOCUMENT_ANSWERS.Add(new DOCUMENT_ANSWERS() { Answer_Id = oldIdNewAnswer[a.Answer_Id].Answer_Id, Document_Id = item.Document_Id });
             }
             Dictionary<int, FINDING> idToFinding = new Dictionary<int, FINDING>();
             foreach (var a in model.jFINDING)
@@ -241,8 +243,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var info = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
                 if (info != null)
                 {
-                    var b = TinyMapper.Map<INFORMATION>(a);
-                    TinyMapper.Map(b, info);
+                    TinyMapper.Map(a, info);
                     db.SaveChanges();
                 }
                 else

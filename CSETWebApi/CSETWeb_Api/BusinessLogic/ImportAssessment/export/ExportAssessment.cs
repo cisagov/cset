@@ -75,7 +75,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             foreach (var c in entitites.CUSTOM_QUESTIONAIRES) { model.jCUSTOM_QUESTIONAIRES.Add(TinyMapper.Map<jCUSTOM_QUESTIONAIRES>(c)); }
             foreach (var c in entitites.CUSTOM_QUESTIONAIRE_QUESTIONS) { model.jCUSTOM_QUESTIONAIRE_QUESTIONS.Add(TinyMapper.Map<jCUSTOM_QUESTIONAIRE_QUESTIONS>(c)); }
             foreach (var c in entitites.DEMOGRAPHICS.Where(x => x.Assessment_Id == _assessmentId)) { model.jDEMOGRAPHICS.Add(TinyMapper.Map<jDEMOGRAPHICS>(c)); }
-            foreach (var c in entitites.DOCUMENT_FILE.Include("Answer").Where(x => x.Assessment_Id == _assessmentId)) {
+            foreach (var c in entitites.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS).ThenInclude(x => x.Answer_).Where(x => x.Assessment_Id == _assessmentId)) {
                 model.jDOCUMENT_FILE.Add(TinyMapper.Map<jDOCUMENT_FILE>(c));
                 foreach (var a in c.ANSWERs())
                 {
