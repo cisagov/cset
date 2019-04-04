@@ -8,6 +8,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 MIT License
 
-Copyright 2018 Battelle Energy Alliance, LLC
+Copyright 2019 Battelle Energy Alliance, LLC
 
 See License.txt
