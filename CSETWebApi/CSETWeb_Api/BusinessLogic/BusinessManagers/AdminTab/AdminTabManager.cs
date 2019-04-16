@@ -113,14 +113,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
                     switch (t.ReviewType.ToLower())
                     {
                         case "documentation":
-                            resp.DocumentationTotal += (int)t.Total;
+                            resp.DocumentationTotal += (double)t.Total;
                             break;
                         case "interview process":
-                            resp.InterviewTotal += (int)t.Total;
+                            resp.InterviewTotal += (double)t.Total;
                             break;
                     }
                 };
-                resp.GrandTotal = (int)d.GrandTotal;
+                resp.GrandTotal = (double)d.GrandTotal;
                 //resp.ReviewedTotal = ???;
 
                 return resp;

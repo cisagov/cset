@@ -352,14 +352,13 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (subCatAnswer == null)
             {
-                subCatAnswer = new SUB_CATEGORY_ANSWERS();
+                subCatAnswer = new SUB_CATEGORY_ANSWERS(); 
             }
-
             subCatAnswer.Assessement_Id = _assessmentId;
             subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
             subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
+            db.SUB_CATEGORY_ANSWERS.AddOrUpdate(subCatAnswer, x=>x.Assessement_Id, x=>x.Heading_Pair_Id);
 
-            db.SUB_CATEGORY_ANSWERS.AddOrUpdate(subCatAnswer);
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);

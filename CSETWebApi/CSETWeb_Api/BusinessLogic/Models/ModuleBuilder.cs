@@ -269,7 +269,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public bool IsCustom;
     }
 
-    public class DeleteModuleResponse
+    public class BasicResponse
     {
         public List<string> InformationalMessages = new List<string>();
         public List<string> ErrorMessages = new List<string>();

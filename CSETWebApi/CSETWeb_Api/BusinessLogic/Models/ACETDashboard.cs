@@ -17,6 +17,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         //IRP Section
         public List<IRPSummary> IRPs;
         public int[] SumRisk;
+        public int SumRiskLevel;
         public int SumRiskTotal; //i regret the names i started using.
         public int Override;
         public string OverrideReason;
