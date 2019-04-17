@@ -122,11 +122,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
 
                         maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
+                                                                       maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.SubBaselineMaturity) ? Constants.SubBaselineMaturity :
                                                                        maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.EvolvinMaturity) ? Constants.EvolvinMaturity :
                                                                             maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
-                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.AdvancedMaturity) ? Constants.BaselineMaturity :
-                                                                                   "Innovative";
+                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.AdvancedMaturity) ? Constants.AdvancedMaturity :
+                                                                                   maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
+                                                                                       Constants.IncompleteMaturity;
                         maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
                         maturityDomain.Assessments.Add(maturityAssessment);
 
@@ -135,11 +137,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
 
                     maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
+                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.SubBaselineMaturity) ? Constants.SubBaselineMaturity :
                                                                            maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
                                                                                maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.EvolvinMaturity) ? Constants.EvolvinMaturity :
                                                                                    maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
-                                                                                    maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.AdvancedMaturity) ? Constants.BaselineMaturity :
-                                                                                       "Innovative";
+                                                                                    maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.AdvancedMaturity) ? Constants.AdvancedMaturity :
+                                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
+                                                                                            Constants.IncompleteMaturity;
                     maturityDomain.Assessments = maturityDomain.Assessments.OrderBy(x => x.Sequence).ToList();
                     maturityDomains.Add(maturityDomain);
                 }

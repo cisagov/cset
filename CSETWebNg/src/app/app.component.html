@@ -27,18 +27,23 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+  <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
+    *ngIf="auth.userToken() && auth.userToken() !== 'null'">
     <!-- Brand -->
-    <span [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
+    <span
+      [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a">
-        <svg width="28" height="28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-          x="0px" y="0px" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
-          <path class="fill-primary" d="M384.4,166.7c0-14.3-0.1-30.7-0.6-38.9C379.4,58.8,317,6.2,246.3,6.4v0c-0.1,0-0.2,0-0.3,0
+        <svg width="28" height="28" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500"
+          style="enable-background:new 0 0 500 500;" xml:space="preserve">
+          <path class="fill-primary"
+            d="M384.4,166.7c0-14.3-0.1-30.7-0.6-38.9C379.4,58.8,317,6.2,246.3,6.4v0c-0.1,0-0.2,0-0.3,0
               c-0.1,0-0.1,0-0.3,0h0C175,7.5,113.6,61.2,110.4,130.2c-0.4,9.7-0.3,25.2-0.1,36.4h-0.2v27.2h62.4v-14.1c0,0-0.5-33.8,1-50.1
               c3.3-34.8,36.7-60.2,73-60.9c36.3,0,70.2,24.9,74.1,59.6c1.8,16.3,0.5,65.5,0.5,65.5h0.9h62.3V166.7L384.4,166.7z" />
-          <path class="fill-white" d="M331.7,183.5c0.3-15.6,0.6-44.2-0.8-56.3c-4.3-38.5-41.3-68.8-84.4-68.8
+          <path class="fill-white"
+            d="M331.7,183.5c0.3-15.6,0.6-44.2-0.8-56.3c-4.3-38.5-41.3-68.8-84.4-68.8
               c-43.2,0.8-79.7,31.7-83.3,70.3c-1.5,16.7-1.1,49.8-1.1,51.2v3.6h-41.7v-14.9c0.2-0.7,0.2-1.4,0.2-2.2c-0.2-11.2-0.4-26.4,0.1-35.8
               c2.9-61.8,59-113,125.1-114c0.1,0,0.6,0,0.7,0c66,0,122.9,50.1,126.9,111.8c0.4,6.3,0.6,18.8,0.6,38.2v16.9H331.7z" />
           <path class="fill-primary" d="M404.6,207.6H90c-19.4,0-35.1,15.7-35.1,35.1v215.8c0,19.4,15.7,35.1,35.1,35.1h314.6
@@ -51,7 +56,8 @@
         </svg>
         <!-- CSET Name Logo -->
         <svg class="ml-2" width="120" height="28" viewBox="100 -25 70 65">
-          <path d="M254.64,29.7L255.106,29.7C255.65,29.7 256.09,29.517 256.09,29.077 256.09,28.689 255.805,28.43 255.183,28.43 254.924,28.43 254.743,28.457 254.64,28.483z M254.614,32.083L253.63,32.083 253.63,27.834C254.019,27.783 254.563,27.705 255.261,27.705 256.064,27.705 256.426,27.834 256.711,28.043 256.971,28.223 257.152,28.534 257.152,28.948 257.152,29.467 256.763,29.803 256.273,29.959L256.273,30.011C256.686,30.14 256.893,30.476 257.022,31.046 257.152,31.694 257.256,31.927 257.333,32.083L256.297,32.083C256.167,31.927 256.09,31.565 255.961,31.046 255.882,30.605 255.623,30.399 255.079,30.399L254.614,30.399z M251.997,29.882C251.997,31.771 253.422,33.273 255.313,33.273 257.152,33.3 258.55,31.771 258.55,29.906 258.55,28.016 257.152,26.488 255.261,26.488 253.422,26.488 251.997,28.016 251.997,29.882 M259.639,29.882C259.639,32.264 257.721,34.154 255.287,34.154 252.853,34.154 250.91,32.264 250.91,29.882 250.91,27.499 252.853,25.634 255.313,25.634 257.721,25.634 259.639,27.499 259.639,29.882 M210,0L271,0 271,8 244,8 244,38 237,38 237,8 210,8z M147,23L147,30 201,30 201,38 140,38 140,0 201,0 201,8 147,8 147,16 175,16 175,23z M125.078,38L70,38 70,30.316 122.721,30.199C123.334,30.199 123.641,29.894 123.755,29.277 123.792,29.162 123.937,29.066 123.937,28.99L124,23.226 124,23 70,23 70,6.457C70,3.806 70.951,1.883 73.104,0.806 74.028,0.308 74.959,0 76.152,0L131,0 131,7.724 78.448,7.668C77.833,7.668 77.323,7.955 77.205,8.531 77.166,8.648 77,8.744 77,8.82L77,16 131,16 131,31.467C131,34.158 130.153,36.107 128.039,37.181 127.078,37.681 126.229,38 125.078,38 M8,28.875C8,29.566 8.115,29.898 8.729,30.013 8.807,30.053 8.69,30 8.765,30L61,30 61,38 6.115,38C3.543,38 1.818,36.857 0.666,34.705 0.127,33.705 0,32.525 0,31.295L0,6.457C0,3.806 0.935,1.883 3.087,0.806 4.009,0.308 4.923,0 6.115,0L62,0 62,8 8.996,8C8.075,8,8,8.207,8,9.281z"
+          <path
+            d="M254.64,29.7L255.106,29.7C255.65,29.7 256.09,29.517 256.09,29.077 256.09,28.689 255.805,28.43 255.183,28.43 254.924,28.43 254.743,28.457 254.64,28.483z M254.614,32.083L253.63,32.083 253.63,27.834C254.019,27.783 254.563,27.705 255.261,27.705 256.064,27.705 256.426,27.834 256.711,28.043 256.971,28.223 257.152,28.534 257.152,28.948 257.152,29.467 256.763,29.803 256.273,29.959L256.273,30.011C256.686,30.14 256.893,30.476 257.022,31.046 257.152,31.694 257.256,31.927 257.333,32.083L256.297,32.083C256.167,31.927 256.09,31.565 255.961,31.046 255.882,30.605 255.623,30.399 255.079,30.399L254.614,30.399z M251.997,29.882C251.997,31.771 253.422,33.273 255.313,33.273 257.152,33.3 258.55,31.771 258.55,29.906 258.55,28.016 257.152,26.488 255.261,26.488 253.422,26.488 251.997,28.016 251.997,29.882 M259.639,29.882C259.639,32.264 257.721,34.154 255.287,34.154 252.853,34.154 250.91,32.264 250.91,29.882 250.91,27.499 252.853,25.634 255.313,25.634 257.721,25.634 259.639,27.499 259.639,29.882 M210,0L271,0 271,8 244,8 244,38 237,38 237,8 210,8z M147,23L147,30 201,30 201,38 140,38 140,0 201,0 201,8 147,8 147,16 175,16 175,23z M125.078,38L70,38 70,30.316 122.721,30.199C123.334,30.199 123.641,29.894 123.755,29.277 123.792,29.162 123.937,29.066 123.937,28.99L124,23.226 124,23 70,23 70,6.457C70,3.806 70.951,1.883 73.104,0.806 74.028,0.308 74.959,0 76.152,0L131,0 131,7.724 78.448,7.668C77.833,7.668 77.323,7.955 77.205,8.531 77.166,8.648 77,8.744 77,8.82L77,16 131,16 131,31.467C131,34.158 130.153,36.107 128.039,37.181 127.078,37.681 126.229,38 125.078,38 M8,28.875C8,29.566 8.115,29.898 8.729,30.013 8.807,30.053 8.69,30 8.765,30L61,30 61,38 6.115,38C3.543,38 1.818,36.857 0.666,34.705 0.127,33.705 0,32.525 0,31.295L0,6.457C0,3.806 0.935,1.883 3.087,0.806 4.009,0.308 4.923,0 6.115,0L62,0 62,8 8.996,8C8.075,8,8,8.207,8,9.281z"
             class="fill-white" />
         </svg>
       </div>
@@ -64,49 +70,52 @@
 
     <!-- Collapse Content -->
     <div class="collapse navbar-collapse" id="csetNavbarCollapse">
-      <div class="navbar-nav dropdown" 
+      <div class="navbar-nav dropdown"
         *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
-        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
-          id="toolsDropdownMenuLink">
+        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+          data-toggle="dropdown" id="toolsDropdownMenuLink">
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
           <span>Tools</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
-          <button class="dropdown-item fs-base d-flex align-items-center flex-00a" (click)="enableProtectedFeature()">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            (click)="enableProtectedFeature()">
             <span class="cset-icons-key-shield fs-base mr-2"></span>
             <span>Enable Protected Features</span>
           </button>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item fs-base d-flex align-items-center flex-00a" [ngClass]="{'disabled-menu-item' : !isAssessment()}"
-            (click)="isAssessment() ? showAssessDocs() : null">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
             <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
             <span>Assessment Documents</span>
           </button>
-          <button class="dropdown-item fs-base d-flex align-items-center flex-00a" [ngClass]="{'disabled-menu-item' : !isAssessment()}"
-            (click)="isAssessment() ? editParameters() : null">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? editParameters() : null">
             <span class="cset-icons-puzzle fs-base mr-2"></span>
             <span>Parameter Editor</span>
           </button>
-          <a class="dropdown-item fs-base d-flex align-items-center flex-00a" [ngClass]="{'disabled-menu-item' : !isAssessment()}"
-            (click)="isAssessment() ? exportToExcel() : null" target="_blank" href="#">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? exportToExcel() : null">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export Assessment to Excel</span>
-          </a>
+          </button>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item fs-base d-flex align-items-center flex-00a" [routerLink]="['/importModule']">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [routerLink]="['/importModule']">
             <span class="cset-icons-module fs-base mr-2"></span>
             <span>Import Modules</span>
           </button>
-          <a class="dropdown-item fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=set-list" target="csetSetBuilder">            
-              <span class="cset-icons-module fs-base mr-2"></span>
-              <span >Module Builder</span>            
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            href="index.html?returnPath=set-list" target="csetSetBuilder">
+            <span class="cset-icons-module fs-base mr-2"></span>
+            <span>Module Builder</span>
           </a>
         </div>
       </div>
 
       <div class="navbar-nav">
-        <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" href="index.html?returnPath=resource-library"
-          target="csetResourceLibrary" 
+        <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"
+          href="index.html?returnPath=resource-library" target="csetResourceLibrary"
           *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
           <span class="cset-icons-library fs-base-4 mr-2"></span>
           <span>Resource Library</span>
@@ -115,24 +124,29 @@
 
       <!-- HELP -->
       <div class="navbar-nav ml-auto dropdown">
-        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown">
+        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+          data-toggle="dropdown">
           <span class="cset-icons-question-circle-outline fs-base-4 mr-2"></span>
           <span class="">Help</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank" href="{{docUrl}}htmlhelp/index.htm">
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}htmlhelp/index.htm">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>User Guide</span>
           </a>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf">
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}cdDocs/UserGuide.pdf">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>User Guide (PDF)</span>
           </a>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank" href="{{docUrl}}AccessibilityFeatures/index.htm">
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}AccessibilityFeatures/index.htm">
             <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
           </a>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="showKeyboardShortcuts()">
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+            (click)="showKeyboardShortcuts()">
             <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
             <span>Keyboard Shortcuts</span>
           </button>
@@ -143,7 +157,7 @@
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="about()">
             <span class="cset-icons-cset-lock fs-base mr-2"></span>
-            <span>About CSET</span>
+            <span>About</span>
           </button>
           <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="advisory()">
             <span class="cset-icons-advisory fs-base mr-2"></span>
@@ -153,10 +167,10 @@
       </div>
 
       <!-- USER PROFILE -->
-      <div class="navbar-nav dropdown" 
+      <div class="navbar-nav dropdown"
         *ngIf="this.router.url !== '/resource-library' && this.router.url !== '/importModule' && !isModuleBuilder(this.router.url)">
-        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a" data-toggle="dropdown"
-          *ngIf="auth.userToken()">
+        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+          data-toggle="dropdown" *ngIf="auth.userToken()">
           <span class="cset-icons-profile fs-base-4 mr-2"></span>
           <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
             <span>{{auth.firstName()}} {{auth.lastName()}}</span>
@@ -190,20 +204,25 @@
   <!-- Body -->
   <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
     <!-- gradient-background -->
-    <div class="p-0 d-none d-xl-flex col-xl-2" [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'"></div>
+    <div class="p-0 d-none d-xl-flex col-xl-2"
+      [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'">
+    </div>
     <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
-    <div class="p-0 d-flex col-xl-8" > 
+    <div class="p-0 d-flex col-xl-8">
       <router-outlet></router-outlet>
     </div>
-    <div class="p-0 d-none d-xl-flex col-xl-2" [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'"></div>
+    <div class="p-0 d-none d-xl-flex col-xl-2"
+      [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'">
+    </div>
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"  
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
     <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>
-        <button id="footerExpanderButton" class="cset-footer-expand-button" [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
+        <button id="footerExpanderButton" class="cset-footer-expand-button"
+          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="footer-section-1 bgc-primary px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
@@ -236,7 +255,8 @@
             </div>
             <div class="d-flex align-items-center flex-00a">
               <span class="cset-icons-import fs-base-1 mr-2"></span>
-              <a class="d-flex align-items-center flex-00a" target="_blank" href="https://urldefense.proofpoint.com/v2/url?u=https-3A__ics-2Dcert.us-2Dcert.gov_sites_default_files_documents_ICS-2DCERT-5FPGP-5FPub-5FKey.asc&d=DwMFAg&c=54IZrppPQZKX9mLzcGdPfFD1hxrcB__aEkJFOKJFd00&r=KUZGhTpyhFuT194Cu_O2Q9FWMT7vNzyaKs0s81_-NBo&m=3ePze1BsWjWCM2I6x_FbNdejSJ1viFDwLcSnDNLh1mU&s=NKc4hm9rIXJDx1ppx5R0kA5G3ssdzLmZvo50A4MTfpM&e=">
+              <a class="d-flex align-items-center flex-00a" target="_blank"
+                href="https://urldefense.proofpoint.com/v2/url?u=https-3A__ics-2Dcert.us-2Dcert.gov_sites_default_files_documents_ICS-2DCERT-5FPGP-5FPub-5FKey.asc&d=DwMFAg&c=54IZrppPQZKX9mLzcGdPfFD1hxrcB__aEkJFOKJFd00&r=KUZGhTpyhFuT194Cu_O2Q9FWMT7vNzyaKs0s81_-NBo&m=3ePze1BsWjWCM2I6x_FbNdejSJ1viFDwLcSnDNLh1mU&s=NKc4hm9rIXJDx1ppx5R0kA5G3ssdzLmZvo50A4MTfpM&e=">
                 Get PGP/GPG keys
               </a>
             </div>
@@ -265,4 +285,5 @@
   </ngb-accordion>
 </div>
 
-<div class="bgc-white dhs-seal-background" *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+<div class="bgc-white dhs-seal-background"
+  *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>

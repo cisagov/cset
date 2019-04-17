@@ -112,6 +112,14 @@
         both high-level and detailed questions related to all industrial control and IT systems.​​
       </p>
       <img class="mt-4" width="150" height="150" src="./assets/images/DHSLogo.svg">
+
+      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+          Internet Explorer has been detected as your current browser.
+          Some functionality of CSET is not fully supported by Internet Explorer.
+          Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+          your experience.
+      </div>
     </div>
+    
   </div>
 </div>

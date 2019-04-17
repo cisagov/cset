@@ -119,9 +119,9 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// 
         /// </summary>
-        public DeleteModuleResponse DeleteSet(string setName)
+        public BasicResponse DeleteSet(string setName)
         {
-            DeleteModuleResponse resp = new DeleteModuleResponse();
+            BasicResponse resp = new BasicResponse();
 
             using (var db = new CSET_Context())
             {
@@ -470,7 +470,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                     REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
                     {
-                        Question_Id = request.QuestionID,
+                        Question_Id = q.Question_Id,
                         Requirement_Id = request.RequirementID
                     };
 
@@ -973,8 +973,10 @@ namespace CSETWeb_Api.BusinessManagers
         /// Updates the question text.  Only questions originally attached
         /// to a 'custom' set can have their text updated.
         /// </summary>
-        public void UpdateQuestionText(int questionID, string text)
+        public BasicResponse UpdateQuestionText(int questionID, string text)
         {
+            BasicResponse resp = new BasicResponse();
+
             using (var db = new CSET_Context())
             {
                 // is this a custom question?
@@ -988,26 +990,37 @@ namespace CSETWeb_Api.BusinessManagers
                 // if the question's original set does not exist (this should never happen), do nothing.
                 if (origSet == null)
                 {
-                    return;
+                    return resp;
                 }
 
                 // if the question's original set is not 'custom', do nothing.
                 if (!origSet.Is_Custom)
                 {
-                    return;
+                    return resp;
                 }
 
-                // update text
+                // Update text.  Try/catch in case they are setting duplicate question text.
+                try
+                {                    
                 var question = db.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefault();
                 if (question == null)
                 {
-                    return;
+                        resp.ErrorMessages.Add("Question ID is not defined");
+                        return resp;
                 }
 
                 question.Simple_Question = text;
 
                 db.NEW_QUESTION.Update(question);
                 db.SaveChanges();
+
+                    return resp;
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException exc)
+                {                    
+                    resp.ErrorMessages.Add("DUPLICATE QUESTION TEXT");
+                    return resp;
+                }
             }
         }
 

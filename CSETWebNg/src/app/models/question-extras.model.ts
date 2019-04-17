@@ -84,6 +84,7 @@ export interface RequirementTabData {
   Text: String;
   SupplementalInfo: String;
   Set_Name: string;
+  ExaminationApproach: String;
 }
 
 export class CustomDocument {

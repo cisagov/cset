@@ -105,6 +105,13 @@ div.disclaimer-blurb {
     clear: both;
 }
 
+@media only screen {
+    .page-break {
+        border-top: 1px solid #336699;
+        margin-top: 3rem;
+    }
+}
+
 .cover-page-bottom {
     margin: 5em 2em 0 2em;
     display: flex; 
@@ -141,6 +148,12 @@ div.disclaimer-blurb {
     line-height: 115%;
 }
 
+
+/* --- atomic styles --- */
+
+.w-20pct {
+    width: 20% !important;
+}
 
 
 /* ---- common display container widget ---- */
@@ -312,7 +325,7 @@ table.table-site-info td {
 table.table-site-info td:first-child {
     color: #0A5278;
     font-weight: bold;
-    width: 30%;
+    max-width: 50%;
 }
 
 
@@ -333,6 +346,13 @@ td.tint1 {
 
 td.tint2 {
     background-color: #f2f7f9;
+}
+
+
+table.label-value td {
+    padding: .2rem;
+    padding-right: 1rem;
+    vertical-align: top;
 }
 
 
@@ -378,3 +398,90 @@ td.tint2 {
 //     -webkit-print-color-adjust: exact;
 //     print-color-adjust: exact;
 // }
+
+
+/////////////////// ACET REPORT CLASSES ///////////////////
+
+.irp-table th, .irp-table td {
+    vertical-align: top;
+    padding: .5rem .3rem;
+  }
+  
+.alert-incomplete{
+    color: #fff;
+    background-color: #909090;
+    border-color: #787878;
+    padding: 0.5rem 0.75rem !important;
+}
+.alert-baseline{
+    color: #fff;
+    background-color: #3498DB;
+    border-color: #2E86C1;
+    padding: .50rem .75rem !important;
+}
+.alert-evolving{
+    color: #fff;
+    background-color: #2E86C1;
+    border-color: #2874A6;
+    padding: .50rem .75rem !important;
+}
+.alert-intermediate{
+    background-color: #2874A6;
+    border-color: #21618C;
+    color: #fff !important;
+    padding: .50rem .75rem !important;
+}
+.alert-advanced{
+    background-color: #21618C;
+    border-color: #1B4F72;
+    color: #fff !important;
+    padding: .50rem .75rem !important;
+}
+.alert-innovative{
+    background-color: #1B4F72;
+    border-color: #154360;
+    color: #fff !important;
+    padding: .50rem .75rem !important;
+}
+.alert{
+    text-align: center !important;
+}
+
+.factor-section {
+    margin-bottom: 3rem;
+}
+
+.factor-section > .component-section {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #bebebe;
+}
+.factor-section > .component-section:last-child {
+    border-bottom: none;
+}
+
+.component-pill {
+    width: 70px !important;
+    margin: 0 auto !important;
+    white-space: nowrap !important;
+}
+
+
+
+/**
+ * following 3 for component sections
+ */
+ .mat-detail-green {
+    background-color: rgb(198,239,206);
+    color: rgb(0,97,0);
+}
+
+.mat-detail-orange {
+    background-color: rgb(255,235,156);
+    color: rgb(156,101,0);
+}
+
+.mat-detail-red {
+    background-color: rgb(253,233,217);
+    color: rgb(156,0,6);
+}

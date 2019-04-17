@@ -46,15 +46,15 @@
 
     <div class="form-group p-0 col-md-12">
       <label required for="requirementTitle">Identifier/Title</label>
-      <input type="text" class="form-control" id="requirementTitle" name="requirementTitle" required focusOnInit="true"
-        [(ngModel)]="r.Title" (change)="updateRequirement($event)">
+      <input type="text" maxlength="250" class="form-control" id="requirementTitle" name="requirementTitle" required
+        focusOnInit="true" [(ngModel)]="r.Title" (change)="updateRequirement($event)">
       <div *ngIf="">Title is required</div>
     </div>
 
     <div class="form-group p-0 col-md-12 mb-5">
       <label required for="requirementText">Standard-Specific Requirement</label>
-      <textarea appAutoSize id="description" class="form-control" type="text" id="requirementText" name="requirementText"
-        [(ngModel)]="r.RequirementText" (change)="updateRequirement($event)"></textarea>
+      <textarea appAutoSize id="description" class="form-control" type="text" id="requirementText"
+        name="requirementText" [(ngModel)]="r.RequirementText" (change)="updateRequirement($event)"></textarea>
     </div>
 
     <div class="form-group p-0 col-md-12 mb-5">
@@ -62,17 +62,17 @@
       <p>Select all applicable levels.</p>
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'L')">
-          <input type="checkbox" id="SAL-L-{{r?.RequirementID}}" name="SAL-L-{{r?.RequirementID}}" [checked]="hasSAL(r, 'L')"
-            (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" />Low</label>
+          <input type="checkbox" id="SAL-L-{{r?.RequirementID}}" name="SAL-L-{{r?.RequirementID}}"
+            [checked]="hasSAL(r, 'L')" (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" />Low</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'M')">
-          <input type="checkbox" id="SAL-M-{{r?.RequirementID}}" name="SAL-M-{{r?.RequirementID}}" [checked]="hasSAL(r, 'M')"
-            (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" />Moderate</label>
+          <input type="checkbox" id="SAL-M-{{r?.RequirementID}}" name="SAL-M-{{r?.RequirementID}}"
+            [checked]="hasSAL(r, 'M')" (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" />Moderate</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'H')">
-          <input type="checkbox" id="SAL-H-{{r?.RequirementID}}" name="SAL-H-{{r?.RequirementID}}" [checked]="hasSAL(r, 'H')"
-            (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" />High</label>
+          <input type="checkbox" id="SAL-H-{{r?.RequirementID}}" name="SAL-H-{{r?.RequirementID}}"
+            [checked]="hasSAL(r, 'H')" (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" />High</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'VH')">
-          <input type="checkbox" id="SAL-VH-{{r?.RequirementID}}" name="SAL-VH-{{r?.RequirementID}}" [checked]="hasSAL(r, 'VH')"
-            (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" />Very High</label>
+          <input type="checkbox" id="SAL-VH-{{r?.RequirementID}}" name="SAL-VH-{{r?.RequirementID}}"
+            [checked]="hasSAL(r, 'VH')" (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" />Very High</label>
       </div>
       <div *ngIf="missingSAL(r)" class="alert alert-danger">At least one SAL level is required</div>
     </div>
@@ -81,7 +81,7 @@
       <h4>Supplemental Information</h4>
       <p class="keyboard">HTML markup can be edited directly by clicking the <kbd><i class="fa fa-code"></i></kbd>
         button.</p>
-      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo" 
+      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo"
         (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)"></angular-editor>
     </div>
 
@@ -111,7 +111,8 @@
             {{ref.SectionRef}}
           </td>
           <td>
-            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, ref.ID, true, ref.SectionRef, false)"
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+              (click)="addDeleteReference(r.RequirementID, ref.ID, true, ref.SectionRef, false)"
               matTooltip="Delete reference">
               <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
             </button>
@@ -126,10 +127,11 @@
             <div class="alert alert-danger" *ngIf="sourceDocMissing">A document is required.</div>
           </td>
           <td>
-            <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newSourceSectionRef">
+            <input type="text" maxlength="2000" id="newBookmark" class="form-control" [(ngModel)]="newSourceSectionRef">
           </td>
           <td>
-            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, newSourceDocID, true, newSourceSectionRef, true)"
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+              (click)="addDeleteReference(r.RequirementID, newSourceDocID, true, newSourceSectionRef, true)"
               matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>
@@ -147,7 +149,8 @@
             {{ref.SectionRef}}
           </td>
           <td>
-            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, ref.ID, false, ref.SectionRef, false)"
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+              (click)="addDeleteReference(r.RequirementID, ref.ID, false, ref.SectionRef, false)"
               matTooltip="Delete reference">
               <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
             </button>
@@ -162,10 +165,12 @@
             <div class="alert alert-danger" *ngIf="resourceDocMissing">A document is required.</div>
           </td>
           <td>
-            <input type="text" id="newBookmark" class="form-control" [(ngModel)]="newResourceSectionRef">
+            <input type="text" maxlength="2000" id="newBookmark" class="form-control"
+              [(ngModel)]="newResourceSectionRef">
           </td>
           <td>
-            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a" (click)="addDeleteReference(r.RequirementID, newResourceDocID, false, newResourceSectionRef, true)"
+            <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+              (click)="addDeleteReference(r.RequirementID, newResourceDocID, false, newResourceSectionRef, true)"
               matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>
@@ -177,7 +182,7 @@
 
     <div class="form-group p-0 col-md-12 mb-5">
       <h4>Related Questions</h4>
-      <p>Questions may be added to the requirement. This will present a list of questions for 
+      <p>Questions may be added to the requirement. This will present a list of questions for
         the assessors to answer.
       </p>
 
@@ -195,21 +200,27 @@
           <div class="d-flex flex-column mb-3 mr-3 w-100">
             <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.QuestionText)">
             </div>
+            <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
+              A question with that text already exists. The edit was canceled.
+            </div>
             <div *ngIf="questionBeingEdited === q" class="w-100">
               <div class="alert alert-danger" *ngIf="editedQuestionInUse">
                 This question is in use in other standards/question sets or assessments.
-                Do not change the meaning of the question text.
+                Changing the meaning of the question text may have an undesired effect. 
               </div>
-              <textarea appAutoSize id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
-                (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+              <textarea appAutoSize maxlength="7338" id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText"
+                (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
+                [class.b-validate]="editedQuestionInUse"></textarea>
             </div>
           </div>
           <span class="d-flex align-items-end justify-content-between flex-00a">
-            <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+            <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)"
+              class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
               <span class="cset-icons-pencil fs-base-2"></span>
               <span class="d-none d-md-flex fs-smaller">Change</span>
             </button>
-            <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeQuestion(q)">
+            <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button"
+              (click)="removeQuestion(q)">
               <span class="cset-icons-trash-can fs-base-2"></span>
               <span class="d-none d-md-flex fs-smaller">Remove</span>
             </button>

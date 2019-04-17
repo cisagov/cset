@@ -22,6 +22,7 @@ namespace DataLayerCore.Model
         public string Std_Ref { get; set; }
         public int Universal_Weight { get; set; }
         public int Question_Group_Heading_Id { get; set; }
+        public bool Is_Custom { get; set; }
 
         public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
         public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }

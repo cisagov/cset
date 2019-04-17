@@ -35,6 +35,9 @@ export interface AssessmentDetail {
     ExecutiveSummary?: string;
     AssessmentDescription?: string;
     AdditionalNotesAndComments?: string;
+    Charter?: string;
+    CreditUnion?: string;
+    Assets?: string;
 }
 
 export interface AssessmentContactsResponse {

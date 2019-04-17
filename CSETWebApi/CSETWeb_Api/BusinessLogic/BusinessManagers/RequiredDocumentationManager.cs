@@ -24,14 +24,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                foreach (REQUIRED_DOCUMENTATION_HEADERS header in db.REQUIRED_DOCUMENTATION_HEADERS)
+                foreach (REQUIRED_DOCUMENTATION_HEADERS header in db.REQUIRED_DOCUMENTATION_HEADERS.OrderBy(h => h.Header_Order))
                 {
                     RequiredDocumentHeader tempHeader = new RequiredDocumentHeader()
                     {
                         documents = new List<RequiredDocument>(),
                         Header = header.Requirement_Documentation_Header
                     };
-                    foreach (REQUIRED_DOCUMENTATION doc in db.REQUIRED_DOCUMENTATION.Where(d => d.RDH_.RDH_Id == header.RDH_Id))
+                    foreach (REQUIRED_DOCUMENTATION doc in db.REQUIRED_DOCUMENTATION
+                        .Where(d => d.RDH_.RDH_Id == header.RDH_Id)
+                        .OrderBy(d => d.Document_Order))
                     {
                         RequiredDocument tempDoc = new RequiredDocument()
                         {

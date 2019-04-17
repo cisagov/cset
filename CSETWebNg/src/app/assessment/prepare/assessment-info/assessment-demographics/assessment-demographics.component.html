@@ -43,6 +43,7 @@
     <div class="form-group">
         <label for="assetValue">What is the gross value of the asset you are trying to protect?</label>
         <select class="form-control" id="assetValue" name="assetValue" (change)="changeAssetValue($event)">
+            <option selected disabled>Not Selected</option>
             <option *ngFor="let asset of assetValues" [value]="asset.DemographicsAssetId" [selected]="asset.DemographicsAssetId === demographicData.AssetValue">{{asset.AssetValue}}</option>
         </select>
     </div>

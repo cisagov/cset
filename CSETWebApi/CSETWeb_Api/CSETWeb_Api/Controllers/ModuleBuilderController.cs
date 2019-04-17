@@ -80,7 +80,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/builder/DeleteSet")]
-        public DeleteModuleResponse DeleteSet([FromBody] string setName)
+        public BasicResponse DeleteSet([FromBody] string setName)
         {
             ModuleBuilderManager m = new ModuleBuilderManager();
             return m.DeleteSet(setName);
@@ -216,10 +216,10 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/builder/UpdateQuestionText")]
-        public void UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
+        public BasicResponse UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
         {
             ModuleBuilderManager m = new ModuleBuilderManager();
-            m.UpdateQuestionText(parms.QuestionID, parms.QuestionText);
+            return m.UpdateQuestionText(parms.QuestionID, parms.QuestionText);
         }
 
 

@@ -25,6 +25,7 @@ export const environment = {
   production: true,
   appUrl: '',
   apiUrl: '',
-  docUrl: ''
+  docUrl: '',
+  reportsUrl: ''
 };
 

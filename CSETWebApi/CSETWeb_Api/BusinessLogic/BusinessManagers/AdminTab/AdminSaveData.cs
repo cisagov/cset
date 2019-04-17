@@ -13,9 +13,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
 
     public class AdminSaveResponse
     {
-        public int DocumentationTotal { get; set; }
-        public int InterviewTotal { get; set; }
-        public int GrandTotal { get; set; }
-        public int ReviewedTotal { get; set; }
+        public double DocumentationTotal { get; set; }
+        public double InterviewTotal { get; set; }
+        public double GrandTotal { get; set; }
+        public double ReviewedTotal { get; set; }
     }
 }

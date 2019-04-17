@@ -17,6 +17,7 @@ namespace DataLayerCore.Model
         [Required]
         [StringLength(250)]
         public string Requirement_Documentation_Header { get; set; }
+        public int? Header_Order { get; set; }
 
         [InverseProperty("RDH_")]
         public virtual ICollection<REQUIRED_DOCUMENTATION> REQUIRED_DOCUMENTATION { get; set; }
