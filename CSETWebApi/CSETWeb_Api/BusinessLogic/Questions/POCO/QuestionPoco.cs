@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using CSET_Main.Common;
 
 namespace CSET_Main.Questions.POCO
 {
@@ -494,7 +495,7 @@ namespace CSET_Main.Questions.POCO
             {
                 if (Answer.Reviewed != value)
                 {
-                    Answer.Reviewed = value;
+                    Answer.Reviewed = value ?? false;
                 }
             }
         }

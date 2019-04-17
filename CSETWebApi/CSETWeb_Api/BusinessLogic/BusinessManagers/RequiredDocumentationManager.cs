@@ -48,12 +48,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 Answer = "N",
                                 Assessment_Id = assessmentId,
-                                Documentation_Id = doc.Documentation_Id
+                                Documentation_Id = doc.Documentation_Id,
+                                Comment = ""
                             });
                         }
                         else
                         {
                             tempDoc.Answer = answer.Answer;
+                            tempDoc.Comment = answer.Comment;
                         }
 
                         tempHeader.documents.Add(tempDoc);
@@ -79,13 +81,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     {
                         Assessment_Id = assessmentId,
                         Documentation_Id = reqDoc.DocId,
-                        Answer = reqDoc.Answer
+                        Answer = reqDoc.Answer,
+                        Comment = reqDoc.Comment
                     };
                     db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(ard);
                 }
                 else
                 {
                     ard.Answer = reqDoc.Answer;
+                    ard.Comment = reqDoc.Comment;
                 }
                 db.SaveChanges();
             }

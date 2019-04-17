@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -18,7 +18,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Idaho National Laboratory")]
 [assembly: AssemblyProduct("ExportCSV")]
-[assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2017")]
+[assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

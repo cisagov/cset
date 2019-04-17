@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Versioning
             get
             {
                 Version version = Version;
-                string csetVersion = version.Major.ToString() + "." + version.Minor;
+                string csetVersion = version.Major.ToString() + "." + version.Minor + "." + version.Build;
                 return csetVersion;
             }
 

@@ -17,7 +17,6 @@ namespace DataLayerCore.Model
         [StringLength(50)]
         public string AssetValue { get; set; }
         public int? ValueOrder { get; set; }
-        [Required]
         [StringLength(10)]
         public string AppCode { get; set; }
 

@@ -20,7 +20,7 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();                                    
             AdminTabManager manager = new AdminTabManager();
-            return manager.getTabData(assessmentId);            
+            return manager.GetTabData(assessmentId);            
         }
 
         [HttpPost]

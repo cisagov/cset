@@ -1,17 +1,17 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
-using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -39,6 +39,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     ZipArchive zip = new ZipArchive(fs);
                     StreamReader r = new StreamReader(zip.GetEntry("model.json").Open());
                     string jsonObject = r.ReadToEnd();
+
+
+                    // Apply any data updates to older versions
+                    ImportUpgradeManager upgrader = new ImportUpgradeManager();
+                    jsonObject = upgrader.Upgrade(jsonObject);
+
+
                     UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
                     foreach (var doc in model.CustomStandardDocs)
                     {
@@ -207,7 +214,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             //Console.WriteLine(error);
             process.WaitForExit();// Waits here for the process to exit.
         }
-
     }
 }
 

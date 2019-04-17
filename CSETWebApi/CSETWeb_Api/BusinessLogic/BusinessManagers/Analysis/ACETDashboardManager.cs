@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayerCore.Model;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
 {
@@ -25,37 +26,42 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                 result.Charter = assessment.Charter;
                 result.Assets = assessment.Assets;
 
+                result.Hours = (new AdminTabManager()).GetTabData(assessmentId).GrandTotal;
+
                 //IRP Section
+                result.Override = assessment.IRPTotalOverride ?? 0;
+                result.OverrideReason = assessment.IRPTotalOverrideReason;
                 foreach (IRP_HEADER header in db.IRP_HEADER)
                 {
                     IRPSummary summary = new IRPSummary();
                     summary.HeaderText = header.Header;
 
-                    ASSESSMENT_IRP_HEADER headerInfo = db.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER_.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT_.Assessment_Id == assessmentId);
+                    ASSESSMENT_IRP_HEADER headerInfo = db.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_Header_.IRP_Header_Id == header.IRP_Header_Id && h.Assessment_.Assessment_Id == assessmentId);
                     if (headerInfo != null)
                     {
-                        summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID;
-                        summary.RiskLevel = headerInfo.RISK_LEVEL.Value;
+                        summary.RiskLevelId = headerInfo.Header_Risk_Level_Id ?? 0;
+                        summary.RiskLevel = headerInfo.Risk_Level.Value;
+                        summary.Comment = headerInfo.Comment;
                     }
                     else
                     {
                         summary.RiskLevel = 0;
                         headerInfo = new ASSESSMENT_IRP_HEADER()
                         {
-                            RISK_LEVEL = 0,
-                            IRP_HEADER_ = header
+                            Risk_Level = 0,
+                            IRP_Header_ = header
                         };
-                        headerInfo.ASSESSMENT_ = assessment;
+                        headerInfo.Assessment_ = assessment;
                         if (db.ASSESSMENT_IRP_HEADER.Count() == 0)
                         {
-                            headerInfo.HEADER_RISK_LEVEL_ID = header.IRP_Header_Id;
+                            headerInfo.Header_Risk_Level_Id = header.IRP_Header_Id;
                         }
                         else
                         {
-                            headerInfo.HEADER_RISK_LEVEL_ID = db.ASSESSMENT_IRP_HEADER.Max(i => i.HEADER_RISK_LEVEL_ID) + idOffset;
+                            headerInfo.Header_Risk_Level_Id = db.ASSESSMENT_IRP_HEADER.Max(i => i.Header_Risk_Level_Id) + idOffset;
                             idOffset++;
                         }
-                        summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID;
+                        summary.RiskLevelId = headerInfo.Header_Risk_Level_Id ?? 0;
 
                         db.ASSESSMENT_IRP_HEADER.Add(headerInfo);
                     }
@@ -75,6 +81,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                     }
 
                     result.IRPs.Add(summary);
+                }
+
+                //go back through the IRPs and calculate the Risk Level for each section
+                foreach (IRPSummary irp in result.IRPs)
+                {
+                    int MaxRisk = 0;
+                    irp.RiskLevel = 0;
+                    for (int i = 0; i < irp.RiskCount.Length; i++)
+                    {
+                        if (irp.RiskCount[i] >= MaxRisk && irp.RiskCount[i] > 0)
+                        {
+                            MaxRisk = irp.RiskCount[i];
+                            irp.RiskLevel = i + 1;
+                        }
+                    }
                 }
 
                 db.SaveChanges();
@@ -108,14 +129,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                     assessment.CreditUnionName = summary.CreditUnionName;
                     assessment.Charter = summary.Charter;
                     assessment.Assets = summary.Assets;
+
+                    assessment.IRPTotalOverride = summary.Override;
+                    assessment.IRPTotalOverrideReason = summary.OverrideReason;
                 }
 
                 foreach (IRPSummary irp in summary.IRPs)
                 {
-                    ASSESSMENT_IRP_HEADER dbSummary = db.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
+                    ASSESSMENT_IRP_HEADER dbSummary = db.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.Assessment_Id == assessment.Assessment_Id && s.Header_Risk_Level_Id == irp.RiskLevelId);
                     if (dbSummary != null)
                     {
-                        dbSummary.RISK_LEVEL = irp.RiskLevel;
+                        dbSummary.Risk_Level = irp.RiskLevel;
+                        dbSummary.Comment = irp.Comment;
                     } // the else should never happen
                     else
                     {

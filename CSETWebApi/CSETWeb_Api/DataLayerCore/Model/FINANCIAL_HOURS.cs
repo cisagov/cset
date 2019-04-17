@@ -14,7 +14,6 @@ namespace DataLayerCore.Model
         public string ReviewType { get; set; }
         [Column(TypeName = "decimal(9, 2)")]
         public decimal Hours { get; set; }
-        public int? ReviewedCountOverride { get; set; }
         [StringLength(512)]
         public string OtherSpecifyValue { get; set; }
 
