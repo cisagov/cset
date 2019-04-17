@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="report-body">
 
     <div class="flex-container">
@@ -57,35 +57,49 @@
         <h1>Disclaimer</h1>
 
         <p>The analysis, data, and reports in CSET
-            <sup>®</sup> are provided “as is” for informational purposes only. The Department of Homeland Security (DHS) does
-            not provide any warranties of any kind regarding any information contained within. In no event shall the United
-            States Government or its contractors or subcontractors be liable for any damages, including but not limited to,
-            direct, indirect, special, or consequential damages and including damages based on any negligence of the United
-            States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected
-            with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from,
+            <sup>®</sup> are provided “as is” for informational purposes only. The Department of Homeland Security (DHS)
+            does
+            not provide any warranties of any kind regarding any information contained within. In no event shall the
+            United
+            States Government or its contractors or subcontractors be liable for any damages, including but not limited
+            to,
+            direct, indirect, special, or consequential damages and including damages based on any negligence of the
+            United
+            States Government or its contractors or subcontractors, arising out of, resulting from, or in any way
+            connected
+            with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained
+            from,
             or arose out of the results of, or reliance upon the report.
         </p>
 
         <p>
-            DHS does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report.
-            Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise,
+            DHS does not endorse any commercial product or service, including the subject of the assessment or
+            evaluation in this report.
+            Any reference to specific commercial products, processes, or services by trademark, manufacturer, or
+            otherwise,
             does not constitute or imply its endorsement, recommendation, or favoring by DHS.
         </p>
 
         <p>
-            The display of the DHS official seal or other DHS visual identities on this report shall not be interpreted to provide the
-            recipient organization authorization to use the official seal, insignia, or other visual identities of DHS. The
-            DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial
+            The display of the DHS official seal or other DHS visual identities on this report shall not be interpreted
+            to provide the
+            recipient organization authorization to use the official seal, insignia, or other visual identities of DHS.
+            The
+            DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any
+            commercial
             product or activity by DHS or the United States Government. Use of the DHS seal without proper authorization
             violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against DHS policies governing usage of the
             seal.
         </p>
 
         <p>
-            The report is prepared and intended for internal use by the organization that made the request. The contents of this report
+            The report is prepared and intended for internal use by the organization that made the request. The contents
+            of this report
             may be subject to government or private intellectual property rights. To request distribution of this report
-            outside the organization for which it was prepared, contact the CSET Program Office. The contents of this report
-            may be reproduced or incorporated into other reports, but may not be modified without the prior express written
+            outside the organization for which it was prepared, contact the CSET Program Office. The contents of this
+            report
+            may be reproduced or incorporated into other reports, but may not be modified without the prior express
+            written
             permission of the CSET Program Office.
         </p>
     </div>
@@ -95,31 +109,39 @@
     <div class="page-break">
         <h1>Advisory</h1>
         <p>
-            CSET® is only one component of the overall cyber security picture and should be complemented with a robust cyber security
-            program within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses,
-            and should not be the sole means of determining an organization’s security posture.
+            CSET® is only one component of the overall cyber security picture and should be complemented with a robust
+            cyber security program within the organization. A self-assessment with CSET® cannot reveal all types of
+            security
+            weaknesses, and should not be the sole means of determining an organization’s security posture.
         </p>
 
         <p>
-            The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration
-            review. It is not a risk analysis tool so it will not generate a complex risk assessment. CSET® is not intended
-            as a substitute for in depth analysis of control system vulnerabilities as performed by trained professionals.
-            Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility
-            walk downs, interviews, and observation and examination of facility practices. Consideration should also be given
-            to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production
-            systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production
-            or safety.
+            The tool will not provide a detailed architectural analysis of the network or a detailed network
+            hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex
+            risk assessment. CSET® is not
+            intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained
+            professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach
+            including facility walk downs, interviews, and observation and examination of facility practices.
+            Consideration should also be
+            given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or
+            non-production systems, or systems where failures, unexpected faults, or other unexpected results will not
+            compromise
+            production or safety.
         </p>
 
         <p>
-            CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives
-            from operational, maintenance, information technology, business, and security areas is essential. The representatives
-            must be subject matter experts with significant expertise in their respective areas. No one individual has the
+            CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting
+            of representatives
+            from operational, maintenance, information technology, business, and security areas is essential. The
+            representatives
+            must be subject matter experts with significant expertise in their respective areas. No one individual has
+            the
             span of responsibility or knowledge to effectively answer all the questions.
         </p>
 
         <p>
-            Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate
+            Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a
+            manner appropriate
             to their sensitivity.
         </p>
     </div>
@@ -166,7 +188,11 @@
             </tr>
             <tr>
                 <td>Contact(s):</td>
-                <td>{{response?.information.Additional_Contacts}}</td>
+                <td>
+                    <div *ngFor="let c of response?.information.Additional_Contacts">
+                        {{c}}
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>Real Property Site Unique ID (RPSUID):</td>
@@ -209,17 +235,22 @@
         <div style="max-width: calc(100% - 4em); margin: 0 auto">
             <div style="display: flex; flex-direction: row; align-items: flex-end;">
                 <div>
-                    <div style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+                    <div
+                        style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
                         STANDARD OR QUESTION SET
                     </div>
-                    <div style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-                        <div *ngFor="let s of responseResultsByCategory?.multipleDataSets" style="display: flex; flex-direction: row; align-items: center;">
-                            <div style="width: 1.2em; height: 1.2em; margin: 4px 10px 4px 0;" [style.backgroundColor]="s.backgroundColor"></div>{{s.label}}
+                    <div
+                        style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
+                        <div *ngFor="let s of responseResultsByCategory?.multipleDataSets"
+                            style="display: flex; flex-direction: row; align-items: center;">
+                            <div style="width: 1.2em; height: 1.2em; margin: 4px 10px 4px 0;"
+                                [style.backgroundColor]="s.backgroundColor"></div>{{s.label}}
                         </div>
                     </div>
                 </div>
                 <div style="padding: 1em;">
-                    <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+                    <div class="cset-container"
+                        style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
                         <div>STANDARDS SUMMARY</div>
                         <div>
                             <canvas id="canvasStandardsSummary"></canvas>
@@ -227,7 +258,8 @@
                     </div>
                 </div>
             </div>
-            <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
+            <div
+                style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
                 <canvas id="chartStandardResultsByCategory"></canvas>
             </div>
         </div>
@@ -401,8 +433,10 @@
         </h1>
 
         <p>
-            This chart shows subject areas needing the most attention.  Each bar represents the labeled subject area’s weighted contribution
-            so that the combined total always equals 100%.  The weighted contribution includes the importance of both the
+            This chart shows subject areas needing the most attention.  Each bar represents the labeled subject area’s
+            weighted contribution
+            so that the combined total always equals 100%.  The weighted contribution includes the importance of both
+            the
             question and the subject area, as well as the percentage of missed questions in that subject area.
         </p>
 
@@ -418,10 +452,13 @@
         </h1>
 
         <p>
-            Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed
-            levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH).
+            Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below.
+            The displayed
+            levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High
+            (VH).
             CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels
-            are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S),
+            are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive
+            (S),
             and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category.
         </p>
 
@@ -448,8 +485,8 @@
             <tr>
                 <th colspan="3">
                     {{c.CategoryAndNumber}}
-                    <i *ngIf="c.MarkedForReview === 'True'" class="cset-icons-browse mr-2" style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;"
-                        title="Marked for Review"></i>
+                    <i *ngIf="c.MarkedForReview === 'True'" class="cset-icons-browse mr-2"
+                        style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;" title="Marked for Review"></i>
                 </th>
             </tr>
             <tr>
