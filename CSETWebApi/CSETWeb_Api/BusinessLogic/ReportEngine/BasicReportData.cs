@@ -43,10 +43,19 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public string State_Province_Or_Region { get; set; }
             public string Assessor_Phone { get; set; }
             public string Additional_Notes_And_Comments { get; set; }
-            public string Additional_Contacts { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public List<string> Additional_Contacts { get; set; }
             public string Real_Property_Unique_Id { get; set; }
             public string Executive_Summary {get; set;}
             public string Assessment_Description { get; set; }
+
+            // ACET properties
+            public string Credit_Union_Name { get; set; }
+            public string Charter { get; set; }
+            public int Assets { get; set; }
         }
 
         public class OverallSALTable

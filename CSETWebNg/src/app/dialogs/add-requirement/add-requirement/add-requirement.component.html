@@ -35,7 +35,7 @@
 
       <div class="form-group">
         <label for="category">Category</label>
-        <input required #editCat #cat="ngModel" type="text" class="form-control" id="category" name="category" list="catoptions"
+        <input required #editCat #cat="ngModel" type="text" maxlength="250" class="form-control" id="category" name="category" list="catoptions"
           [(ngModel)]="model.Category">
         <datalist id="catoptions">
           <option *ngFor="let category of categories" [attr.data-value]="category.ID" [value]="category.Text"></option>
@@ -55,7 +55,7 @@
 
       <div class="form-group">
         <label for="subcategory">Subcategory</label>
-        <input required #subcat="ngModel" type="text" id="subcategory" name="subcategory" [(ngModel)]="model.Subcategory"
+        <input required #subcat="ngModel" type="text" maxlength="100" id="subcategory" name="subcategory" [(ngModel)]="model.Subcategory"
           list="subcatoptions" class="form-control" />
         <datalist id="subcatoptions">
           <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.ID" [value]="subcategory.Text"></option>

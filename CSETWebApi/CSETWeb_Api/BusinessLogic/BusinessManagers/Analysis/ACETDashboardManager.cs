@@ -99,6 +99,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                 }
 
                 db.SaveChanges();
+
+                result.SumRiskLevel = 1;
+                int maxRisk = 0;
+                for (int i = 0; i < result.SumRisk.Length; i++)
+                {
+                    if (result.SumRisk[i] >= maxRisk && result.SumRisk[i]>0)
+                    {
+                        result.SumRiskLevel = i+1;
+                        maxRisk = result.SumRisk[i];
+                    }  
+                }
+
             }
 
             result.Domains = new List<DashboardDomain>();

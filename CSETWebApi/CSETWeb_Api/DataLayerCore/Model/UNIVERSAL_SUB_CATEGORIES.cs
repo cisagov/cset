@@ -16,6 +16,7 @@ namespace DataLayerCore.Model
         [StringLength(100)]
         public string Universal_Sub_Category { get; set; }
         public int Universal_Sub_Category_Id { get; set; }
+        public bool Is_Custom { get; set; }
 
         public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
     }

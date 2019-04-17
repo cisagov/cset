@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -340,23 +341,55 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
+        /// <summary>
+        /// Returns a block of data generally from the INFORMATION table plus a few others.
+        /// </summary>
+        /// <returns></returns>
         public BasicReportData.INFORMATION GetInformation()
         {
-            
             using (var db = new CSET_Context())
             {
                 INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
-                return TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
-                //return new BasicReportData.INFORMATION()
-                //{
-                //    Assessment_Name = infodb.Assessment_Name,
-                //    Assessment_Date= infodb.Assessment_Date.ToLongDateString(),
-                //    Assessor_Name= infodb.Assessor_Name,
-                //    Additional_Contacts = infodb.Additional_Contacts,
-                //    Additional_Notes_And_Comments = infodb.
-                //};                
+                
+                var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
+               
+                var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+                info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+
+                // Primary Assessor
+                var user = db.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+                info.Assessor_Name = user != null ? $"{user.FirstName} {user.LastName} ({user.PrimaryEmail})" : string.Empty;
+
+
+                // Other Contacts
+                info.Additional_Contacts = new List<string>();
+                var contacts = db.ASSESSMENT_CONTACTS
+                    .Where(ac => ac.Assessment_Id == _assessmentId
+                            && ac.UserId != assessment.AssessmentCreatorId)
+                    .Include(u => u.User)
+                    .ToList();
+                foreach (var c in contacts)
+                {
+                    info.Additional_Contacts.Add($"{c.FirstName} {c.LastName} ({c.PrimaryEmail})");
+            }
+
+
+                // ACET properties
+                info.Credit_Union_Name = assessment.CreditUnionName;
+                info.Charter = assessment.Charter;
+
+                info.Assets = 0;
+                bool a = int.TryParse(assessment.Assets, out int assets);
+                if (a)
+                {
+                    info.Assets = assets;
+        }
+
+                return info;
             }
         }
+
 
         public List<Individual> GetFindingIndividuals()
         {

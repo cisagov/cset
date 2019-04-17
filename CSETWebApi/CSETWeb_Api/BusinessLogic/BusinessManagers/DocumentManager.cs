@@ -115,19 +115,16 @@ namespace CSETWeb_Api.BusinessManagers
 
             // Detach the document from the Answer
             doc.DOCUMENT_ANSWERS.Remove(db.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answerId).FirstOrDefault());
-
+            db.SaveChanges();
 
             // If we just detached the document from its only Answer, delete the whole document record
-            var otherAnswersForThisDoc = db.ANSWER.Where(ans => ans.Assessment_Id == this.assessmentId
-                                         && ans.Answer_Id != answerId
-                                        && ans.DOCUMENT_FILEs().Select(x => x.Document_Id).Contains(id)).ToList();
-
-            if (otherAnswersForThisDoc.Count == 0)
+            var otherAnswersForThisDoc = db.DOCUMENT_ANSWERS.Where(da => da.Document_Id == id).Count();
+            if (otherAnswersForThisDoc == 0)
             {
                 db.DOCUMENT_FILE.Remove(doc);
+                db.SaveChanges();
             }
 
-            db.SaveChanges();
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
 

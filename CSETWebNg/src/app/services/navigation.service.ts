@@ -72,10 +72,30 @@ export class NavigationService {
   }
 
   selectItem(value: string) {
-    this.activeResultsView = value;
     this.itemSelected.emit(value);
   }
+
+  /**
+   * Recurses the tree to find the specified value.
+   * @param tree
+   * @param value
+   */
+  isPathInTree(tree: NavTree[], path: string): boolean {
+    for (let index = 0; index < tree.length; index++) {
+      const t = tree[index];
+
+      if (t.value === path) {
+        return true;
 }
+
+      if (this.isPathInTree(t.children, path)) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
 
 function frameworkIndex(elementf) {
   return elementf.value === "framework";

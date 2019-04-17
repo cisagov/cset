@@ -26,6 +26,7 @@ import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/rou
 import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { StandardService } from '../../../services/standard.service';
 
 @Component({
   selector: 'app-overview',
@@ -42,6 +43,7 @@ export class OverviewComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
     private navSvc: NavigationService,
+    private stdSvc: StandardService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -54,6 +56,8 @@ export class OverviewComponent implements OnInit {
         // this.myExecSumm = this.defaultExecSumm;
         this.o.ExecutiveSummary = this.defaultExecSumm;
       }
+
+      this.updateAssessmentDetails();
     });
 
     this.navSvc.itemSelected.asObservable().subscribe((value: string) => {

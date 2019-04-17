@@ -61,6 +61,7 @@ export interface Question {
     HasDiscovery: boolean;
     HasDocument: boolean;
     MarkForReview: boolean;
+    Reviewed: boolean;
 
     ExtrasExpanded: boolean;
     Visible: boolean;
@@ -73,6 +74,7 @@ export class Answer {
     AltAnswerText: string;
     Comment: string;
     MarkForReview: boolean;
+    Reviewed: boolean;
 }
 
 export class SubToken {

@@ -276,6 +276,51 @@ input[type='text']:focus {
   border: 2px solid $primary-250;
 }
 
+// suppress the 'spinner' arrows
+input[type='number']::-webkit-inner-spin-button, 
+input[type='number']::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+
+///////////////////////////////////////////
+//       Basic table layout  
+table.cset-table {
+  width: 100%;
+  color: $primary-color;
+}
+
+table.cset-table tr:nth-child(even) {
+  background: $gray-100;
+}
+
+table.cset-table tr:nth-child(odd) {
+  background: $gray-50;
+}
+
+table.cset-table td,
+table.cset-table th {
+  padding: .5rem 0.75rem;
+}
+
+table.cset-table th {
+  background-color: $secondary-color;
+  color: $gray-50;
+  font-weight: 500;
+}
+
+table.cset-table tr.total-row {
+  border-top: 1px solid rgb(200,200,200);
+  border-bottom: 1px solid rgb(200,200,200);
+  background-color: inherit !important;
+}
+///////////////////////////////////////////
+
+
 table.assessment-summary {
   width: 100%;
   color: $primary-color;
@@ -1048,7 +1093,7 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .dropdown-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
-  cursor: auto;
+  cursor: not-allowed !important;
 }
 
 
@@ -2063,8 +2108,28 @@ hr.ranked-questions {
   width: 0;
 }
 
+.w-5rem {
+  width: 5rem !important;
+}
+
+.w-20pct {
+  width: 20% !important;
+}
+
+.va-neg-17rem {
+  vertical-align: -.17rem !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
 .cursor-pointer {
   cursor: pointer!important;
+}
+
+.cursor-auto {
+  cursor: auto !important;
 }
 
 .o-hidden {
@@ -2073,6 +2138,10 @@ hr.ranked-questions {
 
 .oy-auto {
   overflow-y: auto!important;
+}
+
+.ox-hidden{
+  overflow-x: hidden !important;
 }
 
 .text-left {

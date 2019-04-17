@@ -25,7 +25,7 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" required for="name">Assessment Name</label>
-            <input type="text" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
+            <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
                 (ngModelChange)="assessment.AssessmentName" (change)="update($event)">
         </div>
         <div class="form-group col-md-6">
@@ -37,18 +37,18 @@
     </div>
     <div class="form-group">
         <label class="mb-1" for="facility">Facility Name</label>
-        <input type="text" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.FacilityName"
+        <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.FacilityName"
             (change)="update($event)">
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="citySite">City Or Site Name</label>
-            <input type="text" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.CityOrSiteName"
+            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.CityOrSiteName"
                 (change)="update($event)">
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
-            <input type="text" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.StateProvRegion"
+            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.StateProvRegion"
                 (change)="update($event)">
         </div>
     </div>

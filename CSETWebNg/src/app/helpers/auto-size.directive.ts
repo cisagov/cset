@@ -44,6 +44,7 @@ export class AutoSizeDirective implements OnInit {
         const textArea = this.element.nativeElement;
         textArea.style.height = 'auto';
         textArea.style.height = (textArea.scrollHeight + 10) + 'px';
+        textArea.style.minHeight = '2.5rem';
         textArea.style.maxHeight = '100rem';
     }
 }

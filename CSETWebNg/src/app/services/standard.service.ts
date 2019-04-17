@@ -34,6 +34,7 @@ const headers = {
 @Injectable()
 export class StandardService {
   frameworkSelected = false;
+  acetSelected = false;
 
   constructor(private http: HttpClient, private configSvc: ConfigService, private navSvc: NavigationService) {}
 
@@ -58,10 +59,28 @@ export class StandardService {
   getFramework() {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
   }
+  getACET() {
+    return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
+  }
 
   setFrameworkSelected(framework: boolean) {
-    const magic = this.navSvc.getMagic();
     this.frameworkSelected = framework;
+
+    this.makeNavTree();
+  }
+
+  setACETSelected(acet: boolean) {
+    this.acetSelected = acet;
+
+    this.makeNavTree();
+  }
+
+  setAcetSelected_NoTree(acet: boolean) {
+    this.acetSelected = acet;
+  }
+
+  makeNavTree() {
+    const magic = this.navSvc.getMagic();
 
     const tree = [
       {children: [], label: 'Assessment Information', value: 'info'},
@@ -71,6 +90,11 @@ export class StandardService {
 
     if (this.frameworkSelected) {
       tree.push({children: [], label: 'Cybersecurity Framework', value: 'framework'});
+    }
+
+    if (this.acetSelected) {
+      tree.push({children: [], label: 'Document Request List', value: 'required'});
+      tree.push({children: [], label: 'Inherent Risk Profiles', value: 'irp' });
     }
 
     this.navSvc.setTree(tree, magic);

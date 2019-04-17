@@ -266,6 +266,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.CreditUnionName).IsUnicode(false);
 
+                entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
+
                 entity.HasOne(d => d.AssessmentCreator)
                     .WithMany(p => p.ASSESSMENTS)
                     .HasForeignKey(d => d.AssessmentCreatorId)
@@ -339,7 +341,6 @@ namespace DataLayerCore.Model
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENT_IRP)
                     .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
 
                 entity.HasOne(d => d.IRP_)
@@ -358,7 +359,6 @@ namespace DataLayerCore.Model
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
                     .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
 
                 entity.HasOne(d => d.IRP_Header_)
@@ -672,14 +672,15 @@ namespace DataLayerCore.Model
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AppCode).IsUnicode(false);
+                entity.Property(e => e.AppCode)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('CSET')");
 
                 entity.Property(e => e.DemographicsAssetId).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.AppCodeNavigation)
                     .WithMany(p => p.DEMOGRAPHICS_ASSET_VALUES)
                     .HasForeignKey(d => d.AppCode)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_DEMOGRAPHICS_ASSET_VALUES_APP_CODE");
             });
 
@@ -2408,7 +2409,6 @@ namespace DataLayerCore.Model
                 entity.HasOne(d => d.Set_NameNavigation)
                     .WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
                     .HasForeignKey(d => d.Set_Name)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS");
 
                 entity.HasOne(d => d.Universal_Sub_Category_)

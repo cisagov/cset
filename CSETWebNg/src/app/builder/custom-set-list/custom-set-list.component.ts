@@ -28,6 +28,7 @@ import { Router } from '@angular/router';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { MatDialog } from '@angular/material';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-custom-set-list',
@@ -41,11 +42,13 @@ export class SetListComponent implements OnInit {
 
   constructor(
     public setBuilderSvc: SetBuilderService,
+    public authSvc: AuthenticationService,
     private router: Router,
     private dialog: MatDialog) {
   }
 
   ngOnInit() {
+    this.authSvc.checkLocal().then();
     this.getStandards();
   }
 
