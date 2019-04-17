@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -18,6 +18,10 @@ using Microsoft.Win32;
 using CSETWeb_Api.BusinessManagers;
 using System.IO;
 using System.Security.Principal;
+using BusinessLogic.Helpers;
+using System.Reflection;
+using System.Diagnostics;
+using CSETWeb_Api.BusinessLogic.Version;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -87,7 +91,7 @@ namespace CSETWeb_Api.Helpers
             string primaryEmailSO = "";
 
             // Read the Registry for the user key put there at install time
-            if (!IsLocalInstallation())
+            if (!IsLocalInstallation(login.Scope))
             {
                 return null;
             }
@@ -148,12 +152,21 @@ namespace CSETWeb_Api.Helpers
         /// in a 'local' installation configuration (the Registry key exists).
         /// </summary>
         /// <returns></returns>
-        public static bool IsLocalInstallation()
+        public static bool IsLocalInstallation(String app_code)
         {
+            Dictionary<String, String> registryPath = new Dictionary<string, string>();
+            registryPath.Add("CSET", "\\DHS\\CSET");
+            registryPath.Add("ACET", "\\NCUA\\ACET");
             // Read the Registry for the user key put there at install time
             try
             {
-                string subkey = "SOFTWARE\\DHS\\CSET 9.0";
+                
+                string regPath;
+                if(!registryPath.TryGetValue(app_code,out regPath))
+                {
+                    return false;
+                }             
+                string subkey = "SOFTWARE" + regPath+ " " + VersionInjected.Version;
                 using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey))
                 {
                     if (key == null)

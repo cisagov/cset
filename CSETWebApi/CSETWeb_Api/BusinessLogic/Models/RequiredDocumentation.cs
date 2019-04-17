@@ -48,5 +48,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// Y / N / NA indicating whether this document is required for the assessment in question.
         /// </summary>
         public string Answer;
+
+        public string Comment;
     }
 }

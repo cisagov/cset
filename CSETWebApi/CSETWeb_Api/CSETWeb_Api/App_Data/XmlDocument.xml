@@ -487,16 +487,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AngularConfigController.GetConfig(System.Net.Http.HttpRequestMessage)">
-            <summary>
-            NOTE THIS APOLOGY
-            this call returns the config.json file
-            but modifies the port to be the current port 
-            the application is running on.
-            (IE the file may be different from what is returned)
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:CSETWeb_Api.Controllers.AngularConfigController.GetConfigURLRewrite(System.Net.Http.HttpRequestMessage)">
             <summary>
             NOTE THIS APOLOGY

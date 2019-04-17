@@ -281,6 +281,8 @@ namespace DataLayerCore.Model
                     .IsUnicode(false)
                     .HasDefaultValueSql("('N')");
 
+                entity.Property(e => e.Comment).IsUnicode(false);
+
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION)
                     .HasForeignKey(d => d.Assessment_Id)
@@ -327,8 +329,10 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
             {
-                entity.HasKey(e => e.Answer_Id)
-                    .HasName("PK__Assessme__36918F380D1C2E80");
+                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id })
+                    .HasName("PK_Assessment_IRP");
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Comment).IsUnicode(false);
 
@@ -347,20 +351,19 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
             {
-                entity.HasKey(e => e.HEADER_RISK_LEVEL_ID)
-                    .HasName("PK__ASSESSME__5A008FB576A7ABB8");
+                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Header_Id });
 
-                entity.Property(e => e.HEADER_RISK_LEVEL_ID).ValueGeneratedNever();
+                entity.Property(e => e.Comment).IsUnicode(false);
 
-                entity.HasOne(d => d.ASSESSMENT_)
+                entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.ASSESSMENT_ID)
+                    .HasForeignKey(d => d.Assessment_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
 
-                entity.HasOne(d => d.IRP_HEADER_)
+                entity.HasOne(d => d.IRP_Header_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.IRP_HEADER_ID)
+                    .HasForeignKey(d => d.IRP_Header_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
             });
@@ -676,6 +679,7 @@ namespace DataLayerCore.Model
                 entity.HasOne(d => d.AppCodeNavigation)
                     .WithMany(p => p.DEMOGRAPHICS_ASSET_VALUES)
                     .HasForeignKey(d => d.AppCode)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_DEMOGRAPHICS_ASSET_VALUES_APP_CODE");
             });
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -100,8 +100,10 @@ export class UploadExportComponent implements OnInit {
 
     // convert the progress map into an array
     const allProgressObservables = [];
-    for (const key of this.progress) {
-      allProgressObservables.push(this.progress[key].progress);
+    for (const key in this.progress) {
+      if (this.progress.hasOwnProperty(key)) {
+        allProgressObservables.push(this.progress[key].progress);
+      }
     }
 
     // Adjust the state variables

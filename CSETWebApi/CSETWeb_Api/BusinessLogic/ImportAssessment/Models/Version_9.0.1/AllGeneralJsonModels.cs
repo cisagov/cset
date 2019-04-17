@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models
+namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
 {
 
 
@@ -107,6 +107,15 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models
 
         [Required]
         public Guid Assessment_GUID { get; set; }
+
+        [StringLength(100)]
+        public string CreditUnionName { get; set; }
+
+        [StringLength(100)]
+        public string Charter { get; set; }
+
+        [StringLength(100)]
+        public string Assets { get; set; }
 
     }
 
@@ -382,6 +391,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models
         public Int32 Component_Id { get; set; }
 
         public Boolean Mark_For_Review { get; set; }
+
+        public Boolean Reviewed { get; set; }
 
 
         public String Comment { get; set; }
@@ -664,8 +675,68 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models
 
     }
 
+    public class jFINANCIAL_HOURS
+    {
+        public int Assessment_Id { get; set; }
+        [StringLength(50)]
+        public string Component { get; set; }
+        [StringLength(50)]
+        public string ReviewType { get; set; }
+        public decimal Hours { get; set; }
+        [StringLength(512)]
+        public string OtherSpecifyValue { get; set; }
+    }
 
+    public class jFINANCIAL_ASSESSMENT_VALUES
+    {
+        public int Assessment_Id { get; set; }
 
+        [StringLength(250)]
+        public string AttributeName { get; set; }
+
+        [StringLength(50)]
+        public string AttributeValue { get; set; }
+    }
+
+    public class jASSESSMENTS_REQUIRED_DOCUMENTATION
+    {
+        public int Assessment_Id { get; set; }
+
+        public int Documentation_Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Answer { get; set; }
+
+        public string Comment { get; set; }
+    }
+
+    public class jASSESSMENT_IRP_HEADER
+    {
+        public int Assessment_Id { get; set; }
+
+        public int IRP_Header_Id { get; set; }
+
+        public int? Risk_Level { get; set; }
+
+        public int Header_Risk_Level_Id { get; set; }
+
+        public string Comment { get; set; }
+    }
+
+    public class jASSESSMENT_IRP
+    {
+        public int Answer_Id { get; set; }
+
+        public int Assessment_Id { get; set; }
+
+        public int IRP_Id { get; set; }
+
+        public int? Response { get; set; }
+
+        [StringLength(500)]
+        public string Comment { get; set; }
+    }
 }
 
 

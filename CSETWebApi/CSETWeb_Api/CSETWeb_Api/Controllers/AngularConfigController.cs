@@ -1,9 +1,10 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -27,29 +28,17 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/assets/config.json")]
-        public JObject GetConfig(HttpRequestMessage requestMessage)
-        {
-            return processConfig(requestMessage.RequestUri);
-        }
-
-        /// <summary>
-        /// NOTE THIS APOLOGY
-        /// this call returns the config.json file
-        /// but modifies the port to be the current port 
-        /// the application is running on.
-        /// (IE the file may be different from what is returned)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
         [Route("api/assets/config")]
+        [Route("Reports/api/assets/config")]
         public JObject GetConfigURLRewrite(HttpRequestMessage requestMessage)
         {
             return processConfig(requestMessage.RequestUri);
         }
 
+        
         private JObject processConfig(Uri newBase)
         {
+
             if (File.Exists(System.Web.Hosting.HostingEnvironment.MapPath("~/assets/config.json")))
             {
                 string contents = File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath("~/assets/config.json"));
@@ -57,6 +46,7 @@ namespace CSETWeb_Api.Controllers
                 if (jObject["override"] != null)
                     if ((jObject["override"]).ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
                         return jObject;
+
                 // get the base appURL 
                 // then change it to include the new port.
                 string findString = jObject["appUrl"].ToString();
@@ -73,13 +63,12 @@ namespace CSETWeb_Api.Controllers
                 {
                     reportsUrl += reportsUrl.EndsWith("reports/", StringComparison.CurrentCultureIgnoreCase) ? "" : "reports/";
                 }
-                jObject["reportsUrl"] = newUri(newBase, reportsUrl);
-                //jObject["OldDebug"] = contents;
+                jObject["reportsUrl"] = newUri(newBase, reportsUrl);                
                 return jObject;
             }
-
             throw new HttpException(404, "assets/config.json file not found");
         }
+
 
         private Uri newUri(Uri newBase, string oldUri)
         {

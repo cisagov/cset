@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSETWeb_Api.BusinessLogic</RootNamespace>
     <AssemblyName>BusinessLogic</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -246,6 +246,7 @@
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />
     <Compile Include="BusinessManagers\ImportManager.cs" />
+    <Compile Include="BusinessManagers\ImportUpgradeManager.cs" />
     <Compile Include="BusinessManagers\InformationTabData\BaseQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
@@ -343,7 +344,10 @@
     <Compile Include="ImportAssessment\BulkSqlUpload.cs" />
     <Compile Include="ImportAssessment\export\ExportAssessment.cs" />
     <Compile Include="ImportAssessment\Importer.cs" />
-    <Compile Include="ImportAssessment\Models\AllGeneralJsonModels.cs" />
+    <Compile Include="ImportAssessment\Models\Version_9.0.1\AllGeneralJsonModels.cs" />
+    <Compile Include="ImportAssessment\Models\Version_9.0.1\UploadAssessmentModel.cs" />
+    <Compile Include="ImportAssessment\Models\Version_9.0\AllGeneralJsonModels.cs" />
+    <Compile Include="ImportAssessment\Models\Version_9.0\UploadAssessmentModel.cs" />
     <Compile Include="Models\ACETDashboard.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
@@ -376,7 +380,6 @@
     <Compile Include="Models\SalAnswers.cs" />
     <Compile Include="Models\Sals.cs" />
     <Compile Include="Models\Standard.cs" />
-    <Compile Include="ImportAssessment\Models\UploadAssessmentModel.cs" />
     <Compile Include="Models\UserCreateResponse.cs" />
     <Compile Include="Models\UserDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -439,6 +442,7 @@
     <Compile Include="ResourceLibrary\Search\FieldNames.cs" />
     <Compile Include="ResourceLibrary\Search\ResourceTypeEnum.cs" />
     <Compile Include="ResourceLibrary\Search\SearchDocs.cs" />
+    <Compile Include="Version\VersionInjected.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -481,5 +485,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

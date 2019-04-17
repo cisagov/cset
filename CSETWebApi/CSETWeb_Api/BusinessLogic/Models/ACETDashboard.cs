@@ -12,12 +12,14 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string CreditUnionName;
         public string Charter;
         public string Assets;
-        public int Hours;
+        public decimal Hours;
 
         //IRP Section
         public List<IRPSummary> IRPs;
         public int[] SumRisk;
         public int SumRiskTotal; //i regret the names i started using.
+        public int Override;
+        public string OverrideReason;
 
         //Cybersecurity Maturity Section
         public List<DashboardDomain> Domains;

@@ -1,11 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,11 +21,18 @@ namespace CSETWeb_Api
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("index.html");
 
-            routes.MapRoute(
-                name: "default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "home", action = "index", id = UrlParameter.Optional }
-            );
+            ///here is what I want 
+            ///check the file system if index.html does not exist then 
+            ///set up the default route             
+            if (!File.Exists(System.Web.Hosting.HostingEnvironment.MapPath("~/Index.html")))
+            {
+                routes.MapRoute(
+                    name: "Default",
+                    url: "{controller}/{action}/{id}",
+                    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                );
+            }
+            
         }
     }
 }
