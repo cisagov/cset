@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConfigService } from './config.service';
+import { ReportsConfigService } from './config.service';
 
 @Injectable()
 export class ReportService {
@@ -34,7 +34,7 @@ export class ReportService {
     /**
      *
      */
-    constructor(private http: HttpClient, private configSvc: ConfigService) {
+    constructor(private http: HttpClient, private configSvc: ReportsConfigService) {
         if (!this.initialized) {
             this.apiUrl = this.configSvc.apiUrl;
             this.initialized = true;
