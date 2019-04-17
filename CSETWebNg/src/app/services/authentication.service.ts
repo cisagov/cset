@@ -34,6 +34,7 @@ import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { isNullOrUndefined } from 'util';
+import { environment } from '../../environments/environment';
 
 export interface LoginResponse {
     Token: string;
@@ -70,7 +71,7 @@ export class AuthenticationService {
             JSON.stringify(
                 {
                     TzOffset: new Date().getTimezoneOffset(),
-                    Scope: this.configSvc.config.appCode
+                    Scope: environment.appCode
                 }
             ), headers)
             .toPromise().then(
@@ -114,12 +115,14 @@ export class AuthenticationService {
                     Email: email,
                     Password: password,
                     TzOffset: new Date().getTimezoneOffset(),
-                    Scope: this.configSvc.config.appCode
+                    Scope: environment.appCode
                 }
             ), headers).pipe(
                 map((user: LoginResponse) => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
+
                     this.storeUserData(user);
+
                     return user;
                 }));
     }
@@ -208,7 +211,7 @@ export class AuthenticationService {
     }
 
     getSecurityQuestionsList(email: string) {
-        return this.http.get(this.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.config.appCode);
+        return this.http.get(this.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + environment.appCode);
     }
 
     getSecurityQuestionsPotentialList() {

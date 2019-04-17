@@ -25,7 +25,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-const configUrl = 'assets/config.json';
+
 
 @Injectable()
 export class ConfigService {
@@ -36,6 +36,7 @@ export class ConfigService {
   docUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
+  configUrl = 'assets/config.json';
 
   config: any;
 
@@ -43,6 +44,9 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   constructor(private http: HttpClient) {
+    if (/reports/i.test(window.location.href)) {
+      this.configUrl = "../" + this.configUrl;
+    }
       this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
       if (this.isAPI_together_With_Web) {
         this.apiUrl = sessionStorage.getItem("appAPIURL");
@@ -57,13 +61,20 @@ export class ConfigService {
       // are all together.   Consequently I don't need other environments etc
       // and I can assume production
 
-      let tmpConfigURL = 'api/assets/config.json';
-      if (!this.isAPI_together_With_Web) { tmpConfigURL = configUrl; }
+      // and I can assume production
+      if (!this.isAPI_together_With_Web) {
+        this.apiUrl = environment.apiUrl;
+        this.appUrl = environment.appUrl;
+        this.docUrl = environment.docUrl;
+        this.reportsUrl = environment.reportsUrl;
+      } else {
+        this.configUrl = "api/assets/config";
+      }
 
       // it is very important that this be a single promise
       // I'm not sure the config call is actually behaving.
       // multiple chained promises definitely does not work
-      return this.http.get(tmpConfigURL)
+      return this.http.get(this.configUrl)
         .toPromise() // APP_INITIALIZER doesn't seem to work with observables
         .then((data: any) => {
                 if (this.isAPI_together_With_Web) {
@@ -73,13 +84,6 @@ export class ConfigService {
                   this.reportsUrl = data.reportsUrl;
                   this.helpContactEmail = data.helpContactEmail;
                   this.helpContactPhone = data.helpContactPhone;
-                } else {
-                  this.apiUrl = environment.apiUrl;
-                  this.appUrl = environment.appUrl;
-                  this.docUrl = environment.docUrl;
-                  this.reportsUrl = environment.reportsUrl;
-                  this.helpContactEmail = environment.helpContactEmail;
-                  this.helpContactPhone = environment.helpContactPhone;
                 }
                 this.config = data;
                 this.initialized = true;

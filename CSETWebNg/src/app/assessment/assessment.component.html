@@ -19,38 +19,47 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a w-100">
 
   <!-- Tabs -->
   <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
     <div class="d-flex justify-content-start flex-11a">
       <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}" class.active="false"
-          (click)="toggleNav()">
-          <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a" matTooltip="Expand/Collapse options" matTooltipPosition="below">
-            <span class="fs-base-1 m-0" [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
+        <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
+          class.active="false" (click)="toggleNav()">
+          <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a"
+            matTooltip="Expand/Collapse options" matTooltipPosition="below">
+            <span class="fs-base-1 m-0"
+              [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
           </button>
         </li>
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'" (click)="assessSvc.currentTab = 'prepare'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a" data-toggle="tab" routerLink="prepare">
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'"
+          (click)="assessSvc.currentTab = 'prepare'">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="prepare">
             <span class="tab-icon cset-icons-clipboard-pencil mr-2" id="prepareIcon"></span>
             <span class="nav-tab-text">Prepare</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'" (click)="assessSvc.currentTab = 'questions'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a" data-toggle="tab" routerLink="questions">
-            <span class="tab-icon cset-icons-question-mark mr-2" *ngIf="assessSvc.applicationMode === 'Q'" id="questionsIcon" alt="Questions mode icon"></span>
-            <span class="tab-icon cset-icons-books-stack-2 mr-2" *ngIf="assessSvc.applicationMode === 'R'" id="requirementsIcon" alt="Requirements mode icon"></span>
-            <span class="nav-tab-text">{{ this.assessSvc.applicationMode === 'Q' ? 'Questions' : 'Requirements' }}</span>
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'"
+          (click)="assessSvc.currentTab = 'questions'">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+            routerLink="questions">
+            <span class="tab-icon cset-icons-question-mark mr-2" *ngIf="assessSvc.applicationMode === 'Q'"
+              id="questionsIcon" alt="Questions mode icon"></span>
+            <span class="tab-icon cset-icons-books-stack-2 mr-2" *ngIf="assessSvc.applicationMode === 'R'"
+              id="requirementsIcon" alt="Requirements mode icon"></span>
+            <span
+              class="nav-tab-text">{{ this.assessSvc.applicationMode === 'Q' ? 'Questions' : 'Requirements' }}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'" (click)="assessSvc.currentTab = 'results'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a" data-toggle="tab" routerLink="results">
-              <span class="tab-icon cset-icons-results mr-2"></span>
-              <span class="nav-tab-text">Results</span>
+        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'"
+          (click)="assessSvc.currentTab = 'results'">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="results">
+            <span class="tab-icon cset-icons-results mr-2"></span>
+            <span class="nav-tab-text">Results</span>
           </button>
         </li>
       </ul>
@@ -60,7 +69,8 @@
   <!-- Content -->
   <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
     <mat-sidenav-container autosize id="sidenav-container" class="d-flex flex-column flex-11a">
-      <mat-sidenav #sNav mode="{{innerWidth<960 ? 'over' : 'side'}}" [opened]="expandNav" id="sidenav" (scroll)="handleScroll('sidenav')">
+      <mat-sidenav #sNav mode="{{innerWidth<960 ? 'over' : 'side'}}" [opened]="expandNav" id="sidenav"
+        (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
         <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
           <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild">
             <button (click)="selectItem(node?.value)" class="btn btn-link ta-left">
@@ -77,12 +87,14 @@
                 </mat-icon>
               </span>
             </button>
-            <button class="btn btn-link" matIconButton matTreeNodeToggle="!navSvc?.disableCollapse" *ngIf="node.value === null || node.value?.length < 1">
+            <button class="btn btn-link" matIconButton matTreeNodeToggle="!navSvc?.disableCollapse"
+              *ngIf="node.value === null || node.value?.length < 1">
               <span class="menu-link">
                 {{node?.label}}
               </span>
             </button>
-            <button class="btn btn-link" matIconButton (click)="selectItem(node?.value)" *ngIf="node.value !== null && node.value?.length >= 1">
+            <button class="btn btn-link" matIconButton (click)="selectItem(node?.value)"
+              *ngIf="node.value !== null && node.value?.length >= 1">
               <span class="menu-link">
                 {{node?.label}}
               </span>
@@ -101,4 +113,3 @@
     </mat-sidenav-container>
   </div>
 </div>
-

@@ -118,3 +118,7 @@ export interface ReferenceDoc {
     SectionRef?: string;
   }
 
+  export interface BasicResponse {
+    InformationalMessages: string[];
+    ErrorMessages: string[];
+  }

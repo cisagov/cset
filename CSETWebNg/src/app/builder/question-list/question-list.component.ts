@@ -26,7 +26,8 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { MatDialog } from '@angular/material';
-import { Question } from '../../models/set-builder.model';
+import { Question, BasicResponse } from '../../models/set-builder.model';
+import { query } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-question-list',
@@ -42,6 +43,7 @@ export class QuestionListComponent implements OnInit {
   questionBeingEdited: Question = null;
   originalQuestionText: string = null;
   editedQuestionInUse = false;
+  duplicateTextQuestion: Question = null;
 
   headingBeingEdited: any = null;
   originalHeading: string = null;
@@ -77,6 +79,7 @@ export class QuestionListComponent implements OnInit {
    */
   startQuestionEdit(q: Question) {
     this.questionBeingEdited = q;
+    this.duplicateTextQuestion = null;
     this.originalQuestionText = q.QuestionText;
 
     setTimeout(() => {
@@ -95,7 +98,12 @@ export class QuestionListComponent implements OnInit {
   endQuestionEdit(q: Question) {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
-    this.setBuilderSvc.updateQuestionText(q).subscribe();
+    this.setBuilderSvc.updateQuestionText(q).subscribe((resp: BasicResponse) => {
+      if (resp.ErrorMessages.indexOf('DUPLICATE QUESTION TEXT') >= 0) {
+        this.duplicateTextQuestion = q;
+        this.abandonQuestionEdit(q);
+      }
+    });
   }
 
   abandonQuestionEdit(q: Question) {

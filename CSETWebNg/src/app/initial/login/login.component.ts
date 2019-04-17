@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   incorrect = false;
   private isEjectDialogOpen = false;
+  browserIsIE: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +60,8 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+
     this.authenticationService.checkLocal().then(() => {
       if (this.authenticationService.isLocal) {
         this.mode = 'LOCAL';
