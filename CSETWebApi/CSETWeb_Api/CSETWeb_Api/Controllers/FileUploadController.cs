@@ -19,6 +19,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
@@ -45,46 +46,34 @@ namespace WebAPIFileUploadExample.Controllers
         [Route("api/files/blob/create")]
         public async Task<HttpResponseMessage> UploadToBlob()
         {
-            HttpRequestMessage request = this.Request;
-            if (!request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
+
+            string squestion_id = "questionId";
+            string sanswerId = "answerId";
+            string stitle = "title";
+
+
             int assessmentId = Auth.AssessmentForUser();
             string fileHash;
             try
             {
-                var streamProvider = new InMemoryMultipartFormDataStreamProvider();
-                await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
                 
+                FileUploadStream fileUploader = new FileUploadStream();
+                Dictionary<string, string> formValues = new Dictionary<string, string>();
+                formValues.Add(squestion_id, null);
+                formValues.Add(sanswerId, null);
+                formValues.Add(stitle, null);
+
+
+                FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(this.Request, formValues);
              
-                //access form data
-                NameValueCollection formData = streamProvider.FormData;
-                 foreach (HttpContent ctnt in streamProvider.Files)
-                 {
-                    // You would get hold of the inner memory stream here              
-                    using (Stream fs = ctnt.ReadAsStreamAsync().Result)
-                     {
-                         string filename = ctnt.Headers.ContentDisposition.FileName.Trim("\"".ToCharArray());
-                         string contentType = ctnt.Headers.ContentType.MediaType;
-                         using (BinaryReader br = new BinaryReader(fs))
-                         {
-                             byte[] bytes = br.ReadBytes((Int32)fs.Length);
-                            // Hash the file so that we can determine if it is already attached to another question
-                            using (var md5 = MD5.Create())
-                            {
-                                var hash = md5.ComputeHash(bytes);
-                                fileHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();                                
-                            }
                             
                             // Find or create the Answer for the document to be associated with.  
                             // If they are attaching a document to a question that has not yet been answered,
                             // the answerId will not be sent in the request.
-                            int questionId = int.Parse(streamProvider.FormData["questionId"]);
-
+                int questionId = int.Parse(streamResult.FormNameValues[squestion_id]);
                             int answerId;
-                            bool isAnswerIdProvided = int.TryParse(streamProvider.FormData["answerId"], out answerId);
-                            string title = streamProvider.FormData["title"];
+                bool isAnswerIdProvided = int.TryParse(streamResult.FormNameValues[sanswerId], out answerId);
+                string title = streamResult.FormNameValues[stitle];
 
                             if (!isAnswerIdProvided)
                             {
@@ -97,21 +86,17 @@ namespace WebAPIFileUploadExample.Controllers
                             var dm = new DocumentManager(assessmentId);
                             using (CSET_Context db = new CSET_Context())
                             {   
-                                dm.AddDocument(title, filename, contentType, fileHash, answerId, bytes);
+                    dm.AddDocument(title,answerId, streamResult);
                             }
 
                             // Return a current picture of this answer's documents
                             return Request.CreateResponse(dm.GetDocumentsForAnswer(answerId));
-                        }
-                     }
-                 }                
+               
             }
             catch (System.Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
-
-            return null;
         }
 
         [Route("api/files/all")]

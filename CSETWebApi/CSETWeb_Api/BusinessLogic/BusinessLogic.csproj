@@ -339,6 +339,10 @@
     <Compile Include="Helpers\StatUtils.cs" />
     <Compile Include="Helpers\TokenManager.cs" />
     <Compile Include="Helpers\TransactionSecurity.cs" />
+    <Compile Include="Helpers\upload\FileUploadStream.cs" />
+    <Compile Include="Helpers\upload\FileUploadStreamResult.cs" />
+    <Compile Include="Helpers\upload\InMemoryMultipartFormDataStreamProvider.cs" />
+    <Compile Include="Helpers\upload\UploadFormException.cs" />
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="ImportAssessment\BulkSqlUpload.cs" />

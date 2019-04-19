@@ -13,6 +13,7 @@ using DataLayerCore.Model;
 using System.Text;
 using CSETWeb_Api.Models;
 using Microsoft.EntityFrameworkCore;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -157,16 +158,18 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="answerId"></param>
         /// <param name="File_Upload_Id"></param>
         /// <param name="stream_id">only used if moving away from the blob process</param>
-        public void AddDocument(string title, string fileName, string contentType, string fileHash, int answerId, byte[] bytes, Guid? stream_id = null)
+        public void AddDocument(string title, int answerId, FileUploadStreamResult result)
         {
             if (string.IsNullOrWhiteSpace(title))
             {
                 title = "click to edit title";
             }
 
+            foreach (var file in result.FileResultList)
+            {
             // first see if the document already exists on any question in this Assessment, based on the filename and hash
-            var doc = db.DOCUMENT_FILE.Where(f => f.FileMd5 == fileHash
-                && f.Name == fileName
+                var doc = db.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
+                    && f.Name == file.FileName
                 && f.Assessment_Id == this.assessmentId).FirstOrDefault();
             if (doc == null)
             {
@@ -174,18 +177,18 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     Assessment_Id = this.assessmentId,
                     Title = title,
-                    Path = fileName,  // this may end up being some other reference
-                    Name = fileName,
-                    FileMd5 = fileHash,
-                    ContentType = contentType,
-                    Data = bytes
+                        Path = file.FileName,  // this may end up being some other reference
+                        Name = file.FileName,
+                        FileMd5 = file.FileHash,
+                        ContentType = file.ContentType,
+                        Data = file.FileBytes
                 };
 
             }
             else
             {
                 doc.Title = title;
-                doc.Name = fileName;
+                    doc.Name = file.FileName;
             }
 
             var answer = db.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
@@ -204,6 +207,8 @@ namespace CSETWeb_Api.BusinessManagers
             db.SaveChanges();
 
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
+            }
+            
         }
 
         /// <summary>

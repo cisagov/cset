@@ -1049,28 +1049,5 @@
             [Authorize] attribute that authenticates the security token in the request header. 
             </summary>
         </member>
-        <member name="P:CSETWeb_Api.Helpers.InMemoryMultipartFormDataStreamProvider.FormData">
-            <summary>
-            Gets a <see cref="T:System.Collections.Specialized.NameValueCollection"/> of form data passed as part of the multipart form data.
-            </summary>
-        </member>
-        <member name="P:CSETWeb_Api.Helpers.InMemoryMultipartFormDataStreamProvider.Files">
-            <summary>
-            Gets list of <see cref="T:System.Net.Http.HttpContent"/>s which contain uploaded files as in-memory representation.
-            </summary>
-        </member>
-        <member name="M:CSETWeb_Api.Helpers.InMemoryMultipartFormDataStreamProvider.ExecutePostProcessingAsync">
-            <summary>
-            Read the non-file contents as form data.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:CSETWeb_Api.Helpers.InMemoryMultipartFormDataStreamProvider.UnquoteToken(System.String)">
-            <summary>
-            Remove bounding quotes on a token if present
-            </summary>
-            <param name="token">Token to unquote.</param>
-            <returns>Unquoted token.</returns>
-        </member>
     </members>
 </doc>

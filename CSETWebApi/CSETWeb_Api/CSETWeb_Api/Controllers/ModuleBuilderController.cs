@@ -10,7 +10,7 @@ using System.Web.Http;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -390,66 +390,29 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/builder/UploadReferenceDoc")]
-        public int UploadReferenceDoc()
-        {
-            HttpRequestMessage request = this.Request;
-            if (!request.Content.IsMimeMultipartContent())
+        public async Task<int> UploadReferenceDoc()
             {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
+
 
             try
-            {
-                var streamProvider = new InMemoryMultipartFormDataStreamProvider();
-                Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
-
-
-                //access form data
-                NameValueCollection formData = streamProvider.FormData;
-                foreach (HttpContent ctnt in streamProvider.Files)
-                {
-                    // You would get hold of the inner memory stream here              
-                    using (Stream fs = ctnt.ReadAsStreamAsync().Result)
-                    {
-                        string filename = ctnt.Headers.ContentDisposition.FileName.Trim("\"".ToCharArray());
-                        string physicalFilePath = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + @"\Documents\" + filename;
-                        string contentType = ctnt.Headers.ContentType.MediaType;
-
-
-
-                        // Do we support this file type?
-
-
-                        string title = streamProvider.FormData["title"];
-                        string setName = streamProvider.FormData["setName"];
-
-                        int fileSize = 0;
-
-                        using (BinaryReader br = new BinaryReader(fs))
-                        {
-                            byte[] bytes = br.ReadBytes((Int32)fs.Length);
-                            fileSize = bytes.Length;
-
-                            using (FileStream fsw = File.Create(physicalFilePath, bytes.Length))
                             {
-                                fsw.Write(bytes, 0, fileSize);
-                            }
-                        }
+                FileUploadStream fileUploader = new FileUploadStream();
+                Dictionary<string, string> formValues = new Dictionary<string, string>();
+                formValues.Add("title", null);
+                formValues.Add("setName", null);
 
+                FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(this.Request,formValues);
 
                         // Create a GEN_FILE entry, and a SET_FILES entry.
                         ModuleBuilderManager m = new ModuleBuilderManager();
-                        return m.RecordDocInDB(setName, filename, contentType, fileSize);
-                    }
-                }
+                return m.RecordDocInDB(streamResult);
+                
             }
             catch (System.Exception e)
             {
                 throw e;
                 // throw Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
-
-            return 0;
         }
     }
 }

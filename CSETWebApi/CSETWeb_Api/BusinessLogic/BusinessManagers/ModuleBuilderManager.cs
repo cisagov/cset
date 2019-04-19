@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
@@ -1720,15 +1721,19 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// Saves the physical document and defines it in the database.
         /// Returns the ID of the new GEN_FILE row.
+        /// !!Note that this only processes the first file in the foreach list!!
         /// </summary>
-        public int RecordDocInDB(string setName, string filename, string contentType, int fileSize)
+        public int RecordDocInDB(FileUploadStreamResult result)
         {
+            
             using (var db = new CSET_Context())
             {
                 // Determine file type ID.  Store null if not known.
                 int? fileType = null;
 
-                var type = db.FILE_TYPE.Where(x => x.Mime_Type == contentType).FirstOrDefault();
+                foreach (var file in result.FileResultList)
+                {
+                    var type = db.FILE_TYPE.Where(x => x.Mime_Type == file.ContentType).FirstOrDefault();
                 if (type != null)
                 {
                     fileType = (int)type.File_Type_Id;
@@ -1737,12 +1742,13 @@ namespace CSETWeb_Api.BusinessManagers
 
                 GEN_FILE gf = new GEN_FILE
                 {
-                    File_Name = filename,
+                        File_Name = file.FileName,
                     Title = "(no title)",
                     File_Type_Id = fileType,
-                    File_Size = fileSize,
+                        File_Size = file.FileSize,
                     Doc_Num = "NONE",
-                    Short_Name = "(no short name)"
+                        Short_Name = "(no short name)",
+                        Data = file.FileBytes
                 };
                 db.GEN_FILE.Add(gf);
                 db.SaveChanges();
@@ -1750,13 +1756,15 @@ namespace CSETWeb_Api.BusinessManagers
 
                 SET_FILES sf = new SET_FILES
                 {
-                    SetName = setName,
+                        SetName = result.FormNameValues["setName"],
                     Gen_File_Id = gf.Gen_File_Id
                 };
                 db.SET_FILES.Add(sf);
                 db.SaveChanges();
 
                 return gf.Gen_File_Id;
+                }
+                return 0; 
             }
         }
     }
