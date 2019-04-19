@@ -65,7 +65,7 @@
 
       <div class="form-group">
         <label for="title">Title/Identifier</label>
-        <input required #title="ngModel" id="title" name="title" [(ngModel)]="model.Title" class="form-control">
+        <input required #title="ngModel" maxlength="250" id="title" name="title" [(ngModel)]="model.Title" class="form-control">
         <div *ngIf="submitted && !title.valid" class="m-0 mt-2 alert alert-danger">Title is required</div>
       </div>
 
