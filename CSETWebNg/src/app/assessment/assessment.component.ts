@@ -33,6 +33,7 @@ import { MatSidenav } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { NavigationService } from '../services/navigation.service';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-assessment',
@@ -105,5 +106,9 @@ export class AssessmentComponent implements OnInit {
       document.scrollingElement.scrollTo({ behavior: 'smooth', top: 0 });
     }
     this.scrollTop = element.scrollTop;
+  }
+
+  openStateChange(event){
+    console.log("This is broken and needs handled!");
   }
 }
