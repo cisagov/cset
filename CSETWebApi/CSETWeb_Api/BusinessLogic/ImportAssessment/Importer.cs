@@ -352,11 +352,15 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             //
             // NCUA data
             //
+            List<int> supportedDocIds = db.REQUIRED_DOCUMENTATION.Select(d => d.Documentation_Id).ToList();
             foreach (var a in model.jASSESSMENTS_REQUIRED_DOCUMENTATION)
             {
-                var item = TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION>(a);
-                item.Assessment_Id = _assessmentId;
-                db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(item);
+                if (supportedDocIds.Contains(a.Documentation_Id))
+                {
+                    var item = TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION>(a);
+                    item.Assessment_Id = _assessmentId;
+                    db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(item);
+                }
             }
 
             foreach (var a in model.jFINANCIAL_ASSESSMENT_VALUES)
@@ -385,7 +389,11 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = TinyMapper.Map<ASSESSMENT_IRP>(a);
                 item.Assessment_Id = _assessmentId;
                 item.Answer_Id = 0;
-                db.ASSESSMENT_IRP.Add(item);
+
+                if (db.ASSESSMENT_IRP.Count(ai => ai.IRP_Id == item.IRP_Id) == 0)
+                {
+                    db.ASSESSMENT_IRP.Add(item);
+                }
             }
 
 

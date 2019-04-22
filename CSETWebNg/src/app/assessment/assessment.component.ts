@@ -44,8 +44,19 @@ import { Alert } from 'selenium-webdriver';
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
+
+  /**
+   * Indicates whether the nav panel is visible (true)
+   * or hidden (false).
+   */
   expandNav = true;
+
+  /**
+   * Indicates whether the nav stays visible (true)
+   * or auto-hides when the screen is narrow (false).
+   */
   lockNav = true;
+  
   minWidth = 960;
   scrollTop = 0;
 
@@ -108,7 +119,11 @@ export class AssessmentComponent implements OnInit {
     this.scrollTop = element.scrollTop;
   }
 
-  openStateChange(event){
-    console.log("This is broken and needs handled!");
+  /**
+   * Fired when the sidenav's opened state changes.
+   * @param e
+   */
+  openStateChange(e) {
+    this.expandNav = e;
   }
 }
