@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
 using System;
@@ -43,11 +44,19 @@ namespace CSETWeb_Api.Controllers
 
                 using (var db = new CSET_Context())
                 {
-                    var doc = db.GEN_FILE.FirstOrDefault(s => s.File_Name == fileName && s.Is_Uploaded == true);
-                    var stream = new MemoryStream(doc.Data);
+                    var files = from a in db.GEN_FILE
+                                join f in db.FILE_TYPE on a.File_Type_Id equals f.File_Type_Id
+                                where (a.File_Name == fileName) && (a.Is_Uploaded ?? false)
+                                select new { a, f };
+
+                    foreach (var f in files.ToList())
+                    {
+                        var stream = new MemoryStream(f.a.Data);
                     result.Content = new StreamContent(stream);
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(doc.File_Type_.Mime_Type);
+                        result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.f.Mime_Type);
                     return result;
+                    }
+                    return null;
 
                 }
             });

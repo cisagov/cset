@@ -28,6 +28,7 @@ import {
 } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
+import { StandardService } from '../../services/standard.service';
 
 @Component({
   selector: 'app-results',
@@ -39,6 +40,7 @@ export class ResultsComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
     private navSvc: NavigationService,
+    private stdSvc: StandardService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -62,8 +64,11 @@ export class ResultsComponent implements OnInit {
       }
     });
 
-    this.populateTree();
+    // Build the nav tree
+    this.stdSvc.getACET().subscribe(x => this.populateTree(x));
   }
+
+  tree: NavTree[] = [];
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
@@ -73,13 +78,24 @@ export class ResultsComponent implements OnInit {
 
     // Jump to the previously active view (if known)
     if (!!this.navSvc.activeResultsView) {
+
+      // make sure the tree is up to date before we query it
+      this.stdSvc.getACET().subscribe(x => {
+        this.populateTree(x);
+
+        // if the 'active' view is no longer in the tree, default to the dashboard view
+        if (!this.navSvc.isPathInTree(this.tree, this.navSvc.activeResultsView)) {
+          this.navSvc.activeResultsView = 'dashboard';
+        }
+
       this.navSvc.selectItem(this.navSvc.activeResultsView);
+      });
     }
   }
 
-  populateTree() {
+  populateTree(acet) {
     const magic = this.navSvc.getMagic();
-    this.navSvc.setTree([
+    this.tree = [
       {
         label: 'Analysis Dashboard', value: 'dashboard', children: [
           { label: 'Control Priorities', value: 'ranked-questions', children: [] },
@@ -98,9 +114,25 @@ export class ResultsComponent implements OnInit {
           // ] },
         ]
       },
-      { label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] },
-      { label: 'Reports', value: 'reports', children: [] }
-    ], magic);
+      // { label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] },
+      // { label: 'Reports', value: 'reports', children: [] }
+    ];
+
+    if (acet) {
+      this.tree.push({
+        label: 'ACET Information', value: '', children: [
+          { children: [], label: 'Cybersecurity Maturity', value: 'maturity' },
+          { children: [], label: 'Administration - Review Hours', value: 'admin' },
+          { children: [], label: 'ACET Dashboard', value: 'acetDashboard' }
+        ]
+      });
+    }
+
+    this.tree.push({ label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] });
+    this.tree.push({ label: 'Reports', value: 'reports', children: [] });
+
+    this.navSvc.setTree(this.tree, magic);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[0]);
+    this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[1]);
   }
 }

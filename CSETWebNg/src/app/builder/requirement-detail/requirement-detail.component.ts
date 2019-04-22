@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Requirement, Question, ReferenceDoc, RefDocLists } from '../../models/set-builder.model';
+import { Requirement, Question, ReferenceDoc, RefDocLists, BasicResponse } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -47,6 +47,7 @@ export class RequirementDetailComponent implements OnInit {
   questionBeingEdited: Question = null;
   originalQuestionText: string = null;
   editedQuestionInUse = false;
+  duplicateTextQuestion: Question = null;
 
   sourceDocs: ReferenceDoc[] = [];
 
@@ -269,6 +270,7 @@ export class RequirementDetailComponent implements OnInit {
    */
   startQuestionEdit(q: Question) {
     this.questionBeingEdited = q;
+    this.duplicateTextQuestion = null;
     this.originalQuestionText = q.QuestionText;
 
     setTimeout(() => {
@@ -287,7 +289,12 @@ export class RequirementDetailComponent implements OnInit {
   endQuestionEdit(q: Question) {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
-    this.setBuilderSvc.updateQuestionText(q).subscribe();
+    this.setBuilderSvc.updateQuestionText(q).subscribe((resp: BasicResponse) => {
+      if (resp.ErrorMessages.indexOf('DUPLICATE QUESTION TEXT') >= 0) {
+        this.duplicateTextQuestion = q;
+        this.abandonQuestionEdit(q);
+      }
+    });
   }
 
   abandonQuestionEdit(q: Question) {

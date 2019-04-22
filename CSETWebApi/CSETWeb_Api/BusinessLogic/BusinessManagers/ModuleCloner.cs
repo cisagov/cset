@@ -154,18 +154,10 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
 
-                // Clone UNIVERSAL_SUB_CATEGORY_HEADINGS
-                var headings = db.UNIVERSAL_SUB_CATEGORY_HEADINGS
-                    .Where(x => x.Set_Name == this.origSetName).ToList();
-
-                foreach (var heading in headings)
-                {
-                    var newHeading = (UNIVERSAL_SUB_CATEGORY_HEADINGS)db.Entry(heading).CurrentValues.ToObject();
-                    newHeading.Set_Name = copySet.Set_Name;
-
-                    db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(newHeading);
-                }
-
+                // There is no need to clone UNIVERSAL_SUB_CATEGORY_HEADINGS
+                // because the classification of a Question with a Question Header and a Subcategory
+                // only exists once.  The Set it is tied to is the Set where the original
+                // classification was made.  
 
 
                 // Clone REQUIREMENT_SOURCE_FILES

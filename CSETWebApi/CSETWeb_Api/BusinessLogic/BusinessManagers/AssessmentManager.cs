@@ -207,7 +207,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             db.SaveChanges();
             assessmentId = dbAssessment.Assessment_Id;
-
+            var user = db.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
             // then use its key for the INFORMATION record
             var dbInfo = new INFORMATION
             {

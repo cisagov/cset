@@ -70,8 +70,8 @@ namespace CSETWeb_Api.Helpers
                 UserFirstName = loginUser.FirstName,
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
-                PasswordResetRequired = loginUser.PasswordResetRequired ?? true
-
+                PasswordResetRequired = loginUser.PasswordResetRequired ?? true,
+                ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
             };
 
             return resp;
@@ -80,7 +80,7 @@ namespace CSETWeb_Api.Helpers
 
         /// <summary>
         /// Emulates credential authentication without requiring credentials.
-        /// The Windows Registry is consulted to see if a certain key was placed there
+        /// The Windows file system is consulted to see if a certain file was placed there
         /// during the stand-alone install process.  
         /// </summary>
         /// <param name="login"></param>
@@ -90,7 +90,7 @@ namespace CSETWeb_Api.Helpers
             int userIdSO = 100;
             string primaryEmailSO = "";
 
-            // Read the Registry for the user key put there at install time
+            // Read the file system for the LOCAL-INSTALLATION file put there at install time
             if (!IsLocalInstallation(login.Scope))
             {
                 return null;
@@ -98,8 +98,8 @@ namespace CSETWeb_Api.Helpers
 
 
             String name = WindowsIdentity.GetCurrent().Name;
-            name = string.IsNullOrWhiteSpace(name)?"Local":name;
-           primaryEmailSO = name + "@myorg.org";
+            name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
+            primaryEmailSO = name + "@myorg.org";
             using (var db = new CSET_Context())
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
@@ -110,7 +110,7 @@ namespace CSETWeb_Api.Helpers
                     {
                         Email = primaryEmailSO,
                         FirstName = name,
-                        LastName =  ""
+                        LastName = ""
                     };
                     UserCreateResponse userCreateResponse = um.CreateUser(ud);
 
@@ -139,7 +139,8 @@ namespace CSETWeb_Api.Helpers
                 UserFirstName = name,
                 UserLastName = "",
                 IsSuperUser = false,
-                PasswordResetRequired = false
+                PasswordResetRequired = false,
+                ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
             };
 
 
@@ -148,50 +149,17 @@ namespace CSETWeb_Api.Helpers
 
 
         /// <summary>
-        /// Returns a boolean indicating if this API component is installed
-        /// in a 'local' installation configuration (the Registry key exists).
+        /// Returns 'true' if the installation is 'local' (self-contained using Windows identity).
+        /// The local installer will place an empty file (LOCAL-INSTALLATION) in the website folder
+        /// and the existence of the file indicates if the installation is local.
         /// </summary>
+        /// <param name="app_code"></param>
         /// <returns></returns>
         public static bool IsLocalInstallation(String app_code)
         {
-            Dictionary<String, String> registryPath = new Dictionary<string, string>();
-            registryPath.Add("CSET", "\\DHS\\CSET");
-            registryPath.Add("ACET", "\\NCUA\\ACET");
-            // Read the Registry for the user key put there at install time
-            try
-            {
-                
-                string regPath;
-                if(!registryPath.TryGetValue(app_code,out regPath))
-                {
-                    return false;
-                }             
-                string subkey = "SOFTWARE" + regPath+ " " + VersionInjected.Version;
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey))
-                {
-                    if (key == null)
-                    {
-                        return false;
-                    }
+            string physicalAppPath = HttpContext.Current.Request.PhysicalApplicationPath;
 
-                    Object o = key.GetValue("LocalRunAsOpen");
-                    if (o == null)
-                    {
-                        return false;
-                    }
-
-                    if (bool.Parse(o.ToString()))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return false;
+            return File.Exists(physicalAppPath + "LOCAL-INSTALLATION");
         }
     }
 }

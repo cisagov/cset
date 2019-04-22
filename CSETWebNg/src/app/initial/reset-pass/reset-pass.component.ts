@@ -27,6 +27,7 @@ import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { ConfigService } from '../../services/config.service';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
     selector: 'app-reset-pass',
@@ -52,7 +53,6 @@ export class ResetPassComponent {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private configSvc: ConfigService,
         private auth: AuthenticationService,
         private emailSvc: EmailService) { }
 
@@ -107,7 +107,7 @@ export class ResetPassComponent {
             PrimaryEmail: this.model.email,
             QuestionText: this.securityQuestion,
             AnswerText: this.securityAnswer,
-            AppCode: this.configSvc.config.appCode
+            AppCode: environment.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)

@@ -40,7 +40,7 @@
 
 <div *ngFor="let slider of sliders" class="mb-4">
     <div class="mb-3">
-        <label class="mb-3 fw-500 fs-base bgc-gray-100 p-2">{{slider.OnSite.Sal_Description}}</label>
+        <label class="mb-3 fw-500 fs-base-2 bgc-gray-100 p-2">{{slider.OnSite.Sal_Description}}</label>
         <ion-range-slider #sliderElement type="single" [min]="slider.OnSite.min" [max]="slider.OnSite.max" to_shadow="true"
             grid="true" force_edges="true" [from]="slider.OnSite.Slider_Value" grid_num="10" [prefix]="slider.OnSite.prefix"
             [postfix]="slider.OnSite.postfix" [values]="slider.OnSite.values" decorate_both="false" (onChange)="myOnChange($event,slider.OnSite.Sal_Name)"

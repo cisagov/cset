@@ -19,6 +19,7 @@ namespace DataLayerCore.Model
         [StringLength(4000)]
         public string Document_Description { get; set; }
         public int RDH_Id { get; set; }
+        public int? Document_Order { get; set; }
 
         [ForeignKey("RDH_Id")]
         [InverseProperty("REQUIRED_DOCUMENTATION")]

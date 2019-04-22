@@ -187,6 +187,19 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             //{
             //});
         }
+
+        public static string GetFileExtension(string appCode)
+        {
+            switch ((appCode ?? "").ToUpper())
+            {
+                case "CSET":
+                    return ".csetw";
+                case "ACET":
+                    return ".acet";
+                default:
+                    return ".csetw";
+            }
+        }
     }
 }
 

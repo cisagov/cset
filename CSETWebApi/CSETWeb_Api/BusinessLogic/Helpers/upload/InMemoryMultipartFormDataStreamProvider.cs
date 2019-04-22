@@ -15,7 +15,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace CSETWeb_Api.Helpers
+namespace CSETWeb_Api.BusinessLogic.Helpers.upload
 {
     public class InMemoryMultipartFormDataStreamProvider : MultipartStreamProvider
     {

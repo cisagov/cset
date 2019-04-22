@@ -55,6 +55,7 @@ export class LandingPageComponent implements OnInit {
   sortedAssessments: UserAssessment[] = null;
   unsupportedImportFile: boolean = false;
 
+  browserIsIE: boolean = false;
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -66,6 +67,8 @@ export class LandingPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+
     this.checkPasswordReset();
   }
 

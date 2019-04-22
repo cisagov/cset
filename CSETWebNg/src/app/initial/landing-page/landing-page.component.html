@@ -24,6 +24,13 @@
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <!-- <p>{{this.authSvc.userToken()}}</p> -->
     <div *ngIf="!!sortedAssessments" class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a">
+    
+    <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100">
+            Internet Explorer has been detected as your current browser.
+            Some functionality of CSET is not fully supported by Internet Explorer.
+            Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+            your experience.
+        </div>
 
         <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
             <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>

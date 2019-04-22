@@ -377,12 +377,24 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var user = (from cc in db.ASSESSMENT_CONTACTS
+                var ac = (from cc in db.ASSESSMENT_CONTACTS
                             where cc.UserId == userId && cc.Assessment_Id == assessmentId
                             select cc).FirstOrDefault();
-                if (user == null)
+                if (ac == null)
                     throw new NoSuchUserException();
-                db.ASSESSMENT_CONTACTS.Remove(user);
+                db.ASSESSMENT_CONTACTS.Remove(ac);
+
+
+                // Remove any related FINDING_CONTACT records
+                var fcList = (from fcc in db.FINDING_CONTACT
+                          where fcc.Assessment_Contact_Id == ac.Assessment_Contact_Id
+                          select fcc).ToList();
+                if (fcList.Count > 0)
+                {
+                    db.FINDING_CONTACT.RemoveRange(fcList);
+                }
+
+
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(assessmentId);

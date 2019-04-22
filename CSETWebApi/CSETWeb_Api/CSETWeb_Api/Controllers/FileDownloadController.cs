@@ -60,13 +60,24 @@ namespace CSETWeb_Api.Controllers
             return null;
         }
 
+
+       
+
+
+
         [Route("api/files/export")]
         [HttpGet]
         public HttpResponseMessage Download(string token)
         {
             int _assessmentId = Auth.AssessmentForUser(token);
             var result = new HttpResponseMessage(HttpStatusCode.OK);
-            string filename = ".csetw";
+
+            // determine the file extension based on the application
+            TokenManager tm = new TokenManager(token);
+            string appCode = tm.Payload("scope");
+            string filename = ExportAssessment.GetFileExtension(appCode);
+
+
             using (CSET_Context context = new CSET_Context())
             {
                 string assessmentName = context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault().Assessment_Name;

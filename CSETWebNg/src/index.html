@@ -32,17 +32,19 @@
             if (this.readyState == 4 && this.status == 200) {
                 sessionStorage.setItem("isAPI_together_With_Web", "true");
                 var jsonResponse = JSON.parse(xhttp.responseText);
-                // console.log(jsonResponse);
                 sessionStorage.setItem("appAPIURL", jsonResponse.apiUrl);
             }
             else if (this.readyState == 4) {
                 sessionStorage.setItem("isAPI_together_With_Web", "false");
             }
+            console.log("isAPI_together_With_Web");
+            console.log(sessionStorage.getItem("isAPI_together_With_Web"));
+
         };
         xhttp.onerror = function () {
             alert('returned error');
         }
-        xhttp.open("GET", "api/assets/config.json", false);
+        xhttp.open("GET", "api/assets/config", false);
         xhttp.send();
 
         function getParameterByName(name, url) {
