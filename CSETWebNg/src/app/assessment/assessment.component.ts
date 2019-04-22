@@ -33,6 +33,7 @@ import { MatSidenav } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { NavigationService } from '../services/navigation.service';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-assessment',
