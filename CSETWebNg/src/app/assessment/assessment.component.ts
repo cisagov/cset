@@ -43,8 +43,19 @@ import { NavigationService } from '../services/navigation.service';
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
+
+  /**
+   * Indicates whether the nav panel is visible (true)
+   * or hidden (false).
+   */
   expandNav = true;
+
+  /**
+   * Indicates whether the nav stays visible (true)
+   * or auto-hides when the screen is narrow (false).
+   */
   lockNav = true;
+  
   minWidth = 960;
   scrollTop = 0;
 
@@ -105,5 +116,13 @@ export class AssessmentComponent implements OnInit {
       document.scrollingElement.scrollTo({ behavior: 'smooth', top: 0 });
     }
     this.scrollTop = element.scrollTop;
+  }
+
+  /**
+   * Fired when the sidenav's opened state changes.
+   * @param e
+   */
+  openStateChange(e) {
+    this.expandNav = e;
   }
 }
