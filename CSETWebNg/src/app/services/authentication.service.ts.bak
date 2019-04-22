@@ -91,9 +91,7 @@ export class AuthenticationService {
 
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');
-        if(user.Token != null){
         sessionStorage.setItem('userToken', user.Token);
-        }
         sessionStorage.setItem('firstName', user.UserFirstName);
         sessionStorage.setItem('lastName', user.UserLastName);
         sessionStorage.setItem('resetPassword', '' + user.PasswordResetRequired);
