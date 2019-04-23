@@ -47,28 +47,36 @@ namespace CSETWeb_Api.Controllers
 
             var provider = new MultipartFormDataStreamProvider(root);
 
-            string csetFilePath  = await request.Content.ReadAsMultipartAsync(provider).
-                ContinueWith<string>(o =>
-                {
-                    string file1 = provider.FileData.First().LocalFileName;
-                    return file1;
-                }
-            );
-
-            String apiURL = this.Request.RequestUri.ToString().Replace("api/ImportLegacyAssessment", "");
-            string processPath = this.GetLegacyImportProcessPath();
-            if (processPath.Length > 0)
-            {   
-                var id = BackgroundJob.Enqueue(() => HangfireExecutor.ProcessAssessmentImportLegacyAsync(csetFilePath, tm.Token, processPath, apiURL, null));
-                //ImportManager manager = new ImportManager();
-                //await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, processPath, apiURL);
-            }
-            else
+            try
             {
-                // TODO: Throw an exception or notify caller that process doesn't exist
-                Console.WriteLine("Process doesn't exist...");
-            }
+                string csetFilePath = await request.Content.ReadAsMultipartAsync(provider).ContinueWith<string>(o =>
+                    {
+                        if (o.IsFaulted || o.IsCanceled)
+                            throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                        string file1 = provider.FileData.First().LocalFileName;
+                        return file1;
+                    }
+                );
 
+
+                String apiURL = this.Request.RequestUri.ToString().Replace("api/ImportLegacyAssessment", "");
+                string processPath = this.GetLegacyImportProcessPath();
+                if (processPath.Length > 0)
+                {   
+                    //var id = BackgroundJob.Enqueue(() => HangfireExecutor.ProcessAssessmentImportLegacyAsync(csetFilePath, tm.Token, processPath, apiURL, null));
+                    ImportManager manager = new ImportManager();
+                    await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, processPath, apiURL);
+                }
+                else
+                {
+                    // TODO: Throw an exception or notify caller that process doesn't exist
+                    Console.WriteLine("Process doesn't exist...");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             return true; // import.RunImport(model, currentUserId, useremail);
         }
 

@@ -159,7 +159,7 @@ namespace CSETWeb_Api.Helpers
         {
             string physicalAppPath = HttpContext.Current.Request.PhysicalApplicationPath;
 
-            return File.Exists(physicalAppPath + "LOCAL-INSTALLATION");
+            return File.Exists(Path.Combine(physicalAppPath,"LOCAL-INSTALLATION"));
         }
     }
 }
