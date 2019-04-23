@@ -75,9 +75,6 @@
         <div *ngIf="incorrect">
           <div class="alert alert-danger">Incorrect Username or Password</div>
         </div>
-                  <label for="email">
-                      Enter your email address and password to login.
-                  </label>
         <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #email="ngModel"
           required email focusOnInit="true" />
         <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>

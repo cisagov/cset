@@ -41,7 +41,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 var query = from sc in db.SETS_CATEGORY
                             from s in db.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
-                                && !set.Is_Deprecated
+                                && !set.Is_Deprecated && (set.Is_Displayed??false)
                                 && (!set.IsEncryptedModule
                                 || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? true)))
                                 )
@@ -203,7 +203,7 @@ namespace CSETWeb_Api.BusinessManagers
             switch (appCode.ToLower())
             {
                 case "cset":
-                    basicStandards.Add("Key");
+                    //basicStandards.Add("Key");
                     break;
                 case "acet":
                     basicStandards.Add("ACET_V1");
