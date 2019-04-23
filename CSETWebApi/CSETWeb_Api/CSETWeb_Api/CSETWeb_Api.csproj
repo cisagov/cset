@@ -1485,6 +1485,12 @@
     <Content Include="Documents\NIST.SP.800-86.pdf" />
     <Content Include="Documents\M-17-25.pdf" />
     <Content Include="Documents\FFIEC_CAT5_17.pdf" />
+    <Content Include="LuceneIndex\_3.fnm" />
+    <Content Include="LuceneIndex\_3.frq" />
+    <Content Include="LuceneIndex\_3.nrm" />
+    <Content Include="LuceneIndex\_3.prx" />
+    <Content Include="LuceneIndex\_3.tii" />
+    <Content Include="LuceneIndex\_3.tis" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
