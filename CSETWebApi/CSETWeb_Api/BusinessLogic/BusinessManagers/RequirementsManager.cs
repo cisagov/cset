@@ -270,6 +270,9 @@ namespace CSETWeb_Api.BusinessManagers
                     }
                 }
 
+                
+                ps.Tokens =  ps.Tokens.OrderByDescending(x => x.Token.Length).ToList();
+
                 return ps.Tokens;
             }
         }

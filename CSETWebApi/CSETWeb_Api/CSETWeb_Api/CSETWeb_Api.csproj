@@ -1410,24 +1410,6 @@
     <Content Include="LuceneIndex\_0.cfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="LuceneIndex\_2.fnm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.frq">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.nrm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.prx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.tii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.tis">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Documents\14 cfr 121.docx" />
     <Content Include="Documents\ApplicationDocuments\FIPS199Language.mht" />
     <Content Include="Documents\Word\AccessibilityFeatures.docx" />
