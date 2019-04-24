@@ -29,6 +29,7 @@ import {
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
 import { StandardService } from '../../services/standard.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-results',
@@ -42,7 +43,8 @@ export class ResultsComponent implements OnInit {
     private navSvc: NavigationService,
     private stdSvc: StandardService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private configSvc: ConfigService
   ) {
 
     // Store the active results view based on the new navigation target
@@ -118,14 +120,16 @@ export class ResultsComponent implements OnInit {
       // { label: 'Reports', value: 'reports', children: [] }
     ];
 
-    if (acet) {
-      this.tree.push({
-        label: 'ACET Information', value: '', children: [
-          { children: [], label: 'Cybersecurity Maturity', value: 'maturity' },
-          { children: [], label: 'Administration - Review Hours', value: 'admin' },
-          { children: [], label: 'ACET Dashboard', value: 'acetDashboard' }
-        ]
-      });
+    if(this.configSvc.config.appCode=="ACET"){
+      if (acet) {
+        this.tree.push({
+          label: 'ACET Information', value: '', children: [
+            { children: [], label: 'Cybersecurity Maturity', value: 'maturity' },
+            { children: [], label: 'Administration - Review Hours', value: 'admin' },
+            { children: [], label: 'ACET Dashboard', value: 'acetDashboard' }
+          ]
+        });
+      }
     }
 
     this.tree.push({ label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] });
