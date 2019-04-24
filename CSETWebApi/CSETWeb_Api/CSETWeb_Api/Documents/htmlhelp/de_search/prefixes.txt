@@ -72,7 +72,7 @@
  NUMEROUS
 0xu004f
  OBJECT
- OWNS
+ OWNERS
 0xu0050
  P
  PUT
@@ -87,7 +87,7 @@
  SYSTEMS
 0xu0054
  T
- TYPICALLY
+ TYPING
 0xu0055
  U
  UTILIZE
@@ -106,6 +106,3 @@
 0xu005a
  ZERO
  ZONES
-0xu005f
- ___
- ___
