@@ -38,3 +38,34 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.home-img {
+}
+
+.home-btn {
+    font-size: small;
+}
+
+.home-page {
+    column-count: 2;
+    column-gap: 10px;
+    width: 818px;
+    height: 500px;
+    border: 1px solid #d0d0d0;
+    background-color: #fafafa;
+    padding: 50px;
+}
+
+    .home-page p {
+        font-size: small;
+    }
+
+    .home-page h3 {
+        color: #194e84;
+    }
+
+    .home-page a {
+        color: #194e84;
+        background-color: #fafafa;
+        border: 1px solid #d0d0d0;
+    }
