@@ -208,7 +208,7 @@
                 This question is in use in other standards/question sets or assessments.
                 Changing the meaning of the question text may have an undesired effect. 
               </div>
-              <textarea appAutoSize maxlength="7338" id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText"
+              <textarea appAutoSize maxlength="7000" id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText"
                 (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
                 [class.b-validate]="editedQuestionInUse"></textarea>
             </div>

@@ -977,6 +977,8 @@ namespace CSETWeb_Api.BusinessManagers
         public BasicResponse UpdateQuestionText(int questionID, string text)
         {
             BasicResponse resp = new BasicResponse();
+            if (text.Length > 7000)
+                text = text.Substring(0, 7000);
 
             using (var db = new CSET_Context())
             {
