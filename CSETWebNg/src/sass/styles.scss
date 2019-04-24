@@ -349,7 +349,7 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
 }
-@media only screen and (max-width: 1200px) {
+/*@media only screen and (max-width: 1200px) {
   table.assessment-summary td > button > span {
     display: none;
   }
@@ -385,7 +385,7 @@ table.assessment-summary th {
     display: none;
   }
 }
-
+*/
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
