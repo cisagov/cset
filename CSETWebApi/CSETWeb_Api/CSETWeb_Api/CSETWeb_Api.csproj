@@ -644,7 +644,6 @@
     <Content Include="Documents\htmlhelp\de_search\0xu0058.txt" />
     <Content Include="Documents\htmlhelp\de_search\0xu0059.txt" />
     <Content Include="Documents\htmlhelp\de_search\0xu005a.txt" />
-    <Content Include="Documents\htmlhelp\de_search\0xu005f.txt" />
     <Content Include="Documents\htmlhelp\de_search\ids.txt" />
     <Content Include="Documents\htmlhelp\de_search\prefixes.txt" />
     <Content Include="Documents\htmlhelp\de_style.css" />
@@ -956,7 +955,6 @@
     <Content Include="Documents\htmlhelp\i\blocks\tree\sprite.png" />
     <Content Include="Documents\htmlhelp\i\blocks\work-zone\header-bg.png" />
     <Content Include="Documents\htmlhelp\i\null.gif" />
-    <Content Include="Documents\htmlhelp\i\Thumbs.db" />
     <Content Include="Documents\htmlhelp\js\all.js" />
     <Content Include="Documents\htmlhelp\js\all2.js" />
     <Content Include="Documents\htmlhelp\js\drexplain.data.index.js" />
