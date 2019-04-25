@@ -28,7 +28,7 @@
         Define the input value for the selected parameter.
       </p>
       <div class="parameter-orig-value">{{originalValue}}</div>
-      <textarea class="form-control" id="parmValue" name="parmValue" [(ngModel)]="parameterValue" (keydown.enter)="save()"></textarea>
+      <textarea maxlength="2000" class="form-control" id="parmValue" name="parmValue" [(ngModel)]="parameterValue" (keydown.enter)="save()"></textarea>
     </div>
   </mat-dialog-content>
 

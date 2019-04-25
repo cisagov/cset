@@ -47,7 +47,7 @@
     <div class="form-row align-items-end">
       <div class="form-group col-md-8">
         <label for="docTitleFilter">Filter</label>
-        <input type="text" id="docTitleFilter" name="docTitleFilter" class="form-control" [(ngModel)]="filter"
+        <input type="text" maxlength="3000" id="docTitleFilter" name="docTitleFilter" class="form-control" [(ngModel)]="filter"
           (ngModelChange)="applyFilter()">
       </div>
       <div class="form-check m-3">
