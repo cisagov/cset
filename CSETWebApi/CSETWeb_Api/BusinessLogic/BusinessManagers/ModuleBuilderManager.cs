@@ -170,6 +170,15 @@ namespace CSETWeb_Api.BusinessManagers
                 db.SaveChanges();
 
 
+                // Delete any questions that were created for this set.
+                var queryQ = db.NEW_QUESTION.Where(x => x.Original_Set_Name == setName);
+                foreach (NEW_QUESTION q in queryQ.ToList())
+                {
+                    db.NEW_QUESTION.Remove(q);
+                }
+                db.SaveChanges();
+
+
                 // This should cascade delete everything else
                 db.SETS.Remove(dbSet);
                 db.SaveChanges();
@@ -340,24 +349,28 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
-        /// Returns a list of questions whose 'original_set_name' is the one specified.
-        /// This is used to know which questions will be affected if a set is 
-        /// deleted.
+        /// Gets any questions originated by the specified set 
+        /// that are being used by other sets.
         /// </summary>
         /// <param name="setName"></param>
-        public List<int> GetQuestionsOriginatingFromSet(string setName)
+        /// <returns></returns>
+        public List<int> GetMyQuestionsUsedByOtherSets(string setName)
         {
             using (var db = new CSET_Context())
             {
-                var query = db.NEW_QUESTION.Where(x => x.Original_Set_Name == setName).ToList();
+                var query = from nqs in db.NEW_QUESTION_SETS
+                            join question in db.NEW_QUESTION on nqs.Question_Id equals question.Question_Id
+                            where question.Original_Set_Name == setName && nqs.Set_Name != setName
+                            select question;
                 List<int> qList = new List<int>();
-                foreach (NEW_QUESTION q in query)
+                foreach (var q in query)
                 {
                     qList.Add(q.Question_Id);
                 }
                 return qList;
             }
         }
+
 
         /// <summary>
         /// 

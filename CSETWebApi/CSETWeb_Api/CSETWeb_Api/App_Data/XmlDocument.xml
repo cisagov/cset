@@ -921,7 +921,7 @@
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetQuestionsOriginatingFromSet(System.String)">
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetMyQuestionsUsedByOtherSets(System.String)">
             <summary>
             Returns a list of questions whose 'original_set_name' is the one specified.
             This is used to know which questions will be affected if a set is 
