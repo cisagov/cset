@@ -359,7 +359,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 // Primary Assessor
                 var user = db.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
-                info.Assessor_Name = user != null ? $"{user.FirstName} {user.LastName} ({user.PrimaryEmail})" : string.Empty;
+                info.Assessor_Name = user != null ? $"{user.FirstName} {user.LastName}" : string.Empty;
 
 
                 // Other Contacts
@@ -371,7 +371,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     .ToList();
                 foreach (var c in contacts)
                 {
-                    info.Additional_Contacts.Add($"{c.FirstName} {c.LastName} ({c.PrimaryEmail})");
+                    info.Additional_Contacts.Add($"{c.FirstName} {c.LastName}");
             }
 
 

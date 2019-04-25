@@ -77,18 +77,19 @@ export class SetListComponent implements OnInit {
    */
   deleteSet(s: SetDetail) {
 
-    // See if any questions originated from this set
-    this.setBuilderSvc.getQuestionsOriginatingFromSet(s.SetName).subscribe((resp: number[]) => {
+    // See if any of my questions are being used by other sets.
+    this.setBuilderSvc.getMyQuestionsUsedByOtherSets(s.SetName).subscribe((resp: number[]) => {
 
       // Prevent the deletion if the set spawned questions.
       if (resp.length > 0) {
         let msg = null;
 
         if (resp.length === 1) {
-          msg = 'There is 1 question that were created for this set.  You cannot delete the set.';
+          msg = 'There is 1 question that was ';
         } else {
-          msg = 'There are ' + resp.length + ' questions that were created for this set.  You cannot delete the set.';
+          msg = 'There are ' + resp.length + ' questions that were ';
         }
+        msg += 'created for this Module used by other Modules.  Deleting this Module is not allowed.';
 
         this.dialog.open(AlertComponent, {
           data: {

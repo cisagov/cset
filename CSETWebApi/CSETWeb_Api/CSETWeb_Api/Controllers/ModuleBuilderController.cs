@@ -102,17 +102,16 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// Returns a list of questions whose 'original_set_name' is the one specified.
-        /// This is used to know which questions will be affected if a set is 
-        /// deleted.
+        /// Returns a list of questions whose 'original_set_name' is the one specified,
+        /// but are also being used in other sets.
         /// </summary>
         /// <param name="setName"></param>
         [HttpGet]
-        [Route("api/builder/GetQuestionsOriginatingFromSet")]
-        public List<int> GetQuestionsOriginatingFromSet([FromUri] string setName)
+        [Route("api/builder/GetMyQuestionsUsedByOtherSets")]
+        public List<int> GetMyQuestionsUsedByOtherSets([FromUri] string setName)
         {
             ModuleBuilderManager m = new ModuleBuilderManager();
-            List<int> response = m.GetQuestionsOriginatingFromSet(setName);
+            List<int> response = m.GetMyQuestionsUsedByOtherSets(setName);
 
             return response;
         }

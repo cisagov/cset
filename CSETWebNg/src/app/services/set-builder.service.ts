@@ -108,10 +108,10 @@ export class SetBuilderService {
     /**
      * Gets questions with this "original set name".
      */
-    getQuestionsOriginatingFromSet(setName: string) {
+    getMyQuestionsUsedByOtherSets(setName: string) {
         return this.http
             .get(
-                this.apiUrl + 'builder/GetQuestionsOriginatingFromSet?setName=' + setName,
+                this.apiUrl + 'builder/GetMyQuestionsUsedByOtherSets?setName=' + setName,
                 headers
             );
     }
