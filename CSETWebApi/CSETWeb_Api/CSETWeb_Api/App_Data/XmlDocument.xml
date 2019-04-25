@@ -923,9 +923,8 @@
         </member>
         <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.GetMyQuestionsUsedByOtherSets(System.String)">
             <summary>
-            Returns a list of questions whose 'original_set_name' is the one specified.
-            This is used to know which questions will be affected if a set is 
-            deleted.
+            Returns a list of questions whose 'original_set_name' is the one specified,
+            but are also being used in other sets.
             </summary>
             <param name="setName"></param>
         </member>
