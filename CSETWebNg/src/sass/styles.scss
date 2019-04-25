@@ -131,6 +131,7 @@ label[required]::after {
 
 
 
+
 .z-10 {
   z-index: 10;
 }
@@ -1421,6 +1422,21 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   overflow: hidden;
 }
 
+
+// Import Modules
+///////////////////////////////////////////////////////////////////////
+
+.import-module-error-item {
+  list-style-type: none; 
+  font-size: .9rem;
+}
+
+.import-module-error-warn {
+  color: #b18500f5 !important;
+}
+
+
+
 // Questions Block
 ///////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 990px) {
@@ -2594,3 +2610,4 @@ hr.ranked-questions {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
+
