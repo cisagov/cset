@@ -22,6 +22,8 @@ using BusinessLogic.Helpers;
 using System.Reflection;
 using System.Diagnostics;
 using CSETWeb_Api.BusinessLogic.Version;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -115,6 +117,11 @@ namespace CSETWeb_Api.Helpers
                     UserCreateResponse userCreateResponse = um.CreateUser(ud);
 
                     db.SaveChanges();
+                    //update the userid 1 to the new user
+                    var tempu = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                    if (tempu != null)
+                        userIdSO = tempu.UserId;
+                    determineIfUpgradedNeededAndDoSo(userIdSO);
                 }
                 else
                 {
@@ -145,6 +152,29 @@ namespace CSETWeb_Api.Helpers
 
 
             return resp;
+        }
+
+        private static bool IsUpgraded = false;
+
+        private static void determineIfUpgradedNeededAndDoSo(int newuserID)
+        {
+            //look to see if the localuser@myorg.org exists
+            //if so then get that user id and changes all 
+            if (!IsUpgraded)
+            {
+                using (var db = new CSET_Context())
+                {
+                    var user = db.USERS.Where(x => x.PrimaryEmail == "localuser@myorg.org").FirstOrDefault();
+                    if (user != null)
+                    {
+                        db.Database.ExecuteSqlCommand("update assessment_contacts set userid = @newId where userid = @oldId",
+                            new SqlParameter("@newId", newuserID),
+                            new SqlParameter("@oldId", user.UserId)
+                        );
+                    }
+                }
+            }
+            IsUpgraded = true;
         }
 
 
