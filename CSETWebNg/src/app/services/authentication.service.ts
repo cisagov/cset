@@ -67,7 +67,7 @@ export class AuthenticationService {
     }
 
     checkLocal() {
-        console.log('Heres my appCode in checkLocal: ' + environment.appCode);
+        //console.log('Heres my appCode in checkLocal: ' + environment.appCode);
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
