@@ -221,6 +221,10 @@ namespace CSETWeb_Api.Helpers
             }
         }
 
+        public static void GenerateSecret()
+        {
+            GetSecret();
+        }
 
         /// <summary>
         /// Retrieves the JWT secret from the database.  

@@ -52,6 +52,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/auth/login/standalone")]
         public LoginResponse LoginStandalone(Login login)
         {
+            TransactionSecurity.GenerateSecret();
             LoginResponse resp = UserAuthentication.AuthenticateStandalone(login);
             if (resp != null)
             {

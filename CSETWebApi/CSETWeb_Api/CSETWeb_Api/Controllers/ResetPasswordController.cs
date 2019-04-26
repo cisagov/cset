@@ -149,7 +149,7 @@ namespace CSETWeb_Api.Controllers
                 }
 
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager();
-                bool rval = await resetter.CreateUserSendEmail(user);
+                bool rval = resetter.CreateUserSendEmail(user);
                 if (rval)
                     return Request.CreateResponse(HttpStatusCode.OK, "Created Successfully");
                 else

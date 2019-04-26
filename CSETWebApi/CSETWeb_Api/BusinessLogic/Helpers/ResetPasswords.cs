@@ -27,7 +27,7 @@ namespace CSETWeb_Api.Helpers
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public async Task<bool> CreateUserSendEmail(CreateUser info)
+        public bool CreateUserSendEmail(CreateUser info)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace CSETWeb_Api.Helpers
                     SecurityAnswer2 = info.SecurityAnswer2
                 });
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 
                 // Send the new temp password to the user
                 NotificationManager nm = new NotificationManager(info.AppCode);
