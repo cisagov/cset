@@ -67,6 +67,7 @@ export class AuthenticationService {
     }
 
     checkLocal() {
+        console.log('Heres my appCode in checkLocal: ' + environment.appCode);
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
@@ -91,8 +92,8 @@ export class AuthenticationService {
 
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');
-        if(user.Token != null){
-        sessionStorage.setItem('userToken', user.Token);
+        if (user.Token != null) {
+            sessionStorage.setItem('userToken', user.Token);
         }
         sessionStorage.setItem('firstName', user.UserFirstName);
         sessionStorage.setItem('lastName', user.UserLastName);
