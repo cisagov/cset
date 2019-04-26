@@ -384,7 +384,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSETWeb_Api.csproj.user" />
-    <Content Include="DeleteMe.html" />
     <Content Include="Documents\05-00993 r0 Common Vulnerability.pdf" />
     <Content Include="Documents\14 cfr 121.pdf" />
     <Content Include="Documents\14 CFR Parts 43.11.pdf" />
@@ -1579,7 +1578,6 @@
     <Folder Include="assets\" />
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
-    <Folder Include="Model\" />
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\IRP2\" />
     <Folder Include="Views\RequiredDocumentation\" />

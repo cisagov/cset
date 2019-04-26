@@ -10,3 +10,4 @@ CSETStandAlone.exe
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin
 bin
 /backup of new paramters (Can delete me if you are unsure).txt
+/CSETWebApi/CSETWeb_Api/CSETWeb_Api/Properties/PublishProfiles/runlocal.pubxml.user
