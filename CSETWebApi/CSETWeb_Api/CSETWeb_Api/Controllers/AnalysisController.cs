@@ -278,7 +278,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {
-                return GetStandardsSummaryMultiple(context, assessmentId);
+                return getStandardsSummarySingle(context, assessmentId);
             }
         }
 
@@ -293,7 +293,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {   
-                if (context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Count() > 1)
+                if (context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Count() > 1)
                 {
                     return GetStandardsSummaryMultiple(context, assessmentId);
                 }
@@ -339,8 +339,7 @@ namespace CSETWeb_Api.Controllers
                             label = c.Answer_Full_Name,
                             Labels = Labels,
                             data = data
-                        };
-                        summary.multipleDataSets.Add(next);
+                        };                        
                         charts.Add(c.Answer_Full_Name, next);
                     }
                     else
@@ -374,54 +373,54 @@ namespace CSETWeb_Api.Controllers
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
             myChartData.Colors = new List<string>();
-
+            
 
             var results = new StandardSummaryOverallMultiResult();
             context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
-          .WithSqlParam("assessment_id", assessmentId)
-          .ExecuteStoredProc((handler) =>
-          {
-              results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
-
-          });
-
-          
-            if (results.Count >= 1)
+            .WithSqlParam("assessment_id", assessmentId)
+            .ExecuteStoredProc((handler) =>
             {
-                List<DataRowsPie> answerRow = (List<DataRowsPie>)results.Result1;
+                results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
-                // Build the results in a defined answer order
-                AddAnswerToStandardsSummary(answerRow, "Y", myChartData);
-                AddAnswerToStandardsSummary(answerRow, "N", myChartData);
-                AddAnswerToStandardsSummary(answerRow, "NA", myChartData);
-                AddAnswerToStandardsSummary(answerRow, "A", myChartData);
-                AddAnswerToStandardsSummary(answerRow, "U", myChartData);
+            });
+
+
+            /** 
+             * foreach each standard in the list 
+             * create a chartdata 
+             * foreach record
+             *  if the previous does not equal the current then create a new chartdata
+             *  add the record to the chart data
+             *  
+             */
+            
+            string previousStandard = "";
+
+            
+            Dictionary<string, ChartData> answers = new Dictionary<string, ChartData>();
+            foreach (var data in results.Result1.OrderBy(x => x.Short_Name).ThenBy(x => x.Answer_Order))
+            {
+                //this only adds the labels
+                if (previousStandard !=data.Short_Name)
+                {
+                    myChartData.Labels.Add(data.Short_Name);
+                    previousStandard = data.Short_Name;
+                }
+                ChartData chartData;
+                if (!answers.TryGetValue(data.Answer_Full_Name, out chartData))
+                {
+                    chartData = new ChartData();
+                    chartData.label = data.Answer_Full_Name;
+                    chartData.backgroundColor = answerColorDefs[data.Answer_Text];
+                    myChartData.dataSets.Add(chartData);
+                    answers.Add(data.Answer_Full_Name, chartData);
+                    
+                }
+                chartData.data.Add((double)(data.Percent ?? 0));
             }
 
             return myChartData;
         }
-
-
-        private void AddAnswerToStandardsSummary(List<DataRowsPie> answers,
-            string answerShortName,
-            ChartData myChartData)
-        {
-            DataRowsPie ans = answers.Find(x => x.Answer_Text == answerShortName);
-            myChartData.data.Add((double)(ans.Percent ?? 0));
-            myChartData.Labels.Add(ans.Answer_Full_Name);
-            myChartData.Colors.Add(answerColorDefs[ans.Answer_Text]);
-
-            myChartData.DataRowsPie.Add(new DataRowsPie()
-            {
-                Answer_Full_Name = ans.Answer_Full_Name,
-                Short_Name = ans.Short_Name,
-                Answer_Text = ans.Answer_Text,
-                qc = ans.qc,
-                Total = ans.Total,
-                Percent = ans.Percent
-            });
-        }
-
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]
@@ -488,7 +487,7 @@ namespace CSETWeb_Api.Controllers
                             {
 
                                 ChartData nextChartData = new ChartData();
-                                red.multipleDataSets.Add(nextChartData);
+                                red.dataSets.Add(nextChartData);
                                 nextChartData.DataRows = new List<DataRows>();
                                 var nextSet = (from usp_getStandardsResultsByCategory an in result
                                                where an.Set_Name == set.Set_Name

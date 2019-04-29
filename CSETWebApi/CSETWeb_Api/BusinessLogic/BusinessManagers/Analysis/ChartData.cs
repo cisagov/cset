@@ -50,9 +50,14 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public ChartData ComponentSummaryPie { get; set; }
     }
 
-
     public class ChartData
     {
+        //this is hokey sorry
+        //but check this list if it is not empty then use this
+        //list otherwise user the rest of the data
+        public List<ChartData> dataSets { get; set; }
+
+
         public string label { get; set; }
         public string backgroundColor { get; set; }
         public string borderColor { get; set; }
@@ -63,13 +68,12 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public List<DataRowsPie> DataRowsPie { get; set; }
         public List<string> Colors { get; set; }
 
-        public List<ChartData> multipleDataSets { get; set; }
-
         public ChartData()
         {
             data = new List<double>();
             Labels = new List<string>();
-            multipleDataSets = new List<ChartData>();
+            dataSets = new List<ChartData>();
+
         }
     }
     public class DataRows
