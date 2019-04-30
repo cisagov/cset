@@ -57,13 +57,13 @@ export class StandardsResultsComponent implements OnInit {
   setupChart(x: any) {
     this.initialized = false;
     this.dataRows = x.DataRows;
-    this.dataSets = x.multipleDataSets;
+    this.dataSets = x.dataSets;
 
     this.chart = new Chart('stdResultCanvas', {
       type: 'horizontalBar',
       data: {
         labels: x.Labels,
-        datasets: x.multipleDataSets,
+        datasets: x.dataSets,
       },
       options: {
         title: {

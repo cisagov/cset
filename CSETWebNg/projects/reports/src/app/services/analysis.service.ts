@@ -139,6 +139,7 @@ export class AnalysisService {
         rotation: -Math.PI
       }
     });
+  
   }
 
   getComponentsSummary(): any {
@@ -160,7 +161,7 @@ export class AnalysisService {
       type: 'horizontalBar',
       data: {
         labels: x.Labels,
-        datasets: x.multipleDataSets,
+        datasets: x.dataSets,
       },
       options: {
         title: {
