@@ -151,8 +151,16 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 //db.Configuration.LazyLoadingEnabled = false;
 
                 var reqs = standard.NEW_REQUIREMENT.ToList();
-                var reqQuestions = reqs.Select(s => new { s.Requirement_Id, Questions = s.NEW_QUESTIONs().Select(t => new { t.Simple_Question, t.Heading_Pair_Id }) }).ToDictionary(s => s.Requirement_Id, s => s.Questions);
+                Dictionary<int,List<QuestionAndHeading>> reqQuestions = reqs.Select(s => new { s.Requirement_Id, Questions = s.NEW_QUESTIONs().Select(t => 
+                    new QuestionAndHeading(){Simple_Question= t.Simple_Question, Heading_Pair_Id=t.Heading_Pair_Id }) })                    
+                    .ToDictionary(s => s.Requirement_Id, s => s.Questions.ToList());
+
                 var reqHeadingIds = reqs.Select(s => s.Question_Group_Heading_Id).ToList();
+                //var questionHeadings = from a in db.REQUIREMENT_QUESTIONS
+                //                       join b in db.new on a.Question_Id equals b.Question_Id
+                //                       join c in db.NEW_QUESTION_SETS on b.Question_Id equals c.Question_Id
+                //                       where c.Set_Name == standard.Set_Name
+                //                       select b.question_group_heading_id
                 var questionHeadings = reqQuestions.SelectMany(s => s.Value.Select(t => t.Heading_Pair_Id)).Distinct().ToList();
                 var reqHeadings = db.QUESTION_GROUP_HEADING.Where(s => reqHeadingIds.Contains(s.Question_Group_Heading_Id)).ToDictionary(s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading1);
                 var headingPairs = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(s => questionHeadings.Contains(s.Heading_Pair_Id));
@@ -237,10 +245,11 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     externalRequirement.Heading = heading;
 
                     // Questions
-                    List<string> questions = new List<string>();
-                    reqQuestions.ToDictionary(s => s.Key, s => s.Value.Select(e => e.Simple_Question).ToList<String>()).TryGetValue(requirement.Requirement_Id, out questions);
+                    List<QuestionAndHeading> questions = new List<QuestionAndHeading>();
+                    reqQuestions.TryGetValue(requirement.Requirement_Id, out questions);
                     externalRequirement.Questions = new QuestionList();
-                    externalRequirement.Questions.AddRange(questions);
+                    foreach(QuestionAndHeading h in questions)
+                        externalRequirement.Questions.Add(h.Simple_Question);
 
                     // Subheading
                     string subheading = null;
@@ -268,6 +277,12 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             }
             return externalStandard;
         }
+    }
+
+    class QuestionAndHeading
+    {
+        public string Simple_Question { get; set; }
+        public int Heading_Pair_Id { get; set; }
     }
 }
 

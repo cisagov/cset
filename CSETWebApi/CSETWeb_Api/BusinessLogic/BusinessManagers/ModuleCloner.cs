@@ -39,7 +39,7 @@ namespace CSETWeb_Api.BusinessManagers
                 var copySet = (SETS)db.Entry(origSet).CurrentValues.ToObject();
 
                 copySet.Set_Name = this.newSetName;
-                copySet.Full_Name = origSet.Full_Name + " (copy)";
+                copySet.Full_Name = origSet.Full_Name.Substring(0,240) + " (copy)";
                 copySet.Is_Custom = true;
 
                 db.SETS.Add(copySet);

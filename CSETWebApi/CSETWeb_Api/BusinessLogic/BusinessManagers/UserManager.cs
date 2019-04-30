@@ -68,7 +68,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 UserCreateResponse resp = new UserCreateResponse
                 {
-                    UserId = u.UserId,
+                    UserId = u.UserId==0?1:u.UserId,
                     PrimaryEmail = u.PrimaryEmail,
                     TemporaryPassword = temporaryPassword
                 };
