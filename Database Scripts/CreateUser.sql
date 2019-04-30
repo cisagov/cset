@@ -1,3 +1,5 @@
+--this is an example script 
+--please rename INEL-NT\WEB_SQL_CSET_ACC to your user name
 IF NOT EXISTS (SELECT * FROM master.dbo.syslogins WHERE loginname = N'INEL-NT\WEB_SQL_CSET_ACC')
 CREATE LOGIN [INEL-NT\WEB_SQL_CSET_ACC] FROM WINDOWS
 GO

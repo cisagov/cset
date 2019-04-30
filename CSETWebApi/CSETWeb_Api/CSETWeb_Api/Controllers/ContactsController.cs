@@ -270,7 +270,7 @@ namespace CSETWeb_Api.Controllers
             // know its UserId. In that case we will attempt to determine it via the primary email.
             using (CSET_Context context = new CSET_Context())
             {
-                if (userBeingUpdated.UserId == 0)
+                if (userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
                 {
                     var u = context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.saveEmail).FirstOrDefault();
                     if (u != null)

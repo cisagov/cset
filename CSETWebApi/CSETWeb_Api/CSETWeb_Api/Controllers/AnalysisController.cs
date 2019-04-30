@@ -330,7 +330,7 @@ namespace CSETWeb_Api.Controllers
                     if (!charts.TryGetValue(c.Answer_Full_Name, out next))
                     {
                         data = new List<double>();
-                        rows = new List<DataRowsPie>();
+                       
                         next = new ChartData()
                         {
                             Colors = Colors,
@@ -407,15 +407,18 @@ namespace CSETWeb_Api.Controllers
                     previousStandard = data.Short_Name;
                 }
                 ChartData chartData;
+                
                 if (!answers.TryGetValue(data.Answer_Full_Name, out chartData))
                 {
                     chartData = new ChartData();
+      
                     chartData.label = data.Answer_Full_Name;
                     chartData.backgroundColor = answerColorDefs[data.Answer_Text];
                     myChartData.dataSets.Add(chartData);
                     answers.Add(data.Answer_Full_Name, chartData);
                     
                 }
+                myChartData.DataRowsPie.Add(data);
                 chartData.data.Add((double)(data.Percent ?? 0));
             }
 

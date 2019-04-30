@@ -64,7 +64,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
                 model.jANSWER.Add(TinyMapper.Map<jANSWER>(c));
                 foreach (var f in c.FINDING)
                 {
-                    model.jFINDING.Add(TinyMapper.Map<jFINDING>(c));
+                    model.jFINDING.Add(TinyMapper.Map<jFINDING>(f));
                     foreach (var fc in f.FINDING_CONTACT)
                     {
                         model.jFINDING_CONTACT.Add(TinyMapper.Map<jFINDING_CONTACT>(c));
