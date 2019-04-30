@@ -1,4 +1,4 @@
-﻿﻿# CSET 9.0.1
+# CSET 9.0.1
  
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/alerts/)
 [![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:csharp)
