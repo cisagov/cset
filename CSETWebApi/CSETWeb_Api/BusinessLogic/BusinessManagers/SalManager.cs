@@ -1,13 +1,13 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.BusinessLogic.Models;
-using CSETWeb_Api.Helpers;
-using DataLayer;
+using CSETWeb_Api.BusinessLogic.Helpers;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 
@@ -19,7 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             try
             {
-                using (CSETWebEntities db = new CSETWebEntities())
+                using (CSET_Context db = new CSET_Context())
                 {
                     TinyMapper.Bind<STANDARD_SELECTION, Sals>();
                     TinyMapper.Bind<Sals, STANDARD_SELECTION>();
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     standardSelection = TinyMapper.Map<STANDARD_SELECTION>(sals);
                     standardSelection.Assessment_Id = assessmentId;
-                    standardSelection.Application_Mode = AssessmentModeData.QUESTIONS_BASED_APPLICATION_MODE;
+                    standardSelection.Application_Mode = AssessmentModeData.DetermineDefaultApplicationMode();
 
                     db.STANDARD_SELECTION.Add(standardSelection);
                     db.SaveChanges();

@@ -1,25 +1,23 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic;
+using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.Helpers;
+using CSETWeb_Api.Models;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CSETWeb_Api.Models;
-using CSETWeb_Api.Helpers;
-using CSETWeb_Api.BusinessManagers;
-using DataLayer;
-using CSETWeb_Api.BusinessLogic.Models;
-using BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic;
-
 
 namespace CSETWeb_Api.Controllers
 {
@@ -76,6 +74,8 @@ namespace CSETWeb_Api.Controllers
         public ContactsListResponse CreateAndAddContactToAssessment([FromBody]ContactCreateParameters newContact)
         {
             int assessmentId = Auth.AssessmentForUser();
+            TokenManager tm = new TokenManager();
+            string app_code = tm.Payload(Constants.Token_Scope);
 
             // Make sure the user is an admin on this assessment
             Auth.AuthorizeAdminRole();
@@ -113,7 +113,7 @@ namespace CSETWeb_Api.Controllers
                 throw new HttpResponseException(err);
             }
 
-            int assessmentId = contactRemove.Assessment_ID == 0?Auth.AssessmentForUser():contactRemove.Assessment_ID;
+            int assessmentId = contactRemove.Assessment_ID == 0 ? Auth.AssessmentForUser() : contactRemove.Assessment_ID;
             int currentUserId = Auth.GetUserId();
             if (contactRemove.UserId == 0)
                 contactRemove.UserId = currentUserId;
@@ -210,7 +210,7 @@ namespace CSETWeb_Api.Controllers
                         Subject = inviteParms.Subject,
                         AssessmentId = assessmentId
                     });
-                    using (CSETWebEntities db = new CSETWebEntities())
+                    using (CSET_Context db = new CSET_Context())
                     {
                         var invited = db.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefault();
                         invited.Invited = true;
@@ -265,13 +265,12 @@ namespace CSETWeb_Api.Controllers
             {
                 userid = Auth.GetUserId();
             }
-            int assessmentId = Auth.AssessmentForUser();
 
             // If an edit is happening to a brand-new user, it is possible that the UI does not yet
             // know its UserId. In that case we will attempt to determine it via the primary email.
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
-                if (userBeingUpdated.UserId == 0)
+                if (userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
                 {
                     var u = context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.saveEmail).FirstOrDefault();
                     if (u != null)
@@ -281,30 +280,41 @@ namespace CSETWeb_Api.Controllers
                 }
             }
 
+            int assessmentId = -1;
+
+            try
+            {
+                assessmentId = Auth.AssessmentForUser();
+            }
+            catch (HttpResponseException)
+            {
+                // The user is not currently 'in' an assessment
+            }
 
             if (userid != userBeingUpdated.UserId)
             {
-                // Updating a Contact in the context of the current Assessment.  
-               
-
-                Auth.AuthorizeAdminRole();
-
-                ContactsManager cm = new ContactsManager();
-                cm.UpdateContact(new ContactDetail
+                if (assessmentId >= 0)
                 {
-                    AssessmentId = assessmentId,
-                    AssessmentRoleId = userBeingUpdated.AssessmentRoleId,
-                    FirstName = userBeingUpdated.FirstName,
-                    LastName = userBeingUpdated.LastName,
-                    PrimaryEmail = userBeingUpdated.PrimaryEmail,
-                    UserId = userBeingUpdated.UserId
-                });
-                CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
+                    // Updating a Contact in the context of the current Assessment.  
+                    Auth.AuthorizeAdminRole();
+
+                    ContactsManager cm = new ContactsManager();
+                    cm.UpdateContact(new ContactDetail
+                    {
+                        AssessmentId = assessmentId,
+                        AssessmentRoleId = userBeingUpdated.AssessmentRoleId,
+                        FirstName = userBeingUpdated.FirstName,
+                        LastName = userBeingUpdated.LastName,
+                        PrimaryEmail = userBeingUpdated.PrimaryEmail,
+                        UserId = userBeingUpdated.UserId
+                    });
+                    BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
+                }
             }
             else
             {
                 // Updating myself
-                using (CSETWebEntities context = new CSETWebEntities())
+                using (CSET_Context context = new CSET_Context())
                 {
                     // update user detail                    
                     var user = context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();
@@ -327,7 +337,7 @@ namespace CSETWeb_Api.Controllers
                     var sq = context.USER_SECURITY_QUESTIONS.Where(x => x.UserId == userid).FirstOrDefault();
                     if (sq == null)
                     {
-                        sq = new DataLayer.USER_SECURITY_QUESTIONS
+                        sq = new USER_SECURITY_QUESTIONS
                         {
                             UserId = userid
                         };
@@ -354,7 +364,7 @@ namespace CSETWeb_Api.Controllers
                     // delete or add/update the record
                     if (sq.SecurityQuestion1 != null || sq.SecurityQuestion2 != null)
                     {
-                        context.USER_SECURITY_QUESTIONS.AddOrUpdate(sq);
+                        context.USER_SECURITY_QUESTIONS.AddOrUpdate(sq, x => x.UserId);
                     }
                     else
                     {
@@ -365,14 +375,17 @@ namespace CSETWeb_Api.Controllers
                     try
                     {
                         context.SaveChanges();
-                        CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
+                        // Only touch the assessment if the user is currently in one.
+                        if (assessmentId >= 0)
+                        {
+                            BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
+                        }
                     }
                     catch (DbUpdateConcurrencyException)
                     {
                         // this can happen if there is no USER_SECURITY_QUESTIONS record
                         // but the code tries to delete it.
                     }
-                    
                 }
             }
         }

@@ -1,22 +1,19 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.SqlServer;
+
 using static BusinessLogic.Models.ExternalRequirement;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessLogic.Helpers
 {
@@ -37,12 +34,12 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             newRequirement.REQUIREMENT_LEVELS = new List<REQUIREMENT_LEVELS>();
             newRequirement.REQUIREMENT_REFERENCES = new List<REQUIREMENT_REFERENCES>();
             newRequirement.REQUIREMENT_SETS = new List<REQUIREMENT_SETS>() { new REQUIREMENT_SETS() { Set_Name = setName } };
-            newRequirement.NEW_QUESTION = new List<NEW_QUESTION>();
+            //newRequirement.NEW_QUESTION = new List<NEW_QUESTION>();
 
-            QUESTION_GROUP_HEADING questionGroupHeading=null;
+            QUESTION_GROUP_HEADING questionGroupHeading = null;
             UNIVERSAL_SUB_CATEGORY_HEADINGS subcategory = null;
 
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 try
                 {
@@ -96,12 +93,12 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 result.LogError(String.Format("Subheading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
             }
             externalRequirement.Category = string.IsNullOrWhiteSpace(externalRequirement.Category) ? externalRequirement.Heading : externalRequirement.Category;
-            using (var db = new CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var category = db.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.Category);
                 if (category == null)
                 {
-                    newRequirement.STANDARD_CATEGORY1 = new STANDARD_CATEGORY() { Standard_Category1 = externalRequirement.Category };
+                    newRequirement.Standard_CategoryNavigation = new STANDARD_CATEGORY() { Standard_Category1 = externalRequirement.Category };
                 }
                 else
                 {
@@ -124,7 +121,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 }
                 catch
                 {
-                    result.LogError(String.Format("An error occurred while adding SALs for requirement {0} {1}.",  externalRequirement.Identifier, externalRequirement.Text));
+                    result.LogError(String.Format("An error occurred while adding SALs for requirement {0} {1}.", externalRequirement.Identifier, externalRequirement.Text));
 
                 }
             }
@@ -140,7 +137,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                         reqReference.Destination_String = reference.Destination;
                         reqReference.Page_Number = reference.PageNumber;
                         reqReference.Section_Ref = String.IsNullOrEmpty(reference.SectionReference) ? "" : reference.SectionReference;
-                        reqReference.Gen_File_Id = (await importer.LookupGenFileAsync(reference.FileName))?.Gen_File_Id??0;
+                        reqReference.Gen_File_Id = importer.LookupGenFileId(reference.FileName);
                     }
                     catch
                     {
@@ -161,7 +158,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 if (externalRequirement.Source != null)
                 {
-                    reqSource.Gen_File_Id = (await importer.LookupGenFileAsync(externalRequirement.Source.FileName))?.Gen_File_Id ?? 0;
+                    reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.Source.FileName);
                     reqSource.Page_Number = externalRequirement.Source.PageNumber;
                     reqSource.Destination_String = externalRequirement.Source.Destination;
                     reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.Source.SectionReference) ? "" : externalRequirement.Source.SectionReference;
@@ -187,7 +184,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 NEW_QUESTION newQuestion = null;
                 var set = new NEW_QUESTION_SETS() { Set_Name = setName, NEW_QUESTION_LEVELS = new List<NEW_QUESTION_LEVELS>() };
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
                     newQuestion = db.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
                     if (newQuestion != null)
@@ -205,7 +202,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                         newQuestion.Simple_Question = question;
                         newQuestion.Weight = externalRequirement.Weight;
                         newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
-                        newQuestion.Universal_Sal_Level = ((SalValues)(externalRequirement.SecurityAssuranceLevel??(int)SalValues.L)).ToString();
+                        newQuestion.Universal_Sal_Level = ((SalValues)(externalRequirement.SecurityAssuranceLevel ?? (int)SalValues.L)).ToString();
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
                         newQuestion.Heading_Pair_Id = subcategory.Heading_Pair_Id;
@@ -237,8 +234,11 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 newQuestion.NEW_QUESTION_SETS = new List<NEW_QUESTION_SETS>();
                 newQuestion.REQUIREMENT_QUESTIONS_SETS = new List<REQUIREMENT_QUESTIONS_SETS>();
                 newQuestion.NEW_QUESTION_SETS.Add(set);
-                newQuestion.REQUIREMENT_QUESTIONS_SETS.Add(new REQUIREMENT_QUESTIONS_SETS { Set_Name = setName, NEW_REQUIREMENT = newRequirement });
-                newRequirement.NEW_QUESTION.Add(newQuestion);
+                newQuestion.REQUIREMENT_QUESTIONS_SETS.Add(new REQUIREMENT_QUESTIONS_SETS { Set_Name = setName, Requirement_ = newRequirement });
+                using (CSET_Context db = new CSET_Context())
+                {
+                    db.NEW_QUESTION.Add(newQuestion);
+                }
             }
             return result;
         }

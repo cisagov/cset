@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2018 Battelle Energy Alliance, LLC  
+   Copyright 2019 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -27,7 +27,7 @@
 <div>
     <div class="d-flex flex-column flex-11a mb-3">
       <h4>Overall SAL</h4>
-      <div class="btn-group" data-toggle="buttons">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"
             (click)="saveLevel(level.value,'std')">
@@ -45,7 +45,7 @@
           This value relates to the importance of protecting information from unauthorized access. The more important it
           is that unauthorized users do not have access to the information the higher your SAL level.
         </div>
-      <div class="btn-group" data-toggle="buttons">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.CLevel" (click)="saveLevel(level.value,'C')">
             <input class="form-check-input" type="radio" autocomplete="off" name="sal_confidentiality"
@@ -63,7 +63,7 @@
           This value relates to the the importance of the accuracy of information. The more important it is that
           information is kept consistent, accurate, and only changed by those authorized the higher your SAL level.
         </div>
-      <div class="btn-group" data-toggle="buttons">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ILevel" (click)="saveLevel(level.value,'I')">
             <input class="form-check-input" type="radio" autocomplete="off" name="sal_integrity"
@@ -81,7 +81,7 @@
           This value relates to the importance of information being readily available.The more important it is to have
           your information available for use the higher your SAL level.
         </div>
-      <div class="btn-group" data-toggle="buttons">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ALevel" (click)="saveLevel(level.value,'A')">
             <input class="form-check-input" type="radio" autocomplete="off" name="sal_availability"
@@ -133,21 +133,21 @@
             {{model.Type_Value}} : {{model.NIST_Number}}</label>
         </td>
         <td>
-          <a class="specialFactorsLink" *ngIf='model.Confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
+          <a class="special-factors-link" *ngIf='model.Confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
             (click)="changeSpecialFactor(model, 'C')">
             {{salsSvc.getDisplayLevel(model.Confidentiality_Value)}}
           </a>
           <ng-template #basicC>{{salsSvc.getDisplayLevel(model.Confidentiality_Value)}}</ng-template>
         </td>
         <td>
-          <a class="specialFactorsLink" *ngIf='model.Integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
+          <a class="special-factors-link" *ngIf='model.Integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
             (click)="changeSpecialFactor(model, 'I')">
             {{salsSvc.getDisplayLevel(model.Integrity_Value)}}
           </a>
           <ng-template #basicI>{{salsSvc.getDisplayLevel(model.Integrity_Value)}}</ng-template>
         </td>
         <td>
-          <a class="specialFactorsLink" *ngIf='model.Availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
+          <a class="special-factors-link" *ngIf='model.Availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
             (click)="changeSpecialFactor(model, 'A')">{{salsSvc.getDisplayLevel(model.Availability_Value)}}</a>
           <ng-template #basicA>
             {{salsSvc.getDisplayLevel(model.Availability_Value)}}
@@ -183,12 +183,12 @@
     <div class="form-group special-factors">
       <label for="ConfidentialitySpecialFactor">Confidentiality Special Factor</label>
       <textarea class="form-control" id="ConfidentialitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Confidentiality_Special_Factor"
-        (change)="specialFactor()"></textarea>
+        (change)="specialFactor()" maxlength="1500"></textarea>
       <label for="IntegritySpecialFactor">Integrity Special Factor</label>
       <textarea class="form-control" id="IntegritySpecialFactor" [(ngModel)]="topModel?.specialFactors.Integrity_Special_Factor"
-        (change)="specialFactor()"></textarea>
+        (change)="specialFactor()" maxlength="1500"></textarea>
       <label for="AvailabilitySpecialFactor">Availability Special Factor</label>
       <textarea class="form-control" id="AvailabilitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Availability_Special_Factor"
-        (change)="specialFactor()"></textarea>
+        (change)="specialFactor()" maxlength="1500"></textarea>
     </div>
   </div>

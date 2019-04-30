@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2018 Battelle Energy Alliance, LLC  
+   Copyright 2019 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,69 +22,69 @@
 --------------------------> 
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <i class="glyphicon glyphicon-filter fs-medium"></i>
-    <span class="ml-2 mt-1">Question Filters</span>
+    <span class="mr-3 fs-base-6 cset-icons-filter"></span>
+    <span>Question Filters</span>
   </div>
 
-  <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="question-filters pr-3">
+  <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <div class="question-filters pr-3 form-check">
       <div>
         <input placeholder="Search" class="form-control" [value]="questionsSvc.searchString" (keyup)="updateSearchString($event)" />
       </div>
-      <hr style="margin: 10px 0 3px 0" />
+      <hr class="mt-3 mb-1" />
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
-        <label for="cbSelectAll">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
+        <label class="m-0" for="cbSelectAll">
           Select/Deselect All
         </label>
       </div>
-      <hr style="margin: 3px 0" />
+      <hr class="m-1" />
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('Y')" id="cbShowY" name="cbShowY" (click)="updateFilters($event, 'Y')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('Y')" id="cbShowY" name="cbShowY" (click)="updateFilters($event, 'Y')">
         <label for="cbShowY">
           Show YES answered questions
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('N')" id="cbShowN" name="cbShowN" (click)="updateFilters($event, 'N')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('N')" id="cbShowN" name="cbShowN" (click)="updateFilters($event, 'N')">
         <label for="cbShowN">
           Show NO answered questions
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('NA')" id="cbShowNA" name="cbShowNA" (click)="updateFilters($event, 'NA')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('NA')" id="cbShowNA" name="cbShowNA" (click)="updateFilters($event, 'NA')">
         <label for="cbShowNA">
           Show NA answered questions
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('A')" id="cbShowA" name="cbShowA" (click)="updateFilters($event, 'A')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('A')" id="cbShowA" name="cbShowA" (click)="updateFilters($event, 'A')">
         <label for="cbShowA">
           Show ALT answered questions
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
         <label for="cbShowU">
           Show unanswered questions
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments">
           Show questions with comments
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked">
           Show questions marked for review
         </label>
       </div>
       <div>
-        <input type="checkbox" [checked]="questionsSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
         <label for="cbShowDisc">
-          Show questions with discoveries
+          Show questions with observations
         </label>
       </div>
     </div>

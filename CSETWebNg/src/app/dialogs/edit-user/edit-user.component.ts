@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,8 @@ import { CreateUser } from '../../models/user.model';
 export class EditUserComponent implements OnInit {
   model: CreateUser = {};
 
-  constructor(private dialog: MatDialogRef<EditUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private dialog: MatDialogRef<EditUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

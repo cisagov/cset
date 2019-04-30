@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,21 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/materia
 })
 export class OkayComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<OkayComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  dialogTitle: string = "Notification";
+  iconClass: string = "cset-icons-bell";
   public hasHeader: boolean;
 
-  ngOnInit() {}
+  ngOnInit() {
+    // override the default title
+    if (!!this.data.title) {
+      this.dialogTitle = this.data.title;
+    }
+
+    // override the header icon
+    if (!!this.data.iconClass) {
+      this.iconClass = this.data.iconClass;
+    }
+  }
 
 }

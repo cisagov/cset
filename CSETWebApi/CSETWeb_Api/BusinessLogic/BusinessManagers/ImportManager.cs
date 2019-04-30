@@ -1,16 +1,17 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models;
-using CSETWeb_Api.BusinessLogic.Models;
-using DataLayer;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +31,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId)
         {
-            using (CSETWebEntities web = new CSETWebEntities())
+            using (CSET_Context web = new CSET_Context())
             {
                 //* read from db and set as memory stream here.
                 using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -38,6 +39,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     ZipArchive zip = new ZipArchive(fs);
                     StreamReader r = new StreamReader(zip.GetEntry("model.json").Open());
                     string jsonObject = r.ReadToEnd();
+
+
+                    // Apply any data updates to older versions
+                    ImportUpgradeManager upgrader = new ImportUpgradeManager();
+                    jsonObject = upgrader.Upgrade(jsonObject);
+
+
                     UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
                     foreach (var doc in model.CustomStandardDocs)
                     {
@@ -48,7 +56,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = docModel.ToGenFile();
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                            genFile.FILE_TYPE = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                            genFile.File_Type_ = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
 
                             try
                             {
@@ -65,7 +73,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     foreach (var standard in model.CustomStandards)
                     {
                         var sets = web.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
-                        SET set = null;
+                        SETS set = null;
                         StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
                         var setJson = setReader.ReadToEnd();
                         var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);
@@ -97,9 +105,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 web.SETS.Add(setResult.Result);
 
-                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTION).Where(s => s.Question_Id != 0).ToList())
+                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
                                 {
-                                    web.Entry(question).State = System.Data.Entity.EntityState.Unchanged;
+                                    web.Entry(question).State = EntityState.Unchanged;
                                 }
                                 try
                                 {
@@ -206,7 +214,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             //Console.WriteLine(error);
             process.WaitForExit();// Waits here for the process to exit.
         }
-
     }
 }
 

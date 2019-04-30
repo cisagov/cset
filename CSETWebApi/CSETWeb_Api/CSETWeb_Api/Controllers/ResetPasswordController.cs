@@ -1,11 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -14,19 +14,19 @@ using System.Web;
 using System.Web.Http;
 using System.Linq;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http.Description;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.Controllers
 {
     public class ResetPasswordController : ApiController
     {
         private Regex emailvalidator = new Regex(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
-        private CSETWebEntities db = new CSETWebEntities();
+        private CSET_Context db = new CSET_Context();
 
 
 
@@ -149,7 +149,7 @@ namespace CSETWeb_Api.Controllers
                 }
 
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager();
-                bool rval = await resetter.CreateUserSendEmail(user);
+                bool rval = resetter.CreateUserSendEmail(user);
                 if (rval)
                     return Request.CreateResponse(HttpStatusCode.OK, "Created Successfully");
                 else
@@ -167,7 +167,8 @@ namespace CSETWeb_Api.Controllers
 
 
         [HttpPost]
-        public async Task<IHttpActionResult> PostResetPassword([FromBody] SecurityQuestionAnswer answer)
+        [Route("api/ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword([FromBody] SecurityQuestionAnswer answer)
         {
             try
             {
@@ -183,7 +184,7 @@ namespace CSETWeb_Api.Controllers
                 if (IsSecurityAnswerCorrect(answer))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager();
-                    bool rval = await resetter.ResetPassword(answer.PrimaryEmail, "Password Reset");
+                    bool rval = await resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
                     if (rval)
                         return StatusCode(HttpStatusCode.OK);
                     else
@@ -221,7 +222,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/ResetPassword/SecurityQuestions")]
         [HttpGet]
         [ResponseType(typeof(List<SecurityQuestions>))]
-        public async Task<IHttpActionResult> GetSecurityQuestions([FromUri]string email)
+        public async Task<IHttpActionResult> GetSecurityQuestions([FromUri] string email, [FromUri] string appCode)
         {
             try
             {
@@ -238,10 +239,12 @@ namespace CSETWeb_Api.Controllers
                                                            }).ToListAsync<SecurityQuestions>();
                 //note that you don't have to provide a security question
                 //it will just reset if you don't 
-                if (questions.Count <= 0)
+                if (questions.Count == 0 
+                    || (questions[0].SecurityQuestion1 == null && questions[0].SecurityQuestion2 == null))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager();
-                    bool rval = await resetter.ResetPassword(email, "Password Reset");
+                    bool rval = await resetter.ResetPassword(email, "Password Reset", appCode);
+                    return Ok(new List<SecurityQuestions>());
                 }
 
 

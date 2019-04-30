@@ -1,19 +1,19 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using static CSETWeb_Api.BusinessLogic.ReportEngine.BasicReportData;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -42,14 +42,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public QuestionResponse GetRequirementsList()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 RequirementsPass req = GetControls(db);
                 return BuildResponse(req.Requirements.ToList(), req.Answers.ToList());
             }
         }
 
-        private RequirementsPass GetControls(CSETWebEntities db)
+        private RequirementsPass GetControls(CSET_Context db)
         {
             var q = from rs in db.REQUIREMENT_SETS
                     from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
@@ -65,7 +65,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // Get all REQUIREMENT answers for the assessment
-            var answers = from a in db.ANSWERs.Where(x => x.Assessment_Id == _assessmentId && x.Is_Requirement)
+            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Is_Requirement)
                           from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
@@ -151,7 +151,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
                     Comment = answer?.a.Comment,
-                    MarkForReview = answer?.a.Mark_For_Review ?? false
+                    MarkForReview = answer?.a.Mark_For_Review ?? false,
+                    Reviewed = answer?.a.Reviewed ?? false
                 };
                 if (answer != null)
                 {
@@ -168,6 +169,10 @@ namespace CSETWeb_Api.BusinessManagers
                 QuestionGroups = groupList,
                 ApplicationMode = this.applicationMode
             };
+
+            resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+            resp.RequirementCount = this.NumberOfRequirements();
+
             return resp;
         }
 
@@ -182,7 +187,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int NumberOfRequirements()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var q = from rs in db.REQUIREMENT_SETS
                         from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
@@ -227,7 +232,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             ParameterSubstitution ps = new ParameterSubstitution();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // get the 'base' parameter values (parameter_name) for the requirement
                 var qBaseLevel = from p in db.PARAMETERS
@@ -265,6 +270,9 @@ namespace CSETWeb_Api.BusinessManagers
                     }
                 }
 
+                
+                ps.Tokens =  ps.Tokens.OrderByDescending(x => x.Token.Length).ToList();
+
                 return ps.Tokens;
             }
         }
@@ -278,7 +286,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             ParameterSubstitution ps = new ParameterSubstitution();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Get the list of requirement IDs
                 List<RequirementPlus> reqs = GetControls(db).Requirements.ToList();
@@ -324,7 +332,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public ParameterToken SaveAssessmentParameter(int parameterId, string newText)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // If an empty value is supplied, delete the PARAMETER_VALUES row.
                 if (string.IsNullOrEmpty(newText))
@@ -358,7 +366,14 @@ namespace CSETWeb_Api.BusinessManagers
                 pa.Parameter_ID = parameterId;
                 pa.Parameter_Value_Assessment = newText;
 
-                db.PARAMETER_ASSESSMENT.AddOrUpdate(pa);
+                if (db.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
+                {
+                    db.PARAMETER_ASSESSMENT.Add(pa);
+                }
+                else
+                {
+                    db.PARAMETER_ASSESSMENT.Update(pa);
+                }
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(_assessmentId);
@@ -392,7 +407,7 @@ namespace CSETWeb_Api.BusinessManagers
                 answerId = StoreAnswer(ans);
             }
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // If an empty value is supplied, delete the PARAMETER_VALUES row.
                 if (string.IsNullOrEmpty(newText))
@@ -416,16 +431,23 @@ namespace CSETWeb_Api.BusinessManagers
 
                 if (dbParameterValues == null)
                 {
-                    dbParameterValues = new DataLayer.PARAMETER_VALUES();
+                    dbParameterValues = new PARAMETER_VALUES();
                 }
 
                 dbParameterValues.Answer_Id = answerId;
                 dbParameterValues.Parameter_Id = parameterId;
                 dbParameterValues.Parameter_Is_Default = false;
                 dbParameterValues.Parameter_Value = newText;
-                
 
-                db.PARAMETER_VALUES.AddOrUpdate(dbParameterValues);
+
+                if (db.PARAMETER_VALUES.Find(dbParameterValues.Answer_Id, dbParameterValues.Parameter_Id) == null)
+                {
+                    db.PARAMETER_VALUES.Add(dbParameterValues);
+                }
+                else
+                {
+                    db.PARAMETER_VALUES.Update(dbParameterValues);
+                }
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(_assessmentId);

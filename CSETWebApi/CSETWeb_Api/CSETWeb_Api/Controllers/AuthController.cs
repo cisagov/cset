@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 using BusinessLogic.Helpers;
 
 namespace CSETWeb_Api.Controllers
@@ -52,6 +52,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/auth/login/standalone")]
         public LoginResponse LoginStandalone(Login login)
         {
+            TransactionSecurity.GenerateSecret();
             LoginResponse resp = UserAuthentication.AuthenticateStandalone(login);
             if (resp != null)
             {
@@ -76,6 +77,7 @@ namespace CSETWeb_Api.Controllers
             TokenManager tm = new TokenManager();
             int currentUserId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? currentAssessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            string scope = tm.Payload(Constants.Token_Scope);
 
             // If the 'refresh' parm was sent, this is a pure refresh
             if (refresh != "*default*")
@@ -101,7 +103,8 @@ namespace CSETWeb_Api.Controllers
                 currentUserId,
                 tm.Payload(Constants.Token_TimezoneOffsetKey),
                 expSeconds,
-                currentAssessmentId);
+                currentAssessmentId,
+                scope);
 
             TokenResponse resp = new TokenResponse
             {

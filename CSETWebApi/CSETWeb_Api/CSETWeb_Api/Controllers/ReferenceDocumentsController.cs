@@ -1,13 +1,14 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -41,13 +42,21 @@ namespace CSETWeb_Api.Controllers
                 }
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
-                    var doc = db.GEN_FILE.FirstOrDefault(s => s.File_Name == fileName && s.Is_Uploaded == true);
-                    var stream = new MemoryStream(doc.Data);
+                    var files = from a in db.GEN_FILE
+                                join f in db.FILE_TYPE on a.File_Type_Id equals f.File_Type_Id
+                                where (a.File_Name == fileName) && (a.Is_Uploaded ?? false)
+                                select new { a, f };
+
+                    foreach (var f in files.ToList())
+                    {
+                        var stream = new MemoryStream(f.a.Data);
                     result.Content = new StreamContent(stream);
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(doc.FILE_TYPE.Mime_Type);
+                        result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.f.Mime_Type);
                     return result;
+                    }
+                    return null;
 
                 }
             });
@@ -89,9 +98,9 @@ namespace CSETWeb_Api.Controllers
                 var extension = Path.GetExtension(genFile.File_Name).Substring(1);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
 
-                using (CSETWebEntities db = new CSETWebEntities())
+                using (CSET_Context db = new CSET_Context())
                 {
-                    var existingFiles = db.GEN_FILE.Where(s => s.File_Name == genFile.File_Name && (s.Is_Uploaded??false)).ToList();
+                    var existingFiles = db.GEN_FILE.Where(s => s.File_Name == genFile.File_Name && (s.Is_Uploaded ?? false)).ToList();
                     if (existingFiles.Any(s => s.Doc_Num == genFile.Doc_Num))
                     {
                         var existingFile = existingFiles.FirstOrDefault(s => s.Doc_Num == genFile.Doc_Num);
@@ -99,11 +108,11 @@ namespace CSETWeb_Api.Controllers
                         await db.SaveChangesAsync();
                         return response;
                     }
-                    else if(existingFiles.Any())
+                    else if (existingFiles.Any())
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new Exception("Document could not be added.  Please change the file name and try again"));
                     }
-                    genFile.FILE_TYPE=db.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                    genFile.File_Type_ = db.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
                     try
                     {
                         db.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
@@ -119,7 +128,7 @@ namespace CSETWeb_Api.Controllers
 
                 return response;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
 

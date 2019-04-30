@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
 
 namespace CSET_Main.ReportEngine.Builder
@@ -47,7 +47,7 @@ namespace CSET_Main.ReportEngine.Builder
         //public ReportData BuildReport(ReportConfig Config, int assessment_id)
         //{
         //    ReportData reportData = new ReportData();
-        //    using (CSETWebEntities context = new CSETWebEntities())
+        //    using (CSET_Context context = new CSET_Context())
         //    {
         //        reportData.Config = Config;
         //        // Data for Reports
@@ -179,7 +179,7 @@ namespace CSET_Main.ReportEngine.Builder
         //        var selectedSets = context.REPORT_STANDARDS_SELECTION.Where(s => s.Is_Selected).Select(s => s.Report_Set_Entity_Name).ToList();
         //        standardQuestions = standardQuestions.Where(s => selectedSets.Contains(s.Key)).ToDictionary(s => s.Key, s => s.Value);
         //        // Create Standard Questions Data for Detail Report
-        //        Dictionary<String, SET> sets = setRepository.SetsDictionary;
+        //        Dictionary<String, SETS> sets = setRepository.SetsDictionary;
         //        // Add standard document sections for each standard.
         //        if (standardQuestions != null)
         //        {
@@ -211,7 +211,7 @@ namespace CSET_Main.ReportEngine.Builder
         //                    isLast = 0;
         //                }
         //                var row = standardsTable.NewRow();
-        //                SET set = sets[pair.Key];
+        //                SETS set = sets[pair.Key];
         //                string standardFullName = set.Full_Name;
         //                row["StandardFullName"] = standardFullName;
         //                string setName = set.Set_Name.Replace(' ', '_');
@@ -353,7 +353,7 @@ namespace CSET_Main.ReportEngine.Builder
         /// Populates a datatable with the INFORMATION data
         /// </summary>
         /// <returns></returns>
-        protected DataTable BuildInformationTable(CSETWebEntities context)
+        protected DataTable BuildInformationTable(CSET_Context context)
         {
 
             int indexCtr = 0;
@@ -394,16 +394,16 @@ namespace CSET_Main.ReportEngine.Builder
                 row["Real_Property_Unique_Id"] = info.Real_Property_Unique_Id;
                 if (info.eMass_Document_Id.HasValue)
                 {
-                    indexCtr = info.DOCUMENT_FILE.Path.LastIndexOf("\\");
+                    indexCtr = info.eMass_Document_.Path.LastIndexOf("\\");
                     if (indexCtr < 0)
                     {
-                        row["eMass_Document_Path"] = info.DOCUMENT_FILE.Path;
+                        row["eMass_Document_Path"] = info.eMass_Document_.Path;
                     }
                     else
                     {
-                        row["eMass_Document_Path"] = info.DOCUMENT_FILE.Path.Substring(indexCtr + 1);
+                        row["eMass_Document_Path"] = info.eMass_Document_.Path.Substring(indexCtr + 1);
                     }
-                    row["eMass_Document_Title"] = info.DOCUMENT_FILE.Title;
+                    row["eMass_Document_Title"] = info.eMass_Document_.Title;
                 }
                 else
                 {
@@ -662,7 +662,7 @@ namespace CSET_Main.ReportEngine.Builder
         /// </summary>
         /// <param name="nistSalDataList"></param>
         /// <returns></returns>
-        //private DataTable BuildCNSSSalTable(CSETWebEntities assessmentFileEntities, MainSalControlViewModel nistDataObject)
+        //private DataTable BuildCNSSSalTable(CSET_Context assessmentFileEntities, MainSalControlViewModel nistDataObject)
         //{
         //    DataTable table = new DataTable();
         //    table.TableName = "CNSSSALTable";
@@ -700,7 +700,7 @@ namespace CSET_Main.ReportEngine.Builder
         //    return table;
         //}
 
-        private DataTable BuildCNSSSALJustificationTable(CSETWebEntities assessmentFileEntities)
+        private DataTable BuildCNSSSALJustificationTable(CSET_Context assessmentFileEntities)
         {
             DataTable table = new DataTable();
             table.TableName = "CNSSSALJustificationsTable";

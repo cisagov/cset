@@ -1,11 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,9 @@ namespace CSETWeb_Api.Data.ControlData
 */
 
         private int answer_id = 0;
-        private CSETWebEntities assessmentContext;
+        private CSET_Context assessmentContext;
 
-        public FindingsViewModel(CSETWebEntities assessmentContext,int assessment_id, int answer_id)
+        public FindingsViewModel(CSET_Context assessmentContext,int assessment_id, int answer_id)
         {
             this.assessment_id = assessment_id; 
             this.answer_id = answer_id;
@@ -49,9 +50,14 @@ namespace CSETWeb_Api.Data.ControlData
         public List<Finding> AllFindings()
         {
             List<Finding> findings = new List<Finding>();            
-            foreach (FINDING f in assessmentContext.FINDINGs.Include("IMPORTANCE").Include("FINDING_CONTACT")
-                .Where(x => x.Answer_Id == this.answer_id)                
-                .ToList())
+
+            var xxx = assessmentContext.FINDING
+                .Where(x => x.Answer_Id == this.answer_id)
+                .Include(i => i.Importance_)
+                .Include(k => k.FINDING_CONTACT)
+                .ToList();
+
+            foreach (FINDING f in xxx)
             {
                 Finding webF = new Finding();
                 webF.Finding_Contacts = new List<FindingContact>();
@@ -59,14 +65,14 @@ namespace CSETWeb_Api.Data.ControlData
                 webF.Finding_Id = f.Finding_Id;
                 webF.Answer_Id = this.answer_id;
                 TinyMapper.Map(f, webF);
-                if (f.IMPORTANCE == null)
+                if (f.Importance_ == null)
                     webF.Importance = new Importance()
                     {
                         Importance_Id = 1,
                         Value = Constants.SAL_LOW
                     };
                 else
-                    webF.Importance = TinyMapper.Map<Importance>(f.IMPORTANCE);
+                    webF.Importance = TinyMapper.Map<Importance>(f.Importance_);
 
                 foreach(FINDING_CONTACT fc in f.FINDING_CONTACT)
                 {
@@ -85,9 +91,9 @@ namespace CSETWeb_Api.Data.ControlData
             Finding webF;
             if (finding_id != 0)
             {
-                FINDING f = assessmentContext.FINDINGs
-                    .Include("FINDING_CONTACT")                    
+                FINDING f = assessmentContext.FINDING
                     .Where(x => x.Finding_Id == finding_id)
+                    .Include(fc => fc.FINDING_CONTACT)
                     .FirstOrDefault();
 
                 webF = TinyMapper.Map<Finding>(f);
@@ -108,7 +114,7 @@ namespace CSETWeb_Api.Data.ControlData
                 };
                 
 
-                assessmentContext.FINDINGs.Add(f);
+                assessmentContext.FINDING.Add(f);
                 assessmentContext.SaveChanges();
                 webF = TinyMapper.Map<Finding>(f);
                 webF.Finding_Contacts = new List<FindingContact>();

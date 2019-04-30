@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -16,7 +16,7 @@ using System.Text;
 using System.Web.Http;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Helpers
         /// </param>
         /// <param name="assesmentId">Optionally brands the new token with an assessment ID in the payload</param>
         /// <returns></returns>
-        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId)
+        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
@@ -73,7 +73,7 @@ namespace CSETWeb_Api.Helpers
                 { "exp", Utilities.UnixTime() + secondsUntilExpiry },
                 { Constants.Token_UserId, userId },
                 { Constants.Token_TimezoneOffsetKey, tzOffset },
-                { "scope", "CSET"}
+                { "scope", scope}
             };
 
             
@@ -221,7 +221,12 @@ namespace CSETWeb_Api.Helpers
             }
         }
 
+        public static void GenerateSecret()
+        {
+            GetSecret();
+        }
 
+        private static string tmpNewSecret = null; 
         /// <summary>
         /// Retrieves the JWT secret from the database.  
         /// If the secret is not in the database a new one is generated and persisted.
@@ -229,11 +234,14 @@ namespace CSETWeb_Api.Helpers
         /// <returns></returns>
         private static string GetSecret()
         {
-            using (CSETWebEntities db = new CSETWebEntities())
+            if (tmpNewSecret != null)
+                return tmpNewSecret;
+            using (CSET_Context db = new CSET_Context())
             {
                 var jwtKey = db.JWT.OrderBy(x => x.Generated).FirstOrDefault();
                 if (jwtKey != null)
                 {
+                    tmpNewSecret = jwtKey.Secret;
                     return jwtKey.Secret;
                 }
 
@@ -254,7 +262,7 @@ namespace CSETWeb_Api.Helpers
                 };
                 db.JWT.Add(j);
                 db.SaveChanges();
-
+                tmpNewSecret = newSecret;
                 return newSecret;
             }
         }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSET_Main.Questions.POCO;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Data.ControlData
 {
@@ -20,9 +20,9 @@ namespace CSET_Main.Data.ControlData
         private Dictionary<string, string> fullNameToStandardLevel = new Dictionary<string, string>();
         private int maxLevel;
 
-        private CSETWebEntities Context { get; }
+        private CSET_Context Context { get; }
 
-        public StandardSpecficLevelRepository(CSETWebEntities context)
+        public StandardSpecficLevelRepository(CSET_Context context)
         {
             this.Context = context;
             SetStandardLevelLookup();

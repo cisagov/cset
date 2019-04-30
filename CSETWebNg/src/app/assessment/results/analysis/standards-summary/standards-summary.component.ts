@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => this.setupChart(x));
+    this.analysisSvc.getStandardsSummary().subscribe(x => this.setupChart(x));
   }
 
   navNext() {
@@ -60,36 +60,36 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   setupChart(x: any) {
     this.initialized = false;
     this.dataRows = x.DataRowsPie;
-    this.dataSets = x.multipleDataSets;
+    this.dataSets = x.dataSets;
 
     const colors = x.Colors;
-    // if (this.dataSets.length > 1) {
-    //   this.chart = new Chart('stdSumCanvas', {
-    //     type: 'horizontalBar',
-    //     data: {
-    //       labels: x.Labels,
-    //       datasets: x.multipleDataSets
-    //     },
-    //     options: {
-    //       title: {
-    //         display: false,
-    //         fontSize: 20,
-    //         text: 'Standards Summary'
-    //       },
-    //       legend: {
-    //         display: true
-    //       },
-    //       scales: {
-    //         xAxes: [{
-    //           stacked: true,
-    //         }],
-    //         yAxes: [{
-    //           stacked: true
-    //         }]
-    //       }
-    //     }
-    //   });
-    //  } else {
+    if (this.dataSets.length > 1) {
+      this.chart = new Chart('stdSumCanvas', {
+        type: 'horizontalBar',
+        data: {
+          labels: x.Labels,
+          datasets: x.dataSets
+        },
+        options: {
+          title: {
+            display: false,
+            fontSize: 20,
+            text: 'Standards Summary'
+          },
+          legend: {
+            display: true
+          },
+          scales: {
+            xAxes: [{
+              stacked: true,
+            }],
+            yAxes: [{
+              stacked: true
+            }]
+          }
+        }
+      });
+     } else {
       this.chart = new Chart('stdSumCanvas', {
         type: 'doughnut',
         data: {
@@ -163,7 +163,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
         }
       });
 
-    //  }
+    }
 
     this.dataSets.map(r => r.backgroundColor = r.Colors);
     this.initialized = true;

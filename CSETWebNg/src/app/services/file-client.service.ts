@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,26 +44,26 @@ export class FileUploadClientService {
   exportUrl: string;
 
   constructor(private http: HttpClient, private configSvc: ConfigService,
-  private authSvc: AuthenticationService) {
+    private authSvc: AuthenticationService) {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
     this.exportUrl = this.configSvc.apiUrl + 'files/export';
     this.reportsUrl = this.configSvc.reportsUrl;
     this.Token = this.authSvc.userToken();
-   }
+  }
 
   downloadFile(id: number) {
     const headers = {
       headers: new HttpHeaders()
-          .set('Content-Type', 'application/json'),
+        .set('Content-Type', 'application/json'),
       params: new HttpParams()
     };
     return this.http.get(this.downloadUrl + '' + id, headers);
   }
   download(url: string): Observable<Blob> {
-    return this.http.get(url, {responseType: 'blob'});
+    return this.http.get(url, { responseType: 'blob' });
   }
   getText(url: string): Observable<string> {
-    return this.http.get(url, {responseType: 'text'});
+    return this.http.get(url, { responseType: 'text' });
   }
   /**
    *
@@ -71,9 +71,6 @@ export class FileUploadClientService {
    * @param extraData
    */
   fileUpload(fileItem: File, extraData?: object): any {
-
-
-
     const apiCreateEndpoint = this.configSvc.apiUrl + 'files/blob/create/';
     const formData: FormData = new FormData();
 
@@ -134,13 +131,13 @@ export class FileUploadClientService {
   }
   getXMLExportSet(setName: string): Observable<string> {
     const moduleEndpoint = this.configSvc.apiUrl + 'export/' + setName;
-    const headers = new HttpHeaders({"Accept": "application/xml"});
-    return this.http.get(moduleEndpoint, {headers: headers, responseType: "text"});
+    const headers = new HttpHeaders({ "Accept": "application/xml" });
+    return this.http.get(moduleEndpoint, { headers: headers, responseType: "text" });
   }
   getJSONExportSet(setName: string): Observable<string> {
     const moduleEndpoint = this.configSvc.apiUrl + 'export/' + setName;
-    const headers = new HttpHeaders({"Accept": "application/json"});
-    const options = {headers: headers, responseType: 'text' as 'text'};
+    const headers = new HttpHeaders({ "Accept": "application/json" });
+    const options = { headers: headers, responseType: 'text' as 'text' };
     return this.http.get(moduleEndpoint, options);
   }
   moduleUpload(module: string): Observable<any> {
@@ -149,8 +146,8 @@ export class FileUploadClientService {
     if (module.startsWith("<")) {
       contentType = "application/xml";
     }
-    const headers = new HttpHeaders({"Content-Type": contentType});
-    return this.http.post(moduleEndpoint, module, { headers: headers}) ;
+    const headers = new HttpHeaders({ "Content-Type": contentType });
+    return this.http.post(moduleEndpoint, module, { headers: headers });
   }
   /**
    *
@@ -158,6 +155,23 @@ export class FileUploadClientService {
   list(): Observable<any> {
     const listEndpoint = this.configSvc.apiUrl + 'files/';
     return this.http.get(listEndpoint);
+  }
+
+  /**
+   *
+   */
+  uploadReferenceDoc(fileItem: File, options?: object): any {
+    const apiCreateEndpoint = this.configSvc.apiUrl + 'builder/UploadReferenceDoc';
+    const formData: FormData = new FormData();
+
+    formData.append('fileItem', fileItem, fileItem.name);
+    formData.append('setName', sessionStorage.getItem('setName'));
+    // if we ever need to support options, add them here
+
+    const req = new HttpRequest('POST', apiCreateEndpoint, formData, {
+      reportProgress: true // for progress data
+    });
+    return this.http.request(req);
   }
 }
 

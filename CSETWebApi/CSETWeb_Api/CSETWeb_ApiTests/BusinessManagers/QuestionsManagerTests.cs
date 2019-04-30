@@ -1,12 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CSET_Main.Views.Questions.QuestionDetails;
-using DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
 using CSET_Main.Common.EnumHelper;
 

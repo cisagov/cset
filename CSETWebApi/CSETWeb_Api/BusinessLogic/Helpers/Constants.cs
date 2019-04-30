@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -25,6 +25,7 @@ namespace BusinessLogic.Helpers
         public static string Token_UserId = "userid";
         // public static string Token_UserEmail = "useremail";  This is mutable - let's not send it
         public static string Token_AssessmentId = "assess";
+        public static string Token_Scope = "scope";
 
         public const string UNIVERSAL_DB = "Universal";
         public const string KEY_DB = "Key";
@@ -397,6 +398,14 @@ namespace BusinessLogic.Helpers
         public const string Integrity = "Integrity";
 
         public const string SIMPLE_SAL = "Simple";
+        //Maturity Levels
+        public const string IncompleteMaturity = "Incomplete";
+        public const string SubBaselineMaturity = "Sub-Baseline";
+        public const string BaselineMaturity = "Baseline";
+        public const string EvolvinMaturity = "Evolving";
+        public const string IntermediateMaturity = "Intermediate";
+        public const string AdvancedMaturity = "Advanced";
+        public const string InnovativeMaturity = "Innovative";
     }
     
 

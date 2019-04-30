@@ -1,0 +1,86 @@
+<!---------------------- 
+
+   Copyright 2019 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+  <div>
+    <h3>
+      Standard Documents
+    </h3>
+    <h5>
+      {{ standardTitle }}
+    </h5>
+    <div class="d-flex flex-row w-100 justify-content-between align-items-start">
+      <p class="mr-3">Select or upload any reference documents applicable to the standard. This will
+        make them available for attaching to the requirements in the standard. Enter a string in the
+        Filter field to narrow down candidates.
+      </p>
+      <button class="btn btn-primary add" (click)="openFileBrowser($event)">
+          <span class="cset-icons-import fs-base-1 mr-2"></span>
+          Import a Document
+      </button>
+      <!-- <input type="hidden" [value]="setBuilderSvc.activeRequirement.RequirementID"> -->
+      <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
+    </div>
+
+    <button class="btn btn-link" (click)="navBack()">&laquo; Back</button>
+
+    <div class="form-row align-items-end">
+      <div class="form-group col-md-8">
+        <label for="docTitleFilter">Filter</label>
+        <input type="text" maxlength="3000" id="docTitleFilter" name="docTitleFilter" class="form-control" [(ngModel)]="filter"
+          (ngModelChange)="applyFilter()">
+      </div>
+      <div class="form-check m-3">
+        <input type="checkbox" class="form-check-input" id="showOnlyChecked" name="showOnlyChecked" [checked]="showChecked"
+          (change)="toggleShowChecked()">
+        <label class="form-check-label" for="showOnlyChecked">Show Selected Items</label>
+      </div>
+    </div>
+
+    <table class="assessment-summary">
+      <th></th>
+      <th>Title</th>
+      <th></th>
+      <th>File Name</th>
+      <tr *ngFor="let doc of filteredDocuments">
+        <td class="align-top"><input type="checkbox" [(ngModel)]="doc.Selected" (ngModelChange)="selectDoc(doc)"></td>
+        <td class="d-flex align-items-start justify-content-between flex-00a">
+            {{ doc.Title }}
+        </td>
+        <td>
+          <button *ngIf="doc.IsCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.ID)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ml-4 mr-4">
+            <span class="cset-icons-pencil fs-base-2"></span>
+            <span class="d-none d-md-flex fs-smaller">Edit</span>
+          </button>
+        </td>
+        <td>
+          {{ doc.FileName }}
+        </td>
+      </tr>
+    </table>
+    <div *ngIf="filteredDocuments.length === 0" class="alert alert-info">
+      No documents found for the filter.
+    </div>
+
+  </div>
+</div>

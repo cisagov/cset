@@ -1,15 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using CSETWeb_Api.BusinessLogic;
+using CSETWeb_Api.BusinessLogic.Version;
+using CSETWeb_Api.Helpers;
+using CSETWeb_Api.Versioning;
 using Hangfire;
 using Hangfire.Console;
 using Microsoft.Owin;
@@ -29,7 +26,10 @@ namespace CSETWeb_Api
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
             //NotificationManager.SetConfigurationManager(new ConfigWrapper());
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888    
+            TransactionSecurity.GenerateSecret();
             GlobalConfiguration.Configuration.UseSqlServerStorage("HangfireConn").UseConsole();
+            VersionHandler version = new VersionHandler();
+            VersionInjected.Version = version.CSETVersionString;
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

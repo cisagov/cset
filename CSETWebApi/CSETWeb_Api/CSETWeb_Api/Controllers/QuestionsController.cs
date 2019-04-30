@@ -1,12 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,9 +14,11 @@ using CSET_Main.Views.Questions.QuestionDetails;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
+using CSET_Main.Data.AssessmentData;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -53,29 +54,6 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// Determines if the assessment is question or requirements based.
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        protected string GetApplicationMode(int assessmentId)
-        {
-            using (var db = new DataLayer.CSETWebEntities())
-            {
-                var mode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
-
-                if (mode == null)
-                {
-                    // default to Questions mode
-                    mode = "Q";
-                    SetMode(mode);
-                }
-
-                return mode;
-            }
-        }
-
-
-        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>
@@ -88,6 +66,7 @@ namespace CSETWeb_Api.Controllers
             qm.SetApplicationMode(mode);
         }
 
+
         /// <summary>
         /// Gets the application mode (question or requirements based).
         /// </summary>
@@ -98,15 +77,38 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             QuestionsManager qm = new QuestionsManager(assessmentId);
             string mode = GetApplicationMode(assessmentId).Trim().Substring(0, 1);
+
             if (String.IsNullOrEmpty(mode))
             {
-                SetMode("Q");
-                return "Q";
-            } else
+                mode = AssessmentModeData.DetermineDefaultApplicationModeAbbrev();
+                SetMode(mode);
+            }
+
+            return mode;
+        }
+
+
+        /// <summary>
+        /// Determines if the assessment is question or requirements based.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        protected string GetApplicationMode(int assessmentId)
+        {
+            using (var db = new CSET_Context())
             {
+                var mode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
+
+                if (mode == null)
+                {
+                    mode = AssessmentModeData.DetermineDefaultApplicationModeAbbrev();
+                    SetMode(mode);
+                }
+
                 return mode;
             }
         }
+
 
 
         /// <summary>
@@ -179,7 +181,7 @@ namespace CSETWeb_Api.Controllers
         public List<Finding> AllDiscoveries([FromUri] int Answer_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 FindingsViewModel fm = new FindingsViewModel(context, assessmentId, Answer_Id);
                 return fm.AllFindings();
@@ -191,7 +193,7 @@ namespace CSETWeb_Api.Controllers
         public Finding GetFinding([FromUri] int Answer_Id, int Finding_id, int Question_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 if (Answer_Id == 0)
                 {
@@ -213,9 +215,9 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             List<Importance> rlist = new List<Importance>();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
-                foreach (IMPORTANCE import in context.IMPORTANCEs)
+                foreach (IMPORTANCE import in context.IMPORTANCE)
                 {
                     rlist.Add(TinyMapper.Map<Importance>(import));
                 }
@@ -228,7 +230,7 @@ namespace CSETWeb_Api.Controllers
         public void DeleteFinding([FromBody] int Finding_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 FindingViewModel fm = new FindingViewModel(Finding_Id, context);
                 fm.Delete();
@@ -240,7 +242,7 @@ namespace CSETWeb_Api.Controllers
         public void SaveDiscovery([FromBody] Finding finding)
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 FindingViewModel fm = new FindingViewModel(finding, context);
                 fm.Save();

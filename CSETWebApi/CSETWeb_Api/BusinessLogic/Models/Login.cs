@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,6 +19,11 @@ namespace CSETWeb_Api.Models
         public string Email;
         public string Password;
         public string TzOffset;
+
+        /// <summary>
+        /// The application that is talking to the API.
+        /// </summary>
+        public string Scope;
     }
 
     /// <summary>
@@ -33,6 +38,7 @@ namespace CSETWeb_Api.Models
         public string UserLastName;
         public bool PasswordResetRequired;
         public bool IsSuperUser;
+        public string ExportExtension;
     }
 }
 

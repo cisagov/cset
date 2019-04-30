@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ interface LibrarySearchResponse {
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
@@ -135,7 +135,7 @@ export class ResourceLibraryComponent implements OnInit {
       headers)
       .subscribe(
         (docHtml: string) => {
-          this.dialog.open(OkayComponent, {data: {messageText: docHtml}});
+          this.dialog.open(OkayComponent, { data: { messageText: docHtml } });
           this.dialogRef.componentInstance.hasHeader = false;
         });
   }

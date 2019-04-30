@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,9 +11,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using BusinessLogic.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSET_Main.Data.ControlData
 {
@@ -25,18 +26,17 @@ namespace CSET_Main.Data.ControlData
         public Dictionary<int, ResourceNode> ResourceModelDictionary{get; private set;}
 
         private CSET_Main.Common.ICSETGlobalProperties globalProperties;
-        private CSETWebEntities controlContextHolder;
+        private CSET_Context dbContext;
         private string pdfDirectory;
         private string xpsDirectory;
 
-        public ResourceLibraryRepository(CSETWebEntities controlContextHolder, CSET_Main.Common.ICSETGlobalProperties globalProperties)
+        public ResourceLibraryRepository(CSET_Context dbContext, CSET_Main.Common.ICSETGlobalProperties globalProperties)
         {           
-            this.controlContextHolder = controlContextHolder;
+            this.dbContext = dbContext;
             this.globalProperties = globalProperties;
             this.pdfDirectory = Path.Combine(Constants.DOCUMENT_PATH);
             this.xpsDirectory = Path.Combine(Constants.XPS_DOCUMENT_PATH);
-            CreateResourceLibraryData();
-            
+            CreateResourceLibraryData();            
         }
 
         public List<SimpleNode> GetTreeNodes() {
@@ -82,24 +82,29 @@ namespace CSET_Main.Data.ControlData
                 TopNodes = new ObservableCollection<ResourceNode>();
                 ResourceModelDictionary = new Dictionary<int, ResourceNode>();
                
+                Dictionary<int, ResourceNode> ResourceNodeDict = new Dictionary<int, ResourceNode>();
 
-                Dictionary<int, ResourceNode> ResourceNodeDict = new Dictionary<int, ResourceNode>();             
-                var items = controlContextHolder.REF_LIBRARY_PATH.Select(x => new { REF_LIB = x, GEN_FILE_Items = x.GEN_FILE }).ToList();         
-                foreach (var obj in items)
+                var query = dbContext.REF_LIBRARY_PATH
+                    .Include(x => x.GEN_FILE_LIB_PATH_CORL)
+                    .ThenInclude(x => x.Gen_File_);
+
+                foreach (var obj in query.ToList())
                 {
                     ResourceNode node = new NoneNode();
-                    node.ID = Convert.ToInt32(obj.REF_LIB.Lib_Path_Id);
-                    if (obj.REF_LIB.Parent_Path_Id.HasValue)
-                        node.ParentID = Convert.ToInt32(obj.REF_LIB.Parent_Path_Id);
+                    node.ID = Convert.ToInt32(obj.Lib_Path_Id);
+                    if (obj.Parent_Path_Id.HasValue)
+                        node.ParentID = Convert.ToInt32(obj.Parent_Path_Id);
                     else
                         node.ParentID = -1;
 
-                    node.TreeTextNode = obj.REF_LIB.Path_Name;
+                    node.TreeTextNode = obj.Path_Name;
                     node.Type = ResourceNodeType.None;
                     node.Nodes = new ObservableCollection<ResourceNode>();
                     List<ResourceNode> listItems = new List<ResourceNode>();
-                    foreach (GEN_FILE doc in obj.GEN_FILE_Items)
+                    foreach (GEN_FILE_LIB_PATH_CORL corl in obj.GEN_FILE_LIB_PATH_CORL)
                     {
+                        GEN_FILE doc = corl.Gen_File_;
+
                         if (ResourceModelDictionary.ContainsKey(doc.Gen_File_Id))  //Check if node is already created
                         {
                             ResourceNode getNode = ResourceModelDictionary[doc.Gen_File_Id];
@@ -119,14 +124,13 @@ namespace CSET_Main.Data.ControlData
                         }
                         else
                         {
-                            Debug.Assert(false, "Invalid document type: " + doc.FILE_TYPE.File_Type1);
+                            Debug.Assert(false, "Invalid document type: " + doc.File_Type_.File_Type1);
                         }
                     }
                     foreach (ResourceNode rn in listItems.OrderBy(x => x.TreeTextNode)) {
                         node.Nodes.Add(rn);
                     }
                     ResourceNodeDict.Add(node.ID, node);
-
                 }
            
                 foreach (ResourceNode libDoc in ResourceNodeDict.Values)
@@ -148,7 +152,7 @@ namespace CSET_Main.Data.ControlData
 
                 Dictionary<int,List<PROCUREMENTLANGUAGEDATA>> dictionaryProcurementLanguageData = new Dictionary<int,List<PROCUREMENTLANGUAGEDATA>>();
 
-                foreach (PROCUREMENT_LANGUAGE_DATA data in controlContextHolder.PROCUREMENT_LANGUAGE_DATA.ToList())
+                foreach (PROCUREMENT_LANGUAGE_DATA data in dbContext.PROCUREMENT_LANGUAGE_DATA.ToList())
                 {
                     List<PROCUREMENTLANGUAGEDATA> list;
                     if (!dictionaryProcurementLanguageData.TryGetValue(data.Parent_Heading_Id.Value, out list))
@@ -160,7 +164,7 @@ namespace CSET_Main.Data.ControlData
                     list.Add(TinyMapper.Map<PROCUREMENTLANGUAGEDATA>(data));
                 }
               
-                foreach (PROCUREMENT_LANGUAGE_HEADINGS procHeading in controlContextHolder.PROCUREMENT_LANGUAGE_HEADINGS.OrderBy(h => h.Heading_Num).ToList())
+                foreach (PROCUREMENT_LANGUAGE_HEADINGS procHeading in dbContext.PROCUREMENT_LANGUAGE_HEADINGS.OrderBy(h => h.Heading_Num).ToList())
                 {
                     ResourceNode procHeadingModel = new NoneNode(procHeading.Heading_Name);
                     procTopicModel.Nodes.Add(procHeadingModel);
@@ -178,7 +182,7 @@ namespace CSET_Main.Data.ControlData
 
                 Dictionary<int, List<CATALOGRECOMMENDATIONSDATA>> dictionaryCatalogRecommendations = new Dictionary<int, List<CATALOGRECOMMENDATIONSDATA>>();
 
-                foreach (CATALOG_RECOMMENDATIONS_DATA data in controlContextHolder.CATALOG_RECOMMENDATIONS_DATA.ToList())
+                foreach (CATALOG_RECOMMENDATIONS_DATA data in dbContext.CATALOG_RECOMMENDATIONS_DATA.ToList())
                 {
                     List<CATALOGRECOMMENDATIONSDATA> list;
                     if (!dictionaryCatalogRecommendations.TryGetValue(data.Parent_Heading_Id.Value, out list))
@@ -190,7 +194,7 @@ namespace CSET_Main.Data.ControlData
                     list.Add(TinyMapper.Map<CATALOGRECOMMENDATIONSDATA>(data));
                 }
 
-                foreach (CATALOG_RECOMMENDATIONS_HEADINGS procHeading in controlContextHolder.CATALOG_RECOMMENDATIONS_HEADINGS.OrderBy(h => h.Heading_Num).ToList())
+                foreach (CATALOG_RECOMMENDATIONS_HEADINGS procHeading in dbContext.CATALOG_RECOMMENDATIONS_HEADINGS.OrderBy(h => h.Heading_Num).ToList())
                 {
                     ResourceNode procHeadingModel = new NoneNode(procHeading.Heading_Name);
                     recCatTopicModel.Nodes.Add(procHeadingModel);
@@ -212,7 +216,7 @@ namespace CSET_Main.Data.ControlData
 
         private PROCUREMENTLANGUAGEDATA GetProcurmentLanguage(int id)
         {
-            return TinyMapper.Map<PROCUREMENTLANGUAGEDATA>(controlContextHolder.PROCUREMENT_LANGUAGE_DATA.First(data => data.Procurement_Id == id));
+            return TinyMapper.Map<PROCUREMENTLANGUAGEDATA>(dbContext.PROCUREMENT_LANGUAGE_DATA.First(data => data.Procurement_Id == id));
         }
 
         public ProcurementLanguageTopicNode GetProcurmentLanguageNode(int id)
@@ -222,7 +226,7 @@ namespace CSET_Main.Data.ControlData
 
         private CATALOGRECOMMENDATIONSDATA GetCatalogRecommendations(int id)
         {
-            return TinyMapper.Map<CATALOGRECOMMENDATIONSDATA>(controlContextHolder.CATALOG_RECOMMENDATIONS_DATA.First(data => data.Data_Id == id));
+            return TinyMapper.Map<CATALOGRECOMMENDATIONSDATA>(dbContext.CATALOG_RECOMMENDATIONS_DATA.First(data => data.Data_Id == id));
         }
 
         public CatalogRecommendationsTopicNode GetCatalogRecommendationsNode(int id)

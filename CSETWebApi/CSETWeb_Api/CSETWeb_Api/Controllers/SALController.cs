@@ -1,35 +1,33 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSET_Main.Data.AssessmentData;
+using CSET_Main.Data.ControlData;
+using CSET_Main.SALS;
+using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-using DataLayer;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using CSETWeb_Api.Helpers.sals;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Nelibur.ObjectMapper;
-using System;
-using CSETWeb_Api.Helpers.sals;
-using System.Web;
-using System.Collections.Generic;
-using CSET_Main.SALS;
-using CSET_Main.Data.AssessmentData;
-using CSET_Main.Data.ControlData;
-using System.Net.Http;
-using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.Controllers
 {
     [CSETAuthorize]
     public class SALController : ApiController
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CSET_Context db = new CSET_Context();
 
         /// <summary>
         /// 
@@ -60,7 +58,7 @@ namespace CSETWeb_Api.Controllers
                     };
                     sTANDARD_SELECTION = TinyMapper.Map<STANDARD_SELECTION>(rsal);
                     sTANDARD_SELECTION.Assessment_Id = asssessmentId;
-                    sTANDARD_SELECTION.Application_Mode = AssessmentModeData.QUESTIONS_BASED_APPLICATION_MODE;
+                    sTANDARD_SELECTION.Application_Mode = AssessmentModeData.DetermineDefaultApplicationMode();
                     db.STANDARD_SELECTION.Add(sTANDARD_SELECTION);
                     db.SaveChanges();
                 }

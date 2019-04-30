@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -13,10 +13,17 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
 using Microsoft.Win32;
 using CSETWeb_Api.BusinessManagers;
 using System.IO;
+using System.Security.Principal;
+using BusinessLogic.Helpers;
+using System.Reflection;
+using System.Diagnostics;
+using CSETWeb_Api.BusinessLogic.Version;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -33,10 +40,10 @@ namespace CSETWeb_Api.Helpers
                 return null;
             }
 
-            USER loginUser = null;
+            USERS loginUser = null;
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 loginUser = db.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
 
@@ -54,7 +61,7 @@ namespace CSETWeb_Api.Helpers
             }
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null);
+            string token = TransactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -65,7 +72,8 @@ namespace CSETWeb_Api.Helpers
                 UserFirstName = loginUser.FirstName,
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
-                PasswordResetRequired = loginUser.PasswordResetRequired
+                PasswordResetRequired = loginUser.PasswordResetRequired ?? true,
+                ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
             };
 
             return resp;
@@ -74,7 +82,7 @@ namespace CSETWeb_Api.Helpers
 
         /// <summary>
         /// Emulates credential authentication without requiring credentials.
-        /// The Windows Registry is consulted to see if a certain key was placed there
+        /// The Windows file system is consulted to see if a certain file was placed there
         /// during the stand-alone install process.  
         /// </summary>
         /// <param name="login"></param>
@@ -84,15 +92,17 @@ namespace CSETWeb_Api.Helpers
             int userIdSO = 100;
             string primaryEmailSO = "";
 
-            // Read the Registry for the user key put there at install time
-            if (!IsLocalInstallation())
+            // Read the file system for the LOCAL-INSTALLATION file put there at install time
+            if (!IsLocalInstallation(login.Scope))
             {
                 return null;
             }
 
 
-            primaryEmailSO = "localuser@myorg.org";
-            using (var db = new DataLayer.CSETWebEntities())
+            String name = WindowsIdentity.GetCurrent().Name;
+            name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
+            primaryEmailSO = name + "@myorg.org";
+            using (var db = new CSET_Context())
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)
@@ -101,12 +111,17 @@ namespace CSETWeb_Api.Helpers
                     UserDetail ud = new UserDetail()
                     {
                         Email = primaryEmailSO,
-                        FirstName = "Local",
-                        LastName = "User"
+                        FirstName = name,
+                        LastName = ""
                     };
                     UserCreateResponse userCreateResponse = um.CreateUser(ud);
 
                     db.SaveChanges();
+                    //update the userid 1 to the new user
+                    var tempu = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                    if (tempu != null)
+                        userIdSO = tempu.UserId;
+                    determineIfUpgradedNeededAndDoSo(userIdSO);
                 }
                 else
                 {
@@ -121,60 +136,60 @@ namespace CSETWeb_Api.Helpers
 
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null);
+            string token = TransactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
             {
                 Token = token,
                 Email = primaryEmailSO,
-                UserFirstName = "Local",
-                UserLastName = "User",
+                UserFirstName = name,
+                UserLastName = "",
                 IsSuperUser = false,
-                PasswordResetRequired = false
+                PasswordResetRequired = false,
+                ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
             };
 
 
             return resp;
         }
 
+        private static bool IsUpgraded = false;
 
-        /// <summary>
-        /// Returns a boolean indicating if this API component is installed
-        /// in a 'local' installation configuration (the Registry key exists).
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsLocalInstallation()
+        private static void determineIfUpgradedNeededAndDoSo(int newuserID)
         {
-            // Read the Registry for the user key put there at install time
-            try
+            //look to see if the localuser@myorg.org exists
+            //if so then get that user id and changes all 
+            if (!IsUpgraded)
             {
-                string subkey = "SOFTWARE\\DHS\\CSET 9.0";
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey))
+                using (var db = new CSET_Context())
                 {
-                    if (key == null)
+                    var user = db.USERS.Where(x => x.PrimaryEmail == "localuser@myorg.org").FirstOrDefault();
+                    if (user != null)
                     {
-                        return false;
-                    }
-
-                    Object o = key.GetValue("LocalRunAsOpen");
-                    if (o == null)
-                    {
-                        return false;
-                    }
-
-                    if (bool.Parse(o.ToString()))
-                    {
-                        return true;
+                        db.Database.ExecuteSqlCommand("update assessment_contacts set userid = @newId where userid = @oldId",
+                            new SqlParameter("@newId", newuserID),
+                            new SqlParameter("@oldId", user.UserId)
+                        );
                     }
                 }
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            IsUpgraded = true;
+        }
 
-            return false;
+
+        /// <summary>
+        /// Returns 'true' if the installation is 'local' (self-contained using Windows identity).
+        /// The local installer will place an empty file (LOCAL-INSTALLATION) in the website folder
+        /// and the existence of the file indicates if the installation is local.
+        /// </summary>
+        /// <param name="app_code"></param>
+        /// <returns></returns>
+        public static bool IsLocalInstallation(String app_code)
+        {
+            string physicalAppPath = HttpContext.Current.Request.PhysicalApplicationPath;
+
+            return File.Exists(Path.Combine(physicalAppPath,"LOCAL-INSTALLATION"));
         }
     }
 }

@@ -1,11 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSET_Main.ReportEngine.Builder;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,10 +24,10 @@ namespace ExportCSV
     /// 
     public class CSETtoExcelDataMappings
     {
-        private CSETWebEntities assessmentEntity;
+        private CSET_Context assessmentEntity;
         private int assessment_id;
 
-        public CSETtoExcelDataMappings(int assessment_id ,CSETWebEntities assessmentEntity)
+        public CSETtoExcelDataMappings(int assessment_id , CSET_Context assessmentEntity)
         {
             this.assessmentEntity = assessmentEntity;
             this.assessment_id = assessment_id;
@@ -43,7 +43,7 @@ namespace ExportCSV
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
             IEnumerable<QuestionExport> list;
 
-            List<ANSWER> answers = assessmentEntity.ANSWERs.ToList<ANSWER>();
+            List<ANSWER> answers = assessmentEntity.ANSWER.ToList<ANSWER>();
 
             // Determine whether the assessment is questions based or requirements based
             var applicationMode = assessmentEntity.STANDARD_SELECTION.Where(a => a.Assessment_Id == this.assessment_id).FirstOrDefault().Application_Mode;
@@ -63,6 +63,7 @@ namespace ExportCSV
                            Simple_Question = q.Simple_Question,
                            Answer_Text = a.Answer_Text,
                            Mark_For_Review = a.Mark_For_Review,
+                           Reviewed = a.Reviewed,
                            Is_Requirement = a.Is_Requirement,
                            Is_Component = a.Is_Component,
                            Is_Framework = a.Is_Framework,
@@ -91,6 +92,7 @@ namespace ExportCSV
                            Simple_Question = q.Requirement_Text,
                            Answer_Text = a.Answer_Text,
                            Mark_For_Review = a.Mark_For_Review,
+                           Reviewed = a.Reviewed,
                            Is_Requirement = a.Is_Requirement,
                            Is_Component = a.Is_Component,
                            Is_Framework = a.Is_Framework,
@@ -117,6 +119,7 @@ namespace ExportCSV
                             Simple_Question = q.Simple_Question,
                             Answer_Text = a.Answer_Text,
                             Mark_For_Review = a.Mark_For_Review,
+                            Reviewed = a.Reviewed,
                             Is_Requirement = a.Is_Requirement,
                             Is_Component = a.Is_Component,
                             Is_Framework = a.Is_Framework,
@@ -309,6 +312,7 @@ namespace ExportCSV
         public String Simple_Question { get; set; }
         public String Answer_Text { get; set; }
         public Boolean? Mark_For_Review { get; set; }
+        public Boolean? Reviewed { get; set; }
         public Boolean? Is_Question { get { return !Is_Requirement; } }
         public Boolean? Is_Requirement { get; set; }
         public Boolean? Is_Component { get; set; }

@@ -1,26 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!---------------------- 
-
-   Copyright 2018 Battelle Energy Alliance, LLC  
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
---------------------------> 
 <!--[if lt IE 7]><html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="ie ie6 no-js"><![endif]-->
 <!--[if IE 7 ]><html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="ie ie7 no-js"><![endif]-->
 <!--[if IE 8 ]><html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="ie ie8 no-js"><![endif]-->
@@ -38,7 +16,7 @@
     //]]>
     </script>
 
-    		<title>Topic: Ranked Questions</title>
+    		<title>Topic: Control Priorities</title>
 
     <link rel="stylesheet" type="text/css" href="css/all.css" media="all" />
     <link rel="stylesheet" href="de_style.css" type="text/css" media="all" />
@@ -269,14 +247,14 @@
 
 <li class="b-breadCrumbs__item"><a href="analysis_screen.htm" class="b-breadCrumbs__link">Analysis Screen</a></li>
 
-<li class="b-breadCrumbs__item">Ranked Questions</li>
+<li class="b-breadCrumbs__item">Control Priorities</li>
 </ul>                    </div>
                 </td>
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
                             <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="dashboard_in_questions_requirements_mode.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
-                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="results_overall_ranked_categories_screen.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="standards_analysis.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
                                                 </ul>
                     </div>
                 </td>
@@ -305,7 +283,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"dashboard_in_questions_requirements_mode.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"results_overall_ranked_categories_screen.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"dashboard_in_questions_requirements_mode.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"standards_analysis.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -348,30 +326,22 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
-                <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Ranked Questions</strong></h1></div></div>
+                <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Control Priorities</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Each question in the assessment where the answer had a No response or was unanswered will be ranked and displayed on the Ranked Questions Screen. The information provided is intended to answer the fundamental question, &quot;Okay, I have some problems, so what do I do first?&quot; Based on the ranking, the answer would be, do Number 1 first, and then do Number 2, and so on until all resources have been exhausted or all the problems have been resolved. </div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Each question in the assessment where the answer had a No response or was unanswered will be ranked and displayed on the Control Priorities Screen. The information provided is intended to answer the fundamental question, &quot;Okay, I have some problems, so what do I do first?&quot; Based on the ranking, the answer would be, do Number 1 first, and then do Number 2, and so on until all resources have been exhausted or all the problems have been resolved. </div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Ranked Questions screen is shown in the Figure below.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Control Priorities screen is shown in the figure below.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">
-<map name="controlmap29c75600_f699_4ce6_9e05_9ca72cd2faa2" id="controlmap29c75600_f699_4ce6_9e05_9ca72cd2faa2">
-<area shape="rect" alt="" href="#id_1" coords="202,145,305,178" data-coord-left="202" data-coord-top="145" data-coord-right="305" data-coord-bottom="178"  />
-<area shape="rect" alt="" href="#id_1" coords="161,149,185,173" data-coord-left="161" data-coord-top="149" data-coord-right="185" data-coord-bottom="173"  />
-<area shape="rect" alt="" href="#id_2" coords="405,136,935,586" data-coord-left="405" data-coord-top="136" data-coord-right="935" data-coord-bottom="586"  />
-<area shape="rect" alt="" href="#id_2" coords="694,28,718,52" data-coord-left="694" data-coord-top="28" data-coord-right="718" data-coord-bottom="52"  />
-</map><img usemap="#controlmap29c75600_f699_4ce6_9e05_9ca72cd2faa2"  alt="Ranked Questions" style="border: solid 0px;  " width="1128" height="611" class="de_wndimg de_780D01ADE8" src="drex_results_ranked_questions_screen_screen.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Ranked Questions Screen</strong></span></div>
+<map name="controlmapc5fe0047_b6e4_43c2_9412_e7f084019afa" id="controlmapc5fe0047_b6e4_43c2_9412_e7f084019afa">
+<area shape="rect" alt="" href="#id_1" coords="197,150,908,528" data-coord-left="197" data-coord-top="150" data-coord-right="908" data-coord-bottom="528"  />
+<area shape="rect" alt="" href="#id_1" coords="135,165,159,189" data-coord-left="135" data-coord-top="165" data-coord-right="159" data-coord-bottom="189"  />
+</map><img usemap="#controlmapc5fe0047_b6e4_43c2_9412_e7f084019afa"  alt="Control Priorities" style="border: solid 0px;  " width="1106" height="563" class="de_wndimg de_780D01ADE8" src="drex_results_ranked_questions_screen_screen.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Control Priorities Screen</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#top"><img  alt="1" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2><strong>Ranked Questions</strong></h2></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Navigation Button</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. Ranked Questions&#x000D;&#x000A;Navigation Button" style="border: solid 0px;  " width="120" height="38" class="de_ctrlimg de_780D01ADE8" src="drex_results_ranked_questions_screen_control_1.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Clicking the Ranked Questions button will show the Ranked Questions analysis screen.</div>
-</td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_2"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#top"><img  alt="2" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_2.png"/></a><div class="ic"><h2><strong>Ranked Questions List</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Ranked Questions List" style="border: solid 0px;  " width="609" height="516" class="de_ctrlimg de_780D01ADE8" src="drex_results_ranked_questions_screen_control_2.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Ranked Questions list displays a list of all questions that were answered 'No' or left unanswered.&#160; The following is a description of the columns in the Ranked Question List:</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#top"><img  alt="1" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2><strong>Control Priorities List</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. Control Priorities List" style="border: solid 0px;  " width="818" height="435" class="de_ctrlimg de_780D01ADE8" src="drex_results_ranked_questions_screen_control_1.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Control Priorities list displays a list of all questions that were answered 'No' or left unanswered.&#160; The following is a description of the columns in the Control Priorities List:</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="T1"><strong>Rank:</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">A numeric ranking of each question that was missed with #1 having the highest priority. </div>
@@ -405,4 +375,3 @@
                 			</div>
 </body>
 </html>
-

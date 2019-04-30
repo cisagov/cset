@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -55,6 +55,17 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             return new StandardsManager().GetFramework(assessmentId);
+        }
+
+        /// <summary>
+        /// Persists the current Standards selection in the database.
+        /// </summary>
+        [HttpGet]
+        [Route("api/standard/IsACET")]
+        public bool GetACETSelected()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            return new StandardsManager().GetACET(assessmentId);
         }
 
         ///// <summary>

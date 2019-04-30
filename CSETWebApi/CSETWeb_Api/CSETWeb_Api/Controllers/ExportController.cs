@@ -1,11 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSETWeb_Api.BusinessLogic.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -23,9 +24,9 @@ namespace CSETWeb_Api.Controllers
         {
             return await Task.Run(() =>
             {
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
-                    var sets = db.SETS.Where(s => s.Is_Displayed).ToList()
+                    var sets = db.SETS.Where(s => s.Is_Displayed ?? true).ToList()
                                         .Select(s => new { Name = s.Full_Name, SetName = s.Set_Name }).OrderBy(s => s.Name)
                                         .ToList();
                     return Request.CreateResponse(sets);
@@ -38,10 +39,17 @@ namespace CSETWeb_Api.Controllers
         {
             return await Task.Run(() =>
             {
-                using (var db = new CSETWebEntities())
+                using (var db = new CSET_Context())
                 {
-                    var set = db.SETS.Where(s => s.Is_Displayed && s.Set_Name == setName).FirstOrDefault().ToExternalStandard();
-                    return Request.CreateResponse(set);
+                    var set = db.SETS
+                    .Include(s => s.Set_Category_)
+                    .Include(s => s.REQUIREMENT_SETS)
+                    .ThenInclude(r => r.Requirement_)
+                    .ThenInclude(rf => rf.REQUIREMENT_REFERENCES)
+                    .ThenInclude(gf => gf.Gen_File_)
+                    .Where(s => (s.Is_Displayed ?? false) && (s.Set_Name == setName)).FirstOrDefault();
+
+                    return Request.CreateResponse(set.ToExternalStandard());
                 }
             });
         }

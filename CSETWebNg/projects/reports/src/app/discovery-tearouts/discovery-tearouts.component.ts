@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ export class DiscoveryTearoutsComponent implements OnInit {
   public constructor(private titleService: Title, private reportSvc: ReportService) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Discoveries Tear Out Sheets - CSET");
+    this.titleService.setTitle("Observations Tear Out Sheets - CSET");
 
     this.reportSvc.getReport('discoveries').subscribe(
       (r: any) => {

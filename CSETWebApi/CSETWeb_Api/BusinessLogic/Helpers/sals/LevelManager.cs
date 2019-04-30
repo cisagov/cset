@@ -1,13 +1,13 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Controllers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,14 +47,14 @@ namespace CSETWeb_Api.Helpers.sals
 
         private Dictionary<String, ASSESSMENT_SELECTED_LEVELS> dictionarySelectedLevels;
 
-        private CSETWebEntities db;
+        private CSET_Context db;
 
         public int Selected_Sal_Level_Order { get; private set; }
 
         private String selectedSalLevel;
 
 
-        public LevelManager(int id, CSETWebEntities db)
+        public LevelManager(int id, CSET_Context db)
         {
             this.db = db;
             this.dictionarySelectedLevels = new Dictionary<string, ASSESSMENT_SELECTED_LEVELS>();            

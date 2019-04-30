@@ -1,11 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSET_Main.Questions.POCO;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 namespace CSET_Main.Data.ControlData

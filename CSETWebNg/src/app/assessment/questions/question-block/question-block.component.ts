@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../mode
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
+import { ConfigService } from '../../../services/config.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -45,9 +46,12 @@ export class QuestionBlockComponent implements OnInit {
   @Output() answerChanged = new EventEmitter();
 
   dialogRef: MatDialogRef<InlineParameterComponent>;
+  answer: Answer;
 
-
-  constructor(public questionsSvc: QuestionsService, private dialog: MatDialog) { }
+  constructor(
+    public questionsSvc: QuestionsService,
+    private dialog: MatDialog,
+    public configSvc: ConfigService) { }
 
   ngOnInit() {
     this.refreshReviewIndicator();
@@ -196,7 +200,8 @@ export class QuestionBlockComponent implements OnInit {
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
         Comment: q.Comment,
-        MarkForReview: q.MarkForReview
+        MarkForReview: q.MarkForReview,
+        Reviewed: q.Reviewed
       };
 
       subCatAnswers.Answers.push(answer);
@@ -231,7 +236,8 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      MarkForReview: q.MarkForReview
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed
     };
 
     this.refreshReviewIndicator();
@@ -254,7 +260,8 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      MarkForReview: q.MarkForReview
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed
     };
 
     this.refreshReviewIndicator();
@@ -281,4 +288,26 @@ export class QuestionBlockComponent implements OnInit {
     return "break-all";
   }
 
+
+
+  /**
+   *
+   */
+  saveMFR(q: Question) {
+    this.answerChanged.emit(null);
+    q.MarkForReview = !q.MarkForReview; // Toggle Bind
+
+    const newAnswer: Answer = {
+      QuestionId: q.QuestionId,
+      QuestionNumber: q.DisplayNumber,
+      AnswerText: q.Answer,
+      AltAnswerText: q.AltAnswerText,
+      Comment: '',
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed
+    };
+
+    this.refreshReviewIndicator();
+    this.questionsSvc.storeAnswer(newAnswer).subscribe();
+  }
 }

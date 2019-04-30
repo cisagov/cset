@@ -1,5 +1,14 @@
 *.log
 dist
-CSETStandAlone.exe
-/CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Debug
+
+
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Release
+/CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Debug
+/CSETWebApi/CSETWeb_Api/AddCSETUser/publish
+/CSETWebApi/CSETWeb_Api/AddCSETUser/bin/Debug
+/CSETWebApi/CSETWeb_Api/AddCSETUser/bin/Release
+/CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Debug
+/CSETWebApi/CSETWeb_Api/DataLayer2/bin/Debug
+/CSETWebApi/CSETWeb_Api/DataLayerCore/bin
+bin
+/CSETWebApi/CSETWeb_Api/CSETWeb_Api/Properties/PublishProfiles/runlocal.pubxml.user

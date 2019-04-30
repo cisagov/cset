@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,9 @@ export interface AssessmentDetail {
     ExecutiveSummary?: string;
     AssessmentDescription?: string;
     AdditionalNotesAndComments?: string;
+    Charter?: string;
+    CreditUnion?: string;
+    Assets?: string;
 }
 
 export interface AssessmentContactsResponse {

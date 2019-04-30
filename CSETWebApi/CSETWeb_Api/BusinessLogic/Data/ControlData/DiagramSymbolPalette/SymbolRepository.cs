@@ -1,19 +1,14 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Markup;
 
 namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 {
@@ -38,10 +33,10 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
         //private SymbolShapeItem defaultShape;
         //      private CSET_Main.Common.ICSETGlobalProperties globalProperties;
 
-        public SymbolRepository(CSETWebEntities context)
+        public SymbolRepository(CSET_Context context)
         {
             // This gets all Component Symbols or NodeTypes/Service Types from the database
-            foreach (COMPONENT_SYMBOLS symbolItemData in context.COMPONENT_SYMBOLS.Include(x => x.SYMBOL_GROUPS).OrderBy(x => x.Display_Name))
+            foreach (COMPONENT_SYMBOLS symbolItemData in context.COMPONENT_SYMBOLS.Include(x => x.Symbol_Group_).OrderBy(x => x.Display_Name))
             {
                 // Populate the DataTemplate files (for the vectors) into a Dictionary from the Component Symbols table. 
                 // TODO: Handle possible null for file name

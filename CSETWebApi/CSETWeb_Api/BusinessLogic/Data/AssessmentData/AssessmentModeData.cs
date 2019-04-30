@@ -1,11 +1,13 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
-using DataLayer;
+using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
+using DataLayerCore.Model;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -20,17 +22,17 @@ namespace CSET_Main.Data.AssessmentData
         public const String REQUIREMENTS_BASED_APPLICATION_MODE = "Requirements Based";
         public const String NIST_FRAMEWORK_MODE = "Cybersecurity Framework Based";
         public const String NIST_OLD_MODE_ASSESSMENT = "NIST Framework Mode";//This only for assessments created between 6.0 and 6.1
-        private CSETWebEntities DataContext;
+        private CSET_Context DataContext;
         private STANDARD_SELECTION standard;
 
-        public AssessmentModeData(CSETWebEntities assessmentContextHolder, int assessmentId)
+        public AssessmentModeData(CSET_Context assessmentContextHolder, int assessmentId)
         {
             this.DataContext = assessmentContextHolder;
             this.standard = this.DataContext.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (this.standard == null)
                 this.standard = new STANDARD_SELECTION()
                 {
-                    Application_Mode = QUESTIONS_BASED_APPLICATION_MODE,
+                    Application_Mode = DetermineDefaultApplicationMode(),
                     Assessment_Id = assessmentId,
                     Selected_Sal_Level = Constants.SAL_LOW
                 };
@@ -104,6 +106,39 @@ namespace CSET_Main.Data.AssessmentData
                 return standard.Sort_Set_Name;
             else
                 return String.Empty;
+        }
+
+
+        /// <summary>
+        /// Normally default to Questions mode, 
+        /// but ACET should default to Requirements mode.
+        /// </summary>
+        /// <returns></returns>
+        public static string DetermineDefaultApplicationMode()
+        {
+            string defaultMode = QUESTIONS_BASED_APPLICATION_MODE;
+
+            // ACET defaults to Requirements mode
+            TokenManager tm = new TokenManager();
+            string scope = tm.Payload("scope");
+
+            if (scope == "ACET")
+            {
+                defaultMode = REQUIREMENTS_BASED_APPLICATION_MODE;
+            }
+
+            return defaultMode;
+        }
+
+
+        /// <summary>
+        /// Returns the first character of the default application mode,
+        /// 'Q' or 'R'.
+        /// </summary>
+        /// <returns></returns>
+        public static string DetermineDefaultApplicationModeAbbrev()
+        {
+            return DetermineDefaultApplicationMode().Substring(0, 1);
         }
     }
 }

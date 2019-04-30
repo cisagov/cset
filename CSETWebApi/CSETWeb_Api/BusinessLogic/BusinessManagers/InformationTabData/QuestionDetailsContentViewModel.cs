@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,7 +19,7 @@ using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Views.Questions.QuestionDetails
 {
@@ -87,7 +87,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         /// <summary>
         /// 
         /// </summary>
-        private CSETWebEntities DataContext { get; }
+        private CSET_Context DataContext { get; }
 
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         public QuestionDetailsContentViewModel(
                                                 IStandardSpecficLevelRepository levelManager,
                                                 InformationTabBuilder informationTabBuilder,
-                                                CSETWebEntities datacontext)
+                                                CSET_Context datacontext)
         {
             this.DataContext = datacontext;
             //this.symbolRepository = symbolRepository;
@@ -159,7 +159,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             if (questionId != null)
             {
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWERs.Where(a => a.Question_Or_Requirement_Id == questionId && a.Assessment_Id == assessmentId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
@@ -172,10 +172,11 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
+                        Reviewed = false,
                         Component_Id = 0,
                         Is_Component = false
                     };
-                    DataContext.ANSWERs.Add(newAnswer);
+                    DataContext.ANSWER.Add(newAnswer);
                 }
                 var qp = new QuestionPoco(newAnswer, newqp);
                 qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
@@ -235,7 +236,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             //{
             //    var rlist = DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == questionId).ToList();
             //    var tmpreq = (from r in DataContext.NEW_REQUIREMENT
-            //                  join a in DataContext.ANSWERs on r.Requirement_Id equals a.Question_Or_Requirement_Id
+            //                  join a in DataContext.ANSWER on r.Requirement_Id equals a.Question_Or_Requirement_Id
             //                  where r.Requirement_Id == questionId && a.Assessment_Id == assessmentId && a.Is_Requirement == true
             //                  select new QuestionPoco(a, r, levelManager.GetRequirementLevel(rlist)));
             //}
@@ -271,7 +272,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     Set = question.SetName==null?null:question.DictionaryStandards[question.SetName],
                     Sets = question.DictionaryStandards,
                     Question=question.Question,
-                    Requirement=question.NEW_REQUIREMENT??question.Question.NEW_REQUIREMENT.FirstOrDefault(t=>t.REQUIREMENT_SETS.Select(s=>s.Set_Name).Contains(question.SetName??question.DictionaryStandards.Keys.FirstOrDefault()))
+                    Requirement=question.NEW_REQUIREMENT??question.Question.NEW_REQUIREMENTs().FirstOrDefault(t=>t.REQUIREMENT_SETS.Select(s=>s.Set_Name).Contains(question.SetName??question.DictionaryStandards.Keys.FirstOrDefault()))
                 };                
                 list = informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
             }

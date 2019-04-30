@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ import { DetailComponent } from './detail/detail.component';
 import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearouts.component';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReportService } from './services/report.service';
-import { ConfigService } from './services/config.service';
+import { ReportsConfigService } from './services/config.service';
 import { AnalysisService } from './services/analysis.service';
 import { createCustomElement } from '@angular/elements';
 import { EvalAgainstComponent } from './eval-against/eval-against.component';
@@ -42,6 +42,8 @@ import { JwtParser } from '../../../../src/app/helpers/jwt-parser';
 import { AuthenticationService } from '../../../../src/app/services/authentication.service';
 import { JwtInterceptor } from '../../../../src/app/helpers/jwt.interceptor';
 import { RedirectComponent } from './redirect/redirect.component';
+import { ConfigService } from '../../../../src/app/services/config.service';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -57,17 +59,18 @@ import { RedirectComponent } from './redirect/redirect.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
-    ConfigService,
+    ReportsConfigService,
     {
       provide: APP_INITIALIZER,
-      useFactory: (configSvc: ConfigService) => () => configSvc.loadConfig(),
-      deps: [ConfigService],
+      useFactory: (configSvc: ReportsConfigService) => () => configSvc.loadConfig(),
+      deps: [ReportsConfigService],
       multi: true
     },
     AuthenticationService,
@@ -77,7 +80,8 @@ import { RedirectComponent } from './redirect/redirect.component';
         multi: true
     },
     ReportService,
-    AnalysisService
+    AnalysisService,
+    ConfigService
   ],
   entryComponents: [
     EvalAgainstComponent

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -39,6 +39,8 @@ import { CreateUser } from './models/user.model';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -46,11 +48,14 @@ declare var $: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
+  isFooterVisible: boolean = false;
+
+  @ViewChild('acc') accordion: NgbAccordion;
 
   constructor(
     public auth: AuthenticationService,
@@ -59,7 +64,8 @@ export class AppComponent implements OnInit {
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleSvc: Title
   ) { }
 
 
@@ -72,22 +78,14 @@ export class AppComponent implements OnInit {
       }
     }
 
-    // initialize footer behavior
-    $(document).click(function (e) {
-      if ($(e.target).closest('.panel-group').length === 0 && $("#collapseFooter").hasClass("in")) {
-        $('#collapseFooter').collapse('toggle');
-      }
-    });
-
-    $('#collapseFooter').on('shown.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
-    });
-
-    $('#collapseFooter').on('hidden.bs.collapse', function () {
-      $("#footerExpander").removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
-    });
-
     this.setupShortCutKeys();
+  }
+
+  ngAfterViewInit() {
+
+    setTimeout(() => {
+      this.isFooterOpen();
+    }, 200);
   }
 
   hasPath(rpath: string) {
@@ -97,10 +95,36 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /**
+   * Indicates if the user is currently within the Module Builder pages.
+   * TODO:  Hard-coded paths could be replaced by asking the BreadcrumbComponent
+   * or the SetBuilderService for Module Builder paths.
+   */
+  isModuleBuilder(rpath: string) {
+    if (!rpath) {
+      return false;
+    }
+    if (rpath === '/set-list'
+      || rpath.indexOf('/set-detail') > -1
+      || rpath.indexOf('/requirement-list') > -1
+      || rpath.indexOf('/standard-documents') > -1
+      || rpath.indexOf('/ref-document') > -1
+      || rpath.indexOf('/requirement-detail') > -1
+      || rpath.indexOf('/question-list') > -1
+      || rpath.indexOf('/add-question') > -1) {
+      return true;
+    }
+    return false;
+  }
+
 
   goHome() {
-    this.assessSvc.dropAssessment();
-    this.router.navigate(['/home']);
+    if (this.isModuleBuilder(this.router.url)) {
+      this.router.navigate(['/set-list']);
+    } else {
+      this.assessSvc.dropAssessment();
+      this.router.navigate(['/home']);
+    }
   }
 
   about() {
@@ -285,5 +309,12 @@ export class AppComponent implements OnInit {
     }
 
     return this.router.url !== '/resource-library';
+  }
+
+  isFooterOpen() {
+    if (!!this.accordion) {
+      return this.accordion.isExpanded('footerPanel');
+    }
+    return false;
   }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ import { MatSidenav } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { NavigationService } from '../services/navigation.service';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-assessment',
@@ -43,8 +44,19 @@ import { NavigationService } from '../services/navigation.service';
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
+
+  /**
+   * Indicates whether the nav panel is visible (true)
+   * or hidden (false).
+   */
   expandNav = true;
+
+  /**
+   * Indicates whether the nav stays visible (true)
+   * or auto-hides when the screen is narrow (false).
+   */
   lockNav = true;
+  
   minWidth = 960;
   scrollTop = 0;
 
@@ -77,6 +89,7 @@ export class AssessmentComponent implements OnInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'prepare';
+    this.navSvc.activeResultsView = null;
   }
 
   selectItem(target: string) {
@@ -104,5 +117,13 @@ export class AssessmentComponent implements OnInit {
       document.scrollingElement.scrollTo({ behavior: 'smooth', top: 0 });
     }
     this.scrollTop = element.scrollTop;
+  }
+
+  /**
+   * Fired when the sidenav's opened state changes.
+   * @param e
+   */
+  openStateChange(e) {
+    this.expandNav = e;
   }
 }

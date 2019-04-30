@@ -1,25 +1,20 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSET_Main.Analysis.Analyzers;
 using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.Common;
 using CSETWeb_Api.Controllers;
-using CSETWeb_Api.Helpers.sals;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -33,7 +28,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 db.FillEmptyQuestionsForAnalysis(_assessmentId);
 
@@ -103,7 +98,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
-            using(var db = new CSETWebEntities())
+            using(var db = new CSET_Context())
             {
                 var dblist = from a in db.AVAILABLE_STANDARDS
                              join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
@@ -144,7 +139,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
         {   
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {   
                 return db.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
             }
@@ -158,7 +153,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<QuestionsWithAlternateJustifi> GetQuestionsWithAlternateJustification()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 
                 var dblist = from a in db.AVAILABLE_STANDARDS
@@ -184,7 +179,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<QuestionsWithComments> getQuestionsWithCommentsOrMarkedForReview()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 
                 var dblist = from a in db.AVAILABLE_STANDARDS
@@ -209,7 +204,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 RequirementsManager rm = new RequirementsManager(_assessmentId);
 
@@ -234,7 +229,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<DocumentLibraryTable> GetDocumentLibrary()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
                 var docs = from a in db.DOCUMENT_FILE
@@ -254,7 +249,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
-            using (var db = new DataLayer.CSETWebEntities()) {
+            using (var db = new CSET_Context()) {
                 
                 NistSalManager manager = new NistSalManager();
                 Models.Sals sals =  manager.CalculatedNist(_assessmentId, db);
@@ -285,7 +280,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
                 var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
@@ -304,7 +299,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public BasicReportData.OverallSALTable GetSals()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var sals = (from a in db.STANDARD_SELECTION
                            join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
@@ -346,33 +341,65 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
+        /// <summary>
+        /// Returns a block of data generally from the INFORMATION table plus a few others.
+        /// </summary>
+        /// <returns></returns>
         public BasicReportData.INFORMATION GetInformation()
         {
-            
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
-                return TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
-                //return new BasicReportData.INFORMATION()
-                //{
-                //    Assessment_Name = infodb.Assessment_Name,
-                //    Assessment_Date= infodb.Assessment_Date.ToLongDateString(),
-                //    Assessor_Name= infodb.Assessor_Name,
-                //    Additional_Contacts = infodb.Additional_Contacts,
-                //    Additional_Notes_And_Comments = infodb.
-                //};                
+                
+                var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
+               
+                var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+                info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+
+                // Primary Assessor
+                var user = db.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+                info.Assessor_Name = user != null ? $"{user.FirstName} {user.LastName}" : string.Empty;
+
+
+                // Other Contacts
+                info.Additional_Contacts = new List<string>();
+                var contacts = db.ASSESSMENT_CONTACTS
+                    .Where(ac => ac.Assessment_Id == _assessmentId
+                            && ac.UserId != assessment.AssessmentCreatorId)
+                    .Include(u => u.User)
+                    .ToList();
+                foreach (var c in contacts)
+                {
+                    info.Additional_Contacts.Add($"{c.FirstName} {c.LastName}");
+            }
+
+
+                // ACET properties
+                info.Credit_Union_Name = assessment.CreditUnionName;
+                info.Charter = assessment.Charter;
+
+                info.Assets = 0;
+                bool a = int.TryParse(assessment.Assets, out int assets);
+                if (a)
+                {
+                    info.Assets = assets;
+        }
+
+                return info;
             }
         }
 
+
         public List<Individual> GetFindingIndividuals()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var findings = (from a in db.FINDING_CONTACT
-                                join b in db.FINDINGs on a.Finding_Id equals b.Finding_Id
-                                join c in db.ANSWERs on b.Answer_Id equals c.Answer_Id
+                                join b in db.FINDING on a.Finding_Id equals b.Finding_Id
+                                join c in db.ANSWER on b.Answer_Id equals c.Answer_Id
                                 join d in db.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                                join i in db.IMPORTANCEs on b.Importance_Id equals i.Importance_Id
+                                join i in db.IMPORTANCE on b.Importance_Id equals i.Importance_Id
                                 where c.Assessment_Id == _assessmentId
                                 orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
                                 select new { a, b, d, i.Value }).ToList();
@@ -412,7 +439,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public GenSALTable GetGenSals()
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var gensalnames =  db.GEN_SAL_NAMES.ToList();
                 var actualvalues = (from a in db.GENERAL_SAL.Where(x => x.Assessment_Id == this._assessmentId)

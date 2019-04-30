@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ export class QuestionsService {
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
-   *   Discoveries - D
+   *   Discoveries (Observations) - D
    */
   public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D'];
 
@@ -59,7 +59,7 @@ export class QuestionsService {
   autoLoadSupplementalSetting: boolean;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue.toLowerCase() === 'true');
+    this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
   }
 
   /**

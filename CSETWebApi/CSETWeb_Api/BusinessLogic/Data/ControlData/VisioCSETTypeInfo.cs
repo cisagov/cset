@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using CSET_Main.Common.EnumHelper;
 using CSET_Main.Diagram.DiagramObjects;
 using CSET_Main.Diagram.DiagramObjects.Enums;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Data.ControlData
 {

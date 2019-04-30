@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   incorrect = false;
   private isEjectDialogOpen = false;
+  browserIsIE: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +60,8 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+
     this.authenticationService.checkLocal().then(() => {
       if (this.authenticationService.isLocal) {
         this.mode = 'LOCAL';

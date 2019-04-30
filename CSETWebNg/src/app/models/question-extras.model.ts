@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -84,6 +84,7 @@ export interface RequirementTabData {
   Text: String;
   SupplementalInfo: String;
   Set_Name: string;
+  ExaminationApproach: String;
 }
 
 export class CustomDocument {

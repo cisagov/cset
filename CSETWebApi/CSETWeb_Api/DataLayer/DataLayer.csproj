@@ -388,6 +388,9 @@
     <Compile Include="SETS_CATEGORY.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SET_FILES.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SHAPE_TYPES.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>

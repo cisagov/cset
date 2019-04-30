@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2018 Battelle Energy Alliance, LLC
+   Copyright 2019 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<mat-dialog-content>
+<div class="d-flex flex-column justify-content-center flex-11a">
+<div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
+    <span>Observation Details</span>
+  </div>
+
+<mat-dialog-content class="py-3">
   <div class="item bigitem">
-    <h2>Discovery Details</h2>
-    <p>The question discovery section is for advanced users that want to collect extra infromation about specific questions
+    <p>The question observation section is for advanced users that want to collect extra information about specific questions
       in the assessment.</p>
 
     <div class="form-group">
@@ -63,22 +68,28 @@
     </div>
   </div>
 
+  <div class="card" (click)="navToContacts()">
+    <div class="card-body">
+      See Prepare -> Assessment Information -> Contacts -> Add Contact to add additional individuals to this assessment.
+    </div>
+  </div>
   <!-- interested parties -->
   <div class="form-group">
-    <label for="contacts" class="form-label">Individuals Responsible</label>
-
-    <div style="padding-left: .5em;">
-
-      <div *ngFor="let contact of finding.Finding_Contacts" class="indiv-responsible">
-        <input type="checkbox" id="{{contact.Assessment_Contact_Id}}" [(ngModel)]="contact.Selected">
-        <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
-      </div>
-
-      <a (click)="clearMulti()">clear</a>
-    </div>
-
+    <div class="d-flex justify-content-between align-items-center flex-11a">
+      <label for="contacts" class="form-label">Individuals Responsible</label>
+      <button class="btn-link fs-smaller" (click)="clearMulti()">Clear Selections</button>
   </div>
 
-  <button class="btn btn-primary" (click)="update()">Close</button>
-
+    <div class="pl-3">
+      <div *ngFor="let contact of finding.Finding_Contacts" class="indiv-responsible form-check">
+        <input class="form-check-input" type="checkbox" id="{{contact.Assessment_Contact_Id}}" [(ngModel)]="contact.Selected">
+        <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
+      </div>
+    </div>
+  </div>
 </mat-dialog-content>
+
+<mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary" (click)="update()">Close</button>
+  </mat-dialog-actions>
+</div>

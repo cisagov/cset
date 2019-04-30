@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,10 +9,10 @@ using CSETWeb_Api.BusinessLogic;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,14 +20,14 @@ namespace CSETWeb_Api.Helpers
 {
     public class UserAccountSecurityManager
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CSET_Context db = new CSET_Context();
 
         /// <summary>
         /// Creates a new user and sends them an email containing a temporary password.
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public async Task<bool> CreateUserSendEmail(CreateUser info)
+        public bool CreateUserSendEmail(CreateUser info)
         {
             try
             {
@@ -51,10 +51,10 @@ namespace CSETWeb_Api.Helpers
                     SecurityAnswer2 = info.SecurityAnswer2
                 });
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 
                 // Send the new temp password to the user
-                NotificationManager nm = new NotificationManager();
+                NotificationManager nm = new NotificationManager(info.AppCode);
                 nm.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword);
 
                 return true;
@@ -105,7 +105,15 @@ namespace CSETWeb_Api.Helpers
             }
         }
 
-        public async Task<bool> ResetPassword(String email, String subject) {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="subject"></param>
+        /// <param name="appCode"></param>
+        /// <returns></returns>
+        public async Task<bool> ResetPassword(string email, string subject, string appCode) {
             /**
              * get the user and make sure they exist
              * set the reset password flag
@@ -132,7 +140,7 @@ namespace CSETWeb_Api.Helpers
                 user.Salt = salt;
 
 
-                NotificationManager nm = new NotificationManager();
+                NotificationManager nm = new NotificationManager(appCode);
                 nm.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject);
                 
 

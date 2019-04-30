@@ -1,22 +1,18 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Http.Description;
-using CSETWeb_Api.BusinessManagers;
 
 
 namespace CSETWeb_Api.Controllers
@@ -24,14 +20,14 @@ namespace CSETWeb_Api.Controllers
     [CSETAuthorize]
     public class DemographicsController : ApiController
     {
-        private CSETWebEntities db = new CSETWebEntities();
+        private CSET_Context db = new CSET_Context();
 
         /// <summary>
         /// Assessment demographics.
         /// </summary>
         public DemographicsController() : base()
         {
-            db.Configuration.ProxyCreationEnabled = false;
+           
         }
 
         /// <summary>
@@ -69,7 +65,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/Demographics/Sectors")]
         public async Task<List<Sector>> GetSECTORs()
         {
-            List<SECTOR> list = await db.SECTORs.ToListAsync<SECTOR>();
+            List<SECTOR> list = await db.SECTOR.ToListAsync<SECTOR>();
             var tmplist = list.OrderBy(s => s.SectorName).ToList();
 
             var otherItem = list.Find(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
@@ -107,14 +103,21 @@ namespace CSETWeb_Api.Controllers
         [Route("api/Demographics/AssetValues")]
         public async Task<List<DemographicsAssetValue>> GetAssetValues()
         {
-            List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await db.DEMOGRAPHICS_ASSET_VALUES.ToListAsync<DEMOGRAPHICS_ASSET_VALUES>();
+            // RKW - Get the calling application (scope) to filter the appropriate asset values.
+            //       The scope was set by the calling app during the login transaction and is stored in the JWT.
+            TokenManager tm = new TokenManager();            
+            string scope = tm.Payload("scope");
+
+            List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await db.DEMOGRAPHICS_ASSET_VALUES
+                .Where(x => x.AppCode == scope)
+                .ToListAsync();
             return assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList();
         }
 
         [Route("api/Demographics/Size")]
         public async Task<List<AssessmentSize>> GetSize()
         {
-            List<DEMOGRAPHICS_SIZE> assetValues = await db.DEMOGRAPHICS_SIZE.ToListAsync<DEMOGRAPHICS_SIZE>();
+            List<DEMOGRAPHICS_SIZE> assetValues = await db.DEMOGRAPHICS_SIZE.ToListAsync();
             return assetValues.OrderBy(a => a.ValueOrder).Select(s => new AssessmentSize() { DemographicId = s.DemographicId, Description = s.Description, Size = s.Size }).ToList();
         }
         #endregion

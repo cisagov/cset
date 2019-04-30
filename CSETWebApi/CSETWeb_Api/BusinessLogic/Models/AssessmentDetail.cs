@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,6 +24,10 @@ namespace CSETWeb_Api.Models
         public string FacilityName;
         public string CityOrSiteName;
         public string StateProvRegion;
+
+        public string Charter;
+        public string CreditUnion;
+        public string Assets;
 
         /// <summary>
         /// The last time the Assessment was altered.

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -16,17 +17,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSETWeb_Api</RootNamespace>
     <AssemblyName>CSETWeb_Api</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -60,23 +63,17 @@
     <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Hangfire.Console, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hangfire.Console.1.4.2\lib\net45\Hangfire.Console.dll</HintPath>
     </Reference>
-    <Reference Include="Hangfire.Core, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hangfire.Core.1.6.20\lib\net45\Hangfire.Core.dll</HintPath>
+    <Reference Include="Hangfire.Core, Version=1.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.6.22\lib\net45\Hangfire.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Hangfire.SqlServer, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hangfire.SqlServer.1.6.20\lib\net45\Hangfire.SqlServer.dll</HintPath>
+    <Reference Include="Hangfire.SqlServer, Version=1.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.6.22\lib\net45\Hangfire.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.1.0.145, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.1.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net, Version=2.9.2.1, Culture=neutral, PublicKeyToken=402f1553d5c332e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -122,40 +119,88 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.5\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.2.4\lib\net451\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.2.4\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.2.4\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Design, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\lib\net461\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.2.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.2.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.4.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.4.0\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.4.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NJsonSchema, Version=9.10.75.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.9.10.75\lib\net45\NJsonSchema.dll</HintPath>
+    <Reference Include="NJsonSchema, Version=9.13.18.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\NJsonSchema.9.13.18\lib\net45\NJsonSchema.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
@@ -163,22 +208,42 @@
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
     </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
-    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+    <Reference Include="System.Console, Version=4.0.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.1\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
     </Reference>
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.2.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.4.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async, Version=3.2.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Interactive.Async.3.2.0\lib\net46\System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
@@ -193,23 +258,42 @@
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.2\lib\net46\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.2\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
@@ -217,45 +301,47 @@
     <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.Owin, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.6\lib\net45\System.Web.Http.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.7\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -267,21 +353,17 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.1\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TinyMapper.2.0.8\lib\net45\TinyMapper.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -302,7 +384,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSETWeb_Api.csproj.user" />
-    <Content Include="DeleteMe.html" />
     <Content Include="Documents\05-00993 r0 Common Vulnerability.pdf" />
     <Content Include="Documents\14 cfr 121.pdf" />
     <Content Include="Documents\14 CFR Parts 43.11.pdf" />
@@ -445,7 +526,6 @@
     <Content Include="Documents\CSC-MASTER-VER 6.0 CIS Critical Security Controls 10.15.2015.pdf" />
     <Content Include="Documents\CSC-MASTER-VER50-2-27-2014.pdf" />
     <Content Include="Documents\CSC_NCSD_Cyber_StormII_final09.pdf" />
-    <Content Include="Documents\CSET_Manual.chm" />
     <Content Include="Documents\CyberSecDefenseStrategies.pdf" />
     <Content Include="Documents\CybersecProcurementLanguage-EnergyDeliverySystems_040714_fin.pdf" />
     <Content Include="Documents\CyberSecurityPlan-RG5.71.pdf" />
@@ -456,7 +536,6 @@
     <Content Include="Documents\dcid6-9.pdf" />
     <Content Include="Documents\Defense_in_Depth_Oct09.pdf" />
     <Content Include="Documents\DHS Bulletin_Feb 2005 R2.pdf" />
-    <Content Include="Documents\Diagram bugs CSET.pdf" />
     <Content Include="Documents\DialInAccessPolicy_SANS.docx" />
     <Content Include="Documents\DialInAccessPolicy_SANS.pdf" />
     <Content Include="Documents\DigitalCertificates.pdf" />
@@ -465,7 +544,6 @@
     <Content Include="Documents\DisasterPreparedness_Nascio.pdf" />
     <Content Include="Documents\DisasterRecovery2_SANS.pdf" />
     <Content Include="Documents\DNS-recursion033006.pdf" />
-    <Content Include="Documents\document.pdf" />
     <Content Include="Documents\DOD8551.pdf" />
     <Content Include="Documents\DODI 855201.pdf" />
     <Content Include="Documents\DODI-8500.2.pdf" />
@@ -501,7 +579,8 @@
     <Content Include="Documents\HSPD-7.pdf" />
     <Content Include="Documents\htmlhelp\about_cset.htm" />
     <Content Include="Documents\htmlhelp\accessibility_document.htm" />
-    <Content Include="Documents\htmlhelp\advanced__import_module.htm" />
+    <Content Include="Documents\htmlhelp\add_questions.htm" />
+    <Content Include="Documents\htmlhelp\add_requirements.htm" />
     <Content Include="Documents\htmlhelp\advisory.htm" />
     <Content Include="Documents\htmlhelp\analysis_screen.htm" />
     <Content Include="Documents\htmlhelp\assessment_categories.htm" />
@@ -517,6 +596,7 @@
     <Content Include="Documents\htmlhelp\change_password.htm" />
     <Content Include="Documents\htmlhelp\comments_section.htm" />
     <Content Include="Documents\htmlhelp\contacts_management.htm" />
+    <Content Include="Documents\htmlhelp\create_a_new_module.htm" />
     <Content Include="Documents\htmlhelp\cset_revision_history.htm" />
     <Content Include="Documents\htmlhelp\cset_standards_and_groupings.htm" />
     <Content Include="Documents\htmlhelp\css\all.css" />
@@ -563,16 +643,12 @@
     <Content Include="Documents\htmlhelp\de_search\0xu0058.txt" />
     <Content Include="Documents\htmlhelp\de_search\0xu0059.txt" />
     <Content Include="Documents\htmlhelp\de_search\0xu005a.txt" />
-    <Content Include="Documents\htmlhelp\de_search\0xu005f.txt" />
     <Content Include="Documents\htmlhelp\de_search\ids.txt" />
     <Content Include="Documents\htmlhelp\de_search\prefixes.txt" />
     <Content Include="Documents\htmlhelp\de_style.css" />
     <Content Include="Documents\htmlhelp\disclaimer.htm" />
-    <Content Include="Documents\htmlhelp\discoveries_section.htm" />
-    <Content Include="Documents\htmlhelp\discoveries_tear_out_sheets.htm" />
     <Content Include="Documents\htmlhelp\documents_section.htm" />
     <Content Include="Documents\htmlhelp\document_manager_window.htm" />
-    <Content Include="Documents\htmlhelp\document_questions_list_window.htm" />
     <Content Include="Documents\htmlhelp\drex_about_cset_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_about_cset_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_about_cset_control_3.png" />
@@ -582,23 +658,16 @@
     <Content Include="Documents\htmlhelp\drex_about_cset_control_7.png" />
     <Content Include="Documents\htmlhelp\drex_about_cset_screen.png" />
     <Content Include="Documents\htmlhelp\drex_accessibility_document_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_10.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_11.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_12.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_13.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_14.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_15.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_16.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_17.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_3.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_4.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_5.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_6.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_7.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_8.png" />
-    <Content Include="Documents\htmlhelp\drex_advanced__import_module_custom_9.png" />
+    <Content Include="Documents\htmlhelp\drex_add_questions_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_add_questions_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_add_questions_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_add_questions_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_add_requirements_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_add_requirements_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_add_requirements_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_add_requirements_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_add_requirements_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_add_requirements_custom_6.png" />
     <Content Include="Documents\htmlhelp\drex_advisory_custom.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_2.png" />
@@ -623,10 +692,6 @@
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_screen.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_1.png" />
-    <Content Include="Documents\htmlhelp\drex_bullet_10.png" />
-    <Content Include="Documents\htmlhelp\drex_bullet_11.png" />
-    <Content Include="Documents\htmlhelp\drex_bullet_12.png" />
-    <Content Include="Documents\htmlhelp\drex_bullet_13.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_2.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_3.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_4.png" />
@@ -643,24 +708,20 @@
     <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom.png" />
     <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_change_password_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_comments_section_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_comments_section_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_comments_section_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_3.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_4.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_5.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_6.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_7.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_contacts_management_custom.png" />
     <Content Include="Documents\htmlhelp\drex_contacts_management_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_contacts_management_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_contacts_management_custom_4.png" />
     <Content Include="Documents\htmlhelp\drex_contacts_management_custom_5.png" />
     <Content Include="Documents\htmlhelp\drex_contacts_management_custom_6.png" />
-    <Content Include="Documents\htmlhelp\drex_contacts_management_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_7.png" />
+    <Content Include="Documents\htmlhelp\drex_contacts_management_custom_8.png" />
+    <Content Include="Documents\htmlhelp\drex_create_a_new_module_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_create_a_new_module_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_create_a_new_module_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_create_a_new_module_custom_4.png" />
     <Content Include="Documents\htmlhelp\drex_cybersecurity_framework_description_custom.png" />
     <Content Include="Documents\htmlhelp\drex_cybersecurity_framework_description_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom.png" />
@@ -672,17 +733,14 @@
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_screen.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_requirements_mode_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_requirements_mode_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_discoveries_section_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_discoveries_section_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_discoveries_section_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_documents_section_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_documents_section_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_documents_section_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_documents_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_7.png" />
     <Content Include="Documents\htmlhelp\drex_document_manager_window_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_document_questions_list_window_screen.png" />
     <Content Include="Documents\htmlhelp\drex_evaluation_preparation_screen.png" />
     <Content Include="Documents\htmlhelp\drex_executive_summary__overview__and_comments_screen_custom.png" />
     <Content Include="Documents\htmlhelp\drex_exporting_a_cset_assessment_custom.png" />
@@ -701,34 +759,37 @@
     <Content Include="Documents\htmlhelp\drex_help_menu_screen.png" />
     <Content Include="Documents\htmlhelp\drex_importing_a__csetw_file_custom.png" />
     <Content Include="Documents\htmlhelp\drex_importing_a__cset_file_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_import_module_screen.png" />
     <Content Include="Documents\htmlhelp\drex_index_custom.png" />
     <Content Include="Documents\htmlhelp\drex_keyboard_shortcuts_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_manage_documents_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_manage_documents_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_module_builder_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_module_builder_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_module_builder_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_module_builder_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_observations_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_observations_section_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_observations_section_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_overview_custom.png" />
     <Content Include="Documents\htmlhelp\drex_overview_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_parameter_editor_window_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_parameter_editor_window_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_3.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_4.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_5.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_control_6.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_3.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_4.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_control_5.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_prepare_mode_selection_custom.png" />
     <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_prepare_standard_selection_control_3.png" />
@@ -760,12 +821,9 @@
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_4.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_screen.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_10.png" />
-    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_11.png" />
-    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_12.png" />
-    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_13.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_4.png" />
@@ -773,13 +831,16 @@
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_6.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_7.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_8.png" />
-    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_9.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_5.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_screen.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_references_section_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_references_section_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_references_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_references_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_references_section_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_3.png" />
@@ -788,13 +849,12 @@
     <Content Include="Documents\htmlhelp\drex_register_a_user_account_screen.png" />
     <Content Include="Documents\htmlhelp\drex_report_builder_custom.png" />
     <Content Include="Documents\htmlhelp\drex_resource_library_window_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_results_by_category_multiple_standards_custom.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_results_overall_ranked_categories_screen_screen.png" />
     <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_screen.png" />
     <Content Include="Documents\htmlhelp\drex_results_standards_ranked_categories_screen_custom.png" />
     <Content Include="Documents\htmlhelp\drex_results_standards_results_by_category_screen_custom.png" />
@@ -828,9 +888,9 @@
     <Content Include="Documents\htmlhelp\drex_search_screen_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_search_screen_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_search_screen_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_standards_results_by_category_multiple_standards_custom.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_10.png" />
+    <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_11.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_4.png" />
@@ -839,8 +899,7 @@
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_7.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_8.png" />
     <Content Include="Documents\htmlhelp\drex_stand_alone_install_custom_9.png" />
-    <Content Include="Documents\htmlhelp\drex_supplemental_section_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_supplemental_section_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_supplemental_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_terms_of_use_custom.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_control_2.png" />
@@ -848,14 +907,9 @@
     <Content Include="Documents\htmlhelp\drex_title_bar_control_4.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_control_5.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_control_3.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_control_4.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_control_5.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_control_6.png" />
     <Content Include="Documents\htmlhelp\drex_tools_menu_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_tools_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_tools_menu_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_user_profile_1_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_user_profile_1_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_user_profile_1_control_3.png" />
@@ -864,6 +918,7 @@
     <Content Include="Documents\htmlhelp\drex_user_profile_2_custom.png" />
     <Content Include="Documents\htmlhelp\drex_using_the_stand_alone_custom.png" />
     <Content Include="Documents\htmlhelp\drex_using_the_stand_alone_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_using_the_stand_alone_custom_3.png" />
     <Content Include="Documents\htmlhelp\enterprise_install.htm" />
     <Content Include="Documents\htmlhelp\evaluation_preparation.htm" />
     <Content Include="Documents\htmlhelp\executive_summary_report.htm" />
@@ -884,6 +939,7 @@
     <Content Include="Documents\htmlhelp\importing_a__csetw_file.htm" />
     <Content Include="Documents\htmlhelp\importing_a__cset_file.htm" />
     <Content Include="Documents\htmlhelp\import_export_a_cset_assessment.htm" />
+    <Content Include="Documents\htmlhelp\import_module.htm" />
     <Content Include="Documents\htmlhelp\index.htm" />
     <Content Include="Documents\htmlhelp\initiation_scenarios.htm" />
     <Content Include="Documents\htmlhelp\installation_procedure.htm" />
@@ -898,7 +954,6 @@
     <Content Include="Documents\htmlhelp\i\blocks\tree\sprite.png" />
     <Content Include="Documents\htmlhelp\i\blocks\work-zone\header-bg.png" />
     <Content Include="Documents\htmlhelp\i\null.gif" />
-    <Content Include="Documents\htmlhelp\i\Thumbs.db" />
     <Content Include="Documents\htmlhelp\js\all.js" />
     <Content Include="Documents\htmlhelp\js\all2.js" />
     <Content Include="Documents\htmlhelp\js\drexplain.data.index.js" />
@@ -907,6 +962,10 @@
     <Content Include="Documents\htmlhelp\js\tooltips.js" />
     <Content Include="Documents\htmlhelp\keyboard_shortcuts.htm" />
     <Content Include="Documents\htmlhelp\main_cset_window_sections.htm" />
+    <Content Include="Documents\htmlhelp\manage_documents.htm" />
+    <Content Include="Documents\htmlhelp\module_builder.htm" />
+    <Content Include="Documents\htmlhelp\observations_section.htm" />
+    <Content Include="Documents\htmlhelp\observation_tear_out_sheets.htm" />
     <Content Include="Documents\htmlhelp\operation_menus.htm" />
     <Content Include="Documents\htmlhelp\overview.htm" />
     <Content Include="Documents\htmlhelp\parameter_editor_window.htm" />
@@ -929,8 +988,8 @@
     <Content Include="Documents\htmlhelp\reports_screen.htm" />
     <Content Include="Documents\htmlhelp\report_builder.htm" />
     <Content Include="Documents\htmlhelp\resource_library_window.htm" />
+    <Content Include="Documents\htmlhelp\results_by_category_multiple_standards.htm" />
     <Content Include="Documents\htmlhelp\results_menu.htm" />
-    <Content Include="Documents\htmlhelp\results_overall_ranked_categories_screen.htm" />
     <Content Include="Documents\htmlhelp\results_ranked_questions_screen.htm" />
     <Content Include="Documents\htmlhelp\results_section.htm" />
     <Content Include="Documents\htmlhelp\results_standards_ranked_categories_screen.htm" />
@@ -946,7 +1005,6 @@
     <Content Include="Documents\htmlhelp\site_detail_report.htm" />
     <Content Include="Documents\htmlhelp\site_summary_report.htm" />
     <Content Include="Documents\htmlhelp\standards_analysis.htm" />
-    <Content Include="Documents\htmlhelp\standards_results_by_category_multiple_standards.htm" />
     <Content Include="Documents\htmlhelp\stand_alone_install.htm" />
     <Content Include="Documents\htmlhelp\supplemental_section.htm" />
     <Content Include="Documents\htmlhelp\system_basics.htm" />
@@ -1014,7 +1072,6 @@
     <Content Include="Documents\KeyMgtPlan_Template_PSWN.pdf" />
     <Content Include="Documents\LabSecPolicy_SANS.docx" />
     <Content Include="Documents\LabSecPolicy_SANS.pdf" />
-    <Content Include="Documents\list.txt" />
     <Content Include="Documents\m03-18.pdf" />
     <Content Include="Documents\m05-08.pdf" />
     <Content Include="Documents\m06-16.pdf" />
@@ -1063,7 +1120,6 @@
     <Content Include="Documents\NIST IR-7694_Draft.pdf" />
     <Content Include="Documents\NIST IR-7756_Draft.pdf" />
     <Content Include="Documents\NIST SP800-53 R4.pdf" />
-    <Content Include="Documents\NIST SP800-53 R4.pdf.txt" />
     <Content Include="Documents\NIST SP800-60 V1.pdf" />
     <Content Include="Documents\NIST.CSWP.04162018.pdf" />
     <Content Include="Documents\NIST.IR.7622.pdf" />
@@ -1268,7 +1324,6 @@
     <Content Include="Documents\STE-Plan_Template_NIST.pdf" />
     <Content Include="Documents\Strategy for Securing Control Systems.pdf" />
     <Content Include="Documents\Survivability_10tn013.pdf" />
-    <Content Include="Documents\Task Planning.pdf" />
     <Content Include="Documents\TechWriting_SecPolicy_SANS.pdf" />
     <Content Include="Documents\TIP-10-105-01_Mobile Devices.pdf" />
     <Content Include="Documents\TIP-11-075-01_System Integrity.pdf" />
@@ -1317,28 +1372,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
     <None Include="Data\sql16dev1.csetweb v %28localdb%29_v11.0.CSETWeb 2.scp" />
     <None Include="Data\sql16dev1.CSETWeb v %28localdb%29_v11.0.CSETWeb.sdc" />
     <Content Include="LuceneIndex\segments.gen">
@@ -1348,24 +1387,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="LuceneIndex\_0.cfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.fnm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.frq">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.nrm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.prx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.tii">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LuceneIndex\_2.tis">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\14 cfr 121.docx" />
@@ -1386,8 +1407,69 @@
     <Content Include="Documents\Word\FIPS199Language.docx" />
     <Content Include="Documents\Word\Keyboard_Shortcuts.docx" />
     <Content Include="Documents\Word\ReadMe.docx" />
+    <Content Include="Documents\800-53 R5.pdf" />
+    <Content Include="Documents\sp800_154_draft.pd.pdf" />
+    <Content Include="Documents\sp800_188_draft2.pd.pdf" />
+    <Content Include="Documents\SP800-60-1r1.pdf" />
+    <Content Include="Documents\nistir7539.pd.pdf" />
+    <Content Include="Documents\nistir7559.pd.pdf" />
+    <Content Include="Documents\nistir7676.pdf" />
+    <Content Include="Documents\nistir7788.pd.pdf" />
+    <Content Include="Documents\nistir_8011draft_vol1.pd.pdf" />
+    <Content Include="Documents\NIST.FIPS.180-4.pd.pdf" />
+    <Content Include="Documents\NIST.FIPS.186-4.pd.pdf" />
+    <Content Include="Documents\NIST.FIPS.202.pd.pdf" />
+    <Content Include="Documents\NIST.IR.7817.pd.pdf" />
+    <Content Include="Documents\NIST.IR.7849.pd.pdf" />
+    <Content Include="Documents\NIST.IR.7870.pd.pdf" />
+    <Content Include="Documents\NIST.IR.7874.pd.pdf" />
+    <Content Include="Documents\NIST.IR.7956.pd.pdf" />
+    <Content Include="Documents\NIST.IR.7966.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8023.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8040.pdf" />
+    <Content Include="Documents\NIST.IR.8062.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-101r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-115.pdf" />
+    <Content Include="Documents\NIST.SP.800-125B.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-150.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-152.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-156.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-160.pdf" />
+    <Content Include="Documents\NIST.sp.800-162.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-166.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-167.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-177.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-178.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-57-3.pdf" />
+    <Content Include="Documents\NIST.SP.800-63-2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-63a.pdf" />
+    <Content Include="Documents\NIST.SP.800-86.pdf" />
+    <Content Include="Documents\M-17-25.pdf" />
+    <Content Include="Documents\FFIEC_CAT5_17.pdf" />
+    <Content Include="LuceneIndex\_3.fnm" />
+    <Content Include="LuceneIndex\_3.frq" />
+    <Content Include="LuceneIndex\_3.nrm" />
+    <Content Include="LuceneIndex\_3.prx" />
+    <Content Include="LuceneIndex\_3.tii" />
+    <Content Include="LuceneIndex\_3.tis" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1445,12 +1527,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AdminTabController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\AngularConfigController.cs" />
     <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentImportController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DemographicsController.cs" />
     <Compile Include="Controllers\DiagnosticController.cs" />
     <Compile Include="Controllers\ExcelExportController.cs" />
@@ -1460,15 +1544,19 @@
     <Compile Include="Controllers\FrameworkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\IRP2Controller.cs" />
+    <Compile Include="Controllers\MaturityController.cs" />
     <Compile Include="Controllers\ProtectedFeatureController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReferenceDocumentsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\RequiredDocumentationController.cs" />
     <Compile Include="Controllers\ResetPasswordController.cs" />
     <Compile Include="Controllers\ResourceLibraryController.cs" />
     <Compile Include="Controllers\SALController.cs" />
     <Compile Include="Controllers\sal\GeneralSalController.cs" />
     <Compile Include="Controllers\SchemaController.cs" />
+    <Compile Include="Controllers\ModuleBuilderController.cs" />
     <Compile Include="Controllers\StandardsController.cs" />
     <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -1480,7 +1568,6 @@
     <Compile Include="Helpers\ElmahWrapper.cs" />
     <Compile Include="Helpers\HangfireExecutor.cs" />
     <Compile Include="Helpers\HangfireLogger.cs" />
-    <Compile Include="Helpers\InMemoryMultipartFormDataStreamProvider.cs" />
     <Compile Include="Helpers\PropertyHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -1491,11 +1578,18 @@
     <Folder Include="assets\" />
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\IRP2\" />
+    <Folder Include="Views\RequiredDocumentation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -1505,10 +1599,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1536,9 +1626,9 @@
       <Project>{4e44142d-08e2-4f40-9532-896e1f00018c}</Project>
       <Name>CryptoBuffer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
-      <Project>{227f840d-ec18-4431-a4e8-061bd351e6cc}</Project>
-      <Name>DataLayer</Name>
+    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj">
+      <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
+      <Name>DataLayerCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExportCSV\ExportCSV.csproj">
       <Project>{6f0dd06e-eb8c-4b13-bd4b-20a267f96537}</Project>
@@ -1605,7 +1695,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.EntityFrameworkCore.Design.2.2.2\build\net461\Microsoft.EntityFrameworkCore.Design.props'))" />
   </Target>
   <!-- the step to copy the config file first avoids a 'File is being used by another process' error -->
   <Target Name="BeforeBuild">

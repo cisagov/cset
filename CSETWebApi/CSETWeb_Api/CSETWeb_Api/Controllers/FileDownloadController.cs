@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,8 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Export;
 using CSETWeb_Api.Helpers;
 using DataAccess;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Http;
-using System.Data.Entity;
-using System.Text;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -45,7 +45,7 @@ namespace CSETWeb_Api.Controllers
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-            using (CSETWebEntities context = new CSETWebEntities())
+            using (CSET_Context context = new CSET_Context())
             {
                 foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
                 {
@@ -60,78 +60,93 @@ namespace CSETWeb_Api.Controllers
             return null;
         }
 
+
+       
+
+
+
         [Route("api/files/export")]
         [HttpGet]
         public HttpResponseMessage Download(string token)
         {
-            int _assessmentId = Auth.AssessmentForUser(token);            
+            int _assessmentId = Auth.AssessmentForUser(token);
             var result = new HttpResponseMessage(HttpStatusCode.OK);
-            string filename = ".csetw";
-            using (CSETWebEntities context = new CSETWebEntities())
+
+            // determine the file extension based on the application
+            TokenManager tm = new TokenManager(token);
+            string appCode = tm.Payload("scope");
+            string filename = ExportAssessment.GetFileExtension(appCode);
+
+
+            using (CSET_Context context = new CSET_Context())
             {
-                string assessmentName = context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault().Assessment_Name; 
-                if(assessmentName!=null)
+                string assessmentName = context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault().Assessment_Name;
+                if (assessmentName != null)
                     filename = assessmentName + filename;
                 ExportAssessment export = new ExportAssessment(context);
-                var exportCopy=export.CopyForExport(_assessmentId);
+                var exportCopy = export.CopyForExport(_assessmentId);
 
                 MemoryStream zipToOpen = new MemoryStream();
 
-                ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create,true);
+                ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create, true);
                 foreach (var standard in exportCopy.jAVAILABLE_STANDARDS)
                 {
-                    var set = context.SETS.Include(s=>s.NEW_QUESTION).Include(s=>s.NEW_REQUIREMENT).FirstOrDefault(s => s.Set_Name == standard.Set_Name && standard.Selected);
-                    if(set!=null)
-                    if (set.Is_Custom)
-                    {
-                        //Export Set
-                        var externalSet = set.ToExternalStandard();
-                        var setname = Regex.Replace(externalSet.ShortName, @"\W", "_");
-                        ZipArchiveEntry standardEntry = archive.CreateEntry(setname + ".json");
-                        string jsonStandard = JsonConvert.SerializeObject(externalSet, Formatting.Indented);
-                        using (StreamWriter writer = new StreamWriter(standardEntry.Open()))
+                    var set = context.SETS
+                        .Include(s => s.NEW_QUESTION)
+                        .Include(s => s.NEW_REQUIREMENT)
+                        .Include(s => s.Set_Category_)
+                        .FirstOrDefault(s => s.Set_Name == standard.Set_Name && standard.Selected);
+                    if (set != null)
+                        if (set.Is_Custom)
                         {
-                            writer.Write(jsonStandard);
-                            writer.Close();
-                        }
-                        //Set the GUID at time of export so we are sure it's right!!!
-                        exportCopy.jANSWER= exportCopy.jANSWER.Where(s => s.Is_Requirement).GroupJoin(set.NEW_REQUIREMENT, s => s.Question_Or_Requirement_Id, s => s.Requirement_Id, (t, s) =>
-                              {
-                                  var req = s.FirstOrDefault();
-                                  if(req!=null)
-                                  {
-                                      t.Custom_Question_Guid = new Guid(new System.Security.Cryptography.MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(externalSet.ShortName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString();
-                                  }
-                                  return t;
-                              }).Concat(exportCopy.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(set.NEW_QUESTION, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
-                              {
-                              var req = s.FirstOrDefault();
-                                  if (req != null)
-                                  {
-                                      t.Custom_Question_Guid = new Guid(new System.Security.Cryptography.MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString();
-                                  }
-                                  return t;
-                              })).ToList();
-                        exportCopy.CustomStandards.Add(setname);
-                        var files = externalSet.Requirements.SelectMany(s => s.References.Concat(new List<ExternalResource> { s.Source })).Distinct();
-                        foreach(var file in files)
-                        {
-                            var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.FileName && s.Is_Uploaded == true);
-                            if (genFile!=null&&!exportCopy.CustomStandardDocs.Any(s=>s==file.FileName))
+                            //Export Set
+                            var externalSet = set.ToExternalStandard();
+                            var setname = Regex.Replace(externalSet.ShortName, @"\W", "_");
+                            ZipArchiveEntry standardEntry = archive.CreateEntry(setname + ".json");
+                            string jsonStandard = JsonConvert.SerializeObject(externalSet, Formatting.Indented);
+                            using (StreamWriter writer = new StreamWriter(standardEntry.Open()))
                             {
-                                var doc = genFile.ToExternalDocument();
-                                ZipArchiveEntry docEntry = archive.CreateEntry(doc.ShortName + ".json");
-                                string jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
-                                using (StreamWriter writer = new StreamWriter(docEntry.Open()))
-                                {
-                                    writer.Write(jsonDoc);
-                                    writer.Close();
-                                }
-                                exportCopy.CustomStandardDocs.Add(file.FileName);
+                                writer.Write(jsonStandard);
+                                writer.Close();
                             }
+                            //Set the GUID at time of export so we are sure it's right!!!
+                            exportCopy.jANSWER = exportCopy.jANSWER.Where(s => s.Is_Requirement).GroupJoin(set.NEW_REQUIREMENT, s => s.Question_Or_Requirement_Id, s => s.Requirement_Id, (t, s) =>
+                                   {
+                                       var req = s.FirstOrDefault();
+                                       if (req != null)
+                                       {
+                                           t.Custom_Question_Guid = new Guid(new System.Security.Cryptography.MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(externalSet.ShortName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString();
+                                       }
+                                       return t;
+                                   }).Concat(exportCopy.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(set.NEW_QUESTION, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
+                                   {
+                                       var req = s.FirstOrDefault();
+                                       if (req != null)
+                                       {
+                                           t.Custom_Question_Guid = new Guid(new System.Security.Cryptography.MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString();
+                                       }
+                                       return t;
+                                   })).ToList();
+                            exportCopy.CustomStandards.Add(setname);
+                            var files = externalSet.Requirements.SelectMany(s => s.References.Concat(new List<ExternalResource> { s.Source })).Distinct();
+                            foreach (var file in files)
+                            {
+                                var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.FileName && s.Is_Uploaded == true);
+                                if (genFile != null && !exportCopy.CustomStandardDocs.Any(s => s == file.FileName))
+                                {
+                                    var doc = genFile.ToExternalDocument();
+                                    ZipArchiveEntry docEntry = archive.CreateEntry(doc.ShortName + ".json");
+                                    string jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
+                                    using (StreamWriter writer = new StreamWriter(docEntry.Open()))
+                                    {
+                                        writer.Write(jsonDoc);
+                                        writer.Close();
+                                    }
+                                    exportCopy.CustomStandardDocs.Add(file.FileName);
+                                }
+                            }
+
                         }
-                       
-                    }
                 }
 
                 string json = JsonConvert.SerializeObject(exportCopy, Formatting.Indented);
@@ -148,18 +163,18 @@ namespace CSETWeb_Api.Controllers
                     destStream.Write(doc.Data, 0, doc.Data.Length);
                     destStream.Close();
                 }
-                
+
                 archive.Dispose();
 
                 zipToOpen.Seek(0, SeekOrigin.Begin);
-                result.Content = new StreamContent(zipToOpen);                        
+                result.Content = new StreamContent(zipToOpen);
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                result.Content.Headers.Add("content-disposition", "attachment; filename=\"" + filename + "\"");                 
+                result.Content.Headers.Add("content-disposition", "attachment; filename=\"" + filename + "\"");
 
                 return result;
-                
-                    
-                
+
+
+
             }
         }
     }

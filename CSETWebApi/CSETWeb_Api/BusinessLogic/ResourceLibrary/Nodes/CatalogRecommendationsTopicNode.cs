@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CSET_Main.Data;
-using DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 
 namespace ResourceLibrary.Nodes

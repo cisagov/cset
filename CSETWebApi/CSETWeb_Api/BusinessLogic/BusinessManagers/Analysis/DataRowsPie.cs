@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -14,6 +14,7 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public int? qc { get; set; }
         public int? Total { get; set; }
         public int? Percent { get; set; }
+        public int? Answer_Order { get; set; }
     }
 }
 

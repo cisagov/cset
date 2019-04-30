@@ -1,20 +1,20 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSET_Main.Data.ControlData;
 using System.Collections.Generic;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Questions.InformationTabData
 {
     public class InformationTabBuilder
     {
-        public CSETWebEntities DataContext { get; }
+        public CSET_Context DataContext { get; }
 
-        public InformationTabBuilder(CSETWebEntities context)
+        public InformationTabBuilder(CSET_Context context)
         {
             this.DataContext = context;
         }

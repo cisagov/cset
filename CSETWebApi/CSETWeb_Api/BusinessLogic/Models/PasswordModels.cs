@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -39,6 +39,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         public string QuestionText { get; set; }
         public string AnswerText { get; set; }
+
+        /// <summary>
+        /// This must be explicitly sent by the front end because
+        /// the user is not logged in, so there's no JWT at this point.
+        /// </summary>
+        public string AppCode { get; set; }
     }
 
     public class UserStatus
@@ -62,6 +68,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string SecurityQuestion2 { get; set; }
         public string SecurityAnswer1 { get; set; }
         public string SecurityAnswer2 { get; set; }
+
+        /// <summary>
+        /// This must be explicitly sent by the front end because
+        /// the user is not logged in, so there's no JWT at this point.
+        /// </summary>
+        public string AppCode { get; set; }
     }
 }
 

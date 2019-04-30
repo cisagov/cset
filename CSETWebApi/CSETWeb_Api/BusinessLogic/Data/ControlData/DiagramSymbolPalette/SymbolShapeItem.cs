@@ -1,13 +1,13 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using CSET_Main.Common.EnumHelper;
 using CSETWeb_Api.Diagram;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 {

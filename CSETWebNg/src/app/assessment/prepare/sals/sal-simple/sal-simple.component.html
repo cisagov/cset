@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2018 Battelle Energy Alliance, LLC  
+   Copyright 2019 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,7 +22,7 @@
 --------------------------> 
 <div class="d-flex flex-column flex-11a mb-3">
   <h4>Overall SAL</h4>
-  <div class="btn-group" data-toggle="buttons">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"
         (click)="saveLevel(level.value,'std')">
@@ -39,7 +39,7 @@
     This value relates to the importance of protecting information from unauthorized access. The more important it is
     that unauthorized users do not have access to the information the higher your SAL level.
   </div>
-  <div class="btn-group" data-toggle="buttons">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.CLevel"
         (click)="saveLevel(level.value,'C')">
@@ -56,7 +56,7 @@
     This value relates to the the importance of the accuracy of information. The more important it is that
     information is kept consistent, accurate, and only changed by those authorized the higher your SAL level.
   </div>
-  <div class="btn-group" data-toggle="buttons">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ILevel"
         (click)="saveLevel(level.value,'I')">
@@ -73,7 +73,7 @@
     This value relates to the importance of information being readily available.The more important it is to have your
     information available for use the higher your SAL level.
   </div>
-  <div class="btn-group" data-toggle="buttons">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ALevel"
         (click)="saveLevel(level.value,'A')">

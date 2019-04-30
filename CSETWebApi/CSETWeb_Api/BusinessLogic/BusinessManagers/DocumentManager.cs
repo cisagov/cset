@@ -1,18 +1,19 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Web;
-using DataLayer;
+using DataLayerCore.Model;
 using System.Text;
 using CSETWeb_Api.Models;
+using Microsoft.EntityFrameworkCore;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -24,7 +25,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// The database context.
         /// </summary>
-        private CSETWebEntities db;
+        private CSET_Context db;
 
         /// <summary>
         /// The current assessment.
@@ -37,7 +38,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public DocumentManager(int assessmentId)
         {
-            this.db = new DataLayer.CSETWebEntities();
+            this.db = new CSET_Context();
             this.assessmentId = assessmentId;
         }
 
@@ -50,7 +51,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<Document> list = new List<Document>();
 
-            var files = db.ANSWERs.Include("DOCUMENT_FILE").Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILE.ToList();
+            var files = db.ANSWER
+                .Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILEs().ToList();
 
             if (files == null)
             {
@@ -90,7 +92,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             doc.Title = title;
 
-            db.DOCUMENT_FILE.AddOrUpdate(doc);
+            db.DOCUMENT_FILE.AddOrUpdate( doc,x=> x.Document_Id);
             db.SaveChanges();
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
@@ -113,21 +115,17 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // Detach the document from the Answer
-            doc.ANSWERs.Remove(db.ANSWERs.Where(ans => ans.Assessment_Id == this.assessmentId
-            && ans.Answer_Id == answerId).FirstOrDefault());
-
+            doc.DOCUMENT_ANSWERS.Remove(db.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answerId).FirstOrDefault());
+            db.SaveChanges();
 
             // If we just detached the document from its only Answer, delete the whole document record
-            var otherAnswersForThisDoc = db.ANSWERs.Where(ans => ans.Assessment_Id == this.assessmentId
-                                         && ans.Answer_Id != answerId
-                                        && ans.DOCUMENT_FILE.Select(x => x.Document_Id).Contains(id)).ToList();
-
-            if (otherAnswersForThisDoc.Count == 0)
+            var otherAnswersForThisDoc = db.DOCUMENT_ANSWERS.Where(da => da.Document_Id == id).Count();
+            if (otherAnswersForThisDoc == 0)
             {
                 db.DOCUMENT_FILE.Remove(doc);
+                db.SaveChanges();
             }
 
-            db.SaveChanges();
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
 
@@ -138,7 +136,8 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="id">The document ID</param>
         public List<int> GetQuestionsForDocument(int id)
         {
-            var ans = db.DOCUMENT_FILE.Include("ANSWERS").Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs.ToList();
+            var ans = db.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS)
+                .Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs().ToList();
 
             List<int> qlist = new List<int>();
 
@@ -159,15 +158,18 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="answerId"></param>
         /// <param name="File_Upload_Id"></param>
         /// <param name="stream_id">only used if moving away from the blob process</param>
-        public void AddDocument(string title, string fileName, string contentType, string fileHash, int answerId, byte[] bytes, Guid? stream_id = null)
+        public void AddDocument(string title, int answerId, FileUploadStreamResult result)
         {
             if (string.IsNullOrWhiteSpace(title))
             {
                 title = "click to edit title";
             }
 
+            foreach (var file in result.FileResultList)
+            {
             // first see if the document already exists on any question in this Assessment, based on the filename and hash
-            var doc = db.DOCUMENT_FILE.Where(f => f.FileMd5 == fileHash
+                var doc = db.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
+                    && f.Name == file.FileName
                 && f.Assessment_Id == this.assessmentId).FirstOrDefault();
             if (doc == null)
             {
@@ -175,26 +177,38 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     Assessment_Id = this.assessmentId,
                     Title = title,
-                    Path = fileName,  // this may end up being some other reference
-                    Name = fileName,
-                    FileMd5 = fileHash,
-                    ContentType = contentType,
-                    Data = bytes
+                        Path = file.FileName,  // this may end up being some other reference
+                        Name = file.FileName,
+                        FileMd5 = file.FileHash,
+                        ContentType = file.ContentType,
+                        Data = file.FileBytes
                 };
 
             }
             else
             {
                 doc.Title = title;
-                doc.Name = fileName;
+                    doc.Name = file.FileName;
             }
 
-            var answer = db.ANSWERs.Where(a => a.Answer_Id == answerId).FirstOrDefault();
-            doc.ANSWERs.Add(answer);
-
-            db.DOCUMENT_FILE.AddOrUpdate(doc);
+            var answer = db.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
+            db.DOCUMENT_FILE.AddOrUpdate( doc, x=> x.Document_Id);
             db.SaveChanges();
+
+            DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id }; 
+            if (db.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
+            {
+                db.DOCUMENT_ANSWERS.Add(temp);
+            }
+            else
+            {
+                db.DOCUMENT_ANSWERS.Update(temp);
+            }
+            db.SaveChanges();
+
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
+            }
+            
         }
 
         /// <summary>
@@ -220,19 +234,16 @@ namespace CSETWeb_Api.BusinessManagers
                 answerIds = rm.GetActiveAnswerIds();
             }
 
+            List<int> docIDs = db.DOCUMENT_ANSWERS
+                .Where(x => answerIds.Contains(x.Answer_Id))
+                .Select(y => y.Document_Id)
+                .ToList();
 
-            var dfQuery =
-                from df in db.DOCUMENT_FILE
-                where (
-                    from ans in df.ANSWERs
-                    where answerIds.Contains(ans.Answer_Id)
-                    select ans
-                ).Any()
-                select df;
+            var files = from df in db.DOCUMENT_FILE
+                        where docIDs.Contains(df.Document_Id)
+                        select df;
 
-            var files = dfQuery.ToList();
-
-            if (files == null || files.Count == 0)
+            if (files == null || files.Count() == 0)
             {
                 return list;
             }

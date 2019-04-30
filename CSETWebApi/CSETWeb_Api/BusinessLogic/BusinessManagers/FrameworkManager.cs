@@ -1,13 +1,14 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using System.Data.Entity.Migrations;
+
 using System.Linq;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -26,7 +27,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             FrameworkResponse resp = new FrameworkResponse();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // get any existing answers for this assessment
                 var answers = db.FRAMEWORK_TIER_TYPE_ANSWER.Where(ans => ans.Assessment_Id == assessmentId);
@@ -101,21 +102,29 @@ namespace CSETWeb_Api.BusinessManagers
         public void PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier)
         {
             // save to FRAMEWORK_TIER_TYPE_ANSWER table
-            var db = new DataLayer.CSETWebEntities();
+            var db = new CSET_Context();
 
             var answer = db.FRAMEWORK_TIER_TYPE_ANSWER.Where(x => x.Assessment_Id == assessmentId && x.TierType == selectedTier.TierType).FirstOrDefault();
 
             if (answer == null)
             {
-                answer = new DataLayer.FRAMEWORK_TIER_TYPE_ANSWER();
+                answer = new FRAMEWORK_TIER_TYPE_ANSWER();
             }
 
             answer.Assessment_Id = assessmentId;
             answer.TierType = selectedTier.TierType;
             answer.Tier = selectedTier.TierName;            
 
-            db.FRAMEWORK_TIER_TYPE_ANSWER.AddOrUpdate(answer);
+            if (db.FRAMEWORK_TIER_TYPE_ANSWER.Find(answer.Assessment_Id, answer.TierType) == null)
+            {
+                db.FRAMEWORK_TIER_TYPE_ANSWER.Add(answer);
+            }
+            else
+            {
+                db.FRAMEWORK_TIER_TYPE_ANSWER.Update(answer);
+            }
             db.SaveChanges();
+
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
         }
     }

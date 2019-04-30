@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,8 @@
 export interface QuestionResponse {
     QuestionGroups: QuestionGroup[];
     ApplicationMode: string;
+    QuestionCount: number;
+    RequirementCount: number;
 }
 
 export interface QuestionGroup {
@@ -59,6 +61,7 @@ export interface Question {
     HasDiscovery: boolean;
     HasDocument: boolean;
     MarkForReview: boolean;
+    Reviewed: boolean;
 
     ExtrasExpanded: boolean;
     Visible: boolean;
@@ -71,6 +74,7 @@ export class Answer {
     AltAnswerText: string;
     Comment: string;
     MarkForReview: boolean;
+    Reviewed: boolean;
 }
 
 export class SubToken {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConfigService } from './config.service';
+import { ReportsConfigService } from './config.service';
 
 @Injectable()
 export class ReportService {
@@ -34,7 +34,7 @@ export class ReportService {
     /**
      *
      */
-    constructor(private http: HttpClient, private configSvc: ConfigService) {
+    constructor(private http: HttpClient, private configSvc: ReportsConfigService) {
         if (!this.initialized) {
             this.apiUrl = this.configSvc.apiUrl;
             this.initialized = true;

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -22,7 +22,7 @@ namespace CSET_Main.ReportEngine.Builder
         //private IQueryable<FINDING> findings;
        
         //public DiscoveriesTearoutSheetsDataBuilder(IReportModel reportModel, IAssessmentContextHolder assessmentContext):
-        //    this(reportModel?.ActiveQuestionsManager?.ActiveQuestionData?.GetRootTree()?.QuestionList,assessmentContext?.AssessmentContext?.FINDING_CONTACT, assessmentContext?.AssessmentContext?.FINDINGs)
+        //    this(reportModel?.ActiveQuestionsManager?.ActiveQuestionData?.GetRootTree()?.QuestionList,assessmentContext?.AssessmentContext?.FINDING_CONTACT, assessmentContext?.AssessmentContext?.FINDING)
         //{
         //}
         //public DiscoveriesTearoutSheetsDataBuilder(IEnumerable<IQuestionPoco> questions, IQueryable<FINDING_CONTACT> findingContacts, IQueryable<FINDING> findings)

@@ -1,23 +1,20 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+ 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayer;
+using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -88,7 +85,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             List<Assessment> list = new List<Assessment>();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var query = (from uu in db.USERS
                              join ac in db.ASSESSMENT_CONTACTS on uu.UserId equals ac.UserId
@@ -125,7 +122,7 @@ namespace CSETWeb_Api.BusinessManagers
                     // See if any of the assessment's active answers are marked for review
                     AnswerManager ansMan = new AnswerManager(a.AssessmentId);
                     List<int> myAnswerIds = ansMan.ActiveAnswerIds();
-                    a.MarkedForReview = db.ANSWERs.Where(ans => myAnswerIds.Contains(ans.Answer_Id) && (ans.Mark_For_Review ?? false)).Count() > 0;
+                    a.MarkedForReview = db.ANSWER.Where(ans => myAnswerIds.Contains(ans.Answer_Id) && (ans.Mark_For_Review ?? false)).Count() > 0;
 
                     list.Add(a);
                 }
@@ -144,7 +141,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             AssessmentDetail assessment = new AssessmentDetail();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var query = (from ii in db.INFORMATION
                              join aa in db.ASSESSMENTS on ii.Id equals aa.Assessment_Id
@@ -167,6 +164,10 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
+                    assessment.Charter = result.aa.Charter;
+                    assessment.CreditUnion = result.aa.CreditUnionName;
+                    assessment.Assets = result.aa.Assets;
+                    
                     // Fields located on the Overview page
                     assessment.ExecutiveSummary = result.ii.Executive_Summary;
                     assessment.AssessmentDescription = result.ii.Assessment_Description;
@@ -187,24 +188,28 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            var db = new DataLayer.CSETWebEntities();
+            var db = new DataLayerCore.Model.CSET_Context();
 
             // Add or update the ASSESSMENT record
-            var dbAssessment = new DataLayer.ASSESSMENT()
+            var dbAssessment = new ASSESSMENTS()
             {
                 Assessment_Id = assessment.Id,
                 AssessmentCreatedDate = assessment.CreatedDate,
                 AssessmentCreatorId = assessment.CreatorId,
                 Assessment_Date = assessment.AssessmentDate??DateTime.Now,
-                LastAccessedDate = assessment.LastModifiedDate
+                LastAccessedDate = assessment.LastModifiedDate,
+                Charter = assessment.Charter,
+                CreditUnionName = assessment.CreditUnion,
+                Assets = assessment.Assets
             };
 
-            db.ASSESSMENTS.AddOrUpdate(dbAssessment);
+            db.ASSESSMENTS.AddOrUpdate( dbAssessment, x=> x.Assessment_Id);
+
             db.SaveChanges();
             assessmentId = dbAssessment.Assessment_Id;
-
+            var user = db.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
             // then use its key for the INFORMATION record
-            var dbInfo = new DataLayer.INFORMATION
+            var dbInfo = new INFORMATION
             {
                 Id = assessmentId,
                 Assessment_Name = assessment.AssessmentName,                
@@ -216,7 +221,8 @@ namespace CSETWeb_Api.BusinessManagers
                 Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments                
             };
 
-            db.INFORMATION.AddOrUpdate(dbInfo);
+            db.INFORMATION.AddOrUpdate( dbInfo, x=> x.Id);
+
             db.SaveChanges();
 
 
@@ -239,7 +245,7 @@ namespace CSETWeb_Api.BusinessManagers
                 AssessmentId = assessmentId
             };
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var query = from ddd in db.DEMOGRAPHICS
                             from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
@@ -269,7 +275,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int SaveDemographics(Demographics demographics)
         {
-            var db = new DataLayer.CSETWebEntities();
+            var db = new CSET_Context();
 
             // Convert Size and AssetValue from their keys to the strings they are stored as
             string assetValue = db.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
@@ -287,7 +293,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             // Add or update the DEMOGRAPHICS record
-            var dbDemographics = new DataLayer.DEMOGRAPHIC()
+            var dbDemographics = new DEMOGRAPHICS()
             {
                 Assessment_Id = demographics.AssessmentId,
                 IndustryId = demographics.IndustryId,
@@ -296,7 +302,7 @@ namespace CSETWeb_Api.BusinessManagers
                 AssetValue = assetValue
             };
 
-            db.DEMOGRAPHICS.AddOrUpdate(dbDemographics);
+            db.DEMOGRAPHICS.AddOrUpdate( dbDemographics, x=> x.Assessment_Id);
             db.SaveChanges();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
 
@@ -316,7 +322,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             int currentUserId = Auth.GetUserId();
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 int countAC = db.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
                 && ac.UserId == currentUserId).Count();

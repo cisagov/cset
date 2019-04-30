@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,14 @@ import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
 import { ImportComponent } from './import/import.component';
-
+import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
+import { CustomSetComponent } from './builder/set-detail/set-detail.component';
+import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
+import { QuestionListComponent } from './builder/question-list/question-list.component';
+import { AddQuestionComponent } from './builder/add-question/add-question.component';
+import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
+import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
+import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -126,6 +133,39 @@ const appRoutes: Routes = [
       { path: '**', redirectTo: 'prepare' }
     ]
   },
+  {
+    path: 'set-list',
+    component: SetListComponent,
+    children: []
+  },
+  {
+    path: 'set-detail/:id',
+    component: CustomSetComponent
+  },
+  {
+    path: 'standard-documents/:id',
+    component: StandardDocumentsComponent
+  },
+  {
+    path: 'ref-document/:id',
+    component: RefDocumentComponent
+  },
+  {
+    path: 'requirement-list/:id',
+    component: RequirementListComponent
+  },
+  {
+    path: 'requirement-detail/:id',
+    component: RequirementDetailComponent
+  },
+  {
+    path: 'question-list/:id',
+    component: QuestionListComponent
+  },
+  {
+    path: 'add-question/:id',
+    component: AddQuestionComponent
+  },
   { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
@@ -134,4 +174,4 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

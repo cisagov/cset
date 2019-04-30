@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -22,8 +22,8 @@ namespace CSET_Main.Data.AssessmentData
         public const string NIST_FRAMEWORK_DB = "NCSF_V1";
         public const string DOD8510 = "DODI_8510";
         public const string NERC5 = "Nerc_Cip_R5";
-        public const string CSC = "CSC_V6";        
-        
+        public const string CSC = "CSC_V6";
+        public const string ACET_V1 = "ACET_V1";
     }
 }
 

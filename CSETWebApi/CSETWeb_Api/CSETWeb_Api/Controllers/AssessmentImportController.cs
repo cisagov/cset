@@ -1,12 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Specialized;
 using System.IO;
@@ -19,6 +19,7 @@ using Hangfire;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSET_Main.Common;
 using CSETWeb_Api.Versioning;
+using CSETWeb_Api.BusinessLogic.Helpers.upload;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -46,28 +47,36 @@ namespace CSETWeb_Api.Controllers
 
             var provider = new MultipartFormDataStreamProvider(root);
 
-            string csetFilePath  = await request.Content.ReadAsMultipartAsync(provider).
-                ContinueWith<string>(o =>
-                {
-                    string file1 = provider.FileData.First().LocalFileName;
-                    return file1;
-                }
-            );
-
-            String apiURL = this.Request.RequestUri.ToString().Replace("api/ImportLegacyAssessment", "");
-            string processPath = this.GetLegacyImportProcessPath();
-            if (processPath.Length > 0)
-            {   
-                var id = BackgroundJob.Enqueue(() => HangfireExecutor.ProcessAssessmentImportLegacyAsync(csetFilePath, tm.Token, processPath, apiURL, null));
-                //ImportManager manager = new ImportManager();
-                //await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, processPath, apiURL);
-            }
-            else
+            try
             {
-                // TODO: Throw an exception or notify caller that process doesn't exist
-                Console.WriteLine("Process doesn't exist...");
-            }
+                string csetFilePath = await request.Content.ReadAsMultipartAsync(provider).ContinueWith<string>(o =>
+                    {
+                        if (o.IsFaulted || o.IsCanceled)
+                            throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                        string file1 = provider.FileData.First().LocalFileName;
+                        return file1;
+                    }
+                );
 
+
+                String apiURL = this.Request.RequestUri.ToString().Replace("api/ImportLegacyAssessment", "");
+                string processPath = this.GetLegacyImportProcessPath();
+                if (processPath.Length > 0)
+                {   
+                    //var id = BackgroundJob.Enqueue(() => HangfireExecutor.ProcessAssessmentImportLegacyAsync(csetFilePath, tm.Token, processPath, apiURL, null));
+                    ImportManager manager = new ImportManager();
+                    await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, processPath, apiURL);
+                }
+                else
+                {
+                    // TODO: Throw an exception or notify caller that process doesn't exist
+                    Console.WriteLine("Process doesn't exist...");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             return true; // import.RunImport(model, currentUserId, useremail);
         }
 
@@ -119,7 +128,7 @@ namespace CSETWeb_Api.Controllers
                 var streamProvider = new InMemoryMultipartFormDataStreamProvider();
                 await Request.Content.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
 
-                using (CSETWebEntities web = new CSETWebEntities())
+                using (CSET_Context web = new CSET_Context())
                 {
                     //access form data
                     NameValueCollection formData = streamProvider.FormData;

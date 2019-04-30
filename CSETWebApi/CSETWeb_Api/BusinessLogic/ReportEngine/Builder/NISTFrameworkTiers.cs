@@ -1,10 +1,10 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -43,7 +43,7 @@ namespace CSET_Main.ReportEngine.Builder
             
         }
 
-        public List<DataTable> GetNistTables(CSETWebEntities context, int assessment_id)
+        public List<DataTable> GetNistTables(CSET_Context context, int assessment_id)
         {
             List<DataTable> nistTables = new List<DataTable>();
 

@@ -40,6 +40,7 @@
               "node_modules/ion-rangeslider/css/ion.rangeSlider.css",
               "node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/sass/styles.scss",
               "src/styles.css"
             ],
@@ -126,6 +127,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ion-rangeslider/css/ion.rangeSlider.css",
               "node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/sass/styles.scss",
               "src/styles.css"
             ],

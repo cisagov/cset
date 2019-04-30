@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2018 Battelle Energy Alliance, LLC  
+   Copyright 2019 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -34,7 +34,8 @@
     <h4>{{ tt.TierType }}</h4>
     <div class="cyber-tier-section" *ngFor="let t of tt.Tiers">
       <div style="display: flex; align-items: flex-start">
-        <input type="radio" id="{{ t.ControlId }}" name="{{ tt.GroupName }}" [checked]="t.Selected" (change)="submit(tt, t)">
+        <input type="radio" id="{{ t.ControlId }}" name="{{ tt.GroupName }}" class="mt-1"
+            [checked]="t.Selected" (change)="submit(tt, t)">
         <label for="{{ t.ControlId }}">
           <div style="font-weight: bold">{{ t.TierName }}</div>
           <div>{{ t.Question }}

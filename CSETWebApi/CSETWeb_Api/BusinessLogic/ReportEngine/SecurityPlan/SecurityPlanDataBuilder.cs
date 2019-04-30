@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,7 +10,7 @@
 //using System.Collections.Generic;
 //using System.Data;
 //using System.Linq;
-//using DataLayer;
+//using DataLayerCore.Model;
 //using CSETWeb_Api.BusinessLogic;
 //using CSETWeb_Api.BusinessManagers;
 //using CSETWeb_Api.Models;
@@ -24,14 +24,14 @@
 
 //        private static Dictionary<int, String> level_To_Full_Name = null;
 //        private Dictionary<string, string> entity_to_set_full_name;
-//        private CSETWebEntities context; 
-        
+//        private CSET_Context context; 
+
 //        public SecurityPlanDataBuilder()
 //        {
-//            this.context = new CSETWebEntities();
+//            this.context = new CSET_Context();
 //        }
 
-        
+
 //        internal Tuple<DataSet, ArrayList> GetData(int assessmentId)
 //        {
 //            if (level_To_Full_Name == null)
@@ -45,7 +45,7 @@
 //            //and the #Yes/#total questions for each requirement
 //            //for each requirement get a table of the components
 //            //for each requirement get a table of the zones
-             
+
 //            string applicationMode = GetApplicationMode(assessmentId);
 
 
@@ -65,7 +65,7 @@
 
 //        private void createLevelLookup()
 //        {
-            
+
 //            level_To_Full_Name= context.UNIVERSAL_SAL_LEVEL.ToDictionary(t => t.Sal_Level_Order, t=> t.Full_Name_Sal);
 //            entity_to_set_full_name = (from x in context.SETS
 //                                       where x.Set_Name != null
@@ -166,7 +166,7 @@
 //                    row["Answer"] = answers.GetRequirementAnswer(rs.Key);
 //                    //row["ImplementationRecommendations"] = question.ImplementationRecommendations;
 
-                    
+
 //                    row["ComponentsList"] = getListIfExists(rs.Key, spd.ReqID_To_Component);
 //                    row["ControlDescription"] = spd.GetTextForRequirement(rs.Value.NewRequirement);
 //                    String com = answers.GetRequirementAnswerComments(rs.Key);
@@ -216,7 +216,7 @@
 //            DataSet ds = new DataSet();
 
 //            String Control_Table_Name = "FrameworkControlList";
-            
+
 
 //            DataTable table = new DataTable();
 //            table.TableName = Control_Table_Name;
@@ -230,7 +230,7 @@
 //            table.Columns.Add(cb.BuildTableColumn("ImplementationStatus"));
 //            table.Columns.Add(cb.BuildTableColumn("ControlDescription"));
 //            table.Columns.Add(cb.BuildTableColumn("Comment"));
-          
+
 //            /**
 //             * go through the questions that were asked or the requirements that were given and determine all the associated controls and questions
 //             * Notice that this is only applicable to the multiServiceComponent questions and it does not matter what mode is selected or other standards answered.
@@ -263,7 +263,7 @@
 //                    {
 //                        row["ImplementationStatus"] = "0%";
 //                    }
-                  
+
 //                    row["StandardShortName"] = entity_to_set_full_name[Constants.NIST_FRAMEWORK_DB];
 
 //                    row["ControlDescription"] = rs.Value.Question.Text;
@@ -272,12 +272,12 @@
 //                        row["Comment"] = "\nCOMMENTS: " + rs.Value.Question.Comment;
 
 //                    table.Rows.Add(row);
-                    
+
 //                }
 //            }
 //            table.DefaultView.Sort = "RequirementTitle";
 //            ds.Tables.Add(table);
-            
+
 
 //            ArrayList SetPrintCommand = new ArrayList();
 //            DictionaryEntry entry;

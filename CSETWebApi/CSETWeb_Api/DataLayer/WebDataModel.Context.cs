@@ -143,6 +143,7 @@ namespace DataLayer
         public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
         public virtual DbSet<USER> USERS { get; set; }
         public virtual DbSet<JWT> JWT { get; set; }
+        public virtual DbSet<SET_FILES> SET_FILES { get; set; }
     
         public virtual int changeEmail(string originalEmail, string newEmail)
         {

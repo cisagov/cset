@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,12 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatDialogModule, MatDividerModule,
-  MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-  MatTooltipModule, MatTreeModule } from '@angular/material';
+import {
+    MatAutocompleteModule, MatDialogModule, MatDividerModule,
+    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
+    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
+    MatTooltipModule, MatTreeModule
+} from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
@@ -35,7 +37,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { IonRangeSliderModule } from 'ng2-ion-range-slider';
-import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -97,6 +98,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validator.directive';
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
+import { AutoSizeDirective } from './helpers/auto-size.directive';
 import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
@@ -124,6 +126,20 @@ import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
+import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
+import { SetBuilderService } from './services/set-builder.service';
+import { CustomSetComponent } from './builder/set-detail/set-detail.component';
+import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QuestionListComponent } from './builder/question-list/question-list.component';
+import { RouterModule } from '@angular/router';
+import { BuilderBreadcrumbsComponent } from './builder/builder-breadcrumbs/builder-breadcrumbs.component';
+import { AddQuestionComponent } from './builder/add-question/add-question.component';
+import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
+import { AddRequirementComponent } from './dialogs/add-requirement/add-requirement/add-requirement.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
+import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 
 @NgModule({
     imports: [
@@ -143,7 +159,6 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         MatTooltipModule,
         IonRangeSliderModule,
         MatSidenavModule,
-        TextareaAutosizeModule,
         MatTreeModule,
         MatIconModule,
         MatDividerModule,
@@ -151,6 +166,9 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         MatProgressBarModule,
         MatListModule,
         FileUploadModule,
+        AngularEditorModule,
+        RouterModule,
+        NgbModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -178,6 +196,7 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
+        AutoSizeDirective,
         SalGenComponent,
         SalNistComponent,
         SalsComponent,
@@ -223,8 +242,18 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         ImportComponent,
         UploadExportComponent,
         KeyboardShortcutsComponent,
-        LicenseComponent
-      ],
+        LicenseComponent,
+        SetListComponent,
+        CustomSetComponent,
+        RequirementListComponent,
+        QuestionListComponent,
+        BuilderBreadcrumbsComponent,
+        AddQuestionComponent,
+        RequirementDetailComponent,
+        AddRequirementComponent,
+        StandardDocumentsComponent,
+        RefDocumentComponent
+    ],
     providers: [
         ConfigService,
         {
@@ -252,29 +281,31 @@ import { CodeEditorModule } from '@ngstack/code-editor';
         NavigationService,
         FileUploadClientService,
         AnalysisService,
-        EnableFeatureService
+        EnableFeatureService,
+        SetBuilderService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-      EmailComponent,
-      EditUserComponent,
-      EjectionComponent,
-      AlertComponent,
-      ConfirmComponent,
-      ChangePasswordComponent,
-      AboutComponent,
-      AdvisoryComponent,
-      OkayComponent,
-      TermsOfUseComponent,
-      FindingsComponent,
-      EnableProtectedComponent,
-      QuestionFiltersComponent,
-      AssessmentDocumentsComponent,
-      UploadExportComponent,
-      InlineParameterComponent,
-      GlobalParametersComponent,
-      KeyboardShortcutsComponent,
-      LicenseComponent
+        EmailComponent,
+        EditUserComponent,
+        EjectionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        ChangePasswordComponent,
+        AboutComponent,
+        AdvisoryComponent,
+        OkayComponent,
+        TermsOfUseComponent,
+        FindingsComponent,
+        EnableProtectedComponent,
+        QuestionFiltersComponent,
+        AssessmentDocumentsComponent,
+        UploadExportComponent,
+        InlineParameterComponent,
+        GlobalParametersComponent,
+        KeyboardShortcutsComponent,
+        LicenseComponent,
+        AddRequirementComponent
     ]
 })
 

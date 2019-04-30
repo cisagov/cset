@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using CSET_Main.Questions.POCO;
-using DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.DocumentLibrary
 {

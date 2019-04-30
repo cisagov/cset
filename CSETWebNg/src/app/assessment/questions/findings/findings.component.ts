@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FindingsService } from '../../../services/findings.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Finding, Importance, FindingContact } from './findings.model';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-findings',
@@ -40,7 +42,8 @@ export class FindingsComponent implements OnInit {
 
   constructor(private findSvc: FindingsService,
     private dialog: MatDialogRef<FindingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Finding) {
+    @Inject(MAT_DIALOG_DATA) public data: Finding, 
+    private router: Router, private assessSvc: AssessmentService) {
     this.finding = data;
   }
 
@@ -88,6 +91,10 @@ export class FindingsComponent implements OnInit {
     Array.from(contactid).forEach((element: HTMLOptionElement) => {
       this.finding.Finding_Contacts[element.value.split(':')[0]].Selected = element.selected;
     });
+  }
+
+  navToContacts() {
+    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'info']);
   }
 
 }

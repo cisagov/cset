@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import { ConfigService } from '../../../../services/config.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class RankedQuestionsComponent implements OnInit {
-  dataRows: { rank: number; standard: string; category: string; Question_Ref: string; question: string; answer: string; }[];
+  dataRows: { rank: number; standard: string; category: string; Question_Ref: string; question: string; AnswerText: string; displayAnswer: string}[];
   initialized = false;
   docUrl: string;
 
@@ -60,9 +60,18 @@ export class RankedQuestionsComponent implements OnInit {
   setupTable(data: any) {
     this.initialized = false;
     this.dataRows = data;
+    
     let i = 1;
     for (const row of this.dataRows) {
       row.rank = i++;
+      switch (row.AnswerText) {
+        case 'U':
+        row.displayAnswer = 'Unanswered';
+        break;
+        case 'N':
+        row.displayAnswer = 'No';
+        break;
+      }
     }
     this.initialized = true;
   }

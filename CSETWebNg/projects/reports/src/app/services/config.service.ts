@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//  Copyright 2018 Battelle Energy Alliance, LLC
+//  Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { environment } from '../../environments/environment';
 
 
 @Injectable()
-export class ConfigService {
+export class ReportsConfigService {
   reportsUrl: string;
   apiUrl: string;
   appUrl: string;
@@ -43,7 +43,6 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   constructor(private http: HttpClient) {
-      this.configUrl = "assets/config.json";
         if (/reports/i.test(window.location.href)) {
           this.configUrl = "../" + this.configUrl;
         }
@@ -61,14 +60,21 @@ export class ConfigService {
       // are all together.   Consequently I don't need other environments etc
       // and I can assume production
 
-      let tmpConfigURL = 'assets/config.json';
-      if (!this.isAPI_together_With_Web) { tmpConfigURL = this.configUrl; }
+      // and I can assume production
+      if (!this.isAPI_together_With_Web) {
+        this.apiUrl = environment.apiUrl;
+        this.appUrl = environment.appUrl;
+        this.docUrl = environment.docUrl;
+        this.reportsUrl = environment.reportsUrl;
+      } else {
+        this.configUrl = "api/assets/config";
+      }
 
       // it is very important that this be a single promise
       // I'm not sure the config call is actually behaving.
       // multiple chained promises definitely does not work
-      return this.http.get(tmpConfigURL)
-        .toPromise()
+      return this.http.get(this.configUrl)
+        .toPromise() // APP_INITIALIZER doesn't seem to work with observables
         .then((data: any) => {
                 if (this.isAPI_together_With_Web) {
                   this.apiUrl = data.apiUrl;
@@ -77,14 +83,19 @@ export class ConfigService {
                   this.reportsUrl = data.reportsUrl;
                   this.helpContactEmail = data.helpContactEmail;
                   this.helpContactPhone = data.helpContactPhone;
-                } else {
-                  this.apiUrl = environment.apiUrl;
-                  this.appUrl = environment.appUrl;
-                  this.docUrl = environment.docUrl;
                 }
                 this.config = data;
                 this.initialized = true;
               }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
     }
+  }
+
+
+  /**
+   * Returns a boolean indicating if the app is configured to show
+   * question and requirement IDs for debugging purposes.
+   */
+  showQuestionAndRequirementIDs() {
+    return this.config.showQuestionAndRequirementIDs || false;
   }
 }

@@ -1,21 +1,15 @@
 //////////////////////////////// 
 // 
-//   Copyright 2018 Battelle Energy Alliance, LLC  
+//   Copyright 2019 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Web;
-using CSETWeb_Api.Controllers;
 using CSETWeb_Api.Models;
-using CSETWeb_Api.Helpers;
-using DataLayer;
+using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -39,7 +33,7 @@ namespace CSETWeb_Api.BusinessManagers
             List<string> selectedSets = new List<string>();
 
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Build a list of standards already selected for this assessment
                 selectedSets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Select(x => x.Set_Name).ToList();
@@ -47,9 +41,9 @@ namespace CSETWeb_Api.BusinessManagers
 
                 var query = from sc in db.SETS_CATEGORY
                             from s in db.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
-                                && !set.Is_Deprecated
-                                && (!set.IsEncryptedModule 
-                                || (set.IsEncryptedModule && set.IsEncryptedModuleOpen))
+                                && !set.Is_Deprecated && (set.Is_Displayed??false)
+                                && (!set.IsEncryptedModule
+                                || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? true)))
                                 )
                             select new { s, sc.Set_Category_Name };
 
@@ -90,12 +84,20 @@ namespace CSETWeb_Api.BusinessManagers
 
         public bool GetFramework(int assessmentId)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 return db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "NCSF_V1" && x.Selected)
-                    .FirstOrDefault() ==null ? false:true;                                
+                    .FirstOrDefault() == null ? false : true;
             }
 
+        }
+
+        public bool GetACET(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                return !(db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "ACET_V1" && x.Selected).FirstOrDefault() == null);
+            }
         }
 
 
@@ -115,7 +117,7 @@ namespace CSETWeb_Api.BusinessManagers
                 return list;
             }
 
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 // Convert Size and AssetValue from their keys to the strings they are stored as
                 string assetValue = db.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
@@ -147,7 +149,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public QuestionRequirementCounts PersistSelectedStandards(int assessmentId, List<string> selectedStandards)
         {
-            using (var db = new DataLayer.CSETWebEntities())
+            using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_STANDARDS.RemoveRange(result);
@@ -185,12 +187,28 @@ namespace CSETWeb_Api.BusinessManagers
         /// Returns a list of 'default' standards for a 'basic' assessment.
         /// This has been decided to be the 'Key' set, rather than using the demographics
         /// to look up sets in the SECTOR_STANDARD_RECOMMENDATIONS table as before.
+        /// 
+        /// If the calling app is CSET, default to 'Key'.
+        /// If the calling app is ACET, default to 'ACET_V1'.
+        /// 
         /// </summary>
         /// <returns></returns>
         private List<string> GetDefaultStandardsList()
         {
+            TokenManager tm = new TokenManager();
+            var appCode = tm.Payload("scope");
+
             List<string> basicStandards = new List<string>();
-            basicStandards.Add("Key");
+
+            switch (appCode.ToLower())
+            {
+                case "cset":
+                    //basicStandards.Add("Key");
+                    break;
+                case "acet":
+                    basicStandards.Add("ACET_V1");
+                    break;
+            }
 
             return basicStandards;
         }

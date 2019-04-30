@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2018 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { AlertComponent } from '../../../dialogs/alert/alert.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 // tslint:disable-next-line:max-line-length
 import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
@@ -40,7 +40,7 @@ import { Finding } from './../findings/findings.model';
   selector: 'app-question-extras',
   templateUrl: './question-extras.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionExtrasComponent implements OnInit {
 
@@ -52,6 +52,7 @@ export class QuestionExtrasComponent implements OnInit {
   expanded = false;
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC'.
   answer: Answer;
+  dialogRef: MatDialogRef<OkayComponent>;
 
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
@@ -68,6 +69,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   ngOnInit() { }
+
 
   /**
  * Shows/hides the "expand" section.
@@ -105,6 +107,13 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
+
+        // add questionIDs to related questions for debug if configured to do so
+        if (this.configSvc.showQuestionAndRequirementIDs()) {
+          this.tab.QuestionsList.forEach((q: any) => {
+            q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+          });
+        }
       }
     );
   }
@@ -120,6 +129,17 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
+   *
+   * @param q
+   */
+  storeReviewed(e: any) {
+    this.defaultEmptyAnswer();
+    this.myQuestion.Reviewed = e.target.checked;
+    this.answer.Reviewed = this.myQuestion.Reviewed;
+    this.saveAnswer();
+  }
+
+  /**
    * Creates an Answer if one does not already exist.
    */
   defaultEmptyAnswer() {
@@ -130,7 +150,8 @@ export class QuestionExtrasComponent implements OnInit {
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
         Comment: '',
-        MarkForReview: false
+        MarkForReview: false,
+        Reviewed: false
       };
 
       this.answer = newAnswer;
@@ -147,6 +168,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.AnswerText = this.myQuestion.Answer;
     this.answer.AltAnswerText = this.myQuestion.AltAnswerText;
     this.answer.MarkForReview = this.myQuestion.MarkForReview;
+    this.answer.Reviewed = this.myQuestion.Reviewed;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
@@ -219,6 +241,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.Findings = response;
+            this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
@@ -231,13 +254,13 @@ export class QuestionExtrasComponent implements OnInit {
    */
   deleteDiscovery(findingToDelete) {
 
-    // Build a message whether the discovery has a title or not
-    let msg = "Are you sure you want to delete discovery '"
+    // Build a message whether the observation has a title or not
+    let msg = "Are you sure you want to delete observation '"
       + findingToDelete.Summary
       + "?'";
 
     if (findingToDelete.Summary === null) {
-      msg = "Are you sure you want to delete this discovery?";
+      msg = "Are you sure you want to delete this observation?";
     }
 
 
@@ -255,6 +278,7 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
         this.extras.Findings.splice(deleteIndex, 1);
+        this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
       }
     });
   }
@@ -344,8 +368,8 @@ export class QuestionExtrasComponent implements OnInit {
 
   documentUrl(document: CustomDocument) {
     return (document.Is_Uploaded ?
-              this.configSvc.apiUrl + '/ReferenceDocuments/'
-            : this.configSvc.docUrl)
+      this.configSvc.apiUrl + '/ReferenceDocuments/'
+      : this.configSvc.docUrl)
       + document.File_Name + '#' + document.Section_Ref;
   }
   /**
@@ -376,7 +400,11 @@ export class QuestionExtrasComponent implements OnInit {
         });
         msg += "</ul>";
 
-        this.dialog.open(AlertComponent, { data: { messageText: msg } });
+        this.dialogRef = this.dialog.open(OkayComponent,
+          {
+            data: { title: "Related Questions", iconClass: "cset2-icons-q", messageText: msg }
+          });
+        this.dialogRef.componentInstance.hasHeader = true;
       });
   }
 
@@ -391,8 +419,8 @@ export class QuestionExtrasComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-        const url = this.fileSvc.downloadUrl + doc.Document_Id + "?token=" + response.Token;
-        window.open(url, "_blank");
+      const url = this.fileSvc.downloadUrl + doc.Document_Id + "?token=" + response.Token;
+      window.open(url, "_blank");
     });
   }
 
