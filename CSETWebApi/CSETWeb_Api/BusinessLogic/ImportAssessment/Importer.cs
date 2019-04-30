@@ -32,6 +32,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 config.Ignore(x => x.eMass_Document_Id);
                 config.Ignore(x => x.Id);
             });
+            TinyMapper.Bind<jFINDING, FINDING>(config =>
+             {
+                 config.Ignore(x => x.Finding_Id);
+             });
             //copy the incoming information to an intermediary
             //then copy from the intermediary to destination
             //and permit updates.
@@ -209,7 +213,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     Document_Id = item.Document_Id
                 });
             }
-
+           
             Dictionary<int, FINDING> idToFinding = new Dictionary<int, FINDING>();
             foreach (var a in model.jFINDING)
             {
@@ -233,6 +237,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     });
                 }
             }
+           
 
             foreach (var a in model.jFRAMEWORK_TIER_TYPE_ANSWER)
             {
@@ -245,13 +250,14 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = TinyMapper.Map<GENERAL_SAL>(a);
                 item.Assessment_Id = _assessmentId;
                 db.GENERAL_SAL.Add(item);
-            }
+            }          
             foreach (var a in model.jINFORMATION)
             {
                 var info = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
                 if (info != null)
                 {
                     TinyMapper.Map(a, info);
+                    info.Id = _assessmentId;
                     db.SaveChanges();
                 }
                 else
