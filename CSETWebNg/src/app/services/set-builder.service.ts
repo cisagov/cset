@@ -69,7 +69,7 @@ export class SetBuilderService {
      * Creates a copy of the set and opens the copy
      * @param setName
      */
-    cloneCustomSet(setName: string) {
+    cloneCustomSet(setName: string) {        
         return this.http.get(this.apiUrl + 'builder/CloneSet?setName=' + setName);
     }
 
