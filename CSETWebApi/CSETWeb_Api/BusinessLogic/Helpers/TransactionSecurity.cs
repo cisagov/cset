@@ -226,6 +226,7 @@ namespace CSETWeb_Api.Helpers
             GetSecret();
         }
 
+        private static string tmpNewSecret = null; 
         /// <summary>
         /// Retrieves the JWT secret from the database.  
         /// If the secret is not in the database a new one is generated and persisted.
@@ -233,11 +234,14 @@ namespace CSETWeb_Api.Helpers
         /// <returns></returns>
         private static string GetSecret()
         {
+            if (tmpNewSecret != null)
+                return tmpNewSecret;
             using (CSET_Context db = new CSET_Context())
             {
                 var jwtKey = db.JWT.OrderBy(x => x.Generated).FirstOrDefault();
                 if (jwtKey != null)
                 {
+                    tmpNewSecret = jwtKey.Secret;
                     return jwtKey.Secret;
                 }
 
@@ -258,7 +262,7 @@ namespace CSETWeb_Api.Helpers
                 };
                 db.JWT.Add(j);
                 db.SaveChanges();
-
+                tmpNewSecret = newSecret;
                 return newSecret;
             }
         }
