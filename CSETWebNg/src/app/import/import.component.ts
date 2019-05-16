@@ -391,9 +391,4 @@ export class ImportComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
-
-  checkMonacoStuff(): boolean {
-    let hasInput: boolean = this.moduleCode && this.moduleCode.match(/""/g).length < 8;
-    return hasInput && this.monaco && this.monaco.editor && this.monaco.editor.getModelMarkers().length;
-  }
 }
