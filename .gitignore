@@ -12,3 +12,4 @@ dist
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin
 bin
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Properties/PublishProfiles/runlocal.pubxml.user
+/diagram/obj
