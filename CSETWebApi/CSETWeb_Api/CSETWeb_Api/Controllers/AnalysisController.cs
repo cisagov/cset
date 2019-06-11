@@ -194,7 +194,33 @@ namespace CSETWeb_Api.Controllers
 
             return red;
         }
+		
+		/// <summary>
+        /// Re-orders the pieces into Y|N|NA|A|U order
+        /// </summary>
+        /// <param name="r"></param>
+        void SortIntoAnswerOrder(StandardSummaryOverallMultiResult r)
+        {
+            var shortName = r.Result1.Select(x => x.Short_Name).Distinct();
 
+            var orderedList = new List<DataRowsPie>();
+            foreach (var s in shortName)
+            {
+                var tempOList = new List<DataRowsPie>
+                {
+                    r.Result1.Where(p => p.Answer_Text == "Y" && p.Short_Name == s).FirstOrDefault(),
+                    r.Result1.Where(p => p.Answer_Text == "N" && p.Short_Name == s).FirstOrDefault(),
+                    r.Result1.Where(p => p.Answer_Text == "NA" && p.Short_Name == s).FirstOrDefault(),
+                    r.Result1.Where(p => p.Answer_Text == "A" && p.Short_Name == s).FirstOrDefault(),
+                    r.Result1.Where(p => p.Answer_Text == "U" && p.Short_Name == s).FirstOrDefault()
+                };
+                orderedList = orderedList.Union(tempOList).ToList();
+            }
+            
+
+            r.Result1 = orderedList;
+        }
+		
         private ChartData transformToChart(GetCombinedOveralls c)
         {
             List<double> data = new List<double>();
@@ -317,6 +343,7 @@ namespace CSETWeb_Api.Controllers
          
             if (results.Count >= 1)
             {
+				SortIntoAnswerOrder(results);							 
                 List<double> data = new List<double>();
                 List<String> Colors = new List<string>();
                 List<string> Labels = new List<string>();
@@ -383,7 +410,7 @@ namespace CSETWeb_Api.Controllers
                 results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
             });
-
+            SortIntoAnswerOrder(results);
 
             /** 
              * foreach each standard in the list 
@@ -393,7 +420,7 @@ namespace CSETWeb_Api.Controllers
              *  add the record to the chart data
              *  
              */
-            
+
             string previousStandard = "";
 
             
@@ -448,6 +475,23 @@ namespace CSETWeb_Api.Controllers
             }
 
             return red;
+        }
+
+		[HttpGet]
+        [Route("api/analysis/DocumentComments")]
+        public List<CommentData> GetDocumentComments()
+        {
+            int assessmentId = Auth.AssessmentForUser();                        
+            using (CSET_Context context = new CSET_Context())
+            {
+                var items = from a in context.ASSESSMENTS_REQUIRED_DOCUMENTATION
+                            join d in context.REQUIRED_DOCUMENTATION on a.Documentation_Id equals d.Documentation_Id
+                            where a.Assessment_Id == assessmentId
+                            orderby d.Document_Order
+                            select new CommentData() {Number=d.Number,  AssociatedHeader = d.Document_Description, Comment = a.Comment, Answer = a.Answer };
+
+                return items.ToList();
+            }            
         }
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]

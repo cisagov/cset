@@ -1533,6 +1533,7 @@
     <Compile Include="Controllers\AngularConfigController.cs" />
     <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentImportController.cs" />
+    <Compile Include="Controllers\CommentData.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
