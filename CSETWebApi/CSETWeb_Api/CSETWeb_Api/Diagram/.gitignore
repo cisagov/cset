@@ -1,0 +1,7 @@
+bin
+build
+classes
+node_modules
+/src/main/webapp/js/viewer.min.js
+/src/main/webapp/js/app.min.js
+/src/main/webapp/cache.manifest
