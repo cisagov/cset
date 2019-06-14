@@ -808,7 +808,7 @@
 		}
 		
 		this.addCSETPalette(this.customEntries == null);
-		this.addImagePalette('ICS', 'ICS',imgDir + '/cset/','.jpg',['AudioSwitch']);
+		this.addImagePalette('ICS', 'ICS',imgDir + '/cset/','.jpg',['AudioSwitch','AudioSwitch'],['A1SW','SW'],['IDASW','IDSW']);
 
 // 		this.addGeneralPalette(this.customEntries == null);
 // 		this.addMiscPalette(false);
