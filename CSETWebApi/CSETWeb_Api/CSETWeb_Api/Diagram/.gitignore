@@ -1,5 +1,4 @@
 bin
-build
 classes
 node_modules
 /src/main/webapp/js/viewer.min.js
