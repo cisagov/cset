@@ -807,7 +807,8 @@
 			}
 		}
 		
-		this.addCSETPalette();
+		this.addCSETPalette(this.customEntries == null);
+		this.addImagePalette('ICS', 'ICS',imgDir + '/cset/','.jpg',['AudioSwitch']);
 
 // 		this.addGeneralPalette(this.customEntries == null);
 // 		this.addMiscPalette(false);
