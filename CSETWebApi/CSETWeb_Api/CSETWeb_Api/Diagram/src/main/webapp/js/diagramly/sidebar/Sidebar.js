@@ -807,386 +807,388 @@
 			}
 		}
 		
-		this.addGeneralPalette(this.customEntries == null);
-		this.addMiscPalette(false);
-		this.addAdvancedPalette(false);
-		this.addBasicPalette();
-		this.addStencilPalette('arrows', mxResources.get('arrows'), dir + '/arrows.xml',
-				';html=1;' + mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;' + mxConstants.STYLE_STROKEWIDTH + '=2;strokeColor=#000000;');
-		this.addArrows2Palette();
-		
-		this.addImagePalette('computer', 'Clipart / Computer', imgDir
-				+ '/lib/clip_art/computers/', '_128x128.png', ['Antivirus',
-				'Data_Filtering', 'Database', 'Database_Add', 'Database_Minus',
-				'Database_Move_Stack', 'Database_Remove', 'Fujitsu_Tablet',
-				'Harddrive', 'IBM_Tablet', 'iMac', 'iPad', 'Laptop', 'MacBook',
-				'Mainframe', 'Monitor', 'Monitor_Tower',
-				'Monitor_Tower_Behind', 'Netbook', 'Network', 'Network_2',
-				'Printer', 'Printer_Commercial', 'Secure_System', 'Server',
-				'Server_Rack', 'Server_Rack_Empty', 'Server_Rack_Partial',
-				'Server_Tower', 'Software', 'Stylus', 'Touch', 'USB_Hub',
-				'Virtual_Application', 'Virtual_Machine', 'Virus',
-				'Workstation' ], [ 'Antivirus', 'Data Filtering', 'Database',
-	            'Database Add', 'Database Minus', 'Database Move Stack',
-	            'Database Remove', 'Fujitsu Tablet', 'Harddrive', 'IBMTablet',
-	            'iMac', 'iPad', 'Laptop', 'MacBook', 'Mainframe', 'Monitor',
-	            'Monitor Tower', 'Monitor Tower Behind', 'Netbook', 'Network',
-	            'Network 2', 'Printer', 'Printer Commercial', 'Secure System',
-	            'Server', 'Server Rack', 'Server Rack Empty', 'Server Rack Partial',
-	            'Server Tower', 'Software', 'Stylus', 'Touch', 'USB Hub',
-	            'Virtual Application', 'Virtual Machine', 'Virus', 'Workstation']);
-		
-		this.addImagePalette('finance', 'Clipart / Finance', imgDir
-				+ '/lib/clip_art/finance/', '_128x128.png', [ 'Arrow_Down',
-				'Arrow_Up', 'Coins', 'Credit_Card', 'Dollar', 'Graph',
-				'Pie_Chart', 'Piggy_Bank', 'Safe', 'Shopping_Cart',
-				'Stock_Down', 'Stock_Up'], ['Arrow_Down', 'Arrow Up',
-	            'Coins', 'Credit Card', 'Dollar', 'Graph', 'Pie Chart',
-	            'Piggy Bank', 'Safe', 'Shopping Basket', 'Stock Down', 'Stock Up']);
-		
-		this.addImagePalette('clipart', 'Clipart / Various', imgDir
-				+ '/lib/clip_art/general/', '_128x128.png', [ 'Battery_0',
-				'Battery_100', 'Battery_50', 'Battery_75', 'Battery_allstates',
-				'Bluetooth', 'Earth_globe', 'Empty_Folder', 'Full_Folder',
-				'Gear', 'Keys', 'Lock', 'Mouse_Pointer', 'Plug', 'Ships_Wheel',
-				'Star', 'Tire' ], [ 'Battery 0%', 'Battery 100%', 'Battery 50%',
-	            'Battery 75%', 'Battery', 'Bluetooth', 'Globe',
-	            'Empty Folder', 'Full Folder', 'Gear', 'Keys', 'Lock', 'Mousepointer',
-	            'Plug', 'Ships Wheel', 'Star', 'Tire']);
-		
-		this.addImagePalette('networking', 'Clipart / Networking', imgDir
-				+ '/lib/clip_art/networking/', '_128x128.png', ['Bridge',
-				'Certificate', 'Certificate_Off', 'Cloud', 'Cloud_Computer',
-				'Cloud_Computer_Private', 'Cloud_Rack', 'Cloud_Rack_Private',
-				'Cloud_Server', 'Cloud_Server_Private', 'Cloud_Storage',
-				'Concentrator', 'Email', 'Firewall_02', 'Firewall',
-				'Firewall-page1', 'Ip_Camera', 'Modem',
-				'power_distribution_unit', 'Print_Server',
-				'Print_Server_Wireless', 'Repeater', 'Router', 'Router_Icon',
-				'Switch', 'UPS', 'Wireless_Router', 'Wireless_Router_N'],
-				['Bridge', 'Certificate', 'Certificate Off', 'Cloud', 'Cloud Computer',
-				'Cloud Computer Private', 'Cloud Rack', 'Cloud Rack Private',
-				'Cloud Server', 'Cloud Server Private', 'Cloud Storage',
-				'Concentrator', 'Email', 'Firewall 1', 'Firewall 2',
-				'Firewall', 'Camera', 'Modem',
-				'Power Distribution Unit', 'Print Server',
-				'Print Server Wireless', 'Repeater', 'Router', 'Router Icon',
-				'Switch', 'UPS', 'Wireless Router', 'Wireless Router N'],
-				 {'Wireless_Router': 'wireless router switch wap wifi access point wlan',
-				  'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
-				  'Router': 'router switch',
-				  'Router_Icon': 'router switch'});
-		
-		this.addImagePalette('people', 'Clipart / People', imgDir
-				+ '/lib/clip_art/people/', '_128x128.png', ['Suit_Man',
-				'Suit_Man_Black', 'Suit_Man_Blue', 'Suit_Man_Green',
-				'Suit_Man_Green_Black', 'Suit_Woman', 'Suit_Woman_Black',
-				'Suit_Woman_Blue', 'Suit_Woman_Green',
-				'Suit_Woman_Green_Black', 'Construction_Worker_Man',
-				'Construction_Worker_Man_Black', 'Construction_Worker_Woman',
-				'Construction_Worker_Woman_Black', 'Doctor_Man',
-				'Doctor_Man_Black', 'Doctor_Woman', 'Doctor_Woman_Black',
-				'Farmer_Man', 'Farmer_Man_Black', 'Farmer_Woman',
-				'Farmer_Woman_Black', 'Nurse_Man', 'Nurse_Man_Black',
-				'Nurse_Woman',
-				'Nurse_Woman_Black',
-				'Military_Officer', 'Military_Officer_Black',
-				'Military_Officer_Woman', 'Military_Officer_Woman_Black',
-				'Pilot_Man', 'Pilot_Man_Black', 'Pilot_Woman',
-				'Pilot_Woman_Black', 'Scientist_Man', 'Scientist_Man_Black',
-				'Scientist_Woman', 'Scientist_Woman_Black', 'Security_Man',
-				'Security_Man_Black', 'Security_Woman', 'Security_Woman_Black',
-				'Tech_Man', 'Tech_Man_Black',
-				'Telesales_Man', 'Telesales_Man_Black', 'Telesales_Woman',
-				'Telesales_Woman_Black', 'Waiter', 'Waiter_Black',
-				'Waiter_Woman', 'Waiter_Woman_Black', 'Worker_Black',
-				'Worker_Man', 'Worker_Woman', 'Worker_Woman_Black']);
-		
-		this.addImagePalette('telco', 'Clipart / Telecommunication', imgDir
-				+ '/lib/clip_art/telecommunication/', '_128x128.png', [
-				'BlackBerry', 'Cellphone', 'HTC_smartphone', 'iPhone',
-				'Palm_Treo', 'Signal_tower_off', 'Signal_tower_on' ],
-				['BlackBerry', 'Cellphone', 'HTC smartphone', 'iPhone',
-				  'Palm Treo', 'Signaltower off', 'Signaltower on']);
+		this.addCSETPalette();
 
-		this.addFlowchartPalette();
-		this.addActiveDirectoryPalette();
-		this.addAndroidPalette();
-		this.addAtlassianPalette();
-		this.addBootstrapPalette();
-		this.addDFDPalette();
-		this.addErPalette();
-		this.addIos7Palette();
-		this.addIosPalette();
-		this.addMockupPalette();
-		this.addSitemapPalette();
-		this.addUmlPalette(false);
-		this.addAlliedTelesisPalette();
-		this.addAWS3Palette();
-		this.addAWS4bPalette();
-		this.addAWS4Palette();
-		this.addAWS3DPalette();
-		this.addAzurePalette();
-		this.addMSCAEPalette();
+// 		this.addGeneralPalette(this.customEntries == null);
+// 		this.addMiscPalette(false);
+// 		this.addAdvancedPalette(false);
+// 		this.addBasicPalette();
+// 		this.addStencilPalette('arrows', mxResources.get('arrows'), dir + '/arrows.xml',
+// 				';html=1;' + mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;' + mxConstants.STYLE_STROKEWIDTH + '=2;strokeColor=#000000;');
+// 		this.addArrows2Palette();
 		
-		for (var i = 0; i < cisco.length; i++)
-		{
-			this.addStencilPalette('cisco' + cisco[i], 'Cisco / ' + cisco[i],
-				dir + '/cisco/' + cisco[i].toLowerCase().replace(/ /g, '_') + '.xml',
-				';html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;', null, null, 1.6);
-		}
+// 		this.addImagePalette('computer', 'Clipart / Computer', imgDir
+// 				+ '/lib/clip_art/computers/', '_128x128.png', ['Antivirus',
+// 				'Data_Filtering', 'Database', 'Database_Add', 'Database_Minus',
+// 				'Database_Move_Stack', 'Database_Remove', 'Fujitsu_Tablet',
+// 				'Harddrive', 'IBM_Tablet', 'iMac', 'iPad', 'Laptop', 'MacBook',
+// 				'Mainframe', 'Monitor', 'Monitor_Tower',
+// 				'Monitor_Tower_Behind', 'Netbook', 'Network', 'Network_2',
+// 				'Printer', 'Printer_Commercial', 'Secure_System', 'Server',
+// 				'Server_Rack', 'Server_Rack_Empty', 'Server_Rack_Partial',
+// 				'Server_Tower', 'Software', 'Stylus', 'Touch', 'USB_Hub',
+// 				'Virtual_Application', 'Virtual_Machine', 'Virus',
+// 				'Workstation' ], [ 'Antivirus', 'Data Filtering', 'Database',
+// 	            'Database Add', 'Database Minus', 'Database Move Stack',
+// 	            'Database Remove', 'Fujitsu Tablet', 'Harddrive', 'IBMTablet',
+// 	            'iMac', 'iPad', 'Laptop', 'MacBook', 'Mainframe', 'Monitor',
+// 	            'Monitor Tower', 'Monitor Tower Behind', 'Netbook', 'Network',
+// 	            'Network 2', 'Printer', 'Printer Commercial', 'Secure System',
+// 	            'Server', 'Server Rack', 'Server Rack Empty', 'Server Rack Partial',
+// 	            'Server Tower', 'Software', 'Stylus', 'Touch', 'USB Hub',
+// 	            'Virtual Application', 'Virtual Machine', 'Virus', 'Workstation']);
+		
+// 		this.addImagePalette('finance', 'Clipart / Finance', imgDir
+// 				+ '/lib/clip_art/finance/', '_128x128.png', [ 'Arrow_Down',
+// 				'Arrow_Up', 'Coins', 'Credit_Card', 'Dollar', 'Graph',
+// 				'Pie_Chart', 'Piggy_Bank', 'Safe', 'Shopping_Cart',
+// 				'Stock_Down', 'Stock_Up'], ['Arrow_Down', 'Arrow Up',
+// 	            'Coins', 'Credit Card', 'Dollar', 'Graph', 'Pie Chart',
+// 	            'Piggy Bank', 'Safe', 'Shopping Basket', 'Stock Down', 'Stock Up']);
+		
+// 		this.addImagePalette('clipart', 'Clipart / Various', imgDir
+// 				+ '/lib/clip_art/general/', '_128x128.png', [ 'Battery_0',
+// 				'Battery_100', 'Battery_50', 'Battery_75', 'Battery_allstates',
+// 				'Bluetooth', 'Earth_globe', 'Empty_Folder', 'Full_Folder',
+// 				'Gear', 'Keys', 'Lock', 'Mouse_Pointer', 'Plug', 'Ships_Wheel',
+// 				'Star', 'Tire' ], [ 'Battery 0%', 'Battery 100%', 'Battery 50%',
+// 	            'Battery 75%', 'Battery', 'Bluetooth', 'Globe',
+// 	            'Empty Folder', 'Full Folder', 'Gear', 'Keys', 'Lock', 'Mousepointer',
+// 	            'Plug', 'Ships Wheel', 'Star', 'Tire']);
+		
+// 		this.addImagePalette('networking', 'Clipart / Networking', imgDir
+// 				+ '/lib/clip_art/networking/', '_128x128.png', ['Bridge',
+// 				'Certificate', 'Certificate_Off', 'Cloud', 'Cloud_Computer',
+// 				'Cloud_Computer_Private', 'Cloud_Rack', 'Cloud_Rack_Private',
+// 				'Cloud_Server', 'Cloud_Server_Private', 'Cloud_Storage',
+// 				'Concentrator', 'Email', 'Firewall_02', 'Firewall',
+// 				'Firewall-page1', 'Ip_Camera', 'Modem',
+// 				'power_distribution_unit', 'Print_Server',
+// 				'Print_Server_Wireless', 'Repeater', 'Router', 'Router_Icon',
+// 				'Switch', 'UPS', 'Wireless_Router', 'Wireless_Router_N'],
+// 				['Bridge', 'Certificate', 'Certificate Off', 'Cloud', 'Cloud Computer',
+// 				'Cloud Computer Private', 'Cloud Rack', 'Cloud Rack Private',
+// 				'Cloud Server', 'Cloud Server Private', 'Cloud Storage',
+// 				'Concentrator', 'Email', 'Firewall 1', 'Firewall 2',
+// 				'Firewall', 'Camera', 'Modem',
+// 				'Power Distribution Unit', 'Print Server',
+// 				'Print Server Wireless', 'Repeater', 'Router', 'Router Icon',
+// 				'Switch', 'UPS', 'Wireless Router', 'Wireless Router N'],
+// 				 {'Wireless_Router': 'wireless router switch wap wifi access point wlan',
+// 				  'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
+// 				  'Router': 'router switch',
+// 				  'Router_Icon': 'router switch'});
+		
+// 		this.addImagePalette('people', 'Clipart / People', imgDir
+// 				+ '/lib/clip_art/people/', '_128x128.png', ['Suit_Man',
+// 				'Suit_Man_Black', 'Suit_Man_Blue', 'Suit_Man_Green',
+// 				'Suit_Man_Green_Black', 'Suit_Woman', 'Suit_Woman_Black',
+// 				'Suit_Woman_Blue', 'Suit_Woman_Green',
+// 				'Suit_Woman_Green_Black', 'Construction_Worker_Man',
+// 				'Construction_Worker_Man_Black', 'Construction_Worker_Woman',
+// 				'Construction_Worker_Woman_Black', 'Doctor_Man',
+// 				'Doctor_Man_Black', 'Doctor_Woman', 'Doctor_Woman_Black',
+// 				'Farmer_Man', 'Farmer_Man_Black', 'Farmer_Woman',
+// 				'Farmer_Woman_Black', 'Nurse_Man', 'Nurse_Man_Black',
+// 				'Nurse_Woman',
+// 				'Nurse_Woman_Black',
+// 				'Military_Officer', 'Military_Officer_Black',
+// 				'Military_Officer_Woman', 'Military_Officer_Woman_Black',
+// 				'Pilot_Man', 'Pilot_Man_Black', 'Pilot_Woman',
+// 				'Pilot_Woman_Black', 'Scientist_Man', 'Scientist_Man_Black',
+// 				'Scientist_Woman', 'Scientist_Woman_Black', 'Security_Man',
+// 				'Security_Man_Black', 'Security_Woman', 'Security_Woman_Black',
+// 				'Tech_Man', 'Tech_Man_Black',
+// 				'Telesales_Man', 'Telesales_Man_Black', 'Telesales_Woman',
+// 				'Telesales_Woman_Black', 'Waiter', 'Waiter_Black',
+// 				'Waiter_Woman', 'Waiter_Woman_Black', 'Worker_Black',
+// 				'Worker_Man', 'Worker_Woman', 'Worker_Woman_Black']);
+		
+// 		this.addImagePalette('telco', 'Clipart / Telecommunication', imgDir
+// 				+ '/lib/clip_art/telecommunication/', '_128x128.png', [
+// 				'BlackBerry', 'Cellphone', 'HTC_smartphone', 'iPhone',
+// 				'Palm_Treo', 'Signal_tower_off', 'Signal_tower_on' ],
+// 				['BlackBerry', 'Cellphone', 'HTC smartphone', 'iPhone',
+// 				  'Palm Treo', 'Signaltower off', 'Signaltower on']);
 
-		this.addCiscoSafePalette();
-		this.addCumulusPalette();
-		this.addCitrixPalette();
-//		this.addGCP2Palette();
-		this.addGCP2Palette();
-		this.addIBMPalette();
-		this.addNetworkPalette();
-		this.addOfficePalette();
+// 		this.addFlowchartPalette();
+// 		this.addActiveDirectoryPalette();
+// 		this.addAndroidPalette();
+// 		this.addAtlassianPalette();
+// 		this.addBootstrapPalette();
+// 		this.addDFDPalette();
+// 		this.addErPalette();
+// 		this.addIos7Palette();
+// 		this.addIosPalette();
+// 		this.addMockupPalette();
+// 		this.addSitemapPalette();
+// 		this.addUmlPalette(false);
+// 		this.addAlliedTelesisPalette();
+// 		this.addAWS3Palette();
+// 		this.addAWS4bPalette();
+// 		this.addAWS4Palette();
+// 		this.addAWS3DPalette();
+// 		this.addAzurePalette();
+// 		this.addMSCAEPalette();
 		
-		for (var i = 0; i < rack.length; i++)
-		{
-			if (rack[i].toLowerCase() === 'general')
-			{
-				this.addRackGeneralPalette();
-			}
-			else if (rack[i].toLowerCase() === 'f5')
-			{
-				this.addRackF5Palette();
-			}
-			else
-			{
-				this.addStencilPalette('rack' + rack[i], 'Rack / ' + rack[i],
-					dir + '/rack/' + rack[i].toLowerCase() + '.xml',
-					';html=1;labelPosition=right;align=left;spacingLeft=15;dashed=0;shadow=0;fillColor=#ffffff;');
-			}
-		}
+// 		for (var i = 0; i < cisco.length; i++)
+// 		{
+// 			this.addStencilPalette('cisco' + cisco[i], 'Cisco / ' + cisco[i],
+// 				dir + '/cisco/' + cisco[i].toLowerCase().replace(/ /g, '_') + '.xml',
+// 				';html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;', null, null, 1.6);
+// 		}
 
-		this.addVeeamPalette();
-		this.addVVDPalette();
-		this.addArchimate3Palette();
-		this.addArchiMatePalette();
-		this.addBpmnPalette(dir, false);
-		this.addLeanMappingPalette();
+// 		this.addCiscoSafePalette();
+// 		this.addCumulusPalette();
+// 		this.addCitrixPalette();
+// //		this.addGCP2Palette();
+// 		this.addGCP2Palette();
+// 		this.addIBMPalette();
+// 		this.addNetworkPalette();
+// 		this.addOfficePalette();
 		
-		for (var i = 0; i < sysml.length; i++)
-		{
-			if (sysml[i] == 'Model Elements')
-			{
-				this.addSysMLModelElementsPalette();
-			}
-			else if (sysml[i] == 'Blocks')
-			{
-				this.addSysMLBlocksPalette();
-			}
-			else if (sysml[i] == 'Ports and Flows')
-			{
-				this.addSysMLPortsAndFlowsPalette();
-			}
-			else if (sysml[i] == 'Constraint Blocks')
-			{
-				this.addSysMLConstraintBlocksPalette();
-			}
-			else if (sysml[i] == 'Activities')
-			{
-				this.addSysMLActivitiesPalette();
-			}
-			else if (sysml[i] == 'Interactions')
-			{
-				this.addSysMLInteractionsPalette();
-			}
-			else if (sysml[i] == 'State Machines')
-			{
-				this.addSysMLStateMachinesPalette();
-			}
-			else if (sysml[i] == 'Use Cases')
-			{
-				this.addSysMLUseCasesPalette();
-			}
-			else if (sysml[i] == 'Allocations')
-			{
-				this.addSysMLAllocationsPalette();
-			}
-			else if (sysml[i] == 'Requirements')
-			{
-				this.addSysMLRequirementsPalette();
-			}
-			else if (sysml[i] == 'Profiles')
-			{
-				this.addSysMLProfilesPalette();
-			}
-			else if (sysml[i] == 'Stereotypes')
-			{
-				this.addSysMLStereotypesPalette();
-			}
-		}
+// 		for (var i = 0; i < rack.length; i++)
+// 		{
+// 			if (rack[i].toLowerCase() === 'general')
+// 			{
+// 				this.addRackGeneralPalette();
+// 			}
+// 			else if (rack[i].toLowerCase() === 'f5')
+// 			{
+// 				this.addRackF5Palette();
+// 			}
+// 			else
+// 			{
+// 				this.addStencilPalette('rack' + rack[i], 'Rack / ' + rack[i],
+// 					dir + '/rack/' + rack[i].toLowerCase() + '.xml',
+// 					';html=1;labelPosition=right;align=left;spacingLeft=15;dashed=0;shadow=0;fillColor=#ffffff;');
+// 			}
+// 		}
 
-		this.addCabinetsPalette();
-		this.addInfographicPalette();
+// 		this.addVeeamPalette();
+// 		this.addVVDPalette();
+// 		this.addArchimate3Palette();
+// 		this.addArchiMatePalette();
+// 		this.addBpmnPalette(dir, false);
+// 		this.addLeanMappingPalette();
 		
-		for (var i = 0; i < eip.length; i++)
-		{
-			if (eip[i] == 'Message Construction')
-			{
-				this.addEipMessageConstructionPalette();
-			}
-			else if (eip[i] == 'Message Routing')
-			{
-				this.addEipMessageRoutingPalette();
-			}
-			else if (eip[i] == 'Message Transformation')
-			{
-				this.addEipMessageTransformationPalette();
-			}
-			else if (eip[i] == 'Messaging Channels')
-			{
-				this.addEipMessagingChannelsPalette();
-			}
-			else if (eip[i] == 'Messaging Endpoints')
-			{
-				this.addEipMessagingEndpointsPalette();
-			}
-			else if (eip[i] == 'Messaging Systems')
-			{
-				this.addEipMessagingSystemsPalette();
-			}
-			else if (eip[i] == 'System Management')
-			{
-				this.addEipSystemManagementPalette();
-			}
-		}
-		
-		this.addElectricalPalette();
-		this.addFloorplanPalette();
-		
-		for (var i = 0; i < gmdl.length; i++)
-		{
-			if (gmdl[i] == 'Bottom Navigation')
-			{
-				this.addGMDLBottomNavigationPalette();
-			}
-			else if (gmdl[i] == 'Bottom Sheets')
-			{
-				this.addGMDLBottomSheetsPalette();
-			}
-			else if (gmdl[i] == 'Buttons')
-			{
-				this.addGMDLButtonsPalette();
-			}
-			else if (gmdl[i] == 'Cards')
-			{
-				this.addGMDLCardsPalette();
-			}
-			else if (gmdl[i] == 'Chips')
-			{
-				this.addGMDLChipsPalette();
-			}
-			else if (gmdl[i] == 'Dialogs')
-			{
-				this.addGMDLDialogsPalette();
-			}
-			else if (gmdl[i] == 'Dividers')
-			{
-				this.addGMDLDividersPalette();
-			}
-			else if (gmdl[i] == 'Grid Lists')
-			{
-				this.addGMDLGridListsPalette();
-			}
-			else if (gmdl[i] == 'Icons')
-			{
-				this.addGMDLIconsPalette();
-			}
-			else if (gmdl[i] == 'Lists')
-			{
-				this.addGMDLListsPalette();
-			}
-			else if (gmdl[i] == 'Menus')
-			{
-				this.addGMDLMenusPalette();
-			}
-			else if (gmdl[i] == 'Misc')
-			{
-				this.addGMDLMiscPalette();
-			}
-			else if (gmdl[i] == 'Pickers')
-			{
-				this.addGMDLPickersPalette();
-			}
-			else if (gmdl[i] == 'Selection Controls')
-			{
-				this.addGMDLSelectionControlsPalette();
-			}
-			else if (gmdl[i] == 'Sliders')
-			{
-				this.addGMDLSlidersPalette();
-			}
-			else if (gmdl[i] == 'Steppers')
-			{
-				this.addGMDLSteppersPalette();
-			}
-			else if (gmdl[i] == 'Tabs')
-			{
-				this.addGMDLTabsPalette();
-			}
-			else if (gmdl[i] == 'Text Fields')
-			{
-				this.addGMDLTextFieldsPalette();
-			}
-		}
+// 		for (var i = 0; i < sysml.length; i++)
+// 		{
+// 			if (sysml[i] == 'Model Elements')
+// 			{
+// 				this.addSysMLModelElementsPalette();
+// 			}
+// 			else if (sysml[i] == 'Blocks')
+// 			{
+// 				this.addSysMLBlocksPalette();
+// 			}
+// 			else if (sysml[i] == 'Ports and Flows')
+// 			{
+// 				this.addSysMLPortsAndFlowsPalette();
+// 			}
+// 			else if (sysml[i] == 'Constraint Blocks')
+// 			{
+// 				this.addSysMLConstraintBlocksPalette();
+// 			}
+// 			else if (sysml[i] == 'Activities')
+// 			{
+// 				this.addSysMLActivitiesPalette();
+// 			}
+// 			else if (sysml[i] == 'Interactions')
+// 			{
+// 				this.addSysMLInteractionsPalette();
+// 			}
+// 			else if (sysml[i] == 'State Machines')
+// 			{
+// 				this.addSysMLStateMachinesPalette();
+// 			}
+// 			else if (sysml[i] == 'Use Cases')
+// 			{
+// 				this.addSysMLUseCasesPalette();
+// 			}
+// 			else if (sysml[i] == 'Allocations')
+// 			{
+// 				this.addSysMLAllocationsPalette();
+// 			}
+// 			else if (sysml[i] == 'Requirements')
+// 			{
+// 				this.addSysMLRequirementsPalette();
+// 			}
+// 			else if (sysml[i] == 'Profiles')
+// 			{
+// 				this.addSysMLProfilesPalette();
+// 			}
+// 			else if (sysml[i] == 'Stereotypes')
+// 			{
+// 				this.addSysMLStereotypesPalette();
+// 			}
+// 		}
 
-		for (var i = 0; i < pids.length; i++)
-		{
-			if (pids[i] == 'Instruments')
-			{
-				this.addPidInstrumentsPalette();
-			}
-			else if (pids[i] == 'Misc')
-			{
-				this.addPidMiscPalette();
-			}
-			else if (pids[i] == 'Valves')
-			{
-				this.addPidValvesPalette();
-			}
-			else if (pids[i] == 'Compressors')
-			{
-				this.addPidCompressorsPalette();
-			}
-			else if (pids[i] == 'Engines')
-			{
-				this.addPidEnginesPalette();
-			}
-			else if (pids[i] == 'Filters')
-			{
-				this.addPidFiltersPalette();
-			}
-			else if (pids[i] == 'Flow Sensors')
-			{
-				this.addPidFlowSensorsPalette();
-			}
-			else if (pids[i] == 'Piping')
-			{
-				this.addPidPipingPalette();
-			}
-			else
-			{
-				this.addStencilPalette('pid' + pids[i], 'Proc. Eng. / ' + pids[i],
-					dir + '/pid/' + pids[i].toLowerCase().replace(' ', '_') + '.xml',
-					';html=1;pointerEvents=1;align=center;' + mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;dashed=0;');
-			}
-		}
+// 		this.addCabinetsPalette();
+// 		this.addInfographicPalette();
 		
-		this.addWebIconsPalette();
-		this.addWebLogosPalette();
+// 		for (var i = 0; i < eip.length; i++)
+// 		{
+// 			if (eip[i] == 'Message Construction')
+// 			{
+// 				this.addEipMessageConstructionPalette();
+// 			}
+// 			else if (eip[i] == 'Message Routing')
+// 			{
+// 				this.addEipMessageRoutingPalette();
+// 			}
+// 			else if (eip[i] == 'Message Transformation')
+// 			{
+// 				this.addEipMessageTransformationPalette();
+// 			}
+// 			else if (eip[i] == 'Messaging Channels')
+// 			{
+// 				this.addEipMessagingChannelsPalette();
+// 			}
+// 			else if (eip[i] == 'Messaging Endpoints')
+// 			{
+// 				this.addEipMessagingEndpointsPalette();
+// 			}
+// 			else if (eip[i] == 'Messaging Systems')
+// 			{
+// 				this.addEipMessagingSystemsPalette();
+// 			}
+// 			else if (eip[i] == 'System Management')
+// 			{
+// 				this.addEipSystemManagementPalette();
+// 			}
+// 		}
+		
+// 		this.addElectricalPalette();
+// 		this.addFloorplanPalette();
+		
+// 		for (var i = 0; i < gmdl.length; i++)
+// 		{
+// 			if (gmdl[i] == 'Bottom Navigation')
+// 			{
+// 				this.addGMDLBottomNavigationPalette();
+// 			}
+// 			else if (gmdl[i] == 'Bottom Sheets')
+// 			{
+// 				this.addGMDLBottomSheetsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Buttons')
+// 			{
+// 				this.addGMDLButtonsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Cards')
+// 			{
+// 				this.addGMDLCardsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Chips')
+// 			{
+// 				this.addGMDLChipsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Dialogs')
+// 			{
+// 				this.addGMDLDialogsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Dividers')
+// 			{
+// 				this.addGMDLDividersPalette();
+// 			}
+// 			else if (gmdl[i] == 'Grid Lists')
+// 			{
+// 				this.addGMDLGridListsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Icons')
+// 			{
+// 				this.addGMDLIconsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Lists')
+// 			{
+// 				this.addGMDLListsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Menus')
+// 			{
+// 				this.addGMDLMenusPalette();
+// 			}
+// 			else if (gmdl[i] == 'Misc')
+// 			{
+// 				this.addGMDLMiscPalette();
+// 			}
+// 			else if (gmdl[i] == 'Pickers')
+// 			{
+// 				this.addGMDLPickersPalette();
+// 			}
+// 			else if (gmdl[i] == 'Selection Controls')
+// 			{
+// 				this.addGMDLSelectionControlsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Sliders')
+// 			{
+// 				this.addGMDLSlidersPalette();
+// 			}
+// 			else if (gmdl[i] == 'Steppers')
+// 			{
+// 				this.addGMDLSteppersPalette();
+// 			}
+// 			else if (gmdl[i] == 'Tabs')
+// 			{
+// 				this.addGMDLTabsPalette();
+// 			}
+// 			else if (gmdl[i] == 'Text Fields')
+// 			{
+// 				this.addGMDLTextFieldsPalette();
+// 			}
+// 		}
+
+// 		for (var i = 0; i < pids.length; i++)
+// 		{
+// 			if (pids[i] == 'Instruments')
+// 			{
+// 				this.addPidInstrumentsPalette();
+// 			}
+// 			else if (pids[i] == 'Misc')
+// 			{
+// 				this.addPidMiscPalette();
+// 			}
+// 			else if (pids[i] == 'Valves')
+// 			{
+// 				this.addPidValvesPalette();
+// 			}
+// 			else if (pids[i] == 'Compressors')
+// 			{
+// 				this.addPidCompressorsPalette();
+// 			}
+// 			else if (pids[i] == 'Engines')
+// 			{
+// 				this.addPidEnginesPalette();
+// 			}
+// 			else if (pids[i] == 'Filters')
+// 			{
+// 				this.addPidFiltersPalette();
+// 			}
+// 			else if (pids[i] == 'Flow Sensors')
+// 			{
+// 				this.addPidFlowSensorsPalette();
+// 			}
+// 			else if (pids[i] == 'Piping')
+// 			{
+// 				this.addPidPipingPalette();
+// 			}
+// 			else
+// 			{
+// 				this.addStencilPalette('pid' + pids[i], 'Proc. Eng. / ' + pids[i],
+// 					dir + '/pid/' + pids[i].toLowerCase().replace(' ', '_') + '.xml',
+// 					';html=1;pointerEvents=1;align=center;' + mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;dashed=0;');
+// 			}
+// 		}
+		
+// 		this.addWebIconsPalette();
+// 		this.addWebLogosPalette();
 				
-		for (var i = 0; i < signs.length; i++)
-		{
-			this.addStencilPalette('signs' + signs[i], 'Signs / ' + signs[i],
-				dir + '/signs/' + signs[i].toLowerCase() + '.xml',
-				';html=1;pointerEvents=1;fillColor=#000000;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;');
-		}
+// 		for (var i = 0; i < signs.length; i++)
+// 		{
+// 			this.addStencilPalette('signs' + signs[i], 'Signs / ' + signs[i],
+// 				dir + '/signs/' + signs[i].toLowerCase() + '.xml',
+// 				';html=1;pointerEvents=1;fillColor=#000000;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;');
+// 		}
 		
 		// LATER: Check if conflicts with restore libs after loading file
 		this.showEntries();
