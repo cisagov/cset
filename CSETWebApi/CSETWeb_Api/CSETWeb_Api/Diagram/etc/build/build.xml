@@ -98,6 +98,9 @@
 			</sources>
 		</jscomp>
 		
+		<echo message="My basedir is ${basedir}" />
+		<echo message="My sidebar folder is ${war.dir}/js/diagramly/sidebar" />
+		
 		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/sidebar.min.js">
 			<sources dir="${war.dir}/js/diagramly/sidebar">
 				<file name="Sidebar.js" />
