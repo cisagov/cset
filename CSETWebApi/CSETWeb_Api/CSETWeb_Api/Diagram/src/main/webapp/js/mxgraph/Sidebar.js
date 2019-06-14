@@ -956,7 +956,7 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	this.addPaletteFunctions('general', mxResources.get('general'), (expand != null) ? expand : true, fns);
 };
 
-Sidebar.prototype.addCSETPallette = function(expand)
+Sidebar.prototype.addCSETPalette = function(expand)
 {
 	var lineTags = 'line lines connector connectors connection connections arrow arrows ';
 	
