@@ -1,0 +1,17 @@
+<div class="btn-group btn-group-toggle">
+  <label class="btn btn-app-mode" [class.default-mat-filter]="isDefaultMatLevel('B')" ngbButtonLabel>
+    <input class="form-check-input" type="checkbox" ngbButton [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get('B')"
+      (ngModelChange)="filterChanged('B', $event)">Baseline</label>    
+  <label class="btn btn-app-mode" [class.default-mat-filter]="isDefaultMatLevel('E')" ngbButtonLabel>
+    <input class="form-check-input" type="checkbox" ngbButton [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get('E')"
+      (ngModelChange)="filterChanged('E', $event)">Evolving</label>
+  <label class="btn btn-app-mode" [class.default-mat-filter]="isDefaultMatLevel('Int')" ngbButtonLabel>
+    <input class="form-check-input" type="checkbox" ngbButton [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get('Int')"
+      (ngModelChange)="filterChanged('Int', $event)">Intermediate</label>
+  <label class="btn btn-app-mode" [class.default-mat-filter]="isDefaultMatLevel('A')" ngbButtonLabel>
+    <input class="form-check-input" type="checkbox" ngbButton [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get('A')"
+      (ngModelChange)="filterChanged('A', $event)">Advanced</label>
+  <label class="btn btn-app-mode" [class.default-mat-filter]="isDefaultMatLevel('Inn')" ngbButtonLabel>
+    <input class="form-check-input" type="checkbox" ngbButton [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get('Inn')"
+      (ngModelChange)="filterChanged('Inn', $event)">Innovative</label>
+</div>
