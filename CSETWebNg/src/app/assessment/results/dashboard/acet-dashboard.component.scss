@@ -1,0 +1,88 @@
+.admin-table-left {
+    width: 65%;
+    text-align: right;
+}
+
+.admin-table-right {
+    width: 35%;
+}
+
+.irp-table-left {
+    width: 30%;
+}
+
+.table-head {
+    background-color: rgb(245,245,245);
+    border-bottom: 2px solid rgb(200,200,200);
+}
+
+.table-head-special {
+    background-color: rgb(245,245,245);
+}
+
+.table-sub-head {
+    background-color: rgb(221, 235, 247);
+}
+
+.dash-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.border-table {
+    border-top: 2px solid rgb(200,200,200);
+}
+
+.mid-align {
+    text-align: center;
+}
+
+.dash-select {
+    width: 100%;
+}
+
+.rightmost {
+    border-left: 1px solid rgb(200,200,200);
+}
+
+.dash-select {
+    width: 300px;
+}
+
+.risk-head {
+    width: 340px;
+}
+
+.dash-header {
+    width: 100%;
+    background-color: rgb(245,245,245);
+    color: rgb(16,60,123);
+    padding: 30px 10px 10px 10px;
+    border-bottom: 2px solid rgb(200,200,200);
+}
+
+.dash-header-joined {
+    margin-bottom: 0px;
+    border-bottom: 0px;
+    border-top: 2px solid rgb(200,200,200);
+    margin-top: 20px;
+}
+
+.blue-text {
+    color: rgb(16,60,123);
+}
+
+.override-select {
+    width: 100%;
+}
+
+.override-div {
+    width: 100%;
+    padding: 2px;
+    margin-top: 5px;
+}
+.mat-detail-red {
+    background-color: rgb(253,233,217);
+    color: rgb(156,0,6);
+    border:1px solid rgb(156,0,6);
+}
