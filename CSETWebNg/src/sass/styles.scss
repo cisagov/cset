@@ -1036,6 +1036,11 @@ ul.nav-tabs li.active button .tab-icon {
   flex: 0 0  auto;
   padding: 5px;
 }
+
+#csetNavbarCollapse {
+  margin-top: 4px;
+}
+
 .navbar-toggler-icon:before {
   content: '\e5d2';
 }
@@ -1051,9 +1056,14 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 20px;
   padding: 5px;
 }
+
 .navbar-brand {
   padding: 0rem;
-  margin-top: -15px;
+  margin-top: -4px;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 
 .dropdown-menu > li > a {
@@ -1063,6 +1073,10 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .navbar-brand:hover {
   background-color: $secondary-color;
   color: $white;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 
 .navbar .rll:hover,
