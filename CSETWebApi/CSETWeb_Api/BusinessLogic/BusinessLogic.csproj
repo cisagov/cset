@@ -337,6 +337,7 @@
     <Compile Include="Helpers\sals\LevelManager.cs" />
     <Compile Include="Helpers\StandardConverter.cs" />
     <Compile Include="Helpers\StatUtils.cs" />
+    <Compile Include="Helpers\StringExt.cs" />
     <Compile Include="Helpers\TokenManager.cs" />
     <Compile Include="Helpers\TransactionSecurity.cs" />
     <Compile Include="Helpers\upload\FileUploadStream.cs" />
@@ -355,11 +356,13 @@
     <Compile Include="Models\ACETDashboard.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
+    <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\IRP.cs" />
     <Compile Include="Models\MaturityAnswers.cs" />
     <Compile Include="Models\MaturityAssessment.cs" />
     <Compile Include="Models\MaturityComponent.cs" />
     <Compile Include="Models\MaturityDomain.cs" />
+    <Compile Include="Models\MaturityMap.cs" />
     <Compile Include="Models\ModuleBuilder.cs" />
     <Compile Include="Models\ConsoleLogger.cs" />
     <Compile Include="Models\ContactDetail.cs" />

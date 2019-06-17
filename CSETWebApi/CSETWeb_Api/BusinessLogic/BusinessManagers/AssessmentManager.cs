@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -48,7 +49,7 @@ namespace CSETWeb_Api.BusinessManagers
             new SalManager().SetDefaultSALs(assessment_id);
 
             new StandardsManager().PersistSelectedStandards(assessment_id, new List<string> { "***DEFAULT***" });
-
+            CreateIrpHeaders(assessment_id);
             return newAssessment;
         }
 
@@ -140,6 +141,8 @@ namespace CSETWeb_Api.BusinessManagers
         public AssessmentDetail GetAssessmentDetail(int assessmentId)
         {
             AssessmentDetail assessment = new AssessmentDetail();
+            TokenManager tm = new TokenManager();
+            string app_code = tm.Payload(Constants.Token_Scope);
 
             using (var db = new CSET_Context())
             {
@@ -163,6 +166,9 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
+
+                    bool defaultAcet = (app_code == "ACET");
+                    assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
                     assessment.Charter = result.aa.Charter;
                     assessment.CreditUnion = result.aa.CreditUnionName;
@@ -189,7 +195,8 @@ namespace CSETWeb_Api.BusinessManagers
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
             var db = new DataLayerCore.Model.CSET_Context();
-
+            TokenManager tm = new TokenManager();
+            string app_code = tm.Payload(Constants.Token_Scope);
             // Add or update the ASSESSMENT record
             var dbAssessment = new ASSESSMENTS()
             {
@@ -198,9 +205,10 @@ namespace CSETWeb_Api.BusinessManagers
                 AssessmentCreatorId = assessment.CreatorId,
                 Assessment_Date = assessment.AssessmentDate??DateTime.Now,
                 LastAccessedDate = assessment.LastModifiedDate,
-                Charter = assessment.Charter,
+                Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5,'0'),
                 CreditUnionName = assessment.CreditUnion,
-                Assets = assessment.Assets
+                Assets = assessment.Assets, 
+                MatDetail_targetBandOnly = app_code == "ACET"
             };
 
             db.ASSESSMENTS.AddOrUpdate( dbAssessment, x=> x.Assessment_Id);
@@ -218,7 +226,8 @@ namespace CSETWeb_Api.BusinessManagers
                 State_Province_Or_Region = assessment.StateProvRegion,
                 Executive_Summary = assessment.ExecutiveSummary,
                 Assessment_Description = assessment.AssessmentDescription,
-                Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments                
+                Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments, 
+                IsAcetOnly = assessment.IsAcetOnly
             };
 
             db.INFORMATION.AddOrUpdate( dbInfo, x=> x.Id);
@@ -227,12 +236,60 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             AssessmentUtil.TouchAssessment(assessmentId);
-
+            
 
             return dbInfo.Id;
         }
 
-        
+        /// <summary>
+        /// Create new headers for IRP calculations
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void CreateIrpHeaders(int assessmentId)
+        {
+
+            int idOffset = 1;
+            using (var db = new CSET_Context())
+            {
+                // now just properties on an Assessment
+                ASSESSMENTS assessment = db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+
+                foreach (IRP_HEADER header in db.IRP_HEADER)
+                {
+                    IRPSummary summary = new IRPSummary();
+                    summary.HeaderText = header.Header;
+
+                    ASSESSMENT_IRP_HEADER headerInfo = db.ASSESSMENT_IRP_HEADER.FirstOrDefault(h =>
+                        h.IRP_HEADER_.IRP_Header_Id == header.IRP_Header_Id &&
+                        h.ASSESSMENT_.Assessment_Id == assessmentId);
+
+                    summary.RiskLevel = 0;
+                    headerInfo = new ASSESSMENT_IRP_HEADER()
+                    {
+                        RISK_LEVEL = 0,
+                        IRP_HEADER_ = header
+                    };
+                    headerInfo.ASSESSMENT_ = assessment;
+                    if (db.ASSESSMENT_IRP_HEADER.Count() == 0)
+                    {
+                        headerInfo.HEADER_RISK_LEVEL_ID = header.IRP_Header_Id;
+                    }
+                    else
+                    {
+                        headerInfo.HEADER_RISK_LEVEL_ID =
+                            db.ASSESSMENT_IRP_HEADER.Max(i => i.HEADER_RISK_LEVEL_ID) + idOffset;
+                        idOffset++;
+                    }
+
+                    summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
+
+                    db.ASSESSMENT_IRP_HEADER.Add(headerInfo);
+                }
+
+                db.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// Returns the Demographics instance for the assessment.
         /// </summary>

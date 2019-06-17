@@ -41,10 +41,16 @@ export class PrepareComponent implements OnInit {
     private route: ActivatedRoute,
     private stdSvc: StandardService
   ) {
+  
+
+    this.stdSvc.getACET().subscribe((x: boolean) => {
+      this.stdSvc.setACETSelected(x);
+    });
+
     this.stdSvc.getFramework().subscribe((x: boolean) => {
       this.stdSvc.setFrameworkSelected(x);
     });
-
+    
     this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route });
     });

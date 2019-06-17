@@ -35,6 +35,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-question-extras',
@@ -65,7 +66,8 @@ export class QuestionExtrasComponent implements OnInit {
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
-    public authSvc: AuthenticationService) { }
+    public authSvc: AuthenticationService,
+    public assessSvc: AssessmentService) { }
 
 
   ngOnInit() { }
@@ -382,16 +384,25 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe((qlist: number[]) => {
         const array = [];
 
+        
         // Traverse the local model to get the "display" question numbers
-        this.questionsSvc.questionGroups.forEach(qg => {
-          qg.SubCategories.forEach(sc => {
-            sc.Questions.forEach(q => {
-              if (qlist.includes(q.QuestionId)) {
-                array.push(qg.GroupHeadingText + " #" + q.DisplayNumber);
-              }
+        if(this.questionsSvc.domains){
+          this.questionsSvc.domains.forEach(d => {            
+            d.QuestionGroups.forEach(qg => {
+              qg.SubCategories.forEach(sc => {
+                sc.Questions.forEach(q => {
+                  if (qlist.includes(q.QuestionId)) {
+                    array.push(qg.GroupHeadingText + " #" + q.DisplayNumber);
+                  }
+                });
+              });
             });
           });
-        });
+        }
+        else{
+          console.log('there were no domains for questions!!!');
+        }
+        
 
         // Format a list of questions
         let msg = "This document is attached to the following questions: <ul>";
@@ -441,6 +452,16 @@ export class QuestionExtrasComponent implements OnInit {
     this.expanded = false;
     const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.QuestionId) as HTMLElement;
     btn.click();
+  }
+
+  /**
+   * Converts linebreak characters to HTML <br> tag.
+   */
+  formatLinebreaks(text: string) {
+    if (!text) {
+      return '';
+    }
+    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
 }
 

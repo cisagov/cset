@@ -25,12 +25,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int IRP_Id;
         public int Item_Number;
         public string Description;
+        public string DescriptionComment;
+        public string Validation_Approach;
         public string Risk_1_Description;
         public string Risk_2_Description;
         public string Risk_3_Description;
         public string Risk_4_Description;
         public string Risk_5_Description;
-        public string Validation_Approach;
         public int Response;
         public string Comment;
 

@@ -22,6 +22,11 @@ namespace CSETWeb_Api.Models
 
         public int QuestionCount;
         public int RequirementCount;
+
+        /// <summary>
+        /// The calculated IRP.  If overridden, the override is returned.
+        /// </summary>
+        public int OverallIRP;
     }
 
     /// <summary>
@@ -32,6 +37,7 @@ namespace CSETWeb_Api.Models
         public int GroupHeadingId;
         public string GroupHeadingText;
         public string StandardShortName;
+        public string DomainName;
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
     }
 
@@ -66,6 +72,7 @@ namespace CSETWeb_Api.Models
         public string AltAnswerText;
         public string Comment;
         public bool MarkForReview;
+
         /// <summary>
         /// Indicates an answer that has been reviewed.  
         /// This field was added for NCUA/ACET support.
@@ -77,6 +84,11 @@ namespace CSETWeb_Api.Models
         public bool HasDiscovery { get; set; }
         public int findingnum { get; set; }
         public int? Answer_Id { get; set; }
+
+        /// <summary>
+        /// Indicates the maturity level of the question/requirement/statement
+        /// </summary>
+        public string MaturityLevel { get; set; }
     }
 
 

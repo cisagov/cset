@@ -21,15 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { Router } from '@angular/router';
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
-import { QuestionGroup, QuestionResponse } from '../../models/questions.model';
+import { Domain, QuestionGroup, QuestionResponse, QuestionResponseWithDomains } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
 import { QuestionsService } from '../../services/questions.service';
 import { StandardService } from '../../services/standard.service';
+import { Navigation2Service } from '../../services/navigation2.service';
+
 
 @Component({
   selector: 'app-questions',
@@ -37,16 +39,19 @@ import { StandardService } from '../../services/standard.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements OnInit {
+export class QuestionsComponent implements AfterViewInit {
   @ViewChild('questionBlock') questionBlock;
-  // applicationMode: string;
-  questionGroups: QuestionGroup[] = null;
+
+  domains: Domain[] = null;
 
   setHasRequirements = false;
 
   autoLoadSupplementalInfo: boolean;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
+
+  currentDomain: string;
+
 
   /**
    * Constructor
@@ -59,6 +64,7 @@ export class QuestionsComponent implements OnInit {
     private navSvc: NavigationService,
     public assessSvc: AssessmentService,
     private stdSvc: StandardService,
+    public navSvc2: Navigation2Service,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -75,6 +81,13 @@ export class QuestionsComponent implements OnInit {
       this.autoLoadSupplementalInfo = false;
     }
 
+    // force requirements/statements mode for ACET-only assessments
+    if (this.assessSvc.getIsAcetOnly()) {
+      this.assessSvc.applicationMode = 'R';
+      this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+      return;
+    }
+
     if (!this.assessSvc.applicationMode) {
       this.assessSvc.applicationMode = 'Q';
       this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
@@ -83,10 +96,14 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    if (this.questionGroups != null && this.questionGroups.length <= 0) {
+  /**
+   *
+   */
+  ngAfterViewInit() {
+    if (this.domains != null && this.domains.length <= 0) {
       this.loadQuestions();
     }
+
     this.assessSvc.currentTab = 'questions';
   }
 
@@ -100,8 +117,9 @@ export class QuestionsComponent implements OnInit {
     if (!magic) {
       magic = this.navSvc.getMagic();
     }
-    this.questionsSvc.evaluateFilters(this.questionGroups);
-    if (!!this.questionGroups) {
+
+    this.questionsSvc.evaluateFilters(this.domains);
+    if (!!this.domains) {
       this.populateTree(magic);
     }
   }
@@ -114,9 +132,10 @@ export class QuestionsComponent implements OnInit {
       { label: 'Please wait', value: '', children: [] },
       { label: 'Loading questions', value: '', children: [] }
     ], this.navSvc.getMagic());
-    this.questionGroups = null;
+    // this.questionGroups = null;
     this.questionsSvc.setMode(mode).subscribe(() => this.loadQuestions());
   }
+
 
   /**
    * Retrieves the complete list of questions
@@ -125,10 +144,35 @@ export class QuestionsComponent implements OnInit {
     const magic = this.navSvc.getMagic();
     this.questionsSvc.getQuestionsList().subscribe(
       (data: QuestionResponse) => {
-        this.questionGroups = data.QuestionGroups;
-        this.questionsSvc.questionGroups = this.questionGroups;
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
+
+
+        // Reformat the response to create domain groupings ---------------------------------
+        const bigStructure: QuestionResponseWithDomains = {
+          ApplicationMode: data.ApplicationMode,
+          Domains: [],
+          OverallIRP: data.OverallIRP,
+          QuestionCount: data.QuestionCount,
+          RequirementCount: data.RequirementCount
+        };
+        data.QuestionGroups.forEach(g => {
+          if (!bigStructure.Domains.find(d => d.DomainName === g.DomainName)) {
+            bigStructure.Domains.push({
+              DomainName: g.DomainName,
+              QuestionGroups: []
+            });
+          }
+          bigStructure.Domains.find(d => d.DomainName === g.DomainName).QuestionGroups.push(g);
+        });
+        this.domains = bigStructure.Domains;
+        this.questionsSvc.domains = bigStructure.Domains;
+        // ------------------------------------------------------------------------------------
+
+
+
+        // default the selected maturity filters
+        this.questionsSvc.initializeMatFilters(data.OverallIRP);
 
         this.refreshQuestionVisibility(magic);
       },
@@ -143,55 +187,48 @@ export class QuestionsComponent implements OnInit {
     );
   }
 
+  /**
+   * Builds the side nav tree structure.
+   * @param magic
+   */
   populateTree(magic?: string) {
     if (!magic) {
       magic = this.navSvc.getMagic();
     }
     const tree: NavTree[] = [];
-    this.questionGroups
-      .filter(g => g.Visible)
-      .map(q => {
+    this.domains.forEach(d => {
+      d.QuestionGroups
+        .filter(g => g.Visible)
+        .map(q => {
 
-        if (!!q.StandardShortName) {
-          let standard = tree.find(elem => elem.label === q.StandardShortName);
-          if (standard === undefined || standard === null) {
+          if (!!q.StandardShortName) {
+            this.insertWithParents(tree, q);
+          } else {
             tree.push({
-              label: q.StandardShortName,
-              value: '',
+              label: q.GroupHeadingText,
+              elementType: 'QUESTION-HEADING',
+              value: {
+                target: 'Q' + q.GroupHeadingId + '.' + q.StandardShortName,
+                question: q.GroupHeadingId
+              },
               children: []
             });
-            standard = tree[tree.length - 1];
           }
-          standard.children.push({
-            label: q.GroupHeadingText,
-            value: {
-              target: 'Q' + q.GroupHeadingId + '.' + q.StandardShortName,
-              question: q.GroupHeadingId
-            },
-            children: []
-          });
-        } else {
-          tree.push({
-            label: q.GroupHeadingText,
-            value: {
-              target: 'Q' + q.GroupHeadingId + '.' + q.StandardShortName,
-              question: q.GroupHeadingId
-            },
-            children: []
-          });
-        }
-      });
+        });
+    });
     this.navSvc.setTree(tree, magic, true);
     this.navSvc.itemSelected
       .asObservable()
       .subscribe(
         (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {
           if (!!tgt.subcategory) {
-            this.questionGroups
-              .find(val => val.GroupHeadingId === tgt.question)
-              .SubCategories.find(
-                val => val.SubCategoryId === tgt.subcategory
-              ).Expanded = true;
+            this.domains.forEach(d => {
+              d.QuestionGroups
+                .find(val => val.GroupHeadingId === tgt.question)
+                .SubCategories.find(
+                  val => val.SubCategoryId === tgt.subcategory
+                ).Expanded = true;
+            });
             document.getElementById(tgt.parent).scrollIntoView();
           }
           if (!!tgt.target) {
@@ -201,13 +238,86 @@ export class QuestionsComponent implements OnInit {
       );
   }
 
-  visibleGroupCount() {
-    if (!this.questionGroups) {
-      return 1;
+  /**
+   * Insert the Heading into the tree with optional Standard / Domain parents.
+   * @param tree
+   * @param q
+   */
+  insertWithParents(tree: NavTree[], q: QuestionGroup) {
+    let standard = tree.find(elem => elem.elementType === 'STANDARD' && elem.label === q.StandardShortName);
+    if (!standard) {
+      tree.push({
+        label: q.StandardShortName,
+        elementType: 'STANDARD',
+        value: '',
+        children: []
+      });
+      standard = tree[tree.length - 1];
     }
-    return this.questionGroups.filter(g => g.Visible).length;
+
+    // this element is only built if the question group belongs to a domain (ACET)
+    let domain = null;
+    if (!!q.DomainName) {
+      domain = standard.children.find(elem => elem.elementType === 'DOMAIN' && elem.label === q.DomainName);
+      if (!domain) {
+        standard.children.push({
+          label: q.DomainName,
+          elementType: 'DOMAIN',
+          value: '',
+          children: []
+        });
+        domain = standard.children[standard.children.length - 1];
+      }
+    }
+
+    // build the question group heading element
+    const heading = {
+      label: q.GroupHeadingText,
+      value: {
+        target: 'Q' + q.GroupHeadingId + '.' + q.StandardShortName,
+        question: q.GroupHeadingId
+      },
+      elementType: 'QUESTION-HEADING',
+      children: []
+    };
+
+
+    if (!!domain) {
+      domain.children.push(heading);
+    } else {
+      standard.children.push(heading);
+    }
   }
 
+
+  visibleGroupCount() {
+    if (!this.domains) {
+      return 1;
+    }
+    let count = 0;
+    this.domains.forEach(d => {
+      count = count + d.QuestionGroups.filter(g => g.Visible).length;
+    });
+    return count;
+  }
+
+  hasDomainChanged(domain) {
+    if (!domain) {
+      return false;
+    }
+    if (this.currentDomain !== domain) {
+      this.currentDomain = domain;
+      return false;
+    }
+    return true;
+  }
+
+  addDomainPad(domain) {
+    if (domain != null) {
+      return "domain-pad";
+    }
+    return "";
+  }
   /**
    * Returns a boolean indicating if the browser is IE or Edge.
    * The 'auto-load supplemental' logic is not performant in IE, so we won't offer it.
@@ -217,6 +327,7 @@ export class QuestionsComponent implements OnInit {
     return isIEOrEdge;
   }
 
+
   /**
    * Stores the Supplemental auto-load setting in the service
    * for access by the child components.
@@ -225,17 +336,21 @@ export class QuestionsComponent implements OnInit {
     this.questionsSvc.autoLoadSupplementalSetting = this.autoLoadSupplementalInfo;
   }
 
+
   /**
    * Controls the mass expansion/collapse of all subcategories on the screen.
    * @param mode
    */
   expandAll(mode: boolean) {
-    this.questionGroups.forEach(group => {
-      group.SubCategories.forEach(subcategory => {
-        subcategory.Expanded = mode;
+    this.domains.forEach((d: Domain) => {
+      d.QuestionGroups.forEach(group => {
+        group.SubCategories.forEach(subcategory => {
+          subcategory.Expanded = mode;
+        });
       });
     });
   }
+
 
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
@@ -247,17 +362,5 @@ export class QuestionsComponent implements OnInit {
       .subscribe(() => {
         this.refreshQuestionVisibility();
       });
-  }
-
-  navBack() {
-    if (this.stdSvc.frameworkSelected) {
-      this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'framework']);
-    } else {
-      this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'standards']);
-    }
-  }
-
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results']);
   }
 }

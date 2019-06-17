@@ -75,9 +75,12 @@ namespace CSETWeb_Api.Helpers
         {
             /* Get the token string from the Authorization header and
                strip off the Bearer prefix if present. */
-            HttpRequest req = HttpContext.Current.Request;
-            tokenString = req.Headers["Authorization"];
-            Init(tokenString);
+            if (HttpContext.Current != null)
+            {
+                HttpRequest req = HttpContext.Current.Request;
+                tokenString = req.Headers["Authorization"];
+                Init(tokenString);
+            }
         }
 
 

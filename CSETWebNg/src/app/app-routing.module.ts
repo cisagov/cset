@@ -26,6 +26,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
+import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
+import { IRPComponent } from './assessment/prepare/irp/irp.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
 import { StandardsComponent } from './assessment/prepare/standards/standards.component';
@@ -54,6 +56,9 @@ import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
 import { ImportComponent } from './import/import.component';
+import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
+import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AdminComponent } from './assessment/results/admin/admin.component';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
@@ -62,6 +67,7 @@ import { AddQuestionComponent } from './builder/add-question/add-question.compon
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
+import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -100,6 +106,9 @@ const appRoutes: Routes = [
           { path: 'sal', component: SalsComponent },
           { path: 'standards', component: StandardsComponent },
           { path: 'framework', component: FrameworkComponent },
+          { path: 'required', component: RequiredDocsComponent },
+          { path: 'irp', component: IRPComponent },
+          { path: 'irp-summary', component: IrpSummaryComponent },
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: '**', redirectTo: 'info' }
         ]
@@ -124,6 +133,9 @@ const appRoutes: Routes = [
           { path: 'components-types', component: ComponentsTypesComponent },
           { path: 'components-warnings', component: ComponentsWarningsComponent },
 
+          { path: 'maturity', component: MatDetailComponent },
+          { path: 'admin', component: AdminComponent },
+          { path: 'acetDashboard', component: ACETDashboardComponent },
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
           { path: '', component: DashboardComponent },
