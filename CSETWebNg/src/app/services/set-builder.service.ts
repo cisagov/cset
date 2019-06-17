@@ -36,6 +36,9 @@ export class SetBuilderService {
      * Converts linebreak characters to HTML <br> tag.
      */
     formatLinebreaks(text: string) {
+        if (!text) {
+            return '';
+          }
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
     }
 
@@ -69,7 +72,7 @@ export class SetBuilderService {
      * Creates a copy of the set and opens the copy
      * @param setName
      */
-    cloneCustomSet(setName: string) {        
+    cloneCustomSet(setName: string) {
         return this.http.get(this.apiUrl + 'builder/CloneSet?setName=' + setName);
     }
 
@@ -108,10 +111,10 @@ export class SetBuilderService {
     /**
      * Gets questions with this "original set name".
      */
-    getMyQuestionsUsedByOtherSets(setName: string) {
+    getQuestionsOriginatingFromSet(setName: string) {
         return this.http
             .get(
-                this.apiUrl + 'builder/GetMyQuestionsUsedByOtherSets?setName=' + setName,
+                this.apiUrl + 'builder/GetQuestionsOriginatingFromSet?setName=' + setName,
                 headers
             );
     }

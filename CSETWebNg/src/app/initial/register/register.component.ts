@@ -30,12 +30,13 @@ import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material';
 import { ChangeDetectorRef } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: {class: 'd-flex flex-column flex-11a'}
 })
 
 export class RegisterComponent implements OnInit {
@@ -49,7 +50,6 @@ export class RegisterComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private auth: AuthenticationService,
-    private configSvc: ConfigService,
     private emailSvc: EmailService,
     private dialog: MatDialog
   ) { }
@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
     // don't send email if they have not provided everything
     if ((!this.model.FirstName || this.model.FirstName.length === 0)
       || (!this.model.LastName || this.model.LastName.length === 0)
-      || (!this.model.PrimaryEmail || this.model.PrimaryEmail.length === 0)) {
+      || (!this.model.PrimaryEmail || this.model.PrimaryEmail.length === 0) ) {
       this.errorMessage = "* fields are required";
       this.receivedError = true;
       return;
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog;
 
     // tell the API which app we are, for emailing purposes.
-    this.model.AppCode = this.configSvc.config.appCode;
+    this.model.AppCode = environment.appCode;
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {

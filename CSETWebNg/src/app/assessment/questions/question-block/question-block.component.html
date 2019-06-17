@@ -23,14 +23,17 @@
 <div class="question-group">
 
   <div class="subcat-header" [class.flat-bottom]="mySubCategory.Expanded">
-    <div class="sub-head-1" (click)="mySubCategory.Expanded = !mySubCategory.Expanded" (keydown.Spacebar)="mySubCategory.Expanded = !mySubCategory.Expanded"
+    <div class="sub-head-1" (click)="mySubCategory.Expanded = !mySubCategory.Expanded"
+      (keydown.Spacebar)="mySubCategory.Expanded = !mySubCategory.Expanded"
       (keydown.Enter)="mySubCategory.Expanded = !mySubCategory.Expanded" [attr.aria-expanded]="mySubCategory.Expanded"
       tabindex="0">
       <div class="sub-head-2">
         <span *ngIf="mySubCategory.SubCategoryHeadingText != ''">{{ mySubCategory.SubCategoryHeadingText }}</span>
       </div>
       <div class="d-flex justify-content-end align-items-center flex-00a">
-        <span [class.display-hidden]="!mySubCategory.HasReviewItems" class="d-flex justify-content-center align-items-center flex-00a" matTooltip="One or more controls in this category requires further review.">
+        <span [class.display-hidden]="!mySubCategory.HasReviewItems"
+          class="d-flex justify-content-center align-items-center flex-00a"
+          matTooltip="One or more controls in this category requires further review.">
           <span class="mr-1 cset-icons-flag-dark fs-small"></span>
           <span class="mb-1 fs-small">Requires Review</span>
         </span>
@@ -40,8 +43,7 @@
     </div>
     <div class="header-question" *ngIf="mySubCategory.HeaderQuestionText !== null 
                   && mySubCategory.HeaderQuestionText.length > 0
-                  && mySubCategory.Questions.length > 1"
-      [class.display-none]="!mySubCategory.Expanded">
+                  && mySubCategory.Questions.length > 1" [class.display-none]="!mySubCategory.Expanded">
 
       <div class="mb-2">
         {{ mySubCategory.HeaderQuestionText }}
@@ -51,21 +53,22 @@
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
           <label class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'"
             (click)="setBlockAnswer('Y')">
-            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="mySubCategory.SubCategoryAnswer === 'Y'">Yes
+            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
+              autocomplete="off" [checked]="mySubCategory.SubCategoryAnswer === 'Y'">{{ configSvc.buttonLabels['Y'] }}
           </label>
           <label class="btn btn-no form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'N'"
             (click)="setBlockAnswer('N')">
-            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="mySubCategory.SubCategoryAnswer === 'N'">No
+            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
+              autocomplete="off" [checked]="mySubCategory.SubCategoryAnswer === 'N'">{{ configSvc.buttonLabels['N'] }}
           </label>
           <label class="btn btn-na form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'NA'"
             (click)="setBlockAnswer('NA')">
-            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="mySubCategory.SubCategoryAnswer === 'NA'">NA
+            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
+              autocomplete="off" [checked]="mySubCategory.SubCategoryAnswer === 'NA'">{{ configSvc.buttonLabels['NA'] }}
           </label>
           <label class="btn btn-na form-check-label" style="visibility: hidden;">
-            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio" autocomplete="off">XX
+            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
+              autocomplete="off">XX
           </label>
         </div>
       </div>
