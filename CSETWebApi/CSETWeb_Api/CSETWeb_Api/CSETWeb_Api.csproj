@@ -688,6 +688,7 @@
     <Content Include="Diagram\src\main\webapp\img\computers\Virus_128x128.png" />
     <Content Include="Diagram\src\main\webapp\img\computers\Workstation_128x128.png" />
     <Content Include="Diagram\src\main\webapp\img\cset\AudioSwitch.jpg" />
+    <Content Include="Diagram\src\main\webapp\img\cset\Shinjuku.png" />
     <Content Include="Diagram\src\main\webapp\img\finance\Arrow_Down_128x128.png" />
     <Content Include="Diagram\src\main\webapp\img\finance\Arrow_Up_128x128.png" />
     <Content Include="Diagram\src\main\webapp\img\finance\Coins_128x128.png" />

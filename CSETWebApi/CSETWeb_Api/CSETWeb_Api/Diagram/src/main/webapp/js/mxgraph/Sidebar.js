@@ -3528,7 +3528,7 @@ Sidebar.prototype.addImagePalette = function(id, title, prefix, postfix, items, 
 			}
 			
 			fns.push(this.createVertexTemplateEntry('image;html=1;labelBackgroundColor=#ffffff;image=' + prefix + item + postfix,
-				this.defaultImageWidth, this.defaultImageHeight, '', title, title != null, null, this.filterTags(tmpTags)));
+				this.defaultImageWidth - 10, this.defaultImageHeight - 10, '', title, title != null, null, this.filterTags(tmpTags)));
 		}))(items[i], (titles != null) ? titles[i] : null, (tags != null) ? tags[items[i]] : null);
 	}
 
