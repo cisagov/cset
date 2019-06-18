@@ -27,13 +27,15 @@ import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConfigService } from '../../../services/config.service';
+import { AssessmentService } from '../../../services/assessment.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
  */
 @Component({
   selector: 'app-question-block',
-  templateUrl: './question-block.component.html'
+  templateUrl: './question-block.component.html',
+  styleUrls: ['./question-block.component.css']
 })
 export class QuestionBlockComponent implements OnInit {
 
@@ -48,10 +50,20 @@ export class QuestionBlockComponent implements OnInit {
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
 
+  matLevelMap = new Map<string,string>();
+  private _timeoutId: any;
+
   constructor(
     public questionsSvc: QuestionsService,
     private dialog: MatDialog,
-    public configSvc: ConfigService) { }
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService) { 
+      this.matLevelMap.set("B","Baseline");
+      this.matLevelMap.set("E","Evolving");
+      this.matLevelMap.set("Int","Intermediate");
+      this.matLevelMap.set("A","Advanced");
+      this.matLevelMap.set("Inn","Innovative");
+    }
 
   ngOnInit() {
     this.refreshReviewIndicator();
@@ -77,10 +89,12 @@ export class QuestionBlockComponent implements OnInit {
       text = this.replaceAll(text, t.Token, "<span class='sub-me pid-" + t.Id + "'>" + s + "</span>");
     });
 
-    // return text + " [" + q.QuestionId + "]";
     return text;
   }
 
+  baselineLevel(q: Question){
+    return this.matLevelMap.get(q.MaturityLevel);
+  }
   /**
    * Spawns a dialog to capture the new substitution text.
    */
@@ -152,12 +166,21 @@ export class QuestionBlockComponent implements OnInit {
   refreshPercentAnswered() {
     let answeredCount = 0;
     let totalCount = 0;
+    let isAcetOnly = this.assessSvc.getIsAcetOnly();
 
     this.mySubCategory.Questions.forEach(q => {
-      totalCount++;
-
-      if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
-        answeredCount++;
+      
+      if(isAcetOnly && q.Visible)
+      {
+        totalCount++;
+        if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
+          answeredCount++;
+        }
+      } else if(!isAcetOnly){
+        totalCount++;
+        if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
+          answeredCount++;
+        }
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
@@ -254,20 +277,25 @@ export class QuestionBlockComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
-    const answer: Answer = {
-      QuestionId: q.QuestionId,
-      QuestionNumber: q.DisplayNumber,
-      AnswerText: q.Answer,
-      AltAnswerText: q.AltAnswerText,
-      Comment: q.Comment,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
-    };
-
-    this.refreshReviewIndicator();
-
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+    
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(()=>{
+      const answer: Answer = {
+        QuestionId: q.QuestionId,
+        QuestionNumber: q.DisplayNumber,
+        AnswerText: q.Answer,
+        AltAnswerText: q.AltAnswerText,
+        Comment: q.Comment,
+        MarkForReview: q.MarkForReview,
+        Reviewed: q.Reviewed
+      };
+  
+      this.refreshReviewIndicator();
+  
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
+    
   }
 
   replaceAll(origString: string, searchStr: string, replaceStr: string) {

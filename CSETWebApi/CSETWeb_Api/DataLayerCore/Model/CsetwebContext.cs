@@ -61,6 +61,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<FINANCIAL_COMPONENTS> FINANCIAL_COMPONENTS { get; set; }
         public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
         public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
+        public virtual DbSet<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
         public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
         public virtual DbSet<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
         public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
@@ -352,18 +353,18 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Header_Id });
+                entity.HasKey(e => new { e.ASSESSMENT_ID, e.IRP_HEADER_ID });
 
-                entity.Property(e => e.Comment).IsUnicode(false);
+                entity.Property(e => e.COMMENT).IsUnicode(false);
 
-                entity.HasOne(d => d.Assessment_)
+                entity.HasOne(d => d.ASSESSMENT_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasForeignKey(d => d.ASSESSMENT_ID)
                     .HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
 
-                entity.HasOne(d => d.IRP_Header_)
+                entity.HasOne(d => d.IRP_HEADER_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.IRP_Header_Id)
+                    .HasForeignKey(d => d.IRP_HEADER_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
             });
@@ -832,6 +833,8 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINANCIAL_ASSESSMENT_VALUES>(entity =>
@@ -867,6 +870,8 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.FinComponentId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINANCIAL_DETAILS>(entity =>
@@ -889,6 +894,24 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.DomainId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.DomainId });
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_ASSESSMENTS");
+
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
+                    .HasForeignKey(d => d.DomainId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_FINANCIAL_DOMAINS");
             });
 
             modelBuilder.Entity<FINANCIAL_FFIEC_MAPPINGS>(entity =>
@@ -975,6 +998,8 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.MaturityId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINANCIAL_QUESTIONS>(entity =>
@@ -1172,6 +1197,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.File_Name).IsUnicode(false);
 
+                entity.Property(e => e.Is_Uploaded).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.Property(e => e.Short_Name).IsUnicode(false);
@@ -1191,7 +1218,7 @@ namespace DataLayerCore.Model
                 entity.HasOne(d => d.File_Type_)
                     .WithMany(p => p.GEN_FILE)
                     .HasForeignKey(d => d.File_Type_Id)
-                    .HasConstraintName("SYS_C0014719");
+                    .HasConstraintName("FK_GEN_FILE_FILE_TYPE");
             });
 
             modelBuilder.Entity<GEN_FILE_LIB_PATH_CORL>(entity =>
@@ -1265,6 +1292,8 @@ namespace DataLayerCore.Model
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
+                
+
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.INFORMATION)
                     .HasForeignKey<INFORMATION>(d => d.Id)
@@ -1282,6 +1311,8 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.IRP_ID).ValueGeneratedNever();
 
                 entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.DescriptionComment).IsUnicode(false);
 
                 entity.Property(e => e.Risk_1_Description).IsUnicode(false);
 

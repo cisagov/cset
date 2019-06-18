@@ -26,6 +26,8 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
+import { ConfigService } from '../../../../services/config.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 declare var $: any;
 
 @Component({
@@ -47,7 +49,12 @@ export class DashboardComponent implements OnInit {
   hasComponents = false;
   initialized = false;
 
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+  constructor(
+    private analysisSvc: AnalysisService,
+    private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    public configSvc: ConfigService,
+    private router: Router) { }
 
   ngOnInit() {
     this.analysisSvc.getDashboard().subscribe(x => this.setupChart(x));
@@ -56,18 +63,11 @@ export class DashboardComponent implements OnInit {
     $("#overall-score").css("width", $("#component-score").width() + "px");
   }
 
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'ranked-questions']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'questions']);
-  }
 
   setupChart(x: any) {
     this.initialized = false;
     const stds = this.getScore(x.OverallBars, 'Questions')
-               + this.getScore(x.OverallBars, 'Requirement');
+      + this.getScore(x.OverallBars, 'Requirement');
     const comp = x.OverallBars.data[0];
     this.overallScore = this.getScore(x.OverallBars, 'Overall').toFixed(0) + '%';
     this.standardBasedScore = stds > 0 ? stds.toFixed(0) + '%' : 'No Standards Answers';
@@ -75,39 +75,39 @@ export class DashboardComponent implements OnInit {
 
     this.hasComponents = (x.ComponentSummaryPie.data as number[]).reduce((a, b) => a + b) > 0;
 
-    this.assessComplChart = new Chart('assessComplCanvas', {
-      type: 'horizontalBar',
-      data: {
-        labels: x.OverallBars.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
-            backgroundColor: '#0A5278',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Assessment Compliance'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              max: 100
-            }
-          }]
-        }
-      }
-    });
+    // this.assessComplChart = new Chart('assessComplCanvas', {
+    // type: 'horizontalBar',
+    // data: {
+    // labels: x.OverallBars.Labels,
+    // datasets: [
+    // {
+    // label: '',
+    // data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
+    // backgroundColor: '#0A5278',
+    // borderColor: [],
+    // borderWidth: 1
+    // }
+    // ],
+    // },
+    // options: {
+    // title: {
+    // display: false,
+    // fontSize: 20,
+    // text: 'Assessment Compliance'
+    // },
+    // legend: {
+    // display: false
+    // },
+    // scales: {
+    // xAxes: [{
+    // ticks: {
+    // beginAtZero: true,
+    // max: 100
+    // }
+    // }]
+    // }
+    // }
+    // });
 
     this.topCategChart = new Chart('topCategCanvas', {
       type: 'horizontalBar',
@@ -146,11 +146,11 @@ export class DashboardComponent implements OnInit {
       type: 'doughnut',
       data: {
         labels: [
-          'Yes',
-          'No',
-          'N/A',
-          'Alternate',
-          'Unanswered'
+          this.configSvc.answerLabels['Y'],
+          this.configSvc.answerLabels['N'],
+          this.configSvc.answerLabels['NA'],
+          this.configSvc.answerLabels['A'],
+          this.configSvc.answerLabels['U']
         ],
         datasets: [
           {
@@ -214,33 +214,33 @@ export class DashboardComponent implements OnInit {
         rotation: -Math.PI
       }
     });
-    if (x.ComponentSummaryPie != null) {
-      this.compSummChart = new Chart('compSummCanvas', {
-        type: 'pie',
-        data: {
-          labels: x.ComponentSummaryPie.Labels,
-          datasets: [
-            {
-              label: '',
-              data: x.ComponentSummaryPie.data,
-              backgroundColor: x.ComponentSummaryPie.backgroundColor,
-              borderColor: x.ComponentSummaryPie.borderColor,
-              borderWidth: 1
-            }
-          ],
-        },
-        options: {
-          title: {
-            display: false,
-            fontSize: 20,
-            text: 'Components Summary'
-          },
-          legend: {
-            display: true,
-            position: 'bottom'
-          }
-        }
-      });
+    if (!x.ComponentSummaryPie) {
+      // this.compSummChart = new Chart('compSummCanvas', {
+      //   type: 'pie',
+      //   data: {
+      //     labels: x.ComponentSummaryPie.Labels,
+      //     datasets: [
+      //       {
+      //         label: '',
+      //         data: x.ComponentSummaryPie.data,
+      //         backgroundColor: x.ComponentSummaryPie.backgroundColor,
+      //         borderColor: x.ComponentSummaryPie.borderColor,
+      //         borderWidth: 1
+      //       }
+      //     ],
+      //   },
+      //   options: {
+      //     title: {
+      //       display: false,
+      //       fontSize: 20,
+      //       text: 'Components Summary'
+      //     },
+      //     legend: {
+      //       display: true,
+      //       position: 'bottom'
+      //     }
+      //   }
+      // });
     }
     this.initialized = true;
   }

@@ -34,6 +34,15 @@ SOFTWARE.
 
 body {
   background-color: $gray-50;
+  outline:none;
+}
+
+:focus{
+  outline:none;
+}
+
+*:focus{
+  outline:none !important;
 }
 
 .gutter-background {
@@ -350,7 +359,16 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
 }
-/*@media only screen and (max-width: 1200px) {
+@media only screen and (max-width:767px){
+  .navbar-collapse.collapse.show
+  {
+    background-color: #052637;
+    z-index:10000;
+    padding:10px;
+  }
+}
+/*
+@media only screen and (max-width: 1200px) {
   table.assessment-summary td > button > span {
     display: none;
   }
@@ -385,8 +403,8 @@ table.assessment-summary th {
   table.assessment-summary th:nth-child(4) {
     display: none;
   }
-}
-*/
+}*/
+
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
@@ -398,18 +416,17 @@ table.td-align-top td {
 
 .reference-table {
   width: 100%;
-  margin-bottom: .8em;
+  margin-bottom: 10px;
 }
 
 .reference-table td,
 .reference-table th {
-  vertical-align: top;
-  padding-right: .8em;
-  padding-bottom: .8em;
+  padding-right: 10px;
 }
 
-.builder-requirement-docs td {
+.irp-table th, .irp-table td {
   vertical-align: top;
+  padding: .5rem .3rem;
 }
 
 .login-logo {
@@ -850,6 +867,12 @@ ul.mat-tree-node mat-tree-node {
   color: $primary-color;
 }
 
+.default-mat-filter {
+  font-weight: 700 !important;
+  font-style: italic !important;
+  font-size: 1.1rem;
+}
+
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
@@ -1036,6 +1059,11 @@ ul.nav-tabs li.active button .tab-icon {
   flex: 0 0  auto;
   padding: 5px;
 }
+
+#csetNavbarCollapse {
+  margin-top: 4px;
+}
+
 .navbar-toggler-icon:before {
   content: '\e5d2';
 }
@@ -1051,9 +1079,14 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 20px;
   padding: 5px;
 }
+
 .navbar-brand {
   padding: 0rem;
-  margin-top: -15px;
+  margin-top: -4px;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 
 .dropdown-menu > li > a {
@@ -1063,6 +1096,10 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .navbar-brand:hover {
   background-color: $secondary-color;
   color: $white;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 
 .navbar .rll:hover,
@@ -2610,4 +2647,60 @@ hr.ranked-questions {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
+
+
+/////////////////// ACET DASHBOARD CLASSES ///////////////////
+.alert-incomplete{
+  color: #fff;
+  background-color: #909090;
+  border-color: #787878;
+  padding: 0.5rem 0.75rem !important;
+}
+.alert-baseline{
+  color: #fff;
+  background-color: #3498DB;
+  border-color: #2E86C1;
+  padding: .50rem .75rem !important;
+}
+.alert-evolving{
+  color: #fff;
+  background-color: #2E86C1;
+  border-color: #2874A6;
+  padding: .50rem .75rem !important;
+}
+.alert-intermediate{
+  background-color: #2874A6;
+  border-color: #21618C;
+  color: #fff !important;
+  padding: .50rem .75rem !important;
+}
+.alert-advanced{
+  background-color: #21618C;
+  border-color: #1B4F72;
+  color: #fff !important;
+  padding: .50rem .75rem !important;
+}
+.alert-innovative{
+  background-color: #1B4F72;
+  border-color: #154360;
+  color: #fff !important;
+  padding: .50rem .75rem !important;
+  
+}
+
+.alert-domain{
+  background-color: #fff;
+  border-color: #ccc;
+  color: #000 !important;
+  padding: .50rem 2.5rem .50rem .75rem !important;
+  text-align: left !important;
+}
+.alert{
+  text-align: center !important;
+}
+
+.domain-pad{
+  margin-left:20px;
+}
+
 

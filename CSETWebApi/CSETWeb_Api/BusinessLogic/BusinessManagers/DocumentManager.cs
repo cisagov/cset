@@ -92,7 +92,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             doc.Title = title;
 
-            db.DOCUMENT_FILE.AddOrUpdate( doc,x=> x.Document_Id);
+            db.DOCUMENT_FILE.AddOrUpdate(doc, x => x.Document_Id);
             db.SaveChanges();
             CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
@@ -167,46 +167,45 @@ namespace CSETWeb_Api.BusinessManagers
 
             foreach (var file in result.FileResultList)
             {
-            // first see if the document already exists on any question in this Assessment, based on the filename and hash
+                // first see if the document already exists on any question in this Assessment, based on the filename and hash
                 var doc = db.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
                     && f.Name == file.FileName
-                && f.Assessment_Id == this.assessmentId).FirstOrDefault();
-            if (doc == null)
-            {
-                doc = new DOCUMENT_FILE()
+                    && f.Assessment_Id == this.assessmentId).FirstOrDefault();
+                if (doc == null)
                 {
-                    Assessment_Id = this.assessmentId,
-                    Title = title,
+                    doc = new DOCUMENT_FILE()
+                    {
+                        Assessment_Id = this.assessmentId,
+                        Title = title,
                         Path = file.FileName,  // this may end up being some other reference
                         Name = file.FileName,
                         FileMd5 = file.FileHash,
                         ContentType = file.ContentType,
                         Data = file.FileBytes
-                };
+                    };
 
-            }
-            else
-            {
-                doc.Title = title;
+                }
+                else
+                {
+                    doc.Title = title;
                     doc.Name = file.FileName;
-            }
+                }
 
-            var answer = db.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
-            db.DOCUMENT_FILE.AddOrUpdate( doc, x=> x.Document_Id);
-            db.SaveChanges();
+                var answer = db.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
+                db.DOCUMENT_FILE.AddOrUpdate(doc, x => x.Document_Id);
+                db.SaveChanges();
 
-            DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id }; 
-            if (db.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
-            {
-                db.DOCUMENT_ANSWERS.Add(temp);
-            }
-            else
-            {
-                db.DOCUMENT_ANSWERS.Update(temp);
-            }
-            db.SaveChanges();
-
-            CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
+                DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id };
+                if (db.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
+                {
+                    db.DOCUMENT_ANSWERS.Add(temp);
+                }
+                else
+                {
+                    db.DOCUMENT_ANSWERS.Update(temp);
+                }
+                db.SaveChanges();
+                CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
             }
             
         }

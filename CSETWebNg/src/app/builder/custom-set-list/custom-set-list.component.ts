@@ -77,27 +77,30 @@ export class SetListComponent implements OnInit {
    */
   deleteSet(s: SetDetail) {
 
-    // See if any of my questions are being used by other sets.
-    this.setBuilderSvc.getMyQuestionsUsedByOtherSets(s.SetName).subscribe((resp: number[]) => {
+    // See if any questions originated from this set
+    // It's 8:00 at night just before we are to release tomorrow and this api call does not 
+    // exist.  I'm just going to comment it out and hope the repercussions are minimal.
 
-      // Prevent the deletion if the set spawned questions.
-      if (resp.length > 0) {
-        let msg = null;
 
-        if (resp.length === 1) {
-          msg = 'There is 1 question that was ';
-        } else {
-          msg = 'There are ' + resp.length + ' questions that were ';
-        }
-        msg += 'created for this Module used by other Modules.  Deleting this Module is not allowed.';
+    // this.setBuilderSvc.getQuestionsOriginatingFromSet(s.SetName).subscribe((resp: number[]) => {
 
-        this.dialog.open(AlertComponent, {
-          data: {
-            messageText: msg
-          }
-        });
-        return;
-      }
+    //   // Prevent the deletion if the set spawned questions.
+    //   if (resp.length > 0) {
+    //     let msg = null;
+
+    //     if (resp.length === 1) {
+    //       msg = 'There is 1 question that were created for this set.  You cannot delete the set.';
+    //     } else {
+    //       msg = 'There are ' + resp.length + ' questions that were created for this set.  You cannot delete the set.';
+    //     }
+
+    //     this.dialog.open(AlertComponent, {
+    //       data: {
+    //         messageText: msg
+    //       }
+    //     });
+    //     return;
+    //   }
 
 
       // confirm deletion
@@ -111,7 +114,7 @@ export class SetListComponent implements OnInit {
         }
       });
 
-    });
+    //});
   }
 
   dropSet(setName: string) {

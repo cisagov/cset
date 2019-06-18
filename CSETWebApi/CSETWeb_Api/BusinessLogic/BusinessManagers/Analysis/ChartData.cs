@@ -50,6 +50,7 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public ChartData ComponentSummaryPie { get; set; }
     }
 
+
     public class ChartData
     {
         //this is hokey sorry

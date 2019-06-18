@@ -56,6 +56,9 @@ export class LandingPageComponent implements OnInit {
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
+  exportExtension: string;
+  displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -68,6 +71,7 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+    this.exportExtension = sessionStorage.getItem('exportExtension');
 
     this.checkPasswordReset();
   }
