@@ -63,7 +63,7 @@
                         for processing. This may take several minutes</div>
                     <div class="alert alert-danger" role="alert" *ngIf="state=='Failed'">The module failed to import
                         because an error occurred in processing.</div>
-                    <div class="alert alert-warning" role="alert" *ngIf="checkMonacoStuff() && importNgForm.invalid">You must correct all
+                    <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You must correct all
                         errors before submitting the module for processing.</div>
 
                 </div>
@@ -154,7 +154,7 @@
                     <input style="display:none" #codeGoodInput="ngModel" [(ngModel)]="codeGood" name="codeGood"
                         type="checkbox" value="true" required *ngIf="!codeChecked">
                     <div class="panel panel-default mt-0 mb-5"
-                        *ngIf="state != 'Processing' && checkMonacoStuff()">
+                        *ngIf="state != 'Processing' && monaco && monaco.editor && monaco.editor.getModelMarkers().length">
                         <div class="panel-heading">
                             <h4 class="panel-title px-2 py-1 c-white">
                                 Validation messages
