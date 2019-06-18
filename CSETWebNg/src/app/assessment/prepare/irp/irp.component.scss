@@ -1,0 +1,66 @@
+.irp-risk { 
+    margin: 10px 30px;
+    width: 80%;
+    border-radius: .25rem;
+    padding: .375rem .75rem;
+    border: 1px solid transparent;
+}
+
+.irp-risk:hover {
+    background-color: transparent;
+    border: 1px solid #0f3c7a;
+}
+
+.irp-selected {
+    background-color: #0f3c7a !important;
+    color: white !important;
+}
+
+.irp-selected h3 {
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.irp-selected:hover {
+    background-color: #1964cc !important;
+}
+
+.irp-header {
+    width: 100%;
+    //background-color: rgb(245,245,245);
+    margin-bottom: 0px;
+}
+
+.risk-text {
+    margin-left: 10px;
+}
+
+.risk-subheader {
+    color: rgb(140,140,140);
+}
+
+.irp-info-box {
+    width: 90%;
+    border: 3px solid rgb(200,200,200);
+    margin: 5px 20px;
+    line-height: 1.4;
+    border-radius: .25rem;
+}
+
+.irp-info-btn {
+    border: 0px;
+    width: 100%;
+    text-align: left;
+    background-color: rgb(200,200,200);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.irp-info-body {
+    background-color: rgb(245,245,245);
+    padding: 5px;
+}
+
+.irp-textarea {
+    width: 100%;
+}

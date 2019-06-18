@@ -26,6 +26,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-ranked-questions',
@@ -34,12 +35,21 @@ import { ConfigService } from '../../../../services/config.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class RankedQuestionsComponent implements OnInit {
-  dataRows: { rank: number; standard: string; category: string; Question_Ref: string; question: string; AnswerText: string; displayAnswer: string}[];
+  dataRows: {
+    rank: number;
+    standard: string;
+    category: string;
+    Question_Ref: string;
+    question: string;
+    AnswerText: string;
+    displayAnswer: string
+  }[];
   initialized = false;
   docUrl: string;
 
   constructor(private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
     private router: Router,
     private configSvc: ConfigService) { }
 
@@ -48,29 +58,20 @@ export class RankedQuestionsComponent implements OnInit {
     this.analysisSvc.getRankedQuestions().subscribe(x => this.setupTable(x));
   }
 
-  navNext() {
-    // this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'overall-ranked-categories']);
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'standards-summary']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'dashboard']);
-  }
-
   setupTable(data: any) {
     this.initialized = false;
     this.dataRows = data;
-    
+
     let i = 1;
     for (const row of this.dataRows) {
       row.rank = i++;
       switch (row.AnswerText) {
         case 'U':
-        row.displayAnswer = 'Unanswered';
-        break;
+          row.displayAnswer = this.configSvc.answerLabels['U'];
+          break;
         case 'N':
-        row.displayAnswer = 'No';
-        break;
+          row.displayAnswer = this.configSvc.answerLabels['N'];
+          break;
       }
     }
     this.initialized = true;

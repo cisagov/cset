@@ -398,6 +398,7 @@ namespace BusinessLogic.Helpers
         public const string Integrity = "Integrity";
 
         public const string SIMPLE_SAL = "Simple";
+
         //Maturity Levels
         public const string IncompleteMaturity = "Incomplete";
         public const string SubBaselineMaturity = "Sub-Baseline";
@@ -406,6 +407,13 @@ namespace BusinessLogic.Helpers
         public const string IntermediateMaturity = "Intermediate";
         public const string AdvancedMaturity = "Advanced";
         public const string InnovativeMaturity = "Innovative";
+
+        //IRP Levels
+        public const string LeastIrp = "Least";
+        public const string MinimalIrp = "Minimal";
+        public const string ModerateIrp = "Moderate";
+        public const string SignificantIrp = "Significant";
+        public const string MostIrp = "Most";
     }
     
 

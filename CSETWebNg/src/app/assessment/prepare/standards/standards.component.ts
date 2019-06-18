@@ -29,6 +29,7 @@ import { QuestionRequirementCounts, StandardsBlock } from "../../../models/stand
 import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
+import { Navigation2Service } from "../../../services/navigation2.service";
 
 @Component({
   selector: "app-standards",
@@ -45,6 +46,7 @@ export class StandardsComponent implements OnInit {
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
+    public navSvc2: Navigation2Service,
     public dialog: MatDialog
   ) {}
 
@@ -163,6 +165,10 @@ export class StandardsComponent implements OnInit {
       this.setFrameworkNavigation();
     }
 
+    if (standard.Code === "ACET_V1") {
+      this.standardSvc.setACETSelected(standard.Selected);
+    }
+
     this.standards.Categories.forEach(cat => {
       cat.Standards.forEach(std => {
         if (std.Selected) {
@@ -201,28 +207,5 @@ export class StandardsComponent implements OnInit {
       // this.assessSvc.currentTab = 'questions';
       this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
     });
-  }
-
-  /**
-   * Navigate to the previous page
-   */
-  navBack() {
-    this.router.navigate([
-      "/assessment",
-      this.assessSvc.id(),
-      "prepare",
-      "sal"
-    ]);
-  }
-
-  /**
-   * Navigate to the next page
-   */
-  navNext() {
-    if (this.standardSvc.frameworkSelected) {
-      this.router.navigate(["/assessment", this.assessSvc.id(), "prepare", "framework"]);
-    } else {
-      this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
-    }
   }
 }

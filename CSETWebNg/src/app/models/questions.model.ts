@@ -26,6 +26,26 @@ export interface QuestionResponse {
     ApplicationMode: string;
     QuestionCount: number;
     RequirementCount: number;
+    OverallIRP: number;
+}
+
+export interface QuestionResponseWithDomains {
+    Domains: Domain[];
+    ApplicationMode: string;
+    QuestionCount: number;
+    RequirementCount: number;
+    OverallIRP: number;
+}
+
+export interface ACETDomain {
+    DomainName: string;
+    DomainId: number;
+    Acronym: string;
+}
+
+export interface Domain {
+    DomainName: string;
+    QuestionGroups: QuestionGroup[];
 }
 
 export interface QuestionGroup {
@@ -34,6 +54,7 @@ export interface QuestionGroup {
     StandardShortName: string;
     SubCategories: SubCategory[];
     Visible: boolean;
+    DomainName: string;
 }
 
 export interface SubCategory {
@@ -62,6 +83,7 @@ export interface Question {
     HasDocument: boolean;
     MarkForReview: boolean;
     Reviewed: boolean;
+    MaturityLevel: string;
 
     ExtrasExpanded: boolean;
     Visible: boolean;
@@ -99,7 +121,6 @@ export class DefaultParameter {
     EditMode: boolean;
 }
 
-
 /**
  * Encapsulates an in-line Parameter when changing the value
  * and persisting back to the API.
@@ -128,3 +149,17 @@ export interface SubCategoryAnswers {
     Answers: Answer[];
 }
 
+/**
+ * Represents
+ */
+export interface MaturityFilter {
+    label: string;
+    isSet: boolean;
+}
+
+/**
+ *
+ */
+export class DomainMaturityFilterSet {
+    
+}
