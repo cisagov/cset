@@ -16,14 +16,23 @@ using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
-    public class ReportsDataManager: QuestionRequirementManager
+    public class ReportsDataManager : QuestionRequirementManager
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="assessment_id"></param>
         public ReportsDataManager(int assessment_id) : base(assessment_id)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<BasicReportData.RequirementControl> GetControls()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
@@ -33,17 +42,17 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 db.FillEmptyQuestionsForAnalysis(_assessmentId);
 
                 var q = (from rs in db.REQUIREMENT_SETS
-                        join  r in db.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
-                        join  rl in db.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
-                        join s in db.SETS on rs.Set_Name equals s.Set_Name
-                        join av in db.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name 
-                        join rqs in db.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name} equals new { rqs.Requirement_Id, rqs.Set_Name }
-                        join qu in db.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
-                        join a in db.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
-                        where rl.Standard_Level == _standardLevel && av.Selected == true && rl.Level_Type == "NST" 
-                            && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
-                        orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
-                        select new { r, rs, rl, s, qu, a }).ToList();
+                         join r in db.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
+                         join rl in db.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
+                         join s in db.SETS on rs.Set_Name equals s.Set_Name
+                         join av in db.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name
+                         join rqs in db.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
+                         join qu in db.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
+                         join a in db.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
+                         where rl.Standard_Level == _standardLevel && av.Selected == true && rl.Level_Type == "NST"
+                             && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
+                         orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
+                         select new { r, rs, rl, s, qu, a }).ToList();
 
                 //get all the questions for this control 
                 //determine the percent implemented.                 
@@ -54,13 +63,13 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 List<BasicReportData.Control_Questions> questions = null;
                 foreach (var a in q.ToList())
                 {
-                    double implementationstatus = 0; 
-                    if(prev_requirement_id!=a.r.Requirement_Id)
+                    double implementationstatus = 0;
+                    if (prev_requirement_id != a.r.Requirement_Id)
                     {
                         questionCount = 0;
                         questionsAnswered = 0;
                         questions = new List<BasicReportData.Control_Questions>();
-                        control =  new BasicReportData.RequirementControl()
+                        control = new BasicReportData.RequirementControl()
                         {
                             ControlDescription = a.r.Requirement_Text,
                             RequirementTitle = a.r.Requirement_Title,
@@ -68,11 +77,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                             StandardShortName = a.s.Short_Name,
                             Standard_Category = a.r.Standard_Category,
                             SubCategory = a.r.Standard_Sub_Category,
-                            Control_Questions = questions                            
+                            Control_Questions = questions
                         };
                         controls.Add(control);
                     }
-                    questionCount++;                        
+                    questionCount++;
 
                     switch (a.a.Answer_Text)
                     {
@@ -89,7 +98,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                         Simple_Question = a.qu.Simple_Question
                     });
 
-                    control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered,questionCount,2).ToString("##.##");
+                    control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered, questionCount, 2).ToString("##.##");
                     prev_requirement_id = a.r.Requirement_Id;
                 }
             }
@@ -98,28 +107,28 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
-            using(var db = new CSET_Context())
+            using (var db = new CSET_Context())
             {
                 var dblist = from a in db.AVAILABLE_STANDARDS
                              join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
                              join c in db.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
                              join q in db.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
                              join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
-                             join s in db.SETS on b.Set_Name equals s.Set_Name                              
+                             join s in db.SETS on b.Set_Name equals s.Set_Name
                              where a.Selected == true && a.Assessment_Id == _assessmentId
                              && c.Assessment_Id == _assessmentId
-                             orderby  s.Short_Name, h.Question_Group_Heading, c.Question_Number
+                             orderby s.Short_Name, h.Question_Group_Heading, c.Question_Number
                              select new SimpleStandardQuestions()
                              {
                                  ShortName = s.Short_Name,
                                  Answer = c.Answer_Text,
-                                 CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,                                 
-                                 Question = q.Simple_Question                                 
+                                 CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
+                                 Question = q.Simple_Question
                              };
                 List<StandardQuestions> list = new List<StandardQuestions>();
                 string lastshortname = "";
                 List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
-                foreach(var a in dblist.ToList())
+                foreach (var a in dblist.ToList())
                 {
                     if (a.ShortName != lastshortname)
                     {
@@ -138,12 +147,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
         public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
-        {   
+        {
             using (var db = new CSET_Context())
-            {   
+            {
                 return db.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
             }
-            
+
         }
 
         public List<RankedQuestions> GetTop5Questions()
@@ -151,52 +160,147 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return GetRankedQuestions().Take(5).ToList();
         }
 
+
+        /// <summary>
+        /// Returns a list of questions that have been answered "Alt"
+        /// </summary>
+        /// <returns></returns>
         public List<QuestionsWithAlternateJustifi> GetQuestionsWithAlternateJustification()
         {
             using (var db = new CSET_Context())
             {
-                
+                var results = new List<QuestionsWithAlternateJustifi>();
+
+                // get any "A" answers that currently apply
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                    .Where(ans => ans.Answer_Text == "A").ToList();
+
+                if (relevantAnswers.Count == 0)
+                {
+                    return results;
+                }
+
+                bool requirementMode = relevantAnswers[0].Is_Requirement;
+
+                // include Question or Requirement contextual information
+                if (requirementMode)
+                {
+                    var query = from ans in relevantAnswers
+                               join req in db.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                               select new QuestionsWithAlternateJustifi()
+                               {
+                                   Answer = ans.Answer_Text,
+                                   CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                   AlternateJustification = ans.Alternate_Justification,
+                                   Question = req.Requirement_Text
+                               };
+
+                    return query.ToList();
+                }
+                else
+                {
+                    var query = from ans in relevantAnswers
+                               join q in db.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
+                               join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                               orderby h.Question_Group_Heading
+                               select new QuestionsWithAlternateJustifi()
+                               {
+                                   Answer = ans.Answer_Text,
+                                   CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
+                                   AlternateJustification = ans.Alternate_Justification,
+                                   Question = q.Simple_Question
+                               };
+
+                    return query.ToList();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a list of questions that have been marked for review or have comments.
+        /// </summary>
+        /// <returns></returns>
+        public List<QuestionsWithComments> getQuestionsWithCommentsOrMarkedForReview()
+        {
+            using (var db = new CSET_Context())
+            {
+                var results = new List<QuestionsWithComments>();
+
+                // get any "marked for review" or commented answers that currently apply
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                    .Where(ans => ans.Mark_For_Review == true || ans.Comment != null)
+                    .ToList();
+
+                if (relevantAnswers.Count == 0)
+                {
+                    return results;
+                }
+
+                bool requirementMode = relevantAnswers[0].Is_Requirement;
+
+                // include Question or Requirement contextual information
+                if (requirementMode)
+                {
+                    var query = from ans in relevantAnswers
+                            join req in db.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                            select new QuestionsWithComments()
+                            {
+                                Answer = ans.Answer_Text,
+                                CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                MarkedForReview = ans.Mark_For_Review.ToString(),
+                                Question = req.Requirement_Text,
+                                Comment = ans.Comment
+                            };
+
+                    return query.ToList();
+                }
+                else
+                {
+                    var query = from ans in relevantAnswers
+                            join q in db.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
+                            join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                            orderby h.Question_Group_Heading
+                            select new QuestionsWithComments()
+                            {
+                                Answer = ans.Answer_Text,
+                                CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
+                                MarkedForReview = ans.Mark_For_Review.ToString(),
+                                Question = q.Simple_Question,
+                                Comment = ans.Comment
+                            };
+
+                    return query.ToList();
+                }
+
+
+
+
+
+
+
+
+
+
+
+
                 var dblist = from a in db.AVAILABLE_STANDARDS
                              join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
                              join c in db.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
                              join q in db.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
                              join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
                              where a.Selected == true && a.Assessment_Id == _assessmentId
-                             && c.Assessment_Id == _assessmentId 
-                             && c.Answer_Text == "A"                                
-                             orderby h.Question_Group_Heading
-                             select new QuestionsWithAlternateJustifi()
-                             {
-                                 Answer = c.Answer_Text,
-                                 CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,                                 
-                                 AlternateJustification = c.Alternate_Justification,
-                                 Question = q.Simple_Question
-                             };
-
-                return dblist.ToList<QuestionsWithAlternateJustifi>();
-            }
-        }
-
-        public List<QuestionsWithComments> getQuestionsWithCommentsOrMarkedForReview()
-        {
-            using (var db = new CSET_Context())
-            {
-                
-                var dblist = from a in db.AVAILABLE_STANDARDS
-                             join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
-                             join c in db.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
-                             join q in db.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
-                             join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
-                             where a.Selected == true && a.Assessment_Id == _assessmentId 
                                 && c.Assessment_Id == _assessmentId
                                 && (c.Mark_For_Review == true || c.Comment != null)
                              orderby h.Question_Group_Heading
                              select new QuestionsWithComments()
-                             { Answer = c.Answer_Text,
-                                         CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
-                                         MarkedForReview = c.Mark_For_Review.ToString(),
-                                         Question = q.Simple_Question,
-                                         Comment = c.Comment };
+                             {
+                                 Answer = c.Answer_Text,
+                                 CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
+                                 MarkedForReview = c.Mark_For_Review.ToString(),
+                                 Question = q.Simple_Question,
+                                 Comment = c.Comment
+                             };
 
                 return dblist.ToList<QuestionsWithComments>();
             }
@@ -217,7 +321,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     list.Add(new RankedQuestions()
                     {
                         Answer = q.AnswerText,
-                        CategoryAndNumber = q.Category + " #"+ q.QuestionRef,
+                        CategoryAndNumber = q.Category + " #" + q.QuestionRef,
                         Level = q.Level,
                         Question = q.QuestionText,
                         Rank = q.Rank ?? 0
@@ -235,7 +339,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var docs = from a in db.DOCUMENT_FILE
                            where a.Assessment_Id == _assessmentId
                            select a;
-                foreach(var doc in docs)
+                foreach (var doc in docs)
                 {
                     list.Add(new DocumentLibraryTable()
                     {
@@ -249,10 +353,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
-            using (var db = new CSET_Context()) {
-                
+            using (var db = new CSET_Context())
+            {
+
                 NistSalManager manager = new NistSalManager();
-                Models.Sals sals =  manager.CalculatedNist(_assessmentId, db);
+                Models.Sals sals = manager.CalculatedNist(_assessmentId, db);
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
                 var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
                 Dictionary<string, string> typeToLevel = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.CIA_Type, x => x.DropDownValueLevel);
@@ -284,7 +389,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
                 var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
-                foreach(CNSS_CIA_JUSTIFICATIONS info in infos)
+                foreach (CNSS_CIA_JUSTIFICATIONS info in infos)
                 {
                     list.Add(new BasicReportData.CNSSSALJustificationsTable()
                     {
@@ -294,7 +399,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 }
                 return list;
             }
-            
+
         }
 
         public BasicReportData.OverallSALTable GetSals()
@@ -302,9 +407,9 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             using (var db = new CSET_Context())
             {
                 var sals = (from a in db.STANDARD_SELECTION
-                           join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
-                           where a.Assessment_Id == _assessmentId
-                           select new { a, b }).ToList();
+                            join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
+                            where a.Assessment_Id == _assessmentId
+                            select new { a, b }).ToList();
 
                 string OSV = "Low";
                 string Q_CV = "Low";
@@ -351,9 +456,9 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             using (var db = new CSET_Context())
             {
                 INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
-                
+
                 var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
-               
+
                 var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
                 info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
 
@@ -372,7 +477,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 foreach (var c in contacts)
                 {
                     info.Additional_Contacts.Add($"{c.FirstName} {c.LastName}");
-            }
+                }
 
 
                 // ACET properties
@@ -384,7 +489,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 if (a)
                 {
                     info.Assets = assets;
-        }
+                }
 
                 return info;
             }
@@ -404,14 +509,15 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
                                 select new { a, b, d, i.Value }).ToList();
 
-                
+
 
                 List<Individual> list = new List<Individual>();
                 int contactid = 0;
-                Individual individual = null; 
-                foreach(var f in findings)
+                Individual individual = null;
+                foreach (var f in findings)
                 {
-                    if (contactid != f.a.Assessment_Contact_Id) {
+                    if (contactid != f.a.Assessment_Contact_Id)
+                    {
                         individual = new Individual()
                         {
                             Findings = new List<Findings>(),
@@ -426,11 +532,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     rfind.Importance = f.Value;
 
                     var othersList = (from a in f.b.FINDING_CONTACT
-                     join b in db.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
-                     select b.FirstName + " " + b.LastName ).ToList();
-                    rfind.OtherContacts = string.Join(",",othersList);
+                                      join b in db.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
+                                      select b.FirstName + " " + b.LastName).ToList();
+                    rfind.OtherContacts = string.Join(",", othersList);
                     individual.Findings.Add(rfind);
-                    
+
                 }
                 return list;
             }
@@ -441,14 +547,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                var gensalnames =  db.GEN_SAL_NAMES.ToList();
+                var gensalnames = db.GEN_SAL_NAMES.ToList();
                 var actualvalues = (from a in db.GENERAL_SAL.Where(x => x.Assessment_Id == this._assessmentId)
-                                   join b in db.GEN_SAL_WEIGHTS on new { a.Sal_Name, a.Slider_Value } equals new { b.Sal_Name, b.Slider_Value }
-                                   select b).ToList();
+                                    join b in db.GEN_SAL_WEIGHTS on new { a.Sal_Name, a.Slider_Value } equals new { b.Sal_Name, b.Slider_Value }
+                                    select b).ToList();
                 GenSALTable genSALTable = new GenSALTable();
-                foreach(var a in gensalnames)
+                foreach (var a in gensalnames)
                 {
-                    genSALTable.setValue(a.Sal_Name, "None");                    
+                    genSALTable.setValue(a.Sal_Name, "None");
                 }
                 foreach (var a in actualvalues)
                 {

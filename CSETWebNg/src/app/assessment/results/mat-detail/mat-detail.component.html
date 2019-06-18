@@ -1,0 +1,221 @@
+<!---------------------- 
+
+   Copyright 2019 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <div class="container">
+        <div class="row" style="padding-bottom:5px;">
+            <div class="col-8" style="padding-left:0;"><h2>Cybersecurity Maturity</h2></div>
+            <div class="col-4"><button class="btn btn-primary float-right" (click)="checkExpand()">{{expand}}</button></div>
+        </div>
+        <div *ngIf="false">
+            <input type="checkbox" [(ngModel)]="targetBandOnly" name="targetBandOnlyCheckbox" (change)="setTargetBand()"> 
+            <label for="targetBandOnlyCheckbox">&nbsp;Show Target Band Only</label>
+            
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-8" style="padding-left:0;"><h5 class="h5-black">IRP: {{overallIrp}}</h5></div>
+            </div>
+            <div class="row">
+                <div class="col-8" style="padding-left:0; padding-bottom:15px;"><h5 class="h5-black">Expected Maturity Range: {{matRange}}</h5></div>
+            </div>
+       </div>
+        <div class="row" *ngFor="let domain of matDetails">
+            <div class="col-lg" style="padding-bottom:20px;">
+                <div class="row"><h5>Domain</h5></div>
+                <div class="row">
+                    <div class="col-8">
+                        <h6>{{domain.DomainName}}</h6>
+                    </div>
+                    <div class="col-4 float-right">
+                        <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)"  style="float:right; width:300px;">
+                            <!-- <div class="row">
+                                <div class="col-8">
+                                    Expected Level: 
+                                </div>
+                                <div class="col-4">
+                                    {{bottomExpected}}
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-8">
+                                    Actual Level: 
+                                </div>
+                                <div class="col-4" [ngClass]="checkMaturity(domain.DomainMaturity)">
+                                    {{ acetSvc.translateMaturity(domain.DomainMaturity) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><h5>Assessment Factor</h5></div>
+                <div class="row">
+                    <div class="col-lg">
+                            
+                            <mat-accordion multi="true" >
+
+                                    <mat-expansion-panel *ngFor="let factor of domain.Assessments" [expanded]="expanded">
+                                      <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                    <h6>{{factor.AssessmentFactor}}</h6>
+                                                  </mat-panel-title>
+                                                  <mat-panel-description>
+                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.AssessmentFactorMaturity)"
+                                                        style="width:125px;height:41px; margin-top:15px;">{{ acetSvc.translateMaturity(factor.AssessmentFactorMaturity) }}</div>
+                                                  </mat-panel-description> 
+                                      </mat-expansion-panel-header>
+                                      <div class="row"><h5>Components</h5></div>
+                                      <div class="row clearfix" *ngFor="let comp of factor.Components; last as isLast">
+                                          <div class="col">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                        <h6>{{ comp.ComponentName }}</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
+                                                        style="width:125px; height:41px ;margin-right:23px;float:right;">{{ acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1" style="width:200px;max-width:200px;">
+                                                    Baseline
+                                                    <br/>
+                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Baseline)">{{ comp.Baseline }}%
+                                                    </div>
+                                                </div>
+                                                <div class="col-1" style="width:200px;max-width:200px;">
+                                                    Evolving
+                                                    <br/>
+                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Evolving)">{{ comp.Evolving }}%
+                                                    </div>
+                                                </div>
+                                                <div class="col-1" style="width:200px;max-width:200px;">
+                                                    Intermediate
+                                                    <br/>
+                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Intermediate)">{{ comp.Intermediate }}%
+                                                    </div>
+                                                </div>
+                                                <div class="col-1" style="width:200px;max-width:200px;">
+                                                    Advanced
+                                                    <br/>
+                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Advanced)">{{ comp.Advanced }}%
+                                                    </div>
+                                                </div>
+                                                <div class="col-1" style="width:200px;max-width:200px;">
+                                                    Innovative
+                                                    <br/>
+                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Innovative)">{{ comp.Innovative }}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <hr [hidden]="isLast">
+                                                </div>
+                                            </div>
+                                        </div>
+                                          
+                                      </div>
+                                    </mat-expansion-panel>
+                                  </mat-accordion>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+
+<!--
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <table class="big-table table">
+        <tr>
+            <th scope="col" width="300px">Domain</th>
+            <th scope="col" width="150px">Domain Maturity</th>
+            <th scope="col" width="200px">Assessment Factor</th>
+            <th scope="col" width="150px">Assessment Factor Maturity</th>
+            <th scope="col" width="200px">Component</th>
+            <th scope="col" width="100px">Baseline</th>
+            <th scope="col" width="100px">Evolving</th>
+            <th scope="col" width="100px">Intermediate</th>
+            <th scope="col" width="100px">Advanced</th>
+            <th scope="col" width="100px">Innovative</th>
+            <th scope="col" width="150px">Assessed Maturity Level</th>
+        </tr>
+        <tr *ngFor="let domain of matDetails; let isEven = even" [ngClass]="{'even-row': isEven, 'odd-row': !isEven}">
+            <td scope="col">{{ domain.DomainName }}</td>
+            <td scope="col">
+                <div class="alert" [ngClass]="maturityClasses(domain.DomainMaturity)" style="width:125px">
+                    {{ domain.DomainMaturity }}</div>
+            </td>
+            <td scope="col" colspan="9" class="container-cell">
+                <table class="table little-table">
+                    <tr *ngFor="let factor of domain.Assessments">
+                        <td scope="col" width="200px">{{ factor.AssessmentFactor }}</td>
+                        <td scope="col" width="150px">
+                            <div class="alert" [ngClass]="maturityClasses(factor.AssessmentFactorMaturity)"
+                                style="width:125px">{{ factor.AssessmentFactorMaturity }}</div>
+                        </td>
+                        <td scope="col" width="850px" class="container-cell">
+                            <table class="table little-table">
+                                <tr *ngFor="let comp of factor.Components">
+                                    <td scope="col" width="200px">{{ comp.ComponentName }}</td>
+                                    <td scope="col" width="100px">
+                                        <div class="alert" [ngClass]="levelClasses(comp.Baseline)">{{ comp.Baseline }}%
+                                        </div>
+                                    </td>
+                                    <td scope="col" width="100px">
+                                        <div class="alert" [ngClass]="levelClasses(comp.Evolving)">{{ comp.Evolving }}%
+                                        </div>
+                                    </td>
+                                    <td scope="col" width="100px">
+                                        <div class="alert" [ngClass]="levelClasses(comp.Intermediate)">
+                                            {{ comp.Intermediate }}%</div>
+                                    </td>
+                                    <td scope="col" width="100px">
+                                        <div class="alert" [ngClass]="levelClasses(comp.Advanced)">{{ comp.Advanced }}%
+                                        </div>
+                                    </td>
+                                    <td scope="col" width="100px">
+                                        <div class="alert" [ngClass]="levelClasses(comp.Innovative)">
+                                            {{ comp.Innovative }}%
+                                        </div>
+                                    </td>
+                                    <td scope="col" width="150px">
+                                        <div class="alert" [ngClass]="maturityClasses(comp.AssessedMaturityLevel)"
+                                            style="width:125px">{{ comp.AssessedMaturityLevel }}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    -->
+
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+        <button class="btn btn-primary" (click)="navSvc2.navBack('maturity')">Back</button>
+        <button class="btn btn-primary" (click)="navSvc2.navNext('maturity')">Next</button>
+    </div>
+</div>

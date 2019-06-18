@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
+import { Navigation2Service } from '../../../services/navigation2.service';
 
 @Component({
     selector: 'app-reports',
@@ -39,6 +40,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     constructor(
         private assessSvc: AssessmentService,
         private navSvc: NavigationService,
+        public navSvc2: Navigation2Service,
         private router: Router,
         private route: ActivatedRoute,
         private authSvc: AuthenticationService,
@@ -63,9 +65,5 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
             window.open(url, "_blank");
         });
-    }
-
-    navBack() {
-        this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'overview']);
     }
 }

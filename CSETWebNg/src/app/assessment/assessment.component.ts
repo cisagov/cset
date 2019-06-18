@@ -39,7 +39,7 @@ import { Alert } from 'selenium-webdriver';
   selector: 'app-assessment',
   templateUrl: './assessment.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
@@ -56,7 +56,7 @@ export class AssessmentComponent implements OnInit {
    * or auto-hides when the screen is narrow (false).
    */
   lockNav = true;
-  
+
   minWidth = 960;
   scrollTop = 0;
 
@@ -117,6 +117,13 @@ export class AssessmentComponent implements OnInit {
       document.scrollingElement.scrollTo({ behavior: 'smooth', top: 0 });
     }
     this.scrollTop = element.scrollTop;
+  }
+
+  /**
+   * Returns the text for the Requirements label.  It might be Statements for ACET assessments.
+   */
+  requirementsLabel() {
+    return this.assessSvc.getIsAcetOnly() ? 'Statements' : 'Requirements';
   }
 
   /**

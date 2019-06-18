@@ -96,7 +96,10 @@ namespace CSETWeb_Api.Data.ControlData
                     .Include(fc => fc.FINDING_CONTACT)
                     .FirstOrDefault();
 
+                var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == this.answer_id).FirstOrDefault();
+                
                 webF = TinyMapper.Map<Finding>(f);
+                webF.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
                 webF.Finding_Contacts = new List<FindingContact>();
                 foreach (var contact in assessmentContext.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessment_id))
                 {
@@ -108,24 +111,33 @@ namespace CSETWeb_Api.Data.ControlData
             }
             else
             {
-                FINDING f = new FINDING()
+                var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == this.answer_id).FirstOrDefault();
+
+                return new Finding()
                 {
-                    Answer_Id = answer_id
+                    Answer_Id = this.answer_id,
+                    Question_Id = q != null ? q.Question_Or_Requirement_Id: 0,
+                    Finding_Id = finding_id
                 };
+
+                //FINDING f = new FINDING()
+                //{
+                //    Answer_Id = answer_id
+                //};
                 
 
-                assessmentContext.FINDING.Add(f);
-                assessmentContext.SaveChanges();
-                webF = TinyMapper.Map<Finding>(f);
-                webF.Finding_Contacts = new List<FindingContact>();
-                foreach (var contact in assessmentContext.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessment_id))
-                {
-                    FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
-                    webContact.Finding_Id = f.Finding_Id;
-                    webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
-                    webContact.Selected = false;
-                    webF.Finding_Contacts.Add(webContact);
-                }
+                //assessmentContext.FINDING.Add(f);
+                //assessmentContext.SaveChanges();
+                //webF = TinyMapper.Map<Finding>(f);
+                //webF.Finding_Contacts = new List<FindingContact>();
+                //foreach (var contact in assessmentContext.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessment_id))
+                //{
+                //    FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
+                //    webContact.Finding_Id = f.Finding_Id;
+                //    webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
+                //    webContact.Selected = false;
+                //    webF.Finding_Contacts.Add(webContact);
+                //}
             }
 
             return webF;
@@ -146,6 +158,23 @@ namespace CSETWeb_Api.Data.ControlData
         public Nullable<int> Importance_Id { get; set; }
         public Importance Importance { get; set; }
         public List<FindingContact> Finding_Contacts { get; set; }
+
+        public bool CheckFinding()
+        {
+            bool noValue = true;
+
+            noValue = noValue && String.IsNullOrWhiteSpace(Impact);
+            //hasValues = hasValues && webFinding.Importance
+            noValue = noValue && String.IsNullOrWhiteSpace(Issue);
+            noValue = noValue && String.IsNullOrWhiteSpace(Recommendations);
+            noValue = noValue && String.IsNullOrWhiteSpace(Impact);
+            noValue = noValue && String.IsNullOrWhiteSpace(Summary);
+            noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
+            noValue = noValue && Resolution_Date == null;
+
+            return noValue;
+
+        }
     }
 
     public class FindingContact{

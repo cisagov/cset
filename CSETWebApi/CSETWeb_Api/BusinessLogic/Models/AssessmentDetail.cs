@@ -28,6 +28,7 @@ namespace CSETWeb_Api.Models
         public string Charter;
         public string CreditUnion;
         public string Assets;
+        public bool? IsAcetOnly;
 
         /// <summary>
         /// The last time the Assessment was altered.

@@ -25,27 +25,25 @@ import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { DemographicService } from '../../../services/demographic.service';
+import { Navigation2Service } from '../../../services/navigation2.service';
 
 @Component({
   selector: 'app-assessment-info',
   templateUrl: './assessment-info.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentInfoComponent implements OnInit {
-  constructor(private assessSvc: AssessmentService, private router: Router, private demoSvc: DemographicService) { }
+  constructor(
+    public assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    private router: Router,
+    private demoSvc: DemographicService) { }
 
   @ViewChild('assessmentDetail') assessmentDetail;
   @ViewChild('demographics') demographics;
 
   ngOnInit() {
     this.demoSvc.id = (this.assessSvc.id());
-  }
-
-  /**
-   * Navigate to the next page
-   */
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'sal']);
   }
 }

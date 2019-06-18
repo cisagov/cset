@@ -17,6 +17,9 @@ namespace DataLayerCore.Model
         [Required]
         [StringLength(255)]
         public string FinComponent { get; set; }
+        [StringLength(50)]
+        public string Acronym { get; set; }
+        public int? Number { get; set; }
 
         [InverseProperty("FinComponent")]
         public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
