@@ -35,6 +35,7 @@ export interface NavTree {
   HeadingTitle?: string;
   HeadingText?: string;
   DocId?: string;
+  elementType?: string;
 }
 
 @Injectable({
@@ -86,7 +87,7 @@ export class NavigationService {
 
       if (t.value === path) {
         return true;
-}
+      }
 
       if (this.isPathInTree(t.children, path)) {
         return true;

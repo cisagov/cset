@@ -39,8 +39,10 @@ import { CreateUser } from './models/user.model';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPanelChangeEvent, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
+import { ResourceLibraryService } from "./services/resource-library.service" 
+
 declare var $: any;
 
 @Component({

@@ -17,6 +17,8 @@ namespace DataLayerCore.Model
         [Required]
         [StringLength(255)]
         public string MaturityLevel { get; set; }
+        [StringLength(50)]
+        public string Acronym { get; set; }
 
         [InverseProperty("Maturity")]
         public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }

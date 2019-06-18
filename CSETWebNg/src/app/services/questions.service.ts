@@ -23,8 +23,11 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Answer, DefaultParameter, ParameterForAnswer, QuestionGroup, SubCategoryAnswers } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, SubCategoryAnswers, ACETDomain } from '../models/questions.model';
 import { ConfigService } from './config.service';
+import { AssessmentService } from './assessment.service';
+import { AcetFiltersService, ACETFilter } from './acet-filters.service';
+
 
 
 const headers = {
@@ -52,21 +55,112 @@ export class QuestionsService {
 
   public searchString = '';
 
+  public overallIRP: number;
+
+  /**
+   * Tracks the maturity filter settings across all domains
+   */
+  public domainMatFilters: Map<string, Map<string, boolean>>;
+
 
   /**
    * Persists the current selection of the 'auto load supplemental' preference.
    */
   autoLoadSupplementalSetting: boolean;
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService,
+    private assessmentSvc: AssessmentService,
+    private filterSvc: AcetFiltersService
+
+  ) {
     this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
   }
 
   /**
    * The page can store its model here for accessibility by question-extras
    */
-  questionGroups = null;
+  domains = null;
 
+  /**
+   * Sets the starting value of the maturity filters, based on the 'stairstep.'
+   * Any 'empty' values below the bottom of the band are set as well.
+   */
+  initializeMatFilters(irp: number) {
+    this.overallIRP = irp;
+
+    console.log("filter called");
+    // if we have an IRP, default the maturity filters based on the stairstep.
+    
+
+    // this.domainMatFilters = new Map<string, Map<string, boolean>>();
+    this.domainMatFilters = new Map();
+
+    
+    // if we don't have domain names in this array of questions, there's no maturity filters to worry about
+    if (!this.domains || !this.domains[0].DomainName) {
+      return;
+    }
+
+     this.filterSvc.getFilters().subscribe((x: ACETFilter[])  => {       
+        // set the filters based on the bands
+        if ((x === undefined) || (x.length === 0)) {          
+           this.getDefaultBand(irp);
+          if ((x === undefined) || (x.length === 0)) {          
+            this.filterSvc.saveFilters(this.domainMatFilters).subscribe();
+          }
+        }
+        else{                    
+          for(let entry of x){
+            let tmpMap = new Map();
+            this.domainMatFilters.set(entry.DomainName, tmpMap);
+            tmpMap.set('B', entry.B);
+            tmpMap.set('E', entry.E);
+            tmpMap.set('Int', entry.Int);
+            tmpMap.set('A', entry.A);
+            tmpMap.set('Inn', entry.Inn);            
+          }          
+        }
+        this.evaluateFilters(this.domains);
+      });
+  }
+
+  resetBandS(irp: number){
+    this.filterSvc.getACETDomains().subscribe((domains: ACETDomain) =>{
+      this.domains = domains;
+      this.domainMatFilters = new Map();
+      this.getDefaultBand(irp);
+      this.filterSvc.saveFilters(this.domainMatFilters).subscribe();
+    });
+  }
+
+  getDefaultBand(irp: number){
+    const bands = this.getStairstepOrig(irp);
+    const dmf = this.domainMatFilters;
+
+    this.domains.forEach((d: Domain) => {
+      dmf.set(d.DomainName, new Map());
+      dmf.get(d.DomainName).set('B', bands.includes('B'));
+      dmf.get(d.DomainName).set('E', bands.includes('E'));
+      dmf.get(d.DomainName).set('Int', bands.includes('Int'));
+      dmf.get(d.DomainName).set('A', bands.includes('A'));
+      dmf.get(d.DomainName).set('Inn', bands.includes('Inn'));
+
+      // bottom fill
+      let belowBand = true;
+      const i = this.domainMatFilters.get(d.DomainName).entries();
+      let e = i.next();
+      while (!e.done && belowBand) {
+        if (e.value[1]) {
+          belowBand = false;
+        } else {
+          dmf.get(d.DomainName).set(e.value[0], true);
+        }
+        e = i.next();
+      }
+    });
+  }
   /**
    * Sets the application mode of the assessment.
    */
@@ -138,54 +232,63 @@ export class QuestionsService {
    * based on the current filter settings.
    * @param cats
    */
-  public evaluateFilters(cats: QuestionGroup[]) {
-    if (!cats) {
+  public evaluateFilters(domains: Domain[]) {
+    if (!domains) {
       return;
     }
 
-    cats.forEach(c => {
-      c.SubCategories.forEach(s => {
-        s.Questions.forEach(q => {
-          // start with false, then set true if possible
-          q.Visible = false;
+    domains.forEach(d => {
+      d.QuestionGroups.forEach(c => {
+        c.SubCategories.forEach(s => {
+          s.Questions.forEach(q => {
+            // start with false, then set true if possible
+            q.Visible = false;
 
-          // If search string is specified, any questions that don't contain the string
-          // are not shown.  No need to check anything else.
-          if (this.searchString.length > 0
-            && q.QuestionText.indexOf(this.searchString) < 0) {
-            return;
-          }
+            // If search string is specified, any questions that don't contain the string
+            // are not shown.  No need to check anything else.
+            if (this.searchString.length > 0
+              && q.QuestionText.indexOf(this.searchString) < 0) {
+              return;
+            }
 
-          // evaluate answers
-          if (this.answerValues.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
-            q.Visible = true;
-          }
+            // evaluate answers
+            if (this.answerValues.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
+              q.Visible = true;
+            }
 
-          // consider null answers as 'U'
-          if (q.Answer == null && this.showFilters.includes('U')) {
-            q.Visible = true;
-          }
+            // consider null answers as 'U'
+            if (q.Answer == null && this.showFilters.includes('U')) {
+              q.Visible = true;
+            }
 
-          // evaluate other features
-          if (this.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
-            q.Visible = true;
-          }
+            // evaluate other features
+            if (this.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
+              q.Visible = true;
+            }
 
-          if (this.showFilters.includes('M') && q.MarkForReview) {
-            q.Visible = true;
-          }
+            if (this.showFilters.includes('M') && q.MarkForReview) {
+              q.Visible = true;
+            }
 
-          if (this.showFilters.includes('D') && q.HasDiscovery) {
-            q.Visible = true;
-          }
+            if (this.showFilters.includes('D') && q.HasDiscovery) {
+              q.Visible = true;
+            }
+
+            // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
+            if (!!c.DomainName && !!this.domainMatFilters.get(c.DomainName)) {
+              if (this.domainMatFilters.get(c.DomainName).get(q.MaturityLevel) === false) {
+                q.Visible = false;
+              }
+            }
+          });
+
+          /// now evaluate subcat visiblity
+          s.Visible = (!!s.Questions.find(q => q.Visible));
         });
 
-        /// now evaluate subcat visiblity
-        s.Visible = (!!s.Questions.find(q => q.Visible));
+        // evaluate category heading visibility
+        c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
-
-      // evaluate category heading visibility
-      c.Visible = (!!c.SubCategories.find(s => s.Visible));
     });
   }
 
@@ -233,6 +336,29 @@ export class QuestionsService {
     }
   }
 
+  /**
+   * Returns true if no maturity filters are enabled.
+   * This is used primarily to ngif the 'all filters are off' message.
+   */
+  maturityFiltersAllOff(domainName: string) {
+    // If not ACET (no domain name), return false
+    if (!domainName || domainName.length === 0 || !this.domainMatFilters.get(domainName)) {
+      return false;
+    }
+
+    const i = this.domainMatFilters.get(domainName).entries();
+    let e = i.next();
+    while (!e.done) {
+      if (e.value[1]) {
+        return false;
+      }
+      e = i.next();
+    }
+
+    return true;
+  }
+
+
   getDefaultParametersForAssessment() {
     return this.http.get(this.configSvc.apiUrl + 'ParametersForAssessment', headers);
   }
@@ -242,12 +368,74 @@ export class QuestionsService {
    */
   storeAssessmentParameter(p: DefaultParameter) {
     return this.http.post(this.configSvc.apiUrl + 'SaveAssessmentParameter',
-    {
-      Id: p.ParameterId,
-      Token: p.ParameterName,
-      Substitution: p.ParameterValue
-    },
-    headers);
+      {
+        Id: p.ParameterId,
+        Token: p.ParameterName,
+        Substitution: p.ParameterValue
+      },
+      headers);
+  }
+
+
+  /**
+   *
+   */
+  isDefaultMatLevel(mat: string) {
+    return this.getStairstepOrig(this.overallIRP).includes(mat);
+  }
+
+
+  /**
+   * Indicates whether a certain filter is set to 'on'
+   */
+  isDomainMatFilterSet(domainName: string, mat: string) {
+    if (!this.domainMatFilters.get(domainName)) {
+      return false;
+    }
+
+    return this.domainMatFilters.get(domainName).get(mat);
+  }
+
+  /**
+   * Returns the maturity levels applicable to the overall IRP,
+   * based on the stairstep graph in the NCUA Guide.
+   */
+  getStairstepOrig(irp: number): string[] {
+    switch (irp) {
+      case 0:
+        return [];
+      case 1:
+        return ['B', 'E'];
+      case 2:
+        return ['B', 'E', 'Int'];
+      case 3:
+        return ['E', 'Int', 'A'];
+      case 4:
+        return ['Int', 'A', 'Inn'];
+      case 5:
+        return ['A', 'Inn'];
+    }
+  }
+
+  /**
+   * Returns the maturity levels applicable to the overall IRP,
+   * based on the proposed 'grounded' stairstep graph.
+   */
+  getStairstepNew(irp: number): string[] {
+    switch (irp) {
+      case 0:
+        return [];
+      case 1:
+        return ['B'];
+      case 2:
+        return ['B', 'E'];
+      case 3:
+        return ['B', 'E', 'Int'];
+      case 4:
+        return ['B', 'E', 'Int', 'A'];
+      case 5:
+        return ['B', 'E', 'Int', 'A', 'Inn'];
+    }
   }
 
   /**
@@ -256,13 +444,13 @@ export class QuestionsService {
    */
   storeAnswerParameter(answerParm: ParameterForAnswer) {
     return this.http.post(this.configSvc.apiUrl + 'SaveAnswerParameter',
-    {
-      RequirementId: answerParm.RequirementId,
-      Id: answerParm.ParameterId,
-      AnswerId: answerParm.AnswerId,
-      Substitution: answerParm.ParameterValue
-    },
-    headers);
+      {
+        RequirementId: answerParm.RequirementId,
+        Id: answerParm.ParameterId,
+        AnswerId: answerParm.AnswerId,
+        Substitution: answerParm.ParameterValue
+      },
+      headers);
   }
 
 

@@ -43,7 +43,7 @@
       If you wish to add a custom question to the set, enter it here.
     </p>
 
-    <textarea maxlength="7000" appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4"
+    <textarea appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4"
       type="text"></textarea>
     <div *ngIf="isCustomQuestionEmpty">
       <div class="alert alert-danger">Question text is required</div>

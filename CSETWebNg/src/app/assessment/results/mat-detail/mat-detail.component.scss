@@ -1,0 +1,131 @@
+/**
+ * Color of maturity fields, pulled mainly from the excel workbook.
+ */
+.mat-detail-Incomplete {
+    background-color: yellow;
+}
+
+.mat-detail-Sub-baseline {
+    background-color: rgb(217,217,217);
+}
+
+.mat-detail-Baseline {
+    background-color: rgb(218,238,243);
+}
+
+.mat-detail-Evolving {
+    background-color: rgb(183,222,232);
+}
+
+.mat-detail-Intermediate {
+    background-color: rgb(146,205,220);
+}
+
+.mat-detail-Advanced {
+    background-color: rgb(49,134,155);
+}
+
+.mat-detail-Innovative {
+    background-color: rgb(33,89,103);
+}
+
+/**
+ * following 3 for component sections
+ */
+.mat-detail-green {
+    background-color: rgb(198,239,206);
+    color: rgb(0,97,0);
+    border: 1px solid rgb(0,97,0);
+}
+
+.mat-detail-orange {
+    background-color: rgb(255,235,156);
+    color: rgb(156,101,0);
+    border: 1px solid rgb(156,101,0);
+}
+
+.mat-detail-red {
+    background-color: rgb(253,233,217);
+    color: rgb(156,0,6);
+    border: 1px solid rgb(156,0,6);
+}
+
+/** 
+ * Actual page styling
+ */
+.container-cell {
+    padding: 0px 0px 0px 0px;
+    border: 0px;
+}
+
+.little-table {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background-color: transparent;
+}
+
+.big-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: center;
+    color: #0f3c7a;
+}
+
+.big-table th {
+    border-bottom: 2px solid grey;
+    background-color: #FAFAFA;
+}
+
+.even-row {
+    background-color: white;
+}
+
+.odd-row { 
+    background-color: #F8F8F8;
+}
+.alert{
+    text-align: center !important;
+}
+h5{
+    color:#a8a8a8;
+}
+
+.h5-black{
+    color:#000 !important;;
+}
+.mat-expansion-panel-header{
+    min-height:60px !important;
+    height:100% !important;
+}
+.mat-expansion-panel-header-title {
+    margin-top: 25px;
+}
+.mat-expansion-panel-header-description {
+    justify-content: flex-end !important;
+}
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;               
+    background-color:#BEBEBE;
+    height: 1px;
+  }
+.alert{
+    //padding: 0.5rem 0.75rem !important;
+}
+.alert-domain{
+    background-color: #fff;
+    border-color: #ccc;
+    color: #000 !important;
+    padding: .50rem 2.5rem .50rem .75rem !important;
+    text-align: left !important;
+  }
+.domain-green{
+    color:green;
+}
+.domain-red{
+    color:red;
+}

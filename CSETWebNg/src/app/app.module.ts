@@ -24,19 +24,19 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-    MatAutocompleteModule, MatDialogModule, MatDividerModule,
-    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-    MatTooltipModule, MatTreeModule
-} from '@angular/material';
+import { MatAutocompleteModule, MatDialogModule, MatDividerModule,
+  MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
+  MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
+  MatTooltipModule, MatTreeModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { IonRangeSliderModule } from 'ng2-ion-range-slider';
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +49,8 @@ import { AssessmentDemographicsComponent } from './assessment/prepare/assessment
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
+import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
+import { IRPComponent } from './assessment/prepare/irp/irp.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.component';
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
@@ -140,6 +142,17 @@ import { AddRequirementComponent } from './dialogs/add-requirement/add-requireme
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
+import { RequiredDocumentService } from './services/required-document.service';
+import { IRPService } from './services/irp.service';
+import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
+import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AdminComponent } from './assessment/results/admin/admin.component';
+import { ACETService } from './services/acet.service';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
+import { ResourceLibraryService } from './services/resource-library.service';
+import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
+
 
 @NgModule({
     imports: [
@@ -153,12 +166,14 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         MatNativeDateModule,
         MatFormFieldModule,
         MatSortModule,
+        MatExpansionModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
         MatDialogModule,
         MatTooltipModule,
         IonRangeSliderModule,
         MatSidenavModule,
+        TextareaAutosizeModule,
         MatTreeModule,
         MatIconModule,
         MatDividerModule,
@@ -168,6 +183,7 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
+        CurrencyMaskModule,
         NgbModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
@@ -207,6 +223,9 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         AlertComponent,
         ConfirmComponent,
         FrameworkComponent,
+        RequiredDocsComponent,
+        IRPComponent,
+        MatDetailComponent,
         AboutComponent,
         AdvisoryComponent,
         QuestionsComponent,
@@ -243,6 +262,8 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         UploadExportComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
+        ACETDashboardComponent,
+        AdminComponent,
         SetListComponent,
         CustomSetComponent,
         RequirementListComponent,
@@ -252,7 +273,9 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         RequirementDetailComponent,
         AddRequirementComponent,
         StandardDocumentsComponent,
-        RefDocumentComponent
+        RefDocumentComponent,
+        MaturityFilterComponent,
+        IrpSummaryComponent
     ],
     providers: [
         ConfigService,
@@ -277,35 +300,39 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         SalService,
         StandardService,
         FrameworkService,
+        RequiredDocumentService,
+        IRPService,
         FindingsService,
         NavigationService,
         FileUploadClientService,
         AnalysisService,
         EnableFeatureService,
-        SetBuilderService
+        SetBuilderService,
+        ACETService,
+        ResourceLibraryService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-        EmailComponent,
-        EditUserComponent,
-        EjectionComponent,
-        AlertComponent,
-        ConfirmComponent,
-        ChangePasswordComponent,
-        AboutComponent,
-        AdvisoryComponent,
-        OkayComponent,
-        TermsOfUseComponent,
-        FindingsComponent,
-        EnableProtectedComponent,
-        QuestionFiltersComponent,
-        AssessmentDocumentsComponent,
-        UploadExportComponent,
-        InlineParameterComponent,
-        GlobalParametersComponent,
-        KeyboardShortcutsComponent,
-        LicenseComponent,
-        AddRequirementComponent
+      EmailComponent,
+      EditUserComponent,
+      EjectionComponent,
+      AlertComponent,
+      ConfirmComponent,
+      ChangePasswordComponent,
+      AboutComponent,
+      AdvisoryComponent,
+      OkayComponent,
+      TermsOfUseComponent,
+      FindingsComponent,
+      EnableProtectedComponent,
+      QuestionFiltersComponent,
+      AssessmentDocumentsComponent,
+      UploadExportComponent,
+      InlineParameterComponent,
+      GlobalParametersComponent,
+      KeyboardShortcutsComponent,
+      LicenseComponent,
+      AddRequirementComponent
     ]
 })
 

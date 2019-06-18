@@ -26,32 +26,30 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-overall-ranked-categories',
   templateUrl: './overall-ranked-categories.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 
 export class OverallRankedCategoriesComponent implements OnInit {
   chart: Chart;
-  dataRows: {title: string, rank: number, failed: number, total: number, percent: string}[];
+  dataRows: { title: string, rank: number, failed: number, total: number, percent: string }[];
   initialized = false;
 
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+  constructor(
+    private analysisSvc: AnalysisService,
+    private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    private router: Router) { }
 
   ngOnInit() {
     this.analysisSvc.getOverallRankedCategories().subscribe(x => this.setupChart(x));
   }
 
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'standards-summary']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'ranked-questions']);
-  }
 
   setupChart(x: any) {
     this.initialized = false;
