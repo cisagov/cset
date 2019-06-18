@@ -481,6 +481,12 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
+            <summary>
+            Re-orders the pieces into Y|N|NA|A|U order
+            </summary>
+            <param name="r"></param>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.GetStandardsSummary">
             <summary>
             This may not be called by the UI.... can't find any code that calls it
@@ -539,6 +545,12 @@
             Gets the path to the Legacy CSET Import process. Checks for both dev and production versions.
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:CSETWeb_Api.Controllers.CommentData.AssociatedHeader">
+            <summary>
+            this is the questions or the document name or 
+            what ever header identfies this comment
+            </summary>
         </member>
         <member name="T:CSETWeb_Api.Controllers.ContactsController">
             <summary>
