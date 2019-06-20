@@ -3513,6 +3513,9 @@ Sidebar.prototype.removePalette = function(id)
  */
 Sidebar.prototype.addImagePalette = function(id, title, prefix, postfix, items, titles, tags)
 {
+
+    console.log(postfix);
+
 	var showTitles = titles != null;
 	var fns = [];
 	

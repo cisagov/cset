@@ -806,77 +806,9 @@
 				}
 			}
 		}
-		
-//		this.addCSETPalette(this.customEntries == null);
-        this.addImagePalette(
-            'ICS', 
-            'ICS', 
-            imgDir + '/cset/', 
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
 
-        this.addImagePalette(
-            'IT',
-            'IT',
-            imgDir + '/cset/',
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
-
-        this.addImagePalette(
-            'Radio',
-            'Radio',
-            imgDir + '/cset/',
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
-
-        this.addImagePalette(
-            'Medical',
-            'Medical',
-            imgDir + '/cset/',
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
-
-        this.addImagePalette(
-            'General',
-            'General',
-            imgDir + '/cset/',
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
-
-        this.addImagePalette(
-            'Zone',
-            'Zone',
-            imgDir + '/cset/',
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
-
-        this.addImagePalette(
-            'Shapes',
-            'Shapes',
-            imgDir + '/cset/',
-            '.jpg',
-            ['AudioSwitch', 'Shinjuku', 'Shinjuku-Big'],
-            ['A1SW', 'Shinjuku', 'Shinjuku Big'],
-            ['IDASW', 'IDShinjuku', 'IDShinBig']
-        );
+        console.log('about to call addCSETPalettes');
+        this.addCSETPalettes();
 
 
 // 		this.addGeneralPalette(this.customEntries == null);
