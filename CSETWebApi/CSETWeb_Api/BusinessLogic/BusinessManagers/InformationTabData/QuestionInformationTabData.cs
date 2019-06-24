@@ -8,6 +8,7 @@ using CSET_Main.Data.ControlData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Collections.ObjectModel;
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
 using System.Diagnostics;
@@ -34,6 +35,8 @@ namespace CSET_Main.Questions.InformationTabData
         public List<CustomDocument> ResourceDocumentList { get; set; }
         public List<CustomDocument> SourceDocumentsList { get; set; }
         public string References { get; set; }
+
+        public string ExaminationApproach { get; set; }
 
         /// <summary>
         /// Contains a list of multiServiceComponent types for the current multiServiceComponent question
@@ -327,6 +330,8 @@ namespace CSET_Main.Questions.InformationTabData
             QuestionsVisible = true;
             ShowRequirementStandards = true;
             ShowSALLevel = true;
+            ExaminationApproach = requirement.ExaminationApproach;
+
             BuildDocuments(requirementData.RequirementID, controlContext);
         }
 
@@ -422,19 +427,32 @@ namespace CSET_Main.Questions.InformationTabData
             }
         }
 
+        public List<string> GetBuildDocuments()
+        {
+            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documents");
+            List<string> availableRefDocs = new DirectoryInfo(dir).GetFiles()
+                .Select(f => f.Name).ToList();
+            return availableRefDocs;
+        }
+
         private void BuildDocuments(int requirement_ID, CSET_Context controlContext)
         {
+            // Build a list of available documents
+
+            List<string> availableRefDocs = GetBuildDocuments();
+
             var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded }).Concat(
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
+
             // Source Documents        
             var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            SourceDocumentsList = sourceDocuments.ToList();
+            SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
 
-            // Help Documents
-            // This gets all help documents for the question
+
+            // Help (Resource) Documents
             var helpDocuments = documents.Where(t => !t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            ResourceDocumentList = helpDocuments.ToList();
+            ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
         }
 
 

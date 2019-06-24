@@ -36,7 +36,8 @@
 
     <div class="d-flex flex-column align-items-start flex-00a">
       <div class="d-flex align-items-start flex-11a">
-        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse All</button>
+        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse
+          All</button>
         <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
         <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
           <i class="cset-icons-filter"></i>
@@ -51,7 +52,7 @@
     </div>
   </div>
 
-  <div *ngIf="questionGroups == null">
+  <div *ngIf="domains == null">
     <div class="spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
@@ -59,17 +60,56 @@
 
   <div *ngIf="questionsSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
-  <div *ngFor="let g of questionGroups" style="margin-bottom: 2em;" [id]="'Q' + g.GroupHeadingId + '.' + g.StandardShortName">
 
-    <div class="group-heading" [class.display-none]="!g.Visible">{{ g.GroupHeadingText }} {{ !!g.StandardShortName ? '
-      - ' + g.StandardShortName : '' }}</div>
+  <!-- top level -->
+  <div *ngFor="let d of domains">
 
-    <div *ngFor="let sg of g.SubCategories" style="margin-bottom: 1em;" [class.display-none]="!sg.Visible" [id]="'Q' + g.GroupHeadingId + 'S' + sg.SubCategoryId">
-      <app-question-block #questionBlock [mySubCategory]="sg"></app-question-block>
+    <!-- (spacer) -->
+    <div class="mt-4"></div>
+
+    <!-- Domain Header Level -->
+    <div class="domain-group-heading" *ngIf="!!d.DomainName && d.DomainName.length > 0">
+      <app-maturity-filter [domainName]="d.DomainName" (filtersChanged)="refreshQuestionVisibility()">
+      </app-maturity-filter>
+      <div>
+        {{ d.DomainName }}
+      </div>
     </div>
+
+    <!-- Loop Groups within Domain -->
+    <div *ngFor="let g of d.QuestionGroups" style="margin-bottom: 2em;"
+      [id]="'Q' + g.GroupHeadingId + '.' + g.StandardShortName">
+
+      <!-- Question Group Heading / Category-->
+      <div class="group-heading" [ngClass]="addDomainPad(g.DomainName)" [class.display-none]="!g.Visible">
+        {{ g.GroupHeadingText }}
+        {{ (!g.DomainName && !!g.StandardShortName) ? ' - ' + g.StandardShortName : '' }}
+      </div>
+
+      <!-- Subcategory -->
+      <div *ngFor="let sg of g.SubCategories" [ngClass]="addDomainPad(g.DomainName)" style="margin-bottom: 1em;"
+        [class.display-none]="!sg.Visible" [id]="'Q' + g.GroupHeadingId + 'S' + sg.SubCategoryId">
+
+        <!-- Questions within subcategory -->
+        <app-question-block #questionBlock [mySubCategory]="sg"></app-question-block>
+
+      </div>
+
+    </div>
+
+    <!-- indicates when all maturity filters turned off for this domain -->
+    <div *ngIf="domains != null && questionsSvc.maturityFiltersAllOff(d.DomainName)"
+      class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        All maturity filters are deselected for this domain. Select one or more maturity levels to view questions.
+      </span>
+    </div>
+
   </div>
 
-  <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0" class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+  <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0"
+    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
     <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
       There are no questions visible for the current filters or search criteria. Please change your selections and try
@@ -77,7 +117,8 @@
     </span>
   </div>
 
-  <div *ngIf="questionGroups?.length === 0" class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+  <div *ngIf="domains !== null && domains.length === 0"
+    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
     <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
       There are no applicable questions/requirements to display. Check the assessment's SAL level and Standards
@@ -85,18 +126,10 @@
     </span>
   </div>
 
-  <!-- <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0" class="in-page-message">
-    There are no questions visible for the current filters or search criteria. Please change your selections and try
-    again.
-  </div> -->
-
-  <!-- <div *ngIf="questionGroups?.length === 0" class="in-page-message">
-    There are no applicable questions/requirements to display. Check the assessment's SAL level and Standards
-    selection.
-  </div> -->
 
   <div style="display: flex; justify-content: space-between;">
-    <button class="btn btn-primary" (click)="navBack()">Back</button>
-    <button class="btn btn-primary" (click)="navNext()">Next</button>
+    <button class="btn btn-primary" (click)="navSvc2.navBack('questions')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc2.navNext('questions')">Next</button>
   </div>
+
 </div>

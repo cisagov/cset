@@ -30,6 +30,8 @@ namespace DataLayerCore.Model
         public int Header_Id { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
+        [StringLength(1300)]
+        public string DescriptionComment { get; set; }
 
         [ForeignKey("Header_Id")]
         [InverseProperty("IRP")]

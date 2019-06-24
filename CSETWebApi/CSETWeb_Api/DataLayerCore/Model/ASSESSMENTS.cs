@@ -18,6 +18,7 @@ namespace DataLayerCore.Model
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
+            FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
@@ -45,6 +46,9 @@ namespace DataLayerCore.Model
         public int? IRPTotalOverride { get; set; }
         [StringLength(150)]
         public string IRPTotalOverrideReason { get; set; }
+        [Required]
+        public bool? MatDetail_targetBandOnly { get; set; }
+
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
@@ -62,7 +66,7 @@ namespace DataLayerCore.Model
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("ASSESSMENT_")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
@@ -72,6 +76,8 @@ namespace DataLayerCore.Model
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
         [InverseProperty("Assessment_")]

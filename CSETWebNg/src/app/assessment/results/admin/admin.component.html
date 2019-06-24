@@ -1,0 +1,79 @@
+<!---------------------- 
+
+   Copyright 2019 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div *ngIf="info != null && Components != null" class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3>Administration - Review Hours</h3>
+    <table class="cset-table td-align-top">
+        <tr>
+            <th class="col-4">Component</th>
+            <th class="text-right">Documentation Hours</th>
+            <th class="text-right">Interview Process Hours</th>
+            <th class="text-right">Statements Reviewed</th>
+        </tr>
+        <tr *ngFor="let comp of Components">
+            <td>{{comp.Component}}
+                <div>
+                    <textarea maxlength="512" *ngIf="comp.HasSpecifyField" class="form-control" type="text" appAutoSize [(ngModel)]="comp.OtherSpecifyValue"
+                        (change)="SaveData(comp, 'other')"></textarea>
+                </div>
+            </td>
+            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.DocumentationHours"
+                    (change)="SaveData(comp, 'doc')">
+                    <div *ngIf="test(comp.DocumentationHours)" class="alert-danger">{{error}}</div>
+            </td>
+            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.InterviewHours"
+                    (change)="SaveData(comp, 'int')">
+                    <div *ngIf="test(comp.InterviewHours)" class="alert-danger">{{error}}</div>
+                </td>
+            <td class="text-right"><div [hidden]="HideStatementsReviewed(comp.Component)">{{comp.StatementsReviewed}}</div></td>
+        </tr>
+        <tr class="total-row">
+            <td>Total Review Hours</td>
+            <td class="text-right pr-4">{{ DocumentationTotal }}</td>
+            <td class="text-right pr-4">{{ InterviewTotal }}</td>
+            <td class="text-right"></td>
+        </tr>
+        <tr class="total-row">
+            <td>Grand Totals</td>
+            <td class="text-right pr-4" colspan="2">{{ GrandTotal }}</td>
+            <td class="text-right pr-3">{{ ReviewedStatementTotal }}</td>
+        </tr>
+    </table>
+
+    <div class="row" *ngFor="let attr of info.Attributes">
+        <div class="col-sm-9 admin-label p-2">
+            <label>{{ attr.AttributeName }}</label>
+        </div>
+        <div class="col-sm-3 p-2">
+            <select class="form-control" [(ngModel)]="attr.AttributeValue" (change)="SaveAttribute(attr);">
+                <option value=""></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+        <button class="btn btn-primary" (click)="navSvc2.navBack('admin')">Back</button>
+        <button class="btn btn-primary" (click)="navSvc2.navNext('admin')">Next</button>
+    </div>
+</div>

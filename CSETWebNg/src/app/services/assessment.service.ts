@@ -46,12 +46,14 @@ const headers = {
 
 @Injectable()
 export class AssessmentService {
+
   userRoleId: number;
   roles: Role[];
   currentTab: string;
   private apiUrl: string;
   private initialized = false;
-  applicationMode: string;
+  public applicationMode: string;
+  private isAcetOnly = true;
 
   constructor(
     private emailSvc: EmailService,
@@ -65,6 +67,19 @@ export class AssessmentService {
         .subscribe((response: Role[]) => (this.roles = response));
       this.initialized = true;
     }
+
+    this.getIsAcetOnlyApi();
+  }
+
+  public getIsAcetOnly():boolean{
+    return this.isAcetOnly;
+  }
+  public setIsAcetOnly(tmpIsAcetOnly: boolean){
+    this.isAcetOnly = tmpIsAcetOnly;
+    this.http.post(this.apiUrl + 'SaveIsAcetOnly',
+    this.isAcetOnly,
+    headers
+    ).subscribe();
   }
 
   dropAssessment() {
@@ -72,6 +87,12 @@ export class AssessmentService {
     this.currentTab = undefined;
     this.applicationMode = undefined;
     sessionStorage.removeItem('assessmentId');
+  }
+
+  getIsAcetOnlyApi() {
+    return this.http.get(this.apiUrl + 'IsAcetOnly').subscribe( (data: boolean) =>{
+      this.isAcetOnly = data;
+    });
   }
 
   refreshRoles() {
@@ -222,10 +243,21 @@ export class AssessmentService {
       } else {
         this.router.navigate(['/assessment', id]);
       }
+      this.getIsAcetOnlyApi();
     });
   }
 
   getAssessmentDocuments() {
     return this.http.get(this.apiUrl + 'assessmentdocuments');
+  }
+
+  /**
+   * Converts linebreak characters to HTML <br> tag.
+   */
+  formatLinebreaks(text: string) {
+    if (!text) {
+      return '';
+    }
+    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
 }

@@ -44,6 +44,7 @@ export interface LoginResponse {
     UserFirstName: string;
     UserId: number;
     Email: string;
+    ExportExtension: string;
 }
 
 const headers = {
@@ -67,7 +68,6 @@ export class AuthenticationService {
     }
 
     checkLocal() {
-        //console.log('Heres my appCode in checkLocal: ' + environment.appCode);
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
@@ -101,6 +101,7 @@ export class AuthenticationService {
         sessionStorage.setItem('superUser', '' + user.IsSuperUser);
         sessionStorage.setItem('userId', '' + user.UserId);
         sessionStorage.setItem('email', user.Email);
+        sessionStorage.setItem('exportExtension', user.ExportExtension);
         sessionStorage.setItem('developer', String(false));
 
 

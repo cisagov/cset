@@ -67,6 +67,20 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
             Dictionary<String, int> oldUserNewUser = db.USERS.ToDictionary(x => x.PrimaryEmail, y => y.UserId);
 
+            foreach(var a in model.jASSESSMENTS)
+            {
+                var item = db.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                if (item != null)
+                {
+                    item.Assets = a.Assets;
+                    item.Charter = a.Charter;
+                    item.CreditUnionName = a.CreditUnionName;
+                    item.IRPTotalOverride = a.IRPTotalOverride;
+                    item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
+                    item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly;
+                    db.SaveChanges();
+                }
+            }
 
             // go through the assessment contacts and 
             // if the contact does exist create it then add the id
@@ -213,7 +227,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     Document_Id = item.Document_Id
                 });
             }
-           
+
             Dictionary<int, FINDING> idToFinding = new Dictionary<int, FINDING>();
             foreach (var a in model.jFINDING)
             {
@@ -237,7 +251,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     });
                 }
             }
-           
 
             foreach (var a in model.jFRAMEWORK_TIER_TYPE_ANSWER)
             {
@@ -250,7 +263,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = TinyMapper.Map<GENERAL_SAL>(a);
                 item.Assessment_Id = _assessmentId;
                 db.GENERAL_SAL.Add(item);
-            }          
+            }
             foreach (var a in model.jINFORMATION)
             {
                 var info = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
@@ -363,10 +376,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             {
                 if (supportedDocIds.Contains(a.Documentation_Id))
                 {
-                    var item = TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION>(a);
-                    item.Assessment_Id = _assessmentId;
-                    db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(item);
-                }
+                var item = TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION>(a);
+                item.Assessment_Id = _assessmentId;
+                db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(item);
+            }
             }
 
             foreach (var a in model.jFINANCIAL_ASSESSMENT_VALUES)
@@ -386,7 +399,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             foreach (var a in model.jASSESSMENT_IRP_HEADER)
             {
                 var item = TinyMapper.Map<ASSESSMENT_IRP_HEADER>(a);
-                item.Assessment_Id = _assessmentId;
+                item.ASSESSMENT_ID = _assessmentId;
                 db.ASSESSMENT_IRP_HEADER.Add(item);
             }
 
@@ -398,7 +411,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
                 if (db.ASSESSMENT_IRP.Count(ai => ai.IRP_Id == item.IRP_Id) == 0)
                 {
-                    db.ASSESSMENT_IRP.Add(item);
+                db.ASSESSMENT_IRP.Add(item);
                 }
             }
 

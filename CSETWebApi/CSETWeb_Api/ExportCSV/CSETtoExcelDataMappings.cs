@@ -27,7 +27,7 @@ namespace ExportCSV
         private CSET_Context assessmentEntity;
         private int assessment_id;
 
-        public CSETtoExcelDataMappings(int assessment_id , CSET_Context assessmentEntity)
+        public CSETtoExcelDataMappings(int assessment_id, CSET_Context assessmentEntity)
         {
             this.assessmentEntity = assessmentEntity;
             this.assessment_id = assessment_id;
@@ -38,7 +38,7 @@ namespace ExportCSV
         /// 
         /// </summary>
         /// <param name="stream"></param>
-        public void processTables(MemoryStream stream)
+        public void ProcessTables(MemoryStream stream)
         {
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
             IEnumerable<QuestionExport> list;
@@ -132,7 +132,17 @@ namespace ExportCSV
             doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
 
 
-            List<DataMap> maps = new List<DataMap>();        
+            // Add a worksheet with the product version
+            List<VersionExport> versionList = new List<VersionExport>();
+            VersionExport v = new VersionExport
+            {
+                Version = assessmentEntity.CSET_VERSION.FirstOrDefault().Cset_Version1
+            };
+            versionList.Add(v);
+            doc.AddList<VersionExport>(versionList, "Version", null);
+
+
+            List<DataMap> maps = new List<DataMap>();
             doc.WriteExcelFile(stream, maps);
         }
 
@@ -300,7 +310,7 @@ namespace ExportCSV
             "Alternate_Justification",
             "Component_Guid"};
 
-       
+
 
         public static String[] Headings
         {
@@ -322,10 +332,11 @@ namespace ExportCSV
         public string Comment { get; set; }
         public string Alternate_Justification { get; set; }
         public string Component_Guid { get; set; }
-        
+
     }
 
-    public class CompQuestionExport:QuestionExport{
+    public class CompQuestionExport : QuestionExport
+    {
         private static string[] compheadings = new String[] { "Question_Id",
             "Question_Group_Heading",
             "Simple_Question",
@@ -350,7 +361,18 @@ namespace ExportCSV
         public string Related_Components { get; internal set; }
     }
 
+    public class VersionExport
+    {
+        private static string[] headings = new string[] { "Version" };
 
+        public static string[] Headings
+        {
+            get { return headings; }
+            set { headings = value; }
+        }
+
+        public string Version { get; set; }
     }
+}
 
 
