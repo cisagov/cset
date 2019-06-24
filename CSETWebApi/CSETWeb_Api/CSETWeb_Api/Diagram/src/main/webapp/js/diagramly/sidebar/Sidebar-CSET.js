@@ -12,7 +12,7 @@
         var gn = 'ms active directory ';
 
 
-
+        // ICS Palette
         var fns = [
             this.createVertexTemplateEntry(s + 'configuration_server.svg;',
                 d, d, '', 'Configuration Server', false, null, this.getTagsForStencil(gn, 'configuration server', dt).join(' ')),
@@ -47,11 +47,8 @@
             }
         }));
 
-
-
-        // All of these palette definitions should be refactored into their own functions
-        
-
+       
+        // IT Palette
         var fns2 = [
             this.createVertexTemplateEntry(s + 'active_directory.svg;',
                 d, d, '', 'Active Directory', false, null, this.getTagsForStencil(gn, 'Active Directory', dt).join(' ')),
@@ -153,7 +150,7 @@
         }));
 
 
-
+        // Radio Palette
         var fns3 = [
             this.createVertexTemplateEntry(s + 'audio_switch.svg;',
                 d, d * .3, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
@@ -183,7 +180,7 @@
         }));
 
 
-
+        // Medical Palette
         var fns4 = [
             this.createVertexTemplateEntry(s + 'ct_scanner.svg;',
                 d, d, '', 'CT Scan', false, null, this.getTagsForStencil(gn, 'CT Scan', dt).join(' ')),
@@ -229,6 +226,7 @@
         }));
 
 
+        // General Palette
         var fns5 = [
             this.createVertexTemplateEntry(s + 'connector.svg;',
                 d * .3, d * .3, '', 'Connector', false, null, this.getTagsForStencil(gn, 'Connector', dt).join(' ')),
@@ -248,9 +246,9 @@
         }));
 
 
-
+        // Zone Palette
         var fns6 = [
-            
+            this.createVertexTemplateEntry('swimlane;', 200, 200, 'Zone', 'Zone', null, null, 'container swimlane lane pool group zone')
         ];
         this.addPalette('zone', 'Zone', false, mxUtils.bind(this, function (content) {
             for (var i = 0; i < fns6.length; i++) {
@@ -259,18 +257,25 @@
         }));
 
 
+        // Shapes Palette
         var fns7 = [
-           
+            this.createVertexTemplateEntry('shape=ellipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;backgroundOutline=1;', d, d, '', 'Or', null, null, 'or circle oval ellipse'),
+            this.createVertexTemplateEntry('shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;', d * 1.15, d, '', 'Hexagon', null, null, 'hexagon'),
+            this.createVertexTemplateEntry('shape=mxgraph.basic.octagon;whiteSpace=wrap;html=1;', d, d, '', 'Octagon', null, null, 'octagon'),
+            this.createVertexTemplateEntry('shape=mxgraph.basic.pentagon;whiteSpace=wrap;html=1;', d, d, '', 'Pentagon', null, null, 'pentagon'),
+            this.createVertexTemplateEntry('shape=cross;whiteSpace=wrap;html=1;size=.4;', d, d, '', 'Cross', null, null, 'cross'),
+            this.createVertexTemplateEntry('shape=rectangle;whiteSpace=wrap;html=1;', d, d, '', 'Rectangle', null, null, 'rectangle'),
+            this.createVertexTemplateEntry('shape=mxgraph.basic.orthogonal_triangle;whiteSpace=wrap;html=1;', d, d, '', 'Right Triangle', null, null, 'right triangle'),
+            this.createVertexTemplateEntry('shape=rectangle;rounded=1;arcSize=20;whiteSpace=wrap;html=1;', d, d, '', 'Rounded Rectangle', null, null, 'rounded rectangle'),
+            this.createVertexTemplateEntry('shape=mxgraph.basic.star;whiteSpace=wrap;html=1;', d, d, '', 'Star', null, null, 'star'),
+            this.createVertexTemplateEntry('shape=mxgraph.basic.acute_triangle;dx=.5;whiteSpace=wrap;html=1;', d, d, '', 'Triangle', null, null, 'triangle'),
         ];
         this.addPalette('shapes', 'Shapes', false, mxUtils.bind(this, function (content) {
             for (var i = 0; i < fns7.length; i++) {
                 content.appendChild(fns7[i](content));
             }
         }));
+       
     };
-
-
-
-
 
 })();
