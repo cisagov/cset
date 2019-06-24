@@ -123,7 +123,7 @@ export class AssessmentComponent implements OnInit {
    * Returns the text for the Requirements label.  It might be Statements for ACET assessments.
    */
   requirementsLabel() {
-    return this.assessSvc.getIsAcetOnly() ? 'Statements' : 'Requirements';
+    return 'Requirements';
   }
 
   /**
