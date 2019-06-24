@@ -4,7 +4,7 @@
 
         // perimeter=ellipsePerimeter or rectangle (and there are others).  
         // Probably use rectangle for most, except circular images.  
-        var d = 50;
+        var d = 60;
         var dt = 'ibm';
         var sb = this;
         var s = 'aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/';
@@ -40,8 +40,7 @@
                 d, d, '', 'Terminal Server', false, null, this.getTagsForStencil(gn, 'terminal server', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'unidirectional_device.svg;',
                 d, d, '', 'Unidirectional Device', false, null, this.getTagsForStencil(gn, 'unidirectional device', dt).join(' '))
-        ];
-        
+        ];        
         this.addPalette('ics', 'ICS', false, mxUtils.bind(this, function (content) {
             for (var i = 0; i < fns.length; i++) {
                 content.appendChild(fns[i](content));
@@ -111,9 +110,9 @@
             this.createVertexTemplateEntry(s + 'remote_access_server.svg;',
                 d, d, '', 'RAS', false, null, this.getTagsForStencil(gn, 'RAS', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'rfid_transmitter.svg;',
-                d, d, '', 'RFID', false, null, this.getTagsForStencil(gn, 'RFID', dt).join(' ')),
+                d, d * .3, '', 'RFID', false, null, this.getTagsForStencil(gn, 'RFID', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'router.svg;',
-                d, d, '', 'Router', false, null, this.getTagsForStencil(gn, 'Router', dt).join(' ')),
+                d, d * .3, '', 'Router', false, null, this.getTagsForStencil(gn, 'Router', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'serial_radio.svg;',
                 d, d, '', 'Serial Radio', false, null, this.getTagsForStencil(gn, 'Serial Radio', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'serial_switch.svg;',
@@ -147,7 +146,6 @@
             this.createVertexTemplateEntry(s + 'wireless_router.svg;',
                 d, d, '', 'Wireless Router', false, null, this.getTagsForStencil(gn, 'wireless router', dt).join(' '))
         ];
-
         this.addPalette('it', 'IT', false, mxUtils.bind(this, function (content) {
             for (var i = 0; i < fns2.length; i++) {
                 content.appendChild(fns2[i](content));
@@ -158,7 +156,7 @@
 
         var fns3 = [
             this.createVertexTemplateEntry(s + 'audio_switch.svg;',
-                d, d, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
+                d, d * .3, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'dispatch_console.svg;',
                 d, d, '', 'Dispatch Console', false, null, this.getTagsForStencil(gn, 'Dispatch Console', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'ethernet_backhaul.svg;',
@@ -178,7 +176,6 @@
             this.createVertexTemplateEntry(s + 'tdm_backhaul.svg;',
                 d, d, '', 'TDM Backhaul', false, null, this.getTagsForStencil(gn, 'TDM Backhaul', dt).join(' '))
         ];
-
         this.addPalette('radio', 'Radio', false, mxUtils.bind(this, function (content) {
             for (var i = 0; i < fns3.length; i++) {
                 content.appendChild(fns3[i](content));
@@ -187,27 +184,87 @@
 
 
 
+        var fns4 = [
+            this.createVertexTemplateEntry(s + 'ct_scanner.svg;',
+                d, d, '', 'CT Scan', false, null, this.getTagsForStencil(gn, 'CT Scan', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'ecg.svg;',
+                d, d, '', 'ECG', false, null, this.getTagsForStencil(gn, 'ECG', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'eeg.svg;',
+                d, d, '', 'EEG', false, null, this.getTagsForStencil(gn, 'EEG', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'emg.svg;',
+                d, d, '', 'EMG', false, null, this.getTagsForStencil(gn, 'EMG', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'emergency_medical_service_communications_hardware.svg;',
+                d, d, '', 'EMS', false, null, this.getTagsForStencil(gn, 'EMS', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'endoscopy_system.svg;',
+                d, d, '', 'Endoscopy', false, null, this.getTagsForStencil(gn, 'Endoscopy', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'imaging_server.svg;',
+                d, d, '', 'Imaging Server', false, null, this.getTagsForStencil(gn, 'Imaging Server', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'imaging_modalities_and_equipment.svg;',
+                d, d, '', 'IME', false, null, this.getTagsForStencil(gn, 'IME', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'infusion_pump.svg;',
+                d, d, '', 'Infusion Pump', false, null, this.getTagsForStencil(gn, 'Infusion Pump', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'linear_partical_accelerator.svg;',
+                d, d * .3, '', 'Linac', false, null, this.getTagsForStencil(gn, 'Linac', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'medical_gas_system.svg;',
+                d, d, '', 'Medical Gas', false, null, this.getTagsForStencil(gn, 'Medical Gas', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'physiological_monitoring_system.svg;',
+                d, d, '', 'Medical Monitoring Device', false, null, this.getTagsForStencil(gn, 'Medical Monitoring Device', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'magnetic_resonance_imaging.svg;',
+                d, d, '', 'MRI', false, null, this.getTagsForStencil(gn, 'MRI', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'infant_protection_remote_display_unit.svg;',
+                d, d, '', 'Remote Display Unit', false, null, this.getTagsForStencil(gn, 'Remote Display Unit', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'real_time_location_systems.svg;',
+                d, d, '', 'RTLS', false, null, this.getTagsForStencil(gn, 'RTLS', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'ultrasound.svg;',
+                d, d, '', 'Ultrasound', false, null, this.getTagsForStencil(gn, 'Ultrasound', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'urodynamic_diagnostic_equipment.svg;',
+                d, d, '', 'Urodynamic Equipment', false, null, this.getTagsForStencil(gn, 'Urodynamic Equipment', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'xray_generator.svg;',
+                d, d, '', 'Xray', false, null, this.getTagsForStencil(gn, 'Xray', dt).join(' '))
+        ];
         this.addPalette('medical', 'Medical', false, mxUtils.bind(this, function (content) {
-            for (var i = 0; i < fns.length; i++) {
-                content.appendChild(fns[i](content));
+            for (var i = 0; i < fns4.length; i++) {
+                content.appendChild(fns4[i](content));
             }
         }));
 
+
+        var fns5 = [
+            this.createVertexTemplateEntry(s + 'connector.svg;',
+                d * .3, d * .3, '', 'Connector', false, null, this.getTagsForStencil(gn, 'Connector', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'partner.svg;',
+                d, d, '', 'Partner', false, null, this.getTagsForStencil(gn, 'Partner', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'unknown.svg;',
+                d, d, '', 'Unknown', false, null, this.getTagsForStencil(gn, 'Unknown', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'vendor.svg;',
+                d, d, '', 'Vendor', false, null, this.getTagsForStencil(gn, 'Vendor', dt).join(' ')),
+            this.createVertexTemplateEntry(s + 'web.svg;',
+                d, d, '', 'Web', false, null, this.getTagsForStencil(gn, 'Web', dt).join(' ')),
+        ];
         this.addPalette('general', 'General', false, mxUtils.bind(this, function (content) {
-            for (var i = 0; i < fns.length; i++) {
-                content.appendChild(fns[i](content));
+            for (var i = 0; i < fns5.length; i++) {
+                content.appendChild(fns5[i](content));
             }
         }));
 
+
+
+        var fns6 = [
+            
+        ];
         this.addPalette('zone', 'Zone', false, mxUtils.bind(this, function (content) {
-            for (var i = 0; i < fns.length; i++) {
-                content.appendChild(fns[i](content));
+            for (var i = 0; i < fns6.length; i++) {
+                content.appendChild(fns6[i](content));
             }
         }));
 
+
+        var fns7 = [
+           
+        ];
         this.addPalette('shapes', 'Shapes', false, mxUtils.bind(this, function (content) {
-            for (var i = 0; i < fns.length; i++) {
-                content.appendChild(fns[i](content));
+            for (var i = 0; i < fns7.length; i++) {
+                content.appendChild(fns7[i](content));
             }
         }));
     };
