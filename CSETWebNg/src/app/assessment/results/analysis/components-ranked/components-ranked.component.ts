@@ -26,6 +26,7 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-components-ranked',
@@ -35,7 +36,12 @@ export class ComponentsRankedComponent implements OnInit {
   chart: Chart;
   dataRows: { title: string; rank: number; failed: number; total: number; percent: number; }[];
   initialized = false;
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+  constructor(
+    private analysisSvc: AnalysisService,
+    private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.analysisSvc.getComponentsRankedCategories().subscribe(x => this.setupChart(x));
@@ -52,13 +58,6 @@ export class ComponentsRankedComponent implements OnInit {
 
   }
 
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-results']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-summary']);
-  }
 
   setupChart(x: any) {
     this.initialized = false;

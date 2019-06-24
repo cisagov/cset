@@ -32,7 +32,7 @@
       High Level Assessment Description: Please provide a description of the assessment process and work performed for senior management.
       This information will be included in your reports. This is not intended to be analysis of the assessment results as
       requested in the executive summary.
-      <textarea class="overview-textarea-height" name="overview" id="overview" placeholder="Please provide a description of the assessment process and work performed."
+      <textarea maxlength="4000" class="overview-textarea-height" name="overview" id="overview" placeholder="Please provide a description of the assessment process and work performed."
         [(ngModel)]="o.AssessmentDescription" (change)="update($event)"></textarea>
     </div>
     <hr>
@@ -40,12 +40,12 @@
     <div class="d-flex flex-column flex-00a">
       Comments: Please provide general comments, if any, to include in the reports. These comments are not included in the Executive
       Summary Report, but are included in the remaining reports.
-      <textarea class="overview-textarea-height" name="comments" id="comments" placeholder="Please provide general comments, if any, to include in the reports."
+      <textarea maxlength="4000" class="overview-textarea-height" name="comments" id="comments" placeholder="Please provide general comments, if any, to include in the reports."
          [(ngModel)]="o.AdditionalNotesAndComments" (change)="update($event)"></textarea>
     </div>
     <div class="mt-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navBack()">Back</button>
-      <button class="btn btn-primary" (click)="navNext()">Next</button>
+      <button class="btn btn-primary" (click)="navSvc2.navBack('overview')">Back</button>
+      <button class="btn btn-primary" (click)="navSvc2.navNext('overview')">Next</button>
     </div>
   </div>
 

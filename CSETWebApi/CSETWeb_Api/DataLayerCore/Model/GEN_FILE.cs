@@ -47,6 +47,7 @@ namespace DataLayerCore.Model
         [StringLength(50)]
         public string Source_Type { get; set; }
         public byte[] Data { get; set; }
+        [Required]
         public bool? Is_Uploaded { get; set; }
 
         [ForeignKey("Doc_Num")]

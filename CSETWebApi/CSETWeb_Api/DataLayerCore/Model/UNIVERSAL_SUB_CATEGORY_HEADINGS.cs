@@ -18,9 +18,9 @@ namespace DataLayerCore.Model
         public bool? Display_Radio_Buttons { get; set; }
         public int Question_Group_Heading_Id { get; set; }
         public int Universal_Sub_Category_Id { get; set; }
-        public int Heading_Pair_Id { get; set; }
         [StringLength(50)]
         public string Set_Name { get; set; }
+        public int Heading_Pair_Id { get; set; }
 
         public virtual QUESTION_GROUP_HEADING Question_Group_Heading_ { get; set; }
         [ForeignKey("Set_Name")]

@@ -13,6 +13,8 @@ using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using static CSETWeb_Api.BusinessLogic.ReportEngine.BasicReportData;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers
@@ -25,6 +27,7 @@ namespace CSETWeb_Api.BusinessManagers
     {
         List<NEW_REQUIREMENT> Requirements;
         List<FullAnswer> Answers;
+        Dictionary<int, MaturityMap> matLevels;
 
         /// <summary>
         /// Constructor.
@@ -32,7 +35,9 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="assessmentId"></param>
         public RequirementsManager(int assessmentId) : base(assessmentId)
         {
-
+            // Get the maturity level for all requirements
+            var mm = new BusinessLogic.BusinessManagers.MaturityManager();
+            matLevels = mm.GetRequirementMaturityLevels();
         }
 
 
@@ -45,7 +50,7 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 RequirementsPass req = GetControls(db);
-                return BuildResponse(req.Requirements.ToList(), req.Answers.ToList());
+                return BuildResponse(req.Requirements.ToList(), req.Answers.ToList(), req.DomainAssessmentFactors.ToList());
             }
         }
 
@@ -63,6 +68,12 @@ namespace CSETWeb_Api.BusinessManagers
                 .ThenBy(x => x.rs.Requirement_Sequence)
                 .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name });
 
+            var domains = (from d in db.FINANCIAL_DOMAINS
+                join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
+                join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
+                select new DomainAssessmentFactor {DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor}).Distinct();
+
+
 
             // Get all REQUIREMENT answers for the assessment
             var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Is_Requirement)
@@ -75,7 +86,8 @@ namespace CSETWeb_Api.BusinessManagers
             return new RequirementsPass()
             {
                 Requirements = results,
-                Answers = answers
+                Answers = answers, 
+                DomainAssessmentFactors = domains
             };
         }
 
@@ -87,7 +99,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="answers"></param>
         /// <returns></returns>
         private QuestionResponse BuildResponse(List<RequirementPlus> requirements,
-            List<FullAnswer> answers)
+            List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup g = new QuestionGroup();
@@ -115,8 +127,15 @@ namespace CSETWeb_Api.BusinessManagers
                     {
                         GroupHeadingId = dbR.Question_Group_Heading_Id,
                         GroupHeadingText = dbR.Standard_Category,
-                        StandardShortName = dbRPlus.SetShortName
+                        StandardShortName = dbRPlus.SetShortName,
+                        
                     };
+
+                    if (domains.Any(x=>x.AssessmentFactorName == g.GroupHeadingText))
+                    {
+                        g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
+                            .DomainName;
+                    }
 
                     groupList.Add(g);
 
@@ -152,7 +171,8 @@ namespace CSETWeb_Api.BusinessManagers
                     AltAnswerText = answer?.a.Alternate_Justification,
                     Comment = answer?.a.Comment,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
-                    Reviewed = answer?.a.Reviewed ?? false
+                    Reviewed = answer?.a.Reviewed ?? false,
+                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id)
                 };
                 if (answer != null)
                 {
@@ -172,6 +192,14 @@ namespace CSETWeb_Api.BusinessManagers
 
             resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
             resp.RequirementCount = this.NumberOfRequirements();
+
+            // Get the overall risk level
+            var acetDash = new ACETDashboardManager().LoadDashboard(this._assessmentId);
+            resp.OverallIRP = acetDash.SumRiskLevel;
+            if (acetDash.Override > 0)
+            {
+                resp.OverallIRP = acetDash.Override;
+            }
 
             return resp;
         }
@@ -277,6 +305,21 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirementID"></param>
+        /// <returns></returns>
+        private string ReqMaturityLevel(int requirementID)
+        {
+            if (matLevels.ContainsKey(requirementID))
+            {
+                return matLevels[requirementID].Acronym;
+            }
+
+            return string.Empty;
+        }
 
         /// <summary>
         /// 
@@ -483,6 +526,7 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public IQueryable<RequirementPlus> Requirements { get; set; }
         public IQueryable<FullAnswer> Answers { get; set; }
+        public IQueryable<DomainAssessmentFactor> DomainAssessmentFactors { get; set; }
     }
 
 
@@ -495,6 +539,12 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public NEW_REQUIREMENT Requirement;
         public string SetShortName;
+    }
+
+    internal class DomainAssessmentFactor
+    {
+        public string DomainName;
+        public string AssessmentFactorName;
     }
 }
 

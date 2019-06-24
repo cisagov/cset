@@ -38,6 +38,8 @@ namespace CSETWeb_Api.Data.ControlData
             //get all the contacts in this assessment
             //get all the contexts on this finding
             this.webFinding = f;
+            if (f.CheckFinding())
+                return;
             this.context = context;
             this.dbFinding = context.FINDING
                 .Include(x => x.FINDING_CONTACT)
@@ -106,6 +108,11 @@ namespace CSETWeb_Api.Data.ControlData
             {
                 return;
             }
+          
+
+
+            if (this.webFinding.CheckFinding())
+                return;
 
             //var contacts = Contacts.Where(s => s.Id != new Guid()).Distinct().ToList();
             //finding.FINDING_CONTACT.Where(s => !contacts.Select(se => se.Id).Contains(s.Assessment_Contact_Id)).ToList().ForEach(t => finding.FINDING_CONTACT.Remove(t));

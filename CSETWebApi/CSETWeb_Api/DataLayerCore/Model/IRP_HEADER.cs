@@ -18,7 +18,7 @@ namespace DataLayerCore.Model
         [StringLength(200)]
         public string Header { get; set; }
 
-        [InverseProperty("IRP_Header_")]
+        [InverseProperty("IRP_HEADER_")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         [InverseProperty("Header_")]
         public virtual ICollection<IRP> IRP { get; set; }

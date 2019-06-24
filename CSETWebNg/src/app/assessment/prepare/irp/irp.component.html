@@ -1,0 +1,95 @@
+<div class="white-panel">
+    <div>
+        <h4>Inherent Risk Profiles</h4>
+        <p>The IRP has <a mattooltip="Click to see more information about risk levels." data-toggle="collapse"
+                href="#risk-desc" role="button" aria-expanded="false" aria-controls="risk-desc">five risk areas</a>
+            across five categories. It is
+            measured on a scale from least risk to most risk in this order below:</p>
+        <div class="collapse" id="risk-desc">
+            1. Least - very limited use of technology.<br>
+            2. Minimal - limited complexity in terms of the techonology it uses.<br>
+            3. Moderate - uses technology that may be somewhat complex in terms of volume and sophistication.<br>
+            4. Significant - uses complex technology in terms of scope and sophistication.<br>
+            5. Most - uses extremely complex technology to deliver myriad products and services.<br>
+        </div>
+        <hr>
+    </div>
+    <div *ngFor="let iHeader of irps?.headerList">
+        <h3 class="irp-header">{{ iHeader.header }}</h3>
+        <hr>
+        <div *ngFor="let irp of iHeader.irpList" class="mb-4">
+            <div class="lead">{{ irp.Item_Number }}. {{ irp.Description }}</div>
+            <div class="mb-4 b-primary-200 br-standard fst-italic open-desc"
+                [innerHTML]="assessSvc.formatLinebreaks(irp.DescriptionComment)">
+            </div>
+            <label class="ml-1 font-weight-bold">Validation Approach</label>
+            <div class="mb-4 ml-3">{{ irp.Validation_Approach }}
+            </div>
+
+            <label class="ml-1 font-weight-bold">Risk Levels</label>
+            <div (click)="setResponse(irp, 1);" class="irp-risk cursor-pointer"
+                [ngClass]="{'irp-selected': irp.Response==1}">
+                <div class="row">
+                    <div class="col-2">
+                        <h3>1</h3>
+                    </div>
+                    <div class="col-10">{{ irp.Risk_1_Description }}</div>
+                </div>
+            </div>
+            <div (click)="setResponse(irp, 2);" class="irp-risk cursor-pointer"
+                [ngClass]="{'irp-selected': irp.Response==2}">
+                <div class="row">
+                    <div class="col-2">
+                        <h3>2</h3>
+                    </div>
+                    <div class="col-10">{{ irp.Risk_2_Description }}</div>
+                </div>
+            </div>
+            <div (click)="setResponse(irp, 3);" class="irp-risk cursor-pointer"
+                [ngClass]="{'irp-selected': irp.Response==3}">
+                <div class="row">
+                    <div class="col-2">
+                        <h3>3</h3>
+                    </div>
+                    <div class="col-10">{{ irp.Risk_3_Description }}</div>
+                </div>
+            </div>
+            <div (click)="setResponse(irp, 4);" class="irp-risk cursor-pointer"
+                [ngClass]="{'irp-selected': irp.Response==4}">
+                <div class="row">
+                    <div class="col-2">
+                        <h3>4</h3>
+                    </div>
+                    <div class="col-10">{{ irp.Risk_4_Description }}</div>
+                </div>
+            </div>
+            <div (click)="setResponse(irp, 5);" class="irp-risk cursor-pointer"
+                [ngClass]="{'irp-selected': irp.Response==5}">
+                <div class="row">
+                    <div class="col-2">
+                        <h3>5</h3>
+                    </div>
+                    <div class="col-10">{{ irp.Risk_5_Description }}</div>
+                </div>
+            </div>
+
+            <div class="mt-4 ml-3 align-middle">
+                <svg style="height: 31px; width: 37px; vertical-align: middle; margin-right: .3rem">
+                    <path fill="#0f3c7a" stroke="transparent" stroke-width="0" transform="scale(.8)"
+                        d="M5.523,11.864C5.523,10.271 6.6,9.151 8.173,9.151 9.746,9.151 10.869,10.271 10.869,11.864 10.869,13.413 9.79,14.576 8.219,14.576 6.556,14.576 5.523,13.413 5.523,11.864 M14.827,11.864C14.827,10.271 15.905,9.151 17.478,9.151 19.05,9.151 20.174,10.271 20.174,11.864 20.174,13.413 19.094,14.576 17.523,14.576 15.861,14.576 14.827,13.413 14.827,11.864 M24.132,11.864C24.132,10.271 25.209,9.151 26.782,9.151 28.355,9.151 29.478,10.271 29.478,11.864 29.478,13.413 28.399,14.576 26.828,14.576 25.165,14.576 24.132,13.413 24.132,11.864 M0,3.332L0,20.394C0,22.227,1.565,23.726,3.477,23.726L7.42,23.726 7.42,33 15.455,23.726 31.524,23.726C33.436,23.726,35,22.227,35,20.394L35,3.332C35,1.499,33.436,0,31.524,0L3.477,0C1.565,0,0,1.499,0,3.332" />
+                    <circle cx="31" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900"
+                        *ngIf="!!irp.Comment && irp.Comment.length > 0" class="test" />
+                </svg>
+                <span class="font-weight-bold">Comments</span>
+            </div>
+            <textarea appAutoSize class="form-control irp-textarea" maxlength="500" [(ngModel)]="irp.Comment"
+                (blur)="submit(irp.IRP_Id, irp.Response, irp.Comment)"></textarea>
+        </div>
+    </div>
+    <hr>
+
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+        <button class="btn btn-primary" (click)="navSvc2.navBack('irp')">Back</button>
+        <button class="btn btn-primary" (click)="navSvc2.navNext('irp')">Next</button>
+    </div>
+</div>

@@ -119,7 +119,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Export
             foreach (var c in db.FINANCIAL_HOURS.Where(x => x.Assessment_Id == _assessmentId)) { model.jFINANCIAL_HOURS.Add(TinyMapper.Map<jFINANCIAL_HOURS>(c)); }
             foreach (var c in db.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == _assessmentId)) { model.jFINANCIAL_ASSESSMENT_VALUES.Add(TinyMapper.Map<jFINANCIAL_ASSESSMENT_VALUES>(c)); }
             foreach (var c in db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Where(x => x.Assessment_Id == _assessmentId)) { model.jASSESSMENTS_REQUIRED_DOCUMENTATION.Add(TinyMapper.Map<jASSESSMENTS_REQUIRED_DOCUMENTATION>(c)); }
-            foreach (var c in db.ASSESSMENT_IRP_HEADER.Where(x => x.Assessment_Id == _assessmentId)) { model.jASSESSMENT_IRP_HEADER.Add(TinyMapper.Map<jASSESSMENT_IRP_HEADER>(c)); }
+            foreach (var c in db.ASSESSMENT_IRP_HEADER.Where(x => x.ASSESSMENT_ID == _assessmentId)) { model.jASSESSMENT_IRP_HEADER.Add(TinyMapper.Map<jASSESSMENT_IRP_HEADER>(c)); }
             foreach (var c in db.ASSESSMENT_IRP.Where(x => x.Assessment_Id == _assessmentId)) { model.jASSESSMENT_IRP.Add(TinyMapper.Map<jASSESSMENT_IRP>(c)); }
 
             return model;

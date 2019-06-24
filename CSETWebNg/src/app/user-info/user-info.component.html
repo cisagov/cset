@@ -38,7 +38,7 @@
 
   <div class="form-group" [ngClass]="{ 'has-error': submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
     <label required for="email">Email</label>
-    <input type="email" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
+    <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
       appEmailValidator />
     <div class="alert alert-danger" *ngIf="submitted">
       <div *ngIf="email?.errors?.required">Email is required</div>
@@ -90,32 +90,5 @@
         </div>
       </div>
     </form>
-
-
-    <!-- <table class="paddingBetweenCols">
-        <th>Security Question</th>
-        <th>Security Answer</th>
-        <tr>
-          <td>
-            <select class="form-control" id="securityQuestion1" name="securityQuestion1" [(ngModel)]="model.SecurityQuestion1">
-              <option *ngFor="let question of SecurityQuestions" [attr.selected]="question.SecurityQuestion === model.SecurityQuestion1">{{question.SecurityQuestion}}</option>
-            </select>
-          </td>
-          <td>
-            <input type="text" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.SecurityAnswer1"
-              placeholder="Answer">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="text" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
-              name="SecurityQuestion2" [(ngModel)]="model.SecurityQuestion2">
-          </td>
-          <td>
-            <input type="text" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
-              [(ngModel)]="model.SecurityAnswer2">
-          </td>
-        </tr>
-      </table> -->
   </div>
 </form>

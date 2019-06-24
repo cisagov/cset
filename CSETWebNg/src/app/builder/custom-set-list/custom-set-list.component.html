@@ -40,11 +40,12 @@
       <div class="spinner-size-50"></div>
     </div>
   </div>
-  <div *ngIf="setDetailList?.length > 0" class="w-100">
+  <div *ngIf="setDetailList?.length > 0" class="row">
+    <div class="col-12">
     <table class="w-100">
       <tr *ngFor="let s of setDetailList">
         <td class="w-100">
-          <button class="btn btn-link ws-normal text-left" (click)="setBuilderSvc.navSetDetail2(s.SetName)">
+          <button style="white-space: normal; text-align:left;" class="btn btn-link" (click)="setBuilderSvc.navSetDetail2(s.SetName)">
             {{s.FullName}}
           </button>
         </td>
@@ -62,6 +63,7 @@
         </td>
       </tr>
     </table>
+  </div>
   </div>
   <div *ngIf="setDetailList?.length === 0" class="alert alert-info mt-3 mb-4">
     <p>There are no custom sets available.</p>

@@ -116,7 +116,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
 
         [StringLength(100)]
         public string Assets { get; set; }
-
+        public int? IRPTotalOverride { get; set; }
+        public string IRPTotalOverrideReason { get; set; }
+        public bool? MatDetail_targetBandOnly { get; set; }
     }
 
     public class jvQUESTION_HEADINGS
@@ -713,15 +715,15 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
 
     public class jASSESSMENT_IRP_HEADER
     {
-        public int Assessment_Id { get; set; }
+        public int ASSESSMENT_ID { get; set; }
 
-        public int IRP_Header_Id { get; set; }
+        public int IRP_HEADER_ID { get; set; }
 
-        public int? Risk_Level { get; set; }
+        public int? RISK_LEVEL { get; set; }
 
-        public int Header_Risk_Level_Id { get; set; }
+        public int HEADER_RISK_LEVEL_ID { get; set; }
 
-        public string Comment { get; set; }
+        public string COMMENT { get; set; }
     }
 
     public class jASSESSMENT_IRP
