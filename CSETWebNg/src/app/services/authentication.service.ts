@@ -112,7 +112,7 @@ export class AuthenticationService {
     login(email: string, password: string) {
         sessionStorage.clear();
         sessionStorage.setItem('email', email);
-
+console.log ("test; "+ this.apiUrl)
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(
                 {
