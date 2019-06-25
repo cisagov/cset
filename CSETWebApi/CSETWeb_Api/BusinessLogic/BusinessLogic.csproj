@@ -242,6 +242,7 @@
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
+    <Compile Include="BusinessManagers\DiagramManager.cs" />
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
+    <Compile Include="Models\Diagram.cs" />
     <Compile Include="Models\IRP.cs" />
     <Compile Include="Models\MaturityAnswers.cs" />
     <Compile Include="Models\MaturityAssessment.cs" />

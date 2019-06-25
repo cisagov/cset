@@ -16,11 +16,11 @@
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
-    "buttonLabelA": "Yes(C)",
+    "buttonLabelA": "Alt",
   
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
-    "answerLabelA": "Yes(C)",
+    "answerLabelA": "Alternate",
     "answerLabelU": "Unanswered"
 }

@@ -720,6 +720,24 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:CSETWeb_Api.Controllers.DiagramController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveDiagram(CSETWeb_Api.Models.DiagramRequest)">
+            <summary>
+            Persists the diagram XML in the database.
+            </summary>
+            <param name="req"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagram(System.Int32)">
+            <summary>
+            Returns the diagram XML for the assessment.
+            </summary>
+            <param name="assessmentID"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.
