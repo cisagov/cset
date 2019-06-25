@@ -68,6 +68,7 @@ import { RequirementDetailComponent } from './builder/requirement-detail/require
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
+import { DiagramComponent } from './assessment/prepare/diagram/diagram.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -109,6 +110,7 @@ const appRoutes: Routes = [
           { path: 'required', component: RequiredDocsComponent },
           { path: 'irp', component: IRPComponent },
           { path: 'irp-summary', component: IrpSummaryComponent },
+          { path: 'diagram', component: DiagramComponent },
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: '**', redirectTo: 'info' }
         ]

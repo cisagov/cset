@@ -98,6 +98,8 @@ export class StandardService {
       tree.push({ children: [], label: 'Inherent Risk Profiles', value: 'irp' });
       tree.push({ children: [], label: 'Inherent Risk Summary', value: 'irp-summary' });
     }
+    
+    tree.push({ children: [], label: 'Network Diagram', value: 'diagram'});
 
     this.navSvc.setTree(tree, magic);
   }
