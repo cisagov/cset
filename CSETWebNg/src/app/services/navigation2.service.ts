@@ -17,8 +17,8 @@ export class Navigation2Service {
   pages = [
     // Prepare
     { pageClass: 'info', path: 'assessment/{:id}/prepare/info' },
-    { pageClass: 'sal', path: 'assessment/{:id}/prepare/sal', condition: '!ACET' },
-    { pageClass: 'standards', path: 'assessment/{:id}/prepare/standards', condition: '!ACET' },
+    { pageClass: 'sal', path: 'assessment/{:id}/prepare/sal' },
+    { pageClass: 'standards', path: 'assessment/{:id}/prepare/standards' },
     { pageClass: 'framework', path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
     { pageClass: 'required', path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
     { pageClass: 'irp', path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
