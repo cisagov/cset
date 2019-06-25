@@ -1539,6 +1539,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DemographicsController.cs" />
     <Compile Include="Controllers\DiagnosticController.cs" />
+    <Compile Include="Controllers\DiagramController.cs" />
     <Compile Include="Controllers\ExcelExportController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\FileDownloadController.cs" />
