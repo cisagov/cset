@@ -481,6 +481,9 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.GetACETFilters">
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
             Re-orders the pieces into Y|N|NA|A|U order

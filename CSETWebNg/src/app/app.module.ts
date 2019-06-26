@@ -152,6 +152,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
 import { ResourceLibraryService } from './services/resource-library.service';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
+import { DiagramComponent } from './assessment/prepare/diagram/diagram.component';
 
 
 @NgModule({
@@ -225,6 +226,7 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
         FrameworkComponent,
         RequiredDocsComponent,
         IRPComponent,
+        DiagramComponent,
         MatDetailComponent,
         AboutComponent,
         AdvisoryComponent,
