@@ -68,7 +68,7 @@ import { RequirementDetailComponent } from './builder/requirement-detail/require
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
-import { DiagramComponent } from './assessment/prepare/diagram/diagram.component';
+import { DiagramComponent } from './assessment/diagram/diagram.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -114,6 +114,12 @@ const appRoutes: Routes = [
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: '**', redirectTo: 'info' }
         ]
+      },
+      {
+        path: 'diagram',
+        component: DiagramComponent,
+        canActivate: [AssessGuard],
+        canActivateChild: [AssessGuard],
       },
       { path: 'questions', component: QuestionsComponent },
       {

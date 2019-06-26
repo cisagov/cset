@@ -28,6 +28,7 @@
     "@angular/platform-browser-dynamic": "^7.1.0",
     "@angular/platform-server": "^7.1.0",
     "@angular/router": "^7.1.0",
+    "@fortawesome/angular-fontawesome": "^0.4.0",
     "@kolkov/angular-editor": "^0.13.1",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "@ng-select/ng-select": "^2.12.1",
