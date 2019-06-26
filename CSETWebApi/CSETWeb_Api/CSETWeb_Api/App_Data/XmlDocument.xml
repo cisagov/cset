@@ -481,6 +481,9 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.GetACETFilters">
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
             Re-orders the pieces into Y|N|NA|A|U order
@@ -718,6 +721,24 @@
             Tests connectivity to the SMTP server and sends 
             a test email to the designated recipient.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CSETWeb_Api.Controllers.DiagramController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveDiagram(CSETWeb_Api.Models.DiagramRequest)">
+            <summary>
+            Persists the diagram XML in the database.
+            </summary>
+            <param name="req"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagram(System.Int32)">
+            <summary>
+            Returns the diagram XML for the assessment.
+            </summary>
+            <param name="assessmentID"></param>
             <returns></returns>
         </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
