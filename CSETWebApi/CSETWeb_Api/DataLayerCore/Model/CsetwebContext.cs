@@ -23,6 +23,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
+        public virtual DbSet<ASSESSMENT_DIAGRAM_MARKUP> ASSESSMENT_DIAGRAM_MARKUP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
@@ -45,6 +46,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
+        public virtual DbSet<DIAGRAM_MARKUP> DIAGRAM_MARKUP { get; set; }
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
@@ -269,6 +271,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
 
+                entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
+
                 entity.HasOne(d => d.AssessmentCreator)
                     .WithMany(p => p.ASSESSMENTS)
                     .HasForeignKey(d => d.AssessmentCreatorId)
@@ -330,18 +334,32 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
             });
 
+            modelBuilder.Entity<ASSESSMENT_DIAGRAM_MARKUP>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Diagram_Id });
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_MARKUP)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_MARKUP_ASSESSMENTS");
+
+                entity.HasOne(d => d.Diagram_)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_MARKUP)
+                    .HasForeignKey(d => d.Diagram_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_MARKUP_DIAGRAM_MARKUP");
+            });
+
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id })
-                    .HasName("PK_Assessment_IRP");
-
-                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+                entity.HasKey(e => e.Answer_Id)
+                    .HasName("PK__Assessme__36918F380D1C2E80");
 
                 entity.Property(e => e.Comment).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENT_IRP)
                     .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
 
                 entity.HasOne(d => d.IRP_)
@@ -1292,7 +1310,7 @@ namespace DataLayerCore.Model
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                
+                entity.Property(e => e.IsAcetOnly).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.INFORMATION)
