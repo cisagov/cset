@@ -23,7 +23,9 @@ export class Navigation2Service {
     { pageClass: 'required', path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
     { pageClass: 'irp', path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
     { pageClass: 'irp-summary', path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },
-    { pageClass: 'diagram', path: 'assessment/{:id}/prepare/diagram'},
+
+    //  Diagram
+    { pageClass: 'diagram', path: 'assessment/{:id}/diagram'},
 
     // Questions/Requirements/Statements
     { pageClass: 'questions', path: 'assessment/{:id}/questions' },
