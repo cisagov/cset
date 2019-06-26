@@ -454,17 +454,30 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                NEW_QUESTION q = new NEW_QUESTION();
-                q.Simple_Question = request.CustomQuestionText;
+                // get the max Std_Ref_Number for the std_ref
+                int newStdRefNum = 1;
+                var fellowQuestions = db.NEW_QUESTION.Where(x => x.Std_Ref == request.SetName).ToList();
+                if (fellowQuestions.Count > 0)
+                {
+                    newStdRefNum = fellowQuestions.Max(x => x.Std_Ref_Number) + 1;
+                }
+                
 
-                // TODO:  std_ref + std_ref_number must be unique
-                q.Std_Ref = DateTime.Now.Millisecond.ToString();
-                q.Std_Ref_Number = 0;
 
-                q.Universal_Sal_Level = "L";
-                q.Weight = 0;
-                q.Original_Set_Name = request.SetName;
-                q.Heading_Pair_Id = GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName);
+
+                NEW_QUESTION q = new NEW_QUESTION
+                {
+                    Simple_Question = request.CustomQuestionText,
+
+                    // TODO:  std_ref + std_ref_number must be unique
+                    Std_Ref = request.SetName,
+                    Std_Ref_Number = newStdRefNum,
+
+                    Universal_Sal_Level = "L",
+                    Weight = 0,
+                    Original_Set_Name = request.SetName,
+                    Heading_Pair_Id = GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName)
+                };
 
                 db.NEW_QUESTION.Add(q);
                 db.SaveChanges();
