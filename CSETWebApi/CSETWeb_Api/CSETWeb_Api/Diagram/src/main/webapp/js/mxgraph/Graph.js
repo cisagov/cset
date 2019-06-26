@@ -80,6 +80,50 @@ mxText.prototype.baseSpacingBottom = 1;
 // Keeps edges between relative child cells inside parent
 mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 
+// CSET - default value (label) for some objects
+mxGraphModel.prototype.cellAdded = function (cell)
+{
+    // assign an ID if the cell is being added to the main graph
+    if (!!cell.parent && cell.parent.id == "1")
+    {
+        if (!!cell.style)
+        {
+            // ignore shapes
+            if (getStyle(cell.style, 'shape') !== null)
+            {
+                return;
+            }
+
+            // ignore connectors
+            if (cell.geometry.width === 0 && cell.geometry.height === 0)
+            {
+                return;
+            }
+        }
+        cell.setValue("RKW-" + Math.floor(Math.random() * Math.floor(1000)));
+    }
+}
+
+/**
+ * Returns the value for the specified style.
+ * @param {any} styleString
+ * @param {any} name
+ */
+function getStyle(styleString, name)
+{
+    var v = null;
+    styleString.split(';').forEach((style) =>
+    {
+        const s = style.split('=', 2);
+        if (s[0] === name)
+        {
+            v = s[1];
+        }
+    });
+    return v;
+}
+
+
 // Defines grid properties
 mxGraphView.prototype.gridImage = (mxClient.IS_SVG) ? 'data:image/gif;base64,R0lGODlhCgAKAJEAAAAAAP///8zMzP///yH5BAEAAAMALAAAAAAKAAoAAAIJ1I6py+0Po2wFADs=' :
 	IMAGE_PATH + '/grid.gif';

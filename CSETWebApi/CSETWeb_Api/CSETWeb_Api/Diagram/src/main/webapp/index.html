@@ -112,14 +112,11 @@
         (function () {
             if (!!urlParams['j']) {
                 localStorage.setItem('jwt', urlParams['j']);
+            }
 
-                var qm = window.location.href.indexOf('?');
-                var href = window.location.href.substring(0, qm);
-
-                // Redirects if href changes
-                if (href != window.location.href) {
-                    window.location.href = href;
-                }
+            if (!!urlParams['h'])
+            {
+                localStorage.setItem('cset.host', decodeURIComponent(urlParams['h']));
             }
         })();
 		

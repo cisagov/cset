@@ -41,14 +41,6 @@ Editor = function (chromeless, themes, model, graph, editable)
     // Updates modified state if graph changes
     this.graphChangeListener = function (sender, eventObject)
     {
-        // This is an attempt at auto-assigning a label/value to a new object, but it's too late to display. ------------
-        const newCell = eventObject.properties.changes.find(e => e instanceof mxChildChange && e.child.value === '');
-        if (!!newCell)
-        {
-            sender.setValue(newCell.child, 'RKW-' + Math.floor(Math.random() * Math.floor(1000)));
-        }
-        // --------------------------------------------------------------------------------------------------------------
-
         PersistGraphToCSET(this);
 
         var edit = (eventObject != null) ? eventObject.getProperty('edit') : null;
@@ -74,7 +66,7 @@ Editor = function (chromeless, themes, model, graph, editable)
  */
 function PersistGraphToCSET(editor)
 {
-    var jwt = localStorage.getItem("jwt");
+    var jwt = localStorage.getItem('jwt');
     var enc = new mxCodec();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
@@ -85,11 +77,11 @@ function PersistGraphToCSET(editor)
     req.DiagramXml = sXML;
 
 
-    var url = "http://localhost:46000/api/diagram/save";
+    var url = localStorage.getItem('cset.host') + '/diagram/save';
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Authorization", jwt);
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', jwt);
     xhr.send(JSON.stringify(req));
 }
 
