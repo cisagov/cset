@@ -1,4 +1,4 @@
-<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+﻿<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,7 +104,24 @@
 					}
 				}
 			})();
-		}
+        }
+
+        /**
+         * Capture the JWT and remove it from the URL
+         */
+        (function () {
+            if (!!urlParams['j']) {
+                localStorage.setItem('jwt', urlParams['j']);
+
+                var qm = window.location.href.indexOf('?');
+                var href = window.location.href.substring(0, qm);
+
+                // Redirects if href changes
+                if (href != window.location.href) {
+                    window.location.href = href;
+                }
+            }
+        })();
 		
 		/**
 		 * Adds meta tags with application name (depends on offline URL parameter)
