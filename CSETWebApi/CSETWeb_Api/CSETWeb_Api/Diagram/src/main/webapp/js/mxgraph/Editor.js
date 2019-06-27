@@ -73,7 +73,7 @@ function PersistGraphToCSET(editor)
     var sXML = oSerializer.serializeToString(node);
 
     var req = {};
-    req.AssessmentID = 41;
+    req.AssessmentID = localStorage.getItem('assess.id');
     req.DiagramXml = sXML;
 
 
