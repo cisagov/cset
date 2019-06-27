@@ -23,10 +23,11 @@
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
 import { FindingsService } from '../../../services/findings.service';
+import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Finding, Importance, FindingContact } from './findings.model';
 import * as _ from 'lodash';
-import { find } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-findings',
@@ -38,16 +39,16 @@ export class FindingsComponent implements OnInit {
   importances: Importance[];
   contactsmodel: any[];
   answerID: number;
-  questionID: number; 
+  questionID: number;
 
   constructor(private findSvc: FindingsService,
     private dialog: MatDialogRef<FindingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Finding) {
-       console.log("in the constructor the inital passed data");
-       console.log(data);
+    @Inject(MAT_DIALOG_DATA) public data: Finding,
+    private router: Router,
+    private assessSvc: AssessmentService) {
     this.finding = data;
     this.answerID = data.Answer_Id;
-    this.questionID = data.Question_Id; 
+    this.questionID = data.Question_Id;
   }
 
   ngOnInit() {
@@ -77,11 +78,11 @@ export class FindingsComponent implements OnInit {
     });
   }
 
-  checkFinding(finding: Finding){
-    //and a bunch of fields together
-    //if they are all null then false
-    //else true;
-    var findingCompleted = true;
+  checkFinding(finding: Finding) {
+    // and a bunch of fields together
+    // if they are all null then false
+    // else true;
+    let findingCompleted = true;
 
     findingCompleted = (finding.Impact == null);
     findingCompleted = (finding.Importance == null) && (findingCompleted);
@@ -96,14 +97,14 @@ export class FindingsComponent implements OnInit {
 
 
   update() {
-    console.log("finding in the update answerid:"+this.answerID+" questionid:"+this.questionID);
+    console.log("finding in the update answerid:" + this.answerID + " questionid:" + this.questionID);
     console.log(this.finding);
-    //if(this.checkFinding(this.finding)) {
-      this.finding.Answer_Id = this.answerID;
-      this.finding.Question_Id = this.questionID;
-      this.findSvc.SaveDiscovery(this.finding).subscribe(() => {
-        this.dialog.close(true);
-      });
+    // if(this.checkFinding(this.finding)) {
+    this.finding.Answer_Id = this.answerID;
+    this.finding.Question_Id = this.questionID;
+    this.findSvc.SaveDiscovery(this.finding).subscribe(() => {
+      this.dialog.close(true);
+    });
     // }
     // else{
     //   this.dialog.close(true);
@@ -123,4 +124,7 @@ export class FindingsComponent implements OnInit {
     });
   }
 
+  navToContacts() {
+    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'info']);
+  }
 }
