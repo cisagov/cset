@@ -56,7 +56,11 @@ export class StandardsResultsComponent implements OnInit {
     this.initialized = false;
     this.dataRows = x.DataRows;
     this.dataSets = x.dataSets;
-
+    for(var i = 0; i < x.dataSets.length; i++){
+      x.dataSets[i].borderColor = [];
+      x.dataSets[i].borderWidth = 1;
+    }
+    
     this.chart = new Chart('stdResultCanvas', {
       type: 'horizontalBar',
       data: {
