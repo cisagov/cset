@@ -107,9 +107,9 @@
             this.createVertexTemplateEntry(s + 'remote_access_server.svg;',
                 d, d, '', 'RAS', false, null, this.getTagsForStencil(gn, 'RAS', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'rfid_transmitter.svg;',
-                d, d * .3, '', 'RFID', false, null, this.getTagsForStencil(gn, 'RFID', dt).join(' ')),
+                d, d, '', 'RFID', false, null, this.getTagsForStencil(gn, 'RFID', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'router.svg;',
-                d, d * .3, '', 'Router', false, null, this.getTagsForStencil(gn, 'Router', dt).join(' ')),
+                d, d, '', 'Router', false, null, this.getTagsForStencil(gn, 'Router', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'serial_radio.svg;',
                 d, d, '', 'Serial Radio', false, null, this.getTagsForStencil(gn, 'Serial Radio', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'serial_switch.svg;',
@@ -153,7 +153,7 @@
         // Radio Palette
         var fns3 = [
             this.createVertexTemplateEntry(s + 'audio_switch.svg;',
-                d, d * .3, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
+                d, d, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'dispatch_console.svg;',
                 d, d, '', 'Dispatch Console', false, null, this.getTagsForStencil(gn, 'Dispatch Console', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'ethernet_backhaul.svg;',

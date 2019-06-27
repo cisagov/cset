@@ -107,7 +107,7 @@
         }
 
         /**
-         * Capture the JWT and remove it from the URL
+         * Capture the query string parameters that define this diagram session.
          */
         (function () {
             if (!!urlParams['j']) {
@@ -118,6 +118,20 @@
             {
                 localStorage.setItem('cset.host', decodeURIComponent(urlParams['h']));
             }
+
+            if (!!urlParams['a'])
+            {
+                localStorage.setItem('assess.id', decodeURIComponent(urlParams['a']));
+            }
+
+            // Clean up the URL
+            const qm = window.location.href.indexOf('?');
+            var href = window.location.href.substring(0, qm);
+            if (href != window.location.href)
+            {
+                window.location.href = href;
+            }
+
         })();
 		
 		/**
