@@ -82,12 +82,6 @@ export class QuestionsComponent implements AfterViewInit {
     }
 
     // force requirements/statements mode for ACET-only assessments
-    if (this.assessSvc.getIsAcetOnly()) {
-      this.assessSvc.applicationMode = 'R';
-      this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-      return;
-    }
-
     if (!this.assessSvc.applicationMode) {
       this.assessSvc.applicationMode = 'Q';
       this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
