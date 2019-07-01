@@ -81,7 +81,7 @@
             </div>
         </div>
         
-        <div *ngIf="extras !== null && mode == 'DETAIL' && !assessSvc.getIsAcetOnly()" class="detail">
+        <div *ngIf="extras !== null && mode == 'DETAIL'" class="detail">
             <div><span class="reqlabel">Title: </span>{{tab?.RequirementFrameworkTitle}}</div>
 
             <div><span class="reqlabel">Category: </span>{{tab?.RelatedFrameworkCategory}}</div>
@@ -98,9 +98,6 @@
             <ul *ngIf="tab?.QuestionsList?.length > 0" class="related-questions">
                 <li *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ.QuestionText"></li>                
             </ul>
-        </div>
-
-        <div *ngIf="extras !== null && mode == 'DETAIL' && assessSvc.getIsAcetOnly()" class="supplemental" [innerHTML]="formatLinebreaks(tab?.ExaminationApproach)">        
         </div>
 
         <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
@@ -137,7 +134,7 @@
                     </td>
                     <td>
                         <span class="text-nowrap">
-                            <button (click)="showRelatedQuestions(doc)" class="cset2-icons-q" [hidden]="assessSvc.isAcetOnly"
+                            <button (click)="showRelatedQuestions(doc)" class="cset2-icons-q"
                             style="color: #285464; transform: scale(1.3); 
                                     vertical-align: top; cursor: pointer; background-color:transparent; 
                                     border: none; outline:none; position: relative; top: -2px;"></button>

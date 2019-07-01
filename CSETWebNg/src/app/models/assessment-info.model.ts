@@ -38,7 +38,6 @@ export interface AssessmentDetail {
     Charter?: string;
     CreditUnion?: string;
     Assets?: string;
-    IsAcetOnly?: boolean;
 }
 
 export interface AssessmentContactsResponse {

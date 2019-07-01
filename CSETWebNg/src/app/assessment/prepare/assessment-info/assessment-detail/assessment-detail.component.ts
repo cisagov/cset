@@ -55,12 +55,12 @@ export class AssessmentDetailComponent implements OnInit {
     }
   }
 
-  setCharterPad(){
-    this.assessment.Charter =  this.padLeft(this.assessment.Charter, '0', 5);
+  setCharterPad() {
+    this.assessment.Charter = this.padLeft(this.assessment.Charter, '0', 5);
   }
 
-  padLeft(text:string, padChar:string, size:number): string {
-    return (String(padChar).repeat(size) + text).substr( (size * -1), size) ;
+  padLeft(text: string, padChar: string, size: number): string {
+    return (String(padChar).repeat(size) + text).substr((size * -1), size);
   }
 
   getAssessmentDetail() {
@@ -68,15 +68,6 @@ export class AssessmentDetailComponent implements OnInit {
       (data: AssessmentDetail) => {
         this.assessment = data;
         this.setCharterPad();
-        let acetOnlyTemp = "true";
-        if (data.IsAcetOnly) {
-          acetOnlyTemp = "true";
-        } else {
-          acetOnlyTemp = "false";
-        }
-
-        //NEED TO LOOK TO SEE IF I NEED THIS ONE
-        //this.assessSvc.setIsAcetOnly(data.IsAcetOnly);
 
         // Null out a 'low date' so that we display a blank
         const assessDate: Date = new Date(this.assessment.AssessmentDate);
@@ -95,16 +86,9 @@ export class AssessmentDetailComponent implements OnInit {
     // default Assessment Name if it is left empty
     if (this.assessment.AssessmentName.trim().length === 0) {
       this.assessment.AssessmentName = "(Untitled Assessment)";
-    }    
+    }
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
-    this.assessSvc.setIsAcetOnly(this.assessment.IsAcetOnly);
-    if(this.assessment.IsAcetOnly){
-      this.standardSvc.acetSelected = true;
-    }
-    if (this.assessment.IsAcetOnly) {
-      this.standardSvc.postSelections(["ACET_V1"]).subscribe();
-    }
     this.standardSvc.makeNavTree();
   }
 }
