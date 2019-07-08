@@ -7,6 +7,7 @@
 using System;
 using System.Linq;
 using System.Data;
+using System.Xml;
 using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Model;
 
@@ -21,6 +22,21 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="diagramXML"></param>
         public void SaveDiagram(int assessmentID, string diagramXML)
         {
+
+            // the front end sometimes calls 'save' with an empty graph on open.  Need to 
+            // prevent the javascript from doing that on open, but for now,
+            // let's detect an empty graph and not save it.
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(diagramXML);
+            var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
+            if (cellCount == 2)
+            {
+                return;
+            }
+
+
+
             using (var db = new CSET_Context())
             {
                 // Assume a single bridge record for now.  

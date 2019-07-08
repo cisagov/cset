@@ -1344,6 +1344,15 @@ Actions.prototype.get = function(name)
 };
 
 /**
+ * CSET - Removes the given action from the Actions collection.
+ * @param {any} name
+ */
+Actions.prototype.remove = function (name)
+{
+    this.actions.delete(name);
+}
+
+/**
  * Constructs a new action for the given parameters.
  */
 function Action(label, funct, enabled, iconCls, shortcut)

@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Web.Http;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-
+using BusinessLogic.Helpers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -27,6 +27,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <param name="req"></param>
         [Route("api/diagram/save")]
+        [HttpPost]
         public void SaveDiagram([FromBody] DiagramRequest req)
         {
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
@@ -37,13 +38,18 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Returns the diagram XML for the assessment.
         /// </summary>
-        /// <param name="assessmentID"></param>
         /// <returns></returns>
         [Route("api/diagram/get")]
-        public string GetDiagram([FromUri] int assessmentID)
+        [HttpGet]
+        public string GetDiagram()
         {
+            // get the assessment ID from the JWT
+            TokenManager tm = new TokenManager();
+            int userId = (int)tm.PayloadInt(Constants.Token_UserId);
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            return dm.GetDiagram(assessmentID);
+            return dm.GetDiagram((int)assessmentId);
         }
     }
 }
