@@ -50,20 +50,20 @@ export class QuestionBlockComponent implements OnInit {
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
 
-  matLevelMap = new Map<string,string>();
+  matLevelMap = new Map<string, string>();
   private _timeoutId: any;
 
   constructor(
     public questionsSvc: QuestionsService,
     private dialog: MatDialog,
     public configSvc: ConfigService,
-    public assessSvc: AssessmentService) { 
-      this.matLevelMap.set("B","Baseline");
-      this.matLevelMap.set("E","Evolving");
-      this.matLevelMap.set("Int","Intermediate");
-      this.matLevelMap.set("A","Advanced");
-      this.matLevelMap.set("Inn","Innovative");
-    }
+    public assessSvc: AssessmentService) {
+    this.matLevelMap.set("B", "Baseline");
+    this.matLevelMap.set("E", "Evolving");
+    this.matLevelMap.set("Int", "Intermediate");
+    this.matLevelMap.set("A", "Advanced");
+    this.matLevelMap.set("Inn", "Innovative");
+  }
 
   ngOnInit() {
     this.refreshReviewIndicator();
@@ -92,7 +92,7 @@ export class QuestionBlockComponent implements OnInit {
     return text;
   }
 
-  baselineLevel(q: Question){
+  baselineLevel(q: Question) {
     return this.matLevelMap.get(q.MaturityLevel);
   }
   /**
@@ -166,21 +166,11 @@ export class QuestionBlockComponent implements OnInit {
   refreshPercentAnswered() {
     let answeredCount = 0;
     let totalCount = 0;
-    let isAcetOnly = this.assessSvc.getIsAcetOnly();
 
     this.mySubCategory.Questions.forEach(q => {
-      
-      if(isAcetOnly && q.Visible)
-      {
-        totalCount++;
-        if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
-          answeredCount++;
-        }
-      } else if(!isAcetOnly){
-        totalCount++;
-        if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
-          answeredCount++;
-        }
+      totalCount++;
+      if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
+        answeredCount++;
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
@@ -277,9 +267,9 @@ export class QuestionBlockComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
-    
+
     clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(()=>{
+    this._timeoutId = setTimeout(() => {
       const answer: Answer = {
         QuestionId: q.QuestionId,
         QuestionNumber: q.DisplayNumber,
@@ -289,13 +279,13 @@ export class QuestionBlockComponent implements OnInit {
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed
       };
-  
+
       this.refreshReviewIndicator();
-  
+
       this.questionsSvc.storeAnswer(answer)
         .subscribe();
     }, 500);
-    
+
   }
 
   replaceAll(origString: string, searchStr: string, replaceStr: string) {
