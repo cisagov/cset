@@ -2457,7 +2457,7 @@
 
             if (this.readyState == 4 && this.status == 401)
             {
-                window.location.href = 'error.html';
+                window.location.href = 'error401.html';
             }
         };
         xhr.open('GET', url);

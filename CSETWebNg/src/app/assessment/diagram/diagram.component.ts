@@ -32,7 +32,8 @@ export class DiagramComponent implements OnInit {
     launchDiagram() {
         console.log('launchDiagram');
         console.log(this.authSvc.userToken());
-        const url = this.configSvc.apiUrl + "../diagram/src/main/webapp/index.html" + "?j=" + this.authSvc.userToken();
+        const url = this.configSvc.apiUrl + "../diagram/src/main/webapp/index.html"
+        + "?j=" + this.authSvc.userToken() + "&h=" + this.configSvc.apiUrl;
         window.open(url, "_blank");
     }
 }
