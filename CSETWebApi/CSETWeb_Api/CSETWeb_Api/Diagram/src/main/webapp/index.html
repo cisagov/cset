@@ -119,19 +119,18 @@
                 localStorage.setItem('cset.host', decodeURIComponent(urlParams['h']));
             }
 
-            if (!!urlParams['a'])
+            if (localStorage.getItem('jwt') == null || localStorage.getItem('cset.host') == null)
             {
-                localStorage.setItem('assess.id', decodeURIComponent(urlParams['a']));
+                window.location = 'error.html';
             }
 
-            // Clean up the URL
-            const qm = window.location.href.indexOf('?');
-            var href = window.location.href.substring(0, qm);
-            if (href != window.location.href)
+            // remove query string and redirect
+            var q = window.location.href.indexOf('?');
+            if (q >= 0)
             {
-                window.location.href = href;
+                window.location.href = window.location.href.substr(0, q);
             }
-
+           
         })();
 		
 		/**
