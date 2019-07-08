@@ -53,7 +53,6 @@ export class AssessmentService {
   private apiUrl: string;
   private initialized = false;
   public applicationMode: string;
-  private isAcetOnly = true;
 
   constructor(
     private emailSvc: EmailService,
@@ -67,19 +66,6 @@ export class AssessmentService {
         .subscribe((response: Role[]) => (this.roles = response));
       this.initialized = true;
     }
-
-    this.getIsAcetOnlyApi();
-  }
-
-  public getIsAcetOnly():boolean{
-    return this.isAcetOnly;
-  }
-  public setIsAcetOnly(tmpIsAcetOnly: boolean){
-    this.isAcetOnly = tmpIsAcetOnly;
-    this.http.post(this.apiUrl + 'SaveIsAcetOnly',
-    this.isAcetOnly,
-    headers
-    ).subscribe();
   }
 
   dropAssessment() {
@@ -87,12 +73,6 @@ export class AssessmentService {
     this.currentTab = undefined;
     this.applicationMode = undefined;
     sessionStorage.removeItem('assessmentId');
-  }
-
-  getIsAcetOnlyApi() {
-    return this.http.get(this.apiUrl + 'IsAcetOnly').subscribe( (data: boolean) =>{
-      this.isAcetOnly = data;
-    });
   }
 
   refreshRoles() {
@@ -194,7 +174,7 @@ export class AssessmentService {
   removeContact(userId: number, assessment_id: number) {
     return this.http.post(
       this.apiUrl + 'contacts/remove',
-      { UserId: userId, Assessment_ID: assessment_id},
+      { UserId: userId, Assessment_ID: assessment_id },
       headers
     );
   }
@@ -243,7 +223,6 @@ export class AssessmentService {
       } else {
         this.router.navigate(['/assessment', id]);
       }
-      this.getIsAcetOnlyApi();
     });
   }
 
