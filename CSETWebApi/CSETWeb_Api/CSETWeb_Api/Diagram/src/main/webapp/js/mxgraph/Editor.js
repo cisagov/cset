@@ -41,13 +41,17 @@ Editor = function (chromeless, themes, model, graph, editable)
     // Updates modified state if graph changes
     this.graphChangeListener = function (sender, eventObject)
     {
-        PersistGraphToCSET(this);
-
         var edit = (eventObject != null) ? eventObject.getProperty('edit') : null;
 
         if (edit == null || !edit.ignoreEdit)
         {
             this.setModified(true);
+        }
+
+        // Only persist if actual changes occurred.  An mxRootChange is likely a new diagram.
+        if (typeof edit.changes[0] != "mxRootChange")
+        {
+            PersistGraphToCSET(this);
         }
     };
 
@@ -73,7 +77,7 @@ function PersistGraphToCSET(editor)
     var sXML = oSerializer.serializeToString(node);
 
     var req = {};
-    req.AssessmentID = 41;
+    req.AssessmentID = localStorage.getItem('assess.id');
     req.DiagramXml = sXML;
 
 
@@ -733,6 +737,9 @@ OpenFile.prototype.setConsumer = function (value)
  */
 OpenFile.prototype.setData = function ()
 {
+    console.log("OpenFile.prototype.setData");
+    console.trace();
+
     this.args = arguments;
     this.execute();
 };
@@ -1783,7 +1790,8 @@ PageSetupDialog.addPageFormatPanel = function (div, namePostfix, pageFormat, pag
 
     update();
 
-    return {set: function (value)
+    return {
+        set: function (value)
         {
             pageFormat = value;
             listener(null, null, true);
@@ -1791,7 +1799,8 @@ PageSetupDialog.addPageFormatPanel = function (div, namePostfix, pageFormat, pag
         {
             return currentPageFormat;
         }, widthInput: widthInput,
-        heightInput: heightInput};
+        heightInput: heightInput
+    };
 };
 
 /**

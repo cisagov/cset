@@ -7,11 +7,9 @@ import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'app-diagram',
-    templateUrl: './diagram.component.html',
-    styleUrls: ['./diagram.component.scss']
+    templateUrl: './diagram.component.html'
 })
 export class DiagramComponent implements OnInit {
-  
 
     constructor(private router: Router,
         private navSvc: NavigationService,
@@ -24,7 +22,7 @@ export class DiagramComponent implements OnInit {
         this.populateTree();
     }
 
-    populateTree(){
+    populateTree() {
         const magic = this.navSvc.getMagic();
         this.navSvc.setTree(this.tree, magic);
     }
