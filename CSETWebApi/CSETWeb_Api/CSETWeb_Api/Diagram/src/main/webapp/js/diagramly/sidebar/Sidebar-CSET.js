@@ -107,9 +107,9 @@
             this.createVertexTemplateEntry(s + 'remote_access_server.svg;',
                 d, d, '', 'RAS', false, null, this.getTagsForStencil(gn, 'RAS', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'rfid_transmitter.svg;',
-                d, d * .3, '', 'RFID', false, null, this.getTagsForStencil(gn, 'RFID', dt).join(' ')),
+                d, d, '', 'RFID', false, null, this.getTagsForStencil(gn, 'RFID', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'router.svg;',
-                d, d * .3, '', 'Router', false, null, this.getTagsForStencil(gn, 'Router', dt).join(' ')),
+                d, d, '', 'Router', false, null, this.getTagsForStencil(gn, 'Router', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'serial_radio.svg;',
                 d, d, '', 'Serial Radio', false, null, this.getTagsForStencil(gn, 'Serial Radio', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'serial_switch.svg;',
@@ -153,7 +153,7 @@
         // Radio Palette
         var fns3 = [
             this.createVertexTemplateEntry(s + 'audio_switch.svg;',
-                d, d * .3, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
+                d, d, '', 'Audio Switch', false, null, this.getTagsForStencil(gn, 'Audio Switch', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'dispatch_console.svg;',
                 d, d, '', 'Dispatch Console', false, null, this.getTagsForStencil(gn, 'Dispatch Console', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'ethernet_backhaul.svg;',
@@ -228,6 +228,11 @@
 
         // General Palette
         var fns5 = [
+            this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
+                40, 20, 'Text', 'Text', null, null, 'text textbox textarea label'),
+            this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;', 190, 120,
+                '<h1>Heading</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>',
+                'Textbox', null, null, 'text textbox textarea'),
             this.createVertexTemplateEntry(s + 'connector.svg;',
                 d * .3, d * .3, '', 'Connector', false, null, this.getTagsForStencil(gn, 'Connector', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'partner.svg;',

@@ -449,6 +449,8 @@
     <Content Include="Diagram\src\main\webapp\app.html" />
     <Content Include="Diagram\src\main\webapp\dropbox.html" />
     <Content Include="Diagram\src\main\webapp\electron.js" />
+    <Content Include="Diagram\src\main\webapp\error.html" />
+    <Content Include="Diagram\src\main\webapp\error401.html" />
     <Content Include="Diagram\src\main\webapp\export2.html" />
     <Content Include="Diagram\src\main\webapp\export3.html" />
     <Content Include="Diagram\src\main\webapp\favicon.ico" />
