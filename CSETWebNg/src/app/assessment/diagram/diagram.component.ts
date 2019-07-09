@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
 import { Navigation2Service } from '../../services/navigation2.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
@@ -16,7 +15,6 @@ export class DiagramComponent implements OnInit {
         private navSvc: NavigationService,
         public assessSvc: AssessmentService,
         public navSvc2: Navigation2Service,
-        public authSvc: AuthenticationService,
         public configSvc: ConfigService
     ) { }
     tree: NavTree[] = [];
@@ -29,11 +27,11 @@ export class DiagramComponent implements OnInit {
         this.navSvc.setTree(this.tree, magic);
     }
 
-    launchDiagram() {
-        console.log('launchDiagram');
-        console.log(this.authSvc.userToken());
-        const url = this.configSvc.apiUrl + "../diagram/src/main/webapp/index.html"
-        + "?j=" + this.authSvc.userToken() + "&h=" + this.configSvc.apiUrl;
-        window.open(url, "_blank");
+    sendToDiagram(){
+        var jwt = sessionStorage.getItem("userToken");
+        var assessmentId = sessionStorage.getItem("assessmentId");
+        var apiUrl = this.configSvc.apiUrl;
+
+        window.open("http://localhost:46000/diagram/src/main/webapp/index.html?j="+jwt+"&a=" +assessmentId+"&h="+apiUrl,"_blank");
     }
 }
