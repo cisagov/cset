@@ -94,12 +94,20 @@ mxGraphModel.prototype.cellAdded = function (cell)
                 return;
             }
 
+            // ignore text objects
+            if (hasStyle(cell.style, 'text'))
+            {
+                return;
+            }
+
             // ignore connectors
             if (cell.geometry.width === 0 && cell.geometry.height === 0)
             {
                 return;
             }
         }
+
+        // TODO:  Name the new object according to its type, with the next available integer.
         cell.setValue("RKW-" + Math.floor(Math.random() * Math.floor(1000)));
     }
 }
@@ -121,6 +129,26 @@ function getStyle(styleString, name)
         }
     });
     return v;
+}
+
+/**
+ * Returns a boolean indicating if the specified style exists,
+ * regardless of its value.
+ * @param {any} styleString
+ * @param {any} name
+ */
+function hasStyle(styleString, name)
+{
+    var exists = false;
+    styleString.split(';').forEach((style) =>
+    {
+        const s = style.split('=', 2);
+        if (s[0] === name)
+        {
+            exists = true;
+        }
+    });
+    return exists;
 }
 
 

@@ -228,6 +228,11 @@
 
         // General Palette
         var fns5 = [
+            this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
+                40, 20, 'Text', 'Text', null, null, 'text textbox textarea label'),
+            this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;', 190, 120,
+                '<h1>Heading</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>',
+                'Textbox', null, null, 'text textbox textarea'),
             this.createVertexTemplateEntry(s + 'connector.svg;',
                 d * .3, d * .3, '', 'Connector', false, null, this.getTagsForStencil(gn, 'Connector', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'partner.svg;',
