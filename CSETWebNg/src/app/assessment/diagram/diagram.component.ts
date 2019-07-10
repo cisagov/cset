@@ -27,11 +27,16 @@ export class DiagramComponent implements OnInit {
         this.navSvc.setTree(this.tree, magic);
     }
 
-    sendToDiagram(){
-        var jwt = sessionStorage.getItem("userToken");
-        var assessmentId = sessionStorage.getItem("assessmentId");
-        var apiUrl = this.configSvc.apiUrl;
+    sendToDiagram() {
+        const jwt = sessionStorage.getItem("userToken");
+        const apiUrl = this.configSvc.apiUrl;
+        let host = this.configSvc.apiUrl;
+        if (host.endsWith('/api/')) {
+            host = host.substr(0, host.length - 4);
+        }
 
-        window.open("http://localhost:46000/diagram/src/main/webapp/index.html?j="+jwt+"&a=" +assessmentId+"&h="+apiUrl,"_blank");
+        window.open(host + "diagram/src/main/webapp/index.html" +
+            "?j=" + jwt +
+            "&h=" + apiUrl, "_blank");
     }
 }
