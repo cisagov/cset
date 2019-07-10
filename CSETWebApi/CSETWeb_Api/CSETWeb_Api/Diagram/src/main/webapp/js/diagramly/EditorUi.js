@@ -11795,7 +11795,7 @@
 		this.actions.get('createShape').setEnabled(active);
 		this.actions.get('createRevision').setEnabled(active);
 		this.actions.get('moveToFolder').setEnabled(file != null);
-        this.actions.get('makeCopy').setEnabled(false); //.setEnabled(file != null && !file.isRestricted());
+        this.actions.get('makeCopy').setEnabled(file != null && !file.isRestricted());
 		this.actions.get('editDiagram').setEnabled(active && (file == null || !file.isRestricted()));
 		this.actions.get('publishLink').setEnabled(file != null && !file.isRestricted());
 		this.actions.get('tags').setEnabled(this.diagramContainer.style.visibility != 'hidden');
@@ -11813,14 +11813,7 @@
         this.actions.get('new').visible = false;
         this.actions.get('save').visible = false;
         this.actions.get('saveAs').visible = false;
-        //this.actions.get('openFrom').visible = false;        
-        //this.actions.get('openRecent').visible = false;
-        //this.actions.get('embed').visible = false;
-        //this.actions.get('publish').visible = false;
-        //this.actions.get('newLibrary').visible = false;
-        //this.actions.get('openLibrary').visible = false;
-
-
+       
 		this.actions.get('editShape').setEnabled(active && state != null && state.shape != null && state.shape.stencil != null);
 	};
 
