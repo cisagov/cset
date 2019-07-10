@@ -740,6 +740,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.ImportCsetd(System.String)">
+            <summary>
+            Translates XML from CSETD file to XML for Draw.io.
+            </summary>
+            <param name="xml"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.
