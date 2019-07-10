@@ -10,9 +10,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Xml;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Diagram;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -50,6 +52,20 @@ namespace CSETWeb_Api.Controllers
 
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
             return dm.GetDiagram((int)assessmentId);
+        }
+
+
+        /// <summary>
+        /// Translates XML from CSETD file to XML for Draw.io.
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        [Route("api/diagram/importcsetd")]
+        [HttpPost]
+        public string ImportCsetd([FromBody] string xml)
+        {
+            var t = new TranslateCsetdToDrawio();
+            return t.Translate(xml).OuterXml;
         }
     }
 }
