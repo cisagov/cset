@@ -1887,7 +1887,7 @@
 					}
 				}, true);
 			};
-		
+		    /*
 			if (typeof(google) != 'undefined' && typeof(google.picker) != 'undefined')
 			{
 				if (editorUi.drive != null)
@@ -1969,12 +1969,12 @@
 					editorUi.importLocalFile(false);
 				}, parent);
 			}
-
+            */
 			menu.addItem(mxResources.get('device') + '...', null, function()
 			{
 				editorUi.importLocalFile(true);
 			}, parent);
-
+            /*
 			if (!editorUi.isOffline())
 			{
 				menu.addSeparator(parent);
@@ -2002,7 +2002,7 @@
 					editorUi.showDialog(dlg.container, 300, 80, true, true);
 					dlg.init();
 				}, parent);
-			}
+			}*/
 		}))).isEnabled = isGraphEnabled;
 
 		this.put('theme', new Menu(mxUtils.bind(this, function(menu, parent)
@@ -3068,11 +3068,11 @@
 					this.addMenuItems(menu, ['new'], parent);
 				}
 				
-				this.addSubmenu('openFrom', menu, parent);
+				//this.addSubmenu('openFrom', menu, parent);
 
 				if (isLocalStorage)
 				{
-					this.addSubmenu('openRecent', menu, parent);
+					//this.addSubmenu('openRecent', menu, parent);
 				}
 				
 				if (file != null && file.constructor == DriveFile)
@@ -3119,11 +3119,11 @@
 				this.addSubmenu('importFrom', menu, parent);
 				this.addSubmenu('exportAs', menu, parent);
 				menu.addSeparator(parent);
-				this.addSubmenu('embed', menu, parent);
-				this.addSubmenu('publish', menu, parent);
-				menu.addSeparator(parent);
-				this.addSubmenu('newLibrary', menu, parent);
-				this.addSubmenu('openLibraryFrom', menu, parent);
+				//this.addSubmenu('embed', menu, parent);
+				//this.addSubmenu('publish', menu, parent);
+				//menu.addSeparator(parent);
+				//this.addSubmenu('newLibrary', menu, parent);
+				//this.addSubmenu('openLibraryFrom', menu, parent);
 				
 				if (editorUi.isRevisionHistorySupported())
 				{
