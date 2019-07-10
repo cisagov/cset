@@ -11690,6 +11690,14 @@
         {
             this.menus.get('exportAs').setEnabled(!restricted);
         }
+
+        //remove menu items
+        this.actions.get('makeCopy').visible = false;
+        this.actions.get('rename').visible = false;
+        this.actions.get('new').visible = false;
+        this.actions.get('save').visible = false;
+        this.actions.get('saveAs').visible = false;
+
         this.menus.get('embed').setEnabled(!restricted);
 
         // Disables libraries and extras menu in embed mode
