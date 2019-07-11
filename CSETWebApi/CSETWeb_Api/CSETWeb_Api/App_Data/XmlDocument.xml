@@ -740,11 +740,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.ImportCsetd(System.String)">
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.ImportCsetd(CSETWeb_Api.Models.DiagramRequest)">
             <summary>
             Translates XML from CSETD file to XML for Draw.io.
             </summary>
-            <param name="xml"></param>
+            <param name="importRequest"></param>
             <returns></returns>
         </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
