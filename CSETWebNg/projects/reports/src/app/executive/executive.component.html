@@ -114,6 +114,55 @@
     </div>
   </div>
 
+
+  <div class="mt-3 mb-3" *ngIf="reportSvc.hasACET">
+    <h1>Inherent Risk Profile</h1>
+    <div class="ml-3 mr-3 form">
+      <table class="label-value">
+        <tr>
+          <td>Calculated Overall Risk Level:</td>
+          <td>{{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}</td>
+        </tr>
+        <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+          <td>
+            The overall IRP score is overridden to:
+          </td>
+          <td>
+            {{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}
+          </td>
+        </tr>
+        <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+          <td>
+            Override Reason:
+          </td>
+          <td>
+            {{ acetDashboard?.OverrideReason }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="mt-3 mb-3" *ngIf="reportSvc.hasACET">
+    <h1>Cybersecurity Maturity</h1>
+    <table class="cset-table">
+      <tr>
+        <th width="50%" class="table-head">Domain</th>
+        <th width="50%" class="table-head">Maturity Level</th>
+      </tr>
+      <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
+        <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+        <td class="text-center">
+          <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
+            {{ domain.Maturity }}</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
   <div class="page-break">
     <h1>
       Areas of Concern Top Subjects and Questions
