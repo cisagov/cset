@@ -24,7 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ReportService } from '../services/report.service';
+import { ReportsConfigService } from '../services/config.service';
 import { AnalysisService } from '../services/analysis.service';
+import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
+import { ACETService } from '../../../../../src/app/services/acet.service';
 
 @Component({
   selector: 'rapp-securityplan',
@@ -35,14 +38,19 @@ export class SecurityplanComponent implements OnInit {
 
   response: any;
 
+  acetDashboard: AcetDashboard;
+
   // FIPS SAL answers
   nistSalC = '';
   nistSalI = '';
   nistSalA = '';
 
-  public constructor(private titleService: Title,
-    private reportSvc: ReportService,
-    public analysisSvc: AnalysisService
+  public constructor(
+    private titleService: Title,
+    public reportSvc: ReportService,
+    public analysisSvc: AnalysisService,
+    public configSvc: ReportsConfigService,
+    public acetSvc: ACETService
   ) { }
 
   /**
@@ -76,6 +84,24 @@ export class SecurityplanComponent implements OnInit {
       },
       error => console.log('Security Plan report load Error: ' + (<Error>error).message)
     );
+
+    // ACET-specific content
+    this.reportSvc.getACET().subscribe((x: boolean) => {
+      this.reportSvc.hasACET = x;
+    });
+
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+
+        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
+          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        }
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
   }
 
 
