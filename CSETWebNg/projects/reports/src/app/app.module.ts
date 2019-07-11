@@ -43,7 +43,9 @@ import { AuthenticationService } from '../../../../src/app/services/authenticati
 import { JwtInterceptor } from '../../../../src/app/helpers/jwt.interceptor';
 import { RedirectComponent } from './redirect/redirect.component';
 import { ConfigService } from '../../../../src/app/services/config.service';
+import { ACETService } from '../../../../src/app/services/acet.service';
 import { MatDialogModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { MatDialogModule } from '@angular/material';
     DiscoveryTearoutsComponent,
     EvalAgainstComponent,
     RedirectComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -81,6 +84,7 @@ import { MatDialogModule } from '@angular/material';
     },
     ReportService,
     AnalysisService,
+    ACETService,
     ConfigService
   ],
   entryComponents: [
