@@ -402,6 +402,222 @@
     </div>
 
 
+    <div class="page-break" *ngIf="reportSvc.hasACET">
+        <h1>Maturity Detail</h1>
+
+        <div *ngFor="let domain of matDetails" class="pl-3 pr-3 mb-5 w-100 domain-section card">
+            <h2>{{domain.DomainName}}</h2>
+
+            <div *ngFor="let factor of domain.Assessments" class="factor-section">
+                <div class="row justify-content-between m-0">
+                    <b>{{factor.AssessmentFactor}}</b>
+
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.AssessmentFactorMaturity)">
+                        {{ acetSvc.translateMaturity(factor.AssessmentFactorMaturity) }}
+                    </div>
+                </div>
+
+                <div *ngFor="let comp of factor.Components" class="component-section">
+                    <div class="row justify-content-between m-0">
+                        <div>
+                            <h6>{{ comp.ComponentName }}</h6>
+                        </div>
+                        <div>
+                            <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)">
+                                {{ acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
+                        </div>
+                    </div>
+
+                    <div class="row m-0 ml-5">
+                        <div class="w-20pct text-center">
+                            Baseline
+                            <br />
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Baseline)">
+                                {{ comp.Baseline }}%
+                            </div>
+                        </div>
+                        <div class="w-20pct text-center">
+                            Evolving
+                            <br />
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Evolving)">
+                                {{ comp.Evolving }}%
+                            </div>
+                        </div>
+                        <div class="w-20pct text-center">
+                            Intermediate
+                            <br />
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Intermediate)">
+                                {{ comp.Intermediate }}%
+                            </div>
+                        </div>
+                        <div class="w-20pct text-center">
+                            Advanced
+                            <br />
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Advanced)">
+                                {{ comp.Advanced }}%
+                            </div>
+                        </div>
+                        <div class="w-20pct text-center">
+                            Innovative
+                            <br />
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Innovative)">
+                                {{ comp.Innovative }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-break" *ngIf="reportSvc.hasACET">
+        <h1>Administration</h1>
+        <table class="cset-table td-align-top">
+            <tr>
+                <th class="col-4">Component</th>
+                <th class="text-right">Documentation Hours</th>
+                <th class="text-right">Interview Process Hours</th>
+                <th class="text-right">Statements Reviewed</th>
+            </tr>
+            <tr *ngFor="let comp of Components">
+                <td>{{comp.Component}}
+                    <div>
+                        <span *ngIf="comp.HasSpecifyField" class="font-italic">{{comp.OtherSpecifyValue}}</span>
+                    </div>
+                </td>
+                <td class="text-right">{{comp.DocumentationHours}}</td>
+                <td class="text-right">{{comp.InterviewHours}}</td>
+                <td class="text-right">{{comp.StatementsReviewed}}</td>
+            </tr>
+            <tr class="total-row">
+                <td>Total Review Hours</td>
+                <td class="text-right">{{ DocumentationTotal }}</td>
+                <td class="text-right">{{ InterviewTotal }}</td>
+                <td class="text-right"></td>
+            </tr>
+            <tr class="total-row">
+                <td>Grand Totals</td>
+                <td class="text-right" colspan="2">{{ GrandTotal }}</td>
+                <td class="text-right">{{ ReviewedStatementTotal }}</td>
+            </tr>
+        </table>
+
+        <div class="row" *ngFor="let attr of adminPageData?.Attributes">
+            <div class="col-sm-9 admin-label">
+                <label>{{ attr.AttributeName }}</label>
+            </div>
+            <div class="col-sm-3">
+                {{attr.AttributeValue}}
+            </div>
+        </div>
+    </div>
+
+    <div class="page-break" *ngIf="reportSvc.hasACET">
+        <h1>
+            ACET Dashboard
+        </h1>
+
+        <table class="table-site-info">
+            <tr>
+                <td>Credit Union Name:</td>
+                <td>{{acetDashboard?.CreditUnionName}}</td>
+            </tr>
+            <tr>
+                <td>Charter Number:</td>
+                <td>{{acetDashboard?.Charter}}</td>
+            </tr>
+            <tr>
+                <td>Assets:</td>
+                <td>{{acetDashboard?.Assets | currency:'USD':'symbol':'1.0'}}</td>
+            </tr>
+            <tr>
+                <td>Hours:</td>
+                <td>{{ acetDashboard?.Hours }}</td>
+            </tr>
+        </table>
+
+        <div class="mt-3 mb-4">
+            <p>
+                <b>Inherent Risk Profile</b>
+            </p>
+            <table class="cset-table mb-1">
+                <tr>
+                    <th rowspan="2">Category</th>
+                    <th colspan="5" class="text-center">Inherent Risk</th>
+                    <th rowspan="2">Risk Level</th>
+                </tr>
+                <tr>
+                    <th class="table-head text-right">1</th>
+                    <th class="table-head text-right">2</th>
+                    <th class="table-head text-right">3</th>
+                    <th class="table-head text-right">4</th>
+                    <th class="table-head text-right">5</th>
+                </tr>
+                <tr *ngFor="let irp of acetDashboard?.IRPs">
+                    <td>{{ irp.HeaderText }}</td>
+                    <td class="text-right">{{ irp.RiskCount[0] }}</td>
+                    <td class="text-right">{{ irp.RiskCount[1] }}</td>
+                    <td class="text-right">{{ irp.RiskCount[2] }}</td>
+                    <td class="text-right">{{ irp.RiskCount[3] }}</td>
+                    <td class="text-right">{{ irp.RiskCount[4] }}</td>
+                    <td class="text-nowrap">{{ irp.Comment }}</td>
+                </tr>
+                <tr>
+                    <td class="border-table">Totals</td>
+                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[0] }}</td>
+                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[1] }}</td>
+                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[2] }}</td>
+                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[3] }}</td>
+                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[4] }}</td>
+                    <td class="border-table"></td>
+                </tr>
+            </table>
+
+            <div class="ml-3">
+                <div>Overall Risk Level is <span class="blue-text font-weight-bold">
+                        {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
+                    </span>
+                </div>
+                <div *ngIf="!acetDashboard?.Override || acetDashboard?.Override == '' || acetDashboard?.Override == 0">
+                    Overall Risk Level has not been overridden
+                </div>
+                <div
+                    *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+                    Overall Risk Level has been overriden to <span
+                        class="blue-text font-weight-bold">{{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}</span>
+                    <div>Override Reason:
+                        <em>
+                            {{ acetDashboard?.OverrideReason }}
+                        </em>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3 mb-3">
+            <p>
+                <b>Cybersecurity Maturity</b>
+            </p>
+            <table class="cset-table">
+                <tr>
+                    <th width="50%" class="table-head">Domain</th>
+                    <th width="50%" class="table-head">Maturity Level</th>
+                </tr>
+                <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
+                    <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+                    <td class="text-center">
+                        <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
+                            {{ domain.Maturity }}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="reportSvc.hasACET">
+        <rapp-required-docs></rapp-required-docs>
+    </div>
 
     <div class="page-break">
         <h1>
@@ -471,7 +687,7 @@
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.Question"></td>
-                <td class="tint2">{{analysisSvc.answerWord(rq.Answer)}}</td>
+                <td class="tint2">{{configSvc.answerLabels[rq.Answer]}}</td>
             </tr>
         </table>
     </div>
@@ -494,7 +710,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2">{{c.Question}}</td>
-                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(c.Answer)}}</td>
+                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[c.Answer]}}</td>
             </tr>
             <tr>
                 <td class="tint2">Comment:</td>
@@ -534,7 +750,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2">{{t.Question}}</td>
-                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.Answer)}}</td>
+                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[t.Answer]}}</td>
             </tr>
             <tr>
                 <td class="tint2">Alternate Justification:</td>
@@ -570,7 +786,7 @@
             <tr *ngFor="let q of ddd.Questions">
                 <td class="tint2" style="width: 20%">{{q.CategoryAndNumber}}</td>
                 <td>{{q.Question}}</td>
-                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(q.Answer)}}</td>
+                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[q.Answer]}}</td>
             </tr>
         </table>
     </div>

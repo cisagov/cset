@@ -39,6 +39,12 @@ export class ReportsConfigService {
 
   config: any;
 
+  // button labels
+  buttonLabels = {};
+
+  // labels for graph legends and report answers
+  answerLabels = {};
+
   private initialized = false;
   isAPI_together_With_Web = false;
 
@@ -60,35 +66,56 @@ export class ReportsConfigService {
       // are all together.   Consequently I don't need other environments etc
       // and I can assume production
 
-      // and I can assume production
-      if (!this.isAPI_together_With_Web) {
-        this.apiUrl = environment.apiUrl;
-        this.appUrl = environment.appUrl;
-        this.docUrl = environment.docUrl;
-        this.reportsUrl = environment.reportsUrl;
-      } else {
-        this.configUrl = "api/assets/config";
-      }
-
-      // it is very important that this be a single promise
-      // I'm not sure the config call is actually behaving.
-      // multiple chained promises definitely does not work
-      return this.http.get(this.configUrl)
-        .toPromise() // APP_INITIALIZER doesn't seem to work with observables
-        .then((data: any) => {
-                if (this.isAPI_together_With_Web) {
-                  this.apiUrl = data.apiUrl;
-                  this.appUrl = data.appUrl;
-                  this.docUrl = data.docUrl;
-                  this.reportsUrl = data.reportsUrl;
-                  this.helpContactEmail = data.helpContactEmail;
-                  this.helpContactPhone = data.helpContactPhone;
-                }
-                this.config = data;
-                this.initialized = true;
-              }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
-    }
+  // and I can assume production
+  if (!this.isAPI_together_With_Web) {
+          this.apiUrl = environment.apiUrl;
+    this.appUrl = environment.appUrl;
+    this.docUrl = environment.docUrl;
+    this.reportsUrl = environment.reportsUrl;
+  } else {
+    this.configUrl = "api/assets/config";
   }
+    
+    // it is very important that this be a single promise
+    // I'm not sure the config call is actually behaving.
+    // multiple chained promises definitely does not work
+    return this.http.get(this.configUrl)
+      .toPromise() // APP_INITIALIZER doesn't seem to work with observables
+      .then((data: any) => {
+    if (this.isAPI_together_With_Web) {
+      this.apiUrl = data.apiUrl;
+      this.appUrl = data.appUrl;
+        this.docUrl = data.docUrl;
+            this.reportsUrl = data.reportsUrl;
+            this.helpContactEmail = data.helpContactEmail;
+          this.helpContactPhone = data.helpContactPhone;
+          }
+        this.config = data;
+
+        this.populateLabelValues();
+
+        this.initialized = true;
+      }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
+  }
+}
+
+
+  /**
+   * Populates label values.
+   */
+  populateLabelValues() {
+    // Apply any overrides to button and graph labels
+    this.buttonLabels['Y'] = this.config.buttonLabelY;
+    this.buttonLabels['N'] = this.config.buttonLabelN;
+    this.buttonLabels['NA'] = this.config.buttonLabelNA;
+    this.buttonLabels['A'] = this.config.buttonLabelA;
+
+    this.answerLabels['Y'] = this.config.answerLabelY;
+    this.answerLabels['N'] = this.config.answerLabelN;
+    this.answerLabels['NA'] = this.config.answerLabelNA;
+    this.answerLabels['A'] = this.config.answerLabelA;
+    this.answerLabels['U'] = this.config.answerLabelU;
+  } 
 
 
   /**

@@ -24,7 +24,11 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
+import { ReportsConfigService } from '../services/config.service';
 import { Title } from '@angular/platform-browser';
+import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
+import { AdminTableData, AdminPageData, HoursOverride } from '../../../../../src/app/models/admin-save.model';
+import { ACETService } from '../../../../../src/app/services/acet.service';
 
 @Component({
   selector: 'rapp-sitesummary',
@@ -51,8 +55,24 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
+  // ACET data
+  matDetails: any;
+  acetDashboard: AcetDashboard;
+  Components: AdminTableData[];
+  adminPageData: AdminPageData;
+  GrandTotal: number;
+  DocumentationTotal: number;
+  InterviewTotal: number;
+  ReviewedStatementTotal: number;
 
-  constructor(private reportSvc: ReportService, public analysisSvc: AnalysisService, private titleService: Title) { }
+
+  constructor(
+    public reportSvc: ReportService,
+    public analysisSvc: AnalysisService,
+    public configSvc: ReportsConfigService,
+    private titleService: Title,
+    public acetSvc: ACETService
+  ) { }
 
   ngOnInit() {
     this.titleService.setTitle("Site Summary Report - CSET");
@@ -104,6 +124,44 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
       this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
     });
+
+
+    // ACET-specific content
+    this.reportSvc.getACET().subscribe((x: boolean) => {
+      this.reportSvc.hasACET = x;
+    });
+
+    this.acetSvc.getMatDetailList().subscribe(
+      (data) => {
+        this.matDetails = data;
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
+
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+
+        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
+          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        }
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
+
+    this.acetSvc.getAdminData().subscribe(
+      (data: AdminPageData) => {
+        this.adminPageData = data;
+        this.ProcessAcetAdminData();
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
   }
 
   ngAfterViewChecked() {
@@ -122,5 +180,73 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.complianceGraphs.forEach(x => {
       this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + i++, x);
     });
+  }
+
+
+  ProcessAcetAdminData() {
+    /// the data type Barry used to load data for this screen would be really, really hard
+    /// to work with in angular, with a single row described in multiple entries.
+    /// so here i turn barry's model into something more workable.
+    this.Components = [];
+
+    // the totals at the bottom of the table
+    this.GrandTotal = this.adminPageData.GrandTotal;
+    for (let i = 0; i < this.adminPageData.ReviewTotals.length; i++) {
+      if (this.adminPageData.ReviewTotals[i].ReviewType === "Documentation") {
+        this.DocumentationTotal = this.adminPageData.ReviewTotals[i].Total;
+      } else if (this.adminPageData.ReviewTotals[i].ReviewType === "Interview Process") {
+        this.InterviewTotal = this.adminPageData.ReviewTotals[i].Total;
+      } else if (this.adminPageData.ReviewTotals[i].ReviewType === "Statements Reviewed") {
+        this.ReviewedStatementTotal = this.adminPageData.ReviewTotals[i].Total;
+      }
+    }
+
+    // Create a framework for the page's values
+    this.BuildComponent(this.Components, "Pre-exam prep", false);
+    this.BuildComponent(this.Components, "IRP", false);
+    this.BuildComponent(this.Components, "Domain 1", false);
+    this.BuildComponent(this.Components, "Domain 2", false);
+    this.BuildComponent(this.Components, "Domain 3", false);
+    this.BuildComponent(this.Components, "Domain 4", false);
+    this.BuildComponent(this.Components, "Domain 5", false);
+    this.BuildComponent(this.Components, "Discussing end results with CU", false);
+    this.BuildComponent(this.Components, "Other (specify)", true);
+    this.BuildComponent(this.Components, "Additional Other (specify)", true);
+
+    // the "meat" of the page, the components list and hours on each
+    for (let i = 0; i < this.adminPageData.DetailData.length; i++) {
+      const detail: HoursOverride = this.adminPageData.DetailData[i];
+
+      // find the corresponding Component/Row in the framework
+      const c = this.Components.find(function (element) {
+        return element.Component === detail.Data.Component;
+      });
+
+      if (!!c) {
+        // drop in the hours
+        if (detail.Data.ReviewType === "Documentation") {
+          c.DocumentationHours = detail.Data.Hours;
+        } else if (detail.Data.ReviewType === "Interview Process") {
+          c.InterviewHours = detail.Data.Hours;
+        }
+
+        c.StatementsReviewed = detail.StatementsReviewed;
+
+        c.OtherSpecifyValue = detail.Data.OtherSpecifyValue;
+      }
+    }
+  }
+
+  /**
+   * Builds one 'row/component'.
+   */
+  BuildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
+    const comp = new AdminTableData();
+    comp.Component = componentName;
+    comp.DocumentationHours = 0;
+    comp.InterviewHours = 0;
+    comp.StatementsReviewed = 0;
+    comp.HasSpecifyField = hasSpecifyField;
+    components.push(comp);
   }
 }
