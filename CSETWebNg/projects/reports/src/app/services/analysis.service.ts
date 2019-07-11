@@ -73,11 +73,11 @@ export class AnalysisService {
       type: 'doughnut',
       data: {
         labels: [
-          'Yes',
-          'No',
-          'N/A',
-          'Alternate',
-          'Unanswered'
+          this.configSvc.answerLabels['Y'],
+          this.configSvc.answerLabels['N'],
+          this.configSvc.answerLabels['NA'],
+          this.configSvc.answerLabels['A'],
+          this.configSvc.answerLabels['U']
         ],
         datasets: [
           {
@@ -267,6 +267,10 @@ export class AnalysisService {
 
   getComponentsResultsByCategory(): any {
     return this.http.get(this.apiUrl + 'ComponentsResultsByCategory');
+  }
+
+  getOtherComments(): any {
+    return this.http.get(this.apiUrl + 'DocumentComments');
   }
 
   getComponentsRankedCategories(): any {
