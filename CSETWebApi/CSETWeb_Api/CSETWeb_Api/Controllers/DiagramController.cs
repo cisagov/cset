@@ -58,14 +58,36 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Translates XML from CSETD file to XML for Draw.io.
         /// </summary>
-        /// <param name="xml"></param>
+        /// <param name="importRequest"></param>
         /// <returns></returns>
         [Route("api/diagram/importcsetd")]
         [HttpPost]
-        public string ImportCsetd([FromBody] string xml)
+        public string ImportCsetd([FromBody] DiagramRequest importRequest)
         {
-            var t = new TranslateCsetdToDrawio();
-            return t.Translate(xml).OuterXml;
+            if (importRequest == null)
+            {
+                return "request payload not sent";
+            }
+
+            try
+            {
+                var t = new TranslateCsetdToDrawio();
+                string newDiagramXml = t.Translate(importRequest.DiagramXml).OuterXml;
+
+                DiagramRequest req = new DiagramRequest
+                {
+                    AssessmentID = importRequest.AssessmentID,
+                    DiagramXml = newDiagramXml
+                };
+
+                SaveDiagram(req);
+
+                return "diagram imported and saved";
+            }
+            catch (Exception exc)
+            {
+                return exc.ToString();
+            }
         }
     }
 }
