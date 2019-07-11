@@ -4232,6 +4232,7 @@
     <Content Include="Diagram\src\main\webapp\WEB-INF\msgraph_dev_client_secret" />
     <Content Include="Diagram\src\main\webapp\WEB-INF\pusher.properties" />
     <Content Include="Diagram\VERSION" />
+    <Content Include="Documents\TSA pipeline_security_guidelines.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
