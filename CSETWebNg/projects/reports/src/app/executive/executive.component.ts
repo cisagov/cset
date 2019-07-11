@@ -25,6 +25,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
+import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
+import { ACETService } from '../../../../../src/app/services/acet.service';
 
 
 @Component({
@@ -41,8 +43,15 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
   chartStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
 
+  acetDashboard: AcetDashboard;
 
-  constructor(private reportSvc: ReportService, private analysisSvc: AnalysisService, private titleService: Title) { }
+
+  constructor(
+    public reportSvc: ReportService,
+    private analysisSvc: AnalysisService,
+    private titleService: Title,
+    public acetSvc: ACETService
+  ) { }
 
   ngOnInit() {
     this.titleService.setTitle("Executive Summary - CSET");
@@ -53,6 +62,10 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
+
+    this.reportSvc.getACET().subscribe((x: boolean) => {
+      this.reportSvc.hasACET = x;
+    });
   }
 
   ngAfterViewInit() {
@@ -70,5 +83,19 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       this.responseResultsByCategory = x;
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
     });
+
+    // ACET-specific content
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+
+        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
+          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        }
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
   }
 }

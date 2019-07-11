@@ -30,6 +30,7 @@ export class ReportService {
 
     private initialized = false;
     private apiUrl: string;
+    public hasACET: boolean = false;
 
     /**
      *
@@ -46,5 +47,12 @@ export class ReportService {
      */
     public getReport(reportId: string) {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
+    }
+
+    /**
+     *
+     */
+    getACET() {
+        return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
     }
 }
