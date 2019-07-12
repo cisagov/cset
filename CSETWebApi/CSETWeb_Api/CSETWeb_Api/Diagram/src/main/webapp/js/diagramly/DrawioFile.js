@@ -1276,6 +1276,10 @@ DrawioFile.prototype.addAllSavedStatus = function(status)
  */
 DrawioFile.prototype.addUnsavedStatus = function(err)
 {
+
+    // CSET - suppress this
+    return;
+
 	if (!this.inConflictState && this.ui.statusContainer != null && this.ui.getCurrentFile() == this)
 	{
 		if (err instanceof Error && err.message != null && err.message != '')
@@ -1323,8 +1327,8 @@ DrawioFile.prototype.addUnsavedStatus = function(err)
 				((msg != null && msg != '') ? ' (' + mxUtils.htmlEntities(msg) + ')' : '');
 			this.ui.editor.setStatus('<div title="'+ status +
 				'" class="geStatusAlert" style="cursor:pointer;overflow:hidden;">' +
-				status + '</div>');
-			
+                status + '</div>');
+
 			// Installs click handler for saving
 			var links = this.ui.statusContainer.getElementsByTagName('div');
 			
