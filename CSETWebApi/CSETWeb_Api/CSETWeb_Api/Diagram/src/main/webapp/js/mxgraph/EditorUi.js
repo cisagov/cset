@@ -2271,87 +2271,8 @@ EditorUi.prototype.open = function()
     console.log("EditorUi.prototype.open");
 
     this.CSET = true;
-
     if (this.CSET)
     {
-        console.log("loading CSET diagram from API...");
-
-
-        debugger;
-
-        var blah = '<mxGraphModel dx="940" dy="705" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">' +
-            '    <root>' +
-            '    <mxCell id="0" />' +
-            '    <mxCell id="1" parent="0" />' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-1" value="" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">' +
-            '        <mxGeometry x="290" y="260" width="150" height="150" as="geometry" />' +
-            '    </mxCell>' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-2" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;" parent="1" vertex="1">' +
-            '        <mxGeometry x="290" y="430" width="120" height="80" as="geometry" />' +
-            '    </mxCell>' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-3" value="" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.pentagon" parent="1" vertex="1">' +
-            '        <mxGeometry x="290" y="530" width="100" height="90" as="geometry" />' +
-            '    </mxCell>' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-4" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.orthogonal_triangle" parent="1" vertex="1">' +
-            '        <mxGeometry x="290" y="640" width="100" height="70" as="geometry" />' +
-            '    </mxCell>' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-5" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.acute_triangle;dx=0.5;" parent="1" vertex="1">' +
-            '        <mxGeometry x="120" y="420" width="100" height="70" as="geometry" />' +
-            '    </mxCell>' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-6" value="I was saved!" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.roundRectCallout;dx=30;dy=15;size=5;boundedLbl=1;" parent="1" vertex="1">' +
-            '        <mxGeometry x="120" y="730" width="100" height="60" as="geometry" />' +
-            '    </mxCell>' +
-            '    <mxCell id="UBvCn-ZBLWGS8fVr-ES3-7" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">' +
-            '        <mxGeometry x="620" y="530" width="120" height="60" as="geometry" />' +
-            '    </mxCell>' +
-            ' </root>' +
-            ' </mxGraphModel>';
-
-
-
-
-        data = Graph.zapGremlins(mxUtils.trim(blah));
-
-
-
-
-
-        this.editor.graph.model.beginUpdate();
-        try
-        {
-            this.editor.setGraphXml(mxUtils.parseXml(data).documentElement);
-        }
-        catch (e)
-        {
-            error = e;
-        }
-        finally
-        {
-            this.editor.graph.model.endUpdate();
-        }
-
-        return;
-
-        // --------------------
-
-
-        var xml = '<mxGraphModel pageWidth="1169" pageHeight="827" background="#ffffff">' +
-            '    <root>' +
-            '        <mxCell id="0" />' +
-            '        <mxCell id="1" parent="0" />' +
-            '    </root>' +
-            '</mxGraphModel>';
-        var doc = mxUtils.parseXml(xml);
-        this.editor.setGraphXml(doc.documentElement);
-        this.editor.setModified(false);
-        this.editor.undoManager.clear();
-
-
-
-
-        console.log("The graph is supposedly: ");
-        console.log(this.editor.graph.getModel());
-
         return;
     }
 
