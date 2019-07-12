@@ -9,7 +9,6 @@ namespace CSETWeb_Api.Models
 {
     public class DiagramRequest
     {
-        public int AssessmentID;
         public string DiagramXml;
     }
 }
