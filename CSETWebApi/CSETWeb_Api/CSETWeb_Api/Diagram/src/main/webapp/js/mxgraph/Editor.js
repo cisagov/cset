@@ -83,6 +83,17 @@ function PersistGraphToCSET(editor)
 
     var url = localStorage.getItem('cset.host') + '/diagram/save';
     var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            // successful post
+        }
+        if (this.readyState == 4 && this.status == 401)
+        {
+            window.location.href = 'error401.html';
+        }
+    }
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', jwt);
