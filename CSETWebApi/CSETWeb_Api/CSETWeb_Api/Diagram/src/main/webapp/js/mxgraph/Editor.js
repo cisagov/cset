@@ -77,9 +77,7 @@ function PersistGraphToCSET(editor)
     var sXML = oSerializer.serializeToString(node);
 
     var req = {};
-    req.AssessmentID = localStorage.getItem('assess.id');
     req.DiagramXml = sXML;
-
 
     var url = localStorage.getItem('cset.host') + '/diagram/save';
     var xhr = new XMLHttpRequest();
