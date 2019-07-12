@@ -253,7 +253,7 @@
 
         // Zone Palette
         var fns6 = [
-            this.createVertexTemplateEntry('swimlane;', 200, 200, 'Zone', 'Zone', null, null, 'container swimlane lane pool group zone')
+            this.createVertexTemplateEntry('swimlane;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;', 200, 200, 'Zone', 'Zone', null, null, 'container swimlane lane pool group zone')
         ];
         this.addPalette('zone', 'Zone', false, mxUtils.bind(this, function (content) {
             for (var i = 0; i < fns6.length; i++) {

@@ -32,8 +32,13 @@ namespace CSETWeb_Api.Controllers
         [HttpPost]
         public void SaveDiagram([FromBody] DiagramRequest req)
         {
+            // get the assessment ID from the JWT
+            TokenManager tm = new TokenManager();
+            int userId = (int)tm.PayloadInt(Constants.Token_UserId);
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            dm.SaveDiagram(req.AssessmentID, req.DiagramXml);
+            dm.SaveDiagram((int)assessmentId, req.DiagramXml);
         }
 
 
@@ -63,11 +68,16 @@ namespace CSETWeb_Api.Controllers
         [Route("api/diagram/importcsetd")]
         [HttpPost]
         public string ImportCsetd([FromBody] DiagramRequest importRequest)
-        {
+        {            
             if (importRequest == null)
             {
                 return "request payload not sent";
             }
+
+            // get the assessment ID from the JWT
+            TokenManager tm = new TokenManager();
+            int userId = (int)tm.PayloadInt(Constants.Token_UserId);
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
             try
             {
@@ -76,7 +86,6 @@ namespace CSETWeb_Api.Controllers
 
                 DiagramRequest req = new DiagramRequest
                 {
-                    AssessmentID = importRequest.AssessmentID,
                     DiagramXml = newDiagramXml
                 };
 
