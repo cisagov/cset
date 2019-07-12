@@ -313,6 +313,7 @@
     <Compile Include="Diagram\DiagramObjects\Enums\DiagramTypeEnum.cs" />
     <Compile Include="Diagram\DiagramObjects\Enums\LinkSecurityEnum.cs" />
     <Compile Include="Diagram\DiagramObjects\Enums\NetworkCriticalityEnum.cs" />
+    <Compile Include="Diagram\TranslateCsetdToDrawio.cs" />
     <Compile Include="DocumentLibrary\DocumentManager.cs" />
     <Compile Include="DocumentLibrary\DocumentObject.cs" />
     <Compile Include="Framework\ProfileCategory.cs" />

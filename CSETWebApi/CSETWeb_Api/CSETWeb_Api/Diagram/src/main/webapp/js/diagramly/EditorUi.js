@@ -2185,7 +2185,6 @@
     EditorUi.prototype.fileLoaded = function (file, noDialogs)
     {
         console.log("EditorUi.prototype.fileLoaded (diagramly)");
-        debugger;
 
         var oldFile = this.getCurrentFile();
         this.fileLoadedError = null;
@@ -2417,14 +2416,13 @@
     };
 
     /**
-     * 
+     * Retrieves the graph from the CSET API if it has been stored.
      */
     EditorUi.prototype.LoadGraphFromCSET = function(editor)
     {
         console.log("LoadGraphFromCSET (EditorUi, diagramly)");
 
-
-        // call the API ...
+        // call the CSET API ...
         var url = localStorage.getItem('cset.host') + '/diagram/get';
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function ()
@@ -2432,11 +2430,12 @@
             if (this.readyState == 4 && this.status == 200)
             {
                 var data = this.responseText;
-
-                console.log(data);
-
                 data = Graph.zapGremlins(mxUtils.trim(data));
 
+                // fix escaped quotes and trim quotes
+                data = data.replace(/\\"/g, '"').replace(/^\"|\"$/g, '');
+                
+                
                 editor.graph.model.beginUpdate();
                 try
                 {
