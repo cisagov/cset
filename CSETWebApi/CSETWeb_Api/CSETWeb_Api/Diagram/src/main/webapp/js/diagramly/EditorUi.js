@@ -2405,6 +2405,8 @@
             noFile();
         }
 
+        // CSET - suppress the open dialog
+        this.dialog.dialogImg.click();
         // CSET - always load from the API
         this.LoadGraphFromCSET(this.editor);
 
