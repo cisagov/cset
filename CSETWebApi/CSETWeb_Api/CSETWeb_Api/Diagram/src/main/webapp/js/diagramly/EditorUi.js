@@ -2405,12 +2405,8 @@
             noFile();
         }
 
-        var CSET = true;
-        if (CSET)
-        {
-            this.LoadGraphFromCSET(this.editor);
-        }
-
+        // CSET - always load from the API
+        this.LoadGraphFromCSET(this.editor);
 
         return result;
     };
@@ -2420,9 +2416,6 @@
      */
     EditorUi.prototype.LoadGraphFromCSET = function(editor)
     {
-        console.log("LoadGraphFromCSET (EditorUi, diagramly)");
-
-        // call the CSET API ...
         var url = localStorage.getItem('cset.host') + '/diagram/get';
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function ()
@@ -7157,13 +7150,14 @@
             {
                 var input = document.createElement('input');
                 input.setAttribute('type', 'file');
+                input.setAttribute('accept', '.csetd');
 
                 mxEvent.addListener(input, 'change', mxUtils.bind(this, function ()
                 {
                     if (input.files != null)
                     {
-                        // Using null for position will disable crop of input file
-                        this.importFiles(input.files, null, null, this.maxImageSize);
+                        this.importFilesCSETD(input.files, this.editor);
+                        // this.importFiles(input.files, null, null, this.maxImageSize);
                     }
 
                     input.value = '';
@@ -7239,6 +7233,12 @@
 
 	/**
 	 * Imports the given XML into the existing diagram.
+
+
+        CSET will do this differently -- it will send the imported file content to the API for translation,
+        and then the translated XML that comes back will be dropped into the existing diagram.
+
+
 	 */
     EditorUi.prototype.importFile = function (data, mimeType, dx, dy, w, h, filename, done, file, crop, ignoreEmbeddedXml)
     {
@@ -7391,6 +7391,76 @@
 
         return out;
     };
+
+    /**
+     * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
+     * into the existing diagram.
+     */
+    EditorUi.prototype.importFilesCSETD = function(files, editor)
+    {
+        if (files.length == 0)
+        {
+            return;
+        }
+
+        var file = files[0];
+        var reader = new FileReader();
+        reader.onload = function(e)
+		{
+            TranslateToMxGraph(editor, e.target.result);
+		};
+        reader.readAsText(file);
+    }
+
+    /**
+     * Persists the CSETD XML to the CSET API.  The mxGraph translation
+     * is returned, and dropped into the existing graph.
+     */
+    function TranslateToMxGraph(editor, sXML)
+    {
+        var jwt = localStorage.getItem('jwt');
+
+        var req = {};
+        req.DiagramXml = sXML;
+
+        var url = localStorage.getItem('cset.host') + '/diagram/importcsetd';
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && (this.status == 200 || this.status == 204))
+            {
+                // successful post - drop the XML that came back into the graph
+                var data = xhr.responseText;
+                data = Graph.zapGremlins(mxUtils.trim(data));
+
+                // fix escaped quotes and trim quotes
+                data = data.replace(/\\"/g, '"').replace(/^\"|\"$/g, '');
+                                
+                editor.graph.model.beginUpdate();
+                try
+                {
+                    editor.setGraphXml(mxUtils.parseXml(data).documentElement);
+                }
+                catch (e)
+                {
+                    error = e;
+                    console.log('TranslateToMxGraph error: ' + error);
+                }
+                finally
+                {
+                    editor.graph.model.endUpdate();
+                }
+            }
+            if (this.readyState == 4 && this.status == 401)
+            {
+                window.location.href = 'error401.html';
+            }
+        }
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', jwt);
+        xhr.send(JSON.stringify(req));
+    }
 
 	/**
 	 * 
@@ -9767,7 +9837,6 @@
 	 */
     EditorUi.prototype.openLocalFile = function (data, name, temp)
     {
-        console.log("EditorUi.prototype.openLocalFile (diagramly)");
         var currentFile = this.getCurrentFile();
 
         var fn = mxUtils.bind(this, function ()

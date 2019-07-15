@@ -1975,7 +1975,7 @@
                     }, parent);
                 }
                 */
-                menu.addItem(mxResources.get('device') + '...', null, function ()
+                menu.addItem('CSETD file...', null, function ()
                 {
                     editorUi.importLocalFile(true);
                 }, parent);

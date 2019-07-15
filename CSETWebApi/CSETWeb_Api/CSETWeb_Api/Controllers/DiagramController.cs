@@ -91,7 +91,7 @@ namespace CSETWeb_Api.Controllers
 
                 SaveDiagram(req);
 
-                return "diagram imported and saved";
+                return newDiagramXml;
             }
             catch (Exception exc)
             {

@@ -424,14 +424,27 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
 
         /// <summary>
-        /// 
+        /// Returns a string describing the style (image file path) for the component type.
         /// </summary>
         /// <param name="assetName"></param>
         /// <returns></returns>
         private string AssetType(string assetName)
         {
-            // all SVGs should follow this pattern            
-            return string.Format("image;image=img/cset/{0}.svg;", assetName.Replace(" ", "_").ToLower());
+            // all SVGs should follow this pattern ...
+            var imgName = assetName.Replace(" ", "_").ToLower();
+            
+            // ... with a few exceptions
+            switch (imgName)
+            {
+                case "engineering_workstation":
+                    imgName = "ews";
+                    break;
+                case "optical_ring_system":
+                    imgName = "optical_ring";
+                    break;
+            }
+
+            return string.Format("image;image=img/cset/{0}.svg;", imgName);
         }
 
 
