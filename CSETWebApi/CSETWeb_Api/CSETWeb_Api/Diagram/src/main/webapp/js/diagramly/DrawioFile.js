@@ -1277,8 +1277,9 @@ DrawioFile.prototype.addAllSavedStatus = function(status)
 DrawioFile.prototype.addUnsavedStatus = function(err)
 {
 
-    // CSET - suppress this
+    // CSET - suppress this element
     return;
+
 
 	if (!this.inConflictState && this.ui.statusContainer != null && this.ui.getCurrentFile() == this)
 	{
