@@ -785,6 +785,30 @@
             Persists the selected required docs value to the database.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityRange">
+            <summary>
+            Get maturity range based on IRP rating
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetOverallIrp">
+            <summary>
+            Get IRP total for maturity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetTargetBand">
+            <summary>
+            Get target band for maturity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetTargetBand(System.Boolean)">
+            <summary>
+            Set target band for maturity rating
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
             <summary>
             Returns a list of all applicable Questions or Requirements for the assessment.
