@@ -89,7 +89,7 @@ function PersistGraphToCSET(editor)
         }
         if (this.readyState == 4 && this.status == 401)
         {
-            window.location.href = 'error401.html';
+            window.location.replace('error401.html');
         }
     }
     xhr.open('POST', url);
