@@ -192,6 +192,7 @@ Actions.prototype.init = function()
 	
 	function deleteCells(includeEdges)
 	{
+		console.log("in the delete");
 		// Cancels interactive operations
 		graph.escape();
 		var cells = graph.getDeletableCells(graph.getSelectionCells());
