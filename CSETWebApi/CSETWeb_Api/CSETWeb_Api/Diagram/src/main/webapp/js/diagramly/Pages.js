@@ -995,7 +995,10 @@ EditorUi.prototype.createTabContainer = function()
 	div.style.position = 'absolute';
 	div.style.whiteSpace = 'nowrap';
 	div.style.overflow = 'hidden';
-	div.style.height = '0px';
+    div.style.height = '0px';
+
+    // CSET - suppress this footer
+    div.style.display = 'none';
 	
 	return div;
 };

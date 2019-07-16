@@ -48,15 +48,23 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [Route("api/diagram/get")]
         [HttpGet]
-        public string GetDiagram()
+        public DiagramResponse GetDiagram()
         {
             // get the assessment ID from the JWT
             TokenManager tm = new TokenManager();
             int userId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
+            var response = new DiagramResponse();
+
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            return dm.GetDiagram((int)assessmentId);
+            response.DiagramXml = dm.GetDiagram((int)assessmentId);
+
+            var assessmentDetail = new AssessmentController().Get();
+
+            response.AssessmentName = assessmentDetail.AssessmentName;
+
+            return response;
         }
 
 

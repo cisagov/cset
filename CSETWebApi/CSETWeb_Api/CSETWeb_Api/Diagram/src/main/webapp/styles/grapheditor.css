@@ -1,5 +1,6 @@
 .geEditor {
 	font-family:Helvetica,Arial,sans-serif;
+	font-family: "Roboto", sans-serif;
 	font-size:14px;
 	border:none;
 	margin:0px;
@@ -708,7 +709,7 @@ html table.mxPopupMenu {
 }
 html td.mxPopupMenuItem {
 	padding:7px 30px 7px 30px;
-	font-family:Helvetica Neue,Helvetica,Arial Unicode MS,Arial;
+	font-family: "Roboto", sans-serif, Helvetica Neue,Helvetica,Arial Unicode MS,Arial;
 	font-size:10pt;
 }
 html td.mxPopupMenuIcon {
@@ -1432,4 +1433,50 @@ html td.mxWindowTitle {
 	position: absolute;
 	top: 5px;
 	right: 5px;
+}
+
+/* ------------- CSET diagram styles --------------- */
+
+.display-none {
+    display: none !important;
+}
+
+.geMenubarContainer {
+	background-color: #052637;
+}
+
+.geMenubarContainer, .geMenubarContainer .geItem {
+	color: #fff;
+}
+
+.geMenubarContainer .geItem:hover {
+	background-color:#f1f3f4;
+	color: #052637;
+}
+
+.geEditor div.mxPopupMenu {
+	box-shadow:0 2px 6px 2px rgba(60,64,67,.15);
+	background:#052637;
+	border-radius:4px;
+	border:none;
+	padding:3px;
+	color: #fff;
+}
+
+html tr.mxPopupMenuItem {
+	color: #fff;
+}
+
+html tr.mxPopupMenuItemHover {
+	background-color: #eeeeee;
+	color: #052637;
+}
+
+tr.mxPopupMenuItem .mxDisabled {
+	color: #8FB0C1;
+	opacity: 1 !important;
+}
+
+.geDiagramBackdrop {
+	background-color: #c2d4dd;
 }
