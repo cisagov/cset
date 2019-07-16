@@ -463,5 +463,16 @@ export class QuestionExtrasComponent implements OnInit {
     }
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
+
+  /**
+   * check if approach exists for acet questions
+   * @param approach 
+   */
+  checkForApproach(approach: string){
+    if (typeof approach != 'undefined' && approach)
+      return true;
+
+    return false;
+  }
 }
 
