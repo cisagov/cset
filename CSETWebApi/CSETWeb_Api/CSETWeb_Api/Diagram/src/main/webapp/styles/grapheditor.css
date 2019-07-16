@@ -1433,3 +1433,7 @@ html td.mxWindowTitle {
 	top: 5px;
 	right: 5px;
 }
+
+.display-none {
+    display: none !important;
+}
