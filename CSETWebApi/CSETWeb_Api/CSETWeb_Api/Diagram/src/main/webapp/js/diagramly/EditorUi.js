@@ -3591,8 +3591,11 @@
             this.actions.get('shapes').funct();
             mxEvent.consume(evt);
         }));
-
+        
         div.appendChild(elt2);
+
+        // CSET - suppress the 'more shapes' menu
+        div.className += " display-none "
 
         return div;
     };
