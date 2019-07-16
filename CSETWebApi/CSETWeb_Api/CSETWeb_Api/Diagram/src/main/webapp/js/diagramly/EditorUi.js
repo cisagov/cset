@@ -170,7 +170,8 @@
 	/**
 	 * Specifies the URL for the diffsync cache.
 	 */
-    EditorUi.cacheUrl = (urlParams['dev'] == '1') ? '/cache' : 'https://rt.draw.io/cache';
+    // CSET - EditorUi.cacheUrl = (urlParams['dev'] == '1') ? '/cache' : 'https://rt.draw.io/cache';
+    EditorUi.cacheUrl = (urlParams['dev'] == '1') ? '/cache' : '';
 
 	/**
 	 * Switch to enable PlantUML in the insert from text dialog.
@@ -2223,11 +2224,17 @@
                 window.location.hash = '';
             }
 
-            if (this.fname != null)
+            // CSET - don't alter the 'filename'
+            var CSET = true;
+            if (!CSET && this.fname != null)
             {
                 this.fnameWrapper.style.display = 'none';
                 this.fname.innerHTML = '';
                 this.fname.setAttribute('title', mxResources.get('rename'));
+            }
+            if (CSET)
+            {
+                this.fname.innerHTML = sessionStorage.getItem('assessment.name');
             }
 
             this.editor.setStatus('');
@@ -2408,7 +2415,7 @@
         // CSET - suppress the open dialog
         this.dialog.dialogImg.click();
         // CSET - always load from the API
-        this.LoadGraphFromCSET(this.editor);
+        this.LoadGraphFromCSET(this.editor, this.fname);        
 
         return result;
     };
@@ -2416,7 +2423,7 @@
     /**
      * Retrieves the graph from the CSET API if it has been stored.
      */
-    EditorUi.prototype.LoadGraphFromCSET = function(editor)
+    EditorUi.prototype.LoadGraphFromCSET = function(editor, fname)
     {
         var url = localStorage.getItem('cset.host') + '/diagram/get';
         var xhr = new XMLHttpRequest();
@@ -2424,7 +2431,17 @@
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                var data = this.responseText;
+                var resp = JSON.parse(this.responseText);
+
+                // set the title/filename
+                sessionStorage.setItem('assessment.name', resp.AssessmentName);
+
+                console.log('fname =');
+                console.log(fname);
+
+                fname.innerHTML = resp.AssessmentName;
+
+                var data = resp.DiagramXml;
                 data = Graph.zapGremlins(mxUtils.trim(data));
 
                 // fix escaped quotes and trim quotes
@@ -2451,6 +2468,10 @@
 
             if (this.readyState == 4 && this.status == 401)
             {
+                EditorUi.prototype.addBeforeUnloadListener = function ()
+                {
+                    alert('1');
+                };
                 window.location.href = 'error401.html';
             }
         };
@@ -7458,6 +7479,10 @@
             }
             if (this.readyState == 4 && this.status == 401)
             {
+                EditorUi.prototype.addBeforeUnloadListener = function ()
+                {
+                    alert('2');
+                };
                 window.location.href = 'error401.html';
             }
         }

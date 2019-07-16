@@ -3786,49 +3786,8 @@ App.prototype.fileCreated = function (file, libs, replace, done)
 App.prototype.loadFile = function (id, sameWindow, file, success, force)
 {
     console.log("App.prototype.loadFile (diagramly)");
-    console.log(id);
-    console.log(sameWindow);
-    console.log(file);
-    console.log(success);
-    console.log(force);
 
     this.hideDialog();
-
-
-    var CSET = false;
-    if (CSET)
-    {
-        console.log("App.prototype.loadFile:  loading CSET diagram from API...");
-
-
-
-
-
-        var xml = '<mxGraphModel pageWidth="1169" pageHeight="827" background="#ffffff">' +
-            '    <root>' +
-            '        <mxCell id="0" />' +
-            '        <mxCell id="1" parent="0" />' +
-            '    </root>' +
-            '</mxGraphModel>';
-        var doc = mxUtils.parseXml(xml);
-        this.editor.setGraphXml(doc.documentElement);
-        this.editor.setModified(false);
-        this.editor.undoManager.clear();
-
-
-
-
-        console.log("The graph is supposedly: ");
-        console.log(this.editor.graph.getModel());
-
-
-        return;
-
-
-
-        //  return;
-    }
-
 
     var fn2 = mxUtils.bind(this, function ()
     {
@@ -4860,13 +4819,19 @@ App.prototype.descriptorChanged = function ()
 
     if (file != null)
     {
-        if (this.fname != null)
+        // CSET - don't set fname to the filename
+        var CSET = true;
+        if (!CSET && this.fname != null)
         {
             this.fnameWrapper.style.display = 'block';
             this.fname.innerHTML = '';
             var filename = (file.getTitle() != null) ? file.getTitle() : this.defaultFilename;
             mxUtils.write(this.fname, filename);
             this.fname.setAttribute('title', filename + ' - ' + mxResources.get('rename'));
+        }
+        else
+        {
+            this.fname.innerHTML = sessionStorage.getItem('assessment.name');
         }
 
         var graph = this.editor.graph;
@@ -5146,7 +5111,7 @@ App.prototype.updateHeader = function ()
         var logo = (!mxClient.IS_SVG) ? 'url(\'' + IMAGE_PATH + '/logo-white.png\')' :
             'url(data:images/svg+xml;utf8,<svg xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" style="enable-background:new 0 0 500 500;" version="1.1" viewBox="0 0 500 500" width="28" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">			<path class="fill-primary" d="M384.4,166.7c0-14.3-0.1-30.7-0.6-38.9C379.4,58.8,317,6.2,246.3,6.4v0c-0.1,0-0.2,0-0.3,0 c-0.1,0-0.1,0-0.3,0h0C175,7.5,113.6,61.2,110.4,130.2c-0.4,9.7-0.3,25.2-0.1,36.4h-0.2v27.2h62.4v-14.1c0,0-0.5-33.8,1-50.1 c3.3-34.8,36.7-60.2,73-60.9c36.3,0,70.2,24.9,74.1,59.6c1.8,16.3,0.5,65.5,0.5,65.5h0.9h62.3V166.7L384.4,166.7z"></path><path class="fill-white" d="M331.7,183.5c0.3-15.6,0.6-44.2-0.8-56.3c-4.3-38.5-41.3-68.8-84.4-68.8  c-43.2,0.8-79.7,31.7-83.3,70.3c-1.5,16.7-1.1,49.8-1.1,51.2v3.6h-41.7v-14.9c0.2-0.7,0.2-1.4,0.2-2.2c-0.2-11.2-0.4-26.4,0.1-35.8 c2.9-61.8,59-113,125.1-114c0.1,0,0.6,0,0.7,0c66,0,122.9,50.1,126.9,111.8c0.4,6.3,0.6,18.8,0.6,38.2v16.9H331.7z"></path><path class="fill-primary" d="M404.6,207.6H90c-19.4,0-35.1,15.7-35.1,35.1v215.8c0,19.4,15.7,35.1,35.1,35.1h314.6 c19.4,0,35.1-15.7,35.1-35.1V242.7C439.7,223.3,424,207.6,404.6,207.6z"></path>			<path class="fill-white" d="M90,483.2c-13.6,0-24.7-11.1-24.7-24.7V242.7c0-13.6,11.1-24.7,24.7-24.7h314.6 c13.6,0,24.7,11.1,24.7,24.7v215.8c0,13.6-11.1,24.7-24.7,24.7H90z"></path><path class="fill-primary" d="M393,302.9H146.2c-4.3,0-4.6,1-4.6,6v91.2c0,3.2,0.5,4.8,3.4,5.3c0.4,0.2-0.2,0,0.2,0h243.2 v37.2H132.8c-12,0-20-5.3-25.4-15.4 c-2.5-4.6-3.1-10.1-3.1-15.9V295.8c0-12.3,4.3-21.3,14.4-26.3c4.3-2.3,8.6-3.7,14.1-3.7H393 V302.9z"></path></svg>)';
 
-        // RKW - force the CSET logo
+        // CSET - force the CSET logo
         logo = 'url(\'' + IMAGE_PATH + '/drawlogo48.png\')';
 
 
@@ -5207,37 +5172,54 @@ App.prototype.updateHeader = function ()
         this.fnameWrapper.style.overflow = 'hidden';
         this.fnameWrapper.style.textOverflow = 'ellipsis';
 
-        this.fname = document.createElement('a');
-        this.fname.setAttribute('title', mxResources.get('rename'));
-        this.fname.className = 'geItem';
-        this.fname.style.padding = '2px 8px 2px 8px';
-        this.fname.style.display = 'inline';
-        this.fname.style.fontSize = '18px';
-        this.fname.style.whiteSpace = 'nowrap';
-
-        // Prevents focus
-        mxEvent.addListener(this.fname, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
-            mxUtils.bind(this, function (evt)
-            {
-                evt.preventDefault();
-            }));
-
-        mxEvent.addListener(this.fname, 'click', mxUtils.bind(this, function (evt)
+        // CSET - show assessment name in the 'file name' location
+        var CSET = true;
+        if (CSET)
         {
-            var file = this.getCurrentFile();
+            this.fnameWrapper.style.display = 'inline';
 
-            if (file != null && file.isRenamable())
-            {
-                if (this.editor.graph.isEditing())
+            this.fname = document.createElement('div');
+            this.fname.className = 'geItem';
+            this.fname.style.padding = '2px 8px 2px 8px';
+            this.fname.style.display = 'inline';
+            this.fname.style.fontSize = '18px';
+            this.fname.style.whiteSpace = 'nowrap';
+            this.fname.innerHTML = sessionStorage.getItem('assessment.name');
+        }
+        else
+        {
+            this.fname = document.createElement('a');
+            this.fname.setAttribute('title', mxResources.get('rename'));
+            this.fname.className = 'geItem';
+            this.fname.style.padding = '2px 8px 2px 8px';
+            this.fname.style.display = 'inline';
+            this.fname.style.fontSize = '18px';
+            this.fname.style.whiteSpace = 'nowrap';
+
+            // Prevents focus
+            mxEvent.addListener(this.fname, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
+                mxUtils.bind(this, function (evt)
                 {
-                    this.editor.graph.stopEditing();
+                    evt.preventDefault();
+                }));
+
+            mxEvent.addListener(this.fname, 'click', mxUtils.bind(this, function (evt)
+            {
+                var file = this.getCurrentFile();
+
+                if (file != null && file.isRenamable())
+                {
+                    if (this.editor.graph.isEditing())
+                    {
+                        this.editor.graph.stopEditing();
+                    }
+
+                    this.actions.get('rename').funct();
                 }
 
-                this.actions.get('rename').funct();
-            }
-
-            mxEvent.consume(evt);
-        }));
+                mxEvent.consume(evt);
+            }));
+        }
 
         this.fnameWrapper.appendChild(this.fname);
 

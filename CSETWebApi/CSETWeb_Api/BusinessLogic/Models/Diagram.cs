@@ -11,4 +11,10 @@ namespace CSETWeb_Api.Models
     {
         public string DiagramXml;
     }
+
+    public class DiagramResponse
+    {
+        public string AssessmentName;
+        public string DiagramXml;
+    }
 }
