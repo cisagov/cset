@@ -1041,7 +1041,7 @@ EditorUi.prototype.init = function()
 
 	// Updates action states
 	this.addUndoListener();
-	this.addBeforeUnloadListener();
+	// CSET - this.addBeforeUnloadListener();
 	
 	graph.getSelectionModel().addListener(mxEvent.CHANGE, mxUtils.bind(this, function()
 	{
@@ -2257,6 +2257,9 @@ EditorUi.prototype.addBeforeUnloadListener = function()
  */
 EditorUi.prototype.onBeforeUnload = function()
 {
+    // CSET
+    return;
+
 	if (this.editor.modified)
 	{
 		return mxResources.get('allChangesLost');
