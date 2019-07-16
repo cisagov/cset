@@ -52,6 +52,7 @@ namespace CSETWeb_Api.BusinessManagers
                 markup.Markup = diagramXML;
                 db.DIAGRAM_MARKUP.Update(markup);
                 db.SaveChanges();
+
             }
         }
 
