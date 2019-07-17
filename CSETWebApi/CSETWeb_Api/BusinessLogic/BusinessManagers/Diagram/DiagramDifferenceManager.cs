@@ -27,19 +27,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// add records to the table for the new components
         /// deleted records for the removed components
         /// </summary>
-        public void buildDiagramDictionaries(XmlDocument diagramDocument)
+        public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            var cells = diagramDocument.SelectNodes("/mxGraphModel/root/object");
-            foreach(var c in cells)
-            {
+            this.NewDiagram = processDiagram(newDiagramDocument);
+            this.OldDiagram = processDiagram(oldDiagramDocument);
+        }
 
-            }
-
-            var cells = diagramDocument.SelectNodes("/mxGraphModel/root/object");
+        private Dictionary<Guid,string> processDiagram(XmlDocument doc)
+        {
+            Dictionary<Guid, string> nodesList = new Dictionary<Guid, string>(); 
+            var cells = doc.SelectNodes("/mxGraphModel/root/object");
             foreach (var c in cells)
             {
-
+                Console.WriteLine(c);
+                //nodesList.Add()
             }
+            return nodesList;
         }
     }
 }
