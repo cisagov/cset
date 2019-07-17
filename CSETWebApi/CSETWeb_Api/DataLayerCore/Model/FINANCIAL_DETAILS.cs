@@ -24,15 +24,15 @@ namespace DataLayerCore.Model
         [Column("Maturity Target")]
         [StringLength(255)]
         public string Maturity_Target { get; set; }
-        [Column("CSC Basic (1-6)")]
-        [StringLength(255)]
-        public string CSC_Basic__1_6_ { get; set; }
-        [Column("CSC Foundational  (7-16)")]
-        [StringLength(255)]
-        public string CSC_Foundational___7_16_ { get; set; }
         [Column("CSC Organizational (17-20)")]
         [StringLength(255)]
         public string CSC_Organizational__17_20_ { get; set; }
+        [Column("CSC Foundational  (7-16)")]
+        [StringLength(255)]
+        public string CSC_Foundational___7_16_ { get; set; }
+        [Column("CSC Basic (1-6)")]
+        [StringLength(255)]
+        public string CSC_Basic__1_6_ { get; set; }
         [Column("CSC Mapping")]
         [StringLength(255)]
         public string CSC_Mapping { get; set; }

@@ -38,6 +38,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
+        public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
         public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
         public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
@@ -150,6 +151,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
         public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
         public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
+        public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
@@ -269,6 +271,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.CreditUnionName).IsUnicode(false);
 
+                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
+
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
 
                 entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
@@ -351,15 +355,16 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
             {
-                entity.HasKey(e => e.Answer_Id)
-                    .HasName("PK__Assessme__36918F380D1C2E80");
+                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id })
+                    .HasName("PK_Assessment_IRP");
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Comment).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.ASSESSMENT_IRP)
                     .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
 
                 entity.HasOne(d => d.IRP_)
@@ -726,6 +731,8 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<DIAGRAM_TEMPLATES>(entity =>
             {
+                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
+
                 entity.Property(e => e.Is_Read_Only).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");

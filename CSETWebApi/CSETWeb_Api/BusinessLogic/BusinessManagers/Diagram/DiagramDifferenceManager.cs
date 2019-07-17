@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,10 +37,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         private Dictionary<Guid,string> processDiagram(XmlDocument doc)
         {
             Dictionary<Guid, string> nodesList = new Dictionary<Guid, string>(); 
-            var cells = doc.SelectNodes("/mxGraphModel/root/object");
+            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
             foreach (var c in cells)
             {
-                Console.WriteLine(c);
+                Trace.WriteLine(((System.Xml.XmlElement)c).InnerXml);
                 //nodesList.Add()
             }
             return nodesList;
