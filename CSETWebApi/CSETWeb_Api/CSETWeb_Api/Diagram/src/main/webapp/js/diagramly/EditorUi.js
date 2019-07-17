@@ -2468,11 +2468,7 @@
 
             if (this.readyState == 4 && this.status == 401)
             {
-                EditorUi.prototype.addBeforeUnloadListener = function ()
-                {
-                    alert('1');
-                };
-                window.location.href = 'error401.html';
+                window.location.replace('error401.html');
             }
         };
         xhr.open('GET', url);
@@ -7479,11 +7475,7 @@
             }
             if (this.readyState == 4 && this.status == 401)
             {
-                EditorUi.prototype.addBeforeUnloadListener = function ()
-                {
-                    alert('2');
-                };
-                window.location.href = 'error401.html';
+                window.location.replace('error401.html');
             }
         }
         xhr.open('POST', url);
