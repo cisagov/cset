@@ -22,11 +22,9 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="diagramXML"></param>
         public void SaveDiagram(int assessmentID, string diagramXML)
         {
-
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
-
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(diagramXML);
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
@@ -35,24 +33,15 @@ namespace CSETWeb_Api.BusinessManagers
                 return;
             }
 
-
-
             using (var db = new CSET_Context())
             {
                 // Assume a single bridge record for now.  
                 // Maybe we will support multiple diagrams per assessment some day.
-                var bridge = db.ASSESSMENT_DIAGRAM_MARKUP.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
-                if (bridge == null)
-                {
-                    InsertNewDiagram(assessmentID, diagramXML);
-                    return;
+                var bridge = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+                if (String.IsNullOrWhiteSpace(diagramXML))
+                {                
+                    db.SaveChanges();
                 }
-
-                var markup = db.DIAGRAM_MARKUP.Where(x => x.Diagram_ID == bridge.Diagram_Id).FirstOrDefault();
-                markup.Markup = diagramXML;
-                db.DIAGRAM_MARKUP.Update(markup);
-                db.SaveChanges();
-
             }
         }
 
