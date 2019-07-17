@@ -4326,6 +4326,7 @@
     <Compile Include="Controllers\FileDownloadController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\FrameworkController.cs" />
+    <Compile Include="Controllers\GuidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\IRP2Controller.cs" />
@@ -4363,6 +4364,7 @@
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
     <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\Guid\" />
     <Folder Include="Views\IRP2\" />
     <Folder Include="Views\RequiredDocumentation\" />
   </ItemGroup>
