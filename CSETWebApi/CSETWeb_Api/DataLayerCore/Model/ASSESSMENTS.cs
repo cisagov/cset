@@ -49,6 +49,8 @@ namespace DataLayerCore.Model
         public string IRPTotalOverrideReason { get; set; }
         [Required]
         public bool? MatDetail_targetBandOnly { get; set; }
+        public string Diagram_Markup { get; set; }
+        public int LastUsedComponentNumber { get; set; }
 
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]

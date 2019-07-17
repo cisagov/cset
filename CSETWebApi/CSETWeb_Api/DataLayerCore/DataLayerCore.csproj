@@ -181,6 +181,7 @@
     <Compile Include="Model\COMPONENT_STANDARD_QUESTIONS.cs" />
     <Compile Include="Model\COMPONENT_SYMBOLS.cs" />
     <Compile Include="Model\COMPONENT_SYMBOLS_GM_TO_CSET.cs" />
+    <Compile Include="Model\COUNTRIES.cs" />
     <Compile Include="Model\CSETWebContext.cs" />
     <Compile Include="Model\CSET_VERSION.cs" />
     <Compile Include="Model\CUSTOM_BASE_STANDARDS.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Model\STANDARD_SOURCE_FILE.cs" />
     <Compile Include="Model\STANDARD_SPECIFIC_LEVEL.cs" />
     <Compile Include="Model\STANDARD_TO_UNIVERSAL_MAP.cs" />
+    <Compile Include="Model\STATES_AND_PROVINCES.cs" />
     <Compile Include="Model\SUB_CATEGORY_ANSWERS.cs" />
     <Compile Include="Model\SYMBOL_GROUPS.cs" />
     <Compile Include="Model\UNIVERSAL_AREA.cs" />

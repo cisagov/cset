@@ -10,6 +10,7 @@ using System.Data;
 using System.Xml;
 using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Model;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -35,13 +36,30 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
+                
                 // Assume a single bridge record for now.  
                 // Maybe we will support multiple diagrams per assessment some day.
-                var bridge = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
-                if (String.IsNullOrWhiteSpace(diagramXML))
-                {                
-                    db.SaveChanges();
+                var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+                if (assessmentRecord != null)
+                {
+                    DiagramDifferenceManager differenceManager = new DiagramDifferenceManager();
+                    XmlDocument oldDoc = new XmlDocument();
+                    if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup))
+                    {
+                        oldDoc.LoadXml(assessmentRecord.Diagram_Markup);                       
+                    }
+                    differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
                 }
+                else
+                {
+                    //what the?? where is our assessment
+                    throw new ApplicationException("Assessment record is missing for id" + assessmentID);
+                }
+                if (!String.IsNullOrWhiteSpace(diagramXML))
+                {
+                    assessmentRecord.Diagram_Markup = diagramXML;                    
+                }
+                db.SaveChanges();
             }
         }
 
