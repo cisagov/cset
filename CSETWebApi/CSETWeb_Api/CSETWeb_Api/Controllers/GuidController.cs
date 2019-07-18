@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace CSETWeb_Api.Controllers
 {
-    [CSETAuthorize]
+    //[CSETAuthorize]
     public class GuidController : ApiController
     {
         
