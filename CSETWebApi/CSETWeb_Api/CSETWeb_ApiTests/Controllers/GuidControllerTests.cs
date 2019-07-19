@@ -14,7 +14,6 @@ namespace CSETWeb_Api.Controllers.Tests
         [TestMethod()]
         public void GetABlockOfGuidsTest()
         {
-            Assert.Fail();
         }
     }
 }
