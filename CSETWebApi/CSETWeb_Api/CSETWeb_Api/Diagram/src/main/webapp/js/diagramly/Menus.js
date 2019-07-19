@@ -939,12 +939,12 @@
 				
 				if (!EditorUi.isElectronApp && !navigator.standalone && urlParams['embed'] != '1')
 				{
-					this.addMenuItems(menu, ['downloadDesktop'], parent);
+					//this.addMenuItems(menu, ['downloadDesktop'], parent);
 				}
 				
 				if (!navigator.standalone && urlParams['embed'] != '1')
 				{
-					this.addMenuItems(menu, ['useOffline'], parent);
+					//this.addMenuItems(menu, ['useOffline'], parent);
 				}
 				
 				this.addMenuItems(menu, ['-', 'about'], parent);
@@ -2011,76 +2011,76 @@
             }))).isEnabled = isGraphEnabled;
         }
 
-        if (!CSET)
-        {
-            this.put('theme', new Menu(mxUtils.bind(this, function (menu, parent)
-            {
-                var theme = mxSettings.getUi();
+        //if (!CSET)
+        //{
+        //    this.put('theme', new Menu(mxUtils.bind(this, function (menu, parent)
+        //    {
+        //        var theme = mxSettings.getUi();
 
-                var item = menu.addItem(mxResources.get('automatic'), null, function ()
-                {
-                    mxSettings.setUi('');
-                    mxSettings.save();
-                    editorUi.alert(mxResources.get('restartForChangeRequired'));
-                }, parent);
+        //        var item = menu.addItem(mxResources.get('automatic'), null, function ()
+        //        {
+        //            mxSettings.setUi('');
+        //            mxSettings.save();
+        //            editorUi.alert(mxResources.get('restartForChangeRequired'));
+        //        }, parent);
 
-                if (theme != 'kennedy' && theme != 'atlas' &&
-                    theme != 'dark' && theme != 'min')
-                {
-                    menu.addCheckmark(item, Editor.checkmarkImage);
-                }
+        //        if (theme != 'kennedy' && theme != 'atlas' &&
+        //            theme != 'dark' && theme != 'min')
+        //        {
+        //            menu.addCheckmark(item, Editor.checkmarkImage);
+        //        }
 
-                menu.addSeparator(parent);
+        //        menu.addSeparator(parent);
 
-                item = menu.addItem(mxResources.get('kennedy'), null, function ()
-                {
-                    mxSettings.setUi('kennedy');
-                    mxSettings.save();
-                    editorUi.alert(mxResources.get('restartForChangeRequired'));
-                }, parent);
+        //        item = menu.addItem(mxResources.get('kennedy'), null, function ()
+        //        {
+        //            mxSettings.setUi('kennedy');
+        //            mxSettings.save();
+        //            editorUi.alert(mxResources.get('restartForChangeRequired'));
+        //        }, parent);
 
-                if (theme == 'kennedy')
-                {
-                    menu.addCheckmark(item, Editor.checkmarkImage);
-                }
+        //        if (theme == 'kennedy')
+        //        {
+        //            menu.addCheckmark(item, Editor.checkmarkImage);
+        //        }
 
-                item = menu.addItem(mxResources.get('minimal'), null, function ()
-                {
-                    mxSettings.setUi('min');
-                    mxSettings.save();
-                    editorUi.alert(mxResources.get('restartForChangeRequired'));
-                }, parent);
+        //        item = menu.addItem(mxResources.get('minimal'), null, function ()
+        //        {
+        //            mxSettings.setUi('min');
+        //            mxSettings.save();
+        //            editorUi.alert(mxResources.get('restartForChangeRequired'));
+        //        }, parent);
 
-                if (theme == 'min')
-                {
-                    menu.addCheckmark(item, Editor.checkmarkImage);
-                }
+        //        if (theme == 'min')
+        //        {
+        //            menu.addCheckmark(item, Editor.checkmarkImage);
+        //        }
 
-                item = menu.addItem(mxResources.get('atlas'), null, function ()
-                {
-                    mxSettings.setUi('atlas');
-                    mxSettings.save();
-                    editorUi.alert(mxResources.get('restartForChangeRequired'));
-                }, parent);
+        //        item = menu.addItem(mxResources.get('atlas'), null, function ()
+        //        {
+        //            mxSettings.setUi('atlas');
+        //            mxSettings.save();
+        //            editorUi.alert(mxResources.get('restartForChangeRequired'));
+        //        }, parent);
 
-                if (theme == 'atlas')
-                {
-                    menu.addCheckmark(item, Editor.checkmarkImage);
-                }
+        //        if (theme == 'atlas')
+        //        {
+        //            menu.addCheckmark(item, Editor.checkmarkImage);
+        //        }
 
-                item = menu.addItem(mxResources.get('dark'), null, function ()
-                {
-                    mxSettings.setUi('dark');
-                    mxSettings.save();
-                    editorUi.alert(mxResources.get('restartForChangeRequired'));
-                }, parent);
+        //        item = menu.addItem(mxResources.get('dark'), null, function ()
+        //        {
+        //            mxSettings.setUi('dark');
+        //            mxSettings.save();
+        //            editorUi.alert(mxResources.get('restartForChangeRequired'));
+        //        }, parent);
 
-                if (theme == 'dark')
-                {
-                    menu.addCheckmark(item, Editor.checkmarkImage);
-                }
-            })));
-        }
+        //        if (theme == 'dark')
+        //        {
+        //            menu.addCheckmark(item, Editor.checkmarkImage);
+        //        }
+        //    })));
+        //}
 
 		var renameAction = this.editorUi.actions.addAction('rename...', mxUtils.bind(this, function()
 		{
@@ -2238,15 +2238,15 @@
 			this.addMenuItems(menu, ['publishLink'], parent);
 		})));
 
-		editorUi.actions.put('useOffline', new Action(mxResources.get('useOffline') + '...', function()
-		{
-			editorUi.openLink('https://app.draw.io/')
-		}));
+		//editorUi.actions.put('useOffline', new Action(mxResources.get('useOffline') + '...', function()
+		//{
+		//	editorUi.openLink('https://app.draw.io/')
+		//}));
 		
-		editorUi.actions.put('downloadDesktop', new Action(mxResources.get('downloadDesktop') + '...', function()
-		{
-			editorUi.openLink('https://get.draw.io/')
-		}));
+		//editorUi.actions.put('downloadDesktop', new Action(mxResources.get('downloadDesktop') + '...', function()
+		//{
+		//	editorUi.openLink('https://get.draw.io/')
+		//}));
 
 		this.editorUi.actions.addAction('share...', mxUtils.bind(this, function()
 		{
@@ -2945,21 +2945,21 @@
 				menu.addSeparator(parent);
 			}
 			
-			this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-'], parent);
+			//this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-'], parent);
 
 			if (typeof(MathJax) !== 'undefined')
 			{
-				var item = this.addMenuItem(menu, 'mathematicalTypesetting', parent);
+				//var item = this.addMenuItem(menu, 'mathematicalTypesetting', parent);
 				
-				if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
-				{
-					this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000032875');
-				}
+				//if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
+				//{
+				//	this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000032875');
+				//}
 			}
 			
 			if (urlParams['embed'] != '1')
 			{
-				this.addMenuItems(menu, ['autosave'], parent);
+				//this.addMenuItems(menu, ['autosave'], parent);
 			}
 
 			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram'], parent);
@@ -2968,13 +2968,13 @@
 			
 			if (urlParams['embed'] != '1' && (isLocalStorage || mxClient.IS_CHROMEAPP))
 			{
-				this.addMenuItems(menu, ['showStartScreen'], parent);
+				//this.addMenuItems(menu, ['showStartScreen'], parent);
 			}
 
-			if (!editorUi.isOfflineApp() && isLocalStorage)
-			{
-				this.addMenuItem(menu, 'plugins', parent);
-			}
+			//if (!editorUi.isOfflineApp() && isLocalStorage)
+			//{
+			//	this.addMenuItem(menu, 'plugins', parent);
+			//}
 
 			menu.addSeparator(parent);
 			this.addMenuItem(menu, 'tags', parent);
