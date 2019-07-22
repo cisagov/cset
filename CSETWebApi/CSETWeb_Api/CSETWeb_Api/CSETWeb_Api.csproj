@@ -708,7 +708,7 @@
     <Content Include="Diagram\src\main\webapp\img\cset\dcs.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\dispatch_console.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\dns_server.svg" />
-    <Content Include="Diagram\src\main\webapp\img\cset\door_access_door_control.svg" />
+    <Content Include="Diagram\src\main\webapp\img\cset\door_access_door_control_unit.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\ecg.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\eeg.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\electronic_security_system.svg" />
@@ -754,7 +754,7 @@
     <Content Include="Diagram\src\main\webapp\img\cset\power_over_ethernet.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\public_kiosk.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\radio_site.svg" />
-    <Content Include="Diagram\src\main\webapp\img\cset\real_time_location_systems.svg" />
+    <Content Include="Diagram\src\main\webapp\img\cset\real_time_location_system.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\relay_panel.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\remote_access_server.svg" />
     <Content Include="Diagram\src\main\webapp\img\cset\rfid_transmitter.svg" />
