@@ -21,24 +21,26 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
     public class StandardSchemaProcessor : ISchemaProcessor
     {
 
-        public async Task ProcessAsync(SchemaProcessorContext context)
+        void ISchemaProcessor.Process(SchemaProcessorContext context)
         {
-            if(context.Type == typeof(ExternalStandard))
+
+            if (context.Type == typeof(ExternalStandard))
             {
-                var schema = context.Schema.Properties.Where(s => s.Key ==PropertyHelpers.GetPropertyName(()=>new ExternalStandard().Category)).FirstOrDefault().Value;
+                var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Category)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
                     var categories = db.SETS_CATEGORY.Select(s => s.Set_Category_Name).Distinct().OrderBy(s => s).ToList();
                     categories.ForEach(s => schema.Enumeration.Add(s));
-                    var setNames = db.SETS.Select(s => s.Set_Name).ToList().Union(db.SETS.Select(s=>s.Short_Name).ToList()).Distinct().OrderBy(s=>s).ToList();
-                    var newSchema = new JsonSchema4();
+                    var setNames = db.SETS.Select(s => s.Set_Name).ToList().Union(db.SETS.Select(s => s.Short_Name).ToList()).Distinct().OrderBy(s => s).ToList();
+                    var newSchema = new JsonSchema();
                     setNames.ForEach(s => newSchema.Enumeration.Add(s));
-                    context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().ShortName)).FirstOrDefault().Value.Not=newSchema;
+                    context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().ShortName)).FirstOrDefault().Value.Not = newSchema;
                     var reqs = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Requirements)).FirstOrDefault().Value;
                     reqs.MinLength = 1;
                 }
             }
-            else{
+            else
+            {
                 throw new InvalidOperationException("Wrong type");
             }
         }

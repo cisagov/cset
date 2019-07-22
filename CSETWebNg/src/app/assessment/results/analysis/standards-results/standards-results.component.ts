@@ -68,6 +68,14 @@ export class StandardsResultsComponent implements OnInit {
         datasets: x.dataSets,
       },
       options: {
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) => {
+              return data.labels[tooltipItem.index] + ': '
+               +((Number) (data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index])).toFixed(2) + '%';
+            })
+          }
+        },
         title: {
           display: false,
           fontSize: 20,
