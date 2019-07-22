@@ -11,6 +11,7 @@ using System.Xml;
 using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram;
+using CSETWeb_Api.Models;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -21,7 +22,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, string diagramXML)
+        public void SaveDiagram(int assessmentID, string diagramXML, int lastUsedComponentNumber)
         {
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
@@ -36,9 +37,6 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                
-                // Assume a single bridge record for now.  
-                // Maybe we will support multiple diagrams per assessment some day.
                 var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
                 if (assessmentRecord != null)
                 {
@@ -46,7 +44,7 @@ namespace CSETWeb_Api.BusinessManagers
                     XmlDocument oldDoc = new XmlDocument();
                     if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup))
                     {
-                        oldDoc.LoadXml(assessmentRecord.Diagram_Markup);                       
+                        oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
                 }
@@ -55,49 +53,13 @@ namespace CSETWeb_Api.BusinessManagers
                     //what the?? where is our assessment
                     throw new ApplicationException("Assessment record is missing for id" + assessmentID);
                 }
+
+                assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
                 if (!String.IsNullOrWhiteSpace(diagramXML))
                 {
-                    assessmentRecord.Diagram_Markup = diagramXML;                    
-                }
-                db.SaveChanges();
-            }
-        }
-
-
-        /// <summary>
-        /// Create a new diagram record and its bridge to the assessment.
-        /// </summary>
-        /// <param name="assessmentID"></param>
-        /// <param name="diagramXML"></param>
-        private void InsertNewDiagram(int assessmentID, string diagramXML)
-        {
-            using (var db = new CSET_Context())
-            {
-                // quietly validate assessment ID
-                var assessment = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
-                if (assessment == null)
-                {
-                    return;
+                    assessmentRecord.Diagram_Markup = diagramXML;
                 }
 
-
-                // build markup
-                var newMarkup = new DIAGRAM_MARKUP
-                {
-                    Markup = diagramXML
-                };
-
-                db.DIAGRAM_MARKUP.Add(newMarkup);
-                db.SaveChanges();
-
-                // build bridge
-                var newBridge = new ASSESSMENT_DIAGRAM_MARKUP
-                {
-                    Assessment_Id = assessmentID,
-                    Diagram_Id = newMarkup.Diagram_ID
-                };
-
-                db.ASSESSMENT_DIAGRAM_MARKUP.Add(newBridge);
                 db.SaveChanges();
             }
         }
@@ -105,20 +67,48 @@ namespace CSETWeb_Api.BusinessManagers
 
         /// <summary>
         /// Returns the diagram XML for the assessment ID.  
-        /// If not defined, null is returned.
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <returns></returns>
-        public string GetDiagram(int assessmentID)
+        public DiagramResponse GetDiagram(int assessmentID)
         {
             using (var db = new CSET_Context())
             {
-                var markup = from g in db.ASSESSMENT_DIAGRAM_MARKUP
-                             join h in db.DIAGRAM_MARKUP on g.Diagram_Id equals h.Diagram_ID
-                             where g.Assessment_Id == assessmentID
-                             select h.Markup;
+                var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
-                return markup.FirstOrDefault();
+                DiagramResponse resp = new DiagramResponse();
+
+                if (assessmentRecord != null)
+                {
+                    resp.DiagramXml = assessmentRecord.Diagram_Markup;
+                    resp.LastUsedComponentNumber = assessmentRecord.LastUsedComponentNumber;
+                    return resp;
+                }
+
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentID"></param>
+        /// <returns></returns>
+        public ComponentNameMap GetComponentNamingMap()
+        {
+            ComponentNameMap map = new ComponentNameMap();
+
+            using (var db = new CSET_Context())
+            {
+                var componentSymbols = db.COMPONENT_SYMBOLS.ToList();
+
+                foreach (var symbol in componentSymbols)
+                {
+                    map.Abbreviations.Add(new ComponentName(symbol.Abbreviation, symbol.File_Name));
+                }
+
+                return map;
             }
         }
     }

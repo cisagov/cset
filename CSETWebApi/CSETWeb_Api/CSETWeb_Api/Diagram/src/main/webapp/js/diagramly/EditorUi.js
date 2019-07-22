@@ -2177,6 +2177,7 @@
         return title;
     };
 
+
 	/**
 	 * Translates this point by the given vector.
 	 * 
@@ -2415,7 +2416,7 @@
         // CSET - suppress the open dialog
         this.dialog.dialogImg.click();
         // CSET - always load from the API
-        this.LoadGraphFromCSET(this.editor, this.fname);        
+        this.LoadGraphFromCSET(this.editor, this.fname);
 
         return result;
     };
@@ -2423,31 +2424,37 @@
     /**
      * Retrieves the graph from the CSET API if it has been stored.
      */
-    EditorUi.prototype.LoadGraphFromCSET = function(editor, fname)
+    EditorUi.prototype.LoadGraphFromCSET = function (editor, fname)
     {
-        var url = localStorage.getItem('cset.host') + '/diagram/get';
+        var url = localStorage.getItem('cset.host') + 'diagram/get';
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                var resp = JSON.parse(this.responseText);
+                var resp = JSON.parse(this.responseText);                
 
                 // set the title/filename
                 sessionStorage.setItem('assessment.name', resp.AssessmentName);
-
-                console.log('fname =');
-                console.log(fname);
-
                 fname.innerHTML = resp.AssessmentName;
 
+                // set the last used component number 
+                sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
+
                 var data = resp.DiagramXml;
+                if (data == null)
+                {
+                    data = EditorUi.prototype.emptyDiagramXml;
+                    console.log("I got nothing back from API so I'm setting it to: " + data);
+                }
+
+
                 data = Graph.zapGremlins(mxUtils.trim(data));
 
                 // fix escaped quotes and trim quotes
                 data = data.replace(/\\"/g, '"').replace(/^\"|\"$/g, '');
-                
-                
+
+
                 editor.graph.model.beginUpdate();
                 try
                 {
@@ -3608,7 +3615,7 @@
             this.actions.get('shapes').funct();
             mxEvent.consume(evt);
         }));
-        
+
         div.appendChild(elt2);
 
         // CSET - suppress the 'more shapes' menu
@@ -7418,7 +7425,7 @@
      * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
      * into the existing diagram.
      */
-    EditorUi.prototype.importFilesCSETD = function(files, editor)
+    EditorUi.prototype.importFilesCSETD = function (files, editor)
     {
         if (files.length == 0)
         {
@@ -7427,10 +7434,10 @@
 
         var file = files[0];
         var reader = new FileReader();
-        reader.onload = function(e)
-		{
+        reader.onload = function (e)
+        {
             TranslateToMxGraph(editor, e.target.result);
-		};
+        };
         reader.readAsText(file);
     }
 
@@ -7445,7 +7452,7 @@
         var req = {};
         req.DiagramXml = sXML;
 
-        var url = localStorage.getItem('cset.host') + '/diagram/importcsetd';
+        var url = localStorage.getItem('cset.host') + 'diagram/importcsetd';
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function ()
         {
@@ -7457,7 +7464,7 @@
 
                 // fix escaped quotes and trim quotes
                 data = data.replace(/\\"/g, '"').replace(/^\"|\"$/g, '');
-                                
+
                 editor.graph.model.beginUpdate();
                 try
                 {
