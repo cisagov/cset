@@ -78,8 +78,14 @@ function PersistGraphToCSET(editor)
 
     var req = {};
     req.DiagramXml = sXML;
+    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
 
-    var url = localStorage.getItem('cset.host') + '/diagram/save';
+    if (sXML == EditorUi.prototype.emptyDiagramXml)
+    {
+        // debugger;
+    }
+
+    var url = localStorage.getItem('cset.host') + 'diagram/save';
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function ()
     {
