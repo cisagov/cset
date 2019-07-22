@@ -747,6 +747,14 @@
             <param name="importRequest"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetNameMap">
+            <summary>
+            Returns the component naming map.  Also returns the
+            "last used" integer for the current assessment that
+            is used as a suffix in the auto naming.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.
