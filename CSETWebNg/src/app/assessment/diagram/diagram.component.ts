@@ -37,6 +37,6 @@ export class DiagramComponent implements OnInit {
 
         window.open(host + "diagram/src/main/webapp/index.html" +
             "?j=" + jwt +
-            "&h=" + apiUrl, "_blank");
+            "&h=" + apiUrl, sessionStorage.getItem('assessmentId'));
     }
 }
