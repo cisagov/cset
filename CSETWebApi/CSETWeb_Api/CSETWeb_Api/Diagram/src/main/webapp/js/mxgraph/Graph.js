@@ -84,7 +84,7 @@ mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 mxGraphModel.prototype.cellAdded = function (cell)
 {
     // assign an ID if the cell is being added to the main graph
-    if (!!cell.parent && cell.parent.id == "1")
+    if (!!cell.parent && cell.parent.id && cell.parent.id.substring(0, 7) != "mxCell#")
     {
         if (!!cell.style)
         {
@@ -107,10 +107,28 @@ mxGraphModel.prototype.cellAdded = function (cell)
             }
         }
 
-        // TODO:  Name the new object according to its type, with the next available integer.
-        cell.setValue("RKW-" + Math.floor(Math.random() * Math.floor(1000)));
+        // determine new number
+        var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
+        sessionStorage.setItem("last.number", num);
+
+        var prefix = "COMP";
+
+        // determine component type prefix
+        var abbrevFound = false;
+        for (var i = 0; i < Editor.componentMap.Abbreviations.length && !abbrevFound; i++)
+        {
+            var c = Editor.componentMap.Abbreviations[i];
+            if ('img/cset/' + c.ImageFileName == getStyle(cell.style, 'image'))
+            {
+                prefix = c.Abbreviation;
+                abbrevFound = true;
+            }
+        }
+
+        cell.setValue(prefix + "-" + num);
     }
 }
+
 
 /**
  * Returns the value for the specified style.

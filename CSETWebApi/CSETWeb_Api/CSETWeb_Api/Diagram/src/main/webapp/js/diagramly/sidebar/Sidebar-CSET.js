@@ -1,15 +1,13 @@
 (function () {
     Sidebar.prototype.addCSETPalettes = function () {
-
-
-        // perimeter=ellipsePerimeter or rectangle (and there are others).  
-        // Probably use rectangle for most, except circular images.  
+        // default dimension (width & height)
         var d = 60;
-        var dt = 'ibm';
-        var sb = this;
+
+        // var sb = this;
         var s = 'aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/';
 
         var gn = 'ms active directory ';
+        var dt = 'ibm';
 
 
         // ICS Palette
@@ -62,7 +60,7 @@
                 d, d, '', 'DB Server', false, null, this.getTagsForStencil(gn, 'DB Server', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'dns_server.svg;',
                 d, d, '', 'DNS', false, null, this.getTagsForStencil(gn, 'DNS', dt).join(' ')),
-            this.createVertexTemplateEntry(s + 'door_access_door_control.svg;',
+            this.createVertexTemplateEntry(s + 'door_access_door_control_unit.svg;',
                 d, d, '', 'Door Control Unit', false, null, this.getTagsForStencil(gn, 'Door Control Unit', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'electronic_security_system.svg;',
                 d, d, '', 'ESS', false, null, this.getTagsForStencil(gn, 'ESS', dt).join(' ')),
@@ -210,7 +208,7 @@
                 d, d, '', 'MRI', false, null, this.getTagsForStencil(gn, 'MRI', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'infant_protection_remote_display_unit.svg;',
                 d, d, '', 'Remote Display Unit', false, null, this.getTagsForStencil(gn, 'Remote Display Unit', dt).join(' ')),
-            this.createVertexTemplateEntry(s + 'real_time_location_systems.svg;',
+            this.createVertexTemplateEntry(s + 'real_time_location_system.svg;',
                 d, d, '', 'RTLS', false, null, this.getTagsForStencil(gn, 'RTLS', dt).join(' ')),
             this.createVertexTemplateEntry(s + 'ultrasound.svg;',
                 d, d, '', 'Ultrasound', false, null, this.getTagsForStencil(gn, 'Ultrasound', dt).join(' ')),

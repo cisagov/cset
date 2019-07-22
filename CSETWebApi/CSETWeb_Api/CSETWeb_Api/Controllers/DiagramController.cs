@@ -38,7 +38,7 @@ namespace CSETWeb_Api.Controllers
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            dm.SaveDiagram((int)assessmentId, req.DiagramXml);
+            dm.SaveDiagram((int)assessmentId, req.DiagramXml, req.LastUsedComponentNumber);
         }
 
 
@@ -58,11 +58,13 @@ namespace CSETWeb_Api.Controllers
             var response = new DiagramResponse();
 
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            response.DiagramXml = dm.GetDiagram((int)assessmentId);
+            response = dm.GetDiagram((int)assessmentId);
 
             var assessmentDetail = new AssessmentController().Get();
-
             response.AssessmentName = assessmentDetail.AssessmentName;
+
+
+
 
             return response;
         }
@@ -76,7 +78,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/diagram/importcsetd")]
         [HttpPost]
         public string ImportCsetd([FromBody] DiagramRequest importRequest)
-        {            
+        {
             if (importRequest == null)
             {
                 return "request payload not sent";
@@ -105,6 +107,20 @@ namespace CSETWeb_Api.Controllers
             {
                 return exc.ToString();
             }
+        }
+
+
+        /// <summary>
+        /// Returns the component naming map.  Also returns the
+        /// "last used" integer for the current assessment that
+        /// is used as a suffix in the auto naming.
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/diagram/namemap/get")]
+        [HttpGet]
+        public ComponentNameMap GetNameMap()
+        {
+            return new BusinessManagers.DiagramManager().GetComponentNamingMap();
         }
     }
 }
