@@ -100,7 +100,6 @@ export class ResultsComponent implements OnInit {
       {
         label: 'Analysis Dashboard', value: 'dashboard', children: [
           { label: 'Control Priorities', value: 'ranked-questions', children: [] },
-          // { label: 'Overall Ranked Categories', value: 'overall-ranked-categories', children: [] },
           {
             label: 'Standards Summary', value: 'standards-summary', children: [
               { label: 'Ranked Categories', value: 'standards-ranked', children: [] },

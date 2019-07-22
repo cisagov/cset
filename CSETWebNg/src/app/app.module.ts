@@ -69,7 +69,7 @@ import { ComponentsTypesComponent } from './assessment/results/analysis/componen
 import { ComponentsWarningsComponent } from './assessment/results/analysis/components-warnings/components-warnings.component';
 import { DashboardComponent } from './assessment/results/analysis/dashboard/dashboard.component';
 // tslint:disable-next-line:max-line-length
-import { OverallRankedCategoriesComponent } from './assessment/results/analysis/overall-ranked-categories/overall-ranked-categories.component';
+
 import { RankedQuestionsComponent } from './assessment/results/analysis/ranked-questions/ranked-questions.component';
 import { StandardsRankedComponent } from './assessment/results/analysis/standards-ranked/standards-ranked.component';
 import { StandardsResultsComponent } from './assessment/results/analysis/standards-results/standards-results.component';
@@ -252,7 +252,6 @@ import { DiagramComponent } from './assessment/diagram/diagram.component';
         ComponentsWarningsComponent,
         DashboardComponent,
         RankedQuestionsComponent,
-        OverallRankedCategoriesComponent,
         EnableProtectedComponent,
         TermsOfUseComponent,
         QuestionFiltersComponent,
@@ -277,7 +276,6 @@ import { DiagramComponent } from './assessment/diagram/diagram.component';
         RefDocumentComponent,
         MaturityFilterComponent,
         IrpSummaryComponent
-        
     ],
     providers: [
         ConfigService,

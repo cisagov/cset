@@ -71,6 +71,14 @@ export class StandardsRankedComponent implements OnInit {
         ],
       },
       options: {
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) => {
+              return data.labels[tooltipItem.index] + ': '
+               + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+            })
+          }
+        },
         title: {
           display: false,
           fontSize: 20,

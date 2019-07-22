@@ -22,15 +22,15 @@
               ]
             },
             "assets": [{
-  "glob": "**/*.js",
-  "input": "./node_modules/@ngstack/code-editor/workers",
-  "output": "./assets/workers"
-},
-{
-	"glob": "**/*",
-  "input": "./node_modules/monaco-editor/min",
-  "output": "./assets/monaco"
-},
+              "glob": "**/*.js",
+              "input": "./node_modules/@ngstack/code-editor/workers",
+              "output": "./assets/workers"
+            },
+            {
+              "glob": "**/*",
+              "input": "./node_modules/monaco-editor/min",
+              "output": "./assets/monaco"
+            },
               "src/assets",
               "src/favicon.ico",
               "src/uploadAssessment.html"

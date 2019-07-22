@@ -19,8 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
 {
     public class RequirementSchemaProcessor : ISchemaProcessor
     {
-
-        public async Task ProcessAsync(SchemaProcessorContext context)
+        public void Process(SchemaProcessorContext context)
         {
             if (context.Type == typeof(ExternalRequirement))
             {
@@ -33,11 +32,11 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().Subheading)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
-                    var tempSchema = new JsonSchema4();
+                    var tempSchema = new JsonSchema();
                     var subCategories = db.UNIVERSAL_SUB_CATEGORIES.Select(s => s.Universal_Sub_Category).Distinct().OrderBy(s => s).ToList();
                     subCategories.ForEach(s => tempSchema.Enumeration.Add(s));
                     schema.AnyOf.Add(tempSchema);
-                    schema.AnyOf.Add(new JsonSchema4() { Type = JsonObjectType.String });
+                    schema.AnyOf.Add(new JsonSchema() { Type = JsonObjectType.String });
                 }
                 schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().SecurityAssuranceLevel)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
@@ -51,6 +50,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 throw new InvalidOperationException("Wrong type");
             }
         }
+
     }
 }
 
