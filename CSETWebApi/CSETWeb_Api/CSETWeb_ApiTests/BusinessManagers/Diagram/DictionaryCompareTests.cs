@@ -30,7 +30,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Tests
             {
                 oldDiagram.Add(j, "");
             }
-            DictionaryCompare testDictionary = new DictionaryCompare();
+            DiagramDifferences testDictionary = new DiagramDifferences();
             testDictionary.processComparison(newDiagram, oldDiagram);
             Assert.IsTrue(testDictionary.AddedNodes.Count == 4);
             Assert.IsTrue(testDictionary.DeletedNodes.Count == 4);
