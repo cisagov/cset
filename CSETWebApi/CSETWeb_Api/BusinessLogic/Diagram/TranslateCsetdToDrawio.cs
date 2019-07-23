@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Xml;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessLogic.Diagram
 {
@@ -46,6 +48,13 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// </summary>
         int nextID = 0;
 
+
+        /// <summary>
+        /// Indicates the filename that corresponds to a component long name.
+        /// </summary>
+        Dictionary<string, string> componentSymbolFilenames = new Dictionary<string, string>();
+
+
         #endregion
 
         /// <summary>
@@ -55,6 +64,8 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// <returns></returns>
         public XmlDocument Translate(string csetd)
         {
+            InitializeSymbolFilenames();
+
             xCsetd.LoadXml(csetd);
 
             nsmgr = new XmlNamespaceManager(xCsetd.NameTable);
@@ -186,7 +197,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 // style
                 var myStyle = "whiteSpace=wrap;html=1;";
                 var assetName = ChildValue(component, "c:assetname");
-                myStyle += AssetType(assetName);
+                myStyle += GetImagePath(assetName);
 
                 var rotateAngle = ChildValue(component, "c:rotateangle");
                 if (rotateAngle != "0")
@@ -371,6 +382,8 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 // always seems to be exported as '1', regardless of width in 8.1
                 styleString += "strokeWidth=" + ChildValue(connector, "c:linethickness") + ";";
 
+                styleString += "endArrow=none;";
+
                 xConnector.SetAttribute("style", styleString);
 
 
@@ -424,27 +437,33 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
 
         /// <summary>
-        /// Returns a string describing the style (image file path) for the component type.
+        /// Build a dictionary to quickly determine the filename
+        /// for an imported component, based on its name.
+        /// </summary>
+        private void InitializeSymbolFilenames()
+        {
+            componentSymbolFilenames.Clear();
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                foreach (var s in db.COMPONENT_SYMBOLS.ToList())
+                {
+                    componentSymbolFilenames.Add(s.Diagram_Type_Xml, s.File_Name);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a string describing the style (image file path) 
+        /// for the component type / asset name.
         /// </summary>
         /// <param name="assetName"></param>
         /// <returns></returns>
-        private string AssetType(string assetName)
+        private string GetImagePath(string assetName)
         {
-            // all SVGs should follow this pattern ...
-            var imgName = assetName.Replace(" ", "_").ToLower();
-            
-            // ... with a few exceptions
-            switch (imgName)
-            {
-                case "engineering_workstation":
-                    imgName = "ews";
-                    break;
-                case "optical_ring_system":
-                    imgName = "optical_ring";
-                    break;
-            }
-
-            return string.Format("image;image=img/cset/{0}.svg;", imgName);
+            var imgName = componentSymbolFilenames[assetName];
+            return string.Format("image;image=img/cset/{0};", imgName);
         }
 
 
