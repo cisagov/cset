@@ -390,7 +390,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSETWeb_Api.csproj.user" />
-    <Content Include="DeleteMe.html" />
     <Content Include="Diagram\.gitignore" />
     <Content Include="Diagram\.gitmodules" />
     <Content Include="Diagram\etc\build\base-viewer.min.js" />
