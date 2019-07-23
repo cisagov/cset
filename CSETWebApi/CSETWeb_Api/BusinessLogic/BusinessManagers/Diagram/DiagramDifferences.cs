@@ -31,12 +31,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         private Dictionary<Guid,ComponentNode> lookupValue(Dictionary<Guid,ComponentNode> sourcedictionary, Dictionary<Guid,ComponentNode> destinationDictionary)
         {
             Dictionary<Guid, ComponentNode> differences = new Dictionary<Guid, ComponentNode>();
-            foreach (Guid g in sourcedictionary.Keys)
+            foreach (KeyValuePair<Guid,ComponentNode> g in sourcedictionary)
             {
                 ComponentNode ignoreme = null;
-                if (!destinationDictionary.TryGetValue(g, out ignoreme))
+                if (!destinationDictionary.TryGetValue(g.Key, out ignoreme))
                 {
-                    differences.Add(g, ignoreme);
+                    differences.Add(g.Key, g.Value);
                 }
             }
             return differences;

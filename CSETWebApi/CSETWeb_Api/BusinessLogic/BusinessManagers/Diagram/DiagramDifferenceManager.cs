@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -15,13 +16,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     /// </summary>
     public class DiagramDifferenceManager
     {
-        private CSET_Context context;
+        private static readonly object _object = new object(); 
 
-        DiagramDifferenceManager(CSET_Context context)
-        {
-            this.context = context;
-        }
-        
+        private Dictionary<Guid, ComponentNode> OldDiagram = new Dictionary<Guid, ComponentNode>();
+        private Dictionary<Guid, ComponentNode> NewDiagram = new Dictionary<Guid, ComponentNode>();
+
         /// <summary>
         /// pass in the xml document
         /// get the existing from the database
@@ -33,23 +32,49 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            Dictionary<Guid, ComponentNode> OldDiagram = new Dictionary<Guid, ComponentNode>();
-            Dictionary<Guid, ComponentNode> NewDiagram = new Dictionary<Guid, ComponentNode>();
-
             NewDiagram = processDiagram(newDiagramDocument);
             OldDiagram = processDiagram(oldDiagramDocument);
         }
 
-        private void saveDifferences(Dictionary<Guid, ComponentNode> OldDiagram, Dictionary<Guid, ComponentNode> NewDiagram)
+        public void SaveDifferences(CSET_Context context, int assessment_id)
         {
-            DiagramDifferences differences = new DiagramDifferences();
-            differences.processComparison(NewDiagram, OldDiagram);
-            foreach(var newNode in differences.AddedNodes)
+
+            Boolean _lockTaken = false;
+            Monitor.Enter(_object, ref _lockTaken);
+            try
+            {                
+                lock (_object)
+                {
+                    //using (CSET_Context context = new CSET_Context())
+                    //{
+                        DiagramDifferences differences = new DiagramDifferences();
+                        differences.processComparison(this.NewDiagram, this.OldDiagram);
+                        foreach (var newNode in differences.AddedNodes)
+                        {
+                            context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
+                            {
+                                Assessment_Id = assessment_id,
+                                Component_Id = newNode.Key,
+                                Diagram_Component_Type = newNode.Value.Component_Type,
+                                DrawIO_id = newNode.Value.id,
+                                label = newNode.Value.label
+                            });
+                        }
+                        foreach (var deleteNode in differences.DeletedNodes)
+                        {
+                            context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(new ASSESSMENT_DIAGRAM_COMPONENTS()
+                            {
+                                Assessment_Id = assessment_id,
+                                Component_Id = deleteNode.Key
+                            });
+                        }
+                        context.SaveChanges();
+                    //}
+                }
+            }
+            finally
             {
-                //context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
-                //{
-                //    Assessment_Id
-                //});
+                System.Threading.Monitor.Exit(_object);
             }
         }
 
@@ -75,6 +100,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         public string label { get; set; }
         public Guid ComponentGuid { get; set; }
         public string id { get; set; }
+        public string Component_Type { get; internal set; }
 
         public void setValue(string name, string value)
         {
@@ -88,6 +114,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     break;
                 case "id":
                     this.id = value;
+                    break;
+                case "Component_Type":
+                    this.Component_Type = value;
                     break;
             }
         }
