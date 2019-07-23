@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayerCore.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     /// </summary>
     public class DiagramDifferenceManager
     {
-        public Dictionary<Guid, String> AddedComponents = new Dictionary<Guid, string>();
-        public Dictionary<Guid, String> RemovedComponents = new Dictionary<Guid, string>();
-        public Dictionary<Guid, String> OldDiagram = new Dictionary<Guid, string>();
-        public Dictionary<Guid, String> NewDiagram = new Dictionary<Guid, string>();
+        private CSET_Context context;
 
+        DiagramDifferenceManager(CSET_Context context)
+        {
+            this.context = context;
+        }
+        
         /// <summary>
         /// pass in the xml document
         /// get the existing from the database
@@ -30,20 +33,64 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            this.NewDiagram = processDiagram(newDiagramDocument);
-            this.OldDiagram = processDiagram(oldDiagramDocument);
+            Dictionary<Guid, ComponentNode> OldDiagram = new Dictionary<Guid, ComponentNode>();
+            Dictionary<Guid, ComponentNode> NewDiagram = new Dictionary<Guid, ComponentNode>();
+
+            NewDiagram = processDiagram(newDiagramDocument);
+            OldDiagram = processDiagram(oldDiagramDocument);
         }
 
-        private Dictionary<Guid,string> processDiagram(XmlDocument doc)
+        private void saveDifferences(Dictionary<Guid, ComponentNode> OldDiagram, Dictionary<Guid, ComponentNode> NewDiagram)
         {
-            Dictionary<Guid, string> nodesList = new Dictionary<Guid, string>(); 
+            DiagramDifferences differences = new DiagramDifferences();
+            differences.processComparison(NewDiagram, OldDiagram);
+            foreach(var newNode in differences.AddedNodes)
+            {
+                //context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
+                //{
+                //    Assessment_Id
+                //});
+            }
+        }
+
+        private Dictionary<Guid,ComponentNode> processDiagram(XmlDocument doc)
+        {
+            Dictionary<Guid, ComponentNode> nodesList = new Dictionary<Guid, ComponentNode>(); 
             XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
             foreach (var c in cells)
             {
-                Trace.WriteLine(((System.Xml.XmlElement)c).InnerXml);
-                //nodesList.Add()
+                ComponentNode cn = new ComponentNode();
+                foreach(XmlAttribute a in ((System.Xml.XmlElement)c).Attributes)
+                {
+                    cn.setValue(a.Name, a.Value);                    
+                }
+                nodesList.Add(cn.ComponentGuid,cn);                
             }
             return nodesList;
         }
     }
+
+    public class ComponentNode
+    {
+        public string label { get; set; }
+        public Guid ComponentGuid { get; set; }
+        public string id { get; set; }
+
+        public void setValue(string name, string value)
+        {
+            switch (name)
+            {
+                case "label":
+                    this.label = value;
+                    break;
+                case "ComponentGuid":
+                    this.ComponentGuid = new Guid(value);
+                    break;
+                case "id":
+                    this.id = value;
+                    break;
+            }
+        }
+    }
 }
+
