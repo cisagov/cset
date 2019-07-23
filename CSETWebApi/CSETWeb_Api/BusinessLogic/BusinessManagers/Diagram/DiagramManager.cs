@@ -30,7 +30,8 @@ namespace CSETWeb_Api.BusinessManagers
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(diagramXML);
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
-            if (cellCount == 2)
+            var objectCount = xDoc.SelectNodes("//root/object").Count;
+            if (cellCount == 2 && objectCount == 0)
             {
                 return;
             }
