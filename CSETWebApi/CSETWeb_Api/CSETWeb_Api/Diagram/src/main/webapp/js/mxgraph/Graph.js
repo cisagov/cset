@@ -80,6 +80,7 @@ mxText.prototype.baseSpacingBottom = 1;
 // Keeps edges between relative child cells inside parent
 mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 
+
 // CSET - default value (label) for some objects
 mxGraphModel.prototype.cellAdded = function (cell)
 {
@@ -114,14 +115,18 @@ mxGraphModel.prototype.cellAdded = function (cell)
         var prefix = "COMP";
 
         // determine component type prefix
-        var abbrevFound = false;
-        for (var i = 0; i < Editor.componentMap.Abbreviations.length && !abbrevFound; i++)
+        var compMap = Editor.componentSymbols;
+        var found = false;
+        for (var i = 0; i < compMap.length && !found; i++)
         {
-            var c = Editor.componentMap.Abbreviations[i];
-            if ('img/cset/' + c.ImageFileName == getStyle(cell.style, 'image'))
+            for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
             {
-                prefix = c.Abbreviation;
-                abbrevFound = true;
+                var s = compMap[i].Symbols[j];
+                if ('img/cset/' + s.FileName == getStyle(cell.style, 'image'))
+                {
+                    prefix = s.Abbreviation;
+                    found = true;
+                }
             }
         }
 
