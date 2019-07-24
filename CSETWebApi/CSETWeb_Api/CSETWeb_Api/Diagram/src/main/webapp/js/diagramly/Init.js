@@ -26,7 +26,11 @@ window.SHAPES_PATH = window.SHAPES_PATH || 'shapes';
 // Path for images inside the diagram
 window.GRAPH_IMAGE_PATH = window.GRAPH_IMAGE_PATH || 'img';
 window.ICONSEARCH_PATH = window.ICONSEARCH_PATH || ((navigator.userAgent.indexOf('MSIE') >= 0 ||
-	urlParams['dev']) && window.location.protocol != 'file:' ? 'iconSearch' : 'https://www.draw.io/iconSearch');
+    urlParams['dev']) && window.location.protocol != 'file:' ? 'iconSearch' : 'https://www.draw.io/iconSearch');
+
+// CSET
+window.ICONSEARCH_PATH = undefined;
+
 window.TEMPLATE_PATH = window.TEMPLATE_PATH || 'templates';
 window.NEW_DIAGRAM_CATS_PATH = window.NEW_DIAGRAM_CATS_PATH || 'newDiagramCats';
 
