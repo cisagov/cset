@@ -5753,6 +5753,7 @@ var RevisionDialog = function(editorUi, revs, restoreFn)
 
 	tb.appendChild(pageSelect);
 	tb.appendChild(zoomInBtn);
+	tb.appendChild(zoomInBtn);
 	tb.appendChild(zoomOutBtn);
 	tb.appendChild(zoomActualBtn);
 	tb.appendChild(zoomFitBtn);
