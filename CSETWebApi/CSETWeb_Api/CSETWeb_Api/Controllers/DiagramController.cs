@@ -111,16 +111,15 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// Returns the component naming map.  Also returns the
-        /// "last used" integer for the current assessment that
-        /// is used as a suffix in the auto naming.
+        /// Returns the details for symbols.  This is used to build palettes and icons
+        /// in the browser.
         /// </summary>
         /// <returns></returns>
-        [Route("api/diagram/namemap/get")]
+        [Route("api/diagram/symbols/get")]
         [HttpGet]
-        public ComponentNameMap GetNameMap()
+        public object GetComponentSymbols()
         {
-            return new BusinessManagers.DiagramManager().GetComponentNamingMap();
+            return new BusinessManagers.DiagramManager().GetComponentSymbols();
         }
     }
 }
