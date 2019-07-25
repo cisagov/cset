@@ -2416,7 +2416,7 @@
         // CSET - suppress the open dialog
         this.dialog.dialogImg.click();
         // CSET - always load from the API
-        this.LoadGraphFromCSET(this.editor, this.fname);
+        this.LoadGraphFromCSET(this.editor, this.fname, this);
 
         return result;
     };
@@ -2424,7 +2424,7 @@
     /**
      * Retrieves the graph from the CSET API if it has been stored.
      */
-    EditorUi.prototype.LoadGraphFromCSET = function (editor, fname)
+    EditorUi.prototype.LoadGraphFromCSET = function (editor, fname, app)
     {
         var url = localStorage.getItem('cset.host') + 'diagram/get';
         var xhr = new XMLHttpRequest();
@@ -2437,6 +2437,9 @@
                 // set the title/filename
                 sessionStorage.setItem('assessment.name', resp.AssessmentName);
                 fname.innerHTML = resp.AssessmentName;
+
+                app.defaultFilename = resp.AssessmentName + '.csetwd';
+                app.currentFile.title = resp.AssessmentName + '.csetwd';
 
                 // set the last used component number 
                 sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
@@ -4068,12 +4071,14 @@
 	 */
     EditorUi.prototype.saveLocalFile = function (data, filename, mimeType, base64Encoded, format, allowBrowser, allowTab)
     {
+        console.log('EditorUi.prototype.saveLocalFile');
+
         allowBrowser = (allowBrowser != null) ? allowBrowser : false;
         allowTab = (allowTab != null) ? allowTab : (format != 'vsdx') && (!mxClient.IS_IOS || !navigator.standalone);
         var count = this.getServiceCount(allowBrowser);
 
         var dlg = new CreateDialog(this, filename, mxUtils.bind(this, function (newTitle, mode)
-        {
+        {            
             try
             {
                 // Opens a new window
@@ -4323,6 +4328,8 @@
 	 */
     EditorUi.prototype.saveRequest = function (filename, format, fn, data, base64Encoded, mimeType, allowTab)
     {
+        console.log('EditorUi.prototype.saveRequest');
+
         allowTab = (allowTab != null) ? allowTab : !mxClient.IS_IOS || !navigator.standalone;
         var count = this.getServiceCount(false);
 
@@ -9721,7 +9728,7 @@
                                     else
                                     {
                                         name = name + '.drawio';
-                                    }
+                                                                            }
 
                                     if (xml.substring(0, 10) == '<mxlibrary')
                                     {
@@ -11793,7 +11800,6 @@
         this.actions.get('rename').visible = false;
         this.actions.get('new').visible = false;
         this.actions.get('save').visible = false;
-        this.actions.get('saveAs').visible = false;
 
         this.menus.get('embed').setEnabled(!restricted);
 
