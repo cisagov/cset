@@ -14,6 +14,7 @@ bin
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Properties/PublishProfiles/runlocal.pubxml.user
 /diagram/obj
 
+
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js/extensions.min.js
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js/shapes.min.js
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js/stencils.min.js
@@ -23,3 +24,4 @@ bin
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/etc/build/base.min.js
 
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/etc/build/base-viewer.min.js
+

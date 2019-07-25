@@ -26,7 +26,8 @@ var guidService = (function(){
             if(GuidList.length<5)
             {
                 const v = await getNextBlock();
-                v.then(x=> console.log(x));
+                console.log(v);
+                v.then(x=> {console.log(x)});
             }
             else{
                 rval = GuidList.pop();
@@ -61,7 +62,9 @@ function getRootUrl() {
 }
 
 var singleA = guidService.getInstance();
-console.log("next guid" + singleA.getNextGuid());
+singleA.getNextGuid().then((data)=>{
+  console.log("next guid" + data);
+});
 
 function resolveAfter2Seconds() {
     return new Promise(resolve => {
