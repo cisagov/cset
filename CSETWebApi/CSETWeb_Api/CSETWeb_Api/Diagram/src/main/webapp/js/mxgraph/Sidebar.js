@@ -467,7 +467,9 @@ Sidebar.prototype.addEntry = function(tags, fn)
 Sidebar.prototype.searchEntries = function(searchTerms, count, page, success, error)
 {
 	if (this.taglist != null && searchTerms != null)
-	{
+    {
+        debugger;
+
 		var tmp = searchTerms.toLowerCase().split(' ');
 		var dict = new mxDictionary();
 		var max = (page + 1) * count;
@@ -2135,7 +2137,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 						}
 					}
 					catch (e)
-					{
+                    {
 						this.editorUi.handleError(e);
 					}
 					finally
