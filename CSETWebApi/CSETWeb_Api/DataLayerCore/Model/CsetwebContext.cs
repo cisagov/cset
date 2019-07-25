@@ -23,7 +23,6 @@ namespace DataLayerCore.Model
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
-        public virtual DbSet<ASSESSMENT_DIAGRAM_MARKUP> ASSESSMENT_DIAGRAM_MARKUP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
@@ -47,7 +46,6 @@ namespace DataLayerCore.Model
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
-        public virtual DbSet<DIAGRAM_MARKUP> DIAGRAM_MARKUP { get; set; }
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
@@ -333,24 +331,19 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.Diagram_Component_Type });
+                entity.HasKey(e => new { e.Assessment_Id, e.Component_Id })
+                    .HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
 
                 entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
-            });
 
-            modelBuilder.Entity<ASSESSMENT_DIAGRAM_MARKUP>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Diagram_Id });
+                entity.Property(e => e.DrawIO_id).IsUnicode(false);
+
+                entity.Property(e => e.label).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_MARKUP)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
                     .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_MARKUP_ASSESSMENTS");
-
-                entity.HasOne(d => d.Diagram_)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_MARKUP)
-                    .HasForeignKey(d => d.Diagram_Id)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_MARKUP_DIAGRAM_MARKUP");
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_ASSESSMENTS");
             });
 
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>

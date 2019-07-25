@@ -49,6 +49,7 @@ namespace CSETWeb_Api.BusinessManagers
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
+                    differenceManager.SaveDifferences(db, assessmentID);
                 }
                 else
                 {
