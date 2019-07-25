@@ -516,34 +516,6 @@
         return rtn.join('');
     };
 
-    // Initialize the component name map for CSET objects
-    Editor.componentMap = {};
-    GetComponentNameMap();
-
-
-    /**
-     * Retrieve and store the component name map from the CSET API.
-     */
-    function GetComponentNameMap()
-    {
-        console.log('Editor (diagramly) GetComponentNameMap');
-
-        // Get the component naming map
-        var url = localStorage.getItem('cset.host') + 'diagram/namemap/get';
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function ()
-        {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                Editor.componentMap = JSON.parse(this.responseText);
-            }
-        }
-        xhr.open('GET', url);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('Authorization', localStorage.getItem('jwt'));
-        xhr.send();
-    }
-
 	/**
 	 * This should not be enabled if reflows are required for math rendering.
 	 */

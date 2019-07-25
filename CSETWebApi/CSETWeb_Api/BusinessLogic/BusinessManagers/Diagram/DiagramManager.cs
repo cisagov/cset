@@ -5,6 +5,7 @@
 // 
 ////////////////////////////////
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Xml;
@@ -48,6 +49,7 @@ namespace CSETWeb_Api.BusinessManagers
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
+                    differenceManager.SaveDifferences(db, assessmentID);
                 }
                 else
                 {
@@ -94,23 +96,50 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="assessmentID"></param>
         /// <returns></returns>
-        public ComponentNameMap GetComponentNamingMap()
+        public List<ComponentSymbolGroup> GetComponentSymbols()
         {
-            ComponentNameMap map = new ComponentNameMap();
+            var resp = new List<ComponentSymbolGroup>();
 
             using (var db = new CSET_Context())
             {
-                var componentSymbols = db.COMPONENT_SYMBOLS.ToList();
+                var symbolGroups = db.SYMBOL_GROUPS.OrderBy(x => x.Id).ToList();
 
-                foreach (var symbol in componentSymbols)
+                foreach (SYMBOL_GROUPS g in symbolGroups)
                 {
-                    map.Abbreviations.Add(new ComponentName(symbol.Abbreviation, symbol.File_Name));
-                }
+                    var group = new ComponentSymbolGroup {
+                        SymbolGroupID = g.Id,
+                        GroupName = g.Symbol_Group_Name,
+                        SymbolGroupTitle = g.Symbol_Group_Title,
+                        Symbols = new List<ComponentSymbol>()
+                    };
 
-                return map;
+                    resp.Add(group);
+
+                    var symbols = db.COMPONENT_SYMBOLS.Where(x => x.Symbol_Group_Id == group.SymbolGroupID)
+                        .OrderBy(x => x.Name).ToList();
+
+                    foreach (COMPONENT_SYMBOLS s in symbols)
+                    {
+                        var symbol = new ComponentSymbol {
+                            Name = s.Name,
+                            DiagramTypeXml = s.Diagram_Type_Xml,
+                            Abbreviation = s.Abbreviation,
+                            FileName = s.File_Name,
+                            DisplayName = s.Display_Name,
+                            LongName = s.Long_Name,
+                            ComponentFamilyName = s.Component_Family_Name,
+                            Tags = s.Tags,
+                            Width = (int) s.Width,
+                            Height = (int) s.Height
+                        };
+
+                        group.Symbols.Add(symbol);
+                    }
+                }
             }
+
+            return resp;
         }
     }
 }

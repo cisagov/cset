@@ -80,9 +80,11 @@ mxText.prototype.baseSpacingBottom = 1;
 // Keeps edges between relative child cells inside parent
 mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 
+
 // CSET - default value (label) for some objects
 mxGraphModel.prototype.cellAdded = function (cell)
 {
+	
     // assign an ID if the cell is being added to the main graph
     if (!!cell.parent && cell.parent.id && cell.parent.id.substring(0, 7) != "mxCell#")
     {
@@ -114,18 +116,49 @@ mxGraphModel.prototype.cellAdded = function (cell)
         var prefix = "COMP";
 
         // determine component type prefix
-        var abbrevFound = false;
-        for (var i = 0; i < Editor.componentMap.Abbreviations.length && !abbrevFound; i++)
+        var compMap = Editor.componentSymbols;
+        var found = false;
+        for (var i = 0; i < compMap.length && !found; i++)
         {
-            var c = Editor.componentMap.Abbreviations[i];
-            if ('img/cset/' + c.ImageFileName == getStyle(cell.style, 'image'))
+            for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
             {
-                prefix = c.Abbreviation;
-                abbrevFound = true;
+                var s = compMap[i].Symbols[j];
+                if ('img/cset/' + s.FileName == getStyle(cell.style, 'image'))
+                {
+                    prefix = s.Abbreviation;
+                    found = true;
+                }
             }
         }
 
-        cell.setValue(prefix + "-" + num);
+		cell.setValue(prefix + "-" + num);
+		var nextGuid = guidService.getInstance().getNextGuid();
+		
+		try
+		{
+			//var graph = ui.editor.graph;
+			var value = this.getValue(cell);			
+			// Converts the value to an XML node
+			if (!mxUtils.isNode(value))
+			{
+				var doc = mxUtils.createXmlDocument();
+				var obj = doc.createElement('object');
+				obj.setAttribute('label', value || '');
+				obj.setAttribute('ComponentGuid',nextGuid);
+				value = obj;
+			}
+			
+			value = value.cloneNode(true);
+			// Updates the value of the cell (undoable)
+			this.setValue(cell, value);
+			console.log(cell);
+			console.log('set cell attribute');
+			console.log(value.getAttribute('ComponentGuid'));
+		}
+		catch (e)
+		{
+			console.log(e);
+		}
     }
 }
 
