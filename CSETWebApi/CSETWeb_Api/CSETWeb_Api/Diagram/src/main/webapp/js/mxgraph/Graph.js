@@ -84,6 +84,7 @@ mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 // CSET - default value (label) for some objects
 mxGraphModel.prototype.cellAdded = function (cell)
 {
+	
     // assign an ID if the cell is being added to the main graph
     if (!!cell.parent && cell.parent.id && cell.parent.id.substring(0, 7) != "mxCell#")
     {
@@ -130,7 +131,34 @@ mxGraphModel.prototype.cellAdded = function (cell)
             }
         }
 
-        cell.setValue(prefix + "-" + num);
+		cell.setValue(prefix + "-" + num);
+		var nextGuid = guidService.getInstance().getNextGuid();
+		
+		try
+		{
+			//var graph = ui.editor.graph;
+			var value = this.getValue(cell);			
+			// Converts the value to an XML node
+			if (!mxUtils.isNode(value))
+			{
+				var doc = mxUtils.createXmlDocument();
+				var obj = doc.createElement('object');
+				obj.setAttribute('label', value || '');
+				obj.setAttribute('ComponentGuid',nextGuid);
+				value = obj;
+			}
+			
+			value = value.cloneNode(true);
+			// Updates the value of the cell (undoable)
+			this.setValue(cell, value);
+			console.log(cell);
+			console.log('set cell attribute');
+			console.log(value.getAttribute('ComponentGuid'));
+		}
+		catch (e)
+		{
+			console.log(e);
+		}
     }
 }
 

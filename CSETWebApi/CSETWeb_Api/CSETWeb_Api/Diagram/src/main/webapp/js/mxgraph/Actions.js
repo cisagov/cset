@@ -1197,7 +1197,7 @@ Actions.prototype.init = function()
 			    			{
 			    				var pt = graph.getFreeInsertPoint();
 			    				cells = [graph.insertVertex(graph.getDefaultParent(), null, '', pt.x, pt.y, w, h,
-			    						'shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;')];
+										'shape=image;imageAspect=0;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;')];								
 			    				select = cells;
 		            	    		graph.fireEvent(new mxEventObject('cellsInserted', 'cells', select));
 			    			}
