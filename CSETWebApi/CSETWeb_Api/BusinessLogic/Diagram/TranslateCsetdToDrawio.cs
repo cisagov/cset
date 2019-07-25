@@ -85,7 +85,13 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
             BuildComponents();
 
 
+            BuildMSCs();
+
+
             BuildShapes();
+
+
+            AssignToMSCs();
 
 
             AssignToZones();
@@ -171,10 +177,57 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// <summary>
         /// 
         /// </summary>
+        private void BuildMSCs()
+        {
+            XmlNodeList mscList = xCsetd.SelectNodes("//c:multiServiceComponent", nsmgr);
+            foreach (XmlNode msc in mscList)
+            {
+                string oldID = ChildValue(msc, "c:id");
+                string newID = GetID(oldID);
+
+
+                var xObject = xDrawio.CreateElement("object");
+                xRoot.AppendChild(xObject);
+                xObject.SetAttribute("id", newID);
+                xObject.SetAttribute("label", ChildValue(msc, "c:label/c:label"));
+
+                var xZone = xDrawio.CreateElement("mxCell");
+                xObject.AppendChild(xZone);
+                xZone.SetAttribute("vertex", "1");
+
+                xZone.SetAttribute("style", "swimlane;fillColor=#FFF;swimlaneFillColor=#FFF;");
+
+
+                // determine the parent layer
+                var layerName = ChildValue(msc, "c:layername");
+                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                xZone.SetAttribute("parent", newLayerID);
+
+
+                // geometry
+                var xGeometry = xDrawio.CreateElement("mxGeometry");
+                xZone.AppendChild(xGeometry);
+                xGeometry.SetAttribute("as", "geometry");
+                string v = ChildValue(msc, "c:position/c:width");
+                xGeometry.SetAttribute("width", v);
+                v = ChildValue(msc, "c:position/c:height");
+                xGeometry.SetAttribute("height", v);
+                v = ChildValue(msc, "c:position/c:x");
+                xGeometry.SetAttribute("x", v);
+                v = ChildValue(msc, "c:position/c:y");
+                xGeometry.SetAttribute("y", v);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void BuildComponents()
         {
-            // components
-            XmlNodeList componentList = xCsetd.SelectNodes("//c:component", nsmgr);
+            // find all components, including those inside MSCs
+            XmlNodeList componentList = xCsetd.SelectNodes("//c:component | //c:multiServiceComponent/c:components", nsmgr);
+
             foreach (XmlNode component in componentList)
             {
                 // map the IDs
@@ -299,6 +352,52 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xGeometry.SetAttribute("x", v);
                 v = ChildValue(shape, "c:size/c:y");
                 xGeometry.SetAttribute("y", v);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void AssignToMSCs()
+        {
+            XmlNodeList mscList = xCsetd.SelectNodes("//c:multiServiceComponent", nsmgr);
+            foreach (XmlNode msc in mscList)
+            {
+                var newMscID = GetID(ChildValue(msc, "c:id"));
+
+
+                XmlNodeList childList = msc.SelectNodes("c:components", nsmgr);
+                foreach (XmlNode child in childList)
+                {
+                    var oldObjectID = ChildValue(child, "c:id");
+                    var newObjectID = GetID(oldObjectID);
+
+
+                    // get the MSC's geometry
+                    var xZoneGeometry = (XmlElement)xDrawio.SelectSingleNode("//*[@id='" + newMscID + "']//mxGeometry");
+
+
+                    // set the parent MSC on the object and its mxCell child
+                    XmlElement xNewObject = (XmlElement)xDrawio.SelectSingleNode("//object[@id=" + newObjectID + "]");
+                    if (xNewObject == null)
+                    {
+                        // couldn't find an object wrapper -- look for the mxCell directly
+                        xNewObject = (XmlElement)xDrawio.SelectSingleNode("//mxCell[@id=" + newObjectID + "]");
+                    }
+                    xNewObject.SetAttribute("parent", newMscID);
+                    ((XmlElement)xNewObject.FirstChild).SetAttribute("parent", newMscID);
+                    var xObjGeometry = (XmlElement)xNewObject.SelectSingleNode(".//mxGeometry");
+
+
+                    // adjust the child object coordinates to be relative to their parent MSC
+                    var zoneX = float.Parse(xZoneGeometry.Attributes["x"].InnerText);
+                    var objX = float.Parse(xObjGeometry.Attributes["x"].InnerText);
+                    var zoneY = float.Parse(xZoneGeometry.Attributes["y"].InnerText);
+                    var objY = float.Parse(xObjGeometry.Attributes["y"].InnerText);
+                    xObjGeometry.SetAttribute("x", (objX - zoneX).ToString());
+                    xObjGeometry.SetAttribute("y", (objY - zoneY).ToString());
+                }
             }
         }
 
