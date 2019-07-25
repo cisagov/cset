@@ -747,11 +747,10 @@
             <param name="importRequest"></param>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetNameMap">
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetComponentSymbols">
             <summary>
-            Returns the component naming map.  Also returns the
-            "last used" integer for the current assessment that
-            is used as a suffix in the auto naming.
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
             </summary>
             <returns></returns>
         </member>
