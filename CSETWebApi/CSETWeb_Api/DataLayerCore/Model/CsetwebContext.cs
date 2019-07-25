@@ -546,11 +546,15 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.File_Name).IsUnicode(false);
 
+                entity.Property(e => e.Height).HasDefaultValueSql("((60))");
+
                 entity.Property(e => e.Long_Name)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.Name).IsUnicode(false);
+
+                entity.Property(e => e.Width).HasDefaultValueSql("((60))");
 
                 entity.HasOne(d => d.Component_Family_NameNavigation)
                     .WithMany(p => p.COMPONENT_SYMBOLS)
