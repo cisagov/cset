@@ -342,6 +342,7 @@
 			<sources dir="${war.dir}/js/diagramly/util">
 				<file name="mxAsyncCanvas.js" />
 				<file name="mxJsCanvas.js" />
+				<file name="GuidService.js" />
 			</sources>
 
 			<sources dir="${war.dir}/js/diagramly">
