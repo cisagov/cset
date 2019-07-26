@@ -78,6 +78,7 @@ export interface QuestionInformationTabData {
   SetsList: string[];
   QuestionsList: string[];
   ShowNoQuestionInformation: boolean;
+  ExaminationApproach: String;
 }
 
 export interface RequirementTabData {
