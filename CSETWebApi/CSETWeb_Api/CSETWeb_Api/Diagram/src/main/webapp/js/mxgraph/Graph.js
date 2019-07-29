@@ -84,7 +84,14 @@ mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 // CSET - default value (label) for some objects
 mxGraphModel.prototype.cellAdded = function (cell)
 {
-	
+    // special case:  if the component is a multi-service component,
+    // swap out the symbol with a container.
+    var filename = getStyle(cell.style, 'image');
+    if (filename == 'img/cset/multiple_services_component.svg')
+    {
+
+    }
+
     // assign an ID if the cell is being added to the main graph
     if (!!cell.parent && cell.parent.id && cell.parent.id.substring(0, 7) != "mxCell#")
     {
@@ -113,9 +120,9 @@ mxGraphModel.prototype.cellAdded = function (cell)
         var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
         sessionStorage.setItem("last.number", num);
 
-        var prefix = "COMP";
 
         // determine component type prefix
+        var prefix = "COMP";
         var compMap = Editor.componentSymbols;
         var found = false;
         for (var i = 0; i < compMap.length && !found; i++)
