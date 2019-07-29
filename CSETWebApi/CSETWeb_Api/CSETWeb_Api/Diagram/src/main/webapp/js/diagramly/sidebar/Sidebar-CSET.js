@@ -96,7 +96,6 @@
     Sidebar.prototype.getTagsForSymbol = function (symbol)
     {
         tag = symbol.Abbreviation + ' ' + symbol.LongName + ' ' + symbol.DisplayName + ' ' + (!!symbol.Tags ? symbol.Tags : '');
-        console.log(tag);
         return tag;
     }
 
