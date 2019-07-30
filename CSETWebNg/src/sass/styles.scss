@@ -52,19 +52,23 @@ body {
   background-size: auto 100%;
 }
 
-a {
+a, a:not([href]) {
   color: $link-color-dark;
   cursor: pointer;
 }
 
-.btn-link,
-.btn-link-dark {
+a:not([href]).btn-link-dark:hover {
+  color: #0056b3;
+}
+
+.btn-link, a:not([href]).btn-link, 
+.btn-link-dark, a:not([href]).btn-link-dark {
   color: $link-color-dark;
   font-weight: 500;
   border: none;
 }
 
-.btn-link-dark:hover,
+.btn-link-dark:hover, a:not([href]).btn-link-dark:hover,
 .icon-link-button-text-dark:hover {
   text-decoration: underline;
 }
