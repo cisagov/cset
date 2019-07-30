@@ -1399,6 +1399,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter:  "FlipH";
+  margin-top: -10px;
 }
 
 .open-desc {
@@ -1536,6 +1537,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter:  "FlipH";
+  margin-top: -10px;
 }
 
 .header-question {

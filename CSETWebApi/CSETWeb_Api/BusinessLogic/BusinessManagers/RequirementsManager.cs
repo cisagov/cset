@@ -114,6 +114,10 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 var dbR = dbRPlus.Requirement;
 
+                // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
+                dbR.Standard_Category = dbR.Standard_Category.Trim();
+                dbR.Standard_Sub_Category = dbR.Standard_Sub_Category.Trim();
+
                 // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
                 if (dbR.Standard_Sub_Category == null)
                 {
