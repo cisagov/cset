@@ -20,11 +20,25 @@
 
                 Editor.componentSymbols.forEach((group) =>
                 {
-                    var fns = [];
+                    var symbols = [];
+
+
+                    // special case:  insert the 'text' symbols into the General palette
+                    if (group.SymbolGroupTitle == 'General')
+                    {
+                        symbols = [
+                            sidebar.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
+                                40, 20, 'Text', 'Text', null, null, 'text textbox textarea label'),
+                            sidebar.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;', 190, 120,
+                                '<h1>Heading</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>',
+                                'Textbox', null, null, 'text textbox textarea')
+                        ];
+                    }
+
 
                     group.Symbols.forEach((symbol) =>
                     {
-                        fns.push(
+                        symbols.push(
                             sidebar.createVertexTemplateEntry(
                                 s + symbol.FileName,
                                 symbol.Width, 
@@ -39,30 +53,31 @@
 
                     sidebar.addPalette(group.SymbolGroupTitle, group.SymbolGroupTitle, false, mxUtils.bind(sidebar, function (content)
                     {
-                        for (var i = 0; i < fns.length; i++)
+                        for (var i = 0; i < symbols.length; i++)
                         {
-                            content.appendChild(fns[i](content));
+                            content.appendChild(symbols[i](content));
                         }
                     }));
 
                 });
 
 
+
                 // Zone Palette
-                var fns6 = [
+                var symbolsZone = [
                     sidebar.createVertexTemplateEntry('swimlane;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;', 200, 200, 'Zone', 'Zone', null, null, 'container group zone')
                 ];
                 sidebar.addPalette('zone', 'Zone', false, mxUtils.bind(sidebar, function (content)
                 {
-                    for (var i = 0; i < fns6.length; i++)
+                    for (var i = 0; i < symbolsZone.length; i++)
                     {
-                        content.appendChild(fns6[i](content));
+                        content.appendChild(symbolsZone[i](content));
                     }
                 }));
 
 
                 // Shapes Palette
-                var fns7 = [
+                var symbolsShapes = [
                     sidebar.createVertexTemplateEntry('shape=ellipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;backgroundOutline=1;', d, d, '', 'Or', null, null, 'circle oval ellipse'),
                     sidebar.createVertexTemplateEntry('shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;', d * 1.15, d, '', 'Hexagon', null, null, 'hexagon'),
                     sidebar.createVertexTemplateEntry('shape=mxgraph.basic.octagon;whiteSpace=wrap;html=1;', d, d, '', 'Octagon', null, null, 'octagon'),
@@ -76,9 +91,9 @@
                 ];
                 sidebar.addPalette('shapes', 'Shapes', false, mxUtils.bind(sidebar, function (content)
                 {
-                    for (var i = 0; i < fns7.length; i++)
+                    for (var i = 0; i < symbolsShapes.length; i++)
                     {
-                        content.appendChild(fns7[i](content));
+                        content.appendChild(symbolsShapes[i](content));
                     }
                 }));
             }
@@ -96,7 +111,6 @@
     Sidebar.prototype.getTagsForSymbol = function (symbol)
     {
         tag = symbol.Abbreviation + ' ' + symbol.LongName + ' ' + symbol.DisplayName + ' ' + (!!symbol.Tags ? symbol.Tags : '');
-        console.log(tag);
         return tag;
     }
 

@@ -1729,6 +1729,9 @@ App.prototype.updateDocumentTitle = function ()
             title = filename + ' - ' + title;
         }
 
+        // CSET - set browser title
+        title = 'CSET Diagram';
+
         document.title = title;
     }
 };
@@ -5179,7 +5182,7 @@ App.prototype.updateHeader = function ()
             this.fnameWrapper.style.display = 'inline';
 
             this.fname = document.createElement('div');
-            this.fname.className = 'geItem';
+            // this.fname.className = 'geItem';
             this.fname.style.padding = '2px 8px 2px 8px';
             this.fname.style.display = 'inline';
             this.fname.style.fontSize = '18px';
