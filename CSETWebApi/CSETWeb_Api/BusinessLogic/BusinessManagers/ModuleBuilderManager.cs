@@ -461,7 +461,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     newStdRefNum = fellowQuestions.Max(x => x.Std_Ref_Number) + 1;
                 }
-                
+
 
 
 
@@ -1031,7 +1031,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 // Update text.  Try/catch in case they are setting duplicate question text.
                 try
-                {                    
+                {
                     var question = db.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefault();
                     if (question == null)
                     {
@@ -1047,7 +1047,7 @@ namespace CSETWeb_Api.BusinessManagers
                     return resp;
                 }
                 catch (Microsoft.EntityFrameworkCore.DbUpdateException exc)
-                {                    
+                {
                     resp.ErrorMessages.Add("DUPLICATE QUESTION TEXT");
                     return resp;
                 }
@@ -1241,10 +1241,10 @@ namespace CSETWeb_Api.BusinessManagers
 
                 NEW_REQUIREMENT req = new NEW_REQUIREMENT
                 {
-                    Requirement_Title = parms.Title==null?"":parms.Title.Truncate(250),
-                    Requirement_Text = parms.RequirementText,
-                    Standard_Category = parms.Category.Truncate(250),
-                    Standard_Sub_Category = parms.Subcategory==null?"":parms.Subcategory.Truncate(250),
+                    Requirement_Title = parms.Title == null ? "" : parms.Title.Trim().Truncate(250),
+                    Requirement_Text = parms.RequirementText.Trim(),
+                    Standard_Category = parms.Category.Trim().Truncate(250),
+                    Standard_Sub_Category = parms.Subcategory == null ? "" : parms.Subcategory.Trim().Truncate(250),
                     Question_Group_Heading_Id = parms.QuestionGroupHeadingID,
                     Original_Set_Name = parms.SetName.Truncate(50)
                 };
@@ -1755,7 +1755,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public int RecordDocInDB(FileUploadStreamResult result)
         {
-            
+
             using (var db = new CSET_Context())
             {
                 // Determine file type ID.  Store null if not known.
@@ -1794,7 +1794,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                     return gf.Gen_File_Id;
                 }
-                return 0; 
+                return 0;
             }
         }
     }
