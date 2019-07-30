@@ -1761,12 +1761,12 @@
                 // Redirects export to PDF to print in Chrome App
                 if (editorUi.isOffline() || editorUi.printPdfExport)
                 {
-                    this.addMenuItems(menu, ['exportPdf'], parent);
+                    //this.addMenuItems(menu, ['exportPdf'], parent);
                 }
                 // Disabled for standalone mode in iOS because new tab cannot be closed
                 else if (!editorUi.isOffline() && (!mxClient.IS_IOS || !navigator.standalone))
                 {
-                    this.addMenuItems(menu, ['exportPdf'], parent);
+                    //this.addMenuItems(menu, ['exportPdf'], parent);
                 }
 
                 if (!mxClient.IS_IE && (typeof (VsdxExport) !== 'undefined' || !editorUi.isOffline()))
@@ -1774,7 +1774,7 @@
                     this.addMenuItems(menu, ['exportVsdx'], parent);
                 }
 
-                this.addMenuItems(menu, ['-', 'exportHtml', 'exportXml', 'exportUrl'], parent);
+                //this.addMenuItems(menu, ['-', 'exportHtml', 'exportXml', 'exportUrl'], parent);
 
                 if (!editorUi.isOffline())
                 {
