@@ -468,8 +468,6 @@ Sidebar.prototype.searchEntries = function(searchTerms, count, page, success, er
 {
 	if (this.taglist != null && searchTerms != null)
     {
-        debugger;
-
 		var tmp = searchTerms.toLowerCase().split(' ');
 		var dict = new mxDictionary();
 		var max = (page + 1) * count;

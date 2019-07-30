@@ -55,6 +55,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("into the registration component");
     this.getSecurityList();
   }
 

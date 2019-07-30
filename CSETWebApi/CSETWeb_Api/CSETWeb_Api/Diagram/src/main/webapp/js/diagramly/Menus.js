@@ -1761,12 +1761,12 @@
                 // Redirects export to PDF to print in Chrome App
                 if (editorUi.isOffline() || editorUi.printPdfExport)
                 {
-                    this.addMenuItems(menu, ['exportPdf'], parent);
+                    //this.addMenuItems(menu, ['exportPdf'], parent);
                 }
                 // Disabled for standalone mode in iOS because new tab cannot be closed
                 else if (!editorUi.isOffline() && (!mxClient.IS_IOS || !navigator.standalone))
                 {
-                    this.addMenuItems(menu, ['exportPdf'], parent);
+                    //this.addMenuItems(menu, ['exportPdf'], parent);
                 }
 
                 if (!mxClient.IS_IE && (typeof (VsdxExport) !== 'undefined' || !editorUi.isOffline()))
@@ -1774,7 +1774,7 @@
                     this.addMenuItems(menu, ['exportVsdx'], parent);
                 }
 
-                this.addMenuItems(menu, ['-', 'exportHtml', 'exportXml', 'exportUrl'], parent);
+                //this.addMenuItems(menu, ['-', 'exportHtml', 'exportXml', 'exportUrl'], parent);
 
                 if (!editorUi.isOffline())
                 {
@@ -2406,24 +2406,24 @@
 			}
 		});
 
-		this.put('insert', new Menu(mxUtils.bind(this, function(menu, parent)
-		{
-			this.addMenuItems(menu, ['insertRectangle', 'insertEllipse', 'insertRhombus', '-',
-				'insertText', 'insertLink', '-', 'insertImage'], parent);
+		//this.put('insert', new Menu(mxUtils.bind(this, function(menu, parent)
+		//{
+		//	this.addMenuItems(menu, ['insertRectangle', 'insertEllipse', 'insertRhombus', '-',
+		//		'insertText', 'insertLink', '-', 'insertImage'], parent);
 
-			if (editorUi.insertTemplateEnabled && !editorUi.isOffline())
-			{
-				this.addMenuItems(menu, ['insertTemplate', '-'], parent);
-			}
+		//	if (editorUi.insertTemplateEnabled && !editorUi.isOffline())
+		//	{
+		//		this.addMenuItems(menu, ['insertTemplate', '-'], parent);
+		//	}
 			
-			this.addSubmenu('insertLayout', menu, parent, mxResources.get('layout'));
-			menu.addSeparator(parent);
-			addInsertMenuItems(menu, parent, ['fromText', 'plantUml', '-', 'formatSql']);
-			menu.addItem(mxResources.get('csv') + '...', null, function()
-			{
-				editorUi.showImportCsvDialog();
-			}, parent, null, isGraphEnabled());
-		})));
+		//	this.addSubmenu('insertLayout', menu, parent, mxResources.get('layout'));
+		//	menu.addSeparator(parent);
+		//	addInsertMenuItems(menu, parent, ['fromText', 'plantUml', '-', 'formatSql']);
+		//	menu.addItem(mxResources.get('csv') + '...', null, function()
+		//	{
+		//		editorUi.showImportCsvDialog();
+		//	}, parent, null, isGraphEnabled());
+		//})));
 
 		this.put('insertLayout', new Menu(mxUtils.bind(this, function(menu, parent)
 		{
