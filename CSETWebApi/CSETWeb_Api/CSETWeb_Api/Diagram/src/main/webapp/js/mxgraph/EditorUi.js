@@ -148,7 +148,7 @@ EditorUi = function(editor, container, lightbox)
     }
     
 	// Creates hover icons
-	this.hoverIcons = this.createHoverIcons();
+    this.hoverIcons = this.createHoverIcons();
 	
 	// Adds tooltip when mouse is over scrollbars to show space-drag panning option
 	mxEvent.addListener(this.diagramContainer, 'mousemove', mxUtils.bind(this, function(evt)
@@ -2257,7 +2257,7 @@ EditorUi.prototype.addBeforeUnloadListener = function()
  */
 EditorUi.prototype.onBeforeUnload = function()
 {
-    // CSET
+    // CSET - suppress the 'are you sure you want to leave?' dialog
     return;
 
 	if (this.editor.modified)
@@ -2367,7 +2367,7 @@ EditorUi.prototype.updateDocumentTitle = function()
 	
     document.title = title;
 
-    // CSET
+    // CSET - set browser title
     document.title = 'CSET Diagram';
 };
 

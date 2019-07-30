@@ -16,7 +16,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     /// </summary>
     public class DiagramDifferenceManager
     {
-        private static readonly object _object = new object(); 
+        private static readonly object _object = new object();
 
         private Dictionary<Guid, ComponentNode> OldDiagram = new Dictionary<Guid, ComponentNode>();
         private Dictionary<Guid, ComponentNode> NewDiagram = new Dictionary<Guid, ComponentNode>();
@@ -32,44 +32,43 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            NewDiagram = processDiagram(newDiagramDocument);
-            OldDiagram = processDiagram(oldDiagramDocument);
+            NewDiagram = ProcessDiagram(newDiagramDocument);
+            OldDiagram = ProcessDiagram(oldDiagramDocument);
         }
 
         public void SaveDifferences(CSET_Context context, int assessment_id)
         {
-
-            Boolean _lockTaken = false;
+            bool _lockTaken = false;
             Monitor.Enter(_object, ref _lockTaken);
             try
-            {                
+            {
                 lock (_object)
                 {
-                    //using (CSET_Context context = new CSET_Context())
-                    //{
-                        DiagramDifferences differences = new DiagramDifferences();
-                        differences.processComparison(this.NewDiagram, this.OldDiagram);
-                        foreach (var newNode in differences.AddedNodes)
+                    DiagramDifferences differences = new DiagramDifferences();
+                    differences.processComparison(this.NewDiagram, this.OldDiagram);
+                    foreach (var newNode in differences.AddedNodes)
+                    {
+                        context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
                         {
-                            context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
-                            {
-                                Assessment_Id = assessment_id,
-                                Component_Id = newNode.Key,
-                                Diagram_Component_Type = newNode.Value.Component_Type,
-                                DrawIO_id = newNode.Value.id,
-                                label = newNode.Value.label
-                            });
-                        }
-                        foreach (var deleteNode in differences.DeletedNodes)
+                            Assessment_Id = assessment_id,
+                            Component_Id = newNode.Key,
+                            Diagram_Component_Type = newNode.Value.Component_Type,
+                            DrawIO_id = newNode.Value.id,
+                            label = newNode.Value.label
+                        });
+                    }
+                    context.SaveChanges();
+
+                    foreach (var deleteNode in differences.DeletedNodes)
+                    {
+                        var adc = context.ASSESSMENT_DIAGRAM_COMPONENTS
+                            .FirstOrDefault(x => x.Assessment_Id == assessment_id && x.Component_Id == deleteNode.Key);
+                        if (adc != null)
                         {
-                            context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(new ASSESSMENT_DIAGRAM_COMPONENTS()
-                            {
-                                Assessment_Id = assessment_id,
-                                Component_Id = deleteNode.Key
-                            });
+                            context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(adc);
                         }
-                        context.SaveChanges();
-                    //}
+                    }
+                    context.SaveChanges();
                 }
             }
             finally
@@ -78,18 +77,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             }
         }
 
-        private Dictionary<Guid,ComponentNode> processDiagram(XmlDocument doc)
+        private Dictionary<Guid, ComponentNode> ProcessDiagram(XmlDocument doc)
         {
-            Dictionary<Guid, ComponentNode> nodesList = new Dictionary<Guid, ComponentNode>(); 
+            Dictionary<Guid, ComponentNode> nodesList = new Dictionary<Guid, ComponentNode>();
             XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
             foreach (var c in cells)
             {
-                ComponentNode cn = new ComponentNode();
-                foreach(XmlAttribute a in ((System.Xml.XmlElement)c).Attributes)
+                var cell = (XmlElement)c;
+                if (cell.HasAttribute("ComponentGuid"))
                 {
-                    cn.setValue(a.Name, a.Value);                    
+                    ComponentNode cn = new ComponentNode();
+                    foreach (XmlAttribute a in ((System.Xml.XmlElement)c).Attributes)
+                    {
+                        cn.setValue(a.Name, a.Value);
+                    }
+                    nodesList.Add(cn.ComponentGuid, cn);
                 }
-                nodesList.Add(cn.ComponentGuid,cn);                
             }
             return nodesList;
         }

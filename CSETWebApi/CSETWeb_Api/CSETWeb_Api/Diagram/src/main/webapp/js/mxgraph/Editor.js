@@ -1847,6 +1847,9 @@ PageSetupDialog.getFormats = function ()
     {
         var graph = this.graph;
 
+        // CSET - default the layout to an infinite canvas
+        graph.pageVisible = false;
+
         if (graph.container != null && !graph.transparentBackground)
         {
             if (graph.pageVisible)
