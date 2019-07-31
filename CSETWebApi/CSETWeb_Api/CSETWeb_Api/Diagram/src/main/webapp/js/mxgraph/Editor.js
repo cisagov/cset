@@ -51,7 +51,12 @@ Editor = function (chromeless, themes, model, graph, editable)
         // Only persist if actual changes occurred.  An mxRootChange is likely a new diagram.
         if (typeof edit.changes[0] != "mxRootChange")
         {
+            // fix any connections to MSC children
+            fixMSCChildLinks(this);
+
             PersistGraphToCSET(this);
+
+
         }
     };
 
@@ -91,7 +96,7 @@ function PersistGraphToCSET(editor)
     {
         if (this.readyState == 4 && this.status == 200)
         {
-            // successful post
+            // successful post            
         }
         if (this.readyState == 4 && this.status == 401)
         {
@@ -103,6 +108,7 @@ function PersistGraphToCSET(editor)
     xhr.setRequestHeader('Authorization', jwt);
     xhr.send(JSON.stringify(req));
 }
+
 
 /**
  * Counts open editor tabs (must be global for cross-window access)
