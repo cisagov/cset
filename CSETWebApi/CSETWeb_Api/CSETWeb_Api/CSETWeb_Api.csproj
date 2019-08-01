@@ -1842,6 +1842,7 @@
     <Content Include="Diagram\src\main\webapp\js\diagramly\TrelloFile.js" />
     <Content Include="Diagram\src\main\webapp\js\diagramly\TrelloLibrary.js" />
     <Content Include="Diagram\src\main\webapp\js\diagramly\UrlLibrary.js" />
+    <Content Include="Diagram\src\main\webapp\js\diagramly\util\CsetUtils.js" />
     <Content Include="Diagram\src\main\webapp\js\diagramly\util\GuidService.js" />
     <Content Include="Diagram\src\main\webapp\js\diagramly\util\mxAsyncCanvas.js" />
     <Content Include="Diagram\src\main\webapp\js\diagramly\util\mxJsCanvas.js" />
