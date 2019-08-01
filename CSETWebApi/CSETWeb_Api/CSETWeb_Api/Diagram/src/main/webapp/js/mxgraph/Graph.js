@@ -90,13 +90,13 @@ mxGraphModel.prototype.cellAdded = function (cell)
         if (!!cell.style)
         {
             // ignore shapes
-            if (getStyle(cell.style, 'shape') !== null)
+            if (CsetUtils.getStyleValue(cell.style, 'shape') !== null)
             {
                 return;
             }
 
             // ignore text objects
-            if (hasStyle(cell.style, 'text'))
+            if (CsetUtils.hasStyle(cell.style, 'text'))
             {
                 return;
             }
@@ -123,7 +123,7 @@ mxGraphModel.prototype.cellAdded = function (cell)
             for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
             {
                 var s = compMap[i].Symbols[j];
-                if ('img/cset/' + s.FileName == getStyle(cell.style, 'image'))
+                if ('img/cset/' + s.FileName == CsetUtils.getStyleValue(cell.style, 'image'))
                 {
                     prefix = s.Abbreviation;
                     found = true;
@@ -132,89 +132,27 @@ mxGraphModel.prototype.cellAdded = function (cell)
         }
 
         cell.setValue(prefix + "-" + num);
+
+
         var nextGuid = guidService.getInstance().getNextGuid();
+        CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
 
-        try
-        {
-            //var graph = ui.editor.graph;
-            var value = this.getValue(cell);
-            // Converts the value to an XML node
-            if (!mxUtils.isNode(value))
-            {
-                var doc = mxUtils.createXmlDocument();
-                var obj = doc.createElement('object');
-                obj.setAttribute('label', value || '');
-                obj.setAttribute('ComponentGuid', nextGuid);
-                value = obj;
-            }
 
-            value = value.cloneNode(true);
-            // Updates the value of the cell (undoable)
-            this.setValue(cell, value);
-        }
-        catch (e)
-        {
-            console.log(e);
-        }
 
         // special case:  if the component is a multi-service component,
         // swap out the symbol with a container.
-        var filename = getStyle(cell.style, 'image');
+        var filename = CsetUtils.getStyleValue(cell.style, 'image');
         console.log(filename);
         if (!!filename && filename.endsWith('multiple_services_component.svg'))
         {
             // convert the MSC into a swimlane (container)
-            cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#ffffff;swimlaneFillColor=#ffffff');
-            cell.geometry.width = 170;
-            cell.geometry.height = 90;
+            cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
+            cell.geometry.width = 230;
+            cell.geometry.height = 120;
         }
     }
 }
 
-
-/**
- * Returns the value for the specified style.
- * @param {any} styleString
- * @param {any} name
- */
-function getStyle(styleString, name)
-{
-    if (!styleString)
-    {
-        return null;
-    }
-
-    var v = null;
-    styleString.split(';').forEach((style) =>
-    {
-        const s = style.split('=', 2);
-        if (s[0] === name)
-        {
-            v = s[1];
-        }
-    });
-    return v;
-}
-
-/**
- * Returns a boolean indicating if the specified style exists,
- * regardless of its value.
- * @param {any} styleString
- * @param {any} name
- */
-function hasStyle(styleString, name)
-{
-    var exists = false;
-    styleString.split(';').forEach((style) =>
-    {
-        const s = style.split('=', 2);
-        if (s[0] === name)
-        {
-            exists = true;
-        }
-    });
-    return exists;
-}
 
 
 // Defines grid properties
