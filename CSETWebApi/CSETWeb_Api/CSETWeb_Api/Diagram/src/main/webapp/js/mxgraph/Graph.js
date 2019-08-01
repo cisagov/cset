@@ -115,28 +115,39 @@ mxGraphModel.prototype.cellAdded = function (cell)
 
 
         // determine component type prefix
-        var prefix = "COMP";
-        var compMap = Editor.componentSymbols;
-        var found = false;
-        for (var i = 0; i < compMap.length && !found; i++)
+        if (cell.getValue() == 'Zone')
         {
-            for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
+            prefix = 'Zone';
+        }
+        else 
+        {
+            var prefix = "COMP";
+            var compMap = Editor.componentSymbols;
+            var found = false;
+            for (var i = 0; i < compMap.length && !found; i++)
             {
-                var s = compMap[i].Symbols[j];
-                if ('img/cset/' + s.FileName == CsetUtils.getStyleValue(cell.style, 'image'))
+                for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
                 {
-                    prefix = s.Abbreviation;
-                    found = true;
+                    var s = compMap[i].Symbols[j];
+                    if ('img/cset/' + s.FileName == CsetUtils.getStyleValue(cell.style, 'image'))
+                    {
+                        prefix = s.Abbreviation;
+                        found = true;
+                    }
                 }
             }
         }
+        
 
-        cell.setValue(prefix + "-" + num);
+        cell.setValue(prefix + '-' + num);
 
 
-        var nextGuid = guidService.getInstance().getNextGuid();
-        CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
-
+        // assign a component GUID to components (not zones or MSCs)
+        if (CsetUtils.getStyleValue(cell.style, 'zone') != '1' && CsetUtils.getStyleValue(cell.style, 'msc') != '1')
+        {
+            var nextGuid = guidService.getInstance().getNextGuid();
+            CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
+        }
 
 
         // special case:  if the component is a multi-service component,
