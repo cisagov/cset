@@ -65,7 +65,7 @@
 
                 // Zone Palette
                 var symbolsZone = [
-                    sidebar.createVertexTemplateEntry('swimlane;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;', 200, 200, 'Zone', 'Zone', null, null, 'container group zone')
+                    sidebar.createVertexTemplateEntry('swimlane;zone=1;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;', 200, 200, 'Zone', 'Zone', null, null, 'container group zone')
                 ];
                 sidebar.addPalette('zone', 'Zone', false, mxUtils.bind(sidebar, function (content)
                 {
