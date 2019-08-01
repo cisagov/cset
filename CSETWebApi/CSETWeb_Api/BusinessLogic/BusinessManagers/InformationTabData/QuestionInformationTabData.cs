@@ -12,6 +12,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using CSET_Main.Questions.ComponentOverride;
 using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
@@ -523,6 +524,14 @@ namespace CSET_Main.Questions.InformationTabData
             }
 
             // Convert any linefeed characters to HTML line break tags
+            const string pattern = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+            Regex reg = new Regex(pattern);
+            var matches = reg.Matches(supp);
+            if (matches.Count > 0)
+            {
+                return supp;
+            }
+
             return supp.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
         }
 
