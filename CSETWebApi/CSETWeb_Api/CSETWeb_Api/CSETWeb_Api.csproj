@@ -4238,6 +4238,7 @@
     <Content Include="Diagram\src\main\webapp\WEB-INF\pusher.properties" />
     <Content Include="Diagram\VERSION" />
     <Content Include="Documents\TSA pipeline_security_guidelines.pdf" />
+    <Content Include="Documents\S_62443-4-1.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
