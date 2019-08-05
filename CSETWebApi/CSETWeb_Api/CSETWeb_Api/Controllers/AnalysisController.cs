@@ -357,7 +357,6 @@ namespace CSETWeb_Api.Controllers
                     if (!charts.TryGetValue(c.Answer_Full_Name, out next))
                     {
                         data = new List<double>();
-                        rows = new List<DataRowsPie>();
                         next = new ChartData()
                         {
                             Colors = Colors,
@@ -367,7 +366,6 @@ namespace CSETWeb_Api.Controllers
                             Labels = Labels,
                             data = data
                         }; 
-                        summary.dataSets.Add(next);
                         charts.Add(c.Answer_Full_Name, next);
                     }
                     else
