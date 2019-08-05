@@ -109,37 +109,7 @@ mxGraphModel.prototype.cellAdded = function (cell)
         }
 
 
-        // determine new number
-        var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
-        sessionStorage.setItem("last.number", num);
-
-
-        // determine component type prefix
-        if (cell.getValue() == 'Zone')
-        {
-            prefix = 'Zone';
-        }
-        else 
-        {
-            var prefix = "COMP";
-            var compMap = Editor.componentSymbols;
-            var found = false;
-            for (var i = 0; i < compMap.length && !found; i++)
-            {
-                for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
-                {
-                    var s = compMap[i].Symbols[j];
-                    if ('img/cset/' + s.FileName == CsetUtils.getStyleValue(cell.style, 'image'))
-                    {
-                        prefix = s.Abbreviation;
-                        found = true;
-                    }
-                }
-            }
-        }
-        
-
-        cell.setValue(prefix + '-' + num);
+        CsetUtils.addLabelToComponent(cell);
 
 
         // assign a component GUID to components (not zones or MSCs)
@@ -147,6 +117,9 @@ mxGraphModel.prototype.cellAdded = function (cell)
         {
             var nextGuid = guidService.getInstance().getNextGuid();
             CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
+
+
+            CsetUtils.applyAttributeToCell(this, cell, 'RKWTemp', '123');
         }
 
 

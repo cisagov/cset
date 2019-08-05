@@ -15,57 +15,77 @@ CsetUtils = function ()
 
 }
 
+
+
+
 /**
-* Finds any connectors that reach into a child component of a multi-service component.
-* Reattaches the connector to the MSC itself.
-*/
-CsetUtils.fixMSCChildLinks = function (editor)
+ * 
+ */
+CsetUtils.addLabelToComponent = function(cell)
 {
-    var g = editor.graph;
-    if (!g.model.root.children)
+    // determine new number
+    var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
+    sessionStorage.setItem("last.number", num);
+
+
+    // determine component type prefix
+    if (cell.getValue() == 'Zone')
     {
-        return;
+        prefix = 'Zone';
     }
-
-    var cells = g.model.root.children[0].children;
-    if (!cells)
+    else 
     {
-        return;
-    }
-
-    var refreshNeeded = false;
-
-    for (var i = 0; i < cells.length; i++)
-    {
-        var c = cells[i];
-        if (!c.value && !!c.edge && c.edge == true)
+        var prefix = "COMP";
+        var compMap = Editor.componentSymbols;
+        var found = false;
+        for (var i = 0; i < compMap.length && !found; i++)
         {
-            if (!!c.source)
+            for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
             {
-                if (CsetUtils.isParentMSC(c.source))
+                var s = compMap[i].Symbols[j];
+                if ('img/cset/' + s.FileName == CsetUtils.getStyleValue(cell.style, 'image'))
                 {
-                    var p = c.source.getParent();
-                    c.source = p;
-                    refreshNeeded = true;
-                }
-            }
-
-            if (!!c.target)
-            {
-                if (CsetUtils.isParentMSC(c.target))
-                {
-                    var p = c.target.getParent();
-                    c.target = p;
-                    refreshNeeded = true;
+                    prefix = s.Abbreviation;
+                    found = true;
                 }
             }
         }
     }
 
-    if (refreshNeeded)
+    cell.setValue(prefix + '-' + num);
+}
+
+
+/**
+ * If the edit is a cell being moved or added, makes it 'unconnectable'
+ * if it is now the child of a multi-service component. 
+ * @param {any} edit
+ */
+CsetUtils.adjustConnectability = function (edit)
+{
+    for (var i = 0; i < edit.changes.length; i++)
     {
-        editor.graph.refresh();
+        if (typeof edit.changes[i] === "mxValueChange")
+        {
+            if (CsetUtils.isParentMSC(edit.changes[i].cell))
+            {
+                c.setConnectible(false);
+            }
+            else
+            {
+                c.setConnectible(true);
+            }
+        }
     }
+}
+
+
+/**
+ * 
+ */
+CsetUtils.isConnector = function (cell)
+{
+    return (!cell.value && !!cell.edge && cell.edge == true);
 }
 
 /**
@@ -118,15 +138,19 @@ CsetUtils.PersistGraphToCSET = function (editor)
 
 
 /**
- * 
- * 
- * @param {any} model
- * @param {any} cell
- * @param {any} attributeName
- * @param {any} attributeValue
+ * Sets an attribute on a cell.  Creates an object for the cell as needed.
  */
 CsetUtils.applyAttributeToCell = function (model, cell, attributeName, attributeValue)
 {
+    // If the cell already holds an object, just set the attribute
+    if (typeof cell.value == "object")
+    {
+        var obj = cell.value;
+        obj.setAttribute(attributeName, attributeValue);
+        return;
+    }
+
+    // The cell is primitive (label only).  Instantiate an object as the value of the cell.
     try
     {
         var value = model.getValue(cell);
@@ -141,10 +165,9 @@ CsetUtils.applyAttributeToCell = function (model, cell, attributeName, attribute
             // set the new attribute value on the object
             obj.setAttribute(attributeName, attributeValue);
             value = obj;
-
         }
 
-        // value = value.cloneNode(true);
+        value = value.cloneNode(true);
 
         // Updates the value of the cell (undoable)
         model.setValue(cell, value);
@@ -204,3 +227,73 @@ CsetUtils.hasStyle = function (styleString, name)
     });
     return exists;
 }
+
+
+
+
+/**
+* Finds any connectors that reach into a child component of a multi-service component.
+* Reattaches the connector to the MSC itself.
+ * 
+ * Maybe making the children unconnectable (which I have done) is good enough.
+*/
+//CsetUtils.fixMSCChildLinks = function (editor)
+//{
+
+//    return;
+
+//    var g = editor.graph;
+//    if (!g.model.root.children)
+//    {
+//        return;
+//    }
+
+//    var cells = g.model.root.children[0].children;
+//    if (!cells)
+//    {
+//        return;
+//    }
+
+//    var refreshNeeded = false;
+
+//    for (var i = 0; i < cells.length; i++)
+//    {
+//        var c = cells[i];
+//        if (CsetUtils.isConnector(c))
+//        {
+//            if (!!c.source)
+//            {
+//                if (CsetUtils.isParentMSC(c.source))
+//                {
+//                    var p = c.source.getParent();
+//                    c.source = p;
+//                    refreshNeeded = true;
+//                }
+//            }
+
+//            if (!!c.target)
+//            {
+//                if (CsetUtils.isParentMSC(c.target))
+//                {
+//                    var p = c.target.getParent();
+//                    c.target = p;
+//                    refreshNeeded = true;
+//                }
+//            }
+//        }
+
+//        // look for children inside of a MSC
+//        if (!CsetUtils.isConnector(c))
+//        {
+//            if (CsetUtils.isParentMSC(c))
+//            {
+//                c.setConnectible(false);
+//            }
+//        }
+//    }
+
+//    if (refreshNeeded)
+//    {
+//        editor.graph.refresh();
+//    }
+//}
