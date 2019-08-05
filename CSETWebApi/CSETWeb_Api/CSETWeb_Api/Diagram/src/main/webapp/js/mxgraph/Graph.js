@@ -84,56 +84,55 @@ mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 // CSET - default value (label) for some objects
 mxGraphModel.prototype.cellAdded = function (cell)
 {
-    // assign an ID if the cell is being added to the main graph
-    if (!!cell.parent && cell.parent.id && cell.parent.id.substring(0, 7) != "mxCell#")
+    // if the parent is not 'root', it is something in the sidebar, and we don't need to do anything.
+    if (!CsetUtils.parentIsRoot(cell))
     {
-        if (!!cell.style)
+        return;
+    }
+
+
+    if (!!cell.style)
+    {
+        // ignore shapes
+        if (CsetUtils.getStyleValue(cell.style, 'shape') !== null)
         {
-            // ignore shapes
-            if (CsetUtils.getStyleValue(cell.style, 'shape') !== null)
-            {
-                return;
-            }
-
-            // ignore text objects
-            if (CsetUtils.hasStyle(cell.style, 'text'))
-            {
-                return;
-            }
-
-            // ignore connectors
-            if (cell.geometry.width === 0 && cell.geometry.height === 0)
-            {
-                return;
-            }
+            return;
         }
 
-
-        CsetUtils.addLabelToComponent(cell);
-
-
-        // assign a component GUID to components (not zones or MSCs)
-        if (CsetUtils.getStyleValue(cell.style, 'zone') != '1' && CsetUtils.getStyleValue(cell.style, 'msc') != '1')
+        // ignore text objects
+        if (CsetUtils.hasStyle(cell.style, 'text'))
         {
-            var nextGuid = guidService.getInstance().getNextGuid();
-            CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
-
-
-            CsetUtils.applyAttributeToCell(this, cell, 'RKWTemp', '123');
+            return;
         }
 
-
-        // special case:  if the component is a multi-service component,
-        // swap out the symbol with a container.
-        var filename = CsetUtils.getStyleValue(cell.style, 'image');
-        console.log(filename);
-        if (!!filename && filename.endsWith('multiple_services_component.svg'))
+        // ignore connectors
+        if (cell.geometry.width === 0 && cell.geometry.height === 0)
         {
-            // convert the MSC into a swimlane (container)
-            cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
-            cell.geometry.width = 230;
-            cell.geometry.height = 120;
+            return;
         }
+    }
+
+
+    CsetUtils.autoNameComponent(cell);
+
+
+    // assign a component GUID to components (not zones or MSCs)
+    if (CsetUtils.getStyleValue(cell.style, 'zone') != '1' && CsetUtils.getStyleValue(cell.style, 'msc') != '1')
+    {
+        var nextGuid = guidService.getInstance().getNextGuid();
+        CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
+    }
+
+
+    // If the object being added is a multi-service component,
+    // swap out the symbol with a container.
+    var filename = CsetUtils.getStyleValue(cell.style, 'image');
+    if (!!filename && filename.endsWith('multiple_services_component.svg'))
+    {
+        // convert the MSC into a swimlane (container)
+        cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
+        cell.geometry.width = 230;
+        cell.geometry.height = 120;
     }
 }
 
@@ -4949,8 +4948,10 @@ if (typeof mxVertexHandler != 'undefined')
 		 * Contains the default style for edges.
 		 */
         Graph.prototype.defaultEdgeStyle = {
-            'edgeStyle': 'orthogonalEdgeStyle', 'rounded': '0',
-            'jettySize': 'auto', 'orthogonalLoop': '1'
+            // 'edgeStyle': 'orthogonalEdgeStyle',   // CSET
+            'rounded': '0',
+            'jettySize': 'auto',
+            'orthogonalLoop': '1'
         };
 
 		/**

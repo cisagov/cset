@@ -16,12 +16,10 @@ CsetUtils = function ()
 }
 
 
-
-
 /**
- * 
+ * Derives a name/label for the component based on its type.
  */
-CsetUtils.addLabelToComponent = function(cell)
+CsetUtils.autoNameComponent = function(cell)
 {
     // determine new number
     var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
@@ -65,15 +63,22 @@ CsetUtils.adjustConnectability = function (edit)
 {
     for (var i = 0; i < edit.changes.length; i++)
     {
-        if (typeof edit.changes[i] === "mxValueChange")
+        if (edit.changes[i] instanceof mxChildChange)
         {
-            if (CsetUtils.isParentMSC(edit.changes[i].cell))
+            var c = edit.changes[i].child;
+
+            if (CsetUtils.isConnector(c))
             {
-                c.setConnectible(false);
+                return;
+            }
+
+            if (CsetUtils.isParentMSC(c))
+            {
+                c.setConnectable(false);
             }
             else
             {
-                c.setConnectible(true);
+                c.setConnectable(true);
             }
         }
     }
@@ -93,7 +98,10 @@ CsetUtils.isConnector = function (cell)
  */
 CsetUtils.isParentMSC = function (cell)
 {
-    var s = cell.getParent().getStyle();
+    var parent = cell.getParent();
+    if (!parent) { return false; }
+
+    var s = parent.getStyle();
     return (!!s && s.indexOf('msc=1') > 0);
 }
 
@@ -229,71 +237,22 @@ CsetUtils.hasStyle = function (styleString, name)
 }
 
 
-
-
 /**
-* Finds any connectors that reach into a child component of a multi-service component.
-* Reattaches the connector to the MSC itself.
- * 
- * Maybe making the children unconnectable (which I have done) is good enough.
-*/
-//CsetUtils.fixMSCChildLinks = function (editor)
-//{
+ * Recursively looks up through parentage to see if the cell's
+ * parent is ultimately 'root'.
+ * @param {any} cell
+ */
+CsetUtils.parentIsRoot = function (cell)
+{
+    if (!cell.parent)
+    {
+        return false;
+    }
 
-//    return;
+    if (cell.parent.id == 'root')
+    {
+        return true;
+    }
 
-//    var g = editor.graph;
-//    if (!g.model.root.children)
-//    {
-//        return;
-//    }
-
-//    var cells = g.model.root.children[0].children;
-//    if (!cells)
-//    {
-//        return;
-//    }
-
-//    var refreshNeeded = false;
-
-//    for (var i = 0; i < cells.length; i++)
-//    {
-//        var c = cells[i];
-//        if (CsetUtils.isConnector(c))
-//        {
-//            if (!!c.source)
-//            {
-//                if (CsetUtils.isParentMSC(c.source))
-//                {
-//                    var p = c.source.getParent();
-//                    c.source = p;
-//                    refreshNeeded = true;
-//                }
-//            }
-
-//            if (!!c.target)
-//            {
-//                if (CsetUtils.isParentMSC(c.target))
-//                {
-//                    var p = c.target.getParent();
-//                    c.target = p;
-//                    refreshNeeded = true;
-//                }
-//            }
-//        }
-
-//        // look for children inside of a MSC
-//        if (!CsetUtils.isConnector(c))
-//        {
-//            if (CsetUtils.isParentMSC(c))
-//            {
-//                c.setConnectible(false);
-//            }
-//        }
-//    }
-
-//    if (refreshNeeded)
-//    {
-//        editor.graph.refresh();
-//    }
-//}
+    return CsetUtils.parentIsRoot(cell.parent);
+}
