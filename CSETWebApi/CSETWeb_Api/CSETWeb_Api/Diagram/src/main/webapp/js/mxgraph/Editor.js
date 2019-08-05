@@ -51,8 +51,7 @@ Editor = function (chromeless, themes, model, graph, editable)
         // Only persist if actual changes occurred.  An mxRootChange is likely a new diagram.
         if (typeof edit.changes[0] != "mxRootChange")
         {
-            // fix any connections to MSC children
-            CsetUtils.fixMSCChildLinks(this);
+            CsetUtils.adjustConnectability(edit);
 
             CsetUtils.PersistGraphToCSET(this);
         }
