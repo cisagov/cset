@@ -1,7 +1,10 @@
 ---
-
-name: 🚀 Feature Proposal
+name: "\U0001F680 Feature Proposal"
 about: Submit a proposal for a new feature
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 ## 🚀 Feature Proposal
