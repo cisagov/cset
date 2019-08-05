@@ -333,7 +333,7 @@ namespace CSETWeb_Api.Controllers
             ChartData summary = null;
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
           .WithSqlParam("assessment_id", assessmentId)
           .ExecuteStoredProc((handler) =>
           {
@@ -357,7 +357,7 @@ namespace CSETWeb_Api.Controllers
                     if (!charts.TryGetValue(c.Answer_Full_Name, out next))
                     {
                         data = new List<double>();
-                       
+                        rows = new List<DataRowsPie>();
                         next = new ChartData()
                         {
                             Colors = Colors,
@@ -366,7 +366,8 @@ namespace CSETWeb_Api.Controllers
                             label = c.Answer_Full_Name,
                             Labels = Labels,
                             data = data
-                        };                        
+                        }; 
+                        summary.dataSets.Add(next);
                         charts.Add(c.Answer_Full_Name, next);
                     }
                     else
