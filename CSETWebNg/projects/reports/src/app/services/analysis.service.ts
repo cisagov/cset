@@ -204,12 +204,18 @@ export class AnalysisService {
           }
         ]
       },
+      
       options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        aspectRatio:0,
+        
         title: {
           display: false,
           fontSize: 20,
           text: 'Ranked Categories'
         },
+       
         legend: {
           display: false
         },
