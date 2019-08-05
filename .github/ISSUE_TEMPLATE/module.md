@@ -1,7 +1,10 @@
 ---
-
-name: 🧩 CSET Module Proposal
+name: "\U0001F9E9 CSET Module Proposal"
 about: Submit a proposal for a new CSET module
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 ## 🧩 CSET Module Proposal
@@ -19,3 +22,7 @@ Please provide an example for how this module would be used.
 ## Pitch
 
 Why does this module belong in CSET?
+
+## Document Links
+
+Include the URL to associated documents or reference material.
