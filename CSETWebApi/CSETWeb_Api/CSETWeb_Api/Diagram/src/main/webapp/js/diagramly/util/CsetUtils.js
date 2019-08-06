@@ -72,6 +72,14 @@ CsetUtils.adjustConnectability = function (edit)
                 return;
             }
 
+            // zones are not connectable
+            if (CsetUtils.getStyleValue(c.style, 'zone') == '1')
+            {
+                c.setConnectable(false);
+                return;
+            }
+
+            // children of an MSC are not connectable
             if (CsetUtils.isParentMSC(c))
             {
                 c.setConnectable(false);
