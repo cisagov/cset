@@ -19,7 +19,7 @@ CsetUtils = function ()
 /**
  * Derives a name/label for the component based on its type.
  */
-CsetUtils.autoNameComponent = function(cell)
+CsetUtils.autoNameComponent = function (cell)
 {
     // determine new number
     var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
@@ -35,6 +35,10 @@ CsetUtils.autoNameComponent = function(cell)
     {
         var prefix = "COMP";
         var compMap = Editor.componentSymbols;
+        if (!compMap)
+        {
+            return;
+        }
         var found = false;
         for (var i = 0; i < compMap.length && !found; i++)
         {
@@ -250,17 +254,93 @@ CsetUtils.hasStyle = function (styleString, name)
  * parent is ultimately 'root'.
  * @param {any} cell
  */
-CsetUtils.parentIsRoot = function (cell)
+CsetUtils.parentIsGraph = function (cell)
 {
-    if (!cell.parent)
+    if (!cell.hasOwnProperty('parent'))
     {
         return false;
     }
 
-    if (cell.parent.id == 'root')
+    // if I have a null parent but I have an ID, then I am the top node of the graph
+    if (cell.parent == null && cell.hasOwnProperty('id'))
     {
         return true;
     }
 
-    return CsetUtils.parentIsRoot(cell.parent);
+    return CsetUtils.parentIsGraph(cell.parent);
+}
+
+/**
+ * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
+ * into the existing diagram.
+ */
+CsetUtils.importFilesCSETD = function (files, editor)
+{
+    if (files.length == 0)
+    {
+        return;
+    }
+
+    var file = files[0];
+    var reader = new FileReader();
+    reader.onload = function (e)
+    {
+        TranslateToMxGraph(editor, e.target.result);
+    };
+    reader.readAsText(file);
+}
+
+/**
+ * Persists the CSETD XML to the CSET API.  The mxGraph translation
+ * is returned, and dropped into the existing graph.
+ */
+function TranslateToMxGraph(editor, sXML)
+{
+    var jwt = localStorage.getItem('jwt');
+
+    var req = {};
+    req.DiagramXml = sXML;
+
+    var url = localStorage.getItem('cset.host') + 'diagram/importcsetd';
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && (this.status == 200 || this.status == 204))
+        {
+            // successful post - drop the XML that came back into the graph
+            var data = xhr.responseText;
+            data = Graph.zapGremlins(mxUtils.trim(data));
+
+            // fix escaped quotes and trim quotes
+            data = data.replace(/\\"/g, '"').replace(/^\"|\"$/g, '');
+
+            editor.graph.model.beginUpdate();
+            try
+            {
+                editor.setGraphXml(mxUtils.parseXml(data).documentElement);
+
+                console.log('just set import graph');
+                console.log(editor.graph);
+            }
+            catch (e)
+            {
+                error = e;
+                console.log('TranslateToMxGraph error: ' + error);
+            }
+            finally
+            {
+                editor.graph.model.endUpdate();
+                editor.graph.fit();
+                editor.graph.zoomOut();
+            }
+        }
+        if (this.readyState == 4 && this.status == 401)
+        {
+            window.location.replace('error401.html');
+        }
+    }
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', jwt);
+    xhr.send(JSON.stringify(req));
 }

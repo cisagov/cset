@@ -81,15 +81,14 @@ mxText.prototype.baseSpacingBottom = 1;
 mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 
 
-// CSET - default value (label) for some objects
+// CSET - things to do when new objects are added to the graph
 mxGraphModel.prototype.cellAdded = function (cell)
 {
-    // if the parent is not 'root', it is something in the sidebar, and we don't need to do anything.
-    if (!CsetUtils.parentIsRoot(cell))
+    // is this new addition part of the graph, or part of the sidebar?
+    if (!CsetUtils.parentIsGraph(cell))
     {
         return;
     }
-
 
     if (!!cell.style)
     {
