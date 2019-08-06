@@ -3393,7 +3393,9 @@ App.prototype.saveFile = function (forceDialog, success)
                     'https://desk.draw.io/support/solutions/articles/16000042485',
                 true, rowLimit, null, null, null, this.editor.fileExtensions);
 
-            this.showDialog(dlg.container, 460, (serviceCount > rowLimit) ? 390 : 270, true, true);
+            // CSET - reduce height of Save dialog
+            // this.showDialog(dlg.container, 460, (serviceCount > rowLimit) ? 390 : 270, true, true);
+            this.showDialog(dlg.container, 460, 150, true, true);
             dlg.init();
         }
     }
