@@ -49,9 +49,11 @@ Editor = function (chromeless, themes, model, graph, editable)
         }
 
         // Only persist if actual changes occurred.  An mxRootChange is likely a new diagram.
-        if (typeof edit.changes[0] != "mxRootChange")
+        if (!(edit.changes[0] instanceof mxRootChange))
         {
-            PersistGraphToCSET(this);
+            CsetUtils.adjustConnectability(edit);
+
+            CsetUtils.PersistGraphToCSET(this);
         }
     };
 
@@ -65,44 +67,8 @@ Editor = function (chromeless, themes, model, graph, editable)
     this.init();
 };
 
-/**
- * Persists the graph to the CSET API.
- */
-function PersistGraphToCSET(editor)
-{
-    var jwt = localStorage.getItem('jwt');
-    var enc = new mxCodec();
-    var node = enc.encode(editor.graph.getModel());
-    var oSerializer = new XMLSerializer();
-    var sXML = oSerializer.serializeToString(node);
 
-    var req = {};
-    req.DiagramXml = sXML;
-    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
 
-    if (sXML == EditorUi.prototype.emptyDiagramXml)
-    {
-        // debugger;
-    }
-
-    var url = localStorage.getItem('cset.host') + 'diagram/save';
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function ()
-    {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            // successful post
-        }
-        if (this.readyState == 4 && this.status == 401)
-        {
-            window.location.replace('error401.html');
-        }
-    }
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', jwt);
-    xhr.send(JSON.stringify(req));
-}
 
 /**
  * Counts open editor tabs (must be global for cross-window access)
