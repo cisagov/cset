@@ -2461,7 +2461,7 @@
                 editor.graph.model.beginUpdate();
                 try
                 {
-                    editor.setGraphXml(mxUtils.parseXml(data).documentElement);
+                    editor.setGraphXml(mxUtils.parseXml(data).documentElement);                    
                 }
                 catch (e)
                 {
@@ -2471,6 +2471,8 @@
                 finally
                 {
                     editor.graph.model.endUpdate();
+                    editor.graph.fit();
+                    editor.graph.zoomOut();
                 }
 
                 return;
