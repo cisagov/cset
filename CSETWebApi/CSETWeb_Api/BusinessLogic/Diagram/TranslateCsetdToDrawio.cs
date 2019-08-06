@@ -148,8 +148,13 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xObject.AppendChild(xZone);
                 xZone.SetAttribute("vertex", "1");
 
-                // zone fill color defaulted to mint green to match CSET 8.1
-                xZone.SetAttribute("style", "swimlane;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;");
+                // zone type
+                string zoneType = ChildValue(zone, "c:type");
+                xObject.SetAttribute("zonetype", zoneType);
+
+                // zone fill color 
+                string zoneColor = GetZoneColor(zoneType);
+                xZone.SetAttribute("style", "swimlane;fillColor=" + zoneColor + ";swimlaneFillColor=" + zoneColor + ";");
 
 
                 // determine the parent layer
@@ -171,6 +176,35 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 v = ChildValue(zone, "c:rect/c:y");
                 xGeometry.SetAttribute("y", v);
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="zoneType"></param>
+        /// <returns></returns>
+        private string GetZoneColor(string zoneType)
+        {
+            switch (zoneType)
+            {
+                case "Control DMZ":
+                    return "#6ce48d";
+                case "Corporate":
+                    return "#dcafae";
+                case "Other":
+                    return "#4b5e00";
+                case "Safety":
+                    return "#db7e94";
+                case "ExternalDMZ":
+                    return "#933705";
+                case "Plant System":
+                    return "#b97349";
+                case "Control System":
+                    return "#fb1936";
+            }
+
+            return "#f0fff0";
         }
 
 
