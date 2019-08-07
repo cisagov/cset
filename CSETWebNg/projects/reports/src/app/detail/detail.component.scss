@@ -21,3 +21,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.grey {
+  text-align: left;
+  background-color: #bfbfbf;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 3rem;
+}
+
+table td {
+  border: 1px solid #000;
+  padding: .5rem;
+  vertical-align: top;
+}

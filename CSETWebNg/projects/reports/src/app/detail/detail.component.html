@@ -142,6 +142,19 @@
     </div>
 
 
+    <!--Table Of Contents-->
+    <div class="page-break">
+        <p class="header"><strong>Table of Contents</strong></p>
+
+        <ul class="leaders">
+            <li><span>Table Of Contents</span> <span>4</span></li>
+            <li><span>Site Information</span> <span>5</span></li>
+            <li><span>Executive Summary</span> <span>6</span></li>
+            <li><span>Network Diagram</span> <span>11</span></li>
+            <li><span>Questions Comments and Marked For Review</span> <span>36</span></li>
+        </ul>
+    </div>
+
 
     <div class="page-break">
         <h1>
@@ -196,7 +209,14 @@
         </table>
     </div>
 
-
+    <!--Network Diagram-->
+    <div class="page-break">
+        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana;"><strong>Network Diagram</strong></h4>
+	
+	    <img src="W:/mockups/Reports Mockups/test image.png" style="width: 100%; height: auto; max-width: 1500px; float: center;">
+	
+	    <h1 style="text-align: center;">^^^ Insert Network Diagram Here ^^^</h1>
+     </div>
 
 
     <div class="page-break">
@@ -220,6 +240,34 @@
     </div>
 
 
+    <!--Analysis of Network Components-->
+    <div class="page-break">
+        <div id="chartContainer2"></div>
+	    <div id="chartContainer1">Analysis of<br>Network Components</div>
+	    <div id="chartContainer3">
+			<p>The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is: <input type="text" class="warnInput" value="2"> <br><br> See the Site Summary report Findings and Recommendations from Basic Network Analysis for details. </p>
+	    </div>
+        <div id="chartContainer4"></div>
+    </div>
+
+
+    <!--Component Compliance by Subject Area-->
+    <div class="page-break">
+        <h4 style="color: #0A5278; font-size: 18px; font-family: Verdana;"><strong>Network Diagram</strong></h4>
+	    <p style="color: #0A5278; font-size: 18px; font-family: Verdana; text-align: center;">Component</p>
+	    <div id="chartContainer5"></div>
+    </div>
+
+
+    <!--Findings and Reccomendations From Basic Network Analysis-->  
+    <div class="page-break">
+        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana;"><strong>Findings and Recommendations From Basic Network Analysis</strong></h4>
+	
+	<ol style="font-family: Palatino;">
+		<li>THE PATH BETWEEN THE COMPONENTS, REMOTE ACCESS SERVER, AND CORP SWITCH, IS UNTRUSTED. BECAUSE MALICIOUS TRAFFIC MAY BE INTRODUCED ONTO THE LINK, A FIREWALL TO FILTER THE TRAFFIC ON BOTH SIDES OF UNTRUSTED LINK IS RECOMMENDED.</li> <br>
+		<li>THE NETWORK PATH IDENTIFIED BY THE COMPONENTS, REMOTE CONTROL SHED, AND NETWORK RING, APPEARS TO CONNECT NETWORK SEGMENTS WHOSE COMPONENTS RESIDE IN DIFFERENT ZONES. A FIREWALL TO FILTER THE TRAFFIC IN THIS PATH IS RECOMMENDED TO PROTECT THE COMPONENTS IN ONE ZONE FROM A COMPRIMISED COMPONENT IN THE OTHER ZONE.</li>
+	</ol>
+    </div>
 
 
     <div class="page-break">
@@ -792,7 +840,78 @@
     </div>
 
 
+    <!--Component Question Detail-->
+    <div class="page-break">
+        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana; padding: 15px;"><strong>Component Question Details</strong></h4>
 
+        <table>
+
+            <tr class="grey">
+                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td> 
+            </tr>
+            <tr>
+                <td style="width: 10%">
+                    <div>Question</div>
+                </td>
+                <td colspan="2"style="width: 80%">
+                    Are critical network components (modems, switches, routers, firewalls) physically secure from unauthorized access? (i.e. located in a locked room)
+                </td>
+                <td style="width: 10%">
+                    Yes
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 10%">Zone</td>
+                <td style="width: 75%">Facility Configuration</td>
+                <td style="width: 5%">SAL:</td>
+                <td style="width: 10%">Moderate</td>
+            </tr>
+        </table>	
+        <table>	
+            <tr class="grey">
+                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td> 
+            </tr>
+            <tr>
+                <td style="width: 10%">
+                    <div>Question</div>
+                </td>
+                <td colspan="2"style="width: 80%">
+                    Have default user names and passwords for administration been changed, utilizing robust password guidelines (e.g., length, complexity)?
+                </td>
+                <td style="width: 10%">
+                    Yes
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 10%">Zone</td>
+                <td style="width: 75%">Facility Configuration</td>
+                <td style="width: 5%">SAL:</td>
+                <td style="width: 10%">Moderate</td>
+            </tr>
+        </table>	
+        <table>
+            <tr class="grey">
+                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td> 
+            </tr>
+            <tr>
+                <td style="width: 10%">
+                    <div>Question</div>
+                </td>
+                <td colspan="2"style="width: 80%">
+                    Do you have procedures in place for patch deployment, incluiding firmware updates?
+                </td>
+                <td style="width: 10%">
+                    Yes
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 10%">Zone</td>
+                <td style="width: 75%">Facility Configuration</td>
+                <td style="width: 5%">SAL:</td>
+                <td style="width: 10%">Moderate</td>
+            </tr>
+        </table>
+    </div>
 
     <div *ngIf="false">
         <!-- Remove this wrapping div tag when Components are implemented in CSET -->
