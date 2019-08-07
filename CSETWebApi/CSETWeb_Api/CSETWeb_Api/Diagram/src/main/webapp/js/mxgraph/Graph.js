@@ -84,6 +84,9 @@ mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 // CSET - things to do when new objects are added to the graph
 mxGraphModel.prototype.cellAdded = function (cell)
 {
+    console.log('cellAdded');
+    console.log(cell);
+
     // is this new addition part of the graph, or part of the sidebar?
     if (!this.getRoot(cell).hasOwnProperty('id'))
     {
