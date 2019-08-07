@@ -17,48 +17,6 @@ CsetUtils = function ()
 
 
 /**
- * Derives a name/label for the component based on its type.
- */
-CsetUtils.autoNameComponent = function (cell)
-{
-    // determine new number
-    var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
-    sessionStorage.setItem("last.number", num);
-
-
-    // determine component type prefix
-    if (cell.getValue() == 'Zone')
-    {
-        prefix = 'Zone';
-    }
-    else 
-    {
-        var prefix = "COMP";
-        var compMap = Editor.componentSymbols;
-        if (!compMap)
-        {
-            return;
-        }
-        var found = false;
-        for (var i = 0; i < compMap.length && !found; i++)
-        {
-            for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
-            {
-                var s = compMap[i].Symbols[j];
-                if ('img/cset/' + s.FileName == CsetUtils.getStyleValue(cell.style, 'image'))
-                {
-                    prefix = s.Abbreviation;
-                    found = true;
-                }
-            }
-        }
-    }
-
-    cell.setValue(prefix + '-' + num);
-}
-
-
-/**
  * If the edit is a cell being moved or added, makes it 'unconnectable'
  * if it is now the child of a multi-service component. 
  * @param {any} edit
@@ -71,20 +29,20 @@ CsetUtils.adjustConnectability = function (edit)
         {
             var c = edit.changes[i].child;
 
-            if (CsetUtils.isConnector(c))
+            if (c.isConnector())
             {
                 return;
             }
 
             // zones are not connectable
-            if (CsetUtils.getStyleValue(c.style, 'zone') == '1')
+            if (c.isZone())
             {
                 c.setConnectable(false);
                 return;
             }
 
             // children of an MSC are not connectable
-            if (CsetUtils.isParentMSC(c))
+            if (c.isParentMSC())
             {
                 c.setConnectable(false);
             }
@@ -96,26 +54,6 @@ CsetUtils.adjustConnectability = function (edit)
     }
 }
 
-
-/**
- * 
- */
-CsetUtils.isConnector = function (cell)
-{
-    return (!cell.value && !!cell.edge && cell.edge == true);
-}
-
-/**
- * 
- */
-CsetUtils.isParentMSC = function (cell)
-{
-    var parent = cell.getParent();
-    if (!parent) { return false; }
-
-    var s = parent.getStyle();
-    return (!!s && s.indexOf('msc=1') > 0);
-}
 
 /**
  * Persists the graph to the CSET API.
@@ -156,119 +94,6 @@ CsetUtils.PersistGraphToCSET = function (editor)
     xhr.send(JSON.stringify(req));
 }
 
-
-/**
- * Sets an attribute on a cell.  Creates an object for the cell as needed.
- */
-CsetUtils.applyAttributeToCell = function (model, cell, attributeName, attributeValue)
-{
-    // If the cell already holds an object, just set the attribute
-    if (typeof cell.value == "object")
-    {
-        var obj = cell.value;
-        obj.setAttribute(attributeName, attributeValue);
-        return;
-    }
-
-    // The cell is primitive (label only).  Instantiate an object as the value of the cell.
-    try
-    {
-        var value = model.getValue(cell);
-        // Converts the value to an XML node
-        if (!mxUtils.isNode(value))
-        {
-            var doc = mxUtils.createXmlDocument();
-            var obj = doc.createElement('object');
-
-            obj.setAttribute('label', cell.getValue('label') || '');
-
-            // set the new attribute value on the object
-            obj.setAttribute(attributeName, attributeValue);
-            value = obj;
-        }
-
-        value = value.cloneNode(true);
-
-        // Updates the value of the cell (undoable)
-        model.setValue(cell, value);
-    }
-    catch (e)
-    {
-        console.log(e);
-    }
-}
-
-
-/**
- * Returns the value for the specified style.  
- * Some style elements may not have a value.
- * This function should not be used to find those.
- * @param {any} styleString
- * @param {any} name
- */
-CsetUtils.getStyleValue = function (styleString, name)
-{
-    if (!styleString)
-    {
-        return null;
-    }
-
-    var v = null;
-    styleString.split(';').forEach((pair) =>
-    {
-        const s = pair.split('=', 2);
-        if (s[0] === name)
-        {
-            if (!!s[1])
-            {
-                v = s[1];
-            }
-        }
-    });
-    return v;
-}
-
-/**
- * Returns a boolean indicating if the specified style exists,
- * regardless of its value.
- * @param {any} styleString
- * @param {any} name
- */
-CsetUtils.hasStyle = function (styleString, name)
-{
-    var exists = false;
-    styleString.split(';').forEach((style) =>
-    {
-        const s = style.split('=', 2);
-        if (s[0] === name)
-        {
-            exists = true;
-        }
-    });
-    return exists;
-}
-
-
-/**
- * Recursively looks up through parentage to see if the cell's
- * parent is ultimately 'root'.
- * @param {any} cell
- */
-CsetUtils.parentIsGraph = function (cell)
-{
-    if (!cell.hasOwnProperty('parent'))
-    {
-        return false;
-    }
-
-    // if I have a null parent but I have an ID, then I am the top node of the graph
-    if (cell.parent == null && cell.hasOwnProperty('id'))
-    {
-        return true;
-    }
-
-    return CsetUtils.parentIsGraph(cell.parent);
-}
 
 /**
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
@@ -318,9 +143,6 @@ function TranslateToMxGraph(editor, sXML)
             try
             {
                 editor.setGraphXml(mxUtils.parseXml(data).documentElement);
-
-                console.log('just set import graph');
-                console.log(editor.graph);
             }
             catch (e)
             {
@@ -330,8 +152,13 @@ function TranslateToMxGraph(editor, sXML)
             finally
             {
                 editor.graph.model.endUpdate();
+                CsetUtils.initializeZones(editor.graph);
+
                 editor.graph.fit();
-                editor.graph.zoomOut();
+                if (editor.graph.view.scale > 1)
+                {
+                    editor.graph.zoomTo(1);
+                }
             }
         }
         if (this.readyState == 4 && this.status == 401)
@@ -344,3 +171,41 @@ function TranslateToMxGraph(editor, sXML)
     xhr.setRequestHeader('Authorization', jwt);
     xhr.send(JSON.stringify(req));
 }
+
+/**
+ * 
+ */
+CsetUtils.initializeZones = function (graph)
+{
+    var allCells = graph.getChildVertices(graph.getDefaultParent());
+    allCells.forEach(x =>
+    {
+        x.setAttribute('internalLabel', x.getAttribute('label'));
+        
+        x.initZone();
+    });
+    graph.refresh();
+}
+
+/**
+ * 
+ */
+CsetUtils.handleZoneChanges = function (edit)
+{
+    edit.changes.forEach(change =>
+    {
+        if (change instanceof mxValueChange && change.cell.isZone())
+        {
+            var c = change.cell;
+
+            // if they just changed the label, update the internal label
+            if (change.value.attributes.label.value != change.previous.attributes.label.value)
+            {
+                c.setAttribute('internalLabel', change.value.attributes.label.value);
+            }
+
+            c.initZone();
+        }
+    });
+}
+

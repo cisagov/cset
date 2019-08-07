@@ -2472,7 +2472,10 @@
                 {
                     editor.graph.model.endUpdate();
                     editor.graph.fit();
-                    editor.graph.zoomOut();
+                    if (editor.graph.view.scale > 1)
+                    {
+                        editor.graph.zoomTo(1);
+                    }
                 }
 
                 return;
