@@ -22,23 +22,52 @@ SOFTWARE.
 
 */
 * {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content {
+    border-collapse: collapse;
+    margin: 1rem;
+    
+}
+
+.content td {
+    border: 1px solid #000;
+    padding: .5rem;
+    vertical-align: top;
 }
 
 .grey {
-  text-align: left;
-  background-color: #bfbfbf;
-  font-weight: 600;
-  text-transform: uppercase;
+    text-align: left;
+    background-color: #bfbfbf;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-table {
-  border-collapse: collapse;
-  margin: 3rem;
+h4{
+    color: #0A5278;
+    font-size: 18px;
+    font-family: Verdana;
+    padding: 15px;
 }
 
-table td {
-  border: 1px solid #000;
-  padding: .5rem;
-  vertical-align: top;
+.description{
+    color: #0A5278;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    text-align: left;
+    border: 0px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.info {
+    padding-left: 15px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.leadInfo {
+    margin-left: 25px;
 }
