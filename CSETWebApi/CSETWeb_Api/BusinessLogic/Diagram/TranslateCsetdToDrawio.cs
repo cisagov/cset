@@ -140,9 +140,13 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 var xObject = xDrawio.CreateElement("object");
                 xRoot.AppendChild(xObject);
                 xObject.SetAttribute("id", newID);
+
                 var sal = ChildValue(zone, "c:sallevel");
-                xObject.SetAttribute("label", ChildValue(zone, "c:tag/c:label") + "-" + sal);
                 xObject.SetAttribute("SAL", sal);
+
+                var label = ChildValue(zone, "c:tag/c:label");
+                xObject.SetAttribute("label", label);
+                xObject.SetAttribute("internalLabel", label);
 
                 var xZone = xDrawio.CreateElement("mxCell");
                 xObject.AppendChild(xZone);
@@ -150,11 +154,13 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
                 // zone type
                 string zoneType = ChildValue(zone, "c:type");
-                xObject.SetAttribute("zonetype", zoneType);
+                xObject.SetAttribute("zoneType", zoneType);
+
+                xObject.SetAttribute("zone", "1");
 
                 // zone fill color 
-                string zoneColor = GetZoneColor(zoneType);
-                xZone.SetAttribute("style", "swimlane;fillColor=" + zoneColor + ";swimlaneFillColor=" + zoneColor + ";");
+                string zoneColor = "#ffffff";
+                xZone.SetAttribute("style", "swimlane;zone=1;fillColor=" + zoneColor + ";swimlaneFillColor=" + zoneColor + ";");
 
 
                 // determine the parent layer
@@ -176,35 +182,6 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 v = ChildValue(zone, "c:rect/c:y");
                 xGeometry.SetAttribute("y", v);
             }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="zoneType"></param>
-        /// <returns></returns>
-        private string GetZoneColor(string zoneType)
-        {
-            switch (zoneType)
-            {
-                case "Control DMZ":
-                    return "#6ce48d";
-                case "Corporate":
-                    return "#dcafae";
-                case "Other":
-                    return "#4b5e00";
-                case "Safety":
-                    return "#db7e94";
-                case "ExternalDMZ":
-                    return "#933705";
-                case "Plant System":
-                    return "#b97349";
-                case "Control System":
-                    return "#fb1936";
-            }
-
-            return "#f0fff0";
         }
 
 

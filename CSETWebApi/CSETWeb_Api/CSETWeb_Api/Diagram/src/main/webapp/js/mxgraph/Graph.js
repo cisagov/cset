@@ -85,7 +85,7 @@ mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 mxGraphModel.prototype.cellAdded = function (cell)
 {
     // is this new addition part of the graph, or part of the sidebar?
-    if (!CsetUtils.parentIsGraph(cell))
+    if (!this.getRoot(cell).hasOwnProperty('id'))
     {
         return;
     }
@@ -93,13 +93,13 @@ mxGraphModel.prototype.cellAdded = function (cell)
     if (!!cell.style)
     {
         // ignore shapes
-        if (CsetUtils.getStyleValue(cell.style, 'shape') !== null)
+        if (cell.getStyleValue('shape') !== null)
         {
             return;
         }
 
         // ignore text objects
-        if (CsetUtils.hasStyle(cell.style, 'text'))
+        if (cell.hasStyle('text'))
         {
             return;
         }
@@ -111,21 +111,29 @@ mxGraphModel.prototype.cellAdded = function (cell)
         }
     }
 
-
-    CsetUtils.autoNameComponent(cell);
-
-
     // assign a component GUID to components (not zones or MSCs)
-    if (CsetUtils.getStyleValue(cell.style, 'zone') != '1' && CsetUtils.getStyleValue(cell.style, 'msc') != '1')
+    if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
     {
         var nextGuid = guidService.getInstance().getNextGuid();
-        CsetUtils.applyAttributeToCell(this, cell, 'ComponentGuid', nextGuid);
+        cell.setCsetAttribute('ComponentGuid', nextGuid);
     }
+
+    // give zones a couple of zone-specific attributes
+    if (cell.getStyleValue('zone') == '1')
+    {        
+        cell.setCsetAttribute('zone', '1');
+        cell.setCsetAttribute('zoneType', 'Other');
+        cell.setCsetAttribute('SAL', 'Low');
+        cell.colorZone();
+    }
+
+
+    cell.autoNameComponent();
 
 
     // If the object being added is a multi-service component,
     // swap out the symbol with a container.
-    var filename = CsetUtils.getStyleValue(cell.style, 'image');
+    var filename = cell.getStyleValue('image');
     if (!!filename && filename.endsWith('multiple_services_component.svg'))
     {
         // convert the MSC into a swimlane (container)
