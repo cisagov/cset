@@ -53,6 +53,9 @@ Editor = function (chromeless, themes, model, graph, editable)
         {
             CsetUtils.adjustConnectability(edit);
 
+            CsetUtils.handleZoneChanges(edit);
+            this.graph.refresh();
+
             CsetUtils.PersistGraphToCSET(this);
         }
     };

@@ -140,16 +140,27 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 var xObject = xDrawio.CreateElement("object");
                 xRoot.AppendChild(xObject);
                 xObject.SetAttribute("id", newID);
+
                 var sal = ChildValue(zone, "c:sallevel");
-                xObject.SetAttribute("label", ChildValue(zone, "c:tag/c:label") + "-" + sal);
                 xObject.SetAttribute("SAL", sal);
+
+                var label = ChildValue(zone, "c:tag/c:label");
+                xObject.SetAttribute("label", label);
+                xObject.SetAttribute("internalLabel", label);
 
                 var xZone = xDrawio.CreateElement("mxCell");
                 xObject.AppendChild(xZone);
                 xZone.SetAttribute("vertex", "1");
 
-                // zone fill color defaulted to mint green to match CSET 8.1
-                xZone.SetAttribute("style", "swimlane;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;");
+                // zone type
+                string zoneType = ChildValue(zone, "c:type");
+                xObject.SetAttribute("zoneType", zoneType);
+
+                xObject.SetAttribute("zone", "1");
+
+                // zone fill color 
+                string zoneColor = "#ffffff";
+                xZone.SetAttribute("style", "swimlane;zone=1;fillColor=" + zoneColor + ";swimlaneFillColor=" + zoneColor + ";");
 
 
                 // determine the parent layer
