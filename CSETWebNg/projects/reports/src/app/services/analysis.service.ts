@@ -139,7 +139,7 @@ export class AnalysisService {
         rotation: -Math.PI
       }
     });
-  
+
   }
 
   getComponentsSummary(): any {
@@ -204,18 +204,18 @@ export class AnalysisService {
           }
         ]
       },
-      
+
       options: {
-        responsive:true,
-        maintainAspectRatio:false,
-        aspectRatio:0,
-        
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 0,
+
         title: {
           display: false,
           fontSize: 20,
           text: 'Ranked Categories'
         },
-       
+
         legend: {
           display: false
         },
@@ -380,6 +380,156 @@ export class AnalysisService {
         return "";
     }
   }
+
+
+
+  /**
+   * This is an attempt at making a horizontal stacked bar chart using Chart.js.
+   * @param canvasId
+   */
+  buildDummyComponentChart1(canvasId: string) {
+    return new Chart("chartNetwork1",
+      {
+        type: 'horizontalBar',
+        data: {
+          labels:
+
+            ["Active Directory",
+              "DB Server",
+              "Firewall",
+              "Handheld Wireless Device",
+              "HMI",
+              "IDS",
+              "IP Camera",
+              "IP Phone",
+              "Network Printer",
+              "Optical Ring",
+              "RAS",
+              "Router",
+              "Server",
+              "Switch",
+              "Terminal Server",
+              "Wireless Modem"],
+
+
+          datasets: [
+            {
+              label: "Yes",
+              backgroundColor: '#006000',
+              data: [6, 7, 6, 8, 6, 10, 3]
+            },
+            {
+              label: "No",
+              backgroundColor: '#990000',
+              data: [8, 9, 5, 8, 6, 10, 3]
+            },
+            {
+              label: "N/A",
+              backgroundColor: '#0063b1',
+              data: [6, 7, 6, 8, 6, 10, 3]
+            },
+            {
+              label: "Alt",
+              backgroundColor: '#b17300',
+              data: [6, 7, 6, 8, 6, 10, 3]
+            },
+            {
+              label: "Unanswered",
+              backgroundColor: '#cccccc',
+              data: [74, 7, 6, 8, 6, 10, 3]
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          scales: {
+            yAxes: [{
+              stacked: true
+            }],
+            xAxes: [{
+              stacked: true
+            }]
+          },
+        }
+      });
+  }
+
+  buildDummyComponentAnswerPie(canvasId: string) {
+    const x = {
+      label: 'hey',
+      data: [],
+      Colors: []
+    };
+
+    return new Chart(canvasId, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          this.configSvc.answerLabels['Y'],
+          this.configSvc.answerLabels['N'],
+          this.configSvc.answerLabels['NA'],
+          this.configSvc.answerLabels['A'],
+          this.configSvc.answerLabels['U']
+        ],
+        datasets: [
+          {
+            label: x.label,
+            data: x.data,
+            backgroundColor: x.Colors
+          }
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        },
+        title: {
+          display: false,
+          fontSize: 20,
+          text: 'Standards Summary'
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            generateLabels: function (chart) { // Add values to legend labels
+              const data = chart.data;
+              if (data.labels.length && data.datasets.length) {
+                return data.labels.map(function (label, i) {
+                  const meta = chart.getDatasetMeta(0);
+                  const ds = data.datasets[0];
+                  const arc = meta.data[i];
+                  const custom = arc && arc.custom || {};
+                  const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                  const arcOpts = chart.options.elements.arc;
+                  const fill = custom.backgroundColor ? custom.backgroundColor :
+                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                  const stroke = custom.borderColor ? custom.borderColor :
+                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                  const bw = custom.borderWidth ? custom.borderWidth :
+                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                  const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                  return {
+                    text: label + ' : ' + value + '%',
+                    fillStyle: fill,
+                    strokeStyle: stroke,
+                    lineWidth: bw,
+                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    index: i
+                  };
+                });
+              } else {
+                return [];
+              }
+            }
+          }
+        },
+        circumference: Math.PI,
+        rotation: -Math.PI
+      }
+    });
+  }
 }
-
-
