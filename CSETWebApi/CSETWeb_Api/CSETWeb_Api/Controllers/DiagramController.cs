@@ -63,10 +63,25 @@ namespace CSETWeb_Api.Controllers
             var assessmentDetail = new AssessmentController().Get();
             response.AssessmentName = assessmentDetail.AssessmentName;
 
-
-
-
             return response;
+        }
+
+
+        /// <summary>
+        /// Returns a boolean indicating the existence of a diagram.
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/diagram/has")]
+        [HttpGet]
+        public bool HasDiagram()
+        {
+            // get the assessment ID from the JWT
+            TokenManager tm = new TokenManager();
+            int userId = (int)tm.PayloadInt(Constants.Token_UserId);
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+
+            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
+            return dm.HasDiagram((int)assessmentId);
         }
 
 

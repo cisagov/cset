@@ -11,6 +11,10 @@ import { ConfigService } from '../../services/config.service';
 })
 export class DiagramComponent implements OnInit {
 
+    msgDiagramExists = "Edit the network diagram";
+    msgNoDiagramExists = "Create a network diagram";
+    buttonText: string = this.msgNoDiagramExists;
+
     constructor(private router: Router,
         private navSvc: NavigationService,
         public assessSvc: AssessmentService,
@@ -20,6 +24,9 @@ export class DiagramComponent implements OnInit {
     tree: NavTree[] = [];
     ngOnInit() {
         this.populateTree();
+        this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
+            this.buttonText = resp ? this.msgDiagramExists : this.msgNoDiagramExists;
+          });
     }
 
     populateTree() {
