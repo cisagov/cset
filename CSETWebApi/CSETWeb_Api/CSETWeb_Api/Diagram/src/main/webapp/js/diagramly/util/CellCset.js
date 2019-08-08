@@ -199,6 +199,9 @@ mxCell.prototype.colorZone = function ()
  */
 mxCell.prototype.autoNameComponent = function ()
 {
+    console.log('autoNameComponent');
+    console.log(this);
+
     // ignore items without style
     if (!this.getStyle())
     {
