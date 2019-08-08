@@ -29,6 +29,7 @@ import { Title } from '@angular/platform-browser';
 import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../../../../src/app/models/admin-save.model';
 import { ACETService } from '../../../../../src/app/services/acet.service';
+import * as CanvasJS from '../../assets/canvasjs_src/core/canvasjs.js';
 
 @Component({
   selector: 'rapp-sitesummary',
@@ -162,6 +163,12 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
+
+
+
+      this.doChartStuff();
+
+
   }
 
   ngAfterViewChecked() {
@@ -249,7 +256,6 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     comp.HasSpecifyField = hasSpecifyField;
     components.push(comp);
   }
-}
 
 // /*Analysis of Network Components */
 // var chart = new CanvasJS.Chart("chartContainer2",
@@ -458,3 +464,4 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 //         ]
 //     });
 // chart.render();
+

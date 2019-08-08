@@ -43,6 +43,10 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
   chartStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
 
+
+  dummyChart1: Chart;
+  dummyChart2: Chart;
+
   acetDashboard: AcetDashboard;
 
 
@@ -66,6 +70,13 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
     this.reportSvc.getACET().subscribe((x: boolean) => {
       this.reportSvc.hasACET = x;
     });
+
+
+
+    this.doChartStuff();
+
+
+
   }
 
   ngAfterViewInit() {
@@ -84,6 +95,12 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
     });
 
+
+    // This is an attempt at making a horizontal stacked bar chart using Chart.js
+    // this.dummyChart1 = this.analysisSvc.buildDummyComponentAnswerPie('canvasComponentSummary');
+    this.dummyChart2 = this.analysisSvc.buildDummyComponentChart1('chartNetwork1');
+
+
     // ACET-specific content
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {
@@ -98,7 +115,6 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
   }
-}
 
 // var chart = new CanvasJS.Chart("chartContainer2",
 //     {
@@ -258,3 +274,4 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
 //         ]
 //     });
 // chart.render();
+
