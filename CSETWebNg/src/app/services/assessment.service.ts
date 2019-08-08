@@ -230,6 +230,10 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'assessmentdocuments');
   }
 
+  hasDiagram() {
+    return this.http.get(this.apiUrl + 'diagram/has');
+  }
+
   /**
    * Converts linebreak characters to HTML <br> tag.
    */
