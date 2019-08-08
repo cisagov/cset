@@ -740,6 +740,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.HasDiagram">
+            <summary>
+            Returns a boolean indicating the existence of a diagram.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.DiagramController.ImportCsetd(CSETWeb_Api.Models.DiagramRequest)">
             <summary>
             Translates XML from CSETD file to XML for Draw.io.

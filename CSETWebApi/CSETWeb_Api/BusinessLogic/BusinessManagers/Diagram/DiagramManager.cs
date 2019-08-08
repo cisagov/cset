@@ -94,6 +94,29 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// Returns a boolean indicating the presence of a diagram.
+        /// </summary>
+        /// <param name="assessmentID"></param>
+        /// <returns></returns>
+        public bool HasDiagram(int assessmentID)
+        {
+            using (var db = new CSET_Context())
+            {
+                var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+
+                DiagramResponse resp = new DiagramResponse();
+
+                if (assessmentRecord != null)
+                {
+                    return assessmentRecord.Diagram_Markup != null;
+                }
+
+                return false;
+            }
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
