@@ -397,7 +397,7 @@ namespace CSETWeb_Api.Controllers
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
-            myChartData.Colors = new List<string>();
+            myChartData.Colors = new List<string>();            
 
 
             var results = new StandardSummaryOverallMultiResult();
@@ -436,16 +436,24 @@ namespace CSETWeb_Api.Controllers
                 if (!answers.TryGetValue(data.Answer_Full_Name, out chartData))
                 {
                     chartData = new ChartData();
-
                     chartData.label = data.Answer_Full_Name;
                     chartData.backgroundColor = answerColorDefs[data.Answer_Text];
+
+                    myChartData.Colors.Add(answerColorDefs[data.Answer_Text]);
+
                     myChartData.dataSets.Add(chartData);
                     answers.Add(data.Answer_Full_Name, chartData);
-
                 }
+
                 myChartData.DataRowsPie.Add(data);
                 chartData.data.Add((double)(data.Percent ?? 0));
             }
+
+            myChartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "#000000";
+            });
 
             return myChartData;
         }

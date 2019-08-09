@@ -472,17 +472,17 @@ export class AnalysisService {
     return new Chart(canvasId,
       {
         type: 'horizontalBar',
-        borderColor: 'red',
         data: {
           labels: x.Labels,
           datasets: x.dataSets
         },
         options: {
-          legend: { display: false },
+          legend: { display: true },
           tooltips: {
             callbacks: {
               label: ((tooltipItem, data) =>
-                data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
             }
           },
           scales: {
