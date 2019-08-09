@@ -480,14 +480,16 @@ Format.prototype.refresh = function()
 		label.style.backgroundColor = this.inactiveTabBackgroundColor;
 		label.style.borderLeftWidth = '1px';
 		label.style.cursor = 'pointer';
-		label.style.width = (containsLabel) ? '50%' : '33.3%';
-		label.style.width = (containsLabel) ? '50%' : '33.3%';
+		label.style.width = (containsLabel) ? '50%' : '25%';
+		label.style.width = (containsLabel) ? '50%' : '25%';
 		var label2 = label.cloneNode(false);
-		var label3 = label2.cloneNode(false);
+        var label3 = label2.cloneNode(false);
+        var labelProperties = label3.cloneNode(false);
 
 		// Workaround for ignored background in IE
 		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
-		label3.style.backgroundColor = this.inactiveTabBackgroundColor;
+        label3.style.backgroundColor = this.inactiveTabBackgroundColor;
+        labelProperties.backgroundColor = this.inactiveTabBackgroundColor;
 		
 		// Style
 		if (containsLabel)
@@ -524,11 +526,22 @@ Format.prototype.refresh = function()
 		var arrangePanel = div.cloneNode(false);
 		arrangePanel.style.display = 'none';
 		this.panels.push(new ArrangePanel(this, ui, arrangePanel));
-		this.container.appendChild(arrangePanel);
+        this.container.appendChild(arrangePanel);
+
+        // CSET Properties
+        mxUtils.write(labelProperties, mxResources.get('prop'));
+        console.log(labelProperties);
+        div.appendChild(labelProperties);
+
+        var propertiesPanel = div.cloneNode(false);
+        propertiesPanel.style.display = 'none';
+        this.panels.push(new PropertiesPanel(this, ui, propertiesPanel));
+        this.container.appendChild(propertiesPanel);
 		
 		addClickHandler(label2, textPanel, idx++);
-		addClickHandler(label3, arrangePanel, idx++);
-	}
+        addClickHandler(label3, arrangePanel, idx++);
+        addClickHandler(labelProperties, propertiesPanel, idx++);
+    }
 };
 
 /**
@@ -2425,6 +2438,245 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 };
 
 /**
+ * CSET: Adds Properties label menu items to given menu
+ */
+PropertiesPanel = function (format, editorUi, container) {
+    BaseFormatPanel.call(this, format, editorUi, container);
+    this.init();
+}
+mxUtils.extend(PropertiesPanel, BaseFormatPanel);
+PropertiesPanel.prototype.init = function() {
+    this.container.style.borderBottom = 'none';
+    this.addProperties(this.container);
+}
+PropertiesPanel.prototype.addProperties = function(container) {
+    var ui = this.editorUi;
+    var editor = ui.editor;
+    var graph = editor.graph;
+    var ss = this.format.getSelectionState();
+
+    //tag 
+    var tagPanel = this.createPanel();;
+    tagPanel.style.marginLeft = '0px';
+    tagPanel.style.paddingTop = '4px';
+    tagPanel.style.paddingBottom = '4px';
+    tagPanel.style.fontWeight = 'normal';
+    tagPanel.style.border = 'none';
+    tagPanel.style.marginBottom = '7px';
+    tagPanel.style.marginTop = '10px';
+
+    mxUtils.write(tagPanel, mxResources.get('tag'));
+    var tagText = document.createElement('input');
+    tagText.style.position = 'absolute';
+    tagText.style.right = '20px';
+    tagText.style.width = '97px';
+    tagText.style.marginTop = '-2px';
+    tagPanel.appendChild(tagText);
+    container.appendChild(tagPanel);
+    var updateTag = function(evt, value) {
+        console.log(evt.srcElement.value);
+        console.log(evt);
+    }
+    mxEvent.addListener(tagText, 'blur', updateTag);
+    mxEvent.addListener(tagText, 'change', updateTag);
+    //layer
+    var layerPanel = this.createPanel();;
+    layerPanel.style.marginLeft = '0px';
+    layerPanel.style.paddingTop = '4px';
+    layerPanel.style.paddingBottom = '4px';
+    layerPanel.style.fontWeight = 'normal';
+    layerPanel.style.border = 'none';
+    layerPanel.style.marginBottom = '4px';
+    mxUtils.write(layerPanel, mxResources.get('layer'));
+
+    var layerSelect = document.createElement('select');
+    layerSelect.style.position = 'absolute';
+    layerSelect.style.right = '20px';
+    layerSelect.style.width = '97px';
+    layerSelect.style.marginTop = '-2px';
+
+    var layers = ['Main Layer', 'Mid Layer', 'Bottom Layer'];
+    for (var i = 0; i < layers.length; i++) {
+        var layerOption = document.createElement('option');
+        layerOption.setAttribute('value', layers[i]);
+        mxUtils.write(layerOption, layers[i]);
+        layerSelect.appendChild(layerOption);
+    }
+    layerPanel.appendChild(layerSelect);
+    container.appendChild(layerPanel);
+
+    //SAL
+    var salPanel = this.createPanel();;
+    salPanel.style.marginLeft = '0px';
+    salPanel.style.paddingTop = '4px';
+    salPanel.style.paddingBottom = '4px';
+    salPanel.style.fontWeight = 'normal';
+    salPanel.style.border = 'none';
+    salPanel.style.marginBottom = '4px';
+    mxUtils.write(salPanel, mxResources.get('sal'));
+
+    var salSelect = document.createElement('select');
+    salSelect.style.position = 'absolute';
+    salSelect.style.right = '20px';
+    salSelect.style.width = '97px';
+    salSelect.style.marginTop = '-2px';
+
+    var sals = ['Low', 'Moderate', 'High', 'Very High'];
+    for (var i = 0; i < sals.length; i++) {
+        var salOption = document.createElement('option');
+        salOption.setAttribute('value', sals[i]);
+        mxUtils.write(salOption, sals[i]);
+        salSelect.appendChild(salOption);
+    }
+    salPanel.appendChild(salSelect);
+    container.appendChild(salPanel);
+
+    //ip address 
+    var ipPanel = this.createPanel();;
+    ipPanel.style.marginLeft = '0px';
+    ipPanel.style.paddingTop = '4px';
+    ipPanel.style.paddingBottom = '4px';
+    ipPanel.style.fontWeight = 'normal';
+    ipPanel.style.border = 'none';
+    ipPanel.style.marginBottom = '7px';
+
+    mxUtils.write(ipPanel, mxResources.get('ipAddress'));
+    var ipText = document.createElement('input');
+    ipText.style.position = 'absolute';
+    ipText.style.right = '20px';
+    ipText.style.width = '97px';
+    ipText.style.marginTop = '-2px';
+    ipPanel.appendChild(ipText);
+    container.appendChild(ipPanel);
+
+    //asset type
+    var assetPanel = this.createPanel();;
+    assetPanel.style.marginLeft = '0px';
+    assetPanel.style.paddingTop = '4px';
+    assetPanel.style.paddingBottom = '4px';
+    assetPanel.style.fontWeight = 'normal';
+    assetPanel.style.border = 'none';
+    assetPanel.style.marginBottom = '4px';
+    mxUtils.write(assetPanel, mxResources.get('assetType'));
+
+    var assetSelect = document.createElement('select');
+    assetSelect.style.position = 'absolute';
+    assetSelect.style.right = '20px';
+    assetSelect.style.width = '97px';
+    assetSelect.style.marginTop = '-2px';
+
+    var assets = ['DCS', 'ESS', 'Ethernet Backhaul', 'EWS', 'FEP', 'Firewall', 'Handheld Wireless Device',
+        'Historian', 'HMI'];
+    for (var i = 0; i < assets.length; i++) {
+        var assetOption = document.createElement('option');
+        assetOption.setAttribute('value', assets[i]);
+        mxUtils.write(assetOption, assets[i]);
+        assetSelect.appendChild(assetOption);
+    }
+    assetPanel.appendChild(assetSelect);
+    container.appendChild(assetPanel);
+
+    //criticality
+    var criticalityPanel = this.createPanel();;
+    criticalityPanel.style.marginLeft = '0px';
+    criticalityPanel.style.paddingTop = '4px';
+    criticalityPanel.style.paddingBottom = '4px';
+    criticalityPanel.style.fontWeight = 'normal';
+    criticalityPanel.style.border = 'none';
+    criticalityPanel.style.marginBottom = '4px';
+    mxUtils.write(criticalityPanel, mxResources.get('criticality'));
+
+    var criticalitySelect = document.createElement('select');
+    criticalitySelect.style.position = 'absolute';
+    criticalitySelect.style.right = '20px';
+    criticalitySelect.style.width = '97px';
+    criticalitySelect.style.marginTop = '-2px';
+
+    var criticality = ['Low', 'Moderate', 'High'];
+    for (var i = 0; i < criticality.length; i++) {
+        var criticalityOption = document.createElement('option');
+        criticalityOption.setAttribute('value', criticality[i]);
+        mxUtils.write(criticalityOption, criticality[i]);
+        criticalitySelect.appendChild(criticalityOption);
+    }
+    criticalityPanel.appendChild(criticalitySelect);
+    container.appendChild(criticalityPanel);
+
+    //Zone
+    var zonePanel = this.createPanel();;
+    zonePanel.style.marginLeft = '0px';
+    zonePanel.style.paddingTop = '4px';
+    zonePanel.style.paddingBottom = '4px';
+    zonePanel.style.fontWeight = 'normal';
+    zonePanel.style.border = 'none';
+    zonePanel.style.marginBottom = '7px';
+
+    mxUtils.write(zonePanel, mxResources.get('zone'));
+    var zoneText = document.createElement('input');
+    zoneText.style.position = 'absolute';
+    zoneText.style.right = '20px';
+    zoneText.style.width = '97px';
+    zoneText.style.marginTop = '-2px';
+    zonePanel.appendChild(zoneText);
+    container.appendChild(zonePanel);
+
+    //subnet
+    var subnetPanel = this.createPanel();;
+    subnetPanel.style.marginLeft = '0px';
+    subnetPanel.style.paddingTop = '4px';
+    subnetPanel.style.paddingBottom = '4px';
+    subnetPanel.style.fontWeight = 'normal';
+    subnetPanel.style.border = 'none';
+    subnetPanel.style.marginBottom = '7px';
+
+    mxUtils.write(subnetPanel, mxResources.get('subnetNames'));
+    var subnetText = document.createElement('input');
+    subnetText.style.position = 'absolute';
+    subnetText.style.right = '20px';
+    subnetText.style.width = '97px';
+    subnetText.style.marginTop = '-2px';
+    subnetPanel.appendChild(subnetText);
+    container.appendChild(subnetPanel);
+
+    //Description
+    var descriptionPanel = this.createPanel();;
+    descriptionPanel.style.marginLeft = '0px';
+    descriptionPanel.style.paddingTop = '4px';
+    descriptionPanel.style.paddingBottom = '4px';
+    descriptionPanel.style.fontWeight = 'normal';
+    descriptionPanel.style.border = 'none';
+    descriptionPanel.style.marginBottom = '7px';
+
+    mxUtils.write(descriptionPanel, mxResources.get('description'));
+    var descriptionText = document.createElement('input');
+    descriptionText.style.position = 'absolute';
+    descriptionText.style.right = '20px';
+    descriptionText.style.width = '97px';
+    descriptionText.style.marginTop = '-2px';
+    descriptionPanel.appendChild(descriptionText);
+    container.appendChild(descriptionPanel);
+
+    //hostname
+    var hostnamePanel = this.createPanel();;
+    hostnamePanel.style.marginLeft = '0px';
+    hostnamePanel.style.paddingTop = '4px';
+    hostnamePanel.style.paddingBottom = '4px';
+    hostnamePanel.style.fontWeight = 'normal';
+    hostnamePanel.style.border = 'none';
+    hostnamePanel.style.marginBottom = '7px';
+
+    mxUtils.write(hostnamePanel, mxResources.get('hostName'));
+    var hostnameText = document.createElement('input');
+    hostnameText.style.position = 'absolute';
+    hostnameText.style.right = '20px';
+    hostnameText.style.width = '97px';
+    hostnameText.style.marginTop = '-2px';
+    hostnamePanel.appendChild(hostnameText);
+    container.appendChild(hostnamePanel);
+}
+
+
+/**
  * Adds the label menu items to the given menu and parent.
  */
 TextFormatPanel = function(format, editorUi, container)
@@ -2505,7 +2757,8 @@ TextFormatPanel.prototype.addFont = function(container)
 	colorPanel.style.borderTop = '1px solid #c0c0c0';
 	colorPanel.style.paddingTop = '6px';
 	colorPanel.style.paddingBottom = '6px';
-	
+	//cset log
+    console.log(stylePanel);
 	var fontMenu = this.editorUi.toolbar.addMenu('Helvetica', mxResources.get('fontFamily'),
 		true, 'fontFamily', stylePanel, null, true);
 	fontMenu.style.color = 'rgb(112, 112, 112)';
