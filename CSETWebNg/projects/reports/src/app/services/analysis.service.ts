@@ -68,6 +68,18 @@ export class AnalysisService {
     return this.http.get(this.apiUrl + 'StandardsSummary');
   }
 
+  getComponentsSummary(): any {
+
+    console.log(this.configSvc.answerLabels);
+
+    return this.http.get(this.apiUrl + 'ComponentsSummary');
+  }
+
+  getComponentBarChart(): any {
+    return this.http.get(this.apiUrl + 'ComponentsBreakdown');
+  }
+
+
   buildStandardsSummary(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
@@ -140,10 +152,6 @@ export class AnalysisService {
       }
     });
 
-  }
-
-  getComponentsSummary(): any {
-    return this.http.get(this.apiUrl + 'ComponentsSummary');
   }
 
   /**
@@ -381,86 +389,7 @@ export class AnalysisService {
     }
   }
 
-
-
-  /**
-   * This is an attempt at making a horizontal stacked bar chart using Chart.js.
-   * @param canvasId
-   */
-  buildDummyComponentChart1(canvasId: string) {
-    return new Chart("chartNetwork1",
-      {
-        type: 'horizontalBar',
-        data: {
-          labels:
-
-            ["Active Directory",
-              "DB Server",
-              "Firewall",
-              "Handheld Wireless Device",
-              "HMI",
-              "IDS",
-              "IP Camera",
-              "IP Phone",
-              "Network Printer",
-              "Optical Ring",
-              "RAS",
-              "Router",
-              "Server",
-              "Switch",
-              "Terminal Server",
-              "Wireless Modem"],
-
-
-          datasets: [
-            {
-              label: "Yes",
-              backgroundColor: '#006000',
-              data: [6, 7, 6, 8, 6, 10, 3]
-            },
-            {
-              label: "No",
-              backgroundColor: '#990000',
-              data: [8, 9, 5, 8, 6, 10, 3]
-            },
-            {
-              label: "N/A",
-              backgroundColor: '#0063b1',
-              data: [6, 7, 6, 8, 6, 10, 3]
-            },
-            {
-              label: "Alt",
-              backgroundColor: '#b17300',
-              data: [6, 7, 6, 8, 6, 10, 3]
-            },
-            {
-              label: "Unanswered",
-              backgroundColor: '#cccccc',
-              data: [74, 7, 6, 8, 6, 10, 3]
-            }
-          ]
-        },
-        options: {
-          legend: { display: false },
-          scales: {
-            yAxes: [{
-              stacked: true
-            }],
-            xAxes: [{
-              stacked: true
-            }]
-          },
-        }
-      });
-  }
-
-  buildDummyComponentAnswerPie(canvasId: string) {
-    const x = {
-      label: 'hey',
-      data: [],
-      Colors: []
-    };
-
+  buildComponentsSummary(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {
@@ -489,7 +418,7 @@ export class AnalysisService {
         title: {
           display: false,
           fontSize: 20,
-          text: 'Standards Summary'
+          text: 'Components Summary'
         },
         legend: {
           display: true,
@@ -531,5 +460,40 @@ export class AnalysisService {
         rotation: -Math.PI
       }
     });
+  }
+
+
+ /**
+ * Renders a horizontal stacked bar chart showing the answer distribution
+ * for each component type.
+ * @param canvasId
+ */
+  buildComponentsStackedChart(canvasId: string, x: any) {
+    return new Chart(canvasId,
+      {
+        type: 'horizontalBar',
+        borderColor: 'red',
+        data: {
+          labels: x.Labels,
+          datasets: x.dataSets
+        },
+        options: {
+          legend: { display: false },
+          tooltips: {
+            callbacks: {
+              label: ((tooltipItem, data) =>
+                data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+            }
+          },
+          scales: {
+            yAxes: [{
+              stacked: true
+            }],
+            xAxes: [{
+              stacked: true
+            }]
+          },
+        }
+      });
   }
 }
