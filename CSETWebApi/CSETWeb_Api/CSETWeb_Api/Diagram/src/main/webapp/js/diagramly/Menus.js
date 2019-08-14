@@ -585,29 +585,29 @@
 
 		var showingAbout = false;
 		
-		editorUi.actions.put('about', new Action(mxResources.get('aboutDrawio') + '...', function()
-		{
-			if (!showingAbout)
-			{
-				editorUi.showDialog(new AboutDialog(editorUi).container, 220, 300, true, true, function()
-				{
-					showingAbout = false;
-				});
+		//editorUi.actions.put('about', new Action(mxResources.get('aboutDrawio') + '...', function()
+		//{
+		//	if (!showingAbout)
+		//	{
+		//		editorUi.showDialog(new AboutDialog(editorUi).container, 220, 300, true, true, function()
+		//		{
+		//			showingAbout = false;
+		//		});
 				
-				showingAbout = true;
-			}
+		//		showingAbout = true;
+		//	}
 			
-		}, null, null, 'F1'));
+		//}, null, null, 'F1'));
 		
 		editorUi.actions.addAction('userManual...', function()
 		{
 			editorUi.openLink('https://support.draw.io/display/DO/Draw.io+Online+User+Manual');
 		});
 
-		editorUi.actions.addAction('support...', function()
-		{
-			editorUi.openLink('https://about.draw.io/support/');
-		});
+		//editorUi.actions.addAction('support...', function()
+		//{
+		//	editorUi.openLink('https://about.draw.io/support/');
+		//});
 
 		editorUi.actions.addAction('exportOptionsDisabled...', function()
 		{
@@ -631,17 +631,17 @@
 			}
 		});
 
-		editorUi.actions.addAction('feedback...', function()
-		{
-			var dlg = new FeedbackDialog(editorUi);
-			editorUi.showDialog(dlg.container, 610, 360, true, true);
-			dlg.init();
-		});
+		//editorUi.actions.addAction('feedback...', function()
+		//{
+		//	var dlg = new FeedbackDialog(editorUi);
+		//	editorUi.showDialog(dlg.container, 610, 360, true, true);
+		//	dlg.init();
+		//});
 
-		editorUi.actions.addAction('quickStart...', function()
-		{
-			editorUi.openLink('https://www.youtube.com/watch?v=Z0D96ZikMkc');
-		});
+		//editorUi.actions.addAction('quickStart...', function()
+		//{
+		//	editorUi.openLink('https://www.youtube.com/watch?v=Z0D96ZikMkc');
+		//});
 		
 		action = editorUi.actions.addAction('tags...', mxUtils.bind(this, function()
 		{
@@ -866,67 +866,67 @@
 		{
 			if (!mxClient.IS_CHROMEAPP && editorUi.isOffline())
 			{
-				this.addMenuItems(menu, ['about'], parent);
+				//this.addMenuItems(menu, ['about'], parent);
 			}
 			else
 			{
 				// No translation for menu item since help is english only
-				var item = menu.addItem('Search:', null, null, parent, null, null, false);
-				item.style.backgroundColor = (uiTheme == 'dark') ? '#505759' : 'whiteSmoke';
-				item.style.cursor = 'default';
+				//var item = menu.addItem('Search:', null, null, parent, null, null, false);
+				//item.style.backgroundColor = (uiTheme == 'dark') ? '#505759' : 'whiteSmoke';
+				//item.style.cursor = 'default';
 				
-				var input = document.createElement('input');
-				input.setAttribute('type', 'text');
-				input.setAttribute('size', '25');
-				input.style.marginLeft = '8px';
+				//var input = document.createElement('input');
+				//input.setAttribute('type', 'text');
+				//input.setAttribute('size', '25');
+				//input.style.marginLeft = '8px';
 
-				mxEvent.addListener(input, 'keydown', mxUtils.bind(this, function(e)
-				{
-					var term = mxUtils.trim(input.value);
+				//mxEvent.addListener(input, 'keydown', mxUtils.bind(this, function(e)
+				//{
+				//	var term = mxUtils.trim(input.value);
 					
-					if (e.keyCode == 13 && term.length > 0)
-					{
-						this.editorUi.openLink('https://desk.draw.io/support/search/solutions?term=' +
-							encodeURIComponent(term));
-						input.value = '';
-						EditorUi.logEvent({category: 'SEARCH-HELP', action: 'search', label: term});
+				//	if (e.keyCode == 13 && term.length > 0)
+				//	{
+				//		this.editorUi.openLink('https://desk.draw.io/support/search/solutions?term=' +
+				//			encodeURIComponent(term));
+				//		input.value = '';
+				//		EditorUi.logEvent({category: 'SEARCH-HELP', action: 'search', label: term});
 						
-						if (this.editorUi.menubar != null)
-						{
-							window.setTimeout(mxUtils.bind(this, function()
-							{
-								this.editorUi.menubar.hideMenu();
-							}), 0);
-						}
-					}
-	                else if (e.keyCode == 27)
-	                {
-	                    input.value = '';
-	                }
-				}));
+				//		if (this.editorUi.menubar != null)
+				//		{
+				//			window.setTimeout(mxUtils.bind(this, function()
+				//			{
+				//				this.editorUi.menubar.hideMenu();
+				//			}), 0);
+				//		}
+				//	}
+	            //             else if (e.keyCode == 27)
+	            //             {
+	            //                 input.value = '';
+	            //             }
+				//}));
 				
-				item.firstChild.nextSibling.appendChild(input);
+				//item.firstChild.nextSibling.appendChild(input);
 				
-				mxEvent.addGestureListeners(input, function(evt)
-				{
-					if (document.activeElement != input)
-					{
-						input.focus();
-					}
+				//mxEvent.addGestureListeners(input, function(evt)
+				//{
+				//	if (document.activeElement != input)
+				//	{
+				//		input.focus();
+				//	}
 					
-					mxEvent.consume(evt);
-				}, function(evt)
-				{
-					mxEvent.consume(evt);
-				}, function(evt)
-				{
-					mxEvent.consume(evt);
-				});
+				//	mxEvent.consume(evt);
+				//}, function(evt)
+				//{
+				//	mxEvent.consume(evt);
+				//}, function(evt)
+				//{
+				//	mxEvent.consume(evt);
+				//});
 				
-				window.setTimeout(function()
-				{
-					input.focus();
-				}, 0);
+				//window.setTimeout(function()
+				//{
+				//	input.focus();
+				//}, 0);
 				
 				this.addMenuItems(menu, ['-', 'quickStart', 'userManual', 'keyboardShortcuts', '-'], parent);
 				
@@ -947,7 +947,7 @@
 					//this.addMenuItems(menu, ['useOffline'], parent);
 				}
 				
-				this.addMenuItems(menu, ['-', 'about'], parent);
+				this.addMenuItems(menu, ['-'], parent);
 			}
 			
 			if (urlParams['test'] == '1')
@@ -1650,20 +1650,20 @@
 			});
 		}
 		
-		var action = editorUi.actions.addAction('search', function()
-		{
-			var visible = editorUi.sidebar.isEntryVisible('search');
-			editorUi.sidebar.showPalette('search', !visible);
+		//var action = editorUi.actions.addAction('search', function()
+		//{
+		//	var visible = editorUi.sidebar.isEntryVisible('search');
+		//	editorUi.sidebar.showPalette('search', !visible);
 			
-			if (isLocalStorage)
-			{
-				mxSettings.settings.search = !visible;
-				mxSettings.save();
-			}
-		});
+		//	if (isLocalStorage)
+		//	{
+		//		mxSettings.settings.search = !visible;
+		//		mxSettings.save();
+		//	}
+		//});
 		
 		action.setToggleAction(true);
-		action.setSelectedCallback(function() { return editorUi.sidebar.isEntryVisible('search'); });
+		//action.setSelectedCallback(function() { return editorUi.sidebar.isEntryVisible('search'); });
 		
 		if (urlParams['embed'] == '1')
 		{
