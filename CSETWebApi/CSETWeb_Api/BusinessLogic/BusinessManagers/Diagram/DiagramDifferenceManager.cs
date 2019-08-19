@@ -1,6 +1,7 @@
 ﻿using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,25 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     /// </summary>
     public class DiagramDifferenceManager
     {
+        private CSET_Context context;
+
         private static readonly object _object = new object();
 
         private Dictionary<Guid, ComponentNode> OldDiagram = new Dictionary<Guid, ComponentNode>();
         private Dictionary<Guid, ComponentNode> NewDiagram = new Dictionary<Guid, ComponentNode>();
+
+        private List<COMPONENT_SYMBOLS> componentSymbols;
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public DiagramDifferenceManager(CSET_Context context)
+        {
+            this.context = context;
+            this.componentSymbols = this.context.COMPONENT_SYMBOLS.ToList();
+        }
+
 
         /// <summary>
         /// pass in the xml document
@@ -36,7 +52,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             OldDiagram = ProcessDiagram(oldDiagramDocument);
         }
 
-        public void SaveDifferences(CSET_Context context, int assessment_id)
+        public void SaveDifferences(int assessment_id)
         {
             bool _lockTaken = false;
             Monitor.Enter(_object, ref _lockTaken);
@@ -87,14 +103,55 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 if (cell.HasAttribute("ComponentGuid"))
                 {
                     ComponentNode cn = new ComponentNode();
-                    foreach (XmlAttribute a in ((System.Xml.XmlElement)c).Attributes)
+                    foreach (XmlAttribute a in cell.Attributes)
                     {
                         cn.setValue(a.Name, a.Value);
                     }
+
+                    // determine the component type
+                    cn.setValue("Component_Type", GetComponentType(cell));
+
                     nodesList.Add(cn.ComponentGuid, cn);
                 }
             }
             return nodesList;
+        }
+
+
+        /// <summary>
+        /// Determines component type from its image.
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        private string GetComponentType(XmlElement cell)
+        {
+            var mxCell = cell.SelectSingleNode("mxCell");
+            if (mxCell == null)
+            {
+                return null;
+            }
+
+            if (mxCell.Attributes["style"] == null)
+            {
+                return null;
+            }
+
+            string style = mxCell.Attributes["style"].InnerText;
+            string[] styleElements = style.Split(';');
+            foreach (string styleElement in styleElements)
+            {
+                if (styleElement.StartsWith("image="))
+                {
+                    string imagePath = styleElement.Substring("image=".Length);
+                    var symbol = this.componentSymbols.FirstOrDefault(x => x.File_Name.EndsWith(imagePath.Substring(imagePath.LastIndexOf('/') + 1)));
+                    if (symbol != null)
+                    {
+                        return symbol.Diagram_Type_Xml;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 
