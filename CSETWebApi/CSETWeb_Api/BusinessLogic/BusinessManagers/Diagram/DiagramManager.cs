@@ -42,14 +42,14 @@ namespace CSETWeb_Api.BusinessManagers
                 var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
                 if (assessmentRecord != null)
                 {
-                    DiagramDifferenceManager differenceManager = new DiagramDifferenceManager();
+                    DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(db);
                     XmlDocument oldDoc = new XmlDocument();
                     if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup))
                     {
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
-                    differenceManager.SaveDifferences(db, assessmentID);
+                    differenceManager.SaveDifferences(assessmentID);
                 }
                 else
                 {
