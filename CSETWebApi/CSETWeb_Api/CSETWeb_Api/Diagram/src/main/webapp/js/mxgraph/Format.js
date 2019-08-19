@@ -2454,7 +2454,7 @@ PropertiesPanel.prototype.addProperties = function(container) {
     var editor = ui.editor;
     var graph = editor.graph;
     var ss = this.format.getSelectionState();
-
+    console.log(graph);
     //tag 
     var tagPanel = this.createPanel();;
     tagPanel.style.marginLeft = '0px';
@@ -2474,8 +2474,8 @@ PropertiesPanel.prototype.addProperties = function(container) {
     tagPanel.appendChild(tagText);
     container.appendChild(tagPanel);
     var updateTag = function(evt, value) {
-        console.log(evt.srcElement.value);
-        console.log(evt);
+        //console.log(evt.srcElement.value);
+        //console.log(evt);
     }
     mxEvent.addListener(tagText, 'blur', updateTag);
     mxEvent.addListener(tagText, 'change', updateTag);
@@ -2757,8 +2757,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	colorPanel.style.borderTop = '1px solid #c0c0c0';
 	colorPanel.style.paddingTop = '6px';
 	colorPanel.style.paddingBottom = '6px';
-	//cset log
-    console.log(stylePanel);
+	
 	var fontMenu = this.editorUi.toolbar.addMenu('Helvetica', mxResources.get('fontFamily'),
 		true, 'fontFamily', stylePanel, null, true);
 	fontMenu.style.color = 'rgb(112, 112, 112)';
