@@ -819,12 +819,13 @@ namespace CSETWeb_Api.Controllers
                 .WithSqlParam("assessment_Id", assessmentId)
                 .ExecuteStoredProc((handler) =>
                 {
-                    var result = handler.ReadToList<usp_getNetworkWarnings>();
+                    // TODO:  RKW - Uncomment this once the stored proc is written
+                    //var result = handler.ReadToList<usp_getNetworkWarnings>();
 
-                    foreach (usp_getNetworkWarnings w in result)
-                    {
-                        wlist.Add(w);
-                    }
+                    //foreach (usp_getNetworkWarnings w in result)
+                    //{
+                    //    wlist.Add(w);
+                    //}
                 });
                 return wlist;
             }
