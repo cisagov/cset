@@ -94,8 +94,8 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       this.chartComponentAnswerPie = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
     });
     // This is an attempt at making a horizontal stacked bar chart using Chart.js
-    this.analysisSvc.getComponentBarChart().subscribe(x => {
-      this.chartComponentStackedBar = this.analysisSvc.buildComponentsStackedChart('canvasComponentStackedBar', x);
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.chartComponentStackedBar = this.analysisSvc.buildComponentTypes('canvasComponentStackedBar', x);
     });
 
 

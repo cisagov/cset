@@ -37,10 +37,12 @@ export class Navigation2Service {
     { pageClass: 'standards-ranked', path: 'assessment/{:id}/results/standards-ranked' },
     { pageClass: 'standards-results', path: 'assessment/{:id}/results/standards-results' },
 
-    // Results - Components -- disabled until diagram is implemented
-    { pageClass: 'components-summary', path: 'assessment/{:id}/results/components-summary', condition: 'FALSE' },
-    { pageClass: 'components-ranked', path: 'assessment/{:id}/results/components-ranked', condition: 'FALSE' },
-    { pageClass: 'components-results', path: 'assessment/{:id}/results/components-results', condition: 'FALSE' },
+    // Results - Components
+    { pageClass: 'components-summary', path: 'assessment/{:id}/results/components-summary' },
+    { pageClass: 'components-ranked', path: 'assessment/{:id}/results/components-ranked' },
+    { pageClass: 'components-results', path: 'assessment/{:id}/results/components-results' },
+    { pageClass: 'components-types', path: 'assessment/{:id}/results/components-types' },
+    { pageClass: 'components-warnings', path: 'assessment/{:id}/results/components-warnings' },
 
     // ACET results pages
     { pageClass: 'maturity', path: 'assessment/{:id}/results/maturity', condition: 'ACET' },

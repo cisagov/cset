@@ -69,14 +69,7 @@ export class AnalysisService {
   }
 
   getComponentsSummary(): any {
-
-    console.log(this.configSvc.answerLabels);
-
     return this.http.get(this.apiUrl + 'ComponentsSummary');
-  }
-
-  getComponentBarChart(): any {
-    return this.http.get(this.apiUrl + 'ComponentsBreakdown');
   }
 
 
@@ -468,7 +461,7 @@ export class AnalysisService {
  * for each component type.
  * @param canvasId
  */
-  buildComponentsStackedChart(canvasId: string, x: any) {
+  buildComponentTypes(canvasId: string, x: any) {
     return new Chart(canvasId,
       {
         type: 'horizontalBar',
