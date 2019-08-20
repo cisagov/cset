@@ -19,12 +19,13 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="report-body">
 
   <div class="flex-container">
     <div class="column">
-      <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+      <p
+        style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
         EXECUTIVE SUMMARY
       </p>
     </div>
@@ -54,9 +55,11 @@
   <div class="page-break">
 
     <div class="disclaimer-blurb mt-4">
-      This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government
+      This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S.
+      Government
       nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability
-      or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or
+      or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product,
+      or
       process disclosed in this publication, or represents that its use by such third party would not infringe privately
       owned rights.
     </div>
@@ -90,12 +93,16 @@
     <div style="max-width: calc(100% - 4em); margin: 0 auto">
       <div style="display: flex; flex-direction: row; align-items: flex-end;">
         <div>
-          <div style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+          <div
+            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
             STANDARD OR QUESTION SET
           </div>
-          <div style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-            <div *ngFor="let s of responseResultsByCategory?.multipleDataSets" style="display: flex; flex-direction: row; align-items: center;">
-              <div style="width: 1.2em; height: 1.2em; margin: 4px 10px 4px 0;" [style.backgroundColor]="s.backgroundColor"></div>{{s.label}}
+          <div
+            style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
+            <div *ngFor="let s of responseResultsByCategory?.multipleDataSets"
+              style="display: flex; flex-direction: row; align-items: center;">
+              <div style="width: 1.2em; height: 1.2em; margin: 4px 10px 4px 0;"
+                [style.backgroundColor]="s.backgroundColor"></div>{{s.label}}
             </div>
           </div>
         </div>
@@ -108,43 +115,81 @@
           </div>
         </div>
       </div>
-      <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
+      <div
+        style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
         <canvas id="chartStandardResultsByCategory"></canvas>
       </div>
     </div>
   </div>
 
+
   <div class="page-break">
-    <div id="chartContainer2"><canvas id="combinedComponentSummary"></canvas></div>
-  	<div id="chartContainer1">Analysis of<br>Network Components</div>
-  	<div id="chartContainer3">
-			<p>The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is: <input type="text" class="warnInput" value="2"> <br><br> See the Site Summary report Findings and Recommendations from Basic Network Analysis for details. </p>
-	  </div>
-	  <div id="chartContainer4"></div>
+    <h1>
+      Analysis of Network Components
+    </h1>
+    <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram
+      is: <input type="text" class="warnInput" value="2">
+    </p>
+    <p> See the Site Summary report Findings and
+      Recommendations from Basic Network Analysis for details.
+    </p>
+
+
+    <div style="padding: 1em;">
+        <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+          <div>COMBINED COMPONENT SUMMARY</div>
+          <div>
+            <canvas id="canvasComponentSummary"></canvas>
+          </div>
+        </div>
+      </div>
+
+    <canvas id="canvasComponentStackedBar"></canvas>
+
   </div>
 
-  <div class="mt-3 mb-3" *ngIf="reportSvc.hasACET">
-    <h1>Inherent Risk Profile</h1>
-    <div class="ml-3 mr-3 form">
-      <table class="label-value">
+
+  <div class="page-break" *ngIf="reportSvc.hasACET">
+    <div class="mt-3 mb-3">
+      <h1>Inherent Risk Profile</h1>
+      <div class="ml-3 mr-3 form">
+        <table class="label-value">
+          <tr>
+            <td>Calculated Overall Risk Level:</td>
+            <td>{{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}</td>
+          </tr>
+          <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+            <td>
+              The overall IRP score is overridden to:
+            </td>
+            <td>
+              {{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}
+            </td>
+          </tr>
+          <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+            <td>
+              Override Reason:
+            </td>
+            <td>
+              {{ acetDashboard?.OverrideReason }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-3 mb-3" *ngIf="reportSvc.hasACET">
+      <h1>Cybersecurity Maturity</h1>
+      <table class="cset-table">
         <tr>
-          <td>Calculated Overall Risk Level:</td>
-          <td>{{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}</td>
+          <th width="50%" class="table-head">Domain</th>
+          <th width="50%" class="table-head">Maturity Level</th>
         </tr>
-        <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
-          <td>
-            The overall IRP score is overridden to:
-          </td>
-          <td>
-            {{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}
-          </td>
-        </tr>
-        <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
-          <td>
-            Override Reason:
-          </td>
-          <td>
-            {{ acetDashboard?.OverrideReason }}
+        <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
+          <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+          <td class="text-center">
+            <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
+              {{ domain.Maturity }}</div>
           </td>
         </tr>
       </table>
@@ -153,31 +198,14 @@
 
 
 
-  <div class="mt-3 mb-3" *ngIf="reportSvc.hasACET">
-    <h1>Cybersecurity Maturity</h1>
-    <table class="cset-table">
-      <tr>
-        <th width="50%" class="table-head">Domain</th>
-        <th width="50%" class="table-head">Maturity Level</th>
-      </tr>
-      <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
-        <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
-        <td class="text-center">
-          <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
-            {{ domain.Maturity }}</div>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-
   <div class="page-break">
     <h1>
       Areas of Concern Top Subjects and Questions
     </h1>
 
     <p>
-      The top subject areas and questions identify those areas where attention will either provide the most immediate impact or
+      The top subject areas and questions identify those areas where attention will either provide the most immediate
+      impact or
       protect against the greatest vulnerabilities.
     </p>
 
