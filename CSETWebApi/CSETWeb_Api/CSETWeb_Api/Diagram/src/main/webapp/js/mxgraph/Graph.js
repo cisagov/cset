@@ -116,6 +116,9 @@ mxGraphModel.prototype.cellAdded = function (cell)
     if (cell.geometry.width === 0 && cell.geometry.height === 0)
     {
 
+        console.log('Connector added.');
+
+
         if (!cell.target && !cell.geometry.targetPoint)
         {
             console.log('CONNECTOR HAS NO TARGET OR TARGETPOINT');
@@ -140,7 +143,7 @@ mxGraphModel.prototype.cellAdded = function (cell)
         cell.setCsetAttribute('zone', '1');
         cell.setCsetAttribute('zoneType', 'Other');
         cell.setCsetAttribute('SAL', 'Low');
-        cell.colorZone();
+        cell.setZoneColor();
     }
 
 
