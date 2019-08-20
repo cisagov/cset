@@ -31,6 +31,7 @@ CsetUtils.adjustConnectability = function (edit)
 
             if (c.isConnector())
             {
+                console.log('I am a connector.  Goodbye.');
                 return;
             }
 
@@ -65,6 +66,13 @@ CsetUtils.PersistGraphToCSET = function (editor)
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
     var sXML = oSerializer.serializeToString(node);
+
+
+
+    console.log("CsetUtils.PersistGraphToCSET");
+    console.log(sXML);
+
+
 
     var req = {};
     req.DiagramXml = sXML;
