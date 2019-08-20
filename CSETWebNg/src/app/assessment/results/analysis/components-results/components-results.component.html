@@ -33,12 +33,12 @@
     </div>
     <div class="data" [hidden]="!initialized">
       <table class="table">
-        <th></th>
+        <th class="align-left">Component</th>
         <th class="align-right">Passed</th>
         <th class="align-right">Total</th>
         <th class="align-right">Percent</th>
         <tr *ngFor="let row of dataRows">
-          <td class="align-right" style="width: 50%">{{row.title}}</td>
+          <td class="align-left" style="width: 50%">{{row.title}}</td>
           <td class="align-right">{{row.passed}}</td>
           <td class="align-right">{{row.total}}</td>
           <td class="align-right">{{row.percent}}%</td>

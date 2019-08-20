@@ -83,6 +83,7 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public string title { get; set; }
         public Decimal? rank { get; set; }
         public int? failed { get; set; }
+        public int? passed { get; set; }
         public int? total { get; set; }
         public Decimal? percent { get; set;  }
 

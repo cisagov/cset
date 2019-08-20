@@ -47,6 +47,7 @@ export class ComponentsResultsComponent implements OnInit {
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       // this.setupChart(x)
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
+      this.dataRows = x.DataRows;
 
       this.initialized = true;
     });

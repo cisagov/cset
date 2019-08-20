@@ -654,25 +654,22 @@ namespace CSETWeb_Api.Controllers
                       .WithSqlParam("assessment_Id", assessmentId)
                       .ExecuteStoredProc((handler) =>
                       {
-                          /////////////  var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
-
+                          var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
 
                           chartData = new ChartData();
 
-                          for (int i = 0; i < 8; i++)
+                          foreach (usp_getComponentsResultsByCategory c in result)
                           {
-                              chartData.data.Add((double) i*10);
-                              chartData.Labels.Add("Component #" + i);
+                              chartData.Labels.Add(c.Question_Group_Heading);
+                              chartData.data.Add((double)c.percent);
+                              chartData.DataRows.Add(new DataRows
+                              {
+                                  title = c.Question_Group_Heading,
+                                  passed = c.passed,
+                                  total = c.total,
+                                  percent = c.percent
+                              });
                           }
-
-
-
-                          //foreach (usp_getComponentsResultsByCategory c in result)
-                          //{
-                          //    chartData.data.Add((double)c.prc);
-                          //    chartData.Labels.Add(c.Question_Group_Heading);
-
-                          //}
                       });
             }
 
