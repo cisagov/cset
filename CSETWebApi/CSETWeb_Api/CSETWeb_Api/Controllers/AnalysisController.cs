@@ -397,7 +397,7 @@ namespace CSETWeb_Api.Controllers
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
-            myChartData.Colors = new List<string>();            
+            myChartData.Colors = new List<string>();
 
 
             var results = new StandardSummaryOverallMultiResult();
@@ -487,12 +487,17 @@ namespace CSETWeb_Api.Controllers
                              sortedList.Add(answerTotals.FirstOrDefault(x => x.Answer_Text == "U"));
                              answerTotals = sortedList;
 
+                             var totalQuestionCount = answerTotals.Sum(x => x.vcount);
+
                              foreach (usp_getComponentsSummmary c in answerTotals)
                              {
                                  // build DataRowsPie for each answer total
                                  DataRowsPie pie = new DataRowsPie();
                                  pie.Answer_Full_Name = c.Answer_Full_Name;
+                                 pie.Short_Name = "";
                                  pie.Answer_Text = c.Answer_Text;
+                                 pie.qc = c.vcount;
+                                 pie.Total = totalQuestionCount;
                                  pie.Percent = (int)Math.Round(c.value, 0);
                                  chartData.DataRowsPie.Add(pie);
 
@@ -504,84 +509,6 @@ namespace CSETWeb_Api.Controllers
                              }
                          });
             }
-
-            return chartData;
-        }
-
-
-        [HttpGet]
-        [Route("api/analysis/ComponentsBreakdown")]
-        public ChartData ComponentsBreakdown()
-        {
-            int assessmentId = Auth.AssessmentForUser();
-
-            // initialize the response container
-            ChartData chartData = new ChartData();
-            chartData.Colors = new List<string>();
-            chartData.DataRowsPie = new List<DataRowsPie>();
-
-            using (CSET_Context context = new CSET_Context())
-            {
-                context.LoadStoredProc("[dbo].[usp_getComponentTypes]")
-                         .WithSqlParam("assessment_Id", assessmentId)
-                         .ExecuteStoredProc((handler) =>
-                         {
-                             var componentTotals = handler.ReadToList<usp_getComponentTypes>();
-
-                             var cdY = new ChartData
-                             {
-                                 label = "Yes",
-                                 backgroundColor = answerColorDefs["Y"]
-                             };
-                             chartData.dataSets.Add(cdY);
-
-                             var cdN = new ChartData
-                             {
-                                 label = "No",
-                                 backgroundColor = answerColorDefs["N"]
-                             };
-                             chartData.dataSets.Add(cdN);
-
-                             var cdNA = new ChartData
-                             {
-                                 label = "N/A",
-                                 backgroundColor = answerColorDefs["NA"]
-                             };
-                             chartData.dataSets.Add(cdNA);
-
-                             var cdAlt = new ChartData
-                             {
-                                 label = "Alt",
-                                 backgroundColor = answerColorDefs["A"]
-                             };
-                             chartData.dataSets.Add(cdAlt);
-
-                             var cdU = new ChartData
-                             {
-                                 label = "Unanswered",
-                                 backgroundColor = answerColorDefs["U"]
-                             };
-                             chartData.dataSets.Add(cdU);
-
-
-                             foreach (var total in componentTotals)
-                             {
-                                 chartData.Labels.Add(total.component_type);
-
-                                 cdY.data.Add((int)total.Y);
-                                 cdN.data.Add((int)total.N);
-                                 cdNA.data.Add((int)total.NA);
-                                 cdAlt.data.Add((int)total.A);
-                                 cdU.data.Add((int)total.U);
-                             }
-                         });
-            }
-
-            chartData.dataSets.ForEach(ds => {
-                ds.borderWidth = "0";
-                ds.borderColor = "#000000";
-            });
-
 
             return chartData;
         }
@@ -727,14 +654,25 @@ namespace CSETWeb_Api.Controllers
                       .WithSqlParam("assessment_Id", assessmentId)
                       .ExecuteStoredProc((handler) =>
                       {
-                          var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
-                          chartData = new ChartData();
-                          foreach (usp_getComponentsResultsByCategory c in result)
-                          {
-                              chartData.data.Add((double)c.prc);
-                              chartData.Labels.Add(c.Question_Group_Heading);
+                          /////////////  var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
 
+
+                          chartData = new ChartData();
+
+                          for (int i = 0; i < 8; i++)
+                          {
+                              chartData.data.Add((double) i*10);
+                              chartData.Labels.Add("Component #" + i);
                           }
+
+
+
+                          //foreach (usp_getComponentsResultsByCategory c in result)
+                          //{
+                          //    chartData.data.Add((double)c.prc);
+                          //    chartData.Labels.Add(c.Question_Group_Heading);
+
+                          //}
                       });
             }
 
@@ -761,6 +699,16 @@ namespace CSETWeb_Api.Controllers
                             chartData.data.Add((double)c.prc);
                             chartData.Labels.Add(c.Question_Group_Heading);
 
+
+                            // create a new DataRows entry with answer percentages for this component
+                            chartData.DataRows.Add(new DataRows
+                            {
+                                title = c.Question_Group_Heading,
+                                rank = c.prc,
+                                failed = c.nuCount,  /// ??????
+                                total = c.qc,
+                                percent = c.Percent
+                            });
                         }
                     });
             }
@@ -771,26 +719,92 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentTypes")]
-        public ChartData GetComponentTypes()
+        public ChartData ComponentTypes()
         {
             int assessmentId = Auth.AssessmentForUser();
-            ChartData chartData = null;
+
+            // initialize the response container
+            ChartData chartData = new ChartData
+            {
+                Colors = new List<string>(),
+                DataRowsPie = new List<DataRowsPie>()
+            };
+
             using (CSET_Context context = new CSET_Context())
             {
                 context.LoadStoredProc("[dbo].[usp_getComponentTypes]")
-                   .WithSqlParam("assessment_Id", assessmentId)
-                   .ExecuteStoredProc((handler) =>
-                   {
-                       var result = handler.ReadToList<usp_getComponentTypes>();
-                       chartData = new ChartData();
-                       foreach (usp_getComponentTypes c in result)
-                       {
-                           chartData.data.Add((double)c.Value);
-                           chartData.Labels.Add(c.component_type);
+                         .WithSqlParam("assessment_Id", assessmentId)
+                         .ExecuteStoredProc((handler) =>
+                         {
+                             var componentTotals = handler.ReadToList<usp_getComponentTypes>();
 
-                       }
-                   });
+                             var cdY = new ChartData
+                             {
+                                 label = "Yes",
+                                 backgroundColor = answerColorDefs["Y"]
+                             };
+                             chartData.dataSets.Add(cdY);
+
+                             var cdN = new ChartData
+                             {
+                                 label = "No",
+                                 backgroundColor = answerColorDefs["N"]
+                             };
+                             chartData.dataSets.Add(cdN);
+
+                             var cdNA = new ChartData
+                             {
+                                 label = "N/A",
+                                 backgroundColor = answerColorDefs["NA"]
+                             };
+                             chartData.dataSets.Add(cdNA);
+
+                             var cdAlt = new ChartData
+                             {
+                                 label = "Alt",
+                                 backgroundColor = answerColorDefs["A"]
+                             };
+                             chartData.dataSets.Add(cdAlt);
+
+                             var cdU = new ChartData
+                             {
+                                 label = "Unanswered",
+                                 backgroundColor = answerColorDefs["U"]
+                             };
+                             chartData.dataSets.Add(cdU);
+
+
+                             foreach (var total in componentTotals)
+                             {
+                                 chartData.Labels.Add(total.component_type);
+
+                                 cdY.data.Add((int)total.Y);
+                                 cdN.data.Add((int)total.N);
+                                 cdNA.data.Add((int)total.NA);
+                                 cdAlt.data.Add((int)total.A);
+                                 cdU.data.Add((int)total.U);
+
+
+                                 // create a new DataRows entry with answer percentages for this component
+                                 chartData.DataRows.Add(new DataRows
+                                 {
+                                     title = total.component_type,
+                                     yes = total.Y,
+                                     no = total.N,
+                                     na = total.NA,
+                                     alt = total.A,
+                                     unanswered = total.U,
+                                     total = total.Total
+                                 });
+                             }
+                         });
             }
+
+            chartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "#000000";
+            });
 
             return chartData;
         }

@@ -33,7 +33,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
   templateUrl: './components-results.component.html'
 })
 export class ComponentsResultsComponent implements OnInit {
-  chart: Chart;
+  compResCanvas: Chart;
   dataRows: { title: string; passed: number; total: number; percent: number; }[];
   initialized = false;
   constructor(
@@ -44,53 +44,20 @@ export class ComponentsResultsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => this.setupChart(x));
+    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
+      // this.setupChart(x)
+      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
 
-    this.dataRows = [ // TODO: Pull data from API
-      {
-        title: 'test',
-        passed: 30,
-        total: 17,
-        percent: 100
-      }
-    ];
-  }
-
-
-  setupChart(x: any) {
-    this.initialized = false;
-    this.chart = new Chart('compResCanvas', {
-      type: 'pie',
-      data: {
-        labels: x.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.data,
-            backgroundColor: 'red',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Results by Category'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+      this.initialized = true;
     });
-    this.initialized = true;
+
+    // this.dataRows = [ // TODO: Pull data from API
+    //   {
+    //     title: 'test',
+    //     passed: 30,
+    //     total: 17,
+    //     percent: 100
+    //   }
+    // ];
   }
 }

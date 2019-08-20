@@ -46,57 +46,12 @@ export class ComponentsTypesComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.analysisSvc.getComponentTypes().subscribe(x => this.setupChart(x));
-
-    this.dataRows = [ // TODO: Pull data from API
-      {
-        title: 'test',
-        yes: 20,
-        no: 20,
-        na: 20,
-        alt: 20,
-        unanswered: 20,
-        total: 100
-      }
-    ];
-
-  }
-
-
-  setupChart(x: any) {
-    this.initialized = false;
-    this.chart = new Chart('compTypeCanvas', {
-      type: 'pie',
-      data: {
-        labels: x.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.data,
-            backgroundColor: 'red',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Component Types'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.analysisSvc.buildComponentTypes('compTypeCanvas', x);
+      this.dataRows = x.DataRows;
+      this.initialized = true;
     });
-    this.initialized = true;
+
+
   }
 }
