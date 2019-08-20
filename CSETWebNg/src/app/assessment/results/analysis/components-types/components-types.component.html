@@ -33,7 +33,7 @@
     </div>
     <div class="data" [hidden]="!initialized">
       <table class="table">
-        <th></th>
+        <th class="align-left">Component</th>
         <th class="align-right">{{configSvc.answerLabels['Y']}}</th>
         <th class="align-right">{{configSvc.answerLabels['N']}}</th>
         <th class="align-right">{{configSvc.answerLabels['NA']}}</th>
@@ -52,8 +52,8 @@
       </table>
     </div>
     <div class="mt-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navSvc2.navBack('components-sypes')">Back</button>
-      <button class="btn btn-primary" (click)="navSvc2.navNext('components-sypes')">Next</button>
+      <button class="btn btn-primary" (click)="navSvc2.navBack('components-types')">Back</button>
+      <button class="btn btn-primary" (click)="navSvc2.navNext('components-types')">Next</button>
     </div>
   </div>
 </div>

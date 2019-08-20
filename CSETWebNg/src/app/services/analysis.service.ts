@@ -261,21 +261,29 @@ export class AnalysisService {
       type: 'horizontalBar',
       data: {
         labels: x.Labels,
-        datasets: x.data,
+        datasets: [
+          {
+            label: '',
+            data: x.data,
+            backgroundColor: '#0a0',
+            borderColor: [],
+            borderWidth: 1
+          }
+        ],
       },
       options: {
         tooltips: {
           callbacks: {
             label: ((tooltipItem, data) => {
               return data.labels[tooltipItem.index] + ': '
-                + ((Number)(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index])).toFixed(2) + '%';
+               + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
             })
           }
         },
         title: {
           display: false,
           fontSize: 20,
-          text: 'Results by Category'
+          text: 'Results By Category'
         },
         legend: {
           display: false
