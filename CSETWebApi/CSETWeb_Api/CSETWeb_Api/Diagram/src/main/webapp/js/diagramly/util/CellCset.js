@@ -139,7 +139,7 @@ mxCell.prototype.initZone = function ()
         return;
     }
 
-    this.colorZone();
+    this.setZoneColor();
 
     this.setConnectable(false);
 
@@ -155,41 +155,49 @@ mxCell.prototype.initZone = function ()
 /**
  * Changes the color of the zone
  */
-mxCell.prototype.colorZone = function ()
+mxCell.prototype.setZoneColor = function ()
 {
     if (!this.isZone())
     {
         return;
     }
-    var color = '#4b5e00';
+    var headerColor = '#ece4d7';
+    var color = '#f6f3ed';
 
     var zoneType = (this.getCsetAttribute('zoneType') || '').toLowerCase();
     switch (zoneType)
     {
         case 'control dmz':
-            color = '#6ce48d';
+            headerColor = '#ffe7e9';
+            color = '#fff1f2';
             break;
         case 'corporate':
-            color = '#dcafae';
-        case 'other':
+            headerColor = '#fdf9d9';
+            color = '#fffef4';
             break;
-            color = '#4b5e00';
+        case 'other':
+            headerColor = '#ece4d7';
+            color = '#f6f3ed';
             break;
         case 'safety':
-            color = '#db7e94';
+            headerColor = '#f6d06b';
+            color = '#ffe7a5';
             break;
         case 'externaldmz':
-            color = '#933705';
+            headerColor = '#d3f1df';
+            color = '#ebf4ef';
             break;
         case 'plant system':
-            color = '#b97349';
+            headerColor = '#e6dbee';
+            color = '#f2edf6';
             break;
         case 'control system':
-            color = '#fb1936';
+            headerColor = '#f6d06b';
+            color = '#f2f8f9';
             break;
     }
 
-    this.setStyleValue('fillColor', color);
+    this.setStyleValue('fillColor', headerColor);
     this.setStyleValue('swimlaneFillColor', color);
 }
 
@@ -199,6 +207,9 @@ mxCell.prototype.colorZone = function ()
  */
 mxCell.prototype.autoNameComponent = function ()
 {
+    console.log('autoNameComponent');
+    console.log(this);
+
     // ignore items without style
     if (!this.getStyle())
     {

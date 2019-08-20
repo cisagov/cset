@@ -93,26 +93,42 @@ mxGraphModel.prototype.cellAdded = function (cell)
         return;
     }
 
-    if (!!cell.style)
+    // no cell without a style needs to be considered for any of the logic below
+    if (!cell.style)
     {
-        // ignore shapes
-        if (cell.getStyleValue('shape') !== null)
-        {
-            return;
-        }
-
-        // ignore text objects
-        if (cell.hasStyle('text'))
-        {
-            return;
-        }
-
-        // ignore connectors
-        if (cell.geometry.width === 0 && cell.geometry.height === 0)
-        {
-            return;
-        }
+        return;
     }
+
+
+    // ignore shapes
+    if (cell.getStyleValue('shape') !== null)
+    {
+        return;
+    }
+
+    // ignore text objects
+    if (cell.hasStyle('text'))
+    {
+        return;
+    }
+
+    // ignore connectors
+    if (cell.geometry.width === 0 && cell.geometry.height === 0)
+    {
+
+        console.log('Connector added.');
+
+
+        if (!cell.target && !cell.geometry.targetPoint)
+        {
+            console.log('CONNECTOR HAS NO TARGET OR TARGETPOINT');
+        }
+
+        // remove endarrow while we're at it
+        cell.setStyleValue('endArrow', 'none');
+        return;
+    }
+
 
     // assign a component GUID to components (not zones or MSCs)
     if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
@@ -123,11 +139,11 @@ mxGraphModel.prototype.cellAdded = function (cell)
 
     // give zones a couple of zone-specific attributes
     if (cell.getStyleValue('zone') == '1')
-    {        
+    {
         cell.setCsetAttribute('zone', '1');
         cell.setCsetAttribute('zoneType', 'Other');
         cell.setCsetAttribute('SAL', 'Low');
-        cell.colorZone();
+        cell.setZoneColor();
     }
 
 
