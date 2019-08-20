@@ -85,6 +85,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         }
                     }
                     context.SaveChanges();
+                    context.FillNetworkDiagramQuestions(assessment_id);
                 }
             }
             finally
