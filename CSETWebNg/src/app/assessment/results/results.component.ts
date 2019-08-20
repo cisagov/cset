@@ -106,12 +106,12 @@ export class ResultsComponent implements OnInit {
               { label: 'Results by Category', value: 'standards-results', children: [] }
             ]
           },
-          // { label: 'Components Summary', value: 'components-summary', children: [
-          //   { label: 'Ranked Categories', value: 'components-ranked', children: [] },
-          //   { label: 'Results by Category', value: 'components-results', children: [] },
-          //   { label: 'Component Types', value: 'components-types', children: [] },
-          //   { label: 'Network Warnings', value: 'components-warnings', children: [] }
-          // ] },
+          { label: 'Components Summary', value: 'components-summary', children: [
+            { label: 'Ranked Categories', value: 'components-ranked', children: [] },
+            { label: 'Results by Category', value: 'components-results', children: [] },
+            { label: 'Component Types', value: 'components-types', children: [] },
+            { label: 'Network Warnings', value: 'components-warnings', children: [] }
+          ] },
         ]
       },
       // { label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] },

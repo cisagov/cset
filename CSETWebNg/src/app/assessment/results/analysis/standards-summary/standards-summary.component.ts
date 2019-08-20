@@ -78,6 +78,13 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
           legend: {
             display: true
           },
+          tooltips: {
+            callbacks: {
+              label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+            }
+          },
           scales: {
             xAxes: [{
               stacked: true,
@@ -164,7 +171,6 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
     }
 
-    this.dataSets.map(r => r.backgroundColor = r.Colors);
     this.initialized = true;
   }
 }

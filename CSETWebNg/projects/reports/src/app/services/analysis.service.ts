@@ -68,6 +68,11 @@ export class AnalysisService {
     return this.http.get(this.apiUrl + 'StandardsSummary');
   }
 
+  getComponentsSummary(): any {
+    return this.http.get(this.apiUrl + 'ComponentsSummary');
+  }
+
+
   buildStandardsSummary(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
@@ -139,11 +144,7 @@ export class AnalysisService {
         rotation: -Math.PI
       }
     });
-  
-  }
 
-  getComponentsSummary(): any {
-    return this.http.get(this.apiUrl + 'ComponentsSummary');
   }
 
   /**
@@ -204,18 +205,18 @@ export class AnalysisService {
           }
         ]
       },
-      
+
       options: {
-        responsive:true,
-        maintainAspectRatio:false,
-        aspectRatio:0,
-        
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 0,
+
         title: {
           display: false,
           fontSize: 20,
           text: 'Ranked Categories'
         },
-       
+
         legend: {
           display: false
         },
@@ -380,6 +381,112 @@ export class AnalysisService {
         return "";
     }
   }
+
+  buildComponentsSummary(canvasId: string, x: any) {
+    return new Chart(canvasId, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          this.configSvc.answerLabels['Y'],
+          this.configSvc.answerLabels['N'],
+          this.configSvc.answerLabels['NA'],
+          this.configSvc.answerLabels['A'],
+          this.configSvc.answerLabels['U']
+        ],
+        datasets: [
+          {
+            label: x.label,
+            data: x.data,
+            backgroundColor: x.Colors
+          }
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        },
+        title: {
+          display: false,
+          fontSize: 20,
+          text: 'Components Summary'
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            generateLabels: function (chart) { // Add values to legend labels
+              const data = chart.data;
+              if (data.labels.length && data.datasets.length) {
+                return data.labels.map(function (label, i) {
+                  const meta = chart.getDatasetMeta(0);
+                  const ds = data.datasets[0];
+                  const arc = meta.data[i];
+                  const custom = arc && arc.custom || {};
+                  const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                  const arcOpts = chart.options.elements.arc;
+                  const fill = custom.backgroundColor ? custom.backgroundColor :
+                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                  const stroke = custom.borderColor ? custom.borderColor :
+                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                  const bw = custom.borderWidth ? custom.borderWidth :
+                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                  const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                  return {
+                    text: label + ' : ' + value + '%',
+                    fillStyle: fill,
+                    strokeStyle: stroke,
+                    lineWidth: bw,
+                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    index: i
+                  };
+                });
+              } else {
+                return [];
+              }
+            }
+          }
+        },
+        circumference: Math.PI,
+        rotation: -Math.PI
+      }
+    });
+  }
+
+
+ /**
+ * Renders a horizontal stacked bar chart showing the answer distribution
+ * for each component type.
+ * @param canvasId
+ */
+  buildComponentTypes(canvasId: string, x: any) {
+    return new Chart(canvasId,
+      {
+        type: 'horizontalBar',
+        data: {
+          labels: x.Labels,
+          datasets: x.dataSets
+        },
+        options: {
+          legend: { display: true },
+          tooltips: {
+            callbacks: {
+              label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+            }
+          },
+          scales: {
+            yAxes: [{
+              stacked: true
+            }],
+            xAxes: [{
+              stacked: true
+            }]
+          },
+        }
+      });
+  }
 }
-
-
