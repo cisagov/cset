@@ -79,7 +79,21 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+        public virtual int FillNetworkDiagramQuestions(Nullable<int> assessment_Id)
+        {
+            if (!assessment_Id.HasValue)
+                throw new ApplicationException("parameters may not be null");
 
+            int myrval = 0;
+            this.LoadStoredProc("FillNetworkDiagramQuestions")
+                     .WithSqlParam("Assessment_Id", assessment_Id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToValue<int>() ?? 0;
+                     });
+            return myrval;
+        }
 
         public virtual IList<usp_GetOverallRankedCategoriesPage_Result> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
         {
