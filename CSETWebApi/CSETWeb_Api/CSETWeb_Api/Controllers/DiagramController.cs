@@ -38,7 +38,10 @@ namespace CSETWeb_Api.Controllers
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            dm.SaveDiagram((int)assessmentId, req.DiagramXml, req.LastUsedComponentNumber);
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(req.DiagramXml);
+            dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
+            dm.PerformAnalysis(xDoc);
         }
 
 

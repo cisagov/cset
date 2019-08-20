@@ -23,13 +23,12 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, string diagramXML, int lastUsedComponentNumber)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber)
         {
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(diagramXML);
+            
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/object").Count;
             if (cellCount == 2 && objectCount == 0)
