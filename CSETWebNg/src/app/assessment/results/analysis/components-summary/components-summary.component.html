@@ -33,14 +33,12 @@
     </div>
     <div class="data" [hidden]="!initialized">
         <table class="table">
-          <th *ngIf="dataSets?.length > 1">Standard</th>
-          <th>Answer </th>
+          <th class="align-left">Answer</th>
           <th class="align-right">Number</th>
           <th class="align-right">Total</th>
           <th class="align-right">Percent</th>
           <tr *ngFor="let row of dataRows; let i = index">
-            <td *ngIf="dataSets?.length > 1">{{row.Short_Name}}</td>
-            <td width=50%>{{row.Answer_Full_Name}}</td>
+            <td class="align-left" style="width: 50%">{{row.Answer_Full_Name}}</td>
             <td class="align-right">{{row.qc}}</td>
             <td class="align-right">{{row.Total}}</td>
             <td class="align-right">{{row.Percent}}%</td>
