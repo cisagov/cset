@@ -50,7 +50,6 @@ export class ComponentsSummaryComponent implements OnInit {
     this.analysisSvc.getComponentsSummary().subscribe(x => {
       this.canvasComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
       this.dataRows = x.DataRowsPie;
-      console.log(x);
       this.initialized = true;
     });
   }

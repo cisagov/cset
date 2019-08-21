@@ -49,8 +49,8 @@ export class AnalysisService {
     return this.http.get(this.apiUrl + 'RankedQuestions');
   }
 
-  getTopCategories() {
-    return this.http.get(this.apiUrl + 'TopCategories');
+  getTopCategories(num: number) {
+    return this.http.get(this.apiUrl + 'TopCategories?total=' + num);
   }
 
   getOverallRankedCategories(): any {
@@ -99,7 +99,50 @@ export class AnalysisService {
   // let's migrate the chart building to this service
   // ---------------------------------------------------------
 
+  /**
+   *
+   */
+  buildTopCategories(canvasId: string, x: any) {
 
+console.log(x);
+
+    return new Chart(canvasId, {
+      type: 'horizontalBar',
+      data: {
+        labels: x.Labels,
+        datasets: [
+          {
+            label: '',
+            data: (x.data as Array<number>).map((e: number) => parseFloat(e.toFixed(2))),
+            backgroundColor: '#a00',
+            borderColor: [],
+            borderWidth: 1
+          }
+        ],
+      },
+      options: {
+        title: {
+          display: false,
+          fontSize: 20,
+          text: 'Top Ranked Categories'
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+
+  /**
+   *
+   */
   buildComponentsSummary(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
