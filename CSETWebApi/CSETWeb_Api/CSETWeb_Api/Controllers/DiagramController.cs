@@ -15,6 +15,7 @@ using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Diagram;
+using CSETWeb_Api.BusinessManagers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -41,7 +42,8 @@ namespace CSETWeb_Api.Controllers
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(req.DiagramXml);
             dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
-            dm.PerformAnalysis(xDoc);
+            DiagramAnalysis analysis = new DiagramAnalysis();
+            analysis.PerformAnalysis(xDoc);
         }
 
 

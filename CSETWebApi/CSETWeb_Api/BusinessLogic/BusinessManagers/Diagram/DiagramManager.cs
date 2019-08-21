@@ -90,6 +90,8 @@ namespace CSETWeb_Api.BusinessManagers
 
                 db.SaveChanges();
             }
+            DiagramAnalysis analysis = new DiagramAnalysis();
+            analysis.PerformAnalysis(xDoc);
         }
 
 
