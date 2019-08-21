@@ -601,7 +601,7 @@
 		
 		editorUi.actions.addAction('userManual...', function()
 		{
-			editorUi.openLink('https://support.draw.io/display/DO/Draw.io+Online+User+Manual');
+			editorUi.openLink('../../../../Documents/htmlhelp/index.htm');
 		});
 
 		//editorUi.actions.addAction('support...', function()
