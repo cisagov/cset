@@ -15,6 +15,7 @@ using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Diagram;
+using CSETWeb_Api.BusinessManagers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -38,7 +39,11 @@ namespace CSETWeb_Api.Controllers
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            dm.SaveDiagram((int)assessmentId, req.DiagramXml, req.LastUsedComponentNumber);
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(req.DiagramXml);
+            dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
+            DiagramAnalysis analysis = new DiagramAnalysis();
+            analysis.PerformAnalysis(xDoc);
         }
 
 

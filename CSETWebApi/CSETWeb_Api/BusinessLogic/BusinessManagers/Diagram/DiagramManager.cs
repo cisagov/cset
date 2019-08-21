@@ -23,12 +23,9 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, string diagramXML, int lastUsedComponentNumber)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber)
         {
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(diagramXML);
-
-
+            
             // this is a temporary check to see if the graph has any duplicate "id" attributes.
             List<string> idList = new List<string>();
             var nodesWithID = xDoc.SelectNodes("//*[@id]");
@@ -57,6 +54,7 @@ namespace CSETWeb_Api.BusinessManagers
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
+            
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/object").Count;
             if (cellCount == 2 && objectCount == 0)
@@ -92,6 +90,8 @@ namespace CSETWeb_Api.BusinessManagers
 
                 db.SaveChanges();
             }
+            DiagramAnalysis analysis = new DiagramAnalysis();
+            analysis.PerformAnalysis(xDoc);
         }
 
 
