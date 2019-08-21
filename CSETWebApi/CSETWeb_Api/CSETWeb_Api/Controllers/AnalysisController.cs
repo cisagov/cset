@@ -154,8 +154,13 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/TopCategories")]
-        public ChartData GetTopCategories()
+        public ChartData GetTopCategories([FromUri] int? total)
         {
+            if (total == null)
+            {
+                total = 10000;
+            }
+
             int assessmentId = Auth.AssessmentForUser();
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
@@ -182,11 +187,10 @@ namespace CSETWeb_Api.Controllers
                     };
 
                     chartData = new ChartData();
-                    foreach (usp_getRankedCategories c in results.Result1)
+                    foreach (usp_getRankedCategories c in results.Result1.Take((int)total))
                     {
                         chartData.data.Add((double)c.prc);
                         chartData.Labels.Add(c.Question_Group_Heading);
-
                     }
                 }
             }
