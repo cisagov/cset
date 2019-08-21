@@ -1,5 +1,6 @@
 ﻿// -------------- mxCell extension functions ------------------------
 
+
 /**
  * Providing a nice function to set a single style element in a cell.
  * @param {any} name

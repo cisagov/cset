@@ -285,6 +285,83 @@
 		/**
 		 * Synchronously adds scripts to the page.
 		 */
+		 function cellAddedCSET(graph, cell)
+{
+    // is this new addition part of the graph, or part of the sidebar?
+    if (!graph.getRoot(cell).hasOwnProperty('id'))
+    {
+        return;
+    }
+
+    // no cell without a style needs to be considered for any of the logic below
+    if (!cell.style)
+    {
+        return;
+    }
+
+
+    // ignore shapes
+    if (cell.getStyleValue('shape') !== null)
+    {
+        return;
+    }
+
+    // ignore text objects
+    if (cell.hasStyle('text'))
+    {
+        return;
+    }
+
+    // ignore connectors
+    if (cell.geometry.width === 0 && cell.geometry.height === 0)
+    {
+
+        console.log('Connector added.');
+
+
+        if (!cell.target && !cell.geometry.targetPoint)
+        {
+            console.log('CONNECTOR HAS NO TARGET OR TARGETPOINT');
+        }
+
+        // remove endarrow while we're at it
+        cell.setStyleValue('endArrow', 'none');
+        return;
+    }
+
+
+    // assign a component GUID to components (not zones or MSCs)
+    if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
+    {
+        var nextGuid = guidService.getInstance().getNextGuid();
+        cell.setCsetAttribute('ComponentGuid', nextGuid);
+    }
+
+    // give zones a couple of zone-specific attributes
+    if (cell.getStyleValue('zone') == '1')
+    {
+        cell.setCsetAttribute('zone', '1');
+        cell.setCsetAttribute('zoneType', 'Other');
+        cell.setCsetAttribute('SAL', 'Low');
+        cell.setZoneColor();
+    }
+
+
+    cell.autoNameComponent();
+
+
+    // If the object being added is a multi-service component,
+    // swap out the symbol with a container.
+    var filename = cell.getStyleValue('image');
+    if (!!filename && filename.endsWith('multiple_services_component.svg'))
+    {
+        // convert the MSC into a swimlane (container)
+        cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
+        cell.geometry.width = 230;
+        cell.geometry.height = 120;
+    }
+}
+
 		function mxscript(src, onLoad, id, dataAppKey, noWrite)
 		{
 			if (onLoad != null || noWrite)
@@ -381,8 +458,9 @@
 		}
 		else
 		{
-            mxscript('js/app.min.js');
-            mxscript('js/diagramly/util/CsetUtils.js');
+			
+			mxscript('js/app.min.js');            
+			mxscript('js/diagramly/util/CsetUtils.js');
             mxscript('js/diagramly/util/CellCset.js');
 		}
 
@@ -458,6 +536,8 @@
  * Main
  */
 console.log("before app main");
+// CSET - things to do when new objects are added to the graph
+
 App.main();
 </script>
 </body>
