@@ -25,7 +25,7 @@ namespace CSETWeb_Api.BusinessManagers
             //to extract minimal spanning tree(s)
             //then walk the tree to evaluate node rules
 
-            
+            return;
             
             XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object");
             XmlNodeList mxCellNodes = xDoc.SelectNodes("//*[@edge=\"1\"]");
