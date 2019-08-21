@@ -34,7 +34,7 @@ declare var $: any;
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class DashboardComponent implements OnInit {
 
@@ -73,7 +73,10 @@ export class DashboardComponent implements OnInit {
     this.standardBasedScore = stds > 0 ? stds.toFixed(0) + '%' : 'No Standards Answers';
     this.componentBasedScore = comp > 0 ? comp.toFixed(0) + '%' : 'No components answers';
 
+    console.log(x.ComponentSummaryPie.data);
     this.hasComponents = (x.ComponentSummaryPie.data as number[]).reduce((a, b) => a + b) > 0;
+
+    this.hasComponents = true;
 
     // this.assessComplChart = new Chart('assessComplCanvas', {
     // type: 'horizontalBar',
@@ -109,139 +112,24 @@ export class DashboardComponent implements OnInit {
     // }
     // });
 
-    this.topCategChart = new Chart('topCategCanvas', {
-      type: 'horizontalBar',
-      data: {
-        labels: x.RedBars.Labels,
-        datasets: [
-          {
-            label: '',
-            data: (x.RedBars.data as Array<number>).map((e: number) => parseFloat(e.toFixed(2))),
-            backgroundColor: '#a00',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Top Ranked Categories'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+
+    // Top Categories (only show the top 5 entries for dashboard)
+    this.analysisSvc.getTopCategories(5).subscribe(respTopCateg => {
+      this.topCategChart = this.analysisSvc.buildTopCategories('topCategCanvas', respTopCateg);
     });
 
-    this.stdsSummChart = new Chart('stdsSummCanvas', {
-      type: 'doughnut',
-      data: {
-        labels: [
-          this.configSvc.answerLabels['Y'],
-          this.configSvc.answerLabels['N'],
-          this.configSvc.answerLabels['NA'],
-          this.configSvc.answerLabels['A'],
-          this.configSvc.answerLabels['U']
-        ],
-        datasets: [
-          {
-            label: '',
-            data: x.StandardsSummaryPie.data,
-            backgroundColor: x.StandardsSummaryPie.Labels,
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
-          }
-        },
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Standards Summary'
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-          labels: {
-            generateLabels: function (chart) { // Add values to legend labels
-              const data = chart.data;
-              if (data.labels.length && data.datasets.length) {
-                return data.labels.map(function (label, i) {
-                  const meta = chart.getDatasetMeta(0);
-                  const ds = data.datasets[0];
-                  const arc = meta.data[i];
-                  const custom = arc && arc.custom || {};
-                  const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-                  const arcOpts = chart.options.elements.arc;
-                  const fill = custom.backgroundColor ? custom.backgroundColor :
-                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = custom.borderColor ? custom.borderColor :
-                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = custom.borderWidth ? custom.borderWidth :
-                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                  const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-                  return {
-                    text: label + ' : ' + value + '%',
-                    fillStyle: fill,
-                    strokeStyle: stroke,
-                    lineWidth: bw,
-                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                    index: i
-                  };
-                });
-              } else {
-                return [];
-              }
-            }
-          }
-        },
-        circumference: Math.PI,
-        rotation: -Math.PI
-      }
+
+    // Standards Summary
+    this.analysisSvc.getStandardsSummary().subscribe(respStandSumm => {
+      this.stdsSummChart = this.analysisSvc.buildComponentsSummary('stdsSummCanvas', respStandSumm);
     });
-    if (!x.ComponentSummaryPie) {
-      // this.compSummChart = new Chart('compSummCanvas', {
-      //   type: 'pie',
-      //   data: {
-      //     labels: x.ComponentSummaryPie.Labels,
-      //     datasets: [
-      //       {
-      //         label: '',
-      //         data: x.ComponentSummaryPie.data,
-      //         backgroundColor: x.ComponentSummaryPie.backgroundColor,
-      //         borderColor: x.ComponentSummaryPie.borderColor,
-      //         borderWidth: 1
-      //       }
-      //     ],
-      //   },
-      //   options: {
-      //     title: {
-      //       display: false,
-      //       fontSize: 20,
-      //       text: 'Components Summary'
-      //     },
-      //     legend: {
-      //       display: true,
-      //       position: 'bottom'
-      //     }
-      //   }
-      // });
-    }
+
+
+    // Component Summary
+    this.analysisSvc.getComponentsSummary().subscribe(respCompSumm => {
+      this.compSummChart = this.analysisSvc.buildComponentsSummary('compSummCanvas', respCompSumm);
+    });
+
     this.initialized = true;
   }
 
