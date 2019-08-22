@@ -45,20 +45,10 @@ export class ComponentsResultsComponent implements OnInit {
 
   ngOnInit() {
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      // this.setupChart(x)
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
       this.dataRows = x.DataRows;
 
       this.initialized = true;
     });
-
-    // this.dataRows = [ // TODO: Pull data from API
-    //   {
-    //     title: 'test',
-    //     passed: 30,
-    //     total: 17,
-    //     percent: 100
-    //   }
-    // ];
   }
 }

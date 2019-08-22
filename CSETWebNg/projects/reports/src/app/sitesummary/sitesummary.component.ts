@@ -32,8 +32,7 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
 
 @Component({
   selector: 'rapp-sitesummary',
-  templateUrl: './sitesummary.component.html',
-  styleUrls: ['./sitesummary.component.scss']
+  templateUrl: './sitesummary.component.html'
 })
 export class SitesummaryComponent implements OnInit, AfterViewChecked {
   chartStandardsSummary: Chart;
@@ -55,6 +54,13 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
+  // Charts for Components
+  chartComponentSummary: Chart;
+  chartComponentsTypes: Chart;
+  warningCount = 0;
+  networkRecommendations = [];
+  compResCanvas: Chart;
+
   // ACET data
   matDetails: any;
   acetDashboard: AcetDashboard;
@@ -64,6 +70,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   DocumentationTotal: number;
   InterviewTotal: number;
   ReviewedStatementTotal: number;
+
 
 
   constructor(
@@ -115,14 +122,27 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
-      this.numberOfStandards = x.multipleDataSets.length;
-      x.multipleDataSets.forEach(element => {
-        this.complianceGraphs.push(element);
-      });
+      // This was throwing errors - commenting for now (RKW 8/22/19)
+      // this.numberOfStandards = !!x.multipleDataSets ? x.multipleDataSets.length : 0;
+      // x.multipleDataSets.forEach(element => {
+      //   this.complianceGraphs.push(element);
+      // });
     });
 
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
       this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+    });
+
+
+    // Components content
+    this.analysisSvc.getComponentsSummary().subscribe(x => {
+      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
+    });
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
+    });
+    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
+      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
     });
 
 

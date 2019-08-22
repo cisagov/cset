@@ -192,7 +192,7 @@ mxCell.prototype.setZoneColor = function ()
             color = '#f2edf6';
             break;
         case 'control system':
-            headerColor = '#f6d06b';
+            headerColor = '#d3eef2';
             color = '#f2f8f9';
             break;
     }
