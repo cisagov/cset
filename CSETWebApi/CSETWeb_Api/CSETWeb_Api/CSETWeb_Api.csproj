@@ -4317,9 +4317,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="BusinessManagers\DiagramAnalysis.cs" />
-    <Compile Include="BusinessManagers\NetworkNode.cs" />
-    <Compile Include="BusinessManagers\NodeNotFound.cs" />
     <Compile Include="Controllers\ACETFilterController.cs" />
     <Compile Include="Controllers\AdminTabController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />

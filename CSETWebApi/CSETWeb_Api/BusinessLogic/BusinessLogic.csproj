@@ -246,6 +246,13 @@
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysis.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisNodeMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferenceManager.cs" />
