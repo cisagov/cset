@@ -31,9 +31,7 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
 
 @Component({
   selector: 'rapp-executive',
-  templateUrl: './executive.component.html',
-  styleUrls: ['./executive.component.scss'
-  ]
+  templateUrl: './executive.component.html'
 })
 export class ExecutiveComponent implements OnInit, AfterViewInit {
   response: any;
@@ -45,8 +43,9 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
 
 
   // Charts for Components
-  chartComponentAnswerPie: Chart;
-  chartComponentStackedBar: Chart;
+  chartComponentSummary: Chart;
+  chartComponentsTypes: Chart;
+  warningCount = 0;
 
   acetDashboard: AcetDashboard;
 
@@ -91,11 +90,10 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
 
 
     this.analysisSvc.getComponentsSummary().subscribe(x => {
-      this.chartComponentAnswerPie = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
+      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
     });
-    // This is an attempt at making a horizontal stacked bar chart using Chart.js
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.chartComponentStackedBar = this.analysisSvc.buildComponentTypes('canvasComponentStackedBar', x);
+      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
     });
 
 

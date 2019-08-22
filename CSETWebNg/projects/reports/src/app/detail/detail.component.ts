@@ -32,8 +32,7 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
 
 @Component({
   selector: 'rapp-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  templateUrl: './detail.component.html'
 })
 export class DetailComponent implements OnInit, AfterViewChecked {
   response: any;
@@ -56,6 +55,11 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   nistSalI = '';
   nistSalA = '';
 
+  // Charts for Components
+  chartComponentSummary: Chart;
+  chartComponentsTypes: Chart;
+  networkRecommendations = [];
+  compResCanvas: Chart;
 
   // ACET data
   matDetails: any;
@@ -133,6 +137,18 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
       this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+    });
+
+
+    // Components content
+    this.analysisSvc.getComponentsSummary().subscribe(x => {
+      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
+    });
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
+    });
+    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
+      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
     });
 
 
