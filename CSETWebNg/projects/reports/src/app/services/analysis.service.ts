@@ -456,11 +456,11 @@ export class AnalysisService {
   }
 
 
- /**
- * Renders a horizontal stacked bar chart showing the answer distribution
- * for each component type.
- * @param canvasId
- */
+  /**
+  * Renders a horizontal stacked bar chart showing the answer distribution
+  * for each component type.
+  * @param canvasId
+  */
   buildComponentTypes(canvasId: string, x: any) {
     return new Chart(canvasId,
       {
@@ -474,8 +474,8 @@ export class AnalysisService {
           tooltips: {
             callbacks: {
               label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+                data.datasets[tooltipItem.datasetIndex].label + ': '
+                + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
             }
           },
           scales: {
@@ -489,4 +489,51 @@ export class AnalysisService {
         }
       });
   }
+
+  /**
+   *
+   */
+  buildComponentsResultsByCategory(canvasId: string, x: any) {
+    return new Chart(canvasId, {
+      type: 'horizontalBar',
+      data: {
+        labels: x.Labels,
+        datasets: [
+          {
+            label: '',
+            data: x.data,
+            backgroundColor: '#0a0',
+            borderColor: [],
+            borderWidth: 1
+          }
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) => {
+              return data.labels[tooltipItem.index] + ': '
+                + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+            })
+          }
+        },
+        title: {
+          display: false,
+          fontSize: 20,
+          text: 'Results By Category'
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+
 }

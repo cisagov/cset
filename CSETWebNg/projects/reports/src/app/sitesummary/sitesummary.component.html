@@ -24,7 +24,8 @@
 
     <div class="flex-container">
         <div class="column">
-            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
                 SITE SUMMARY REPORT
             </p>
         </div>
@@ -38,8 +39,7 @@
             <div>
                 <img style="width: 283px; height: 133px" src="./assets/img/SiteSummaryFiles/image003.jpg">
             </div>
-            <div
-                style="flex-direction: column; line-height: 150%; padding-right: 2em">
+            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information.Assessment_Name}}</div>
                 <div>
                     {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
@@ -284,39 +284,65 @@
 
     <!--Network Diagram-->
     <div class="page-break">
-        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana;"><strong>Network Diagram</strong></h4>
-	
-	    <img src="W:/mockups/Reports Mockups/test image.png" style="width: 100%; height: auto; max-width: 1500px; float: center;">
-	
-	    <h1 style="text-align: center;">^^^ Insert Network Diagram Here ^^^</h1>
-     </div>
+        <h1>Network Diagram</h1>
 
-<!--Analysis of Network Components-->
-    <div class="page-break">
-        <div id="chartContainer2"></div>
-	    <div id="chartContainer1">Analysis of<br>Network Components</div>
-	    <div id="chartContainer3">
-			<p>The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is: <input type="text" class="warnInput" value="2"> <br><br> See the Site Summary report Findings and Recommendations from Basic Network Analysis for details. </p>
-	    </div>
-        <div id="chartContainer4"></div>
+        <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
     </div>
-    
-<!--Component Compliance by Subject Area-->  
+
+
+    <!--Analysis of Network Components-->
     <div class="page-break">
-        <h4 style="color: #0A5278; font-size: 18px; font-family: Verdana;"><strong>Network Diagram</strong></h4>
-	    <p style="color: #0A5278; font-size: 18px; font-family: Verdana; text-align: center;">Component</p>
-	    <div id="chartContainer5"></div>
+        <h1>
+            Analysis of Network Components
+        </h1>
+
+        <div class="d-flex flex-row align-items-center">
+            <div style="padding: 1rem;">
+                <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+                    <div>COMBINED COMPONENT SUMMARY</div>
+                    <div>
+                        <canvas id="canvasComponentSummary"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 1rem;">
+                <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
+                    system diagram is <span class="warnInput">{{ warningCount }}</span>.
+                </p>
+                <p> See the Findings and Recommendations from Basic Network Analysis for details.
+                </p>
+            </div>
+        </div>
+
+        <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+            <canvas id="canvasComponentsTypes"></canvas>
+        </div>
     </div>
-    
- <!--Findings and Reccomendations From Basic Network Analysis-->   
+
+
+
+    <!--Component Compliance by Subject Area-->
     <div class="page-break">
-        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana;"><strong>Findings and Recommendations From Basic Network Analysis</strong></h4>
-	
-	<ol style="font-family: Palatino;">
-		<li>THE PATH BETWEEN THE COMPONENTS, REMOTE ACCESS SERVER, AND CORP SWITCH, IS UNTRUSTED. BECAUSE MALICIOUS TRAFFIC MAY BE INTRODUCED ONTO THE LINK, A FIREWALL TO FILTER THE TRAFFIC ON BOTH SIDES OF UNTRUSTED LINK IS RECOMMENDED.</li> <br>
-		<li>THE NETWORK PATH IDENTIFIED BY THE COMPONENTS, REMOTE CONTROL SHED, AND NETWORK RING, APPEARS TO CONNECT NETWORK SEGMENTS WHOSE COMPONENTS RESIDE IN DIFFERENT ZONES. A FIREWALL TO FILTER THE TRAFFIC IN THIS PATH IS RECOMMENDED TO PROTECT THE COMPONENTS IN ONE ZONE FROM A COMPRIMISED COMPONENT IN THE OTHER ZONE.</li>
-	</ol>
+        <h1>
+            Component Compliance by Subject Area
+        </h1>
+        <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+            <canvas id="compResCanvas">{{compResCanvas}}</canvas>
+        </div>
     </div>
+
+
+
+    <!--Findings and Reccomendations From Basic Network Analysis-->
+    <div class="page-break">
+        <h1>Findings and Recommendations From Basic Network Analysis</h1>
+
+        <ol>
+            <li *ngFor="let r of networkRecommendations">{{r}}</li>
+        </ol>
+    </div>
+
 
 
     <div class="page-break">
@@ -612,27 +638,27 @@
                     <td class="border-table text-right">{{ acetDashboard?.SumRisk[4] }}</td>
                     <td class="border-table">
                     </td>
-                </tr>                
+                </tr>
             </table>
             <div class="ml-3">
-                    <div>Overall Risk Level is <span class="blue-text font-weight-bold">
-                            {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
-                        </span>
-                    </div>
-                    <div *ngIf="!acetDashboard?.Override || acetDashboard?.Override == '' || acetDashboard?.Override == 0">
-                        Overall Risk Level has not been overridden
-                    </div>
-                    <div
-                        *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
-                        Overall Risk Level has been overriden to <span
-                            class="blue-text font-weight-bold">{{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}</span>
-                        <div>Override Reason:
-                            <em>
-                                {{ acetDashboard?.OverrideReason }}
-                            </em>
-                        </div>
+                <div>Overall Risk Level is <span class="blue-text font-weight-bold">
+                        {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
+                    </span>
+                </div>
+                <div *ngIf="!acetDashboard?.Override || acetDashboard?.Override == '' || acetDashboard?.Override == 0">
+                    Overall Risk Level has not been overridden
+                </div>
+                <div
+                    *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+                    Overall Risk Level has been overriden to <span
+                        class="blue-text font-weight-bold">{{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}</span>
+                    <div>Override Reason:
+                        <em>
+                            {{ acetDashboard?.OverrideReason }}
+                        </em>
                     </div>
                 </div>
+            </div>
         </div>
         <div class="mt-3 mb-3">
             <p>
@@ -653,7 +679,7 @@
             </table>
         </div>
     </div>
-    
+
     <div *ngIf="reportSvc.hasACET">
         <rapp-required-docs></rapp-required-docs>
     </div>
