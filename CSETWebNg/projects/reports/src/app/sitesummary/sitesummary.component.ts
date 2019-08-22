@@ -57,7 +57,6 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   // Charts for Components
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
-  warningCount = 0;
   networkRecommendations = [];
   compResCanvas: Chart;
 
