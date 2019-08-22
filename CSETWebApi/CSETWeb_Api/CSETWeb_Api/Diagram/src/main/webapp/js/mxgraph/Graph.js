@@ -80,90 +80,6 @@ mxText.prototype.baseSpacingBottom = 1;
 // Keeps edges between relative child cells inside parent
 mxGraphModel.prototype.ignoreRelativeEdgeParent = false;
 
-
-// CSET - things to do when new objects are added to the graph
-mxGraphModel.prototype.cellAdded = function (cell)
-{
-    console.log('cellAdded');
-    console.log(cell);
-
-    // is this new addition part of the graph, or part of the sidebar?
-    if (!this.getRoot(cell).hasOwnProperty('id'))
-    {
-        return;
-    }
-
-    // no cell without a style needs to be considered for any of the logic below
-    if (!cell.style)
-    {
-        return;
-    }
-
-
-    // ignore shapes
-    if (cell.getStyleValue('shape') !== null)
-    {
-        return;
-    }
-
-    // ignore text objects
-    if (cell.hasStyle('text'))
-    {
-        return;
-    }
-
-    // ignore connectors
-    if (cell.geometry.width === 0 && cell.geometry.height === 0)
-    {
-
-        console.log('Connector added.');
-
-
-        if (!cell.target && !cell.geometry.targetPoint)
-        {
-            console.log('CONNECTOR HAS NO TARGET OR TARGETPOINT');
-        }
-
-        // remove endarrow while we're at it
-        cell.setStyleValue('endArrow', 'none');
-        return;
-    }
-
-
-    // assign a component GUID to components (not zones or MSCs)
-    if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
-    {
-        var nextGuid = guidService.getInstance().getNextGuid();
-        cell.setCsetAttribute('ComponentGuid', nextGuid);
-    }
-
-    // give zones a couple of zone-specific attributes
-    if (cell.getStyleValue('zone') == '1')
-    {
-        cell.setCsetAttribute('zone', '1');
-        cell.setCsetAttribute('zoneType', 'Other');
-        cell.setCsetAttribute('SAL', 'Low');
-        cell.setZoneColor();
-    }
-
-
-    cell.autoNameComponent();
-
-
-    // If the object being added is a multi-service component,
-    // swap out the symbol with a container.
-    var filename = cell.getStyleValue('image');
-    if (!!filename && filename.endsWith('multiple_services_component.svg'))
-    {
-        // convert the MSC into a swimlane (container)
-        cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
-        cell.geometry.width = 230;
-        cell.geometry.height = 120;
-    }
-}
-
-
-
 // Defines grid properties
 mxGraphView.prototype.gridImage = (mxClient.IS_SVG) ? 'data:image/gif;base64,R0lGODlhCgAKAJEAAAAAAP///8zMzP///yH5BAEAAAMALAAAAAAKAAoAAAIJ1I6py+0Po2wFADs=' :
     IMAGE_PATH + '/grid.gif';
@@ -181,6 +97,7 @@ mxShape.prototype.getConstraints = function (style, w, h)
 {
     return null;
 };
+
 
 /**
  * Constructs a new graph instance. Note that the constructor does not take a
@@ -1021,6 +938,7 @@ Graph = function (container, model, renderHint, stylesheet, themes)
     this.currentTranslate = new mxPoint(0, 0);
 };
 
+
 /**
  * Specifies if the touch UI should be used (cannot detect touch in FF so always on for Windows/Linux)
  */
@@ -1241,6 +1159,7 @@ Graph.prototype.edgeMode = false;
  * Allows all values in fit.
  */
 Graph.prototype.connectionArrowsEnabled = true;
+Graph.prototype.connectionArrowsEnabled = false;  // CSET
 
 /**
  * Specifies the regular expression for matching placeholders.
@@ -4974,7 +4893,9 @@ if (typeof mxVertexHandler != 'undefined')
 		 * Contains the default style for edges.
 		 */
         Graph.prototype.defaultEdgeStyle = {
-            // 'edgeStyle': 'orthogonalEdgeStyle',   // CSET
+            'edgeStyle': '',            // CSET
+            'strokeColor': '#808080',   // CSET
+            'endArrow': 'none',         // CSET
             'rounded': '0',
             'jettySize': 'auto',
             'orthogonalLoop': '1'
