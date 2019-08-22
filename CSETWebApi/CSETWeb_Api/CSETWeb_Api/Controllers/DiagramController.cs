@@ -42,8 +42,8 @@ namespace CSETWeb_Api.Controllers
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(req.DiagramXml);
             dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
-            //DiagramAnalysis analysis = new DiagramAnalysis();
-            //analysis.PerformAnalysis(xDoc);
+            DiagramAnalysis analysis = new DiagramAnalysis();
+            analysis.PerformAnalysis(xDoc);
         }
 
 
