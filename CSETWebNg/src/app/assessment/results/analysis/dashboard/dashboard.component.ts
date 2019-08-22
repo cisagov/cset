@@ -38,9 +38,11 @@ declare var $: any;
 })
 export class DashboardComponent implements OnInit {
 
-  overallScore: string;
-  standardBasedScore: string;
-  componentBasedScore: string;
+  overallScoreDisplay: string;
+  standardBasedScore: number;
+  standardBasedScoreDisplay: string;
+  componentBasedScore: number;
+  componentBasedScoreDisplay: string;
 
   assessComplChart: Chart;
   topCategChart: Chart;
@@ -57,60 +59,63 @@ export class DashboardComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.analysisSvc.getDashboard().subscribe(x => this.setupChart(x));
+    this.analysisSvc.getDashboard().subscribe(x => this.setupPage(x));
 
     // even up the score container widths
     $("#overall-score").css("width", $("#component-score").width() + "px");
   }
 
 
-  setupChart(x: any) {
+  setupPage(x: any) {
     this.initialized = false;
-    const stds = this.getScore(x.OverallBars, 'Questions')
-      + this.getScore(x.OverallBars, 'Requirement');
-    const comp = x.OverallBars.data[0];
-    this.overallScore = this.getScore(x.OverallBars, 'Overall').toFixed(0) + '%';
-    this.standardBasedScore = stds > 0 ? stds.toFixed(0) + '%' : 'No Standards Answers';
-    this.componentBasedScore = comp > 0 ? comp.toFixed(0) + '%' : 'No components answers';
 
-    console.log(x.ComponentSummaryPie.data);
+    // score boxes
+    this.overallScoreDisplay = this.getScore(x.OverallBars, 'Overall').toFixed(0) + '%';
+
+    this.standardBasedScore = this.getScore(x.OverallBars, 'Questions') + this.getScore(x.OverallBars, 'Requirement');
+    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? this.standardBasedScore.toFixed(0) + '%' : 'No Standards Answers';
+
+    this.componentBasedScore = x.OverallBars.data[0];
+    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
+
     this.hasComponents = (x.ComponentSummaryPie.data as number[]).reduce((a, b) => a + b) > 0;
 
-    this.hasComponents = true;
+    this.hasComponents = true;   // RKW - set this based on reality
 
-    // this.assessComplChart = new Chart('assessComplCanvas', {
-    // type: 'horizontalBar',
-    // data: {
-    // labels: x.OverallBars.Labels,
-    // datasets: [
-    // {
-    // label: '',
-    // data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
-    // backgroundColor: '#0A5278',
-    // borderColor: [],
-    // borderWidth: 1
-    // }
-    // ],
-    // },
-    // options: {
-    // title: {
-    // display: false,
-    // fontSize: 20,
-    // text: 'Assessment Compliance'
-    // },
-    // legend: {
-    // display: false
-    // },
-    // scales: {
-    // xAxes: [{
-    // ticks: {
-    // beginAtZero: true,
-    // max: 100
-    // }
-    // }]
-    // }
-    // }
-    // });
+
+    this.assessComplChart = new Chart('assessComplCanvas', {
+      type: 'horizontalBar',
+      data: {
+        labels: x.OverallBars.Labels,
+        datasets: [
+          {
+            label: '',
+            data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
+            backgroundColor: '#0A5278',
+            borderColor: [],
+            borderWidth: 1
+          }
+        ],
+      },
+      options: {
+        title: {
+          display: false,
+          fontSize: 20,
+          text: 'Assessment Compliance'
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 100
+            }
+          }]
+        }
+      }
+    });
 
 
     // Top Categories (only show the top 5 entries for dashboard)
