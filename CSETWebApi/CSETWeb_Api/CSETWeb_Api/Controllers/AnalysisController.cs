@@ -78,26 +78,18 @@ namespace CSETWeb_Api.Controllers
 
                 if (results.Count >= 2)
                 {
-                    List<double> data = new List<double>();
-                    List<String> labels = new List<String>();
+                    // for the compliance graph
+                    List<Tuple<string, double>> compliance = new List<Tuple<string, double>>();
+
                     ChartData stand = null;
                     ChartData comp = null;
+
+
                     foreach (GetCombinedOveralls c in results.Result1)
                     {
-                        // Questions or Requirements are included only if we are in that 'mode'
-                        // Do not include 'Framework' entry.
                         string mode = this.GetAssessmentMode(assessmentId);
-                        if ((c.StatType.ToLower() == "questions" && mode != "Q")
-                            || (c.StatType.ToLower() == "requirement" && mode != "R")
-                            || c.StatType.ToLower() == "framework")
-                        {
-                            // do not include the label and data
-                        }
-                        else
-                        {
-                            labels.Add(c.StatType);
-                            data.Add(c.Value);
-                        }
+
+                        string label = c.StatType;
 
                         if (c.StatType == "Components")
                         {
@@ -108,40 +100,56 @@ namespace CSETWeb_Api.Controllers
                             || (c.StatType == "Requirement" && mode == "R"))
                         {
                             stand = transformToChart(c);
+                            label = stand.label;
+                        }
+
+                        // Questions or Requirements are included only if we are in that 'mode'
+                        // Do not include 'Framework' entry.
+                        if ((c.StatType.ToLower() == "questions" && mode != "Q")
+                            || (c.StatType.ToLower() == "requirement" && mode != "R")
+                            || c.StatType.ToLower() == "framework")
+                        {
+                            // do not include the label and data
+                        }
+                        else
+                        {
+                            compliance.Add(new Tuple<string, double>(label, c.Value));
                         }
                     }
+
                     ChartData overallBars = new ChartData()
                     {
                         backgroundColor = "red",
                         borderWidth = "1",
-                        label = "overalls",
-                        Labels = labels,
-                        data = data
+                        label = "overalls"
                     };
+
+                    // order the compliance elements for display
+                    var complianceOrdered = new List<Tuple<string, double>>();
+                    complianceOrdered.Add(compliance.First(x => x.Item1 == "Overall"));
+                    complianceOrdered.Add(compliance.First(x => x.Item1 == "Standards"));
+                    complianceOrdered.Add(compliance.First(x => x.Item1 == "Components"));
+                    foreach (var j in complianceOrdered)
+                    {
+                        overallBars.Labels.Add(j.Item1);
+                        overallBars.data.Add(j.Item2);
+                    }
+
 
                     ChartData chartData = new ChartData();
 
-                    int rcount = 0;
-                    foreach (usp_getRankedCategories c in results.Result2)
+                    foreach (usp_getRankedCategories c in results.Result2.Take(5))
                     {
-                        if (rcount < 5)
-                        {
-                            chartData.data.Add((double)(c.prc ?? 0.0M));
-                            chartData.Labels.Add(c.Question_Group_Heading);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        rcount++;
+                        chartData.data.Add((double)(c.prc ?? 0.0M));
+                        chartData.Labels.Add(c.Question_Group_Heading);
                     }
 
 
                     rval = new FirstPage()
                     {
                         OverallBars = overallBars,
-                        ComponentSummaryPie = comp,
                         StandardsSummaryPie = stand,
+                        ComponentSummaryPie = comp,
                         RedBars = chartData
                     };
 
@@ -242,7 +250,7 @@ namespace CSETWeb_Api.Controllers
 
             return new ChartData()
             {
-                label = c.StatType,
+                label = new List<string>(){ "Questions", "Requirements" }.Contains(c.StatType) ? "Standards" : c.StatType,
                 Labels = labels,
                 data = data
             };
