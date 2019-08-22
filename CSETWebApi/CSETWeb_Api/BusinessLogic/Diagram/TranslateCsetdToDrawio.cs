@@ -154,13 +154,18 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
                 // zone type
                 string zoneType = ChildValue(zone, "c:type");
+                if (zoneType.ToLower() == "externaldmz")
+                {
+                    // add space for readability
+                    zoneType = "External DMZ";
+                }
                 xObject.SetAttribute("zoneType", zoneType);
 
                 xObject.SetAttribute("zone", "1");
 
-                // zone fill color 
-                string zoneColor = "#ffffff";
-                xZone.SetAttribute("style", "swimlane;zone=1;fillColor=" + zoneColor + ";swimlaneFillColor=" + zoneColor + ";");
+                // zone colors
+                GetZoneColors(zoneType, out string zoneColor, out string zoneHeaderColor);
+                xZone.SetAttribute("style", "swimlane;zone=1;fillColor=" + zoneHeaderColor + ";swimlaneFillColor=" + zoneColor + ";");
 
 
                 // determine the parent layer
@@ -181,6 +186,50 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xGeometry.SetAttribute("x", v);
                 v = ChildValue(zone, "c:rect/c:y");
                 xGeometry.SetAttribute("y", v);
+            }
+        }
+
+
+        /// <summary>
+        /// Determines the zone colors for the zone type.
+        /// </summary>
+        /// <param name="zoneType"></param>
+        /// <returns></returns>
+        private void GetZoneColors(string zoneType, out string color, out string headerColor)
+        {
+            headerColor = "#ece4d7";
+            color = "#f6f3ed";
+
+            switch (zoneType.ToLower())
+            {
+                case "control dmz":
+                    headerColor = "#ffe7e9";
+                    color = "#fff1f2";
+                    break;
+                case "corporate":
+                    headerColor = "#fdf9d9";
+                    color = "#fffef4";
+                    break;
+                case "other":
+                    headerColor = "#ece4d7";
+                    color = "#f6f3ed";
+                    break;
+                case "safety":
+                    headerColor = "#f6d06b";
+                    color = "#ffe7a5";
+                    break;
+                case "external dmz":
+                    headerColor = "#d3f1df";
+                    color = "#ebf4ef";
+                    break;
+                case "plant system":
+                    headerColor = "#e6dbee";
+                    color = "#f2edf6";
+                    break;
+                case "control system":
+                    headerColor = "#f6d06b";
+                    color = "#f2f8f9";
+                    break;
             }
         }
 
