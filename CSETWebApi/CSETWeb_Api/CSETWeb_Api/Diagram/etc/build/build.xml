@@ -16,7 +16,7 @@
 			<arg value="../../src/main/webapp/js/stencils.min.js"/>
 		</java>
 		
-		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${war.dir}/js/shapes.min.js">
+		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${war.dir}/js/shapes.min.js">
 			<sources dir="${basedir}/../../build">
 				<file name="shapes.js" />
 			</sources>
@@ -83,7 +83,7 @@
     		</concat>
 		<echo file="${basedir}/Graph-Resources.js" append="true">`);</echo>
 		
-		<jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/grapheditor.min.js">
+		<jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/grapheditor.min.js">
 			<sources dir="${grapheditor.dir}">
 				<file name="Editor.js" />
 				<file name="EditorUi.js" />
@@ -101,7 +101,7 @@
 		<echo message="My basedir is ${basedir}" />
 		<echo message="My sidebar folder is ${war.dir}/js/diagramly/sidebar" />
 		
-		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/sidebar.min.js">
+		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/sidebar.min.js">
 			<sources dir="${war.dir}/js/diagramly/sidebar">
 				<file name="Sidebar.js" />
 				<file name="Sidebar-ActiveDirectory.js" />
@@ -154,7 +154,7 @@
 			</sources>
 		</jscomp>
 		
-		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/client.min.js">
+		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/client.min.js">
 			<sources dir="${war.dir}/js/deflate">
 				<file name="base64.js" />
 			</sources>
@@ -176,13 +176,13 @@
 			</sources>
 		</jscomp>
 
-		<jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/.tmp0.min.js">
+		<jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/.tmp0.min.js">
 			<sources dir="${basedir}">
 				<file name=".tmp0.js"/>
 			</sources>
 		</jscomp>
 			
-		<jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/.tmp1.js">
+		<jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/.tmp1.js">
 			<sources dir="${grapheditor.dir}">
 				<file name="Editor.js" />
 				<file name="EditorUi.js" />
@@ -238,7 +238,7 @@
 			})();
 		</echo>
 		
-		<jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/.tmp2.min.js">
+		<jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/.tmp2.min.js">
 			<sources dir="${basedir}">
 				<file name=".tmp2.js"/>
 			</sources>
@@ -257,7 +257,7 @@
 		<delete file="${basedir}/.tmp1.xml"/>
 		<delete file="${basedir}/.tmp2.xml"/>
 
-		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp1.js">
+		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp1.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
 				<file name="LocalFile.js" />
@@ -297,7 +297,7 @@
 		<loadfile property="version" srcFile="../../VERSION"/>
 		<replace file="${basedir}/base.min.js" token="@DRAWIO-VERSION@" value="${version}"/>
 		
-		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${war.dir}/js/extensions.min.js">
+		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${war.dir}/js/extensions.min.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="Extensions.js" />
 			</sources>
@@ -317,7 +317,7 @@
 		
 		<delete file="${basedir}/.tmp1.js"/>
 		
-		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp1.js">
+		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp1.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
 				<file name="LocalFile.js" />
