@@ -9,7 +9,13 @@
     </ng-container>
     <ng-container matColumnDef="security">
       <th mat-header-cell *matHeaderCellDef> Security </th>
-      <td mat-cell *matCellDef="let element"> {{element.security}} </td>
+      <td mat-cell *matCellDef="let element"> 
+          <select [(ngModel)]="element.sal" class="form-control override-select"
+          (change)="submit(element.tag, element.security);">
+          <option [ngValue]="Trusted">Trusted</option>
+          <option [ngValue]="Untrusted">Untrusted</option>
+        </select>
+       </td>
     </ng-container>
     <ng-container matColumnDef="layer">
       <th mat-header-cell *matHeaderCellDef> Layer </th>
@@ -37,11 +43,21 @@
     </ng-container>
     <ng-container matColumnDef="linkType">
       <th mat-header-cell *matHeaderCellDef> Link Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.linkType}} </td>
+      <td mat-cell *matCellDef="let element"> 
+          <select [(ngModel)]="element.linkType" class="form-control override-select"
+          (change)="submit(element.tag, element.linkType);">
+          <option [ngValue]="Cellular Backhaul">Cellular Backhaul</option>
+          <option [ngValue]="Fiber">Fiber</option>
+          <option [ngValue]="Leased Line">Leased Line</option>
+          <option [ngValue]="Microwave">Microwave</option>
+          <option [ngValue]="None">None</option>
+        </select>
+      </td>
     </ng-container>
     <ng-container matColumnDef="visible">
       <th mat-header-cell *matHeaderCellDef> Visible </th>
-      <td mat-cell *matCellDef="let element"> {{element.visible}} </td>
+      <td mat-cell *matCellDef="let element">  <input type="checkbox" class="mt-1"
+        [checked]="element.visible" (change)="submit(element.tag, element.visible)"> </td>
     </ng-container>
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
