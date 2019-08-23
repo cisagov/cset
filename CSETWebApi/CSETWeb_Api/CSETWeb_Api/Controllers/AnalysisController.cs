@@ -250,7 +250,7 @@ namespace CSETWeb_Api.Controllers
 
             return new ChartData()
             {
-                label = new List<string>(){ "Questions", "Requirements" }.Contains(c.StatType) ? "Standards" : c.StatType,
+                label = new List<string>() { "Questions", "Requirements" }.Contains(c.StatType) ? "Standards" : c.StatType,
                 Labels = labels,
                 data = data
             };
@@ -824,22 +824,17 @@ namespace CSETWeb_Api.Controllers
         public List<usp_getNetworkWarnings> GetNetworkWarnings()
         {
             int assessmentId = Auth.AssessmentForUser();
+            var result = new List<usp_getNetworkWarnings>();
+
             using (CSET_Context context = new CSET_Context())
             {
-                List<usp_getNetworkWarnings> wlist = new List<usp_getNetworkWarnings>();
                 context.LoadStoredProc("[dbo].[usp_getNetworkWarnings]")
                 .WithSqlParam("assessment_Id", assessmentId)
                 .ExecuteStoredProc((handler) =>
                 {
-                    // TODO:  RKW - Uncomment this once the stored proc is written
-                    //var result = handler.ReadToList<usp_getNetworkWarnings>();
-
-                    //foreach (usp_getNetworkWarnings w in result)
-                    //{
-                    //    wlist.Add(w);
-                    //}
+                    result = (List<usp_getNetworkWarnings>) handler.ReadToList<usp_getNetworkWarnings>();
                 });
-                return wlist;
+                return result;
             }
         }
 
