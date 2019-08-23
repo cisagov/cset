@@ -1,8 +1,4 @@
-﻿using CSET_Main.Diagram.DiagramObjects.BaseNodes;
-using CSET_Main.Diagram.DiagramObjects.DataContainer;
-using System;
-using System.Windows;
-using Telerik.Windows.Controls.Diagrams.Extensions.ViewModels;
+﻿using System;
 
 namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 {

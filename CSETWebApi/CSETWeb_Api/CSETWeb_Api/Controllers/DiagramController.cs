@@ -16,6 +16,8 @@ using CSETWeb_Api.Models;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Diagram;
 using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -37,13 +39,15 @@ namespace CSETWeb_Api.Controllers
             TokenManager tm = new TokenManager();
             int userId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(req.DiagramXml);
-            dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
-            DiagramAnalysis analysis = new DiagramAnalysis();
-            analysis.PerformAnalysis(xDoc);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.LoadXml(req.DiagramXml);
+                dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
+                DiagramAnalysis analysis = new DiagramAnalysis(db);
+                analysis.PerformAnalysis(xDoc);
+            }
         }
 
 
@@ -61,9 +65,11 @@ namespace CSETWeb_Api.Controllers
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
             var response = new DiagramResponse();
-
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            response = dm.GetDiagram((int)assessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                response = dm.GetDiagram((int)assessmentId);
+            }
 
             var assessmentDetail = new AssessmentController().Get();
             response.AssessmentName = assessmentDetail.AssessmentName;
@@ -85,8 +91,11 @@ namespace CSETWeb_Api.Controllers
             int userId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            return dm.HasDiagram((int)assessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return dm.HasDiagram((int)assessmentId);
+            }
         }
 
 
@@ -139,7 +148,11 @@ namespace CSETWeb_Api.Controllers
         [HttpGet]
         public object GetComponentSymbols()
         {
-            return new BusinessManagers.DiagramManager().GetComponentSymbols();
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return dm.GetComponentSymbols();
+            }
         }
     }
 }

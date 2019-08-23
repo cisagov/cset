@@ -18,6 +18,13 @@ namespace CSETWeb_Api.BusinessManagers
 {
     public class DiagramManager
     {
+        private CSET_Context db;
+
+        public DiagramManager(CSET_Context db)
+        {
+            this.db = db;
+        }
+
         /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
@@ -62,36 +69,34 @@ namespace CSETWeb_Api.BusinessManagers
                 return;
             }
 
-            using (var db = new CSET_Context())
+            
+            var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+            if (assessmentRecord != null)
             {
-                var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
-                if (assessmentRecord != null)
+                DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(db);
+                XmlDocument oldDoc = new XmlDocument();
+                if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup))
                 {
-                    DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(db);
-                    XmlDocument oldDoc = new XmlDocument();
-                    if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup))
-                    {
-                        oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
-                    }
-                    differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
-                    differenceManager.SaveDifferences(assessmentID);
+                    oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                 }
-                else
-                {
-                    //what the?? where is our assessment
-                    throw new ApplicationException("Assessment record is missing for id" + assessmentID);
-                }
-
-                assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
-                if (!String.IsNullOrWhiteSpace(diagramXML))
-                {
-                    assessmentRecord.Diagram_Markup = diagramXML;
-                }
-
-                db.SaveChanges();
+                differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
+                differenceManager.SaveDifferences(assessmentID);
             }
-            //DiagramAnalysis analysis = new DiagramAnalysis();
-            //analysis.PerformAnalysis(xDoc);
+            else
+            {
+                //what the?? where is our assessment
+                throw new ApplicationException("Assessment record is missing for id" + assessmentID);
+            }
+
+            assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
+            if (!String.IsNullOrWhiteSpace(diagramXML))
+            {
+                assessmentRecord.Diagram_Markup = diagramXML;
+            }
+
+            db.SaveChanges();
+            
+         
         }
 
 
@@ -102,8 +107,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public DiagramResponse GetDiagram(int assessmentID)
         {
-            using (var db = new CSET_Context())
-            {
+           
                 var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
                 DiagramResponse resp = new DiagramResponse();
@@ -115,8 +119,7 @@ namespace CSETWeb_Api.BusinessManagers
                     return resp;
                 }
 
-                return null;
-            }
+                return null;           
         }
 
 
