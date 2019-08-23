@@ -25,32 +25,6 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="diagramXML"></param>
         public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber)
         {
-            
-            // this is a temporary check to see if the graph has any duplicate "id" attributes.
-            List<string> idList = new List<string>();
-            var nodesWithID = xDoc.SelectNodes("//*[@id]");
-            foreach (XmlNode n in nodesWithID)
-            {
-                if (idList.Contains(n.Attributes["id"].InnerText))
-                {
-
-                    // SUPER-TEMPORARY!!!!! Just to keep things from breaking too hard, assign a temporary random ID
-                    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                    Random random = new Random();
-                    var newID = new string(Enumerable.Repeat(chars, 10)
-                      .Select(s => s[random.Next(s.Length)]).ToArray());
-
-                    n.Attributes["id"].InnerText = newID;
-                    object a = null;
-                                    }
-                idList.Add(n.Attributes["id"].InnerText);
-            }
-
-
-
-
-
-
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
