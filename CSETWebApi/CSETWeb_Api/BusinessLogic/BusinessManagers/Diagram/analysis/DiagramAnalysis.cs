@@ -167,7 +167,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xmlContent);
                 XmlNode newNode = doc.DocumentElement;
-                xDoc.AppendChild(newNode);
+                XmlNode root =  xDoc.DocumentElement.FirstChild;
+                root.AppendChild(newNode);
+                Trace.Write(xDoc.ToString());
             }
         }
 
