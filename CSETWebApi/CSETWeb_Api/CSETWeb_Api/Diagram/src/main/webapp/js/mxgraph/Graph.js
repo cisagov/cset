@@ -98,6 +98,7 @@ mxShape.prototype.getConstraints = function (style, w, h)
     return null;
 };
 
+
 /**
  * Constructs a new graph instance. Note that the constructor does not take a
  * container because the graph instance is needed for creating the UI, which
@@ -937,6 +938,7 @@ Graph = function (container, model, renderHint, stylesheet, themes)
     this.currentTranslate = new mxPoint(0, 0);
 };
 
+
 /**
  * Specifies if the touch UI should be used (cannot detect touch in FF so always on for Windows/Linux)
  */
@@ -1157,6 +1159,7 @@ Graph.prototype.edgeMode = false;
  * Allows all values in fit.
  */
 Graph.prototype.connectionArrowsEnabled = true;
+Graph.prototype.connectionArrowsEnabled = false;  // CSET
 
 /**
  * Specifies the regular expression for matching placeholders.
@@ -4890,7 +4893,9 @@ if (typeof mxVertexHandler != 'undefined')
 		 * Contains the default style for edges.
 		 */
         Graph.prototype.defaultEdgeStyle = {
-            // 'edgeStyle': 'orthogonalEdgeStyle',   // CSET
+            'edgeStyle': '',            // CSET
+            'strokeColor': '#808080',   // CSET
+            'endArrow': 'none',         // CSET
             'rounded': '0',
             'jettySize': 'auto',
             'orthogonalLoop': '1'
