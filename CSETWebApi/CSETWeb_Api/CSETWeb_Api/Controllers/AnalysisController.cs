@@ -787,24 +787,28 @@ namespace CSETWeb_Api.Controllers
                              {
                                  chartData.Labels.Add(total.component_type);
 
-                                 cdY.data.Add((int)total.Y);
-                                 cdN.data.Add((int)total.N);
-                                 cdNA.data.Add((int)total.NA);
-                                 cdAlt.data.Add((int)total.A);
-                                 cdU.data.Add((int)total.U);
+                                 // adjust the percentages to equal 100% after rounding
+                                 var adjTotal = new BusinessLogic.Common.PercentageFixer(total.Y, total.N, total.NA, total.A, total.U);
+
+                                 cdY.data.Add((int)adjTotal.Y);
+                                 cdN.data.Add((int)adjTotal.N);
+                                 cdNA.data.Add((int)adjTotal.NA);
+                                 cdAlt.data.Add((int)adjTotal.A);
+                                 cdU.data.Add((int)adjTotal.U);
 
 
                                  // create a new DataRows entry with answer percentages for this component
-                                 chartData.DataRows.Add(new DataRows
+                                 var row = new DataRows
                                  {
                                      title = total.component_type,
-                                     yes = total.Y,
-                                     no = total.N,
-                                     na = total.NA,
-                                     alt = total.A,
-                                     unanswered = total.U,
+                                     yes = adjTotal.Y,
+                                     no = adjTotal.N,
+                                     na = adjTotal.NA,
+                                     alt = adjTotal.A,
+                                     unanswered = adjTotal.U,
                                      total = total.Total
-                                 });
+                                 };                                 
+                                 chartData.DataRows.Add(row);
                              }
                          });
             }

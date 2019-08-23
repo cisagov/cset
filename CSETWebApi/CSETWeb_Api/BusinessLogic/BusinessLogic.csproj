@@ -289,6 +289,7 @@
     <Compile Include="Common\EnumHelper\StringToEnum.cs" />
     <Compile Include="Common\ICSETGlobalProperties.cs" />
     <Compile Include="Common\MultipleResultSets.cs" />
+    <Compile Include="Common\PercentageFixer.cs" />
     <Compile Include="Data\AssessmentData\AssessmentModeData.cs" />
     <Compile Include="Data\AssessmentData\LevelsStringMap.cs" />
     <Compile Include="Data\AssessmentData\sals\GeneralSalManager.cs" />
