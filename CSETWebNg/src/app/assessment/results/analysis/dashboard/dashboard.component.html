@@ -34,28 +34,28 @@
 
         <div id="overall-score" class="score-container" style="margin: 0 4px;">
           <div>Overall Score</div>
-          <div style="font-size: 2em;">{{overallScore}}</div>
+          <div style="padding: .3rem; font-size: 2rem;">{{overallScoreDisplay}}</div>
         </div>
 
         <div style="flex-direction: column">
           <div id="standard-score" class="score-container">
             <div>Standard-based</div>
-            <div style="font-size: 2em;">{{standardBasedScore}}</div>
+            <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">{{standardBasedScoreDisplay}}</div>
           </div>
 
           <div id="component-score" class="score-container">
             <div>Component-based</div>
-            <div>{{componentBasedScore}}</div>
+            <div style="padding: .3rem" [class.has-score]="componentBasedScore > 0">{{componentBasedScoreDisplay}}</div>
           </div>
         </div>
         
       </div>
     </div>
 
-    <!-- <div class="chart d-flex flex-column flex-00a">
+    <div class="chart d-flex flex-column flex-00a">
       <h3>Assessment Compliance</h3>
       <canvas id="assessComplCanvas">{{assessComplChart}}</canvas>
-    </div> -->
+    </div>
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Top Ranked Categories</h3>
