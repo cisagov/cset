@@ -158,9 +158,10 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
             foreach(var message in dictionaryNodeMessages.Values)
             {
-                string warning = "  <mxCell id=\"{0}\" value=\"1\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FF0000;fontColor=#FFFFFF;fontSize=13;\" vertex=\"1\" parent=\"{2}\">" +
+                string warning = "    <object redDot=\"1\" label=\"1\" id=\"{0}\">" +
+                    "<mxCell  value=\"1\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FF0000;fontColor=#FFFFFF;fontSize=13;\" vertex=\"1\" parent=\"1\">" +
                             "      <mxGeometry x=\"{3}\" y=\"{4}\" width=\"20\" height=\"20\" as=\"geometry\"/>" +
-                            "    </mxCell>";
+                            "    </mxCell></object>";
                 //0 id  //1 Message Number //2 layer //3 x //4 y
 
                 string xmlContent = String.Format(warning, Guid.NewGuid().ToString(), message.Number, message.Component.LayerId, message.Component.Geometry.point.X, message.Component.Geometry.point.Y);
@@ -168,8 +169,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 doc.LoadXml(xmlContent);
                 XmlNode newNode = doc.DocumentElement;
                 XmlNode root =  xDoc.DocumentElement.FirstChild;
-                root.AppendChild(newNode);
-                Trace.Write(xDoc.ToString());
+                XmlNode r = xDoc.ImportNode(newNode, true);
+                root.AppendChild(r);                
             }
         }
 

@@ -89,7 +89,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
-            String diagramXML = xDoc.ToString();
+            String diagramXML = xDoc.OuterXml;
             if (!String.IsNullOrWhiteSpace(diagramXML))
             {
                 assessmentRecord.Diagram_Markup = diagramXML;

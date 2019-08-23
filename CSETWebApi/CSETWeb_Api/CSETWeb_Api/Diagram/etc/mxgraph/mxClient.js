@@ -9651,7 +9651,10 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
     {
         return;
     }
-
+    
+    if(cell.getCsetAttribute("redDot")== '1'){
+        return;
+    }
 
     // assign a component GUID to components (not zones or MSCs)
     if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
