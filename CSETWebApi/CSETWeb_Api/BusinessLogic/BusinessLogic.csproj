@@ -253,8 +253,11 @@
     <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkLayer.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkLink.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NodeViewModelBase.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferenceManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferences.cs" />
