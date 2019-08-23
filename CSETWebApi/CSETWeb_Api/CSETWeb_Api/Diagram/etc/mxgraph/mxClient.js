@@ -9615,7 +9615,78 @@ mxGraphModel.prototype.add = function (a, b, c) {
     }
     return b
 };
-mxGraphModel.prototype.cellAdded = function (a) {
+
+/**
+ * CSET - things to do when new objects are added to the graph
+ */
+mxGraphModel.cellAddedCSET = function (graph, cell)
+{
+    // get out if the new added cell is part of the sidebar.  Sidebar graph doesn't appear to have a prefix attribute.
+    if (!graph.prefix)
+    {
+        return;
+    }
+
+    // no cell without a style needs to be considered for any of the logic below
+    if (!cell.style)
+    {
+        return;
+    }
+
+
+    // ignore shapes
+    if (cell.getStyleValue('shape') !== null)
+    {
+        return;
+    }
+
+    // ignore text objects
+    if (cell.hasStyle('text'))
+    {
+        return;
+    }
+
+    // connectors
+    if (cell.isEdge())
+    {
+        return;
+    }
+
+
+    // assign a component GUID to components (not zones or MSCs)
+    if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
+    {
+        var nextGuid = guidService.getInstance().getNextGuid();
+        cell.setCsetAttribute('ComponentGuid', nextGuid);
+    }
+
+    // give zones a couple of zone-specific attributes
+    if (cell.getStyleValue('zone') == '1')
+    {
+        cell.setCsetAttribute('zone', '1');
+        cell.setCsetAttribute('zoneType', 'Other');
+        cell.setCsetAttribute('SAL', 'Low');
+        cell.setZoneColor();
+    }
+
+
+    cell.autoNameComponent();
+
+
+    // If the object being added is a multi-service component,
+    // swap out the symbol with a container.
+    var filename = cell.getStyleValue('image');
+    if (!!filename && filename.endsWith('multiple_services_component.svg'))
+    {
+        // convert the MSC into a swimlane (container)
+        cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
+        cell.geometry.width = 230;
+        cell.geometry.height = 120;
+    }
+}
+
+mxGraphModel.prototype.cellAdded = function (a)
+{
     if (null != a) {
         null == a.getId() && this.createIds && a.setId(this.createId(a));
         if (null != a.getId()) {
@@ -9627,9 +9698,10 @@ mxGraphModel.prototype.cellAdded = function (a) {
             }
         }
         mxUtils.isNumeric(a.getId()) && (this.nextId = Math.max(this.nextId, a.getId()));        
-        cellAddedCSET(this, a);        
-        for (var b = this.getChildCount(a), c = 0; c < b; c++) this.cellAdded(this.getChildAt(a, c))
-        
+
+        mxGraphModel.cellAddedCSET(this, a);        
+
+        for (var b = this.getChildCount(a), c = 0; c < b; c++) this.cellAdded(this.getChildAt(a, c))        
     }
     
 };

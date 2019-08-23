@@ -29,7 +29,7 @@ mxCell.prototype.getCsetAttribute = function (name)
 
 
 /**
- * Sets an attribute on a cell.  Creates a wrapper object for the cell if needed.
+ * Sets an attribute on a cell.  Lazily creates an object value for the cell.
  */
 mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
@@ -65,28 +65,6 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 
 
 /**
- * Recursively looks up through parentage to see if the cell's
- * parent is ultimately the top of the graph (as opposed to the sidebar).
- * @param {any} cell
- */
-mxCell.prototype.isTopParentGraph = function ()
-{
-    if (!this.hasOwnProperty('parent'))
-    {
-        return false;
-    }
-
-    // if I have a null parent but I have an ID, then I am the top node of the graph
-    if (this.parent == null && this.hasOwnProperty('id'))
-    {
-        return true;
-    }
-
-    return this.getParent().isTopParentGraph();
-}
-
-
-/**
  * Returns a boolean indicating if the cell's immediate parent is a 
  * multi-service component.
  */
@@ -97,16 +75,6 @@ mxCell.prototype.isParentMSC = function ()
 
     var s = parent.getStyle();
     return (!!s && s.indexOf('msc=1') > 0);
-}
-
-
-/**
- * Returns a boolean indicating if the cell is a connector.
- */
-mxCell.prototype.isConnector = function ()
-{
-    var isconnector = (!this.value && !!this.edge && this.edge == true);
-    return isconnector;
 }
 
 
@@ -153,6 +121,7 @@ mxCell.prototype.initZone = function ()
     this.setAttribute('label', this.getAttribute('internalLabel') + '-' + sal);
 }
 
+
 /**
  * Changes the color of the zone
  */
@@ -184,7 +153,7 @@ mxCell.prototype.setZoneColor = function ()
             headerColor = '#f6d06b';
             color = '#ffe7a5';
             break;
-        case 'externaldmz':
+        case 'external dmz':
             headerColor = '#d3f1df';
             color = '#ebf4ef';
             break;
@@ -193,7 +162,7 @@ mxCell.prototype.setZoneColor = function ()
             color = '#f2edf6';
             break;
         case 'control system':
-            headerColor = '#f6d06b';
+            headerColor = '#d3eef2';
             color = '#f2f8f9';
             break;
     }
@@ -208,9 +177,6 @@ mxCell.prototype.setZoneColor = function ()
  */
 mxCell.prototype.autoNameComponent = function ()
 {
-    console.log('autoNameComponent');
-    console.log(this);
-
     // ignore items without style
     if (!this.getStyle())
     {

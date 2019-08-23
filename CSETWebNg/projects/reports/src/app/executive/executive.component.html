@@ -127,15 +127,10 @@
     <h1>
       Analysis of Network Components
     </h1>
-    <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram
-      is: <input type="text" class="warnInput" value="2">
-    </p>
-    <p> See the Site Summary report Findings and
-      Recommendations from Basic Network Analysis for details.
-    </p>
 
 
-    <div style="padding: 1em;">
+    <div class="d-flex flex-row align-items-center">
+      <div style="padding: 1rem;">
         <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
           <div>COMBINED COMPONENT SUMMARY</div>
           <div>
@@ -144,8 +139,20 @@
         </div>
       </div>
 
-    <canvas id="canvasComponentStackedBar"></canvas>
+      <div style="padding: 1rem;">
+        <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system
+          diagram is <span class="warnInput">{{ warningCount }}</span>.
+        </p>
+        <p> See the Site Summary report Findings and
+          Recommendations from Basic Network Analysis for details.
+        </p>
+      </div>
+    </div>
 
+    <div
+      style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+      <canvas id="canvasComponentsTypes"></canvas>
+    </div>
   </div>
 
 
