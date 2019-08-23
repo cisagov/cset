@@ -5,7 +5,7 @@
   </ng-container>
   <ng-container matColumnDef="hasUniqueQuestions">
     <th mat-header-cell *matHeaderCellDef> Has Unique Questions </th>
-    <td mat-cell *matCellDef="let element"> <input type="radio" name="{{ tt.GroupName }}" class="mt-1"
+    <td mat-cell *matCellDef="let element"> <input type="checkbox" name="{{ tt.GroupName }}" class="mt-1"
       [checked]="element.hasUniqueQuestions" (change)="submit(element.tag, element.hasUniqueQuestions)"> 
     </td>
   </ng-container>
@@ -64,7 +64,7 @@
   <ng-container matColumnDef="visible">
     <th mat-header-cell *matHeaderCellDef> Visible </th>
     <td mat-cell *matCellDef="let element"> 
-        <input type="radio" class="mt-1"
+        <input type="checkbox" class="mt-1"
         [checked]="element.visible" (change)="submit(element.tag, element.visible)"> 
     </td>
   </ng-container>
