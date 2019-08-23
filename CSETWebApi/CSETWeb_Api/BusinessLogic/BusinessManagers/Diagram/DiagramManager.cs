@@ -30,7 +30,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, int lastUsedComponentNumber)
         {
             
             // this is a temporary check to see if the graph has any duplicate "id" attributes.
@@ -89,6 +89,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
+            String diagramXML = xDoc.ToString();
             if (!String.IsNullOrWhiteSpace(diagramXML))
             {
                 assessmentRecord.Diagram_Markup = diagramXML;

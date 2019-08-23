@@ -2,6 +2,7 @@
 {
     public class DiagramAnalysisNodeMessage : DiagramAnalysisBaseMessage
     {
-        public object Component { get; internal set; }
+        public NetworkNode Component { get; internal set; }
+        public int Number { get; internal set; }
     }
 }

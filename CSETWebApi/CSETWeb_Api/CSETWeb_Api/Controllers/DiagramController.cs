@@ -44,9 +44,10 @@ namespace CSETWeb_Api.Controllers
                 BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.LoadXml(req.DiagramXml);
-                dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
+                
                 DiagramAnalysis analysis = new DiagramAnalysis(db);
                 analysis.PerformAnalysis(xDoc);
+                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber);
             }
         }
 
