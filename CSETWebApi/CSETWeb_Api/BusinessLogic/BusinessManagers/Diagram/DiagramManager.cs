@@ -191,5 +191,41 @@ namespace CSETWeb_Api.BusinessManagers
 
             return resp;
         }
+
+        /// <summary>
+        /// Get all component symbols ungrouped 
+        /// </summary>
+        /// <returns></returns>
+        public List<ComponentSymbol> GetAllComponentSymbols()
+        {
+            var resp = new List<ComponentSymbol>();
+            using (var db = new CSET_Context())
+            {
+
+
+                var symbols = db.COMPONENT_SYMBOLS.OrderBy(x => x.Name).ToList();
+
+                foreach (COMPONENT_SYMBOLS s in symbols)
+                {
+                    var symbol = new ComponentSymbol
+                    {
+                        Name = s.Name,
+                        DiagramTypeXml = s.Diagram_Type_Xml,
+                        Abbreviation = s.Abbreviation,
+                        FileName = s.File_Name,
+                        DisplayName = s.Display_Name,
+                        LongName = s.Long_Name,
+                        ComponentFamilyName = s.Component_Family_Name,
+                        Tags = s.Tags,
+                        Width = (int) s.Width,
+                        Height = (int) s.Height
+                    };
+
+                    resp.Add(symbol);
+                }
+            }
+
+            return resp;
+        }
     }
 }
