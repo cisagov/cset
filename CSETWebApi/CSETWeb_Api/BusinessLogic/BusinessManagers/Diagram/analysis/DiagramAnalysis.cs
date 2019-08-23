@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Xml;
+using System.Xml.Linq;
 using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
@@ -32,6 +33,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         private CSET_Context db;
         private Dictionary<string, string> imageToTypePath = new Dictionary<string, string>();
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
+        private int nextMessage = 1; 
 
 
         public DiagramAnalysis(CSET_Context db)
@@ -100,6 +102,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                     }
                 }
 
+                //extract the geometry to a point on the component
+                NetworkGeometry geometry = new NetworkGeometry(node.FirstChild.FirstChild);
+
                 NetworkNode dnode; 
                 string id = node.Attributes["id"].Value;
                 if (nodes.TryGetValue(id,out dnode))
@@ -114,7 +119,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                         ID = node.Attributes["id"].Value,
                         ComponentName = node.Attributes["label"].Value,
                         ComponentType = nodeType,
-                        IsVisible = IsVisible                        
+                        IsVisible = IsVisible,
+                        Geometry = geometry
                     };
                     nodes.Add(id, dnode);
                 }
@@ -125,8 +131,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 //find each node
                 //add them to each other             
                 NetworkNode start = findNode(node.Attributes["source"].Value);
-                NetworkNode target  = findNode(node.Attributes["target"].Value);
-                NetworkLink link = new NetworkLink();
+                NetworkNode target  = findNode(node.Attributes["target"].Value);                
                 Links.Add(new NetworkLink()
                 {
                     
@@ -136,6 +141,34 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 
             }
             AnalyzeNetwork();
+            ProcessNetworkMessages(xDoc);
+        }
+
+        /// <summary>
+        /// Go through the messages and add the red dot 
+        /// to the diagram.
+        /// </summary>
+        private void ProcessNetworkMessages(XmlDocument xDoc)
+        {
+            //generate the string
+            //convert it to an xmlnode
+            //add the node to the document 
+            //save to database
+            //force reload
+
+            foreach(var message in dictionaryNodeMessages.Values)
+            {
+                string warning = "  <mxCell id=\"{0}\" value=\"1\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FF0000;fontColor=#FFFFFF;fontSize=13;\" vertex=\"1\" parent=\"{2}\">" +
+                            "      <mxGeometry x=\"{3}\" y=\"{4}\" width=\"20\" height=\"20\" as=\"geometry\"/>" +
+                            "    </mxCell>";
+                //0 id  //1 Message Number //2 layer //3 x //4 y
+
+                string xmlContent = String.Format(warning, Guid.NewGuid().ToString(), message.Number, message.Component.LayerId, message.Component.Geometry.point.X, message.Component.Geometry.point.Y);
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xmlContent);
+                XmlNode newNode = doc.DocumentElement;
+                xDoc.AppendChild(newNode);
+            }
         }
 
         private NetworkNode findNode(string id)
@@ -161,6 +194,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
          * if so then we need to consider those edges. 
          * do a breadth first search if we find an object that is not a firewall 
          */
+        
+          
 
         private void checkRule1()
         {
@@ -190,7 +225,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                             dictionaryNodeMessages.Add(node.ComponentGuid, new DiagramAnalysisNodeMessage()
                             {
                                 Component = node,
-                                SetMessages = new HashSet<string>()
+                                SetMessages = new HashSet<string>(),
+                                Number = nextMessage++
                             });
                         }
                     }
