@@ -553,12 +553,6 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xConnector.AppendChild(xGeometry);
 
 
-                // determine the parent layer
-                var layerName = ChildValue(connector, "c:layername");
-                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
-                xConnector.SetAttribute("parent", newLayerID);
-
-
                 // Hook up/position the ends.  Note that CSET 8.1 may not export correct coordinates for unattached ends.
                 var tailObjectID = ChildValue(connector, "c:nodeId1");
                 if (tailObjectID != null)
@@ -590,6 +584,29 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                     xPoint.SetAttribute("x", x);
                     xPoint.SetAttribute("y", y);
                     xGeometry.AppendChild(xPoint);
+                }
+
+
+                // determine the parent layer
+                var layerName = ChildValue(connector, "c:layername");
+                var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
+                xConnector.SetAttribute("parent", newLayerID);
+
+                // However ... if both ends' vertices have the same parent, then our connector should have that parent.
+                // This assigns the connector to a zone that both vertices share.
+                try
+                {
+                    var mySource = xRoot.SelectSingleNode("//*[@id=" + xConnector.Attributes["source"].InnerText + "]");
+                    var myTarget = xRoot.SelectSingleNode("//*[@id=" + xConnector.Attributes["target"].InnerText + "]");
+
+                    if (mySource.ChildNodes[0].Attributes["parent"].InnerText == myTarget.ChildNodes[0].Attributes["parent"].InnerText)
+                    {
+                        xConnector.SetAttribute("parent", mySource.ChildNodes[0].Attributes["parent"].InnerText);
+                    }
+                }
+                catch (Exception exc)
+                {
+                    // leave the connector/edge alone
                 }
             }
         }
