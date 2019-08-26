@@ -33,7 +33,7 @@ namespace CSETWeb_Api.Controllers
         /// <param name="req"></param>
         [Route("api/diagram/save")]
         [HttpPost]
-        public void SaveDiagram([FromBody] DiagramRequest req)
+        public List<IDiagramAnalysisNodeMessage> SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             TokenManager tm = new TokenManager();
@@ -48,6 +48,7 @@ namespace CSETWeb_Api.Controllers
                 DiagramAnalysis analysis = new DiagramAnalysis(db);
                 analysis.PerformAnalysis(xDoc);
                 dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber);
+                return analysis.NetworkWarnings;
             }
         }
 

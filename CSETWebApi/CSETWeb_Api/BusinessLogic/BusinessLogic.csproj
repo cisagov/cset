@@ -250,6 +250,7 @@
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisNodeMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />

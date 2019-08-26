@@ -12,6 +12,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using DataLayerCore.Model;
+using Newtonsoft.Json;
 
 namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 {
@@ -35,11 +36,14 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
         private int nextMessage = 1; 
 
+        public XmlDocument NetworkWarningsXml { get; private set; }
+        public List<IDiagramAnalysisNodeMessage> NetworkWarnings { get; private set; }
 
         public DiagramAnalysis(CSET_Context db)
         {
             this.db = db;
             imageToTypePath = db.COMPONENT_SYMBOLS.ToDictionary(x => x.File_Name, x => x.Diagram_Type_Xml);
+            NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
         }
 
         public void PerformAnalysis(XmlDocument xDoc)
@@ -54,9 +58,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             //then walk the tree to evaluate node rules
 
 
-            
-            
-            XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object");
+
+
+            XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
             XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
             XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
             foreach(XmlNode layer in mxCellLayers)
@@ -141,37 +145,56 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 
             }
             AnalyzeNetwork();
-            ProcessNetworkMessages(xDoc);
+            
+            //set both the xml and the json
+            this.NetworkWarningsXml= ProcessNetworkMessages();
+            if (xDoc.DocumentElement != null && this.NetworkWarningsXml.DocumentElement != null)
+            {
+                XmlNode root = xDoc.DocumentElement.FirstChild;
+                XmlNode r = xDoc.ImportNode(this.NetworkWarningsXml.DocumentElement, true);
+                root.AppendChild(r);
+            }
         }
 
+
+
+
+
         /// <summary>
-        /// Go through the messages and add the red dot 
-        /// to the diagram.
+        /// Go through the messages and create the red dot 
+        /// cells for the diagram.
         /// </summary>
-        private void ProcessNetworkMessages(XmlDocument xDoc)
+        /// <returns>
+        /// returns an xmldocument that can be converted to json to return to client
+        /// or directly added to a diagram on import or other api side diagram manipulations
+        /// </returns>
+        private XmlDocument ProcessNetworkMessages()
         {
             //generate the string
             //convert it to an xmlnode
             //add the node to the document 
             //save to database
             //force reload
-
+            XmlDocument start = new XmlDocument();
+            this.NetworkWarnings.Clear();
             foreach(var message in dictionaryNodeMessages.Values)
             {
-                string warning = "    <object redDot=\"1\" label=\"1\" id=\"{0}\">" +
-                    "<mxCell  value=\"1\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FF0000;fontColor=#FFFFFF;fontSize=13;\" vertex=\"1\" parent=\"1\">" +
-                            "      <mxGeometry x=\"{3}\" y=\"{4}\" width=\"20\" height=\"20\" as=\"geometry\"/>" +
-                            "    </mxCell></object>";
-                //0 id  //1 Message Number //2 layer //3 x //4 y
-
-                string xmlContent = String.Format(warning, Guid.NewGuid().ToString(), message.Number, message.Component.LayerId, message.Component.Geometry.point.X, message.Component.Geometry.point.Y);
+                this.NetworkWarnings.Add((IDiagramAnalysisNodeMessage)message);
                 XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlContent);
-                XmlNode newNode = doc.DocumentElement;
-                XmlNode root =  xDoc.DocumentElement.FirstChild;
-                XmlNode r = xDoc.ImportNode(newNode, true);
-                root.AppendChild(r);                
+                doc.LoadXml(message.XmlValue);
+                if (start.DocumentElement == null)
+                {
+                    start = doc;
+                }
+                else
+                {
+                    XmlNode newNode = doc.DocumentElement;
+                    XmlNode root = start.DocumentElement;
+                    XmlNode r = start.ImportNode(newNode, true);
+                    root.AppendChild(r);
+                }
             }
+            return start;
         }
 
         private NetworkNode findNode(string id)
