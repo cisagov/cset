@@ -19,22 +19,36 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <div id="chart">
-      <h3>Network Warnings</h3>
-      <canvas id="netWarnCanvas">{{chart}}</canvas>
+
+    <h3>Network Warnings</h3>
+
+    <div *ngIf="initialized">
+      <p>All identified network analysis problems.</p>
+
+      <table class="table">
+        <tr>
+          <th class="align-right">ID</th>
+          <th>Network Warnings</th>
+        </tr>
+        <tr *ngFor="let w of warnings">
+          <td class="align-right">{{w.Id}}</td>
+          <td>{{w.WarningText}}</td>
+        </tr>
+      </table>
     </div>
+
     <div *ngIf="!initialized">
       <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
     </div>
+
     <div class="mt-3 d-flex justify-content-between flex-00a">
       <button class="btn btn-primary" (click)="navSvc2.navBack('components-warning')">Back</button>
       <button class="btn btn-primary" (click)="navSvc2.navNext('components-warning')">Next</button>
     </div>
   </div>
 </div>
-

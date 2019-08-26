@@ -142,9 +142,9 @@ namespace CSETWeb_Api.Controllers
         [AllowAnonymous]
         [Route("api/diagram/symbols/get")]
         [HttpGet]
-        public object GetComponentSymbols()
+        public List<ComponentSymbolGroup> GetComponentSymbols()
         {
-            return new BusinessManagers.DiagramManager().GetComponentSymbols();
-        }
+            return new DiagramManager().GetComponentSymbols();
+        }       
     }
 }
