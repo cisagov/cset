@@ -60,6 +60,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   chartComponentsTypes: Chart;
   networkRecommendations = [];
   compResCanvas: Chart;
+  warnings: any;
 
   // ACET data
   matDetails: any;
@@ -149,6 +150,9 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
+    });
+    this.analysisSvc.getNetworkWarnings().subscribe(x => {
+      this.warnings = x;
     });
 
 

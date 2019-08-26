@@ -338,9 +338,16 @@
     <div class="page-break">
         <h1>Findings and Recommendations From Basic Network Analysis</h1>
 
-        <ol>
-            <li *ngFor="let r of networkRecommendations">{{r}}</li>
-        </ol>
+        <table class="table">
+            <tr>
+                <th class="align-right">ID</th>
+                <th>Network Warnings</th>
+            </tr>
+            <tr *ngFor="let w of warnings">
+                <td class="align-right">{{w.Id}}</td>
+                <td>{{w.WarningText}}</td>
+            </tr>
+        </table>
     </div>
 
 
