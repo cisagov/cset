@@ -62,17 +62,23 @@ CsetUtils.PersistGraphToCSET = function (editor)
 {
     var jwt = localStorage.getItem('jwt');
     var enc = new mxCodec();
-    var node = enc.encode(editor.graph.getModel());
-    var oSerializer = new XMLSerializer();
-    var sXML = oSerializer.serializeToString(node);
-
+    var model = editor.graph.getModel();
     var req = {};
-    req.DiagramXml = sXML;
-    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+
+    if(model){    
+        var node = enc.encode(model);
+        var oSerializer = new XMLSerializer();
+        var sXML = oSerializer.serializeToString(node);
+    
+        req.DiagramXml = sXML;
+        req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+    }
 
     if (sXML == EditorUi.prototype.emptyDiagramXml)
     {
         // debugger;
+        req.DiagramXml = "";
+        req.LastUsedComponentNumber = 1;
     }
 
     var url = localStorage.getItem('cset.host') + 'diagram/save';
@@ -91,9 +97,16 @@ CsetUtils.PersistGraphToCSET = function (editor)
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', jwt);
+    xhr.overrideMimeType("application/json");
+    xhr.onload  = function() {        
+        if(req.responseText){    
+            var warnings = JSON.parse(req.responseText);
+            var analysis = new CsetAnalysisWarnings();
+            analysis.addWarningsToDiagram(warnings, editor.graph);
+        }
+     };
     xhr.send(JSON.stringify(req));
 }
-
 
 /**
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
