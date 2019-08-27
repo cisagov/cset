@@ -233,7 +233,6 @@
     <Compile Include="BusinessManagers\Analysis\DataRowsPie.cs" />
     <Compile Include="BusinessManagers\Analysis\FirstPageMultiResult.cs" />
     <Compile Include="BusinessManagers\Analysis\MultiResultBase.cs" />
-    <Compile Include="BusinessManagers\Analysis\usp_getNetworkWarnings.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsRankedCategories.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsSummmary.cs" />

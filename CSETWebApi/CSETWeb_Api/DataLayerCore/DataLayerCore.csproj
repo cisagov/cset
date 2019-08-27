@@ -243,6 +243,7 @@
     <Compile Include="Model\NCSF_CATEGORY.cs" />
     <Compile Include="Model\NCSF_FUNCTIONS.cs" />
     <Compile Include="Model\NERC_RISK_RANKING.cs" />
+    <Compile Include="Model\NETWORK_WARNINGS.cs" />
     <Compile Include="Model\NEW_QUESTION.cs" />
     <Compile Include="Model\NEW_QUESTION_LEVELS.cs" />
     <Compile Include="Model\NEW_QUESTION_SETS.cs" />
