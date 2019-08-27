@@ -825,20 +825,14 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/NetworkWarnings")]
-        public List<usp_getNetworkWarnings> GetNetworkWarnings()
+        public List<NETWORK_WARNINGS> GetNetworkWarnings()
         {
             int assessmentId = Auth.AssessmentForUser();
-            var result = new List<usp_getNetworkWarnings>();
-
-            using (CSET_Context context = new CSET_Context())
+            using (CSET_Context db = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getNetworkWarnings]")
-                .WithSqlParam("assessment_Id", assessmentId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    result = (List<usp_getNetworkWarnings>) handler.ReadToList<usp_getNetworkWarnings>();
-                });
-                return result;
+                return (List<NETWORK_WARNINGS>)db.NETWORK_WARNINGS
+                    .Where(x => x.Assessment_Id == assessmentId)
+                    .OrderBy(x => x.Id).ToList();
             }
         }
 
