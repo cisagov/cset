@@ -23,7 +23,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber, string diagramSVG)
         {
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
@@ -61,6 +61,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     assessmentRecord.Diagram_Markup = diagramXML;
                 }
+                assessmentRecord.Diagram_Svg = diagramSVG;
 
                 db.SaveChanges();
             }
