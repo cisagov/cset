@@ -52,6 +52,7 @@ namespace DataLayerCore.Model
         public bool? MatDetail_targetBandOnly { get; set; }
         public string Diagram_Markup { get; set; }
         public int LastUsedComponentNumber { get; set; }
+        public string Diagram_Svg { get; set; }
 
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]

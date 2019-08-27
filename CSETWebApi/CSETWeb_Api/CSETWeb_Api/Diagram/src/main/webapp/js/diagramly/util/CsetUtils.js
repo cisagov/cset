@@ -75,6 +75,23 @@ CsetUtils.PersistGraphToCSET = function (editor)
         // debugger;
     }
 
+
+
+    // ---------------------------------------------------------------------------------------------------
+    var selectionEmpty = editor.graph.isSelectionEmpty();
+    var ignoreSelection = selectionEmpty;
+    var bg = '#ffffff';
+
+    var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    var svgXml = mxUtils.getXml(svgRoot, 'image/svg+xml');
+    console.log(svgXml);
+    req.DiagramSvg = svgXml;
+    // ---------------------------------------------------------------------------------------------------
+
+
+    console.log(req);
+
+
     var url = localStorage.getItem('cset.host') + 'diagram/save';
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function ()
