@@ -295,7 +295,7 @@
 
             <div style="padding: 1rem;">
                 <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                    system diagram is <span class="warnInput">{{ networkRecommendations.length }}</span>.
+                    system diagram is <span class="warnInput">{{ warnings.length }}</span>.
                 </p>
                 <p> See the Findings and Recommendations from Basic Network Analysis for details.
                 </p>
@@ -325,7 +325,7 @@
     <div class="page-break">
         <h1>Findings and Recommendations From Basic Network Analysis</h1>
 
-        <table class="table">
+        <table class="table" *ngIf="!!warnings && warnings.length > 0">
             <tr>
                 <th class="align-right">ID</th>
                 <th>Network Warnings</th>
@@ -335,6 +335,10 @@
                 <td>{{w.WarningText}}</td>
             </tr>
         </table>
+
+        <div class="mt-4 mb-4" *ngIf="!!warnings && warnings.length === 0">
+            There are no network warnings.
+        </div>
     </div>
 
 
