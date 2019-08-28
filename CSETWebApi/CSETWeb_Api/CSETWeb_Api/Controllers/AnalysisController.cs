@@ -103,17 +103,17 @@ namespace CSETWeb_Api.Controllers
                             label = stand.label;
                         }
 
-                        // Questions or Requirements are included only if we are in that 'mode'
-                        // Do not include 'Framework' entry.
-                        if ((c.StatType.ToLower() == "questions" && mode != "Q")
-                            || (c.StatType.ToLower() == "requirement" && mode != "R")
-                            || c.StatType.ToLower() == "framework")
+
+                        if ((c.StatType.ToLower() == "overall")
+                            || (c.StatType.ToLower() == "components"))
                         {
-                            // do not include the label and data
+                            compliance.Add(new Tuple<string, double>(c.StatType, c.Value));
                         }
-                        else
+                        else if ((c.StatType.ToLower() == "questions" && mode == "Q")
+                            || (c.StatType.ToLower() == "requirement" && mode == "R"))
                         {
-                            compliance.Add(new Tuple<string, double>(label, c.Value));
+                            // Questions or Requirements are included only if we are in that 'mode', renamed as 'Standards'
+                            compliance.Add(new Tuple<string, double>("Standards", c.Value));
                         }
                     }
 
@@ -807,7 +807,7 @@ namespace CSETWeb_Api.Controllers
                                      alt = adjTotal.A,
                                      unanswered = adjTotal.U,
                                      total = total.Total
-                                 };                                 
+                                 };
                                  chartData.DataRows.Add(row);
                              }
                          });

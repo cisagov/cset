@@ -28,7 +28,7 @@
     <div *ngIf="initialized">
       <p>All identified network analysis problems.</p>
 
-      <table class="table">
+      <table class="table" *ngIf="!!warnings && warnings.length > 0">
         <tr>
           <th class="align-right">ID</th>
           <th>Network Warnings</th>
@@ -38,6 +38,10 @@
           <td>{{w.WarningText}}</td>
         </tr>
       </table>
+
+      <div class="mt-4 mb-4" *ngIf="!!warnings && warnings.length === 0">
+        There are no network warnings.
+      </div>
     </div>
 
     <div *ngIf="!initialized">
@@ -47,8 +51,8 @@
     </div>
 
     <div class="mt-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navSvc2.navBack('components-warning')">Back</button>
-      <button class="btn btn-primary" (click)="navSvc2.navNext('components-warning')">Next</button>
+      <button class="btn btn-primary" (click)="navSvc2.navBack('components-warnings')">Back</button>
+      <button class="btn btn-primary" (click)="navSvc2.navNext('components-warnings')">Next</button>
     </div>
   </div>
 </div>
