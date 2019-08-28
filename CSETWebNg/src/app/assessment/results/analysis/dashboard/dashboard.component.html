@@ -68,7 +68,7 @@
     </div>
 
 
-    <div class="chart d-flex flex-column flex-00a" *ngIf="hasComponents">
+    <div class="chart d-flex flex-column flex-00a" [class.hidden]="!hasComponents">
       <h3>Components Summary</h3>
       <canvas id="compSummCanvas" style="max-width: 800px; margin: 0 auto;">{{compSummChart}}</canvas>
     </div>
