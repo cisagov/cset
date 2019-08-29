@@ -7,6 +7,7 @@
  * 
  */
 
+
 /**
  * A collection of CSET-specific utilities and functionality.
  */
@@ -83,33 +84,120 @@ CsetUtils.PersistGraphToCSET = function (editor)
     var bg = '#ffffff';
 
     var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
-    var svgXml = mxUtils.getXml(svgRoot, 'image/svg+xml');
-    console.log(svgXml);
-    req.DiagramSvg = svgXml;
+
+
+    var c = document.createElement('canvas');
+    canvg(c, new XMLSerializer().serializeToString(svgRoot));
+    var img2 = c.toDataURL("image/png");
+    req.DiagramSvg = img2;
+
+    console.log(img2);
+
+
+
+    // var svgXml = mxUtils.getXml(svgRoot, 'image/svg+xml');
+    // req.DiagramSvg = svgXml;
+
+
+
+
+    //var diagramDiv = document.getElementsByClassName("geDiagramContainer")[0];
+    //var topG = diagramDiv.getElementsByTagName("svg")[0];
+
+    //console.log(topG);
+
+
     // ---------------------------------------------------------------------------------------------------
 
 
-    console.log(req);
+    //img.onload = function ()
+    //{
+    //    console.log('image onload');
+
+    //    //canvas.drawImage(img, 0, 0);
+    //    //var img2 = canvas.toDataURL("image/png");
+    //    //req.DiagramSvg = img2;
 
 
-    var url = localStorage.getItem('cset.host') + 'diagram/save';
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function ()
+    //    //console.log('data url done');
+    //    //console.log(req);
+
+
+    //    //var url = localStorage.getItem('cset.host') + 'diagram/save';
+    //    //var xhr = new XMLHttpRequest();
+    //    //xhr.onreadystatechange = function ()
+    //    //{
+    //    //    if (this.readyState == 4 && this.status == 200)
+    //    //    {
+    //    //        // successful post            
+    //    //    }
+    //    //    if (this.readyState == 4 && this.status == 401)
+    //    //    {
+    //    //        window.location.replace('error401.html');
+    //    //    }
+    //    //}
+    //    //xhr.open('POST', url);
+    //    //xhr.setRequestHeader('Content-Type', 'application/json');
+    //    //xhr.setRequestHeader('Authorization', jwt);
+    //    //xhr.send(JSON.stringify(req));
+    //}
+
+
+    // var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
+    var svgString = new XMLSerializer().serializeToString(svgRoot);
+
+    //var canvas = document.getElementById("canvas");
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    var DOMURL = self.URL || self.webkitURL || self;
+    var img = new Image();
+    var svg = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+
+    console.log(svg);
+
+    var url = DOMURL.createObjectURL(svg);
+    img.onload = function ()
     {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            // successful post            
-        }
-        if (this.readyState == 4 && this.status == 401)
-        {
-            window.location.replace('error401.html');
-        }
-    }
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', jwt);
-    xhr.send(JSON.stringify(req));
+        ctx.drawImage(img, 0, 0);
+        var png = canvas.toDataURL("image/png");
+        console.log(png);
+        document.querySelector('#png-container').innerHTML = '<img src="' + png + '"/>';
+        DOMURL.revokeObjectURL(png);
+    };
+    img.src = url;
+
+
+
+    //console.log('about to set source');
+
+    //var xml = new XMLSerializer().serializeToString(svgRoot);
+    //console.log(xml);
+
+    //var img = new Image();
+    //console.log('image onload');
+    //img.src = "data:image/svg+xml;charset=utf-8," + xml;
+
+    //setTimeout(function ()
+    //{
+
+    //    console.log(img);
+
+    //    var canvas = document.createElement("canvas");
+    //    var ctx = canvas.getContext("2d");
+    //    ctx.drawImage(img, 0, 0);
+    //    var u = canvas.toDataURL("image/png");
+    //    req.DiagramSvg = u;
+
+    //    console.log(req.DiagramSvg);
+    //}, 5000);
+    
+
+
+
+   
+
 }
+
 
 
 /**
@@ -198,7 +286,7 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-        
+
         x.initZone();
     });
     graph.refresh();
