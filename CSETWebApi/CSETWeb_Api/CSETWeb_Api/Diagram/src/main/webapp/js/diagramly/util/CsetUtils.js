@@ -60,8 +60,7 @@ CsetUtils.adjustConnectability = function (edit)
  * Persists the graph to the CSET API.
  */
 CsetUtils.PersistGraphToCSET = function (editor)
-{
-    var jwt = localStorage.getItem('jwt');
+{    
     var enc = new mxCodec();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
@@ -86,116 +85,72 @@ CsetUtils.PersistGraphToCSET = function (editor)
     var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
 
 
-    var c = document.createElement('canvas');
-    canvg(c, new XMLSerializer().serializeToString(svgRoot));
-    var img2 = c.toDataURL("image/png");
-    req.DiagramSvg = img2;
+    var c = document.createElement('canvas'); 
+    document.getElementsByClassName('geDiagramContainer')[0].appendChild(c);
+    c.crossOrigin = "crossorigin";
 
-    console.log(img2);
-
-
-
-    // var svgXml = mxUtils.getXml(svgRoot, 'image/svg+xml');
-    // req.DiagramSvg = svgXml;
-
-
-
-
-    //var diagramDiv = document.getElementsByClassName("geDiagramContainer")[0];
-    //var topG = diagramDiv.getElementsByTagName("svg")[0];
-
-    //console.log(topG);
-
-
-    // ---------------------------------------------------------------------------------------------------
-
-
-    //img.onload = function ()
-    //{
-    //    console.log('image onload');
-
-    //    //canvas.drawImage(img, 0, 0);
-    //    //var img2 = canvas.toDataURL("image/png");
-    //    //req.DiagramSvg = img2;
-
-
-    //    //console.log('data url done');
-    //    //console.log(req);
-
-
-    //    //var url = localStorage.getItem('cset.host') + 'diagram/save';
-    //    //var xhr = new XMLHttpRequest();
-    //    //xhr.onreadystatechange = function ()
-    //    //{
-    //    //    if (this.readyState == 4 && this.status == 200)
-    //    //    {
-    //    //        // successful post            
-    //    //    }
-    //    //    if (this.readyState == 4 && this.status == 401)
-    //    //    {
-    //    //        window.location.replace('error401.html');
-    //    //    }
-    //    //}
-    //    //xhr.open('POST', url);
-    //    //xhr.setRequestHeader('Content-Type', 'application/json');
-    //    //xhr.setRequestHeader('Authorization', jwt);
-    //    //xhr.send(JSON.stringify(req));
-    //}
-
-
-    // var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-    var svgString = new XMLSerializer().serializeToString(svgRoot);
-
-    //var canvas = document.getElementById("canvas");
-    var canvas = document.createElement("canvas");
-    var ctx = canvas.getContext("2d");
-    var DOMURL = self.URL || self.webkitURL || self;
     var img = new Image();
-    var svg = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+    img.setAttribute('crossOrigin', 'anonymous');
 
-    console.log(svg);
-
-    var url = DOMURL.createObjectURL(svg);
     img.onload = function ()
     {
+        console.log('img.onload');
+        console.log(img.src);
+
+        var ctx = c.getContext('2d');
         ctx.drawImage(img, 0, 0);
-        var png = canvas.toDataURL("image/png");
-        console.log(png);
-        document.querySelector('#png-container').innerHTML = '<img src="' + png + '"/>';
-        DOMURL.revokeObjectURL(png);
-    };
-    img.src = url;
+        // var imageData = ctx.getImageData();
+        // console.log(imageData);
+
+        try
+        {
+            var img2 = c.toDataURL("image/png");
+            console.log(img2);
+            req.DiagramSvg = img2;
+        }
+        catch (e)
+        {
+            console.log(e);
+        }
+
+        CsetUtils.saveDiagram(req);
+    }
+
+    var xml = new XMLSerializer().serializeToString(svgRoot);
+    // img.src = 'img/cset/clock.svg';
+    // img.setAttribute("src", "data:image/svg+xml;charset=utf-8," + encodeURIComponent(xml));
+    img.src = URL.createObjectURL(
+        new Blob([xml], {
+            type: 'image/svg+xml;charset=utf8'
+        })
+    );
+}
 
 
-
-    //console.log('about to set source');
-
-    //var xml = new XMLSerializer().serializeToString(svgRoot);
-    //console.log(xml);
-
-    //var img = new Image();
-    //console.log('image onload');
-    //img.src = "data:image/svg+xml;charset=utf-8," + xml;
-
-    //setTimeout(function ()
-    //{
-
-    //    console.log(img);
-
-    //    var canvas = document.createElement("canvas");
-    //    var ctx = canvas.getContext("2d");
-    //    ctx.drawImage(img, 0, 0);
-    //    var u = canvas.toDataURL("image/png");
-    //    req.DiagramSvg = u;
-
-    //    console.log(req.DiagramSvg);
-    //}, 5000);
-    
-
-
-
-   
-
+/**
+ * Posts the diagram and supporting information to the API.
+ * @param {any} req
+ */
+CsetUtils.saveDiagram = function (req)
+{
+    var jwt = localStorage.getItem('jwt');
+    var url = localStorage.getItem('cset.host') + 'diagram/save';
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            // successful post            
+        }
+        if (this.readyState == 4 && this.status == 401)
+        {
+            window.location.replace('error401.html');
+        }
+    }
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', jwt);
+    xhr.send(JSON.stringify(req));
 }
 
 

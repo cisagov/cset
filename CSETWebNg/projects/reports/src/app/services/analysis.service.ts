@@ -294,6 +294,7 @@ export class AnalysisService {
 
 
 
+
   /**
    * Builds a horizontal bar chart from the Dashboard API response.
    * @param canvasId

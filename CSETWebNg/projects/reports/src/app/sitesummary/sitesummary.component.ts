@@ -51,6 +51,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   chart1: Chart;
   numberOfStandards = -1;
   complianceGraphs: any[] = [];
+  networkDiagramImage: string = '';
 
   pageInitialized = false;
 
@@ -146,6 +147,10 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
       this.warnings = x;
+    });
+
+    this.reportSvc.getNetworkDiagramImage().subscribe(x => {
+      this.networkDiagramImage = x;
     });
 
 
