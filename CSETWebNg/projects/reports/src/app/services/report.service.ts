@@ -55,4 +55,11 @@ export class ReportService {
     getACET() {
         return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
     }
+
+    /**
+     *
+     */
+    getNetworkDiagramImage(): any {
+        return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
+    }
 }

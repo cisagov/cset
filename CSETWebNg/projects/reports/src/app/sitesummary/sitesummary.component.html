@@ -282,12 +282,15 @@
     </div>
 
 
-    <!--Network Diagram-->
-    <div class="page-break">
-        <h1>Network Diagram</h1>
-
-        <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
-    </div>
+     <!--Network Diagram-->
+     <div class="page-break">
+            <h1>Network Diagram</h1>
+    
+            <img class="align-center" style="width: 100%" src="{{networkDiagramImage}}">
+            <div *ngIf="networkDiagramImage.length === 0">
+                No diagram.
+            </div>
+        </div>
 
 
     <!--Analysis of Network Components-->

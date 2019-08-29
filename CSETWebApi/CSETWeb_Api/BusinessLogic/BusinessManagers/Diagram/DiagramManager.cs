@@ -23,17 +23,19 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber, string diagramSVG)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber, string diagramImage)
         {
-            // the front end sometimes calls 'save' with an empty graph on open.  Need to 
-            // prevent the javascript from doing that on open, but for now,
+            // the front end sometimes calls 'save' with an empty graph on open.  
+            // Need to prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
             
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/object").Count;
             if (cellCount == 2 && objectCount == 0)
             {
-                return;
+                // Update 29-Aug-2019 RKW - we are no longer getting the save calls on open.
+                // Allow all save calls with an empty graph.
+                // return;
             }
 
             using (var db = new CSET_Context())
@@ -61,10 +63,11 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     assessmentRecord.Diagram_Markup = diagramXML;
                 }
-                assessmentRecord.Diagram_Svg = diagramSVG;
+                assessmentRecord.Diagram_Image = diagramImage;
 
                 db.SaveChanges();
             }
+
             //DiagramAnalysis analysis = new DiagramAnalysis();
             //analysis.PerformAnalysis(xDoc);
         }
@@ -119,6 +122,25 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// Returns the diagram image stored in the database for the assessment.
+        /// </summary>
+        /// <param name="assessmentID"></param>
+        /// <returns></returns>
+        public string GetDiagramImage(int assessmentID)
+        {
+            using (var db = new CSET_Context())
+            {
+                var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+                if (assessmentRecord.Diagram_Image == null)
+                {
+                    return string.Empty;
+                }
+                return assessmentRecord.Diagram_Image;
+            }
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
@@ -166,6 +188,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             return resp;
         }
+
 
         /// <summary>
         /// Get all component symbols ungrouped 

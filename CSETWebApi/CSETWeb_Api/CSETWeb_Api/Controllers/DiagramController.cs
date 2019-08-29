@@ -75,6 +75,21 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
+        /// Returns the diagram image for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getimage")]
+        [HttpGet]
+        public string GetDiagramImage()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
+            return dm.GetDiagramImage(assessmentId);
+        }
+
+
+        /// <summary>
         /// Returns a boolean indicating the existence of a diagram.
         /// </summary>
         /// <returns></returns>
