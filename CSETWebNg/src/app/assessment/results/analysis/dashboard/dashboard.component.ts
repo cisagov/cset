@@ -78,6 +78,9 @@ export class DashboardComponent implements OnInit {
     this.componentBasedScore = this.getScore(x.OverallBars, 'Components');
     this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
 
+    // this.hasComponents = (respCompSumm.data as number[]).reduce((a, b) => a + b) > 0;
+    this.hasComponents = true;
+
 
     this.assessComplChart = new Chart('assessComplCanvas', {
       type: 'horizontalBar',
@@ -86,7 +89,7 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             label: '',
-            data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
+            data: x.OverallBars.data.map(n => Math.round(parseFloat(n))),
             backgroundColor: '#0A5278',
             borderColor: [],
             borderWidth: 1
@@ -101,6 +104,12 @@ export class DashboardComponent implements OnInit {
         },
         legend: {
           display: false
+        },
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
         },
         scales: {
           xAxes: [{
@@ -128,7 +137,6 @@ export class DashboardComponent implements OnInit {
 
     // Component Summary
     this.analysisSvc.getComponentsSummary().subscribe(respCompSumm => {
-      this.hasComponents = (respCompSumm.data as number[]).reduce((a, b) => a + b) > 0;
       this.compSummChart = this.analysisSvc.buildComponentsSummary('compSummCanvas', respCompSumm);
     });
 
