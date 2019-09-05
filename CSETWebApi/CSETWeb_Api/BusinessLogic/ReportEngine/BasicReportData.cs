@@ -33,6 +33,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<QuestionsWithAlternateJustifi> QuestionsWithAlternateJustifi { get; set; }
         public List<RankedQuestions> top5Questions { get; set; }
         public List<StandardQuestions> StandardsQuestions { get; set; }
+        public List<ComponentQuestion> ComponentQuestions { get; set; }
 
         public class INFORMATION
         {
@@ -119,7 +120,15 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+    }
 
+    public class ComponentQuestion
+    {
+        public string ComponentName { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
+        public string Zone { get; set; }
+        public string SAL { get; set; }
     }
 
     public class RankedQuestions

@@ -140,6 +140,7 @@
     <Compile Include="FileRepository.cs" />
     <Compile Include="IFileRepository.cs" />
     <Compile Include="Manual\ANSWER.cs" />
+    <Compile Include="Manual\Answer_Components.cs" />
     <Compile Include="Manual\Answer_Questions.cs" />
     <Compile Include="Manual\Answer_Questions_No_Components.cs" />
     <Compile Include="Manual\CSET_Context.cs" />
@@ -166,7 +167,6 @@
     <Compile Include="Model\ASSESSMENTS_REQUIRED_DOCUMENTATION.cs" />
     <Compile Include="Model\ASSESSMENT_CONTACTS.cs" />
     <Compile Include="Model\ASSESSMENT_DIAGRAM_COMPONENTS.cs" />
-    <Compile Include="Model\ASSESSMENT_DIAGRAM_MARKUP.cs" />
     <Compile Include="Model\ASSESSMENT_IRP.cs" />
     <Compile Include="Model\ASSESSMENT_IRP_HEADER.cs" />
     <Compile Include="Model\ASSESSMENT_ROLES.cs" />
@@ -191,7 +191,6 @@
     <Compile Include="Model\DEMOGRAPHICS.cs" />
     <Compile Include="Model\DEMOGRAPHICS_ASSET_VALUES.cs" />
     <Compile Include="Model\DEMOGRAPHICS_SIZE.cs" />
-    <Compile Include="Model\DIAGRAM_MARKUP.cs" />
     <Compile Include="Model\DIAGRAM_OBJECT_TYPES.cs" />
     <Compile Include="Model\DIAGRAM_TEMPLATES.cs" />
     <Compile Include="Model\DIAGRAM_TYPES.cs" />
