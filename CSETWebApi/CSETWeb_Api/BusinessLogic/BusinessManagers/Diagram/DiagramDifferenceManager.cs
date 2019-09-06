@@ -27,7 +27,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         //I don't like this here 
         //I'm not sure why but need to look at it
-        private Diagram diagram = new Diagram();
+        private Diagram oldDiagram = new Diagram();
+        private Diagram newDiagram = new Diagram();
 
 
         /// <summary>
@@ -38,7 +39,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             this.context = context;
             this.componentSymbols = this.context.COMPONENT_SYMBOLS.ToList();
         }
-
 
         /// <summary>
         /// pass in the xml document
@@ -51,8 +51,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            diagram.NewDiagram = ProcessDiagram(newDiagramDocument);
-            diagram.OldDiagram = ProcessDiagram(oldDiagramDocument);
+            newDiagram.NetworkComponents = ProcessDiagram(newDiagramDocument);
+            oldDiagram.NetworkComponents = ProcessDiagram(oldDiagramDocument);
+            findLayersAndZones(newDiagramDocument, newDiagram);
+            findLayersAndZones(oldDiagramDocument, oldDiagram);
         }
 
         public void SaveDifferences(int assessment_id)
@@ -66,7 +68,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     ///when saving if the parent object is a layer then there is not default zone
                     ///if the parent object is zone then all objects in that zone inherit the layer of the zone            
                     DiagramDifferences differences = new DiagramDifferences();
-                    differences.processComparison(diagram.NewDiagram, diagram.OldDiagram);
+                    differences.processComparison(newDiagram, oldDiagram);
                     foreach (var newNode in differences.AddedNodes)
                     {
                         context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
@@ -99,7 +101,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             }
         }
 
-        internal void findLayersAndZones(XmlDocument xDoc)
+
+        private void findLayersAndZones(XmlDocument xDoc, Diagram diagram)
         {
             /**
              * Go through and find all the layers first
@@ -108,8 +111,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
              * then associate each zone with it's components
              * post it to an object for saving.
              */
-
-            
             XmlNodeList mxCellZones = xDoc.SelectNodes("//*[@zone=\"1\"]");
             XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
             foreach (XmlNode layer in mxCellLayers)
@@ -133,9 +134,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     ZoneType = zone.Attributes["zoneType"].Value,
                     SAL = zone.Attributes["SAL"].Value
                 });
-                XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[(@parent=\""+id+"\"]");
+                XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[(@parent=\""+id+"\")]");
                 Dictionary<Guid, NetworkComponent> zoneComponents = processNodes(objectNodes);
-                foreach (NetworkComponent c in zone)
+                foreach (NetworkComponent c in zoneComponents.Values)
                     diagram.Zones[id].ContainingComponents.Add(c);
             }            
         }

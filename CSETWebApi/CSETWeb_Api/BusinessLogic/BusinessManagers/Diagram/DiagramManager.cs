@@ -53,8 +53,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                 }
-                differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
-                differenceManager.findLayersAndZones(xDoc);
+                differenceManager.buildDiagramDictionaries(xDoc, oldDoc);                
                 differenceManager.SaveDifferences(assessmentID);
             }
             else

@@ -84,6 +84,12 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 //if it is an edge then we need to save it until all the nodes are created
                 //once we have them all start connecting everything up. 
 
+                //if it is a zone then just skip it
+                if(((XmlElement)node).HasAttribute("zone"))
+                {
+                    continue;
+                }
+
                 //do a little preprocessing to get the attribute values
                 var styleString = node.FirstChild.Attributes["style"].Value;
                 string nodeType = null;
