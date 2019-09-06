@@ -11,15 +11,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 {
     public class Diagram
     {
-        public Dictionary<Guid, NetworkComponent> OldDiagram { get; set; }
-        public Dictionary<Guid, NetworkComponent> NewDiagram { get; set; }
+        public Dictionary<Guid, NetworkComponent> NetworkComponents { get; set; }
+        
         public Dictionary<string, NetworkLayer> Layers { get; private set; }
         public Dictionary<string, NetworkZone> Zones { get; private set; }
 
         public Diagram()
         {
-            OldDiagram = new Dictionary<Guid, NetworkComponent>();
-            NewDiagram = new Dictionary<Guid, NetworkComponent>();
+            NetworkComponents = new Dictionary<Guid, NetworkComponent>();            
             Layers = new Dictionary<string, NetworkLayer>();
             Zones = new Dictionary<string, NetworkZone>();
 

@@ -22,10 +22,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         /// <param name="newDiagram"></param>
         /// <param name="oldDiagram"></param>
-        public void processComparison(Dictionary<Guid,NetworkComponent> newDiagram, Dictionary<Guid,NetworkComponent> oldDiagram)
+        public void processComparison(Diagram newDiagram, Diagram oldDiagram)
         {
-            this.AddedNodes = lookupValue(newDiagram, oldDiagram);
-            this.DeletedNodes = lookupValue(oldDiagram, newDiagram);
+            
+            this.AddedNodes = lookupValue(newDiagram.NetworkComponents, oldDiagram.NetworkComponents);
+            this.DeletedNodes = lookupValue(oldDiagram.NetworkComponents, newDiagram.NetworkComponents);
             
         }
 
