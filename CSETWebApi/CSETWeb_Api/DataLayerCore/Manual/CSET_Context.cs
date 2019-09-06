@@ -45,6 +45,9 @@ namespace DataLayerCore.Model
 
         // modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+
+        public virtual DbSet<Answer_Components> Answer_Components { get; set; }
+
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
         public int changeEmail(string originalEmail, string newEmail)

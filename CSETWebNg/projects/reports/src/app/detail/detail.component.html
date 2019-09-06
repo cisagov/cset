@@ -207,12 +207,12 @@
 
         <h1>High Level Assessment Description</h1>
         <p>
-            {{response?.information.Assessment_Description}}
+            response?.information.Assessment_Description -- TODO:
         </p>
 
         <h1>Executive Summary</h1>
         <p>
-            {{response?.information.Executive_Summary}}
+            response?.information?.Executive_Summary -- TODO:
         </p>
     </div>
 
@@ -295,7 +295,7 @@
 
             <div style="padding: 1rem;">
                 <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                    system diagram is <span class="warnInput">{{ warnings.length }}</span>.
+                    system diagram is <span class="warnInput">{{ warnings?.length }}</span>.
                 </p>
                 <p> See the Findings and Recommendations from Basic Network Analysis for details.
                 </p>
@@ -745,7 +745,7 @@
             <tr>
                 <th style="width: 15%">Rank: {{rq.Rank}}</th>
                 <th>{{rq.CategoryAndNumber}}</th>
-                <th style="width: 15%">Level: {{rq.Level}}</th>
+                <th style="width: 15%">Level: {{configSvc.salLabels[rq.Level]}}</th>
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.Question"></td>
@@ -839,13 +839,13 @@
 
 
 
-    <div class="page-break" *ngFor="let ddd of response?.StandardsQuestions">
+    <div class="page-break" *ngFor="let standard of response?.StandardsQuestions">
         <h1>
-            Question Details: {{ddd.StandardShortName}}
+            Question Details: {{standard.StandardShortName}}
         </h1>
 
         <table class="cset-table-3">
-            <tr *ngFor="let q of ddd.Questions">
+            <tr *ngFor="let q of standard.Questions">
                 <td class="tint2" style="width: 20%">{{q.CategoryAndNumber}}</td>
                 <td>{{q.Question}}</td>
                 <td class="tint2" style="width: 20%">{{configSvc.answerLabels[q.Answer]}}</td>
@@ -854,105 +854,26 @@
     </div>
 
 
-    <!--Component Question Detail-->
-    <div class="page-break">
-        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana; padding: 15px;">
-            <strong>Component Question Details</strong></h4>
+    <div class="page-break" *ngIf="response?.ComponentQuestions.length > 0">
+        <h1>
+            Component Question Details
+        </h1>
 
-        <table>
-
-            <tr class="grey">
-                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td>
+        <table class="cset-table-3" *ngFor="let q of response?.ComponentQuestions">
+            <tr>
+                <th colspan="4">Component: {{q.ComponentName}}</th>
             </tr>
             <tr>
-                <td style="width: 10%">
-                    <div>Question</div>
-                </td>
-                <td colspan="2" style="width: 80%">
-                    Are critical network components (modems, switches, routers, firewalls) physically secure from
-                    unauthorized access? (i.e. located in a locked room)
-                </td>
-                <td style="width: 10%">
-                    Yes
-                </td>
+                <td class="tint2">Question:</td>
+                <td colspan="2" class="tint2" style="width: 80% !important">{{q.Question}}</td>
+                <td class="tint2" style="width: 20% !important">{{configSvc.answerLabels[q.Answer]}}</td>
             </tr>
             <tr>
-                <td style="width: 10%">Zone</td>
-                <td style="width: 75%">Facility Configuration</td>
-                <td style="width: 5%">SAL:</td>
-                <td style="width: 10%">Moderate</td>
+                <td class="tint2">Zone:</td>
+                <td class="w-50">{{q.Zone}}</td>
+                <td class="tint2">SAL:</td>
+                <td>{{configSvc.salLabels[q.SAL]}}</td>
             </tr>
         </table>
-        <table>
-            <tr class="grey">
-                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td>
-            </tr>
-            <tr>
-                <td style="width: 10%">
-                    <div>Question</div>
-                </td>
-                <td colspan="2" style="width: 80%">
-                    Have default user names and passwords for administration been changed, utilizing robust password
-                    guidelines (e.g., length, complexity)?
-                </td>
-                <td style="width: 10%">
-                    Yes
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 10%">Zone</td>
-                <td style="width: 75%">Facility Configuration</td>
-                <td style="width: 5%">SAL:</td>
-                <td style="width: 10%">Moderate</td>
-            </tr>
-        </table>
-        <table>
-            <tr class="grey">
-                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td>
-            </tr>
-            <tr>
-                <td style="width: 10%">
-                    <div>Question</div>
-                </td>
-                <td colspan="2" style="width: 80%">
-                    Do you have procedures in place for patch deployment, incluiding firmware updates?
-                </td>
-                <td style="width: 10%">
-                    Yes
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 10%">Zone</td>
-                <td style="width: 75%">Facility Configuration</td>
-                <td style="width: 5%">SAL:</td>
-                <td style="width: 10%">Moderate</td>
-            </tr>
-        </table>
-    </div>
-
-    <div *ngIf="false">
-        <!-- Remove this wrapping div tag when Components are implemented in CSET -->
-        <div class="page-break">
-            <h1>
-                Component Question Details
-            </h1>
-
-            <table class="cset-table-3">
-                <tr>
-                    <th colspan="4">Component: [component]</th>
-                </tr>
-                <tr>
-                    <td class="tint2">Question:</td>
-                    <td colspan="2" class="tint2"></td>
-                    <td class="tint2"></td>
-                </tr>
-                <tr>
-                    <td class="tint2">Zone:</td>
-                    <td>[Zone]</td>
-                    <td class="tint2">SAL:</td>
-                    <td>[SAL]</td>
-                </tr>
-            </table>
-        </div>
     </div>
 </div>
