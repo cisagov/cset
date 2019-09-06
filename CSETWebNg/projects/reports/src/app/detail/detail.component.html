@@ -24,7 +24,8 @@
 
     <div class="flex-container">
         <div class="column">
-            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
                 SITE DETAIL REPORT
             </p>
         </div>
@@ -270,64 +271,75 @@
 
     <!--Network Diagram-->
     <div class="page-break">
-            <h1>Network Diagram</h1>
-    
-            <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
-        </div>
-    
-    
-        <!--Analysis of Network Components-->
-        <div class="page-break">
-            <h1>
-                Analysis of Network Components
-            </h1>
-    
-            <div class="d-flex flex-row align-items-center">
-                <div style="padding: 1rem;">
-                    <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-                        <div>COMBINED COMPONENT SUMMARY</div>
-                        <div>
-                            <canvas id="canvasComponentSummary"></canvas>
-                        </div>
+        <h1>Network Diagram</h1>
+
+        <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
+    </div>
+
+
+    <!--Analysis of Network Components-->
+    <div class="page-break">
+        <h1>
+            Analysis of Network Components
+        </h1>
+
+        <div class="d-flex flex-row align-items-center">
+            <div style="padding: 1rem;">
+                <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+                    <div>COMBINED COMPONENT SUMMARY</div>
+                    <div>
+                        <canvas id="canvasComponentSummary"></canvas>
                     </div>
                 </div>
-    
-                <div style="padding: 1rem;">
-                    <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                        system diagram is <span class="warnInput">{{ networkRecommendations.length }}</span>.
-                    </p>
-                    <p> See the Findings and Recommendations from Basic Network Analysis for details.
-                    </p>
-                </div>
             </div>
-    
-            <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-                <canvas id="canvasComponentsTypes"></canvas>
+
+            <div style="padding: 1rem;">
+                <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
+                    system diagram is <span class="warnInput">{{ warnings.length }}</span>.
+                </p>
+                <p> See the Findings and Recommendations from Basic Network Analysis for details.
+                </p>
             </div>
         </div>
-    
-    
-    
-        <!--Component Compliance by Subject Area-->
-        <div class="page-break">
-            <h1>
-                Component Compliance by Subject Area
-            </h1>
-            <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-                <canvas id="compResCanvas">{{compResCanvas}}</canvas>
-            </div>
+
+        <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+            <canvas id="canvasComponentsTypes"></canvas>
         </div>
-    
-    
-    
-        <!--Findings and Reccomendations From Basic Network Analysis-->
-        <div class="page-break">
-            <h1>Findings and Recommendations From Basic Network Analysis</h1>
-    
-            <ol>
-                <li *ngFor="let r of networkRecommendations">{{r}}</li>
-            </ol>
+    </div>
+
+
+
+    <!--Component Compliance by Subject Area-->
+    <div class="page-break">
+        <h1>
+            Component Compliance by Subject Area
+        </h1>
+        <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+            <canvas id="compResCanvas">{{compResCanvas}}</canvas>
         </div>
+    </div>
+
+
+
+    <!--Findings and Reccomendations From Basic Network Analysis-->
+    <div class="page-break">
+        <h1>Findings and Recommendations From Basic Network Analysis</h1>
+
+        <table class="table" *ngIf="!!warnings && warnings.length > 0">
+            <tr>
+                <th class="align-right">ID</th>
+                <th>Network Warnings</th>
+            </tr>
+            <tr *ngFor="let w of warnings">
+                <td class="align-right">{{w.Id}}</td>
+                <td>{{w.WarningText}}</td>
+            </tr>
+        </table>
+
+        <div class="mt-4 mb-4" *ngIf="!!warnings && warnings.length === 0">
+            There are no network warnings.
+        </div>
+    </div>
 
 
     <div class="page-break">
@@ -844,19 +856,21 @@
 
     <!--Component Question Detail-->
     <div class="page-break">
-        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana; padding: 15px;"><strong>Component Question Details</strong></h4>
+        <h4 class="header" style="color: #0A5278; font-size: 18px; font-family: Verdana; padding: 15px;">
+            <strong>Component Question Details</strong></h4>
 
         <table>
 
             <tr class="grey">
-                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td> 
+                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td>
             </tr>
             <tr>
                 <td style="width: 10%">
                     <div>Question</div>
                 </td>
-                <td colspan="2"style="width: 80%">
-                    Are critical network components (modems, switches, routers, firewalls) physically secure from unauthorized access? (i.e. located in a locked room)
+                <td colspan="2" style="width: 80%">
+                    Are critical network components (modems, switches, routers, firewalls) physically secure from
+                    unauthorized access? (i.e. located in a locked room)
                 </td>
                 <td style="width: 10%">
                     Yes
@@ -868,17 +882,18 @@
                 <td style="width: 5%">SAL:</td>
                 <td style="width: 10%">Moderate</td>
             </tr>
-        </table>	
-        <table>	
+        </table>
+        <table>
             <tr class="grey">
-                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td> 
+                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td>
             </tr>
             <tr>
                 <td style="width: 10%">
                     <div>Question</div>
                 </td>
-                <td colspan="2"style="width: 80%">
-                    Have default user names and passwords for administration been changed, utilizing robust password guidelines (e.g., length, complexity)?
+                <td colspan="2" style="width: 80%">
+                    Have default user names and passwords for administration been changed, utilizing robust password
+                    guidelines (e.g., length, complexity)?
                 </td>
                 <td style="width: 10%">
                     Yes
@@ -890,16 +905,16 @@
                 <td style="width: 5%">SAL:</td>
                 <td style="width: 10%">Moderate</td>
             </tr>
-        </table>	
+        </table>
         <table>
             <tr class="grey">
-                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td> 
+                <td colspan="4" style="width: 100%">Component: WM-42 - Wireless Modem</td>
             </tr>
             <tr>
                 <td style="width: 10%">
                     <div>Question</div>
                 </td>
-                <td colspan="2"style="width: 80%">
+                <td colspan="2" style="width: 80%">
                     Do you have procedures in place for patch deployment, incluiding firmware updates?
                 </td>
                 <td style="width: 10%">
