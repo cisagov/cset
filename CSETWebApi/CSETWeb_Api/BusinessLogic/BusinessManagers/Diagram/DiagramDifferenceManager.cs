@@ -1,4 +1,8 @@
-﻿using DataLayerCore.Model;
+﻿using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,13 +22,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     public class DiagramDifferenceManager
     {
         private CSET_Context context;
-
-        private static readonly object _object = new object();
-
-        private Dictionary<Guid, ComponentNode> OldDiagram = new Dictionary<Guid, ComponentNode>();
-        private Dictionary<Guid, ComponentNode> NewDiagram = new Dictionary<Guid, ComponentNode>();
-
+        private static readonly object _object = new object();        
         private List<COMPONENT_SYMBOLS> componentSymbols;
+
+        //I don't like this here 
+        //I'm not sure why but need to look at it
+        private Diagram diagram = new Diagram();
 
 
         /// <summary>
@@ -48,8 +51,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            NewDiagram = ProcessDiagram(newDiagramDocument);
-            OldDiagram = ProcessDiagram(oldDiagramDocument);
+            diagram.NewDiagram = ProcessDiagram(newDiagramDocument);
+            diagram.OldDiagram = ProcessDiagram(oldDiagramDocument);
         }
 
         public void SaveDifferences(int assessment_id)
@@ -60,17 +63,19 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             {
                 lock (_object)
                 {
+                    ///when saving if the parent object is a layer then there is not default zone
+                    ///if the parent object is zone then all objects in that zone inherit the layer of the zone            
                     DiagramDifferences differences = new DiagramDifferences();
-                    differences.processComparison(this.NewDiagram, this.OldDiagram);
+                    differences.processComparison(diagram.NewDiagram, diagram.OldDiagram);
                     foreach (var newNode in differences.AddedNodes)
                     {
                         context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
                         {
                             Assessment_Id = assessment_id,
                             Component_Id = newNode.Key,
-                            Diagram_Component_Type = newNode.Value.Component_Type,
-                            DrawIO_id = newNode.Value.id,
-                            label = newNode.Value.label
+                            Diagram_Component_Type = newNode.Value.ComponentType,
+                            DrawIO_id = newNode.Value.ID,
+                            label = newNode.Value.ComponentName
                         });
                     }
                     context.SaveChanges();
@@ -94,28 +99,78 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             }
         }
 
-        private Dictionary<Guid, ComponentNode> ProcessDiagram(XmlDocument doc)
+        internal void findLayersAndZones(XmlDocument xDoc)
         {
-            Dictionary<Guid, ComponentNode> nodesList = new Dictionary<Guid, ComponentNode>();
-            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
+            /**
+             * Go through and find all the layers first
+             * then get all the zones
+             * finally associate each layer with it's components and zones
+             * then associate each zone with it's components
+             * post it to an object for saving.
+             */
+
+            
+            XmlNodeList mxCellZones = xDoc.SelectNodes("//*[@zone=\"1\"]");
+            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
+            foreach (XmlNode layer in mxCellLayers)
+            {
+                string id = layer.Attributes["id"].Value;
+                diagram.Layers.Add(id, new NetworkLayer()
+                {
+                    ID = id,
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : "Main Layer",
+                    Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
+                });
+            }
+            foreach (XmlNode zone in mxCellZones)
+            {
+                string id = zone.Attributes["id"].Value;
+                string layerid = zone.FirstChild.Attributes["parent"].Value;
+                diagram.Zones.Add(id, new NetworkZone()
+                {
+                    ID = id,
+                    LayerId = layerid,
+                    ZoneType = zone.Attributes["zoneType"].Value,
+                    SAL = zone.Attributes["SAL"].Value
+                });
+                XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[(@parent=\""+id+"\"]");
+                Dictionary<Guid, NetworkComponent> zoneComponents = processNodes(objectNodes);
+                foreach (NetworkComponent c in zone)
+                    diagram.Zones[id].ContainingComponents.Add(c);
+            }            
+        }
+
+        private Dictionary<Guid, NetworkComponent> processNodes(XmlNodeList cells)
+        {
+            Dictionary<Guid, NetworkComponent> nodesList = new Dictionary<Guid, NetworkComponent>();
             foreach (var c in cells)
             {
                 var cell = (XmlElement)c;
                 if (cell.HasAttribute("ComponentGuid"))
                 {
-                    ComponentNode cn = new ComponentNode();
+                    //this seems problematic in that a component could be missing a type
+                    NetworkComponent cn = new NetworkComponent();
                     foreach (XmlAttribute a in cell.Attributes)
                     {
                         cn.setValue(a.Name, a.Value);
                     }
 
                     // determine the component type
-                    cn.setValue("Component_Type", GetComponentType(cell));
+                    string ctype = GetComponentType(cell);
+                    if(ctype!=null)
+                        cn.ComponentType =  ctype;
 
                     nodesList.Add(cn.ComponentGuid, cn);
                 }
             }
             return nodesList;
+        }
+
+
+        private Dictionary<Guid, NetworkComponent> ProcessDiagram(XmlDocument doc)
+        {   
+            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
+            return processNodes(cells);
         }
 
 
@@ -153,33 +208,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             }
 
             return null;
-        }
-    }
-
-    public class ComponentNode
-    {
-        public string label { get; set; }
-        public Guid ComponentGuid { get; set; }
-        public string id { get; set; }
-        public string Component_Type { get; internal set; }
-
-        public void setValue(string name, string value)
-        {
-            switch (name)
-            {
-                case "label":
-                    this.label = value;
-                    break;
-                case "ComponentGuid":
-                    this.ComponentGuid = new Guid(value);
-                    break;
-                case "id":
-                    this.id = value;
-                    break;
-                case "Component_Type":
-                    this.Component_Type = value;
-                    break;
-            }
         }
     }
 }
