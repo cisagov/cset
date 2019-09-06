@@ -9,7 +9,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
     {
         [JsonIgnore]
         [IgnoreDataMember]
-        public NetworkNode Component { get; internal set; }
+        public NetworkComponent Component { get; internal set; }
         public int Number { get; internal set; }
         public string redDot { get; set; }
         public string label { get; set; }

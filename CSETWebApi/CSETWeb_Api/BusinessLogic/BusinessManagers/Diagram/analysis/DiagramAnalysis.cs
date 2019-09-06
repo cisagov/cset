@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers;
 using DataLayerCore.Model;
 using Newtonsoft.Json;
 
@@ -23,7 +24,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
     public class DiagramAnalysis
     {
-        private Dictionary<String, NetworkNode> nodes = new Dictionary<string, NetworkNode>();
+        private Dictionary<String, NetworkComponent> nodes = new Dictionary<string, NetworkComponent>();
         private List<NetworkLink> Links = new List<NetworkLink>();
         private Dictionary<Guid, DiagramAnalysisLineMessage> dictionaryLineMessages = new Dictionary<Guid, DiagramAnalysisLineMessage>();
         private Dictionary<Guid, DiagramAnalysisNodeMessage> dictionaryNodeMessages = new Dictionary<Guid, DiagramAnalysisNodeMessage>();
@@ -86,7 +87,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 //do a little preprocessing to get the attribute values
                 var styleString = node.FirstChild.Attributes["style"].Value;
                 string nodeType = null;
-                string imgPath = DecodeQueryParameters(styleString.Replace("image;",""))["image"];
+                string imgPath = DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;",""))["image"];
                 if (!imageToTypePath.TryGetValue(imgPath.Replace("img/cset/",""), out nodeType))
                 {
                     //TODO Add some error handling if we can't find the node type.
@@ -109,7 +110,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 //extract the geometry to a point on the component
                 NetworkGeometry geometry = new NetworkGeometry(node.FirstChild.FirstChild);
 
-                NetworkNode dnode; 
+                NetworkComponent dnode; 
                 string id = node.Attributes["id"].Value;
                 if (nodes.TryGetValue(id,out dnode))
                 {
@@ -117,7 +118,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 }
                 else
                 {
-                    dnode = new NetworkNode()
+                    dnode = new NetworkComponent()
                     {
                         ComponentGuid = Guid.Parse(node.Attributes["ComponentGuid"].Value),
                         ID = node.Attributes["id"].Value,
@@ -134,8 +135,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             {   
                 //find each node
                 //add them to each other             
-                NetworkNode start = findNode(node.Attributes["source"].Value);
-                NetworkNode target  = findNode(node.Attributes["target"].Value);                
+                NetworkComponent start = findNode(node.Attributes["source"].Value);
+                NetworkComponent target  = findNode(node.Attributes["target"].Value);                
                 Links.Add(new NetworkLink()
                 {
                     
@@ -197,9 +198,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             return start;
         }
 
-        private NetworkNode findNode(string id)
+        private NetworkComponent findNode(string id)
         {
-            NetworkNode dnode;
+            NetworkComponent dnode;
             if (nodes.TryGetValue(id, out dnode))
             {
                 return dnode;
@@ -360,7 +361,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         /// if this is control systems network 
         /// </summary>
         /// <param name="component"></param>
-        private void CheckRule7(NetworkNode component)
+        private void CheckRule7(NetworkComponent component)
         {
             //if (component.IsUnidirectional)
             //{
@@ -907,21 +908,6 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> DecodeQueryParameters(string uri)
-        {
-            if (uri == null)
-                throw new ArgumentNullException("uri");
-
-            if (uri.Length == 0)
-                return new Dictionary<string, string>();
-
-            return uri.TrimStart('?')
-                            .Split(new[] { '&', ';' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(parameter => parameter.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries))
-                            .GroupBy(parts => parts[0],
-                                     parts => parts.Length > 2 ? string.Join("=", parts, 1, parts.Length - 1) : (parts.Length > 1 ? parts[1] : ""))
-                            .ToDictionary(grouping => grouping.Key,
-                                          grouping => string.Join(",", grouping));
-        }
+        
     }
 }

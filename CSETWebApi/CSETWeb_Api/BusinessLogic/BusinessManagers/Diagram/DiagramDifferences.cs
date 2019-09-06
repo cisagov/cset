@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSETWeb_Api.BusinessManagers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 {
     public class DiagramDifferences
     {
-        public Dictionary<Guid,ComponentNode> AddedNodes { get; set; }
-        public Dictionary<Guid,ComponentNode> DeletedNodes { get; set; }
+        public Dictionary<Guid,NetworkComponent> AddedNodes { get; set; }
+        public Dictionary<Guid,NetworkComponent> DeletedNodes { get; set; }
         public DiagramDifferences()
         {
-            AddedNodes = new Dictionary<Guid,ComponentNode>();
-            DeletedNodes = new Dictionary<Guid,ComponentNode>();
+            AddedNodes = new Dictionary<Guid,NetworkComponent>();
+            DeletedNodes = new Dictionary<Guid,NetworkComponent>();
         }
 
         /// <summary>
@@ -21,19 +22,19 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         /// <param name="newDiagram"></param>
         /// <param name="oldDiagram"></param>
-        public void processComparison(Dictionary<Guid,ComponentNode> newDiagram, Dictionary<Guid,ComponentNode> oldDiagram)
+        public void processComparison(Dictionary<Guid,NetworkComponent> newDiagram, Dictionary<Guid,NetworkComponent> oldDiagram)
         {
             this.AddedNodes = lookupValue(newDiagram, oldDiagram);
             this.DeletedNodes = lookupValue(oldDiagram, newDiagram);
             
         }
 
-        private Dictionary<Guid,ComponentNode> lookupValue(Dictionary<Guid,ComponentNode> sourcedictionary, Dictionary<Guid,ComponentNode> destinationDictionary)
+        private Dictionary<Guid,NetworkComponent> lookupValue(Dictionary<Guid,NetworkComponent> sourcedictionary, Dictionary<Guid,NetworkComponent> destinationDictionary)
         {
-            Dictionary<Guid, ComponentNode> differences = new Dictionary<Guid, ComponentNode>();
-            foreach (KeyValuePair<Guid,ComponentNode> g in sourcedictionary)
+            Dictionary<Guid, NetworkComponent> differences = new Dictionary<Guid, NetworkComponent>();
+            foreach (KeyValuePair<Guid,NetworkComponent> g in sourcedictionary)
             {
-                ComponentNode ignoreme = null;
+                NetworkComponent ignoreme = null;
                 if (!destinationDictionary.TryGetValue(g.Key, out ignoreme))
                 {
                     differences.Add(g.Key, g.Value);
