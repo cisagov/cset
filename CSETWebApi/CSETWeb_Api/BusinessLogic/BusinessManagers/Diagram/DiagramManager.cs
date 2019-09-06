@@ -32,32 +32,6 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="diagramXML"></param>
         public void SaveDiagram(int assessmentID, XmlDocument xDoc, int lastUsedComponentNumber)
         {
-            
-            // this is a temporary check to see if the graph has any duplicate "id" attributes.
-            List<string> idList = new List<string>();
-            var nodesWithID = xDoc.SelectNodes("//*[@id]");
-            foreach (XmlNode n in nodesWithID)
-            {
-                if (idList.Contains(n.Attributes["id"].InnerText))
-                {
-
-                    // SUPER-TEMPORARY!!!!! Just to keep things from breaking too hard, assign a temporary random ID
-                    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                    Random random = new Random();
-                    var newID = new string(Enumerable.Repeat(chars, 10)
-                      .Select(s => s[random.Next(s.Length)]).ToArray());
-
-                    n.Attributes["id"].InnerText = newID;
-                    object a = null;
-                                    }
-                idList.Add(n.Attributes["id"].InnerText);
-            }
-
-
-
-
-
-
             // the front end sometimes calls 'save' with an empty graph on open.  Need to 
             // prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
@@ -190,6 +164,42 @@ namespace CSETWeb_Api.BusinessManagers
 
                         group.Symbols.Add(symbol);
                     }
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Get all component symbols ungrouped 
+        /// </summary>
+        /// <returns></returns>
+        public List<ComponentSymbol> GetAllComponentSymbols()
+        {
+            var resp = new List<ComponentSymbol>();
+            using (var db = new CSET_Context())
+            {
+
+
+                var symbols = db.COMPONENT_SYMBOLS.OrderBy(x => x.Name).ToList();
+
+                foreach (COMPONENT_SYMBOLS s in symbols)
+                {
+                    var symbol = new ComponentSymbol
+                    {
+                        Name = s.Name,
+                        DiagramTypeXml = s.Diagram_Type_Xml,
+                        Abbreviation = s.Abbreviation,
+                        FileName = s.File_Name,
+                        DisplayName = s.Display_Name,
+                        LongName = s.Long_Name,
+                        ComponentFamilyName = s.Component_Family_Name,
+                        Tags = s.Tags,
+                        Width = (int) s.Width,
+                        Height = (int) s.Height
+                    };
+
+                    resp.Add(symbol);
                 }
             }
 

@@ -9663,12 +9663,19 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         cell.setCsetAttribute('ComponentGuid', nextGuid);
     }
 
-    // give zones a couple of zone-specific attributes
+    // give zones a couple of zone-specific attributes if needed
     if (cell.getStyleValue('zone') == '1')
     {
         cell.setCsetAttribute('zone', '1');
-        cell.setCsetAttribute('zoneType', 'Other');
-        cell.setCsetAttribute('SAL', 'Low');
+
+        if (!cell.getCsetAttribute('zoneType'))
+        {
+            cell.setCsetAttribute('zoneType', 'Other');
+        }
+        if (!cell.setCsetAttribute('SAL'))
+        {
+            cell.setCsetAttribute('SAL', 'Low');
+        }
         cell.setZoneColor();
     }
 

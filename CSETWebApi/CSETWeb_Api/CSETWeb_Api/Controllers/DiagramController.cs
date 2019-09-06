@@ -31,6 +31,7 @@ namespace CSETWeb_Api.Controllers
         /// Persists the diagram XML in the database.
         /// </summary>
         /// <param name="req"></param>
+        [CSETAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
         public List<IDiagramAnalysisNodeMessage> SaveDiagram([FromBody] DiagramRequest req)
@@ -57,6 +58,7 @@ namespace CSETWeb_Api.Controllers
         /// Returns the diagram XML for the assessment.
         /// </summary>
         /// <returns></returns>
+        [CSETAuthorize]
         [Route("api/diagram/get")]
         [HttpGet]
         public DiagramResponse GetDiagram()
@@ -84,6 +86,7 @@ namespace CSETWeb_Api.Controllers
         /// Returns a boolean indicating the existence of a diagram.
         /// </summary>
         /// <returns></returns>
+        [CSETAuthorize]
         [Route("api/diagram/has")]
         [HttpGet]
         public bool HasDiagram()
@@ -106,6 +109,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <param name="importRequest"></param>
         /// <returns></returns>
+        [CSETAuthorize]
         [Route("api/diagram/importcsetd")]
         [HttpPost]
         public string ImportCsetd([FromBody] DiagramRequest importRequest)
@@ -146,9 +150,10 @@ namespace CSETWeb_Api.Controllers
         /// in the browser.
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [Route("api/diagram/symbols/get")]
         [HttpGet]
-        public object GetComponentSymbols()
+        public List<ComponentSymbolGroup> GetComponentSymbols()
         {
             using (var db = new CSET_Context())
             {
