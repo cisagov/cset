@@ -42,8 +42,8 @@ export class DiagramComponent implements OnInit {
             host = host.substr(0, host.length - 4);
         }
 
-        window.open(host + "diagram/src/main/webapp/index.html" +
+        window.location.href = host + "diagram/src/main/webapp/index.html" +
             "?j=" + jwt +
-            "&h=" + apiUrl, sessionStorage.getItem('assessmentId'));
+            "&h=" + apiUrl, sessionStorage.getItem('assessmentId');
     }
 }
