@@ -139,12 +139,11 @@ export class AnalysisService {
 
   /**
    * Builds a doughnut distribution for a single standard.
-   * Builds a stacked bar chart for 
+   * Builds a stacked bar chart for multi-standard questions.
    */
   buildStandardsSummary(canvasId: string, x: any) {
-    if (!!x.label) {
-      // single standard has a label property
-      return this.buildStandardSummaryDoughnut(canvasId, x);
+    if (x.data.length === 5) {
+      return this.buildStandardsSummaryDoughnut(canvasId, x);
     } else {
       return this.buildStandardsSummaryStackedBar(canvasId, x);
     }
@@ -185,7 +184,7 @@ export class AnalysisService {
   /**
    *
    */
-  buildStandardSummaryDoughnut(canvasId: string, x: any) {
+  buildStandardsSummaryDoughnut(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {

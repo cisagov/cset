@@ -110,7 +110,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
 
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => {
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
     });
 

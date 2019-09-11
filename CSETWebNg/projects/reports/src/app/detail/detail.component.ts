@@ -88,10 +88,6 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       (r: any) => {
         this.response = r;
 
-        console.log('back with detail');
-        console.log(this.response);
-
-
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
         if (!!v) {
@@ -117,8 +113,8 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
 
 
-    // Standards Summary (pie)
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => {
+    // Standards Summary (pie or stacked bar)
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
     });
 
