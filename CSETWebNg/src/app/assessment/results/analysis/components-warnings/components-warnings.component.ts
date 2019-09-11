@@ -33,8 +33,13 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
   templateUrl: './components-warnings.component.html'
 })
 export class ComponentsWarningsComponent implements OnInit {
-  chart: Chart;
+
   initialized = false;
+  warnings: any;
+
+  /**
+   *
+   */
   constructor(
     private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
@@ -43,44 +48,12 @@ export class ComponentsWarningsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analysisSvc.getNetworkWarnings().subscribe(x => this.setupChart(x));
-  }
-
-
-  setupChart(x: any) {
-    this.initialized = false;
-    this.chart = new Chart('netWarnCanvas', {
-      type: 'pie',
-      data: {
-        labels: x.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.data,
-            backgroundColor: 'red',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Network Warnings'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+    this.analysisSvc.getNetworkWarnings().subscribe(x => {
+      this.warnings = x;
+      this.initialized = true;
     });
-    this.initialized = true;
   }
+
+
+
 }

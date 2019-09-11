@@ -95,6 +95,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
         public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
+        public virtual DbSet<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
         public virtual DbSet<NEW_QUESTION> NEW_QUESTION { get; set; }
         public virtual DbSet<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
         public virtual DbSet<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
@@ -1439,6 +1440,19 @@ namespace DataLayerCore.Model
                     .HasForeignKey(d => d.Requirement_Id)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_NERC_RISK_RANKING_NEW_REQUIREMENT");
+            });
+
+            modelBuilder.Entity<NETWORK_WARNINGS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Id })
+                    .HasName("PK__network_warnings_001");
+
+                entity.Property(e => e.WarningText).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.NETWORK_WARNINGS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_NETWORK_WARNING_ASSESSMENTS");
             });
 
             modelBuilder.Entity<NEW_QUESTION>(entity =>

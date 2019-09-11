@@ -72,15 +72,11 @@ export class DashboardComponent implements OnInit {
     // score boxes
     this.overallScoreDisplay = this.getScore(x.OverallBars, 'Overall').toFixed(0) + '%';
 
-    this.standardBasedScore = this.getScore(x.OverallBars, 'Questions') + this.getScore(x.OverallBars, 'Requirement');
+    this.standardBasedScore = this.getScore(x.OverallBars, 'Standards');
     this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? this.standardBasedScore.toFixed(0) + '%' : 'No Standards Answers';
 
-    this.componentBasedScore = x.OverallBars.data[0];
+    this.componentBasedScore = this.getScore(x.OverallBars, 'Components');
     this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
-
-    this.hasComponents = (x.ComponentSummaryPie.data as number[]).reduce((a, b) => a + b) > 0;
-
-    this.hasComponents = true;   // RKW - set this based on reality
 
 
     this.assessComplChart = new Chart('assessComplCanvas', {
@@ -132,6 +128,7 @@ export class DashboardComponent implements OnInit {
 
     // Component Summary
     this.analysisSvc.getComponentsSummary().subscribe(respCompSumm => {
+      this.hasComponents = (respCompSumm.data as number[]).reduce((a, b) => a + b) > 0;
       this.compSummChart = this.analysisSvc.buildComponentsSummary('compSummCanvas', respCompSumm);
     });
 

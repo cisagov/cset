@@ -103,9 +103,6 @@ export class AnalysisService {
    *
    */
   buildTopCategories(canvasId: string, x: any) {
-
-console.log(x);
-
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
