@@ -1,0 +1,123 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="tag">Tag</th>
+    <th mat-sort-header="hasUniqueQuestions" style="width:15%;">Has Unique Questions</th>
+    <th mat-sort-header="sal" style="width:20%;">Sal</th>
+    <th mat-sort-header="criticality" style="width:20%;">Criticality</th>
+    <th mat-sort-header="layer">Layer</th>
+    <th mat-sort-header="ipAddress">IP Address</th>
+    <th mat-sort-header="assetType">Asset Type</th>
+    <th mat-sort-header="zone">Zone</th>
+    <th mat-sort-header="subnetNames">Subnet Name(s)</th>
+    <th mat-sort-header="descriptions">Description</th> 
+    <th mat-sort-header="hostName">Host Name</th>
+    <th mat-sort-header="visible">Visible</th>
+
+    <tr *ngFor="let component of components; let i = index">
+        <td>
+                {{component.tag}}
+        </td>
+        <td><input type="checkbox" name="{{ tt.GroupName }}" class="mt-1"
+          [checked]="component.hasUniqueQuestions" (change)="submit(component.tag, component.hasUniqueQuestions)"> </td>
+        <td><select [(ngModel)]="component.sal" class="form-control override-select"
+          (change)="submit(component.tag, component.sal);">
+          <option [ngValue]="none">None</option>
+          <option [ngValue]="L">Low</option>
+          <option [ngValue]="M">Moderate</option>
+          <option [ngValue]="H">High</option>
+          <option [ngValue]="VH">Very High</option>
+        </select></td>
+        <td> <select [(ngModel)]="component.criticality" class="form-control override-select"
+          (change)="submit(component.tag, component.criticality);">
+            <option [ngValue]="L">Low</option>
+            <option [ngValue]="M">Moderate</option>
+            <option [ngValue]="H">High</option>
+          </select></td>
+        <td>{{component.layer}}</td>
+        <td>{{component.ipAddress}}</td>
+        <td>{{component.assetType}}</td>
+        <td>{{component.zone}}</td>
+        <td>{{component.subnetNames}}</td>
+        <td>{{component.description}}</td>
+        <td>{{component.hostName}}</td>
+        <td>
+            <input type="checkbox" class="mt-1"
+            [checked]="component.visible" (change)="submit(component.tag, component.visible)"> 
+        </td>
+    </tr>
+</table>
+
+<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="tag">
+    <th mat-header-cell *matHeaderCellDef> Tag </th>
+    <td mat-cell *matCellDef="let element"> {{element.tag}} </td>
+  </ng-container>
+  <ng-container matColumnDef="hasUniqueQuestions">
+    <th mat-header-cell *matHeaderCellDef> Has Unique Questions </th>
+    <td mat-cell *matCellDef="let element"> <input type="checkbox" name="{{ tt.GroupName }}" class="mt-1"
+      [checked]="element.hasUniqueQuestions" (change)="submit(element.tag, element.hasUniqueQuestions)"> 
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="sal">
+    <th mat-header-cell *matHeaderCellDef> SAL </th>
+    <td mat-cell *matCellDef="let element"> 
+        <select [(ngModel)]="element.sal" class="form-control override-select"
+          (change)="submit(element.tag, element.sal);">
+          <option [ngValue]="none">None</option>
+          <option [ngValue]="L">Low</option>
+          <option [ngValue]="M">Moderate</option>
+          <option [ngValue]="H">High</option>
+          <option [ngValue]="VH">Very High</option>
+        </select>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="criticality">
+    <th mat-header-cell *matHeaderCellDef> Criticality </th>
+    <td mat-cell *matCellDef="let element"> 
+        <select [(ngModel)]="element.criticality" class="form-control override-select"
+        (change)="submit(element.tag, element.criticality);">
+          <option [ngValue]="L">Low</option>
+          <option [ngValue]="M">Moderate</option>
+          <option [ngValue]="H">High</option>
+        </select>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="layer">
+    <th mat-header-cell *matHeaderCellDef> Layer </th>
+    <td mat-cell *matCellDef="let element"> {{element.layer}} </td>
+  </ng-container>
+  <ng-container matColumnDef="ipAddress">
+    <th mat-header-cell *matHeaderCellDef> IP Address </th>
+    <td mat-cell *matCellDef="let element"> {{element.ipAddress}} </td>
+  </ng-container>
+  <ng-container matColumnDef="assetType">
+    <th mat-header-cell *matHeaderCellDef> Asset Type </th>
+    <td mat-cell *matCellDef="let element"> {{element.assetType}} </td>
+  </ng-container>
+  <ng-container matColumnDef="zone">
+    <th mat-header-cell *matHeaderCellDef> Zone </th>
+    <td mat-cell *matCellDef="let element"> {{element.zone}} </td>
+  </ng-container>
+  <ng-container matColumnDef="subnetName">
+    <th mat-header-cell *matHeaderCellDef> Subnet Name(s) </th>
+    <td mat-cell *matCellDef="let element"> {{element.subnetName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.discription}} </td>
+  </ng-container>
+  <ng-container matColumnDef="hostName">
+    <th mat-header-cell *matHeaderCellDef> Host Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.hostName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="visible">
+    <th mat-header-cell *matHeaderCellDef> Visible </th>
+    <td mat-cell *matCellDef="let element"> 
+        <input type="checkbox" class="mt-1"
+        [checked]="element.visible" (change)="submit(element.tag, element.visible)"> 
+    </td>
+  </ng-container>
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+ -->
