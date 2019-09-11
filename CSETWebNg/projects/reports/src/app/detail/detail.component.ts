@@ -133,9 +133,11 @@ export class DetailComponent implements OnInit, AfterViewChecked {
 
       // Set up arrays for green bar graphs
       this.numberOfStandards = !!x.multipleDataSets ? x.multipleDataSets.length : 0;
-      x.multipleDataSets.forEach(element => {
-        this.complianceGraphs.push(element);
-      });
+      if (!!x.multipleDataSets) {
+        x.multipleDataSets.forEach(element => {
+          this.complianceGraphs.push(element);
+        });
+      }
     });
 
 

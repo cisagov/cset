@@ -156,6 +156,7 @@
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
     <Compile Include="Manual\vParameter.cs" />
     <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
+    <Compile Include="Manual\Answer_Components_InScope.cs" />
     <Compile Include="ModelDataAccess\FileDescription.cs" />
     <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
     <Compile Include="ModelDataAccess\FileResult.cs" />
