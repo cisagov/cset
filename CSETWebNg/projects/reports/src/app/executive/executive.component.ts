@@ -79,7 +79,7 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
     });
 
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => {
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
     });
 
@@ -88,10 +88,10 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
     });
 
-
     this.analysisSvc.getComponentsSummary().subscribe(x => {
       this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
     });
+
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
     });
