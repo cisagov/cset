@@ -40,12 +40,12 @@
                 <img style="width: 283px; height: 133px" src="./assets/img/SiteSummaryFiles/image003.jpg">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information?.Assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information?.Assessor_Name}}
                 </div>
             </div>
         </div>
@@ -215,14 +215,14 @@
             High Level Assessment Description
         </h1>
         <p>
-            {{response?.information.Assessment_Description}}
+            {{response?.information?.Assessment_Description}}
         </p>
 
         <h1>
             Executive Summary
         </h1>
         <p>
-            {{response?.information.Executive_Summary}}
+            {{response?.information?.Executive_Summary}}
         </p>
     </div>
 
@@ -285,7 +285,6 @@
     <!--Network Diagram-->
     <div class="page-break">
         <h1>Network Diagram</h1>
-
         <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
     </div>
 
