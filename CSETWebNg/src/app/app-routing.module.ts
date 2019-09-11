@@ -68,6 +68,8 @@ import { StandardDocumentsComponent } from './builder/standard-documents/standar
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
 import { DiagramComponent } from './assessment/diagram/diagram.component';
+import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
+import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -109,7 +111,6 @@ const appRoutes: Routes = [
           { path: 'required', component: RequiredDocsComponent },
           { path: 'irp', component: IRPComponent },
           { path: 'irp-summary', component: IrpSummaryComponent },
-          { path: 'diagram', component: DiagramComponent },
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: '**', redirectTo: 'info' }
         ]
@@ -119,7 +120,14 @@ const appRoutes: Routes = [
         component: DiagramComponent,
         canActivate: [AssessGuard],
         canActivateChild: [AssessGuard],
+        children: [
+          { path: 'info', component: DiagramInfoComponent },
+          { path:'inventory', component: DiagramInventoryComponent },
+          { path: '', redirectTo: 'info', pathMatch: 'full' },
+          { path: '**', redirectTo: 'info' }
+        ]
       },
+     
       { path: 'questions', component: QuestionsComponent },
       {
         path: 'results',
