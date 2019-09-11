@@ -165,6 +165,8 @@ export class AnalysisService {
         datasets: x.dataSets,
       },
       options: {
+        maintainAspectRatio: true,
+        aspectRatio: 0,
         title: {
           display: false,
           fontSize: 20,
@@ -208,7 +210,7 @@ export class AnalysisService {
 
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         aspectRatio: 0,
 
         title: {

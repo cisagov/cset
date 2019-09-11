@@ -132,9 +132,9 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.multipleDataSets ? x.multipleDataSets.length : 0;
-      if (!!x.multipleDataSets) {
-        x.multipleDataSets.forEach(element => {
+      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
+      if (!!x.dataSets) {
+        x.dataSets.forEach(element => {
           this.complianceGraphs.push(element);
         });
       }

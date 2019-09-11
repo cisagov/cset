@@ -125,6 +125,26 @@
 
   <div class="page-break">
     <h1>
+      Standards Compliance
+    </h1>
+
+    <div *ngFor="let graph of complianceGraphs; index as i">
+      <h2 style="text-align: center">{{graph.label}}</h2>
+      <canvas id="complianceGraph{{i}}">
+      </canvas>
+    </div>
+  </div>
+
+
+  <!--Network Diagram-->
+  <div class="page-break">
+    <h1>Network Diagram</h1>
+    <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
+  </div>
+
+
+  <div class="page-break">
+    <h1>
       Analysis of Network Components
     </h1>
 
@@ -149,8 +169,7 @@
       </div>
     </div>
 
-    <div
-      style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+    <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
       <canvas id="canvasComponentsTypes"></canvas>
     </div>
   </div>
