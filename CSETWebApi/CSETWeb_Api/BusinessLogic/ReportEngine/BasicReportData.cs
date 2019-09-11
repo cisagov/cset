@@ -129,6 +129,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string Answer { get; set; }
         public string Zone { get; set; }
         public string SAL { get; set; }
+        public string LayerName { get; set; }
     }
 
     public class RankedQuestions
