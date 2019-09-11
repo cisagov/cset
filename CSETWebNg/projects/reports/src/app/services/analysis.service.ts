@@ -79,9 +79,6 @@ export class AnalysisService {
    * Builds a stacked bar chart for multi-standard questions.
    */
   buildStandardsSummary(canvasId: string, x: any) {
-
-    console.log(x);
-
     if (x.data.length === 5) {
       return this.buildStandardsSummaryDoughnut(canvasId, x);
     } else {
@@ -125,7 +122,6 @@ export class AnalysisService {
    *
    */
   buildStandardsSummaryDoughnut(canvasId: string, x: any) {
-    console.log('buildStandardsSummaryDoughnut');
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {
