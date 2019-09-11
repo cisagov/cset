@@ -5,16 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
-    public partial class ASSESSMENT_DIAGRAM_MARKUP
+    public partial class NETWORK_WARNINGS
     {
         public int Assessment_Id { get; set; }
-        public int Diagram_Id { get; set; }
+        public int Id { get; set; }
+        [StringLength(1000)]
+        public string WarningText { get; set; }
 
         [ForeignKey("Assessment_Id")]
-        [InverseProperty("ASSESSMENT_DIAGRAM_MARKUP")]
+        [InverseProperty("NETWORK_WARNINGS")]
         public virtual ASSESSMENTS Assessment_ { get; set; }
-        [ForeignKey("Diagram_Id")]
-        [InverseProperty("ASSESSMENT_DIAGRAM_MARKUP")]
-        public virtual DIAGRAM_MARKUP Diagram_ { get; set; }
     }
 }

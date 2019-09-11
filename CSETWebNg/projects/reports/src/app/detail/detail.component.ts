@@ -35,7 +35,7 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
   templateUrl: './detail.component.html'
 })
 export class DetailComponent implements OnInit, AfterViewChecked {
-  response: any;
+  response: any = null;
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
   chartStandardResultsByCategory: Chart;
@@ -60,6 +60,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   chartComponentsTypes: Chart;
   networkRecommendations = [];
   compResCanvas: Chart;
+  warnings: any;
 
   // ACET data
   matDetails: any;
@@ -86,6 +87,10 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     this.reportSvc.getReport('detail').subscribe(
       (r: any) => {
         this.response = r;
+
+        console.log('back with detail');
+        console.log(this.response);
+
 
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
@@ -127,10 +132,12 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
-      this.numberOfStandards = x.multipleDataSets.length;
-      x.multipleDataSets.forEach(element => {
-        this.complianceGraphs.push(element);
-      });
+      this.numberOfStandards = !!x.multipleDataSets ? x.multipleDataSets.length : 0;
+      if (!!x.multipleDataSets) {
+        x.multipleDataSets.forEach(element => {
+          this.complianceGraphs.push(element);
+        });
+      }
     });
 
 
@@ -149,6 +156,9 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
+    });
+    this.analysisSvc.getNetworkWarnings().subscribe(x => {
+      this.warnings = x;
     });
 
 

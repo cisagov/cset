@@ -29,16 +29,16 @@
       <span class="fs-small fw-400"> {{contact.AssessmentRole}} </span>
     </div>
     <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()">
+      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()" [disabled]="!enableMyControls">
         <span class="cset-icons-pencil fs-base-2"></span>
         <span class="d-none d-md-flex fs-smaller">Change</span>
       </button>
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()"
+      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()" [disabled]="!enableMyControls"
         *ngIf="!auth.isLocal">
         <span class="cset-icons-envelope fs-base-2"></span>
         <span class="d-none d-md-flex fs-smaller">Email</span>
       </button>
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()">
+      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()" [disabled]="!enableMyControls">
         <span class="cset-icons-trash-can fs-base-2"></span>
         <span class="d-none d-md-flex fs-smaller">Remove</span>
       </button>

@@ -34,4 +34,17 @@ export class DiagramComponent implements OnInit {
         const magic = this.navSvc.getMagic();
         this.navSvc.setTree(this.tree, magic);
     }
+
+    sendToDiagram() {
+        const jwt = sessionStorage.getItem("userToken");
+        const apiUrl = this.configSvc.apiUrl;
+        let host = this.configSvc.apiUrl;
+        if (host.endsWith('/api/')) {
+            host = host.substr(0, host.length - 4);
+        }
+
+        window.location.href = host + "diagram/src/main/webapp/index.html" +
+            "?j=" + jwt +
+            "&h=" + apiUrl, sessionStorage.getItem('assessmentId');
+    }
 }
