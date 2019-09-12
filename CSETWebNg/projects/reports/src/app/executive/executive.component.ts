@@ -33,7 +33,7 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
   selector: 'rapp-executive',
   templateUrl: './executive.component.html'
 })
-export class ExecutiveComponent implements OnInit, AfterViewInit {
+export class ExecutiveComponent implements OnInit, AfterViewChecked {
   response: any;
 
   chartPercentCompliance: Chart;
