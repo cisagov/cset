@@ -79,7 +79,7 @@ export class SecurityplanComponent implements OnInit {
 
         // convert line breaks to HTML
         this.response.ControlList.forEach(control => {
-          control.ControlDescription = control.ControlDescription.replace('\r', '<br/>');
+          control.ControlDescription = control.ControlDescription.replace(/\r/g, '<br/>');
         });
       },
       error => console.log('Security Plan report load Error: ' + (<Error>error).message)
