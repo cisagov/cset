@@ -110,7 +110,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
 
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => {
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
     });
 
@@ -122,11 +122,12 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
-      // This was throwing errors - commenting for now (RKW 8/22/19)
-      // this.numberOfStandards = !!x.multipleDataSets ? x.multipleDataSets.length : 0;
-      // x.multipleDataSets.forEach(element => {
-      //   this.complianceGraphs.push(element);
-      // });
+      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
+      if (!!x.dataSets) {
+        x.dataSets.forEach(element => {
+          this.complianceGraphs.push(element);
+        });
+      }
     });
 
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {

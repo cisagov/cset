@@ -38,8 +38,9 @@ import { Chart } from 'chart.js';
 export class AnalysisService {
   private apiUrl: string;
 
-
-
+  /**
+   *
+   */
   constructor(private http: HttpClient, private configSvc: ReportsConfigService) {
     this.apiUrl = this.configSvc.apiUrl + "analysis/";
   }
@@ -73,7 +74,54 @@ export class AnalysisService {
   }
 
 
+  /**
+   * Builds a doughnut distribution for a single standard.
+   * Builds a stacked bar chart for multi-standard questions.
+   */
   buildStandardsSummary(canvasId: string, x: any) {
+    if (x.data.length === 5) {
+      return this.buildStandardsSummaryDoughnut(canvasId, x);
+    } else {
+      return this.buildStandardsSummaryStackedBar(canvasId, x);
+    }
+  }
+
+  /**
+   *
+   */
+  buildStandardsSummaryStackedBar(canvasId: string, x: any) {
+    return new Chart(canvasId,
+      {
+        type: 'horizontalBar',
+        data: {
+          labels: x.Labels,
+          datasets: x.dataSets
+        },
+        options: {
+          legend: { display: true },
+          tooltips: {
+            callbacks: {
+              label: ((tooltipItem, data) =>
+                data.datasets[tooltipItem.datasetIndex].label + ': '
+                + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+            }
+          },
+          scales: {
+            yAxes: [{
+              stacked: true
+            }],
+            xAxes: [{
+              stacked: true
+            }]
+          },
+        }
+      });
+  }
+
+  /**
+   *
+   */
+  buildStandardsSummaryDoughnut(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {
@@ -165,6 +213,8 @@ export class AnalysisService {
         datasets: x.dataSets,
       },
       options: {
+        maintainAspectRatio: true,
+        aspectRatio: 0,
         title: {
           display: false,
           fontSize: 20,
@@ -208,7 +258,7 @@ export class AnalysisService {
 
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         aspectRatio: 0,
 
         title: {
