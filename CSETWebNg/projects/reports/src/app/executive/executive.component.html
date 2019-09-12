@@ -99,7 +99,7 @@
           </div>
           <div
             style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-            <div *ngFor="let s of responseResultsByCategory?.multipleDataSets"
+            <div *ngFor="let s of responseResultsByCategory?.dataSets"
               style="display: flex; flex-direction: row; align-items: center;">
               <div style="width: 1.2em; height: 1.2em; margin: 4px 10px 4px 0;"
                 [style.backgroundColor]="s.backgroundColor"></div>{{s.label}}
@@ -120,6 +120,26 @@
         <canvas id="chartStandardResultsByCategory"></canvas>
       </div>
     </div>
+  </div>
+
+
+  <div class="page-break">
+    <h1>
+      Standards Compliance
+    </h1>
+
+    <div *ngFor="let graph of complianceGraphs; index as i">
+      <h2 style="text-align: center">{{graph.label}}</h2>
+      <canvas id="complianceGraph{{i}}">
+      </canvas>
+    </div>
+  </div>
+
+
+  <!--Network Diagram-->
+  <div class="page-break">
+    <h1>Network Diagram</h1>
+    <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
   </div>
 
 
@@ -149,8 +169,7 @@
       </div>
     </div>
 
-    <div
-      style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+    <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
       <canvas id="canvasComponentsTypes"></canvas>
     </div>
   </div>

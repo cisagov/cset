@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { ReportsConfigService } from '../services/config.service';
@@ -88,10 +88,6 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       (r: any) => {
         this.response = r;
 
-        console.log('back with detail');
-        console.log(this.response);
-
-
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
         if (!!v) {
@@ -117,11 +113,10 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
 
 
-    // Standards Summary (pie)
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => {
+    // Standards Summary (pie or stacked bar)
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
     });
-
 
 
     // create an array of discreet datasets for the green bar graphs
@@ -132,9 +127,9 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.multipleDataSets ? x.multipleDataSets.length : 0;
-      if (!!x.multipleDataSets) {
-        x.multipleDataSets.forEach(element => {
+      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
+      if (!!x.dataSets) {
+        x.dataSets.forEach(element => {
           this.complianceGraphs.push(element);
         });
       }
@@ -151,12 +146,15 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     this.analysisSvc.getComponentsSummary().subscribe(x => {
       this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
     });
+
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
     });
+
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
     });
+
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
       this.warnings = x;
     });
@@ -200,6 +198,9 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  /**
+   *
+   */
   ngAfterViewChecked() {
     if (this.pageInitialized) {
       return;
@@ -212,9 +213,9 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     }
 
     // at this point the template should know how big the complianceGraphs array is
-    let i = 0;
+    let cg = 0;
     this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + i++, x);
+      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
     });
   }
 
