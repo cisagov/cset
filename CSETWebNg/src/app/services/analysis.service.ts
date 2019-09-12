@@ -99,6 +99,47 @@ export class AnalysisService {
   // let's migrate the chart building to this service
   // ---------------------------------------------------------
 
+   /**
+   * Builds a horizontal bar chart from the Dashboard API response.
+   * @param canvasId
+   * @param x
+   */
+  buildPercentComplianceChart(canvasId: string, x: any) {
+    return new Chart(canvasId, {
+      type: 'horizontalBar',
+      data: {
+        labels: x.OverallBars.Labels,
+        datasets: [
+          {
+            label: '',
+            data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
+            backgroundColor: '#0A5278',
+            borderColor: [],
+            borderWidth: 1
+          }
+        ],
+      },
+      options: {
+        title: {
+          display: false,
+          fontSize: 20,
+          text: 'Assessment Compliance'
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 100
+            }
+          }]
+        }
+      }
+    });
+  }
+  
   /**
    *
    */
@@ -292,7 +333,7 @@ export class AnalysisService {
         title: {
           display: false,
           fontSize: 20,
-          text: 'Components Summary'
+          text: 'Component Summary'
         },
         legend: {
           display: true,

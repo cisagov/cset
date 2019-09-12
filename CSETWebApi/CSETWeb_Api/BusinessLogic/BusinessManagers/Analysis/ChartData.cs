@@ -65,6 +65,7 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public string borderWidth { get; set; }
         public List<double> data { get; set; }
         public List<String> Labels { get; set; }
+        public int ComponentCount { get; set; }
         public List<DataRows> DataRows { get; set; }
         public List<DataRowsPie> DataRowsPie { get; set; }
         public List<string> Colors { get; set; }

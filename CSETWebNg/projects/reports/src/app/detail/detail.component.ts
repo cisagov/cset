@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { ReportsConfigService } from '../services/config.service';
@@ -34,7 +34,7 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
   selector: 'rapp-detail',
   templateUrl: './detail.component.html'
 })
-export class DetailComponent implements OnInit, AfterViewChecked {
+export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
   response: any = null;
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
@@ -60,7 +60,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
-  compResCanvas: Chart;
+  canvasComponentCompliance: Chart;
   warnings: any;
 
   // ACET data
@@ -137,28 +137,31 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
 
 
-    // Ranked Subject Areas
-    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
-    });
-
-
-    // Components Summary
+    // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      setTimeout(() => {
+        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      }, 0);
     });
 
 
-    // Components Types (stacked bar chart)
+    // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.Labels.length;
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      setTimeout(() => {
+        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      }, 0);
     });
 
 
     // Component Compliance by Subject Area
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
+      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+    });
+
+    // Ranked Subject Areas
+    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
+      this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
     });
 
 
@@ -205,6 +208,14 @@ export class DetailComponent implements OnInit, AfterViewChecked {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
   }
+
+  /**
+   *
+   */
+  ngAfterViewInit() {
+
+  }
+
 
   /**
    *
