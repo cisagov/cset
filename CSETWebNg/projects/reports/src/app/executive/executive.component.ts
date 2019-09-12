@@ -97,16 +97,20 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
     });
 
 
-    // Components Summary
+    // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      setTimeout(() => {
+        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      }, 0);
     });
 
 
-    // Components Types (stacked bar chart)
+    // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.Labels.length;
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      setTimeout(() => {
+        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      }, 0);
     });
 
 

@@ -461,7 +461,7 @@ export class AnalysisService {
         title: {
           display: false,
           fontSize: 20,
-          text: 'Components Summary'
+          text: 'Component Summary'
         },
         legend: {
           display: true,

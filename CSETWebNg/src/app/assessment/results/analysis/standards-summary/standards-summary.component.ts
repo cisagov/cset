@@ -63,7 +63,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
     const colors = x.Colors;
     if (this.dataSets.length > 1) {
-      this.chart = new Chart('stdSumCanvas', {
+      this.chart = new Chart('canvasStandardSummary', {
         type: 'horizontalBar',
         data: {
           labels: x.Labels,
@@ -96,7 +96,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
         }
       });
      } else {
-      this.chart = new Chart('stdSumCanvas', {
+      this.chart = new Chart('canvasStandardSummary', {
         type: 'doughnut',
         data: {
           labels: [
