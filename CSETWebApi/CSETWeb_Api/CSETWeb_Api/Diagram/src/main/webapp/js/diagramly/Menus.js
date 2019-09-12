@@ -1412,7 +1412,11 @@
 					editorUi.showDialog(dlg.container, 640, 480, true, false);
 					dlg.init();
 			}
-		});
+        });
+
+        editorUi.actions.addAction('diagramInventory...', function () {
+            editorUi.openLink('../../../../Documents/htmlhelp/index.htm');
+        });
 		
 		editorUi.actions.put('embedHtml', new Action(mxResources.get('html') + '...', function()
 		{
@@ -2962,7 +2966,7 @@
 				//this.addMenuItems(menu, ['autosave'], parent);
 			}
 
-			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram'], parent);
+			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram', 'diagramInventory'], parent);
 
 			menu.addSeparator(parent);
 			

@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit {
 
     // Standards Summary
     this.analysisSvc.getStandardsSummary().subscribe(respStandSumm => {
-      this.stdsSummChart = this.analysisSvc.buildComponentsSummary('stdsSummCanvas', respStandSumm);
+      this.stdsSummChart = this.analysisSvc.buildStandardsSummary('stdsSummCanvas', respStandSumm);
     });
 
 

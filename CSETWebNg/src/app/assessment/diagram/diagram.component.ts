@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
 import { Navigation2Service } from '../../services/navigation2.service';
@@ -27,6 +27,7 @@ export class DiagramComponent implements OnInit {
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.buttonText = resp ? this.msgDiagramExists : this.msgNoDiagramExists;
           });
+        this.assessSvc.currentTab = "diagram"
     }
 
     populateTree() {
@@ -42,8 +43,8 @@ export class DiagramComponent implements OnInit {
             host = host.substr(0, host.length - 4);
         }
 
-        window.open(host + "diagram/src/main/webapp/index.html" +
+        window.location.href = host + "diagram/src/main/webapp/index.html" +
             "?j=" + jwt +
-            "&h=" + apiUrl, sessionStorage.getItem('assessmentId'));
+            "&h=" + apiUrl, sessionStorage.getItem('assessmentId');
     }
 }
