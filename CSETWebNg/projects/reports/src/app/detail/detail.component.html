@@ -243,14 +243,14 @@
                         style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
                         <div>STANDARDS SUMMARY</div>
                         <div>
-                            <canvas id="canvasStandardsSummary"></canvas>
+                            <canvas id="canvasStandardSummary"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div
                 style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
-                <canvas id="chartStandardResultsByCategory"></canvas>
+                <canvas id="canvasStandardResultsByCategory"></canvas>
             </div>
         </div>
     </div>
@@ -270,14 +270,14 @@
 
 
     <!--Network Diagram-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>Network Diagram</h1>
         <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
     </div>
 
 
     <!--Analysis of Network Components-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>
             Analysis of Network Components
         </h1>
@@ -302,14 +302,13 @@
         </div>
 
         <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-            <canvas id="canvasComponentsTypes"></canvas>
+            <canvas id="canvasComponentTypes"></canvas>
         </div>
     </div>
 
 
-
     <!--Component Compliance by Subject Area-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>
             Component Compliance by Subject Area
         </h1>
@@ -321,7 +320,7 @@
 
 
     <!--Findings and Reccomendations From Basic Network Analysis-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>Findings and Recommendations From Basic Network Analysis</h1>
 
         <table class="table" *ngIf="!!warnings && warnings.length > 0">
