@@ -33,20 +33,20 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
   selector: 'rapp-executive',
   templateUrl: './executive.component.html'
 })
-export class ExecutiveComponent implements OnInit, AfterViewInit {
+export class ExecutiveComponent implements OnInit, AfterViewChecked {
   response: any;
 
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  chartStandardResultsByCategory: Chart;
+  canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
 
 
   // Charts for Components
+  componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   warningCount = 0;
-  complianceGraphs: any[] = [];
   chart1: Chart;
 
   numberOfStandards = -1;
@@ -84,47 +84,37 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
 
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
+      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
-    // create an array of discreet datasets for the green bar graphs
+    // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.responseResultsByCategory = x;
 
       // Standard Or Question Set (multi-bar graph)
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
-
-      // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
-      if (!!x.dataSets) {
-        x.dataSets.forEach(element => {
-          this.complianceGraphs.push(element);
-        });
-      }
+      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
     });
 
 
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
+    // Components Summary
+    this.analysisSvc.getComponentSummary().subscribe(x => {
+      this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
     });
 
 
-    this.analysisSvc.getComponentsSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
-    });
-
-
+    // Components Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
+      this.componentCount = x.Labels.length;
+      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
     });
 
+
+    // ACET-specific content
     this.reportSvc.getACET().subscribe((x: boolean) => {
       this.reportSvc.hasACET = x;
     });
 
-    // ACET-specific content
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {
         this.acetDashboard = data;
@@ -139,24 +129,7 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       });
   }
 
-  /**
-   *
-   */
   ngAfterViewChecked() {
-    if (this.pageInitialized) {
-      return;
-    }
 
-    // There's probably a better way to do this ... we have to wait until the
-    // complianceGraphs array has been built so that the template can bind to it.
-    if (this.complianceGraphs.length === this.numberOfStandards && this.numberOfStandards >= 0) {
-      this.pageInitialized = true;
-    }
-
-    // at this point the template should know how big the complianceGraphs array is
-    let cg = 0;
-    this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
-    });
   }
 }

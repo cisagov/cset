@@ -38,14 +38,9 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   chartStandardsSummary: Chart;
   chartRankedSubjectAreas: Chart;
   chartPercentCompliance: Chart;
-  chartStandardResultsByCategory: Chart;
+  canvasStandardResultsByCategory: Chart;
   response: any;
   responseResultsByCategory: any;
-
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
 
 
   chart1: Chart;
@@ -54,7 +49,13 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
+  // FIPS SAL answers
+  nistSalC = '';
+  nistSalI = '';
+  nistSalA = '';
+
   // Charts for Components
+  componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
@@ -74,8 +75,8 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
 
   constructor(
-    public reportSvc: ReportService,
     public analysisSvc: AnalysisService,
+    public reportSvc: ReportService,
     public configSvc: ReportsConfigService,
     private titleService: Title,
     public acetSvc: ACETService
@@ -105,21 +106,26 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );
 
+    // Populate charts
+
+    // Summary Percent Compliance
     this.analysisSvc.getDashboard().subscribe(x => {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
     });
 
 
+    // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
+      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
+    // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.responseResultsByCategory = x;
 
-      // Standard or Question Set (multi-bar graph)
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
+      // Standard Or Question Set (multi-bar graph)
+      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
       this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
@@ -130,21 +136,33 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       }
     });
 
+
+    // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
       this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
     });
 
 
-    // Components content
-    this.analysisSvc.getComponentsSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
+    // Components Summary
+    this.analysisSvc.getComponentSummary().subscribe(x => {
+      this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
     });
+
+
+    // Components Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
+      this.componentCount = x.Labels.length;
+      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
     });
+
+
+    // Component Compliance by Subject Area
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
     });
+
+
+    // Network Warnings
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
       this.warnings = x;
     });
@@ -188,6 +206,9 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  /**
+   *
+   */
   ngAfterViewChecked() {
     if (this.pageInitialized) {
       return;
@@ -200,9 +221,9 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     }
 
     // at this point the template should know how big the complianceGraphs array is
-    let i = 0;
+    let cg = 0;
     this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + i++, x);
+      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
     });
   }
 

@@ -38,7 +38,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   response: any = null;
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  chartStandardResultsByCategory: Chart;
+  canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
   chartRankedSubjectAreas: Chart;
 
@@ -56,6 +56,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   nistSalA = '';
 
   // Charts for Components
+  componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
@@ -115,7 +116,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
 
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
+      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
@@ -124,7 +125,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       this.responseResultsByCategory = x;
 
       // Standard Or Question Set (multi-bar graph)
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
+      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
       this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
@@ -142,19 +143,26 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
 
 
-    // Components content
-    this.analysisSvc.getComponentsSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
+    // Components Summary
+    this.analysisSvc.getComponentSummary().subscribe(x => {
+      this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
     });
 
+
+    // Components Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
+      this.componentCount = x.Labels.length;
+      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
     });
 
+
+    // Component Compliance by Subject Area
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
     });
 
+
+    // Network Warnings
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
       this.warnings = x;
     });

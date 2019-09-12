@@ -19,11 +19,11 @@ export class ACETService {
     constructor(
         private http: HttpClient,
         private configSvc: ConfigService
-    ) { 
-        if(this.configSvc.apiUrl){
+    ) {
+        if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
         }
-        else{
+        else {
             this.apiUrl = "http://localhost:46000/api/";
         }
     }
@@ -43,15 +43,13 @@ export class ACETService {
 
     ////////////////////  Dashboard functions /////////////////////////////
     getAcetDashboard() {
-        console.log("in the dashboard call");
-        console.log(this.apiUrl);
         return this.http.get(this.apiUrl + 'dashboard');
     }
 
     postSelection(selected: AcetDashboard) {
         return this.http.post(this.apiUrl + 'summary', selected, headers);
     }
-    
+
 
     ////////////////// Maturity Detail functions ///////////////////////////
 
@@ -66,32 +64,32 @@ export class ACETService {
     /*
     * Returns matury range based on current IRP rating
     */
-    getMatRange(){
+    getMatRange() {
         return this.http.get(this.apiUrl + 'getMaturityRange');
     }
 
     /*
     * Return the overall IRP score
     */
-    getOverallIrp(){
-    return this.http.get(this.apiUrl + 'getOverallIrpForMaturity');
-    }   
+    getOverallIrp() {
+        return this.http.get(this.apiUrl + 'getOverallIrpForMaturity');
+    }
 
     /*
     * Get target band 
     */
-    getTargetBand(){
+    getTargetBand() {
         return this.http.get(this.apiUrl + 'getTargetBand');
     }
 
     /*
     * Save targetBand
     */
-    setTargetBand(value: boolean){
+    setTargetBand(value: boolean) {
         //adding a comment to force this to push up again
-        return this.http.post(this.apiUrl +'setTargetBand', value, headers);
+        return this.http.post(this.apiUrl + 'setTargetBand', value, headers);
     }
-    
+
 
     /**
     * Returns the color-coded maturity styling for a particular level of maturity.
@@ -112,10 +110,10 @@ export class ACETService {
             return "alert-intermediate";
         } else if (mat === "Advanced") {
             return "alert-advanced";
-        } else if(mat === "Innovative"){
+        } else if (mat === "Innovative") {
             return "alert-innovative";
         }
-        else{
+        else {
             return "alert-domain";
         }
     }
