@@ -212,7 +212,7 @@
 
         <h1>Executive Summary</h1>
         <p>
-            {{response?.information.Executive_Summary}}
+            {{response?.information?.Executive_Summary}}
         </p>
     </div>
 
@@ -231,7 +231,7 @@
                     </div>
                     <div
                         style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-                        <div *ngFor="let s of responseResultsByCategory?.multipleDataSets"
+                        <div *ngFor="let s of responseResultsByCategory?.dataSets"
                             style="display: flex; flex-direction: row; align-items: center;">
                             <div style="width: 1.2em; height: 1.2em; margin: 4px 10px 4px 0;"
                                 [style.backgroundColor]="s.backgroundColor"></div>{{s.label}}
@@ -262,7 +262,7 @@
         </h1>
 
         <div *ngFor="let graph of complianceGraphs; index as i">
-            <h2 class="ta-center">{{graph.label}}</h2>
+            <h2 style="text-align: center">{{graph.label}}</h2>
             <canvas id="complianceGraph{{i}}">
             </canvas>
         </div>
@@ -273,10 +273,7 @@
     <div class="page-break">
         <h1>Network Diagram</h1>
 
-        <img class="align-center" style="width: 100%" src="{{networkDiagramImage}}">
-        <div *ngIf="networkDiagramImage.length === 0">
-            No diagram.
-        </div>
+        <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
     </div>
 
 

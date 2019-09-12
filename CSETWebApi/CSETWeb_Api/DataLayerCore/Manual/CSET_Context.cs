@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 
@@ -45,6 +46,16 @@ namespace DataLayerCore.Model
 
         // modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+
+        public virtual DbSet<Answer_Components> Answer_Components { get; set; }
+
+
+        /// <summary>
+        /// Maps to the view. When given an assessment ID, questions/answers for visible components are returned.
+        /// </summary>
+        public virtual DbSet<Answer_Components_InScope> Answer_Components_InScope { get; set; }
+
+
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
         public int changeEmail(string originalEmail, string newEmail)
@@ -95,6 +106,12 @@ namespace DataLayerCore.Model
             return myrval;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_GetOverallRankedCategoriesPage_Result> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
