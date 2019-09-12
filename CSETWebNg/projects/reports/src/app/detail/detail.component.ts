@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { ReportsConfigService } from '../services/config.service';
@@ -34,11 +34,11 @@ import { ACETService } from '../../../../../src/app/services/acet.service';
   selector: 'rapp-detail',
   templateUrl: './detail.component.html'
 })
-export class DetailComponent implements OnInit, AfterViewChecked {
+export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
   response: any = null;
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  chartStandardResultsByCategory: Chart;
+  canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
   chartRankedSubjectAreas: Chart;
 
@@ -56,10 +56,11 @@ export class DetailComponent implements OnInit, AfterViewChecked {
   nistSalA = '';
 
   // Charts for Components
+  componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
-  compResCanvas: Chart;
+  canvasComponentCompliance: Chart;
   warnings: any;
 
   // ACET data
@@ -115,7 +116,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
 
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
+      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
@@ -124,7 +125,7 @@ export class DetailComponent implements OnInit, AfterViewChecked {
       this.responseResultsByCategory = x;
 
       // Standard Or Question Set (multi-bar graph)
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
+      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
       this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
@@ -136,25 +137,35 @@ export class DetailComponent implements OnInit, AfterViewChecked {
     });
 
 
+    // Component Summary
+    this.analysisSvc.getComponentSummary().subscribe(x => {
+      setTimeout(() => {
+        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      }, 0);
+    });
+
+
+    // Component Types (stacked bar chart)
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.componentCount = x.Labels.length;
+      setTimeout(() => {
+        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      }, 0);
+    });
+
+
+    // Component Compliance by Subject Area
+    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
+      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+    });
+
     // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
       this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
     });
 
 
-    // Components content
-    this.analysisSvc.getComponentsSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
-    });
-
-    this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
-    });
-
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
-    });
-
+    // Network Warnings
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
       this.warnings = x;
     });
@@ -201,6 +212,14 @@ export class DetailComponent implements OnInit, AfterViewChecked {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
   }
+
+  /**
+   *
+   */
+  ngAfterViewInit() {
+
+  }
+
 
   /**
    *

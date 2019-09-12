@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
   topCategChart: Chart;
   stdsSummChart: Chart;
   compSummChart: Chart;
-  hasComponents = false;
+  componentCount = 0;
   initialized = false;
 
   constructor(
@@ -78,66 +78,31 @@ export class DashboardComponent implements OnInit {
     this.componentBasedScore = this.getScore(x.OverallBars, 'Components');
     this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
 
-    // this.hasComponents = (respCompSumm.data as number[]).reduce((a, b) => a + b) > 0;
-    this.hasComponents = true;
 
-
-    this.assessComplChart = new Chart('assessComplCanvas', {
-      type: 'horizontalBar',
-      data: {
-        labels: x.OverallBars.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.OverallBars.data.map(n => Math.round(parseFloat(n))),
-            backgroundColor: '#0A5278',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Assessment Compliance'
-        },
-        legend: {
-          display: false
-        },
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
-          }
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              max: 100
-            }
-          }]
-        }
-      }
-    });
+    // Assessment Compliance
+    this.assessComplChart = this.analysisSvc.buildPercentComplianceChart('canvasAssessmentCompliance', x);
 
 
     // Top Categories (only show the top 5 entries for dashboard)
-    this.analysisSvc.getTopCategories(5).subscribe(respTopCateg => {
-      this.topCategChart = this.analysisSvc.buildTopCategories('topCategCanvas', respTopCateg);
+    this.analysisSvc.getTopCategories(5).subscribe(resp => {
+      this.topCategChart = this.analysisSvc.buildTopCategories('canvasTopCategories', resp);
     });
 
 
     // Standards Summary
-    this.analysisSvc.getStandardsSummary().subscribe(respStandSumm => {
-      this.stdsSummChart = this.analysisSvc.buildStandardsSummary('stdsSummCanvas', respStandSumm);
+    this.analysisSvc.getStandardsSummary().subscribe(resp => {
+      this.stdsSummChart = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', resp);
     });
 
 
     // Component Summary
-    this.analysisSvc.getComponentsSummary().subscribe(respCompSumm => {
-      this.compSummChart = this.analysisSvc.buildComponentsSummary('compSummCanvas', respCompSumm);
+    this.analysisSvc.getComponentsSummary().subscribe(resp => {
+      this.componentCount = resp.ComponentCount;
+      if (this.componentCount > 0) {
+        setTimeout(() => {
+          this.compSummChart = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', resp);
+        }, 0);
+      }
     });
 
     this.initialized = true;
