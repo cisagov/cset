@@ -125,6 +125,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
     public class ComponentQuestion
     {
         public string ComponentName { get; set; }
+        public string ComponentType { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
         public string Zone { get; set; }
