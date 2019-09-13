@@ -159,6 +159,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
+
+                // RKW-TODO:  
+                return l;
+
                 foreach (Answer_Components_InScope q in db.Answer_Components_InScope.Where(a => a.Assessment_Id == _assessmentId).ToList())
                 {
                     l.Add(new ComponentQuestion {

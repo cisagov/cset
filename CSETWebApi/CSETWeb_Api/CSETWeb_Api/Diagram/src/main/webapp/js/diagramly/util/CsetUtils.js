@@ -60,7 +60,9 @@ CsetUtils.adjustConnectability = function (edit)
  * Persists the graph to the CSET API.
  */
 CsetUtils.PersistGraphToCSET = function (editor)
-{    
+{
+    console.log('PersistGraphToCSET - A');
+
     var enc = new mxCodec();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
@@ -77,53 +79,86 @@ CsetUtils.PersistGraphToCSET = function (editor)
 
 
 
-    // ---------------------------------------------------------------------------------------------------
+    // --------- Build network diagram PNG ------------------------------------------------
     var selectionEmpty = editor.graph.isSelectionEmpty();
     var ignoreSelection = selectionEmpty;
     var bg = '#ffffff';
 
     var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    svgRoot = new XMLSerializer().serializeToString(svgRoot);
+    svgRoot = svgRoot.replace(/image=img\/cset\//g, 'image=http://localhost:46000/diagram/src/main/webapp/img/cset/');
 
 
-    var c = document.createElement('canvas'); 
-    document.getElementsByClassName('geDiagramContainer')[0].appendChild(c);
-    c.crossOrigin = "crossorigin";
+    console.log(svgRoot);
 
-    var img = new Image();
-    img.setAttribute('crossOrigin', 'anonymous');
 
-    img.onload = function ()
+   
+    var image = new Image();
+    
+    image.onload = function ()
     {
-        console.log('img.onload');
-        console.log(img.src);
+        var canvas = document.createElement('canvas');
+        canvas.width = image.width;
+        canvas.height = image.height;
+        var context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0);
 
-        var ctx = c.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        // var imageData = ctx.getImageData();
-        // console.log(imageData);
+        var a = document.createElement('a');
+        a.download = "image.png";
+        a.href = canvas.toDataURL('image/png');
+        //document.body.appendChild(a);
+        //a.click();
 
-        try
-        {
-            var img2 = c.toDataURL("image/png");
-            console.log(img2);
-            req.DiagramSvg = img2;
-        }
-        catch (e)
-        {
-            console.log(e);
-        }
 
+        req.DiagramSvg = canvas.toDataURL('image/png');
         CsetUtils.saveDiagram(req);
     }
 
-    var xml = new XMLSerializer().serializeToString(svgRoot);
-    // img.src = 'img/cset/clock.svg';
-    // img.setAttribute("src", "data:image/svg+xml;charset=utf-8," + encodeURIComponent(xml));
-    img.src = URL.createObjectURL(
-        new Blob([xml], {
-            type: 'image/svg+xml;charset=utf8'
-        })
-    );
+    image.src = 'data:image/svg+xml;base64,' + window.btoa(svgRoot);
+
+
+
+
+
+
+
+
+    //try
+    //{
+    //    var canvas = document.createElement('canvas');
+    //    var svgSize = svgRoot.viewBox.baseVal;
+    //    canvas.width = svgSize.width;
+    //    canvas.height = svgSize.height;
+    //    var img = new Image();
+
+    //    img.onload = function ()
+    //    {
+    //        try
+    //        {
+    //            var ctx = canvas.getContext('2d');
+    //            ctx.drawImage(img, 0, 0);
+
+    //            // Works in Chrome, Firefox, Edge, Safari and Opera
+    //            var result = canvas.toDataURL('image/png');
+    //            EditorUi.prototype.useCanvasForExport = result != null && result.length > 6;
+
+    //            req.DiagramSvg = result;
+    //            CsetUtils.saveDiagram(req);
+    //        }
+    //        catch (e)
+    //        {
+    //            // ignore
+    //        }
+    //    };
+
+    //    var s = new XMLSerializer();
+    //    var str = s.serializeToString(svgRoot);
+    //    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(str)));
+    //}
+    //catch (e)
+    //{
+    //    // ignore
+    //}
 }
 
 

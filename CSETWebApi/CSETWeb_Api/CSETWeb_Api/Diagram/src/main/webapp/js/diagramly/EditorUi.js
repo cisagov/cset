@@ -312,6 +312,8 @@
 
         try
         {
+            console.log('EditorUI - A');
+
             var canvas = document.createElement('canvas');
             var img = new Image();
 
@@ -320,6 +322,8 @@
             {
                 try
                 {
+                    console.log('EditorUI - B');
+
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0);
 
