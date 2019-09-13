@@ -702,7 +702,6 @@
 
 
 
-
     <div class="page-break">
         <h1>
             Ranked Subject Areas
@@ -718,8 +717,6 @@
         <canvas id="canvasRankedSubjectAreas">
         </canvas>
     </div>
-
-
 
 
 
@@ -796,8 +793,6 @@
 
 
 
-
-
     <div class="page-break">
         <h1>
             Alternate Justification Comments
@@ -836,7 +831,6 @@
 
 
 
-
     <div class="page-break" *ngFor="let standard of response?.StandardsQuestions">
         <h1>
             Question Details: {{standard.StandardShortName}}
@@ -852,14 +846,15 @@
     </div>
 
 
+
     <div class="page-break" *ngIf="response?.ComponentQuestions.length > 0">
         <h1>
-            Component Question Details
+            Component Question Details 
         </h1>
 
         <table class="cset-table-3" *ngFor="let q of response?.ComponentQuestions">
             <tr>
-                <th colspan="4">Component: {{q.ComponentName}}</th>
+                <th colspan="4">Component: {{q.ComponentName}} - {{q.ComponentType}}</th>
             </tr>
             <tr>
                 <td class="tint2">Question:</td>
