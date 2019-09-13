@@ -159,15 +159,15 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
-
-                // RKW-TODO:  
-                return l;
-
-                foreach (Answer_Components_InScope q in db.Answer_Components_InScope.Where(a => a.Assessment_Id == _assessmentId).ToList())
+                foreach (Answer_Components_Exploded q in db.Answer_Components_Exploded
+                    .Where(a => a.Assessment_Id == _assessmentId)
+                    .OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText)
+                    .ToList())
                 {
                     l.Add(new ComponentQuestion {
                         Answer = q.Answer_Text,
                         ComponentName = q.ComponentName,
+                        ComponentType = q.Component_Type,
                         Question = q.QuestionText,
                         LayerName = q.LayerName,
                         SAL = q.SAL,
