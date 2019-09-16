@@ -28,7 +28,7 @@ namespace CSETWeb_Api.BusinessManagers
             // the front end sometimes calls 'save' with an empty graph on open.  
             // Need to prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
-            
+
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/object").Count;
             if (cellCount == 2 && objectCount == 0)
@@ -135,7 +135,37 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     return string.Empty;
                 }
-                return assessmentRecord.Diagram_Image;
+
+
+                XmlDocument xImage = new XmlDocument();
+                try
+                {
+                    xImage.LoadXml(assessmentRecord.Diagram_Image);
+                }
+                catch (Exception)
+                {
+                    // whatever is in the database is not XML
+                    return string.Empty;
+                }
+
+
+                // Make sure any paths to embedded svg images are correctly qualified with this server's URL
+                var serverHostUrl = System.Web.HttpContext.Current.Request.Url;
+                string s = serverHostUrl.Scheme + "://" + serverHostUrl.Authority;
+
+
+                var images = xImage.GetElementsByTagName("image");
+                foreach (var image in images)
+                {
+                    var href = ((XmlElement)image).Attributes["xlink:href"];
+                    if (href != null)
+                    {
+                        Uri u = new Uri(href.InnerText);
+                        ((XmlElement)image).SetAttribute("xlink:href", s + u.LocalPath);
+                    }
+                }
+
+                return xImage.OuterXml;
             }
         }
 
@@ -154,7 +184,8 @@ namespace CSETWeb_Api.BusinessManagers
 
                 foreach (SYMBOL_GROUPS g in symbolGroups)
                 {
-                    var group = new ComponentSymbolGroup {
+                    var group = new ComponentSymbolGroup
+                    {
                         SymbolGroupID = g.Id,
                         GroupName = g.Symbol_Group_Name,
                         SymbolGroupTitle = g.Symbol_Group_Title,
@@ -168,7 +199,8 @@ namespace CSETWeb_Api.BusinessManagers
 
                     foreach (COMPONENT_SYMBOLS s in symbols)
                     {
-                        var symbol = new ComponentSymbol {
+                        var symbol = new ComponentSymbol
+                        {
                             Name = s.Name,
                             DiagramTypeXml = s.Diagram_Type_Xml,
                             Abbreviation = s.Abbreviation,
@@ -177,8 +209,8 @@ namespace CSETWeb_Api.BusinessManagers
                             LongName = s.Long_Name,
                             ComponentFamilyName = s.Component_Family_Name,
                             Tags = s.Tags,
-                            Width = (int) s.Width,
-                            Height = (int) s.Height
+                            Width = (int)s.Width,
+                            Height = (int)s.Height
                         };
 
                         group.Symbols.Add(symbol);
@@ -215,8 +247,8 @@ namespace CSETWeb_Api.BusinessManagers
                         LongName = s.Long_Name,
                         ComponentFamilyName = s.Component_Family_Name,
                         Tags = s.Tags,
-                        Width = (int) s.Width,
-                        Height = (int) s.Height
+                        Width = (int)s.Width,
+                        Height = (int)s.Height
                     };
 
                     resp.Add(symbol);

@@ -286,8 +286,7 @@
     <div class="page-break" *ngIf="componentCount > 0">
         <h1>Network Diagram</h1>
 
-        <div style="text-align: center;">
-            <img src="{{networkDiagramImage}}">
+        <div style="text-align: center;" [innerHTML]="networkDiagramImage">            
         </div>
     </div>
 
@@ -310,7 +309,7 @@
 
             <div style="padding: 1rem;">
                 <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                    system diagram is <span class="warnInput">{{ warnings.length }}</span>.
+                    system diagram is <span class="warnInput">{{ warnings?.length }}</span>.
                 </p>
                 <p> See the Findings and Recommendations from Basic Network Analysis for details.
                 </p>

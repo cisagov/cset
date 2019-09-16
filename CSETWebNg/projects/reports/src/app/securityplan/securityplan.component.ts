@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ReportService } from '../services/report.service';
 import { ReportsConfigService } from '../services/config.service';
 import { AnalysisService } from '../services/analysis.service';
@@ -38,6 +38,9 @@ export class SecurityplanComponent implements OnInit {
 
   response: any;
 
+  componentCount = 0;
+  networkDiagramImage: SafeHtml;
+
   acetDashboard: AcetDashboard;
 
   // FIPS SAL answers
@@ -50,7 +53,8 @@ export class SecurityplanComponent implements OnInit {
     public reportSvc: ReportService,
     public analysisSvc: AnalysisService,
     public configSvc: ReportsConfigService,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    private sanitizer: DomSanitizer
   ) { }
 
   /**
@@ -84,6 +88,19 @@ export class SecurityplanComponent implements OnInit {
       },
       error => console.log('Security Plan report load Error: ' + (<Error>error).message)
     );
+
+    // Component Types (stacked bar chart)
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.componentCount = x.Labels.length;
+
+      // Network Diagram
+      this.reportSvc.getNetworkDiagramImage().subscribe(y => {
+        this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(y);
+      });
+    });
+
+
+
 
     // ACET-specific content
     this.reportSvc.getACET().subscribe((x: boolean) => {
