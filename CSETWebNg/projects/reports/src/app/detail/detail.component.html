@@ -243,14 +243,14 @@
                         style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
                         <div>STANDARDS SUMMARY</div>
                         <div>
-                            <canvas id="canvasStandardsSummary"></canvas>
+                            <canvas id="canvasStandardSummary"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div
                 style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
-                <canvas id="chartStandardResultsByCategory"></canvas>
+                <canvas id="canvasStandardResultsByCategory"></canvas>
             </div>
         </div>
     </div>
@@ -270,14 +270,16 @@
 
 
     <!--Network Diagram-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>Network Diagram</h1>
-        <div style="text-align: center;">^^^ Insert Network Diagram Here ^^^</div>
+
+        <div style="text-align: center;" [innerHTML]="networkDiagramImage">
+        </div>
     </div>
 
 
     <!--Analysis of Network Components-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>
             Analysis of Network Components
         </h1>
@@ -294,7 +296,7 @@
 
             <div style="padding: 1rem;">
                 <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                    system diagram is <span class="warnInput">{{ warnings?.length }}</span>.
+                    system diagram is <span class="warnInput">{{ warnings.length }}</span>.
                 </p>
                 <p> See the Findings and Recommendations from Basic Network Analysis for details.
                 </p>
@@ -302,26 +304,25 @@
         </div>
 
         <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-            <canvas id="canvasComponentsTypes"></canvas>
+            <canvas id="canvasComponentTypes"></canvas>
         </div>
     </div>
 
 
-
     <!--Component Compliance by Subject Area-->
-    <div class="page-break">
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>
             Component Compliance by Subject Area
         </h1>
         <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-            <canvas id="compResCanvas">{{compResCanvas}}</canvas>
+            <canvas id="canvasComponentCompliance">{{canvasComponentCompliance}}</canvas>
         </div>
     </div>
 
 
 
-    <!--Findings and Reccomendations From Basic Network Analysis-->
-    <div class="page-break">
+    <!--Findings and Recommendations From Basic Network Analysis-->
+    <div class="page-break" *ngIf="componentCount > 0">
         <h1>Findings and Recommendations From Basic Network Analysis</h1>
 
         <table class="table" *ngIf="!!warnings && warnings.length > 0">
@@ -853,6 +854,7 @@
     </div>
 
 
+
     <div class="page-break" *ngIf="response?.ComponentQuestions.length > 0">
         <h1>
             Component Question Details
@@ -860,7 +862,7 @@
 
         <table class="cset-table-3" *ngFor="let q of response?.ComponentQuestions">
             <tr>
-                <th colspan="4">Component: {{q.ComponentName}}</th>
+                <th colspan="4">Component: {{q.ComponentName}} - {{q.ComponentType}}</th>
             </tr>
             <tr>
                 <td class="tint2">Question:</td>

@@ -25,7 +25,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { ReportsConfigService } from '../services/config.service';
-import { Title } from '@angular/platform-browser';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../../../../src/app/models/admin-save.model';
 import { ACETService } from '../../../../../src/app/services/acet.service';
@@ -38,27 +38,29 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   chartStandardsSummary: Chart;
   chartRankedSubjectAreas: Chart;
   chartPercentCompliance: Chart;
-  chartStandardResultsByCategory: Chart;
+  canvasStandardResultsByCategory: Chart;
   response: any;
   responseResultsByCategory: any;
+
+
+  chart1: Chart;
+  numberOfStandards = -1;
+  complianceGraphs: any[] = [];
+  networkDiagramImage: SafeHtml;
+
+  pageInitialized = false;
 
   // FIPS SAL answers
   nistSalC = '';
   nistSalI = '';
   nistSalA = '';
 
-
-  chart1: Chart;
-  numberOfStandards = -1;
-  complianceGraphs: any[] = [];
-
-  pageInitialized = false;
-
   // Charts for Components
+  componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
-  compResCanvas: Chart;
+  canvasComponentCompliance: Chart;
   warnings: any;
 
   // ACET data
@@ -74,11 +76,12 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
 
   constructor(
-    public reportSvc: ReportService,
     public analysisSvc: AnalysisService,
+    public reportSvc: ReportService,
     public configSvc: ReportsConfigService,
     private titleService: Title,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -105,21 +108,26 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );
 
+    // Populate charts
+
+    // Summary Percent Compliance
     this.analysisSvc.getDashboard().subscribe(x => {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
     });
 
 
+    // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
+      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
+    // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.responseResultsByCategory = x;
 
-      // Standard or Question Set (multi-bar graph)
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
+      // Standard Or Question Set (multi-bar graph)
+      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
 
       // Set up arrays for green bar graphs
       this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
@@ -130,23 +138,43 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       }
     });
 
+
+    // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
       this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
     });
 
 
-    // Components content
-    this.analysisSvc.getComponentsSummary().subscribe(x => {
-      this.chartComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
+    // Component Summary
+    this.analysisSvc.getComponentSummary().subscribe(x => {
+      setTimeout(() => {
+        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      }, 0);
     });
+
+
+    // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentsTypes', x);
+      this.componentCount = x.Labels.length;
+      setTimeout(() => {
+        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      }, 0);
     });
+
+
+    // Component Compliance by Subject Area
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
+      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
     });
+
+
+    // Network Warnings
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
       this.warnings = x;
+    });
+
+    this.reportSvc.getNetworkDiagramImage().subscribe(x => {
+      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x);
     });
 
 
@@ -188,6 +216,9 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  /**
+   *
+   */
   ngAfterViewChecked() {
     if (this.pageInitialized) {
       return;
@@ -200,9 +231,9 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     }
 
     // at this point the template should know how big the complianceGraphs array is
-    let i = 0;
+    let cg = 0;
     this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + i++, x);
+      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
     });
   }
 

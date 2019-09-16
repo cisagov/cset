@@ -69,7 +69,7 @@ export class AnalysisService {
     return this.http.get(this.apiUrl + 'StandardsSummary');
   }
 
-  getComponentsSummary(): any {
+  getComponentSummary(): any {
     return this.http.get(this.apiUrl + 'ComponentsSummary');
   }
 
@@ -344,6 +344,7 @@ export class AnalysisService {
 
 
 
+
   /**
    * Builds a horizontal bar chart from the Dashboard API response.
    * @param canvasId
@@ -432,7 +433,7 @@ export class AnalysisService {
     }
   }
 
-  buildComponentsSummary(canvasId: string, x: any) {
+  buildComponentSummary(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {
@@ -461,7 +462,7 @@ export class AnalysisService {
         title: {
           display: false,
           fontSize: 20,
-          text: 'Components Summary'
+          text: 'Component Summary'
         },
         legend: {
           display: true,

@@ -33,7 +33,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
   templateUrl: './components-results.component.html'
 })
 export class ComponentsResultsComponent implements OnInit {
-  compResCanvas: Chart;
+  canvasComponentCompliance: Chart;
   dataRows: { title: string; passed: number; total: number; percent: number; }[];
   initialized = false;
   constructor(
@@ -45,7 +45,7 @@ export class ComponentsResultsComponent implements OnInit {
 
   ngOnInit() {
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('compResCanvas', x);
+      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
       this.dataRows = x.DataRows;
 
       this.initialized = true;

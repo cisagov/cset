@@ -48,34 +48,32 @@
             <div style="padding: .3rem" [class.has-score]="componentBasedScore > 0">{{componentBasedScoreDisplay}}</div>
           </div>
         </div>
-        
+
       </div>
     </div>
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Assessment Compliance</h3>
-      <canvas id="assessComplCanvas">{{assessComplChart}}</canvas>
+      <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
     </div>
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Top Ranked Categories</h3>
-      <canvas id="topCategCanvas">{{topCategChart}}</canvas>
+      <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
     </div>
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Standards Summary</h3>
-      <canvas id="stdsSummCanvas" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
+      <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
     </div>
 
-
-    <div class="chart d-flex flex-column flex-00a" [class.hidden]="!hasComponents">
+    <div class="chart d-flex flex-column flex-00a">
       <h3>Components Summary</h3>
-      <canvas id="compSummCanvas" style="max-width: 800px; margin: 0 auto;">{{compSummChart}}</canvas>
-    </div>
-
-    <div class="chart d-flex flex-column flex-00a" *ngIf="!hasComponents">
-      <h3>Components Summary</h3>
-      <hr style="width: 30%"> There are no components on the diagram.
+      <canvas id="canvasComponentSummary" *ngIf="componentCount > 0"
+        style="max-width: 800px; margin: 0 auto;">{{compSummChart}}</canvas>
+      <div *ngIf="componentCount === 0">
+        <hr style="width: 30%"> There are no components on the diagram.
+      </div>
     </div>
 
 

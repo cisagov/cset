@@ -250,7 +250,10 @@ function setCurrentXml(data, filename)
 			ex = 'http://' + ex;
 		}
 		
-		EXPORT_URL = ex;
+        EXPORT_URL = ex;
+
+
+        console.log('init.js EXPORT_URL = ' + EXPORT_URL);
 	}
 
 	// URL for logging
