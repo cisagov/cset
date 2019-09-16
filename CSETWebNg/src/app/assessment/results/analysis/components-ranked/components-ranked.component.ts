@@ -33,7 +33,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
   templateUrl: './components-ranked.component.html'
 })
 export class ComponentsRankedComponent implements OnInit {
-  compRankCanvas: Chart;
+  canvasComponentRank: Chart;
   dataRows: { title: string; rank: number; failed: number; total: number; percent: number; }[];
   initialized = false;
 
@@ -46,7 +46,7 @@ export class ComponentsRankedComponent implements OnInit {
 
   ngOnInit() {
     this.analysisSvc.getComponentsRankedCategories().subscribe(x => {
-      this.analysisSvc.buildComponentsRankedCategories('compRankCanvas', x);
+      this.analysisSvc.buildComponentsRankedCategories('canvasComponentRank', x);
 
       this.dataRows = x.DataRows;
       this.dataRows.map(r => {

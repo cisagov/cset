@@ -312,6 +312,8 @@
 
         try
         {
+            console.log('EditorUI - A');
+
             var canvas = document.createElement('canvas');
             var img = new Image();
 
@@ -320,6 +322,8 @@
             {
                 try
                 {
+                    console.log('EditorUI - B');
+
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0);
 
@@ -1741,6 +1745,8 @@
         {
             bg = '#ffffff';
         }
+
+        console.log('createDownloadRequest');
 
         return new mxXmlRequest(EXPORT_URL, 'format=' + format + range + allPages +
             '&bg=' + ((bg != null) ? bg : mxConstants.NONE) +
@@ -5570,10 +5576,14 @@
                         '&h=' + Math.round(2 * bounds.height);
                 }
 
+                console.log('createEmbedImage');
+
                 var embed = (lightbox) ? '1' : '0';
                 var req = new mxXmlRequest(EXPORT_URL, 'format=png' +
                     '&base64=1&embedXml=' + embed + size + '&xml=' +
                     encodeURIComponent(data));
+
+                console.log(req);
 
                 // LATER: Updates on each change, add a delay
                 req.send(mxUtils.bind(this, function ()
@@ -10454,11 +10464,15 @@
                             }
                             else
                             {
+                                console.log('installMessageHandler');
+
                                 // Data from server is base64 encoded to avoid binary XHR
                                 // Double encoding for XML arg is needed for UTF8 encoding
                                 var req = new mxXmlRequest(EXPORT_URL, 'format=png&embedXml=' +
                                     ((data.format == 'xmlpng') ? '1' : '0') + '&base64=1&xml=' +
                                     encodeURIComponent(encodeURIComponent(xml)));
+
+                                console.log(req);
 
                                 req.send(mxUtils.bind(this, function (req)
                                 {
@@ -11992,6 +12006,8 @@
         ExportDialog.exportFile = function (editorUi, name, format, bg, s, b)
         {
             var graph = editorUi.editor.graph;
+
+            console.log('EditorUI data');
 
             if (format == 'xml')
             {

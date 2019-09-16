@@ -750,6 +750,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagramImage">
+            <summary>
+            Returns the diagram image for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.DiagramController.HasDiagram">
             <summary>
             Returns a boolean indicating the existence of a diagram.

@@ -42,7 +42,7 @@ namespace CSETWeb_Api.Controllers
             BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(req.DiagramXml);
-            dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber);
+            dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber, req.DiagramSvg);
             //DiagramAnalysis analysis = new DiagramAnalysis();
             //analysis.PerformAnalysis(xDoc);
         }
@@ -71,6 +71,21 @@ namespace CSETWeb_Api.Controllers
             response.AssessmentName = assessmentDetail.AssessmentName;
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Returns the diagram image for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getimage")]
+        [HttpGet]
+        public string GetDiagramImage()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
+            return dm.GetDiagramImage(assessmentId);
         }
 
 

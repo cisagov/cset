@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./network-warnings.component.scss']
 })
 export class NetworkWarningsComponent implements OnInit {
-  dataSource = [];
+  warnings = [];
   displayedColumns = ['id', 'message']
   constructor() { }
 
