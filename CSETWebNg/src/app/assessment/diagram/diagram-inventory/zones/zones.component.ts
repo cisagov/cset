@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./zones.component.scss']
 })
 export class ZonesComponent implements OnInit {
-  dataSource = [];
+  zones = [];
   displayedColumns = ['type', 'label', 'sal', 'layer', 'owner', 'visible']
   constructor() { }
 
