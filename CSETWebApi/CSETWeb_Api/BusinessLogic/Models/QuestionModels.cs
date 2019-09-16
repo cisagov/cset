@@ -72,6 +72,7 @@ namespace CSETWeb_Api.Models
         public string AltAnswerText;
         public string Comment;
         public bool MarkForReview;
+        public string SetName;
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  

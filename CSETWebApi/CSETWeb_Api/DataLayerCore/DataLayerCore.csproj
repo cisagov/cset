@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataLayerCore</RootNamespace>
     <AssemblyName>DataLayerCore</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -148,6 +148,7 @@
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
     <Compile Include="Manual\NEW_REQUIREMENT.cs" />
     <Compile Include="Manual\usp_financial_attributes_result.cs" />
+    <Compile Include="Manual\usp_getFinancialQuestions_Result.cs" />
     <Compile Include="Manual\usp_GetOverallRankedCategoriesPage_Result.cs" />
     <Compile Include="Manual\usp_GetRankedQuestions_Result.cs" />
     <Compile Include="Manual\usp_MaturityDetailsCalculations_Result.cs" />

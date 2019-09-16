@@ -45,10 +45,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         ASSESSMENTS_REQUIRED_DOCUMENTATION answer = db.ASSESSMENTS_REQUIRED_DOCUMENTATION.FirstOrDefault(ard => ard.Assessment_Id == assessmentId && ard.Documentation_Id == doc.Documentation_Id);
                         if (answer == null)
                         {
-                            tempDoc.Answer = "N";
+                            tempDoc.Answer = "U";
                             db.ASSESSMENTS_REQUIRED_DOCUMENTATION.Add(new ASSESSMENTS_REQUIRED_DOCUMENTATION()
                             {
-                                Answer = "N",
+                                Answer = "U",
                                 Assessment_Id = assessmentId,
                                 Documentation_Id = doc.Documentation_Id,
                                 Comment = ""

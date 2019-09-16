@@ -30,7 +30,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber, string diagramImage)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, int lastUsedComponentNumber, string diagramImage)
         {
             // the front end sometimes calls 'save' with an empty graph on open.  
             // Need to prevent the javascript from doing that on open, but for now,
@@ -65,15 +65,16 @@ namespace CSETWeb_Api.BusinessManagers
                     throw new ApplicationException("Assessment record is missing for id" + assessmentID);
                 }
 
-            assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
-            String diagramXML = xDoc.OuterXml;
-            if (!String.IsNullOrWhiteSpace(diagramXML))
-            {
-                assessmentRecord.Diagram_Markup = diagramXML;
-            }
-	    assessmentRecord.Diagram_Image = diagramImage;
+                assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
+                String diagramXML = xDoc.OuterXml;
+                if (!String.IsNullOrWhiteSpace(diagramXML))
+                {
+                    assessmentRecord.Diagram_Markup = diagramXML;
+                }
+                assessmentRecord.Diagram_Image = diagramImage;
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
             
          
         }

@@ -11,6 +11,7 @@ namespace DataLayerCore.Model
         public string PrimaryEmail { get; set; }
         [StringLength(50)]
         public string AddressType { get; set; }
+        public Guid Id { get; set; }
         [StringLength(150)]
         public string City { get; set; }
         [StringLength(150)]
@@ -23,7 +24,6 @@ namespace DataLayerCore.Model
         public string State { get; set; }
         [StringLength(150)]
         public string Zip { get; set; }
-        public Guid Id { get; set; }
 
         [ForeignKey("Id")]
         [InverseProperty("ADDRESS")]
