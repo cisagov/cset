@@ -22,7 +22,7 @@ export class DiagramInfoComponent implements OnInit {
         private navSvc: NavigationService,
         public assessSvc: AssessmentService,
         public navSvc2: Navigation2Service,
-        public configSvc: ConfigService, 
+        public configSvc: ConfigService,
         private location: Location
     ) { }
     tree: NavTree[] = [];
@@ -31,7 +31,7 @@ export class DiagramInfoComponent implements OnInit {
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.hasDiagram = resp;
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
-          });
+        });
     }
 
     populateTree() {
@@ -47,11 +47,11 @@ export class DiagramInfoComponent implements OnInit {
             host = host.substr(0, host.length - 4);
         }
 
-        window.open(host + "diagram/src/main/webapp/index.html" +
+        window.location.href = host + "diagram/src/main/webapp/index.html" +
             "?j=" + jwt +
-            "&h=" + apiUrl, sessionStorage.getItem('assessmentId'));
+            "&h=" + apiUrl, sessionStorage.getItem('assessmentId');
     }
-    sendToInventory(){
-        this.router.navigateByUrl("/assessment/"+sessionStorage.getItem('assessmentId') +"/diagram/inventory");
+    sendToInventory() {
+        this.router.navigateByUrl("/assessment/" + sessionStorage.getItem('assessmentId') + "/diagram/inventory");
     }
 }
