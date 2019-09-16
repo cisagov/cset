@@ -17,6 +17,8 @@ namespace DataLayerCore.Model
             ASSESSMENT_IRP_HEADER = new HashSet<ASSESSMENT_IRP_HEADER>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
+            DIAGRAM_LAYERS = new HashSet<DIAGRAM_LAYERS>();
+            DIAGRAM_ZONES = new HashSet<DIAGRAM_ZONES>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
@@ -78,6 +80,10 @@ namespace DataLayerCore.Model
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<DIAGRAM_LAYERS> DIAGRAM_LAYERS { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<DIAGRAM_ZONES> DIAGRAM_ZONES { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment_")]

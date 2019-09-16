@@ -9,15 +9,24 @@ namespace DataLayerCore.Model
     {
         public int Assessment_Id { get; set; }
         public Guid Component_Id { get; set; }
-        [StringLength(100)]
+        [StringLength(50)]
         public string Diagram_Component_Type { get; set; }
         [StringLength(200)]
         public string label { get; set; }
         [StringLength(50)]
         public string DrawIO_id { get; set; }
+        public int? Zone_Id { get; set; }
+        public int? Layer_Id { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]
         public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual COMPONENT_SYMBOLS Diagram_Component_TypeNavigation { get; set; }
+        [ForeignKey("Layer_Id")]
+        [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]
+        public virtual DIAGRAM_LAYERS Layer_ { get; set; }
+        [ForeignKey("Zone_Id")]
+        [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]
+        public virtual DIAGRAM_ZONES Zone_ { get; set; }
     }
 }
