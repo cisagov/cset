@@ -7,7 +7,7 @@ import { DiagramService } from '../../../../services/diagram.service';
   styleUrls: ['./components.component.scss']
 })
 export class ComponentsComponent implements OnInit {
-  dataSource = [];
+  components = [];
   displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layer', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visible'];
   assetTypes: any;
   sal: any;
