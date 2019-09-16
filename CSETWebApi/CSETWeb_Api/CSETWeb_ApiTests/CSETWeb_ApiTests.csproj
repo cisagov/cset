@@ -66,6 +66,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BusinessManagers\DiagramManagerTests.cs" />
     <Compile Include="BusinessManagers\Diagram\DictionaryCompareTests.cs" />
     <Compile Include="BusinessManagers\ImportManagerTests.cs" />
     <Compile Include="BusinessManagers\QuestionsManagerTests.cs" />
