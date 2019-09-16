@@ -14,6 +14,7 @@ namespace CSETWeb_Api.Models
     {
         public string DiagramXml;
         public int LastUsedComponentNumber;
+        public string DiagramSvg;
     }
 
     public class DiagramResponse

@@ -53,7 +53,7 @@ namespace DataLayerCore.Model
         /// <summary>
         /// Maps to the view. When given an assessment ID, questions/answers for visible components are returned.
         /// </summary>
-        public virtual DbSet<Answer_Components_InScope> Answer_Components_InScope { get; set; }
+        public virtual DbSet<Answer_Components_Exploded> Answer_Components_Exploded { get; set; }
 
 
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");

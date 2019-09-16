@@ -556,6 +556,10 @@ namespace CSETWeb_Api.Controllers
                                      chartData.Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
                              }
                          });
+
+
+                // include component count so front end can know whether components are present
+                chartData.ComponentCount = context.Answer_Components_Exploded.Where(a => a.Assessment_Id == assessmentId).Distinct().Count();
             }
 
             chartData.dataSets.ForEach(ds =>
