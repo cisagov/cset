@@ -25,7 +25,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { ReportsConfigService } from '../services/config.service';
-import { Title } from '@angular/platform-browser';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../../../../src/app/models/admin-save.model';
 import { ACETService } from '../../../../../src/app/services/acet.service';
@@ -46,7 +46,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   chart1: Chart;
   numberOfStandards = -1;
   complianceGraphs: any[] = [];
-  networkDiagramImage: string = '';
+  networkDiagramImage: SafeHtml;
 
   pageInitialized = false;
 
@@ -80,7 +80,8 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     public reportSvc: ReportService,
     public configSvc: ReportsConfigService,
     private titleService: Title,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -173,7 +174,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      this.networkDiagramImage = x;
+      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x);
     });
 
 

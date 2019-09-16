@@ -61,104 +61,69 @@ CsetUtils.adjustConnectability = function (edit)
  */
 CsetUtils.PersistGraphToCSET = function (editor)
 {
-    console.log('PersistGraphToCSET - A');
-
     var enc = new mxCodec();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
     var sXML = oSerializer.serializeToString(node);
 
-    var req = {};
-    req.DiagramXml = sXML;
-    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
-
-    if (sXML == EditorUi.prototype.emptyDiagramXml)
-    {
-        // debugger;
-    }
-
-
-
-    // --------- Build network diagram PNG ------------------------------------------------
     var selectionEmpty = editor.graph.isSelectionEmpty();
     var ignoreSelection = selectionEmpty;
     var bg = '#ffffff';
 
+    var req = {};
+    req.DiagramXml = sXML;
+    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+
+
+    // include the SVG
     var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = new XMLSerializer().serializeToString(svgRoot);
-    svgRoot = svgRoot.replace(/image=img\/cset\//g, 'image=http://localhost:46000/diagram/src/main/webapp/img/cset/');
+
+    req.DiagramSvg = svgRoot;
+    CsetUtils.saveDiagram(req);
 
 
-    console.log(svgRoot);
 
 
-   
-    var image = new Image();
+
+    // --------- Build network diagram PNG ------------------------------------------------
+    //var selectionEmpty = editor.graph.isSelectionEmpty();
+    //var ignoreSelection = selectionEmpty;
+    //var bg = '#ffffff';
+
+    //var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    //svgRoot = new XMLSerializer().serializeToString(svgRoot);
+    //svgRoot = svgRoot.replace(/image=img\/cset\//g, 'image=http://localhost:46000/diagram/src/main/webapp/img/cset/');
+
+
+    //console.log(svgRoot);
+
+
+
+
+    //var image = new Image();
     
-    image.onload = function ()
-    {
-        var canvas = document.createElement('canvas');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        var context = canvas.getContext('2d');
-        context.drawImage(image, 0, 0);
-
-        var a = document.createElement('a');
-        a.download = "image.png";
-        a.href = canvas.toDataURL('image/png');
-        //document.body.appendChild(a);
-        //a.click();
-
-
-        req.DiagramSvg = canvas.toDataURL('image/png');
-        CsetUtils.saveDiagram(req);
-    }
-
-    image.src = 'data:image/svg+xml;base64,' + window.btoa(svgRoot);
-
-
-
-
-
-
-
-
-    //try
+    //image.onload = function ()
     //{
     //    var canvas = document.createElement('canvas');
-    //    var svgSize = svgRoot.viewBox.baseVal;
-    //    canvas.width = svgSize.width;
-    //    canvas.height = svgSize.height;
-    //    var img = new Image();
+    //    canvas.width = image.width;
+    //    canvas.height = image.height;
+    //    var context = canvas.getContext('2d');
+    //    context.drawImage(image, 0, 0);
 
-    //    img.onload = function ()
-    //    {
-    //        try
-    //        {
-    //            var ctx = canvas.getContext('2d');
-    //            ctx.drawImage(img, 0, 0);
+    //    var a = document.createElement('a');
+    //    a.download = "image.png";
+    //    a.href = canvas.toDataURL('image/png');
+    //    //document.body.appendChild(a);
+    //    //a.click();
 
-    //            // Works in Chrome, Firefox, Edge, Safari and Opera
-    //            var result = canvas.toDataURL('image/png');
-    //            EditorUi.prototype.useCanvasForExport = result != null && result.length > 6;
 
-    //            req.DiagramSvg = result;
-    //            CsetUtils.saveDiagram(req);
-    //        }
-    //        catch (e)
-    //        {
-    //            // ignore
-    //        }
-    //    };
-
-    //    var s = new XMLSerializer();
-    //    var str = s.serializeToString(svgRoot);
-    //    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(str)));
+    //    req.DiagramSvg = canvas.toDataURL('image/png');
+    //    CsetUtils.saveDiagram(req);
     //}
-    //catch (e)
-    //{
-    //    // ignore
-    //}
+
+    //image.src = 'data:image/svg+xml;base64,' + window.btoa(svgRoot);
+
 }
 
 

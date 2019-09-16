@@ -559,7 +559,7 @@ namespace CSETWeb_Api.Controllers
 
 
                 // include component count so front end can know whether components are present
-                chartData.ComponentCount = context.Answer_Components_InScope.Where(a => a.Assessment_Id == assessmentId).Distinct().Count();
+                chartData.ComponentCount = context.Answer_Components_Exploded.Where(a => a.Assessment_Id == assessmentId).Distinct().Count();
             }
 
             chartData.dataSets.ForEach(ds =>

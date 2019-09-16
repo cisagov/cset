@@ -273,8 +273,7 @@
     <div class="page-break" *ngIf="componentCount > 0">
         <h1>Network Diagram</h1>
 
-        <div style="text-align: center;">
-            <img src="{{networkDiagramImage}}">
+        <div style="text-align: center;" [innerHTML]="networkDiagramImage">
         </div>
     </div>
 
@@ -858,7 +857,7 @@
 
     <div class="page-break" *ngIf="response?.ComponentQuestions.length > 0">
         <h1>
-            Component Question Details 
+            Component Question Details
         </h1>
 
         <table class="cset-table-3" *ngFor="let q of response?.ComponentQuestions">
