@@ -273,6 +273,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Diagram_Markup).IsUnicode(false);
 
+                entity.Property(e => e.Diagram_Image).IsUnicode(false);
+
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
 
                 entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");

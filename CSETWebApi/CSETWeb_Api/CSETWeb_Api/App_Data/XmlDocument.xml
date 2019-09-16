@@ -486,9 +486,19 @@
         </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
-            Re-orders the pieces into Y|N|NA|A|U order
+            Re-orders the pieces into Y|N|NA|A|U order.
+            Also adjusts percentages to equal 100.
             </summary>
             <param name="r"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalysisController.TransformToChart(CSETWeb_Api.BusinessManagers.Analysis.GetCombinedOveralls)">
+            <summary>
+            Returns a ChartData object with the answer distribution for the StatType.
+            The answer distribution is ordered and normalized to total 100%,
+            fixing any rounding anomaly.
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.GetStandardsSummary">
             <summary>
@@ -737,6 +747,12 @@
         <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagram">
             <summary>
             Returns the diagram XML for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagramImage">
+            <summary>
+            Returns the diagram image for the assessment.
             </summary>
             <returns></returns>
         </member>

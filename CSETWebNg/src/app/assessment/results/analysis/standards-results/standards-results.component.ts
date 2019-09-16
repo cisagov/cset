@@ -56,12 +56,12 @@ export class StandardsResultsComponent implements OnInit {
     this.initialized = false;
     this.dataRows = x.DataRows;
     this.dataSets = x.dataSets;
-    for(var i = 0; i < x.dataSets.length; i++){
+    for (let i = 0; i < x.dataSets.length; i++) {
       x.dataSets[i].borderColor = [];
       x.dataSets[i].borderWidth = 1;
     }
-    
-    this.chart = new Chart('stdResultCanvas', {
+
+    this.chart = new Chart('canvasStandardResult', {
       type: 'horizontalBar',
       data: {
         labels: x.Labels,
@@ -72,7 +72,7 @@ export class StandardsResultsComponent implements OnInit {
           callbacks: {
             label: ((tooltipItem, data) => {
               return data.labels[tooltipItem.index] + ': '
-               +((Number) (data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index])).toFixed(2) + '%';
+                + ((Number)(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index])).toFixed(2) + '%';
             })
           }
         },
