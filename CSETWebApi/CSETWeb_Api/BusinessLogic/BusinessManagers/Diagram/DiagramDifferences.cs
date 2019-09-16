@@ -1,4 +1,6 @@
-﻿using CSETWeb_Api.BusinessManagers;
+﻿using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     {
         public Dictionary<Guid,NetworkComponent> AddedNodes { get; set; }
         public Dictionary<Guid,NetworkComponent> DeletedNodes { get; set; }
+        public Dictionary<string, NetworkLayer> AddedLayers { get; set; }
+        public Dictionary<string, NetworkZone> AddedZones { get; set; }
+        public Dictionary<string, NetworkLayer> DeletedLayers { get; set; }
+        public Dictionary<string, NetworkZone> DeletedZones { get; set; }
+
         public DiagramDifferences()
         {
             AddedNodes = new Dictionary<Guid,NetworkComponent>();
@@ -27,7 +34,39 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             
             this.AddedNodes = lookupValue(newDiagram.NetworkComponents, oldDiagram.NetworkComponents);
             this.DeletedNodes = lookupValue(oldDiagram.NetworkComponents, newDiagram.NetworkComponents);
-            
+            this.AddedLayers = processLayers(newDiagram.Layers,oldDiagram.Layers);
+            this.DeletedLayers = processLayers(oldDiagram.Layers, newDiagram.Layers);
+            this.AddedZones = processZones(newDiagram.Zones, oldDiagram.Zones);
+            this.DeletedZones = processZones(oldDiagram.Zones, newDiagram.Zones);
+
+        }
+
+        private Dictionary<string, NetworkZone> processZones(Dictionary<string, NetworkZone> sourcedictionary, Dictionary<string, NetworkZone> destinationDictionary)
+        {
+            Dictionary<string, NetworkZone> differences = new Dictionary<string, NetworkZone>();
+            foreach (KeyValuePair<string, NetworkZone> g in sourcedictionary)
+            {
+                NetworkZone ignoreme = null;
+                if (!destinationDictionary.TryGetValue(g.Key, out ignoreme))
+                {
+                    differences.Add(g.Key, g.Value);
+                }
+            }
+            return differences;
+        }
+
+        private Dictionary<string, NetworkLayer> processLayers(Dictionary<string, NetworkLayer> sourcedictionary, Dictionary<string, NetworkLayer> destinationDictionary)
+        {
+            Dictionary<string, NetworkLayer> differences = new Dictionary<string, NetworkLayer>();
+            foreach (KeyValuePair<string, NetworkLayer> g in sourcedictionary)
+            {
+                NetworkLayer ignoreme = null;
+                if (!destinationDictionary.TryGetValue(g.Key, out ignoreme))
+                {
+                    differences.Add(g.Key, g.Value);
+                }
+            }
+            return differences;
         }
 
         private Dictionary<Guid,NetworkComponent> lookupValue(Dictionary<Guid,NetworkComponent> sourcedictionary, Dictionary<Guid,NetworkComponent> destinationDictionary)

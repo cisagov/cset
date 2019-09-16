@@ -67,20 +67,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 {
                     ///when saving if the parent object is a layer then there is not default zone
                     ///if the parent object is zone then all objects in that zone inherit the layer of the zone            
+
+                    /*
+                     * remove all deleted zones and layers
+                     * remove 
+                     * add in all the layers and zones
+                     * add all the components for each layer and zone
+                     * 
+                     */
                     DiagramDifferences differences = new DiagramDifferences();
                     differences.processComparison(newDiagram, oldDiagram);
-                    foreach (var newNode in differences.AddedNodes)
-                    {
-                        context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
-                        {
-                            Assessment_Id = assessment_id,
-                            Component_Id = newNode.Key,
-                            Diagram_Component_Type = newNode.Value.ComponentType,
-                            DrawIO_id = newNode.Value.ID,
-                            label = newNode.Value.ComponentName
-                        });
-                    }
-                    context.SaveChanges();
 
                     foreach (var deleteNode in differences.DeletedNodes)
                     {
@@ -90,8 +86,71 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         {
                             context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(adc);
                         }
+                    }                    
+                    foreach(var layer in differences.DeletedLayers)
+                    {
+                        var adc = context.DIAGRAM_LAYERS.FirstOrDefault(x=> x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key);
+                        if (adc != null)
+                        {
+                            context.DIAGRAM_LAYERS.Remove(adc);
+                        }
+                    }
+                    foreach (var zone in differences.DeletedZones)
+                    {
+                        var adc = context.DIAGRAM_ZONES.FirstOrDefault(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key);
+                        if (adc != null)
+                        {
+                            context.DIAGRAM_ZONES.Remove(adc);
+                        }
                     }
                     context.SaveChanges();
+                    foreach(var layer in differences.AddedLayers)
+                    {
+                        context.DIAGRAM_LAYERS.Add(new DIAGRAM_LAYERS()
+                        {
+                            Assessment_Id = assessment_id,
+                            DrawIO_id = layer.Key,
+                            Layer_Name = layer.Value.LayerName,
+                            Visible = layer.Value.Visible
+                        });
+                    }
+                    foreach (var zone in differences.AddedZones)
+                    {
+                        context.DIAGRAM_ZONES.Add(new DIAGRAM_ZONES()
+                        {
+                            Assessment_Id = assessment_id,
+                            DrawIO_id = zone.Key,
+                            Zone_Name = zone.Value.ComponentName,
+                            Universal_Sal_Level = zone.Value.SAL
+                        });
+                    }
+                    context.SaveChanges();
+
+                    Dictionary<string, int> zlookup = context.DIAGRAM_ZONES.Where(x=> x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Zone_Id);
+                    Dictionary<string, int> layerLookup = context.DIAGRAM_LAYERS.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Layer_Id);
+
+
+                    foreach (var newNode in differences.AddedNodes)
+                    {
+                        int zone_id, layer_id;
+                        bool zIsNull, lIsNull = false;
+                        zIsNull = !zlookup.TryGetValue(newNode.Value.Parent_id, out zone_id);
+                        lIsNull = !layerLookup.TryGetValue(newNode.Value.Parent_id, out layer_id);
+
+                        context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
+                        {
+                            Assessment_Id = assessment_id,
+                            Component_Id = newNode.Key,
+                            Diagram_Component_Type = newNode.Value.ComponentType,
+                            DrawIO_id = newNode.Value.ID,
+                            label = newNode.Value.ComponentName, 
+                            Layer_Id = lIsNull? null: (int?) layer_id,
+                            Zone_Id = zIsNull? null: (int?) zone_id
+                        });
+                    }
+                    context.SaveChanges();
+
+                 
                     context.FillNetworkDiagramQuestions(assessment_id);
                 }
             }

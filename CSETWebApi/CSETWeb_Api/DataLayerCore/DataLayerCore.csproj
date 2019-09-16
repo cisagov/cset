@@ -191,11 +191,13 @@
     <Compile Include="Model\DEMOGRAPHICS.cs" />
     <Compile Include="Model\DEMOGRAPHICS_ASSET_VALUES.cs" />
     <Compile Include="Model\DEMOGRAPHICS_SIZE.cs" />
+    <Compile Include="Model\DIAGRAM_LAYERS.cs" />
     <Compile Include="Model\DIAGRAM_MARKUP.cs" />
     <Compile Include="Model\DIAGRAM_OBJECT_TYPES.cs" />
     <Compile Include="Model\DIAGRAM_TEMPLATES.cs" />
     <Compile Include="Model\DIAGRAM_TYPES.cs" />
     <Compile Include="Model\DIAGRAM_TYPES_XML.cs" />
+    <Compile Include="Model\DIAGRAM_ZONES.cs" />
     <Compile Include="Model\DOCUMENT_ANSWERS.cs" />
     <Compile Include="Model\DOCUMENT_FILE.cs" />
     <Compile Include="Model\EXTRA_ACET_MAPPING.cs" />
