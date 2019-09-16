@@ -1742,6 +1742,7 @@
     <Content Include="Diagram\src\main\webapp\js\app.min.js" />
     <Content Include="Diagram\src\main\webapp\js\atlas-viewer.min.js" />
     <Content Include="Diagram\src\main\webapp\js\atlas.min.js" />
+    <Content Include="Diagram\src\main\webapp\js\diagramly\util\canvg.js" />
     <Content Include="Diagram\src\main\webapp\js\cryptojs\aes.min.js" />
     <Content Include="Diagram\src\main\webapp\js\deflate\base64.js" />
     <Content Include="Diagram\src\main\webapp\js\deflate\pako.min.js" />

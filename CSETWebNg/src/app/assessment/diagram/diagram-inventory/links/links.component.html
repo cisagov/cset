@@ -1,0 +1,89 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="label">Label</th>
+    <th mat-sort-header="subnetName" style="width:15%;">Subnet Name(s)</th>
+    <th mat-sort-header="security" style="width:20%;">Security</th>
+    <th mat-sort-header="layer" style="width:20%;">Layer</th>
+    <th mat-sort-header="visible">Visible</th>
+
+    <tr *ngFor="let link of links; let i = index">
+        <td>{{link.label}}</td>
+        <td>{{link.subnetName}}</td>
+        <td><select [(ngModel)]="link.security" class="form-control override-select"
+          (change)="submit(link.tag, link.security);">
+          <option [ngValue]="Trusted">Trusted</option>
+          <option [ngValue]="Untrusted">Untrusted</option>
+        </select></td>
+        <td>{{link.layer}}</td>
+        <td>
+            <input type="checkbox" class="mt-1"
+            [checked]="component.visible" (change)="submit(component.tag, component.visible)"> 
+        </td>
+    </tr>
+</table>
+<!-- 
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="label">
+      <th mat-header-cell *matHeaderCellDef> Label </th>
+      <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+    </ng-container>
+    <ng-container matColumnDef="subnetName">
+      <th mat-header-cell *matHeaderCellDef> Subnet Name(s) </th>
+      <td mat-cell *matCellDef="let element"> {{element.subnetName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="security">
+      <th mat-header-cell *matHeaderCellDef> Security </th>
+      <td mat-cell *matCellDef="let element"> 
+          <select [(ngModel)]="element.sal" class="form-control override-select"
+          (change)="submit(element.tag, element.security);">
+          <option [ngValue]="Trusted">Trusted</option>
+          <option [ngValue]="Untrusted">Untrusted</option>
+        </select>
+       </td>
+    </ng-container>
+    <ng-container matColumnDef="layer">
+      <th mat-header-cell *matHeaderCellDef> Layer </th>
+      <td mat-cell *matCellDef="let element"> {{element.layer}} </td>
+    </ng-container>
+    <ng-container matColumnDef="headLineDecorator">
+      <th mat-header-cell *matHeaderCellDef> Head Line Decorator </th>
+      <td mat-cell *matCellDef="let element"> {{element.headLineDecorator}} </td>
+    </ng-container>
+    <ng-container matColumnDef="tailLineDecorator">
+      <th mat-header-cell *matHeaderCellDef> Tail Line Decorator </th>
+      <td mat-cell *matCellDef="let element"> {{element.tailLineDecorator}} </td>
+    </ng-container>
+    <ng-container matColumnDef="lineType">
+      <th mat-header-cell *matHeaderCellDef> Line Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.lineType}} </td>
+    </ng-container>
+    <ng-container matColumnDef="thickness">
+      <th mat-header-cell *matHeaderCellDef> Thickness </th>
+      <td mat-cell *matCellDef="let element"> {{element.thickness}} </td>
+    </ng-container>
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef> color </th>
+      <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+    </ng-container>
+    <ng-container matColumnDef="linkType">
+      <th mat-header-cell *matHeaderCellDef> Link Type </th>
+      <td mat-cell *matCellDef="let element"> 
+          <select [(ngModel)]="element.linkType" class="form-control override-select"
+          (change)="submit(element.tag, element.linkType);">
+          <option value="Cellular Backhaul">Cellular Backhaul</option>
+          <option value="Fiber">Fiber</option>
+          <option value="Leased Line">Leased Line</option>
+          <option value="Microwave">Microwave</option>
+          <option value="None">None</option>
+        </select>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="visible">
+      <th mat-header-cell *matHeaderCellDef> Visible </th>
+      <td mat-cell *matCellDef="let element">  <input type="checkbox" class="mt-1"
+        [checked]="element.visible" (change)="submit(element.tag, element.visible)"> </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+ -->

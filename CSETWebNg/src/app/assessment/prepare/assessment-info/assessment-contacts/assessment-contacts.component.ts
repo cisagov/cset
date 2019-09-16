@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChildren } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
 import { ConfirmComponent } from "../../../../dialogs/confirm/confirm.component";
@@ -33,12 +33,13 @@ import { AuthenticationService } from "../../../../services/authentication.servi
 import { ConfigService } from "../../../../services/config.service";
 import { EmailService } from "../../../../services/email.service";
 import { EditableUser } from "../../../../models/editable-user.model";
+import { ContactItemComponent } from "./contact-item/contact-item.component";
 
 @Component({
   selector: "app-assessment-contacts",
   templateUrl: "./assessment-contacts.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentContactsComponent implements OnInit {
   contacts: EditableUser[] = [];
@@ -47,13 +48,17 @@ export class AssessmentContactsComponent implements OnInit {
   userEmail: string;
   adding: boolean = false;
 
+  // all child contact item components
+  @ViewChildren(ContactItemComponent) contactItems: ContactItemComponent[];
+
+
   constructor(
     private configSvc: ConfigService,
     private assessSvc: AssessmentService,
     private emailSvc: EmailService,
     private auth: AuthenticationService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.assessSvc.id()) {
@@ -87,8 +92,15 @@ export class AssessmentContactsComponent implements OnInit {
     return false;
   }
 
+  /**
+   * User just clicked 'add contact'
+   */
   newContact() {
     this.adding = true;
+
+    // disable the existing contacts' controls while in add/edit mode
+    this.contactItems.forEach(x => x.enableMyControls = false);
+
     this.contacts.push(
       new EditableUser({
         AssessmentRoleId: 1
@@ -96,6 +108,9 @@ export class AssessmentContactsComponent implements OnInit {
     );
   }
 
+  /**
+   * User just clicked 'Save' in the add/edit dialog area
+   */
   createContact(contact: EditableUser) {
     this.contacts[this.contacts.length - 1] = contact;
 
@@ -117,9 +132,19 @@ export class AssessmentContactsComponent implements OnInit {
       }
     );
     this.adding = false;
+
+    // done adding - show the contacts' controls
+    this.contactItems.forEach(x => x.enableMyControls = true);
   }
-  removeContact(contact: User, indx: number) {
-    if (this.adding) {
+
+  /**
+   * This fires when the user clicks the trashcan icon of an existing contact
+   * or cancels out of the add dialog.
+   */
+  removeContact(contact: EditableUser, indx: number) {
+    this.contactItems.forEach(x => x.enableMyControls = true);
+
+    if (this.adding && contact.IsNew) {
       this.contacts.splice(indx, 1);
       this.adding = false;
       return;
@@ -131,7 +156,7 @@ export class AssessmentContactsComponent implements OnInit {
     ) {
       this.dropContact(contact);
       return;
-  }
+    }
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
@@ -148,6 +173,24 @@ export class AssessmentContactsComponent implements OnInit {
     });
   }
 
+  /**
+   * Fires when the user clicks 'change' on one of the children contact items.
+   */
+  startEdit() {
+    // disable the existing contacts' controls while in add/edit mode
+    this.contactItems.forEach(x => x.enableMyControls = false);
+  }
+
+  /**
+   * Fires when an edit of one of the children contact items is abandoned.
+   */
+  abandonEdit() {
+    this.contactItems.forEach(x => x.enableMyControls = true);
+  }
+
+  /**
+   * Fires when a contact's edit is complete.
+   */
   editContact(contact: User) {
     this.assessSvc.updateContact(contact).subscribe();
   }
@@ -159,7 +202,7 @@ export class AssessmentContactsComponent implements OnInit {
     );
     // zero on the assessement_id implies the current assessment
     this.assessSvc.removeContact(contact.UserId, 0).subscribe(
-      (response: { ContactList: User[] }) => {},
+      (response: { ContactList: User[] }) => { },
       error => {
         this.dialog
           .open(AlertComponent, { data: "Error removing assessment contact" })
