@@ -7,6 +7,7 @@
  * 
  */
 
+
 /**
  * A collection of CSET-specific utilities and functionality.
  */
@@ -60,21 +61,79 @@ CsetUtils.adjustConnectability = function (edit)
  */
 CsetUtils.PersistGraphToCSET = function (editor)
 {
-    var jwt = localStorage.getItem('jwt');
     var enc = new mxCodec();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
     var sXML = oSerializer.serializeToString(node);
 
+    var selectionEmpty = editor.graph.isSelectionEmpty();
+    var ignoreSelection = selectionEmpty;
+    var bg = '#ffffff';
+
     var req = {};
     req.DiagramXml = sXML;
     req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
 
-    if (sXML == EditorUi.prototype.emptyDiagramXml)
-    {
-        // debugger;
-    }
 
+    // include the SVG
+    var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    svgRoot = new XMLSerializer().serializeToString(svgRoot);
+
+    req.DiagramSvg = svgRoot;
+    CsetUtils.saveDiagram(req);
+
+
+
+
+
+    // --------- Build network diagram PNG ------------------------------------------------
+    //var selectionEmpty = editor.graph.isSelectionEmpty();
+    //var ignoreSelection = selectionEmpty;
+    //var bg = '#ffffff';
+
+    //var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    //svgRoot = new XMLSerializer().serializeToString(svgRoot);
+    //svgRoot = svgRoot.replace(/image=img\/cset\//g, 'image=http://localhost:46000/diagram/src/main/webapp/img/cset/');
+
+
+    //console.log(svgRoot);
+
+
+
+
+    //var image = new Image();
+    
+    //image.onload = function ()
+    //{
+    //    var canvas = document.createElement('canvas');
+    //    canvas.width = image.width;
+    //    canvas.height = image.height;
+    //    var context = canvas.getContext('2d');
+    //    context.drawImage(image, 0, 0);
+
+    //    var a = document.createElement('a');
+    //    a.download = "image.png";
+    //    a.href = canvas.toDataURL('image/png');
+    //    //document.body.appendChild(a);
+    //    //a.click();
+
+
+    //    req.DiagramSvg = canvas.toDataURL('image/png');
+    //    CsetUtils.saveDiagram(req);
+    //}
+
+    //image.src = 'data:image/svg+xml;base64,' + window.btoa(svgRoot);
+
+}
+
+
+/**
+ * Posts the diagram and supporting information to the API.
+ * @param {any} req
+ */
+CsetUtils.saveDiagram = function (req)
+{
+    var jwt = localStorage.getItem('jwt');
     var url = localStorage.getItem('cset.host') + 'diagram/save';
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function ()
@@ -93,6 +152,7 @@ CsetUtils.PersistGraphToCSET = function (editor)
     xhr.setRequestHeader('Authorization', jwt);
     xhr.send(JSON.stringify(req));
 }
+
 
 
 /**
@@ -181,7 +241,7 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-        
+
         x.initZone();
     });
     graph.refresh();

@@ -56,7 +56,7 @@ export class StandardsRankedComponent implements OnInit {
     this.dataRows.map(r => {
       r.percent = parseFloat(r.percent).toFixed(2);
     });
-    this.chart = new Chart('stdRankCanvas', {
+    this.chart = new Chart('canvasStandardRank', {
       type: 'horizontalBar',
       data: {
         labels: x.Labels,
