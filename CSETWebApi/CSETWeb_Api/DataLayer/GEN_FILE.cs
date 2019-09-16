@@ -23,8 +23,10 @@ namespace DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GEN_FILE()
         {
+            this.FILE_KEYWORDS = new HashSet<FILE_KEYWORDS>();
             this.REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             this.REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
+            this.SET_FILES = new HashSet<SET_FILES>();
             this.REF_LIBRARY_PATH = new HashSet<REF_LIBRARY_PATH>();
             this.SET_FILES = new HashSet<SET_FILES>();
         }
@@ -46,6 +48,8 @@ namespace DataLayer
         public byte[] Data { get; set; }
         public Nullable<bool> Is_Uploaded { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual FILE_REF_KEYS FILE_REF_KEYS { get; set; }
         public virtual FILE_TYPE FILE_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,8 +57,8 @@ namespace DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SET_FILES> SET_FILES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
     }
 }

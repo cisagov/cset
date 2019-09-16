@@ -48,7 +48,7 @@ namespace CSETWeb_Api.Controllers
                 
                 DiagramAnalysis analysis = new DiagramAnalysis(db);
                 analysis.PerformAnalysis(xDoc);
-                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber);
+                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
                 return analysis.NetworkWarnings;
             }
         }
@@ -92,8 +92,11 @@ namespace CSETWeb_Api.Controllers
         public string GetDiagramImage()
         {
             int assessmentId = Auth.AssessmentForUser();
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            return dm.GetDiagramImage(assessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return dm.GetDiagramImage(assessmentId);
+            }
         }
 
 

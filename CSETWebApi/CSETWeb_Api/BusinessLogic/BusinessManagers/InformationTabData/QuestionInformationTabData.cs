@@ -428,6 +428,11 @@ namespace CSET_Main.Questions.InformationTabData
             }
         }
 
+        /// <summary>
+        /// Returns a list of physical files in the Documents folder.
+        /// Some installations may not have documents installed to reduce installation overhead.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetBuildDocuments()
         {
             var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documents");

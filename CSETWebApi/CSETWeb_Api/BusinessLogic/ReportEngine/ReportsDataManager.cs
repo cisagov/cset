@@ -8,6 +8,7 @@ using BusinessLogic.Helpers;
 using CSET_Main.Analysis.Analyzers;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Controllers;
+using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
@@ -15,7 +16,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
+using DataLayerCore.Manual;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -103,6 +104,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 }
             }
             return controls;
+        }
+
+        public List<usp_getFinancialQuestions_Result> getFinancialQuestions()
+        {
+            using(var db = new CSET_Context())
+            {
+                return db.usp_getFinancialQuestions(_assessmentId).ToList();
+            }            
         }
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
@@ -498,7 +507,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 // Primary Assessor
                 var user = db.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
-                info.Assessor_Name = user != null ? $"{user.FirstName} {user.LastName}" : string.Empty;
+                info.Assessor_Name = user != null ? Utilities.FormatName(user.FirstName, user.LastName) : string.Empty;
 
 
                 // Other Contacts
@@ -510,7 +519,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     .ToList();
                 foreach (var c in contacts)
                 {
-                    info.Additional_Contacts.Add($"{c.FirstName} {c.LastName}");
+                    info.Additional_Contacts.Add(Utilities.FormatName(c.FirstName, c.LastName));
                 }
 
 
@@ -555,7 +564,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                         individual = new Individual()
                         {
                             Findings = new List<Findings>(),
-                            INDIVIDUALFULLNAME = f.d.FirstName + " " + f.d.LastName
+                            INDIVIDUALFULLNAME = Utilities.FormatName(f.d.FirstName, f.d.LastName)
                         };
                         list.Add(individual);
                     }
@@ -567,7 +576,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                     var othersList = (from a in f.b.FINDING_CONTACT
                                       join b in db.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
-                                      select b.FirstName + " " + b.LastName).ToList();
+                                      select Utilities.FormatName(b.FirstName, b.LastName)).ToList();
                     rfind.OtherContacts = string.Join(",", othersList);
                     individual.Findings.Add(rfind);
 
