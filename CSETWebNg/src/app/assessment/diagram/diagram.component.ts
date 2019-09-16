@@ -26,8 +26,8 @@ export class DiagramComponent implements OnInit {
         this.populateTree();
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.buttonText = resp ? this.msgDiagramExists : this.msgNoDiagramExists;
-          });
-        this.assessSvc.currentTab = "diagram"
+        });
+        this.assessSvc.currentTab = "diagram";
     }
 
     populateTree() {
