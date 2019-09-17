@@ -4503,4 +4503,7 @@
     <Copy SourceFiles="Web.temp.config" DestinationFiles="Web.config" OverwriteReadOnlyFiles="True" />
     <Delete Files="Web.temp.config" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>call $(ProjectDir)Diagram\etc\build\build.bat</PostBuildEvent>
+  </PropertyGroup>
 </Project>
