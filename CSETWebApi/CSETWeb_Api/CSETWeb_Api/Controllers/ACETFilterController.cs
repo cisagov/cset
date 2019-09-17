@@ -1,35 +1,51 @@
 ﻿using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace CSETWeb_Api.Controllers
 {
-    [CSETAuthorize]
+    
     public class ACETFilterController : ApiController
     {
         [HttpGet]
         [Route("api/IsAcetOnly")]
         public bool getAcetOnly()
         {
-            int assessment_id = Auth.AssessmentForUser();
+            //if the appcode is null throw an exception
+            //if it is not null return the default for the app
+            
             using(var db= new CSET_Context())
             {
                 TokenManager tm = new TokenManager();
                 string app_code = tm.Payload(Constants.Token_Scope);
-
+                if (app_code == null)
+                {
+                    string ConnectionString = ((DbContext)db).Database.GetDbConnection().ConnectionString;
+                    return ConnectionString.Contains("NCUAWeb");
+                }
+                try
+                {
+                    int assessment_id = Auth.AssessmentForUser();
                 var ar = db.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
                 bool defaultAcet = (app_code == "ACET");
-                return ar.IsAcetOnly??defaultAcet;                 
+                    return ar.IsAcetOnly ?? defaultAcet;
+                }catch(Exception e)
+                {
+                    return (app_code == "ACET");
+                }
             }
         }
 
+        [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveIsAcetOnly")]
         public void SaveACETFilters([FromBody] bool value)
@@ -46,6 +62,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        
         [HttpGet]
         [Route("api/ACETDomains")]
         public List<ACETDomain> getAcetDomains()
@@ -66,7 +83,9 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
         /// <returns></returns>
+        [CSETAuthorize]
         [HttpGet]
         [Route("api/GetAcetFilters")]
         public List<ACETFilter> GetACETFilters()
@@ -91,6 +110,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilter")]
         public void SaveACETFilters([FromBody] ACETFilterValue filterValue)
@@ -160,7 +180,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
-
+        [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilters")]
         public void SaveACETFilters([FromBody] List<ACETFilter> filters)
@@ -169,7 +189,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 Dictionary<string, int> domainIds = context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
-                foreach(ACETFilter f in filters)
+                foreach(ACETFilter f in filters.Where(x => x.DomainName != null).ToList())
                 {
                     int domainId = domainIds[f.DomainName];
                     var filter =  context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -193,6 +213,21 @@ namespace CSETWeb_Api.Controllers
                     }
                 }
                 context.SaveChanges();            
+            }
+        }
+
+        /// <summary>
+        /// Removes all maturity filters for the current assessment.
+        /// </summary>
+        [CSETAuthorize]
+        public void ResetAllAcetFilters()
+        {
+            int assessmentID = Auth.AssessmentForUser();
+            using (CSET_Context context = new CSET_Context())
+            {
+                var filters = context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToList();
+                context.FINANCIAL_DOMAIN_FILTERS.RemoveRange(filters);
+                context.SaveChanges();
             }
         }
     }

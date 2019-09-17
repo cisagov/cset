@@ -8,12 +8,16 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 
+
 namespace CSETWeb_Api.Controllers
 {
     [CSETAuthorize]
     public class MaturityController : ApiController
     {
-
+        /// <summary>
+        /// Get maturity calculations
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityResults")]
         public IHttpActionResult GetMaturityResults()

@@ -23,42 +23,6 @@ namespace CSETWeb_Api.Controllers
     public class ReportsController : ApiController
     {
         [HttpGet]
-        [Route("api/reports/executive")]
-        public BasicReportData getExecutive()
-        {
-            int assessmentId = Auth.AssessmentForUser();
-
-            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            BasicReportData data = new BasicReportData();
-            data.information = reportsDataManager.GetInformation();
-            data.top5Categories = reportsDataManager.GetTop5Categories();
-            data.top5Questions = reportsDataManager.GetTop5Questions();
-            return data;
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/sitesummary")]
-        public BasicReportData getSiteSummary()
-        {
-            int assessmentId = Auth.AssessmentForUser();
-
-            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            BasicReportData data = new BasicReportData();
-            data.genSalTable = reportsDataManager.GetGenSals();
-            data.information = reportsDataManager.GetInformation();
-            data.salTable = reportsDataManager.GetSals();
-            data.nistTypes = reportsDataManager.GetNistInfoTypes();
-            data.nistSalTable = reportsDataManager.GetNistSals();
-            data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
-            data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
-            return data;
-        }
-
-
-        [HttpGet]
         [Route("api/reports/securityplan")]
         public BasicReportData getSecurityPlan()
         {
@@ -76,6 +40,53 @@ namespace CSETWeb_Api.Controllers
             
         }
 
+        [HttpGet]
+        [Route("api/reports/executive")]
+        public BasicReportData getExecutive()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = reportsDataManager.GetInformation();
+            data.top5Categories = reportsDataManager.GetTop5Categories();
+            data.top5Questions = reportsDataManager.GetTop5Questions();
+            return data;
+        }
+
+        [HttpGet]
+        [Route("api/reports/discoveries")]
+        public BasicReportData getDiscoveries()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = reportsDataManager.GetInformation();
+            data.Individuals = reportsDataManager.GetFindingIndividuals();
+            return data;
+        }
+
+        [HttpGet]
+        [Route("api/reports/sitesummary")]
+        public BasicReportData getSiteSummary()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.genSalTable = reportsDataManager.GetGenSals();
+            data.information = reportsDataManager.GetInformation();
+            data.salTable = reportsDataManager.GetSals();
+            data.nistTypes = reportsDataManager.GetNistInfoTypes();
+            data.nistSalTable = reportsDataManager.GetNistSals();
+            data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
+            data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
+            data.FinancialQuestionsTable = reportsDataManager.getFinancialQuestions();
+            data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
+            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
+            return data;
+        }
 
         [HttpGet]
         [Route("api/reports/detail")]
@@ -95,24 +106,8 @@ namespace CSETWeb_Api.Controllers
             data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
-            data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
             return data;
         }
-
-
-        [HttpGet]
-        [Route("api/reports/discoveries")]
-        public BasicReportData getDiscoveries()
-        {
-            int assessmentId = Auth.AssessmentForUser();
-
-            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            BasicReportData data = new BasicReportData();
-            data.information = reportsDataManager.GetInformation();
-            data.Individuals = reportsDataManager.GetFindingIndividuals();
-            return data;
-        }
-
 
         protected string GetApplicationMode(int assessmentId)
         {
@@ -130,7 +125,6 @@ namespace CSETWeb_Api.Controllers
                 return mode;
             }
         }
-
 
         private void SetMode(string mode)
         { 
