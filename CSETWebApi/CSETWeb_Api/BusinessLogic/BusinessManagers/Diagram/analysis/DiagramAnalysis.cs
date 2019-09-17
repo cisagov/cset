@@ -70,7 +70,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 layers.Add(id, new NetworkLayer()
                 {
                     ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : "Background",
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : "Main Layer",
                     Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
                 });
             }
