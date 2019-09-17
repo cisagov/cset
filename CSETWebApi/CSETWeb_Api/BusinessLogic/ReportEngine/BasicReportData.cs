@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Snickler.EFCore;
 
@@ -33,6 +34,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<QuestionsWithAlternateJustifi> QuestionsWithAlternateJustifi { get; set; }
         public List<RankedQuestions> top5Questions { get; set; }
         public List<StandardQuestions> StandardsQuestions { get; set; }
+        public List<usp_getFinancialQuestions_Result> FinancialQuestionsTable { get; set; }
         public List<ComponentQuestion> ComponentQuestions { get; set; }
 
         public class INFORMATION

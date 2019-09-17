@@ -18,12 +18,19 @@ namespace CSETWeb_Api.BusinessManagers
 {
     public class DiagramManager
     {
+        private CSET_Context db;
+
+        public DiagramManager(CSET_Context db)
+        {
+            this.db = db;
+        }
+
         /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, string diagramXML, int lastUsedComponentNumber, string diagramImage)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, int lastUsedComponentNumber, string diagramImage)
         {
             // the front end sometimes calls 'save' with an empty graph on open.  
             // Need to prevent the javascript from doing that on open, but for now,
@@ -59,6 +66,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
+                String diagramXML = xDoc.OuterXml;
                 if (!String.IsNullOrWhiteSpace(diagramXML))
                 {
                     assessmentRecord.Diagram_Markup = diagramXML;
@@ -67,9 +75,8 @@ namespace CSETWeb_Api.BusinessManagers
 
                 db.SaveChanges();
             }
-
-            //DiagramAnalysis analysis = new DiagramAnalysis();
-            //analysis.PerformAnalysis(xDoc);
+            
+         
         }
 
 
@@ -80,8 +87,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public DiagramResponse GetDiagram(int assessmentID)
         {
-            using (var db = new CSET_Context())
-            {
+           
                 var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
                 DiagramResponse resp = new DiagramResponse();
@@ -93,8 +99,7 @@ namespace CSETWeb_Api.BusinessManagers
                     return resp;
                 }
 
-                return null;
-            }
+                return null;           
         }
 
 
