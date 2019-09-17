@@ -13,5 +13,11 @@ namespace CSETWeb_Api.BusinessManagers
         public string ComponentName { get; internal set; }
         public NetworkGeometry Geometry { get; internal set; }
         public string LayerId { get; internal set; }
+        public string Parent_id { get; internal set; }
+        /// <summary>
+        /// This can be either a Layer or zone change.  Components in a zone 
+        /// have a different parent then their layer.
+        /// </summary>
+        public bool ParentChanged { get; internal set; }
     }
 }
