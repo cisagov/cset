@@ -51,11 +51,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
+            
+            newDiagram.OldParentIds = getParentIdsDictionary(oldDiagramDocument.SelectNodes("/mxGraphModel/root/object"));
             newDiagram.NetworkComponents = ProcessDiagram(newDiagramDocument);
             oldDiagram.NetworkComponents = ProcessDiagram(oldDiagramDocument);
             findLayersAndZones(newDiagramDocument, newDiagram);
             findLayersAndZones(oldDiagramDocument, oldDiagram);
+            processNodeParentChanges(newDiagram);
         }
+
+   
 
         public void SaveDifferences(int assessment_id)
         {
@@ -106,23 +111,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     context.SaveChanges();
                     foreach(var layer in differences.AddedLayers)
                     {
-                        context.DIAGRAM_LAYERS.Add(new DIAGRAM_LAYERS()
+                        var l = context.DIAGRAM_LAYERS.Where(x => x.DrawIO_id == layer.Key).FirstOrDefault();
+                        if (l == null) {
+                            context.DIAGRAM_LAYERS.Add(new DIAGRAM_LAYERS()
+                             {
+                                 Assessment_Id = assessment_id,
+                                 DrawIO_id = layer.Key,
+                                 Layer_Name = layer.Value.LayerName,
+                                 Visible = layer.Value.Visible
+                             });
+                        }
+                        else
                         {
-                            Assessment_Id = assessment_id,
-                            DrawIO_id = layer.Key,
-                            Layer_Name = layer.Value.LayerName,
-                            Visible = layer.Value.Visible
-                        });
+                            l.Layer_Name = layer.Value.LayerName;
+                            l.Visible = layer.Value.Visible;
+
+                        }
                     }
                     foreach (var zone in differences.AddedZones)
                     {
-                        context.DIAGRAM_ZONES.Add(new DIAGRAM_ZONES()
+                        var z = context.DIAGRAM_ZONES.Where(x => x.DrawIO_id == zone.Key).FirstOrDefault();
+                        if (z == null)
                         {
-                            Assessment_Id = assessment_id,
-                            DrawIO_id = zone.Key,
-                            Zone_Name = zone.Value.ComponentName,
-                            Universal_Sal_Level = zone.Value.SAL
-                        });
+                            context.DIAGRAM_ZONES.Add(new DIAGRAM_ZONES()
+                            {
+                                Assessment_Id = assessment_id,
+                                DrawIO_id = zone.Key,
+                                Zone_Name = zone.Value.ComponentName,
+                                Universal_Sal_Level = zone.Value.SAL
+                            });
+                        }
+                        else
+                        {
+                            z.Universal_Sal_Level = zone.Value.SAL;
+                            z.Zone_Name = zone.Value.ComponentName;                            
+                        }
                     }
                     context.SaveChanges();
 
@@ -150,9 +173,32 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     }
                     context.SaveChanges();
 
-                 
+                    foreach(var node in newDiagram.getParentChanges())
+                    {
+                        //find the new parent zone or layer and set it
+                        var n = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.DrawIO_id == node.ID).FirstOrDefault();
+                        if (n != null)
+                        {
+                            //try zone first if it is zone then the component gets the zone's layer
+                            //then try layer
+                            //then assume we are broken
+                            int parent_id; 
+                            if(zlookup.TryGetValue(n.DrawIO_id,out parent_id))
+                            {
+                                n.Zone_Id = parent_id;
+                                n.Layer_Id = context.DIAGRAM_ZONES.Where(x=> x.Zone_Id == parent_id).First().
+                            }
+
+                        }
+                        
+                    }
+
                     context.FillNetworkDiagramQuestions(assessment_id);
                 }
+            }
+            catch(Exception e)
+            {
+                throw e;
             }
             finally
             {
@@ -191,14 +237,67 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     ID = id,
                     LayerId = layerid,
                     ZoneType = zone.Attributes["zoneType"].Value,
-                    SAL = zone.Attributes["SAL"].Value
+                    SAL = zone.Attributes["SAL"].Value,
+                    ComponentName = zone.Attributes["label"].Value
                 });
                 XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[(@parent=\""+id+"\")]");
-                Dictionary<Guid, NetworkComponent> zoneComponents = processNodes(objectNodes);
-                foreach (NetworkComponent c in zoneComponents.Values)
-                    diagram.Zones[id].ContainingComponents.Add(c);
+                //Dictionary<Guid, NetworkComponent> zoneComponents = processNodes(objectNodes);
+                //foreach (NetworkComponent c in zoneComponents.Values)
+                //    diagram.Zones[id].ContainingComponents.Add(c);
             }            
         }
+
+        
+
+        /**
+         * Before processing the network nodes get a list of all the previous dictionary
+         * id's if the parent id has changed then mark this as having moved. 
+         * The moved items will need to be connected to their new parents once 
+         * all of the layers and zones have been created and dealt with.
+         */
+        private Dictionary<string, string> getParentIdsDictionary(XmlNodeList cells)
+        {
+            Dictionary<string, string> nodesList = new Dictionary<string,string>();
+            foreach (var c in cells)
+            {
+                var cell = (XmlElement)c;
+                if (cell.HasAttribute("id"))
+                {
+                    string id = cell.GetAttribute("id");
+                    string parent_id = GetParentId(cell);
+                    nodesList.Add(id,parent_id);
+                }
+            }
+            return nodesList;
+        }
+
+        private void processNodeParentChanges(Diagram newDiagram)
+        {
+            IdentifyComponentLayerZoneChanges(newDiagram.NetworkComponents.Cast<NetworkNode>().ToList(), newDiagram.OldParentIds);
+            IdentifyComponentLayerZoneChanges(newDiagram.Zones.Cast<NetworkNode>().ToList(), newDiagram.OldParentIds);
+        }
+
+
+        /// <summary>
+        /// this needs to be all zones and components
+        /// </summary>
+        /// <param name="nodesList"></param>
+        private void IdentifyComponentLayerZoneChanges(List<NetworkNode> nodesList, Dictionary<string, string> parents)
+        {
+            foreach (var c in nodesList)
+            {
+                string oldParent;
+                if (parents.TryGetValue(c.ID, out oldParent))
+                {
+                    c.ParentChanged = c.Parent_id != oldParent;
+                }
+                else
+                {
+                    c.ParentChanged = true;
+                }
+            }
+        }
+
 
         private Dictionary<Guid, NetworkComponent> processNodes(XmlNodeList cells)
         {
@@ -215,6 +314,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         cn.setValue(a.Name, a.Value);
                     }
 
+                    cn.Parent_id = GetParentId(cell);
+
                     // determine the component type
                     string ctype = GetComponentType(cell);
                     if(ctype!=null)
@@ -226,6 +327,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             return nodesList;
         }
 
+        private string GetParentId(XmlElement cell)
+        {
+            var mxCell = cell.SelectSingleNode("mxCell");
+            if (mxCell == null)
+            {
+                return null;
+            }
+
+            if (mxCell.Attributes["parent"] == null)
+            {
+                return null;
+            }
+            return mxCell.Attributes["parent"].Value;
+        }
 
         private Dictionary<Guid, NetworkComponent> ProcessDiagram(XmlDocument doc)
         {   

@@ -9,11 +9,11 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public List<NetworkComponent> Connections { get; set; }
         public bool IsUnidirectional { get; internal set; }
-        public string Parent_id { get; private set; }
-
+        
         public NetworkComponent()
         {
             Connections = new List<NetworkComponent>();
+            ParentChanged = false;
         }
         internal void AddEdge(NetworkComponent target)
         {

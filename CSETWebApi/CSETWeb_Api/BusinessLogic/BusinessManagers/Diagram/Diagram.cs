@@ -15,6 +15,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         
         public Dictionary<string, NetworkLayer> Layers { get; private set; }
         public Dictionary<string, NetworkZone> Zones { get; private set; }
+        public Dictionary<string, string> OldParentIds { get; internal set; }
 
         public Diagram()
         {
@@ -24,6 +25,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         }
 
-
+        internal IEnumerable<NetworkNode> getParentChanges()
+        {
+            List<NetworkNode> AllChangedNodes = new List<NetworkNode>();
+            AllChangedNodes.AddRange(Zones.Where(x => x.Value.ParentChanged).Cast<NetworkNode>().ToList());
+            AllChangedNodes.AddRange(NetworkComponents.Where(x => x.Value.ParentChanged).Cast<NetworkNode>().ToList());
+            return AllChangedNodes;
+        }
     }
 }
