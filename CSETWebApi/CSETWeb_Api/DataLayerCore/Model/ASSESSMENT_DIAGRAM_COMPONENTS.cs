@@ -23,10 +23,10 @@ namespace DataLayerCore.Model
         public virtual ASSESSMENTS Assessment_ { get; set; }
         public virtual COMPONENT_SYMBOLS Diagram_Component_TypeNavigation { get; set; }
         [ForeignKey("Layer_Id")]
-        [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]
-        public virtual DIAGRAM_LAYERS Layer_ { get; set; }
+        [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTSLayer_")]
+        public virtual DIAGRAM_CONTAINER Layer_ { get; set; }
         [ForeignKey("Zone_Id")]
-        [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]
-        public virtual DIAGRAM_ZONES Zone_ { get; set; }
+        [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTSZone_")]
+        public virtual DIAGRAM_CONTAINER Zone_ { get; set; }
     }
 }

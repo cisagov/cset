@@ -94,71 +94,93 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     }                    
                     foreach(var layer in differences.DeletedLayers)
                     {
-                        var adc = context.DIAGRAM_LAYERS.FirstOrDefault(x=> x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key);
+                        var adc = context.DIAGRAM_CONTAINER.FirstOrDefault(x=> x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key);
                         if (adc != null)
                         {
-                            context.DIAGRAM_LAYERS.Remove(adc);
+                            context.DIAGRAM_CONTAINER.Remove(adc);
                         }
                     }
                     foreach (var zone in differences.DeletedZones)
                     {
-                        var adc = context.DIAGRAM_ZONES.FirstOrDefault(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key);
+                        var adc = context.DIAGRAM_CONTAINER.FirstOrDefault(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key);
                         if (adc != null)
                         {
-                            context.DIAGRAM_ZONES.Remove(adc);
+                            context.DIAGRAM_CONTAINER.Remove(adc);
                         }
                     }
-                    context.SaveChanges();
+                    
                     foreach(var layer in differences.AddedLayers)
                     {
-                        var l = context.DIAGRAM_LAYERS.Where(x => x.DrawIO_id == layer.Key).FirstOrDefault();
+                        var l = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == layer.Key).FirstOrDefault();
                         if (l == null) {
-                            context.DIAGRAM_LAYERS.Add(new DIAGRAM_LAYERS()
+                            context.DIAGRAM_CONTAINER.Add(new DIAGRAM_CONTAINER()
                              {
                                  Assessment_Id = assessment_id,
+                                 ContainerType = "Layer",
                                  DrawIO_id = layer.Key,
-                                 Layer_Name = layer.Value.LayerName,
+                                 Name = layer.Value.LayerName,
                                  Visible = layer.Value.Visible
                              });
                         }
                         else
                         {
-                            l.Layer_Name = layer.Value.LayerName;
+                            l.Name = layer.Value.LayerName;
                             l.Visible = layer.Value.Visible;
 
                         }
                     }
+                    foreach(var layer in newDiagram.Layers)
+                    {
+                        var l = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == layer.Key).FirstOrDefault();
+                        if (l != null)
+                        {
+                            l.Name = layer.Value.LayerName;
+                            l.Visible = layer.Value.Visible;
+                        }
+                    }
+
+                    context.SaveChanges();
+                    Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);                    
                     foreach (var zone in differences.AddedZones)
                     {
-                        var z = context.DIAGRAM_ZONES.Where(x => x.DrawIO_id == zone.Key).FirstOrDefault();
+                        var z = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == zone.Key).FirstOrDefault();
                         if (z == null)
                         {
-                            context.DIAGRAM_ZONES.Add(new DIAGRAM_ZONES()
+                            z = new DIAGRAM_CONTAINER()
                             {
                                 Assessment_Id = assessment_id,
+                                ContainerType = "Zone",
                                 DrawIO_id = zone.Key,
-                                Zone_Name = zone.Value.ComponentName,
-                                Universal_Sal_Level = zone.Value.SAL
-                            });
+                                Name = zone.Value.ComponentName,
+                                Universal_Sal_Level = zone.Value.SAL,
+                                Parent_Id = layerLookup[zone.Value.Parent_id]
+                            };
+                            context.DIAGRAM_CONTAINER.Add(z);
+                            
                         }
                         else
                         {
                             z.Universal_Sal_Level = zone.Value.SAL;
-                            z.Zone_Name = zone.Value.ComponentName;                            
+                            z.Name = zone.Value.ComponentName;                            
                         }
                     }
                     context.SaveChanges();
 
-                    Dictionary<string, int> zlookup = context.DIAGRAM_ZONES.Where(x=> x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Zone_Id);
-                    Dictionary<string, int> layerLookup = context.DIAGRAM_LAYERS.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Layer_Id);
+                    Dictionary<string, int> zLookup = context.DIAGRAM_CONTAINER.Where(x=> x.Assessment_Id == assessment_id && x.ContainerType == "Zone").ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
+                    Dictionary<int, int> containerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.Container_Id, x => x.Parent_Id);
+                    Dictionary<string, int> allItems = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
+
 
 
                     foreach (var newNode in differences.AddedNodes)
                     {
-                        int zone_id, layer_id;
-                        bool zIsNull, lIsNull = false;
-                        zIsNull = !zlookup.TryGetValue(newNode.Value.Parent_id, out zone_id);
-                        lIsNull = !layerLookup.TryGetValue(newNode.Value.Parent_id, out layer_id);
+                        int zone_id, layer_id =0;
+                        bool zIsNull = false;
+                        zIsNull = !zLookup.TryGetValue(newNode.Value.Parent_id, out zone_id);
+
+                        //recurse through them all until the parent is 0
+                        layer_id = GetLayerId(newNode.Value.Parent_id, newNode.Value.ID, allItems, containerLookup);
+                        
 
                         context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
                         {
@@ -167,7 +189,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                             Diagram_Component_Type = newNode.Value.ComponentType,
                             DrawIO_id = newNode.Value.ID,
                             label = newNode.Value.ComponentName, 
-                            Layer_Id = lIsNull? null: (int?) layer_id,
+                            Layer_Id = (int?) layer_id,
                             Zone_Id = zIsNull? null: (int?) zone_id
                         });
                     }
@@ -175,24 +197,37 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
                     foreach(var node in newDiagram.getParentChanges())
                     {
+
                         //find the new parent zone or layer and set it
                         var n = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.DrawIO_id == node.ID).FirstOrDefault();
                         if (n != null)
                         {
+
+                            int layer_id = GetLayerId(node.Parent_id, node.ID, allItems, containerLookup);
                             //try zone first if it is zone then the component gets the zone's layer
                             //then try layer
                             //then assume we are broken
                             int parent_id; 
-                            if(zlookup.TryGetValue(n.DrawIO_id,out parent_id))
+                            if(zLookup.TryGetValue(node.Parent_id,out parent_id))
                             {
                                 n.Zone_Id = parent_id;
-                                n.Layer_Id = context.DIAGRAM_ZONES.Where(x=> x.Zone_Id == parent_id).First().
+                                n.Layer_Id = layer_id;
                             }
-
-                        }
-                        
+                            else
+                            {
+                                n.Layer_Id = layer_id;
+                            }
+                        }                        
                     }
-
+                    foreach (var node in newDiagram.getParentChangesZones())
+                    {
+                        //find the new parent zone or layer and set it
+                        var n = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == node.ID).FirstOrDefault();
+                        if (n != null)
+                        {   
+                            n.Parent_Id = allItems[node.Parent_id];
+                        }
+                    }
                     context.FillNetworkDiagramQuestions(assessment_id);
                 }
             }
@@ -205,6 +240,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 System.Threading.Monitor.Exit(_object);
             }
         }
+
+        private int GetLayerId(string Parent_id, String ID, Dictionary<string,int> allItems, Dictionary<int,int> containerLookup)
+        {
+            int nextcomp, layer_id = 0;
+            bool zIsNull = false;
+            //recurse through them all until the parent is 0
+            allItems.TryGetValue(Parent_id, out nextcomp);
+            allItems.TryGetValue(ID, out layer_id);
+            while (nextcomp != 0)
+            {
+                layer_id = nextcomp;
+                containerLookup.TryGetValue(nextcomp, out nextcomp);
+            }
+            return layer_id;
+        }
+
 
 
         private void findLayersAndZones(XmlDocument xDoc, Diagram diagram)
@@ -234,8 +285,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 string layerid = zone.FirstChild.Attributes["parent"].Value;
                 diagram.Zones.Add(id, new NetworkZone()
                 {
-                    ID = id,
-                    LayerId = layerid,
+                    ID = id,                    
+                    Parent_id = layerid,
                     ZoneType = zone.Attributes["zoneType"].Value,
                     SAL = zone.Attributes["SAL"].Value,
                     ComponentName = zone.Attributes["label"].Value
@@ -273,8 +324,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         private void processNodeParentChanges(Diagram newDiagram)
         {
-            IdentifyComponentLayerZoneChanges(newDiagram.NetworkComponents.Cast<NetworkNode>().ToList(), newDiagram.OldParentIds);
-            IdentifyComponentLayerZoneChanges(newDiagram.Zones.Cast<NetworkNode>().ToList(), newDiagram.OldParentIds);
+            List<NetworkNode> networkNodes = newDiagram.NetworkComponents.Values.Cast<NetworkNode>().ToList();
+            IdentifyComponentLayerZoneChanges(networkNodes, newDiagram.OldParentIds);
+            IdentifyComponentLayerZoneChanges(newDiagram.Zones.Values.Cast<NetworkNode>().ToList(), newDiagram.OldParentIds);
         }
 
 

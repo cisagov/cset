@@ -25,12 +25,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         }
 
-        internal IEnumerable<NetworkNode> getParentChanges()
+        internal IEnumerable<NetworkComponent> getParentChanges()
+        {   
+           return NetworkComponents.Values.Where(x => x.ParentChanged);
+        }
+
+        internal IEnumerable<NetworkZone> getParentChangesZones()
         {
-            List<NetworkNode> AllChangedNodes = new List<NetworkNode>();
-            AllChangedNodes.AddRange(Zones.Where(x => x.Value.ParentChanged).Cast<NetworkNode>().ToList());
-            AllChangedNodes.AddRange(NetworkComponents.Where(x => x.Value.ParentChanged).Cast<NetworkNode>().ToList());
-            return AllChangedNodes;
+            return Zones.Values.Where(x => x.ParentChanged).ToList();
         }
     }
 }

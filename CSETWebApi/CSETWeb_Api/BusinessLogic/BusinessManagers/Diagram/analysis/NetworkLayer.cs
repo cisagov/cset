@@ -6,7 +6,7 @@
 //////////////////////////////// 
 namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 {
-    public class NetworkLayer
+    public class NetworkLayer:NetworkNode
     {
         public string ID { get; set; }
         public string LayerName { get; set; }

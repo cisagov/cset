@@ -46,12 +46,12 @@ namespace DataLayerCore.Model
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
-        public virtual DbSet<DIAGRAM_LAYERS> DIAGRAM_LAYERS { get; set; }
+        public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
+        public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES_XML> DIAGRAM_TYPES_XML { get; set; }
-        public virtual DbSet<DIAGRAM_ZONES> DIAGRAM_ZONES { get; set; }
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
@@ -271,9 +271,9 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.CreditUnionName).IsUnicode(false);
 
-                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
-
                 entity.Property(e => e.Diagram_Image).IsUnicode(false);
+
+                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
 
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
 
@@ -292,7 +292,7 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Answer)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('N')");
+                    .HasDefaultValueSql("('U')");
 
                 entity.Property(e => e.Comment).IsUnicode(false);
 
@@ -357,16 +357,14 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_COMPONENT_SYMBOLS");
 
                 entity.HasOne(d => d.Layer_)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSLayer_)
                     .HasForeignKey(d => d.Layer_Id)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_LAYERS");
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER");
 
                 entity.HasOne(d => d.Zone_)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSZone_)
                     .HasForeignKey(d => d.Zone_Id)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_ZONES");
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER1");
             });
 
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
@@ -751,19 +749,38 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Description).IsUnicode(false);
             });
 
-            modelBuilder.Entity<DIAGRAM_LAYERS>(entity =>
+            modelBuilder.Entity<DIAGRAM_CONTAINER>(entity =>
             {
+                entity.Property(e => e.ContainerType).IsUnicode(false);
+
                 entity.Property(e => e.DrawIO_id).IsUnicode(false);
 
-                entity.Property(e => e.Layer_Name).IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
+
+                entity.Property(e => e.Universal_Sal_Level)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('L')");
 
                 entity.Property(e => e.Visible).HasDefaultValueSql("((1))");
 
-                entity.HasOne(d => d.Assessment_)
-                    .WithMany(p => p.DIAGRAM_LAYERS)
-                    .HasForeignKey(d => d.Assessment_Id)
+                entity.HasOne(d => d.ContainerTypeNavigation)
+                    .WithMany(p => p.DIAGRAM_CONTAINER)
+                    .HasForeignKey(d => d.ContainerType)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DIAGRAM_LAYERS_ASSESSMENTS");
+                    .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER_TYPES");
+
+                entity.HasOne(d => d.Parent_)
+                    .WithMany(p => p.InverseParent_)
+                    .HasForeignKey(d => d.Parent_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER");
+            });
+
+            modelBuilder.Entity<DIAGRAM_CONTAINER_TYPES>(entity =>
+            {
+                entity.Property(e => e.ContainerType)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<DIAGRAM_OBJECT_TYPES>(entity =>
@@ -811,23 +828,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Diagram_Type_XML)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<DIAGRAM_ZONES>(entity =>
-            {
-                entity.Property(e => e.DrawIO_id).IsUnicode(false);
-
-                entity.Property(e => e.Universal_Sal_Level)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('L')");
-
-                entity.Property(e => e.Zone_Name).IsUnicode(false);
-
-                entity.HasOne(d => d.Assessment_)
-                    .WithMany(p => p.DIAGRAM_ZONES)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DIAGRAM_ZONES_ASSESSMENTS");
             });
 
             modelBuilder.Entity<DOCUMENT_ANSWERS>(entity =>
@@ -2553,7 +2553,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.UserId)
                     .HasName("PK_USERS_1");
 
-                entity.HasIndex(e => e.UserId)
+                entity.HasIndex(e => e.PrimaryEmail)
                     .HasName("IX_USERS")
                     .IsUnique();
 
