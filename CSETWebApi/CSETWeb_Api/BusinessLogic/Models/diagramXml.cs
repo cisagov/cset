@@ -184,6 +184,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
             get { return this.targetFieldSpecified; }
             set { this.targetFieldSpecified = value; }
         }
+        
+       
     }
 
     /// <remarks/>
@@ -246,6 +248,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         private byte parentField;
 
         private bool parentFieldSpecified;
+
+        private string assetTypeField;
 
         /// <remarks/>
         public mxGraphModelRootObjectMxCell mxCell
@@ -332,6 +336,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
         {
             get { return this.parentFieldSpecified; }
             set { this.parentFieldSpecified = value; }
+        }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public string assetType
+        {
+            get { return this.assetTypeField; }
+            set { this.assetTypeField = value; }
         }
     }
 

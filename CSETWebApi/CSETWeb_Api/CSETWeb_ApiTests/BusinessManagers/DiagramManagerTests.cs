@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWeb_Api.BusinessManagers;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Tests
 {
@@ -18,9 +19,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Tests
             
 
             DiagramManager d = new DiagramManager();
-            FileStream fs = new FileStream(@"c:\Users\KUIPJE\Documents\testdiagram.xml", FileMode.OpenOrCreate);
-            StreamReader reader = new StreamReader(fs);
-            d.ProcessDiagram(reader);
+            //FileStream fs = new FileStream(@"c:\Users\KUIPJE\Documents\testdiagram.xml", FileMode.OpenOrCreate);
+            StringReader reader = new StringReader(test);
+            var vertices = d.ProcessDiagramVertices(reader);
 
         }
 

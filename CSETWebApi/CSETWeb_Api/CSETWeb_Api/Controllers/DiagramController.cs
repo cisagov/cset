@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using System.Xml;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
@@ -160,6 +161,118 @@ namespace CSETWeb_Api.Controllers
         public List<ComponentSymbolGroup> GetComponentSymbols()
         {
             return new DiagramManager().GetComponentSymbols();
-        }       
+        }
+
+        /// <summary>
+        /// Returns list of diagram components
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getComponents")]
+        [HttpGet]
+        public IHttpActionResult GetComponents()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager();
+                var diagramXml = dm.GetDiagramXml((int) assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var components = dm.GetDiagramComponents(vertices);
+                return Ok(components);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No components available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram zones
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getZones")]
+        [HttpGet]
+        public IHttpActionResult GetZones()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager();
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var zones = dm.GetDiagramZones(vertices);
+                return Ok(zones);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No components available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram lines
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getLines")]
+        [HttpGet]
+        public IHttpActionResult getLines()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager();
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var lines = dm.GetDiagramComponents(vertices);
+                return Ok(lines);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No components available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram shapes
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getShapes")]
+        [HttpGet]
+        public IHttpActionResult GetShapes()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager();
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var shapes = dm.GetDiagramShapes(vertices);
+                return Ok(shapes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No components available");
+            }
+            finally
+            {
+            }
+        }
     }
 }

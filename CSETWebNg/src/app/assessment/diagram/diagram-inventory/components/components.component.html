@@ -1,5 +1,5 @@
 <table mat-table matSort class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="tag">Tag</th>
+    <th mat-sort-header="tag">Label</th>
     <th mat-sort-header="hasUniqueQuestions" style="width:15%;">Has Unique Questions</th>
     <th mat-sort-header="sal" style="width:20%;">Sal</th>
     <th mat-sort-header="criticality" style="width:20%;">Criticality</th>
@@ -14,18 +14,11 @@
 
     <tr *ngFor="let component of components; let i = index">
         <td>
-                {{component.tag}}
+                {{component.internalLabelField}}
         </td>
-        <td><input type="checkbox" name="{{ tt.GroupName }}" class="mt-1"
+        <td><input type="checkbox" name="{{ component.label }}" class="mt-1" [disabled]='true'
           [checked]="component.hasUniqueQuestions" (change)="submit(component.tag, component.hasUniqueQuestions)"> </td>
-        <td><select [(ngModel)]="component.sal" class="form-control override-select"
-          (change)="submit(component.tag, component.sal);">
-          <option [ngValue]="none">None</option>
-          <option [ngValue]="L">Low</option>
-          <option [ngValue]="M">Moderate</option>
-          <option [ngValue]="H">High</option>
-          <option [ngValue]="VH">Very High</option>
-        </select></td>
+        <td>{{component.salField}}</td>
         <td> <select [(ngModel)]="component.criticality" class="form-control override-select"
           (change)="submit(component.tag, component.criticality);">
             <option [ngValue]="L">Low</option>
@@ -34,13 +27,13 @@
           </select></td>
         <td>{{component.layer}}</td>
         <td>{{component.ipAddress}}</td>
-        <td>{{component.assetType}}</td>
+        <td>{{component.assetTypeField}}</td>
         <td>{{component.zone}}</td>
         <td>{{component.subnetNames}}</td>
         <td>{{component.description}}</td>
         <td>{{component.hostName}}</td>
         <td>
-            <input type="checkbox" class="mt-1"
+            <input type="checkbox" class="mt-1" [disabled]='true'
             [checked]="component.visible" (change)="submit(component.tag, component.visible)"> 
         </td>
     </tr>
