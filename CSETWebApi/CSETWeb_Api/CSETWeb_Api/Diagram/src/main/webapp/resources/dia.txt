@@ -939,3 +939,4 @@ confALibExist=This library already exists
 confAUploadSucc=Uploaded successfully
 confAUploadFailErr=Upload Failed (Unexpected Error)
 diagramInventory=Diagram Inventory
+analyze=Analyze Network Diagram
