@@ -23,7 +23,6 @@ mxCell.prototype.getCsetAttribute = function (name)
     }
 
     var obj = this.value;
-
     return obj.getAttribute(name);
 }
 
@@ -297,4 +296,38 @@ mxCell.prototype.setStyleValue = function (name, value)
     }
 
     this.setStyle(styleElements.join(';'));
+}
+
+
+/**
+ * 
+ */
+mxCell.prototype.getSAL = function ()
+{
+    if (this.isZone())
+    {
+        return this.getCsetAttribute('SAL');
+    }
+
+    var c = this;
+    while (!isLayer(c) && !c.isZone())
+    {
+        c = c.getParent();
+    }
+
+    return this.getCsetAttribute('SAL');    
+}
+
+
+/**
+ * 
+ */
+isLayer = function (cell)
+{
+    var parent = cell.getParent();
+    if (!!parent && parent.hasOwnProperty('id') && parent.id == 0)
+    {
+        return true;
+    }
+    return false;
 }

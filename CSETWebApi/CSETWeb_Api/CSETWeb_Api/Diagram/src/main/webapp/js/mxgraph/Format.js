@@ -534,7 +534,6 @@ Format.prototype.refresh = function ()
 
         // CSET Properties
         mxUtils.write(labelProperties, mxResources.get('prop'));
-        console.log(labelProperties);
         div.appendChild(labelProperties);
 
         var propertiesPanel = div.cloneNode(false);
@@ -2471,6 +2470,11 @@ PropertiesPanel.prototype.addProperties = function (container)
 
     var cell = graph.getSelectionCell();
 
+    var listener = mxUtils.bind(this, function ()
+    {
+        console.log('listener is doing something');
+    });
+
 
     // if multiple things are selected, don't show the properties panel
     var ss = this.format.getSelectionState();
@@ -2493,8 +2497,16 @@ PropertiesPanel.prototype.addProperties = function (container)
     }
     if (cell.isVertex())
     {
-        propertySet = diagramElementProperties().ComponentProperties;
+        if (cell.isZone())
+        {
+            propertySet = diagramElementProperties().ZoneProperties;
+        }
+        else
+        {
+            propertySet = diagramElementProperties().ComponentProperties;
+        }
     }
+
     // display the property fields
     for (var i = 0; i < propertySet.length; i++)
     {
@@ -2514,6 +2526,7 @@ PropertiesPanel.prototype.addProperties = function (container)
 
         var ctl = document.createElement(pp.type);
         panel.appendChild(ctl);
+        ctl.setAttribute('propname', pp.attributeName);
         ctl.style.position = 'absolute';
         ctl.style.right = '20px';
         ctl.style.width = '97px';
@@ -2521,6 +2534,8 @@ PropertiesPanel.prototype.addProperties = function (container)
 
         if (pp.type === 'select')
         {
+            ctl.style.padding = '4px';
+
             if (!!pp.values)
             {
                 for (var j = 0; j < pp.values.length; j++)
@@ -2554,28 +2569,37 @@ PropertiesPanel.prototype.addProperties = function (container)
             }
         }
 
-        if (pp.type === 'input' || pp.type === 'textarea')
-        {
-            if (pp.hasOwnProperty('disabled') && pp.disabled)
-            {
-                ctl.setAttribute('disabled', true);
-            }
 
-            // special cases
-            if (pp.attributeName === 'SAL_dummy')
-            {
-                ctl.value = 'Extra Spicy';
-            }
-            else
-            {
-                ctl.value = cell.getCsetAttribute(pp.attributeName);
-            }
+        if (pp.hasOwnProperty('disabled') && pp.disabled)
+        {
+            ctl.setAttribute('disabled', true);
+        }
+
+        // special cases
+        if (pp.attributeName === 'SAL_dummy')
+        {
+            ctl.value = cell.getSAL();
+        }
+        else
+        {
+            ctl.value = cell.getCsetAttribute(pp.attributeName);
         }
 
         mxEvent.addListener(ctl, 'change', evt =>
         {
-            console.log('CHANGE event');
-            cell.setCsetAttribute(pp.attributeName, evt.srcElement.value);
+            var cell = graph.getSelectionCell();
+            var ctl = evt.srcElement;
+            cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.value);
+
+            // in case this is a zone
+            cell.setZoneColor();
+
+            graph.refresh();
+
+            // TODO:  still need to fire event that will make the model save itself
+            graph.getModel().addListener(mxEvent.CHANGE, listener);
+            this.listeners.push({ destroy: function () { graph.getModel().removeListener(listener); } });
+            listener();
         });
     }
 }
@@ -2620,6 +2644,45 @@ diagramElementProperties = function ()
             }, {
                 fieldLabel: 'Host Name',
                 attributeName: 'HostName',
+                type: 'input'
+            }
+        ],
+        ZoneProperties: [
+            {
+                fieldLabel: 'Label',
+                attributeName: 'label',
+                type: 'input'
+            },
+            {
+                fieldLabel: 'Type',
+                attributeName: 'zoneType',
+                type: 'select',
+                values: [
+                    'Control DMZ',
+                    'Corporate',
+                    'Other',
+                    'Safety',
+                    'External DMZ',
+                    'Plant System',
+                    'Control System'
+                ],
+                defaultValue: 'Other'
+            },
+            {
+                fieldLabel: 'SAL',
+                attributeName: 'SAL',
+                type: 'select',
+                values: [
+                    'Low',
+                    'Moderate',
+                    'High',
+                    'Very High'
+                ],
+                defaultValue: 'Moderate'
+            },
+            {
+                fieldLabel: 'Owner',
+                attributeName: 'zoneOwner',
                 type: 'input'
             }
         ],
