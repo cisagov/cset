@@ -1173,7 +1173,7 @@ Actions.prototype.init = function () {
 
     action = this.addAction('analyze', mxUtils.bind(this, function () {
         this.analyzeToggled = !this.analyzeToggled;
-        alert('analyzeToggled: ', this.analyzeToggled);
+        alert(`analyzeToggled: ${this.analyzeToggled}`);
     }), null, null, null);
     action.setToggleAction(true);
     action.setSelectedCallback(mxUtils.bind(this, function () {
