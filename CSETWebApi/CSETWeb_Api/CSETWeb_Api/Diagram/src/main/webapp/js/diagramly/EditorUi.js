@@ -2489,7 +2489,7 @@
 
             if (this.readyState == 4 && this.status == 401)
             {
-                window.location.replace('error401.html');
+                window.location.replace('localhost:4200');
             }
         };
         xhr.open('GET', url);
