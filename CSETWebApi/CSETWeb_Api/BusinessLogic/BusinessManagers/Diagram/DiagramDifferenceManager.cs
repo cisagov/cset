@@ -111,7 +111,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     
                     foreach(var layer in differences.AddedLayers)
                     {
-                        var l = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == layer.Key).FirstOrDefault();
+                        var l = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key).FirstOrDefault();
                         if (l == null) {
                             context.DIAGRAM_CONTAINER.Add(new DIAGRAM_CONTAINER()
                              {
@@ -131,7 +131,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     }
                     foreach(var layer in newDiagram.Layers)
                     {
-                        var l = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == layer.Key).FirstOrDefault();
+                        var l = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key).FirstOrDefault();
                         if (l != null)
                         {
                             l.Name = layer.Value.LayerName;
@@ -143,7 +143,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);                    
                     foreach (var zone in differences.AddedZones)
                     {
-                        var z = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == zone.Key).FirstOrDefault();
+                        var z = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key).FirstOrDefault();
                         if (z == null)
                         {
                             z = new DIAGRAM_CONTAINER()
@@ -199,7 +199,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     {
 
                         //find the new parent zone or layer and set it
-                        var n = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.DrawIO_id == node.ID).FirstOrDefault();
+                        var n = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == node.ID).FirstOrDefault();
                         if (n != null)
                         {
 
@@ -222,7 +222,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     foreach (var node in newDiagram.getParentChangesZones())
                     {
                         //find the new parent zone or layer and set it
-                        var n = context.DIAGRAM_CONTAINER.Where(x => x.DrawIO_id == node.ID).FirstOrDefault();
+                        var n = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == node.ID).FirstOrDefault();
                         if (n != null)
                         {   
                             n.Parent_Id = allItems[node.Parent_id];
