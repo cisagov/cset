@@ -20,6 +20,7 @@ using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 using DataLayerCore.Model;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -149,6 +150,7 @@ namespace CSETWeb_Api.Controllers
                 var t = new TranslateCsetdToDrawio();
                 string newDiagramXml = t.Translate(importRequest.DiagramXml).OuterXml;
 
+                Trace.Write(newDiagramXml);
                 DiagramRequest req = new DiagramRequest
                 {
                     DiagramXml = newDiagramXml
@@ -157,8 +159,8 @@ namespace CSETWeb_Api.Controllers
                 {
                     db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First().Diagram_Markup = null;
                     string sql =
-                    "delete [dbo].[DIAGRAM_CONTAINER] where assessment_id = @id;" +
-                    "delete [dbo].ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id";
+                    "delete [dbo].ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
+                    "delete [dbo].[DIAGRAM_CONTAINER] where assessment_id = @id;";
                         db.Database.ExecuteSqlCommand(sql,
                             new SqlParameter("@Id", assessmentId));
                     db.SaveChanges();                    

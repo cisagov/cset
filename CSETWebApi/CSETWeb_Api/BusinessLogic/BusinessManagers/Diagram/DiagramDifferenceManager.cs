@@ -228,6 +228,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                             n.Parent_Id = allItems[node.Parent_id];
                         }
                     }
+                    context.SaveChanges();
                     context.FillNetworkDiagramQuestions(assessment_id);
                 }
             }

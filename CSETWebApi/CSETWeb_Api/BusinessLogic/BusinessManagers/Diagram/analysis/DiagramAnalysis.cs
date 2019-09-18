@@ -89,15 +89,25 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 {
                     continue;
                 }
+                Trace.WriteLine(((XmlElement)node).InnerXml);
 
                 //do a little preprocessing to get the attribute values
                 var styleString = node.FirstChild.Attributes["style"].Value;
                 string nodeType = null;
-                string imgPath = DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;",""))["image"];
-                if (!imageToTypePath.TryGetValue(imgPath.Replace("img/cset/",""), out nodeType))
-                {
-                    //TODO Add some error handling if we can't find the node type.
+
+                string imgPath;
+                if (DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;", "")).TryGetValue("image", out imgPath)){
+                    if (!imageToTypePath.TryGetValue(imgPath.Replace("img/cset/", ""), out nodeType))
+                    {
+                    
+                    }
                 }
+                else
+                {
+                    //I think we can assume
+                    nodeType = "MSC";
+                }
+                
                 //get the parent value if it is in the layers dictionary then set the
                 //visible value to the value of the parent
                 //else set it to visible
@@ -126,9 +136,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 {
                     dnode = new NetworkComponent()
                     {
-                        ComponentGuid = Guid.Parse(node.Attributes["ComponentGuid"].Value),
+                        ComponentGuid = ((XmlElement)node).HasAttribute("ComponentGuid") ? Guid.Parse(node.Attributes["ComponentGuid"].Value):new Guid(),
                         ID = node.Attributes["id"].Value,
-                        ComponentName = node.Attributes["label"].Value,
+                        ComponentName = ((XmlElement)node).HasAttribute("label") ? node.Attributes["label"].Value:"",
                         ComponentType = nodeType,
                         IsVisible = IsVisible,
                         Geometry = geometry
@@ -138,17 +148,25 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             }
 
             foreach (XmlNode node in mxCellLinks)
-            {   
+            {
+                XmlElement xNode = (XmlElement)node;
                 //find each node
-                //add them to each other             
-                NetworkComponent start = findNode(node.Attributes["source"].Value);
-                NetworkComponent target  = findNode(node.Attributes["target"].Value);                
-                Links.Add(new NetworkLink()
+                //add them to each other          
+                if (xNode.HasAttribute("source") && xNode.HasAttribute("target"))
                 {
-                    
-                });
-                start.AddEdge(target);
-                target.AddEdge(start);
+                    NetworkComponent start = findNode(node.Attributes["source"].Value);
+                    NetworkComponent target = findNode(node.Attributes["target"].Value);
+                    Links.Add(new NetworkLink()
+                    {
+
+                    });
+                    start.AddEdge(target);
+                    target.AddEdge(start);
+                }
+                else
+                {
+
+                }
                 
             }
             AnalyzeNetwork();
