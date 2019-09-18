@@ -8,10 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.IO;
+using System.Windows.Navigation;
 using System.Xml;
+using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Models;
 
 namespace CSETWeb_Api.BusinessManagers
@@ -256,6 +260,163 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             return resp;
+        }
+
+        /// <summary>
+        /// Get xml stream for an assessment diagram
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public StringReader GetDiagramXml(int assessmentId)
+        {
+            var diagram = new AssessmentManager().GetAssessmentById(assessmentId)?.Diagram_Markup;
+            
+            if (diagram != null)
+            {
+               
+
+                var stream = new StringReader(diagram);
+                return stream;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// get vertices from diagram stream
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootObject> ProcessDiagramVertices(StringReader stream)
+        {
+
+            List<mxGraphModelRootObject> vertices = new List<mxGraphModelRootObject>();
+            if (stream != null)
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(mxGraphModel));
+                var diagramXml = (mxGraphModel)deserializer.Deserialize((stream));
+
+                mxGraphModelRootObject o = new mxGraphModelRootObject();
+                Type objectType = typeof(mxGraphModelRootObject);
+
+
+                foreach (var item in diagramXml.root.Items)
+                {
+                    if (item.GetType() == objectType)
+                    {
+                        vertices.Add((mxGraphModelRootObject)item);
+                    }
+
+                }
+            }
+
+            return vertices;
+        }
+
+        /// <summary>
+        /// get edges from diagram stream
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootMxCell> ProcessDigramEdges(StringReader stream)
+        {
+            List<mxGraphModelRootMxCell> edges = new List<mxGraphModelRootMxCell>();
+            if (stream != null)
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(mxGraphModel));
+                var diagramXml = (mxGraphModel)deserializer.Deserialize((stream));
+
+                mxGraphModelRootObject o = new mxGraphModelRootObject();
+                Type objectType = typeof(mxGraphModelRootMxCell);
+
+                foreach (var item in diagramXml.root.Items)
+                {
+                    if (item.GetType() == objectType)
+                    {
+                        edges.Add((mxGraphModelRootMxCell)item);
+                    }
+                }
+            }
+
+            return edges;
+        }
+
+        /// <summary>
+        /// Get components from diagram xml objects
+        /// </summary>
+        /// <param name="diagram"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootObject> GetDiagramComponents(List<mxGraphModelRootObject> vertices)
+        {
+            try
+            {
+                var diagramComponents = vertices.Where(x => !string.IsNullOrEmpty(x.ComponentGuid)).ToList();
+                var symbols = GetAllComponentSymbols();
+                for (int i = 0; i < diagramComponents.Count(); i++)
+                {
+                    var imageTag = diagramComponents[i].mxCell.style.Split(';').FirstOrDefault(x=>x.Contains("image="));
+                   
+                    if (!string.IsNullOrEmpty(imageTag))
+                    {
+                        var image = imageTag.Split('/').LastOrDefault();
+                        diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.DisplayName;
+                    }
+                }
+
+                return diagramComponents;
+            }
+            catch (Exception ex)
+            {
+                var messeage = ex.Message;
+            }
+            finally
+            {
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get lines from diagram xml objects
+        /// </summary>
+        /// <param name="edges"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootMxCell> GetDiagramLines(List<mxGraphModelRootMxCell> edges)
+        {
+            var diagramLines = edges.Where(l => l.edge == 1).ToList();
+            return diagramLines;
+        }
+
+        /// <summary>
+        /// Get zones from diagram xml objects
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootObject> GetDiagramZones(List<mxGraphModelRootObject> vertices)
+        {
+            var diagramZones = vertices.Where(z => z.zone == 1).ToList();
+            return diagramZones;
+        }
+
+        /// <summary>
+        /// Get shapes from diagram xml objects
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootObject> GetDiagramShapes(List<mxGraphModelRootObject> vertices)
+        {
+            
+            return null;
+        }
+
+        /// <summary>
+        /// Get text from diagram xml objects
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <returns></returns>
+        public List<mxGraphModelRootObject> GetDiagramText(List<mxGraphModelRootObject> vertices)
+        {
+            return null;
         }
     }
 }

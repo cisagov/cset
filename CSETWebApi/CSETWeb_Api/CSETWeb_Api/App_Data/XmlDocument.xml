@@ -776,6 +776,30 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetComponents">
+            <summary>
+            Returns list of diagram components
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetZones">
+            <summary>
+            Returns list of diagram zones
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.getLines">
+            <summary>
+            Returns list of diagram lines
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetShapes">
+            <summary>
+            Returns list of diagram shapes
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.

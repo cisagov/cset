@@ -244,7 +244,6 @@
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
-    <Compile Include="BusinessManagers\DiagramManager.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />

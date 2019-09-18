@@ -45,4 +45,21 @@ export class DiagramService {
   getSymbols() {
     return this.http.get(this.apiUrl + 'symbols/get');
   }
+
+  //get diagram components
+  getDiagramComponents(){
+    return this.http.get(this.apiUrl+'getComponents');
+  }
+
+  getDiagramZones(){
+    return this.http.get(this.apiUrl+'getZones');
+  }
+
+  getDiagramShapes(){
+    return this.http.get(this.apiUrl+'getShapes');
+  }
+
+  getDiagramText(){
+    return this.http.get(this.apiUrl+'getText');
+  }
 }
