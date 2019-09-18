@@ -3136,89 +3136,94 @@ EditorUi.prototype.createSidebarFooterContainer = function()
  */
 EditorUi.prototype.createUi = function()
 {
+    if (!this.container) {
+        throw new Error('EditorUi.container cannot be null or undefined.');
+    }
+
 	// Creates menubar
 	this.menubar = (this.editor.chromeless) ? null : this.menus.createMenubar(this.createDiv('geMenubar'));
-	
-	if (this.menubar != null)
-	{
-		this.menubarContainer.appendChild(this.menubar.container);
-	}
-	
-	// Adds status bar in menubar
-	if (this.menubar != null)
-	{
-		this.statusContainer = this.createStatusContainer();
-	
-		// Connects the status bar to the editor status
-		this.editor.addListener('statusChanged', mxUtils.bind(this, function()
-		{
-			this.setStatusText(this.editor.getStatus());
-		}));
-	
-		this.setStatusText(this.editor.getStatus());
-		this.menubar.container.appendChild(this.statusContainer);
+	if (this.menubar) {
+        this.menubarContainer.appendChild(this.menubar.container);
+
+        // Add back navigation
+        if (!this.navbackContainer) {
+            this.navbackContainer = this.createNavBackContainer();
+            this.menubar.container.appendChild(this.navbackContainer);
+        }
+
+        // Adds status bar in menubar
+        if (!this.statusContainer) {
+            this.statusContainer = this.createStatusContainer();
+
+            // Connects the status bar to the editor status
+            this.editor.addListener('statusChanged', mxUtils.bind(this, function () {
+                this.setStatusText(this.editor.getStatus());
+            }));
+            this.setStatusText(this.editor.getStatus());
+            this.menubar.container.appendChild(this.statusContainer);
+        }
 		
 		// Inserts into DOM
 		this.container.appendChild(this.menubarContainer);
-	}
+    }
 
 	// Creates the sidebar
 	this.sidebar = (this.editor.chromeless) ? null : this.createSidebar(this.sidebarContainer);
-	
-	if (this.sidebar != null)
-	{
+	if (this.sidebar) {
 		this.container.appendChild(this.sidebarContainer);
 	}
 	
 	// Creates the format sidebar
 	this.format = (this.editor.chromeless || !this.formatEnabled) ? null : this.createFormat(this.formatContainer);
-	
-	if (this.format != null)
-	{
+	if (this.format) {
 		this.container.appendChild(this.formatContainer);
 	}
 	
 	// Creates the footer
 	var footer = (this.editor.chromeless) ? null : this.createFooter();
-	
-	if (footer != null)
-	{
+	if (footer) {
 		this.footerContainer.appendChild(footer);
 		this.container.appendChild(this.footerContainer);
 	}
 
-	if (this.sidebar != null && this.sidebarFooterContainer)
-	{
+	if (this.sidebar && this.sidebarFooterContainer) {
 		this.container.appendChild(this.sidebarFooterContainer);		
 	}
 
-	this.container.appendChild(this.diagramContainer);
+    if (this.diagramContainer) {
+        this.container.appendChild(this.diagramContainer);
+    }
 
-	if (this.container != null && this.tabContainer != null)
-	{
+	if (this.tabContainer) {
 		this.container.appendChild(this.tabContainer);
 	}
 
 	// Creates toolbar
 	this.toolbar = (this.editor.chromeless) ? null : this.createToolbar(this.createDiv('geToolbar'));
-	
-	if (this.toolbar != null)
-	{
+	if (this.toolbar) {
 		this.toolbarContainer.appendChild(this.toolbar.container);
 		this.container.appendChild(this.toolbarContainer);
 	}
 
 	// HSplit
-	if (this.sidebar != null)
-	{
+	if (this.sidebar) {
 		this.container.appendChild(this.hsplit);
-		
-		this.addSplitHandler(this.hsplit, true, 0, mxUtils.bind(this, function(value)
-		{
+		this.addSplitHandler(this.hsplit, true, 0, mxUtils.bind(this, function(value) {
 			this.hsplitPosition = value;
 			this.refresh();
 		}));
 	}
+};
+
+EditorUi.prototype.createNavBackContainer = function () {
+    var container = document.createElement('a');
+    container.className = 'geItem geNavBack';
+    container.style.float = 'right';
+    container.innerHTML = 'Return to CSET';
+    container.onclick = function () {
+        window.history.back();
+    };
+    return container;
 };
 
 /**
