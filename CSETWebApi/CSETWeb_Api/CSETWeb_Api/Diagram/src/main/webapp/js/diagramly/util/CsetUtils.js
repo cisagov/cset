@@ -62,6 +62,7 @@ CsetUtils.adjustConnectability = function (edit)
 CsetUtils.PersistGraphToCSET = function (editor)
 {
     var enc = new mxCodec();
+    var model = editor.graph.getModel();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
     var sXML = oSerializer.serializeToString(node);
@@ -69,61 +70,32 @@ CsetUtils.PersistGraphToCSET = function (editor)
     var selectionEmpty = editor.graph.isSelectionEmpty();
     var ignoreSelection = selectionEmpty;
     var bg = '#ffffff';
-
     var req = {};
-    req.DiagramXml = sXML;
-    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
 
+    if(model){    
+        var node = enc.encode(model);
+        var oSerializer = new XMLSerializer();
+        var sXML = oSerializer.serializeToString(node);
+    
+        req.DiagramXml = sXML;
+        req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+    }
 
-    // include the SVG
+    if (sXML == EditorUi.prototype.emptyDiagramXml)
+    {
+        // debugger;
+        req.DiagramXml = "";
+        req.LastUsedComponentNumber = 1;
+    }
+
+    // include the SVG in the save request
+    var bg = '#ffffff';
+
     var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = new XMLSerializer().serializeToString(svgRoot);
 
     req.DiagramSvg = svgRoot;
     CsetUtils.saveDiagram(req);
-
-
-
-
-
-    // --------- Build network diagram PNG ------------------------------------------------
-    //var selectionEmpty = editor.graph.isSelectionEmpty();
-    //var ignoreSelection = selectionEmpty;
-    //var bg = '#ffffff';
-
-    //var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
-    //svgRoot = new XMLSerializer().serializeToString(svgRoot);
-    //svgRoot = svgRoot.replace(/image=img\/cset\//g, 'image=http://localhost:46000/diagram/src/main/webapp/img/cset/');
-
-
-    //console.log(svgRoot);
-
-
-
-
-    //var image = new Image();
-    
-    //image.onload = function ()
-    //{
-    //    var canvas = document.createElement('canvas');
-    //    canvas.width = image.width;
-    //    canvas.height = image.height;
-    //    var context = canvas.getContext('2d');
-    //    context.drawImage(image, 0, 0);
-
-    //    var a = document.createElement('a');
-    //    a.download = "image.png";
-    //    a.href = canvas.toDataURL('image/png');
-    //    //document.body.appendChild(a);
-    //    //a.click();
-
-
-    //    req.DiagramSvg = canvas.toDataURL('image/png');
-    //    CsetUtils.saveDiagram(req);
-    //}
-
-    //image.src = 'data:image/svg+xml;base64,' + window.btoa(svgRoot);
-
 }
 
 
@@ -150,6 +122,14 @@ CsetUtils.saveDiagram = function (req)
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', jwt);
+    xhr.overrideMimeType("application/json");
+    xhr.onload  = function() {        
+        if(req.responseText){    
+            var warnings = JSON.parse(req.responseText);
+            var analysis = new CsetAnalysisWarnings();
+            analysis.addWarningsToDiagram(warnings, editor.graph);
+        }
+     };
     xhr.send(JSON.stringify(req));
 }
 
@@ -241,7 +221,7 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-
+        
         x.initZone();
     });
     graph.refresh();

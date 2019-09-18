@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataLayerCore</RootNamespace>
     <AssemblyName>DataLayerCore</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -148,6 +148,7 @@
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
     <Compile Include="Manual\NEW_REQUIREMENT.cs" />
     <Compile Include="Manual\usp_financial_attributes_result.cs" />
+    <Compile Include="Manual\usp_getFinancialQuestions_Result.cs" />
     <Compile Include="Manual\usp_GetOverallRankedCategoriesPage_Result.cs" />
     <Compile Include="Manual\usp_GetRankedQuestions_Result.cs" />
     <Compile Include="Manual\usp_MaturityDetailsCalculations_Result.cs" />
@@ -192,6 +193,8 @@
     <Compile Include="Model\DEMOGRAPHICS.cs" />
     <Compile Include="Model\DEMOGRAPHICS_ASSET_VALUES.cs" />
     <Compile Include="Model\DEMOGRAPHICS_SIZE.cs" />
+    <Compile Include="Model\DIAGRAM_CONTAINER.cs" />
+    <Compile Include="Model\DIAGRAM_CONTAINER_TYPES.cs" />
     <Compile Include="Model\DIAGRAM_OBJECT_TYPES.cs" />
     <Compile Include="Model\DIAGRAM_TEMPLATES.cs" />
     <Compile Include="Model\DIAGRAM_TYPES.cs" />

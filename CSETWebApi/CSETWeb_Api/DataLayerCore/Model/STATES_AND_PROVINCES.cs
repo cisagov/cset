@@ -15,5 +15,9 @@ namespace DataLayerCore.Model
         public string Display_Name { get; set; }
         [Key]
         public int STATES_AND_PROVINCES_ID { get; set; }
+        [StringLength(5)]
+        public string Country_Code { get; set; }
+
+        public virtual COUNTRIES Country_CodeNavigation { get; set; }
     }
 }

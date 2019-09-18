@@ -17,13 +17,15 @@ using CSETWeb_Api.Models;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Diagram;
 using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
     /// <summary>
     /// 
     /// </summary>
-    
+    [CSETAuthorize]
     public class DiagramController : ApiController
     {
         /// <summary>
@@ -33,19 +35,23 @@ namespace CSETWeb_Api.Controllers
         [CSETAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public void SaveDiagram([FromBody] DiagramRequest req)
+        public List<IDiagramAnalysisNodeMessage> SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             TokenManager tm = new TokenManager();
             int userId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(req.DiagramXml);
-            dm.SaveDiagram((int)assessmentId, xDoc, req.DiagramXml, req.LastUsedComponentNumber, req.DiagramSvg);
-            //DiagramAnalysis analysis = new DiagramAnalysis();
-            //analysis.PerformAnalysis(xDoc);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.LoadXml(req.DiagramXml);
+                
+                DiagramAnalysis analysis = new DiagramAnalysis(db);
+                analysis.PerformAnalysis(xDoc);
+                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
+                return analysis.NetworkWarnings;
+            }
         }
 
 
@@ -64,9 +70,11 @@ namespace CSETWeb_Api.Controllers
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
             var response = new DiagramResponse();
-
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            response = dm.GetDiagram((int)assessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                response = dm.GetDiagram((int)assessmentId);
+            }
 
             var assessmentDetail = new AssessmentController().Get();
             response.AssessmentName = assessmentDetail.AssessmentName;
@@ -85,8 +93,11 @@ namespace CSETWeb_Api.Controllers
         public string GetDiagramImage()
         {
             int assessmentId = Auth.AssessmentForUser();
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            return dm.GetDiagramImage(assessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return dm.GetDiagramImage(assessmentId);
+            }
         }
 
 
@@ -104,8 +115,11 @@ namespace CSETWeb_Api.Controllers
             int userId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
 
-            BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager();
-            return dm.HasDiagram((int)assessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return dm.HasDiagram((int)assessmentId);
+            }
         }
 
 
@@ -160,9 +174,13 @@ namespace CSETWeb_Api.Controllers
         [HttpGet]
         public List<ComponentSymbolGroup> GetComponentSymbols()
         {
-            return new DiagramManager().GetComponentSymbols();
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return dm.GetComponentSymbols();
+            }
         }
-
+        
         /// <summary>
         /// Returns list of diagram components
         /// </summary>
@@ -176,7 +194,7 @@ namespace CSETWeb_Api.Controllers
             {
                 TokenManager tm = new TokenManager();
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-                var dm = new DiagramManager();
+                var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int) assessmentId);
                 var vertices = dm.ProcessDiagramVertices(diagramXml);
                 var components = dm.GetDiagramComponents(vertices);
@@ -204,7 +222,7 @@ namespace CSETWeb_Api.Controllers
             {
                 TokenManager tm = new TokenManager();
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-                var dm = new DiagramManager();
+                var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
                 var vertices = dm.ProcessDiagramVertices(diagramXml);
                 var zones = dm.GetDiagramZones(vertices);
@@ -232,7 +250,7 @@ namespace CSETWeb_Api.Controllers
             {
                 TokenManager tm = new TokenManager();
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-                var dm = new DiagramManager();
+                var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
                 var vertices = dm.ProcessDiagramVertices(diagramXml);
                 var lines = dm.GetDiagramComponents(vertices);
@@ -260,7 +278,7 @@ namespace CSETWeb_Api.Controllers
             {
                 TokenManager tm = new TokenManager();
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-                var dm = new DiagramManager();
+                var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
                 var vertices = dm.ProcessDiagramVertices(diagramXml);
                 var shapes = dm.GetDiagramShapes(vertices);

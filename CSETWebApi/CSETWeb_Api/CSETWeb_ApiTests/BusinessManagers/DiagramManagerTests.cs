@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSETWeb_Api.BusinessManagers;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Tests
 {
@@ -18,7 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Tests
         {
             
 
-            DiagramManager d = new DiagramManager();
+            DiagramManager d = new DiagramManager(new CSET_Context());
             //FileStream fs = new FileStream(@"c:\Users\KUIPJE\Documents\testdiagram.xml", FileMode.OpenOrCreate);
             StringReader reader = new StringReader(test);
             var vertices = d.ProcessDiagramVertices(reader);

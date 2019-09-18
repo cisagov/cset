@@ -484,6 +484,11 @@
         <member name="M:CSETWeb_Api.Controllers.ACETFilterController.GetACETFilters">
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.ResetAllAcetFilters">
+            <summary>
+            Removes all maturity filters for the current assessment.
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
             Re-orders the pieces into Y|N|NA|A|U order.
@@ -800,6 +805,28 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExport(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExportNCUA(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExportAllNCUA(System.String)">
+            <summary>
+            Generates an Excel spreadsheet with a row for every assessment that
+            the current user has access to that uses the ACET standard.
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.
@@ -837,6 +864,12 @@
             <summary>
             Persists the selected required docs value to the database.
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
+            <summary>
+            Get maturity calculations
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityRange">
             <summary>
