@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using DataLayerCore.Manual;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 
@@ -120,7 +121,6 @@ namespace DataLayerCore.Model
             IList<usp_GetOverallRankedCategoriesPage_Result> myrval = null;
             this.LoadStoredProc("usp_GetOverallRankedCategoriesPage")
                      .WithSqlParam("assessment_id", assessment_id)
-
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetOverallRankedCategoriesPage_Result>();
@@ -129,6 +129,25 @@ namespace DataLayerCore.Model
 
 
         }
+
+        public virtual IList<usp_getFinancialQuestions_Result> usp_getFinancialQuestions(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_getFinancialQuestions_Result> myrval = null;
+            this.LoadStoredProc("usp_getFinancialQuestions")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_getFinancialQuestions_Result>();
+                     });
+            return myrval;
+
+
+        }
+        
 
 
         public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)

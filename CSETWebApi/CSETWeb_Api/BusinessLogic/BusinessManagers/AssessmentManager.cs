@@ -170,7 +170,7 @@ namespace CSETWeb_Api.BusinessManagers
                     bool defaultAcet = (app_code == "ACET");
                     assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
-                    assessment.Charter = result.aa.Charter;
+                    assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                     assessment.CreditUnion = result.aa.CreditUnionName;
                     assessment.Assets = result.aa.Assets;
                     

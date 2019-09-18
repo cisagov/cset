@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSETWeb_Api.BusinessLogic</RootNamespace>
     <AssemblyName>BusinessLogic</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -245,11 +245,27 @@
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysis.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisNodeMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\DrawIOParsingHelps.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkGeometry.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkLayer.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkLink.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkComponent.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NodeViewModelBase.cs" />
+    <Compile Include="BusinessManagers\Diagram\Diagram.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferenceManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferences.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\NetworkZone.cs" />
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />

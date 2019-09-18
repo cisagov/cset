@@ -43,6 +43,9 @@ namespace CSETWeb_Api.Controllers
 
             int assessmentId = Auth.AssessmentForUser();
             new IRPManager().PersistSelectedIRP(assessmentId, reqIRP);
+
+            // reset maturity filters because the risk profile has changed
+            new ACETFilterController().ResetAllAcetFilters();
         }
     }
 }

@@ -84,6 +84,33 @@ namespace CSETWeb_Api.Helpers
             Uri h = HttpContext.Current.Request.UrlReferrer;
             return h.GetLeftPart(UriPartial.Authority);
         }
+
+
+        /// <summary>
+        /// Formats first and last name.  If the name is believed to be a domain\userid, 
+        /// the userid is returned with the domain removed.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
+        public static string FormatName(string firstName, string lastName)
+        {
+            firstName = firstName.Trim();
+            lastName = lastName.Trim();
+
+            if (firstName.Length > 0 && lastName.Length > 0)
+            {
+                return string.Format("{0} {1}", firstName, lastName);
+            }
+
+            // if domain-qualified userid, remove domain
+            if (firstName.IndexOf('\\') >= 0 && firstName.IndexOf(' ') < 0 && lastName.Length == 0)
+            {
+                return firstName.Substring(firstName.LastIndexOf('\\') + 1);
+            }
+            
+            return string.Format("{0} {1}", firstName, lastName);
+        }
     }
 }
 
