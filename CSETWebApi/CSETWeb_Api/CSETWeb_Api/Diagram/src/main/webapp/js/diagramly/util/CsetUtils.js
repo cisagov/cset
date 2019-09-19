@@ -57,6 +57,25 @@ CsetUtils.adjustConnectability = function (edit)
 
 
 /**
+ * Make sure edges (links) are not hidden behind zones or other objects
+ */
+CsetUtils.edgesToTop = function (graph, edit)
+{
+    for (var i = 0; i < edit.changes.length; i++)
+    {
+        if (edit.changes[i] instanceof mxChildChange)
+        {
+            var edges = edit.changes[i].child.edges;
+            if (!!edges)
+            {
+                graph.orderCells(false, edges);
+            }
+        }
+    }
+}
+
+
+/**
  * Persists the graph to the CSET API.
  */
 CsetUtils.PersistGraphToCSET = function (editor)
@@ -72,11 +91,12 @@ CsetUtils.PersistGraphToCSET = function (editor)
     var bg = '#ffffff';
     var req = {};
 
-    if(model){    
+    if (model)
+    {
         var node = enc.encode(model);
         var oSerializer = new XMLSerializer();
         var sXML = oSerializer.serializeToString(node);
-    
+
         req.DiagramXml = sXML;
         req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
     }
@@ -123,13 +143,15 @@ CsetUtils.saveDiagram = function (req)
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', jwt);
     xhr.overrideMimeType("application/json");
-    xhr.onload  = function() {        
-        if(req.responseText){    
+    xhr.onload = function ()
+    {
+        if (req.responseText)
+        {
             var warnings = JSON.parse(req.responseText);
             var analysis = new CsetAnalysisWarnings();
             analysis.addWarningsToDiagram(warnings, editor.graph);
         }
-     };
+    };
     xhr.send(JSON.stringify(req));
 }
 
@@ -221,7 +243,7 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-        
+
         x.initZone();
     });
     graph.refresh();
