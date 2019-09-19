@@ -17,7 +17,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <summary>
         /// The list of versions for which incremental updates are supported.
         /// </summary>
-        private List<string> versionSequence = new List<string>() { "9.0", "9.0.1" };
+        private List<string> versionSequence = new List<string>() { "9.0", "9.0.1", "9.0.2" };
 
 
         public string Upgrade(string json)

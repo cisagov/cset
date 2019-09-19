@@ -15,16 +15,16 @@
     padding: 50px;
 }
 
-    .home-page p {
+.home-page p {
         font-size: small;
-    }
+}
 
-    .home-page h3 {
-        color: #194e84;
-    }
+.home-page h3 {
+    color: #194e84;
+}
 
-    .home-page a {
-        color: #194e84;
-        background-color: #fafafa;
-        border: 1px solid #d0d0d0;
-    }
+.home-page a {
+    color: #194e84;
+    background-color: #fafafa;
+    border: 1px solid #d0d0d0;
+}

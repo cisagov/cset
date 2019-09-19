@@ -66,7 +66,7 @@ namespace CSETWeb_Api.BusinessManagers
             var results = q.Distinct()
                 .OrderBy(x => x.s.Short_Name)
                 .ThenBy(x => x.rs.Requirement_Sequence)
-                .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name });
+                .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name, SetName = x.s.Set_Name });
 
             var domains = (from d in db.FINANCIAL_DOMAINS
                 join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
@@ -176,7 +176,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = answer?.a.Comment,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
-                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id)
+                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                    SetName = dbRPlus.SetName
                 };
                 if (answer != null)
                 {
@@ -253,6 +254,30 @@ namespace CSETWeb_Api.BusinessManagers
             return relevantAnswerIds;
         }
 
+        private void LoadParametersList(CSET_Context db)
+        {
+            parametersDictionary = (from p in db.PARAMETERS
+                join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id                
+                select new { p , r })
+                .GroupBy(x=> x.r.Requirement_Id)
+                .ToDictionary(x=> x.Key, x=> x.Select(y=> y.p).ToList());
+
+
+            parametersAssessmentList = (from pa in db.PARAMETER_ASSESSMENT
+            join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
+            where pa.Assessment_ID == _assessmentId
+            select new ParameterAssessment() { p = p, pa = pa }).ToList();
+
+            parametersAnswerDictionary =  (from p in db.PARAMETERS
+            join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id            
+            select new ParameterValues(){ p = p, pv=pv })
+            .GroupBy(x=> x.pv.Answer_Id)
+            .ToDictionary(x=> x.Key,x=> x.Select(y=> y).ToList());
+        }
+
+        private Dictionary<int, List<PARAMETERS>> parametersDictionary = null;
+        private List<ParameterAssessment> parametersAssessmentList;
+        private Dictionary<int, List<ParameterValues>> parametersAnswerDictionary;
 
         /// <summary>
         /// Pull any 'global' parameters for the requirement, overlaid with any 'local' parameters for the answer.
@@ -267,21 +292,19 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 // get the 'base' parameter values (parameter_name) for the requirement
-                var qBaseLevel = from p in db.PARAMETERS
-                              join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
-                              where r.Requirement_Id == reqId
-                              select new { p, r };
+                if (parametersDictionary == null)
+                    LoadParametersList(db);
+                List<PARAMETERS> qBaseLevel;
+                if (parametersDictionary.TryGetValue(reqId, out qBaseLevel)) {
 
                 foreach (var b in qBaseLevel)
                 {
-                    ps.Set(b.p.Parameter_ID, b.p.Parameter_Name, b.p.Parameter_Name, reqId, 0);
+                        ps.Set(b.Parameter_ID, b.Parameter_Name, b.Parameter_Name, reqId, 0);
+                    }
                 }
 
                 // overlay with any assessment-specific parameters for the requirement
-                var qAssessLevel = from pa in db.PARAMETER_ASSESSMENT
-                                   join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
-                              where pa.Assessment_ID == _assessmentId
-                              select new { p, pa };
+                var qAssessLevel = parametersAssessmentList;
 
                 foreach (var a in qAssessLevel)
                 {
@@ -291,15 +314,13 @@ namespace CSETWeb_Api.BusinessManagers
                 // overlay with any 'inline' values for the answer
                 if (ansId != 0)
                 {
-                    var qLocal = from p in db.PARAMETERS
-                                 join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
-                                 where pv.Answer_Id == ansId
-                                 select new { p, pv };
-
-                    foreach (var local in qLocal.ToList())
-                    {
-                        ps.Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, 0, local.pv.Answer_Id);
-                    }
+                    List<ParameterValues> qLocal;
+                    if (parametersAnswerDictionary.TryGetValue(ansId, out qLocal)){
+	                    foreach (var local in qLocal.ToList())
+	                    {
+	                        ps.Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, 0, local.pv.Answer_Id);
+	                    }
+                    }                
                 }
 
                 
@@ -543,12 +564,25 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public NEW_REQUIREMENT Requirement;
         public string SetShortName;
+        public string SetName;
     }
 
     internal class DomainAssessmentFactor
     {
         public string DomainName;
         public string AssessmentFactorName;
+    }
+
+    internal class ParameterAssessment
+    {
+        public PARAMETERS p { get; set; }
+        public PARAMETER_ASSESSMENT pa { get; set; }
+    }
+
+    internal class ParameterValues
+    {
+        public PARAMETERS p { get; set; }
+        public PARAMETER_VALUES pv { get; set; }
     }
 }
 
