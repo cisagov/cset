@@ -89,7 +89,6 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 {
                     continue;
                 }
-                Trace.WriteLine(((XmlElement)node).InnerXml);
 
                 //do a little preprocessing to get the attribute values
                 var styleString = node.FirstChild.Attributes["style"].Value;
