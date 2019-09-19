@@ -23,6 +23,10 @@ mxCell.prototype.getCsetAttribute = function (name)
     }
 
     var obj = this.value;
+    if (!obj)
+    {
+        return null;
+    }
     return obj.getAttribute(name);
 }
 
@@ -315,7 +319,7 @@ mxCell.prototype.getSAL = function ()
         c = c.getParent();
     }
 
-    return this.getCsetAttribute('SAL');    
+    return c.getCsetAttribute('SAL');
 }
 
 
