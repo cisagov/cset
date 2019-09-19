@@ -101,6 +101,7 @@ import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validato
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
 import { AutoSizeDirective } from './helpers/auto-size.directive';
+import { DigitsOnlyDirective } from './helpers/digits-only.directive';
 import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
@@ -223,6 +224,7 @@ import { DiagramService } from './services/diagram.service';
         EmailValidatorDirective,
         FocusDirective,
         AutoSizeDirective,
+        DigitsOnlyDirective,
         SalGenComponent,
         SalNistComponent,
         SalsComponent,
