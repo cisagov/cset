@@ -296,7 +296,7 @@
 
             <div style="padding: 1rem;">
                 <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                    system diagram is <span class="warnInput">{{ warnings.length }}</span>.
+                    system diagram is <span class="warnInput">{{ warnings?.length }}</span>.
                 </p>
                 <p> See the Findings and Recommendations from Basic Network Analysis for details.
                 </p>
@@ -855,7 +855,7 @@
 
 
 
-    <div class="page-break" *ngIf="response?.ComponentQuestions.length > 0">
+    <div class="page-break" *ngIf="response?.ComponentQuestions?.length > 0">
         <h1>
             Component Question Details
         </h1>
