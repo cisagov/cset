@@ -408,7 +408,11 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = TinyMapper.Map<ASSESSMENT_IRP>(a);
                 item.Assessment_Id = _assessmentId;
                 item.Answer_Id = 0;
+
+                if (db.ASSESSMENT_IRP.Count(ai => ai.IRP_Id == item.IRP_Id) == 0)
+                {
                 db.ASSESSMENT_IRP.Add(item);
+                }
             }
 
 
