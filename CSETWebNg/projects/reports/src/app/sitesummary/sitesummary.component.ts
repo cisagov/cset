@@ -149,7 +149,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
         this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 0);
+      }, 100);
     });
 
 
@@ -158,7 +158,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       this.componentCount = x.Labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      }, 0);
+      }, 100);
     });
 
 
