@@ -23,7 +23,7 @@ namespace CSETWeb_Api.Controllers
     {
         public async Task<HttpResponseMessage> Get()
         {
-            var schema = await JsonSchema4.FromTypeAsync<ExternalStandard>(new NJsonSchema.Generation.JsonSchemaGeneratorSettings() { FlattenInheritanceHierarchy = true });
+            var schema = JsonSchema.FromType<ExternalStandard>(new NJsonSchema.Generation.JsonSchemaGeneratorSettings() { FlattenInheritanceHierarchy = true });
             return Request.CreateResponse(JsonConvert.DeserializeObject(schema.ToJson()));
         }
 
