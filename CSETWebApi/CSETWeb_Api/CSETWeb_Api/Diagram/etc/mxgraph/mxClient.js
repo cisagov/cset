@@ -9663,6 +9663,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         cell.setCsetAttribute('ComponentGuid', nextGuid);
     }
 
+    // default a value for Criticality
+    if (cell.getCsetAttribute('Criticality') == null)
+    {
+        cell.setCsetAttribute('Criticality', 'Low');
+    }
+
     // give zones a couple of zone-specific attributes if needed
     if (cell.getStyleValue('zone') == '1')
     {

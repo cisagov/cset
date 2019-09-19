@@ -116,7 +116,7 @@ CsetUtils.saveDiagram = function (req)
         }
         if (this.readyState == 4 && this.status == 401)
         {
-            window.location.replace('error401.html');
+            window.location.replace('http://localhost:4200');
         }
     }
     xhr.open('POST', url);
@@ -203,7 +203,7 @@ function TranslateToMxGraph(editor, sXML)
         }
         if (this.readyState == 4 && this.status == 401)
         {
-            window.location.replace('error401.html');
+            window.location.replace('http://localhost:4200');
         }
     }
     xhr.open('POST', url);

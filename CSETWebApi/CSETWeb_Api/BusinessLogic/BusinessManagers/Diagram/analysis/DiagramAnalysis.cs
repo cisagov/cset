@@ -159,8 +159,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                     {
 
                     });
-                    start.AddEdge(target);
-                    target.AddEdge(start);
+                    start?.AddEdge(target);
+                    target?.AddEdge(start);
                 }
                 else
                 {
@@ -230,7 +230,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             }
             else
             {
-                throw new NodeNotFound();
+                return null;
             }
         }
 
