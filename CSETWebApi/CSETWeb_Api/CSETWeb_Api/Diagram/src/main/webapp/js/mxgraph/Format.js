@@ -2470,12 +2470,6 @@ PropertiesPanel.prototype.addProperties = function (container)
 
     var cell = graph.getSelectionCell();
 
-    var listener = mxUtils.bind(this, function ()
-    {
-        console.log('listener is doing something');
-    });
-
-
     // if multiple things are selected, don't show the properties panel
     var ss = this.format.getSelectionState();
     if (ss.vertices.length + ss.edges.length > 1)
@@ -2594,12 +2588,15 @@ PropertiesPanel.prototype.addProperties = function (container)
             // in case this is a zone
             cell.setZoneColor();
 
-            graph.refresh();
+            graph.refresh();   
 
-            // TODO:  still need to fire event that will make the model save itself
-            graph.getModel().addListener(mxEvent.CHANGE, listener);
-            this.listeners.push({ destroy: function () { graph.getModel().removeListener(listener); } });
-            listener();
+            // fire events that will make the model save itself
+            var m = graph.getModel();
+            m.beginUpdate();
+            m.currentEdit.add(cell);
+            m.fireEvent(new mxEventObject(mxEvent.EXECUTE, "change", cell));
+            m.fireEvent(new mxEventObject(mxEvent.EXECUTED, "change", cell));
+            m.endUpdate()
         });
     }
 }
