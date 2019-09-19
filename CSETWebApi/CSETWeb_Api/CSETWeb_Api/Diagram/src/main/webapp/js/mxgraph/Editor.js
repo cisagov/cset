@@ -53,7 +53,10 @@ Editor = function (chromeless, themes, model, graph, editable)
         {
             CsetUtils.adjustConnectability(edit);
 
+            CsetUtils.edgesToTop(this.graph, edit);
+
             CsetUtils.handleZoneChanges(edit);
+
             this.graph.refresh();
 
             CsetUtils.PersistGraphToCSET(this);
