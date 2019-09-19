@@ -21,7 +21,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
     public class StandardSchemaProcessor : ISchemaProcessor
     {
 
-        void ISchemaProcessor.Process(SchemaProcessorContext context)
+        public void Process(SchemaProcessorContext context)
         {
 
             if (context.Type == typeof(ExternalStandard))
