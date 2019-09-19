@@ -250,7 +250,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xRoot.AppendChild(xObject);
                 xObject.SetAttribute("id", newID);
                 xObject.SetAttribute("label", ChildValue(msc, "c:label/c:label"));
-
+                xObject.SetAttribute("ComponentGuid", Guid.NewGuid().ToString());
                 var xZone = xDrawio.CreateElement("mxCell");
                 xObject.AppendChild(xZone);
                 xZone.SetAttribute("vertex", "1");

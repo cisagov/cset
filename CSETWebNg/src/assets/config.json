@@ -12,7 +12,8 @@
     "defaultInviteTemplate": "You have been invited to participate in a CSET assessment.\nPlease log into your CSET account to participate. If you have not used CSET before, an account has been created for you, and a second email will be sent to this email address with instructions on logging in for the first time.",
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
-
+    "showQuestionAndRequirementIDs": true,
+    
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",

@@ -193,6 +193,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : irpCalculation.SumRiskLevel;
             if (!targetBandOnly)
                 irpRating = 6; //Do the default configuration
+            return irpSwitch(irpRating);
+        }
+
+        public List<string> irpSwitch(int irpRating)
+        {
             switch (irpRating)
             {
                 case 1:

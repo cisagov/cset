@@ -62,14 +62,31 @@ CsetUtils.adjustConnectability = function (edit)
 CsetUtils.PersistGraphToCSET = function (editor)
 {
     var enc = new mxCodec();
+    var model = editor.graph.getModel();
     var node = enc.encode(editor.graph.getModel());
     var oSerializer = new XMLSerializer();
     var sXML = oSerializer.serializeToString(node);
 
+    var selectionEmpty = editor.graph.isSelectionEmpty();
+    var ignoreSelection = selectionEmpty;
+    var bg = '#ffffff';
     var req = {};
-    req.DiagramXml = sXML;
-    req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
 
+    if(model){    
+        var node = enc.encode(model);
+        var oSerializer = new XMLSerializer();
+        var sXML = oSerializer.serializeToString(node);
+    
+        req.DiagramXml = sXML;
+        req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+    }
+
+    if (sXML == EditorUi.prototype.emptyDiagramXml)
+    {
+        // debugger;
+        req.DiagramXml = "";
+        req.LastUsedComponentNumber = 1;
+    }
 
     // include the SVG in the save request
     var bg = '#ffffff';
@@ -105,6 +122,14 @@ CsetUtils.saveDiagram = function (req)
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', jwt);
+    xhr.overrideMimeType("application/json");
+    xhr.onload  = function() {        
+        if(req.responseText){    
+            var warnings = JSON.parse(req.responseText);
+            var analysis = new CsetAnalysisWarnings();
+            analysis.addWarningsToDiagram(warnings, editor.graph);
+        }
+     };
     xhr.send(JSON.stringify(req));
 }
 
@@ -196,7 +221,7 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-
+        
         x.initZone();
     });
     graph.refresh();

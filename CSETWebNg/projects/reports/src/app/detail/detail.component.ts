@@ -142,7 +142,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
         this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 0);
+      }, 100);
     });
 
 
@@ -151,7 +151,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
       this.componentCount = x.Labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      }, 0);
+      }, 100);
     });
 
 

@@ -56,6 +56,7 @@
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -66,6 +67,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisTests.cs" />
     <Compile Include="BusinessManagers\Diagram\DictionaryCompareTests.cs" />
     <Compile Include="BusinessManagers\ImportManagerTests.cs" />
     <Compile Include="BusinessManagers\QuestionsManagerTests.cs" />
