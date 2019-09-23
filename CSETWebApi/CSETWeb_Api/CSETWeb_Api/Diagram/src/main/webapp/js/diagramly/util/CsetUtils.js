@@ -61,15 +61,19 @@ CsetUtils.adjustConnectability = function (edit)
  */
 CsetUtils.edgesToTop = function (graph, edit)
 {
+    var model = graph.getModel();
+
     for (var i = 0; i < edit.changes.length; i++)
     {
         if (edit.changes[i] instanceof mxChildChange)
         {
-            var edges = edit.changes[i].child.edges;
-            if (!!edges)
+            var filter = function (cell)
             {
-                graph.orderCells(false, edges);
+                return model.isEdge(cell);
             }
+            var edges = model.filterDescendants(filter, edit.changes[i].child);
+            console.log(edges);
+            graph.orderCells(false, edges);
         }
     }
 }

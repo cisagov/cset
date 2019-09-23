@@ -17,12 +17,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         public Dictionary<string, NetworkZone> Zones { get; private set; }
         public Dictionary<string, string> OldParentIds { get; internal set; }
 
+        public Dictionary<string, string> Parentage { get; internal set; }
+
         public Diagram()
         {
             NetworkComponents = new Dictionary<Guid, NetworkComponent>();            
             Layers = new Dictionary<string, NetworkLayer>();
             Zones = new Dictionary<string, NetworkZone>();
-
         }
 
         internal IEnumerable<NetworkComponent> getParentChanges()
