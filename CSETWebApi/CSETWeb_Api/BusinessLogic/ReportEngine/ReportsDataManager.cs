@@ -106,18 +106,36 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return controls;
         }
 
-        public List<DiagramInventory> getDiagramInventory()
+        public List<List<DiagramZones>> getDiagramZones()
         {
             using(var db=new CSET_Context()){
-                var rval = from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
-                           join z in db.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
-                           where c.Assessment_Id == _assessmentId
-                           select new DiagramInventory{ Diagram_Component_Type= c.Diagram_Component_Type,
-                               label=c.label,
-                               Zone_Name =z.Name,
-                               Universal_Sal_Level = z.Universal_Sal_Level                               
-                           };
-                return rval.ToList();
+                var level = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+
+
+                var rval1 = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
+                            where c.Assessment_Id == _assessmentId && c.Zone_Id == null
+                            orderby c.Diagram_Component_Type, c.label
+                            select new DiagramZones
+                            {
+                                Diagram_Component_Type = c.Diagram_Component_Type,
+                                label = c.label,
+                                Zone_Name = "No Assigned Zone",
+                                Universal_Sal_Level = level == null ? "Low" : level.Selected_Sal_Level
+                            }).ToList();
+
+                var rval = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
+                            join z in db.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
+                            where c.Assessment_Id == _assessmentId
+                            orderby c.Diagram_Component_Type, c.label
+                            select new DiagramZones
+                            {
+                                Diagram_Component_Type = c.Diagram_Component_Type,
+                                label = c.label,
+                                Zone_Name = z.Name,
+                                Universal_Sal_Level = z.Universal_Sal_Level
+                            }).ToList();
+                     
+                return rval.Union(rval1).GroupBy(u=> u.Zone_Name).Select(grp => grp.ToList()).ToList();
             }
         }
 
@@ -623,7 +641,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
     }
 
-    public class DiagramInventory
+    public class DiagramZones
     {
         public string Diagram_Component_Type { get; set; }
         public string label { get; set; }        

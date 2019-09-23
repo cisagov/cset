@@ -818,24 +818,18 @@
         <h1>
             Diagram Component Inventory
         </h1>
-        <table class="table-site-info" *ngFor="let inventoryItem of response.Inventory">
-            <tr>
-                <td>Component Type</td>
-                <td>{{inventoryItem.Diagram_Component_Type}}</td>
-            </tr>
-            <tr>
-                <td>Component Name</td>
-                <td>{{inventoryItem.label}}</td>
-            </tr>
-            <tr>
-                <td>Zone</td>
-                <td>{{inventoryItem.Zone_Name}}</td>
-            </tr>
-            <tr>
-                <td>SAL Level</td>
-                <td>{{inventoryItem.Universal_Sal_Level}}</td>
-            </tr>            
-        </table>
+        <div *ngFor="let zoneList of response?.Zones">            
+            <table class="cset-table">
+                <tr>
+                    <th>Zone &nbsp;-&nbsp;{{zoneList[0].Zone_Name}}</th>                
+                    <th>SAL Level&nbsp;-&nbsp;{{zoneList[0].Universal_Sal_Level}}</th>
+                </tr>            
+                <tr *ngFor="let inventoryItem of zoneList">
+                    <td>{{inventoryItem.Diagram_Component_Type}}</td>
+                    <td>{{inventoryItem.label}}</td>
+                </tr>                
+            </table>
+        </div>
     </div>
 
 
