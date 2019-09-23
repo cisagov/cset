@@ -4504,6 +4504,6 @@
     <Delete Files="Web.temp.config" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>call $(ProjectDir)Diagram\etc\build\build.bat</PostBuildEvent>
+    <PostBuildEvent>REM call $(ProjectDir)Diagram\etc\build\build.bat</PostBuildEvent>
   </PropertyGroup>
 </Project>

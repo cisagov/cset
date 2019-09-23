@@ -2477,6 +2477,12 @@ PropertiesPanel.prototype.addProperties = function (container)
         return;
     }
 
+    // if a group is selected, don't show the properties panel.
+    if (cell.hasStyle("group"))
+    {
+        return;
+    }
+
 
     // if a shape is selected, don't show the properties panel.
     if (cell.hasStyle("shape"))
@@ -2487,17 +2493,17 @@ PropertiesPanel.prototype.addProperties = function (container)
     var propertySet = {};
     if (cell.isEdge())
     {
-        propertySet = diagramElementProperties().LinkProperties;
+        propertySet = diagramElementProperties().linkProperties;
     }
     if (cell.isVertex())
     {
         if (cell.isZone())
         {
-            propertySet = diagramElementProperties().ZoneProperties;
+            propertySet = diagramElementProperties().zoneProperties;
         }
         else
         {
-            propertySet = diagramElementProperties().ComponentProperties;
+            propertySet = diagramElementProperties().componentProperties;
         }
     }
 
@@ -2569,15 +2575,15 @@ PropertiesPanel.prototype.addProperties = function (container)
             ctl.setAttribute('disabled', true);
         }
 
+
+        ctl.value = cell.getCsetAttribute(pp.attributeName);
+
         // special cases
         if (pp.attributeName === 'SAL_dummy')
         {
             ctl.value = cell.getSAL();
         }
-        else
-        {
-            ctl.value = cell.getCsetAttribute(pp.attributeName);
-        }
+
 
         mxEvent.addListener(ctl, 'change', evt =>
         {
@@ -2606,7 +2612,7 @@ diagramElementProperties = function ()
 {
     var p =
     {
-        ComponentProperties: [
+        componentProperties: [
             {
                 fieldLabel: 'Label',
                 attributeName: 'label',
@@ -2635,16 +2641,16 @@ diagramElementProperties = function ()
                 ],
                 defaultValue: 'Moderate'
             }, {
-                fieldLabel: 'Description',
-                attributeName: 'Description',
-                type: 'textarea'
-            }, {
                 fieldLabel: 'Host Name',
                 attributeName: 'HostName',
                 type: 'input'
+            }, {
+                fieldLabel: 'Description',
+                attributeName: 'Description',
+                type: 'textarea'
             }
         ],
-        ZoneProperties: [
+        zoneProperties: [
             {
                 fieldLabel: 'Label',
                 attributeName: 'label',
@@ -2683,7 +2689,7 @@ diagramElementProperties = function ()
                 type: 'input'
             }
         ],
-        LinkProperties: [
+        linkProperties: [
             {
                 fieldLabel: 'Label',
                 attributeName: 'label',
