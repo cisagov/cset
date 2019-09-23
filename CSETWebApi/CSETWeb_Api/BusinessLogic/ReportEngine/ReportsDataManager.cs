@@ -106,6 +106,21 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return controls;
         }
 
+        public List<DiagramInventory> getDiagramInventory()
+        {
+            using(var db=new CSET_Context()){
+                var rval = from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
+                           join z in db.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
+                           where c.Assessment_Id == _assessmentId
+                           select new DiagramInventory{ Diagram_Component_Type= c.Diagram_Component_Type,
+                               label=c.label,
+                               Zone_Name =z.Name,
+                               Universal_Sal_Level = z.Universal_Sal_Level                               
+                           };
+                return rval.ToList();
+            }
+        }
+
         public List<usp_getFinancialQuestions_Result> getFinancialQuestions()
         {
             using(var db = new CSET_Context())
@@ -606,6 +621,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return genSALTable;
             }
         }
+    }
+
+    public class DiagramInventory
+    {
+        public string Diagram_Component_Type { get; set; }
+        public string label { get; set; }        
+        public string Universal_Sal_Level { get; set; }
+        public string Zone_Name { get; set; }
     }
 }
 

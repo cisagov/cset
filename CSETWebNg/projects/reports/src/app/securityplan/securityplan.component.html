@@ -814,6 +814,31 @@
         </div>
     </div>
 
+    <div class="page-break">
+        <h1>
+            Diagram Component Inventory
+        </h1>
+        <table class="table-site-info" *ngFor="let inventoryItem of response.Inventory">
+            <tr>
+                <td>Component Type</td>
+                <td>{{inventoryItem.Diagram_Component_Type}}</td>
+            </tr>
+            <tr>
+                <td>Component Name</td>
+                <td>{{inventoryItem.label}}</td>
+            </tr>
+            <tr>
+                <td>Zone</td>
+                <td>{{inventoryItem.Zone_Name}}</td>
+            </tr>
+            <tr>
+                <td>SAL Level</td>
+                <td>{{inventoryItem.Universal_Sal_Level}}</td>
+            </tr>            
+        </table>
+    </div>
+
+
 
     <div class="page-break">
         <h1>

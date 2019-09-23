@@ -36,6 +36,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<StandardQuestions> StandardsQuestions { get; set; }
         public List<usp_getFinancialQuestions_Result> FinancialQuestionsTable { get; set; }
         public List<ComponentQuestion> ComponentQuestions { get; set; }
+        public List<DiagramInventory> Inventory { get; set; }
 
         public class INFORMATION
         {
