@@ -63,15 +63,16 @@ CsetUtils.edgesToTop = function (graph, edit)
 {
     var model = graph.getModel();
 
+    var filter = function (cell)
+    {
+        return model.isEdge(cell);
+    }
+
     for (var i = 0; i < edit.changes.length; i++)
     {
-        if (edit.changes[i] instanceof mxChildChange)
-        {
-            var filter = function (cell)
-            {
-                return model.isEdge(cell);
-            }
-            var edges = model.filterDescendants(filter, edit.changes[i].child);
+        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
+        {             
+            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
             console.log(edges);
             graph.orderCells(false, edges);
         }
@@ -273,5 +274,49 @@ CsetUtils.handleZoneChanges = function (edit)
             c.initZone();
         }
     });
+}
+
+
+/**
+ * Recursively finds all child edges for the parent.
+ * 
+ * @param {any} parent
+ */
+CsetUtils.getAllChildEdges = function (parent)
+{
+    var result = [];
+
+
+    for (var i = 0; i < parent.children.length; i++)
+    {
+        getChildren(parent.children[i]);
+    }
+
+    function getChildren(cell)
+    {
+        if (result.indexOf(cell) > -1)
+        {
+            return;
+        }
+
+        if (cell.isEdge())
+        {
+            result.push(cell);
+        }
+
+        if (!!cell.edges)
+        {
+            cell.edges.forEach(e => result.push(e));
+        }
+
+        if (!!cell.children)
+        {
+            for (var i = 0; i < cell.children.length; i++) 
+            {
+                getChildren(cell.children[i]);
+            }
+        }
+    }
+    return result;
 }
 
