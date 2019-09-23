@@ -63,7 +63,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
             XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
             XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
-            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
+            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
             foreach (XmlNode layer in mxCellLayers)
             {
                 string id = layer.Attributes["id"].Value;
