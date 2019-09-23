@@ -2470,15 +2470,15 @@ PropertiesPanel.prototype.addProperties = function (container)
 
     var cell = graph.getSelectionCell();
 
-    var listener = mxUtils.bind(this, function ()
-    {
-        console.log('listener is doing something');
-    });
-
-
     // if multiple things are selected, don't show the properties panel
     var ss = this.format.getSelectionState();
     if (ss.vertices.length + ss.edges.length > 1)
+    {
+        return;
+    }
+
+    // if a group is selected, don't show the properties panel.
+    if (cell.hasStyle("group"))
     {
         return;
     }
@@ -2493,17 +2493,17 @@ PropertiesPanel.prototype.addProperties = function (container)
     var propertySet = {};
     if (cell.isEdge())
     {
-        propertySet = diagramElementProperties().LinkProperties;
+        propertySet = diagramElementProperties().linkProperties;
     }
     if (cell.isVertex())
     {
         if (cell.isZone())
         {
-            propertySet = diagramElementProperties().ZoneProperties;
+            propertySet = diagramElementProperties().zoneProperties;
         }
         else
         {
-            propertySet = diagramElementProperties().ComponentProperties;
+            propertySet = diagramElementProperties().componentProperties;
         }
     }
 
@@ -2575,15 +2575,15 @@ PropertiesPanel.prototype.addProperties = function (container)
             ctl.setAttribute('disabled', true);
         }
 
+
+        ctl.value = cell.getCsetAttribute(pp.attributeName);
+
         // special cases
         if (pp.attributeName === 'SAL_dummy')
         {
             ctl.value = cell.getSAL();
         }
-        else
-        {
-            ctl.value = cell.getCsetAttribute(pp.attributeName);
-        }
+
 
         mxEvent.addListener(ctl, 'change', evt =>
         {
@@ -2594,12 +2594,15 @@ PropertiesPanel.prototype.addProperties = function (container)
             // in case this is a zone
             cell.setZoneColor();
 
-            graph.refresh();
+            graph.refresh();   
 
-            // TODO:  still need to fire event that will make the model save itself
-            graph.getModel().addListener(mxEvent.CHANGE, listener);
-            this.listeners.push({ destroy: function () { graph.getModel().removeListener(listener); } });
-            listener();
+            // fire events that will make the model save itself
+            var m = graph.getModel();
+            m.beginUpdate();
+            m.currentEdit.add(cell);
+            m.fireEvent(new mxEventObject(mxEvent.EXECUTE, "change", cell));
+            m.fireEvent(new mxEventObject(mxEvent.EXECUTED, "change", cell));
+            m.endUpdate()
         });
     }
 }
@@ -2609,7 +2612,7 @@ diagramElementProperties = function ()
 {
     var p =
     {
-        ComponentProperties: [
+        componentProperties: [
             {
                 fieldLabel: 'Label',
                 attributeName: 'label',
@@ -2638,16 +2641,16 @@ diagramElementProperties = function ()
                 ],
                 defaultValue: 'Moderate'
             }, {
-                fieldLabel: 'Description',
-                attributeName: 'Description',
-                type: 'textarea'
-            }, {
                 fieldLabel: 'Host Name',
                 attributeName: 'HostName',
                 type: 'input'
+            }, {
+                fieldLabel: 'Description',
+                attributeName: 'Description',
+                type: 'textarea'
             }
         ],
-        ZoneProperties: [
+        zoneProperties: [
             {
                 fieldLabel: 'Label',
                 attributeName: 'label',
@@ -2686,7 +2689,7 @@ diagramElementProperties = function ()
                 type: 'input'
             }
         ],
-        LinkProperties: [
+        linkProperties: [
             {
                 fieldLabel: 'Label',
                 attributeName: 'label',

@@ -148,33 +148,48 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
 }
 
 /**
+ * Make sure edges (links) are not hidden behind zones or other objects
+ */
+CsetUtils.edgesToTop = function (graph, edit) {
+    var model = graph.getModel();
+
+    for (var i = 0; i < edit.changes.length; i++) {
+        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child)) {
+            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
+            graph.orderCells(false, edges);
+        }
+    }
+}
+
+
+/**
  * Persists the graph to the CSET API.
  */
 CsetUtils.PersistGraphToCSET = async function (editor) {
-    const enc = new mxCodec();
-    const node = enc.encode(editor.graph.getModel());
-    const model = editor.graph.getModel();
-    const oSerializer = new XMLSerializer();
-    const sXML = oSerializer.serializeToString(node);
+    const req = {
+        DiagramXml: '',
+        LastUsedComponentNumber: 1,
+        AnalyzeDiagram: editor.analyzeDiagram || false
+    };
+    const xmlserializer = new XMLSerializer();
 
-    const req = {};
-    if (sXML === EditorUi.prototype.emptyDiagramXml) {
-        req.DiagramXml = '';
-        req.LastUsedComponentNumber = 1;
-    } else if (model) {
+    const model = editor.graph.getModel();
+    if (model) {
+        const enc = new mxCodec();
         const node = enc.encode(model);
-        const oSerializer = new XMLSerializer();
-        const sXML = oSerializer.serializeToString(node);
-        req.DiagramXml = sXML;
-        req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+        const sXML = xmlserializer.serializeToString(node);
+        if (sXML !== EditorUi.prototype.emptyDiagramXml) {
+            req.DiagramXml = sXML;
+            req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+        }
     }
 
+    // include the SVG in the save request
     const bg = '#ffffff';
     const svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
-    svgRoot = new XMLSerializer().serializeToString(svgRoot);
-
+    svgRoot = xmlserializer.serializeToString(svgRoot);
     req.DiagramSvg = svgRoot;
-    reg.analyzeDiagram = editor.analyzeDiagram || false;
+
     await CsetUtils.saveDiagram(req);
 }
 
@@ -289,4 +304,39 @@ CsetUtils.handleZoneChanges = function (edit) {
             c.initZone();
         }
     });
+}
+
+/**
+ * Recursively finds all child edges for the parent.
+ * 
+ * @param {any} parent
+ */
+CsetUtils.getAllChildEdges = function (parent) {
+    var result = [];
+
+
+    for (var i = 0; i < parent.children.length; i++) {
+        getChildren(parent.children[i]);
+    }
+
+    function getChildren(cell) {
+        if (result.indexOf(cell) > -1) {
+            return;
+        }
+
+        if (cell.isEdge()) {
+            result.push(cell);
+        }
+
+        if (!!cell.edges) {
+            cell.edges.forEach(e => result.push(e));
+        }
+
+        if (!!cell.children) {
+            for (var i = 0; i < cell.children.length; i++) {
+                getChildren(cell.children[i]);
+            }
+        }
+    }
+    return result;
 }

@@ -9633,6 +9633,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         return;
     }
 
+    // ignore grouping objects
+    if (cell.hasStyle('group'))
+    {
+        return;
+    }
+
 
     // ignore shapes
     if (cell.getStyleValue('shape') !== null)
