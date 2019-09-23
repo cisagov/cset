@@ -152,7 +152,6 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
  */
 CsetUtils.edgesToTop = function (graph, edit) {
     var model = graph.getModel();
-
     for (var i = 0; i < edit.changes.length; i++) {
         if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child)) {
             var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
@@ -314,6 +313,11 @@ CsetUtils.handleZoneChanges = function (edit) {
 CsetUtils.getAllChildEdges = function (parent) {
     var result = [];
 
+    if (!!parent.children) {
+        for (var i = 0; i < parent.children.length; i++) {
+            getChildren(parent.children[i]);
+        }
+    }
 
     for (var i = 0; i < parent.children.length; i++) {
         getChildren(parent.children[i]);
@@ -339,4 +343,39 @@ CsetUtils.getAllChildEdges = function (parent) {
         }
     }
     return result;
+}
+
+/**
+ * 
+ * 
+ * @param {any} filename
+ */
+CsetUtils.findComponentInMap = function (filename) {
+    var m = Editor.componentSymbols;
+    for (var i = 0; i < m.length; i++) {
+        var group = m[i];
+        for (var j = 0; j < group.Symbols.length; j++) {
+            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName) {
+                return group.Symbols[j];
+            }
+        }
+    };
+}
+
+/**
+ * 
+ */
+CsetUtils.getFilenameFromPath = function (path) {
+    if (!path) {
+        return '';
+    }
+
+    var s = path.lastIndexOf('/');
+    if (s > 0) {
+        if (path.length > (s + 1)) {
+            return path.substring(s + 1);
+        }
+        return '';
+    }
+    return path;
 }
