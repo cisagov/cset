@@ -2569,32 +2569,57 @@ PropertiesPanel.prototype.addProperties = function (container)
             }
         }
 
-
+        // disable the field if configured so
         if (pp.hasOwnProperty('disabled') && pp.disabled)
         {
             ctl.setAttribute('disabled', true);
         }
 
-
         ctl.value = cell.getCsetAttribute(pp.attributeName);
 
+
+
         // special cases
-        if (pp.attributeName === 'SAL_dummy')
+        if (pp.attributeName === 'SAL')
         {
             ctl.value = cell.getSAL();
         }
+
+        if (!!pp.isComponentTypeField)
+        {
+            ctl.setAttribute('propname', 'ComponentType');
+
+            populateComponentTypes(ctl, cell);
+
+            // disable field if the component is an MSC
+            var symbolDetail = cell.getSymbolDetail();
+            if (!!symbolDetail && symbolDetail.Abbreviation === 'MSC')
+            {
+                ctl.setAttribute('disabled', true);
+            }
+        }
+
 
 
         mxEvent.addListener(ctl, 'change', evt =>
         {
             var cell = graph.getSelectionCell();
             var ctl = evt.srcElement;
-            cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.value);
+            
+            if (ctl.getAttribute('propname') == 'ComponentType')
+            {
+                cell.removeStyleValue('image');
+                cell.setStyleValue('image;image', 'img/cset/' + ctl.value);
+            }
+            else
+            {
+                cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.value);
+            }
 
             // in case this is a zone
             cell.setZoneColor();
 
-            graph.refresh();   
+            graph.refresh();
 
             // fire events that will make the model save itself
             var m = graph.getModel();
@@ -2608,6 +2633,49 @@ PropertiesPanel.prototype.addProperties = function (container)
 }
 
 
+/**
+ * 
+ */
+populateComponentTypes = function (ctl, cell)
+{
+    var c = [];
+    for (var i = 0; i < Editor.componentSymbols.length; i++)
+    {
+        var group = Editor.componentSymbols[i];
+        for (var j = 0; j < group.Symbols.length; j++)
+        {
+            c.push(group.Symbols[j]);
+        }
+    }
+    c.sort((a, b) =>
+    {
+        if (a.LongName < b.LongName) return -1;
+        if (a.LongName > b.LongName) return 1;
+        return 0;
+    });
+
+    c.forEach(t =>
+    {
+        var option = document.createElement('option');
+        ctl.appendChild(option);
+        option.setAttribute('value', t.FileName);
+        mxUtils.write(option, t.LongName);
+
+        // set the existing value
+        for (var o = 0; o < ctl.options.length; o++)
+        {
+            if (ctl.options[o].value === CsetUtils.getFilenameFromPath(cell.getStyleValue('image')))
+            {
+                ctl.selectedIndex = o;
+            }
+        }
+    });
+}
+
+
+/**
+ * 
+ */
 diagramElementProperties = function ()
 {
     var p =
@@ -2619,7 +2687,7 @@ diagramElementProperties = function ()
                 type: 'input'
             }, {
                 fieldLabel: 'SAL',
-                attributeName: 'SAL_dummy',
+                attributeName: 'SAL',
                 type: 'input',
                 disabled: true
             },
@@ -2629,7 +2697,9 @@ diagramElementProperties = function ()
                 type: 'input'
             }, {
                 fieldLabel: 'Asset Type',
-                comment: 'Defined in the style'
+                comment: 'Defined in the style',
+                isComponentTypeField: true,
+                type: 'select'
             }, {
                 fieldLabel: 'Criticality',
                 attributeName: 'Criticality',

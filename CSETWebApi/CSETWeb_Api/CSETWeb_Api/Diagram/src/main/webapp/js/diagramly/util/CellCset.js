@@ -2,17 +2,6 @@
 
 
 /**
- * Providing a nice function to set a single style element in a cell.
- * @param {any} name
- * @param {any} value
- */
-mxCell.prototype.setStyleValue = function (name, value)
-{
-    this.setStyle(CsetUtils.setStyleValue(this.getStyle(), name, value));
-}
-
-
-/**
  * Returns the value of the attribute on the wrapper object (NOT THE STYLE).
  */
 mxCell.prototype.getCsetAttribute = function (name)
@@ -224,6 +213,33 @@ mxCell.prototype.autoNameComponent = function ()
 
 
 /**
+ * Returns details for the component (sourced from COMPONENT_SYMBOLS columns)
+ */
+mxCell.prototype.getSymbolDetail = function ()
+{
+    // ignore items without style
+    if (!this.getStyle())
+    {
+        return;
+    }
+
+
+    var filename = CsetUtils.getFilenameFromPath(this.getStyleValue('image'));
+
+
+    // if this is an MSC, use it's natural filename to find the component definition
+    var s = this.getStyle();
+    if (!!s && s.indexOf('msc=1') > 0)
+    {
+        filename = 'multiple_services_component.svg';
+    }
+
+    return CsetUtils.findComponentInMap(filename);
+}
+
+
+
+/**
  * Returns a boolean indicating if the specified style exists,
  * regardless of its value.
  * @param {any} styleString
@@ -235,8 +251,8 @@ mxCell.prototype.hasStyle = function (name)
     var styleString = this.getStyle();
     styleString.split(';').forEach((style) =>
     {
-        const s = style.split('=', 2);
-        if (s[0] === name)
+        if (style.toLowerCase() === name.toLowerCase()
+            || style.toLowerCase().startsWith(name.toLowerCase() + '='))
         {
             exists = true;
         }
@@ -276,30 +292,53 @@ mxCell.prototype.getStyleValue = function (name)
 }
 
 /**
+ * 
+ */
+mxCell.prototype.removeStyleValue = function (name)
+{
+    var elements = this.getStyle().split(';');
+
+    for (var i = elements.length - 1; i >= 0; i--)
+    {
+        if (elements[i].toLowerCase() === name.toLowerCase()
+            || elements[i].toLowerCase().startsWith(name.toLowerCase() + '=')
+            || elements[i] === '')
+        {
+            elements.splice(i, 1);
+        }
+    }
+
+    this.setStyle(elements.join(';'));
+}
+
+
+/**
  * Sets a single style value in the cell's style string.
  */
 mxCell.prototype.setStyleValue = function (name, value)
 {
-    var exists = false;
-    var styleElements = this.getStyle().split(';');
+    var elements = this.getStyle().split(';');
 
-    for (var i = 0; i < styleElements.length; i++)
+    // first, remove any elements for the name, whether or not they contain a value
+    for (var i = elements.length - 1; i >= 0; i--)
     {
-        const s = styleElements[i].split('=', 2);
-        if (s[0].toLowerCase() === name.toLowerCase())
+        if (elements[i].toLowerCase() === name.toLowerCase()
+            || elements[i].toLowerCase().startsWith(name.toLowerCase() + '=')
+            || elements[i] === '')
         {
-            s[1] = value;
-            styleElements[i] = s[0] + '=' + s[1];
-            exists = true;
+            elements.splice(i, 1);
         }
     }
 
-    if (!exists)
+    // then add the specified style and value
+    var newStyle = name;
+    if (!!value)
     {
-        styleElements.push(name + '=' + value + ';');
+        newStyle += ('=' + value);
     }
+    elements.push(newStyle + ';');
 
-    this.setStyle(styleElements.join(';'));
+    this.setStyle(elements.join(';'));
 }
 
 
@@ -308,6 +347,7 @@ mxCell.prototype.setStyleValue = function (name, value)
  */
 mxCell.prototype.getSAL = function ()
 {
+
     if (this.isZone())
     {
         return this.getCsetAttribute('SAL');
