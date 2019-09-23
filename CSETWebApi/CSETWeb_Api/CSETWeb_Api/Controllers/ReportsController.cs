@@ -107,6 +107,7 @@ namespace CSETWeb_Api.Controllers
             data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
+            data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
             return data;
         }
 

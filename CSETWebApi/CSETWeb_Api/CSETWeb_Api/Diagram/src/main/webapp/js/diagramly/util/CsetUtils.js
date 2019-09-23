@@ -57,6 +57,24 @@ CsetUtils.adjustConnectability = function (edit)
 
 
 /**
+ * Make sure edges (links) are not hidden behind zones or other objects
+ */
+CsetUtils.edgesToTop = function (graph, edit)
+{
+    var model = graph.getModel();
+
+    for (var i = 0; i < edit.changes.length; i++)
+    {
+        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
+        {             
+            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
+            graph.orderCells(false, edges);
+        }
+    }
+}
+
+
+/**
  * Persists the graph to the CSET API.
  */
 CsetUtils.PersistGraphToCSET = function (editor)
@@ -72,11 +90,12 @@ CsetUtils.PersistGraphToCSET = function (editor)
     var bg = '#ffffff';
     var req = {};
 
-    if(model){    
+    if (model)
+    {
         var node = enc.encode(model);
         var oSerializer = new XMLSerializer();
         var sXML = oSerializer.serializeToString(node);
-    
+
         req.DiagramXml = sXML;
         req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
     }
@@ -116,20 +135,22 @@ CsetUtils.saveDiagram = function (req)
         }
         if (this.readyState == 4 && this.status == 401)
         {
-            window.location.replace('error401.html');
+            window.location.replace('http://localhost:4200');
         }
     }
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', jwt);
     xhr.overrideMimeType("application/json");
-    xhr.onload  = function() {        
-        if(req.responseText){    
+    xhr.onload = function ()
+    {
+        if (req.responseText)
+        {
             var warnings = JSON.parse(req.responseText);
             var analysis = new CsetAnalysisWarnings();
             analysis.addWarningsToDiagram(warnings, editor.graph);
         }
-     };
+    };
     xhr.send(JSON.stringify(req));
 }
 
@@ -203,7 +224,7 @@ function TranslateToMxGraph(editor, sXML)
         }
         if (this.readyState == 4 && this.status == 401)
         {
-            window.location.replace('error401.html');
+            window.location.replace('http://localhost:4200');
         }
     }
     xhr.open('POST', url);
@@ -221,7 +242,7 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-        
+
         x.initZone();
     });
     graph.refresh();
@@ -247,5 +268,49 @@ CsetUtils.handleZoneChanges = function (edit)
             c.initZone();
         }
     });
+}
+
+
+/**
+ * Recursively finds all child edges for the parent.
+ * 
+ * @param {any} parent
+ */
+CsetUtils.getAllChildEdges = function (parent)
+{
+    var result = [];
+
+
+    for (var i = 0; i < parent.children.length; i++)
+    {
+        getChildren(parent.children[i]);
+    }
+
+    function getChildren(cell)
+    {
+        if (result.indexOf(cell) > -1)
+        {
+            return;
+        }
+
+        if (cell.isEdge())
+        {
+            result.push(cell);
+        }
+
+        if (!!cell.edges)
+        {
+            cell.edges.forEach(e => result.push(e));
+        }
+
+        if (!!cell.children)
+        {
+            for (var i = 0; i < cell.children.length; i++) 
+            {
+                getChildren(cell.children[i]);
+            }
+        }
+    }
+    return result;
 }
 
