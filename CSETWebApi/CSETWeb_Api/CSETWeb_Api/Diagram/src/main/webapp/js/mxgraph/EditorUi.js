@@ -2956,8 +2956,8 @@ EditorUi.prototype.pickColor = function (color, apply) {
         graph.cellEditor.restoreSelection(selState);
         apply(color);
     }, function () {
-            graph.cellEditor.restoreSelection(selState);
-        });
+        graph.cellEditor.restoreSelection(selState);
+    });
     this.showDialog(dlg.container, 230, h, true, false);
     dlg.init();
 };
@@ -3682,10 +3682,18 @@ EditorUi.prototype.destroy = function () {
         this.destroyFunctions = null;
     }
 
-    var c = [this.menubarContainer, this.toolbarContainer, this.sidebarContainer,
-    this.formatContainer, this.diagramContainer, this.footerContainer,
-    this.chromelessToolbar, this.hsplit, this.sidebarFooterContainer,
-    this.layersDialog];
+    var c = [
+        this.menubarContainer,
+        this.toolbarContainer,
+        this.sidebarContainer,
+        this.formatContainer,
+        this.diagramContainer,
+        this.footerContainer,
+        this.chromelessToolbar,
+        this.hsplit,
+        this.sidebarFooterContainer,
+        this.layersDialog
+    ];
 
     for (var i = 0; i < c.length; i++) {
         if (c[i] != null && c[i].parentNode != null) {
@@ -3694,7 +3702,7 @@ EditorUi.prototype.destroy = function () {
     }
 };
 
-EditorUi.prototype.toggleAnalyzer = mxUtils.bind(this, function (e) {
+EditorUi.prototype.toggleAnalyzer = function (e) {
     if (!e.action.toggleAction) {
         return;
     }
@@ -3705,6 +3713,8 @@ EditorUi.prototype.toggleAnalyzer = mxUtils.bind(this, function (e) {
         e.elmt.classList.add(klas);
     }
 
-    this.editor.analyzeDiagram = e.state;
-    CsetUtils.PersistGraphToCSET(this.editor);
-});
+    if (this.editor) {
+        this.editor.analyzeDiagram = e.state;
+        CsetUtils.PersistGraphToCSET(this.editor);
+    }
+};
