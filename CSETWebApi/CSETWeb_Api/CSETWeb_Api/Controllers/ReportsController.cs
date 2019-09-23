@@ -85,6 +85,7 @@ namespace CSETWeb_Api.Controllers
             data.FinancialQuestionsTable = reportsDataManager.getFinancialQuestions();
             data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
+            data.Inventory = reportsDataManager.getDiagramInventory();
             return data;
         }
 
