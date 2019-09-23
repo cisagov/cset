@@ -45,13 +45,13 @@ function makeRequest(e) {
     const jwt = localStorage.getItem('jwt');
     return new Promise(function (resolve, reject) {
         const xhr = new XMLHttpRequest();
+        xhr.open(e.method, e.url);
         xhr.setRequestHeader('Authorization', jwt);
         xhr.setRequestHeader('Content-Type', e.contentType || 'application/json');
         if (e.overrideMimeType) {
             xhr.overrideMimeType(e.overrideMimeType);
         }
 
-        xhr.open(e.method, e.url);
         if (e.onreadystatechange) {
             xhr.onreadystatechange = function () {
                 e.onreadystatechange({
@@ -137,7 +137,7 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
                     sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
 
                     var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
-                    await updateGraph(editor, data);
+                    updateGraph(editor, data);
                     break
                 case 401:
                     window.location.replace('http://localhost:4200');
@@ -161,7 +161,6 @@ CsetUtils.edgesToTop = function (graph, edit) {
     }
 }
 
-
 /**
  * Persists the graph to the CSET API.
  */
@@ -184,10 +183,11 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
         }
     }
 
-    // include the SVG in the save request
     const bg = '#ffffff';
-    const svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = xmlserializer.serializeToString(svgRoot);
+
+    // include the SVG in the save request
     req.DiagramSvg = svgRoot;
 
     await CsetUtils.saveDiagram(req);
@@ -197,7 +197,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
  * Posts the diagram and supporting information to the API.
  * @param {any} req
  */
-CsetUtils.saveDiagram = function (req) {
+CsetUtils.saveDiagram = async function (req) {
     const response = await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
@@ -230,7 +230,7 @@ CsetUtils.saveDiagram = function (req) {
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
  * into the existing diagram.
  */
-CsetUtils.importFilesCSETD = async function (files, editor) {
+CsetUtils.importFilesCSETD = function (files, editor) {
     if (files.length == 0) {
         return;
     }
@@ -238,7 +238,7 @@ CsetUtils.importFilesCSETD = async function (files, editor) {
     var file = files[0];
     var reader = new FileReader();
     reader.onload = function (e) {
-        await TranslateToMxGraph(editor, e.target.result);
+        TranslateToMxGraph(editor, e.target.result);
     };
     reader.readAsText(file);
 }
@@ -255,7 +255,7 @@ async function TranslateToMxGraph(editor, sXML) {
         method: 'POST',
         url: localStorage.getItem('cset.host') + 'diagram/importcsetd',
         payload: JSON.stringify(req),
-        onreadystatechange = function (e) {
+        onreadystatechange: function (e) {
             if (e.readyState !== 4) {
                 return;
             }
@@ -264,7 +264,7 @@ async function TranslateToMxGraph(editor, sXML) {
                 case 200:
                 case 204:
                     // successful post - drop the XML that came back into the graph
-                    await updateGraph(editor, e.responseText, function () {
+                    updateGraph(editor, e.responseText, function () {
                         CsetUtils.initializeZones(editor.graph)
                     });
                     break;
