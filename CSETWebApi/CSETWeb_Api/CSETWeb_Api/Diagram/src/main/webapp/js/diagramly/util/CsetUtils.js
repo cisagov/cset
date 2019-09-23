@@ -61,15 +61,14 @@ CsetUtils.adjustConnectability = function (edit)
  */
 CsetUtils.edgesToTop = function (graph, edit)
 {
+    var model = graph.getModel();
+
     for (var i = 0; i < edit.changes.length; i++)
     {
-        if (edit.changes[i] instanceof mxChildChange)
-        {
-            var edges = edit.changes[i].child.edges;
-            if (!!edges)
-            {
-                graph.orderCells(false, edges);
-            }
+        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
+        {             
+            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
+            graph.orderCells(false, edges);
         }
     }
 }
@@ -269,5 +268,49 @@ CsetUtils.handleZoneChanges = function (edit)
             c.initZone();
         }
     });
+}
+
+
+/**
+ * Recursively finds all child edges for the parent.
+ * 
+ * @param {any} parent
+ */
+CsetUtils.getAllChildEdges = function (parent)
+{
+    var result = [];
+
+
+    for (var i = 0; i < parent.children.length; i++)
+    {
+        getChildren(parent.children[i]);
+    }
+
+    function getChildren(cell)
+    {
+        if (result.indexOf(cell) > -1)
+        {
+            return;
+        }
+
+        if (cell.isEdge())
+        {
+            result.push(cell);
+        }
+
+        if (!!cell.edges)
+        {
+            cell.edges.forEach(e => result.push(e));
+        }
+
+        if (!!cell.children)
+        {
+            for (var i = 0; i < cell.children.length; i++) 
+            {
+                getChildren(cell.children[i]);
+            }
+        }
+    }
+    return result;
 }
 
