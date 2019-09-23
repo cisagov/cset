@@ -52,9 +52,6 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
-
-
-
         /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
@@ -143,7 +140,7 @@ namespace CSETWeb_Api.Controllers
         /// Returns the details under a given questions details
         /// </summary>
         /// <param name="QuestionId"></param>
-        [HttpPost]
+        [HttpPost, HttpGet]
         [Route("api/Details")]
         public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId)
         {
