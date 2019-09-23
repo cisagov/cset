@@ -4318,3 +4318,17 @@ EditorUi.prototype.destroy = function()
 		}
 	}
 };
+
+EditorUi.prototype.toggleAnalyzer = function (e) {
+    /* TODO: send diagram with analyzer state to database for processing.
+     * AND await diagram analyzer completion, then refresh the GUI. */
+    if (!e.action.toggleAction) {
+        return;
+    }
+
+    const klas = 'geSprite-analyze-selected';
+    e.elmt.classList.remove(klas);
+    if (e.state) {
+        e.elmt.classList.add(klas);
+    }
+};

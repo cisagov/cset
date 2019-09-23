@@ -284,7 +284,9 @@
 	<script type="text/javascript">
 		/**
 		 * Synchronously adds scripts to the page.
-		 */		 
+		 */
+	
+
 		function mxscript(src, onLoad, id, dataAppKey, noWrite)
 		{
 			if (onLoad != null || noWrite)
@@ -386,7 +388,7 @@
 			mxscript('js/diagramly/util/canvg.js');
 			mxscript('js/diagramly/util/CsetAnalysis.js')         
 			mxscript('js/diagramly/util/CsetUtils.js');
-		        mxscript('js/diagramly/util/CellCset.js');
+            mxscript('js/diagramly/util/CellCset.js');
 		}
 
 		// Electron
@@ -456,14 +458,14 @@
 		</tr>
 	</table>
 </div>
+
 <script type="text/javascript">
 /**
  * Main
  */
 console.log("before app main");
-// CSET - things to do when new objects are added to the graph
-
 App.main();
 </script>
+
 </body>
 </html>
