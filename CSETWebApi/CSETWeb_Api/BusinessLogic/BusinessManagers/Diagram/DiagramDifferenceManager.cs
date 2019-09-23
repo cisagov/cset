@@ -281,7 +281,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
              * post it to an object for saving.
              */
             XmlNodeList mxCellZones = xDoc.SelectNodes("//*[@zone=\"1\"]");
-            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
+            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
             foreach (XmlNode layer in mxCellLayers)
             {
                 string id = layer.Attributes["id"].Value;
