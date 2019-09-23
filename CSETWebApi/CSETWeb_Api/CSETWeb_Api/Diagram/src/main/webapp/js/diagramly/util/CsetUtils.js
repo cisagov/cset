@@ -63,17 +63,11 @@ CsetUtils.edgesToTop = function (graph, edit)
 {
     var model = graph.getModel();
 
-    var filter = function (cell)
-    {
-        return model.isEdge(cell);
-    }
-
     for (var i = 0; i < edit.changes.length; i++)
     {
         if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
         {             
             var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
-            console.log(edges);
             graph.orderCells(false, edges);
         }
     }
