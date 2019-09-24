@@ -11,6 +11,7 @@ using System.Data;
 using System.IO;
 using System.Windows.Navigation;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Model;
@@ -356,6 +357,7 @@ namespace CSETWeb_Api.BusinessManagers
             try
             {
                 var diagramComponents = vertices.Where(x => !string.IsNullOrEmpty(x.ComponentGuid)).ToList();
+                var diagramZones = GetDiagramZones(vertices);
                 var symbols = GetAllComponentSymbols();
                 for (int i = 0; i < diagramComponents.Count(); i++)
                 {
@@ -366,13 +368,15 @@ namespace CSETWeb_Api.BusinessManagers
                         var image = imageTag.Split('/').LastOrDefault();
                         diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.DisplayName;
                     }
+
+                    diagramComponents[i].zoneLabel = diagramZones.FirstOrDefault(x=>x.id == diagramComponents[i].parent)?.label;
                 }
 
                 return diagramComponents;
             }
             catch (Exception ex)
             {
-                var messeage = ex.Message;
+                var message = ex.Message;
             }
             finally
             {
@@ -386,7 +390,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="edges"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> GetDiagramLines(List<mxGraphModelRootMxCell> edges)
+        public List<mxGraphModelRootMxCell> GetDiagramLinks(List<mxGraphModelRootMxCell> edges)
         {
             var diagramLines = edges.Where(l => l.edge == 1).ToList();
             return diagramLines;
@@ -410,7 +414,6 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<mxGraphModelRootObject> GetDiagramShapes(List<mxGraphModelRootObject> vertices)
         {
-            
             return null;
         }
 
@@ -422,6 +425,60 @@ namespace CSETWeb_Api.BusinessManagers
         public List<mxGraphModelRootObject> GetDiagramText(List<mxGraphModelRootObject> vertices)
         {
             return null;
+        }
+
+        public void SaveComponent(mxGraphModelRootObject vertice, int assessmentId)
+        {
+            try
+            {
+                var stream = GetDiagramXml(assessmentId);
+                XmlSerializer serializer = new XmlSerializer(typeof(mxGraphModel));
+                var diagramXml = (mxGraphModel)serializer.Deserialize(stream);
+                for (int i = 0; i < diagramXml.root.Items.Length; i++)
+                {
+                    mxGraphModelRootObject item = new mxGraphModelRootObject();
+                    Type objectType = typeof(mxGraphModelRootObject);
+
+                    if (diagramXml.root.Items[i].GetType() == objectType)
+                    {
+                        item = (mxGraphModelRootObject) diagramXml.root.Items[i];
+                    }
+
+                    if (item.id == vertice.id)
+                    {
+                        item.label = vertice.label;
+                        item.internalLabel = vertice.label;
+                        item.HasUniqueQuestions = vertice.HasUniqueQuestions;
+                        item.Criticality = vertice.Criticality;
+                        diagramXml.root.Items[i] = (object)item;
+                    }
+                }
+
+                using (var sww = new StringWriter())
+                {
+                    using (XmlWriter writer = XmlWriter.Create(sww))
+                    {
+                        serializer.Serialize(writer, diagramXml);
+                        string xml = sww.ToString();
+                        var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+                        var xDoc = new XmlDocument();
+                        xDoc.LoadXml(xml);
+                        if(assessment != null)
+                            SaveDiagram(assessmentId, xDoc, assessment.LastUsedComponentNumber, assessment.Diagram_Image);
+                    }
+                }
+
+               
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+            }
+            finally
+            {
+            }
+
+            
         }
     }
 }

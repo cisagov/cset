@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DiagramService } from '../../../../services/diagram.service';
 
 @Component({
   selector: 'zones',
@@ -8,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class ZonesComponent implements OnInit {
   zones = [];
   displayedColumns = ['type', 'label', 'sal', 'layer', 'owner', 'visible']
-  constructor() { }
+  constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
+    this.getZones();
   }
 
+  getZones(){
+    this.diagramSvc.getDiagramZones().subscribe((x:any) =>{
+      this.zones = x;
+      console.log(x);
+    });
+  }
 }

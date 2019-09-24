@@ -22,6 +22,7 @@ using DataLayerCore.Model;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -257,9 +258,9 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [CSETAuthorize]
-        [Route("api/diagram/getLines")]
+        [Route("api/diagram/getLinks")]
         [HttpGet]
-        public IHttpActionResult getLines()
+        public IHttpActionResult GetLinks()
         {
             try
             {
@@ -267,9 +268,9 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml);
-                var lines = dm.GetDiagramComponents(vertices);
-                return Ok(lines);
+                var edges = dm.ProcessDigramEdges(diagramXml);
+                var links = dm.GetDiagramLinks(edges);
+                return Ok(links);
             }
             catch (Exception ex)
             {
@@ -306,6 +307,22 @@ namespace CSETWeb_Api.Controllers
             finally
             {
             }
+        }
+
+        [CSETAuthorize]
+        [Route("api/diagram/saveDiagram")]
+        [HttpPost]
+        public IHttpActionResult SaveDiagram(mxGraphModelRootObject vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveComponent(vertice, (int)assessmentId);
+            }
+
+            return Ok();
         }
     }
 }

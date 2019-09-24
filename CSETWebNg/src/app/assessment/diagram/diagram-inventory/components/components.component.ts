@@ -12,23 +12,30 @@ export class ComponentsComponent implements OnInit {
   assetTypes: any;
   sal: any;
   criticality: any;
-  constructor(public diagrmSvc: DiagramService) {
+  constructor(public diagramSvc: DiagramService) {
 
    }
 
   ngOnInit() {
     // Summary Percent Compliance
-    this.diagrmSvc.getSymbols().subscribe((x:any) => {
+    this.diagramSvc.getSymbols().subscribe((x:any) => {
       this.assetTypes = x;
     });
     this.getComponents();
   }
 
   getComponents(){
-    this.diagrmSvc.getDiagramComponents().subscribe((x:any) =>{
+    this.diagramSvc.getDiagramComponents().subscribe((x:any) =>{
       this.components = x;
       console.log(x);
     });
+  }
+
+  submit(component){
+    this.diagramSvc.saveDiagram(component).subscribe((x:any)=>{
+    
+    });
+
   }
 
 

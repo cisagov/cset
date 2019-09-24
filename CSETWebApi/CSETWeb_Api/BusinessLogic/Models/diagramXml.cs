@@ -17,6 +17,7 @@ using System.Xml.Serialization;
 
 namespace CSETWeb_Api.BusinessLogic.Models
 {
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -28,11 +29,257 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         private mxGraphModelRoot rootField;
 
+        private ushort dxField;
+
+        private ushort dyField;
+
+        private byte gridField;
+
+        private byte gridSizeField;
+
+        private byte guidesField;
+
+        private byte tooltipsField;
+
+        private byte connectField;
+
+        private byte arrowsField;
+
+        private byte foldField;
+
+        private byte pageField;
+
+        private byte pageScaleField;
+
+        private ushort pageWidthField;
+
+        private ushort pageHeightField;
+
+        private byte mathField;
+
+        private byte shadowField;
+
         /// <remarks/>
         public mxGraphModelRoot root
         {
-            get { return this.rootField; }
-            set { this.rootField = value; }
+            get
+            {
+                return this.rootField;
+            }
+            set
+            {
+                this.rootField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort dx
+        {
+            get
+            {
+                return this.dxField;
+            }
+            set
+            {
+                this.dxField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort dy
+        {
+            get
+            {
+                return this.dyField;
+            }
+            set
+            {
+                this.dyField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte grid
+        {
+            get
+            {
+                return this.gridField;
+            }
+            set
+            {
+                this.gridField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte gridSize
+        {
+            get
+            {
+                return this.gridSizeField;
+            }
+            set
+            {
+                this.gridSizeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte guides
+        {
+            get
+            {
+                return this.guidesField;
+            }
+            set
+            {
+                this.guidesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte tooltips
+        {
+            get
+            {
+                return this.tooltipsField;
+            }
+            set
+            {
+                this.tooltipsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte connect
+        {
+            get
+            {
+                return this.connectField;
+            }
+            set
+            {
+                this.connectField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte arrows
+        {
+            get
+            {
+                return this.arrowsField;
+            }
+            set
+            {
+                this.arrowsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte fold
+        {
+            get
+            {
+                return this.foldField;
+            }
+            set
+            {
+                this.foldField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte page
+        {
+            get
+            {
+                return this.pageField;
+            }
+            set
+            {
+                this.pageField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte pageScale
+        {
+            get
+            {
+                return this.pageScaleField;
+            }
+            set
+            {
+                this.pageScaleField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort pageWidth
+        {
+            get
+            {
+                return this.pageWidthField;
+            }
+            set
+            {
+                this.pageWidthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort pageHeight
+        {
+            get
+            {
+                return this.pageHeightField;
+            }
+            set
+            {
+                this.pageHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte math
+        {
+            get
+            {
+                return this.mathField;
+            }
+            set
+            {
+                this.mathField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte shadow
+        {
+            get
+            {
+                return this.shadowField;
+            }
+            set
+            {
+                this.shadowField = value;
+            }
         }
     }
 
@@ -52,8 +299,14 @@ namespace CSETWeb_Api.BusinessLogic.Models
         [System.Xml.Serialization.XmlElementAttribute("object", typeof(mxGraphModelRootObject))]
         public object[] Items
         {
-            get { return this.itemsField; }
-            set { this.itemsField = value; }
+            get
+            {
+                return this.itemsField;
+            }
+            set
+            {
+                this.itemsField = value;
+            }
         }
     }
 
@@ -68,7 +321,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         private mxGraphModelRootMxCellMxGeometry mxGeometryField;
 
-        private string idField;
+        private byte idField;
 
         private string valueField;
 
@@ -78,10 +331,6 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         private string styleField;
 
-        private byte edgeField;
-
-        private bool edgeFieldSpecified;
-
         private byte sourceField;
 
         private bool sourceFieldSpecified;
@@ -90,102 +339,208 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         private bool targetFieldSpecified;
 
+        private byte edgeField;
+
+        private bool edgeFieldSpecified;
+
+        private byte vertexField;
+
+        private bool vertexFieldSpecified;
+
         /// <remarks/>
         public mxGraphModelRootMxCellMxGeometry mxGeometry
         {
-            get { return this.mxGeometryField; }
-            set { this.mxGeometryField = value; }
+            get
+            {
+                return this.mxGeometryField;
+            }
+            set
+            {
+                this.mxGeometryField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string id
+        public byte id
         {
-            get { return this.idField; }
-            set { this.idField = value; }
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string value
         {
-            get { return this.valueField; }
-            set { this.valueField = value; }
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte parent
         {
-            get { return this.parentField; }
-            set { this.parentField = value; }
+            get
+            {
+                return this.parentField;
+            }
+            set
+            {
+                this.parentField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool parentSpecified
         {
-            get { return this.parentFieldSpecified; }
-            set { this.parentFieldSpecified = value; }
+            get
+            {
+                return this.parentFieldSpecified;
+            }
+            set
+            {
+                this.parentFieldSpecified = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string style
         {
-            get { return this.styleField; }
-            set { this.styleField = value; }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte edge
-        {
-            get { return this.edgeField; }
-            set { this.edgeField = value; }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool edgeSpecified
-        {
-            get { return this.edgeFieldSpecified; }
-            set { this.edgeFieldSpecified = value; }
+            get
+            {
+                return this.styleField;
+            }
+            set
+            {
+                this.styleField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte source
         {
-            get { return this.sourceField; }
-            set { this.sourceField = value; }
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool sourceSpecified
         {
-            get { return this.sourceFieldSpecified; }
-            set { this.sourceFieldSpecified = value; }
+            get
+            {
+                return this.sourceFieldSpecified;
+            }
+            set
+            {
+                this.sourceFieldSpecified = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte target
         {
-            get { return this.targetField; }
-            set { this.targetField = value; }
+            get
+            {
+                return this.targetField;
+            }
+            set
+            {
+                this.targetField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool targetSpecified
         {
-            get { return this.targetFieldSpecified; }
-            set { this.targetFieldSpecified = value; }
+            get
+            {
+                return this.targetFieldSpecified;
+            }
+            set
+            {
+                this.targetFieldSpecified = value;
+            }
         }
-        
-       
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte edge
+        {
+            get
+            {
+                return this.edgeField;
+            }
+            set
+            {
+                this.edgeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool edgeSpecified
+        {
+            get
+            {
+                return this.edgeFieldSpecified;
+            }
+            set
+            {
+                this.edgeFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte vertex
+        {
+            get
+            {
+                return this.vertexField;
+            }
+            set
+            {
+                this.vertexField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool vertexSpecified
+        {
+            get
+            {
+                return this.vertexFieldSpecified;
+            }
+            set
+            {
+                this.vertexFieldSpecified = value;
+            }
+        }
     }
 
     /// <remarks/>
@@ -197,24 +552,253 @@ namespace CSETWeb_Api.BusinessLogic.Models
     public partial class mxGraphModelRootMxCellMxGeometry
     {
 
+        private mxGraphModelRootMxCellMxGeometryMxPoint mxPointField;
+
         private byte relativeField;
 
+        private bool relativeFieldSpecified;
+
         private string asField;
+
+        private short xField;
+
+        private bool xFieldSpecified;
+
+        private short yField;
+
+        private bool yFieldSpecified;
+
+        private byte widthField;
+
+        private bool widthFieldSpecified;
+
+        private byte heightField;
+
+        private bool heightFieldSpecified;
+
+        /// <remarks/>
+        public mxGraphModelRootMxCellMxGeometryMxPoint mxPoint
+        {
+            get
+            {
+                return this.mxPointField;
+            }
+            set
+            {
+                this.mxPointField = value;
+            }
+        }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte relative
         {
-            get { return this.relativeField; }
-            set { this.relativeField = value; }
+            get
+            {
+                return this.relativeField;
+            }
+            set
+            {
+                this.relativeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool relativeSpecified
+        {
+            get
+            {
+                return this.relativeFieldSpecified;
+            }
+            set
+            {
+                this.relativeFieldSpecified = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string @as
         {
-            get { return this.asField; }
-            set { this.asField = value; }
+            get
+            {
+                return this.asField;
+            }
+            set
+            {
+                this.asField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public short x
+        {
+            get
+            {
+                return this.xField;
+            }
+            set
+            {
+                this.xField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool xSpecified
+        {
+            get
+            {
+                return this.xFieldSpecified;
+            }
+            set
+            {
+                this.xFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public short y
+        {
+            get
+            {
+                return this.yField;
+            }
+            set
+            {
+                this.yField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ySpecified
+        {
+            get
+            {
+                return this.yFieldSpecified;
+            }
+            set
+            {
+                this.yFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte width
+        {
+            get
+            {
+                return this.widthField;
+            }
+            set
+            {
+                this.widthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool widthSpecified
+        {
+            get
+            {
+                return this.widthFieldSpecified;
+            }
+            set
+            {
+                this.widthFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte height
+        {
+            get
+            {
+                return this.heightField;
+            }
+            set
+            {
+                this.heightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool heightSpecified
+        {
+            get
+            {
+                return this.heightFieldSpecified;
+            }
+            set
+            {
+                this.heightFieldSpecified = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class mxGraphModelRootMxCellMxGeometryMxPoint
+    {
+
+        private decimal xField;
+
+        private decimal yField;
+
+        private string asField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal x
+        {
+            get
+            {
+                return this.xField;
+            }
+            set
+            {
+                this.xField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal y
+        {
+            get
+            {
+                return this.yField;
+            }
+            set
+            {
+                this.yField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string @as
+        {
+            get
+            {
+                return this.asField;
+            }
+            set
+            {
+                this.asField = value;
+            }
         }
     }
 
@@ -245,97 +829,245 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         private string componentGuidField;
 
+        private string hasUniqueQuestionsField;
+
+        private string iPAddressField;
+
+        private string descriptionField;
+
+        private string criticalityField;
+
+        private string hostNameField;
+
         private byte parentField;
 
         private bool parentFieldSpecified;
 
         private string assetTypeField;
 
+        private string zoneLabelField;
+
         /// <remarks/>
         public mxGraphModelRootObjectMxCell mxCell
         {
-            get { return this.mxCellField; }
-            set { this.mxCellField = value; }
+            get
+            {
+                return this.mxCellField;
+            }
+            set
+            {
+                this.mxCellField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string SAL
         {
-            get { return this.sALField; }
-            set { this.sALField = value; }
+            get
+            {
+                return this.sALField;
+            }
+            set
+            {
+                this.sALField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string label
         {
-            get { return this.labelField; }
-            set { this.labelField = value; }
+            get
+            {
+                return this.labelField;
+            }
+            set
+            {
+                this.labelField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string internalLabel
         {
-            get { return this.internalLabelField; }
-            set { this.internalLabelField = value; }
+            get
+            {
+                return this.internalLabelField;
+            }
+            set
+            {
+                this.internalLabelField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string zoneType
         {
-            get { return this.zoneTypeField; }
-            set { this.zoneTypeField = value; }
+            get
+            {
+                return this.zoneTypeField;
+            }
+            set
+            {
+                this.zoneTypeField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte zone
         {
-            get { return this.zoneField; }
-            set { this.zoneField = value; }
+            get
+            {
+                return this.zoneField;
+            }
+            set
+            {
+                this.zoneField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool zoneSpecified
         {
-            get { return this.zoneFieldSpecified; }
-            set { this.zoneFieldSpecified = value; }
+            get
+            {
+                return this.zoneFieldSpecified;
+            }
+            set
+            {
+                this.zoneFieldSpecified = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte id
         {
-            get { return this.idField; }
-            set { this.idField = value; }
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string ComponentGuid
         {
-            get { return this.componentGuidField; }
-            set { this.componentGuidField = value; }
+            get
+            {
+                return this.componentGuidField;
+            }
+            set
+            {
+                this.componentGuidField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string HasUniqueQuestions
+        {
+            get
+            {
+                return this.hasUniqueQuestionsField;
+            }
+            set
+            {
+                this.hasUniqueQuestionsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string IPAddress
+        {
+            get
+            {
+                return this.iPAddressField;
+            }
+            set
+            {
+                this.iPAddressField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Description
+        {
+            get
+            {
+                return this.descriptionField;
+            }
+            set
+            {
+                this.descriptionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Criticality
+        {
+            get
+            {
+                return this.criticalityField;
+            }
+            set
+            {
+                this.criticalityField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string HostName
+        {
+            get
+            {
+                return this.hostNameField;
+            }
+            set
+            {
+                this.hostNameField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte parent
         {
-            get { return this.parentField; }
-            set { this.parentField = value; }
+            get
+            {
+                return this.parentField;
+            }
+            set
+            {
+                this.parentField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool parentSpecified
         {
-            get { return this.parentFieldSpecified; }
-            set { this.parentFieldSpecified = value; }
+            get
+            {
+                return this.parentFieldSpecified;
+            }
+            set
+            {
+                this.parentFieldSpecified = value;
+            }
         }
 
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -343,6 +1075,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
         {
             get { return this.assetTypeField; }
             set { this.assetTypeField = value; }
+        }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public string zoneLabel
+        {
+            get { return this.zoneLabelField; }
+            set { this.zoneLabelField = value; }
         }
     }
 
@@ -363,55 +1102,59 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         private byte vertexField;
 
-        private byte connectableField;
-
-        private bool connectableFieldSpecified;
-
         /// <remarks/>
         public mxGraphModelRootObjectMxCellMxGeometry mxGeometry
         {
-            get { return this.mxGeometryField; }
-            set { this.mxGeometryField = value; }
+            get
+            {
+                return this.mxGeometryField;
+            }
+            set
+            {
+                this.mxGeometryField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string style
         {
-            get { return this.styleField; }
-            set { this.styleField = value; }
+            get
+            {
+                return this.styleField;
+            }
+            set
+            {
+                this.styleField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte parent
         {
-            get { return this.parentField; }
-            set { this.parentField = value; }
+            get
+            {
+                return this.parentField;
+            }
+            set
+            {
+                this.parentField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public byte vertex
         {
-            get { return this.vertexField; }
-            set { this.vertexField = value; }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte connectable
-        {
-            get { return this.connectableField; }
-            set { this.connectableField = value; }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool connectableSpecified
-        {
-            get { return this.connectableFieldSpecified; }
-            set { this.connectableFieldSpecified = value; }
+            get
+            {
+                return this.vertexField;
+            }
+            set
+            {
+                this.vertexField = value;
+            }
         }
     }
 
@@ -438,40 +1181,70 @@ namespace CSETWeb_Api.BusinessLogic.Models
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal x
         {
-            get { return this.xField; }
-            set { this.xField = value; }
+            get
+            {
+                return this.xField;
+            }
+            set
+            {
+                this.xField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal y
         {
-            get { return this.yField; }
-            set { this.yField = value; }
+            get
+            {
+                return this.yField;
+            }
+            set
+            {
+                this.yField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public ushort width
         {
-            get { return this.widthField; }
-            set { this.widthField = value; }
+            get
+            {
+                return this.widthField;
+            }
+            set
+            {
+                this.widthField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public ushort height
         {
-            get { return this.heightField; }
-            set { this.heightField = value; }
+            get
+            {
+                return this.heightField;
+            }
+            set
+            {
+                this.heightField = value;
+            }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string @as
         {
-            get { return this.asField; }
-            set { this.asField = value; }
+            get
+            {
+                return this.asField;
+            }
+            set
+            {
+                this.asField = value;
+            }
         }
     }
 }
