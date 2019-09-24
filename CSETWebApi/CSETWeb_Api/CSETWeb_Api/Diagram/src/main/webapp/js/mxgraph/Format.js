@@ -2737,7 +2737,8 @@ diagramElementProperties = function ()
                     'Safety',
                     'External DMZ',
                     'Plant System',
-                    'Control System'
+                    'Control System',
+                    'Classified'
                 ],
                 defaultValue: 'Other'
             },
