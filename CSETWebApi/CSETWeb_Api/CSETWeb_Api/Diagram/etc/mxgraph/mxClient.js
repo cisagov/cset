@@ -9684,7 +9684,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         {
             cell.setCsetAttribute('zoneType', 'Other');
         }
-        if (!cell.setCsetAttribute('SAL'))
+        if (!cell.getCsetAttribute('SAL'))
         {
             cell.setCsetAttribute('SAL', 'Low');
         }
