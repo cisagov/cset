@@ -9633,6 +9633,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         return;
     }
 
+    // ignore grouping objects
+    if (cell.hasStyle('group'))
+    {
+        return;
+    }
+
 
     // ignore shapes
     if (cell.getStyleValue('shape') !== null)
@@ -9661,6 +9667,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
     {
         var nextGuid = guidService.getInstance().getNextGuid();
         cell.setCsetAttribute('ComponentGuid', nextGuid);
+    }
+
+    // default a value for Criticality
+    if (cell.getCsetAttribute('Criticality') == null)
+    {
+        cell.setCsetAttribute('Criticality', 'Low');
     }
 
     // give zones a couple of zone-specific attributes if needed

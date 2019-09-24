@@ -36,6 +36,7 @@ namespace CSETWeb_Api.Controllers
             data.salTable = reportsDataManager.GetSals();
             data.nistTypes = reportsDataManager.GetNistInfoTypes();
             data.nistSalTable = reportsDataManager.GetNistSals();
+            data.Zones = reportsDataManager.getDiagramZones();            
             return data;
             
         }
@@ -84,7 +85,7 @@ namespace CSETWeb_Api.Controllers
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
             data.FinancialQuestionsTable = reportsDataManager.getFinancialQuestions();
             data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
+            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();            
             return data;
         }
 
@@ -106,6 +107,7 @@ namespace CSETWeb_Api.Controllers
             data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
+            data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
             return data;
         }
 

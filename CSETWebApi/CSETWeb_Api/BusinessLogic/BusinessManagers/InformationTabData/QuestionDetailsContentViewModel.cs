@@ -158,11 +158,13 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
             if (questionId != null)
             {
+                AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
+
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Assessment_Id == assessmentId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Is_Requirement == (mode.IsRequirement)  && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
-                AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
+                
 
                 if (newAnswer == null)                    
                 {
@@ -176,7 +178,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Component_Id = 0,
                         Is_Component = false
                     };
-                    DataContext.ANSWER.Add(newAnswer);
+                    DataContext.ANSWER.Add(newAnswer);                    
                 }
                 var qp = new QuestionPoco(newAnswer, newqp);
                 qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
@@ -296,8 +298,10 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 var sets = question.GetRequirementSets().Distinct().ToDictionary(s=>s.Set_Name);
 
                 var set = question.GetRequirementSet().Set_Name;
+                
                 if (question.NEW_REQUIREMENT == null)
-                {   
+                {
+                    //var rs = this.DataContext.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == question.Question_or_Requirement_ID && x.Set_Name == set).First();
                     question.NEW_REQUIREMENT = this.DataContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).FirstOrDefault();
                 }
                 RequirementInfoData reqInfoData = new RequirementInfoData()

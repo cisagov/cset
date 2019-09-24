@@ -26,7 +26,7 @@ namespace DataLayerCore.Model
         public string Component_GUID { get; set; }
         public Nullable<int> Layer_Id { get; set; }
         public string LayerName { get; set; }
-        public Nullable<int> Zone_Id { get; set; }
+        public Nullable<int> Container_Id { get; set; }
         public string ZoneName { get; set; }
         public string SAL { get; set; }
         public Nullable<bool> Mark_For_Review { get; set; }
