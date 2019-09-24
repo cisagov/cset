@@ -11,49 +11,62 @@
 /**
  * A collection of CSET-specific utilities and functionality.
  */
-CsetUtils = function () {
+CsetUtils = function ()
+{
 }
 
-function updateGraph(editor, data, finalize) {
+function updateGraph(editor, data, finalize)
+{
     let graph = Graph.zapGremlins(mxUtils.trim(data));
     graph = graph.replace(/\\"/g, '"').replace(/^\"|\"$/g, ''); // fix escaped quotes and trim quotes
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject)
+    {
         editor.graph.model.beginUpdate();
-        try {
+        try
+        {
             editor.setGraphXml(mxUtils.parseXml(graph).documentElement);
             resolve();
-        } catch (err) {
+        } catch (err)
+        {
             console.warn('Failed to set graph xml:', err);
             reject(err);
-        } finally {
+        } finally
+        {
             editor.graph.model.endUpdate();
 
-            if (finalize) {
+            if (finalize)
+            {
                 finalize();
             }
 
             editor.graph.fit();
-            if (editor.graph.view.scale > 1) {
+            if (editor.graph.view.scale > 1)
+            {
                 editor.graph.zoomTo(1);
             }
         }
     });
 }
 
-function makeRequest(e) {
+function makeRequest(e)
+{
     const jwt = localStorage.getItem('jwt');
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject)
+    {
         const xhr = new XMLHttpRequest();
         xhr.open(e.method, e.url);
         xhr.setRequestHeader('Authorization', jwt);
         xhr.setRequestHeader('Content-Type', e.contentType || 'application/json');
-        if (e.overrideMimeType) {
+        if (e.overrideMimeType)
+        {
             xhr.overrideMimeType(e.overrideMimeType);
         }
 
-        if (e.onreadystatechange) {
-            xhr.onreadystatechange = function () {
+        if (e.onreadystatechange)
+        {
+            xhr.onreadystatechange = function ()
+            {
                 e.onreadystatechange({
                     readyState: this.readyState,
                     status: this.status,
@@ -61,24 +74,29 @@ function makeRequest(e) {
                 });
             };
         }
-        xhr.onload = function () {
-            if (this.status >= 200 && this.status < 300) {
+        xhr.onload = function ()
+        {
+            if (this.status >= 200 && this.status < 300)
+            {
                 resolve(xhr.response);
-            } else {
+            } else
+            {
                 reject({
                     status: this.status,
                     statusText: xhr.statusText
                 });
             }
         };
-        xhr.onerror = function () {
+        xhr.onerror = function ()
+        {
             reject({
                 status: this.status,
                 statusText: xhr.statusText
             });
         };
 
-        switch (e.method) {
+        switch (e.method)
+        {
             case 'GET':
                 xhr.send();
                 break;
@@ -94,16 +112,21 @@ function makeRequest(e) {
  * if it is now the child of a multi-service component. 
  * @param {any} edit
  */
-CsetUtils.adjustConnectability = function (edit) {
-    for (var i = 0; i < edit.changes.length; i++) {
-        if (edit.changes[i] instanceof mxChildChange) {
+CsetUtils.adjustConnectability = function (edit)
+{
+    for (var i = 0; i < edit.changes.length; i++)
+    {
+        if (edit.changes[i] instanceof mxChildChange)
+        {
             var c = edit.changes[i].child;
-            if (c.isEdge()) {
+            if (c.isEdge())
+            {
                 return;
             }
 
             // zones are not connectable
-            if (c.isZone()) {
+            if (c.isZone())
+            {
                 c.setConnectable(false);
                 return;
             }
@@ -117,16 +140,20 @@ CsetUtils.adjustConnectability = function (edit) {
 /**
  * Retrieves the graph from the CSET API if it has been stored.
  */
-CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
+CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
+{
     await makeRequest({
         method: 'GET',
         url: localStorage.getItem('cset.host') + 'diagram/get',
-        onreadystatechange: function (e) {
-            if (e.readyState !== 4) {
+        onreadystatechange: function (e)
+        {
+            if (e.readyState !== 4)
+            {
                 return;
             }
 
-            switch (e.status) {
+            switch (e.status)
+            {
                 case 200:
                     const resp = JSON.parse(e.responseText);
                     const assessmentName = resp.AssessmentName;
@@ -150,10 +177,13 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
 /**
  * Make sure edges (links) are not hidden behind zones or other objects
  */
-CsetUtils.edgesToTop = function (graph, edit) {
+CsetUtils.edgesToTop = function (graph, edit)
+{
     var model = graph.getModel();
-    for (var i = 0; i < edit.changes.length; i++) {
-        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child)) {
+    for (var i = 0; i < edit.changes.length; i++)
+    {
+        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
+        {
             var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
             graph.orderCells(false, edges);
         }
@@ -163,7 +193,8 @@ CsetUtils.edgesToTop = function (graph, edit) {
 /**
  * Persists the graph to the CSET API.
  */
-CsetUtils.PersistGraphToCSET = async function (editor) {
+CsetUtils.PersistGraphToCSET = async function (editor)
+{
     const req = {
         DiagramXml: '',
         LastUsedComponentNumber: 1,
@@ -172,11 +203,13 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     const xmlserializer = new XMLSerializer();
 
     const model = editor.graph.getModel();
-    if (model) {
+    if (model)
+    {
         const enc = new mxCodec();
         const node = enc.encode(model);
         const sXML = xmlserializer.serializeToString(node);
-        if (sXML !== EditorUi.prototype.emptyDiagramXml) {
+        if (sXML !== EditorUi.prototype.emptyDiagramXml)
+        {
             req.DiagramXml = sXML;
             req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
         }
@@ -196,18 +229,22 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
  * Posts the diagram and supporting information to the API.
  * @param {any} req
  */
-CsetUtils.saveDiagram = async function (req) {
+CsetUtils.saveDiagram = async function (req)
+{
     const response = await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
         url: localStorage.getItem('cset.host') + 'diagram/save',
         payload: JSON.stringify(req),
-        onreadystatechange: function (e) {
-            if (e.readyState !== 4) {
+        onreadystatechange: function (e)
+        {
+            if (e.readyState !== 4)
+            {
                 return;
             }
 
-            switch (e.status) {
+            switch (e.status)
+            {
                 case 200:
                     // successful post            
                     break;
@@ -218,10 +255,11 @@ CsetUtils.saveDiagram = async function (req) {
         }
     });
 
-    if (response) {
+    if (response)
+    {
         const warnings = JSON.parse(response);
         const analysis = new CsetAnalysisWarnings();
-        analysis.addWarningsToDiagram(warnings, editor.graph);
+        // RKW - editor not yet available here ..... analysis.addWarningsToDiagram(warnings, editor.graph);
     }
 }
 
@@ -229,14 +267,17 @@ CsetUtils.saveDiagram = async function (req) {
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
  * into the existing diagram.
  */
-CsetUtils.importFilesCSETD = function (files, editor) {
-    if (files.length == 0) {
+CsetUtils.importFilesCSETD = function (files, editor)
+{
+    if (files.length == 0)
+    {
         return;
     }
 
     var file = files[0];
     var reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function (e)
+    {
         TranslateToMxGraph(editor, e.target.result);
     };
     reader.readAsText(file);
@@ -246,7 +287,8 @@ CsetUtils.importFilesCSETD = function (files, editor) {
  * Persists the CSETD XML to the CSET API.  The mxGraph translation
  * is returned, and dropped into the existing graph.
  */
-async function TranslateToMxGraph(editor, sXML) {
+async function TranslateToMxGraph(editor, sXML)
+{
     var req = {};
     req.DiagramXml = sXML;
 
@@ -254,16 +296,20 @@ async function TranslateToMxGraph(editor, sXML) {
         method: 'POST',
         url: localStorage.getItem('cset.host') + 'diagram/importcsetd',
         payload: JSON.stringify(req),
-        onreadystatechange: function (e) {
-            if (e.readyState !== 4) {
+        onreadystatechange: function (e)
+        {
+            if (e.readyState !== 4)
+            {
                 return;
             }
 
-            switch (e.status) {
+            switch (e.status)
+            {
                 case 200:
                 case 204:
                     // successful post - drop the XML that came back into the graph
-                    updateGraph(editor, e.responseText, function () {
+                    updateGraph(editor, e.responseText, function ()
+                    {
                         CsetUtils.initializeZones(editor.graph)
                     });
                     break;
@@ -278,9 +324,11 @@ async function TranslateToMxGraph(editor, sXML) {
 /**
  * 
  */
-CsetUtils.initializeZones = function (graph) {
+CsetUtils.initializeZones = function (graph)
+{
     var allCells = graph.getChildVertices(graph.getDefaultParent());
-    allCells.forEach(x => {
+    allCells.forEach(x =>
+    {
         x.setAttribute('internalLabel', x.getAttribute('label'));
         x.initZone();
     });
@@ -290,13 +338,17 @@ CsetUtils.initializeZones = function (graph) {
 /**
  * 
  */
-CsetUtils.handleZoneChanges = function (edit) {
-    edit.changes.forEach(change => {
-        if (change instanceof mxValueChange && change.cell.isZone()) {
+CsetUtils.handleZoneChanges = function (edit)
+{
+    edit.changes.forEach(change =>
+    {
+        if (change instanceof mxValueChange && change.cell.isZone())
+        {
             var c = change.cell;
 
             // if they just changed the label, update the internal label
-            if (change.value.attributes.label.value != change.previous.attributes.label.value) {
+            if (change.value.attributes.label.value != change.previous.attributes.label.value)
+            {
                 c.setAttribute('internalLabel', change.value.attributes.label.value);
             }
 
@@ -310,34 +362,44 @@ CsetUtils.handleZoneChanges = function (edit) {
  * 
  * @param {any} parent
  */
-CsetUtils.getAllChildEdges = function (parent) {
+CsetUtils.getAllChildEdges = function (parent)
+{
     var result = [];
 
-    if (!!parent.children) {
-        for (var i = 0; i < parent.children.length; i++) {
+    if (!!parent.edges)
+    {
+        parent.edges.forEach(e => result.push(e));
+    }
+
+    if (!!parent.children)
+    {
+        for (var i = 0; i < parent.children.length; i++)
+        {
             getChildren(parent.children[i]);
         }
     }
 
-    for (var i = 0; i < parent.children.length; i++) {
-        getChildren(parent.children[i]);
-    }
-
-    function getChildren(cell) {
-        if (result.indexOf(cell) > -1) {
+    function getChildren(cell)
+    {
+        if (result.indexOf(cell) > -1)
+        {
             return;
         }
 
-        if (cell.isEdge()) {
+        if (cell.isEdge())
+        {
             result.push(cell);
         }
 
-        if (!!cell.edges) {
+        if (!!cell.edges)
+        {
             cell.edges.forEach(e => result.push(e));
         }
 
-        if (!!cell.children) {
-            for (var i = 0; i < cell.children.length; i++) {
+        if (!!cell.children)
+        {
+            for (var i = 0; i < cell.children.length; i++)
+            {
                 getChildren(cell.children[i]);
             }
         }
@@ -350,12 +412,16 @@ CsetUtils.getAllChildEdges = function (parent) {
  * 
  * @param {any} filename
  */
-CsetUtils.findComponentInMap = function (filename) {
+CsetUtils.findComponentInMap = function (filename)
+{
     var m = Editor.componentSymbols;
-    for (var i = 0; i < m.length; i++) {
+    for (var i = 0; i < m.length; i++)
+    {
         var group = m[i];
-        for (var j = 0; j < group.Symbols.length; j++) {
-            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName) {
+        for (var j = 0; j < group.Symbols.length; j++)
+        {
+            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName)
+            {
                 return group.Symbols[j];
             }
         }
@@ -365,14 +431,18 @@ CsetUtils.findComponentInMap = function (filename) {
 /**
  * 
  */
-CsetUtils.getFilenameFromPath = function (path) {
-    if (!path) {
+CsetUtils.getFilenameFromPath = function (path)
+{
+    if (!path)
+    {
         return '';
     }
 
     var s = path.lastIndexOf('/');
-    if (s > 0) {
-        if (path.length > (s + 1)) {
+    if (s > 0)
+    {
+        if (path.length > (s + 1))
+        {
             return path.substring(s + 1);
         }
         return '';
