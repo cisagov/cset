@@ -157,6 +157,10 @@ mxCell.prototype.setZoneColor = function ()
             headerColor = '#d3eef2';
             color = '#f2f8f9';
             break;
+        case 'classified':
+            headerColor = '#99cfff';
+            color = '#cce5ff';
+            break;
     }
 
     this.setStyleValue('fillColor', headerColor);
@@ -175,6 +179,12 @@ mxCell.prototype.autoNameComponent = function ()
         return;
     }
 
+    // ignore items already labeled
+    if (!!this.getCsetAttribute('label'))
+    {
+        return;
+    }
+
     // determine new number
     var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
     sessionStorage.setItem("last.number", num);
@@ -185,7 +195,7 @@ mxCell.prototype.autoNameComponent = function ()
     {
         prefix = 'Zone';
     }
-    else 
+    else
     {
         var prefix = "COMP";
         var compMap = Editor.componentSymbols;
