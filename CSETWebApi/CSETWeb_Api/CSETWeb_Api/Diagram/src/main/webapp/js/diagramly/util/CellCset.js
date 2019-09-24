@@ -368,6 +368,11 @@ mxCell.prototype.getSAL = function ()
  */
 isLayer = function (cell)
 {
+    if (!cell)
+    {
+        return false;
+    }
+
     var parent = cell.getParent();
     if (!!parent && parent.hasOwnProperty('id') && parent.id == 0)
     {
