@@ -258,8 +258,10 @@ CsetUtils.saveDiagram = async function (req)
     if (response)
     {
         const warnings = JSON.parse(response);
-        const analysis = new CsetAnalysisWarnings();
-        // RKW - editor not yet available here ..... analysis.addWarningsToDiagram(warnings, editor.graph);
+
+        // RKW - not defined anywhere ... ?
+        // const analysis = new CsetAnalysisWarnings();
+        // analysis.addWarningsToDiagram(warnings, editor.graph);
     }
 }
 
