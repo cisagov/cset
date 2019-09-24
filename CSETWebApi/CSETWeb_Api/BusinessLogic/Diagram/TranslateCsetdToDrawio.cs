@@ -290,6 +290,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
             foreach (XmlNode component in componentList)
             {
+                var componentXml = (XmlElement) component;
                 // map the IDs
                 string oldID = ChildValue(component, "c:id");
                 string newID = GetID(oldID);
@@ -300,6 +301,11 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xObject.SetAttribute("id", newID);
                 xObject.SetAttribute("label", ChildValue(component, "c:label/c:label"));
                 xObject.SetAttribute("ComponentGuid", Guid.NewGuid().ToString());
+                xObject.SetAttribute("HasUniqueQuestions",componentXml.GetAttribute("hasuniquequestions"));
+                xObject.SetAttribute("IPAddress", ((XmlElement) component).HasAttribute("ipaddress")? componentXml.GetAttribute("ipaddress"):string.Empty);
+                xObject.SetAttribute("Description", ((XmlElement)component).HasAttribute("description") ? componentXml.GetAttribute("description") : string.Empty);
+                xObject.SetAttribute("Criticality", ((XmlElement)component).HasAttribute("criticality") ? componentXml.GetAttribute("criticality") : string.Empty);
+                xObject.SetAttribute("HostName", ((XmlElement)component).HasAttribute("hostname") ? componentXml.GetAttribute("hostname") : string.Empty);
 
 
                 var xComponent = xDrawio.CreateElement("mxCell");

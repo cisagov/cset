@@ -62,4 +62,12 @@ export class DiagramService {
   getDiagramText(){
     return this.http.get(this.apiUrl+'getText');
   }
+
+  getDiagramLinks(){
+    return this.http.get(this.apiUrl+'getLinks');
+  }
+
+  saveDiagram(component){
+    return this.http.post(this.apiUrl+'saveDiagram', component);
+  }
 }

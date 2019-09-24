@@ -793,7 +793,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.getLines">
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetLinks">
             <summary>
             Returns list of diagram lines
             </summary>
