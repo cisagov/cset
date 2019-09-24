@@ -159,7 +159,9 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
                     const assessmentName = resp.AssessmentName;
 
                     filename.innerHTML = assessmentName;
-                    app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
+                    if (app.currentFile) {
+                        app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
+                    }
                     sessionStorage.setItem('assessment.name', assessmentName);
                     sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
 

@@ -2756,55 +2756,52 @@ App.prototype.start = function ()
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-App.prototype.showSplash = function (force)
-{
-    var serviceCount = this.getServiceCount(true, true);
-
-    var showSecondDialog = mxUtils.bind(this, function ()
-    {
-        var dlg = new SplashDialog(this);
-
-        this.showDialog(dlg.container, 340, (serviceCount < 2 ||
-            mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) ? 200 : 260, true, true,
-            mxUtils.bind(this, function (cancel)
-            {
-                // Creates a blank diagram if the dialog is closed
-                if (cancel && !mxClient.IS_CHROMEAPP)
-                {
-                    var prev = Editor.useLocalStorage;
-                    this.createFile(this.defaultFilename, null, null, null, null, null, null,
-                        urlParams['local'] != '1');
-                    Editor.useLocalStorage = prev;
-                }
-            }), true);
-    });
-
-    if (this.editor.isChromelessView())
-    {
+App.prototype.showSplash = function (force) {
+    if (this.editor.isChromelessView()) {
         this.handleError({ message: mxResources.get('noFileSelected') },
-            mxResources.get('errorLoadingFile'), mxUtils.bind(this, function ()
-            {
+            mxResources.get('errorLoadingFile'), mxUtils.bind(this, function () {
                 this.showSplash();
             }));
+        return;
     }
-    else if (!mxClient.IS_CHROMEAPP && (this.mode == null || force))
-    {
-        var rowLimit = (serviceCount == 4) ? 2 : 3;
 
-        var dlg = new StorageDialog(this, mxUtils.bind(this, function ()
-        {
-            this.hideDialog();
-            showSecondDialog();
-        }), rowLimit);
+    const serviceCount = this.getServiceCount(true, true);
+    const showSecondDialog = mxUtils.bind(this, function () {
+        const splashDwidth = 340;
+        const splashDheight = serviceCount < 2 || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp ? 200 : 260;
+        const splashDmodal = true;
+        const splashDcanclose = true;
+        const onclose = mxUtils.bind(this, function (cancel) {
+            // Creates a blank diagram if the dialog is closed
+            if (cancel && !mxClient.IS_CHROMEAPP) {
+                var prev = Editor.useLocalStorage;
+                this.createFile(this.defaultFilename, null, null, null, null, null, null,
+                    urlParams['local'] != '1');
+                Editor.useLocalStorage = prev;
+            }
+        });
+        const noscroll = true;
+        const dlg = new SplashDialog(this);
+        this.showDialog(dlg.container, splashDwidth, splashDheight, splashDmodal, splashDcanclose, onclose, noscroll);
+    });
 
-        this.showDialog(dlg.container, (rowLimit < 3) ? 260 : 300,
-            (serviceCount >= 4) ? 420 : 300, true, false);
-        dlg.init();
-    }
-    else if (urlParams['create'] == null)
-    {
-        showSecondDialog();
-    }
+    //if (!mxClient.IS_CHROMEAPP && (this.mode == null || force)) {
+    //    const rowLimit = serviceCount !== 4 ? 3 : 2;
+    //    const w = rowLimit < 3 ? 260 : 300;
+    //    const h = serviceCount > 3 ? 420 : 300;
+    //    const onclose = mxUtils.bind(this, function () {
+    //        this.hideDialog();
+    //        showSecondDialog();
+    //    });
+    //    const modal = true;
+    //    const canclose = false;
+    //    const dlg = new StorageDialog(this, onclose, rowLimit);
+    //    this.showDialog(dlg.container, w, h, modal, canclose);
+    //     dlg.init();
+    //} else if (urlParams['create'] == null) {
+    //    showSecondDialog();
+    //}
+    showSecondDialog();
 };
 
 /**
@@ -2989,53 +2986,40 @@ App.prototype.pickFile = function (mode)
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-App.prototype.pickLibrary = function (mode)
-{
+App.prototype.pickLibrary = function (mode) {
     console.log("App.prototype.pickLibrary");
 
     mode = (mode != null) ? mode : this.mode;
 
-    if (mode == App.MODE_GOOGLE || mode == App.MODE_DROPBOX || mode == App.MODE_ONEDRIVE || mode == App.MODE_GITHUB || mode == App.MODE_TRELLO)
-    {
+    if (mode == App.MODE_GOOGLE || mode == App.MODE_DROPBOX || mode == App.MODE_ONEDRIVE || mode == App.MODE_GITHUB || mode == App.MODE_TRELLO) {
         var peer = (mode == App.MODE_GOOGLE) ? this.drive :
             ((mode == App.MODE_ONEDRIVE) ? this.oneDrive :
                 ((mode == App.MODE_GITHUB) ? this.gitHub :
                     ((mode == App.MODE_TRELLO) ? this.trello :
                         this.dropbox)));
 
-        if (peer != null)
-        {
-            peer.pickLibrary(mxUtils.bind(this, function (id, optionalFile)
-            {
-                if (optionalFile != null)
-                {
-                    try
-                    {
+        if (peer != null) {
+            peer.pickLibrary(mxUtils.bind(this, function (id, optionalFile) {
+                if (optionalFile != null) {
+                    try {
                         this.loadLibrary(optionalFile);
                     }
-                    catch (e)
-                    {
+                    catch (e) {
                         this.handleError(e, mxResources.get('errorLoadingFile'));
                     }
                 }
-                else
-                {
-                    if (this.spinner.spin(document.body, mxResources.get('loading')))
-                    {
-                        peer.getLibrary(id, mxUtils.bind(this, function (file)
-                        {
+                else {
+                    if (this.spinner.spin(document.body, mxResources.get('loading'))) {
+                        peer.getLibrary(id, mxUtils.bind(this, function (file) {
                             this.spinner.stop();
 
-                            try
-                            {
+                            try {
                                 this.loadLibrary(file);
                             }
-                            catch (e)
-                            {
+                            catch (e) {
                                 this.handleError(e, mxResources.get('errorLoadingFile'));
                             }
-                        }), mxUtils.bind(this, function (resp)
-                        {
+                        }), mxUtils.bind(this, function (resp) {
                             this.handleError(resp, (resp != null) ? mxResources.get('errorLoadingFile') : null);
                         }));
                     }
@@ -3043,31 +3027,22 @@ App.prototype.pickLibrary = function (mode)
             }));
         }
     }
-    else if (mode == App.MODE_DEVICE && Graph.fileSupport && !mxClient.IS_IE && !mxClient.IS_IE11)
-    {
-        if (this.libFileInputElt == null) 
-        {
+    else if (mode == App.MODE_DEVICE && Graph.fileSupport && !mxClient.IS_IE && !mxClient.IS_IE11) {
+        if (this.libFileInputElt == null) {
             var input = document.createElement('input');
             input.setAttribute('type', 'file');
 
-            mxEvent.addListener(input, 'change', mxUtils.bind(this, function ()
-            {
-                if (input.files != null)
-                {
-                    for (var i = 0; i < input.files.length; i++)
-                    {
-                        (mxUtils.bind(this, function (file)
-                        {
+            mxEvent.addListener(input, 'change', mxUtils.bind(this, function () {
+                if (input.files != null) {
+                    for (var i = 0; i < input.files.length; i++) {
+                        (mxUtils.bind(this, function (file) {
                             var reader = new FileReader();
 
-                            reader.onload = mxUtils.bind(this, function (e)
-                            {
-                                try
-                                {
+                            reader.onload = mxUtils.bind(this, function (e) {
+                                try {
                                     this.loadLibrary(new LocalLibrary(this, e.target.result, file.name));
                                 }
-                                catch (e)
-                                {
+                                catch (e) {
                                     this.handleError(e, mxResources.get('errorLoadingFile'));
                                 }
                             });
@@ -3087,8 +3062,7 @@ App.prototype.pickLibrary = function (mode)
 
         this.libFileInputElt.click();
     }
-    else
-    {
+    else {
         window.openNew = false;
         window.openKey = 'open';
 
@@ -3096,31 +3070,30 @@ App.prototype.pickLibrary = function (mode)
         Editor.useLocalStorage = mode == App.MODE_BROWSER;
 
         // Closes dialog after open
-        window.openFile = new OpenFile(mxUtils.bind(this, function (cancel)
-        {
+        window.openFile = new OpenFile(mxUtils.bind(this, function (cancel) {
             this.hideDialog(cancel);
         }));
 
-        window.openFile.setConsumer(mxUtils.bind(this, function (xml, filename)
-        {
-            try
-            {
+        window.openFile.setConsumer(mxUtils.bind(this, function (xml, filename) {
+            try {
                 this.loadLibrary((mode == App.MODE_BROWSER) ? new StorageLibrary(this, xml, filename) :
                     new LocalLibrary(this, xml, filename));
             }
-            catch (e)
-            {
+            catch (e) {
                 this.handleError(e, mxResources.get('errorLoadingFile'));
             }
         }));
 
         // Removes openFile if dialog is closed
-        this.showDialog(new OpenDialog(this).container, (Editor.useLocalStorage) ? 640 : 360,
-            (Editor.useLocalStorage) ? 480 : 220, true, true, function ()
-            {
-                Editor.useLocalStorage = prevValue;
-                window.openFile = null;
-            });
+        const openDwidth = Editor.useLocalStorage ? 640 : 360;
+        const openDheight = Editor.useLocalStorage ? 480 : 220;
+        const openDmodal = true;
+        const openDcanclose = true;
+        const openDonclose = function () {
+            Editor.useLocalStorage = prevValue;
+            window.openFile = null;
+        }
+        this.showDialog(new OpenDialog(this).container, openDwidth, openDheight, openDmodal, openDcanclose, openDonclose);
     }
 };
 
