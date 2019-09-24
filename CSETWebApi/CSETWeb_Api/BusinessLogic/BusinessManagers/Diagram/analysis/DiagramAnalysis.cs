@@ -12,6 +12,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using DataLayerCore.Model;
 using Newtonsoft.Json;
 
@@ -31,10 +32,14 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
         private List<NetworkAnalysisNode> ListAnalysisNodes = new List<NetworkAnalysisNode>();
         private List<INetworkAnalysisMessage> ListAnalysisMessages = new List<INetworkAnalysisMessage>();
-        private String rule1 = "The network path identified by the components, {0} and {1}, appears to connect network segments whose components reside in different zones.  A firewall to filter the traffic on this path is recommended to protect the components in one zone from a compromised component in the other zone.";
+        
         private CSET_Context db;
         private Dictionary<string, string> imageToTypePath = new Dictionary<string, string>();
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
+
+        //drawio id to zone lookup
+        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
+
         private int nextMessage = 1;
 
         public XmlDocument NetworkWarningsXml { get; private set; }
@@ -62,6 +67,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
 
             XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
+            XmlNodeList zoneNodes = xDoc.SelectNodes("//*[@zone=\"1\"]");
             XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
             XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
             foreach (XmlNode layer in mxCellLayers)
@@ -75,6 +81,28 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 });
             }
 
+            foreach (XmlNode node in zoneNodes)
+            {
+                //determine if it is an edge or a node
+                //if it is an node look it up(should be new)
+                //and create it
+                //if it is an edge then we need to save it until all the nodes are created
+                //once we have them all start connecting everything up. 
+
+                //if it is a zone then just skip it
+                if (((XmlElement)node).HasAttribute("zone"))
+                {
+                    string zone = node.Attributes["id"].Value;
+
+                    zones.Add(zone, new NetworkZone()
+                    {
+                        ID = zone,
+                        ZoneType = node.Attributes["zoneType"].Value,
+                        SAL = node.Attributes["SAL"].Value
+                    });
+                }
+            }
+
 
             foreach (XmlNode node in objectNodes)
             {
@@ -86,7 +114,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
                 //if it is a zone then just skip it
                 if (((XmlElement)node).HasAttribute("zone"))
-                {
+                {                 
                     continue;
                 }
 
@@ -140,10 +168,11 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 string id = node.Attributes["id"].Value;
                 if (nodes.TryGetValue(id, out dnode))
                 {
-
+                    //this should never happen we should never have a duplicate id
                 }
                 else
                 {
+                    
                     dnode = new NetworkComponent()
                     {
                         ComponentGuid = ((XmlElement)node).HasAttribute("ComponentGuid") ? Guid.Parse(node.Attributes["ComponentGuid"].Value) : new Guid(),
@@ -153,6 +182,11 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                         IsVisible = IsVisible,
                         Geometry = geometry
                     };
+                    NetworkZone myzone;
+                    if (zones.TryGetValue(layername, out myzone))
+                    {
+                        dnode.Zone = myzone;
+                    }
                     nodes.Add(id, dnode);
                 }
             }
@@ -258,43 +292,6 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
 
 
-        private void checkRule1()
-        {
-            //get the list of vendors, partners, or web
-            //if the vendor, partner, or web is connected to anything other than a firewall
-            //add a message and let the user know.
-            List<string> suspects = new List<string>();
-            suspects.Add("Web");
-            suspects.Add("Vendor");
-            suspects.Add("Partner");
-            var suspectslist = nodes.Values.Where(x => suspects.Contains(x.ComponentType));
-            foreach (var node in suspectslist)
-            {
-                foreach (var child in node.Connections)
-                {
-                    if (child.ComponentType != "Firewall")
-                    {
-                        //flag node and put up the message
-                        //if the message is already there over write with the latest edition
-                        DiagramAnalysisNodeMessage msg;
-                        if (dictionaryNodeMessages.TryGetValue(node.ComponentGuid, out msg))
-                        {
-                            String text = String.Format(rule1, node.ComponentName);
-                            msg.SetMessages.Add(text);
-                        }
-                        else
-                        {
-                            dictionaryNodeMessages.Add(node.ComponentGuid, new DiagramAnalysisNodeMessage()
-                            {
-                                Component = node,
-                                SetMessages = new HashSet<string>(),
-                                Number = nextMessage++
-                            });
-                        }
-                    }
-                }
-            }
-        }
 
         //private void SetNodeMessage(NetworkNode component, string text)
         //{
@@ -379,125 +376,10 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             //ListAnalysisMessages.AddRange(listMessages);
         }
 
-        //private String rule7 = "Data flow between two distinct SAL zones via a unidirectional {0} must only flow from a higher SAL to a lower SAL." +
-        //    " Example Control or SCADA network SAL High to Corporate Network SAL Low, but not SAL Low to SAL High.";
+  
 
 
-        /// <summary>
-        /// rewriting the rules to make more sense  NOTE the data flows in the direction of the arrow
-        /// so for this one we need to determine orientation of the device
-        /// we want to recurse up into the network from the connections and 
-        /// see if we can find some control system devices if we can 
-        /// then data should only flow out of the control system side of the data diode
-        /// if we find control systems components on both sides we should warn and have the user resolve it. 
-        /// maybe we should popup a dialog to determine how to analyse the network
-        /// 
-        /// ie if this is classified then data should flow in 
-        /// if this is control systems network 
-        /// </summary>
-        /// <param name="component"></param>
-        private void CheckRule7(NetworkComponent component)
-        {
-            //if (component.IsUnidirectional)
-            //{
-            //    SAL_LEVELS leftPosition = null;
-            //    SAL_LEVELS rightPosition = null;
 
-            //    foreach (NetworkLink link in connectors)
-            //    {
-            //        if (link.SourceComponent == null || link.TargetComponent == null)
-            //            continue;
-
-            //        NetworkNode otherComponent = GetOtherComponent(link, component);
-            //        if (otherComponent == null)
-            //            continue;
-
-            //        String connectionPostion;
-
-            //        if (link.TargetComponent.ID == component.ID)
-            //        {
-            //            connectionPostion = link.GetTargetConnectionPort();
-            //        }
-            //        else
-            //        {
-            //            connectionPostion = link.GetSourceConnectionPort();
-            //        }
-            //        if (connectionPostion == Constants.LEFT_UNI_CONNECTOR)
-            //        {
-            //            leftPosition = otherComponent.SAL;
-            //        }
-            //        else if (connectionPostion == Constants.RIGHT_UNI_CONNECTOR)
-            //        {
-            //            rightPosition = otherComponent.SAL;
-            //        }
-            //    }
-
-            //    if (leftPosition != null && rightPosition != null)
-            //    {
-            //        bool isHighToLow;
-            //        if (component.IsReverse)
-            //            isHighToLow = rightPosition.Sal_Level_Order > leftPosition.Sal_Level_Order;
-            //        else
-            //            isHighToLow = rightPosition.Sal_Level_Order < leftPosition.Sal_Level_Order;
-
-            //        String componentName = "unnamed";
-            //        if (!String.IsNullOrWhiteSpace(component.TextNodeLabel))
-            //        {
-            //            componentName = component.TextNodeLabel;
-            //        }
-
-            //        if (!isHighToLow)
-            //        {
-            //            String text = String.Format(rule7, componentName);
-            //            SetNodeMessage(component, text);
-            //        }
-            //    }
-            //}
-        }
-
-
-        //private String rule3 = "The separate subnets handled by the VLAN component, {0}, carry traffic of different SALs.  The incorrect configuration of the component, or the possible compromise of the component, allow the critical traffic to be visible on the less protected network segment.";
-        //private String rule4 = "The component, {0}, has multiple interfaces where the subnets of those interfaces carry traffic of different SALs.  If the component is compromised, the critical traffic could be visible from the less protected network.";
-
-
-        ///// <summary>
-        ///// rewrite rules  
-        ///// 
-        ///// </summary>
-        ///// <param name="component"></param>
-        //private void CheckRule34(NetworkNode component)
-        //{
-        //    if ((component.Subnets.Count) > 1)
-        //    {
-        //        List<EdgeNodeInfo> list = GetNodeEdges(component, new HashSet<string>() { Constants.FIREWALL_TYPE, Constants.UNIDIRECTIONAL_TYPE });
-        //        int countSALs = list.Select(x => x.EndComponent.SAL.Selected_Sal_Level).Distinct().Count();
-        //        if (countSALs > 2)
-        //        {
-        //            if (component.IsVLAN)
-        //            {
-        //                String componentName = "unnamed";
-        //                if (!String.IsNullOrWhiteSpace(component.TextNodeLabel))
-        //                {
-        //                    componentName = component.TextNodeLabel;
-        //                }
-
-        //                String text = String.Format(rule3, componentName);
-        //                SetNodeMessage(component, text);
-        //            }
-        //            else
-        //            {
-        //                String componentName = "unnamed";
-        //                if (!String.IsNullOrWhiteSpace(component.TextNodeLabel))
-        //                {
-        //                    componentName = component.TextNodeLabel;
-        //                }
-
-        //                String text = String.Format(rule4, componentName);
-        //                SetNodeMessage(component, text);
-        //            }
-        //        }
-        //    }
-        //}
 
         ///// <summary>
         ///// Many of the rules have to do with crossing an enclave boundary
@@ -510,70 +392,6 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         //}
 
 
-        //private void CheckRule12(NetworkLink link, NetworkNode headComponent, NetworkNode tailComponent)
-        //{
-        //    if (!headComponent.IsInSameZone(tailComponent))
-        //    {
-        //        //Debug.WriteLine("HeadComponent: " + headComponent.Node.ID + " " + headComponent.Node.Label);
-        //        //Debug.WriteLine("tailComponent: " + tailComponent.Node.ID + " " + tailComponent.Node.Label);
-
-        //        //Get All components that are not firewalls or unidirectional devices not connectors on head side of edge
-        //        List<EdgeNodeInfo> listHead = CheckFirewallUni(link, headComponent, new HashSet<Guid>() { tailComponent.ID });
-
-        //        //Get All that are not firewalls or unidirectional devices components that are not connectors on tail side of edge
-        //        List<EdgeNodeInfo> listTail = CheckFirewallUni(link, tailComponent, new HashSet<Guid>() { headComponent.ID });
-
-        //        //If one of these lists is empty then has sufficient filter because it means all the nodes on one
-        //        //side have a firewall
-        //        bool isFilterTrafficHead = listHead.Count == 0;
-        //        bool isFilterTrafficTail = listTail.Count == 0;
-
-        //        if (isFilterTrafficTail || isFilterTrafficHead)
-        //            return;
-        //        else
-        //        {
-        //            foreach (EdgeNodeInfo info in listHead)
-        //            {
-        //                if (info.EndComponent.IsPartnerVendorOrWeb)
-        //                {
-        //                    return;
-        //                }
-        //            }
-        //            foreach (EdgeNodeInfo info in listTail)
-        //            {
-        //                if (info.EndComponent.IsPartnerVendorOrWeb)
-        //                {
-        //                    return;
-        //                }
-        //            }
-
-        //            String headName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(headComponent.TextNodeLabel))
-        //            {
-        //                headName = headComponent.TextNodeLabel;
-        //            }
-
-        //            String tailName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(tailComponent.TextNodeLabel))
-        //            {
-        //                tailName = tailComponent.TextNodeLabel;
-        //            }
-
-        //            String text = String.Format(rule1, headName, tailName);
-        //            AddMessage(link, text);
-        //        }
-        //    }
-
-        //    if (headComponent.IsFirewall)
-        //    {
-        //        CheckRule2(headComponent);
-        //    }
-
-        //    if (tailComponent.IsFirewall)
-        //    {
-        //        CheckRule2(tailComponent);
-        //    }
-        //}
 
 
         //private List<EdgeNodeInfo> CheckFirewallUni(NetworkLink link, NetworkNode component, HashSet<Guid> SetVisted = null)
@@ -638,110 +456,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         //    }
         //}
 
-        //private String rule2 = "The subnet, {0}, should have an IDS (Intrusion Detection System) or IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, {1}, is correct and that malware has not been able to penetrate past the firewall.";
-
-        ///// <summary>
-        ///// Check Firewall for IPS and IDS past the firewall
-        ///// </summary>
-        ///// <param name="multiServiceComponent"></param>
-        ///// <param name="visitedNodes"></param>
-        //private void CheckRule2(NetworkNode firewall)
-        //{
-        //    if (firewall.IsIDSOrIPS) // This code is here because component can be a multiple service component that is IDS and IPS
-        //    {
-        //        return;
-        //    }
-
-        //    List<EdgeNodeInfo> list = GetNodeEdges(firewall, new HashSet<string>());
-        //    foreach (EdgeNodeInfo info in list)
-        //    {
-        //        if (info.EndComponent.IsInSameZone(firewall))
-        //        {
-        //            if (info.EndComponent.IsIDSOrIPS)
-        //            {
-        //                return;
-        //            }
-        //        }
-        //    }
-        //    string subnet = "";
-
-        //    HashSet<String> subnets = firewall.Subnets;
-        //    if (subnets.Count > 0)
-        //        subnet = subnets.ToList<String>()[0];
-        //    else
-        //        subnet = "unnamed";
-
-        //    String componentName = "unnamed";
-        //    if (!String.IsNullOrWhiteSpace(firewall.TextNodeLabel))
-        //    {
-        //        componentName = firewall.TextNodeLabel;
-        //    }
-
-        //    String text = String.Format(rule2, subnet, componentName);
-        //    SetNodeMessage(firewall, text);
-        //}
-
-        //private String rule5 = "The path identified by the components, {0} and {1}, appears to connect on one side to an external network.  A firewall to filter the traffic to and from the external network is recommended to protect the facility's network.  Note that a 'Web' component, 'Vendor' component, or 'Partner' component are all assumed to interface with an external network.  In addition, a modem with a single connection is assumed to allow a connection from outside the facility's network.";
-
-        //private void CheckRule5(NetworkNode component)
-        //{
-        //    if (component.IsPartnerVendorOrWeb)//Is it Firewall,Vendor,Partner
-        //    {
-        //        HashSet<Guid> VisitedNodes = new HashSet<Guid>();
-        //        VisitedNodes.Add(component.ID);
-        //        List<EdgeNodeInfo> list = GetNodeEdges(component, new HashSet<String>() { Constants.FIREWALL_TYPE });
-        //        foreach (EdgeNodeInfo info in list)
-        //        {
-        //            String componentName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(component.TextNodeLabel))
-        //            {
-        //                componentName = component.TextNodeLabel;
-        //            }
-
-        //            String endComponentName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(info.EndComponent.TextNodeLabel))
-        //            {
-        //                endComponentName = info.EndComponent.TextNodeLabel;
-        //            }
-
-        //            String text = String.Format(rule5, componentName, endComponentName);
-        //            AddMessage(info.Link, text);
-        //        }
-        //    }
-        //}
+        
 
 
-        //private String rule6 = "The path between the components, {0} and {1}, is untrusted.  Because malicious traffic may be introduced onto the link, a firewall to filter the traffic on both sides of untrusted link is recommended.";
-
-
-        //private void CheckRule6(HashSet<Guid> checkedLines, NetworkLink link, NetworkNode headComponent, NetworkNode tailComponent)
-        //{
-        //    if (link.Security == LinkSecurityEnum.Untrusted)
-        //    {
-        //        if (headComponent.IsFirewall || tailComponent.IsFirewall)
-        //        {
-        //            //If there is firewall don't show message
-        //        }
-        //        else
-        //        {
-        //            String headName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(headComponent.TextNodeLabel))
-        //            {
-        //                headName = headComponent.TextNodeLabel;
-        //            }
-
-        //            String tailName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(tailComponent.TextNodeLabel))
-        //            {
-        //                tailName = tailComponent.TextNodeLabel;
-        //            }
-
-        //            String text = String.Format(rule6, headName, tailName);
-        //            AddMessage(link, text);
-        //        }
-
-        //    }
-        //}
 
         //private void AddMessage(NetworkLink link, String text)
         //{

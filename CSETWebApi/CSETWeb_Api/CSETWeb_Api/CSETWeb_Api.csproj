@@ -4243,6 +4243,7 @@
     <Content Include="Diagram\VERSION" />
     <Content Include="Documents\TSA pipeline_security_guidelines.pdf" />
     <Content Include="Documents\S_62443-4-1.pdf" />
+    <Content Include="Diagram\etc\build\filechecker.bat" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
