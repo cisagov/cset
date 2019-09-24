@@ -72,11 +72,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     foreach (var d in domains)
                     {
+                        var tGroupOrder =maturity.FirstOrDefault(x => x.Domain == d.Domain);
                         var maturityDomain = new MaturityDomain
                         {
                             DomainName = d.Domain,
                             Assessments = new List<MaturityAssessment>(),
-                            Sequence = (int)maturity.FirstOrDefault(x => x.Domain == d.Domain).grouporder
+                            Sequence = tGroupOrder == null? 0: tGroupOrder.grouporder
                         };
                         var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Domain).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
                         foreach (var s in partial_sub_categoy)
