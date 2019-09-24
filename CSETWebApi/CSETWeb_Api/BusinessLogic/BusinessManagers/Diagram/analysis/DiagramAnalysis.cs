@@ -35,7 +35,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         private CSET_Context db;
         private Dictionary<string, string> imageToTypePath = new Dictionary<string, string>();
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
-        private int nextMessage = 1; 
+        private int nextMessage = 1;
 
         public XmlDocument NetworkWarningsXml { get; private set; }
         public List<IDiagramAnalysisNodeMessage> NetworkWarnings { get; private set; }
@@ -63,8 +63,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
             XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
             XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
-            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
-            foreach(XmlNode layer in mxCellLayers)
+            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
+            foreach (XmlNode layer in mxCellLayers)
             {
                 string id = layer.Attributes["id"].Value;
                 layers.Add(id, new NetworkLayer()
@@ -85,20 +85,31 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 //once we have them all start connecting everything up. 
 
                 //if it is a zone then just skip it
-                if(((XmlElement)node).HasAttribute("zone"))
+                if (((XmlElement)node).HasAttribute("zone"))
                 {
                     continue;
                 }
 
+
                 //do a little preprocessing to get the attribute values
                 var styleString = node.FirstChild.Attributes["style"].Value;
+
+
+                // if it is a group then skip it
+                if (styleString.Split(';').Contains("group"))
+                {
+                    continue;
+                }
+
+
                 string nodeType = null;
 
                 string imgPath;
-                if (DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;", "")).TryGetValue("image", out imgPath)){
+                if (DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;", "")).TryGetValue("image", out imgPath))
+                {
                     if (!imageToTypePath.TryGetValue(imgPath.Replace("img/cset/", ""), out nodeType))
                     {
-                    
+
                     }
                 }
                 else
@@ -106,14 +117,14 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                     //I think we can assume
                     nodeType = "MSC";
                 }
-                
+
                 //get the parent value if it is in the layers dictionary then set the
                 //visible value to the value of the parent
                 //else set it to visible
                 string layername = node.FirstChild.Attributes["parent"].Value;
                 NetworkLayer layer;
                 bool IsVisible = true;
-                if(layers.TryGetValue(layername,out layer))
+                if (layers.TryGetValue(layername, out layer))
                 {
                     if (!layer.Visible)
                     {
@@ -125,9 +136,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 //extract the geometry to a point on the component
                 NetworkGeometry geometry = new NetworkGeometry(node.FirstChild.FirstChild);
 
-                NetworkComponent dnode; 
+                NetworkComponent dnode;
                 string id = node.Attributes["id"].Value;
-                if (nodes.TryGetValue(id,out dnode))
+                if (nodes.TryGetValue(id, out dnode))
                 {
 
                 }
@@ -135,9 +146,9 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 {
                     dnode = new NetworkComponent()
                     {
-                        ComponentGuid = ((XmlElement)node).HasAttribute("ComponentGuid") ? Guid.Parse(node.Attributes["ComponentGuid"].Value):new Guid(),
+                        ComponentGuid = ((XmlElement)node).HasAttribute("ComponentGuid") ? Guid.Parse(node.Attributes["ComponentGuid"].Value) : new Guid(),
                         ID = node.Attributes["id"].Value,
-                        ComponentName = ((XmlElement)node).HasAttribute("label") ? node.Attributes["label"].Value:"",
+                        ComponentName = ((XmlElement)node).HasAttribute("label") ? node.Attributes["label"].Value : "",
                         ComponentType = nodeType,
                         IsVisible = IsVisible,
                         Geometry = geometry
@@ -159,19 +170,19 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                     {
 
                     });
-                    start.AddEdge(target);
-                    target.AddEdge(start);
+                    start?.AddEdge(target);
+                    target?.AddEdge(start);
                 }
                 else
                 {
 
                 }
-                
+
             }
             AnalyzeNetwork();
-            
+
             //set both the xml and the json
-            this.NetworkWarningsXml= ProcessNetworkMessages();
+            this.NetworkWarningsXml = ProcessNetworkMessages();
             if (xDoc.DocumentElement != null && this.NetworkWarningsXml.DocumentElement != null)
             {
                 XmlNode root = xDoc.DocumentElement.FirstChild;
@@ -201,7 +212,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             //force reload
             XmlDocument start = new XmlDocument();
             this.NetworkWarnings.Clear();
-            foreach(var message in dictionaryNodeMessages.Values)
+            foreach (var message in dictionaryNodeMessages.Values)
             {
                 this.NetworkWarnings.Add((IDiagramAnalysisNodeMessage)message);
                 XmlDocument doc = new XmlDocument();
@@ -230,7 +241,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             }
             else
             {
-                throw new NodeNotFound();
+                return null;
             }
         }
 
@@ -244,8 +255,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
          * if so then we need to consider those edges. 
          * do a breadth first search if we find an object that is not a firewall 
          */
-        
-          
+
+
 
         private void checkRule1()
         {
@@ -266,7 +277,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                         //flag node and put up the message
                         //if the message is already there over write with the latest edition
                         DiagramAnalysisNodeMessage msg;
-                        if (dictionaryNodeMessages.TryGetValue(node.ComponentGuid, out msg)){
+                        if (dictionaryNodeMessages.TryGetValue(node.ComponentGuid, out msg))
+                        {
                             String text = String.Format(rule1, node.ComponentName);
                             msg.SetMessages.Add(text);
                         }
@@ -390,7 +402,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             //{
             //    SAL_LEVELS leftPosition = null;
             //    SAL_LEVELS rightPosition = null;
-                
+
             //    foreach (NetworkLink link in connectors)
             //    {
             //        if (link.SourceComponent == null || link.TargetComponent == null)
@@ -931,6 +943,6 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        
+
     }
 }

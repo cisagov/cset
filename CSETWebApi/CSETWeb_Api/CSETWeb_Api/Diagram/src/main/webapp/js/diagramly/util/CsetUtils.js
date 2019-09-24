@@ -13,9 +13,99 @@
  */
 CsetUtils = function ()
 {
-
 }
 
+function updateGraph(editor, data, finalize)
+{
+    let graph = Graph.zapGremlins(mxUtils.trim(data));
+    graph = graph.replace(/\\"/g, '"').replace(/^\"|\"$/g, ''); // fix escaped quotes and trim quotes
+
+    return new Promise(function (resolve, reject)
+    {
+        editor.graph.model.beginUpdate();
+        try
+        {
+            editor.setGraphXml(mxUtils.parseXml(graph).documentElement);
+            resolve();
+        } catch (err)
+        {
+            console.warn('Failed to set graph xml:', err);
+            reject(err);
+        } finally
+        {
+            editor.graph.model.endUpdate();
+
+            if (finalize)
+            {
+                finalize();
+            }
+
+            editor.graph.fit();
+            if (editor.graph.view.scale > 1)
+            {
+                editor.graph.zoomTo(1);
+            }
+        }
+    });
+}
+
+function makeRequest(e)
+{
+    const jwt = localStorage.getItem('jwt');
+    return new Promise(function (resolve, reject)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open(e.method, e.url);
+        xhr.setRequestHeader('Authorization', jwt);
+        xhr.setRequestHeader('Content-Type', e.contentType || 'application/json');
+        if (e.overrideMimeType)
+        {
+            xhr.overrideMimeType(e.overrideMimeType);
+        }
+
+        if (e.onreadystatechange)
+        {
+            xhr.onreadystatechange = function ()
+            {
+                e.onreadystatechange({
+                    readyState: this.readyState,
+                    status: this.status,
+                    responseText: this.responseText
+                });
+            };
+        }
+        xhr.onload = function ()
+        {
+            if (this.status >= 200 && this.status < 300)
+            {
+                resolve(xhr.response);
+            } else
+            {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function ()
+        {
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+
+        switch (e.method)
+        {
+            case 'GET':
+                xhr.send();
+                break;
+            case 'POST':
+                xhr.send(e.payload);
+                break;
+        }
+    });
+}
 
 /**
  * If the edit is a cell being moved or added, makes it 'unconnectable'
@@ -29,7 +119,6 @@ CsetUtils.adjustConnectability = function (edit)
         if (edit.changes[i] instanceof mxChildChange)
         {
             var c = edit.changes[i].child;
-
             if (c.isEdge())
             {
                 return;
@@ -43,97 +132,136 @@ CsetUtils.adjustConnectability = function (edit)
             }
 
             // children of an MSC are not connectable
-            if (c.isParentMSC())
-            {
-                c.setConnectable(false);
-            }
-            else
-            {
-                c.setConnectable(true);
-            }
+            c.setConnectable(!c.isParentMSC());
         }
     }
 }
 
+/**
+ * Retrieves the graph from the CSET API if it has been stored.
+ */
+CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
+{
+    await makeRequest({
+        method: 'GET',
+        url: localStorage.getItem('cset.host') + 'diagram/get',
+        onreadystatechange: function (e)
+        {
+            if (e.readyState !== 4)
+            {
+                return;
+            }
+
+            switch (e.status)
+            {
+                case 200:
+                    const resp = JSON.parse(e.responseText);
+                    const assessmentName = resp.AssessmentName;
+
+                    filename.innerHTML = assessmentName;
+                    app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
+                    sessionStorage.setItem('assessment.name', assessmentName);
+                    sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
+
+                    var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
+                    updateGraph(editor, data);
+                    break
+                case 401:
+                    window.location.replace('http://localhost:4200');
+                    break;
+            }
+        }
+    })
+}
+
+/**
+ * Make sure edges (links) are not hidden behind zones or other objects
+ */
+CsetUtils.edgesToTop = function (graph, edit)
+{
+    var model = graph.getModel();
+    for (var i = 0; i < edit.changes.length; i++)
+    {
+        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
+        {
+            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
+            graph.orderCells(false, edges);
+        }
+    }
+}
 
 /**
  * Persists the graph to the CSET API.
  */
-CsetUtils.PersistGraphToCSET = function (editor)
+CsetUtils.PersistGraphToCSET = async function (editor)
 {
-    var enc = new mxCodec();
-    var model = editor.graph.getModel();
-    var node = enc.encode(editor.graph.getModel());
-    var oSerializer = new XMLSerializer();
-    var sXML = oSerializer.serializeToString(node);
+    const req = {
+        DiagramXml: '',
+        LastUsedComponentNumber: 1,
+        AnalyzeDiagram: editor.analyzeDiagram || false
+    };
+    const xmlserializer = new XMLSerializer();
 
-    var selectionEmpty = editor.graph.isSelectionEmpty();
-    var ignoreSelection = selectionEmpty;
-    var bg = '#ffffff';
-    var req = {};
-
-    if(model){    
-        var node = enc.encode(model);
-        var oSerializer = new XMLSerializer();
-        var sXML = oSerializer.serializeToString(node);
-    
-        req.DiagramXml = sXML;
-        req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
-    }
-
-    if (sXML == EditorUi.prototype.emptyDiagramXml)
+    const model = editor.graph.getModel();
+    if (model)
     {
-        // debugger;
-        req.DiagramXml = "";
-        req.LastUsedComponentNumber = 1;
+        const enc = new mxCodec();
+        const node = enc.encode(model);
+        const sXML = xmlserializer.serializeToString(node);
+        if (sXML !== EditorUi.prototype.emptyDiagramXml)
+        {
+            req.DiagramXml = sXML;
+            req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+        }
     }
+
+    const bg = '#ffffff';
+    let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
+    svgRoot = xmlserializer.serializeToString(svgRoot);
 
     // include the SVG in the save request
-    var bg = '#ffffff';
-
-    var svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
-    svgRoot = new XMLSerializer().serializeToString(svgRoot);
-
     req.DiagramSvg = svgRoot;
-    CsetUtils.saveDiagram(req);
-}
 
+    await CsetUtils.saveDiagram(req);
+}
 
 /**
  * Posts the diagram and supporting information to the API.
  * @param {any} req
  */
-CsetUtils.saveDiagram = function (req)
+CsetUtils.saveDiagram = async function (req)
 {
-    var jwt = localStorage.getItem('jwt');
-    var url = localStorage.getItem('cset.host') + 'diagram/save';
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function ()
+    const response = await makeRequest({
+        method: 'POST',
+        overrideMimeType: 'application/json',
+        url: localStorage.getItem('cset.host') + 'diagram/save',
+        payload: JSON.stringify(req),
+        onreadystatechange: function (e)
+        {
+            if (e.readyState !== 4)
+            {
+                return;
+            }
+
+            switch (e.status)
+            {
+                case 200:
+                    // successful post            
+                    break;
+                case 401:
+                    window.location.replace('http://localhost:4200');
+                    break;
+            }
+        }
+    });
+
+    if (response)
     {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            // successful post            
-        }
-        if (this.readyState == 4 && this.status == 401)
-        {
-            window.location.replace('error401.html');
-        }
+        const warnings = JSON.parse(response);
+        const analysis = new CsetAnalysisWarnings();
+        // RKW - editor not yet available here ..... analysis.addWarningsToDiagram(warnings, editor.graph);
     }
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', jwt);
-    xhr.overrideMimeType("application/json");
-    xhr.onload  = function() {        
-        if(req.responseText){    
-            var warnings = JSON.parse(req.responseText);
-            var analysis = new CsetAnalysisWarnings();
-            analysis.addWarningsToDiagram(warnings, editor.graph);
-        }
-     };
-    xhr.send(JSON.stringify(req));
 }
-
-
 
 /**
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
@@ -159,57 +287,38 @@ CsetUtils.importFilesCSETD = function (files, editor)
  * Persists the CSETD XML to the CSET API.  The mxGraph translation
  * is returned, and dropped into the existing graph.
  */
-function TranslateToMxGraph(editor, sXML)
+async function TranslateToMxGraph(editor, sXML)
 {
-    var jwt = localStorage.getItem('jwt');
-
     var req = {};
     req.DiagramXml = sXML;
 
-    var url = localStorage.getItem('cset.host') + 'diagram/importcsetd';
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function ()
-    {
-        if (this.readyState == 4 && (this.status == 200 || this.status == 204))
+    await makeRequest({
+        method: 'POST',
+        url: localStorage.getItem('cset.host') + 'diagram/importcsetd',
+        payload: JSON.stringify(req),
+        onreadystatechange: function (e)
         {
-            // successful post - drop the XML that came back into the graph
-            var data = xhr.responseText;
-            data = Graph.zapGremlins(mxUtils.trim(data));
-
-            // fix escaped quotes and trim quotes
-            data = data.replace(/\\"/g, '"').replace(/^\"|\"$/g, '');
-
-            editor.graph.model.beginUpdate();
-            try
+            if (e.readyState !== 4)
             {
-                editor.setGraphXml(mxUtils.parseXml(data).documentElement);
+                return;
             }
-            catch (e)
-            {
-                error = e;
-                console.log('TranslateToMxGraph error: ' + error);
-            }
-            finally
-            {
-                editor.graph.model.endUpdate();
-                CsetUtils.initializeZones(editor.graph);
 
-                editor.graph.fit();
-                if (editor.graph.view.scale > 1)
-                {
-                    editor.graph.zoomTo(1);
-                }
+            switch (e.status)
+            {
+                case 200:
+                case 204:
+                    // successful post - drop the XML that came back into the graph
+                    updateGraph(editor, e.responseText, function ()
+                    {
+                        CsetUtils.initializeZones(editor.graph)
+                    });
+                    break;
+                case 401:
+                    window.location.replace('http://localhost:4200');
+                    break;
             }
         }
-        if (this.readyState == 4 && this.status == 401)
-        {
-            window.location.replace('error401.html');
-        }
-    }
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', jwt);
-    xhr.send(JSON.stringify(req));
+    });
 }
 
 /**
@@ -221,7 +330,6 @@ CsetUtils.initializeZones = function (graph)
     allCells.forEach(x =>
     {
         x.setAttribute('internalLabel', x.getAttribute('label'));
-        
         x.initZone();
     });
     graph.refresh();
@@ -249,3 +357,95 @@ CsetUtils.handleZoneChanges = function (edit)
     });
 }
 
+/**
+ * Recursively finds all child edges for the parent.
+ * 
+ * @param {any} parent
+ */
+CsetUtils.getAllChildEdges = function (parent)
+{
+    var result = [];
+
+    if (!!parent.edges)
+    {
+        parent.edges.forEach(e => result.push(e));
+    }
+
+    if (!!parent.children)
+    {
+        for (var i = 0; i < parent.children.length; i++)
+        {
+            getChildren(parent.children[i]);
+        }
+    }
+
+    function getChildren(cell)
+    {
+        if (result.indexOf(cell) > -1)
+        {
+            return;
+        }
+
+        if (cell.isEdge())
+        {
+            result.push(cell);
+        }
+
+        if (!!cell.edges)
+        {
+            cell.edges.forEach(e => result.push(e));
+        }
+
+        if (!!cell.children)
+        {
+            for (var i = 0; i < cell.children.length; i++)
+            {
+                getChildren(cell.children[i]);
+            }
+        }
+    }
+    return result;
+}
+
+/**
+ * 
+ * 
+ * @param {any} filename
+ */
+CsetUtils.findComponentInMap = function (filename)
+{
+    var m = Editor.componentSymbols;
+    for (var i = 0; i < m.length; i++)
+    {
+        var group = m[i];
+        for (var j = 0; j < group.Symbols.length; j++)
+        {
+            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName)
+            {
+                return group.Symbols[j];
+            }
+        }
+    };
+}
+
+/**
+ * 
+ */
+CsetUtils.getFilenameFromPath = function (path)
+{
+    if (!path)
+    {
+        return '';
+    }
+
+    var s = path.lastIndexOf('/');
+    if (s > 0)
+    {
+        if (path.length > (s + 1))
+        {
+            return path.substring(s + 1);
+        }
+        return '';
+    }
+    return path;
+}

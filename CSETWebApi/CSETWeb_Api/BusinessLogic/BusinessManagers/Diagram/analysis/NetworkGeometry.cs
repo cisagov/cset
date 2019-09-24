@@ -19,19 +19,24 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
         public NetworkGeometry(XmlNode node)
         {
+            if (node == null)
+            {
+                return;
+            }
+
             int x = 0;
             int y = 0; 
-            int.TryParse(node.Attributes["x"].Value, out x);
-            int.TryParse(node.Attributes["y"].Value, out y);
+            int.TryParse(node.Attributes["x"]?.Value, out x);
+            int.TryParse(node.Attributes["y"]?.Value, out y);
 
             point = new Point(x,y);
             int width, height;
 
-            if(int.TryParse(node.Attributes["width"].Value, out width))
+            if(int.TryParse(node.Attributes["width"]?.Value, out width))
             {
                 Width = width;
             }
-            if (int.TryParse(node.Attributes["height"].Value, out height))
+            if (int.TryParse(node.Attributes["height"]?.Value, out height))
             {
                 Height = height;
             }

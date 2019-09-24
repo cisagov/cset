@@ -2,17 +2,6 @@
 
 
 /**
- * Providing a nice function to set a single style element in a cell.
- * @param {any} name
- * @param {any} value
- */
-mxCell.prototype.setStyleValue = function (name, value)
-{
-    this.setStyle(CsetUtils.setStyleValue(this.getStyle(), name, value));
-}
-
-
-/**
  * Returns the value of the attribute on the wrapper object (NOT THE STYLE).
  */
 mxCell.prototype.getCsetAttribute = function (name)
@@ -23,7 +12,10 @@ mxCell.prototype.getCsetAttribute = function (name)
     }
 
     var obj = this.value;
-
+    if (!obj)
+    {
+        return null;
+    }
     return obj.getAttribute(name);
 }
 
@@ -165,6 +157,10 @@ mxCell.prototype.setZoneColor = function ()
             headerColor = '#d3eef2';
             color = '#f2f8f9';
             break;
+        case 'classified':
+            headerColor = '#99cfff';
+            color = '#cce5ff';
+            break;
     }
 
     this.setStyleValue('fillColor', headerColor);
@@ -183,6 +179,12 @@ mxCell.prototype.autoNameComponent = function ()
         return;
     }
 
+    // ignore items already labeled
+    if (!!this.getCsetAttribute('label'))
+    {
+        return;
+    }
+
     // determine new number
     var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
     sessionStorage.setItem("last.number", num);
@@ -193,7 +195,7 @@ mxCell.prototype.autoNameComponent = function ()
     {
         prefix = 'Zone';
     }
-    else 
+    else
     {
         var prefix = "COMP";
         var compMap = Editor.componentSymbols;
@@ -221,6 +223,33 @@ mxCell.prototype.autoNameComponent = function ()
 
 
 /**
+ * Returns details for the component (sourced from COMPONENT_SYMBOLS columns)
+ */
+mxCell.prototype.getSymbolDetail = function ()
+{
+    // ignore items without style
+    if (!this.getStyle())
+    {
+        return;
+    }
+
+
+    var filename = CsetUtils.getFilenameFromPath(this.getStyleValue('image'));
+
+
+    // if this is an MSC, use it's natural filename to find the component definition
+    var s = this.getStyle();
+    if (!!s && s.indexOf('msc=1') > 0)
+    {
+        filename = 'multiple_services_component.svg';
+    }
+
+    return CsetUtils.findComponentInMap(filename);
+}
+
+
+
+/**
  * Returns a boolean indicating if the specified style exists,
  * regardless of its value.
  * @param {any} styleString
@@ -232,8 +261,8 @@ mxCell.prototype.hasStyle = function (name)
     var styleString = this.getStyle();
     styleString.split(';').forEach((style) =>
     {
-        const s = style.split('=', 2);
-        if (s[0] === name)
+        if (style.toLowerCase() === name.toLowerCase()
+            || style.toLowerCase().startsWith(name.toLowerCase() + '='))
         {
             exists = true;
         }
@@ -273,28 +302,91 @@ mxCell.prototype.getStyleValue = function (name)
 }
 
 /**
+ * 
+ */
+mxCell.prototype.removeStyleValue = function (name)
+{
+    var elements = this.getStyle().split(';');
+
+    for (var i = elements.length - 1; i >= 0; i--)
+    {
+        if (elements[i].toLowerCase() === name.toLowerCase()
+            || elements[i].toLowerCase().startsWith(name.toLowerCase() + '=')
+            || elements[i] === '')
+        {
+            elements.splice(i, 1);
+        }
+    }
+
+    this.setStyle(elements.join(';'));
+}
+
+
+/**
  * Sets a single style value in the cell's style string.
  */
 mxCell.prototype.setStyleValue = function (name, value)
 {
-    var exists = false;
-    var styleElements = this.getStyle().split(';');
+    var elements = this.getStyle().split(';');
 
-    for (var i = 0; i < styleElements.length; i++)
+    // first, remove any elements for the name, whether or not they contain a value
+    for (var i = elements.length - 1; i >= 0; i--)
     {
-        const s = styleElements[i].split('=', 2);
-        if (s[0].toLowerCase() === name.toLowerCase())
+        if (elements[i].toLowerCase() === name.toLowerCase()
+            || elements[i].toLowerCase().startsWith(name.toLowerCase() + '=')
+            || elements[i] === '')
         {
-            s[1] = value;
-            styleElements[i] = s[0] + '=' + s[1];
-            exists = true;
+            elements.splice(i, 1);
         }
     }
 
-    if (!exists)
+    // then add the specified style and value
+    var newStyle = name;
+    if (!!value)
     {
-        styleElements.push(name + '=' + value + ';');
+        newStyle += ('=' + value);
+    }
+    elements.push(newStyle + ';');
+
+    this.setStyle(elements.join(';'));
+}
+
+
+/**
+ * 
+ */
+mxCell.prototype.getSAL = function ()
+{
+
+    if (this.isZone())
+    {
+        return this.getCsetAttribute('SAL');
     }
 
-    this.setStyle(styleElements.join(';'));
+    var c = this;
+    while (!isLayer(c) && !c.isZone())
+    {
+        c = c.getParent();
+    }
+
+    return c.getCsetAttribute('SAL');
+}
+
+
+/**
+ * 
+ */
+isLayer = function (cell)
+{
+    if (!cell)
+    {
+        return false;
+    }
+
+    var parent = cell.getParent();
+    if (!!parent && parent.hasOwnProperty('id') && parent.id == 0)
+    {
+        return true;
+    }
+    return false;
 }

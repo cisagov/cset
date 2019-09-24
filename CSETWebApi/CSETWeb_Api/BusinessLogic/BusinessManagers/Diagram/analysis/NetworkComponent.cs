@@ -17,6 +17,10 @@ namespace CSETWeb_Api.BusinessManagers
         }
         internal void AddEdge(NetworkComponent target)
         {
+            if (target == null)
+            {
+                return;
+            }
             Connections.Add(target);
         }
 

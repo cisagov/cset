@@ -50,9 +50,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// deleted records for the removed components
         /// </summary>
         public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
-        {
-            
+        {            
             newDiagram.OldParentIds = getParentIdsDictionary(oldDiagramDocument.SelectNodes("/mxGraphModel/root/object"));
+
+            newDiagram.Parentage = BuildParentage(newDiagramDocument);
+
             newDiagram.NetworkComponents = ProcessDiagram(newDiagramDocument);
             oldDiagram.NetworkComponents = ProcessDiagram(oldDiagramDocument);
             findLayersAndZones(newDiagramDocument, newDiagram);
@@ -177,9 +179,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         int zone_id, layer_id =0;
                         bool zIsNull = false;
                         zIsNull = !zLookup.TryGetValue(newNode.Value.Parent_id, out zone_id);
-
-                        //recurse through them all until the parent is 0
-                        layer_id = GetLayerId(newNode.Value.Parent_id, newNode.Value.ID, allItems, containerLookup);
+                        
+                        layer_id = GetLayerId(newNode.Value.ID, newDiagram.Parentage, allItems);
                         
 
                         context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
@@ -203,7 +204,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         if (n != null)
                         {
 
-                            int layer_id = GetLayerId(node.Parent_id, node.ID, allItems, containerLookup);
+                            int layer_id = GetLayerId(node.ID, newDiagram.Parentage, allItems);
                             //try zone first if it is zone then the component gets the zone's layer
                             //then try layer
                             //then assume we are broken
@@ -224,8 +225,19 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         //find the new parent zone or layer and set it
                         var n = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == node.ID).FirstOrDefault();
                         if (n != null)
-                        {   
-                            n.Parent_Id = allItems[node.Parent_id];
+                        {
+                            // recurse parentage upward until we find one that we recognize in allItems
+                            string id = n.DrawIO_id;
+                            while (newDiagram.Parentage.ContainsKey(id))
+                            {
+                                id = newDiagram.Parentage[id];
+                                if (allItems.ContainsKey(id))
+                                {
+                                    break;
+                                }
+                            }
+
+                            n.Parent_Id = allItems[id];
                         }
                     }
                     context.SaveChanges();
@@ -242,21 +254,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             }
         }
 
-        private int GetLayerId(string Parent_id, String ID, Dictionary<string,int> allItems, Dictionary<int,int> containerLookup)
-        {
-            int nextcomp, layer_id = 0;
-            bool zIsNull = false;
-            //recurse through them all until the parent is 0
-            allItems.TryGetValue(Parent_id, out nextcomp);
-            allItems.TryGetValue(ID, out layer_id);
-            while (nextcomp != 0)
-            {
-                layer_id = nextcomp;
-                containerLookup.TryGetValue(nextcomp, out nextcomp);
-            }
-            return layer_id;
-        }
 
+        /// <summary>
+        /// Returns the DB identity of the layer that the component lives in.
+        /// </summary>
+        /// <returns></returns>
+        private int GetLayerId(string id, Dictionary<string, string> parentage, Dictionary<string, int> allItems)
+        {
+            while (parentage.ContainsKey(id) && parentage[id] != "0")
+            {
+                id = parentage[id];
+            }
+
+            // return the identity ID of the layer we just found
+            return allItems[id];
+        }
 
 
         private void findLayersAndZones(XmlDocument xDoc, Diagram diagram)
@@ -269,7 +281,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
              * post it to an object for saving.
              */
             XmlNodeList mxCellZones = xDoc.SelectNodes("//*[@zone=\"1\"]");
-            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\"]");
+            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
             foreach (XmlNode layer in mxCellLayers)
             {
                 string id = layer.Attributes["id"].Value;
@@ -349,6 +361,37 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     c.ParentChanged = true;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Returns a dictionary where the key is the DrawIO ID and the value is its parent ID.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        private Dictionary<string, string> BuildParentage(XmlDocument doc)
+        {
+            // key = id, value = parent
+            var dict = new Dictionary<string, string>();
+            var objList = doc.SelectNodes("//*[@id]");
+            foreach (XmlNode n in objList)
+            {
+                if (n.Attributes["parent"] != null)
+                {
+                    dict.Add(n.Attributes["id"].InnerText, n.Attributes["parent"].InnerText);
+                    continue;
+                }
+
+                // Sometimes the id and parent attributes are on different elements.  
+                // Look for a child mxCell.
+                var c = n.SelectSingleNode("mxCell");
+                if (c != null)
+                {
+                    dict.Add(n.Attributes["id"].InnerText, c.Attributes["parent"].InnerText);
+                }
+            }
+
+            return dict;
         }
 
 

@@ -90,7 +90,6 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
-
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
         if (!!v) {
@@ -149,7 +148,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
         this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 0);
+      }, 100);
     });
 
 
@@ -158,7 +157,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       this.componentCount = x.Labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      }, 0);
+      }, 100);
     });
 
 

@@ -230,6 +230,10 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                     headerColor = "#f6d06b";
                     color = "#f2f8f9";
                     break;
+                case "classified":
+                    headerColor = "#99cfff";
+                    color = "#cce5ff";
+                    break;
             }
         }
 
