@@ -49,7 +49,7 @@ namespace CSETWeb_Api.Controllers
                 XmlDocument xDoc = new XmlDocument();
                 if (string.IsNullOrEmpty(req.DiagramXml))
                 {
-                    req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" /></mxCell></root></mxGraphModel>";
+                    req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
                 }
                 xDoc.LoadXml(req.DiagramXml);
 
