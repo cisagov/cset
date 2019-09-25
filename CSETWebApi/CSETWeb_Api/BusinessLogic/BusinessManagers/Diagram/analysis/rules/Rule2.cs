@@ -7,7 +7,7 @@ using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
-    class Rule2 : IRuleEvaluate
+    class Rule2 : AbstractRule, IRuleEvaluate
     {
         
         private String rule2 = "The subnet, {0}, should have an IDS (Intrusion Detection System) or IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, {1}, is correct and that malware has not been able to penetrate past the firewall.";
@@ -17,7 +17,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         }
 
-        public List<DiagramAnalysisNodeMessage> evaluate()
+        public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             throw new NotImplementedException();
         }

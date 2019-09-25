@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Controllers
         [CSETAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public List<IDiagramAnalysisNodeMessage> SaveDiagram([FromBody] DiagramRequest req)
+        public void SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             TokenManager tm = new TokenManager();
@@ -48,10 +48,27 @@ namespace CSETWeb_Api.Controllers
                 BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.LoadXml(req.DiagramXml);
-                
-                DiagramAnalysis analysis = new DiagramAnalysis(db);
-                analysis.PerformAnalysis(xDoc);
-                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
+                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);                
+            }
+        }
+
+        [CSETAuthorize]
+        [Route("api/diagram/warnings")]
+        [HttpPost]
+        public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
+        {
+            // get the assessment ID from the JWT
+            TokenManager tm = new TokenManager();
+            int userId = (int)tm.PayloadInt(Constants.Token_UserId);
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.LoadXml(req.DiagramXml);
+
+                DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId ?? 0);
+                analysis.PerformAnalysis(xDoc);                
                 return analysis.NetworkWarnings;
             }
         }

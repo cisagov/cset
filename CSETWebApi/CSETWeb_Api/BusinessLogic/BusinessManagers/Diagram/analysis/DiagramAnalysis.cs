@@ -11,7 +11,9 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using DataLayerCore.Model;
 using Newtonsoft.Json;
@@ -25,298 +27,51 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
 
     public class DiagramAnalysis
     {
-        private Dictionary<String, NetworkComponent> nodes = new Dictionary<string, NetworkComponent>();
-        private List<NetworkLink> Links = new List<NetworkLink>();
-        private Dictionary<Guid, DiagramAnalysisLineMessage> dictionaryLineMessages = new Dictionary<Guid, DiagramAnalysisLineMessage>();
-        private Dictionary<Guid, DiagramAnalysisNodeMessage> dictionaryNodeMessages = new Dictionary<Guid, DiagramAnalysisNodeMessage>();
-
-        private List<NetworkAnalysisNode> ListAnalysisNodes = new List<NetworkAnalysisNode>();
-        private List<INetworkAnalysisMessage> ListAnalysisMessages = new List<INetworkAnalysisMessage>();
-        
         private CSET_Context db;
-        private Dictionary<string, string> imageToTypePath = new Dictionary<string, string>();
-        private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
-
-        //drawio id to zone lookup
-        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
-
-        private int nextMessage = 1;
+        private int assessment_id;
+        private Dictionary<string, string> imageToTypePath;
 
         public XmlDocument NetworkWarningsXml { get; private set; }
         public List<IDiagramAnalysisNodeMessage> NetworkWarnings { get; private set; }
 
-        public DiagramAnalysis(CSET_Context db)
+        public DiagramAnalysis(CSET_Context db, int assessment_id)
         {
             this.db = db;
+            this.assessment_id = assessment_id;
             imageToTypePath = db.COMPONENT_SYMBOLS.ToDictionary(x => x.File_Name, x => x.Diagram_Type_Xml);
             NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
         }
 
         public void PerformAnalysis(XmlDocument xDoc)
         {
-            //create a dictionary of connected graphs
-            //go through the document creating each node and its connections
-            //have a dictionary of nodes to see if we saw this node already
-            //if so do not recreate it. 
-            //if not create the node and it's connections
-            //once the graph is built pick a node and start moving through them 
-            //to extract minimal spanning tree(s)
-            //then walk the tree to evaluate node rules
+            String sal = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment_id).First().Selected_Sal_Level;
+            SimplifiedNetwork network = new SimplifiedNetwork(this.imageToTypePath,sal);
+            network.ExtractNetworkFromXml(xDoc);
 
+            List<IDiagramAnalysisNodeMessage> msgs=  AnalyzeNetwork(network);
 
-
-
-            XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
-            XmlNodeList zoneNodes = xDoc.SelectNodes("//*[@zone=\"1\"]");
-            XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
-            XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
-            foreach (XmlNode layer in mxCellLayers)
-            {
-                string id = layer.Attributes["id"].Value;
-                layers.Add(id, new NetworkLayer()
-                {
-                    ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : "Main Layer",
-                    Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
-                });
-            }
-
-            foreach (XmlNode node in zoneNodes)
-            {
-                //determine if it is an edge or a node
-                //if it is an node look it up(should be new)
-                //and create it
-                //if it is an edge then we need to save it until all the nodes are created
-                //once we have them all start connecting everything up. 
-
-                //if it is a zone then just skip it
-                if (((XmlElement)node).HasAttribute("zone"))
-                {
-                    string zone = node.Attributes["id"].Value;
-
-                    zones.Add(zone, new NetworkZone()
-                    {
-                        ID = zone,
-                        ZoneType = node.Attributes["zoneType"].Value,
-                        SAL = node.Attributes["SAL"].Value
-                    });
-                }
-            }
-
-
-            foreach (XmlNode node in objectNodes)
-            {
-                //determine if it is an edge or a node
-                //if it is an node look it up(should be new)
-                //and create it
-                //if it is an edge then we need to save it until all the nodes are created
-                //once we have them all start connecting everything up. 
-
-                //if it is a zone then just skip it
-                if (((XmlElement)node).HasAttribute("zone"))
-                {                 
-                    continue;
-                }
-
-
-                //do a little preprocessing to get the attribute values
-                var styleString = node.FirstChild.Attributes["style"].Value;
-
-
-                // if it is a group then skip it
-                if (styleString.Split(';').Contains("group"))
-                {
-                    continue;
-                }
-
-
-                string nodeType = null;
-
-                string imgPath;
-                if (DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;", "")).TryGetValue("image", out imgPath))
-                {
-                    if (!imageToTypePath.TryGetValue(imgPath.Replace("img/cset/", ""), out nodeType))
-                    {
-
-                    }
-                }
-                else
-                {
-                    //I think we can assume
-                    nodeType = "MSC";
-                }
-
-                //get the parent value if it is in the layers dictionary then set the
-                //visible value to the value of the parent
-                //else set it to visible
-                string layername = node.FirstChild.Attributes["parent"].Value;
-                NetworkLayer layer;
-                bool IsVisible = true;
-                if (layers.TryGetValue(layername, out layer))
-                {
-                    if (!layer.Visible)
-                    {
-                        //if it is not visible skip it. 
-                        continue;
-                    }
-                }
-
-                //extract the geometry to a point on the component
-                NetworkGeometry geometry = new NetworkGeometry(node.FirstChild.FirstChild);
-
-                NetworkComponent dnode;
-                string id = node.Attributes["id"].Value;
-                if (nodes.TryGetValue(id, out dnode))
-                {
-                    //this should never happen we should never have a duplicate id
-                }
-                else
-                {
-                    
-                    dnode = new NetworkComponent()
-                    {
-                        ComponentGuid = ((XmlElement)node).HasAttribute("ComponentGuid") ? Guid.Parse(node.Attributes["ComponentGuid"].Value) : new Guid(),
-                        ID = node.Attributes["id"].Value,
-                        ComponentName = ((XmlElement)node).HasAttribute("label") ? node.Attributes["label"].Value : "",
-                        ComponentType = nodeType,
-                        IsVisible = IsVisible,
-                        Geometry = geometry
-                    };
-                    NetworkZone myzone;
-                    if (zones.TryGetValue(layername, out myzone))
-                    {
-                        dnode.Zone = myzone;
-                    }
-                    nodes.Add(id, dnode);
-                }
-            }
-
-            foreach (XmlNode node in mxCellLinks)
-            {
-                XmlElement xNode = (XmlElement)node;
-                //find each node
-                //add them to each other          
-                if (xNode.HasAttribute("source") && xNode.HasAttribute("target"))
-                {
-                    NetworkComponent start = findNode(node.Attributes["source"].Value);
-                    NetworkComponent target = findNode(node.Attributes["target"].Value);
-                    Links.Add(new NetworkLink()
-                    {
-
-                    });
-                    start?.AddEdge(target);
-                    target?.AddEdge(start);
-                }
-                else
-                {
-
-                }
-
-            }
-            AnalyzeNetwork();
-
-            //set both the xml and the json
-            this.NetworkWarningsXml = ProcessNetworkMessages();
-            if (xDoc.DocumentElement != null && this.NetworkWarningsXml.DocumentElement != null)
-            {
-                XmlNode root = xDoc.DocumentElement.FirstChild;
-                XmlNode r = xDoc.ImportNode(this.NetworkWarningsXml.DocumentElement, true);
-                root.AppendChild(r);
-            }
         }
 
-
-
-
-
-        /// <summary>
-        /// Go through the messages and create the red dot 
-        /// cells for the diagram.
-        /// </summary>
-        /// <returns>
-        /// returns an xmldocument that can be converted to json to return to client
-        /// or directly added to a diagram on import or other api side diagram manipulations
-        /// </returns>
-        private XmlDocument ProcessNetworkMessages()
+        public List<IDiagramAnalysisNodeMessage> AnalyzeNetwork(SimplifiedNetwork network)
         {
-            //generate the string
-            //convert it to an xmlnode
-            //add the node to the document 
-            //save to database
-            //force reload
-            XmlDocument start = new XmlDocument();
-            this.NetworkWarnings.Clear();
-            foreach (var message in dictionaryNodeMessages.Values)
+            List<IRuleEvaluate> rules = new List<IRuleEvaluate>();
+            rules.Add(new Rule1(network));
+            //rules.Add(new Rule2(network));
+            //rules.Add(new Rule7(network));
+            //rules.Add(new Rule7(network));
+            //rules.Add(new Rule7(network));
+            rules.Add(new Rule7(network));
+
+            List<IDiagramAnalysisNodeMessage> msgs = new List<IDiagramAnalysisNodeMessage>();
+            foreach (IRuleEvaluate rule in rules)
             {
-                this.NetworkWarnings.Add((IDiagramAnalysisNodeMessage)message);
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(message.XmlValue);
-                if (start.DocumentElement == null)
-                {
-                    start = doc;
-                }
-                else
-                {
-                    XmlNode newNode = doc.DocumentElement;
-                    XmlNode root = start.DocumentElement;
-                    XmlNode r = start.ImportNode(newNode, true);
-                    root.AppendChild(r);
-                }
+                msgs.AddRange(rule.Evaluate());
             }
-            return start;
+            return msgs;
         }
-
-        private NetworkComponent findNode(string id)
-        {
-            NetworkComponent dnode;
-            if (nodes.TryGetValue(id, out dnode))
-            {
-                return dnode;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public void AnalyzeNetwork()
-        {
-            checkRule1();
-        }
-
-        /*
-         * look at every edge are the enpoints in different zones. 
-         * if so then we need to consider those edges. 
-         * do a breadth first search if we find an object that is not a firewall 
-         */
-
-
-
-
-        //private void SetNodeMessage(NetworkNode component, string text)
-        //{
-        //    DiagramAnalysisNodeMessage messageNode;
-        //    if (dictionaryNodeMessages.ContainsKey(component.ComponentGuid))
-        //    {
-        //        messageNode = dictionaryNodeMessages[component.ComponentGuid];
-        //    }
-        //    else
-        //    {
-        //        messageNode = new DiagramAnalysisNodeMessage()
-        //        {
-        //            Component = component
-        //        };
-        //        dictionaryNodeMessages.Add(component.ComponentGuid, messageNode);
-        //    }
-        //    messageNode.AddMessage(text);
-        //}
 
         private void RunAnalysis()
         {
-
-            List<INetworkAnalysisMessage> listMessages = new List<INetworkAnalysisMessage>();
-            dictionaryLineMessages.Clear();
-            dictionaryNodeMessages.Clear();
 
             HashSet<Guid> checkedLines = new HashSet<Guid>();
 

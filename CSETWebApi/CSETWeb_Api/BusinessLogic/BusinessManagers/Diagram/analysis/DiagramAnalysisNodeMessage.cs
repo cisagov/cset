@@ -21,6 +21,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         public string parent { get; set; }
         public NetworkGeometry mxGeometry { get; internal set; }
         public HashSet<String> SetMessages { get; set; }
+        public int MessageIdentifier { get; set; }
 
         [JsonIgnore]
         [IgnoreDataMember]
@@ -69,5 +70,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 return String.Join("\n\n", SetMessages);
             }
         }
+
+        
     }
 }

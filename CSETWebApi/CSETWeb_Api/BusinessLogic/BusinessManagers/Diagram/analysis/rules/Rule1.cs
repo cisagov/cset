@@ -9,18 +9,14 @@ using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
-    class Rule1 : IRuleEvaluate
+    internal class Rule1 : AbstractRule, IRuleEvaluate
     {
         private Dictionary<String, NetworkComponent> nodes = new Dictionary<string, NetworkComponent>();
         private List<NetworkLink> Links = new List<NetworkLink>();
         private List<NetworkAnalysisNode> ListAnalysisNodes = new List<NetworkAnalysisNode>();
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
         //drawio id to zone lookup
-        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
-
-        private Dictionary<Guid, DiagramAnalysisLineMessage> dictionaryLineMessages = new Dictionary<Guid, DiagramAnalysisLineMessage>();
-        private Dictionary<Guid, DiagramAnalysisNodeMessage> dictionaryNodeMessages = new Dictionary<Guid, DiagramAnalysisNodeMessage>();
-        private List<INetworkAnalysisMessage> ListAnalysisMessages = new List<INetworkAnalysisMessage>();
+        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();               
         private List<IDiagramAnalysisNodeMessage> NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
 
         private int nextMessage = 1;
@@ -28,13 +24,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         private String rule1 = "The network path identified by the components, {0} and {1}, appears to connect network segments whose components reside in different zones.  A firewall to filter the traffic on this path is recommended to protect the components in one zone from a compromised component in the other zone.";
         public Rule1(SimplifiedNetwork simplifiedNetwork)
         {
-
+            this.nodes = simplifiedNetwork.Nodes;
         }
 
-        public List<INetworkAnalysisMessage> evaluate()
+        public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             checkRule1();
-            return ListAnalysisMessages;
+            return this.Messages;
         }
 
 
@@ -54,23 +50,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                 {
                     if (child.ComponentType != "Firewall")
                     {
-                        //flag node and put up the message
-                        //if the message is already there over write with the latest edition
-                        DiagramAnalysisNodeMessage msg;
-                        if (dictionaryNodeMessages.TryGetValue(node.ComponentGuid, out msg))
-                        {
-                            String text = String.Format(rule1, node.ComponentName);
-                            msg.SetMessages.Add(text);
-                        }
-                        else
-                        {
-                            dictionaryNodeMessages.Add(node.ComponentGuid, new DiagramAnalysisNodeMessage()
-                            {
-                                Component = node,
-                                SetMessages = new HashSet<string>(),
-                                Number = nextMessage++
-                            });
-                        }
+                        String text = String.Format(rule1, node.ComponentName, child.ComponentName);
+                        SetNodeMessage(node, text);
                     }
                 }
             }
