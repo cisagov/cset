@@ -77,8 +77,8 @@ namespace CSETWeb_Api.Controllers
                 xDoc.LoadXml(req.DiagramXml);
 
                 DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId);
-                analysis.PerformAnalysis(xDoc);
-                return analysis.NetworkWarnings;
+                return analysis.PerformAnalysis(xDoc);
+                
             }
 
         }

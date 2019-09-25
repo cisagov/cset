@@ -42,13 +42,14 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
         }
 
-        public void PerformAnalysis(XmlDocument xDoc)
+        public List<IDiagramAnalysisNodeMessage> PerformAnalysis(XmlDocument xDoc)
         {
             String sal = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment_id).First().Selected_Sal_Level;
             SimplifiedNetwork network = new SimplifiedNetwork(this.imageToTypePath,sal);
             network.ExtractNetworkFromXml(xDoc);
 
             List<IDiagramAnalysisNodeMessage> msgs=  AnalyzeNetwork(network);
+            return msgs;
 
         }
 
