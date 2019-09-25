@@ -316,7 +316,78 @@ Editor.prototype.defaultGraphOverflow = 'hidden';
 /**
  * Initializes the environment.
  */
-Editor.prototype.init = function () { };
+Editor.prototype.init = function ()
+{ };
+
+
+/**
+ * 
+ */
+Editor.getComponentSymbols = function ()
+{
+    return new Promise(function (resolve, reject)
+    {
+        if (!!Editor.componentSymbols)
+        {
+            resolve(Editor.componentSymbols);
+        }
+        // Get the component symbols structure
+        var url = localStorage.getItem('cset.host') + 'diagram/symbols/get';
+
+        mxUtils.get(url,
+            function (req)
+            {
+                Editor.componentSymbols = JSON.parse(req.request.responseText);
+                resolve(Editor.componentSymbols);
+            },
+            function ()
+            {
+                reject('ERROR:  Could not reach diagram/symbols/get');
+            });
+    });
+}
+
+/**
+ * 
+ */
+Editor.getOverallSAL = function ()
+{
+    return new Promise(function (resolve, reject)
+    {
+        if (!!Editor.overallSAL)
+        {
+            resolve(Editor.overallSAL);
+        }
+
+
+        makeRequest({
+            method: 'GET',
+            url: localStorage.getItem('cset.host') + 'SAL',
+            // payload: JSON.stringify({}),
+            onreadystatechange: function (e)
+            {
+                if (e.readyState !== 4)
+                {
+                    return;
+                }
+
+                switch (e.status)
+                {
+                    case 200:
+                    case 204:
+                        const sal = JSON.parse(e.responseText);
+                        Editor.overallSAL = sal.Selected_Sal_Level;
+                        resolve(Editor.overallSAL);
+                        break;
+                    case 401:
+                        window.location.replace('http://localhost:4200');
+                        break;
+                }
+            }
+        });
+    });
+}
+
 
 /**
  * Sets the XML node for the current diagram.
