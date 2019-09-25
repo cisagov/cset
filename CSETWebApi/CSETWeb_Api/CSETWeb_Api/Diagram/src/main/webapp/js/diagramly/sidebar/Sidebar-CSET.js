@@ -16,7 +16,8 @@
 
 
                 // special case:  insert the 'text' symbols into the General palette
-                if (group.SymbolGroupTitle === 'General') {
+                if (group.SymbolGroupTitle === 'General')
+                {
                     symbols.push(sidebar.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
                         40, 20, 'Text', 'Text', null, null, 'text textbox textarea label'));
                     symbols.push(sidebar.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;', 190, 120,
@@ -24,7 +25,8 @@
                         'Textbox', null, null, 'text textbox textarea'));
                 }
 
-                group.Symbols.forEach((symbol) => {
+                group.Symbols.forEach((symbol) =>
+                {
                     symbols.push(
                         sidebar.createVertexTemplateEntry(
                             s + symbol.FileName,
@@ -38,11 +40,14 @@
                     );
                 });
 
-                for (const symbol of symbols) {
+                for (const symbol of symbols)
+                {
                     symbol.isSearchable = true;
                 }
-                sidebar.addPalette(group.SymbolGroupTitle, group.SymbolGroupTitle, false, mxUtils.bind(sidebar, content => {
-                    for (const symbol of symbols) {
+                sidebar.addPalette(group.SymbolGroupTitle, group.SymbolGroupTitle, false, mxUtils.bind(sidebar, content =>
+                {
+                    for (const symbol of symbols)
+                    {
                         content.appendChild(symbol(content));
                     }
                 }));
@@ -52,11 +57,14 @@
             var symbolsZone = [
                 sidebar.createVertexTemplateEntry('swimlane;zone=1;fillColor=#F0FFF0;swimlaneFillColor=#F0FFF0;', 200, 200, 'Zone', 'Zone', null, null, 'container group zone')
             ];
-            for (const symbol of symbolsZone) {
+            for (const symbol of symbolsZone)
+            {
                 symbol.isSearchable = true;
             }
-            sidebar.addPalette('zone', 'Zone', false, mxUtils.bind(sidebar, content => {
-                for (const symbol of symbolsZone) {
+            sidebar.addPalette('zone', 'Zone', false, mxUtils.bind(sidebar, content =>
+            {
+                for (const symbol of symbolsZone)
+                {
                     content.appendChild(symbol(content));
                 }
             }));
@@ -74,20 +82,19 @@
                 sidebar.createVertexTemplateEntry('shape=mxgraph.basic.star;whiteSpace=wrap;html=1;', d, d, '', 'Star', null, null, 'star'),
                 sidebar.createVertexTemplateEntry('shape=mxgraph.basic.acute_triangle;dx=.5;whiteSpace=wrap;html=1;', d, d, '', 'Triangle', null, null, 'triangle'),
             ];
-            for (const symbol of symbolsShapes) {
+            for (const symbol of symbolsShapes)
+            {
                 symbol.isSearchable = true;
             }
-            sidebar.addPalette('shapes', 'Shapes', false, mxUtils.bind(sidebar, content => {
-                for (const symbol of symbolsShapes) {
+            sidebar.addPalette('shapes', 'Shapes', false, mxUtils.bind(sidebar, content =>
+            {
+                for (const symbol of symbolsShapes)
+                {
                     content.appendChild(symbol(content));
                 }
             }));
-        }
-        xhr.open('GET', url);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('Authorization', localStorage.getItem('jwt'));
-        xhr.send();
-    };
+        });
+    }
 
     /**
      * Builds a string of search tags for the symbol.
