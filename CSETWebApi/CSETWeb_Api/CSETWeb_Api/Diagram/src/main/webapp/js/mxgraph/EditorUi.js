@@ -24,13 +24,12 @@ EditorUi = function (editor, container, lightbox) {
     // Pre-fetches submenu image or replaces with embedded image if supported
     if (mxClient.IS_SVG) {
         mxPopupMenu.prototype.submenuImage = 'data:image/gif;base64,R0lGODlhCQAJAIAAAP///zMzMyH5BAEAAAAALAAAAAAJAAkAAAIPhI8WebHsHopSOVgb26AAADs=';
-    }
-    else {
+    } else {
         new Image().src = mxPopupMenu.prototype.submenuImage;
     }
 
     // Pre-fetches connect image
-    if (!mxClient.IS_SVG && mxConnectionHandler.prototype.connectImage != null) {
+    if (!mxClient.IS_SVG && mxConnectionHandler.prototype.connectImage) {
         new Image().src = mxConnectionHandler.prototype.connectImage.src;
     }
 
@@ -52,11 +51,8 @@ EditorUi = function (editor, container, lightbox) {
 
     // Disables HTML and text selection
     var textEditing = mxUtils.bind(this, function (evt) {
-        if (evt == null) {
-            evt = window.event;
-        }
-
-        return graph.isEditing() || (evt != null && this.isSelectionAllowed(evt));
+        evt = evt || window.event;
+        return graph.isEditing() || (evt && this.isSelectionAllowed(evt));
     });
 
     // Disables text selection while not editing and no dialog visible
@@ -74,7 +70,7 @@ EditorUi = function (editor, container, lightbox) {
         this.footerContainer.onselectstart = textEditing;
         this.footerContainer.onmousedown = textEditing;
 
-        if (this.tabContainer != null) {
+        if (this.tabContainer) {
             // Mouse down is needed for drag and drop
             this.tabContainer.onselectstart = textEditing;
         }
@@ -84,9 +80,8 @@ EditorUi = function (editor, container, lightbox) {
     if (!this.editor.chromeless || this.editor.editable) {
         // Allows context menu for links in hints
         var linkHandler = function (evt) {
-            if (evt != null) {
+            if (evt) {
                 var source = mxEvent.getSource(evt);
-
                 if (source.nodeName == 'A') {
                     while (source != null) {
                         if (source.className == 'geHint') {
@@ -97,19 +92,16 @@ EditorUi = function (editor, container, lightbox) {
                     }
                 }
             }
-
             return textEditing(evt);
         };
 
         if (mxClient.IS_IE && (typeof (document.documentMode) === 'undefined' || document.documentMode < 9)) {
             mxEvent.addListener(this.diagramContainer, 'contextmenu', linkHandler);
-        }
-        else {
+        } else {
             // Allows browser context menu outside of diagram and sidebar
             this.diagramContainer.oncontextmenu = linkHandler;
         }
-    }
-    else {
+    } else {
         graph.panningHandler.usePopupTrigger = false;
     }
 
@@ -117,10 +109,9 @@ EditorUi = function (editor, container, lightbox) {
     graph.init(this.diagramContainer);
 
     // Improves line wrapping for in-place editor
-    if (mxClient.IS_SVG && graph.view.getDrawPane() != null) {
+    if (mxClient.IS_SVG && graph.view.getDrawPane()) {
         var root = graph.view.getDrawPane().ownerSVGElement;
-
-        if (root != null) {
+        if (root) {
             root.style.position = 'absolute';
         }
     }
@@ -131,12 +122,10 @@ EditorUi = function (editor, container, lightbox) {
     // Adds tooltip when mouse is over scrollbars to show space-drag panning option
     mxEvent.addListener(this.diagramContainer, 'mousemove', mxUtils.bind(this, function (evt) {
         var off = mxUtils.getOffset(this.diagramContainer);
-
         if (mxEvent.getClientX(evt) - off.x - this.diagramContainer.clientWidth > 0 ||
             mxEvent.getClientY(evt) - off.y - this.diagramContainer.clientHeight > 0) {
             this.diagramContainer.setAttribute('title', mxResources.get('panTooltip'));
-        }
-        else {
+        } else {
             this.diagramContainer.removeAttribute('title');
         }
     }));
@@ -161,8 +150,7 @@ EditorUi = function (editor, container, lightbox) {
             if (!graph.isEditing() && mxEvent.getSource(evt) == graph.container) {
                 mxEvent.consume(evt);
             }
-        }
-        else if (!mxEvent.isConsumed(evt) && evt.keyCode == 27 /* Escape */) {
+        } else if (!mxEvent.isConsumed(evt) && evt.keyCode === 27 /* Escape */) {
             this.hideDialog(null, true);
         }
     });
@@ -2566,7 +2554,7 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
         this.sidebarFooterContainer.style.bottom = bottom + 'px';
     }
 
-    var fw = (this.format != null) ? this.formatWidth : 0;
+    var fw = this.format ? this.formatWidth : 0;
     this.sidebarContainer.style.top = tmp + 'px';
     this.sidebarContainer.style.width = effHsplitPosition + 'px';
     this.formatContainer.style.top = tmp + 'px';
@@ -2603,8 +2591,7 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
 
         this.diagramContainer.style.height = diagramHeight + 'px';
         this.hsplit.style.height = diagramHeight + 'px';
-    }
-    else {
+    } else {
         if (this.footerHeight > 0) {
             this.footerContainer.style.bottom = off + 'px';
         }
@@ -2720,7 +2707,7 @@ EditorUi.prototype.createUi = function () {
     }
 
     // Creates the sidebar
-    this.sidebar = (this.editor.chromeless) ? null : this.createSidebar(this.sidebarContainer);
+    this.sidebar = this.editor.chromeless ? null : this.createSidebar(this.sidebarContainer);
     if (this.sidebar) {
         this.container.appendChild(this.sidebarContainer);
     }
