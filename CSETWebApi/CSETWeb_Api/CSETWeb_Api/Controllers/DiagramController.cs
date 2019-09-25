@@ -47,6 +47,10 @@ namespace CSETWeb_Api.Controllers
             {
                 BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
                 XmlDocument xDoc = new XmlDocument();
+                if (string.IsNullOrEmpty(req.DiagramXml))
+                {
+                    req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
+                }
                 xDoc.LoadXml(req.DiagramXml);
                 dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);                
             }
@@ -178,15 +182,15 @@ namespace CSETWeb_Api.Controllers
                 {
                     DiagramXml = newDiagramXml
                 };
-                using(CSET_Context db =new CSET_Context())
+                using (CSET_Context db = new CSET_Context())
                 {
                     db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First().Diagram_Markup = null;
                     string sql =
                     "delete [dbo].ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
                     "delete [dbo].[DIAGRAM_CONTAINER] where assessment_id = @id;";
-                        db.Database.ExecuteSqlCommand(sql,
-                            new SqlParameter("@Id", assessmentId));
-                    db.SaveChanges();                    
+                    db.Database.ExecuteSqlCommand(sql,
+                        new SqlParameter("@Id", assessmentId));
+                    db.SaveChanges();
                 }
 
                 SaveDiagram(req);

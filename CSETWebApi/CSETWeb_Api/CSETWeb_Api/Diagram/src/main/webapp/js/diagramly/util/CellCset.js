@@ -157,6 +157,10 @@ mxCell.prototype.setZoneColor = function ()
             headerColor = '#d3eef2';
             color = '#f2f8f9';
             break;
+        case 'classified':
+            headerColor = '#99cfff';
+            color = '#cce5ff';
+            break;
     }
 
     this.setStyleValue('fillColor', headerColor);
@@ -175,6 +179,12 @@ mxCell.prototype.autoNameComponent = function ()
         return;
     }
 
+    // ignore items already labeled
+    if (!!this.getCsetAttribute('label'))
+    {
+        return;
+    }
+
     // determine new number
     var num = parseInt(sessionStorage.getItem("last.number"), 10) + 1;
     sessionStorage.setItem("last.number", num);
@@ -185,7 +195,7 @@ mxCell.prototype.autoNameComponent = function ()
     {
         prefix = 'Zone';
     }
-    else 
+    else
     {
         var prefix = "COMP";
         var compMap = Editor.componentSymbols;
@@ -317,25 +327,15 @@ mxCell.prototype.removeStyleValue = function (name)
  */
 mxCell.prototype.setStyleValue = function (name, value)
 {
-    var elements = this.getStyle().split(';');
+    this.removeStyleValue(name);
 
-    // first, remove any elements for the name, whether or not they contain a value
-    for (var i = elements.length - 1; i >= 0; i--)
-    {
-        if (elements[i].toLowerCase() === name.toLowerCase()
-            || elements[i].toLowerCase().startsWith(name.toLowerCase() + '=')
-            || elements[i] === '')
-        {
-            elements.splice(i, 1);
-        }
-    }
-
-    // then add the specified style and value
     var newStyle = name;
     if (!!value)
     {
         newStyle += ('=' + value);
     }
+
+    var elements = this.getStyle().split(';');
     elements.push(newStyle + ';');
 
     this.setStyle(elements.join(';'));
@@ -347,7 +347,6 @@ mxCell.prototype.setStyleValue = function (name, value)
  */
 mxCell.prototype.getSAL = function ()
 {
-
     if (this.isZone())
     {
         return this.getCsetAttribute('SAL');
@@ -368,6 +367,11 @@ mxCell.prototype.getSAL = function ()
  */
 isLayer = function (cell)
 {
+    if (!cell)
+    {
+        return false;
+    }
+
     var parent = cell.getParent();
     if (!!parent && parent.hasOwnProperty('id') && parent.id == 0)
     {
