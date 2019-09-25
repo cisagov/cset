@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Controllers
         [CSETAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public List<IDiagramAnalysisNodeMessage> SaveDiagram([FromBody] DiagramRequest req)
+        public void SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             TokenManager tm = new TokenManager();
@@ -52,13 +52,35 @@ namespace CSETWeb_Api.Controllers
                     req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
                 }
                 xDoc.LoadXml(req.DiagramXml);
-
-
-                DiagramAnalysis analysis = new DiagramAnalysis(db);
-                analysis.PerformAnalysis(xDoc);
-                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
-                return analysis.NetworkWarnings;
+                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);                
             }
+        }
+
+        [CSETAuthorize]
+        [Route("api/diagram/warnings")]
+        [HttpPost]
+        public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
+        {
+            // get the assessment ID from the JWT
+            TokenManager tm = new TokenManager();            
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            return performAnalysis(req, assessmentId ?? 0);
+
+        }
+
+        public List<IDiagramAnalysisNodeMessage> performAnalysis(DiagramRequest req, int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.LoadXml(req.DiagramXml);
+
+                DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId);
+                return analysis.PerformAnalysis(xDoc);
+                
+            }
+
         }
 
 
