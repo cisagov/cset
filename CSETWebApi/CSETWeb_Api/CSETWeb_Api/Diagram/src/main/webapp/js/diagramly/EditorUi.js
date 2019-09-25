@@ -1931,6 +1931,7 @@
             this.updateUi();
 
             if (!noDialogs) {
+                this.mode = this.mode || App.MODE_DEVICE;
                 this.showSplash();
             }
         });

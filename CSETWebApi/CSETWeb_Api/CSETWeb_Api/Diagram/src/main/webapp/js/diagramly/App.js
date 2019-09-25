@@ -2771,7 +2771,7 @@ App.prototype.showSplash = function (force) {
         const splashDheight = serviceCount < 2 || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp ? 200 : 260;
         const splashDmodal = true;
         const splashDcanclose = true;
-        const onclose = mxUtils.bind(this, function (cancel) {
+        const splashDonclose = mxUtils.bind(this, function (cancel) {
             // Creates a blank diagram if the dialog is closed
             if (cancel && !mxClient.IS_CHROMEAPP) {
                 var prev = Editor.useLocalStorage;
@@ -2782,26 +2782,25 @@ App.prototype.showSplash = function (force) {
         });
         const noscroll = true;
         const dlg = new SplashDialog(this);
-        this.showDialog(dlg.container, splashDwidth, splashDheight, splashDmodal, splashDcanclose, onclose, noscroll);
+        this.showDialog(dlg.container, splashDwidth, splashDheight, splashDmodal, splashDcanclose, splashDonclose, noscroll);
     });
 
-    //if (!mxClient.IS_CHROMEAPP && (this.mode == null || force)) {
-    //    const rowLimit = serviceCount !== 4 ? 3 : 2;
-    //    const w = rowLimit < 3 ? 260 : 300;
-    //    const h = serviceCount > 3 ? 420 : 300;
-    //    const onclose = mxUtils.bind(this, function () {
-    //        this.hideDialog();
-    //        showSecondDialog();
-    //    });
-    //    const modal = true;
-    //    const canclose = false;
-    //    const dlg = new StorageDialog(this, onclose, rowLimit);
-    //    this.showDialog(dlg.container, w, h, modal, canclose);
-    //     dlg.init();
-    //} else if (urlParams['create'] == null) {
-    //    showSecondDialog();
-    //}
-    showSecondDialog();
+    if (!mxClient.IS_CHROMEAPP && (this.mode == null || force)) {
+        const rowLimit = serviceCount !== 4 ? 3 : 2;
+        const saveDwidth = rowLimit < 3 ? 260 : 300;
+        const saveDheight = serviceCount > 3 ? 420 : 300;
+        const saveDmodal = true;
+        const saveDcanclose = false;
+        const saveDonclose = mxUtils.bind(this, function () {
+            this.hideDialog();
+            showSecondDialog();
+        });
+        const dlg = new StorageDialog(this, saveDonclose, rowLimit);
+        this.showDialog(dlg.container, saveDwidth, saveDheight, saveDmodal, saveDcanclose);
+         dlg.init();
+    } else if (urlParams['create'] == null) {
+        showSecondDialog();
+    }
 };
 
 /**
