@@ -2785,7 +2785,9 @@ App.prototype.showSplash = function (force) {
         this.showDialog(dlg.container, splashDwidth, splashDheight, splashDmodal, splashDcanclose, splashDonclose, noscroll);
     });
 
-    if (!mxClient.IS_CHROMEAPP && (this.mode == null || force)) {
+    if (!urlParams.create) {
+        showSecondDialog();
+    } else if (!mxClient.IS_CHROMEAPP && (this.mode == null || force)) {
         const rowLimit = serviceCount !== 4 ? 3 : 2;
         const saveDwidth = rowLimit < 3 ? 260 : 300;
         const saveDheight = serviceCount > 3 ? 420 : 300;
@@ -2797,9 +2799,7 @@ App.prototype.showSplash = function (force) {
         });
         const dlg = new StorageDialog(this, saveDonclose, rowLimit);
         this.showDialog(dlg.container, saveDwidth, saveDheight, saveDmodal, saveDcanclose);
-         dlg.init();
-    } else if (urlParams['create'] == null) {
-        showSecondDialog();
+        dlg.init();
     }
 };
 
