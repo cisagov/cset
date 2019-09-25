@@ -58,19 +58,25 @@ namespace CSETWeb_Api.Controllers
         public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
-            TokenManager tm = new TokenManager();
-            int userId = (int)tm.PayloadInt(Constants.Token_UserId);
+            TokenManager tm = new TokenManager();            
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            return performAnalysis(req, assessmentId ?? 0);
+
+        }
+
+        public List<IDiagramAnalysisNodeMessage> performAnalysis(DiagramRequest req, int assessmentId)
+        {
             using (var db = new CSET_Context())
             {
                 BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.LoadXml(req.DiagramXml);
 
-                DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId ?? 0);
-                analysis.PerformAnalysis(xDoc);                
+                DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId);
+                analysis.PerformAnalysis(xDoc);
                 return analysis.NetworkWarnings;
             }
+
         }
 
 
