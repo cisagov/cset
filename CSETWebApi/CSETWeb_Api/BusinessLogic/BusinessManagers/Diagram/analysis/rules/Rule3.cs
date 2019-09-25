@@ -7,7 +7,7 @@ using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
-    class Rule3and4 : IRuleEvaluate
+    class Rule3and4 : AbstractRule, IRuleEvaluate
     {
         
         public Rule3and4(SimplifiedNetwork simplifiedNetwork)
@@ -15,7 +15,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         }
 
-        public List<DiagramAnalysisNodeMessage> evaluate()
+        public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             throw new NotImplementedException();
         }

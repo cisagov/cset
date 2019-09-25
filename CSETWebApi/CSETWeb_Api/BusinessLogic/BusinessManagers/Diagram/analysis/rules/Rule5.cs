@@ -7,7 +7,7 @@ using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
-    class Rule5 : IRuleEvaluate
+    class Rule5 : AbstractRule, IRuleEvaluate
     {
         private String rule1 = "The network path identified by the components, {0} and {1}, appears to connect network segments whose components reside in different zones.  A firewall to filter the traffic on this path is recommended to protect the components in one zone from a compromised component in the other zone.";
         public Rule5(SimplifiedNetwork simplifiedNetwork)
@@ -15,7 +15,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         }
 
-        public List<DiagramAnalysisNodeMessage> evaluate()
+        public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             throw new NotImplementedException();
         }

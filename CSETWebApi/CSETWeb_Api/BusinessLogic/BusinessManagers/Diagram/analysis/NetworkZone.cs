@@ -20,6 +20,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis
             "Safety",
             "External DMZ",
             "Plant System",
-            "Control System"};
+            "Control System",
+            "Classified",
+            "None"};
     }
 }

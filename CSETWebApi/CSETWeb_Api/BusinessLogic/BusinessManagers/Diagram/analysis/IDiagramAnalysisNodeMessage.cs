@@ -10,12 +10,13 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         NetworkGeometry mxGeometry { get; }
         int Number { get; }
         string parent { get; }
-        string redDot { get; }        
+        string redDot { get; }
         string style { get; }
         string value { get; }
         string vertex { get; }
         string Message { get; }
+        int MessageIdentifier { get; set; }
+        string XmlValue {get;}
 
-       
     }
 }

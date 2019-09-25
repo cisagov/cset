@@ -9,12 +9,14 @@ using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
-    class Rule7 : IRuleEvaluate, AbstractRule
+    class Rule7 : AbstractRule, IRuleEvaluate
     {
         private String rule7 = "Data flow between two distinct SAL zones via a unidirectional {0} must only flow from a higher SAL to a lower SAL." +
             " Example Control or SCADA network SAL High to Corporate Network SAL Low, but not SAL Low to SAL High.";
 
         private static Dictionary<string, UNIVERSAL_SAL_LEVEL> sals = null;
+        private SimplifiedNetwork simplifiedNetwork;
+
         static Rule7()
         {
             using(var db = new CSET_Context())
@@ -26,12 +28,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         public Rule7(SimplifiedNetwork simplifiedNetwork)
         {
-
+            this.simplifiedNetwork = simplifiedNetwork;
         }
 
-        public List<INetworkAnalysisMessage> evaluate()
+        public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
-            throw new NotImplementedException();
+            var unidirectional = this.simplifiedNetwork.Nodes.Values.Where(x => x.IsUnidirectional);
+            foreach(var comp in unidirectional.ToList())
+            {
+                CheckRule7(comp);
+            }
+            return this.Messages;
         }
 
         /// <summary>
@@ -57,6 +64,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
                 bool isHighToLow = true; 
                 //if it is a classified zone it should flow from low to high
+                if(component.Zone!=null)
                 if (component.Zone.ZoneType == "Classified")
                 {
                     //must flow from low to high
@@ -83,17 +91,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     else
                         isComponentConnectionValid = componentSal.Sal_Level_Order < targetSal.Sal_Level_Order;
 
-                    //String componentName = "unnamed";
-                    //if (!String.IsNullOrWhiteSpace(component.TextNodeLabel))
-                    //{
-                    //    componentName = component.TextNodeLabel;
-                    //}
+                    String componentName = "unnamed";
+                    if (!String.IsNullOrWhiteSpace(component.ComponentName))
+                    {
+                        componentName = component.ComponentName;
+                    }
 
-                    //if (!isHighToLow)
-                    //{
-                    //    String text = String.Format(rule7, componentName);
-                    //    SetNodeMessage(component, text);
-                    //}
+                    if (!isComponentConnectionValid)
+                    {
+                        String text = String.Format(rule7, componentName);
+                        SetNodeMessage(component, text);
+                    }
                 }
             }
         }

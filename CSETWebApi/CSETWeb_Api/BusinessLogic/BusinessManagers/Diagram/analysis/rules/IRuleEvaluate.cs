@@ -9,6 +9,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
     interface IRuleEvaluate
     {
-        List<INetworkAnalysisMessage> evaluate();
+        List<IDiagramAnalysisNodeMessage> Evaluate();
     }
 }

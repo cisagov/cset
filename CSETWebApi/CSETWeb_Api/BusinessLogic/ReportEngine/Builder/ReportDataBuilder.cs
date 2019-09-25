@@ -116,7 +116,7 @@ namespace CSET_Main.ReportEngine.Builder
         //        }
         //        diagramImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
-        //        foreach (INetworkAnalysisMessage m in reportModel.AssessmentModel.NetworkModel.UpdateAndGetDiagramAnalysisMessages())
+        //        foreach (IDiagramAnalysisNodeMessage m in reportModel.AssessmentModel.NetworkModel.UpdateAndGetDiagramAnalysisMessages())
         //        {
         //            reportData.NetworkWarnings.Add(new NetworkWarning()
         //            {
@@ -996,7 +996,7 @@ namespace CSET_Main.ReportEngine.Builder
         ///// </summary>
         ///// <param name="networkWarningObject"></param>
         ///// <returns></returns>
-        //protected DataTable GetNetworkWarningDetails(List<INetworkAnalysisMessage> listDiagramAnalysiMessages)
+        //protected DataTable GetNetworkWarningDetails(List<IDiagramAnalysisNodeMessage> listDiagramAnalysiMessages)
         //{
         //    DataTable table = new DataTable();
         //    table.TableName = "NetworkWarningDetails";
@@ -1006,7 +1006,7 @@ namespace CSET_Main.ReportEngine.Builder
 
         //    if (listDiagramAnalysiMessages.Count > 0)
         //    {
-        //        foreach (INetworkAnalysisMessage message in listDiagramAnalysiMessages)
+        //        foreach (IDiagramAnalysisNodeMessage message in listDiagramAnalysiMessages)
         //        {
         //            DataRow row = table.NewRow();
         //            row["NetworkWarningID"] = message.MessageIdentifier;

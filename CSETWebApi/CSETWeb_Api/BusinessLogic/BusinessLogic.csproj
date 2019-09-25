@@ -251,9 +251,7 @@
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\DrawIOParsingHelps.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
-    <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
-    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkGeometry.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkLayer.cs" />

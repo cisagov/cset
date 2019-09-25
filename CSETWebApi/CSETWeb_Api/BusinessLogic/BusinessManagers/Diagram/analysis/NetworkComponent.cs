@@ -12,7 +12,7 @@ namespace CSETWeb_Api.BusinessManagers
         public bool IsUnidirectional {
             get
             {
-                return (this.ComponentType == "UnidirectionalDevice");
+                return (this.ComponentType == "Unidirectional Device");
             }
         }
 
