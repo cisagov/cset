@@ -80,5 +80,5 @@ if %hh% equ 12 set /a hh = 00
 if %3 equ PM (
 	set /a hh = hh + 12
 )
-set /a jtime = %hh%%mn%
+set jtime=%hh%%mn%
 exit /b

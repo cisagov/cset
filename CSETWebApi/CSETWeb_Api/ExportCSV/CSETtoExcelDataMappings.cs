@@ -279,7 +279,7 @@ namespace ExportCSV
         //    }
         //}
 
-        //private void BuildNetworkWarningDataSet(IOrderedEnumerable<INetworkAnalysisMessage> list, DataMap map)
+        //private void BuildNetworkWarningDataSet(IOrderedEnumerable<IDiagramAnalysisNodeMessage> list, DataMap map)
         //{
         //    DataTable table = map.Table;
         //    foreach (NetworkAnalysisMessage c in list)
