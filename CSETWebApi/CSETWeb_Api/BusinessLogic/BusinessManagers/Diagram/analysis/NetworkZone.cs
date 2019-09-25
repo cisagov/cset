@@ -12,5 +12,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis
         {
             ContainingComponents = new List<NetworkComponent>();
         }
+
+        private string[] zoneTypes = new string[] {
+            "Control DMZ",
+            "Corporate",
+            "Other",
+            "Safety",
+            "External DMZ",
+            "Plant System",
+            "Control System",
+            "Classified",
+            "None"};
     }
 }
