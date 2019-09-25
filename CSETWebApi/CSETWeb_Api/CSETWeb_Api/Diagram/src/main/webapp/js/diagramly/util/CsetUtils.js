@@ -171,7 +171,7 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
                     break;
             }
         }
-    })
+    });
 }
 
 /**
@@ -195,11 +195,10 @@ CsetUtils.edgesToTop = function (graph, edit)
  */
 CsetUtils.PersistGraphToCSET = async function (editor)
 {
-    const req = {
-        DiagramXml: '',
-        LastUsedComponentNumber: 1,
-        AnalyzeDiagram: editor.analyzeDiagram || false
+    const analysisReq = {
+        DiagramXml: ''
     };
+
     const xmlserializer = new XMLSerializer();
 
     const model = editor.graph.getModel();
@@ -210,20 +209,72 @@ CsetUtils.PersistGraphToCSET = async function (editor)
         const sXML = xmlserializer.serializeToString(node);
         if (sXML !== EditorUi.prototype.emptyDiagramXml)
         {
-            req.DiagramXml = sXML;
-            req.LastUsedComponentNumber = sessionStorage.getItem("last.number");
+            analysisReq.DiagramXml = sXML;
         }
     }
+
+    // Analyze the diagram, if the user wants to
+    if (editor.analyzeDiagram)
+    {
+        await CsetUtils.analyzeDiagram(analysisReq, editor);
+    }
+
+
+    // Save the diagram
+    const req = {
+        DiagramXml: analysisReq.DiagramXml,
+        LastUsedComponentNumber: sessionStorage.getItem("last.number")
+    };
 
     const bg = '#ffffff';
     let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = xmlserializer.serializeToString(svgRoot);
-
-    // include the SVG in the save request
     req.DiagramSvg = svgRoot;
 
     await CsetUtils.saveDiagram(req);
 }
+
+
+/**
+ * Send the diagram to the API for analysis
+ */
+CsetUtils.analyzeDiagram = async function (req, editor)
+{
+    const response = await makeRequest({
+        method: 'POST',
+        overrideMimeType: 'application/json',
+        url: localStorage.getItem('cset.host') + 'diagram/analyze',
+        payload: JSON.stringify(req),
+        onreadystatechange: function (e)
+        {
+            if (e.readyState !== 4)
+            {
+                return;
+            }
+
+            switch (e.status)
+            {
+                case 200:
+                    // successful post            
+                    break;
+                case 401:
+                    window.location.replace('http://localhost:4200');
+                    break;
+            }
+        }
+    });
+
+    if (response)
+    {
+        const warnings = JSON.parse(response);
+
+        CsetUtils.addWarningsToDiagram(warnings, editor.graph);
+        // RKW - not defined anywhere ... ?
+        // const analysis = new CsetAnalysisWarnings();
+        // analysis.addWarningsToDiagram(warnings, editor.graph);
+    }
+}
+
 
 /**
  * Posts the diagram and supporting information to the API.
@@ -254,16 +305,8 @@ CsetUtils.saveDiagram = async function (req)
             }
         }
     });
-
-    if (response)
-    {
-        const warnings = JSON.parse(response);
-
-        // RKW - not defined anywhere ... ?
-        // const analysis = new CsetAnalysisWarnings();
-        // analysis.addWarningsToDiagram(warnings, editor.graph);
-    }
 }
+
 
 /**
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
@@ -450,4 +493,46 @@ CsetUtils.getFilenameFromPath = function (path)
         return '';
     }
     return path;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Create the red dots.  Maybe move this to its own class.
+ */
+CsetUtils.addWarningsToDiagram = function (warnings, graph)
+{
+    // clear all red dots
+    var m = graph.getModel();
+
+    console.log(m.getChildVertices());
+
+
+    warnings.forEach(w =>
+    {
+        console.log(w);
+    });
 }
