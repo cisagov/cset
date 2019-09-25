@@ -17,14 +17,19 @@ if not exist !appminjs! (
 		set /a blddate = !jdate!
 		set /a bldtime = !jtime!
 	)
+	rem echo !blddate! !bldtime!
 
 	set x=-1
 	call :getfiles %jsfldr% *.js
 	for /L %%f in (0,1,!x!) do (
 		set fdate=!files[%%f].fdate!
 		set ftime=!files[%%f].ftime!
-		if !fdate! geq !blddate! (
+		if !fdate! gtr !blddate! (
+			rem echo !fdate! !ftime!
+			set /a buildcnt += 1
+		) else if !fdate! equ !blddate! (
 			if !ftime! gtr !bldtime! (
+				rem echo !fdate! !ftime!
 				set /a buildcnt += 1
 			)
 		)
@@ -80,5 +85,5 @@ if %hh% equ 12 set /a hh = 00
 if %3 equ PM (
 	set /a hh = hh + 12
 )
-set /a jtime = %hh%%mn%
+set jtime=%hh%%mn%
 exit /b

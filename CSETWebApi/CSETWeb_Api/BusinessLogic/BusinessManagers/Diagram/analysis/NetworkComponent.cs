@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
 namespace CSETWeb_Api.BusinessManagers
@@ -8,8 +9,15 @@ namespace CSETWeb_Api.BusinessManagers
     public class NetworkComponent : NetworkNode
     {
         public List<NetworkComponent> Connections { get; set; }
-        public bool IsUnidirectional { get; internal set; }
-        
+        public bool IsUnidirectional {
+            get
+            {
+                return (this.ComponentType == "Unidirectional Device");
+            }
+        }
+
+        public NetworkZone Zone { get; internal set; }
+
         public NetworkComponent()
         {
             Connections = new List<NetworkComponent>();
@@ -26,14 +34,8 @@ namespace CSETWeb_Api.BusinessManagers
 
         internal bool IsInSameZone(NetworkComponent tailComponent)
         {
-            throw new NotImplementedException();
+            return (tailComponent.Parent_id == this.Parent_id);
         }
-
-        //public string label { get; set; }
-        
-        //public string id { get; set; }
-        //public string Component_Type { get; internal set; }
-        //public string Parent_id { get; private set; }
 
         public void setValue(string name, string value)
         {

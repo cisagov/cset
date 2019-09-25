@@ -4172,6 +4172,7 @@
     <Content Include="Diagram\src\main\java\log4j.properties" />
     <Content Include="Diagram\src\main\webapp\cache.manifest" />
     <Content Include="Diagram\src\main\webapp\images\manifest.json" />
+    <Content Include="Diagram\src\main\webapp\js\app.min.js.bak" />
     <Content Include="Diagram\src\main\webapp\math\.npmignore" />
     <Content Include="Diagram\src\main\webapp\math\.travis.yml" />
     <Content Include="Diagram\src\main\webapp\math\bower.json" />
@@ -4242,8 +4243,34 @@
     <Content Include="Diagram\VERSION" />
     <Content Include="Documents\TSA pipeline_security_guidelines.pdf" />
     <Content Include="Documents\S_62443-4-1.pdf" />
-    <Content Include="Diagram\etc\build\build.bat" />
     <Content Include="Diagram\etc\build\filechecker.bat" />
+    <Content Include="Documents\ffiec_itbooklet_audit.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_businesscontinuityplanning.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_developmentandacquisition.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_informationsecurity.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_management.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_operations.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_outsourcingtechnologyservices.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_retailpaymentsystems.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\ffiec_itbooklet_wholesalepaymentsystems.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
