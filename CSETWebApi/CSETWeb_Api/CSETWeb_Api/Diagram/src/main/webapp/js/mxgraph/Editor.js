@@ -48,8 +48,12 @@ Editor = function (chromeless, themes, model, graph, editable)
             this.setModified(true);
         }
 
-        // Only persist if actual changes occurred.  An mxRootChange is likely a new diagram.
-        if (!(edit.changes[0] instanceof mxRootChange))
+        var isRedDotAddEvent = edit.changes[0] instanceof mxChildChange && edit.changes[0].child.style.indexOf('redDot') >= 0;
+
+        // Only persist if actual changes occurred.  
+        // An mxRootChange is likely a new diagram.
+        // Also ignore 'red dot add' events.  
+        if (!(edit.changes[0] instanceof mxRootChange) && !isRedDotAddEvent)
         {
             CsetUtils.adjustConnectability(edit);
 
