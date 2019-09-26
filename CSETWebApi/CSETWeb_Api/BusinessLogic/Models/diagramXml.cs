@@ -7,11 +7,6 @@ using System.Xml.Serialization;
 
 namespace CSETWeb_Api.BusinessLogic.Models
 {
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class mxGraphModelRootObject
     {
 

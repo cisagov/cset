@@ -1,1 +1,1 @@
-xsd diagramXsd.xsd /c /outputdir:../
+xsd diagramXsd.xsd /c /outputdir:../ /namespace:CSETWeb_Api.BusinessLogic.Models
