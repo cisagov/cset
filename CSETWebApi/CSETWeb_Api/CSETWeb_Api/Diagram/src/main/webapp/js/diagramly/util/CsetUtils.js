@@ -107,6 +107,8 @@ function makeRequest(e)
     });
 }
 
+CsetUtils.makeHttpRequest = makeRequest;
+
 /**
  * If the edit is a cell being moved or added, makes it 'unconnectable'
  * if it is now the child of a multi-service component. 
