@@ -46,6 +46,10 @@ export class DiagramService {
     return this.http.get(this.apiUrl + 'symbols/get');
   }
 
+  getAllSymbols(){
+    return this.http.get(this.apiUrl + 'symbols/getAll')
+  }
+
   //get diagram components
   getDiagramComponents(){
     return this.http.get(this.apiUrl+'getComponents');
@@ -60,14 +64,26 @@ export class DiagramService {
   }
 
   getDiagramText(){
-    return this.http.get(this.apiUrl+'getText');
+    return this.http.get(this.apiUrl+'getTexts');
   }
 
   getDiagramLinks(){
     return this.http.get(this.apiUrl+'getLinks');
   }
 
-  saveDiagram(component){
-    return this.http.post(this.apiUrl+'saveDiagram', component);
+  saveComponent(component){
+    return this.http.post(this.apiUrl+'saveComponent', component);
+  }
+
+  saveZone(zone){
+    return this.http.post(this.apiUrl+'saveZone', zone);
+  }
+
+  saveShape(shape){
+    return this.http.post(this.apiUrl+'saveShape', shape);
+  }
+
+  saveLink(link){
+    return this.http.post(this.apiUrl+'saveLink', link);
   }
 }

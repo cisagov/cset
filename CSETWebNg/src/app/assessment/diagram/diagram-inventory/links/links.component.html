@@ -2,19 +2,17 @@
     <th mat-sort-header="label">Label</th>
     <th mat-sort-header="subnetName" style="width:15%;">Subnet Name(s)</th>
     <th mat-sort-header="security" style="width:20%;">Security</th>
-    <th mat-sort-header="visible">Visible</th>
 
     <tr *ngFor="let link of links; let i = index">
-        <td>{{link.label}}</td>
-        <td>{{link.subnetName}}</td>
-        <td><select [(ngModel)]="link.security" class="form-control override-select"
-          (change)="submit(link.tag, link.security);">
-          <option [ngValue]="Trusted">Trusted</option>
-          <option [ngValue]="Untrusted">Untrusted</option>
-        </select></td>
         <td>
-            <input type="checkbox" class="mt-1"
-            [checked]="component.visible" (change)="submit(component.tag, component.visible)"> 
+            <input type="input" class="form-control mt-2" name="valueField" 
+            [(ngModel)]="link.valueField" (change)="submit(link)" />           
         </td>
+        <td>{{link.subnetNameField}}</td>
+        <td><select [(ngModel)]="link.securityField" class="form-control override-select"
+          (change)="submit(link);">
+          <option [ngValue]="'Trusted'">Trusted</option>
+          <option [ngValue]="'Untrusted'">Untrusted</option>
+        </select></td>
     </tr>
 </table>

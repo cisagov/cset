@@ -18,7 +18,7 @@ export class ComponentsComponent implements OnInit {
 
   ngOnInit() {
     // Summary Percent Compliance
-    this.diagramSvc.getSymbols().subscribe((x:any) => {
+    this.diagramSvc.getAllSymbols().subscribe((x:any) => {
       this.assetTypes = x;
     });
     this.getComponents();
@@ -32,7 +32,7 @@ export class ComponentsComponent implements OnInit {
   }
 
   submit(component){
-    this.diagramSvc.saveDiagram(component).subscribe((x:any)=>{
+    this.diagramSvc.saveComponent(component).subscribe((x:any)=>{
     
     });
 

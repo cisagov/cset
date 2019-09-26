@@ -12,14 +12,19 @@ export class LinksComponent implements OnInit {
   constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
-    this.getZones();
+    this.getLinks();
   }
 
-  getZones(){
+  getLinks(){
     this.diagramSvc.getDiagramLinks().subscribe((x:any) =>{
       this.links = x;
-      console.log(x);
     });
   }
 
+  submit(link){
+    this.diagramSvc.saveLink(link).subscribe((x:any)=>{
+    
+    });
+
+  }
 }
