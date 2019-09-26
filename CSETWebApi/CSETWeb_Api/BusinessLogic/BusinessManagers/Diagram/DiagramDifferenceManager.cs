@@ -440,7 +440,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         private Dictionary<Guid, NetworkComponent> ProcessDiagram(XmlDocument doc)
         {   
-            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
+            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object[not(mxCell[@parent=0])]");
             return processNodes(cells);
         }
 

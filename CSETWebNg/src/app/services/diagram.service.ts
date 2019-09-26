@@ -45,4 +45,45 @@ export class DiagramService {
   getSymbols() {
     return this.http.get(this.apiUrl + 'symbols/get');
   }
+
+  getAllSymbols(){
+    return this.http.get(this.apiUrl + 'symbols/getAll')
+  }
+
+  //get diagram components
+  getDiagramComponents(){
+    return this.http.get(this.apiUrl+'getComponents');
+  }
+
+  getDiagramZones(){
+    return this.http.get(this.apiUrl+'getZones');
+  }
+
+  getDiagramShapes(){
+    return this.http.get(this.apiUrl+'getShapes');
+  }
+
+  getDiagramText(){
+    return this.http.get(this.apiUrl+'getTexts');
+  }
+
+  getDiagramLinks(){
+    return this.http.get(this.apiUrl+'getLinks');
+  }
+
+  saveComponent(component){
+    return this.http.post(this.apiUrl+'saveComponent', component);
+  }
+
+  saveZone(zone){
+    return this.http.post(this.apiUrl+'saveZone', zone);
+  }
+
+  saveShape(shape){
+    return this.http.post(this.apiUrl+'saveShape', shape);
+  }
+
+  saveLink(link){
+    return this.http.post(this.apiUrl+'saveLink', link);
+  }
 }
