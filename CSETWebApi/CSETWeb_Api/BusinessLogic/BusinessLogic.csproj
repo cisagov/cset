@@ -392,6 +392,7 @@
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />
     <Compile Include="Models\diagramXml.cs" />
+    <Compile Include="Models\diagramXsd.cs" />
     <Compile Include="Models\IRP.cs" />
     <Compile Include="Models\MaturityAnswers.cs" />
     <Compile Include="Models\MaturityAssessment.cs" />
@@ -488,6 +489,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Models\diagramXsd\create_classes_xsd.bat" />
+    <None Include="Models\diagramXsd\diagram.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\diagramXsd\diagram_1_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\diagramXsd\diagram_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\diagramXsd\diagramXsd.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

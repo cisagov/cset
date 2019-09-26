@@ -324,7 +324,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> ProcessDiagramShapes(StringReader stream)
+        public List<mx> ProcessDiagramShapes(StringReader stream)
         {
 
             List<mxGraphModelRootMxCell> vertices = new List<mxGraphModelRootMxCell>();

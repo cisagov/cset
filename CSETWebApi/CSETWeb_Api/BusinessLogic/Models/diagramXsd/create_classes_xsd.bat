@@ -1,0 +1,1 @@
+xsd diagramXsd.xsd /c /outputdir:../
