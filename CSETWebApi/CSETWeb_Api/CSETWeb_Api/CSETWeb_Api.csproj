@@ -481,6 +481,7 @@
     <Content Include="Diagram\src\main\webapp\images\collapsed.gif" />
     <Content Include="Diagram\src\main\webapp\images\connector.png" />
     <Content Include="Diagram\src\main\webapp\images\delete.png" />
+    <Content Include="Diagram\src\main\webapp\images\DHSLogo.svg" />
     <Content Include="Diagram\src\main\webapp\images\document-google-drive-icon-80.png" />
     <Content Include="Diagram\src\main\webapp\images\download.png" />
     <Content Include="Diagram\src\main\webapp\images\draw.io-logo.svg" />
