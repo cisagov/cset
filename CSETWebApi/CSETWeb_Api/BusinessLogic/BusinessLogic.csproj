@@ -391,6 +391,7 @@
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />
+    <Compile Include="Models\diagramXml.cs" />
     <Compile Include="Models\IRP.cs" />
     <Compile Include="Models\MaturityAnswers.cs" />
     <Compile Include="Models\MaturityAssessment.cs" />
