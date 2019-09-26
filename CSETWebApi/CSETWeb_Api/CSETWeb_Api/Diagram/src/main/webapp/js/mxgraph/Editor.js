@@ -318,14 +318,27 @@ Editor.prototype.editBlankUrl = window.location.protocol + '//' + window.locatio
 Editor.prototype.defaultGraphOverflow = 'hidden';
 
 /**
+ * Contains the list of supported CSET components.
+ */
+Editor.prototype.componentSymbols = null;
+
+/**
+ * Contains the assessment's overall SAL value.
+ */
+Editor.prototype.overallSAL = null;
+
+/**
  * Initializes the environment.
  */
 Editor.prototype.init = function ()
-{ };
+{
+    Editor.getComponentSymbols();
+    Editor.getOverallSAL();
+};
 
 
 /**
- * 
+ * Initializes the component symbols collection.
  */
 Editor.getComponentSymbols = function ()
 {
@@ -351,19 +364,14 @@ Editor.getComponentSymbols = function ()
     });
 }
 
+
 /**
- * 
+ * Retrieves and stores the assessment's overall SAL.
  */
 Editor.getOverallSAL = function ()
 {
     return new Promise(function (resolve, reject)
     {
-        if (!!Editor.overallSAL)
-        {
-            resolve(Editor.overallSAL);
-        }
-
-
         makeRequest({
             method: 'GET',
             url: localStorage.getItem('cset.host') + 'SAL',
@@ -384,7 +392,7 @@ Editor.getOverallSAL = function ()
                         resolve(Editor.overallSAL);
                         break;
                     case 401:
-                        window.location.replace('http://localhost:4200');
+                        window.location.replace(window.location.origin);
                         break;
                 }
             }
