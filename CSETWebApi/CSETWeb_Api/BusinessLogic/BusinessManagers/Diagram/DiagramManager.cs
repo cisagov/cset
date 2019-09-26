@@ -324,7 +324,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mx> ProcessDiagramShapes(StringReader stream)
+        public List<mxGraphModelRootMxCell> ProcessDiagramShapes(StringReader stream)
         {
 
             List<mxGraphModelRootMxCell> vertices = new List<mxGraphModelRootMxCell>();
@@ -422,7 +422,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<mxGraphModelRootMxCell> GetDiagramLinks(List<mxGraphModelRootMxCell> edges)
         {
-            var diagramLines = edges.Where(l => l.edge == 1).ToList();
+            var diagramLines = edges.Where(l => l.edge == "1").ToList();
             return diagramLines;
         }
 
@@ -433,7 +433,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<mxGraphModelRootObject> GetDiagramZones(List<mxGraphModelRootObject> vertices)
         {
-            var diagramZones = vertices.Where(z => z.zone == 1).ToList();
+            var diagramZones = vertices.Where(z => z.zone == "1").ToList();
             return diagramZones;
         }
 
