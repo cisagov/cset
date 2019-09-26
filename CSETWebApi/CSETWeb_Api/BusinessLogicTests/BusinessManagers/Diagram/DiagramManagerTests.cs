@@ -12,9 +12,10 @@ namespace CSETWeb_Api.BusinessManagers.Tests
     public class DiagramManagerTests
     {
         [TestMethod()]
-        public void GetDiagramXmlTest()
+        public void getLayerVisibilityTest()
         {
-            Assert.Fail();
+            DiagramManager manager = new DiagramManager();
+            manager.getLayerVisibility()
         }
     }
 }

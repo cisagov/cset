@@ -39,6 +39,8 @@
                     <xs:attribute name="target" type="xs:string" use="optional" />
                     <xs:attribute name="edge" type="xs:string" use="optional" />
                     <xs:attribute name="vertex" type="xs:string" use="optional" />
+                    <xs:attribute name="layerName" type="xs:string" use="optional" />
+                    <xs:attribute name="visible" type="xs:string" use="optional" />
                   </xs:complexType>
                 </xs:element>
                 <xs:element maxOccurs="unbounded" name="object">
@@ -78,7 +80,8 @@
                     <xs:attribute name="parent" type="xs:string" use="optional" />
                     <xs:attribute name="Security" type="xs:string" use="optional"/>
                     <xs:attribute name="LinkType" type="xs:string" use="optional"/>
-
+                    <xs:attribute name="layerName" type="xs:string" use="optional" />
+                    <xs:attribute name="visible" type="xs:string" use="optional" />
                   </xs:complexType>
                 </xs:element>
               </xs:choice>
