@@ -38,6 +38,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
             }
         }
 
+        public List<NetworkLink> Edges
+        {
+            get { return Links; }
+        }
+
         public SimplifiedNetwork(Dictionary<string, string> imageToTypePath, string defaultSAL)
         {
             this.imageToTypePath = imageToTypePath;
@@ -63,7 +68,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
 
             XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
             XmlNodeList zoneNodes = xDoc.SelectNodes("//*[@zone=\"1\"]");
+            XmlNodeList mxCellLinkObjects = xDoc.SelectNodes("/mxGraphModel/root/object[mxCell/@edge='1']");
             XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
+            
             XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
             foreach (XmlNode layer in mxCellLayers)
             {
@@ -178,6 +185,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                         Parent_id = layername,
                         Geometry = geometry
                     };
+                   
                     NetworkZone myzone;
                     if (zones.TryGetValue(layername, out myzone))
                     {
@@ -191,27 +199,56 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                 }
             }
 
+            //the mxCellLinks list also has the objects
+            //so we keep track of the child id's and 
+            //if we see them again in the raw links
+            //then just skip it.             
+            foreach (XmlNode node in mxCellLinkObjects)
+            {
+                XmlElement xNode = (XmlElement)node;
+                var link = new NetworkLink();
+                foreach (XmlAttribute a in node.Attributes)
+                {
+                    link.setValue(a.Name, a.Value);
+                }
+                Links.Add(link);
+                var childnode = ((XmlElement)xNode.FirstChild);                
+                //find each node
+                //add them to each other          
+                if (childnode.HasAttribute("source") && childnode.HasAttribute("target"))
+                {
+                    NetworkComponent start = findNode(childnode.Attributes["source"].Value);
+                    NetworkComponent target = findNode(childnode.Attributes["target"].Value);
+                    //map any other attributes
+                    link.SourceComponent = start;
+                    link.TargetComponent = target;
+                    start?.AddEdge(target);
+                    target?.AddEdge(start);
+                }
+            }
             foreach (XmlNode node in mxCellLinks)
             {
                 XmlElement xNode = (XmlElement)node;
+                if (((XmlElement) xNode.ParentNode).Name=="object")
+                {
+                    continue;//skip it
+                }
                 //find each node
                 //add them to each other          
                 if (xNode.HasAttribute("source") && xNode.HasAttribute("target"))
                 {
                     NetworkComponent start = findNode(node.Attributes["source"].Value);
                     NetworkComponent target = findNode(node.Attributes["target"].Value);
-                    Links.Add(new NetworkLink()
-                    {
-
-                    });
+                    //map any other attributes
+                    var link = new NetworkLink();
+                    link.SourceComponent = start;
+                    link.TargetComponent = target;                    
+                    Links.Add(link);
                     start?.AddEdge(target);
                     target?.AddEdge(start);
                 }
-                else
-                {
-
-                }
             }
+          
         }
 
         private NetworkComponent findNode(string id)
