@@ -51,7 +51,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     if (child.ComponentType != "Firewall")
                     {
                         String text = String.Format(rule1, node.ComponentName, child.ComponentName);
-                        SetNodeMessage(node, text);
+                        SetLineMessage(node,child, text);
                     }
                 }
             }

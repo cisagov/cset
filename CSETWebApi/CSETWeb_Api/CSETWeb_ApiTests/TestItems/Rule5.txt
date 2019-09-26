@@ -1,0 +1,36 @@
+﻿<mxGraphModel dx="3234" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-5" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-1" target="GNHcdCZE6_BdkaoNZ0lZ-4">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object ComponentGuid="2ed4ed18-82b5-4b2f-bcd7-de3f56d1afa4" Criticality="Low" label="VE-10" internalLabel="VE-10" id="GNHcdCZE6_BdkaoNZ0lZ-1">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/vendor.svg" vertex="1" parent="1">
+        <mxGeometry x="-910" y="520" width="50" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-6" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-2" target="GNHcdCZE6_BdkaoNZ0lZ-4">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object ComponentGuid="6d3a2861-828a-4dc5-900a-d599668f249f" Criticality="Low" label="WEB-11" internalLabel="WEB-11" id="GNHcdCZE6_BdkaoNZ0lZ-2">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/web.svg" vertex="1" parent="1">
+        <mxGeometry x="-780" y="530" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-7" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-3" target="GNHcdCZE6_BdkaoNZ0lZ-4">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object ComponentGuid="d1560576-5dcd-4c17-bf6a-f372dda512ec" Criticality="Low" label="PA-12" internalLabel="PA-12" id="GNHcdCZE6_BdkaoNZ0lZ-3">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/partner.svg" vertex="1" parent="1">
+        <mxGeometry x="-640" y="542" width="60" height="38" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="27c5b63c-6e71-4c45-a2b7-85b8993bab16" Criticality="Low" label="DB-13" internalLabel="DB-13" id="GNHcdCZE6_BdkaoNZ0lZ-4">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/database_server.svg" vertex="1" parent="1">
+        <mxGeometry x="-810" y="330" width="43" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+  </root>
+</mxGraphModel>
+
