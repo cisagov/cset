@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'rapp-redirect',
   templateUrl: './redirect.component.html',
-  styleUrls: ['./redirect.component.scss']
+  styleUrls: ['./redirect.component.css']
 })
 export class RedirectComponent implements OnInit {
 
