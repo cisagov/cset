@@ -72,6 +72,7 @@
     <Compile Include="BusinessManagers\Diagram\DictionaryCompareTests.cs" />
     <Compile Include="BusinessManagers\ImportManagerTests.cs" />
     <Compile Include="BusinessManagers\QuestionsManagerTests.cs" />
+    <Compile Include="Controllers\DiagramControllerTests.cs" />
     <Compile Include="Controllers\GuidControllerTests.cs" />
     <Compile Include="Controllers\ResourceLibraryControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +94,11 @@
       <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
       <Name>DataLayerCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestItems\SampleDiagram.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
