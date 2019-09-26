@@ -31,6 +31,27 @@ namespace CSETWeb_Api.Controllers
     public class DiagramController : ApiController
     {
         /// <summary>
+        /// Analyzes the diagram XML in the database.
+        /// 
+        /// RKW - THIS IS A STUB.  BARRY WILL BE PROVIDING THE REAL ONE.
+        /// 
+        /// </summary>
+        /// <param name="req"></param>
+        [CSETAuthorize]
+        [Route("api/diagram/analyze")]
+        [HttpPost]
+        public List<IDiagramAnalysisNodeMessage> AnalyzeDiagram([FromBody] DiagramRequest req)
+        {
+            // RKW - this is a dummy response
+            var NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
+            DiagramAnalysisNodeMessage msg = new DiagramAnalysisNodeMessage();
+            NetworkWarnings.Add(msg);
+
+            return NetworkWarnings;
+        }
+
+
+        /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
         /// <param name="req"></param>
