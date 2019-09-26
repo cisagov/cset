@@ -3,56 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
     class Rule6 : AbstractRule, IRuleEvaluate
-    {
-        private String rule1 = "The network path identified by the components, {0} and {1}, appears to connect network segments whose components reside in different zones.  A firewall to filter the traffic on this path is recommended to protect the components in one zone from a compromised component in the other zone.";
+    {   
+        private SimplifiedNetwork network;
+
         public Rule6(SimplifiedNetwork simplifiedNetwork)
         {
-
+            this.network = simplifiedNetwork;
         }
 
-       
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
-            throw new NotImplementedException();
+            foreach (var edge in this.network.Edges)
+            {
+                CheckRule6(edge);
+            }
+            return this.Messages;
+
         }
 
+        private String rule6 = "The path between the components, {0} and {1}, is untrusted.  " +
+            "Because malicious traffic may be introduced onto the link, a firewall to filter the " +
+            "traffic on both sides of untrusted link is recommended.  Or encrypt the link to make it trusted.";
 
 
-        //private String rule6 = "The path between the components, {0} and {1}, is untrusted.  Because malicious traffic may be introduced onto the link, a firewall to filter the traffic on both sides of untrusted link is recommended.";
+        private void CheckRule6(NetworkLink link)
+        {
+            NetworkComponent headComponent = link.SourceComponent;
+            NetworkComponent tailComponent = link.TargetComponent;
+            if (link.Security == Constants.UnTrusted)
+            {
+                if (headComponent.IsFirewall || tailComponent.IsFirewall)
+                {
+                    //If there is firewall don't show message
+                }
+                else
+                {
+                    String headName = "unnamed";
+                    if (!String.IsNullOrWhiteSpace(headComponent.ComponentName))
+                    {
+                        headName = headComponent.ComponentName;
+                    }
 
+                    String tailName = "unnamed";
+                    if (!String.IsNullOrWhiteSpace(tailComponent.ComponentName))
+                    {
+                        tailName = tailComponent.ComponentName;
+                    }
 
-        //private void CheckRule6(HashSet<Guid> checkedLines, NetworkLink link, NetworkNode headComponent, NetworkNode tailComponent)
-        //{
-        //    if (link.Security == LinkSecurityEnum.Untrusted)
-        //    {
-        //        if (headComponent.IsFirewall || tailComponent.IsFirewall)
-        //        {
-        //            //If there is firewall don't show message
-        //        }
-        //        else
-        //        {
-        //            String headName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(headComponent.TextNodeLabel))
-        //            {
-        //                headName = headComponent.TextNodeLabel;
-        //            }
+                    String text = String.Format(rule6, headName, tailName);
+                    SetLineMessage(headComponent,tailComponent, text);
+                }
 
-        //            String tailName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(tailComponent.TextNodeLabel))
-        //            {
-        //                tailName = tailComponent.TextNodeLabel;
-        //            }
-
-        //            String text = String.Format(rule6, headName, tailName);
-        //            AddMessage(link, text);
-        //        }
-
-        //    }
-        //}
+            }
+        }
     }
 }
