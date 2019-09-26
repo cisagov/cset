@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using System.Xml;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
@@ -21,6 +22,7 @@ using DataLayerCore.Model;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -241,6 +243,247 @@ namespace CSETWeb_Api.Controllers
                 BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
                 return dm.GetComponentSymbols();
             }
+        }
+
+        /// <summary>
+        /// Returns the details for symbols.  This is used to build palettes and icons
+        /// in the browser.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("api/diagram/symbols/getAll")]
+        [HttpGet]
+        public IHttpActionResult GetAllSymbols()
+        {
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return Ok(dm.GetAllComponentSymbols());
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram components
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getComponents")]
+        [HttpGet]
+        public IHttpActionResult GetComponents()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager(new CSET_Context());
+                var diagramXml = dm.GetDiagramXml((int) assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var components = dm.GetDiagramComponents(vertices);
+                return Ok(components);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No components available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram zones
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getZones")]
+        [HttpGet]
+        public IHttpActionResult GetZones()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager(new CSET_Context());
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var zones = dm.GetDiagramZones(vertices);
+                return Ok(zones);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No zones available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram lines
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getLinks")]
+        [HttpGet]
+        public IHttpActionResult GetLinks()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager(new CSET_Context());
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var edges = dm.ProcessDigramEdges(diagramXml);
+                var links = dm.GetDiagramLinks(edges);
+                return Ok(links);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No links available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram shapes
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getShapes")]
+        [HttpGet]
+        public IHttpActionResult GetShapes()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager(new CSET_Context());
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramShapes(diagramXml);
+                var shapes = dm.GetDiagramShapes(vertices);
+                return Ok(shapes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No shapes available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Returns list of diagram shapes
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/getTexts")]
+        [HttpGet]
+        public IHttpActionResult GetTexts()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager(new CSET_Context());
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramShapes(diagramXml);
+                var texts = dm.GetDiagramText(vertices);
+                return Ok(texts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No text available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Update component
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveComponent")]
+        [HttpPost]
+        public IHttpActionResult SaveComponent(mxGraphModelRootObject vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveComponent(vertice, (int)assessmentId);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// update zone
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveZone")]
+        [HttpPost]
+        public IHttpActionResult SaveZone(mxGraphModelRootObject vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveZone(vertice, (int)assessmentId);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// update shape
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveShape")]
+        [HttpPost]
+        public IHttpActionResult SaveShape(mxGraphModelRootMxCell vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveShape(vertice, (int)assessmentId);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// update link
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveLink")]
+        [HttpPost]
+        public IHttpActionResult SaveLink(mxGraphModelRootMxCell vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveLink(vertice, (int)assessmentId);
+            }
+
+            return Ok();
         }
     }
 }

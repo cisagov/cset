@@ -388,11 +388,22 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-       
+        /// <summary>
+        /// Get assessment from given assessment Id
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public ASSESSMENTS GetAssessmentById(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                return db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            }
+        }
 
 
-       
-       
+
+
     }
 }
 
