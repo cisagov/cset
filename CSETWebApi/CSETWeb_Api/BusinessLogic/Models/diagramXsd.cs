@@ -281,6 +281,10 @@ namespace CSETWeb_Api.BusinessLogic.Models {
         
         private string vertexField;
         
+        private string layerNameField;
+        
+        private string visibleField;
+        
         /// <remarks/>
         public mxGraphModelRootMxCellMxGeometry mxGeometry {
             get {
@@ -376,6 +380,28 @@ namespace CSETWeb_Api.BusinessLogic.Models {
             }
             set {
                 this.vertexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string layerName {
+            get {
+                return this.layerNameField;
+            }
+            set {
+                this.layerNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string visible {
+            get {
+                return this.visibleField;
+            }
+            set {
+                this.visibleField = value;
             }
         }
     }
@@ -593,6 +619,10 @@ namespace CSETWeb_Api.BusinessLogic.Models {
         
         private string linkTypeField;
         
+        private string layerNameField;
+        
+        private string visibleField;
+        
         /// <remarks/>
         public mxGraphModelRootObjectMxCell mxCell {
             get {
@@ -765,6 +795,28 @@ namespace CSETWeb_Api.BusinessLogic.Models {
             }
             set {
                 this.linkTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string layerName {
+            get {
+                return this.layerNameField;
+            }
+            set {
+                this.layerNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string visible {
+            get {
+                return this.visibleField;
+            }
+            set {
+                this.visibleField = value;
             }
         }
     }

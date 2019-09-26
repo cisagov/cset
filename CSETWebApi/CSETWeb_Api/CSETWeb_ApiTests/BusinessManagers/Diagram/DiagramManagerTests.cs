@@ -15,7 +15,9 @@ namespace CSETWeb_Api.BusinessManagers.Tests
         public void getLayerVisibilityTest()
         {
             DiagramManager manager = new DiagramManager();
-            manager.getLayerVisibility()
+            manager.getLayerVisibility();
+
+
         }
     }
 }
