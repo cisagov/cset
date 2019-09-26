@@ -161,7 +161,8 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
                     const assessmentName = resp.AssessmentName;
 
                     filename.innerHTML = assessmentName;
-                    if (app.currentFile) {
+                    if (app.currentFile)
+                    {
                         app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
                     }
                     sessionStorage.setItem('assessment.name', assessmentName);
@@ -169,9 +170,10 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
 
                     var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
                     updateGraph(editor, data);
-                    break
+                    CsetUtils.clearWarningsFromDiagram(editor.graph);
+                    break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(window.location.origin);
                     break;
             }
         }
@@ -264,7 +266,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
                     // successful post            
                     break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(window.location.origin);
                     break;
             }
         }
@@ -303,7 +305,7 @@ CsetUtils.saveDiagram = async function (req)
                     // successful post            
                     break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(window.location.origin);
                     break;
             }
         }
@@ -362,7 +364,7 @@ async function TranslateToMxGraph(editor, sXML)
                     });
                     break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(window.location.origin);
                     break;
             }
         }
@@ -549,18 +551,76 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
 
     warnings.forEach(w =>
     {
-        var coords = CsetUtils.getCoords(w);
-        var redDot = graph.insertVertex(root, null, w.Number, coords.X, coords.Y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+        var coords = CsetUtils.getCoords(w, graph);
+
+        // don't overlay any other red dots on the same component
+        if (CsetUtils.redDotAtCoords(graph, coords))
+        {
+            coords.x += 33;
+        }
+
+        var redDot = graph.insertVertex(root, null, w.Number, coords.x, coords.y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+        redDot.warningMsg = w.Message;
     });
 }
 
 /**
- * 
+ * Determines where to place the red dot, based on the component or link it 
+ * is describing.
  */
-CsetUtils.getCoords = function (warning)
+CsetUtils.getCoords = function (warning, graph)
 {
-    var coords = {};
-    coords.X = 100;
-    coords.Y = 100;
+    var coords = {
+        x: 100,
+        y: 100
+    };
+
+    // if only one node provided, then the dot goes on that component
+    if (warning.NodeId1 && !warning.NodeId2)
+    {
+        const component = graph.getModel().getCell(warning.NodeId1);
+        const g = component.getGeometry();
+        coords.x = g.x;
+        coords.y = g.y - 40;
+        return coords;
+    }
+
+    // if both are provided, the dot goes on the line somewhere
+    if (warning.NodeId1 && warning.NodeId2)
+    {
+        const component1 = graph.getModel().getCell(warning.NodeId1);
+        const component2 = graph.getModel().getCell(warning.NodeId2);
+
+        const x = (component1.getGeometry().x + component2.getGeometry().x) / 2;
+        const y = (component1.getGeometry().y + component2.getGeometry().y) / 2;
+
+        // fine-tune here if needed
+        coords.x = x;
+        coords.y = y;
+        return coords;
+
+
+        // WIP -- To be thorough, don't assume a straight line.  Account for waypoints.
+        const edges = graph.getModel().getEdgesBetween(component1, component2);
+    }
+
     return coords;
+}
+
+CsetUtils.redDotAtCoords = function (graph, coords)
+{
+    var found = false;
+
+    graph.getModel().getDescendants().forEach(c =>
+    {
+        if (c instanceof mxCell && c.isRedDot())
+        {
+            if (c.getGeometry().x == coords.x && c.getGeometry().y == coords.y)
+            {
+                found = true;
+            }
+        }
+    });
+
+    return found;
 }

@@ -71,6 +71,20 @@ mxCell.prototype.isParentMSC = function ()
 
 
 /**
+ * Returns a boolean indicating if the cell is a Layer.
+ */
+mxCell.prototype.isLayer = function ()
+{
+    var parent = this.getParent();
+    if (!!parent && parent.hasOwnProperty('id') && parent.id == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+/**
  * Returns a boolean indicating if the cell is a Zone.
  */
 mxCell.prototype.isZone = function ()
@@ -87,6 +101,15 @@ mxCell.prototype.isZone = function ()
     }
 
     return (!!z);
+}
+
+
+/**
+ * 
+ */
+mxCell.prototype.isRedDot = function ()
+{
+    return (!!this.style && this.style.indexOf('redDot') >= 0);
 }
 
 
@@ -343,28 +366,29 @@ mxCell.prototype.setStyleValue = function (name, value)
 
 
 /**
- * 
+ * Gets the SAL from the component (if it's a zone), 
+ * the component's zone, or from the assessment itself
+ * if the component is not in a zone.
  */
 mxCell.prototype.getSAL = function ()
 {
-    if (this.isZone())
+    const cell = this;
+
+    if (cell.isZone())
     {
-        return this.getCsetAttribute('SAL');
+        return cell.getCsetAttribute('SAL');
     }
 
-    var c = this;
-    while (!isLayer(c) && !c.isZone())
+    var c = cell;
+    while (!c.isLayer() && !c.isZone())
     {
         c = c.getParent();
     }
 
     // component lives in layer - use overall SAL
-    if (isLayer(c))
+    if (c.isLayer())
     {
-        return Editor.getOverallSAL().then(s =>
-        {
-            return s;
-        });
+        return Editor.overallSAL;
     }
 
     // parent zone's SAL
@@ -372,20 +396,3 @@ mxCell.prototype.getSAL = function ()
 }
 
 
-/**
- * 
- */
-isLayer = function (cell)
-{
-    if (!cell)
-    {
-        return false;
-    }
-
-    var parent = cell.getParent();
-    if (!!parent && parent.hasOwnProperty('id') && parent.id == 0)
-    {
-        return true;
-    }
-    return false;
-}
