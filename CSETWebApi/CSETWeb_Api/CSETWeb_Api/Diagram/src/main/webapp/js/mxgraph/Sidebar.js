@@ -4,100 +4,87 @@
 /**
  * Construcs a new sidebar for the given editor.
  */
-function Sidebar(editorUi, container)
-{
-	this.editorUi = editorUi;
-	this.container = container;
-	this.palettes = new Object();
-	this.taglist = new Object();
-	this.showTooltips = true;
-	this.graph = editorUi.createTemporaryGraph(this.editorUi.editor.graph.getStylesheet());
-	this.graph.cellRenderer.antiAlias = false;
-	this.graph.foldingEnabled = false;
-	this.graph.container.style.visibility = 'hidden';
-	document.body.appendChild(this.graph.container);
-	
-	this.pointerUpHandler = mxUtils.bind(this, function()
-	{
-		this.showTooltips = true;
-	});
+function Sidebar(editorUi, container) {
+    this.editorUi = editorUi;
+    this.container = container;
+    this.palettes = new Object();
+    this.taglist = new Object();
+    this.showTooltips = true;
+    this.graph = editorUi.createTemporaryGraph(this.editorUi.editor.graph.getStylesheet());
+    this.graph.cellRenderer.antiAlias = false;
+    this.graph.foldingEnabled = false;
+    this.graph.container.style.visibility = 'hidden';
+    document.body.appendChild(this.graph.container);
 
-	mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointerup' : 'mouseup', this.pointerUpHandler);
+    this.pointerUpHandler = mxUtils.bind(this, function () {
+        this.showTooltips = true;
+    });
 
-	this.pointerDownHandler = mxUtils.bind(this, function()
-	{
-		this.showTooltips = false;
-		this.hideTooltip();
-	});
-	
-	mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown', this.pointerDownHandler);
-	
-	this.pointerMoveHandler = mxUtils.bind(this, function(evt)
-	{
-		var src = mxEvent.getSource(evt);
-		
-		while (src != null)
-		{
-			if (src == this.currentElt)
-			{
-				return;
-			}
-			
-			src = src.parentNode;
-		}
-		
-		this.hideTooltip();
-	});
+    mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointerup' : 'mouseup', this.pointerUpHandler);
 
-	mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointermove' : 'mousemove', this.pointerMoveHandler);
+    this.pointerDownHandler = mxUtils.bind(this, function () {
+        this.showTooltips = false;
+        this.hideTooltip();
+    });
 
-	// Handles mouse leaving the window
-	this.pointerOutHandler = mxUtils.bind(this, function(evt)
-	{
-		if (evt.toElement == null && evt.relatedTarget == null)
-		{
-			this.hideTooltip();
-		}
-	});
-	
-	mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointerout' : 'mouseout', this.pointerOutHandler);
+    mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown', this.pointerDownHandler);
 
-	// Enables tooltips after scroll
-	mxEvent.addListener(container, 'scroll', mxUtils.bind(this, function()
-	{
-		this.showTooltips = true;
-		this.hideTooltip();
-	}));
-	
-	this.init();
+    this.pointerMoveHandler = mxUtils.bind(this, function (evt) {
+        var src = mxEvent.getSource(evt);
+        while (src != null) {
+            if (src == this.currentElt) {
+                return;
+            }
+            src = src.parentNode;
+        }
+        this.hideTooltip();
+    });
+
+    mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointermove' : 'mousemove', this.pointerMoveHandler);
+
+    // Handles mouse leaving the window
+    this.pointerOutHandler = mxUtils.bind(this, function (evt) {
+        if (evt.toElement == null && evt.relatedTarget == null) {
+            this.hideTooltip();
+        }
+    });
+
+    mxEvent.addListener(document, (mxClient.IS_POINTER) ? 'pointerout' : 'mouseout', this.pointerOutHandler);
+
+    // Enables tooltips after scroll
+    mxEvent.addListener(container, 'scroll', mxUtils.bind(this, function () {
+        this.showTooltips = true;
+        this.hideTooltip();
+    }));
+
+    this.init();
 };
 
 /**
  * Adds all palettes to the sidebar.
  */
-Sidebar.prototype.init = function()
-{
-	var dir = STENCIL_PATH;
-	console.log("in the pallet add function");
-	this.addSearchPalette(true);
-	// this.addGeneralPalette(true);
-	// this.addMiscPalette(false);
-	// this.addAdvancedPalette(false);
-	// this.addBasicPalette(dir);
-	// this.addStencilPalette('arrows', mxResources.get('arrows'), dir + '/arrows.xml',
-	// 	';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
-	// this.addUmlPalette(false);
-	// this.addBpmnPalette(dir, false);
-	// this.addStencilPalette('flowchart', 'Flowchart', dir + '/flowchart.xml',
-	// 	';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
-	// this.addImagePalette('clipart', mxResources.get('clipart'), dir + '/clipart/', '_128x128.png',
-	// 	['Earth_globe', 'Empty_Folder', 'Full_Folder', 'Gear', 'Lock', 'Software', 'Virus', 'Email',
-	// 	 'Database', 'Router_Icon', 'iPad', 'iMac', 'Laptop', 'MacBook', 'Monitor_Tower', 'Printer',
-	// 	 'Server_Tower', 'Workstation', 'Firewall_02', 'Wireless_Router_N', 'Credit_Card',
-	// 	 'Piggy_Bank', 'Graph', 'Safe', 'Shopping_Cart', 'Suit1', 'Suit2', 'Suit3', 'Pilot1',
-	// 	 'Worker1', 'Soldier1', 'Doctor1', 'Tech1', 'Security1', 'Telesales1'], null,
-	// 	 {'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
-	// 	  'Router_Icon': 'router switch'});
+Sidebar.prototype.init = function () {
+    var dir = STENCIL_PATH;
+    console.log("in the pallet add function");
+    this.addSearchPalette(true);
+    // this.addGeneralPalette(true);
+    // this.addMiscPalette(false);
+    // this.addAdvancedPalette(false);
+    // this.addBasicPalette(dir);
+    // this.addStencilPalette('arrows', mxResources.get('arrows'), dir + '/arrows.xml',
+    // 	';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
+    // this.addUmlPalette(false);
+    // this.addBpmnPalette(dir, false);
+    // this.addStencilPalette('flowchart', 'Flowchart', dir + '/flowchart.xml',
+    // 	';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
+    // this.addImagePalette('clipart', mxResources.get('clipart'), dir + '/clipart/', '_128x128.png',
+    // 	['Earth_globe', 'Empty_Folder', 'Full_Folder', 'Gear', 'Lock', 'Software', 'Virus', 'Email',
+    // 	 'Database', 'Router_Icon', 'iPad', 'iMac', 'Laptop', 'MacBook', 'Monitor_Tower', 'Printer',
+    // 	 'Server_Tower', 'Workstation', 'Firewall_02', 'Wireless_Router_N', 'Credit_Card',
+    // 	 'Piggy_Bank', 'Graph', 'Safe', 'Shopping_Cart', 'Suit1', 'Suit2', 'Suit3', 'Pilot1',
+    // 	 'Worker1', 'Soldier1', 'Doctor1', 'Tech1', 'Security1', 'Telesales1'], null,
+    // 	 {'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
+    // 	  'Router_Icon': 'router switch'});
 };
 
 /**
@@ -416,112 +403,79 @@ Sidebar.prototype.addDataEntry = function(tags, width, height, title, data)
 /**
  * Hides the current tooltip.
  */
-Sidebar.prototype.addEntry = function(tags, fn)
-{
-	if (this.taglist != null && tags != null && tags.length > 0)
-	{
-		// Replaces special characters
-		var tmp = tags.toLowerCase().replace(/[\/\,\(\)]/g, ' ').split(' ');
+Sidebar.prototype.addEntry = function (tags, fn) {
+    const doAddEntry = mxUtils.bind(this, tag => {
+        if (tag) {
+            let entry = this.taglist[tag];
+            if (typeof entry !== 'object') {
+                entry = {
+                    tag: tag,
+                    entries: [],
+                    dict: new mxDictionary()
+                };
+                this.taglist[tag] = entry;
+            }
 
-		var doAddEntry = mxUtils.bind(this, function(tag)
-		{
-			if (tag != null && tag.length > 1)
-			{
-				var entry = this.taglist[tag];
-				
-				if (typeof entry !== 'object')
-				{
-					entry = {entries: [], dict: new mxDictionary()};
-					this.taglist[tag] = entry;
-				}
+            if (!entry.dict.get(fn)) {
+                entry.entries.push(fn);
+                entry.dict.put(fn, fn);
+            }
+        }
+    });
 
-				// Ignores duplicates
-				if (entry.dict.get(fn) == null)
-				{
-					entry.dict.put(fn, fn);
-					entry.entries.push(fn);
-				}
-			}
-		});
-		
-		for (var i = 0; i < tmp.length; i++)
-		{
-			doAddEntry(tmp[i]);
-			
-			// Adds additional entry with removed trailing numbers
-			var normalized = tmp[i].replace(/\.*\d*$/, '');
-			
-			if (normalized != tmp[i])
-			{
-				doAddEntry(normalized);
-			}
-		}
-	}
-	
-	return fn;
+    if (this.taglist && tags) {
+        // Replaces forward slash, comma, open paren, and close paren characters.
+        const tagnames = tags.toLowerCase().replace(/[\/\,\(\)]/g, ' ').split(' ');
+
+        for (const tag of tagnames) {
+            doAddEntry(tag);
+
+            // Adds additional entry with removed trailing numbers
+            const normalized = tag.replace(/\.*\d*$/, '');
+            if (normalized !== tag) {
+                doAddEntry(normalized);
+            }
+        }
+    }
+
+    return fn;
 };
 
 /**
  * Adds shape search UI.
  */
-Sidebar.prototype.searchEntries = function(searchTerms, count, page, success, error)
-{
-	if (this.taglist != null && searchTerms != null)
-    {
-		var tmp = searchTerms.toLowerCase().split(' ');
-		var dict = new mxDictionary();
-		var max = (page + 1) * count;
-		var results = [];
-		var index = 0;
-		
-		for (var i = 0; i < tmp.length; i++)
-		{
-			if (tmp[i].length > 0)
-			{
-				var entry = this.taglist[tmp[i]];
-				var tmpDict = new mxDictionary();
-				
-				if (entry != null)
-				{
-					var arr = entry.entries;
-					results = [];
+Sidebar.prototype.searchEntries = function (searchTerms, count, page, success, error) {
+    const pg = page || 0;
+    const cnt = count || 16;
+    const terms = (searchTerms || '').toLowerCase().split(' ');
+    if (!this.taglist || !terms.length) {
+        success([], null, null, terms);
+        return;
+    }
 
-					for (var j = 0; j < arr.length; j++)
-					{
-						var entry = arr[j];
-	
-						// NOTE Array does not contain duplicates
-						if ((index == 0) == (dict.get(entry) == null))
-						{
-							tmpDict.put(entry, entry);
-							results.push(entry);
-							
-							if (i == tmp.length - 1 && results.length == max)
-							{
-								success(results.slice(page * count, max), max, true, tmp);
-								
-								return;
-							}
-						}
-					}
-				}
-				else
-				{
-					results = [];
-				}
-				
-				dict = tmpDict;
-				index++;
-			}
-		}
-		
-		var len = results.length;
-		success(results.slice(page * count, (page + 1) * count), len, false, tmp);
-	}
-	else
-	{
-		success([], null, null, tmp);
-	}
+    let more = false;
+    const results = [];
+    const max = (pg + 1) * cnt;
+    const dict = new mxDictionary();
+
+    for (const term of terms.filter(x => !!x)) {
+        const entry = this.taglist[term];
+        if (!entry) {
+            continue;
+        }
+
+        const ndx = terms.indexOf(term);
+        for (const fn of entry.entries.filter(x => x.isSearchable)) {
+            if (ndx === 0 && !dict.get(fn)) {
+                dict.put(fn, fn);
+                results.push(fn);
+                more = ndx === terms.length - 1 && results.length === max;
+            }
+        }
+    }
+
+    const len = results.length;
+    success(results.slice(pg * cnt, max), len, more, terms);
 };
 
 /**
@@ -693,104 +647,87 @@ Sidebar.prototype.addSearchPalette = function(expand)
 		input.focus();
 	});
 
-	find = mxUtils.bind(this, function()
-	{
-		// Shows 4 rows (minimum 4 results)
-		count = 4 * Math.max(1, Math.floor(this.container.clientWidth / (this.thumbWidth + 10)));
-		this.hideTooltip();
-		
-		if (input.value != '')
-		{
-			if (center.parentNode != null)
-			{
-				if (searchTerm != input.value)
-				{
-					clearDiv();
-					searchTerm = input.value;
-					hash = new Object();
-					complete = false;
-					page = 0;
-				}
-				
-				if (!active && !complete)
-				{
-					button.setAttribute('disabled', 'true');
-					button.style.display = '';
-					button.style.cursor = 'wait';
-					button.innerHTML = mxResources.get('loading') + '...';
-					active = true;
-					
-					// Ignores old results
-					var current = new Object();
-					this.currentSearch = current;
-					
-					this.searchEntries(searchTerm, count, page, mxUtils.bind(this, function(results, len, more, terms)
-					{
-						if (this.currentSearch == current)
-						{
-							results = (results != null) ? results : [];
-							active = false;
-							page++;
-							this.insertSearchHint(div, searchTerm, count, page, results, len, more, terms);
+    find = mxUtils.bind(this, function () {
+        // Shows 4 rows (minimum 4 results)
+        count = 4 * Math.max(1, Math.floor(this.container.clientWidth / (this.thumbWidth + 10)));
+        this.hideTooltip();
 
-							if (center.parentNode != null)
-							{
-								center.parentNode.removeChild(center);
-							}
-							
-							for (var i = 0; i < results.length; i++)
-							{
-								try
-								{
-									var elt = results[i]();
-									
-									// Avoids duplicates in results
-									if (hash[elt.innerHTML] == null)
-									{
-										hash[elt.innerHTML] = '1';
-										div.appendChild(elt);
-									}
-								}
-								catch (e)
-								{
-									// ignore
-								}
-							}
-							
-							if (more)
-							{
-								button.removeAttribute('disabled');
-								button.innerHTML = mxResources.get('moreResults');
-							}
-							else
-							{
-								button.innerHTML = mxResources.get('reset');
-								button.style.display = 'none';
-								complete = true;
-							}
-							
-							button.style.cursor = '';
-							div.appendChild(center);
-						}
-					}), mxUtils.bind(this, function()
-					{
-						// TODO: Error handling
-						button.style.cursor = '';
-					}));
-				}
-			}
-		}
-		else
-		{
-			clearDiv();
-			input.value = '';
-			searchTerm = '';
-			hash = new Object();
-			button.style.display = 'none';
-			complete = false;
-			input.focus();
-		}
-	});
+        if (input.value != '') {
+            if (center.parentNode != null) {
+                if (searchTerm != input.value) {
+                    clearDiv();
+                    searchTerm = input.value;
+                    hash = new Object();
+                    complete = false;
+                    page = 0;
+                }
+
+                if (!active && !complete) {
+                    button.setAttribute('disabled', 'true');
+                    button.style.display = '';
+                    button.style.cursor = 'wait';
+                    button.innerHTML = mxResources.get('loading') + '...';
+                    active = true;
+
+                    // Ignores old results
+                    const current = new Object();
+                    this.currentSearch = current;
+                    const onsuccess = mxUtils.bind(this, function (results, len, more, terms) {
+                        if (this.currentSearch == current) {
+                            page++;
+                            active = false;
+                            results = results || [];
+
+                            this.insertSearchHint(div, searchTerm, count, page, results, len, more, terms);
+
+                            if (center.parentNode != null) {
+                                center.parentNode.removeChild(center);
+                            }
+
+                            for (const fn of results) {
+                                try {
+                                    const elt = fn();
+                                    // Avoids duplicates in results
+                                    if (!hash[elt.innerHTML]) {
+                                        hash[elt.innerHTML] = '1';
+                                        div.appendChild(elt);
+                                    }
+                                } catch (e) {
+                                    // ignore
+                                }
+                            }
+
+                            if (more) {
+                                button.removeAttribute('disabled');
+                                button.innerHTML = mxResources.get('moreResults');
+                            }
+                            else {
+                                button.innerHTML = mxResources.get('reset');
+                                button.style.display = 'none';
+                                complete = true;
+                            }
+
+                            button.style.cursor = '';
+                            div.appendChild(center);
+                        }
+                    });
+                    const onerror = mxUtils.bind(this, function () {
+                        // TODO: Error handling
+                        button.style.cursor = '';
+                    })
+                    this.searchEntries(searchTerm, count, page, onsuccess, onerror);
+                }
+            }
+        } else {
+            clearDiv();
+            input.value = '';
+            searchTerm = '';
+            hash = new Object();
+            button.style.display = 'none';
+            complete = false;
+            input.focus();
+        }
+    });
 	
 	mxEvent.addListener(input, 'keydown', mxUtils.bind(this, function(evt)
 	{
