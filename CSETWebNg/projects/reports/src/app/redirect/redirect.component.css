@@ -1,0 +1,407 @@
+/*
+This CSS resource incorporates links to font software which is
+the valuable copyrighted property of Monotype Imaging and/or
+its suppliers. You may not attempt to copy, install, redistribute, convert,
+modify or reverse engineer this font software. Please contact Monotype Imaging
+with any questions regarding Web Fonts:  http://webfonts.fonts.com
+*/
+
+/* END fonts helvetica */
+.page-subtitle {
+	font-family: HelveticaNeueW01-45Ligh, HelveticaNeueW02-45Ligh, HelveticaNeueW10-45Ligh, sans-serif;
+	font-size: 34px;
+	line-height: 48px
+}
+
+.page-title,
+.published-not-available .page-secondary-title {
+	font-family: HelveticaNeueW01-55Roma, HelveticaNeueW02-55Roma, HelveticaNeueW10-55Roma, sans-serif;
+	font-size: 45px;
+	line-height: 50px
+}
+
+.error-code {
+	margin-top: 30px;
+	font-size: 22px;
+	color: #929292;
+	line-height: 35px
+}
+
+.page-message {
+	margin-top: 14px;
+	font-size: 22px;
+	line-height: 26px
+}
+
+.secondary-font {
+	font-family: HelveticaNeueW01-45Ligh, HelveticaNeueW02-45Ligh, HelveticaNeueW10-45Ligh, sans-serif
+}
+
+.authorization-not-supported .help-link,
+.error-400 .help-link,
+.header-link,
+.invite-expired .help-link,
+.support-link,
+.thick-font,
+.undocumented-error .help-link,
+.unsupported-browser .continue-link {
+	font-family: HelveticaNeueW01-65Medi, HelveticaNeueW02-65Medi, HelveticaNeueW10-65Medi, sans-serif
+}
+
+.support-link,
+.unsupported-browser .continue-link {
+	color: #fb7d33
+}
+
+.error-page-app {
+	position: absolute;
+	z-index: -2;
+	width: 100%;
+	height: 100%
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	margin: 0
+}
+
+
+.page-content-wrapper {
+	margin-top: 204px;
+	width: 560px
+}
+
+.pull-right {
+	float: right
+}
+
+.pull-left {
+	float: left
+}
+
+@media only screen and (max-width:1060px) {
+	.content {
+		width: 100%
+	}
+}
+
+@media only screen and (max-width:767px) {
+	.header-link {
+		font-size: 11px
+	}
+	.wix-logo {
+		top: 18px;
+		width: 70px;
+		height: 19px
+	}
+	.header nav {
+		margin-left: 50px
+	}
+	.page-content-wrapper,
+	.page-title,
+	.published-not-available .page-secondary-title {
+		width: 100%
+	}
+	.page-title,
+	.published-not-available .page-secondary-title {
+		font-size: 44px
+	}
+	.published-not-available .undocumented-error .page-secondary-title,
+	.undocumented-error .page-title,
+	.undocumented-error .published-not-available .page-secondary-title {
+		font-size: 34px
+	}
+	body[lang=ja] .bg-img,
+	body[lang=ja] .cable-spaghetti-bg {
+		margin-left: inherit!important
+	}
+	body[lang=ja] .page-content-wrapper {
+		width: inherit!important
+	}
+	.published-not-available body[lang=ja] .page-secondary-title,
+	body[lang=ja] .page-title,
+	body[lang=ja] .published-not-available .page-secondary-title {
+		font-size: 24px
+	}
+	.bg-img,
+	.cable-spaghetti-bg {
+		width: 100%;
+		height: 100%;
+		top: 90px;
+		margin-left: 100px
+	}
+	.page-content-wrapper {
+		margin-top: 110px!important;
+		margin-left: 20px
+	}
+	.contact-support {
+		margin-top: 67px;
+		padding-bottom: 70px
+	}
+	.connect-your-domain .page-content-wrapper,
+	.connect-your-domain .page-title,
+	.connect-your-domain .published-not-available .page-secondary-title,
+	.published-not-available .connect-your-domain .page-secondary-title,
+	.published-not-available .unsupported-browser .page-secondary-title,
+	.unsupported-browser .page-content-wrapper,
+	.unsupported-browser .page-title,
+	.unsupported-browser .published-not-available .page-secondary-title {
+		width: 70%
+	}
+	.connect-your-domain .bg-img,
+	.connect-your-domain .cable-spaghetti-bg,
+	.unsupported-browser .bg-img,
+	.unsupported-browser .cable-spaghetti-bg {
+		margin-left: 130px
+	}
+	.connect-your-domain .continue-link,
+	.connect-your-domain .update-options-list,
+	.unsupported-browser .continue-link,
+	.unsupported-browser .update-options-list {
+		margin-top: 10px!important
+	}
+	.connect-your-domain .page-title,
+	.connect-your-domain .published-not-available .page-secondary-title,
+	.published-not-available .connect-your-domain .page-secondary-title,
+	.published-not-available .unsupported-browser .page-secondary-title,
+	.unsupported-browser .page-title,
+	.unsupported-browser .published-not-available .page-secondary-title {
+		font-size: 24px;
+		line-height: 30px
+	}
+	.connect-your-domain .page-subtitle,
+	.unsupported-browser .page-subtitle {
+		font-size: 19px;
+		line-height: 20px
+	}
+	.published-not-available .page-secondary-title,
+	.published-not-available .page-title {
+		font-size: 25px
+	}
+	.published-not-available .page-content-wrapper {
+		width: 335px!important
+	}
+	.published-not-available .bg-img,
+	.published-not-available .cable-spaghetti-bg {
+		margin-left: -190px!important
+	}
+}
+
+@media only screen and (min-width:768px) and (max-width:1060px) {
+	.page-title,
+	.published-not-available .page-secondary-title {
+		font-size: 50px
+	}
+	.bg-img,
+	.cable-spaghetti-bg {
+		margin-left: 100px!important
+	}
+	.page-content-wrapper {
+		margin-top: 110px;
+		margin-left: 20px
+	}
+	.contact-support {
+		margin-top: 67px
+	}
+	.connect-your-domain .bg-img,
+	.connect-your-domain .cable-spaghetti-bg,
+	.unsupported-browser .bg-img,
+	.unsupported-browser .cable-spaghetti-bg {
+		margin-left: 320px!important
+	}
+}
+
+@media only screen and (min-width:1061px) and (max-width:1440px) {
+	body[lang=ja] .bg-img,
+	body[lang=ja] .cable-spaghetti-bg {
+		margin-left: 490px!important
+	}
+}
+
+body[lang=ja] .page-content-wrapper {
+	width: 700px
+}
+
+.error-404-non-branded {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center
+}
+
+.error-404-non-branded>.error-contents {
+	margin: 84px auto 0
+}
+
+.error-404-non-branded>.error-contents>.image-404 {
+	width: 318px;
+	margin-left: -20px
+}
+
+@media (max-width:612px) and (min-width:380px) {
+	.error-404-non-branded>.error-contents {
+		margin-top: 14vw
+	}
+	.error-404-non-branded>.error-contents>.image-404 {
+		margin-left: -2.9vw;
+		width: 52vw
+	}
+}
+
+@media (max-width:380px) {
+	.error-404-non-branded>.error-contents {
+		margin-top: 64px;
+		text-align: center
+	}
+	.error-404-non-branded>.error-contents>.image-404 {
+		width: 216px
+	}
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-1 {
+	fill: #3ba6cc
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-2 {
+	fill: #3eb8eb
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-3 {
+	fill: #c3d4d8
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-4 {
+	fill: #e1ebef
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-5 {
+	fill: #37b7ea
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-6 {
+	fill: #a2b7bc
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-7 {
+	fill: #a9a9a9
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-8 {
+	fill: #9c9b9b
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-9 {
+	fill: #f197be
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-10 {
+	fill: #565656
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-11 {
+	fill: #fff
+}
+
+.error-404-non-branded>.error-contents>.image-404 .cls-12 {
+	fill: #e9eff2
+}
+
+.error-404-non-branded>.error-contents>.image-404 .error-code {
+	fill: #fff;
+	font-family: HelveticaNeueW01-45Ligh;
+	font-size: 80px
+}
+
+.error-404-non-branded>.error-contents>.not-found {
+	margin-top: 62px;
+	color: #3eb8ea;
+	font-size: 66px;
+	font-family: HelveticaNeueW01-45Ligh;
+	letter-spacing: 1px;
+	line-height: 90px
+}
+
+@media (max-width:612px) and (min-width:380px) {
+	.error-404-non-branded>.error-contents>.not-found {
+		margin-top: 10vw;
+		font-size: 10vw;
+		line-height: 13vw
+	}
+}
+
+@media (max-width:380px) {
+	.error-404-non-branded>.error-contents>.not-found {
+		font-size: 31px;
+		line-height: 50px
+	}
+}
+
+.error-404-non-branded>.error-contents>.description {
+	margin-top: 19px;
+	font-family: HelveticaNeueW01-45Ligh;
+	letter-spacing: 1px;
+	font-size: 20px;
+	line-height: 39px;
+	color: #184a56
+}
+
+@media (max-width:612px) and (min-width:380px) {
+	.error-404-non-branded>.error-contents>.description {
+		font-size: 3.4vw;
+		line-height: 6.8vw
+	}
+}
+
+@media (max-width:380px) {
+	.error-404-non-branded>.error-contents>.description {
+		font-size: 14px;
+		line-height: 24px
+	}
+}
+
+.error-404-non-branded>.error-contents>.button {
+	margin-top: 37px;
+	outline: 0;
+	height: 56px;
+	letter-spacing: .8px;
+	line-height: 50px;
+	font-size: 22px;
+	text-align: center;
+	border-radius: 28px;
+	font-family: HelveticaNeueW01-45Ligh;
+	cursor: pointer;
+	border: 2px solid #3eb8ea;
+	background-color: #fff;
+	color: #3eb8ea;
+	box-sizing: border-box;
+	transition-property: color, background-color;
+	transition-duration: .2s;
+	padding: 0 20px
+}
+
+@media (max-width:612px) and (min-width:380px) {
+	.error-404-non-branded>.error-contents>.button {
+		height: 9vw;
+		font-size: 3.7vw;
+		line-height: 8vw;
+		width: auto;
+		padding: 0 4vw
+	}
+}
+
+@media (max-width:380px) {
+	.error-404-non-branded>.error-contents>.button {
+		width: 167px;
+		height: 44px;
+		border-radius: 22px;
+		line-height: 37px;
+		font-size: 16px
+	}
+}
+
+.error-404-non-branded>.error-contents>.button:hover {
+	background-color: #3eb8ea;
+	color: #fff
+}
