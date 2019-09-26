@@ -25,7 +25,29 @@ namespace CSETWeb_Api.Controllers.Tests
             Assert.AreEqual(test.Count,2);
             var jstring =  Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);
+        }
 
+        [TestMethod()]
+        public void PerformAnalysisTestRules()
+        {
+            DiagramController controller = new DiagramController();
+            DiagramRequest request = new DiagramRequest();
+            string[] testDiagrams = new string[]
+            {   
+                "TestItems\\Rule2.txt",
+                "TestItems\\Rule3.txt",
+                "TestItems\\Rule4.xml",
+                "TestItems\\Rule5.txt",
+                "TestItems\\Rule6.xml"
+            };
+            foreach (string path in testDiagrams)
+            {
+                request.DiagramXml = File.ReadAllText(path);
+                var test = controller.performAnalysis(request, 2);
+                Assert.IsTrue(test.Count > 0,path);
+                var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
+                Trace.Write(jstring);
+            }
         }
 
         [TestMethod()]
@@ -33,12 +55,36 @@ namespace CSETWeb_Api.Controllers.Tests
         {
             DiagramController controller = new DiagramController();
             DiagramRequest request = new DiagramRequest();
-            request.DiagramXml = File.ReadAllText("TestItems\\SampleDiagram.txt");
+            request.DiagramXml = File.ReadAllText("TestItems\\Rule7.txt");
             var test = controller.performAnalysis(request, 2);
-            Assert.AreEqual(test.Count, 2);
+            Assert.AreEqual(test.Count, 1);
             var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);
+        }
 
+        [TestMethod()]
+        public void PerformAnalysisTestRule4()
+        {
+            DiagramController controller = new DiagramController();
+            DiagramRequest request = new DiagramRequest();
+            request.DiagramXml = File.ReadAllText("TestItems\\Rule4.xml");
+            var test = controller.performAnalysis(request, 2);
+            Assert.IsTrue(test.Count>=1, "Rule 4");
+            var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
+            Trace.Write(jstring);
+        }
+
+
+        [TestMethod()]
+        public void PerformAnalysisTestRule6()
+        {
+            DiagramController controller = new DiagramController();
+            DiagramRequest request = new DiagramRequest();
+            request.DiagramXml = File.ReadAllText("TestItems\\Rule6.xml");
+            var test = controller.performAnalysis(request, 2);
+            Assert.IsTrue(test.Count >= 1, "Rule 6");
+            var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
+            Trace.Write(jstring);
         }
     }
 }

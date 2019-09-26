@@ -1,0 +1,63 @@
+<mxGraphModel dx="2834" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <object Criticality="Low" zone="1" zoneType="Other" SAL="Low" label="Zone-6" internalLabel="Zone-6" id="GNHcdCZE6_BdkaoNZ0lZ-4">
+      <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" vertex="1" connectable="0" parent="1">
+        <mxGeometry x="-280" y="100" width="200" height="200" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="8c3d0ce8-4c9c-4d21-8df9-e9cf805c50ef" Criticality="Low" label="DB-9" internalLabel="DB-9" id="GNHcdCZE6_BdkaoNZ0lZ-8">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/database_server.svg" vertex="1" parent="GNHcdCZE6_BdkaoNZ0lZ-4">
+        <mxGeometry x="78.5" y="50" width="43" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="966b8f5b-162d-45a6-941d-bb844dc81256" Criticality="Low" label="VLANS-3" internalLabel="VLANS-3" id="GNHcdCZE6_BdkaoNZ0lZ-1">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/vlan_switch.svg" vertex="1" parent="1">
+        <mxGeometry x="-360" y="400" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-13" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-2" target="GNHcdCZE6_BdkaoNZ0lZ-9">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object ComponentGuid="61d1fd34-98a4-41bf-9aca-4d3fcc43bf6c" Criticality="Low" label="VLANR-4" internalLabel="VLANR-4" id="GNHcdCZE6_BdkaoNZ0lZ-2">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/vlan_router.svg" vertex="1" parent="1">
+        <mxGeometry x="-170" y="398" width="60" height="25" as="geometry"/>
+      </mxCell>
+    </object>
+    <object Criticality="Low" zone="1" zoneType="Control DMZ" SAL="Moderate" label="Zone-5" internalLabel="Zone-5" id="GNHcdCZE6_BdkaoNZ0lZ-3">
+      <mxCell style="swimlane;zone=1;fillColor=#ffe7e9;swimlaneFillColor=#fff1f2;" vertex="1" connectable="0" parent="1">
+        <mxGeometry x="-560" y="120" width="200" height="200" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="df7eb5ad-09da-4cd6-aaed-c01186b14609" Criticality="Low" label="DB-9" internalLabel="DB-9" id="GNHcdCZE6_BdkaoNZ0lZ-7">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/database_server.svg" vertex="1" parent="GNHcdCZE6_BdkaoNZ0lZ-3">
+        <mxGeometry x="70" y="70" width="43" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object Criticality="Low" zone="1" zoneType="Safety" SAL="High" label="Zone-7" internalLabel="Zone-7" id="GNHcdCZE6_BdkaoNZ0lZ-5">
+      <mxCell style="swimlane;zone=1;fillColor=#f6d06b;swimlaneFillColor=#ffe7a5;" vertex="1" connectable="0" parent="1">
+        <mxGeometry x="50" y="90" width="200" height="200" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="1425a25c-7e77-4a6c-af29-ab5115e3d075" Criticality="Low" label="DB-9" internalLabel="DB-9" id="GNHcdCZE6_BdkaoNZ0lZ-9">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/database_server.svg" vertex="1" parent="GNHcdCZE6_BdkaoNZ0lZ-5">
+        <mxGeometry x="50" y="60" width="43" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-10" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-7" target="GNHcdCZE6_BdkaoNZ0lZ-1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-11" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-1" target="GNHcdCZE6_BdkaoNZ0lZ-8">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="GNHcdCZE6_BdkaoNZ0lZ-12" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-2" target="GNHcdCZE6_BdkaoNZ0lZ-8">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+        <object Security="Untrusted" LinkType="Fiber" label="testline" internalLabel="testline" id="GNHcdCZE6_BdkaoNZ0lZ-23">
+      <mxCell style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;strokeColor=#808080;" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-21" target="GNHcdCZE6_BdkaoNZ0lZ-22" edge="1">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+    </object>
+  </root>
+</mxGraphModel>

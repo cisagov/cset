@@ -57,10 +57,10 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         {
             List<IRuleEvaluate> rules = new List<IRuleEvaluate>();
             rules.Add(new Rule1(network));
-            //rules.Add(new Rule2(network));
-            //rules.Add(new Rule7(network));
-            //rules.Add(new Rule7(network));
-            //rules.Add(new Rule7(network));
+            rules.Add(new Rule2(network));
+            rules.Add(new Rule3and4(network));
+            rules.Add(new Rule5(network));
+            rules.Add(new Rule6(network));
             rules.Add(new Rule7(network));
 
             List<IDiagramAnalysisNodeMessage> msgs = new List<IDiagramAnalysisNodeMessage>();
