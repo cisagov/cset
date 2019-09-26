@@ -358,6 +358,16 @@ mxCell.prototype.getSAL = function ()
         c = c.getParent();
     }
 
+    // component lives in layer - use overall SAL
+    if (isLayer(c))
+    {
+        return Editor.getOverallSAL().then(s =>
+        {
+            return s;
+        });
+    }
+
+    // parent zone's SAL
     return c.getCsetAttribute('SAL');
 }
 
