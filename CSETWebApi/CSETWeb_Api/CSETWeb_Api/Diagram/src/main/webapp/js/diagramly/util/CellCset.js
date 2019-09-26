@@ -327,25 +327,15 @@ mxCell.prototype.removeStyleValue = function (name)
  */
 mxCell.prototype.setStyleValue = function (name, value)
 {
-    var elements = this.getStyle().split(';');
+    this.removeStyleValue(name);
 
-    // first, remove any elements for the name, whether or not they contain a value
-    for (var i = elements.length - 1; i >= 0; i--)
-    {
-        if (elements[i].toLowerCase() === name.toLowerCase()
-            || elements[i].toLowerCase().startsWith(name.toLowerCase() + '=')
-            || elements[i] === '')
-        {
-            elements.splice(i, 1);
-        }
-    }
-
-    // then add the specified style and value
     var newStyle = name;
     if (!!value)
     {
         newStyle += ('=' + value);
     }
+
+    var elements = this.getStyle().split(';');
     elements.push(newStyle + ';');
 
     this.setStyle(elements.join(';'));
@@ -357,7 +347,6 @@ mxCell.prototype.setStyleValue = function (name, value)
  */
 mxCell.prototype.getSAL = function ()
 {
-
     if (this.isZone())
     {
         return this.getCsetAttribute('SAL');

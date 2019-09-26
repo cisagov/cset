@@ -251,9 +251,7 @@
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\DrawIOParsingHelps.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
-    <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
-    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkGeometry.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkLayer.cs" />
@@ -261,6 +259,15 @@
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkComponent.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeViewModelBase.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\AbstractRule.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\IRuleEvaluate.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule7.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule6.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule5.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule3.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule2.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule1.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\SimplifiedNetwork.cs" />
     <Compile Include="BusinessManagers\Diagram\Diagram.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferenceManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramManager.cs" />
