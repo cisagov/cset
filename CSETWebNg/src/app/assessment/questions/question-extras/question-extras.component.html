@@ -69,6 +69,28 @@
             </svg>
         </button>
 
+        <button class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
+        matTooltip="FeedBack" matTooltipPosition="above">
+        <!-- <svg version="1.1" id="Edit_Comment_Icon_-_Edit" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" -->
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px"
+            viewBox="44.5 44.5 37 31" enable-background="new 44.5 44.5 31 31">
+        <path id="Bubble" fill="#004444" d="M69.051,51.771h-0.027l-2.75,4.554h0.834c0.369,0,0.668,0.298,0.668,0.666
+        s-0.299,0.667-0.668,0.667h-1.64l-1.072,1.775h2.712c0.369,0,0.668,0.299,0.668,0.667s-0.299,0.667-0.668,0.667H63.59l-1.074,1.778
+        h4.592c0.369,0,0.668,0.298,0.668,0.665c0,0.368-0.299,0.667-0.668,0.667h-5.481l-3.513,2.792l-2.095,1.664l0.49-2.63l0.34-1.826
+        h-3.956c-0.369,0-0.667-0.299-0.667-0.667c0-0.367,0.297-0.665,0.667-0.665h4.204l0.24-1.289l0.033-0.179l0.094-0.155l0.093-0.154
+        h-4.664c-0.369,0-0.667-0.3-0.667-0.667c0-0.368,0.297-0.667,0.667-0.667l5.469,0l1.073-1.776h-6.542
+        c-0.369,0-0.667-0.299-0.667-0.667c0-0.367,0.297-0.666,0.667-0.666h7.347l2.75-4.554H50.949c-1.337,0-2.426,1.088-2.426,2.426
+        v12.326c0,1.338,1.089,2.428,2.426,2.428h2.757v5.701c0,0.281,0.178,0.534,0.444,0.627c0.074,0.025,0.148,0.037,0.222,0.037
+        c0.198,0,0.39-0.087,0.519-0.246l4.955-6.119h9.205c1.338,0,2.426-1.09,2.426-2.428V54.196
+        C71.477,52.858,70.389,51.771,69.051,51.771z"/>
+        <circle cx="73" cy="58" r="6" stroke="#fff" stroke-width="1" fill="#900" [style.display]="has('FDBK')" class="test" />
+            <g id="Edit_Pencil">
+                <rect id="Eraser" x="68.775" y="44.493" transform="matrix(-0.5161 0.8565 -0.8565 -0.5161 144.7513 10.3737)" fill="#004444" width="1.34" height="3.166"/>
+                <polygon id="Pencil" fill="#004444" points="58.318,61.438 57.491,65.886 61.027,63.075 69.906,48.374 67.197,46.737 	"/>
+            </g>
+        </svg>
+    </button>
+
     </div>
 
     <app-in-view *ngIf="autoLoadSupplemental()" (inView$)="forceLoadSupplemental()"></app-in-view>
@@ -114,6 +136,13 @@
             </div>
         </div>
 
+        <div *ngIf="extras !== null && mode === 'FDBK'">
+            <div class="form-group">
+                <textarea appAutoSize [(ngModel)]="myQuestion.FeedBack" (change)="saveFeedBack($event)"
+                    style="min-height: 72px; width: 100%" class="form-control"></textarea>
+            </div>
+        </div>
+                
         <div *ngIf="extras !== null && mode === 'DOCS'">
             <table class="reference-table">
                 <tr>

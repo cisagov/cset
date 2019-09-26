@@ -45,13 +45,13 @@ export class QuestionsService {
    *   Marked For Review - M
    *   Discoveries (Observations) - D
    */
-  public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D'];
+  public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
 
   // Valid 'answer'-type filter values
   public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
   // The allowable filter values.  Used for "select all"
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
 
   public searchString = '';
 
@@ -266,6 +266,10 @@ export class QuestionsService {
               q.Visible = true;
             }
 
+            if (this.showFilters.includes('FB') && q.FeedBack && q.FeedBack.length > 0) {
+              q.Visible = true;
+            }
+  
             if (this.showFilters.includes('M') && q.MarkForReview) {
               q.Visible = true;
             }
