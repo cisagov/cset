@@ -14,5 +14,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         string vertex { get; }
         string Message { get; }
         int MessageIdentifier { get; set; }
+        string NodeId1 { get; }
+        string NodeId2 { get; }
     }
 }

@@ -49,6 +49,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             }
         }
 
-        
+        public string NodeId1 { get; set; }
+
+        public string NodeId2 { get; set; }
     }
 }

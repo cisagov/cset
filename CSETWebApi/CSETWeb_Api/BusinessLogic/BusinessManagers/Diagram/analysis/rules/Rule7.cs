@@ -100,7 +100,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     if (!isComponentConnectionValid)
                     {
                         String text = String.Format(rule7, componentName);
-                        SetNodeMessage(component, text);
+                        SetLineMessage(component, link, text);
                     }
                 }
             }
