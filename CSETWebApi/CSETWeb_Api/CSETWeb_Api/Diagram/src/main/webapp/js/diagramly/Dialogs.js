@@ -2570,886 +2570,703 @@ var ParseDialog = function(editorUi, title, defaultType)
 /**
  * Constructs a new dialog for creating files from templates.
  */
-var NewDialog = function(editorUi, compact, showName, callback, createOnly, cancelCallback,
-		leftHighlight, rightHighlight, rightHighlightBorder, itemPadding, templateFile,
-		recentDocsCallback, searchDocsCallback, openExtDocCallback, showImport, createButtonLabel, customTempCallback)
-{
-	showName = (showName != null) ? showName : true;
-	createOnly = (createOnly != null) ? createOnly : false;
-	leftHighlight = (leftHighlight != null) ? leftHighlight : '#ebf2f9';
-	rightHighlight = (rightHighlight != null) ? rightHighlight : '#e6eff8';
-	rightHighlightBorder = (rightHighlightBorder != null) ? rightHighlightBorder : '1px solid #ccd9ea';
-	templateFile = (templateFile != null) ? templateFile : EditorUi.templateFile;
-	
-	var outer = document.createElement('div');
-	outer.style.height = '100%';
-	
-	var header = document.createElement('div');
-	header.style.whiteSpace = 'nowrap';
-	header.style.height = '46px';
-	
-	if (showName)
-	{
-		outer.appendChild(header);
-	}
-	
-	var logo = document.createElement('img');
-	logo.setAttribute('border', '0');
-	logo.setAttribute('align', 'absmiddle');
-	logo.style.width = '40px';
-	logo.style.height = '40px';
-	logo.style.marginRight = '10px';
-	logo.style.paddingBottom = '4px';
-	
-	if (editorUi.mode == App.MODE_GOOGLE)
-	{
-		logo.src = IMAGE_PATH + '/google-drive-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_DROPBOX)
-	{
-		logo.src = IMAGE_PATH + '/dropbox-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_ONEDRIVE)
-	{
-		logo.src = IMAGE_PATH + '/onedrive-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_GITHUB)
-	{
-		logo.src = IMAGE_PATH + '/github-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_TRELLO)
-	{
-		logo.src = IMAGE_PATH + '/trello-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_BROWSER)
-	{
-		logo.src = IMAGE_PATH + '/osa_database.png';
-	}
-	else
-	{
-		logo.src = IMAGE_PATH + '/osa_drive-harddisk.png';
-	}
+var NewDialog = function (editorUi, e) {
 
-	if (!compact && showName)
-	{
-		header.appendChild(logo);
-	}
-	
-	if (showName)
-	{
-		mxUtils.write(header, ((editorUi.mode == null || editorUi.mode == App.MODE_GOOGLE ||
-				editorUi.mode == App.MODE_BROWSER) ? mxResources.get('diagramName') : mxResources.get('filename')) + ':');
-	}
-	
-    var ext = '.drawio';
+    e.showName = e.showName || true;
+    e.createOnly = e.createOnly || false;
+    e.leftHighlight = e.leftHighlight || '#ebf2f9';
+    e.rightHighlight = e.rightHighlight || '#e6eff8';
+    e.rightHighlightBorder = e.rightHighlightBorder || '1px solid #ccd9ea';
+    e.templateFile = e.templateFile || EditorUi.templateFile;
 
-	if (editorUi.mode == App.MODE_GOOGLE && editorUi.drive != null)
-	{
-		ext = editorUi.drive.extension;
-	}
-	else if (editorUi.mode == App.MODE_DROPBOX && editorUi.dropbox != null)
-	{
-		ext = editorUi.dropbox.extension;
-	}
-	else if (editorUi.mode == App.MODE_ONEDRIVE && editorUi.oneDrive != null)
-	{
-		ext = editorUi.oneDrive.extension;
-	}
-	else if (editorUi.mode == App.MODE_GITHUB && editorUi.gitHub != null)
-	{
-		ext = editorUi.gitHub.extension;
-	}
-	else if (editorUi.mode == App.MODE_TRELLO && editorUi.trello != null)
-	{
-		ext = editorUi.trello.extension;
-	}
-	
-	var nameInput = document.createElement('input');
-	nameInput.setAttribute('value', editorUi.defaultFilename + ext);
-	nameInput.style.marginLeft = '10px';
-	nameInput.style.width = (compact) ? '220px' : '430px';
-	
-	this.init = function()
-	{
-		if (showName)
-		{
-			nameInput.focus();
-			
-			if (mxClient.IS_GC || mxClient.IS_FF || document.documentMode >= 5 || mxClient.IS_QUIRKS)
-			{
-				nameInput.select();
-			}
-			else
-			{
-				document.execCommand('selectAll', false, null);
-			}
-		}
-	};
+    const outer = document.createElement('div');
+    outer.style.height = '100%';
 
-	if (showName)
-	{
-		header.appendChild(nameInput);
-		
-		if (editorUi.editor.fileExtensions != null)
-		{
-			var hint = FilenameDialog.createTypeHint(
-					editorUi, nameInput, editorUi.editor.fileExtensions);
-			hint.style.marginTop = '12px';
-			
-			header.appendChild(hint);
-		}
-	}
+    const header = document.createElement('div');
+    header.style.whiteSpace = 'nowrap';
+    header.style.height = '46px';
 
-	var hasTabs = false;
-	var i0 = 0;
-	
-	// Dynamic loading
-	function addTemplates()
-	{
-		var first = true;
-		
-		//TODO support paging of external templates
-		if (templates != null)
-		{
-			while (i0 < templates.length && (first || mxUtils.mod(i0, 30) != 0))
-			{
-				var tmp = templates[i0++];
-				addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
-					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg);
-				first = false;
-			}
-		}		
-	};
-	
-	var spinner = new Spinner({
-		lines: 12, // The number of lines to draw
-		length: 10, // The length of each line
-		width: 5, // The line thickness
-		radius: 10, // The radius of the inner circle
-		rotate: 0, // The rotation offset
-		color: '#000', // #rgb or #rrggbb
-		speed: 1.5, // Rounds per second
-		trail: 60, // Afterglow percentage
-		shadow: false, // Whether to render a shadow
-		hwaccel: false, // Whether to use hardware acceleration
-		top: '40%',
-		zIndex: 2e9 // The z-index (defaults to 2000000000)
-	});
-	
-	var createButton = mxUtils.button(createButtonLabel || mxResources.get('create'), function()
-	{
-		createButton.setAttribute('disabled', 'disabled');
-		create();
-		createButton.removeAttribute('disabled');
-	});
-	
-	createButton.className = 'geBtn gePrimaryBtn';
+    if (e.showName) {
+        outer.appendChild(header);
+    }
 
-	if (recentDocsCallback || searchDocsCallback)
-	{
-		var tabsEl = [];
-		var oldTemplates = null, origCategories = null, origCustomCatCount = null;
-		
-		var setActiveTab = function(index)
-		{
-			createButton.setAttribute('disabled', 'disabled');
-			
-			for (var i = 0; i < tabsEl.length; i++)
-			{
-				if (i == index)
-					tabsEl[i].className = 'geBtn gePrimaryBtn';
-				else
-					tabsEl[i].className = 'geBtn';
-			}
-		}
-		
-		hasTabs = true;
-		var tabs = document.createElement('div');
-		tabs.style.whiteSpace = 'nowrap';
-		tabs.style.height = '30px';
-		outer.appendChild(tabs);
-		
-		var templatesTab = mxUtils.button(mxResources.get('Templates', null, 'Templates'), function()
-		{
-			list.style.display = '';
-			div.style.left = '160px';
-			setActiveTab(0);
+    let imgsrc;
+    let ext = '.drawio';
+    let resourceName = 'filename';
+    switch (editorUi.mode) {
+        case App.MODE_GOOGLE:
+            imgsrc = 'google-drive-logo.svg';
+            ext = editorUi.drive && editorUi.drive.extension || ext;
+            resourceName = 'diagramName';
+            break;
+        case App.MODE_DROPBOX:
+            imgsrc = 'dropbox-logo.svg';
+            ext = editorUi.dropbox && editorUi.dropbox.extension || ext;
+            break;
+        case App.MODE_ONEDRIVE:
+            imgsrc = 'onedrive-logo.svg';
+            ext = editorUi.oneDrive && editorUi.oneDrive.extension || ext;
+            break;
+        case App.MODE_GITHUB:
+            imgsrc = 'github-logo.svg';
+            ext = editorUi.gitHub && editorUi.gitHub.extension || ext;
+            break;
+        case App.MODE_TRELLO:
+            imgsrc = 'trello-logo.svg';
+            ext = editorUi.trello && editorUi.trello.extension || ext;
+            break;
+        case App.MODE_BROWSER:
+            imgsrc = 'osa_database.png';
+            resourceName = 'diagramName';
+            break;
+        default:
+            imgsrc = 'osa_drive-harddisk.png';
+            break;
+    }
 
-			div.scrollTop = 0;
-			div.innerHTML = '';
-			i0 = 0;
-			
-			if (oldTemplates != templates)
-			{
-				templates = oldTemplates;
-				categories = origCategories;
-				customCatCount = origCustomCatCount;
-				list.innerHTML = '';
-				initUi();	
-				oldTemplates = null;
-			}
-		});
-		
-		tabsEl.push(templatesTab);
-		tabs.appendChild(templatesTab);
-		
-		var getExtTemplates = function(isSearch)
-		{
-			list.style.display = 'none';
-			div.style.left = '30px';				
-			
-			setActiveTab(isSearch? -1 : 1); //deselect all of them if isSearch 
-			
-			if (oldTemplates == null) 
-			{
-				oldTemplates = templates;
-			}
-			
-			div.scrollTop = 0;
-			div.innerHTML = '';
-			spinner.spin(div);
+    var logo = document.createElement('img');
+    logo.setAttribute('border', '0');
+    logo.setAttribute('align', 'absmiddle');
+    logo.style.width = '40px';
+    logo.style.height = '40px';
+    logo.style.marginRight = '10px';
+    logo.style.paddingBottom = '4px';
+    logo.src = IMAGE_PATH + '/' + imgsrc;
 
-			var callback2 = function(docList, errorMsg, searchImportCats) 
-			{
-				i0 = 0;
-				spinner.stop();
-				templates = docList;
-				searchImportCats = searchImportCats || {};
-				var importListsCount = 0;
-				
-				for (var cat in searchImportCats)
-				{
-					importListsCount += searchImportCats[cat].length;
-				}
-				
-				if (errorMsg)
-				{
-					div.innerHTML = errorMsg;
-				}
-				else if (docList.length == 0 && importListsCount == 0)
-				{
-					div.innerHTML = mxUtils.htmlEntities(mxResources.get('noDiagrams', null, 'No Diagrams Found'));
-				}
-				else
-				{
-					div.innerHTML = '';
-					
-					if (importListsCount > 0)
-					{
-						list.style.display = '';
-						div.style.left = '160px';
-						list.innerHTML = '';
+    if (!e.compact && e.showName) {
+        header.appendChild(logo);
+    }
 
-						customCatCount = 0;
-						categories = {'draw.io': docList};
-						
-						for (var cat in searchImportCats)
-						{	
-							categories[cat] = searchImportCats[cat];
-						}
-						
-						initUi();
-					}
-					else
-					{
-						addTemplates();
-					}
-				}
-			}
-			
-			if (isSearch)
-			{
-				searchDocsCallback(searchInput.value, callback2);
-			}
-			else
-			{
-				recentDocsCallback(callback2);
-			}
-		}
-		
-		if (recentDocsCallback)
-		{
-			var recentTab = mxUtils.button(mxResources.get('Recent', null, 'Recent'), function()
-			{
-				getExtTemplates();
-			});
+    if (e.showName) {
+        mxUtils.write(header, mxResources.get(resourceName) + ':');
+    }
 
-			tabs.appendChild(recentTab);
-			tabsEl.push(recentTab);
-		}
-		
-		if (searchDocsCallback)
-		{
-			var searchTab = document.createElement('span');
-			searchTab.style.marginLeft = '10px';
-			searchTab.innerHTML = mxUtils.htmlEntities(mxResources.get('search') + ':');
-			tabs.appendChild(searchTab);
+    const nameInput = document.createElement('input');
+    nameInput.setAttribute('value', editorUi.defaultFilename + ext);
+    nameInput.style.marginLeft = '10px';
+    nameInput.style.width = (e.compact) ? '220px' : '430px';
 
-			var searchInput = document.createElement('input');
-			searchInput.style.marginRight = '10px';
-			searchInput.style.marginLeft = '10px';
-			searchInput.style.width = '220px';
+    this.init = function () {
+        if (e.showName) {
+            nameInput.focus();
+            if (document.documentMode > 6 || mxClient.IS_GC || mxClient.IS_FF || mxClient.IS_QUIRKS) {
+                nameInput.select();
+            } else {
+                document.execCommand('selectAll', false, null);
+            }
+        }
+    };
 
-			mxEvent.addListener(searchInput, 'keypress', function(e)
-			{
-				if (e.keyCode == 13)
-				{
-					getExtTemplates(true);
-				}
-			});
+    if (e.showName) {
+        header.appendChild(nameInput);
+        const fileExts = editorUi.editor.fileExtensions;
+        if (fileExts) {
+            const hint = FilenameDialog.createTypeHint(editorUi, nameInput, fileExts);
+            hint.style.marginTop = '12px';
+            header.appendChild(hint);
+        }
+    }
 
-			tabs.appendChild(searchInput);
+    let i0 = 0;
+    let hasTabs = false;
 
-			var searchBtn = mxUtils.button(mxResources.get('search'), function()
-			{
-				getExtTemplates(true);
-			});
-					
-			searchBtn.className = 'geBtn';
+    // Dynamic loading
+    function addTemplates() {
+        const items = templates || [];
+        let first = true;
+        if (items.length) {
+            while (i0 < items.length && (first || mxUtils.mod(i0, 30) !== 0)) {
+                const item = items[i0++];
+                item.tooltip = item.tooltip || item.title;
+                addButton(item);
+                first = false;
+            }
+        }
+    };
 
-			tabs.appendChild(searchBtn);
-		}
-		
-		setActiveTab(0);
-	}
-	
-	var templateLibs = null;
-	var templateXml = null;
-	var selectedElt = null;
-	var templateExtUrl = null;
-	var templateInfoObj = null;
-	
-	function create()
-	{
-		if (templateExtUrl)
-		{
-			if (!showName)
-			{
-				editorUi.hideDialog();
-			}
-			
-			openExtDocCallback(templateExtUrl, templateInfoObj, nameInput.value);
-		}
-		else if (callback)
-		{
-			if (!showName)
-			{
-				editorUi.hideDialog();
-			}
-			
-			callback(templateXml, nameInput.value);
-		}
-		else
-		{
-			var title = nameInput.value;
-				
-			if (title != null && title.length > 0)
-			{
-				editorUi.pickFolder(editorUi.mode, function(folderId)
-				{
-					editorUi.createFile(title, templateXml, (templateLibs != null &&
-						templateLibs.length > 0) ? templateLibs : null, null, function()
-					{
-						editorUi.hideDialog();
-					}, null, folderId);
-				}, editorUi.mode != App.MODE_GOOGLE ||
-					editorUi.stateArg == null ||
-					editorUi.stateArg.folderId == null);
-			}
-		}
-	};
-	
-	var div = document.createElement('div');
-	div.style.border = '1px solid #d3d3d3';
-	div.style.position = 'absolute';
-	div.style.left = '160px';
-	div.style.right = '34px';
-	var divTop = (showName) ? 72 : 40;
-	divTop += hasTabs? 30 : 0;
-	div.style.top = divTop + 'px';
-	div.style.bottom = '68px';
-	div.style.margin = '6px 0 0 -1px';
-	div.style.padding = '6px';
-	div.style.overflow = 'auto';
-	
-	var list = document.createElement('div');
-	list.style.cssText = 'position:absolute;left:30px;width:128px;top:' + divTop + 'px;bottom:68px;margin-top:6px;overflow:auto;border:1px solid #d3d3d3;';
-	
-	var w = 140;
-	var h = 140;
+    const spinner = new Spinner({
+        lines: 12, // The number of lines to draw
+        length: 10, // The length of each line
+        width: 5, // The line thickness
+        radius: 10, // The radius of the inner circle
+        rotate: 0, // The rotation offset
+        color: '#000', // #rgb or #rrggbb
+        speed: 1.5, // Rounds per second
+        trail: 60, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        top: '40%',
+        zIndex: 2e9 // The z-index (defaults to 2000000000)
+    });
 
-	function selectElement(elt, xml, libs, extUrl, infoObj)
-	{
-		if (selectedElt != null)
-		{
-			selectedElt.style.backgroundColor = 'transparent';
-			selectedElt.style.border = '1px solid transparent';
-		}
-		
-		createButton.removeAttribute('disabled');
-		
-		templateXml = xml;
-		templateLibs = libs;
-		selectedElt = elt;
-		templateExtUrl = extUrl;
-		templateInfoObj = infoObj;
-		
-		selectedElt.style.backgroundColor = rightHighlight;
-		selectedElt.style.border = rightHighlightBorder;
-	};
+    const createButton = mxUtils.button(e.createButtonLabel || mxResources.get('create'), () => {
+        createButton.setAttribute('disabled', 'disabled');
+        create();
+        createButton.removeAttribute('disabled');
+    });
+    createButton.className = 'geBtn gePrimaryBtn';
 
-	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg)
-	{
-		var elt = document.createElement('div');
-		elt.className = 'geTemplate';
-		elt.style.height = w + 'px';
-		elt.style.width = h + 'px';
-		
-		if (tooltip != null && tooltip.length > 0)
-		{
-			elt.setAttribute('title', tooltip);
-		}
+    let oldTemplates;
+    let origCategories;
+    let origCustomCatCount;
 
-		if (imgUrl != null)
-		{
-			elt.style.backgroundImage = 'url(' + imgUrl + ')';
-			elt.style.backgroundSize = 'contain';
-			elt.style.backgroundPosition = 'center center';
-			elt.style.backgroundRepeat = 'no-repeat';
-			
-			mxEvent.addListener(elt, 'click', function(evt)
-			{
-				selectElement(elt, null, null, url, infoObj);
-			});
-			
-			mxEvent.addListener(elt, 'dblclick', function(evt)
-			{
-				create();
-			});
+    if (e.recentDocsCallback || e.searchDocsCallback) {
+        const tabsEl = [];
 
-		}
-		else if (!noImg && url != null && url.length > 0)
-		{
-			var png = preview || (TEMPLATE_PATH + '/' + url.substring(0, url.length - 4) + '.png');
-			
-			elt.style.backgroundImage = 'url(' + png + ')';
-			elt.style.backgroundPosition = 'center center';
-			elt.style.backgroundRepeat = 'no-repeat';
-			
-			var createIt = false;
-			
-			mxEvent.addListener(elt, 'click', function(evt)
-			{
-				createButton.setAttribute('disabled', 'disabled');
-				elt.style.backgroundColor = 'transparent';
-				elt.style.border = '1px solid transparent';
-				var realUrl = url;
-				
-				if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl))
-				{
-					realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
-				}
-				else
-				{
-					realUrl = TEMPLATE_PATH + '/' + realUrl;
-				}
-				
-				spinner.spin(div);
-				
-				mxUtils.get(realUrl, mxUtils.bind(this, function(req)
-				{
-					spinner.stop();
-					
-					if (req.getStatus() >= 200 && req.getStatus() <= 299)
-					{
-						selectElement(elt, req.getText(), libs);
-						
-						if (createIt)
-						{
-							create();
-						}
-					}
-				}));
-			});
-			
-			mxEvent.addListener(elt, 'dblclick', function(evt)
-			{
-				// Asynchronous double click handling after loading template
-				createIt = true;
-			});
-		}
-		else
-		{
-			elt.innerHTML = '<table width="100%" height="100%" style="line-height:1em;word-break: break-all;"><tr>' +
-				'<td align="center" valign="middle">' + mxResources.get(title, null, title) + '</td></tr></table>';
-			
-			if (select)
-			{
-				selectElement(elt);
-			}
-			
-			if (onClick != null)
-			{
-				mxEvent.addListener(elt, 'click', onClick);
-			}
-			else
-			{
-				mxEvent.addListener(elt, 'click', function(evt)
-				{
-					selectElement(elt, null, null, url, infoObj);
-				});
-				
-				mxEvent.addListener(elt, 'dblclick', function(evt)
-				{
-					create();
-				});
-			}
-		}
+        const setActiveTab = function (index) {
+            createButton.setAttribute('disabled', 'disabled');
+            for (var i = 0; i < tabsEl.length; i++) {
+                tabsEl[i].classList.add('geBtn');
+                if (i === index) {
+                    tabsEl[i].classList.add('gePrimaryBtn');
+                }
+            }
+        }
 
-		div.appendChild(elt);
-	};
+        hasTabs = true;
+        var tabs = document.createElement('div');
+        tabs.style.whiteSpace = 'nowrap';
+        tabs.style.height = '30px';
+        outer.appendChild(tabs);
 
-	var categories = {}, customCats = {};
-	var customCatCount = 0, firstInitUi = true;
-	
-	// Adds local basic templates
-	categories['basic'] = [{title: 'blankDiagram', select: true}];
-	
-	var templates = categories['basic'];
-	
-	function initUi()
-	{
-		if (firstInitUi)
-		{
-			firstInitUi = false;
-			
-			mxEvent.addListener(div, 'scroll', function(evt)
-			{
-				if (div.scrollTop + div.clientHeight >= div.scrollHeight)
-				{
-					addTemplates();
-					mxEvent.consume(evt);
-				}
-			});
-		}
-		
-		var currentEntry = null;
-		
-		if (customCatCount > 0)
-		{
-			var titleCss = 'font-weight: bold;background: #f9f9f9;padding: 5px 0 5px 0;text-align: center;';
-			var title = document.createElement('div');
-			title.style.cssText = titleCss;
-			mxUtils.write(title, mxResources.get('custom'));
-			list.appendChild(title);
-			
-			for (var cat in customCats)
-			{
-				var entry = document.createElement('div');
-				var label = cat;
-				var templateList = customCats[cat];
-				
-				if (label.length > 18)
-				{
-					label = label.substring(0, 18) + '&hellip;';
-				}
-				
-				entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
-				entry.setAttribute('title', label + ' (' + templateList.length + ')');
-				mxUtils.write(entry, entry.getAttribute('title'));
-				
-				if (itemPadding != null)
-				{
-					entry.style.padding = itemPadding;
-				}
+        const templatesTab = mxUtils.button(mxResources.get('Templates', null, 'Templates'), function () {
+            list.style.display = '';
+            div.style.left = '160px';
+            setActiveTab(0);
 
-				list.appendChild(entry);
-				
-				(function(cat2, entry2)
-				{
-					mxEvent.addListener(entry, 'click', function()
-					{
-						if (currentEntry != entry2)
-						{
-							currentEntry.style.backgroundColor = '';
-							currentEntry = entry2;
-							currentEntry.style.backgroundColor = leftHighlight;
-							
-							div.scrollTop = 0;
-							div.innerHTML = '';
-							i0 = 0;
-							
-							templates = customCats[cat2];
-							oldTemplates = null;
-							addTemplates();
-						}
-					});
-				})(cat, entry);
-			}
-			
-			title = document.createElement('div');
-			title.style.cssText = titleCss;
-			mxUtils.write(title, 'draw.io');
-			list.appendChild(title);
-		}
-		
-		for (var cat in categories)
-		{
-			var entry = document.createElement('div');
-			var label = mxResources.get(cat);
-			var templateList = categories[cat];
-			
-			if (label == null)
-			{
-				label = cat.substring(0, 1).toUpperCase() + cat.substring(1);
-			}
-			
-			if (label.length > 18)
-			{
-				label = label.substring(0, 18) + '&hellip;';
-			}
-			
-			entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
-			entry.setAttribute('title', label + ' (' + templateList.length + ')');
-			mxUtils.write(entry, entry.getAttribute('title'));
-			
-			if (itemPadding != null)
-			{
-				entry.style.padding = itemPadding;
-			}
+            div.scrollTop = 0;
+            div.innerHTML = '';
+            i0 = 0;
 
-			list.appendChild(entry);
-			
-			if (currentEntry == null && templateList.length > 0)
-			{
-				currentEntry = entry;
-				currentEntry.style.backgroundColor = leftHighlight;
-				templates = templateList;
-			}
-			
-			(function(cat2, entry2)
-			{
-				mxEvent.addListener(entry, 'click', function()
-				{
-					if (currentEntry != entry2)
-					{
-						currentEntry.style.backgroundColor = '';
-						currentEntry = entry2;
-						currentEntry.style.backgroundColor = leftHighlight;
-						
-						div.scrollTop = 0;
-						div.innerHTML = '';
-						i0 = 0;
-						
-						templates = categories[cat2];
-						oldTemplates = null;
-						addTemplates();
-					}
-				});
-			})(cat, entry);
-		}
-		
-		addTemplates();
-	}
+            if (oldTemplates !== templates) {
+                templates = oldTemplates;
+                categories = origCategories;
+                customCatCount = origCustomCatCount;
+                list.innerHTML = '';
+                initUi();
+                oldTemplates = null;
+            }
+        });
+        tabsEl.push(templatesTab);
+        tabs.appendChild(templatesTab);
 
-	if (!compact)
-	{
-		outer.appendChild(list);
-		outer.appendChild(div);
-		var indexLoaded = false;
-		var realUrl = templateFile;
-		
-		if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl))
-		{
-			realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
-		}
-		
-		function loadDrawioTemplates()
-		{
-			mxUtils.get(realUrl, function(req)
-			{
-				// Workaround for index loaded 3 times in iOS offline mode
-				if (!indexLoaded)
-				{
-					indexLoaded = true;
-					var tmpDoc = req.getXml();
-					var node = tmpDoc.documentElement.firstChild;
-		
-					while (node != null)
-					{
-						if (typeof(node.getAttribute) !== 'undefined')
-						{
-							var url = node.getAttribute('url');
-							
-							if (url != null)
-							{
-								var category = node.getAttribute('section');
-								
-								if (category == null)
-								{
-									var slash = url.indexOf('/');
-									category = url.substring(0, slash);
-								}
-								
-								var list = categories[category];
-								
-								if (list == null)
-								{
-									list = [];
-									categories[category] = list;
-								}
-								
-								list.push({url: node.getAttribute('url'), libs: node.getAttribute('libs'),
-									title: node.getAttribute('title'), tooltip: node.getAttribute('url'),
-									preview: node.getAttribute('preview')});
-							}
-						}
-						
-						node = node.nextSibling;
-					}
-					
-					spinner.stop();
-					initUi();
-				}
-			});
-		};
-		
-		spinner.spin(div);
-		
-		if (customTempCallback != null)
-		{
-			customTempCallback(function(cats, count)
-			{
-				customCats = cats;
-				customCatCount = count;
-				//Custom templates doesn't change after being loaded, so cache them here. Also, only count is overridden
-				origCustomCatCount = count;
+        const getExtTemplates = function (isSearch) {
+            list.style.display = 'none';
+            div.style.left = '30px';
 
-				loadDrawioTemplates();
-			}, 
-			loadDrawioTemplates); //In case of an error, just load draw.io templates only
-		}
-		else
-		{
-			loadDrawioTemplates();
-		}
-		
-		//draw.io templates doesn't change after being loaded, so cache them here
-		origCategories = categories;
-	}
-	
-	mxEvent.addListener(nameInput, 'keypress', function(e)
-	{
-		if (editorUi.dialog.container.firstChild == outer &&
-			e.keyCode == 13)
-		{
-			create();
-		}
-	});
-	
-	var btns = document.createElement('div');
-	btns.style.marginTop = (compact) ? '4px' : '16px';
-	btns.style.textAlign = 'right';
-	btns.style.position = 'absolute';
-	btns.style.left = '40px';
-	btns.style.bottom = '24px';
-	btns.style.right = '40px';
+            // deselect all of them if isSearch 
+            setActiveTab(isSearch ? -1 : 1);
 
-	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
-	{
-		if (cancelCallback != null)
-		{
-			cancelCallback();
-		}
-		
-		editorUi.hideDialog(true);
-	});
-	
-	cancelBtn.className = 'geBtn';
-	
-	if (editorUi.editor.cancelFirst && (!createOnly || cancelCallback != null))
-	{
-		btns.appendChild(cancelBtn);
-	}
-	
-	if (!compact && !editorUi.isOffline() && showName && callback == null && !createOnly)
-	{
-		var helpBtn = mxUtils.button(mxResources.get('help'), function()
-		{
-			editorUi.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
-		});
-		
-		helpBtn.className = 'geBtn';	
-		btns.appendChild(helpBtn);
-	}
+            if (!oldTemplates) {
+                oldTemplates = templates;
+            }
 
-	if (!compact && urlParams['embed'] != '1' && !createOnly)
-	{
-		var fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), function()
-		{
-			var dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), function(fileUrl)
-			{
-				if (fileUrl != null && fileUrl.length > 0)
-				{
-					var url = editorUi.getUrl(window.location.pathname + '?mode=' + editorUi.mode +
-							'&title=' + encodeURIComponent(nameInput.value) +
-							'&create=' + encodeURIComponent(fileUrl));
-					
-					if (editorUi.getCurrentFile() == null)
-					{
-						window.location.href = url;
-					}
-					else
-					{
-						window.openWindow(url);
-					}
-				}
-			}, mxResources.get('url'));
-			editorUi.showDialog(dlg.container, 300, 80, true, true);
-			dlg.init();
-		});
-		fromTmpBtn.className = 'geBtn';
-		btns.appendChild(fromTmpBtn);
-	}
-	
-	if (Graph.fileSupport && showImport)
-	{
-		var importBtn = mxUtils.button(mxResources.get('import'), function()
-		{
-			if (editorUi.newDlgFileInputElt == null) 
-			{
-				var fileInput = document.createElement('input');
-				fileInput.setAttribute('multiple', 'multiple');
-				fileInput.setAttribute('type', 'file');
-				
-				mxEvent.addListener(fileInput, 'change', function(evt)
-				{
-					editorUi.openFiles(fileInput.files, true);
-					fileInput.value = '';
-				});
-				
-				fileInput.style.display = 'none';
-				document.body.appendChild(fileInput);
-				editorUi.newDlgFileInputElt = fileInput;
-			}
-			
-			editorUi.newDlgFileInputElt.click();
-		});
-				
-		importBtn.className = 'geBtn';
-		btns.appendChild(importBtn);
-	}
-	
-	btns.appendChild(createButton);
-	
-	if (!editorUi.editor.cancelFirst && callback == null && (!createOnly || cancelCallback != null))
-	{
-		btns.appendChild(cancelBtn);
-	}
-	
-	outer.appendChild(btns);
-	
-	this.container = outer;
+            div.scrollTop = 0;
+            div.innerHTML = '';
+            spinner.spin(div);
+
+            const callback2 = function (docList, errorMsg, searchImportCats) {
+                i0 = 0;
+                spinner.stop();
+                templates = docList;
+                searchImportCats = searchImportCats || {};
+                var importListsCount = 0;
+
+                for (const cat of searchImportCats) {
+                    importListsCount += cat.length;
+                }
+
+                if (errorMsg) {
+                    div.innerHTML = errorMsg;
+                } else if (!docList.length && !importListsCount) {
+                    div.innerHTML = mxUtils.htmlEntities(mxResources.get('noDiagrams', null, 'No Diagrams Found'));
+                } else {
+                    div.innerHTML = '';
+
+                    if (importListsCount > 0) {
+                        list.style.display = '';
+                        div.style.left = '160px';
+                        list.innerHTML = '';
+
+                        customCatCount = 0;
+                        categories = { 'draw.io': docList };
+
+                        for (var cat in searchImportCats) {
+                            categories[cat] = searchImportCats[cat];
+                        }
+
+                        initUi();
+                    } else {
+                        addTemplates();
+                    }
+                }
+            }
+
+            if (isSearch) {
+                e.searchDocsCallback(searchInput.value, callback2);
+            } else {
+                e.recentDocsCallback(callback2);
+            }
+        }
+
+        if (e.recentDocsCallback) {
+            var recentTab = mxUtils.button(mxResources.get('Recent', null, 'Recent'), function () {
+                getExtTemplates();
+            });
+            tabs.appendChild(recentTab);
+            tabsEl.push(recentTab);
+        }
+
+        if (e.searchDocsCallback) {
+            var searchTab = document.createElement('span');
+            searchTab.style.marginLeft = '10px';
+            searchTab.innerHTML = mxUtils.htmlEntities(mxResources.get('search') + ':');
+            tabs.appendChild(searchTab);
+
+            var searchInput = document.createElement('input');
+            searchInput.style.marginRight = '10px';
+            searchInput.style.marginLeft = '10px';
+            searchInput.style.width = '220px';
+            mxEvent.addListener(searchInput, 'keypress', function (e) {
+                if (e.keyCode == 13) {
+                    getExtTemplates(true);
+                }
+            });
+            tabs.appendChild(searchInput);
+
+            var searchBtn = mxUtils.button(mxResources.get('search'), function () {
+                getExtTemplates(true);
+            });
+            searchBtn.className = 'geBtn';
+            tabs.appendChild(searchBtn);
+        }
+
+        setActiveTab(0);
+    }
+
+    let templateXml;
+    let templateLibs;
+    let templateExtUrl;
+    let templateInfoObj;
+
+    function create() {
+        if (templateExtUrl) {
+            if (!e.showName) {
+                editorUi.hideDialog();
+            }
+            e.openExtDocCallback(templateExtUrl, templateInfoObj, nameInput.value);
+        } else if (e.callback) {
+            if (!e.showName) {
+                editorUi.hideDialog();
+            }
+            e.callback(templateXml, nameInput.value);
+        } else {
+            var title = nameInput.value;
+            if (title) {
+                const enabled = editorUi.mode !== App.MODE_GOOGLE || !editorUi.stateArg || !editorUi.stateArg.folderId;
+                editorUi.pickFolder(editorUi.mode, function (folderId) {
+                    editorUi.createFile(title, templateXml, templateLibs, null, function () {
+                        editorUi.hideDialog();
+                    }, null, folderId);
+                }, enabled);
+            }
+        }
+    };
+
+    const divTop = (e.showName ? 72 : 40) + (hasTabs ? 30 : 0);
+    const div = document.createElement('div');
+    div.style.border = '1px solid #d3d3d3';
+    div.style.position = 'absolute';
+    div.style.left = '160px';
+    div.style.right = '34px';
+    div.style.top = divTop + 'px';
+    div.style.bottom = '68px';
+    div.style.margin = '6px 0 0 -1px';
+    div.style.padding = '6px';
+    div.style.overflow = 'auto';
+
+    const list = document.createElement('div');
+    list.style.cssText = 'position:absolute;left:30px;width:128px;top:' + divTop + 'px;bottom:68px;margin-top:6px;overflow:auto;border:1px solid #d3d3d3;';
+
+    let selectedElt;
+
+    function selectElement(elt, xml, libs, extUrl, infoObj) {
+        if (selectedElt) {
+            selectedElt.style.backgroundColor = 'transparent';
+            selectedElt.style.border = '1px solid transparent';
+        }
+
+        createButton.removeAttribute('disabled');
+
+        templateXml = xml;
+        templateLibs = libs;
+        selectedElt = elt;
+        templateExtUrl = extUrl;
+        templateInfoObj = infoObj;
+
+        selectedElt.style.backgroundColor = e.rightHighlight;
+        selectedElt.style.border = e.rightHighlightBorder;
+    };
+
+    function addButton(e) {
+        const elt = document.createElement('div');
+        elt.className = 'geTemplate';
+        elt.style.height = '140px';
+        elt.style.width = '140px';
+
+        if (e.tooltip) {
+            elt.setAttribute('title', e.tooltip);
+        }
+
+        if (e.imgUrl) {
+            elt.style.backgroundImage = 'url(' + e.imgUrl + ')';
+            elt.style.backgroundSize = 'contain';
+            elt.style.backgroundPosition = 'center center';
+            elt.style.backgroundRepeat = 'no-repeat';
+
+            mxEvent.addListener(elt, 'click', function (evt) {
+                selectElement(elt, null, null, e.url, e.infoObj);
+            });
+
+            mxEvent.addListener(elt, 'dblclick', function (evt) {
+                create();
+            });
+        } else if (!e.noImg && e.url) {
+            const png = e.preview || TEMPLATE_PATH + '/' + e.url.substring(0, e.url.length - 4) + '.png';
+
+            elt.style.backgroundImage = 'url(' + png + ')';
+            elt.style.backgroundPosition = 'center center';
+            elt.style.backgroundRepeat = 'no-repeat';
+
+            let createIt = false;
+
+            mxEvent.addListener(elt, 'click', function () {
+                createButton.setAttribute('disabled', 'disabled');
+                elt.style.backgroundColor = 'transparent';
+                elt.style.border = '1px solid transparent';
+
+                let realUrl = e.url;
+                if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl)) {
+                    realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
+                }
+                else {
+                    realUrl = TEMPLATE_PATH + '/' + realUrl;
+                }
+
+                spinner.spin(div);
+
+                mxUtils.get(realUrl, mxUtils.bind(this, function (req) {
+                    spinner.stop();
+                    if (req.getStatus() >= 200 && req.getStatus() <= 299) {
+                        selectElement(elt, req.getText(), e.libs);
+                        if (createIt) {
+                            create();
+                        }
+                    }
+                }));
+            });
+
+            mxEvent.addListener(elt, 'dblclick', function (evt) {
+                // Asynchronous double click handling after loading template
+                createIt = true;
+            });
+        } else {
+            elt.innerHTML = '<table width="100%" height="100%" style="line-height:1em;word-break: break-all;"><tr>' +
+                '<td align="center" valign="middle">' + mxResources.get(e.title, null, e.title) + '</td></tr></table>';
+
+            if (e.select) {
+                selectElement(elt);
+            }
+
+            const onclick = e.onClick || function () {
+                selectElement(elt, null, null, e.url, e.infoObj);
+            };
+            mxEvent.addListener(elt, 'click', onclick);
+
+            if (!e.onClick) {
+                mxEvent.addListener(elt, 'dblclick', function (evt) {
+                    create();
+                });
+            }
+        }
+
+        div.appendChild(elt);
+    };
+
+    let categories = {};
+    let customCats = {};
+    let customCatCount = 0;
+    let firstInitUi = true;
+
+    // Adds local basic templates
+    categories.basic = [{
+        title: 'blankDiagram',
+        select: true,
+        url: undefined,
+        libs: undefined,
+        tooltip: undefined,
+        imgUrl: undefined,
+        infoObj: undefined,
+        onClick: undefined,
+        preview: undefined,
+        noImg: undefined
+    }];
+
+    let templates = categories.basic;
+
+    function initUi() {
+        if (firstInitUi) {
+            mxEvent.addListener(div, 'scroll', function (evt) {
+                if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
+                    addTemplates();
+                    mxEvent.consume(evt);
+                }
+            });
+            firstInitUi = false;
+        }
+
+        let currentEntry;
+
+        function addCatClick(cat, entry) {
+            mxEvent.addListener(entry, 'click', function () {
+                if (currentEntry === entry) {
+                    return;
+                }
+
+                currentEntry.style.backgroundColor = '';
+
+                entry.style.backgroundColor = e.leftHighlight;
+                currentEntry = entry;
+
+                div.scrollTop = 0;
+                div.innerHTML = '';
+                i0 = 0;
+
+                templates = customCats[cat];
+                oldTemplates = null;
+                addTemplates();
+            });
+        };
+
+        if (customCatCount > 0) {
+            const titleCss = 'font-weight: bold;background: #f9f9f9;padding: 5px 0 5px 0;text-align: center;';
+            const title = document.createElement('div');
+            title.style.cssText = titleCss;
+            mxUtils.write(title, mxResources.get('custom'));
+            list.appendChild(title);
+
+            for (const cat in customCats) {
+                let label = cat;
+                if (label.length > 18) {
+                    label = label.substring(0, 18) + '&hellip;';
+                }
+
+                const templateList = customCats[cat] || [];
+                const entry = document.createElement('div');
+                entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
+                entry.setAttribute('title', label + ' (' + templateList.length + ')');
+                mxUtils.write(entry, entry.getAttribute('title'));
+
+                if (e.itemPadding) {
+                    entry.style.padding = e.itemPadding;
+                }
+                list.appendChild(entry);
+                addCatClick(cat, entry);
+            }
+
+            const title_drawio = document.createElement('div');
+            title_drawio.style.cssText = titleCss;
+            mxUtils.write(title_drawio, 'draw.io');
+            list.appendChild(title_drawio);
+        }
+
+        for (var cat in categories) {
+            let label = mxResources.get(cat) || cat.substring(0, 1).toUpperCase() + cat.substring(1);
+            if (label.length > 18) {
+                label = label.substring(0, 18) + '&hellip;';
+            }
+
+            const templateList = categories[cat] || [];
+            const entry = document.createElement('div');
+            entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
+            entry.setAttribute('title', label + ' (' + templateList.length + ')');
+            mxUtils.write(entry, entry.getAttribute('title'));
+
+            if (e.itemPadding) {
+                entry.style.padding = e.itemPadding;
+            }
+            list.appendChild(entry);
+
+            if (!currentEntry && templateList.length) {
+                currentEntry = entry;
+                currentEntry.style.backgroundColor = e.leftHighlight;
+                templates = templateList;
+            }
+            addCatClick(cat, entry);
+        }
+
+        addTemplates();
+    }
+
+    if (!e.compact) {
+        outer.appendChild(list);
+        outer.appendChild(div);
+
+        let realUrl = e.templateFile;
+        if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl)) {
+            realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
+        }
+
+        let indexLoaded = false;
+
+        function loadDrawioTemplates() {
+            mxUtils.get(realUrl, function (req) {
+                if (indexLoaded) {
+                    // Workaround for index loaded 3 times in iOS offline mode
+                    return;
+                }
+
+                const tmpDoc = req.getXml();
+
+                let node = tmpDoc.documentElement.firstChild;
+                while (node) {
+                    if (typeof node.getAttribute !== 'undefined') {
+                        const url = node.getAttribute('url');
+                        if (url) {
+                            let category = node.getAttribute('section');
+                            if (!category) {
+                                const slash = url.indexOf('/');
+                                category = url.substring(0, slash);
+                            }
+
+                            categories[category] = categories[category] || [];
+
+                            const list = categories[category];
+                            list.push({
+                                title: node.getAttribute('title'),
+                                select: true,
+                                url: node.getAttribute('url'),
+                                libs: node.getAttribute('libs'),
+                                tooltip: node.getAttribute('url'),
+                                preview: node.getAttribute('preview'),
+                                imgUrl: undefined,
+                                infoObj: undefined,
+                                onClick: undefined,
+                                noImg: undefined
+                            });
+                        }
+                    }
+
+                    node = node.nextSibling;
+                }
+
+                indexLoaded = true;
+                spinner.stop();
+                initUi();
+            });
+        };
+
+        spinner.spin(div);
+
+        if (e.customTempCallback) {
+            e.customTempCallback(function (cats, count) {
+                customCats = cats;
+                customCatCount = count;
+                //Custom templates doesn't change after being loaded, so cache them here. Also, only count is overridden
+                origCustomCatCount = count;
+                loadDrawioTemplates();
+            },
+                //In case of an error, just load draw.io templates only
+                loadDrawioTemplates);
+        } else {
+            loadDrawioTemplates();
+        }
+
+        //draw.io templates doesn't change after being loaded, so cache them here
+        origCategories = categories;
+    }
+
+    mxEvent.addListener(nameInput, 'keypress', function (e) {
+        if (editorUi.dialog.container.firstChild === outer && e.keyCode === 13) {
+            create();
+        }
+    });
+
+    const btns = document.createElement('div');
+    btns.style.marginTop = e.compact ? '4px' : '16px';
+    btns.style.textAlign = 'right';
+    btns.style.position = 'absolute';
+    btns.style.left = '40px';
+    btns.style.bottom = '24px';
+    btns.style.right = '40px';
+
+    const cancelBtn = mxUtils.button(mxResources.get('cancel'), function () {
+        e.cancelCallback && e.cancelCallback();
+        editorUi.hideDialog(true);
+    });
+    cancelBtn.className = 'geBtn';
+    if (editorUi.editor.cancelFirst && (!e.createOnly || e.cancelCallback)) {
+        btns.appendChild(cancelBtn);
+    }
+
+    if (!e.compact && !editorUi.isOffline() && e.showName && !e.callback && !e.createOnly) {
+        const helpBtn = mxUtils.button(mxResources.get('help'), function () {
+            editorUi.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
+        });
+        helpBtn.className = 'geBtn';
+        btns.appendChild(helpBtn);
+    }
+
+    if (!e.compact && urlParams.embed !== '1' && !e.createOnly) {
+        const fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), function () {
+            const dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), function (fileUrl) {
+                if (fileUrl) {
+                    const url = editorUi.getUrl(window.location.pathname + '?mode=' + editorUi.mode || '' +
+                        '&title=' + encodeURIComponent(nameInput.value) +
+                        '&create=' + encodeURIComponent(fileUrl));
+                    if (!editorUi.getCurrentFile()) {
+                        window.location.href = url;
+                    } else {
+                        window.openWindow(url);
+                    }
+                }
+            }, mxResources.get('url'));
+            editorUi.showDialog(dlg.container, 300, 80, true, true);
+            dlg.init();
+        });
+        fromTmpBtn.className = 'geBtn';
+        btns.appendChild(fromTmpBtn);
+    }
+
+    if (Graph.fileSupport && e.showImport) {
+        const importBtn = mxUtils.button(mxResources.get('import'), function () {
+            if (!editorUi.newDlgFileInputElt) {
+                const fileInput = document.createElement('input');
+                fileInput.setAttribute('multiple', 'multiple');
+                fileInput.setAttribute('type', 'file');
+                mxEvent.addListener(fileInput, 'change', function (evt) {
+                    editorUi.openFiles(fileInput.files, true);
+                    fileInput.value = '';
+                });
+                fileInput.style.display = 'none';
+                document.body.appendChild(fileInput);
+                editorUi.newDlgFileInputElt = fileInput;
+            }
+            editorUi.newDlgFileInputElt.click();
+        });
+        importBtn.className = 'geBtn';
+        btns.appendChild(importBtn);
+    }
+
+    btns.appendChild(createButton);
+
+    if (!editorUi.editor.cancelFirst && !e.callback && (!e.createOnly || e.cancelCallback)) {
+        btns.appendChild(cancelBtn);
+    }
+
+    outer.appendChild(btns);
+
+    this.container = outer;
 };
 
 /**
