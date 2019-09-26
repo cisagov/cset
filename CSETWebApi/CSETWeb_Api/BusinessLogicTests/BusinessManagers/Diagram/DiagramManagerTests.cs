@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CSETWeb_Api.BusinessManagers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicTests.BusinessManagers.Diagram
+namespace CSETWeb_Api.BusinessManagers.Tests
 {
-    class DiagramManagerTests
+    [TestClass()]
+    public class DiagramManagerTests
     {
+        [TestMethod()]
+        public void GetDiagramXmlTest()
+        {
+            Assert.Fail();
+        }
     }
 }
