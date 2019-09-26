@@ -1,15 +1,11 @@
 <table mat-table matSort class="assessment-summary" style='overflow:auto'>
     <th mat-sort-header="label">Label</th>
-    <th mat-sort-header="color">Color</th>
-    <th mat-sort-header="layer">Layer</th>
-    <th mat-sort-header="visible">Visible</th>
     
     <tr *ngFor="let shape of shapes; let i = index">
-        <td>{{shape.label}}</td>
-        <td>{{shape.color}}</td>
-        <td>{{shape.layer}}</td>
-        <td><input type="checkbox" class="mt-1"
-          [checked]="shape.visible" (change)="submit(shape.tag, shape.visible)"></td>
+        <td>
+            <input type="input" class="form-control mt-2" name="valueField" 
+            [(ngModel)]="shape.valueField" (change)="submit(shape)" />
+        </td>
     </tr>
 </table>
 

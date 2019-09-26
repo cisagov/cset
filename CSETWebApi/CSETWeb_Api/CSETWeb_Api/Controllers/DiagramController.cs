@@ -201,7 +201,24 @@ namespace CSETWeb_Api.Controllers
                 return dm.GetComponentSymbols();
             }
         }
-        
+
+        /// <summary>
+        /// Returns the details for symbols.  This is used to build palettes and icons
+        /// in the browser.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("api/diagram/symbols/getAll")]
+        [HttpGet]
+        public IHttpActionResult GetAllSymbols()
+        {
+            using (var db = new CSET_Context())
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                return Ok(dm.GetAllComponentSymbols());
+            }
+        }
+
         /// <summary>
         /// Returns list of diagram components
         /// </summary>
@@ -251,7 +268,7 @@ namespace CSETWeb_Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("No components available");
+                return BadRequest("No zones available");
             }
             finally
             {
@@ -279,7 +296,7 @@ namespace CSETWeb_Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("No components available");
+                return BadRequest("No links available");
             }
             finally
             {
@@ -301,23 +318,56 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var vertices = dm.ProcessDiagramShapes(diagramXml);
                 var shapes = dm.GetDiagramShapes(vertices);
                 return Ok(shapes);
             }
             catch (Exception ex)
             {
-                return BadRequest("No components available");
+                return BadRequest("No shapes available");
             }
             finally
             {
             }
         }
 
+        /// <summary>
+        /// Returns list of diagram shapes
+        /// </summary>
+        /// <returns></returns>
         [CSETAuthorize]
-        [Route("api/diagram/saveDiagram")]
+        [Route("api/diagram/getTexts")]
+        [HttpGet]
+        public IHttpActionResult GetTexts()
+        {
+            try
+            {
+                TokenManager tm = new TokenManager();
+                int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+                var dm = new DiagramManager(new CSET_Context());
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramShapes(diagramXml);
+                var texts = dm.GetDiagramText(vertices);
+                return Ok(texts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No text available");
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
+        /// Update component
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveComponent")]
         [HttpPost]
-        public IHttpActionResult SaveDiagram(mxGraphModelRootObject vertice)
+        public IHttpActionResult SaveComponent(mxGraphModelRootObject vertice)
         {
             TokenManager tm = new TokenManager();
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
@@ -325,6 +375,69 @@ namespace CSETWeb_Api.Controllers
             if (assessmentId != null)
             {
                 dm.SaveComponent(vertice, (int)assessmentId);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// update zone
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveZone")]
+        [HttpPost]
+        public IHttpActionResult SaveZone(mxGraphModelRootObject vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveZone(vertice, (int)assessmentId);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// update shape
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveShape")]
+        [HttpPost]
+        public IHttpActionResult SaveShape(mxGraphModelRootMxCell vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveShape(vertice, (int)assessmentId);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// update link
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/saveLink")]
+        [HttpPost]
+        public IHttpActionResult SaveLink(mxGraphModelRootMxCell vertice)
+        {
+            TokenManager tm = new TokenManager();
+            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            var dm = new DiagramManager(new CSET_Context());
+            if (assessmentId != null)
+            {
+                dm.SaveLink(vertice, (int)assessmentId);
             }
 
             return Ok();

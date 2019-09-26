@@ -781,6 +781,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetAllSymbols">
+            <summary>
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.DiagramController.GetComponents">
             <summary>
             Returns list of diagram components
@@ -803,6 +810,40 @@
             <summary>
             Returns list of diagram shapes
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTexts">
+            <summary>
+            Returns list of diagram shapes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveComponent(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootObject)">
+            <summary>
+            Update component
+            </summary>
+            <param name="vertice"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveZone(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootObject)">
+            <summary>
+            update zone
+            </summary>
+            <param name="vertice"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveShape(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootMxCell)">
+            <summary>
+            update shape
+            </summary>
+            <param name="vertice"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveLink(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootMxCell)">
+            <summary>
+            update link
+            </summary>
+            <param name="vertice"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExport(System.String)">

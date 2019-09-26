@@ -2,30 +2,30 @@
     <th mat-sort-header="type">Type</th>
     <th mat-sort-header="label">Label</th>
     <th mat-sort-header="sal">Sal</th>
-    <th mat-sort-header="visible">Visible</th>
     
     <tr *ngFor="let zone of zones; let i = index">
         <td><select [(ngModel)]="zone.zoneTypeField" class="form-control override-select"
           (change)="submit(zone);">
-          <option value="Control DMZ">Control DMZ</option>
-          <option value="Control System">Control System</option>
-          <option value="Corporate">Corporate</option>
-          <option value="External DMZ">External DMZ</option>
-          <option value="Other">Other</option>
-          <option value="Plant System">Plant System</option>
-          <option value="Safety">Safety</option>
+          <option [ngValue]="'Control DMZ'">Control DMZ</option>
+          <option [ngValue]="'Control System'">Control System</option>
+          <option [ngValue]="'Corporate'">Corporate</option>
+          <option [ngValue]="'External DMZ'">External DMZ</option>
+          <option [ngValue]="'Other'">Other</option>
+          <option [ngValue]="'Plant System'">Plant System</option>
+          <option [ngValue]="'Safety'">Safety</option>
         </select></td>
-        <td>{{zone.labelField}}</td>
+        <td>
+            <input type="input" class="form-control mt-2" name="labelField" 
+            [(ngModel)]="zone.labelField" (change)="submit(zone)" />
+        </td>
         <td><select [(ngModel)]="zone.sALField" class="form-control override-select"
-          (change)="submit(zone.tag, zone.sal);">
+          (change)="submit(zone);">
           <option [ngValue]="'none'">None</option>
           <option [ngValue]="'Low'">Low</option>
           <option [ngValue]="'Moderate'">Moderate</option>
           <option [ngValue]="'High'">High</option>
           <option [ngValue]="'Very High'">Very High</option>
         </select></td>
-        <td><input type="checkbox" class="mt-1"
-          [checked]="zone.visible" (change)="submit(zone.tag, zone.visible)"></td>
     </tr>
 </table>
 

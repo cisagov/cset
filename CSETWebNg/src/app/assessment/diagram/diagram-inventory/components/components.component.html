@@ -9,7 +9,6 @@
     <th mat-sort-header="subnetNames">Subnet Name(s)</th>
     <th mat-sort-header="descriptions">Description</th> 
     <th mat-sort-header="hostName">Host Name</th>
-    <th mat-sort-header="visible">Visible</th>
 
     <tr *ngFor="let component of components; let i = index">
         <td>
@@ -27,14 +26,22 @@
             <option [ngValue]="'High'">High</option>
           </select></td>
         <td>{{component.ipAddressField}}</td>
-        <td>{{component.assetTypeField}}</td>
+        <td>
+            <select [(ngModel)]="component.assetTypeField" class="form-control override-select"
+            (change)="submit(component);">
+              <option *ngFor="let asset of assetTypes; let i = index" [value]="asset.DisplayName">{{asset.DisplayName}}</option>
+              
+            </select>
+        </td>
         <td>{{component.zoneLabelField}}</td>
         <td>{{component.subnetNames}}</td>
-        <td>{{component.descriptionField}}</td>
-        <td>{{component.hostNameField}}</td>
         <td>
-            <input type="checkbox" class="mt-1" [disabled]='true'
-            [checked]="component.visible"> 
+            <input type="input" class="form-control mt-2" name="descriptionField" 
+            [(ngModel)]="component.descriptionField" (change)="submit(component)" />
+        </td>
+        <td>
+            <input type="input" class="form-control mt-2" name="descriptionField" 
+            [(ngModel)]="component.hostNameField" (change)="submit(component)" />
         </td>
     </tr>
 </table>
