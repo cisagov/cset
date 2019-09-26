@@ -4884,7 +4884,7 @@ var AboutDialog = function (editorUi) {
 
     CsetUtils.makeHttpRequest({
         method: 'GET',
-        url: 'about.html',
+        url: 'about-diag.html',
         onreadystatechange: e => {
             if (e.readyState !== 4) {
                 return;
