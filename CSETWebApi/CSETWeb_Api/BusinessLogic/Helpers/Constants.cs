@@ -393,6 +393,8 @@ namespace BusinessLogic.Helpers
         public static string BuildFileName = "BuildNumber.txt";
         public static string AssessmentFileBuildFileName = "BuildNumberDatabase.txt";
         public static string ASSESSMENT_FILE_LOG = "_log";
+        public const string UnTrusted = "Untrusted";
+        public const string Trusted = "Trusted";
         public const string Availabilty = "Availability";
         public const string Confidentiality = "Confidentiality";
         public const string Integrity = "Integrity";
@@ -414,6 +416,8 @@ namespace BusinessLogic.Helpers
         public const string ModerateIrp = "Moderate";
         public const string SignificantIrp = "Significant";
         public const string MostIrp = "Most";
+
+        
     }
     
 
