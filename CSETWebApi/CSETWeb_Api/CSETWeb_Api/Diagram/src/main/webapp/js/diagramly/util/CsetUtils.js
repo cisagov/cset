@@ -217,6 +217,8 @@ CsetUtils.PersistGraphToCSET = async function (editor)
         }
     }
 
+    CsetUtils.clearWarningsFromDiagram(editor.graph);
+
     // Analyze the diagram, if the user wants to
     if (editor.analyzeDiagram)
     {
@@ -247,7 +249,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
     const response = await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
-        url: localStorage.getItem('cset.host') + 'diagram/analyze',
+        url: localStorage.getItem('cset.host') + 'diagram/warnings',
         payload: JSON.stringify(req),
         onreadystatechange: function (e)
         {
@@ -273,9 +275,6 @@ CsetUtils.analyzeDiagram = async function (req, editor)
         const warnings = JSON.parse(response);
 
         CsetUtils.addWarningsToDiagram(warnings, editor.graph);
-        // RKW - not defined anywhere ... ?
-        // const analysis = new CsetAnalysisWarnings();
-        // analysis.addWarningsToDiagram(warnings, editor.graph);
     }
 }
 
@@ -522,21 +521,46 @@ CsetUtils.getFilenameFromPath = function (path)
 
 
 
+/**
+ * 
+ */
+CsetUtils.clearWarningsFromDiagram = function (graph)
+{
+    var m = graph.getModel();
+    var allCells = m.getDescendants();
 
+    allCells.forEach(c =>
+    {
+        if (!!c.style && c.style.indexOf('redDot') >= 0)
+        {
+            m.remove(c);
+        }
+    });
+}
 
 /**
  * Create the red dots.  Maybe move this to its own class.
  */
 CsetUtils.addWarningsToDiagram = function (warnings, graph)
 {
-    // clear all red dots
     var m = graph.getModel();
 
-    console.log(m.getChildVertices());
-
+    CsetUtils.clearWarningsFromDiagram(graph);
 
     warnings.forEach(w =>
     {
-        console.log(w);
+        var coords = CsetUtils.getCoords(w);
+        var redDot = graph.insertVertex(m.root, null, w.Number, coords.X, coords.Y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
     });
+}
+
+/**
+ * 
+ */
+CsetUtils.getCoords = function (warning)
+{
+    var coords = {};
+    coords.X = 100;
+    coords.Y = 100;
+    return coords;
 }

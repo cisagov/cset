@@ -9657,7 +9657,9 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
     {
         return;
     }    
-    if(cell.getCsetAttribute("redDot")== '1'){
+
+    if (cell.getCsetAttribute("redDot") == '1')
+    {
         return;
     }
 
