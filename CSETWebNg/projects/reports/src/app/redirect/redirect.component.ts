@@ -37,7 +37,7 @@ export class RedirectComponent implements OnInit {
     sessionStorage.removeItem('userToken');
     sessionStorage.setItem('userToken', sessionStorage.getItem('token'));
     const routeRequest = sessionStorage.getItem("routePath");
-    //this.router.navigate(['/' + routeRequest]);
+    this.router.navigate(['/' + routeRequest]);
   }
 
 
