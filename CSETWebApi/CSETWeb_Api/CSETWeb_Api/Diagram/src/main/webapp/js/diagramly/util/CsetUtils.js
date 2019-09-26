@@ -543,14 +543,14 @@ CsetUtils.clearWarningsFromDiagram = function (graph)
  */
 CsetUtils.addWarningsToDiagram = function (warnings, graph)
 {
-    var m = graph.getModel();
-
     CsetUtils.clearWarningsFromDiagram(graph);
+
+    var root = graph.getModel().root;
 
     warnings.forEach(w =>
     {
         var coords = CsetUtils.getCoords(w);
-        var redDot = graph.insertVertex(m.root, null, w.Number, coords.X, coords.Y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+        var redDot = graph.insertVertex(root, null, w.Number, coords.X, coords.Y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
     });
 }
 
