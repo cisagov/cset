@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayerCore", "DataLayerC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWeb_ApiTests", "CSETWeb_ApiTests\CSETWeb_ApiTests.csproj", "{A524C760-C67C-448F-A8C1-12191E63CF31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicTests", "BusinessLogicTests\BusinessLogicTests.csproj", "{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,14 +71,6 @@ Global
 		{A524C760-C67C-448F-A8C1-12191E63CF31}.localhost|Any CPU.Build.0 = Release|Any CPU
 		{A524C760-C67C-448F-A8C1-12191E63CF31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A524C760-C67C-448F-A8C1-12191E63CF31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.localdb|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.localdb|Any CPU.Build.0 = Release|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.localhost|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.localhost|Any CPU.Build.0 = Release|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C3CEB1-5285-4A7F-9825-D28A74F1F560}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
