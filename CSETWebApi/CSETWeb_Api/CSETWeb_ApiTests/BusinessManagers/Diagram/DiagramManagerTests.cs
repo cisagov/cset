@@ -18,7 +18,7 @@ namespace CSETWeb_Api.BusinessManagers.Tests
             using(CSET_Context db =new CSET_Context())
             {
                 DiagramManager manager = new DiagramManager(db);
-                //manager.getLayerVisibility(;
+                manager.getLayerVisibility("kGJ--9y5AF0ObGW-ZAqX-1", 9);
             }
             
 

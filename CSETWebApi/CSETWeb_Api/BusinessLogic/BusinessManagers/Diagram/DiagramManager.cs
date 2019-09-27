@@ -336,10 +336,18 @@ namespace CSETWeb_Api.BusinessManagers
                     Parent_DrawIo_id = parent.DrawIO_id,
                     visible = (node.Visible ?? true) ? "true" : "false"
                 };
+            var list2 = from node in db.DIAGRAM_CONTAINER                       
+                       where node.Assessment_Id == assessment_id && node.Parent_Id ==0
+                       select new LayerVisibility()
+                       {
+                           layerName = node.Name,
+                           DrawIo_id = node.DrawIO_id,
+                           Parent_DrawIo_id = "",
+                           visible = (node.Visible ?? true) ? "true" : "false"
+                       };
+            var list3 = list.Union(list2);
 
-
-
-            Dictionary<string, LayerVisibility> allItems = list.ToDictionary(x => x.DrawIo_id,x=> x);
+            Dictionary<string, LayerVisibility> allItems = list3.ToDictionary(x => x.DrawIo_id,x=> x);
             LayerVisibility layer;
             LayerVisibility lastLayer = null; 
             while (allItems.TryGetValue(drawIoId, out layer))
