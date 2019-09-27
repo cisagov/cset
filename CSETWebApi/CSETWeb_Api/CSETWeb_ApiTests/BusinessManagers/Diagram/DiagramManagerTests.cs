@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers.Tests
 {
@@ -14,8 +15,12 @@ namespace CSETWeb_Api.BusinessManagers.Tests
         [TestMethod()]
         public void getLayerVisibilityTest()
         {
-            DiagramManager manager = new DiagramManager();
-            manager.getLayerVisibility();
+            using(CSET_Context db =new CSET_Context())
+            {
+                DiagramManager manager = new DiagramManager(db);
+                //manager.getLayerVisibility(;
+            }
+            
 
 
         }
