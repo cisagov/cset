@@ -168,6 +168,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
 
     // Network Warnings
     this.analysisSvc.getNetworkWarnings().subscribe(x => {
+      console.log(x);
       this.warnings = x;
     });
 

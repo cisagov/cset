@@ -554,7 +554,7 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
         var coords = CsetUtils.getCoords(w, graph);
 
         // don't overlay any other red dots on the same component
-        if (CsetUtils.redDotAtCoords(graph, coords))
+        if (CsetUtils.isRedDotAtCoords(graph, coords))
         {
             coords.x += 33;
         }
@@ -590,24 +590,50 @@ CsetUtils.getCoords = function (warning, graph)
     {
         const component1 = graph.getModel().getCell(warning.NodeId1);
         const component2 = graph.getModel().getCell(warning.NodeId2);
+        const edges = graph.getModel().getEdgesBetween(component1, component2);
+        const e = edges[0];
 
-        const x = (component1.getGeometry().x + component2.getGeometry().x) / 2;
-        const y = (component1.getGeometry().y + component2.getGeometry().y) / 2;
+        // determine where to drop the red dot on the routed edge...
+        // don't assume a straight line; account for waypoints, curves, etc.
+        const v = graph.view;
+        const s = v.getState(e);
+
+
+       
+
+        // experimenting 
+
+        console.log(s);
+        console.log('Scale: ' + v.scale);
+        // console.log('Routing Center: ' + v.getRoutingCenterX(s) + ', ' + v.getRoutingCenterY(s));
+        console.log('State absolute offset: ');
+        console.log({ x: s.absoluteOffset.x, y: s.absoluteOffset.y });
+        console.log('View translate: ');
+        console.log({ x: v.translate.x, y: v.translate.y });
+        console.log('State xy: ');
+        console.log({ x: s.x, y: s.y });
+
+        xx = (s.absoluteOffset.x - v.translate.x);
+        yy = (s.absoluteOffset.y - v.translate.y);
+
+        coords.x = xx;
+        coords.y = yy;
+        console.log(coords);
 
         // fine-tune here if needed
-        coords.x = x;
-        coords.y = y;
+        //coords.x = xx - 15;
+        //coords.y = yy - 40;
+
         return coords;
-
-
-        // WIP -- To be thorough, don't assume a straight line.  Account for waypoints.
-        const edges = graph.getModel().getEdgesBetween(component1, component2);
     }
 
     return coords;
 }
 
-CsetUtils.redDotAtCoords = function (graph, coords)
+/**
+ * Returns a boolean indicating if a red dot is positioned at the specified coordinates.
+ */
+CsetUtils.isRedDotAtCoords = function (graph, coords)
 {
     var found = false;
 
