@@ -3759,7 +3759,6 @@
     <Content Include="Documents\IPv6 Malware-Tunneling.pdf" />
     <Content Include="Documents\IPv6-IPv4-threats.pdf" />
     <Content Include="Documents\ISA 62443-2009.pdf" />
-    <Content Include="Documents\ISA 62443-2013.pdf" />
     <Content Include="Documents\ISASecurityGuide.pdf" />
     <Content Include="Documents\ISO 15408.pdf" />
     <Content Include="Documents\ISO 27001.pdf" />
