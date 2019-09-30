@@ -589,12 +589,13 @@ CsetUtils.getCoords = function (warning, graph)
         const edges = graph.getModel().getEdgesBetween(component1, component2);
         const e = edges[0];
 
-        console.log(component1);
-        console.log(component2);
+        const v = graph.view;
+        const s1 = v.getState(component1);
+        const s2 = v.getState(component2);
 
         // temporarily place the dot at the midpoint of a straight line between components.
-        coords.x = (component1.getGeometry().x + component2.getGeometry().x) / 2;
-        coords.y = (component1.getGeometry().y + component2.getGeometry().y) / 2;
+        coords.x = (s1.origin.x + s2.origin.x) / 2;
+        coords.y = (s1.origin.y + s2.origin.y) / 2;
 
         // CsetUtils.getTrueEdgeCoordinates(e, coords);
 
