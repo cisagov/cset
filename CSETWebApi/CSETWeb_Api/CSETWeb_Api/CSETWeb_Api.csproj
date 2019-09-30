@@ -4173,7 +4173,6 @@
     <Content Include="Diagram\src\main\java\log4j.properties" />
     <Content Include="Diagram\src\main\webapp\cache.manifest" />
     <Content Include="Diagram\src\main\webapp\images\manifest.json" />
-    <Content Include="Diagram\src\main\webapp\js\app.min.js.bak" />
     <Content Include="Diagram\src\main\webapp\math\.npmignore" />
     <Content Include="Diagram\src\main\webapp\math\.travis.yml" />
     <Content Include="Diagram\src\main\webapp\math\bower.json" />
@@ -4534,6 +4533,6 @@
     <Delete Files="Web.temp.config" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>call $(ProjectDir)Diagram\etc\build\build.bat</PostBuildEvent>
+    <PostBuildEvent>rem call $(ProjectDir)Diagram\etc\build\build.bat</PostBuildEvent>
   </PropertyGroup>
 </Project>
