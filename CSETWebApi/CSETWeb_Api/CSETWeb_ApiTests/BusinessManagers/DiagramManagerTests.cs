@@ -20,9 +20,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Tests
             
 
             DiagramManager d = new DiagramManager(new CSET_Context());
-            //FileStream fs = new FileStream(@"c:\Users\KUIPJE\Documents\testdiagram.xml", FileMode.OpenOrCreate);
+            string test = File.ReadAllText(@"TestItems\testdiagram.xml");
+            //change test to reference below if wanted
             StringReader reader = new StringReader(test);
-            var vertices = d.ProcessDiagramVertices(reader);
+            var vertices = d.ProcessDiagramVertices(reader,2);
 
         }
 

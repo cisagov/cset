@@ -277,7 +277,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int) assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var vertices = dm.ProcessDiagramVertices(diagramXml,assessmentId??0);
                 var components = dm.GetDiagramComponents(vertices);
                 return Ok(components);
             }
@@ -305,7 +305,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var vertices = dm.ProcessDiagramVertices(diagramXml,assessmentId??0);
                 var zones = dm.GetDiagramZones(vertices);
                 return Ok(zones);
             }
