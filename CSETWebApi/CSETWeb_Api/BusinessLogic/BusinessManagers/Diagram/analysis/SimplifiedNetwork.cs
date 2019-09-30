@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using BusinessLogic.Helpers;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
 {
@@ -23,7 +24,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
         private List<NetworkLink> Links = new List<NetworkLink>();        
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
         //drawio id to zone lookup
-        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();        
+        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
         private Dictionary<string, string> imageToTypePath;
         private string defaultSal;
         private NetworkZone defaultZone;
@@ -42,6 +43,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
         {
             get { return Links; }
         }
+
+        
+
 
         public SimplifiedNetwork(Dictionary<string, string> imageToTypePath, string defaultSAL)
         {
@@ -78,7 +82,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                 layers.Add(id, new NetworkLayer()
                 {
                     ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : "Main Layer",
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DefaultLayerName,
                     Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
                 });
             }
