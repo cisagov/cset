@@ -27,7 +27,7 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
 
-    if (typeof this.value == "object")
+    if (!!this.value && typeof this.value == "object")
     {
         obj = this.value;
     }
