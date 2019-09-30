@@ -166,6 +166,7 @@
     <Compile Include="ModelDataAccess\FileResult.cs" />
     <Compile Include="Model\ADDRESS.cs" />
     <Compile Include="Model\ANSWER.cs" />
+    <Compile Include="Model\Answer_Components_Default.cs" />
     <Compile Include="Model\ANSWER_LOOKUP.cs" />
     <Compile Include="Model\APP_CODE.cs" />
     <Compile Include="Model\ASSESSMENTS.cs" />
