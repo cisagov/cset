@@ -116,7 +116,7 @@ CsetUtils.makeHttpRequest = makeRequest;
  */
 CsetUtils.adjustConnectability = function (edit)
 {
-    for (var i = 0; i < edit.changes.length; i++)
+    for (i = 0; i < edit.changes.length; i++)
     {
         if (edit.changes[i] instanceof mxChildChange)
         {
@@ -221,14 +221,8 @@ CsetUtils.PersistGraphToCSET = async function (editor)
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
 
-    // Analyze the diagram, if the user wants to
-    if (editor.analyzeDiagram)
-    {
-        await CsetUtils.analyzeDiagram(analysisReq, editor);
-    }
+    await CsetUtils.analyzeDiagram(analysisReq, editor);
 
-
-    // Save the diagram
     const req = {
         DiagramXml: analysisReq.DiagramXml,
         LastUsedComponentNumber: sessionStorage.getItem("last.number")
@@ -274,9 +268,11 @@ CsetUtils.analyzeDiagram = async function (req, editor)
 
     if (response)
     {
-        const warnings = JSON.parse(response);
-
-        CsetUtils.addWarningsToDiagram(warnings, editor.graph);
+        if (editor.analyzeDiagram)
+        {
+            const warnings = JSON.parse(response);
+            CsetUtils.addWarningsToDiagram(warnings, editor.graph);
+        }
     }
 }
 
@@ -585,7 +581,7 @@ CsetUtils.getCoords = function (warning, graph)
         return coords;
     }
 
-    // if both are provided, the dot goes on the line somewhere
+    // if both are provided, the dot goes on the edge
     if (warning.NodeId1 && warning.NodeId2)
     {
         const component1 = graph.getModel().getCell(warning.NodeId1);
@@ -593,42 +589,49 @@ CsetUtils.getCoords = function (warning, graph)
         const edges = graph.getModel().getEdgesBetween(component1, component2);
         const e = edges[0];
 
-        // determine where to drop the red dot on the routed edge...
-        // don't assume a straight line; account for waypoints, curves, etc.
-        const v = graph.view;
-        const s = v.getState(e);
+        console.log(component1);
+        console.log(component2);
 
+        // temporarily place the dot at the midpoint of a straight line between components.
+        coords.x = (component1.getGeometry().x + component2.getGeometry().x) / 2;
+        coords.y = (component1.getGeometry().y + component2.getGeometry().y) / 2;
 
-       
-
-        // experimenting 
-
-        console.log(s);
-        console.log('Scale: ' + v.scale);
-        // console.log('Routing Center: ' + v.getRoutingCenterX(s) + ', ' + v.getRoutingCenterY(s));
-        console.log('State absolute offset: ');
-        console.log({ x: s.absoluteOffset.x, y: s.absoluteOffset.y });
-        console.log('View translate: ');
-        console.log({ x: v.translate.x, y: v.translate.y });
-        console.log('State xy: ');
-        console.log({ x: s.x, y: s.y });
-
-        xx = (s.absoluteOffset.x - v.translate.x);
-        yy = (s.absoluteOffset.y - v.translate.y);
-
-        coords.x = xx;
-        coords.y = yy;
-        console.log(coords);
+        // CsetUtils.getTrueEdgeCoordinates(e, coords);
 
         // fine-tune here if needed
-        //coords.x = xx - 15;
-        //coords.y = yy - 40;
+        coords.x = coords.x - 15;
+        coords.y = coords.y - 40;
 
         return coords;
     }
 
     return coords;
 }
+
+
+/**
+ * Still experimenting with this.  The goal is to find the correct location for
+ * the red dot on the edge, regardless of where the edge is routed.
+ */
+CsetUtils.getTrueEdgeCoordinates = function(e, coords)
+{
+    const v = graph.view;
+    const s = v.getState(e);
+
+    console.log(s);
+    console.log('Scale: ' + v.scale);
+    // console.log('Routing Center: ' + v.getRoutingCenterX(s) + ', ' + v.getRoutingCenterY(s));
+    console.log('State absolute offset: ');
+    console.log({ x: s.absoluteOffset.x, y: s.absoluteOffset.y });
+    console.log('View translate: ');
+    console.log({ x: v.translate.x, y: v.translate.y });
+    console.log('State xy: ');
+    console.log({ x: s.x, y: s.y });
+
+    coords.x = (s.absoluteOffset.x - v.translate.x);
+    coords.y = (s.absoluteOffset.y - v.translate.y);
+}
+
 
 /**
  * Returns a boolean indicating if a red dot is positioned at the specified coordinates.

@@ -67,8 +67,31 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             {
                 msgs.AddRange(rule.Evaluate());
             }
-            int n = 0;
-            msgs.ForEach(m => m.Number = ++n);
+
+            // number and persist warning messages
+            using (CSET_Context context = new CSET_Context())
+            {
+                var oldWarnings = context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToList();
+                context.NETWORK_WARNINGS.RemoveRange(oldWarnings);
+                context.SaveChanges();
+
+                int n = 0;
+                msgs.ForEach(m =>
+                {
+                    m.Number = ++n;
+
+                    context.NETWORK_WARNINGS.Add(new NETWORK_WARNINGS
+                    {
+                        Assessment_Id = assessment_id,
+                        Id = m.Number,
+                        WarningText = m.Message
+                    });
+
+                });
+
+                context.SaveChanges();
+            }
+
             return msgs;
         }
 
