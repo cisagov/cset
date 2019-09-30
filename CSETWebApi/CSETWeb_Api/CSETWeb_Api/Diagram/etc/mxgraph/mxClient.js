@@ -9663,8 +9663,8 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         return;
     }
 
-    // assign a component GUID to components (not zones or MSCs)
-    if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
+    // assign a component GUID to components (not zones)
+    if (cell.getStyleValue('zone') != '1')
     {
         var nextGuid = guidService.getInstance().getNextGuid();
         cell.setCsetAttribute('ComponentGuid', nextGuid);
@@ -9704,7 +9704,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         // convert the MSC into a swimlane (container)
         cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
         cell.geometry.width = 230;
-        cell.geometry.height = 120;
+        cell.geometry.height = 140;
     }
 }
 
