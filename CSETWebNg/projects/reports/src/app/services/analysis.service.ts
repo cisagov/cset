@@ -339,7 +339,7 @@ export class AnalysisService {
   }
 
   getNetworkWarnings(): any {
-    return this.http.get(this.configSvc.apiUrl + 'diagram/warnings');
+    return this.http.get(this.apiUrl + 'NetworkWarnings');
   }
 
 
