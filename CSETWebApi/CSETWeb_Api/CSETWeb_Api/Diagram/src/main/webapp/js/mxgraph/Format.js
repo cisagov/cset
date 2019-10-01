@@ -2584,7 +2584,7 @@ PropertiesPanel.prototype.addProperties = function (container)
 
         if (ctl.getAttribute('type') === 'checkbox')
         {
-            ctl.checked = cell.getCsetAttribute(pp.attributeName);
+            ctl.checked = (cell.getCsetAttribute(pp.attributeName) == 'true');
         }
         else
         {
@@ -2619,10 +2619,6 @@ PropertiesPanel.prototype.addProperties = function (container)
             var cell = graph.getSelectionCell();
             var ctl = evt.srcElement;
 
-
-            console.log(ctl);
-
-
             if (ctl.getAttribute('propname') == 'ComponentType')
             {
                 cell.removeStyleValue('image');
@@ -2630,8 +2626,38 @@ PropertiesPanel.prototype.addProperties = function (container)
             }
             else if (ctl.getAttribute('type') === 'checkbox')
             {
-                console.log('I am a checkbox');
-                cell.setCsetAttribute(ctl.getAttribute('propname'), true);
+                cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.checked);
+
+                // send setting to API 
+                if (ctl.getAttribute('propname') == 'UniqueQuestions')
+                {
+                    var hasUniqueQuestions = ctl.checked;
+                    
+                    makeRequest({
+                        method: 'GET',
+                        overrideMimeType: 'application/json',
+                        url: localStorage.getItem('cset.host') + 'AnswerSaveComponentOverrides'
+                            + '?guid=' + cell.getCsetAttribute('ComponentGuid')
+                            + '&ShouldSave=' + hasUniqueQuestions,
+                        onreadystatechange: function (e)
+                        {
+                            if (e.readyState !== 4)
+                            {
+                                return;
+                            }
+
+                            switch (e.status)
+                            {
+                                case 200:
+                                    // successful post            
+                                    break;
+                                case 401:
+                                    window.location.replace(localStorage.getItem('cset.client'));
+                                    break;
+                            }
+                        }
+                    });
+                }
             }
             else
             {
