@@ -299,7 +299,6 @@ namespace CSETWeb_Api.BusinessManagers
                             Answer_Text = Constants.UNANSWERED,
                             Assessment_Id = this._assessmentId,
                             Component_Guid = guid,
-                            Component_Id = 1,
                             Is_Component = true,
                             Is_Requirement = false,
                             Question_Or_Requirement_Id = c.Question_Id

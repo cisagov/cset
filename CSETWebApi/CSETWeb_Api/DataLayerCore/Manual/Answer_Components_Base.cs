@@ -30,8 +30,7 @@ namespace DataLayerCore.Manual
             [Required]
             [StringLength(100)]
             public string Universal_Sub_Category { get; private set; }
-            public bool Is_Component { get; private set; }
-            public int Component_Id { get; private set; }
+            public bool Is_Component { get; private set; }            
             [StringLength(36)]
             public string Component_Guid { get; private set; }
             [StringLength(10)]
