@@ -69,8 +69,7 @@ namespace ExportCSV
                            Is_Framework = a.Is_Framework,
                            Comment = a.Comment,
                            Alternate_Justification = a.Alternate_Justification,
-                           Component_Guid = a.Component_Guid,
-                           Component_Id = a.Component_Id,
+                           Component_Guid = a.Component_Guid,                           
                            Answer_Id = a.Answer_Id
                        };
 
@@ -98,8 +97,7 @@ namespace ExportCSV
                            Is_Framework = a.Is_Framework,
                            Comment = a.Comment,
                            Alternate_Justification = a.Alternate_Justification,
-                           Component_Guid = a.Component_Guid,
-                           Component_Id = a.Component_Id,
+                           Component_Guid = a.Component_Guid,                           
                            Answer_Id = a.Answer_Id
                        };
 
@@ -126,7 +124,6 @@ namespace ExportCSV
                             Comment = a.Comment,
                             Alternate_Justification = a.Alternate_Justification,
                             Component_Guid = a.Component_Guid,
-                            Component_Id = a.Component_Id,
                             Answer_Id = a.Answer_Id
                         };
             doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
@@ -303,8 +300,7 @@ namespace ExportCSV
             "Is_Question",
             "Is_Requirement",
             "Is_Component",
-            "Is_Framework",
-            "Component_Id",
+            "Is_Framework",            
             "Answer_Id",
             "Comment",
             "Alternate_Justification",
@@ -326,8 +322,7 @@ namespace ExportCSV
         public Boolean? Is_Question { get { return !Is_Requirement; } }
         public Boolean? Is_Requirement { get; set; }
         public Boolean? Is_Component { get; set; }
-        public Boolean? Is_Framework { get; set; }
-        public int Component_Id { get; set; }
+        public Boolean? Is_Framework { get; set; }        
         public int Answer_Id { get; set; }
         public string Comment { get; set; }
         public string Alternate_Justification { get; set; }
@@ -346,8 +341,7 @@ namespace ExportCSV
             "Is_Question",
             "Is_Requirement",
             "Is_Component",
-            "Is_Framework",
-            "Component_Id",
+            "Is_Framework",            
             "Answer_Id",
             "Comment",
             "Alternate_Justification",

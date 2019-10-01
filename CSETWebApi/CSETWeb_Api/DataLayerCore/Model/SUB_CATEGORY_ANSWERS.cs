@@ -9,12 +9,13 @@ namespace DataLayerCore.Model
     {
         public int Assessement_Id { get; set; }
         public int Heading_Pair_Id { get; set; }
-        public int Component_Id { get; set; }
         public bool Is_Component { get; set; }
         public bool Is_Override { get; set; }
         [Required]
         [StringLength(50)]
         public string Answer_Text { get; set; }
+        [StringLength(36)]
+        public string Component_Guid { get; set; }
 
         [ForeignKey("Answer_Text")]
         [InverseProperty("SUB_CATEGORY_ANSWERS")]
