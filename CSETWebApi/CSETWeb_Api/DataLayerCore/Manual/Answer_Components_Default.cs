@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataLayerCore.Model
 {
     public partial class Answer_Components_Default
-    {
-        [Key]
+    {   
         [StringLength(100)]
         public string UniqueKey { get; private set; }
         public int Assessment_Id { get; private set; }
@@ -42,5 +38,7 @@ namespace DataLayerCore.Model
         public string Sub_Heading_Question_Description { get; set; }
         public string Simple_Question { get; set; }
         public bool? Reviewed { get; set; }
+        public string Diagram_Component_Type { get; set; }
+        public string label { get; set; }
     }
 }

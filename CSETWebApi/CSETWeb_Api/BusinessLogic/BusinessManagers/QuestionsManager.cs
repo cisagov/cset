@@ -201,7 +201,8 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {
                         GroupHeadingId = dbQ.QuestionGroupHeadingId,
-                        GroupHeadingText = dbQ.QuestionGroupHeading
+                        GroupHeadingText = dbQ.QuestionGroupHeading,
+                        StandardShortName = "Standard Questions"
                     };
 
                     groupList.Add(qg);
@@ -265,11 +266,13 @@ namespace CSETWeb_Api.BusinessManagers
 
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
-            
-            //resp.DefaultComponentsCount = 
 
+            //resp.DefaultComponentsCount = 
+            BuildComponentsResponse(resp);
             return resp;
         }
+
+
 
 
         /// <summary>
@@ -277,8 +280,19 @@ namespace CSETWeb_Api.BusinessManagers
         /// response adding the components to it
         /// and then returning
         /// </summary>
-        /// <param name="resp"></param>
-        public void BuildComponentDefaultsResponse(QuestionResponse resp)
+        /// <param name="resp"></param>        
+        private void BuildComponentsResponse(QuestionResponse resp)
+        {
+            using (CSET_Context context = new CSET_Context())
+            {
+                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).ToList();
+                AddResponse(resp, context, list, "Component Defaults");
+                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Default>().ToList();
+                AddResponse(resp, context, dlist, "Component Overrides");
+            }
+        }
+
+        private void AddResponse(QuestionResponse resp, CSET_Context context, List<Answer_Components_Default> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -290,61 +304,58 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             int displayNumber = 0;
-            using (CSET_Context context = new CSET_Context()) {
-                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).ToList();
-                foreach (var dbQ in list)
+            
+            
+            foreach (var dbQ in list)
+            {
+                if (dbQ.Question_Group_Heading != curGroupHeading)
                 {
-                    if (dbQ.Question_Group_Heading != curGroupHeading)
-                    {
-                        qg = new QuestionGroup()
-                        {  
-                            GroupHeadingText = dbQ.Question_Group_Heading
-                        };
-                        groupList.Add(qg);
-                        curGroupHeading = qg.GroupHeadingText;
-                        // start numbering again in new group
-                        displayNumber = 0;
-                    }
-
-
-
-
-                    // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
-                    if (dbQ.heading_pair_id != curHeadingPairId)
-                    {
-                        sc = new QuestionSubCategory()
-                        {   
-                            SubCategoryHeadingText = dbQ.Universal_Sub_Category,
-                            HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                            SubCategoryAnswer = this.subCatAnswers.Where(x=> x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
-                        };
-
-                        qg.SubCategories.Add(sc);
-
-                        curHeadingPairId = dbQ.heading_pair_id;
-                    }
-
-                    qa = new QuestionAnswer()
-                    {
-                        DisplayNumber = (++displayNumber).ToString(),
-                        QuestionId = dbQ.Question_Id,
-                        QuestionText = FormatLineBreaks(dbQ.Simple_Question),
-                        Answer = dbQ.Answer_Text,
-                        Answer_Id = dbQ.Answer_Id,
-                        AltAnswerText = dbQ.Alternate_Justification,
-                        Comment = dbQ.Comment,
-                        MarkForReview = dbQ.Mark_For_Review ?? false,
-                        Reviewed = dbQ.Reviewed ?? false
+                    qg = new QuestionGroup()
+                    {  
+                        GroupHeadingText = dbQ.Question_Group_Heading,
+                        StandardShortName = listname
                     };
-                    
-                    sc.Questions.Add(qa);
+                    groupList.Add(qg);
+                    curGroupHeading = qg.GroupHeadingText;
+                    // start numbering again in new group
+                    displayNumber = 0;
                 }
 
-                resp.DefaultComponents = groupList;
-                resp.DefaultComponentsCount = list.Count;
-                
+                // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
+                if (dbQ.heading_pair_id != curHeadingPairId)
+                {
+                    sc = new QuestionSubCategory()
+                    {   
+                        SubCategoryHeadingText = dbQ.Universal_Sub_Category,
+                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
+                        SubCategoryAnswer = this.subCatAnswers.Where(x=> x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                    };
+
+                    qg.SubCategories.Add(sc);
+
+                    curHeadingPairId = dbQ.heading_pair_id;
+                }
+
+                qa = new QuestionAnswer()
+                {
+                    DisplayNumber = (++displayNumber).ToString(),
+                    QuestionId = dbQ.Question_Id,
+                    QuestionText = FormatLineBreaks(dbQ.Simple_Question),
+                    Answer = dbQ.Answer_Text,
+                    Answer_Id = dbQ.Answer_Id,
+                    AltAnswerText = dbQ.Alternate_Justification,
+                    Comment = dbQ.Comment,
+                    MarkForReview = dbQ.Mark_For_Review ?? false,
+                    Reviewed = dbQ.Reviewed ?? false
+                };
+                    
+                sc.Questions.Add(qa);
             }
-          
+
+                
+            resp.QuestionGroups.AddRange(groupList);
+            resp.QuestionCount += list.Count;
+            resp.DefaultComponentsCount = list.Count;
         }
 
 
