@@ -9,6 +9,7 @@ using CSET_Main.Questions.InformationTabData;
 using CSET_Main.Views.Questions.QuestionDetails;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
+using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System.Collections.Generic;
@@ -285,14 +286,14 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (CSET_Context context = new CSET_Context())
             {
-                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).ToList();
+                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>().ToList();
                 AddResponse(resp, context, list, "Component Defaults");
-                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Default>().ToList();
+                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>().ToList();
                 AddResponse(resp, context, dlist, "Component Overrides");
             }
         }
 
-        private void AddResponse(QuestionResponse resp, CSET_Context context, List<Answer_Components_Default> list, string listname)
+        private void AddResponse(QuestionResponse resp, CSET_Context context, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
