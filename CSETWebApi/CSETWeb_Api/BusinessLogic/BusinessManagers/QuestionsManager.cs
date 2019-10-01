@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using BusinessLogic.Helpers;
 using CSET_Main.Data.ControlData;
 using CSET_Main.Questions.InformationTabData;
 using CSET_Main.Views.Questions.QuestionDetails;
@@ -12,6 +13,7 @@ using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -271,6 +273,47 @@ namespace CSETWeb_Api.BusinessManagers
             //resp.DefaultComponentsCount = 
             BuildComponentsResponse(resp);
             return resp;
+        }
+
+        /// <summary>
+        /// get the exploded view where assessment
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="shouldSave"></param>
+        public void HandleGuid(string component_type, string guid, bool shouldSave)
+        {
+            using (CSET_Context context = new CSET_Context())
+            {
+                if (shouldSave)
+                {
+                    var creates = from a in context.Answer_Components_Exploded
+                                  where a.Assessment_Id == this._assessmentId &&
+                                  a.Component_Type == component_type &&
+                                  a.Component_GUID == null
+                                  select a;
+                    foreach(var c in creates.ToList())
+                    {
+                        context.ANSWER.Add(new ANSWER()
+                        {
+                            Answer_Text = Constants.UNANSWERED,
+                            Assessment_Id = this._assessmentId,
+                            Component_Guid = guid,
+                            Component_Id = 1,
+                            Is_Component = true,
+                            Is_Requirement = false,
+                            Question_Or_Requirement_Id = c.Question_Id
+                        });
+                    }
+                }
+                else
+                {
+                    foreach(var a in context.ANSWER.Where(x=> x.Component_Guid == guid).ToList())
+                    {
+                        context.ANSWER.Remove(a);
+                    }
+                    context.SaveChanges();
+                }
+            }
         }
 
 
