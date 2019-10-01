@@ -256,13 +256,13 @@ namespace CSETWeb_Api.Controllers
         /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
         [HttpGet]
         [Route("api/AnswerSaveComponentOverrides")]
-        public void SaveComponentOverride([FromUri] String guid, Boolean ShouldSave)
+        public void SaveComponentOverride([FromUri]String component_type, String guid, Boolean ShouldSave)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            qm.HandleGuid(guid, ShouldSave);
+            qm.HandleGuid(component_type, guid, ShouldSave);
         }
 
 
