@@ -69,8 +69,14 @@ export class RequirementDetailComponent implements OnInit {
     height: '25rem',
     minHeight: '5rem',
     placeholder: 'Enter text here...',
-    translate: 'no',
+    translate: 'yes',
     uploadUrl: 'v1/images', // if needed
+    fonts: [
+      {class: 'arial', name: 'Arial'},
+      {class: 'times-new-roman', name: 'Times New Roman'},
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+    ],
     customClasses: [ // optional
       {
         name: "quote",
