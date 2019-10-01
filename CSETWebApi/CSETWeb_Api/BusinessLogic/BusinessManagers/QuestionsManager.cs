@@ -280,28 +280,38 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="shouldSave"></param>
-        public void HandleGuid(string component_type, string guid, bool shouldSave)
+        public void HandleGuid(string guid, bool shouldSave)
         {
             using (CSET_Context context = new CSET_Context())
             {
                 if (shouldSave)
                 {
-                    var creates = from a in context.Answer_Components_Exploded
-                                  where a.Assessment_Id == this._assessmentId &&
-                                  a.Component_Type == component_type &&
-                                  a.Component_GUID == Guid.Empty.ToString()
-                                  select a;
-                    foreach(var c in creates.ToList())
+                    Guid g = new Guid(guid);
+                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == g).FirstOrDefault();
+                    if (componentName != null)
                     {
-                        context.ANSWER.Add(new ANSWER()
+                        var creates = from a in context.Answer_Components_Exploded
+                                      where a.Assessment_Id == this._assessmentId &&
+                                      a.ComponentName == componentName.label &&
+                                      a.Component_GUID == null
+                                      select a;
+                        foreach (var c in creates.ToList())
                         {
-                            Answer_Text = Constants.UNANSWERED,
-                            Assessment_Id = this._assessmentId,
-                            Component_Guid = guid,
-                            Is_Component = true,
-                            Is_Requirement = false,
-                            Question_Or_Requirement_Id = c.Question_Id
-                        });
+                            context.ANSWER.Add(new ANSWER()
+                            {
+                                Answer_Text = Constants.UNANSWERED,
+                                Assessment_Id = this._assessmentId,
+                                Component_Guid = guid,
+                                Is_Component = true,
+                                Is_Requirement = false,
+                                Question_Or_Requirement_Id = c.Question_Id
+                            });
+                        }
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new ApplicationException("could not find component for guid:" + guid);
                     }
                 }
                 else
