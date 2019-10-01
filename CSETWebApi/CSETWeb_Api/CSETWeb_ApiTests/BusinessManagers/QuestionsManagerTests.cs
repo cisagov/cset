@@ -24,8 +24,7 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                 Is_Requirement = false,
                 Question_Or_Requirement_Id = 14,
                 Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
-                Mark_For_Review = false,
-                Component_Id = 0,
+                Mark_For_Review = false,                
                 Is_Component = false
             };
             //TODO a setup and teardown that creates the assessment and then destroys it
