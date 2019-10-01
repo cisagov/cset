@@ -166,14 +166,14 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
                         app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
                     }
                     sessionStorage.setItem('assessment.name', assessmentName);
-                    sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
+                    sessionStorage.setItem('last.number', resp.LastUsedComponentNumber);
 
                     var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
                     updateGraph(editor, data);
                     CsetUtils.clearWarningsFromDiagram(editor.graph);
                     break;
                 case 401:
-                    window.location.replace(window.location.origin);
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -260,7 +260,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
                     // successful post            
                     break;
                 case 401:
-                    window.location.replace(window.location.origin);
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -301,7 +301,7 @@ CsetUtils.saveDiagram = async function (req)
                     // successful post            
                     break;
                 case 401:
-                    window.location.replace(window.location.origin);
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -360,7 +360,7 @@ async function TranslateToMxGraph(editor, sXML)
                     });
                     break;
                 case 401:
-                    window.location.replace(window.location.origin);
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -601,8 +601,8 @@ CsetUtils.getCoords = function (warning, graph)
         // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
 
         // fine-tune here if needed
-        coords.x = coords.x - 15;
-        coords.y = coords.y - 40;
+        // coords.x = coords.x - 15;
+        // coords.y = coords.y - 40;
 
         return coords;
     }
