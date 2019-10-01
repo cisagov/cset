@@ -271,7 +271,6 @@ namespace CSETWeb_Api.BusinessManagers
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
 
-            //resp.DefaultComponentsCount = 
             BuildComponentsResponse(resp);
             return resp;
         }
@@ -290,7 +289,7 @@ namespace CSETWeb_Api.BusinessManagers
                     var creates = from a in context.Answer_Components_Exploded
                                   where a.Assessment_Id == this._assessmentId &&
                                   a.Component_Type == component_type &&
-                                  a.Component_GUID == null
+                                  a.Component_GUID == Guid.Empty.ToString()
                                   select a;
                     foreach(var c in creates.ToList())
                     {
