@@ -12,9 +12,9 @@ import { Location } from '@angular/common';
 })
 export class DiagramInfoComponent implements OnInit {
 
-    msgDiagramExists = "Edit the network diagram";
-    msgNoDiagramExists = "Create a network diagram";
-    buttonDiagramInventory = "Diagram Inventory";
+    msgDiagramExists = 'Edit the network diagram';
+    msgNoDiagramExists = 'Create a network diagram';
+    buttonDiagramInventory = 'Diagram Inventory';
     buttonText: string = this.msgNoDiagramExists;
     hasDiagram: boolean = false;
 
@@ -40,18 +40,20 @@ export class DiagramInfoComponent implements OnInit {
     }
 
     sendToDiagram() {
-        const jwt = sessionStorage.getItem("userToken");
+        const jwt = sessionStorage.getItem('userToken');
         const apiUrl = this.configSvc.apiUrl;
         let host = this.configSvc.apiUrl;
         if (host.endsWith('/api/')) {
             host = host.substr(0, host.length - 4);
         }
 
-        window.location.href = host + "diagram/src/main/webapp/index.html" +
-            "?j=" + jwt +
-            "&h=" + apiUrl, sessionStorage.getItem('assessmentId');
+        window.location.href = host + 'diagram/src/main/webapp/index.html' +
+            '?j=' + jwt +
+            '&h=' + apiUrl +
+            '&c=' + 'http://localhost:4200',
+            sessionStorage.getItem('assessmentId');
     }
     sendToInventory() {
-        this.router.navigateByUrl("/assessment/" + sessionStorage.getItem('assessmentId') + "/diagram/inventory");
+        this.router.navigateByUrl('/assessment/' + sessionStorage.getItem('assessmentId') + '/diagram/inventory');
     }
 }
