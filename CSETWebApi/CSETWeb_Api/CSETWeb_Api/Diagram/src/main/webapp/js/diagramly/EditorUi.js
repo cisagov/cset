@@ -284,16 +284,12 @@
         }
 
         try {
-            console.log('EditorUI - A');
-
             var canvas = document.createElement('canvas');
             var img = new Image();
 
             // LATER: Capability check should not be async
             img.onload = function () {
                 try {
-                    console.log('EditorUI - B');
-
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0);
 
@@ -743,7 +739,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.createFileData = function (node, graph, file, url, forceXml, forceSvg, forceHtml, embeddedCallback, ignoreSelection, compact) {
-        console.log("EditorUi.prototype.createFileData (diagramly)");
         graph = (graph != null) ? graph : this.editor.graph;
         forceXml = (forceXml != null) ? forceXml : false;
         ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
@@ -840,7 +835,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.getXmlFileData = function (ignoreSelection, currentPage) {
-        console.log("EditorUi.prototype.getXmlFileData (diagramly)");
         ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
         currentPage = (currentPage != null) ? currentPage : false;
 
@@ -879,7 +873,6 @@
 	 * Removes any values, styles and geometries from the given XML node.
 	 */
     EditorUi.prototype.anonymizeString = function (text, zeros) {
-        console.log("EditorUi.prototype.anonymizeString (diagramly)");
         var result = [];
 
         for (var i = 0; i < text.length; i++) {
@@ -1087,7 +1080,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.getFileData = function (forceXml, forceSvg, forceHtml, embeddedCallback, ignoreSelection, currentPage, node, compact, file) {
-        console.log("EditorUi.prototype.getFileData (diagramly)");
         ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
         currentPage = (currentPage != null) ? currentPage : false;
 
@@ -1367,7 +1359,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.downloadFile = function (format, nonCompressed, addShadow, ignoreSelection, currentPage, pageVisible, transparent) {
-        console.log("EditorUi.prototype.downloadFile (diagramly)");
         try {
             ignoreSelection = (ignoreSelection != null) ? ignoreSelection : this.editor.graph.isSelectionEmpty();
             var basename = this.getBaseFilename(!currentPage);
@@ -1513,8 +1504,6 @@
             bg = '#ffffff';
         }
 
-        console.log('createDownloadRequest');
-
         return new mxXmlRequest(EXPORT_URL, 'format=' + format + range + allPages +
             '&bg=' + ((bg != null) ? bg : mxConstants.NONE) +
             '&base64=' + base64 + '&embedXml=' + embed + '&xml=' +
@@ -1644,7 +1633,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.updateDiagram = function (xml) {
-        console.log("EditorUi.prototype.updateDiagram (diagramly)");
         var doc = null;
         var ui = this;
 
@@ -1881,7 +1869,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.fileLoaded = function (file, noDialogs) {
-        console.log("EditorUi.prototype.fileLoaded (diagramly)");
 
         var oldFile = this.getCurrentFile();
         this.fileLoadedError = null;
@@ -3449,7 +3436,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.saveLocalFile = function (data, filename, mimeType, base64Encoded, format, allowBrowser, allowTab) {
-        console.log('EditorUi.prototype.saveLocalFile');
 
         allowBrowser = (allowBrowser != null) ? allowBrowser : false;
         allowTab = (allowTab != null) ? allowTab : (format != 'vsdx') && (!mxClient.IS_IOS || !navigator.standalone);
@@ -3669,7 +3655,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.saveRequest = function (filename, format, fn, data, base64Encoded, mimeType, allowTab) {
-        console.log('EditorUi.prototype.saveRequest');
 
         allowTab = (allowTab != null) ? allowTab : !mxClient.IS_IOS || !navigator.standalone;
         var count = this.getServiceCount(false);
@@ -4747,14 +4732,10 @@
                         '&h=' + Math.round(2 * bounds.height);
                 }
 
-                console.log('createEmbedImage');
-
                 var embed = (lightbox) ? '1' : '0';
                 var req = new mxXmlRequest(EXPORT_URL, 'format=png' +
                     '&base64=1&embedXml=' + embed + size + '&xml=' +
                     encodeURIComponent(data));
-
-                console.log(req);
 
                 // LATER: Updates on each change, add a delay
                 req.send(mxUtils.bind(this, function () {
@@ -5817,7 +5798,6 @@
 	 * Imports the given Lucidchart data.
 	 */
     EditorUi.prototype.convertLucidChart = function (data, success, error) {
-        console.log(data);
 
         var delayed = mxUtils.bind(this, function () {
             this.loadingExtensions = false;
@@ -8799,7 +8779,6 @@
                                 }), null, null, null, null, null, null, graph);
                             }
                             else {
-                                console.log('installMessageHandler');
 
                                 // Data from server is base64 encoded to avoid binary XHR
                                 // Double encoding for XML arg is needed for UTF8 encoding
@@ -8807,7 +8786,6 @@
                                     ((data.format == 'xmlpng') ? '1' : '0') + '&base64=1&xml=' +
                                     encodeURIComponent(encodeURIComponent(xml)));
 
-                                console.log(req);
 
                                 req.send(mxUtils.bind(this, function (req) {
                                     // Temp graph was never created at this point so we can
@@ -10122,7 +10100,6 @@
         ExportDialog.exportFile = function (editorUi, name, format, bg, s, b) {
             var graph = editorUi.editor.graph;
 
-            console.log('EditorUI data');
 
             if (format == 'xml') {
                 editorUi.hideDialog();
