@@ -2543,6 +2543,12 @@ PropertiesPanel.prototype.addProperties = function (container)
         ctl.style.right = '20px';
         ctl.style.width = '97px';
         ctl.style.marginTop = '-2px';
+        ctl.style.zIndex = '1000';
+
+        if (pp.type === 'textarea')
+        {
+            ctl.style.height = '200px';
+        }
 
         if (pp.type === 'select')
         {

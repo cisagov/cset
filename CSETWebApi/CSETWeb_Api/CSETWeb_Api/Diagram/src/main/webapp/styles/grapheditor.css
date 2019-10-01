@@ -43,6 +43,9 @@
 	border-bottom:1px solid #dadce0;
 	border-color:#dadce0;
 }
+.geFormatSection textarea {
+    font-family: Arial;
+}
 .geDiagramContainer {
 	background-color:#ffffff;
 	font-size:0px;
