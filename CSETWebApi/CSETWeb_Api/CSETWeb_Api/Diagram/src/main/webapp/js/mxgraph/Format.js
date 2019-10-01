@@ -2525,6 +2525,12 @@ PropertiesPanel.prototype.addProperties = function (container)
         mxUtils.write(panel, pp.fieldLabel);
 
         var ctl = document.createElement(pp.type);
+        if (pp.type == 'checkbox')
+        {
+            ctl = document.createElement('input');
+            ctl.setAttribute('type', 'checkbox');
+        }
+
         panel.appendChild(ctl);
         ctl.setAttribute('propname', pp.attributeName);
         ctl.style.position = 'absolute';
@@ -2575,8 +2581,15 @@ PropertiesPanel.prototype.addProperties = function (container)
             ctl.setAttribute('disabled', true);
         }
 
-        ctl.value = cell.getCsetAttribute(pp.attributeName);
 
+        if (ctl.getAttribute('type') === 'checkbox')
+        {
+            ctl.checked = cell.getCsetAttribute(pp.attributeName);
+        }
+        else
+        {
+            ctl.value = cell.getCsetAttribute(pp.attributeName);
+        }
 
 
         // special cases
@@ -2605,11 +2618,20 @@ PropertiesPanel.prototype.addProperties = function (container)
         {
             var cell = graph.getSelectionCell();
             var ctl = evt.srcElement;
-            
+
+
+            console.log(ctl);
+
+
             if (ctl.getAttribute('propname') == 'ComponentType')
             {
                 cell.removeStyleValue('image');
                 cell.setStyleValue('image;image', 'img/cset/' + ctl.value);
+            }
+            else if (ctl.getAttribute('type') === 'checkbox')
+            {
+                console.log('I am a checkbox');
+                cell.setCsetAttribute(ctl.getAttribute('propname'), true);
             }
             else
             {
@@ -2714,6 +2736,10 @@ diagramElementProperties = function ()
                 fieldLabel: 'Host Name',
                 attributeName: 'HostName',
                 type: 'input'
+            }, {
+                fieldLabel: 'Has Unique Questions',
+                attributeName: 'UniqueQuestions',
+                type: 'checkbox'
             }, {
                 fieldLabel: 'Description',
                 attributeName: 'Description',
