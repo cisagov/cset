@@ -23,6 +23,8 @@ namespace DataLayerCore.Model
         [Column(TypeName = "ntext")]
         public string Comment { get; set; }
         [Column(TypeName = "ntext")]
+        public string FeedBack { get; set; }
+        [Column(TypeName = "ntext")]
         public string Alternate_Justification { get; set; }
         public int? Question_Number { get; set; }
         [Required]

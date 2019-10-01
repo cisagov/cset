@@ -213,6 +213,7 @@ export class QuestionBlockComponent implements OnInit {
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
         Comment: q.Comment,
+        FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed
       };
@@ -249,6 +250,7 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
+      FeedBack: q.FeedBack,
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed
     };
@@ -276,6 +278,7 @@ export class QuestionBlockComponent implements OnInit {
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
         Comment: q.Comment,
+        FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed
       };
@@ -321,6 +324,7 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: '',
+      FeedBack: '',
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed
     };
