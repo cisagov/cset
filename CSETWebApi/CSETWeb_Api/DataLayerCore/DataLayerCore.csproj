@@ -142,6 +142,7 @@
     <Compile Include="extensions\IQueryableExtensionsForGeneratedSql.cs" />
     <Compile Include="FileRepository.cs" />
     <Compile Include="IFileRepository.cs" />
+    <Compile Include="Manual\Answer_Components_Base.cs" />
     <Compile Include="Manual\ANSWER.cs" />
     <Compile Include="Manual\Answer_Components.cs" />
     <Compile Include="Manual\Answer_Components_Overrides.cs" />

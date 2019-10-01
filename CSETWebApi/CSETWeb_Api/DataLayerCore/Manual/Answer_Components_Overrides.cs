@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 
+using DataLayerCore.Manual;
 using System.ComponentModel.DataAnnotations;
 
 /// <summary>
@@ -12,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 /// </summary>
 namespace DataLayerCore.Model
 {
-    public class Answer_Components_Overrides:Answer_Components_Default
-    {
+    public partial class Answer_Components_Overrides:Answer_Components_Base
+    {  
     }
 }
