@@ -23,10 +23,14 @@ namespace CSETWeb_Api.Models
         public int QuestionCount;
         public int RequirementCount;
 
+        public List<QuestionGroup> DefaultComponents;
+
         /// <summary>
         /// The calculated IRP.  If overridden, the override is returned.
         /// </summary>
         public int OverallIRP;
+
+        public int DefaultComponentsCount { get; internal set; }
     }
 
     /// <summary>
