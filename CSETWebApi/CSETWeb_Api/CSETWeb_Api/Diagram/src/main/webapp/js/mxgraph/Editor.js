@@ -391,7 +391,7 @@ Editor.getOverallSAL = function ()
                         resolve(Editor.overallSAL);
                         break;
                     case 401:
-                        window.location.replace(window.location.origin);
+                        window.location.replace(localStorage.getItem('cset.client'));
                         break;
                 }
             }
