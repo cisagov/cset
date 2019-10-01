@@ -2477,6 +2477,12 @@ PropertiesPanel.prototype.addProperties = function (container)
         return;
     }
 
+    // if text, don't show the properties panel.
+    if (cell.hasStyle("text"))
+    {
+        return;
+    }
+
     // if a group is selected, don't show the properties panel.
     if (cell.hasStyle("group"))
     {
