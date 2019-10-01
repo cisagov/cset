@@ -15,7 +15,6 @@ function Actions(editorUi)
  * Adds the default actions.
  */
 Actions.prototype.init = function () {
-    console.log("In the init function");
     var ui = this.editorUi;
     var editor = ui.editor;
     var graph = editor.graph;
@@ -182,7 +181,6 @@ Actions.prototype.init = function () {
     }, null, null, 'Alt+Shit+V');
 
     function deleteCells(includeEdges) {
-        console.log("in the delete");
         // Cancels interactive operations
         graph.escape();
         var cells = graph.getDeletableCells(graph.getSelectionCells());
