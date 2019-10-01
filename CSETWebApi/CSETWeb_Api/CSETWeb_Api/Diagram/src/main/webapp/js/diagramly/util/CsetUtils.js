@@ -597,7 +597,8 @@ CsetUtils.getCoords = function (warning, graph)
         coords.x = (s1.origin.x + s2.origin.x) / 2;
         coords.y = (s1.origin.y + s2.origin.y) / 2;
 
-        // CsetUtils.getTrueEdgeCoordinates(e, coords);
+        // then, try to place the dot so that it will be on the line no matter what.
+        // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
 
         // fine-tune here if needed
         coords.x = coords.x - 15;
@@ -614,23 +615,29 @@ CsetUtils.getCoords = function (warning, graph)
  * Still experimenting with this.  The goal is to find the correct location for
  * the red dot on the edge, regardless of where the edge is routed.
  */
-CsetUtils.getTrueEdgeCoordinates = function(e, coords)
+CsetUtils.getTrueEdgeCoordinates = function (graph, e, coords)
 {
     const v = graph.view;
     const s = v.getState(e);
 
-    console.log(s);
-    console.log('Scale: ' + v.scale);
-    // console.log('Routing Center: ' + v.getRoutingCenterX(s) + ', ' + v.getRoutingCenterY(s));
-    console.log('State absolute offset: ');
-    console.log({ x: s.absoluteOffset.x, y: s.absoluteOffset.y });
-    console.log('View translate: ');
-    console.log({ x: v.translate.x, y: v.translate.y });
-    console.log('State xy: ');
-    console.log({ x: s.x, y: s.y });
 
-    coords.x = (s.absoluteOffset.x - v.translate.x);
-    coords.y = (s.absoluteOffset.y - v.translate.y);
+    const overlay = graph.setCellWarning(e, 'XYZ');
+    var pt = s.view.getPoint(s, { x: 0, y: 0, relative: true });
+    console.log(pt);
+    // REMOVE THE OVERLAY AFTER WE HAVE THE COORDS - graph.removeCellOverlay(e);
+
+    var xxx = graph.insertVertex(graph.getModel().root, null, 'X', null, null, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#007700;strokeColor=#007700;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+    var ptDot = graph.insertVertex(graph.getModel().root, null, 'PT', pt.x, pt.y, 10, 10, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#0000ff;strokeColor=#0000ff;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+    const refPoint = v.graphBounds.getPoint(1);
+    console.log(refPoint);
+
+    var refDot = graph.insertVertex(graph.getModel().root, null, 'R', refPoint.x, refPoint.y, 10, 10, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#5500ff;strokeColor=#5500ff;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+
+    console.log('state');
+    console.log(s);  
+
+    coords.x = pt.x - refPoint.x;
+    coords.y = pt.y - refPoint.y;
 }
 
 
