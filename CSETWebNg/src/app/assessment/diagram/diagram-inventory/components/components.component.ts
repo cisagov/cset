@@ -8,7 +8,7 @@ import { DiagramService } from '../../../../services/diagram.service';
 })
 export class ComponentsComponent implements OnInit {
   components: any;
-  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layer', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visible'];
+  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
   sal: any;
   criticality: any;
