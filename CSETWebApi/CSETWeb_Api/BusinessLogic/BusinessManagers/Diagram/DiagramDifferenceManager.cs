@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using BusinessLogic.Helpers;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 {
@@ -142,12 +143,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     }
 
                     context.SaveChanges();
-                    Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);                    
+                    Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
+                    int defaultLayer = context.DIAGRAM_CONTAINER
+                        .Where(x => x.Assessment_Id == assessment_id && x.ContainerType == "Layer").ToList()
+                        .Min(x => x.Assessment_Id);
                     foreach (var zone in differences.AddedZones)
                     {
                         var z = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key).FirstOrDefault();
                         if (z == null)
                         {
+                            int parent_id = 0;
+                            if (!layerLookup.TryGetValue(zone.Value.Parent_id, out parent_id))
+                            {
+                                parent_id = defaultLayer;
+                            }
                             z = new DIAGRAM_CONTAINER()
                             {
                                 Assessment_Id = assessment_id,
@@ -155,7 +164,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                                 DrawIO_id = zone.Key,
                                 Name = zone.Value.ComponentName,
                                 Universal_Sal_Level = zone.Value.SAL,
-                                Parent_Id = layerLookup[zone.Value.Parent_id]
+                                Parent_Id = parent_id
                             };
                             context.DIAGRAM_CONTAINER.Add(z);
                             
@@ -288,7 +297,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 diagram.Layers.Add(id, new NetworkLayer()
                 {
                     ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : "Main Layer",
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DefaultLayerName,
                     Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
                 });
             }
@@ -440,7 +449,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         private Dictionary<Guid, NetworkComponent> ProcessDiagram(XmlDocument doc)
         {   
-            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object");
+            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object[not(mxCell[@parent=0])]");
             return processNodes(cells);
         }
 

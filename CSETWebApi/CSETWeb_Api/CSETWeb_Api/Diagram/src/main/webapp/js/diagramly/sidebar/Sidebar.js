@@ -807,7 +807,6 @@
 			}
 		}
 
-        console.log('about to call addCSETPalettes');
         this.addCSETPalettes();
 
 

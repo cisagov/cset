@@ -6,7 +6,6 @@
  */
 Editor = function (chromeless, themes, model, graph, editable)
 {
-    console.log("this is the editor starting");
     mxEventSource.call(this);
     this.chromeless = (chromeless != null) ? chromeless : this.chromeless;
     this.initStencilRegistry();
@@ -48,8 +47,12 @@ Editor = function (chromeless, themes, model, graph, editable)
             this.setModified(true);
         }
 
-        // Only persist if actual changes occurred.  An mxRootChange is likely a new diagram.
-        if (!(edit.changes[0] instanceof mxRootChange))
+        var isRedDotAddEvent = edit.changes[0] instanceof mxChildChange && edit.changes[0].child.style.indexOf('redDot') >= 0;
+
+        // Only persist if actual changes occurred.  
+        // An mxRootChange is likely a new diagram.
+        // Also ignore 'red dot add' events.  
+        if (!(edit.changes[0] instanceof mxRootChange) && !isRedDotAddEvent)
         {
             CsetUtils.adjustConnectability(edit);
 
@@ -314,9 +317,88 @@ Editor.prototype.editBlankUrl = window.location.protocol + '//' + window.locatio
 Editor.prototype.defaultGraphOverflow = 'hidden';
 
 /**
+ * Contains the list of supported CSET components.
+ */
+Editor.prototype.componentSymbols = null;
+
+/**
+ * Contains the assessment's overall SAL value.
+ */
+Editor.prototype.overallSAL = null;
+
+/**
  * Initializes the environment.
  */
-Editor.prototype.init = function () { };
+Editor.prototype.init = function ()
+{
+    Editor.getComponentSymbols();
+    Editor.getOverallSAL();
+};
+
+
+/**
+ * Initializes the component symbols collection.
+ */
+Editor.getComponentSymbols = function ()
+{
+    return new Promise(function (resolve, reject)
+    {
+        if (!!Editor.componentSymbols)
+        {
+            resolve(Editor.componentSymbols);
+        }
+        // Get the component symbols structure
+        var url = localStorage.getItem('cset.host') + 'diagram/symbols/get';
+
+        mxUtils.get(url,
+            function (req)
+            {
+                Editor.componentSymbols = JSON.parse(req.request.responseText);
+                resolve(Editor.componentSymbols);
+            },
+            function ()
+            {
+                reject('ERROR:  Could not reach diagram/symbols/get');
+            });
+    });
+}
+
+
+/**
+ * Retrieves and stores the assessment's overall SAL.
+ */
+Editor.getOverallSAL = function ()
+{
+    return new Promise(function (resolve, reject)
+    {
+        makeRequest({
+            method: 'GET',
+            url: localStorage.getItem('cset.host') + 'SAL',
+            // payload: JSON.stringify({}),
+            onreadystatechange: function (e)
+            {
+                if (e.readyState !== 4)
+                {
+                    return;
+                }
+
+                switch (e.status)
+                {
+                    case 200:
+                    case 204:
+                        const sal = JSON.parse(e.responseText);
+                        Editor.overallSAL = sal.Selected_Sal_Level;
+                        resolve(Editor.overallSAL);
+                        break;
+                    case 401:
+                        window.location.replace(window.location.origin);
+                        break;
+                }
+            }
+        });
+    });
+}
+
 
 /**
  * Sets the XML node for the current diagram.
