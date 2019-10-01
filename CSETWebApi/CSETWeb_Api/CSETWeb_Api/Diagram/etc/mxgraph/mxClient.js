@@ -9657,12 +9657,14 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
     {
         return;
     }    
-    if(cell.getCsetAttribute("redDot")== '1'){
+
+    if (cell.getCsetAttribute("redDot") == '1')
+    {
         return;
     }
 
-    // assign a component GUID to components (not zones or MSCs)
-    if (cell.getStyleValue('zone') != '1' && cell.getStyleValue('msc') != '1')
+    // assign a component GUID to components (not zones)
+    if (cell.getStyleValue('zone') != '1')
     {
         var nextGuid = guidService.getInstance().getNextGuid();
         cell.setCsetAttribute('ComponentGuid', nextGuid);
@@ -9702,7 +9704,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell)
         // convert the MSC into a swimlane (container)
         cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
         cell.geometry.width = 230;
-        cell.geometry.height = 120;
+        cell.geometry.height = 140;
     }
 }
 
@@ -15088,7 +15090,14 @@ mxGraph.prototype.isLabelClipped = function (a) {
     a = null != b ? b.style : this.getCellStyle(a);
     return null != a ? "hidden" == a[mxConstants.STYLE_OVERFLOW] : !1
 };
-mxGraph.prototype.getTooltip = function (a, b, c, d) {
+mxGraph.prototype.getTooltip = function (a, b, c, d)
+{
+    // Override content for red dots (CSET)
+    if (a.cell.isRedDot())
+    {
+        return (!!a.cell.warningMsg) ? '<div style="max-width: 300px">' + a.cell.warningMsg + '</div>' : 'RED DOT';
+    }
+
     var e = null;
     null != a && (null == a.control || b != a.control.node && b.parentNode != a.control.node || (e = this.collapseExpandResource, e = mxUtils.htmlEntities(mxResources.get(e) || e).replace(/\\n/g, "<br>")), null == e && null != a.overlays && a.overlays.visit(function (a, c) {
             null != e || b != c.node && b.parentNode != c.node || (e = c.overlay.toString())
@@ -19755,8 +19764,7 @@ mxTooltipHandler.prototype.reset = function (a, b, c) {
                 g = a.isSource(c.shape) || a.isSource(c.text);
             this.thread = window.setTimeout(mxUtils.bind(this, function () {
                 if (!this.graph.isEditing() && !this.graph.popupMenuHandler.isMenuShowing() && !this.graph.isMouseDown) {
-                    var a =
-                        this.graph.getTooltip(c, d, e, f);
+                    var a = this.graph.getTooltip(c, d, e, f);
                     this.show(a, e, f);
                     this.state = c;
                     this.node = d;
@@ -19772,7 +19780,8 @@ mxTooltipHandler.prototype.hide = function () {
 mxTooltipHandler.prototype.hideTooltip = function () {
     null != this.div && (this.div.style.visibility = "hidden", this.div.innerHTML = "")
 };
-mxTooltipHandler.prototype.show = function (a, b, c) {
+mxTooltipHandler.prototype.show = function (a, b, c)
+{
     if (!this.destroyed && null != a && 0 < a.length) {
         null == this.div && this.init();
         var d = mxUtils.getScrollOrigin();
