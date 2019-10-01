@@ -144,6 +144,7 @@
     <Compile Include="IFileRepository.cs" />
     <Compile Include="Manual\ANSWER.cs" />
     <Compile Include="Manual\Answer_Components.cs" />
+    <Compile Include="Manual\Answer_Components_Overrides.cs" />
     <Compile Include="Manual\Answer_Questions.cs" />
     <Compile Include="Manual\Answer_Questions_No_Components.cs" />
     <Compile Include="Manual\CSET_Context.cs" />
@@ -166,7 +167,7 @@
     <Compile Include="ModelDataAccess\FileResult.cs" />
     <Compile Include="Model\ADDRESS.cs" />
     <Compile Include="Model\ANSWER.cs" />
-    <Compile Include="Model\Answer_Components_Default.cs" />
+    <Compile Include="Manual\Answer_Components_Default.cs" />
     <Compile Include="Model\ANSWER_LOOKUP.cs" />
     <Compile Include="Model\APP_CODE.cs" />
     <Compile Include="Model\ASSESSMENTS.cs" />
