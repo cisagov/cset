@@ -15,34 +15,27 @@ CsetUtils = function ()
 {
 }
 
-function updateGraph(editor, data, finalize)
-{
+function updateGraph(editor, data, finalize) {
     let graph = Graph.zapGremlins(mxUtils.trim(data));
     graph = graph.replace(/\\"/g, '"').replace(/^\"|\"$/g, ''); // fix escaped quotes and trim quotes
 
-    return new Promise(function (resolve, reject)
-    {
+    return new Promise(function (resolve, reject) {
         editor.graph.model.beginUpdate();
-        try
-        {
+        try {
             editor.setGraphXml(mxUtils.parseXml(graph).documentElement);
             resolve();
-        } catch (err)
-        {
+        } catch (err) {
             console.warn('Failed to set graph xml:', err);
             reject(err);
-        } finally
-        {
+        } finally {
             editor.graph.model.endUpdate();
 
-            if (finalize)
-            {
+            if (finalize) {
                 finalize();
             }
 
             editor.graph.fit();
-            if (editor.graph.view.scale > 1)
-            {
+            if (editor.graph.view.scale > 1) {
                 editor.graph.zoomTo(1);
             }
         }
@@ -142,20 +135,16 @@ CsetUtils.adjustConnectability = function (edit)
 /**
  * Retrieves the graph from the CSET API if it has been stored.
  */
-CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
-{
+CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
     await makeRequest({
         method: 'GET',
         url: localStorage.getItem('cset.host') + 'diagram/get',
-        onreadystatechange: function (e)
-        {
-            if (e.readyState !== 4)
-            {
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
                 return;
             }
 
-            switch (e.status)
-            {
+            switch (e.status) {
                 case 200:
                     const resp = JSON.parse(e.responseText);
                     const assessmentName = resp.AssessmentName;
@@ -286,7 +275,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
  */
 CsetUtils.saveDiagram = async function (req)
 {
-    const response = await makeRequest({
+    await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
         url: localStorage.getItem('cset.host') + 'diagram/save',
@@ -499,31 +488,6 @@ CsetUtils.getFilenameFromPath = function (path)
     return path;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Create the red dots.  Maybe move this to its own class.
  */
@@ -539,4 +503,27 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
     {
         console.log(w);
     });
+}
+
+CsetUtils.getCsetTemplates = async function () {
+    let templates;
+    await makeRequest({
+        method: 'GET',
+        url: localStorage.getItem('cset.host') + 'diagram/templates',
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
+                return;
+            }
+
+            switch (e.status) {
+                case 200:
+                    templates = JSON.parse(e.responseText);
+                    break;
+                case 401:
+                    window.location.replace('http://localhost:4200');
+                    break;
+            }
+        }
+    });
+    return templates;
 }
