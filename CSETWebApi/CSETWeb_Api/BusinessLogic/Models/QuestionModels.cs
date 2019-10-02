@@ -96,6 +96,7 @@ namespace CSETWeb_Api.Models
         /// Indicates the maturity level of the question/requirement/statement
         /// </summary>
         public string MaturityLevel { get; set; }
+        public bool Is_Component { get; set; }
     }
 
 

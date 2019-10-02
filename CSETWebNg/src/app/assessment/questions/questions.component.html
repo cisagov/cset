@@ -105,15 +105,13 @@
         All maturity filters are deselected for this domain. Select one or more maturity levels to view questions.
       </span>
     </div>
-
   </div>
 
   <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0"
     class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
     <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-      There are no questions visible for the current filters or search criteria. Please change your selections and try
-      again.
+      There are no questions visible for the current filters or search criteria. Please change your selections and try again.
     </span>
   </div>
 
