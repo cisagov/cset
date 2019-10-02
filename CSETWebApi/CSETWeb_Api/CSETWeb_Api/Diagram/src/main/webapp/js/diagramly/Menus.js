@@ -1414,9 +1414,7 @@
 			}
         });
 
-        editorUi.actions.addAction('diagramInventory...', function () {
-            editorUi.openLink('../../../../Documents/htmlhelp/index.htm');
-        });
+        
 		
 		editorUi.actions.put('embedHtml', new Action(mxResources.get('html') + '...', function()
 		{
@@ -2966,7 +2964,7 @@
 				//this.addMenuItems(menu, ['autosave'], parent);
 			}
 
-			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram', 'diagramInventory'], parent);
+			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram'], parent);
 
 			menu.addSeparator(parent);
 			
