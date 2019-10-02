@@ -159,7 +159,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                     // add space for readability
                     zoneType = "External DMZ";
                 }
-                xObject.SetAttribute("zoneType", zoneType);
+                xObject.SetAttribute("ZoneType", zoneType);
 
                 xObject.SetAttribute("zone", "1");
 

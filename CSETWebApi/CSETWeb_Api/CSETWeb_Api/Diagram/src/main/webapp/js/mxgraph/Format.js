@@ -2792,7 +2792,7 @@ diagramElementProperties = function ()
             },
             {
                 fieldLabel: 'Type',
-                attributeName: 'zoneType',
+                attributeName: 'ZoneType',
                 type: 'select',
                 values: [
                     'Control DMZ',
