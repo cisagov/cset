@@ -16,8 +16,7 @@ namespace CSET_Main.Questions.ComponentOverride
     {
         public string TypeComponetXML { get; set; }
         public string Type { get; set; }     
-        public bool Enabled { get; set; }
-
+        public bool Enabled { get; set; }        
       
     }
 }
