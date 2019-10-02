@@ -309,7 +309,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 {
                     ID = id,                    
                     Parent_id = layerid,
-                    ZoneType = zone.Attributes["zoneType"].Value,
+                    ZoneType = zone.Attributes["ZoneType"].Value,
                     SAL = zone.Attributes["SAL"].Value,
                     ComponentName = zone.Attributes["label"].Value
                 });
