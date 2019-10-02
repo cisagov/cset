@@ -23,10 +23,14 @@ namespace CSETWeb_Api.Models
         public int QuestionCount;
         public int RequirementCount;
 
+        public List<QuestionGroup> DefaultComponents;
+
         /// <summary>
         /// The calculated IRP.  If overridden, the override is returned.
         /// </summary>
         public int OverallIRP;
+
+        public int DefaultComponentsCount { get; internal set; }
     }
 
     /// <summary>
@@ -71,6 +75,7 @@ namespace CSETWeb_Api.Models
         public string Answer;
         public string AltAnswerText;
         public string Comment;
+        public string FeedBack;
         public bool MarkForReview;
         public string SetName;
 
@@ -81,6 +86,7 @@ namespace CSETWeb_Api.Models
         public bool Reviewed;
         public bool HasComment { get; set; }        
         public bool HasDocument { get; set; }
+        public bool HasFeedBack { get; set; }
         public int docnum { get; set; }
         public bool HasDiscovery { get; set; }
         public int findingnum { get; set; }
@@ -109,6 +115,7 @@ namespace CSETWeb_Api.Models
         public string AnswerText;
         public string AltAnswerText;
         public string Comment;
+        public string FeedBack;
         public bool MarkForReview;
 
         /// <summary>

@@ -743,15 +743,6 @@
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.AnalyzeDiagram(CSETWeb_Api.Models.DiagramRequest)">
-            <summary>
-            Analyzes the diagram XML in the database.
-            
-            RKW - THIS IS A STUB.  BARRY WILL BE PROVIDING THE REAL ONE.
-            
-            </summary>
-            <param name="req"></param>
-        </member>
         <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveDiagram(CSETWeb_Api.Models.DiagramRequest)">
             <summary>
             Persists the diagram XML in the database.
@@ -1002,6 +993,13 @@
             </summary>
             <param name="Answer_Id"></param>
             <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.SaveComponentOverride(System.String,System.Boolean)">
+            <summary>
+            this will explode the provided guid and 
+            </summary>
+            <param name="guid"></param>
+            <param name="ShouldSave">true means explode and save false is delete these questions</param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.RenameDocument(System.Int32,System.String)">
             <summary>

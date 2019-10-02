@@ -28,7 +28,7 @@ SOFTWARE.
 @import 'cset-font-styles.css';
 @import 'cset2-font-styles.css';
 
-* {
+*:not(font) {
   font-family: 'Roboto', sans-serif;
 }
 

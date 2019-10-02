@@ -2144,8 +2144,6 @@ App.prototype.getDiagramId = function ()
  */
 App.prototype.open = function ()
 {
-    console.log("App.prototype.open");
-
     // Cross-domain window access is not allowed in FF, so if we
     // were opened from another domain then this will fail.
     try
@@ -2880,7 +2878,6 @@ App.prototype.addLanguageMenu = function (elt, addLabel)
  */
 App.prototype.pickFile = function (mode)
 {
-    console.log("App.prototype.pickFile");
     try
     {
         mode = (mode != null) ? mode : this.mode;
@@ -2986,8 +2983,6 @@ App.prototype.pickFile = function (mode)
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.pickLibrary = function (mode) {
-    console.log("App.prototype.pickLibrary");
-
     mode = (mode != null) ? mode : this.mode;
 
     if (mode == App.MODE_GOOGLE || mode == App.MODE_DROPBOX || mode == App.MODE_ONEDRIVE || mode == App.MODE_GITHUB || mode == App.MODE_TRELLO) {
@@ -3104,7 +3099,6 @@ App.prototype.pickLibrary = function (mode) {
  */
 App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload, fn)
 {
-    console.log("App.prototype.saveLibrary");
     try
     {
         mode = (mode != null) ? mode : this.mode;
@@ -3269,7 +3263,6 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
  */
 App.prototype.saveFile = function (forceDialog, success)
 {
-    console.log("App.prototype.saveFile");
     var file = this.getCurrentFile();
 
     if (file != null)
@@ -3381,7 +3374,6 @@ App.prototype.saveFile = function (forceDialog, success)
  */
 App.prototype.loadTemplate = function (url, onload, onerror, templateFilename)
 {
-    console.log("App.prototype.loadTemplate");
     var base64 = false;
     var realUrl = url;
 
@@ -3456,7 +3448,6 @@ App.prototype.loadTemplate = function (url, onload, onerror, templateFilename)
  */
 App.prototype.getPeerForMode = function (mode)
 {
-    console.log("App.prototype.getPeerForMode");
     if (mode == App.MODE_GOOGLE)
     {
         return this.drive;
@@ -3490,7 +3481,6 @@ App.prototype.getPeerForMode = function (mode)
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.createFile = function (title, data, libs, mode, done, replace, folderId, tempFile) {
-    console.log("App.prototype.createFile");
     mode = tempFile ? undefined  : mode || this.mode;
 
     if (title && this.spinner.spin(document.body, mxResources.get('inserting'))) {
@@ -3591,7 +3581,6 @@ App.prototype.createFile = function (title, data, libs, mode, done, replace, fol
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.fileCreated = function (file, libs, replace, done) {
-    console.log("App.prototype.fileCreated");
     let url = window.location.pathname;
     if (libs) {
         url += `?libs=${libs}`;
@@ -3705,8 +3694,6 @@ App.prototype.fileCreated = function (file, libs, replace, done) {
  */
 App.prototype.loadFile = function (id, sameWindow, file, success, force)
 {
-    console.log("App.prototype.loadFile (diagramly)");
-
     this.hideDialog();
 
     var fn2 = mxUtils.bind(this, function ()

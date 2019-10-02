@@ -67,23 +67,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 connection.Close();
             }
         }
-        /*
-         * [Mark_For_Review] [bit] NULL,
-	[Comment] [ntext] NULL,
-	[Alternate_Justification] [ntext] NULL,
-	[Is_Requirement] [bit] NOT NULL,
-	[Question_Or_Requirement_Id] [int] NOT NULL,
-	[Component_Id] [int] NOT NULL,
-	[Question_Number] [int] NULL,
-	[Answer_Text] [varchar](50) NOT NULL,
-	[Component_Guid] [char](36) NULL,
-	[Is_Component] [bit] NOT NULL,
-	[Custom_Question_Guid] [varchar](50) NULL,
-	[Is_Framework] [bit] NOT NULL,
-	[Answer_Id] [int] IDENTITY(1,1) NOT NULL,
-	[Assessment_Id] [int] NOT NULL,
-	[Old_Answer_Id] [int] NULL,
-         */
     }
 
     public static class BulkUploadToSqlHelper
