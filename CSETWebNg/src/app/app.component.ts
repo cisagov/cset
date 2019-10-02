@@ -106,8 +106,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (!rpath) {
       return false;
     }
-    if (rpath === '/moduleBuilder'
-      || rpath === '/set-list'
+    if ( rpath === '/set-list'
       || rpath.indexOf('/set-detail') > -1
       || rpath.indexOf('/requirement-list') > -1
       || rpath.indexOf('/standard-documents') > -1
