@@ -673,5 +673,27 @@ namespace CSETWeb_Api.BusinessManagers
 
             return newStyle;
         }
+
+        /// <summary>
+        /// Returns all diagram templates stored in the database.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DiagramTemplate> GetDiagramTemplates()
+        {
+            var templates = Enumerable.Empty<DiagramTemplate>();
+            using (var db = new CSET_Context())
+            {
+                templates = db.DIAGRAM_TEMPLATES
+                    .Where(x => x.Is_Visible ?? false)
+                    .OrderBy(x => x.Id)
+                    .Select(x => new DiagramTemplate {
+                        Name = x.Template_Name,
+                        ImageSource = x.Image_Source,
+                        Markup = x.Diagram_Markup
+                    })
+                    .ToArray();
+            }
+            return templates;
+        }
     }
 }

@@ -485,5 +485,22 @@ namespace CSETWeb_Api.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// get cset diagram templates
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/templates")]
+        [HttpGet]
+        public IHttpActionResult GetTemplates()
+        {
+            var tm = new TokenManager();
+            var userId = tm.PayloadInt(Constants.Token_UserId);
+
+            var dm = new DiagramManager(new CSET_Context());
+            var templates = dm.GetDiagramTemplates();
+            return Ok(templates);
+        }
     }
 }
