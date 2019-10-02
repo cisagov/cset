@@ -15,6 +15,7 @@ namespace DataLayerCore.Model
         public bool? Is_Read_Only { get; set; }
         [Required]
         public bool? Is_Visible { get; set; }
+        public string Image_Source { get; set; }
         public string Diagram_Markup { get; set; }
     }
 }
