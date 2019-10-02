@@ -15,6 +15,12 @@ CsetUtils = function ()
 {
 }
 
+/**
+ * Component attributes we don't want to show in the tooltip
+ */
+CsetUtils.ignoredAttributes = ['ComponentGuid', 'internalLabel', 'UniqueQuestions', 'zone'];
+
+
 function updateGraph(editor, data, finalize)
 {
     let graph = Graph.zapGremlins(mxUtils.trim(data));

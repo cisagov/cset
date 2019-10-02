@@ -317,7 +317,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
                 else
                 {
-                    foreach(var a in context.ANSWER.Where(x=> x.Component_Guid == guid).ToList())
+                    foreach (var a in context.ANSWER.Where(x => x.Component_Guid == guid).ToList())
                     {
                         context.ANSWER.Remove(a);
                     }
@@ -325,7 +325,6 @@ namespace CSETWeb_Api.BusinessManagers
                 }
             }
         }
-
 
 
 
