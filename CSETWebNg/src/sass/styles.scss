@@ -28,7 +28,7 @@ SOFTWARE.
 @import 'cset-font-styles.css';
 @import 'cset2-font-styles.css';
 
-* {
+*:not(font) {
   font-family: 'Roboto', sans-serif;
 }
 
@@ -199,7 +199,7 @@ label[required]::after {
 
 .footer-section-2 {
   color: $gray-50;
-  background-color: $secondary-color;
+  background-color: $primary-color;
   line-height: 2em;
 }
 

@@ -24,8 +24,7 @@ namespace CSET_Main.Questions.POCO
         string Category_Always_Universal { get; }
         List<int> ChildQuestionIDs { get; set; }
         int CNSSINumber { get; set; }
-        string Comment { get; set; }
-        int Component_Id { get; }
+        string Comment { get; set; }        
         string DefaultSetName { get; set; }
         Dictionary<string, SETS> DictionaryStandards { get; set; }
         int DocumentCount { get; set; }

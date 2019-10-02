@@ -51,7 +51,7 @@ export class QuestionExtrasComponent implements OnInit {
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
   expanded = false;
-  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC'.
+  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC', 'FDBK'.
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
 
@@ -67,10 +67,13 @@ export class QuestionExtrasComponent implements OnInit {
     public dialog: MatDialog,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
-    public assessSvc: AssessmentService) { }
+    public assessSvc: AssessmentService) {
+    }
 
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log(this.myQuestion);
+  }
 
 
   /**
@@ -106,15 +109,21 @@ export class QuestionExtrasComponent implements OnInit {
     this.questionsSvc.getDetails(this.myQuestion.QuestionId).subscribe(
       (details) => {
         this.extras = details;
-
         // populate my details with the first "non-null" tab
         this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.configSvc.showQuestionAndRequirementIDs()) {
-          this.tab.QuestionsList.forEach((q: any) => {
-            q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
-          });
+          if (this.tab) {
+            if(this.tab.IsComponent){
+
+            }
+            else{
+              this.tab.QuestionsList.forEach((q: any) => {
+                q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+              });
+            }
+          }
         }
       }
     );
@@ -130,6 +139,16 @@ export class QuestionExtrasComponent implements OnInit {
     this.saveAnswer();
   }
 
+   /**
+   *
+   * @param e
+   */
+  saveFeedBack(e) {
+    this.defaultEmptyAnswer();
+    this.answer.FeedBack = e.srcElement.value;
+    this.saveAnswer();
+  }
+ 
   /**
    *
    * @param q
@@ -152,8 +171,10 @@ export class QuestionExtrasComponent implements OnInit {
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
         Comment: '',
+        FeedBack: '',
         MarkForReview: false,
-        Reviewed: false
+        Reviewed: false,
+        Is_Component: this.myQuestion.Is_Component
       };
 
       this.answer = newAnswer;
@@ -171,6 +192,8 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.AltAnswerText = this.myQuestion.AltAnswerText;
     this.answer.MarkForReview = this.myQuestion.MarkForReview;
     this.answer.Reviewed = this.myQuestion.Reviewed;
+    this.answer.Comment = this.myQuestion.Comment;
+    this.answer.FeedBack = this.myQuestion.FeedBack;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
@@ -193,6 +216,9 @@ export class QuestionExtrasComponent implements OnInit {
     switch (mode) {
       case 'CMNT':
         return (this.myQuestion.Comment && this.myQuestion.Comment.length > 0) ? 'inline' : 'none';
+
+      case 'FDBK':
+        return (this.myQuestion.FeedBack && this.myQuestion.FeedBack.length > 0) ? 'inline' : 'none';
 
       case 'DOCS':
         // if the extras have not been pulled, get the indicator from the question list JSON
@@ -463,6 +489,8 @@ export class QuestionExtrasComponent implements OnInit {
     }
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
+
+  
 
   /**
    * check if approach exists for acet questions

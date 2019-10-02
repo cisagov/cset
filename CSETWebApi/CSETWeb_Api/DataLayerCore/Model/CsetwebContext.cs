@@ -207,15 +207,17 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Answer_Id)
                     .HasName("PK_ANSWER_1");
 
-                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Is_Requirement, e.Component_Id })
-                    .HasName("IX_ANSWER")
+                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Component_Guid, e.Is_Requirement })
+                    .HasName("IX_ANSWER_1")
                     .IsUnique();
 
                 entity.Property(e => e.Answer_Text)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('U')");
 
-                entity.Property(e => e.Component_Guid).IsUnicode(false);
+                entity.Property(e => e.Component_Guid)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('00000000-0000-0000-0000-000000000000')");
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
 
@@ -335,7 +337,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.Component_Id })
+                entity.HasKey(e => new { e.Assessment_Id, e.Component_Guid })
                     .HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
 
                 entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
@@ -2442,7 +2444,11 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<SUB_CATEGORY_ANSWERS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessement_Id, e.Heading_Pair_Id, e.Component_Id, e.Is_Component });
+                entity.HasKey(e => new { e.Assessement_Id, e.Heading_Pair_Id, e.Component_Guid, e.Is_Component });
+
+                entity.Property(e => e.Component_Guid)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Answer_Text).IsUnicode(false);
 

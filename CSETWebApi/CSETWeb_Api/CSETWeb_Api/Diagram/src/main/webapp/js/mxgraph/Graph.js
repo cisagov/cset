@@ -3053,6 +3053,9 @@ Graph.prototype.getTooltipForCell = function (cell)
                 ignored.push('link');
             }
 
+            // Hide certain CSET attributes
+            CsetUtils.ignoredAttributes.forEach(i => ignored.push(i));
+
             for (var i = 0; i < attrs.length; i++)
             {
                 if (mxUtils.indexOf(ignored, attrs[i].nodeName) < 0 && attrs[i].nodeValue.length > 0)
