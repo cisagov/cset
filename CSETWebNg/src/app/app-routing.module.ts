@@ -74,7 +74,7 @@ import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventor
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
   { path: 'importModule', component: ImportComponent },
-  { path: 'moduleBuilder', component: SetListComponent },
+  { path: 'set-list', component: SetListComponent },
   {
     path: 'home',
     component: InitialComponent,
