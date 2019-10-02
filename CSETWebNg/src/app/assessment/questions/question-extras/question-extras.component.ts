@@ -111,7 +111,6 @@ export class QuestionExtrasComponent implements OnInit {
         this.extras = details;
         // populate my details with the first "non-null" tab
         this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
-        console.log(this.tab);
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.configSvc.showQuestionAndRequirementIDs()) {
