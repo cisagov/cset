@@ -174,8 +174,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
-                        Reviewed = false,
-                        Component_Id = 0,
+                        Reviewed = false,                        
                         Is_Component = false
                     };
                     DataContext.ANSWER.Add(newAnswer);                    

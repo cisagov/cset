@@ -250,6 +250,23 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
+        /// this will explode the provided guid and 
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
+        [HttpGet]
+        [Route("api/AnswerSaveComponentOverrides")]
+        public void SaveComponentOverride([FromUri]String guid, Boolean ShouldSave)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            string applicationMode = GetApplicationMode(assessmentId);
+
+            QuestionsManager qm = new QuestionsManager(assessmentId);
+            qm.HandleGuid(guid, ShouldSave);
+        }
+
+
+        /// <summary>
         /// Changes the title of a stored document.
         /// </summary>
         /// <param name="id">The document ID</param>

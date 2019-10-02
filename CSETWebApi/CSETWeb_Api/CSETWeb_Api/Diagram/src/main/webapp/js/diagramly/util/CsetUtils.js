@@ -15,6 +15,11 @@ CsetUtils = function ()
 {
 }
 
+/**
+ * Component attributes we don't want to show in the tooltip
+ */
+CsetUtils.ignoredAttributes = ['ComponentGuid', 'internalLabel', 'UniqueQuestions', 'zone'];
+
 function updateGraph(editor, data, finalize) {
     let graph = Graph.zapGremlins(mxUtils.trim(data));
     graph = graph.replace(/\\"/g, '"').replace(/^\"|\"$/g, ''); // fix escaped quotes and trim quotes
@@ -107,21 +112,17 @@ CsetUtils.makeHttpRequest = makeRequest;
  * if it is now the child of a multi-service component. 
  * @param {any} edit
  */
-CsetUtils.adjustConnectability = function (edit)
-{
-    for (var i = 0; i < edit.changes.length; i++)
-    {
-        if (edit.changes[i] instanceof mxChildChange)
-        {
-            var c = edit.changes[i].child;
-            if (c.isEdge())
-            {
+CsetUtils.adjustConnectability = function (edit) {
+    const changes = edit.changes || [];
+    for (const change of changes) {
+        if (change instanceof mxChildChange) {
+            const c = change.child;
+            if (c.isEdge()) {
                 return;
             }
 
             // zones are not connectable
-            if (c.isZone())
-            {
+            if (c.isZone()) {
                 c.setConnectable(false);
                 return;
             }
@@ -150,17 +151,19 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
                     const assessmentName = resp.AssessmentName;
 
                     filename.innerHTML = assessmentName;
-                    if (app.currentFile) {
+                    if (app.currentFile)
+                    {
                         app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
                     }
                     sessionStorage.setItem('assessment.name', assessmentName);
-                    sessionStorage.setItem("last.number", resp.LastUsedComponentNumber);
+                    sessionStorage.setItem('last.number', resp.LastUsedComponentNumber);
 
                     var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
                     updateGraph(editor, data);
-                    break
+                    CsetUtils.clearWarningsFromDiagram(editor.graph);
+                    break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -206,14 +209,10 @@ CsetUtils.PersistGraphToCSET = async function (editor)
         }
     }
 
-    // Analyze the diagram, if the user wants to
-    if (editor.analyzeDiagram)
-    {
-        await CsetUtils.analyzeDiagram(analysisReq, editor);
-    }
+    CsetUtils.clearWarningsFromDiagram(editor.graph);
 
+    await CsetUtils.analyzeDiagram(analysisReq, editor);
 
-    // Save the diagram
     const req = {
         DiagramXml: analysisReq.DiagramXml,
         LastUsedComponentNumber: sessionStorage.getItem("last.number")
@@ -236,7 +235,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
     const response = await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
-        url: localStorage.getItem('cset.host') + 'diagram/analyze',
+        url: localStorage.getItem('cset.host') + 'diagram/warnings',
         payload: JSON.stringify(req),
         onreadystatechange: function (e)
         {
@@ -251,7 +250,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
                     // successful post            
                     break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -259,12 +258,11 @@ CsetUtils.analyzeDiagram = async function (req, editor)
 
     if (response)
     {
-        const warnings = JSON.parse(response);
-
-        CsetUtils.addWarningsToDiagram(warnings, editor.graph);
-        // RKW - not defined anywhere ... ?
-        // const analysis = new CsetAnalysisWarnings();
-        // analysis.addWarningsToDiagram(warnings, editor.graph);
+        if (editor.analyzeDiagram)
+        {
+            const warnings = JSON.parse(response);
+            CsetUtils.addWarningsToDiagram(warnings, editor.graph);
+        }
     }
 }
 
@@ -293,7 +291,7 @@ CsetUtils.saveDiagram = async function (req)
                     // successful post            
                     break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -352,7 +350,7 @@ async function TranslateToMxGraph(editor, sXML)
                     });
                     break;
                 case 401:
-                    window.location.replace('http://localhost:4200');
+                    window.location.replace(localStorage.getItem('cset.client'));
                     break;
             }
         }
@@ -489,22 +487,151 @@ CsetUtils.getFilenameFromPath = function (path)
 }
 
 /**
+ * 
+ */
+CsetUtils.clearWarningsFromDiagram = function (graph)
+{
+    var m = graph.getModel();
+    var allCells = m.getDescendants();
+
+    allCells.forEach(c =>
+    {
+        if (!!c.style && c.style.indexOf('redDot') >= 0)
+        {
+            m.remove(c);
+        }
+    });
+}
+
+/**
  * Create the red dots.  Maybe move this to its own class.
  */
 CsetUtils.addWarningsToDiagram = function (warnings, graph)
 {
-    // clear all red dots
-    var m = graph.getModel();
+    CsetUtils.clearWarningsFromDiagram(graph);
 
-    console.log(m.getChildVertices());
-
+    var root = graph.getModel().root;
 
     warnings.forEach(w =>
     {
-        console.log(w);
+        var coords = CsetUtils.getCoords(w, graph);
+
+        // don't overlay any other red dots on the same component
+        if (CsetUtils.isRedDotAtCoords(graph, coords))
+        {
+            coords.x += 33;
+        }
+
+        var redDot = graph.insertVertex(root, null, w.Number, coords.x, coords.y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+        redDot.warningMsg = w.Message;
     });
 }
 
+/**
+ * Determines where to place the red dot, based on the component or link it 
+ * is describing.
+ */
+CsetUtils.getCoords = function (warning, graph)
+{
+    var coords = {
+        x: 100,
+        y: 100
+    };
+
+    // if only one node provided, then the dot goes on that component
+    if (warning.NodeId1 && !warning.NodeId2)
+    {
+        const component = graph.getModel().getCell(warning.NodeId1);
+        const g = component.getGeometry();
+        coords.x = g.x;
+        coords.y = g.y - 40;
+        return coords;
+    }
+
+    // if both are provided, the dot goes on the edge
+    if (warning.NodeId1 && warning.NodeId2)
+    {
+        const component1 = graph.getModel().getCell(warning.NodeId1);
+        const component2 = graph.getModel().getCell(warning.NodeId2);
+        const edges = graph.getModel().getEdgesBetween(component1, component2);
+        const e = edges[0];
+
+        const v = graph.view;
+        const s1 = v.getState(component1);
+        const s2 = v.getState(component2);
+
+        // temporarily place the dot at the midpoint of a straight line between components.
+        coords.x = (s1.origin.x + s2.origin.x) / 2;
+        coords.y = (s1.origin.y + s2.origin.y) / 2;
+
+        // then, try to place the dot so that it will be on the line no matter what.
+        // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
+
+        // fine-tune here if needed
+        // coords.x = coords.x - 15;
+        // coords.y = coords.y - 40;
+
+        return coords;
+    }
+
+    return coords;
+}
+
+
+/**
+ * Still experimenting with this.  The goal is to find the correct location for
+ * the red dot on the edge, regardless of where the edge is routed.
+ */
+CsetUtils.getTrueEdgeCoordinates = function (graph, e, coords)
+{
+    const v = graph.view;
+    const s = v.getState(e);
+
+
+    const overlay = graph.setCellWarning(e, 'XYZ');
+    var pt = s.view.getPoint(s, { x: 0, y: 0, relative: true });
+    console.log(pt);
+    // REMOVE THE OVERLAY AFTER WE HAVE THE COORDS - graph.removeCellOverlay(e);
+
+    var xxx = graph.insertVertex(graph.getModel().root, null, 'X', null, null, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#007700;strokeColor=#007700;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+    var ptDot = graph.insertVertex(graph.getModel().root, null, 'PT', pt.x, pt.y, 10, 10, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#0000ff;strokeColor=#0000ff;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+    const refPoint = v.graphBounds.getPoint(1);
+    console.log(refPoint);
+
+    var refDot = graph.insertVertex(graph.getModel().root, null, 'R', refPoint.x, refPoint.y, 10, 10, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#5500ff;strokeColor=#5500ff;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+
+    console.log('state');
+    console.log(s);  
+
+    coords.x = pt.x - refPoint.x;
+    coords.y = pt.y - refPoint.y;
+}
+
+
+/**
+ * Returns a boolean indicating if a red dot is positioned at the specified coordinates.
+ */
+CsetUtils.isRedDotAtCoords = function (graph, coords)
+{
+    var found = false;
+
+    graph.getModel().getDescendants().forEach(c =>
+    {
+        if (c instanceof mxCell && c.isRedDot())
+        {
+            if (c.getGeometry().x == coords.x && c.getGeometry().y == coords.y)
+            {
+                found = true;
+            }
+        }
+    });
+
+    return found;
+}
+
+/**
+ * 
+ */
 CsetUtils.getCsetTemplates = async function () {
     let templates;
     await makeRequest({

@@ -33,27 +33,6 @@ namespace CSETWeb_Api.Controllers
     public class DiagramController : ApiController
     {
         /// <summary>
-        /// Analyzes the diagram XML in the database.
-        /// 
-        /// RKW - THIS IS A STUB.  BARRY WILL BE PROVIDING THE REAL ONE.
-        /// 
-        /// </summary>
-        /// <param name="req"></param>
-        [CSETAuthorize]
-        [Route("api/diagram/analyze")]
-        [HttpPost]
-        public List<IDiagramAnalysisNodeMessage> AnalyzeDiagram([FromBody] DiagramRequest req)
-        {
-            // RKW - this is a dummy response
-            var NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
-            DiagramAnalysisNodeMessage msg = new DiagramAnalysisNodeMessage();
-            NetworkWarnings.Add(msg);
-
-            return NetworkWarnings;
-        }
-
-
-        /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
         /// <param name="req"></param>
@@ -75,7 +54,7 @@ namespace CSETWeb_Api.Controllers
                     req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
                 }
                 xDoc.LoadXml(req.DiagramXml);
-                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);                
+                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
             }
         }
 
@@ -85,7 +64,7 @@ namespace CSETWeb_Api.Controllers
         public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
-            TokenManager tm = new TokenManager();            
+            TokenManager tm = new TokenManager();
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
             return performAnalysis(req, assessmentId ?? 0);
 
@@ -101,9 +80,7 @@ namespace CSETWeb_Api.Controllers
 
                 DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId);
                 return analysis.PerformAnalysis(xDoc);
-                
             }
-
         }
 
 
@@ -276,8 +253,10 @@ namespace CSETWeb_Api.Controllers
                 TokenManager tm = new TokenManager();
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
+
                 var diagramXml = dm.GetDiagramXml((int) assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var vertices = dm.ProcessDiagramVertices(diagramXml,assessmentId??0);
+
                 var components = dm.GetDiagramComponents(vertices);
                 return Ok(components);
             }
@@ -305,7 +284,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml);
+                var vertices = dm.ProcessDiagramVertices(diagramXml,assessmentId??0);
                 var zones = dm.GetDiagramZones(vertices);
                 return Ok(zones);
             }

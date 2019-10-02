@@ -79,6 +79,7 @@ export interface Question {
     Answer: string;
     AltAnswerText: string;
     Comment: string;
+    FeedBack: string;
     HasDiscovery: boolean;
     HasDocument: boolean;
     MarkForReview: boolean;
@@ -95,6 +96,7 @@ export class Answer {
     AnswerText: string;
     AltAnswerText: string;
     Comment: string;
+    FeedBack: string;
     MarkForReview: boolean;
     Reviewed: boolean;
 }

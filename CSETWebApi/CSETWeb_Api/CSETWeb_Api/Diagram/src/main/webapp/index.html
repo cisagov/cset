@@ -97,13 +97,19 @@
         /**
          * Capture the query string parameters that define this diagram session.
          */
-        (function () {
+        (function ()
+        {
             if (!!urlParams['j']) {
                 localStorage.setItem('jwt', urlParams['j']);
             }
 
             if (!!urlParams['h']) {
                 localStorage.setItem('cset.host', decodeURIComponent(urlParams['h']));
+            }
+
+            if (!!urlParams['c'])
+            {
+                localStorage.setItem('cset.client', decodeURIComponent(urlParams['c']));
             }
 
             if (localStorage.getItem('jwt') == null || localStorage.getItem('cset.host') == null) {

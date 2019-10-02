@@ -293,7 +293,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootObject> ProcessDiagramVertices(StringReader stream)
+        public List<mxGraphModelRootObject> ProcessDiagramVertices(StringReader stream, int assessment_id)
         {
 
             List<mxGraphModelRootObject> vertices = new List<mxGraphModelRootObject>();
@@ -310,7 +310,11 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (item.GetType() == objectType)
                     {
-                        vertices.Add((mxGraphModelRootObject)item);
+                        var addLayerVisible = (mxGraphModelRootObject) item;
+                        var layerVisibility =getLayerVisibility(addLayerVisible.parent, assessment_id);
+                        addLayerVisible.visible = layerVisibility.visible;
+                        addLayerVisible.layerName = layerVisibility.layerName;
+                        vertices.Add(addLayerVisible);
                     }
 
                 }
@@ -318,6 +322,44 @@ namespace CSETWeb_Api.BusinessManagers
 
             return vertices;
         }
+
+        public LayerVisibility getLayerVisibility(string drawIoId, int assessment_id)
+        {
+            //get the parent id
+            var list = from node in db.DIAGRAM_CONTAINER
+                join parent in db.DIAGRAM_CONTAINER on node.Parent_Id equals parent.Container_Id
+                       where node.Assessment_Id == assessment_id
+                select new LayerVisibility()
+                {
+                    layerName = node.Name,
+                    DrawIo_id = node.DrawIO_id,
+                    Parent_DrawIo_id = parent.DrawIO_id,
+                    visible = (node.Visible ?? true) ? "true" : "false"
+                };
+            var list2 = from node in db.DIAGRAM_CONTAINER                       
+                       where node.Assessment_Id == assessment_id && node.Parent_Id ==0
+                       select new LayerVisibility()
+                       {
+                           layerName = node.Name,
+                           DrawIo_id = node.DrawIO_id,
+                           Parent_DrawIo_id = "",
+                           visible = (node.Visible ?? true) ? "true" : "false"
+                       };
+            var list3 = list.Union(list2);
+
+            Dictionary<string, LayerVisibility> allItems = list3.ToDictionary(x => x.DrawIo_id,x=> x);
+            LayerVisibility layer;
+            LayerVisibility lastLayer = null; 
+            while (allItems.TryGetValue(drawIoId, out layer))
+            {
+                lastLayer = layer;
+                drawIoId = layer.Parent_DrawIo_id;
+            }
+
+            return lastLayer;
+        }
+
+
 
         /// <summary>
         /// get vertices from diagram stream
@@ -422,7 +464,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<mxGraphModelRootMxCell> GetDiagramLinks(List<mxGraphModelRootMxCell> edges)
         {
-            var diagramLines = edges.Where(l => l.edge == 1).ToList();
+            var diagramLines = edges.Where(l => l.edge == "1").ToList();
             return diagramLines;
         }
 
@@ -433,7 +475,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public List<mxGraphModelRootObject> GetDiagramZones(List<mxGraphModelRootObject> vertices)
         {
-            var diagramZones = vertices.Where(z => z.zone == 1).ToList();
+            var diagramZones = vertices.Where(z => z.zone == "1").ToList();
             return diagramZones;
         }
 
@@ -695,5 +737,14 @@ namespace CSETWeb_Api.BusinessManagers
             }
             return templates;
         }
+    }
+
+    public class LayerVisibility
+    {
+        public string layerName { get; set; }
+        public string visible { get; set; }
+
+        public string Parent_DrawIo_id { get; set; }
+        public string DrawIo_id { get; set; }
     }
 }

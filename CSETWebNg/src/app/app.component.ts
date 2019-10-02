@@ -41,7 +41,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
 import { NgbPanelChangeEvent, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
-import { ResourceLibraryService } from "./services/resource-library.service" 
+import { ResourceLibraryService } from "./services/resource-library.service"
 
 declare var $: any;
 
@@ -106,7 +106,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (!rpath) {
       return false;
     }
-    if (rpath === '/set-list'
+    if ( rpath === '/set-list'
       || rpath.indexOf('/set-detail') > -1
       || rpath.indexOf('/requirement-list') > -1
       || rpath.indexOf('/standard-documents') > -1
@@ -121,12 +121,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   goHome() {
-    if (this.isModuleBuilder(this.router.url)) {
-      this.router.navigate(['/set-list']);
-    } else {
-      this.assessSvc.dropAssessment();
-      this.router.navigate(['/home']);
-    }
+    this.assessSvc.dropAssessment();
+    this.router.navigate(['/home']);
   }
 
   about() {
