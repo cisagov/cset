@@ -252,7 +252,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = answer?.a?.Comment,
                     FeedBack = answer?.a?.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
-                    Reviewed = answer?.a.Reviewed ?? false
+                    Reviewed = answer?.a.Reviewed ?? false,
+                    Is_Component = answer?.a.Is_Component ?? false
                 };
                 if (answer != null)
                 {
@@ -398,7 +399,8 @@ namespace CSETWeb_Api.BusinessManagers
                     AltAnswerText = dbQ.Alternate_Justification,
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
-                    Reviewed = dbQ.Reviewed ?? false
+                    Reviewed = dbQ.Reviewed ?? false,
+                    Is_Component = dbQ.Is_Component
                 };
                     
                 sc.Questions.Add(qa);

@@ -79,6 +79,7 @@ export interface QuestionInformationTabData {
   QuestionsList: string[];
   ShowNoQuestionInformation: boolean;
   ExaminationApproach: String;
+  Is_Component: boolean;
 }
 
 export interface RequirementTabData {

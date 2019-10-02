@@ -101,13 +101,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         /// A list of documents attached to the answer.
         /// </summary>
         public List<Document> Documents { get; private set; }
+        public bool Is_Component { get; private set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private ISymbolRepository symbolRepository;
-        
 
         /// <summary>
         /// 
@@ -159,12 +155,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             if (questionId != null)
             {
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
-
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
                 var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Is_Requirement == (mode.IsRequirement)  && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
-
-                
 
                 if (newAnswer == null)                    
                 {
@@ -189,7 +182,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
                 qp.DefaultSetName = qp.DictionaryStandards.Keys.First();
                 qp.SetName = qp.DictionaryStandards.Keys.First();
-                LoadData(qp);
+                LoadData(qp,assessmentId);
 
                 // Get any findings/discoveries for the question
                 FindingsViewModel fm = new FindingsViewModel(this.DataContext, assessmentId, newAnswer.Answer_Id);
@@ -198,6 +191,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 // Get any documents attached to the question
                 DocumentManager dm = new DocumentManager(assessmentId);
                 this.Documents = dm.GetDocumentsForAnswer(newAnswer.Answer_Id);
+
+                //Get any components
+
             }
 
             return ListTabs;            
@@ -244,8 +240,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             return req;
         }
 
+        private Dictionary<string, SymbolComponentInfoData> symbolInfo;
 
-        private void LoadData(QuestionPoco question)
+        private void LoadData(QuestionPoco question, int assessment_id)
         {
             List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
 
@@ -279,16 +276,47 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             }
             else if (question.IsComponent)
             {
+                if(symbolInfo == null)
+                    symbolInfo = this.DataContext.COMPONENT_SYMBOLS
+                    .ToDictionary(x => x.Diagram_Type_Xml, data => new SymbolComponentInfoData()
+                    { DisplayName = data.Display_Name, XMLName = data.Diagram_Type_Xml });
+
+                var stuff = from a in this.DataContext.Answer_Components_Exploded
+                            join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Universal_Sal_Level1
+                            where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
+                            select new { a.Component_Type, a.SAL, l.Sal_Level_Order };
+
+                Dictionary<string, ComponentTypeSalData> dictionaryComponentTypes = new Dictionary<string, ComponentTypeSalData>();
+                foreach(var item in stuff.ToList())
+                {
+                    ComponentTypeSalData salData;
+                    if(dictionaryComponentTypes.TryGetValue(item.Component_Type,out salData)){
+                        salData.SALLevels.Add(item.Sal_Level_Order);
+                    }
+                    else
+                    {
+                        HashSet<int> SALLevels = new HashSet<int>();
+                        SALLevels.Add(item.Sal_Level_Order);
+                        salData = new ComponentTypeSalData()
+                        {
+                            ComponentType = item.Component_Type,
+                            SALLevels = SALLevels
+                        };
+                        
+                        dictionaryComponentTypes.Add(item.Component_Type, salData);
+                    }
+                }
+
+                //select component_type, ComponentName, SAL from Answer_Components_Exploded
+                //where Assessment_Id = 6 and question_id = 1586
+
                 ComponentQuestionInfoData componentQuestionInfoData = new ComponentQuestionInfoData()
                 {
                     QuestionID = question.Question_or_Requirement_ID,
                     Question = question.Question,
-                    Set = question.DictionaryStandards.Values.FirstOrDefault(),
-                    //TODO !!!NEED to get the list of component types at sal levels here
-                    //DictionaryComponentTypes = assessmentModel.NetworkModel.NetworkData.DictionaryComponentTypes,
-                    //I can't do this until I actually have a diagram to pull the information from. 
-                    DictionaryComponentTypes = new Dictionary<string, ComponentTypeSalData>(),
-                    DictionaryComponentInfo = symbolRepository.GetComponentInfoTabData()
+                    Set = question.DictionaryStandards.Values.FirstOrDefault(),                    
+                    DictionaryComponentTypes = dictionaryComponentTypes,
+                    DictionaryComponentInfo = symbolInfo
                 };                
                 list = informationTabBuilder.CreateComponentInformationTab(componentQuestionInfoData);
             }
@@ -316,6 +344,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
           
 
             SetTabDataList(list);
+            this.Is_Component = question.IsComponent;
         }
 
         internal async void SetFrameworkQuestionInfoTab(CSET_Main.Questions.QuestionList.FrameworkQuestionItem questionViewItem)

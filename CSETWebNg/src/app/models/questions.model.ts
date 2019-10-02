@@ -85,7 +85,7 @@ export interface Question {
     MarkForReview: boolean;
     Reviewed: boolean;
     MaturityLevel: string;
-
+    Is_Component: boolean;
     ExtrasExpanded: boolean;
     Visible: boolean;
 }
@@ -99,6 +99,7 @@ export class Answer {
     FeedBack: string;
     MarkForReview: boolean;
     Reviewed: boolean;
+    Is_Component: boolean;
 }
 
 export class SubToken {
