@@ -18,12 +18,9 @@ export class TextComponent implements OnInit {
   getTexts(){
     this.diagramSvc.getDiagramText().subscribe((x:any) =>{
       this.texts = x;
+      console.log(x)
     });
   }
 
-  submit(text){
-    this.diagramSvc.saveShape(text).subscribe((x:any)=>{});
-
-  }
-
+  
 }

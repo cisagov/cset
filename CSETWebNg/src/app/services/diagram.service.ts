@@ -24,6 +24,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
+import { Observable } from 'rxjs';
+import { RequestOptions, ResponseContentType } from '@angular/http';
 
 
 const headers = {
@@ -71,19 +73,9 @@ export class DiagramService {
     return this.http.get(this.apiUrl+'getLinks');
   }
 
-  saveComponent(component){
-    return this.http.post(this.apiUrl+'saveComponent', component);
+  getExport(): any{
+    return this.http.get(this.apiUrl+'export', {responseType:'blob'});
   }
 
-  saveZone(zone){
-    return this.http.post(this.apiUrl+'saveZone', zone);
-  }
 
-  saveShape(shape){
-    return this.http.post(this.apiUrl+'saveShape', shape);
-  }
-
-  saveLink(link){
-    return this.http.post(this.apiUrl+'saveLink', link);
-  }
 }

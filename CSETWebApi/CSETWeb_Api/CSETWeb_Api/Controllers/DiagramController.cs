@@ -22,7 +22,9 @@ using DataLayerCore.Model;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using CSETWeb_Api.BusinessLogic.Models;
+using ExportCSV;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -312,7 +314,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var edges = dm.ProcessDigramEdges(diagramXml);
+                var edges = dm.ProcessDigramEdges(diagramXml, assessmentId??0);
                 var links = dm.GetDiagramLinks(edges);
                 return Ok(links);
             }
@@ -340,7 +342,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramShapes(diagramXml);
+                var vertices = dm.ProcessDiagramShapes(diagramXml, assessmentId??0);
                 var shapes = dm.GetDiagramShapes(vertices);
                 return Ok(shapes);
             }
@@ -368,7 +370,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramShapes(diagramXml);
+                var vertices = dm.ProcessDiagramShapes(diagramXml, assessmentId??0);
                 var texts = dm.GetDiagramText(vertices);
                 return Ok(texts);
             }
@@ -382,87 +384,27 @@ namespace CSETWeb_Api.Controllers
         }
 
         /// <summary>
-        /// Update component
+        /// Generates an Excel spreadsheet with a row for every assessment that
+        /// the current user has access to that uses the ACET standard.
         /// </summary>
-        /// <param name="vertice"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         [CSETAuthorize]
-        [Route("api/diagram/saveComponent")]
-        [HttpPost]
-        public IHttpActionResult SaveComponent(mxGraphModelRootObject vertice)
+        [HttpGet]
+        [Route("api/diagram/export")]
+        public HttpResponseMessage GetExcelExportDiagram()
         {
             TokenManager tm = new TokenManager();
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            var dm = new DiagramManager(new CSET_Context());
-            if (assessmentId != null)
+            var stream = new ExcelExporter().ExportToExcellDiagram(assessmentId??0);
+            stream.Flush();
+            stream.Seek(0, System.IO.SeekOrigin.Begin);
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                dm.SaveComponent(vertice, (int)assessmentId);
-            }
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// update zone
-        /// </summary>
-        /// <param name="vertice"></param>
-        /// <returns></returns>
-        [CSETAuthorize]
-        [Route("api/diagram/saveZone")]
-        [HttpPost]
-        public IHttpActionResult SaveZone(mxGraphModelRootObject vertice)
-        {
-            TokenManager tm = new TokenManager();
-            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            var dm = new DiagramManager(new CSET_Context());
-            if (assessmentId != null)
-            {
-                dm.SaveZone(vertice, (int)assessmentId);
-            }
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// update shape
-        /// </summary>
-        /// <param name="vertice"></param>
-        /// <returns></returns>
-        [CSETAuthorize]
-        [Route("api/diagram/saveShape")]
-        [HttpPost]
-        public IHttpActionResult SaveShape(mxGraphModelRootMxCell vertice)
-        {
-            TokenManager tm = new TokenManager();
-            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            var dm = new DiagramManager(new CSET_Context());
-            if (assessmentId != null)
-            {
-                dm.SaveShape(vertice, (int)assessmentId);
-            }
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// update link
-        /// </summary>
-        /// <param name="vertice"></param>
-        /// <returns></returns>
-        [CSETAuthorize]
-        [Route("api/diagram/saveLink")]
-        [HttpPost]
-        public IHttpActionResult SaveLink(mxGraphModelRootMxCell vertice)
-        {
-            TokenManager tm = new TokenManager();
-            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            var dm = new DiagramManager(new CSET_Context());
-            if (assessmentId != null)
-            {
-                dm.SaveLink(vertice, (int)assessmentId);
-            }
-
-            return Ok();
+                Content = new StreamContent(stream)
+            };
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            return result;
         }
     }
 }
