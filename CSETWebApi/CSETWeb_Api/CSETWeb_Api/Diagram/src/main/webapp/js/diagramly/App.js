@@ -2776,7 +2776,7 @@ App.prototype.showSplash = function (force) {
             if (cancel && !mxClient.IS_CHROMEAPP) {
                 var prev = Editor.useLocalStorage;
                 this.createFile(this.defaultFilename, null, null, null, null, null, null,
-                    urlParams['local'] != '1');
+                    urlParams.local !== '1');
                 Editor.useLocalStorage = prev;
             }
         });
@@ -3489,119 +3489,95 @@ App.prototype.getPeerForMode = function (mode)
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-App.prototype.createFile = function (title, data, libs, mode, done, replace, folderId, tempFile)
-{
+App.prototype.createFile = function (title, data, libs, mode, done, replace, folderId, tempFile) {
     console.log("App.prototype.createFile");
-    mode = (tempFile) ? null : ((mode != null) ? mode : this.mode);
+    mode = tempFile ? undefined  : mode || this.mode;
 
-    if (title != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-    {
-        data = (data != null) ? data : this.emptyDiagramXml;
+    if (title && this.spinner.spin(document.body, mxResources.get('inserting'))) {
+        data = data || this.emptyDiagramXml;
 
-        var complete = mxUtils.bind(this, function ()
-        {
+        const complete = mxUtils.bind(this, () => {
             this.spinner.stop();
         });
 
-        var error = mxUtils.bind(this, function (resp)
-        {
+        const error = mxUtils.bind(this, err => {
             complete();
-
-            if (resp == null && this.getCurrentFile() == null && this.dialog == null)
-            {
+            if (!err && !this.getCurrentFile() && !this.dialog) {
                 this.showSplash();
-            }
-            else if (resp != null)
-            {
-                this.handleError(resp);
+            } else if (err) {
+                this.handleError(err);
             }
         });
 
-        try
-        {
-            if (mode == App.MODE_GOOGLE && this.drive != null)
-            {
-                if (folderId == null && this.stateArg != null && this.stateArg.folderId != null)
-                {
-                    folderId = this.stateArg.folderId;
-                }
+        try {
+            switch (mode) {
+                case App.MODE_GOOGLE:
+                    if (this.drive) {
+                        folderId = folderId || this.stateArg && this.stateArg.folderId;
+                        this.drive.insertFile(title, data, folderId, mxUtils.bind(this, file => {
+                            complete();
+                            this.fileCreated(file, libs, replace, done);
+                        }), error);
+                    }
+                    break;
+                case App.MODE_GITHUB:
+                    if (this.gitHub) {
+                        this.gitHub.insertFile(title, data, mxUtils.bind(this, file => {
+                            complete();
+                            this.fileCreated(file, libs, replace, done);
+                        }), error, false, folderId);
+                    }
+                    break;
+                case App.MODE_TRELLO:
+                    if (this.trello) {
+                        this.trello.insertFile(title, data, mxUtils.bind(this, file => {
+                            complete();
+                            this.fileCreated(file, libs, replace, done);
+                        }), error, false, folderId);
+                    }
+                    break;
+                case App.MODE_DROPBOX:
+                    if (this.dropbox) {
+                        this.dropbox.insertFile(title, data, mxUtils.bind(this, file => {
+                            complete();
+                            this.fileCreated(file, libs, replace, done);
+                        }), error);
+                    }
+                    break;
+                case App.MODE_ONEDRIVE:
+                    if (this.oneDrive) {
+                        this.oneDrive.insertFile(title, data, mxUtils.bind(this, file => {
+                            complete();
+                            this.fileCreated(file, libs, replace, done);
+                        }), error, false, folderId);
+                    }
+                    break;
+                case App.MODE_BROWSER:
+                    complete();
+                    const fn = mxUtils.bind(this, () => {
+                        const file = new StorageFile(this, data, title);
+                        // Inserts data into local storage
+                        file.saveFile(title, false, mxUtils.bind(this, () => {
+                            this.fileCreated(file, libs, replace, done);
+                        }), error);
+                    });
 
-                this.drive.insertFile(title, data, folderId, mxUtils.bind(this, function (file)
-                {
+                    if (!localStorage.getItem(title)) {
+                        fn();
+                    } else {
+                        this.confirm(mxResources.get('replaceIt', [title]), fn, mxUtils.bind(this, () => {
+                            if (this.getCurrentFile() == null && this.dialog == null) {
+                                this.showSplash();
+                            }
+                        }));
+                    }
+                    break;
+                default:
                     complete();
-                    this.fileCreated(file, libs, replace, done);
-                }), error);
+                    this.fileCreated(new LocalFile(this, data, title, mode == null), libs, replace, done);
+                    break;
             }
-            else if (mode == App.MODE_GITHUB && this.gitHub != null)
-            {
-                this.gitHub.insertFile(title, data, mxUtils.bind(this, function (file)
-                {
-                    complete();
-                    this.fileCreated(file, libs, replace, done);
-                }), error, false, folderId);
-            }
-            else if (mode == App.MODE_TRELLO && this.trello != null)
-            {
-                this.trello.insertFile(title, data, mxUtils.bind(this, function (file)
-                {
-                    complete();
-                    this.fileCreated(file, libs, replace, done);
-                }), error, false, folderId);
-            }
-            else if (mode == App.MODE_DROPBOX && this.dropbox != null)
-            {
-                this.dropbox.insertFile(title, data, mxUtils.bind(this, function (file)
-                {
-                    complete();
-                    this.fileCreated(file, libs, replace, done);
-                }), error);
-            }
-            else if (mode == App.MODE_ONEDRIVE && this.oneDrive != null)
-            {
-                this.oneDrive.insertFile(title, data, mxUtils.bind(this, function (file)
-                {
-                    complete();
-                    this.fileCreated(file, libs, replace, done);
-                }), error, false, folderId);
-            }
-            else if (mode == App.MODE_BROWSER)
-            {
-                complete();
-
-                var fn = mxUtils.bind(this, function ()
-                {
-                    var file = new StorageFile(this, data, title);
-
-                    // Inserts data into local storage
-                    file.saveFile(title, false, mxUtils.bind(this, function ()
-                    {
-                        this.fileCreated(file, libs, replace, done);
-                    }), error);
-                });
-
-                if (localStorage.getItem(title) == null)
-                {
-                    fn();
-                }
-                else
-                {
-                    this.confirm(mxResources.get('replaceIt', [title]), fn, mxUtils.bind(this, function ()
-                    {
-                        if (this.getCurrentFile() == null && this.dialog == null)
-                        {
-                            this.showSplash();
-                        }
-                    }));
-                }
-            }
-            else
-            {
-                complete();
-                this.fileCreated(new LocalFile(this, data, title, mode == null), libs, replace, done);
-            }
-        }
-        catch (e)
-        {
+        } catch (e) {
             complete();
             this.handleError(e);
         }
@@ -3614,142 +3590,109 @@ App.prototype.createFile = function (title, data, libs, mode, done, replace, fol
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-App.prototype.fileCreated = function (file, libs, replace, done)
-{
+App.prototype.fileCreated = function (file, libs, replace, done) {
     console.log("App.prototype.fileCreated");
-    var url = window.location.pathname;
-
-    if (libs != null && libs.length > 0)
-    {
-        url += '?libs=' + libs;
+    let url = window.location.pathname;
+    if (libs) {
+        url += `?libs=${libs}`;
     }
-
     url = this.getUrl(url);
 
     // Always opens a new tab for local files to avoid losing changes
-    if (file.getMode() != App.MODE_DEVICE)
-    {
-        url += '#' + file.getHash();
+    const filemode = file.getMode();
+    if (filemode !== App.MODE_DEVICE) {
+        url += `#${file.getHash()}`;
     }
 
     // Makes sure to produce consistent output with finalized files via createFileData this needs
     // to save the file again since it needs the newly created file ID for redirecting in HTML
-    if (this.spinner.spin(document.body, mxResources.get('inserting')))
-    {
-        var data = file.getData();
-        var dataNode = (data.length > 0) ? this.editor.extractGraphModel(
-            mxUtils.parseXml(data).documentElement, true) : null;
-        var redirect = window.location.protocol + '//' + window.location.hostname + url;
-        var node = dataNode;
-        var graph = null;
+    if (this.spinner.spin(document.body, mxResources.get('inserting'))) {
+        const title = file.getTitle();
+        const data = file.getData();
+        const dataNode = data.length ? this.editor.extractGraphModel(
+            mxUtils.parseXml(data).documentElement, true) : undefined;
+        const redirect = `${window.location.protocol}//${window.location.hostname}${url}`;
 
+        let graph;
+        let node = dataNode;
         // Handles special case where SVG files need a rendered graph to be saved
-        if (dataNode != null && /\.svg$/i.test(file.getTitle()))
-        {
+        if (dataNode && /\.svg$/i.test(title)) {
             graph = this.createTemporaryGraph(this.editor.graph.getStylesheet());
-            document.body.appendChild(graph.container);
-            node = this.decodeNodeIntoGraph(node, graph);
+            if (graph && graph.container) {
+                document.body.appendChild(graph.container);
+                node = this.decodeNodeIntoGraph(node, graph);
+            }
         }
 
-        file.setData(this.createFileData(dataNode, graph, file, redirect));
+        file.setData(this.createFileData(node, graph, file, redirect));
 
-        if (graph != null)
-        {
+        if (graph && graph.container.parentNode) {
             graph.container.parentNode.removeChild(graph.container);
         }
 
-        var complete = mxUtils.bind(this, function ()
-        {
+        const complete = mxUtils.bind(this, e => {
+            if (!e.err) {
+                if (e.done) {
+                    e.done();
+                }
+            } else {
+                this.handleError(e.err);
+            }
             this.spinner.stop();
         });
 
-        var fn = mxUtils.bind(this, function ()
-        {
-            complete();
-
-            var currentFile = this.getCurrentFile();
-
-            if (replace == null && currentFile != null)
-            {
-                replace = !currentFile.isModified() && currentFile.getMode() == null;
+        var fn = mxUtils.bind(this, () => {
+            const currentFile = this.getCurrentFile();
+            if (!replace && currentFile) {
+                replace = !currentFile.isModified() && !currentFile.getMode();
             }
 
-            var fn3 = mxUtils.bind(this, function ()
-            {
+            var fn3 = mxUtils.bind(this, () => {
                 window.openFile = null;
                 this.fileLoaded(file);
 
-                if (replace)
-                {
+                if (replace) {
                     file.addAllSavedStatus();
                 }
 
-                if (libs != null)
-                {
+                if (libs) {
                     this.sidebar.showEntries(libs);
                 }
             });
 
-            var fn2 = mxUtils.bind(this, function ()
-            {
-                if (replace || currentFile == null || !currentFile.isModified())
-                {
+            var fn2 = mxUtils.bind(this, () => {
+                if (replace || !currentFile || !currentFile.isModified()) {
                     fn3();
-                }
-                else
-                {
+                } else {
                     this.confirm(mxResources.get('allChangesLost'), null, fn3,
                         mxResources.get('cancel'), mxResources.get('discardChanges'));
                 }
+                complete({ done });
             });
 
-            if (done != null)
-            {
-                done();
-            }
-
-            // Opens the file in a new window
-            if (replace != null && !replace)
-            {
+            if (replace != null && !replace) {
                 // Opens local file in a new window
-                if (file.constructor == LocalFile)
-                {
-                    window.openFile = new OpenFile(function ()
-                    {
+                if (file.constructor === LocalFile) {
+                    window.openFile = new OpenFile(() => {
                         window.openFile = null;
                     });
-
-                    window.openFile.setData(file.getData(), file.getTitle(), file.getMode() == null);
+                    window.openFile.setData(file.getData(), title, !filemode);
                 }
-
-                if (done != null)
-                {
-                    done();
-                }
-
                 window.openWindow(url, null, fn2);
-            }
-            else
-            {
+                complete({ done });
+            } else {
                 fn2();
             }
         });
+        complete({ done });
 
         // Updates data in memory for local files
-        if (file.constructor == LocalFile)
-        {
+        if (file.constructor === LocalFile) {
             fn();
-        }
-        else
-        {
-            file.saveFile(file.getTitle(), false, mxUtils.bind(this, function ()
-            {
-                fn();
-            }), mxUtils.bind(this, function (resp)
-            {
-                complete();
-                this.handleError(resp);
-            }));
+        } else {
+            file.saveFile(title, false, fn, err => {
+                complete({ err });
+            });
         }
     }
 };

@@ -2570,14 +2570,13 @@ var ParseDialog = function(editorUi, title, defaultType)
 /**
  * Constructs a new dialog for creating files from templates.
  */
-var NewDialog = function (editorUi, e) {
-
-    e.showName = e.showName || true;
-    e.createOnly = e.createOnly || false;
-    e.leftHighlight = e.leftHighlight || '#ebf2f9';
-    e.rightHighlight = e.rightHighlight || '#e6eff8';
-    e.rightHighlightBorder = e.rightHighlightBorder || '1px solid #ccd9ea';
-    e.templateFile = e.templateFile || EditorUi.templateFile;
+var NewDialog = function (editorUi, opts) {
+    opts.showName = opts.hasOwnProperty('showName') ? opts.showName : true;
+    opts.createOnly = opts.createOnly || false;
+    opts.leftHighlight = opts.leftHighlight || '#ebf2f9';
+    opts.rightHighlight = opts.rightHighlight || '#e6eff8';
+    opts.rightHighlightBorder = opts.rightHighlightBorder || '1px solid #ccd9ea';
+    opts.templateFile = opts.templateFile || EditorUi.templateFile;
 
     const outer = document.createElement('div');
     outer.style.height = '100%';
@@ -2586,41 +2585,41 @@ var NewDialog = function (editorUi, e) {
     header.style.whiteSpace = 'nowrap';
     header.style.height = '46px';
 
-    if (e.showName) {
+    if (opts.showName) {
         outer.appendChild(header);
     }
 
-    let imgsrc;
     let ext = '.drawio';
+    let resourceimg;
     let resourceName = 'filename';
     switch (editorUi.mode) {
         case App.MODE_GOOGLE:
-            imgsrc = 'google-drive-logo.svg';
             ext = editorUi.drive && editorUi.drive.extension || ext;
+            resourceimg = 'google-drive-logo.svg';
             resourceName = 'diagramName';
             break;
         case App.MODE_DROPBOX:
-            imgsrc = 'dropbox-logo.svg';
             ext = editorUi.dropbox && editorUi.dropbox.extension || ext;
+            resourceimg = 'dropbox-logo.svg';
             break;
         case App.MODE_ONEDRIVE:
-            imgsrc = 'onedrive-logo.svg';
             ext = editorUi.oneDrive && editorUi.oneDrive.extension || ext;
+            resourceimg = 'onedrive-logo.svg';
             break;
         case App.MODE_GITHUB:
-            imgsrc = 'github-logo.svg';
             ext = editorUi.gitHub && editorUi.gitHub.extension || ext;
+            resourceimg = 'github-logo.svg';
             break;
         case App.MODE_TRELLO:
-            imgsrc = 'trello-logo.svg';
             ext = editorUi.trello && editorUi.trello.extension || ext;
+            resourceimg = 'trello-logo.svg';
             break;
         case App.MODE_BROWSER:
-            imgsrc = 'osa_database.png';
+            resourceimg = 'osa_database.png';
             resourceName = 'diagramName';
             break;
         default:
-            imgsrc = 'osa_drive-harddisk.png';
+            resourceimg = 'osa_drive-harddisk.png';
             break;
     }
 
@@ -2631,23 +2630,23 @@ var NewDialog = function (editorUi, e) {
     logo.style.height = '40px';
     logo.style.marginRight = '10px';
     logo.style.paddingBottom = '4px';
-    logo.src = IMAGE_PATH + '/' + imgsrc;
+    logo.src = IMAGE_PATH + '/' + resourceimg;
 
-    if (!e.compact && e.showName) {
+    if (!opts.compact && opts.showName) {
         header.appendChild(logo);
     }
 
-    if (e.showName) {
+    if (opts.showName) {
         mxUtils.write(header, mxResources.get(resourceName) + ':');
     }
 
     const nameInput = document.createElement('input');
     nameInput.setAttribute('value', editorUi.defaultFilename + ext);
     nameInput.style.marginLeft = '10px';
-    nameInput.style.width = (e.compact) ? '220px' : '430px';
+    nameInput.style.width = (opts.compact) ? '220px' : '430px';
 
     this.init = function () {
-        if (e.showName) {
+        if (opts.showName) {
             nameInput.focus();
             if (document.documentMode > 6 || mxClient.IS_GC || mxClient.IS_FF || mxClient.IS_QUIRKS) {
                 nameInput.select();
@@ -2657,7 +2656,7 @@ var NewDialog = function (editorUi, e) {
         }
     };
 
-    if (e.showName) {
+    if (opts.showName) {
         header.appendChild(nameInput);
         const fileExts = editorUi.editor.fileExtensions;
         if (fileExts) {
@@ -2667,20 +2666,12 @@ var NewDialog = function (editorUi, e) {
         }
     }
 
-    let i0 = 0;
-    let hasTabs = false;
-
     // Dynamic loading
-    function addTemplates() {
+    const addTemplates = templates => {
         const items = templates || [];
-        let first = true;
-        if (items.length) {
-            while (i0 < items.length && (first || mxUtils.mod(i0, 30) !== 0)) {
-                const item = items[i0++];
-                item.tooltip = item.tooltip || item.title;
-                addButton(item);
-                first = false;
-            }
+        for (const item of items) {
+            item.tooltip = item.tooltip || item.title;
+            addButton(item);
         }
     };
 
@@ -2699,531 +2690,300 @@ var NewDialog = function (editorUi, e) {
         zIndex: 2e9 // The z-index (defaults to 2000000000)
     });
 
-    const createButton = mxUtils.button(e.createButtonLabel || mxResources.get('create'), () => {
-        createButton.setAttribute('disabled', 'disabled');
-        create();
-        createButton.removeAttribute('disabled');
-    });
-    createButton.className = 'geBtn gePrimaryBtn';
-
-    let oldTemplates;
-    let origCategories;
-    let origCustomCatCount;
-
-    if (e.recentDocsCallback || e.searchDocsCallback) {
-        const tabsEl = [];
-
-        const setActiveTab = function (index) {
-            createButton.setAttribute('disabled', 'disabled');
-            for (var i = 0; i < tabsEl.length; i++) {
-                tabsEl[i].classList.add('geBtn');
-                if (i === index) {
-                    tabsEl[i].classList.add('gePrimaryBtn');
-                }
-            }
-        }
-
-        hasTabs = true;
-        var tabs = document.createElement('div');
-        tabs.style.whiteSpace = 'nowrap';
-        tabs.style.height = '30px';
-        outer.appendChild(tabs);
-
-        const templatesTab = mxUtils.button(mxResources.get('Templates', null, 'Templates'), function () {
-            list.style.display = '';
-            div.style.left = '160px';
-            setActiveTab(0);
-
-            div.scrollTop = 0;
-            div.innerHTML = '';
-            i0 = 0;
-
-            if (oldTemplates !== templates) {
-                templates = oldTemplates;
-                categories = origCategories;
-                customCatCount = origCustomCatCount;
-                list.innerHTML = '';
-                initUi();
-                oldTemplates = null;
-            }
-        });
-        tabsEl.push(templatesTab);
-        tabs.appendChild(templatesTab);
-
-        const getExtTemplates = function (isSearch) {
-            list.style.display = 'none';
-            div.style.left = '30px';
-
-            // deselect all of them if isSearch 
-            setActiveTab(isSearch ? -1 : 1);
-
-            if (!oldTemplates) {
-                oldTemplates = templates;
-            }
-
-            div.scrollTop = 0;
-            div.innerHTML = '';
-            spinner.spin(div);
-
-            const callback2 = function (docList, errorMsg, searchImportCats) {
-                i0 = 0;
-                spinner.stop();
-                templates = docList;
-                searchImportCats = searchImportCats || {};
-                var importListsCount = 0;
-
-                for (const cat of searchImportCats) {
-                    importListsCount += cat.length;
-                }
-
-                if (errorMsg) {
-                    div.innerHTML = errorMsg;
-                } else if (!docList.length && !importListsCount) {
-                    div.innerHTML = mxUtils.htmlEntities(mxResources.get('noDiagrams', null, 'No Diagrams Found'));
-                } else {
-                    div.innerHTML = '';
-
-                    if (importListsCount > 0) {
-                        list.style.display = '';
-                        div.style.left = '160px';
-                        list.innerHTML = '';
-
-                        customCatCount = 0;
-                        categories = { 'draw.io': docList };
-
-                        for (var cat in searchImportCats) {
-                            categories[cat] = searchImportCats[cat];
-                        }
-
-                        initUi();
-                    } else {
-                        addTemplates();
-                    }
-                }
-            }
-
-            if (isSearch) {
-                e.searchDocsCallback(searchInput.value, callback2);
-            } else {
-                e.recentDocsCallback(callback2);
-            }
-        }
-
-        if (e.recentDocsCallback) {
-            var recentTab = mxUtils.button(mxResources.get('Recent', null, 'Recent'), function () {
-                getExtTemplates();
-            });
-            tabs.appendChild(recentTab);
-            tabsEl.push(recentTab);
-        }
-
-        if (e.searchDocsCallback) {
-            var searchTab = document.createElement('span');
-            searchTab.style.marginLeft = '10px';
-            searchTab.innerHTML = mxUtils.htmlEntities(mxResources.get('search') + ':');
-            tabs.appendChild(searchTab);
-
-            var searchInput = document.createElement('input');
-            searchInput.style.marginRight = '10px';
-            searchInput.style.marginLeft = '10px';
-            searchInput.style.width = '220px';
-            mxEvent.addListener(searchInput, 'keypress', function (e) {
-                if (e.keyCode == 13) {
-                    getExtTemplates(true);
-                }
-            });
-            tabs.appendChild(searchInput);
-
-            var searchBtn = mxUtils.button(mxResources.get('search'), function () {
-                getExtTemplates(true);
-            });
-            searchBtn.className = 'geBtn';
-            tabs.appendChild(searchBtn);
-        }
-
-        setActiveTab(0);
-    }
-
-    let templateXml;
-    let templateLibs;
-    let templateExtUrl;
-    let templateInfoObj;
-
-    function create() {
-        if (templateExtUrl) {
-            if (!e.showName) {
-                editorUi.hideDialog();
-            }
-            e.openExtDocCallback(templateExtUrl, templateInfoObj, nameInput.value);
-        } else if (e.callback) {
-            if (!e.showName) {
-                editorUi.hideDialog();
-            }
-            e.callback(templateXml, nameInput.value);
-        } else {
-            var title = nameInput.value;
+    const create = tmplt => {
+        if (!tmplt.extUrl && !opts.callback) {
+            const title = nameInput.value;
             if (title) {
-                const enabled = editorUi.mode !== App.MODE_GOOGLE || !editorUi.stateArg || !editorUi.stateArg.folderId;
-                editorUi.pickFolder(editorUi.mode, function (folderId) {
-                    editorUi.createFile(title, templateXml, templateLibs, null, function () {
-                        editorUi.hideDialog();
-                    }, null, folderId);
-                }, enabled);
+                if (tmplt.import) {
+                    editorUi.importXml(tmplt.xml);
+                } else {
+                    const folderId = editorUi.stateArg && editorUi.stateArg.folderId;
+                    const enabled = editorUi.mode !== App.MODE_GOOGLE || !folderId;
+                    editorUi.pickFolder(editorUi.mode, fldid => {
+                        editorUi.createFile(title, tmplt.xml, tmplt.libs, undefined, () => {
+                            editorUi.hideDialog();
+                        }, true, fldid);
+                    }, enabled);
+                }
+            }
+        } else {
+            if (!opts.showName) {
+                editorUi.hideDialog();
+            }
+            if (tmplt.extUrl) {
+                opts.openExtDocCallback(tmplt.extUrl, tmplt.infoObj, nameInput.value);
+            } else if (opts.callback) {
+                opts.callback(tmplt.xml, nameInput.value);
             }
         }
     };
 
-    const divTop = (e.showName ? 72 : 40) + (hasTabs ? 30 : 0);
+    const createButton = mxUtils.button(opts.createButtonLabel || mxResources.get('create'), () => {
+        if (selected.template) {
+            createButton.setAttribute('disabled', 'disabled');
+            create({
+                import: selected.template.import,
+                xml: selected.template.xml,
+                libs: selected.template.libs,
+                extUrl: selected.template.exturl,
+                infoObj: selected.template.infoobj
+            });
+            createButton.removeAttribute('disabled');
+        }
+    });
+    createButton.className = 'geBtn gePrimaryBtn';
+
+    const divTop = opts.showName ? 72 : 40;
     const div = document.createElement('div');
     div.style.border = '1px solid #d3d3d3';
     div.style.position = 'absolute';
     div.style.left = '160px';
     div.style.right = '34px';
-    div.style.top = divTop + 'px';
+    div.style.top = `${divTop}px`;
     div.style.bottom = '68px';
     div.style.margin = '6px 0 0 -1px';
     div.style.padding = '6px';
     div.style.overflow = 'auto';
 
     const list = document.createElement('div');
-    list.style.cssText = 'position:absolute;left:30px;width:128px;top:' + divTop + 'px;bottom:68px;margin-top:6px;overflow:auto;border:1px solid #d3d3d3;';
+    list.style.cssText = `position:absolute;left:30px;width:128px;top:${divTop}px;bottom:68px;margin-top:6px;overflow:auto;border:1px solid #d3d3d3;'`;
 
-    let selectedElt;
-
-    function selectElement(elt, xml, libs, extUrl, infoObj) {
-        if (selectedElt) {
-            selectedElt.style.backgroundColor = 'transparent';
-            selectedElt.style.border = '1px solid transparent';
+    const selected = {
+        element: undefined,
+        template: undefined
+    };
+    const selectElement = (elt, tmplt) => {
+        if (selected.element) {
+            selected.element.style.backgroundColor = 'transparent';
+            selected.element.style.border = '1px solid transparent';
         }
+        elt.style.backgroundColor = opts.rightHighlight;
+        elt.style.border = opts.rightHighlightBorder;
 
+        selected.element = elt;
+        selected.template = tmplt;
         createButton.removeAttribute('disabled');
-
-        templateXml = xml;
-        templateLibs = libs;
-        selectedElt = elt;
-        templateExtUrl = extUrl;
-        templateInfoObj = infoObj;
-
-        selectedElt.style.backgroundColor = e.rightHighlight;
-        selectedElt.style.border = e.rightHighlightBorder;
     };
 
-    function addButton(e) {
+    const addButton = tmplt => {
         const elt = document.createElement('div');
         elt.className = 'geTemplate';
         elt.style.height = '140px';
         elt.style.width = '140px';
 
-        if (e.tooltip) {
-            elt.setAttribute('title', e.tooltip);
+        if (tmplt.tooltip) {
+            elt.setAttribute('title', tmplt.tooltip);
         }
 
-        if (e.imgUrl) {
-            elt.style.backgroundImage = 'url(' + e.imgUrl + ')';
+        let onclick = tmplt.onClick || (() => {
+            selectElement(elt, tmplt);
+        });
+        let ondblclick = tmplt.onDblClick || (() => {
+            create({
+                import: tmplt.import,
+                xml: tmplt.xml,
+                libs: tmplt.libs,
+                extUrl: tmplt.url,
+                infoObj: tmplt.infoObj
+            });
+        });
+
+        if (tmplt.imgUrl) {
+            elt.style.backgroundImage = `url(${tmplt.imgUrl})`;
             elt.style.backgroundSize = 'contain';
             elt.style.backgroundPosition = 'center center';
             elt.style.backgroundRepeat = 'no-repeat';
-
-            mxEvent.addListener(elt, 'click', function (evt) {
-                selectElement(elt, null, null, e.url, e.infoObj);
-            });
-
-            mxEvent.addListener(elt, 'dblclick', function (evt) {
-                create();
-            });
-        } else if (!e.noImg && e.url) {
-            const png = e.preview || TEMPLATE_PATH + '/' + e.url.substring(0, e.url.length - 4) + '.png';
-
-            elt.style.backgroundImage = 'url(' + png + ')';
+        } else if (!tmplt.noImg && tmplt.url) {
+            const png = tmplt.preview || `${TEMPLATE_PATH}/${tmplt.url.substring(0, tmplt.url.length - 4)}.png`;
+            elt.style.backgroundImage = `url(${png})`;
             elt.style.backgroundPosition = 'center center';
             elt.style.backgroundRepeat = 'no-repeat';
 
             let createIt = false;
-
-            mxEvent.addListener(elt, 'click', function () {
+            onclick = () => {
                 createButton.setAttribute('disabled', 'disabled');
                 elt.style.backgroundColor = 'transparent';
                 elt.style.border = '1px solid transparent';
 
-                let realUrl = e.url;
+                let realUrl = tmplt.url;
                 if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl)) {
-                    realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
+                    realUrl = `${PROXY_URL}?url=${encodeURIComponent(realUrl)}`;
                 }
                 else {
-                    realUrl = TEMPLATE_PATH + '/' + realUrl;
+                    realUrl = `${TEMPLATE_PATH}/${realUrl}`;
                 }
 
                 spinner.spin(div);
 
-                mxUtils.get(realUrl, mxUtils.bind(this, function (req) {
+                mxUtils.get(realUrl, mxUtils.bind(this, req => {
                     spinner.stop();
                     if (req.getStatus() >= 200 && req.getStatus() <= 299) {
-                        selectElement(elt, req.getText(), e.libs);
+                        selectElement(elt, tmplt);
                         if (createIt) {
-                            create();
+                            const xml = req.getText();
+                            create({
+                                import: false,
+                                xml: xml,
+                                libs: tmplt.libs,
+                                extUrl: tmplt.url,
+                                infoObj: tmplt.infoObj
+                            });
                         }
                     }
                 }));
-            });
+            };
 
-            mxEvent.addListener(elt, 'dblclick', function (evt) {
+            ondblclick = () => {
                 // Asynchronous double click handling after loading template
                 createIt = true;
-            });
+            };
         } else {
             elt.innerHTML = '<table width="100%" height="100%" style="line-height:1em;word-break: break-all;"><tr>' +
-                '<td align="center" valign="middle">' + mxResources.get(e.title, null, e.title) + '</td></tr></table>';
-
-            if (e.select) {
-                selectElement(elt);
-            }
-
-            const onclick = e.onClick || function () {
-                selectElement(elt, null, null, e.url, e.infoObj);
-            };
-            mxEvent.addListener(elt, 'click', onclick);
-
-            if (!e.onClick) {
-                mxEvent.addListener(elt, 'dblclick', function (evt) {
-                    create();
-                });
-            }
+                `<td align="center" valign="middle">${mxResources.get(tmplt.title, null, tmplt.title)}</td></tr></table>`;
         }
 
+        if (tmplt.select) {
+            selectElement(elt, tmplt);
+        }
+        if (onclick) {
+            mxEvent.addListener(elt, 'click', onclick);
+        }
+        if (ondblclick) {
+            mxEvent.addListener(elt, 'dblclick', ondblclick);
+        }
         div.appendChild(elt);
     };
 
-    let categories = {};
-    let customCats = {};
-    let customCatCount = 0;
-    let firstInitUi = true;
+    let categories = {
+        basic: [{
+            title: 'blankDiagram',
+            select: true
+        }]
+    };
 
-    // Adds local basic templates
-    categories.basic = [{
-        title: 'blankDiagram',
-        select: true,
-        url: undefined,
-        libs: undefined,
-        tooltip: undefined,
-        imgUrl: undefined,
-        infoObj: undefined,
-        onClick: undefined,
-        preview: undefined,
-        noImg: undefined
-    }];
-
-    let templates = categories.basic;
-
-    function initUi() {
-        if (firstInitUi) {
-            mxEvent.addListener(div, 'scroll', function (evt) {
-                if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
-                    addTemplates();
-                    mxEvent.consume(evt);
-                }
-            });
-            firstInitUi = false;
-        }
-
+    const initUi = () => {
         let currentEntry;
 
-        function addCatClick(cat, entry) {
-            mxEvent.addListener(entry, 'click', function () {
+        const addCatClick = (cat, entry) => {
+            const cattemplates = categories[cat];
+            mxEvent.addListener(entry, 'click', () => {
                 if (currentEntry === entry) {
                     return;
                 }
 
                 currentEntry.style.backgroundColor = '';
 
-                entry.style.backgroundColor = e.leftHighlight;
+                entry.style.backgroundColor = opts.leftHighlight;
                 currentEntry = entry;
 
                 div.scrollTop = 0;
                 div.innerHTML = '';
-                i0 = 0;
-
-                templates = customCats[cat];
-                oldTemplates = null;
-                addTemplates();
+                addTemplates(cattemplates);
             });
         };
 
-        if (customCatCount > 0) {
-            const titleCss = 'font-weight: bold;background: #f9f9f9;padding: 5px 0 5px 0;text-align: center;';
-            const title = document.createElement('div');
-            title.style.cssText = titleCss;
-            mxUtils.write(title, mxResources.get('custom'));
-            list.appendChild(title);
-
-            for (const cat in customCats) {
-                let label = cat;
-                if (label.length > 18) {
-                    label = label.substring(0, 18) + '&hellip;';
-                }
-
-                const templateList = customCats[cat] || [];
-                const entry = document.createElement('div');
-                entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
-                entry.setAttribute('title', label + ' (' + templateList.length + ')');
-                mxUtils.write(entry, entry.getAttribute('title'));
-
-                if (e.itemPadding) {
-                    entry.style.padding = e.itemPadding;
-                }
-                list.appendChild(entry);
-                addCatClick(cat, entry);
-            }
-
-            const title_drawio = document.createElement('div');
-            title_drawio.style.cssText = titleCss;
-            mxUtils.write(title_drawio, 'draw.io');
-            list.appendChild(title_drawio);
-        }
-
-        for (var cat in categories) {
+        for (var cat of Object.keys(categories)) {
             let label = mxResources.get(cat) || cat.substring(0, 1).toUpperCase() + cat.substring(1);
             if (label.length > 18) {
-                label = label.substring(0, 18) + '&hellip;';
+                label = `${label.substring(0, 18)}&hellip;`;
             }
 
             const templateList = categories[cat] || [];
             const entry = document.createElement('div');
             entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
-            entry.setAttribute('title', label + ' (' + templateList.length + ')');
+            entry.setAttribute('title', `${label} (${templateList.length})`);
             mxUtils.write(entry, entry.getAttribute('title'));
 
-            if (e.itemPadding) {
-                entry.style.padding = e.itemPadding;
+            if (opts.itemPadding) {
+                entry.style.padding = opts.itemPadding;
             }
             list.appendChild(entry);
 
             if (!currentEntry && templateList.length) {
                 currentEntry = entry;
-                currentEntry.style.backgroundColor = e.leftHighlight;
-                templates = templateList;
+                currentEntry.style.backgroundColor = opts.leftHighlight;
             }
             addCatClick(cat, entry);
         }
 
-        addTemplates();
+        addTemplates(categories.basic);
     }
 
-    if (!e.compact) {
+    if (!opts.compact) {
         outer.appendChild(list);
         outer.appendChild(div);
 
-        let realUrl = e.templateFile;
-        if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl)) {
-            realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
-        }
+        const loadCsetTemplates = async () => {
+            const category = 'CSET';
+            categories[category] = categories[category] || [];
 
-        let indexLoaded = false;
-
-        function loadDrawioTemplates() {
-            mxUtils.get(realUrl, function (req) {
-                if (indexLoaded) {
-                    // Workaround for index loaded 3 times in iOS offline mode
-                    return;
-                }
-
-                const tmpDoc = req.getXml();
-
-                let node = tmpDoc.documentElement.firstChild;
-                while (node) {
-                    if (typeof node.getAttribute !== 'undefined') {
-                        const url = node.getAttribute('url');
-                        if (url) {
-                            let category = node.getAttribute('section');
-                            if (!category) {
-                                const slash = url.indexOf('/');
-                                category = url.substring(0, slash);
-                            }
-
-                            categories[category] = categories[category] || [];
-
-                            const list = categories[category];
-                            list.push({
-                                title: node.getAttribute('title'),
-                                select: true,
-                                url: node.getAttribute('url'),
-                                libs: node.getAttribute('libs'),
-                                tooltip: node.getAttribute('url'),
-                                preview: node.getAttribute('preview'),
-                                imgUrl: undefined,
-                                infoObj: undefined,
-                                onClick: undefined,
-                                noImg: undefined
-                            });
-                        }
-                    }
-
-                    node = node.nextSibling;
-                }
-
-                indexLoaded = true;
-                spinner.stop();
-                initUi();
-            });
+            const csetTemplates = await CsetUtils.getCsetTemplates();
+            for (const tmplt of csetTemplates) {
+                categories[category].push({
+                    import: true,
+                    xml: tmplt.Markup,
+                    title: tmplt.Name.trim(),
+                    tooltip: tmplt.Name.trim(),
+                    select: csetTemplates[0] === tmplt,
+                    imgUrl: tmplt.ImageSource && `'data: image/png;base64,${tmplt.ImageSource}'`
+                });
+            }
+            spinner.stop();
+            initUi();
         };
 
         spinner.spin(div);
-
-        if (e.customTempCallback) {
-            e.customTempCallback(function (cats, count) {
-                customCats = cats;
-                customCatCount = count;
-                //Custom templates doesn't change after being loaded, so cache them here. Also, only count is overridden
-                origCustomCatCount = count;
-                loadDrawioTemplates();
-            },
-                //In case of an error, just load draw.io templates only
-                loadDrawioTemplates);
-        } else {
-            loadDrawioTemplates();
-        }
-
-        //draw.io templates doesn't change after being loaded, so cache them here
-        origCategories = categories;
+        loadCsetTemplates();
     }
 
-    mxEvent.addListener(nameInput, 'keypress', function (e) {
+    mxEvent.addListener(nameInput, 'keypress', e => {
         if (editorUi.dialog.container.firstChild === outer && e.keyCode === 13) {
-            create();
+            if (selected.template) {
+                createButton.setAttribute('disabled', 'disabled');
+                create({
+                    import: selected.template.import,
+                    xml: selected.template.xml,
+                    libs: selected.template.libs,
+                    extUrl: selected.template.exturl,
+                    infoObj: selected.template.infoobj
+                });
+                createButton.removeAttribute('disabled');
+            }
         }
     });
 
     const btns = document.createElement('div');
-    btns.style.marginTop = e.compact ? '4px' : '16px';
+    btns.style.marginTop = opts.compact ? '4px' : '16px';
     btns.style.textAlign = 'right';
     btns.style.position = 'absolute';
     btns.style.left = '40px';
     btns.style.bottom = '24px';
     btns.style.right = '40px';
 
-    const cancelBtn = mxUtils.button(mxResources.get('cancel'), function () {
-        e.cancelCallback && e.cancelCallback();
+    const cancelBtn = mxUtils.button(mxResources.get('cancel'), () => {
+        opts.cancelCallback && opts.cancelCallback();
         editorUi.hideDialog(true);
     });
     cancelBtn.className = 'geBtn';
-    if (editorUi.editor.cancelFirst && (!e.createOnly || e.cancelCallback)) {
+    if (editorUi.editor.cancelFirst && (!opts.createOnly || opts.cancelCallback)) {
         btns.appendChild(cancelBtn);
     }
 
-    if (!e.compact && !editorUi.isOffline() && e.showName && !e.callback && !e.createOnly) {
-        const helpBtn = mxUtils.button(mxResources.get('help'), function () {
+    if (!opts.compact && !editorUi.isOffline() && opts.showName && !opts.callback && !opts.createOnly) {
+        const helpBtn = mxUtils.button(mxResources.get('help'), () => {
             editorUi.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
         });
         helpBtn.className = 'geBtn';
         btns.appendChild(helpBtn);
     }
 
-    if (!e.compact && urlParams.embed !== '1' && !e.createOnly) {
-        const fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), function () {
-            const dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), function (fileUrl) {
+    if (!opts.compact && urlParams.embed !== '1' && !opts.createOnly && !opts.hideFromTemplateUrl) {
+        const fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), () => {
+            const dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), fileUrl => {
                 if (fileUrl) {
-                    const url = editorUi.getUrl(window.location.pathname + '?mode=' + editorUi.mode || '' +
-                        '&title=' + encodeURIComponent(nameInput.value) +
-                        '&create=' + encodeURIComponent(fileUrl));
+                    const url = editorUi.getUrl(`${window.location.pathname}?mode=${editorUi.mode || ''}` +
+                        `&title=${encodeURIComponent(nameInput.value)} ` +
+                        `&create=${encodeURIComponent(fileUrl)}`);
                     if (!editorUi.getCurrentFile()) {
                         window.location.href = url;
                     } else {
@@ -3238,13 +2998,13 @@ var NewDialog = function (editorUi, e) {
         btns.appendChild(fromTmpBtn);
     }
 
-    if (Graph.fileSupport && e.showImport) {
-        const importBtn = mxUtils.button(mxResources.get('import'), function () {
+    if (Graph.fileSupport && opts.showImport) {
+        const importBtn = mxUtils.button(mxResources.get('import'), () => {
             if (!editorUi.newDlgFileInputElt) {
                 const fileInput = document.createElement('input');
                 fileInput.setAttribute('multiple', 'multiple');
                 fileInput.setAttribute('type', 'file');
-                mxEvent.addListener(fileInput, 'change', function (evt) {
+                mxEvent.addListener(fileInput, 'change', () => {
                     editorUi.openFiles(fileInput.files, true);
                     fileInput.value = '';
                 });
@@ -3260,7 +3020,7 @@ var NewDialog = function (editorUi, e) {
 
     btns.appendChild(createButton);
 
-    if (!editorUi.editor.cancelFirst && !e.callback && (!e.createOnly || e.cancelCallback)) {
+    if (!editorUi.editor.cancelFirst && !opts.callback && (!opts.createOnly || opts.cancelCallback)) {
         btns.appendChild(cancelBtn);
     }
 
