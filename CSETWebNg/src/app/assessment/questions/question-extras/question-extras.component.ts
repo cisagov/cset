@@ -67,10 +67,13 @@ export class QuestionExtrasComponent implements OnInit {
     public dialog: MatDialog,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
-    public assessSvc: AssessmentService) { }
+    public assessSvc: AssessmentService) {
+    }
 
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log(this.myQuestion);
+  }
 
 
   /**
@@ -106,15 +109,21 @@ export class QuestionExtrasComponent implements OnInit {
     this.questionsSvc.getDetails(this.myQuestion.QuestionId).subscribe(
       (details) => {
         this.extras = details;
-
         // populate my details with the first "non-null" tab
         this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.configSvc.showQuestionAndRequirementIDs()) {
-          this.tab.QuestionsList.forEach((q: any) => {
-            q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
-          });
+          if (this.tab) {
+            if(this.tab.IsComponent){
+
+            }
+            else{
+              this.tab.QuestionsList.forEach((q: any) => {
+                q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+              });
+            }
+          }
         }
       }
     );
@@ -164,7 +173,8 @@ export class QuestionExtrasComponent implements OnInit {
         Comment: '',
         FeedBack: '',
         MarkForReview: false,
-        Reviewed: false
+        Reviewed: false,
+        Is_Component: this.myQuestion.Is_Component
       };
 
       this.answer = newAnswer;
@@ -479,6 +489,8 @@ export class QuestionExtrasComponent implements OnInit {
     }
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
+
+  
 
   /**
    * check if approach exists for acet questions

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CSET_Main.Questions.InformationTabData
 {
-    public class ComponentQuestionInfoData:BaseQuestionInfoData
+    public class ComponentQuestionInfoData : BaseQuestionInfoData
     {
         public Dictionary<String, ComponentTypeSalData> DictionaryComponentTypes { get; set; }
         public Dictionary<String, SymbolComponentInfoData> DictionaryComponentInfo { get; set; }
@@ -33,7 +33,7 @@ namespace CSET_Main.Questions.InformationTabData
             return false;
         }
 
-        
+
 
     }
 }
