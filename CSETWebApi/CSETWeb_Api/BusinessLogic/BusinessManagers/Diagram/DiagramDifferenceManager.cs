@@ -89,7 +89,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     foreach (var deleteNode in differences.DeletedNodes)
                     {
                         var adc = context.ASSESSMENT_DIAGRAM_COMPONENTS
-                            .FirstOrDefault(x => x.Assessment_Id == assessment_id && x.Component_Id == deleteNode.Key);
+                            .FirstOrDefault(x => x.Assessment_Id == assessment_id && x.Component_Guid == deleteNode.Key);
                         if (adc != null)
                         {
                             context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(adc);
@@ -195,7 +195,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(new ASSESSMENT_DIAGRAM_COMPONENTS()
                         {
                             Assessment_Id = assessment_id,
-                            Component_Id = newNode.Key,
+                            Component_Guid = newNode.Key,
                             Diagram_Component_Type = newNode.Value.ComponentType,
                             DrawIO_id = newNode.Value.ID,
                             label = newNode.Value.ComponentName, 
@@ -309,7 +309,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 {
                     ID = id,                    
                     Parent_id = layerid,
-                    ZoneType = zone.Attributes["zoneType"].Value,
+                    ZoneType = zone.Attributes["ZoneType"].Value,
                     SAL = zone.Attributes["SAL"].Value,
                     ComponentName = zone.Attributes["label"].Value
                 });

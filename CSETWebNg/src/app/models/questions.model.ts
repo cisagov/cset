@@ -79,12 +79,13 @@ export interface Question {
     Answer: string;
     AltAnswerText: string;
     Comment: string;
+    FeedBack: string;
     HasDiscovery: boolean;
     HasDocument: boolean;
     MarkForReview: boolean;
     Reviewed: boolean;
     MaturityLevel: string;
-
+    Is_Component: boolean;
     ExtrasExpanded: boolean;
     Visible: boolean;
 }
@@ -95,8 +96,10 @@ export class Answer {
     AnswerText: string;
     AltAnswerText: string;
     Comment: string;
+    FeedBack: string;
     MarkForReview: boolean;
     Reviewed: boolean;
+    Is_Component: boolean;
 }
 
 export class SubToken {

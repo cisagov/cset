@@ -8,7 +8,7 @@ namespace DataLayerCore.Model
     public partial class ASSESSMENT_DIAGRAM_COMPONENTS
     {
         public int Assessment_Id { get; set; }
-        public Guid Component_Id { get; set; }
+        public Guid Component_Guid { get; set; }
         [StringLength(50)]
         public string Diagram_Component_Type { get; set; }
         [StringLength(200)]

@@ -103,7 +103,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                     zones.Add(zone, new NetworkZone()
                     {
                         ID = zone,
-                        ZoneType = node.Attributes["zoneType"].Value,
+                        ZoneType = node.Attributes["ZoneType"].Value,
                         SAL = node.Attributes["SAL"].Value
                     });
                 }

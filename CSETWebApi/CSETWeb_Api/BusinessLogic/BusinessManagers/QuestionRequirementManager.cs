@@ -189,6 +189,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
+            dbAnswer.FeedBack = answer.FeedBack;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
 

@@ -149,7 +149,7 @@ mxCell.prototype.setZoneColor = function ()
     var headerColor = '#ece4d7';
     var color = '#f6f3ed';
 
-    var zoneType = (this.getCsetAttribute('zoneType') || '').toLowerCase();
+    var zoneType = (this.getCsetAttribute('ZoneType') || '').toLowerCase();
     switch (zoneType)
     {
         case 'control dmz':
