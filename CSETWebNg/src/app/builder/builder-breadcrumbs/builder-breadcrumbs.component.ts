@@ -47,13 +47,13 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     // Because this component is only used in the Module Builder, set the browser title here.
-    this.titleSvc.setTitle("Module Builder - CSET");
+    this.titleSvc.setTitle('Module Builder - CSET');
 
     if (!this.setBuilderSvc.navXml) {
       // read XML and populate my local document
       this.setBuilderSvc.ReadBreadcrumbXml().subscribe((x: any) => {
         const oParser = new DOMParser();
-        this.setBuilderSvc.navXml = oParser.parseFromString(x, "application/xml");
+        this.setBuilderSvc.navXml = oParser.parseFromString(x, 'application/xml');
         this.displayCrumbs();
       });
     } else {
@@ -79,10 +79,10 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
     let targetPage = this.findPage(justPathString);
     if (targetPage !== null) {
       this.resetCurrentPage();
-      (<Element>targetPage).setAttribute("current", "true");
+      (<Element>targetPage).setAttribute('current', 'true');
 
       if (!!params) {
-        (<Element>targetPage).setAttribute("parm", params);
+        (<Element>targetPage).setAttribute('parm', params);
       }
     }
 
@@ -116,7 +116,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
   }
 
   /**
-   * Turn off all "current" attributes
+   * Turn off all 'current' attributes
    */
   resetCurrentPage() {
     const result = this.setBuilderSvc.navXml
@@ -126,7 +126,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
     const e = result.iterateNext();
     if (!!e) {
-      (<Element>e).setAttribute("current", "false");
+      (<Element>e).setAttribute('current', 'false');
     }
   }
 
@@ -148,7 +148,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
     }
 
     // find the version of the target page that is a child of the 'current' page
-    xPath = '/Top//Page[@current="true"]/Page[@navpath="' + curPage + '"]';
+    xPath = '/Top//Page[@current="true"]//Page[@navpath="' + curPage + '"]';
     result = this.setBuilderSvc.navXml
       .evaluate(xPath,
         this.setBuilderSvc.navXml, null,
