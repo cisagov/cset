@@ -305,15 +305,15 @@ namespace CSETWeb_Api.BusinessManagers
                 mxGraphModelRootObject o = new mxGraphModelRootObject();
                 Type objectType = typeof(mxGraphModelRootObject);
 
-
                 foreach (var item in diagramXml.root.Items)
                 {
                     if (item.GetType() == objectType)
                     {
                         var addLayerVisible = (mxGraphModelRootObject) item;
-                        var layerVisibility =getLayerVisibility(addLayerVisible.parent, assessment_id);
+                        var layerVisibility =getLayerVisibility(addLayerVisible.mxCell.parent, assessment_id);
                         addLayerVisible.visible = layerVisibility.visible;
                         addLayerVisible.layerName = layerVisibility.layerName;
+                        
                         vertices.Add(addLayerVisible);
                     }
 
@@ -348,12 +348,12 @@ namespace CSETWeb_Api.BusinessManagers
             var list3 = list.Union(list2);
 
             Dictionary<string, LayerVisibility> allItems = list3.ToDictionary(x => x.DrawIo_id,x=> x);
-            LayerVisibility layer;
-            LayerVisibility lastLayer = null; 
-            while (allItems.TryGetValue(drawIoId, out layer))
+            LayerVisibility layer = new LayerVisibility();
+            LayerVisibility lastLayer = new LayerVisibility(); 
+            while (!string.IsNullOrEmpty(drawIoId) && allItems.TryGetValue(drawIoId, out layer))
             {
                 lastLayer = layer;
-                drawIoId = layer.Parent_DrawIo_id;
+                drawIoId = string.IsNullOrEmpty(layer.Parent_DrawIo_id)?"0":layer.Parent_DrawIo_id;
             }
 
             return lastLayer;
@@ -366,7 +366,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> ProcessDiagramShapes(StringReader stream)
+        public List<mxGraphModelRootMxCell> ProcessDiagramShapes(StringReader stream, int assessment_id)
         {
 
             List<mxGraphModelRootMxCell> vertices = new List<mxGraphModelRootMxCell>();
@@ -382,7 +382,11 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (item.GetType() == objectType)
                     {
-                        vertices.Add((mxGraphModelRootMxCell)item);
+                        var addLayerVisible = (mxGraphModelRootMxCell)item;
+                        var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
+                        addLayerVisible.visible = layerVisibility.visible;
+                        addLayerVisible.layerName = layerVisibility.layerName;
+                        vertices.Add(addLayerVisible);
                     }
 
                 }
@@ -396,7 +400,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> ProcessDigramEdges(StringReader stream)
+        public List<mxGraphModelRootMxCell> ProcessDigramEdges(StringReader stream, int assessment_id)
         {
             List<mxGraphModelRootMxCell> edges = new List<mxGraphModelRootMxCell>();
             if (stream != null)
@@ -411,7 +415,11 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (item.GetType() == objectType)
                     {
-                        edges.Add((mxGraphModelRootMxCell)item);
+                        var addLayerVisible = (mxGraphModelRootMxCell)item;
+                        var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
+                        addLayerVisible.visible = layerVisibility.visible;
+                        addLayerVisible.layerName = layerVisibility.layerName;
+                        edges.Add(addLayerVisible);
                     }
                 }
             }
@@ -441,7 +449,7 @@ namespace CSETWeb_Api.BusinessManagers
                         diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.DisplayName;
                     }
 
-                    diagramComponents[i].zoneLabel = diagramZones.FirstOrDefault(x=>x.id == diagramComponents[i].parent)?.label;
+                    diagramComponents[i].zoneLabel = diagramZones.FirstOrDefault(x=>x.id == diagramComponents[i].mxCell.parent)?.label;
                 }
 
                 return diagramComponents;
