@@ -401,6 +401,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 IsComponent = true;
                 ShowRequirementFrameworkTitle = false;
+                this.RequirementFrameworkTitle = "Components";
                 NEW_QUESTION question = BuildFromNewQuestion(info, info.Set, controlContext);
                 ComponentVisibility = true;
                 // Build multiServiceComponent types list if any
@@ -409,7 +410,7 @@ namespace CSET_Main.Questions.InformationTabData
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
-                foreach (COMPONENT_QUESTIONS componentType in question.COMPONENT_QUESTIONS)
+                foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x=> x.Question_Id == info.QuestionID))
                 {
                     bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Type, salLevel);
                     SymbolComponentInfoData componentTypeData = info.DictionaryComponentInfo[componentType.Component_Type];
@@ -421,6 +422,25 @@ namespace CSET_Main.Questions.InformationTabData
                     });
                 }
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Type).ToList();
+                var reqid = controlContext.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
+                BuildDocuments(reqid, controlContext);
+                var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
+                {
+                    Question_or_Requirement_Id = t.Requirement_Id,
+                    Text = FormatRequirementText(t.Requirement_Text),
+                    SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info)                    
+                }).FirstOrDefault();
+                if (requirement != null)
+                {
+                    RequirementsData = new RequirementTabData()
+                    {
+                        RequirementID = requirement.Question_or_Requirement_Id,
+                        Text = requirement.Text,
+                        SupplementalInfo = FormatSupplementalInfo(requirement.SupplementalInfo),
+                    };
+                    QuestionsVisible = false;
+                    ShowSALLevel = true;                    
+                }
             }
             catch (Exception ex)
             {
