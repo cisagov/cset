@@ -31,12 +31,7 @@ export class ComponentsComponent implements OnInit {
     });
   }
 
-  submit(component){
-    this.diagramSvc.saveComponent(component).subscribe((x:any)=>{
-    
-    });
-
-  }
+  
 
 
 
