@@ -1908,6 +1908,8 @@
 
             if (!oldFile) {
                 this.createFile(this.defaultFilename, null, null, null, null, null, null, urlParams.local !== '1');
+                const file = this.getCurrentFile();
+                console.log('file created.', { file, isModified: file.isModified() });
             }
             this.LoadGraphFromCSET(this.editor, this.fname, this).then(() => {
                 const isempty = this.isDiagramEmpty() || this.isGraphModelEmpty();
