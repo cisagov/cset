@@ -2,30 +2,17 @@
     <th mat-sort-header="type">Type</th>
     <th mat-sort-header="label">Label</th>
     <th mat-sort-header="sal">Sal</th>
-    
+    <th mat-sort-header="layer">Layer</th>
+    <th mat-sort-header="visible">Visible</th>
     <tr *ngFor="let zone of zones; let i = index">
-        <td><select [(ngModel)]="zone.zoneTypeField" class="form-control override-select"
-          (change)="submit(zone);">
-          <option [ngValue]="'Control DMZ'">Control DMZ</option>
-          <option [ngValue]="'Control System'">Control System</option>
-          <option [ngValue]="'Corporate'">Corporate</option>
-          <option [ngValue]="'External DMZ'">External DMZ</option>
-          <option [ngValue]="'Other'">Other</option>
-          <option [ngValue]="'Plant System'">Plant System</option>
-          <option [ngValue]="'Safety'">Safety</option>
-        </select></td>
+        <td>{{zone.zoneTypeField}}</td>
+        <td>{{zone.labelField}}</td>
+        <td>{{zone.sALField}}</td>
+        <td>{{zone.layerNameField}}</td>
         <td>
-            <input type="input" class="form-control mt-2" name="labelField" 
-            [(ngModel)]="zone.labelField" (change)="submit(zone)" />
-        </td>
-        <td><select [(ngModel)]="zone.sALField" class="form-control override-select"
-          (change)="submit(zone);">
-          <option [ngValue]="'none'">None</option>
-          <option [ngValue]="'Low'">Low</option>
-          <option [ngValue]="'Moderate'">Moderate</option>
-          <option [ngValue]="'High'">High</option>
-          <option [ngValue]="'Very High'">Very High</option>
-        </select></td>
+          <input type="checkbox" name="{{ zone.visibleField }}" class="mt-1" [(ngModel)]="zone.visibleField"
+            [checked]="zone.visibleField" [disabled]="true" >
+       </td>
     </tr>
 </table>
 

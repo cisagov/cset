@@ -1,9 +1,14 @@
 <table mat-table matSort class="assessment-summary" style='overflow:auto'>
     <th mat-sort-header="label">Label</th>
-    
+    <th mat-sort-header="layer">Layer</th>
+    <th mat-sort-header="visible">Visible</th>
     <tr *ngFor="let text of texts; let i = index">
-        <td><input type="input" class="form-control mt-2" name="valueField" 
-            [(ngModel)]="text.valueField" (change)="submit(text)" /></td>
+        <td>{{text.valueField}}</td>
+        <td>{{text.layerNameField}}</td>
+        <td>
+            <input type="checkbox" name="{{ text.visibleField }}" class="mt-1" [(ngModel)]="text.visibleField"
+              [checked]="text.visibleField" [disabled]="true" >
+         </td>
     </tr>
 </table>
 

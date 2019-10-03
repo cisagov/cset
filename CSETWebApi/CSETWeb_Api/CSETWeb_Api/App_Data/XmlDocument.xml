@@ -818,32 +818,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveComponent(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootObject)">
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetExcelExportDiagram">
             <summary>
-            Update component
+            Generates an Excel spreadsheet with a row for every assessment that
+            the current user has access to that uses the ACET standard.
             </summary>
-            <param name="vertice"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveZone(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootObject)">
-            <summary>
-            update zone
-            </summary>
-            <param name="vertice"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveShape(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootMxCell)">
-            <summary>
-            update shape
-            </summary>
-            <param name="vertice"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveLink(CSETWeb_Api.BusinessLogic.Models.mxGraphModelRootMxCell)">
-            <summary>
-            update link
-            </summary>
-            <param name="vertice"></param>
+            <param name="token"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTemplates">

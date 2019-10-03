@@ -21,10 +21,5 @@ export class LinksComponent implements OnInit {
     });
   }
 
-  submit(link){
-    this.diagramSvc.saveLink(link).subscribe((x:any)=>{
-    
-    });
-
-  }
+  
 }

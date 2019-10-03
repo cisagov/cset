@@ -116,6 +116,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSETtoExcelDiagramMappings.cs" />
     <Compile Include="CSETtoExcelNCUAMappings.cs" />
     <Compile Include="oldReportEngine\DataHandling.cs" />
     <Compile Include="DataMap.cs" />
