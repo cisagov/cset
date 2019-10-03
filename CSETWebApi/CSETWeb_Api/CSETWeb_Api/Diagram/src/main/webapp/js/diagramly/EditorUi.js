@@ -1919,7 +1919,7 @@
                     const modal = true;
                     const canclose = true;
                     const onclose = mxUtils.bind(this, cancel => {
-                        this.hideDialog(cancel);
+                        this.hideDialog();
                     });
                     const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
                     this.showDialog(dlg.container, width, height, modal, canclose, onclose);
@@ -1948,9 +1948,11 @@
             file.open();
             delete this.openingFile;
 
+            const filemode = file.getMode();
+
             // DescriptorChanged updates the enabled state of the graph
             this.setGraphEnabled(true);
-            this.setMode(file.getMode());
+            this.setMode(filemode);
             this.editor.graph.model.prefix = `${Editor.guid()}-`;
             this.editor.undoManager.clear();
             this.descriptorChanged();
@@ -1992,18 +1994,17 @@
             this.editor.fireEvent(new mxEventObject('fileLoaded'));
             result = true;
 
-            if (!this.isOffline() && file.getMode() != null) {
+            if (!this.isOffline() && filemode) {
                 EditorUi.logEvent({
-                    category: `${file.getMode().toUpperCase()}-OPEN-FILE-${file.getHash()}`,
+                    category: `${filemode.toUpperCase()}-OPEN-FILE-${file.getHash()}`,
                     action: `size_${file.getSize()}`,
                     label: `autosave_${this.editor.autosave ? 'on' : 'off'}`
                 });
             }
 
-            if (this.editor.editable && this.mode === file.getMode() &&
-                file.getMode() != App.MODE_DEVICE && file.getMode() != null) {
+            if (this.editor.editable && filemode && this.mode === filemode && filemode !== App.MODE_DEVICE) {
                 try {
-                    this.addRecent({ id: file.getHash(), title: file.getTitle(), mode: file.getMode() });
+                    this.addRecent({ id: file.getHash(), title: file.getTitle(), mode: filemode });
                 } catch (e) {
                     // ignore
                 }
@@ -2054,8 +2055,6 @@
                 fn();
             }
         }
-
-        //this.LoadGraphFromCSET(this.editor, this.fname, this);
 
         return result;
     };

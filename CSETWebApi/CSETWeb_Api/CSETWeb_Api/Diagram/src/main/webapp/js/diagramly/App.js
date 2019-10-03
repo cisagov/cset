@@ -404,27 +404,23 @@ App.getStoredMode = function ()
 
                 // Loads dropbox for all browsers but IE8 and below (no CORS) if not disabled or if enabled and in embed mode
                 // KNOWN: Picker does not work in IE11 (https://dropbox.zendesk.com/requests/1650781)
-                if (typeof window.DropboxClient === 'function')
-                {
+                if (typeof window.DropboxClient === 'function') {
                     if (urlParams['db'] != '0' && isSvgBrowser &&
-                        (document.documentMode == null || document.documentMode > 9))
-                    {
+                        (document.documentMode == null || document.documentMode > 9)) {
                         // Immediately loads client
                         if (App.mode == App.MODE_DROPBOX || (window.location.hash != null &&
-                            window.location.hash.substring(0, 2) == '#D'))
-                        {
-                            mxscript(App.DROPBOX_URL);
+                            window.location.hash.substring(0, 2) == '#D')) {
+                            const cset = true;
+                            if (!cset) {
+                                mxscript(App.DROPBOX_URL);
 
-                            // Must load this after the dropbox SDK since they use the same namespace
-                            mxscript(App.DROPINS_URL, null, 'dropboxjs', App.DROPBOX_APPKEY);
-                        }
-                        else if (urlParams['chrome'] == '0')
-                        {
+                                // Must load this after the dropbox SDK since they use the same namespace
+                                mxscript(App.DROPINS_URL, null, 'dropboxjs', App.DROPBOX_APPKEY);
+                            }
+                        } else if (urlParams['chrome'] == '0') {
                             window.DropboxClient = null;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         // Disables loading of client
                         window.DropboxClient = null;
                     }
@@ -671,16 +667,16 @@ App.main = function (callback, createUi)
                         (window.Dropbox == null && window.DrawDropboxClientCallback != null &&
                             (((urlParams['embed'] != '1' && urlParams['db'] != '0') ||
                                 (urlParams['embed'] == '1' && urlParams['db'] == '1')) &&
-                                isSvgBrowser && (document.documentMode == null || document.documentMode > 9))))
-                    {
-                        mxscript(App.DROPBOX_URL, function ()
-                        {
-                            // Must load this after the dropbox SDK since they use the same namespace
-                            mxscript(App.DROPINS_URL, function ()
-                            {
-                                DrawDropboxClientCallback();
-                            }, 'dropboxjs', App.DROPBOX_APPKEY);
-                        });
+                                isSvgBrowser && (document.documentMode == null || document.documentMode > 9)))) {
+                        const cset = true;
+                        if (!cset) {
+                            mxscript(App.DROPBOX_URL, function () {
+                                // Must load this after the dropbox SDK since they use the same namespace
+                                mxscript(App.DROPINS_URL, function () {
+                                    DrawDropboxClientCallback();
+                                }, 'dropboxjs', App.DROPBOX_APPKEY);
+                            });
+                        }
                     }
                     // Disables client
                     else if (typeof window.Dropbox === 'undefined' || typeof window.Dropbox.choose === 'undefined')
@@ -4720,49 +4716,38 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-App.prototype.descriptorChanged = function ()
-{
-    var file = this.getCurrentFile();
-
-    if (file != null)
-    {
+App.prototype.descriptorChanged = function () {
+    const CSET = true;
+    const file = this.getCurrentFile();
+    if (file) {
         // CSET - don't set fname to the filename
-        var CSET = true;
-        if (!CSET && this.fname != null)
-        {
+        if (!CSET && this.fname) {
             this.fnameWrapper.style.display = 'block';
             this.fname.innerHTML = '';
-            var filename = (file.getTitle() != null) ? file.getTitle() : this.defaultFilename;
+            const filename = file.getTitle() || this.defaultFilename;
             mxUtils.write(this.fname, filename);
-            this.fname.setAttribute('title', filename + ' - ' + mxResources.get('rename'));
+            this.fname.setAttribute('title', `${filename} - ${mxResources.get('rename')}`);
         }
-        else
-        {
+        else {
             this.fname.innerHTML = sessionStorage.getItem('assessment.name');
         }
 
-        var graph = this.editor.graph;
-        var editable = file.isEditable() && !file.invalidChecksum;
+        const graph = this.editor.graph;
+        const editable = file.isEditable() && !file.invalidChecksum;
 
-        if (graph.isEnabled() && !editable)
-        {
+        if (graph.isEnabled() && !editable) {
             graph.reset();
         }
 
         graph.setEnabled(editable);
 
         // Ignores title and hash for revisions
-        if (urlParams['rev'] == null)
-        {
+        if (!urlParams.rev) {
             this.updateDocumentTitle();
-            var newHash = file.getHash();
-
-            if (newHash.length > 0)
-            {
+            const newHash = file.getHash();
+            if (newHash) {
                 window.location.hash = newHash;
-            }
-            else if (window.location.hash.length > 0)
-            {
+            } else if (window.location.hash.length > 0) {
                 window.location.hash = '';
             }
         }
@@ -4770,9 +4755,12 @@ App.prototype.descriptorChanged = function ()
 
     this.updateUi();
 
-    if (this.format != null && this.editor.graph.isSelectionEmpty())
-    {
+    if (this.format && this.editor.graph.isSelectionEmpty()) {
         this.format.refresh();
+    }
+
+    if (CSET) {
+        CsetUtils.PersistGraphToCSET(this.editor);
     }
 };
 

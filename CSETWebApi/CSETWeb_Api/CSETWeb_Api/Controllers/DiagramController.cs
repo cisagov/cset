@@ -74,15 +74,20 @@ namespace CSETWeb_Api.Controllers
 
         public List<IDiagramAnalysisNodeMessage> performAnalysis(DiagramRequest req, int assessmentId)
         {
-            using (var db = new CSET_Context())
+            var messages = new List<IDiagramAnalysisNodeMessage>();
+            if (!string.IsNullOrEmpty(req.DiagramXml))
             {
-                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.LoadXml(req.DiagramXml);
+                using (var db = new CSET_Context())
+                {
+                    BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.LoadXml(req.DiagramXml);
 
-                DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId);
-                return analysis.PerformAnalysis(xDoc);
+                    DiagramAnalysis analysis = new DiagramAnalysis(db, assessmentId);
+                    messages = analysis.PerformAnalysis(xDoc);
+                }
             }
+            return messages;
         }
 
 

@@ -148,15 +148,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     context.SaveChanges();
                     Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
                     int defaultLayer = context.DIAGRAM_CONTAINER
-                        .Where(x => x.Assessment_Id == assessment_id && x.ContainerType == "Layer").ToList()
+                        .Where(x => x.Assessment_Id == assessment_id && x.ContainerType == "Layer")
+                        .DefaultIfEmpty(new DIAGRAM_CONTAINER { Assessment_Id = -1 })
+                        .ToList()
                         .Min(x => x.Assessment_Id);
+                    if (defaultLayer < 0)
+                    {
+                        return;
+                    }
+
                     foreach (var zone in differences.AddedZones)
                     {
                         var z = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key).FirstOrDefault();
                         if (z == null)
                         {
-                            int parent_id = 0;
-                            if (!layerLookup.TryGetValue(zone.Value.Parent_id, out parent_id))
+                            if (!layerLookup.TryGetValue(zone.Value.Parent_id, out int parent_id))
                             {
                                 parent_id = defaultLayer;
                             }

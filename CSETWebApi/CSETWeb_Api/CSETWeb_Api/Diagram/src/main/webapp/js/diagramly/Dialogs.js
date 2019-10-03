@@ -2694,17 +2694,13 @@ var NewDialog = function (editorUi, opts) {
         if (!tmplt.extUrl && !opts.callback) {
             const title = nameInput.value;
             if (title) {
-                if (tmplt.import) {
-                    editorUi.importXml(tmplt.xml);
-                } else {
-                    const folderId = editorUi.stateArg && editorUi.stateArg.folderId;
-                    const enabled = editorUi.mode !== App.MODE_GOOGLE || !folderId;
-                    editorUi.pickFolder(editorUi.mode, fldid => {
-                        editorUi.createFile(title, tmplt.xml, tmplt.libs, undefined, () => {
-                            editorUi.hideDialog();
-                        }, true, fldid);
-                    }, enabled);
-                }
+                const folderId = editorUi.stateArg && editorUi.stateArg.folderId;
+                const enabled = editorUi.mode !== App.MODE_GOOGLE || !folderId;
+                editorUi.pickFolder(editorUi.mode, fldid => {
+                    editorUi.createFile(title, tmplt.xml, tmplt.libs, undefined, () => {
+                        editorUi.hideDialog();
+                    }, true, fldid);
+                }, enabled);
             }
         } else {
             if (!opts.showName) {
@@ -2722,7 +2718,6 @@ var NewDialog = function (editorUi, opts) {
         if (selected.template) {
             createButton.setAttribute('disabled', 'disabled');
             create({
-                import: selected.template.import,
                 xml: selected.template.xml,
                 libs: selected.template.libs,
                 extUrl: selected.template.exturl,
@@ -2780,7 +2775,6 @@ var NewDialog = function (editorUi, opts) {
         });
         let ondblclick = tmplt.onDblClick || (() => {
             create({
-                import: tmplt.import,
                 xml: tmplt.xml,
                 libs: tmplt.libs,
                 extUrl: tmplt.url,
@@ -2822,7 +2816,6 @@ var NewDialog = function (editorUi, opts) {
                         if (createIt) {
                             const xml = req.getText();
                             create({
-                                import: false,
                                 xml: xml,
                                 libs: tmplt.libs,
                                 extUrl: tmplt.url,
@@ -2920,7 +2913,6 @@ var NewDialog = function (editorUi, opts) {
             const csetTemplates = await CsetUtils.getCsetTemplates();
             for (const tmplt of csetTemplates) {
                 categories[category].push({
-                    import: true,
                     xml: tmplt.Markup,
                     title: tmplt.Name.trim(),
                     tooltip: tmplt.Name.trim(),
@@ -2941,7 +2933,6 @@ var NewDialog = function (editorUi, opts) {
             if (selected.template) {
                 createButton.setAttribute('disabled', 'disabled');
                 create({
-                    import: selected.template.import,
                     xml: selected.template.xml,
                     libs: selected.template.libs,
                     extUrl: selected.template.exturl,
