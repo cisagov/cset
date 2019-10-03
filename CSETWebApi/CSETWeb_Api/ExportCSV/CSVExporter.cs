@@ -62,6 +62,18 @@ namespace ExportCSV
                 return stream;
             }
         }
+
+        public MemoryStream ExportToExcellDiagram(int assessmentId)
+        {
+            using (CSET_Context db = new CSET_Context())
+            {
+                var stream = new MemoryStream();
+                CSETtoExcelDiagramMappings export = new CSETtoExcelDiagramMappings(db);
+                export.ProcessDiagram(assessmentId, stream);
+                return stream;
+            }
+
+        }
     }
 }
 

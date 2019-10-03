@@ -22,9 +22,5 @@ export class ZonesComponent implements OnInit {
     });
   }
 
-  submit(zone){
-    this.diagramSvc.saveZone(zone).subscribe((x:any)=>{
-    
-    });
-  }
+  
 }
