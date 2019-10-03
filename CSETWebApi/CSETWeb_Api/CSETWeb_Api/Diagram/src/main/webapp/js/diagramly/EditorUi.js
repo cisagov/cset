@@ -1945,6 +1945,7 @@
             file.addListener('descriptorChanged', this.descriptorChangedListener);
             file.addListener('contentChanged', this.descriptorChangedListener);
             file.open();
+            console.log('file opened.', { file, isModified: file.isModified() });
             delete this.openingFile;
 
             const filemode = file.getMode();
