@@ -174,14 +174,12 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
 /**
  * Make sure edges (links) are not hidden behind zones or other objects
  */
-CsetUtils.edgesToTop = function (graph, edit)
-{
-    var model = graph.getModel();
-    for (var i = 0; i < edit.changes.length; i++)
-    {
-        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
-        {
-            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
+CsetUtils.edgesToTop = function (graph, edit) {
+    const model = graph.getModel();
+    const changes = edit && edit.changes || [];
+    for (const change of changes) {
+        if (change instanceof mxChildChange && model.isVertex(change.child)) {
+            const edges = CsetUtils.getAllChildEdges(change.child);
             graph.orderCells(false, edges);
         }
     }

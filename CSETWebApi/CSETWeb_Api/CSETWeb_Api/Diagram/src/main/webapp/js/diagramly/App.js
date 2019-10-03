@@ -4747,7 +4747,7 @@ App.prototype.descriptorChanged = function () {
             const newHash = file.getHash();
             if (newHash) {
                 window.location.hash = newHash;
-            } else if (window.location.hash.length > 0) {
+            } else if (window.location.hash.length) {
                 window.location.hash = '';
             }
         }
@@ -4755,9 +4755,8 @@ App.prototype.descriptorChanged = function () {
 
     this.updateUi();
 
-    const model = graph.getModel();
-    if (model) {
-        model.fireEvent(new mxEventObject(mxEvent.CHANGE), this, { changes: [], edit: { changes: [] } });
+    if (CSET) {
+        CsetUtils.PersistGraphToCSET(this.editor);
     }
 
     if (this.format && this.editor.graph.isSelectionEmpty()) {
