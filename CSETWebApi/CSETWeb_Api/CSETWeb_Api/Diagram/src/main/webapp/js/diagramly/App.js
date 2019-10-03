@@ -3673,6 +3673,7 @@ App.prototype.fileCreated = function (file, libs, replace, done) {
 
         // Updates data in memory for local files
         if (file.constructor === LocalFile) {
+            file.setModified(true);
             fn();
         } else {
             file.saveFile(title, false, fn, err => {
@@ -4755,8 +4756,10 @@ App.prototype.descriptorChanged = function () {
 
     this.updateUi();
 
-    if (CSET) {
+    console.log('persisting file.', { file, isModified: file && file.isModified() });
+    if (CSET && file && file.isModified()) {
         CsetUtils.PersistGraphToCSET(this.editor);
+        file.setModified(false);
     }
 
     if (this.format && this.editor.graph.isSelectionEmpty()) {
