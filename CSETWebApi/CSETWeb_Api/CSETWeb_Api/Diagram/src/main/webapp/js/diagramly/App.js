@@ -4718,7 +4718,9 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
  */
 App.prototype.descriptorChanged = function () {
     const CSET = true;
+    const graph = this.editor.graph;
     const file = this.getCurrentFile();
+
     if (file) {
         // CSET - don't set fname to the filename
         if (!CSET && this.fname) {
@@ -4727,12 +4729,10 @@ App.prototype.descriptorChanged = function () {
             const filename = file.getTitle() || this.defaultFilename;
             mxUtils.write(this.fname, filename);
             this.fname.setAttribute('title', `${filename} - ${mxResources.get('rename')}`);
-        }
-        else {
+        } else {
             this.fname.innerHTML = sessionStorage.getItem('assessment.name');
         }
 
-        const graph = this.editor.graph;
         const editable = file.isEditable() && !file.invalidChecksum;
 
         if (graph.isEnabled() && !editable) {
@@ -4755,12 +4755,13 @@ App.prototype.descriptorChanged = function () {
 
     this.updateUi();
 
-    if (this.format && this.editor.graph.isSelectionEmpty()) {
-        this.format.refresh();
+    const model = graph.getModel();
+    if (model) {
+        model.fireEvent(new mxEventObject(mxEvent.CHANGE), this, { changes: [], edit: { changes: [] } });
     }
 
-    if (CSET) {
-        CsetUtils.PersistGraphToCSET(this.editor);
+    if (this.format && this.editor.graph.isSelectionEmpty()) {
+        this.format.refresh();
     }
 };
 

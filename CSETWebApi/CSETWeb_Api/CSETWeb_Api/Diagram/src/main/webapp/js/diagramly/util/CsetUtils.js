@@ -27,7 +27,8 @@ function updateGraph(editor, data, finalize) {
     return new Promise(function (resolve, reject) {
         editor.graph.model.beginUpdate();
         try {
-            editor.setGraphXml(mxUtils.parseXml(graph).documentElement);
+            const xml = mxUtils.parseXml(graph);
+            editor.setGraphXml(xml.documentElement);
             resolve();
         } catch (err) {
             console.warn('Failed to set graph xml:', err);
@@ -113,7 +114,7 @@ CsetUtils.makeHttpRequest = makeRequest;
  * @param {any} edit
  */
 CsetUtils.adjustConnectability = function (edit) {
-    const changes = edit.changes || [];
+    const changes = edit && edit.changes || [];
     for (const change of changes) {
         if (change instanceof mxChildChange) {
             const c = change.child;
@@ -374,17 +375,14 @@ CsetUtils.initializeZones = function (graph)
 /**
  * 
  */
-CsetUtils.handleZoneChanges = function (edit)
-{
-    edit.changes.forEach(change =>
-    {
-        if (change instanceof mxValueChange && change.cell.isZone())
-        {
-            var c = change.cell;
+CsetUtils.handleZoneChanges = function (edit) {
+    const changes = edit && edit.changes || [];
+    changes.forEach(change => {
+        if (change instanceof mxValueChange && change.cell.isZone()) {
+            const c = change.cell;
 
             // if they just changed the label, update the internal label
-            if (change.value.attributes.label.value != change.previous.attributes.label.value)
-            {
+            if (change.value.attributes.label.value !== change.previous.attributes.label.value) {
                 c.setAttribute('internalLabel', change.value.attributes.label.value);
             }
 

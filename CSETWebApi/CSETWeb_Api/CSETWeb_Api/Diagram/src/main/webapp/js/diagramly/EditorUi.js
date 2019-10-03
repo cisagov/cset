@@ -1858,7 +1858,6 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.fileLoaded = function (file, noDialogs) {
-
         let result = false;
 
         const oldFile = this.getCurrentFile();
