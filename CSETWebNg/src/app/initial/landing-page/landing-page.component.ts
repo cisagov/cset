@@ -34,6 +34,7 @@ import { ConfirmComponent } from "../../dialogs/confirm/confirm.component";
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { ImportAssessmentService } from "../../services/import-assessment.service";
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
+import { Title } from "@angular/platform-browser";
 
 interface UserAssessment {
   AssessmentId: number;
@@ -66,12 +67,15 @@ export class LandingPageComponent implements OnInit {
     public assessSvc: AssessmentService,
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
-    public fileSvc: FileUploadClientService
+    public fileSvc: FileUploadClientService,
+    public titleSvc: Title
   ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
+
+    this.titleSvc.setTitle('CSET');
 
     this.checkPasswordReset();
   }
@@ -177,16 +181,16 @@ export class LandingPageComponent implements OnInit {
           "?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-              this.assessSvc.removeContact(0, assessment.AssessmentId).subscribe(
-                x => {
-                  this.sortedAssessments.splice(assessmentIndex, 1);
-                },
-                x => {
-                  console.log(x);
-                  this.dialog.open(AlertComponent, {
-                    data: { messageText: x.statusText }
-                  });
+            this.assessSvc.removeContact(0, assessment.AssessmentId).subscribe(
+              x => {
+                this.sortedAssessments.splice(assessmentIndex, 1);
+              },
+              x => {
+                console.log(x);
+                this.dialog.open(AlertComponent, {
+                  data: { messageText: x.statusText }
                 });
+              });
           }
         });
       });
