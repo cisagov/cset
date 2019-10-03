@@ -406,5 +406,22 @@ namespace CSETWeb_Api.Controllers
             result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             return result;
         }
+
+        /// <summary>
+        /// get cset diagram templates
+        /// </summary>
+        /// <returns></returns>
+        [CSETAuthorize]
+        [Route("api/diagram/templates")]
+        [HttpGet]
+        public IHttpActionResult GetTemplates()
+        {
+            var tm = new TokenManager();
+            var userId = tm.PayloadInt(Constants.Token_UserId);
+
+            var dm = new DiagramManager(new CSET_Context());
+            var templates = dm.GetDiagramTemplates();
+            return Ok(templates);
+        }
     }
 }

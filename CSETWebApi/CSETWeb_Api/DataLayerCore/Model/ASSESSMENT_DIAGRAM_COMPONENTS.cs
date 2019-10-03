@@ -17,6 +17,8 @@ namespace DataLayerCore.Model
         public string DrawIO_id { get; set; }
         public int? Zone_Id { get; set; }
         public int? Layer_Id { get; set; }
+        [StringLength(50)]
+        public string Parent_DrawIO_Id { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]

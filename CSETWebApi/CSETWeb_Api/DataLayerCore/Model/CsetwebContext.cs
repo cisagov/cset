@@ -344,6 +344,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.DrawIO_id).IsUnicode(false);
 
+                entity.Property(e => e.Parent_DrawIO_Id).IsUnicode(false);
+
                 entity.Property(e => e.label).IsUnicode(false);
 
                 entity.HasOne(d => d.Assessment_)
@@ -758,6 +760,8 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.DrawIO_id).IsUnicode(false);
 
                 entity.Property(e => e.Name).IsUnicode(false);
+
+                entity.Property(e => e.Parent_Draw_IO_Id).IsUnicode(false);
 
                 entity.Property(e => e.Universal_Sal_Level)
                     .IsUnicode(false)

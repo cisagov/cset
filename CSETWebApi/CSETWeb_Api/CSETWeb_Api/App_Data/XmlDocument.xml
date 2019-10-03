@@ -826,6 +826,12 @@
             <param name="token"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTemplates">
+            <summary>
+            get cset diagram templates
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExport(System.String)">
             <summary>
             

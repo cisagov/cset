@@ -170,6 +170,7 @@
 	 * Contains the default XML for an empty diagram.
 	 */
     EditorUi.prototype.emptyDiagramXml = '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel>';
+    EditorUi.prototype.emptyGraphModelXml = '<mxGraphModel><root><mxCell id="0"/></root></mxGraphModel>';
 
 	/**
 	 * 
@@ -334,7 +335,9 @@
 	/**
 	 * Hook for subclassers.
 	 */
-    EditorUi.prototype.showSplash = function (force) { };
+    EditorUi.prototype.showSplash = function (force) {
+        console.log('EditorUi.prototype.showSplash method does not get called. Change my mind.');
+    };
 
 	/**
 	 * Abstraction for local storage access.
@@ -739,93 +742,80 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.createFileData = function (node, graph, file, url, forceXml, forceSvg, forceHtml, embeddedCallback, ignoreSelection, compact) {
-        graph = (graph != null) ? graph : this.editor.graph;
-        forceXml = (forceXml != null) ? forceXml : false;
-        ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
-
-        var editLink = null;
-        var redirect = null;
-
-        if (file == null || file.getMode() == App.MODE_DEVICE || file.getMode() == App.MODE_BROWSER) {
-            editLink = '_blank';
+        if (!node) {
+            return '';
         }
-        else {
+
+        graph = graph || this.editor.graph;
+        forceXml = forceXml || false;
+        ignoreSelection = !!ignoreSelection ? ignoreSelection : true;
+
+        const filemode = file && file.getMode();
+
+        let editLink;
+        let redirect;
+        if (!file || filemode === App.MODE_DEVICE || filemode === App.MODE_BROWSER) {
+            editLink = '_blank';
+        } else {
             editLink = url;
             redirect = editLink;
         }
 
-        if (node == null) {
-            return '';
+        let fileNode = node;
+
+        // Ignores case for possible HTML or XML nodes
+        if (fileNode.nodeName.toLowerCase() !== 'mxfile') {
+            // Removes control chars in input for correct roundtrip check
+            const text = Graph.zapGremlins(mxUtils.getXml(node));
+            const data = Graph.compress(text);
+
+            // Fallback to plain XML for invalid compression
+            // TODO: Remove this fallback with active pages
+            if (Graph.decompress(data) !== text) {
+                return text;
+            } else {
+                const diagramNode = node.ownerDocument.createElement('diagram');
+                diagramNode.setAttribute('id', Editor.guid());
+                mxUtils.setTextContent(diagramNode, data);
+
+                fileNode = node.ownerDocument.createElement('mxfile');
+                fileNode.appendChild(diagramNode);
+            }
         }
-        else {
-            var fileNode = node;
 
-            // Ignores case for possible HTML or XML nodes
-            if (fileNode.nodeName.toLowerCase() != 'mxfile') {
-                // Removes control chars in input for correct roundtrip check
-                var text = Graph.zapGremlins(mxUtils.getXml(node));
-                var data = Graph.compress(text);
+        fileNode = compact ? fileNode.cloneNode(true) : fileNode;
+        fileNode.removeAttribute('userAgent');
+        fileNode.removeAttribute('version');
+        fileNode.removeAttribute('editor');
+        fileNode.removeAttribute('type');
 
-                // Fallback to plain XML for invalid compression
-                // TODO: Remove this fallback with active pages
-                if (Graph.decompress(data) != text) {
-                    return text;
-                }
-                else {
-                    var diagramNode = node.ownerDocument.createElement('diagram');
-                    diagramNode.setAttribute('id', Editor.guid());
-                    mxUtils.setTextContent(diagramNode, data);
+        if (!compact) {
+            // Adds new metadata
+            fileNode.setAttribute('modified', new Date().toISOString());
+            fileNode.setAttribute('host', window.location.hostname);
+            fileNode.setAttribute('agent', navigator.userAgent);
+            fileNode.setAttribute('version', EditorUi.VERSION);
+            fileNode.setAttribute('etag', Editor.guid());
 
-                    fileNode = node.ownerDocument.createElement('mxfile');
-                    fileNode.appendChild(diagramNode);
-                }
+            var md = filemode || this.mode;
+            if (md) {
+                fileNode.setAttribute('type', md);
             }
+        }
 
-            if (!compact) {
-                // Removes old metadata
-                fileNode.removeAttribute('userAgent');
-                fileNode.removeAttribute('version');
-                fileNode.removeAttribute('editor');
-                fileNode.removeAttribute('type');
-
-                // Adds new metadata
-                fileNode.setAttribute('modified', new Date().toISOString());
-                fileNode.setAttribute('host', window.location.hostname);
-                fileNode.setAttribute('agent', navigator.userAgent);
-                fileNode.setAttribute('version', EditorUi.VERSION);
-                fileNode.setAttribute('etag', Editor.guid());
-
-                var md = (file != null) ? file.getMode() : this.mode;
-
-                if (md != null) {
-                    fileNode.setAttribute('type', md);
-                }
-            }
-            else {
-                fileNode = fileNode.cloneNode(true);
-                fileNode.removeAttribute('userAgent');
-                fileNode.removeAttribute('version');
-                fileNode.removeAttribute('editor');
-                fileNode.removeAttribute('type');
-            }
-
-            var xml = mxUtils.getXml(fileNode);
-
+        let xml = mxUtils.getXml(fileNode);
+        const filetitle = file && file.getTitle();
+        if (!forceSvg && !forceXml && (forceHtml || /(\.html)$/i.test(filetitle))) {
             // Writes the file as an embedded HTML file
-            if (!forceSvg && !forceXml && (forceHtml || (file != null && /(\.html)$/i.test(file.getTitle())))) {
-                xml = this.getHtml2(mxUtils.getXml(fileNode), graph, (file != null) ? file.getTitle() : null, editLink, redirect);
-            }
+            xml = this.getHtml2(mxUtils.getXml(fileNode), graph, filetitle, editLink, redirect);
+        } else if (forceSvg || (!forceXml && /(\.svg)$/i.test(filetitle))) {
             // Maps the XML data to the content attribute in the SVG node 
-            else if (forceSvg || (!forceXml && file != null && /(\.svg)$/i.test(file.getTitle()))) {
-                if (file != null && (file.getMode() == App.MODE_DEVICE || file.getMode() == App.MODE_BROWSER)) {
-                    url = null;
-                }
-
-                xml = this.getEmbeddedSvg(xml, graph, url, null, embeddedCallback, ignoreSelection, redirect);
+            if (filemode === App.MODE_DEVICE || filemode === App.MODE_BROWSER) {
+                url = undefined;
             }
-
-            return xml;
+            xml = this.getEmbeddedSvg(xml, graph, url, null, embeddedCallback, ignoreSelection, redirect);
         }
+        return xml;
     };
 
 	/**
@@ -835,33 +825,32 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.getXmlFileData = function (ignoreSelection, currentPage) {
-        ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
-        currentPage = (currentPage != null) ? currentPage : false;
+        ignoreSelection = ignoreSelection != null && ignoreSelection || true;
+        currentPage = currentPage != null && currentPage || false;
 
-        var node = this.editor.getGraphXml(ignoreSelection);
+        let node = this.editor.getGraphXml(ignoreSelection);
 
-        if (ignoreSelection && this.fileNode != null && this.currentPage != null) {
-            var data = Graph.compressNode(node);
+        if (ignoreSelection && this.fileNode && this.currentPage) {
+            const data = Graph.compressNode(node);
             mxUtils.setTextContent(this.currentPage.node, data);
             node = this.fileNode.cloneNode(false);
 
             if (currentPage) {
                 node.appendChild(this.currentPage.node);
-            }
-            else {
+            } else {
                 // Restores order of pages
-                for (var i = 0; i < this.pages.length; i++) {
-                    if (this.currentPage != this.pages[i] && this.pages[i].needsUpdate) {
-                        var enc = new mxCodec(mxUtils.createXmlDocument());
-                        var temp = enc.encode(new mxGraphModel(this.pages[i].root));
-                        this.editor.graph.saveViewState(this.pages[i].viewState, temp);
-                        mxUtils.setTextContent(this.pages[i].node, Graph.compressNode(temp));
+                const pages = this.pages || [];
+                for (const page of pages) {
+                    if (this.currentPage !== page && page.needsUpdate) {
+                        const enc = new mxCodec(mxUtils.createXmlDocument());
+                        const temp = enc.encode(new mxGraphModel(page.root));
+                        this.editor.graph.saveViewState(page.viewState, temp);
+                        mxUtils.setTextContent(page.node, Graph.compressNode(temp));
 
                         // Marks the page as up-to-date
-                        delete this.pages[i].needsUpdate;
+                        delete page.needsUpdate;
                     }
-
-                    node.appendChild(this.pages[i].node);
+                    node.appendChild(page.node);
                 }
             }
         }
@@ -1080,29 +1069,29 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.getFileData = function (forceXml, forceSvg, forceHtml, embeddedCallback, ignoreSelection, currentPage, node, compact, file) {
-        ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
-        currentPage = (currentPage != null) ? currentPage : false;
+        ignoreSelection = ignoreSelection != null && ignoreSelection || true;
+        currentPage = currentPage != null && currentPage || false;
 
-        node = (node != null) ? node : this.getXmlFileData(ignoreSelection, currentPage);
-        file = (file != null) ? file : this.getCurrentFile();
-        var graph = this.editor.graph;
+        node = node || this.getXmlFileData(ignoreSelection, currentPage);
+        file = file || this.getCurrentFile();
+
+        let graph = this.editor.graph;
+        const page = (this.pages || [])[0];
+        const filetitle = file && file.getTitle();
 
         // Exports SVG for first page while other page is visible by creating a graph
         // LATER: Add caching for the graph or SVG while not on first page
-        if (this.pages != null && this.currentPage != this.pages[0] && (forceSvg ||
-            (!forceXml && file != null && /(\.svg)$/i.test(file.getTitle())))) {
+        if (page && this.currentPage !== page &&
+            (forceSvg || (!forceXml && /(\.svg)$/i.test(filetitle)))) {
             graph = this.createTemporaryGraph(graph.getStylesheet());
-            var graphGetGlobalVariable = graph.getGlobalVariable;
-            var page = this.pages[0];
+            const graphGetGlobalVariable = graph.getGlobalVariable;
 
-            graph.getGlobalVariable = function (name) {
-                if (name == 'page') {
+            graph.getGlobalVariable = name => {
+                if (name === 'page') {
                     return page.getName();
-                }
-                else if (name == 'pagenumber') {
+                } else if (name === 'pagenumber') {
                     return 1;
                 }
-
                 return graphGetGlobalVariable.apply(this, arguments);
             };
 
@@ -1114,7 +1103,7 @@
             forceXml, forceSvg, forceHtml, embeddedCallback, ignoreSelection, compact);
 
         // Removes temporary graph from DOM
-        if (graph != this.editor.graph) {
+        if (graph !== this.editor.graph) {
             graph.container.parentNode.removeChild(graph.container);
         }
 
@@ -1870,13 +1859,15 @@
 	 */
     EditorUi.prototype.fileLoaded = function (file, noDialogs) {
 
-        var oldFile = this.getCurrentFile();
+        let result = false;
+
+        const oldFile = this.getCurrentFile();
         this.fileLoadedError = null;
         this.setCurrentFile(null);
-        var result = false;
+
         this.hideDialog();
 
-        if (oldFile != null) {
+        if (oldFile) {
             oldFile.removeListener(this.descriptorChangedListener);
             oldFile.close();
         }
@@ -1884,12 +1875,11 @@
         this.editor.graph.model.clear();
         this.editor.undoManager.clear();
 
-        var noFile = mxUtils.bind(this, function () {
+        const noFile = () => {
             this.setGraphEnabled(false);
-            this.setCurrentFile(null);
 
             // Keeps initial title if no file existed before
-            if (oldFile != null) {
+            if (oldFile) {
                 this.updateDocumentTitle();
             }
 
@@ -1905,7 +1895,7 @@
 
             // CSET - don't alter the 'filename'
             var CSET = true;
-            if (!CSET && this.fname != null) {
+            if (!CSET && this.fname) {
                 this.fnameWrapper.style.display = 'none';
                 this.fname.innerHTML = '';
                 this.fname.setAttribute('title', mxResources.get('rename'));
@@ -1917,156 +1907,155 @@
             this.editor.setStatus('');
             this.updateUi();
 
-            if (!noDialogs) {
-                this.mode = this.mode || App.MODE_DEVICE;
-                this.showSplash();
+            if (!oldFile) {
+                this.createFile(this.defaultFilename, null, null, null, null, null, null, urlParams.local !== '1');
             }
-        });
-
-        if (file != null) {
-            try {
-                // Workaround for delayed scroll repaint with min UI in Safari
-                if (mxClient.IS_SF && uiTheme == 'min') {
-                    this.diagramContainer.style.visibility = '';
-                }
-
-                // Order is significant, current file needed for correct
-                // file format for initial save after starting realtime
-                this.openingFile = true;
-                this.setCurrentFile(file);
-                file.addListener('descriptorChanged', this.descriptorChangedListener);
-                file.addListener('contentChanged', this.descriptorChangedListener);
-                file.open();
-                delete this.openingFile;
-
-                // DescriptorChanged updates the enabled state of the graph
-                this.setGraphEnabled(true);
-                this.setMode(file.getMode());
-                this.editor.graph.model.prefix = Editor.guid() + '-';
-                this.editor.undoManager.clear();
-                this.descriptorChanged();
-                this.updateUi();
-
-                // Realtime files have a valid status message
-                if (!file.isEditable()) {
-                    this.editor.setStatus('<span class="geStatusAlert" style="margin-left:8px;">' +
-                        mxUtils.htmlEntities(mxResources.get('readOnly')) + '</span>');
-                }
-                // Handles modified state after error of loading new file
-                else if (file.isModified()) {
-                    file.addUnsavedStatus();
-
-                    // Restores unsaved data
-                    if (file.backupPatch != null) {
-                        file.patch([file.backupPatch]);
-                    }
-                }
-                else {
-                    this.editor.setStatus('');
-                }
-
-                if (!this.editor.isChromelessView() || this.editor.editable) {
-                    this.editor.graph.selectUnlockedLayer();
-                    this.showLayersDialog();
-                    this.restoreLibraries();
-
-                    // Workaround for no initial focus in FF
-                    if (window.self !== window.top) {
-                        window.focus();
-                    }
-                }
-                else if (this.editor.graph.isLightboxView()) {
-                    this.lightboxFit();
-                }
-
-                if (this.chromelessResize) {
-                    this.chromelessResize();
-                }
-
-                this.editor.fireEvent(new mxEventObject('fileLoaded'));
-                result = true;
-
-                if (!this.isOffline() && file.getMode() != null) {
-                    EditorUi.logEvent({
-                        category: file.getMode().toUpperCase() + '-OPEN-FILE-' + file.getHash(),
-                        action: 'size_' + file.getSize(),
-                        label: 'autosave_' + ((this.editor.autosave) ? 'on' : 'off')
+            this.LoadGraphFromCSET(this.editor, this.fname, this).then(() => {
+                const isempty = this.isDiagramEmpty() || this.isGraphModelEmpty();
+                if (isempty && !noDialogs) {
+                    const compact = this.isOffline();
+                    const width = compact ? 350 : 620;
+                    const height = compact ? 70 : 440;
+                    const modal = true;
+                    const canclose = true;
+                    const onclose = mxUtils.bind(this, cancel => {
+                        this.hideDialog(cancel);
                     });
+                    const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
+                    this.showDialog(dlg.container, width, height, modal, canclose, onclose);
+                    dlg.init();
                 }
+            });
+        }
 
-                if (this.editor.editable && this.mode == file.getMode() &&
-                    file.getMode() != App.MODE_DEVICE && file.getMode() != null) {
-                    try {
-                        this.addRecent({ id: file.getHash(), title: file.getTitle(), mode: file.getMode() });
-                    }
-                    catch (e) {
-                        // ignore
-                    }
+        if (!file) {
+            noFile();
+            return result;
+        }
+
+        try {
+            // Workaround for delayed scroll repaint with min UI in Safari
+            if (mxClient.IS_SF && uiTheme === 'min') {
+                this.diagramContainer.style.visibility = '';
+            }
+
+            // Order is significant, current file needed for correct
+            // file format for initial save after starting realtime
+            this.openingFile = true;
+            this.setCurrentFile(file);
+            file.addListener('descriptorChanged', this.descriptorChangedListener);
+            file.addListener('contentChanged', this.descriptorChangedListener);
+            file.open();
+            delete this.openingFile;
+
+            // DescriptorChanged updates the enabled state of the graph
+            this.setGraphEnabled(true);
+            this.setMode(file.getMode());
+            this.editor.graph.model.prefix = `${Editor.guid()}-`;
+            this.editor.undoManager.clear();
+            this.descriptorChanged();
+            this.updateUi();
+
+            // Realtime files have a valid status message
+            if (!file.isEditable()) {
+                this.editor.setStatus('<span class="geStatusAlert" style="margin-left:8px;">' +
+                    mxUtils.htmlEntities(mxResources.get('readOnly')) + '</span>');
+            } else if (file.isModified()) {
+                // Handles modified state after error of loading new file
+                file.addUnsavedStatus();
+
+                // Restores unsaved data
+                if (file.backupPatch != null) {
+                    file.patch([file.backupPatch]);
                 }
+            } else {
+                this.editor.setStatus('');
+            }
 
+            if (!this.editor.isChromelessView() || this.editor.editable) {
+                this.editor.graph.selectUnlockedLayer();
+                this.showLayersDialog();
+                this.restoreLibraries();
+
+                // Workaround for no initial focus in FF
+                if (window.self !== window.top) {
+                    window.focus();
+                }
+            } else if (this.editor.graph.isLightboxView()) {
+                this.lightboxFit();
+            }
+
+            if (this.chromelessResize) {
+                this.chromelessResize();
+            }
+
+            this.editor.fireEvent(new mxEventObject('fileLoaded'));
+            result = true;
+
+            if (!this.isOffline() && file.getMode() != null) {
+                EditorUi.logEvent({
+                    category: `${file.getMode().toUpperCase()}-OPEN-FILE-${file.getHash()}`,
+                    action: `size_${file.getSize()}`,
+                    label: `autosave_${this.editor.autosave ? 'on' : 'off'}`
+                });
+            }
+
+            if (this.editor.editable && this.mode === file.getMode() &&
+                file.getMode() != App.MODE_DEVICE && file.getMode() != null) {
                 try {
-                    mxSettings.setOpenCounter(mxSettings.getOpenCounter() + 1);
-                    mxSettings.save();
-                }
-                catch (e) {
+                    this.addRecent({ id: file.getHash(), title: file.getTitle(), mode: file.getMode() });
+                } catch (e) {
                     // ignore
                 }
             }
-            catch (e) {
-                this.fileLoadedError = e;
 
-                // Makes sure the file does not save the invalid UI model and overwrites anything important
-                if (window.console != null) {
-                    console.log('error in fileLoaded:', file, e);
-                }
+            try {
+                mxSettings.setOpenCounter(mxSettings.getOpenCounter() + 1);
+                mxSettings.save();
+            } catch (e) {
+                // ignore
+            }
+        } catch (e) {
+            this.fileLoadedError = e;
 
-                if (EditorUi.enableLogging && !this.isOffline()) {
-                    try {
-                        var img = new Image();
-                        var logDomain = window.DRAWIO_LOG_URL != null ? window.DRAWIO_LOG_URL : '';
-                        img.src = logDomain + '/log?v=' + encodeURIComponent(EditorUi.VERSION) +
-                            '&msg=errorInFileLoaded:url:' + encodeURIComponent(window.location.href) +
-                            ((e != null && e.message != null) ? ':err:' + encodeURIComponent(e.message) : '') +
-                            ((e != null && e.stack != null) ? '&stack=' + encodeURIComponent(e.stack) : '');
-                    }
-                    catch (e) {
-                        // ignore
-                    }
-                }
+            // Makes sure the file does not save the invalid UI model and overwrites anything important
+            if (window.console) {
+                console.log('error in fileLoaded:', file, e);
+            }
 
-                // Asynchronous handling of errors
-                var fn = mxUtils.bind(this, function () {
-                    // Removes URL parameter and reloads the page
-                    if (urlParams['url'] != null && this.spinner.spin(document.body, mxResources.get('reconnecting'))) {
-                        window.location.search = this.getSearch(['url']);
-                    }
-                    else if (oldFile != null) {
-                        this.fileLoaded(oldFile);
-                    }
-                    else {
-                        noFile();
-                    }
-                });
-
-                if (!noDialogs) {
-                    this.handleError(e, mxResources.get('errorLoadingFile'), fn, true);
-                }
-                else {
-                    fn();
+            if (EditorUi.enableLogging && !this.isOffline()) {
+                try {
+                    const img = new Image();
+                    const logDomain = window.DRAWIO_LOG_URL != null ? window.DRAWIO_LOG_URL : '';
+                    img.src = logDomain + '/log?v=' + encodeURIComponent(EditorUi.VERSION) +
+                        '&msg=errorInFileLoaded:url:' + encodeURIComponent(window.location.href) +
+                        (e && e.message ? ':err:' + encodeURIComponent(e.message) : '') +
+                        (e && e.stack ? '&stack=' + encodeURIComponent(e.stack) : '');
+                } catch (e) {
+                    // ignore
                 }
             }
-        }
-        else {
-            noFile();
+
+            // Asynchronous handling of errors
+            const fn = mxUtils.bind(this, () => {
+                // Removes URL parameter and reloads the page
+                if (urlParams.url && this.spinner.spin(document.body, mxResources.get('reconnecting'))) {
+                    window.location.search = this.getSearch(['url']);
+                } else if (oldFile) {
+                    this.fileLoaded(oldFile);
+                } else {
+                    noFile();
+                }
+            });
+
+            if (!noDialogs) {
+                this.handleError(e, mxResources.get('errorLoadingFile'), fn, true);
+            } else {
+                fn();
+            }
         }
 
-        if (this.dialog && this.dialog.dialogImg) {
-            // CSET - suppress the open dialog
-            this.dialog.dialogImg.click();
-        }
-
-        // CSET - always load from the API
-        this.LoadGraphFromCSET(this.editor, this.fname, this);
+        //this.LoadGraphFromCSET(this.editor, this.fname, this);
 
         return result;
     };
@@ -2075,6 +2064,24 @@
      * Retrieves the graph from the CSET API if it has been stored.
      */
     EditorUi.prototype.LoadGraphFromCSET = CsetUtils.LoadGraphFromCSET;
+
+    EditorUi.prototype.PersistGraphToCSET = CsetUtils.PersistGraphToCSET;
+
+    EditorUi.prototype.getGraphModelXml = function () {
+        const xmlserializer = new XMLSerializer();
+        const model = this.editor.graph.getModel();
+        if (model) {
+            const enc = new mxCodec();
+            const node = enc.encode(model);
+            const xml = xmlserializer.serializeToString(node);
+            return xml;
+        }
+    }
+
+    EditorUi.prototype.isGraphModelEmpty = function () {
+        const xml = this.getGraphModelXml();
+        return xml === this.emptyDiagramXml || xml === this.emptyGraphModelXml;
+    }
 
 	/**
 	 * Creates a hash value for the current file.
@@ -3207,10 +3214,9 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.setCurrentFile = function (file) {
-        if (file != null) {
+        if (file) {
             file.opened = new Date().getTime();
         }
-
         this.currentFile = file;
     };
 
@@ -5582,47 +5588,45 @@
 	 * Imports the given XML into the existing diagram.
 	 */
     EditorUi.prototype.importXml = function (xml, dx, dy, crop, noErrorHandling) {
-        dx = (dx != null) ? dx : 0;
-        dy = (dy != null) ? dy : 0;
-        var cells = []
+        dx = dx || 0;
+        dy = dy || 0;
 
+        let cells = [];
         try {
-            var graph = this.editor.graph;
-
-            if (xml != null && xml.length > 0) {
+            let graph = this.editor.graph;
+            if (xml) {
                 // Adds pages
                 graph.model.beginUpdate();
                 try {
-                    var doc = mxUtils.parseXml(xml);
+                    const pages = this.pages || [];
+                    const doc = mxUtils.parseXml(xml);
 
                     // Checks for mxfile with multiple pages
-                    var node = this.editor.extractGraphModel(doc.documentElement, this.pages != null);
+                    let node = this.editor.extractGraphModel(doc.documentElement, pages.length);
+                    if (node && node.nodeName === 'mxfile' && pages.length) {
+                        const diagrams = node.getElementsByTagName('diagram');
 
-                    if (node != null && node.nodeName == 'mxfile' && this.pages != null) {
-                        var diagrams = node.getElementsByTagName('diagram');
-
-                        if (diagrams.length == 1) {
+                        if (diagrams.length === 1) {
                             node = mxUtils.parseXml(Graph.decompress(mxUtils.getTextContent(diagrams[0]))).documentElement;
-                        }
-                        else if (diagrams.length > 1) {
-                            var i0 = 0;
+                        } else if (diagrams.length > 1) {
+                            let i0 = 0;
 
                             // Adds first page to current page if current page is only page and empty
-                            if (this.pages != null && this.pages.length == 1 && this.isDiagramEmpty()) {
+                            if (pages.length === 1 && this.isDiagramEmpty()) {
                                 node = mxUtils.parseXml(Graph.decompress(mxUtils.getTextContent(diagrams[0]))).documentElement;
                                 crop = false;
                                 i0 = 1;
                             }
 
-                            for (var i = i0; i < diagrams.length; i++) {
+                            for (let i = i0; i < diagrams.length; i++) {
                                 // Imported pages must obtain a new ID
                                 diagrams[i].removeAttribute('id');
 
-                                var page = this.updatePageRoot(new DiagramPage(diagrams[i]));
-                                var index = this.pages.length;
+                                const page = this.updatePageRoot(new DiagramPage(diagrams[i]));
+                                const index = pages.length;
 
                                 // Checks for invalid page names
-                                if (page.getName() == null) {
+                                if (!page.getName()) {
                                     page.setName(mxResources.get('pageWithNumber', [index + 1]));
                                 }
 
@@ -5631,20 +5635,17 @@
                         }
                     }
 
-                    if (node != null && node.nodeName === 'mxGraphModel') {
+                    if (node && node.nodeName === 'mxGraphModel') {
                         cells = graph.importGraphModel(node, dx, dy, crop);
                     }
-                }
-                finally {
+                } finally {
                     graph.model.endUpdate();
                 }
             }
-        }
-        catch (e) {
+        } catch (e) {
             if (!noErrorHandling) {
                 this.handleError(e);
-            }
-            else {
+            } else {
                 throw e;
             }
         }
@@ -8495,17 +8496,16 @@
 	 * Adds the buttons for embedded mode.
 	 */
     EditorUi.prototype.installMessageHandler = function (fn) {
-        var changeListener = null;
-        var ignoreChange = false;
-        var autosave = false;
-        var lastData = null;
+        let lastData = null;
+        let autosave = false;
+        let ignoreChange = false;
+        let changeListener = null;
 
         var updateStatus = mxUtils.bind(this, function (sender, eventObject) {
-            if (!this.editor.modified || urlParams['modified'] == '0') {
+            if (!this.editor.modified || urlParams.modified === '0') {
                 this.editor.setStatus('');
-            }
-            else if (urlParams['modified'] != null) {
-                this.editor.setStatus(mxUtils.htmlEntities(mxResources.get(urlParams['modified'])));
+            } else if (urlParams.modified) {
+                this.editor.setStatus(mxUtils.htmlEntities(mxResources.get(urlParams.modified)));
             }
         });
 
@@ -8513,37 +8513,32 @@
 
         // Receives XML message from opener and puts it into the graph
         mxEvent.addListener(window, 'message', mxUtils.bind(this, function (evt) {
-            var validSource = window.opener || window.parent;
-
-            if (evt.source != validSource) {
+            const validSource = window.opener || window.parent;
+            if (evt.source !== validSource) {
                 return;
             }
 
-            var data = evt.data;
+            let data = evt.data;
 
-            var extractDiagramXml = mxUtils.bind(this, function (data) {
-                if (data != null && typeof data.charAt === 'function' && data.charAt(0) != '<') {
+            const extractDiagramXml = mxUtils.bind(this, function (data) {
+                if (data && typeof data.charAt === 'function' && data.charAt(0) !== '<') {
                     try {
-                        if (data.substring(0, 22) == 'data:image/png;base64,') {
+                        if (data.substring(0, 22) === 'data:image/png;base64,') {
                             data = this.extractGraphModelFromPng(data);
-                        }
-                        else if (data.substring(0, 26) == 'data:image/svg+xml;base64,') {
+                        } else if (data.substring(0, 26) === 'data:image/svg+xml;base64,') {
                             data = atob(data.substring(26));
-                        }
-                        else if (data.substring(0, 24) == 'data:image/svg+xml;utf8,') {
+                        } else if (data.substring(0, 24) === 'data:image/svg+xml;utf8,') {
                             data = data.substring(24);
                         }
 
-                        if (data != null) {
-                            if (data.charAt(0) == '%') {
+                        if (data) {
+                            if (data.charAt(0) === '%') {
                                 data = decodeURIComponent(data);
-                            }
-                            else if (data.charAt(0) != '<') {
+                            } else if (data.charAt(0) !== '<') {
                                 data = Graph.decompress(data);
                             }
                         }
-                    }
-                    catch (e) {
+                    } catch (e) {
                         // ignore compression errors and use empty data
                     }
                 }
@@ -8551,423 +8546,430 @@
                 return data;
             });
 
-            if (urlParams['proto'] == 'json') {
+            if (urlParams.proto === 'json') {
                 try {
                     data = JSON.parse(data);
-                }
-                catch (e) {
+                } catch (e) {
                     data = null;
                 }
 
-                if (data == null) {
-                    // Ignore
+                if (!data) {
                     return;
                 }
-                else if (data.action == 'dialog') {
-                    this.showError((data.titleKey != null) ? mxResources.get(data.titleKey) : data.title,
-                        (data.messageKey != null) ? mxResources.get(data.messageKey) : data.message,
-                        (data.buttonKey != null) ? mxResources.get(data.buttonKey) : data.button);
 
-                    if (data.modified != null) {
-                        this.editor.modified = data.modified;
-                    }
-
-                    return;
-                }
-                else if (data.action == 'prompt') {
-                    this.spinner.stop();
-
-                    var dlg = new FilenameDialog(this, data.defaultValue || '',
-                        (data.okKey != null) ? mxResources.get(data.okKey) : null, function (value) {
-                            if (value != null) {
-                                parent.postMessage(JSON.stringify({ event: 'prompt', value: value, message: data }), '*');
-                            }
-                        }, (data.titleKey != null) ? mxResources.get(data.titleKey) : data.title);
-                    this.showDialog(dlg.container, 300, 80, true, false);
-                    dlg.init();
-
-                    return;
-                }
-                else if (data.action == 'draft') {
-                    var tmp = extractDiagramXml(data.xml);
-                    this.spinner.stop();
-
-                    var dlg = new DraftDialog(this, mxResources.get('draftFound', [data.name || this.defaultFilename]),
-                        tmp, mxUtils.bind(this, function () {
-                            this.hideDialog();
-                            parent.postMessage(JSON.stringify({ event: 'draft', result: 'edit', message: data }), '*');
-                        }), mxUtils.bind(this, function () {
-                            this.hideDialog();
-                            parent.postMessage(JSON.stringify({ event: 'draft', result: 'discard', message: data }), '*');
-                        }), (data.editKey) ? mxResources.get(data.editKey) : null,
-                        (data.discardKey) ? mxResources.get(data.discardKey) : null,
-                        (data.ignore) ? mxUtils.bind(this, function () {
-                            this.hideDialog();
-                            parent.postMessage(JSON.stringify({ event: 'draft', result: 'ignore', message: data }), '*');
-                        }) : null);
-                    this.showDialog(dlg.container, 640, 480, true, false, mxUtils.bind(this, function (cancel) {
-                        if (cancel) {
-                            this.actions.get('exit').funct();
+                switch (data.action) {
+                    case 'dialog': {
+                        this.showError(!!data.titleKey ? mxResources.get(data.titleKey) : data.title,
+                            !!data.messageKey ? mxResources.get(data.messageKey) : data.message,
+                            !!data.buttonKey ? mxResources.get(data.buttonKey) : data.button);
+                        if (data.modified != null) {
+                            this.editor.modified = data.modified;
                         }
-                    }));
-
-                    try {
-                        dlg.init();
+                        return;
                     }
-                    catch (e) {
-                        parent.postMessage(JSON.stringify({ event: 'draft', error: e.toString(), message: data }), '*');
-                    }
-
-                    return;
-                }
-                else if (data.action == 'template') {
-                    this.spinner.stop();
-
-                    var enableRecentDocs = data.enableRecent == 1;
-                    var enableSearchDocs = data.enableSearch == 1;
-                    var enableCustomTemp = data.enableCustomTemp == 1;
-
-                    var dlg = new NewDialog(this, false, data.callback != null, mxUtils.bind(this, function (xml, name) {
-                        xml = xml || this.emptyDiagramXml;
-
-                        // LATER: Add autosave option in template message
-                        if (data.callback != null) {
-                            parent.postMessage(JSON.stringify({
-                                event: 'template', xml: xml,
-                                blank: xml == this.emptyDiagramXml, name: name
-                            }), '*');
-                        }
-                        else {
-                            fn(xml, evt, xml != this.emptyDiagramXml);
-
-                            // Workaround for status updated before modified applied
-                            if (!this.editor.modified) {
-                                this.editor.setStatus('');
-                            }
-                        }
-                    }), null, null, null, null, null, null, null,
-                        enableRecentDocs ? mxUtils.bind(this, function (recentReadyCallback) {
-                            this.remoteInvoke('getRecentDiagrams', null, null, recentReadyCallback, function () {
-                                recentReadyCallback(null, 'Network Error!');
-                            });
-                        }) : null,
-                        enableSearchDocs ? mxUtils.bind(this, function (searchStr, searchReadyCallback) {
-                            this.remoteInvoke('searchDiagrams', [searchStr], null, searchReadyCallback, function () {
-                                searchReadyCallback(null, 'Network Error!');
-                            });
-                        }) : null,
-                        mxUtils.bind(this, function (url, info, name) {
-                            //If binary files are possible, we can get the file content using remote invokation, imported it, and send final mxFile back
-                            parent.postMessage(JSON.stringify({
-                                event: 'template', docUrl: url, info: info,
-                                name: name
-                            }), '*');
-                        }), null, null,
-                        enableCustomTemp ? mxUtils.bind(this, function (customTempCallback) {
-                            this.remoteInvoke('getCustomTemplates', null, null, customTempCallback, function () {
-                                customTempCallback({}, 0); //ignore error by sending empty templates
-                            });
-                        }) : null);
-
-                    this.showDialog(dlg.container, 620, 440, true, false, mxUtils.bind(this, function (cancel) {
-                        if (cancel) {
-                            this.actions.get('exit').funct();
-                        }
-                    }));
-                    dlg.init();
-
-                    return;
-                }
-                else if (data.action == 'textContent') {
-                    //TODO Remove this message and use remove invokation instead
-                    var allPagesTxt = this.getDiagramTextContent();
-                    parent.postMessage(JSON.stringify({ event: 'textContent', data: allPagesTxt, message: data }), '*');
-                    return;
-                }
-                else if (data.action == 'status') {
-                    if (data.messageKey != null) {
-                        this.editor.setStatus(mxUtils.htmlEntities(mxResources.get(data.messageKey)));
-                    }
-                    else if (data.message != null) {
-                        this.editor.setStatus(mxUtils.htmlEntities(data.message));
-                    }
-
-                    if (data.modified != null) {
-                        this.editor.modified = data.modified;
-                    }
-
-                    return;
-                }
-                else if (data.action == 'spinner') {
-                    var msg = (data.messageKey != null) ? mxResources.get(data.messageKey) : data.message;
-
-                    if (data.show != null && !data.show) {
+                    case 'prompt': {
                         this.spinner.stop();
+                        var dlg = new FilenameDialog(this, data.defaultValue || '',
+                            !!data.okKey ? mxResources.get(data.okKey) : null, function (value) {
+                                if (value) {
+                                    parent.postMessage(JSON.stringify({
+                                        event: 'prompt',
+                                        value: value,
+                                        message: data
+                                    }), '*');
+                                }
+                            }, !!data.titleKey ? mxResources.get(data.titleKey) : data.title);
+                        this.showDialog(dlg.container, 300, 80, true, false);
+                        dlg.init();
+                        return;
                     }
-                    else {
-                        this.spinner.spin(document.body, msg)
-                    }
-
-                    return;
-                }
-                else if (data.action == 'export') {
-                    if (data.format == 'png' || data.format == 'xmlpng') {
-                        if ((data.spin == null && data.spinKey == null) || this.spinner.spin(document.body,
-                            (data.spinKey != null) ? mxResources.get(data.spinKey) : data.spin)) {
-                            var xml = (data.xml != null) ? data.xml : this.getFileData(true);
-                            this.editor.graph.setEnabled(false);
-                            var graph = this.editor.graph;
-
-                            var postDataBack = mxUtils.bind(this, function (uri) {
-                                this.editor.graph.setEnabled(true);
-                                this.spinner.stop();
-
-                                var msg = this.createLoadMessage('export');
-                                msg.format = data.format;
-                                msg.message = data;
-                                msg.data = uri;
-                                msg.xml = encodeURIComponent(xml);
-                                parent.postMessage(JSON.stringify(msg), '*');
-                            });
-
-                            var processUri = mxUtils.bind(this, function (uri) {
-                                if (uri == null) {
-                                    uri = Editor.blankImage;
-                                }
-
-                                if (data.format == 'xmlpng') {
-                                    uri = this.writeGraphModelToPng(uri, 'zTXt', 'mxGraphModel',
-                                        atob(Graph.compress(xml)));
-                                }
-
-                                // Removes temporary graph from DOM
-                                if (graph != this.editor.graph) {
-                                    graph.container.parentNode.removeChild(graph.container);
-                                }
-
-                                postDataBack(uri);
-                            });
-
-                            // LATER: Uses external export if current page (not first page) has mathEnabled
-                            if (this.isExportToCanvas()) {
-                                // Exports PNG for first page while other page is visible by creating a graph
-                                // LATER: Add caching for the graph or SVG while not on first page
-                                if (this.pages != null && this.currentPage != this.pages[0]) {
-                                    graph = this.createTemporaryGraph(graph.getStylesheet());
-                                    var graphGetGlobalVariable = graph.getGlobalVariable;
-                                    var page = this.pages[0];
-
-                                    graph.getGlobalVariable = function (name) {
-                                        if (name == 'page') {
-                                            return page.getName();
-                                        }
-                                        else if (name == 'pagenumber') {
-                                            return 1;
-                                        }
-
-                                        return graphGetGlobalVariable.apply(this, arguments);
-                                    };
-
-                                    document.body.appendChild(graph.container);
-                                    graph.model.setRoot(page.root);
-                                }
-
-                                this.exportToCanvas(mxUtils.bind(this, function (canvas) {
-                                    processUri(canvas.toDataURL('image/png'));
-                                }), null, null, null, mxUtils.bind(this, function () {
-                                    processUri(null);
-                                }), null, null, null, null, null, null, graph);
+                    case 'draft': {
+                        const tmp = extractDiagramXml(data.xml);
+                        this.spinner.stop();
+                        const dlg = new DraftDialog(this,
+                            mxResources.get('draftFound', [data.name || this.defaultFilename]),
+                            tmp,
+                            mxUtils.bind(this, function () {
+                                this.hideDialog();
+                                parent.postMessage(JSON.stringify({
+                                    event: 'draft',
+                                    result: 'edit',
+                                    message: data
+                                }), '*');
+                            }),
+                            mxUtils.bind(this, function () {
+                                this.hideDialog();
+                                parent.postMessage(JSON.stringify({
+                                    event: 'draft',
+                                    result: 'discard',
+                                    message: data
+                                }), '*');
+                            }),
+                            data.editKey ? mxResources.get(data.editKey) : null,
+                            data.discardKey ? mxResources.get(data.discardKey) : null,
+                            data.ignore ? mxUtils.bind(this, function () {
+                                this.hideDialog();
+                                parent.postMessage(JSON.stringify({
+                                    event: 'draft',
+                                    result: 'ignore',
+                                    message: data
+                                }), '*');
+                            }) : null
+                        );
+                        this.showDialog(dlg.container, 640, 480, true, false, mxUtils.bind(this, function (cancel) {
+                            if (cancel) {
+                                this.actions.get('exit').funct();
                             }
-                            else {
+                        }));
 
-                                // Data from server is base64 encoded to avoid binary XHR
-                                // Double encoding for XML arg is needed for UTF8 encoding
-                                var req = new mxXmlRequest(EXPORT_URL, 'format=png&embedXml=' +
-                                    ((data.format == 'xmlpng') ? '1' : '0') + '&base64=1&xml=' +
-                                    encodeURIComponent(encodeURIComponent(xml)));
+                        try {
+                            dlg.init();
+                        } catch (e) {
+                            parent.postMessage(JSON.stringify({
+                                event: 'draft',
+                                error: e.toString(),
+                                message: data
+                            }), '*');
+                        }
+                        return;
+                    }
+                    case 'template': {
+                        this.spinner.stop();
 
+                        const enableRecentDocs = data.enableRecent === 1;
+                        const enableSearchDocs = data.enableSearch === 1;
+                        const enableCustomTemp = data.enableCustomTemp === 1;
 
-                                req.send(mxUtils.bind(this, function (req) {
-                                    // Temp graph was never created at this point so we can
-                                    // skip processUri since it already contains the XML
-                                    if (req.getStatus() >= 200 && req.getStatus() <= 299) {
-                                        postDataBack('data:image/png;base64,' + req.getText());
+                        const dlg = new NewDialog(this, {
+                            compact: false,
+                            showName: !!data.callback,
+                            callback: mxUtils.bind(this, function (xml, name) {
+                                xml = xml || this.emptyDiagramXml;
+                                // LATER: Add autosave option in template message
+                                if (data.callback) {
+                                    parent.postMessage(JSON.stringify({
+                                        event: 'template',
+                                        xml: xml,
+                                        blank: xml === this.emptyDiagramXml,
+                                        name: name
+                                    }), '*');
+                                } else {
+                                    fn(xml, evt, xml != this.emptyDiagramXml);
+                                    // Workaround for status updated before modified applied
+                                    if (!this.editor.modified) {
+                                        this.editor.setStatus('');
                                     }
-                                    else {
+                                }
+                            }),
+                            recentDocsCallback: enableRecentDocs ? mxUtils.bind(this, function (recentReadyCallback) {
+                                this.remoteInvoke('getRecentDiagrams', null, null, recentReadyCallback, function () {
+                                    recentReadyCallback(null, 'Network Error!');
+                                });
+                            }) : null,
+                            searchDocsCallback: enableSearchDocs ? mxUtils.bind(this, function (searchStr, searchReadyCallback) {
+                                this.remoteInvoke('searchDiagrams', [searchStr], null, searchReadyCallback, function () {
+                                    searchReadyCallback(null, 'Network Error!');
+                                });
+                            }) : null,
+                            openExtDocCallback: mxUtils.bind(this, function (url, info, name) {
+                                //If binary files are possible, we can get the file content using remote invokation, imported it, and send final mxFile back
+                                parent.postMessage(JSON.stringify({
+                                    event: 'template',
+                                    docUrl: url,
+                                    info: info,
+                                    name: name
+                                }), '*');
+                            }),
+                            customTempCallback: enableCustomTemp ? mxUtils.bind(this, function (customTempCallback) {
+                                this.remoteInvoke('getCustomTemplates', null, null, customTempCallback, function () {
+                                    customTempCallback({}, 0); //ignore error by sending empty templates
+                                });
+                            }) : null
+                        });
+
+                        this.showDialog(dlg.container, 620, 440, true, false, mxUtils.bind(this, function (cancel) {
+                            if (cancel) {
+                                this.actions.get('exit').funct();
+                            }
+                        }));
+                        dlg.init();
+                        return;
+                    }
+                    case 'textContent': {
+                        //TODO Remove this message and use remove invokation instead
+                        const allPagesTxt = this.getDiagramTextContent();
+                        parent.postMessage(JSON.stringify({
+                            event: 'textContent',
+                            data: allPagesTxt,
+                            message: data
+                        }), '*');
+                        return;
+                    }
+                    case 'status': {
+                        if (data.messageKey) {
+                            this.editor.setStatus(mxUtils.htmlEntities(mxResources.get(data.messageKey)));
+                        } else if (data.message) {
+                            this.editor.setStatus(mxUtils.htmlEntities(data.message));
+                        }
+                        if (data.modified) {
+                            this.editor.modified = data.modified;
+                        }
+                        return;
+                    }
+                    case 'spinner': {
+                        const msg = !!data.messageKey ? mxResources.get(data.messageKey) : data.message;
+                        const show = data.show || true;
+                        if (!show) {
+                            this.spinner.stop();
+                        } else {
+                            this.spinner.spin(document.body, msg)
+                        }
+                        return;
+                    }
+                    case 'export': {
+                        if (data.format === 'png' || data.format === 'xmlpng') {
+                            if ((!data.spin && !data.spinKey) || this.spinner.spin(
+                                document.body,
+                                !!data.spinKey ? mxResources.get(data.spinKey) : data.spin
+                            )) {
+                                const xml = !!data.xml ? data.xml : this.getFileData(true);
+                                this.editor.graph.setEnabled(false);
+
+                                let graph = this.editor.graph;
+
+                                const postDataBack = mxUtils.bind(this, function (uri) {
+                                    this.editor.graph.setEnabled(true);
+                                    this.spinner.stop();
+
+                                    const msg = this.createLoadMessage('export');
+                                    msg.format = data.format;
+                                    msg.message = data;
+                                    msg.data = uri;
+                                    msg.xml = encodeURIComponent(xml);
+                                    parent.postMessage(JSON.stringify(msg), '*');
+                                });
+
+                                const processUri = mxUtils.bind(this, function (uri) {
+                                    uri = uri || Editor.blankImage;
+                                    if (data.format === 'xmlpng') {
+                                        uri = this.writeGraphModelToPng(uri, 'zTXt', 'mxGraphModel', atob(Graph.compress(xml)));
+                                    }
+
+                                    // Removes temporary graph from DOM
+                                    if (graph !== this.editor.graph) {
+                                        graph.container.parentNode.removeChild(graph.container);
+                                    }
+                                    postDataBack(uri);
+                                });
+
+                                // LATER: Uses external export if current page (not first page) has mathEnabled
+                                if (this.isExportToCanvas()) {
+                                    // Exports PNG for first page while other page is visible by creating a graph
+                                    // LATER: Add caching for the graph or SVG while not on first page
+                                    if (this.pages && this.currentPage !== this.pages[0]) {
+                                        graph = this.createTemporaryGraph(graph.getStylesheet());
+
+                                        const page = this.pages[0];
+                                        const graphGetGlobalVariable = graph.getGlobalVariable;
+
+                                        graph.getGlobalVariable = function (name) {
+                                            if (name === 'page') {
+                                                return page.getName();
+                                            } else if (name === 'pagenumber') {
+                                                return 1;
+                                            }
+                                            return graphGetGlobalVariable.apply(this, arguments);
+                                        };
+                                        document.body.appendChild(graph.container);
+                                        graph.model.setRoot(page.root);
+                                    }
+
+                                    this.exportToCanvas(mxUtils.bind(this, function (canvas) {
+                                        processUri(canvas.toDataURL('image/png'));
+                                    }), null, null, null, mxUtils.bind(this, function () {
                                         processUri(null);
-                                    }
-                                }), mxUtils.bind(this, function () {
-                                    processUri(null);
-                                }));
+                                    }), null, null, null, null, null, null, graph);
+                                } else {
+                                    //console.log('installMessageHandler');
+
+                                    // Data from server is base64 encoded to avoid binary XHR
+                                    // Double encoding for XML arg is needed for UTF8 encoding
+                                    const req = new mxXmlRequest(EXPORT_URL, 'format=png&embedXml=' +
+                                        (data.format === 'xmlpng' ? '1' : '0') + '&base64=1&xml=' +
+                                        encodeURIComponent(encodeURIComponent(xml)));
+
+                                    //console.log(req);
+
+                                    req.send(mxUtils.bind(this, function (req) {
+                                        // Temp graph was never created at this point so we can
+                                        // skip processUri since it already contains the XML
+                                        if (req.getStatus() >= 200 && req.getStatus() <= 299) {
+                                            postDataBack('data:image/png;base64,' + req.getText());
+                                        } else {
+                                            processUri(null);
+                                        }
+                                    }), mxUtils.bind(this, function () {
+                                        processUri(null);
+                                    }));
+                                }
                             }
-                        }
-                    }
-                    else {
-                        // SVG is generated from graph so parse optional XML
-                        if (data.xml != null && data.xml.length > 0) {
-                            this.setFileData(data.xml);
-                        }
-
-                        var msg = this.createLoadMessage('export');
-
-                        // Forces new HTML format if pages exists
-                        if (data.format == 'html2' || (data.format == 'html' && (urlParams['pages'] != '0' ||
-                            (this.pages != null && this.pages.length > 1)))) {
-                            var node = this.getXmlFileData();
-                            msg.xml = mxUtils.getXml(node);
-                            msg.data = this.getFileData(null, null, true, null, null, null, node);
-                            msg.format = data.format;
-                        }
-                        else if (data.format == 'html') {
-                            var xml = this.editor.getGraphXml();
-                            msg.data = this.getHtml(xml, this.editor.graph);
-                            msg.xml = mxUtils.getXml(xml);
-                            msg.format = data.format;
-                        }
-                        else {
-                            // Creates a preview with no alt text for unsupported browsers
-                            mxSvgCanvas2D.prototype.foAltText = null;
-
-                            var bg = this.editor.graph.background;
-
-                            if (bg == mxConstants.NONE) {
-                                bg = null;
+                        } else {
+                            // SVG is generated from graph so parse optional XML
+                            if (data.xml) {
+                                this.setFileData(data.xml);
                             }
 
-                            msg.xml = this.getFileData(true);
-                            msg.format = 'svg';
+                            const msg = this.createLoadMessage('export');
 
-                            if (data.embedImages || data.embedImages == null) {
-                                if ((data.spin == null && data.spinKey == null) || this.spinner.spin(document.body,
-                                    (data.spinKey != null) ? mxResources.get(data.spinKey) : data.spin)) {
-                                    this.editor.graph.setEnabled(false);
+                            // Forces new HTML format if pages exists
+                            if (data.format === 'html2' || (data.format === 'html' && (urlParams.pages !== '0' || (this.pages && this.pages.length)))) {
+                                const node = this.getXmlFileData();
+                                msg.xml = mxUtils.getXml(node);
+                                msg.data = this.getFileData(null, null, true, null, null, null, node);
+                                msg.format = data.format;
+                            } else if (data.format === 'html') {
+                                const xml = this.editor.getGraphXml();
+                                msg.data = this.getHtml(xml, this.editor.graph);
+                                msg.xml = mxUtils.getXml(xml);
+                                msg.format = data.format;
+                            } else {
+                                // Creates a preview with no alt text for unsupported browsers
+                                mxSvgCanvas2D.prototype.foAltText = null;
 
-                                    if (data.format == 'xmlsvg') {
-                                        this.getEmbeddedSvg(msg.xml, this.editor.graph, null, true, mxUtils.bind(this, function (svg) {
-                                            this.editor.graph.setEnabled(true);
-                                            this.spinner.stop();
-
-                                            msg.data = this.createSvgDataUri(svg);
-                                            parent.postMessage(JSON.stringify(msg), '*');
-                                        }));
-                                    }
-                                    else {
-                                        this.convertImages(this.editor.graph.getSvg(bg), mxUtils.bind(this, function (svgRoot) {
-                                            this.editor.graph.setEnabled(true);
-                                            this.spinner.stop();
-
-                                            msg.data = this.createSvgDataUri(mxUtils.getXml(svgRoot));
-                                            parent.postMessage(JSON.stringify(msg), '*');
-                                        }));
-                                    }
+                                let bg = this.editor.graph.background;
+                                if (bg === mxConstants.NONE) {
+                                    bg = null;
                                 }
 
-                                return;
+                                msg.xml = this.getFileData(true);
+                                msg.format = 'svg';
+
+                                if (data.embedImages || !data.embedImages) {
+                                    if ((!data.spin && !data.spinKey) || this.spinner.spin(
+                                        document.body,
+                                        !!data.spinKey ? mxResources.get(data.spinKey) : data.spin
+                                    )) {
+                                        this.editor.graph.setEnabled(false);
+                                        if (data.format === 'xmlsvg') {
+                                            this.getEmbeddedSvg(msg.xml, this.editor.graph, null, true, mxUtils.bind(this, function (svg) {
+                                                this.editor.graph.setEnabled(true);
+                                                this.spinner.stop();
+                                                msg.data = this.createSvgDataUri(svg);
+                                                parent.postMessage(JSON.stringify(msg), '*');
+                                            }));
+                                        } else {
+                                            this.convertImages(this.editor.graph.getSvg(bg), mxUtils.bind(this, function (svgRoot) {
+                                                this.editor.graph.setEnabled(true);
+                                                this.spinner.stop();
+                                                msg.data = this.createSvgDataUri(mxUtils.getXml(svgRoot));
+                                                parent.postMessage(JSON.stringify(msg), '*');
+                                            }));
+                                        }
+                                    }
+
+                                    return;
+                                } else {
+                                    const svg = data.format === 'xmlsvg' ? this.getEmbeddedSvg(
+                                        this.getFileData(true),
+                                        this.editor.graph, null, true
+                                    ) : mxUtils.getXml(this.editor.graph.getSvg(bg));
+                                    msg.data = this.createSvgDataUri(svg);
+                                }
                             }
-                            else {
-                                var svg = (data.format == 'xmlsvg') ? this.getEmbeddedSvg(this.getFileData(true),
-                                    this.editor.graph, null, true) : mxUtils.getXml(this.editor.graph.getSvg(bg));
-                                msg.data = this.createSvgDataUri(svg);
+
+							parent.postMessage(JSON.stringify(msg), '*');
+                        }
+                        return;
+                    }
+                    case 'load': {
+                        autosave = data.autosave === 1;
+                        this.hideDialog();
+
+                        if (data.modified && !urlParams.modified) {
+                            urlParams.modified = data.modified;
+                        }
+
+                        if (data.saveAndExit && !urlParams.saveAndExit) {
+                            urlParams.saveAndExit = data.saveAndExit;
+                        }
+
+                        if (data.title && this.buttonContainer) {
+                            const tmp = document.createElement('span');
+                            mxUtils.write(tmp, data.title);
+
+                            if (uiTheme === 'atlas') {
+                                this.buttonContainer.style.paddingRight = '12px';
+                                this.buttonContainer.style.paddingTop = '6px';
+                                this.buttonContainer.style.right = '25px';
+                            } else if (uiTheme !== 'min') {
+                                this.buttonContainer.style.paddingRight = '38px';
+                                this.buttonContainer.style.paddingTop = '6px';
                             }
+
+                            if (this.embedFilenameSpan) {
+                                this.embedFilenameSpan.parentNode.removeChild(this.embedFilenameSpan);
+                            }
+
+                            this.buttonContainer.appendChild(tmp);
+                            this.embedFilenameSpan = tmp;
                         }
 
-                        parent.postMessage(JSON.stringify(msg), '*');
-                    }
-
-                    return;
-                }
-                else if (data.action == 'load') {
-                    autosave = data.autosave == 1;
-                    this.hideDialog();
-
-                    if (data.modified != null && urlParams['modified'] == null) {
-                        urlParams['modified'] = data.modified;
-                    }
-
-                    if (data.saveAndExit != null && urlParams['saveAndExit'] == null) {
-                        urlParams['saveAndExit'] = data.saveAndExit;
-                    }
-
-                    if (data.title != null && this.buttonContainer != null) {
-                        var tmp = document.createElement('span');
-                        mxUtils.write(tmp, data.title);
-
-                        if (uiTheme == 'atlas') {
-                            this.buttonContainer.style.paddingRight = '12px';
-                            this.buttonContainer.style.paddingTop = '6px';
-                            this.buttonContainer.style.right = '25px';
+                        if (data.xmlpng) {
+                            data = this.extractGraphModelFromPng(data.xmlpng);
+                        } else {
+                            data = data.xml;
                         }
-                        else if (uiTheme != 'min') {
-                            this.buttonContainer.style.paddingRight = '38px';
-                            this.buttonContainer.style.paddingTop = '6px';
-                        }
-
-                        if (this.embedFilenameSpan != null) {
-                            this.embedFilenameSpan.parentNode.removeChild(this.embedFilenameSpan);
-                        }
-
-                        this.buttonContainer.appendChild(tmp);
-                        this.embedFilenameSpan = tmp;
+                        break;
                     }
-
-                    if (data.xmlpng != null) {
-                        data = this.extractGraphModelFromPng(data.xmlpng);
+                    case 'remoteInvokeReady': {
+                        this.handleRemoteInvokeReady(parent);
+                        return;
                     }
-                    else {
-                        data = data.xml;
+                    case 'remoteInvoke': {
+                        this.handleRemoteInvoke(data);
+                        return;
                     }
-                }
-                else if (data.action == 'remoteInvokeReady') {
-                    this.handleRemoteInvokeReady(parent);
-                    return;
-                }
-                else if (data.action == 'remoteInvoke') {
-                    this.handleRemoteInvoke(data);
-                    return;
-                }
-                else if (data.action == 'remoteInvokeResponse') {
-                    this.handleRemoteInvokeResponse(data);
-                    return;
-                }
-                else {
-                    // Unknown message must stop execution
-                    parent.postMessage(JSON.stringify({ error: 'unknownMessage', data: JSON.stringify(data) }), '*');
-
-                    return;
+                    case 'remoteInvokeResponse': {
+                        this.handleRemoteInvokeResponse(data);
+                        return;
+                    }
+                    default: {
+                        // Unknown message must stop execution
+                        parent.postMessage(JSON.stringify({ error: 'unknownMessage', data: JSON.stringify(data) }), '*');
+                        return;
+                    }
                 }
             }
 
-            var doLoad = mxUtils.bind(this, function (data, evt) {
+            const doLoad = mxUtils.bind(this, function (data, evt) {
                 ignoreChange = true;
                 try {
                     fn(data, evt);
-                }
-                catch (e) {
+                } catch (e) {
                     this.handleError(e);
                 }
                 ignoreChange = false;
 
-                if (urlParams['modified'] != null) {
+                if (urlParams.modified) {
                     this.editor.setStatus('');
                 }
 
                 var getData = mxUtils.bind(this, function () {
-                    return (urlParams['pages'] != '0' || (this.pages != null && this.pages.length > 1)) ?
+                    return (urlParams.pages !== '0' || (this.pages && this.pages.length)) ?
                         this.getFileData(true) : mxUtils.getXml(this.editor.getGraphXml());
                 });;
 
                 lastData = getData();
 
-                if (autosave && changeListener == null) {
-                    changeListener = mxUtils.bind(this, function (sender, eventObject) {
-                        var data = getData();
-
-                        if (data != lastData && !ignoreChange) {
-                            var msg = this.createLoadMessage('autosave');
+                if (autosave && !changeListener) {
+                    changeListener = mxUtils.bind(this, function () {
+                        let data = getData();
+                        if (data !== lastData && !ignoreChange) {
+                            const msg = this.createLoadMessage('autosave');
                             msg.xml = data;
                             data = JSON.stringify(msg);
 
-                            var parent = window.opener || window.parent;
+                            const parent = window.opener || window.parent;
                             parent.postMessage(data, '*');
                         }
 
@@ -8991,38 +8993,39 @@
                 }
 
                 // Sends the bounds of the graph to the host after parsing
-                if (urlParams['returnbounds'] == '1' || urlParams['proto'] == 'json') {
+                if (urlParams.returnbounds === '1' || urlParams.proto === 'json') {
                     parent.postMessage(JSON.stringify(this.createLoadMessage('load')), '*');
                 }
             });
 
-            if (data != null && typeof data.substring === 'function' && data.substring(0, 34) == 'data:application/vnd.visio;base64,') {
-                // Checks VND binary magic number in base64
-                var filename = (data.substring(34, 45) == '0M8R4KGxGuE') ? 'raw.vsd' : 'raw.vsdx';
-
-                this.importVisio(this.base64ToBlob(data.substring(data.indexOf(',') + 1)), function (xml) {
-                    doLoad(xml, evt);
-                }, mxUtils.bind(this, function (e) {
-                    this.handleError(e);
-                }), filename);
-            }
-            else if (data != null && typeof data.substring === 'function' && !this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(data, '')) {
-                // Asynchronous parsing via server
-                this.parseFile(new Blob([data], { type: 'application/octet-stream' }), mxUtils.bind(this, function (xhr) {
-                    if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status <= 299 &&
-                        xhr.responseText.substring(0, 13) == '<mxGraphModel') {
-                        doLoad(xhr.responseText, evt);
-                    }
-                }), '');
-            }
-            else if (data != null && typeof data.substring === 'function' && this.isLucidChartData(data)) {
-                this.convertLucidChart(data, mxUtils.bind(this, function (xml) {
-                    doLoad(xml);
-                }), mxUtils.bind(this, function (e) {
-                    this.handleError(e);
-                }));
-            }
-            else {
+            if (data && typeof data.substring === 'function') {
+                if (data.substring(0, 34) === 'data:application/vnd.visio;base64,') {
+                    // Checks VND binary magic number in base64
+                    const filename = data.substring(34, 45) === '0M8R4KGxGuE' ? 'raw.vsd' : 'raw.vsdx';
+                    this.importVisio(this.base64ToBlob(data.substring(data.indexOf(',') + 1)), function (xml) {
+                        doLoad(xml, evt);
+                    }, mxUtils.bind(this, function (e) {
+                        this.handleError(e);
+                    }), filename);
+                } else if (!this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(data, '')) {
+                    // Asynchronous parsing via server
+                    this.parseFile(new Blob([data], { type: 'application/octet-stream' }), mxUtils.bind(this, function (xhr) {
+                        if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status <= 299 &&
+                            xhr.responseText.substring(0, 13) === '<mxGraphModel') {
+                            doLoad(xhr.responseText, evt);
+                        }
+                    }), '');
+                } else if (this.isLucidChartData(data)) {
+                    this.convertLucidChart(data, mxUtils.bind(this, function (xml) {
+                        doLoad(xml);
+                    }), mxUtils.bind(this, function (e) {
+                        this.handleError(e);
+                    }));
+                } else {
+                    data = extractDiagramXml(data);
+                    doLoad(data, evt);
+                }
+            } else {
                 data = extractDiagramXml(data);
                 doLoad(data, evt);
             }
@@ -9030,8 +9033,8 @@
 
         // Requests data from the sender. This is a workaround for not allowing
         // the opener to listen for the onload event if not in the same origin.
-        var parent = window.opener || window.parent;
-        var msg = (urlParams['proto'] == 'json') ? JSON.stringify({ event: 'init' }) : (urlParams['ready'] || 'ready');
+        const parent = window.opener || window.parent;
+        const msg = urlParams.proto === 'json' ? JSON.stringify({ event: 'init' }) : urlParams.ready || 'ready';
         parent.postMessage(msg, '*');
     };
 

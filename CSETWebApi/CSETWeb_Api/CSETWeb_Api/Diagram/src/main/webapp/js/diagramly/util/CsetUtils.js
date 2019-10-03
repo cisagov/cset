@@ -20,35 +20,27 @@ CsetUtils = function ()
  */
 CsetUtils.ignoredAttributes = ['ComponentGuid', 'internalLabel', 'UniqueQuestions', 'zone'];
 
-
-function updateGraph(editor, data, finalize)
-{
+function updateGraph(editor, data, finalize) {
     let graph = Graph.zapGremlins(mxUtils.trim(data));
     graph = graph.replace(/\\"/g, '"').replace(/^\"|\"$/g, ''); // fix escaped quotes and trim quotes
 
-    return new Promise(function (resolve, reject)
-    {
+    return new Promise(function (resolve, reject) {
         editor.graph.model.beginUpdate();
-        try
-        {
+        try {
             editor.setGraphXml(mxUtils.parseXml(graph).documentElement);
             resolve();
-        } catch (err)
-        {
+        } catch (err) {
             console.warn('Failed to set graph xml:', err);
             reject(err);
-        } finally
-        {
+        } finally {
             editor.graph.model.endUpdate();
 
-            if (finalize)
-            {
+            if (finalize) {
                 finalize();
             }
 
             editor.graph.fit();
-            if (editor.graph.view.scale > 1)
-            {
+            if (editor.graph.view.scale > 1) {
                 editor.graph.zoomTo(1);
             }
         }
@@ -120,21 +112,17 @@ CsetUtils.makeHttpRequest = makeRequest;
  * if it is now the child of a multi-service component. 
  * @param {any} edit
  */
-CsetUtils.adjustConnectability = function (edit)
-{
-    for (i = 0; i < edit.changes.length; i++)
-    {
-        if (edit.changes[i] instanceof mxChildChange)
-        {
-            var c = edit.changes[i].child;
-            if (c.isEdge())
-            {
+CsetUtils.adjustConnectability = function (edit) {
+    const changes = edit.changes || [];
+    for (const change of changes) {
+        if (change instanceof mxChildChange) {
+            const c = change.child;
+            if (c.isEdge()) {
                 return;
             }
 
             // zones are not connectable
-            if (c.isZone())
-            {
+            if (c.isZone()) {
                 c.setConnectable(false);
                 return;
             }
@@ -148,20 +136,16 @@ CsetUtils.adjustConnectability = function (edit)
 /**
  * Retrieves the graph from the CSET API if it has been stored.
  */
-CsetUtils.LoadGraphFromCSET = async function (editor, filename, app)
-{
+CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
     await makeRequest({
         method: 'GET',
         url: localStorage.getItem('cset.host') + 'diagram/get',
-        onreadystatechange: function (e)
-        {
-            if (e.readyState !== 4)
-            {
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
                 return;
             }
 
-            switch (e.status)
-            {
+            switch (e.status) {
                 case 200:
                     const resp = JSON.parse(e.responseText);
                     const assessmentName = resp.AssessmentName;
@@ -289,7 +273,7 @@ CsetUtils.analyzeDiagram = async function (req, editor)
  */
 CsetUtils.saveDiagram = async function (req)
 {
-    const response = await makeRequest({
+    await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
         url: localStorage.getItem('cset.host') + 'diagram/save',
@@ -502,29 +486,6 @@ CsetUtils.getFilenameFromPath = function (path)
     return path;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * 
  */
@@ -666,4 +627,30 @@ CsetUtils.isRedDotAtCoords = function (graph, coords)
     });
 
     return found;
+}
+
+/**
+ * 
+ */
+CsetUtils.getCsetTemplates = async function () {
+    let templates;
+    await makeRequest({
+        method: 'GET',
+        url: localStorage.getItem('cset.host') + 'diagram/templates',
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
+                return;
+            }
+
+            switch (e.status) {
+                case 200:
+                    templates = JSON.parse(e.responseText);
+                    break;
+                case 401:
+                    window.location.replace('http://localhost:4200');
+                    break;
+            }
+        }
+    });
+    return templates;
 }
