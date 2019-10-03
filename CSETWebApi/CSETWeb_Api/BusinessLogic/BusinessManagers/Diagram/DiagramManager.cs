@@ -18,6 +18,7 @@ using DataLayerCore.Model;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Models;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -305,13 +306,13 @@ namespace CSETWeb_Api.BusinessManagers
                 mxGraphModelRootObject o = new mxGraphModelRootObject();
                 Type objectType = typeof(mxGraphModelRootObject);
 
-
+                LayerManager layers = new LayerManager(db, assessment_id);
                 foreach (var item in diagramXml.root.Items)
                 {
                     if (item.GetType() == objectType)
                     {
                         var addLayerVisible = (mxGraphModelRootObject) item;
-                        var layerVisibility =getLayerVisibility(addLayerVisible.parent, assessment_id);
+                        var layerVisibility = layers.GetLastLayer(addLayerVisible.parent);
                         addLayerVisible.visible = layerVisibility.visible;
                         addLayerVisible.layerName = layerVisibility.layerName;
                         vertices.Add(addLayerVisible);
@@ -323,41 +324,7 @@ namespace CSETWeb_Api.BusinessManagers
             return vertices;
         }
 
-        public LayerVisibility getLayerVisibility(string drawIoId, int assessment_id)
-        {
-            //get the parent id
-            var list = from node in db.DIAGRAM_CONTAINER
-                join parent in db.DIAGRAM_CONTAINER on node.Parent_Id equals parent.Container_Id
-                       where node.Assessment_Id == assessment_id
-                select new LayerVisibility()
-                {
-                    layerName = node.Name,
-                    DrawIo_id = node.DrawIO_id,
-                    Parent_DrawIo_id = parent.DrawIO_id,
-                    visible = (node.Visible ?? true) ? "true" : "false"
-                };
-            var list2 = from node in db.DIAGRAM_CONTAINER                       
-                       where node.Assessment_Id == assessment_id && node.Parent_Id ==0
-                       select new LayerVisibility()
-                       {
-                           layerName = node.Name,
-                           DrawIo_id = node.DrawIO_id,
-                           Parent_DrawIo_id = "",
-                           visible = (node.Visible ?? true) ? "true" : "false"
-                       };
-            var list3 = list.Union(list2);
-
-            Dictionary<string, LayerVisibility> allItems = list3.ToDictionary(x => x.DrawIo_id,x=> x);
-            LayerVisibility layer;
-            LayerVisibility lastLayer = null; 
-            while (allItems.TryGetValue(drawIoId, out layer))
-            {
-                lastLayer = layer;
-                drawIoId = layer.Parent_DrawIo_id;
-            }
-
-            return lastLayer;
-        }
+     
 
 
 
@@ -746,5 +713,6 @@ namespace CSETWeb_Api.BusinessManagers
 
         public string Parent_DrawIo_id { get; set; }
         public string DrawIo_id { get; set; }
+        public int Container_Id { get; internal set; }
     }
 }

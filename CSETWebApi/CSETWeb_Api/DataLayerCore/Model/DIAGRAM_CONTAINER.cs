@@ -32,6 +32,8 @@ namespace DataLayerCore.Model
         [StringLength(10)]
         public string Universal_Sal_Level { get; set; }
         public int Parent_Id { get; set; }
+        [StringLength(50)]
+        public string Parent_Draw_IO_Id { get; set; }
 
         [ForeignKey("ContainerType")]
         [InverseProperty("DIAGRAM_CONTAINER")]

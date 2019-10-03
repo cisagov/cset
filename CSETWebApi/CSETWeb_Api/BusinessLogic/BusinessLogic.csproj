@@ -273,6 +273,7 @@
     <Compile Include="BusinessManagers\Diagram\DiagramManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferences.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkZone.cs" />
+    <Compile Include="BusinessManagers\Diagram\layers\LayerManager.cs" />
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />
