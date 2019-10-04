@@ -2641,7 +2641,7 @@ PropertiesPanel.prototype.addProperties = function (container)
                 cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.checked);
 
                 // send setting to API 
-                if (ctl.getAttribute('propname') == 'UniqueQuestions')
+                if (ctl.getAttribute('propname') == 'HasUniqueQuestions')
                 {
                     var hasUniqueQuestions = ctl.checked;
                     
@@ -2776,7 +2776,7 @@ diagramElementProperties = function ()
                 type: 'input'
             }, {
                 fieldLabel: 'Has Unique Questions',
-                attributeName: 'UniqueQuestions',
+                attributeName: 'HasUniqueQuestions',
                 type: 'checkbox'
             }, {
                 fieldLabel: 'Description',
