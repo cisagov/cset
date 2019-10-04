@@ -78,8 +78,8 @@
 
     <!-- Loop Groups within Domain -->
     <div *ngFor="let g of d.QuestionGroups" style="margin-bottom: 2em;"
-      [id]="'Q' + g.GroupHeadingId + '.' + g.StandardShortName">
-
+      [id]="formatID('Q' + g.GroupHeadingId  + '.' + g.GroupHeadingText + '.' + g.StandardShortName)">
+    
       <!-- Question Group Heading / Category-->
       <div class="group-heading" [ngClass]="addDomainPad(g.DomainName)" [class.display-none]="!g.Visible">
         {{ g.GroupHeadingText }}
