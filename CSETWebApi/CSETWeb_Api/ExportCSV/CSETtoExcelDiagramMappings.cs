@@ -128,7 +128,7 @@ namespace ExportCSV
                 var row = datatable.NewRow();
 
                 row["Type"] = z.zoneType;
-                row["Label"] = z.zoneLabel;
+                row["Label"] = z.label;
                 row["Sal"] = z.SAL;
                 row["Layer"] = z.layerName;
                 row["Visible"] = z.visible;
@@ -174,7 +174,7 @@ namespace ExportCSV
             var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var shapesCells = dm.ProcessDiagramShapes(diagramXml, assessmentId);
-            var shapes = dm.GetDiagramLinks(shapesCells);
+            var shapes = dm.GetDiagramShapes(shapesCells);
 
             var datatable = new DataTable();
 
@@ -203,7 +203,7 @@ namespace ExportCSV
             var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var textCells = dm.ProcessDiagramShapes(diagramXml, assessmentId);
-            var texts = dm.GetDiagramLinks(textCells);
+            var texts = dm.GetDiagramText(textCells);
 
             var datatable = new DataTable();
 
