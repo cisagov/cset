@@ -405,29 +405,19 @@ namespace CSETWeb_Api.BusinessManagers
         public LayerVisibility getLayerVisibility(string drawIoId, int assessment_id)
         {
             //get the parent id
-            var list = from node in db.DIAGRAM_CONTAINER
-                       join parent in db.DIAGRAM_CONTAINER on node.Parent_Id equals parent.Container_Id
-                       where node.Assessment_Id == assessment_id
-                       select new LayerVisibility()
-                       {
-                           layerName = node.Name,
-                           DrawIo_id = node.DrawIO_id,
-                           Parent_DrawIo_id = parent.DrawIO_id,
-                           visible = (node.Visible ?? true) ? "true" : "false"
-                       };
+            var lm = new LayerManager(db, assessment_id);
+            var list = lm.GetLastLayer(drawIoId);
 
+            //Dictionary<string, LayerVisibility> allItems = list.ToDictionary(x => x.DrawIo_id, x => x);
+            //LayerVisibility layer = new LayerVisibility();
+            //LayerVisibility lastLayer = new LayerVisibility();
+            //while (!string.IsNullOrEmpty(drawIoId) && allItems.TryGetValue(drawIoId, out layer))
+            //{
+            //    lastLayer = layer;
+            //    drawIoId = layer.Parent_DrawIo_id;
+            //}
 
-
-            Dictionary<string, LayerVisibility> allItems = list.ToDictionary(x => x.DrawIo_id, x => x);
-            LayerVisibility layer;
-            LayerVisibility lastLayer = null;
-            while (allItems.TryGetValue(drawIoId, out layer))
-            {
-                lastLayer = layer;
-                drawIoId = layer.Parent_DrawIo_id;
-            }
-
-            return lastLayer;
+            return list;
         }
 
 
