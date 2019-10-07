@@ -22,8 +22,16 @@
 -------------------------->
 <div class="extras-block">
     <div class="">
+        <button *ngIf="myQuestion.Is_Component"
+            class="extras-button cursor-pointer" [class.active]="mode == 'COMPONENT'" (click)="toggleExtras('COMPONENT')"
+            [matTooltip]="Components" matTooltipPosition="above">
+            <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -10px">
+                <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)" d="M28,7.566L28,16.38 28,23.15 28,31.962C28,33.637,26.625,35,24.936,35L7.633,35C6.732,35,5.921,34.611,5.36,33.994L4.678,33.316 4.575,33.316 2.957,31.713 2.314,31.076 2.314,30.969 1.069,29.731C0.951,29.631,0.839,29.52,0.739,29.403L0.727,29.394 0.73,29.394C0.276,28.863,0,28.18,0,27.432L0,18.62 0,11.848 0,3.036C0,1.361,1.372,0,3.062,0L8.052,0 8.052,0.095C6.725,0.427,5.738,1.619,5.738,3.036L5.738,3.201 5.738,4.311 5.738,19.02 7.646,17.401 9.751,19.02 9.751,4.311 9.751,3.201 9.751,3.036C9.751,1.361,11.123,0,12.812,0L20.367,0C22.052,0,23.429,1.361,23.429,3.036L23.429,11.848 23.429,18.62 23.429,27.432C23.429,29.107,22.057,30.47,20.367,30.47L4.913,30.47 6.167,31.713 7.213,32.751 22.668,32.751C24.357,32.751,25.729,31.388,25.729,29.713L25.729,20.901 25.729,15.085 25.729,14.128 25.729,5.317 25.729,4.639C27.033,4.987,28,6.165,28,7.566" />
+            </svg>
+        </button>
 
-        <button class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'" (click)="toggleExtras('DETAIL')"
+        <button *ngIf="!myQuestion.Is_Component"
+            class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'" (click)="toggleExtras('DETAIL')"
             [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Examination Approach' : 'Details/Standard'" matTooltipPosition="above">
             <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -10px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)" d="M28,7.566L28,16.38 28,23.15 28,31.962C28,33.637,26.625,35,24.936,35L7.633,35C6.732,35,5.921,34.611,5.36,33.994L4.678,33.316 4.575,33.316 2.957,31.713 2.314,31.076 2.314,30.969 1.069,29.731C0.951,29.631,0.839,29.52,0.739,29.403L0.727,29.394 0.73,29.394C0.276,28.863,0,28.18,0,27.432L0,18.62 0,11.848 0,3.036C0,1.361,1.372,0,3.062,0L8.052,0 8.052,0.095C6.725,0.427,5.738,1.619,5.738,3.036L5.738,3.201 5.738,4.311 5.738,19.02 7.646,17.401 9.751,19.02 9.751,4.311 9.751,3.201 9.751,3.036C9.751,1.361,11.123,0,12.812,0L20.367,0C22.052,0,23.429,1.361,23.429,3.036L23.429,11.848 23.429,18.62 23.429,27.432C23.429,29.107,22.057,30.47,20.367,30.47L4.913,30.47 6.167,31.713 7.213,32.751 22.668,32.751C24.357,32.751,25.729,31.388,25.729,29.713L25.729,20.901 25.729,15.085 25.729,14.128 25.729,5.317 25.729,4.639C27.033,4.987,28,6.165,28,7.566" />
@@ -73,7 +81,7 @@
         matTooltip="FeedBack" matTooltipPosition="above">
         <!-- <svg version="1.1" id="Edit_Comment_Icon_-_Edit" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" -->
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px"
-            viewBox="44.5 44.5 37 31" enable-background="new 44.5 44.5 31 31">
+            viewBox="44.5 44.5 33 35" enable-background="new 44.5 44.5 31 31">
         <path id="Bubble" fill="#004444" d="M69.051,51.771h-0.027l-2.75,4.554h0.834c0.369,0,0.668,0.298,0.668,0.666
         s-0.299,0.667-0.668,0.667h-1.64l-1.072,1.775h2.712c0.369,0,0.668,0.299,0.668,0.667s-0.299,0.667-0.668,0.667H63.59l-1.074,1.778
         h4.592c0.369,0,0.668,0.298,0.668,0.665c0,0.368-0.299,0.667-0.668,0.667h-5.481l-3.513,2.792l-2.095,1.664l0.49-2.63l0.34-1.826
@@ -102,33 +110,53 @@
                 <div style="max-width: 30px; max-height: 30px;"></div>
             </div>
         </div>
-        
-        <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.RequirementsData?.ExaminationApproach)" class="detail">
-            <div><span class="reqlabel">Title: </span>{{tab?.RequirementFrameworkTitle}}</div>
-
-            <div><span class="reqlabel">Category: </span>{{tab?.RelatedFrameworkCategory}}</div>
-
-            <div><span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.LevelName}}</div>
-
-            <div *ngIf="!tab?.ShowRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
-            <div *ngIf="!tab?.ShowRequirementStandards">
-                <span [innerHTML]="tab?.RequirementsData?.Text | safe: 'html'"></span>
-                <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ tab?.RequirementsData?.RequirementID }}</span>
+        <div *ngIf="myQuestion.Is_Component; else detailTab">
+            <div *ngIf="extras !== null && mode == 'COMPONENT'" class="detail">                        
+                <table>
+                    <tr><th>Component Type</th><th>Override Component Answer</th></tr>
+                    <tr *ngFor="let componentType of tab?.ComponentTypes">
+                        <td>{{componentType.Type}}</td>
+                        <td>
+                            <div class="text-right">
+                                <button *ngIf="componentType.Enabled; else noOverride"
+                                class="btn btn-link btn-link-dark"
+                                style="padding-right: 0"
+                                (click)="this.showOverrideDialog(componentType)">Override</button>
+                            </div>
+                            <ng-template #noOverride>
+                                <div class="text-right">None</div>
+                            </ng-template>
+                        </td>
+                    </tr>
+                </table>            
             </div>
-
-            <div *ngIf="tab?.QuestionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:</div>           
-            <ul *ngIf="tab?.QuestionsList?.length > 0" class="related-questions">
-                <li *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ.QuestionText"></li>                
-            </ul>
+            <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
+                <div [innerHTML]="tab?.RequirementsData?.SupplementalInfo ? (tab?.RequirementsData?.SupplementalInfo | safe) : ''"></div>                
+            </div>
         </div>
-        <div *ngIf="extras !== null && mode == 'DETAIL' && checkForApproach(tab?.RequirementsData?.ExaminationApproach)" class="supplemental" [innerHTML]="formatLinebreaks(tab?.RequirementsData?.ExaminationApproach)">        
-        </div>
-        <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
-            <div [innerHTML]="tab?.RequirementsData?.SupplementalInfo ? (tab?.RequirementsData?.SupplementalInfo | safe) : ''"></div>
-            <hr *ngIf="tab?.RequirementsData?.SupplementalInfo !== null && tab?.RequirementsData?.ExaminationApproach !== null">
-            <div [innerHTML]="tab?.RequirementsData?.ExaminationApproach ? (tab?.RequirementsData?.ExaminationApproach | safe) : ''"></div>
-        </div>
-
+        <ng-template #detailTab>
+            <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.RequirementsData?.ExaminationApproach)" class="detail">
+                <div><span class="reqlabel">Title: </span>{{tab?.RequirementFrameworkTitle}}</div>
+                <div><span class="reqlabel">Category: </span>{{tab?.RelatedFrameworkCategory}}</div>
+                <div><span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.LevelName}}</div>
+                <div *ngIf="!tab?.ShowRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
+                <div *ngIf="!tab?.ShowRequirementStandards">
+                    <span [innerHTML]="tab?.RequirementsData?.Text | safe: 'html'"></span>
+                    <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ tab?.RequirementsData?.RequirementID }}</span>
+                </div>
+                <div *ngIf="tab?.QuestionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:</div>           
+                <ul *ngIf="tab?.QuestionsList?.length > 0" class="related-questions">
+                    <li *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ.QuestionText"></li>                
+                </ul>
+            </div>
+            <div *ngIf="extras !== null && mode == 'DETAIL' && checkForApproach(tab?.RequirementsData?.ExaminationApproach)" class="supplemental" [innerHTML]="formatLinebreaks(tab?.RequirementsData?.ExaminationApproach)">        
+            </div>            
+            <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
+                <div [innerHTML]="tab?.RequirementsData?.SupplementalInfo ? (tab?.RequirementsData?.SupplementalInfo | safe) : ''"></div>
+                <hr *ngIf="tab?.RequirementsData?.SupplementalInfo !== null && tab?.RequirementsData?.ExaminationApproach !== null">
+                <div [innerHTML]="tab?.RequirementsData?.ExaminationApproach ? (tab?.RequirementsData?.ExaminationApproach | safe) : ''"></div>
+            </div>
+        </ng-template>
         <div *ngIf="extras !== null && mode === 'CMNT'">
             <div class="form-group">
                 <textarea autosize [(ngModel)]="myQuestion.Comment" (change)="saveComment($event)" style="min-height: 72px; width: 100%"

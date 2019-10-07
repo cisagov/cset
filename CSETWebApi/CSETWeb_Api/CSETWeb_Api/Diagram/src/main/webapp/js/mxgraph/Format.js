@@ -2477,6 +2477,12 @@ PropertiesPanel.prototype.addProperties = function (container)
         return;
     }
 
+    // if text, don't show the properties panel.
+    if (cell.hasStyle("text"))
+    {
+        return;
+    }
+
     // if a group is selected, don't show the properties panel.
     if (cell.hasStyle("group"))
     {
@@ -2525,12 +2531,24 @@ PropertiesPanel.prototype.addProperties = function (container)
         mxUtils.write(panel, pp.fieldLabel);
 
         var ctl = document.createElement(pp.type);
+        if (pp.type == 'checkbox')
+        {
+            ctl = document.createElement('input');
+            ctl.setAttribute('type', 'checkbox');
+        }
+
         panel.appendChild(ctl);
         ctl.setAttribute('propname', pp.attributeName);
         ctl.style.position = 'absolute';
         ctl.style.right = '20px';
         ctl.style.width = '97px';
         ctl.style.marginTop = '-2px';
+        ctl.style.zIndex = '1000';
+
+        if (pp.type === 'textarea')
+        {
+            ctl.style.height = '200px';
+        }
 
         if (pp.type === 'select')
         {
@@ -2575,8 +2593,15 @@ PropertiesPanel.prototype.addProperties = function (container)
             ctl.setAttribute('disabled', true);
         }
 
-        ctl.value = cell.getCsetAttribute(pp.attributeName);
 
+        if (ctl.getAttribute('type') === 'checkbox')
+        {
+            ctl.checked = (cell.getCsetAttribute(pp.attributeName) == 'true');
+        }
+        else
+        {
+            ctl.value = cell.getCsetAttribute(pp.attributeName);
+        }
 
 
         // special cases
@@ -2605,11 +2630,46 @@ PropertiesPanel.prototype.addProperties = function (container)
         {
             var cell = graph.getSelectionCell();
             var ctl = evt.srcElement;
-            
+
             if (ctl.getAttribute('propname') == 'ComponentType')
             {
                 cell.removeStyleValue('image');
                 cell.setStyleValue('image;image', 'img/cset/' + ctl.value);
+            }
+            else if (ctl.getAttribute('type') === 'checkbox')
+            {
+                cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.checked);
+
+                // send setting to API 
+                if (ctl.getAttribute('propname') == 'HasUniqueQuestions')
+                {
+                    var hasUniqueQuestions = ctl.checked;
+                    
+                    makeRequest({
+                        method: 'GET',
+                        overrideMimeType: 'application/json',
+                        url: localStorage.getItem('cset.host') + 'AnswerSaveComponentOverrides'
+                            + '?guid=' + cell.getCsetAttribute('ComponentGuid')
+                            + '&ShouldSave=' + hasUniqueQuestions,
+                        onreadystatechange: function (e)
+                        {
+                            if (e.readyState !== 4)
+                            {
+                                return;
+                            }
+
+                            switch (e.status)
+                            {
+                                case 200:
+                                    // successful post            
+                                    break;
+                                case 401:
+                                    window.location.replace(localStorage.getItem('cset.client'));
+                                    break;
+                            }
+                        }
+                    });
+                }
             }
             else
             {
@@ -2715,6 +2775,10 @@ diagramElementProperties = function ()
                 attributeName: 'HostName',
                 type: 'input'
             }, {
+                fieldLabel: 'Has Unique Questions',
+                attributeName: 'HasUniqueQuestions',
+                type: 'checkbox'
+            }, {
                 fieldLabel: 'Description',
                 attributeName: 'Description',
                 type: 'textarea'
@@ -2728,7 +2792,7 @@ diagramElementProperties = function ()
             },
             {
                 fieldLabel: 'Type',
-                attributeName: 'zoneType',
+                attributeName: 'ZoneType',
                 type: 'select',
                 values: [
                     'Control DMZ',

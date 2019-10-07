@@ -24,6 +24,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
+import { Observable } from 'rxjs';
+import { RequestOptions, ResponseContentType } from '@angular/http';
 
 
 const headers = {
@@ -45,4 +47,35 @@ export class DiagramService {
   getSymbols() {
     return this.http.get(this.apiUrl + 'symbols/get');
   }
+
+  getAllSymbols(){
+    return this.http.get(this.apiUrl + 'symbols/getAll')
+  }
+
+  //get diagram components
+  getDiagramComponents(){
+    return this.http.get(this.apiUrl+'getComponents');
+  }
+
+  getDiagramZones(){
+    return this.http.get(this.apiUrl+'getZones');
+  }
+
+  getDiagramShapes(){
+    return this.http.get(this.apiUrl+'getShapes');
+  }
+
+  getDiagramText(){
+    return this.http.get(this.apiUrl+'getTexts');
+  }
+
+  getDiagramLinks(){
+    return this.http.get(this.apiUrl+'getLinks');
+  }
+
+  getExport(): any{
+    return this.http.get(this.apiUrl+'export', {responseType:'blob'});
+  }
+
+
 }

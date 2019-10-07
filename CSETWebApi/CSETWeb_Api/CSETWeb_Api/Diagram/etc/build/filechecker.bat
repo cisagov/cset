@@ -13,25 +13,19 @@ if not exist !appminjs! (
     set /a buildcnt = 1
 ) else (
 	for %%f in (!appminjs!) do (
-		call :jdate %%~tf
-		set /a blddate = !jdate!
-		set /a bldtime = !jtime!
+		call :datetime %%~tf
+		set blddatetime=!datetime!
 	)
-	rem echo !blddate! !bldtime!
+	echo app.min.js !blddatetime!
 
 	set x=-1
 	call :getfiles %jsfldr% *.js
 	for /L %%f in (0,1,!x!) do (
-		set fdate=!files[%%f].fdate!
-		set ftime=!files[%%f].ftime!
-		if !fdate! gtr !blddate! (
-			rem echo !fdate! !ftime!
+		set fname=!files[%%f].name!
+		set fdatetime=!files[%%f].fdatetime!
+		if "!fdatetime!" gtr "!blddatetime!" (
+			echo !fname! !fdatetime!
 			set /a buildcnt += 1
-		) else if !fdate! equ !blddate! (
-			if !ftime! gtr !bldtime! (
-				rem echo !fdate! !ftime!
-				set /a buildcnt += 1
-			)
 		)
 	)
 )
@@ -54,9 +48,8 @@ for %%f in (%path%) do (
 	set files[!x!].name=%%~nxf
 	set files[!x!].path=%%~ff
 	
-	call :jdate %%~tf
-	set files[!x!].fdate=!jdate!
-	set files[!x!].ftime=!jtime!
+	call :datetime %%~tf
+	set files[!x!].fdatetime=!datetime!
 )
 set path=%~1*
 for /D %%d in (%path%) do (
@@ -64,26 +57,16 @@ for /D %%d in (%path%) do (
 )
 exit /b
 
-:jdate
+:datetime
 set date=%1
+set yyyy=%date:~6,4%
 set mm=%date:~0,2%
 set dd=%date:~3,2%
-set /a yyyy= %date:~6,4% + 4800
-if %mm:~0,1% equ 0 set mm=%mm:~1%
-if %dd:~0,1% equ 0 set dd=%dd:~1%
 
-set /a month1 = ( %mm% - 14 ) / 12
-set /a year1 = %yyyy% + 4800
-set /a jdate = 1461 * ( %year1% + %month1% ) / 4 + 367 * ( %mm% - 2 -12 * %month1% ) / 12 - ( 3 * ( ( %year1% + %month1% + 100 ) / 100 ) ) / 4 + %dd% - 32075
-set month1=
-set year1=
-
-set tt=%2
-set hh=%tt:~0,2%
-set mn=%tt:~3,2%
-if %hh% equ 12 set /a hh = 00
-if %3 equ PM (
-	set /a hh = hh + 12
-)
-set jtime=%hh%%mn%
+set time=%2
+set hh=%time:~0,2%
+set mn=%time:~3,2%
+if %hh% equ 12 set hh=00
+if %3 equ PM set /a hh = hh + 12
+set datetime=%yyyy%%mm%%dd%%hh%%mn%
 exit /b

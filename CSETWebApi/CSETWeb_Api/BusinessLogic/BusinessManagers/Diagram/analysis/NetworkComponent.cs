@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
@@ -8,15 +9,57 @@ namespace CSETWeb_Api.BusinessManagers
 {
     public class NetworkComponent : NetworkNode
     {
-        public List<NetworkComponent> Connections { get; set; }
+        public List<NetworkComponent> Connections { get; set; }        
         public bool IsUnidirectional {
             get
             {
-                return (this.ComponentType == "Unidirectional Device");
+                return string.Equals(this.ComponentType, "Unidirectional Device", StringComparison.OrdinalIgnoreCase);
             }
         }
 
         public NetworkZone Zone { get; internal set; }
+        public bool IsFirewall { get
+            {
+                return string.Equals(this.ComponentType, "Firewall", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        public bool IsIDSOrIPS {
+            get
+            {
+                //TODO if this is an MSC
+                //look to see if the MSC contains 
+                //an ips or ids
+                return string.Equals(this.ComponentType, Constants.IDS_TYPE, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(this.ComponentType, Constants.IPS_TYPE, StringComparison.OrdinalIgnoreCase);
+
+            }
+        }
+
+        public bool IsFirewallUnidirectional {
+            get
+            {
+                return IsFirewall || IsUnidirectional;
+            }
+        }
+
+        public bool IsLinkConnector {
+            get
+            {
+                return string.Equals(this.ComponentType, Constants.CONNECTOR_TYPE, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        public bool IsVLAN
+        {
+            get
+            {
+                return string.Equals(this.ComponentType, Constants.VLAN_ROUTER, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(this.ComponentType, Constants.VLAN_SWITTCH, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        public bool IsPartnerVendorOrWeb { get; internal set; }
 
         public NetworkComponent()
         {
@@ -58,6 +101,12 @@ namespace CSETWeb_Api.BusinessManagers
                     break;
 
             }
+        }
+
+        public bool IsNotComponentTypes(HashSet<string> types)
+        {
+            //I am concerned about this being case sensitive
+            return !types.Contains(this.ComponentType);
         }
     }
 }

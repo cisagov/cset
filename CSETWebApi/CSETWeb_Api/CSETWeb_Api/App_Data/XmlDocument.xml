@@ -781,6 +781,57 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetAllSymbols">
+            <summary>
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetComponents">
+            <summary>
+            Returns list of diagram components
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetZones">
+            <summary>
+            Returns list of diagram zones
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetLinks">
+            <summary>
+            Returns list of diagram lines
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetShapes">
+            <summary>
+            Returns list of diagram shapes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTexts">
+            <summary>
+            Returns list of diagram shapes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetExcelExportDiagram">
+            <summary>
+            Generates an Excel spreadsheet with a row for every assessment that
+            the current user has access to that uses the ACET standard.
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTemplates">
+            <summary>
+            get cset diagram templates
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExport(System.String)">
             <summary>
             
@@ -922,6 +973,13 @@
             </summary>
             <param name="Answer_Id"></param>
             <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.SaveComponentOverride(System.String,System.Boolean)">
+            <summary>
+            this will explode the provided guid and 
+            </summary>
+            <param name="guid"></param>
+            <param name="ShouldSave">true means explode and save false is delete these questions</param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.RenameDocument(System.Int32,System.String)">
             <summary>

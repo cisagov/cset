@@ -487,7 +487,7 @@ Menus.prototype.init = function()
 	})));
 	this.put('extras', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
-		this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-', 'editDiagram', 'diagramInventory']);
+		this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-', 'editDiagram']);
 	})));
 	this.put('help', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
@@ -946,44 +946,35 @@ Menus.prototype.toggleStyle = function(key, defaultValue)
 /**
  * Creates the keyboard event handler for the current graph and history.
  */
-Menus.prototype.addMenuItem = function(menu, key, parent, trigger, sprite, label)
-{
-	var action = this.editorUi.actions.get(key);
+Menus.prototype.addMenuItem = function (menu, key, parent, trigger, sprite, label) {
+    let item;
+    const action = this.editorUi.actions.get(key);
+    if (action && (menu.showDisabled || action.isEnabled()) && action.visible) {
+        item = menu.addItem(label || action.label, null, function () {
+            action.funct(trigger);
+        }, parent, sprite, action.isEnabled());
 
-	if (action != null && (menu.showDisabled || action.isEnabled()) && action.visible)
-	{
-		var item = menu.addItem(label || action.label, null, function()
-		{
-			action.funct(trigger);
-		}, parent, sprite, action.isEnabled());
-		
-		// Adds checkmark image
-		if (action.toggleAction && action.isSelected())
-		{
-			menu.addCheckmark(item, Editor.checkmarkImage);
-		}
+        if (action.toggleAction && action.isSelected()) {
+            menu.addCheckmark(item, Editor.checkmarkImage);
+        }
 
-		this.addShortcut(item, action);
-		
-		return item;
-	}
-	
-	return null;
+        this.addShortcut(item, action);
+    }
+    return item;
 };
 
 /**
  * Adds a checkmark to the given menuitem.
  */
-Menus.prototype.addShortcut = function(item, action)
-{
-	if (action.shortcut != null)
-	{
-		var td = item.firstChild.nextSibling.nextSibling;
-		var span = document.createElement('span');
-		span.style.color = 'gray';
-		mxUtils.write(span, action.shortcut);
-		td.appendChild(span);
-	}
+Menus.prototype.addShortcut = function (item, action) {
+    if (action.shortcut) {
+        const span = document.createElement('span');
+        span.style.color = 'gray';
+        mxUtils.write(span, action.shortcut);
+
+        const td = item.firstChild.nextSibling.nextSibling;
+        td.appendChild(span);
+    }
 };
 
 /**

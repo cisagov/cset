@@ -54,86 +54,79 @@
 	};
 
 	var menusInit = Menus.prototype.init;
-	Menus.prototype.init = function()
-    {
+    Menus.prototype.init = function () {
         // CSET will not display certain menu items.
-        var CSET = false;
+        const CSET = false;
 
-		menusInit.apply(this, arguments);
-		var editorUi = this.editorUi;
-		var graph = editorUi.editor.graph;
-		var isGraphEnabled = mxUtils.bind(graph, graph.isEnabled);
-		var googleEnabled = ((urlParams['embed'] != '1' && urlParams['gapi'] != '0') ||
-				(urlParams['embed'] == '1' && urlParams['gapi'] == '1')) && mxClient.IS_SVG &&
-				isLocalStorage && (document.documentMode == null || document.documentMode >= 10);
-		var dropboxEnabled = ((urlParams['embed'] != '1' && urlParams['db'] != '0') || (urlParams['embed'] == '1' && urlParams['db'] == '1')) &&
-			mxClient.IS_SVG && (document.documentMode == null || document.documentMode > 9);
-		var oneDriveEnabled = (window.location.hostname == 'www.draw.io' || window.location.hostname == 'test.draw.io' ||
-				window.location.hostname == 'drive.draw.io' || window.location.hostname == 'legacy.draw.io') &&
-				(((urlParams['embed'] != '1' && urlParams['od'] != '0') || (urlParams['embed'] == '1' &&
-				urlParams['od'] == '1')) && !navigator.userAgent.match(/(iPad|iPhone|iPod)/g) &&
-				(navigator.userAgent.indexOf('MSIE') < 0 || document.documentMode >= 10));
-		var trelloEnabled = ((urlParams['embed'] != '1' && urlParams['tr'] != '0') || (urlParams['embed'] == '1' && urlParams['tr'] == '1')) &&
-			mxClient.IS_SVG && (document.documentMode == null || document.documentMode > 9);
+        menusInit.apply(this, arguments);
+        const editorUi = this.editorUi;
+        const graph = editorUi.editor.graph;
+        const isGraphEnabled = mxUtils.bind(graph, graph.isEnabled);
+        const googleEnabled = (
+            (urlParams.embed !== '1' && urlParams.gapi !== '0') || (urlParams.embed === '1' && urlParams.gapi === '1')
+        ) && mxClient.IS_SVG && isLocalStorage && (!document.documentMode || document.documentMode > 9);
+        const dropboxEnabled = (
+            (urlParams.embed !== '1' && urlParams.db !== '0') || (urlParams.embed === '1' && urlParams.db === '1')
+        ) && mxClient.IS_SVG && (!document.documentMode || document.documentMode > 9);
+        const oneDriveEnabled = (
+            window.location.hostname === 'www.draw.io' || window.location.hostname === 'test.draw.io' ||
+            window.location.hostname === 'drive.draw.io' || window.location.hostname === 'legacy.draw.io'
+        ) && ((
+            (urlParams.embed !== '1' && urlParams.od !== '0') || (urlParams.embed === '1' && urlParams.od === '1')
+        ) && !navigator.userAgent.match(/(iPad|iPhone|iPod)/g) &&
+            (navigator.userAgent.indexOf('MSIE') < 0 || document.documentMode > 9));
+        const trelloEnabled = ((urlParams.embed !== '1' && urlParams.tr !== '0') || (urlParams.embed === '1' && urlParams.tr === '1')) &&
+            mxClient.IS_SVG && (document.documentMode == null || document.documentMode > 9);
 
-		if (!mxClient.IS_SVG && !editorUi.isOffline())
-		{
-			var img = new Image();
-			img.src = IMAGE_PATH + '/help.png';
-		}
+        if (!mxClient.IS_SVG && !editorUi.isOffline()) {
+            const img = new Image();
+            img.src = IMAGE_PATH + '/help.png';
+        }
 		
-		editorUi.actions.addAction('new...', function()
-        {
-			var compact = editorUi.isOffline();
-			var dlg = new NewDialog(editorUi, compact);
+        editorUi.actions.addAction('new...', function () {
+            const compact = editorUi.isOffline();
+            const dlg = new NewDialog(editorUi, { compact });
+            editorUi.showDialog(dlg.container, compact ? 350 : 620, compact ? 70 : 440, true, true, function (cancel) {
+                if (cancel && !editorUi.getCurrentFile()) {
+                    editorUi.showSplash();
+                }
+            });
+            dlg.init();
+        });
 
-			editorUi.showDialog(dlg.container, (compact) ? 350 : 620, (compact) ? 70 : 440, true, true, function(cancel)
-			{
-				if (cancel && editorUi.getCurrentFile() == null)
-				{
-					editorUi.showSplash();
-				}
-			});
-			
-			dlg.init();
-		});
+        editorUi.actions.put('exportSvg', new Action(mxResources.get('formatSvg') + '...', function () {
+            editorUi.showExportDialog(mxResources.get('formatSvg'), true, mxResources.get('export'),
+                'https://support.draw.io/display/DO/Exporting+Files',
+                mxUtils.bind(this, function (scale, transparentBackground, ignoreSelection, addShadow,
+                    editable, embedImages, border, cropImage, currentPage, linkTarget) {
+                    var val = parseInt(scale);
 
-		editorUi.actions.put('exportSvg', new Action(mxResources.get('formatSvg') + '...', function()
-		{
-			editorUi.showExportDialog(mxResources.get('formatSvg'), true, mxResources.get('export'),
-				'https://support.draw.io/display/DO/Exporting+Files',
-				mxUtils.bind(this, function(scale, transparentBackground, ignoreSelection, addShadow,
-					editable, embedImages, border, cropImage, currentPage, linkTarget)
-				{
-					var val = parseInt(scale);
-					
-					if (!isNaN(val) && val > 0)
-					{
-					   	editorUi.exportSvg(val / 100, transparentBackground, ignoreSelection, addShadow,
-					   		editable, embedImages, border, !cropImage, currentPage, linkTarget);
-					}
-				}), true, null, 'svg');
-		}));
+                    if (!isNaN(val) && val > 0) {
+                        editorUi.exportSvg(val / 100, transparentBackground, ignoreSelection, addShadow,
+                            editable, embedImages, border, !cropImage, currentPage, linkTarget);
+                    }
+                }), true, null, 'svg');
+        }));
 		
-		editorUi.actions.put('insertTemplate', new Action(mxResources.get('template') + '...', function()
-		{
-			var dlg = new NewDialog(editorUi, null, false, function(xml)
-			{
-				editorUi.hideDialog();
-				
-				if (xml != null)
-				{
-					var insertPoint = editorUi.editor.graph.getFreeInsertPoint();
-					graph.setSelectionCells(editorUi.importXml(xml,
-						Math.max(insertPoint.x, 20),
-						Math.max(insertPoint.y, 20), true));
-					graph.scrollCellToVisible(graph.getSelectionCell());
-				}
-			}, null, null, null, null, null, null, null, null, null, null,
-				false, mxResources.get('insert'));
+        editorUi.actions.put('insertTemplate', new Action(mxResources.get('template') + '...', function () {
+            var dlg = new NewDialog(editorUi, {
+                showName: false,
+                callback: function (xml) {
+                    editorUi.hideDialog();
+                    if (xml) {
+                        const insertPoint = editorUi.editor.graph.getFreeInsertPoint();
+                        graph.setSelectionCells(editorUi.importXml(xml,
+                            Math.max(insertPoint.x, 20),
+                            Math.max(insertPoint.y, 20), true));
+                        graph.scrollCellToVisible(graph.getSelectionCell());
+                    }
+                },
+                showImport: false,
+                createButtonLabel: mxResources.get('insert')
+            });
 
-			editorUi.showDialog(dlg.container, 620, 440, true, true);
-		})).isEnabled = isGraphEnabled;
+            editorUi.showDialog(dlg.container, 620, 440, true, true);
+        })).isEnabled = isGraphEnabled;
 		
 		editorUi.actions.put('exportXml', new Action(mxResources.get('formatXml') + '...', function()
 		{
@@ -1414,9 +1407,7 @@
 			}
         });
 
-        editorUi.actions.addAction('diagramInventory...', function () {
-            editorUi.openLink('../../../../Documents/htmlhelp/index.htm');
-        });
+        
 		
 		editorUi.actions.put('embedHtml', new Action(mxResources.get('html') + '...', function()
 		{
@@ -2966,7 +2957,7 @@
 				//this.addMenuItems(menu, ['autosave'], parent);
 			}
 
-			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram', 'diagramInventory'], parent);
+			this.addMenuItems(menu, ['-', 'createShape', 'editDiagram'], parent);
 
 			menu.addSeparator(parent);
 			

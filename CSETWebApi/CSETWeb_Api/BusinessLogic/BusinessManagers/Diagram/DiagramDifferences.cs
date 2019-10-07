@@ -13,7 +13,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     {
         public Dictionary<Guid,NetworkComponent> AddedNodes { get; set; }
         public Dictionary<Guid,NetworkComponent> DeletedNodes { get; set; }
-        public Dictionary<string, NetworkLayer> AddedLayers { get; set; }
+        public Dictionary<string, NetworkLayer> AddedContainers { get; set; }
         public Dictionary<string, NetworkZone> AddedZones { get; set; }
         public Dictionary<string, NetworkLayer> DeletedLayers { get; set; }
         public Dictionary<string, NetworkZone> DeletedZones { get; set; }
@@ -34,7 +34,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             
             this.AddedNodes = lookupValue(newDiagram.NetworkComponents, oldDiagram.NetworkComponents);
             this.DeletedNodes = lookupValue(oldDiagram.NetworkComponents, newDiagram.NetworkComponents);
-            this.AddedLayers = processLayers(newDiagram.Layers,oldDiagram.Layers);
+            this.AddedContainers = processLayers(newDiagram.Layers,oldDiagram.Layers);
             this.DeletedLayers = processLayers(oldDiagram.Layers, newDiagram.Layers);
             this.AddedZones = processZones(newDiagram.Zones, oldDiagram.Zones);
             this.DeletedZones = processZones(oldDiagram.Zones, newDiagram.Zones);

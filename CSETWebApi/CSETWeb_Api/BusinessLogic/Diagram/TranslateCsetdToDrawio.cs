@@ -50,11 +50,9 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
 
         /// <summary>
-        /// Indicates the filename that corresponds to a component long name.
+        /// Store the properties we know about each symbol.
         /// </summary>
-        Dictionary<string, string> componentSymbolFilenames = new Dictionary<string, string>();
-
-
+        List<COMPONENT_SYMBOLS> symbols = null;
         #endregion
 
         /// <summary>
@@ -97,7 +95,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
             AssignToZones();
 
 
-            BuildConnectors();
+            BuildEdges();
 
 
             return xDrawio;
@@ -159,7 +157,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                     // add space for readability
                     zoneType = "External DMZ";
                 }
-                xObject.SetAttribute("zoneType", zoneType);
+                xObject.SetAttribute("ZoneType", zoneType);
 
                 xObject.SetAttribute("zone", "1");
 
@@ -294,6 +292,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
             foreach (XmlNode component in componentList)
             {
+                var componentXml = (XmlElement)component;
                 // map the IDs
                 string oldID = ChildValue(component, "c:id");
                 string newID = GetID(oldID);
@@ -304,6 +303,11 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xObject.SetAttribute("id", newID);
                 xObject.SetAttribute("label", ChildValue(component, "c:label/c:label"));
                 xObject.SetAttribute("ComponentGuid", Guid.NewGuid().ToString());
+                xObject.SetAttribute("HasUniqueQuestions", componentXml.GetAttribute("hasuniquequestions"));
+                xObject.SetAttribute("IPAddress", ((XmlElement)component).HasAttribute("ipaddress") ? componentXml.GetAttribute("ipaddress") : string.Empty);
+                xObject.SetAttribute("Description", ((XmlElement)component).HasAttribute("description") ? componentXml.GetAttribute("description") : string.Empty);
+                xObject.SetAttribute("Criticality", ((XmlElement)component).HasAttribute("criticality") ? componentXml.GetAttribute("criticality") : string.Empty);
+                xObject.SetAttribute("HostName", ((XmlElement)component).HasAttribute("hostname") ? componentXml.GetAttribute("hostname") : string.Empty);
 
 
                 var xComponent = xDrawio.CreateElement("mxCell");
@@ -335,15 +339,29 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 var xGeometry = xDrawio.CreateElement("mxGeometry");
                 xComponent.AppendChild(xGeometry);
                 xGeometry.SetAttribute("as", "geometry");
-                // Most width and height are coming in as 72 - shrink a bit
-                string v = ChildValue(component, "c:width");
-                xGeometry.SetAttribute("width", ConvertObjSize(v));
-                v = ChildValue(component, "c:height");
-                xGeometry.SetAttribute("height", ConvertObjSize(v));
-                v = ChildValue(component, "c:position/c:x");
-                xGeometry.SetAttribute("x", v);
-                v = ChildValue(component, "c:position/c:y");
-                xGeometry.SetAttribute("y", v);
+
+
+                int.TryParse(ChildValue(component, "c:width"), out int width);
+                int.TryParse(ChildValue(component, "c:height"), out int height);
+                var symbol = symbols.Where(s => s.Diagram_Type_Xml == assetName).FirstOrDefault();
+                if (symbol != null)
+                {
+                    width = symbol.Width;
+                    height = symbol.Height;
+                }
+
+                // Prevent any 0 pixel dimensions just in case
+                width = (width > 0) ? width : 60;
+                height = (height > 0) ? height : 60;
+
+                xGeometry.SetAttribute("width", width.ToString());
+                xGeometry.SetAttribute("height", height.ToString());
+
+
+                string x = ChildValue(component, "c:position/c:x");
+                xGeometry.SetAttribute("x", x);
+                string y = ChildValue(component, "c:position/c:y");
+                xGeometry.SetAttribute("y", y);
             }
         }
 
@@ -516,57 +534,56 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
         /// <summary>
         /// TODO:  
-        ///  - Watch for connectors that don't have a component on both ends.  Don't assume the existence nodeId1 or nodeId2.
+        ///  - Watch for edges that don't have a component on both ends.  Don't assume the existence nodeId1 or nodeId2.
         ///  - For those, look at headpoint and tailpoint coordinates.
         ///  - Arrow head styles, color, thickness, etc.
         /// </summary>
         /// <param name="xRoot"></param>
-        private void BuildConnectors()
+        private void BuildEdges()
         {
-            // connectors
-            XmlNodeList connectorList = xCsetd.SelectNodes("//c:link", nsmgr);
-            foreach (XmlNode connector in connectorList)
+            XmlNodeList edgeList = xCsetd.SelectNodes("//c:link", nsmgr);
+            foreach (XmlNode edge in edgeList)
             {
                 // map the IDs
-                string oldID = ChildValue(connector, "c:id");
+                string oldID = ChildValue(edge, "c:id");
                 string newID = GetID(oldID);
 
-                var xConnector = xDrawio.CreateElement("mxCell");
-                xRoot.AppendChild(xConnector);
-                xConnector.SetAttribute("id", newID);
-                xConnector.SetAttribute("edge", "1");
+                var xEdge = xDrawio.CreateElement("mxCell");
+                xRoot.AppendChild(xEdge);
+                xEdge.SetAttribute("id", newID);
+                xEdge.SetAttribute("edge", "1");
 
 
                 // style
                 var styleString = "rounded=0;orthogonalLoop=1;jettySize=auto;html=1;";
-                var hex = GetColor(connector, "c:linecolor");
+                var hex = GetColor(edge, "c:linecolor");
                 styleString += "strokeColor=#" + hex + ";";
 
                 // always seems to be exported as '1', regardless of width in 8.1
-                styleString += "strokeWidth=" + ChildValue(connector, "c:linethickness") + ";";
+                styleString += "strokeWidth=" + ChildValue(edge, "c:linethickness") + ";";
 
                 styleString += "endArrow=none;";
 
-                xConnector.SetAttribute("style", styleString);
+                xEdge.SetAttribute("style", styleString);
 
 
                 // geometry
                 var xGeometry = xDrawio.CreateElement("mxGeometry");
                 xGeometry.SetAttribute("relative", "1");
                 xGeometry.SetAttribute("as", "geometry");
-                xConnector.AppendChild(xGeometry);
+                xEdge.AppendChild(xGeometry);
 
 
                 // Hook up/position the ends.  Note that CSET 8.1 may not export correct coordinates for unattached ends.
-                var tailObjectID = ChildValue(connector, "c:nodeId1");
+                var tailObjectID = ChildValue(edge, "c:nodeId1");
                 if (tailObjectID != null)
                 {
-                    xConnector.SetAttribute("source", mapIDs[tailObjectID]);
+                    xEdge.SetAttribute("source", mapIDs[tailObjectID]);
                 }
                 else
                 {
-                    var x = ChildValue(connector, "c:tailpoint/c:x");
-                    var y = ChildValue(connector, "c:tailpoint/c:y");
+                    var x = ChildValue(edge, "c:tailpoint/c:x");
+                    var y = ChildValue(edge, "c:tailpoint/c:y");
                     var xPoint = xDrawio.CreateElement("mxPoint");
                     xPoint.SetAttribute("as", "sourcePoint");
                     xPoint.SetAttribute("x", x);
@@ -574,15 +591,15 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                     xGeometry.AppendChild(xPoint);
                 }
 
-                var headObjectID = ChildValue(connector, "c:nodeId2");
+                var headObjectID = ChildValue(edge, "c:nodeId2");
                 if (headObjectID != null)
                 {
-                    xConnector.SetAttribute("target", mapIDs[headObjectID]);
+                    xEdge.SetAttribute("target", mapIDs[headObjectID]);
                 }
                 else
                 {
-                    var x = ChildValue(connector, "c:headpoint/c:x");
-                    var y = ChildValue(connector, "c:headpoint/c:y");
+                    var x = ChildValue(edge, "c:headpoint/c:x");
+                    var y = ChildValue(edge, "c:headpoint/c:y");
                     var xPoint = xDrawio.CreateElement("mxPoint");
                     xPoint.SetAttribute("as", "targetPoint");
                     xPoint.SetAttribute("x", x);
@@ -592,25 +609,25 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
 
                 // determine the parent layer
-                var layerName = ChildValue(connector, "c:layername");
+                var layerName = ChildValue(edge, "c:layername");
                 var newLayerID = xDrawio.SelectSingleNode(string.Format("//mxCell[@value='{0}']", layerName)).Attributes["id"].InnerText;
-                xConnector.SetAttribute("parent", newLayerID);
+                xEdge.SetAttribute("parent", newLayerID);
 
-                // However ... if both ends' vertices have the same parent, then our connector should have that parent.
-                // This assigns the connector to a zone that both vertices share.
+                // However ... if both ends' vertices have the same parent, then our edge should have that parent.
+                // This assigns the edge to a zone that both vertices share.
                 try
                 {
-                    var mySource = xRoot.SelectSingleNode("//*[@id=" + xConnector.Attributes["source"].InnerText + "]");
-                    var myTarget = xRoot.SelectSingleNode("//*[@id=" + xConnector.Attributes["target"].InnerText + "]");
+                    var mySource = xRoot.SelectSingleNode("//*[@id=" + xEdge.Attributes["source"].InnerText + "]");
+                    var myTarget = xRoot.SelectSingleNode("//*[@id=" + xEdge.Attributes["target"].InnerText + "]");
 
                     if (mySource.ChildNodes[0].Attributes["parent"].InnerText == myTarget.ChildNodes[0].Attributes["parent"].InnerText)
                     {
-                        xConnector.SetAttribute("parent", mySource.ChildNodes[0].Attributes["parent"].InnerText);
+                        xEdge.SetAttribute("parent", mySource.ChildNodes[0].Attributes["parent"].InnerText);
                     }
                 }
                 catch (Exception exc)
                 {
-                    // leave the connector/edge alone
+                    // leave the edge alone
                 }
             }
         }
@@ -622,14 +639,9 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// </summary>
         private void InitializeSymbolFilenames()
         {
-            componentSymbolFilenames.Clear();
-
             using (CSET_Context db = new CSET_Context())
             {
-                foreach (var s in db.COMPONENT_SYMBOLS.ToList())
-                {
-                    componentSymbolFilenames.Add(s.Diagram_Type_Xml, s.File_Name);
-                }
+                symbols = db.COMPONENT_SYMBOLS.ToList();
             }
         }
 
@@ -642,8 +654,8 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// <returns></returns>
         private string GetImagePath(string assetName)
         {
-            var imgName = componentSymbolFilenames[assetName];
-            return string.Format("image;image=img/cset/{0};", imgName);
+            var symbol = symbols.Where(s => s.Diagram_Type_Xml == assetName).FirstOrDefault();
+            return string.Format("image;image=img/cset/{0};", symbol.File_Name);
         }
 
 

@@ -177,7 +177,8 @@ namespace CSETWeb_Api.BusinessManagers
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
                     MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
-                    SetName = dbRPlus.SetName
+                    SetName = dbRPlus.SetName,
+                    Is_Component = answer?.a.Is_Component??false
                 };
                 if (answer != null)
                 {

@@ -8,7 +8,7 @@ namespace DataLayerCore.Model
     public partial class ASSESSMENT_DIAGRAM_COMPONENTS
     {
         public int Assessment_Id { get; set; }
-        public Guid Component_Id { get; set; }
+        public Guid Component_Guid { get; set; }
         [StringLength(50)]
         public string Diagram_Component_Type { get; set; }
         [StringLength(200)]
@@ -17,6 +17,8 @@ namespace DataLayerCore.Model
         public string DrawIO_id { get; set; }
         public int? Zone_Id { get; set; }
         public int? Layer_Id { get; set; }
+        [StringLength(50)]
+        public string Parent_DrawIO_Id { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("ASSESSMENT_DIAGRAM_COMPONENTS")]

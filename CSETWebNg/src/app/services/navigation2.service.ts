@@ -26,7 +26,6 @@ export class Navigation2Service {
 
     //  Diagram
     { pageClass: 'diagram', path: 'assessment/{:id}/diagram'},
-    { pageClass: 'diagram-inventory', path: 'assessment/{:id}/diagram/inventory'},
 
     // Questions/Requirements/Statements
     { pageClass: 'questions', path: 'assessment/{:id}/questions' },

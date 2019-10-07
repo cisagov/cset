@@ -75,6 +75,7 @@ import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventor
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
   { path: 'importModule', component: ImportComponent },
+  { path: 'set-list', component: SetListComponent },
   {
     path: 'home',
     component: InitialComponent,
@@ -123,12 +124,12 @@ const appRoutes: Routes = [
         canActivateChild: [AssessGuard],
         children: [
           { path: 'info', component: DiagramInfoComponent },
-          { path:'inventory', component: DiagramInventoryComponent },
+          { path: 'inventory', component: DiagramInventoryComponent },
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: '**', redirectTo: 'info' }
         ]
       },
-     
+
       { path: 'questions', component: QuestionsComponent },
       {
         path: 'results',
