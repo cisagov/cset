@@ -25,10 +25,10 @@
     <span class="cset-icons-profile fs-base-6 mr-3"></span>
     <span>User Profile</span>
   </div>
-
+  
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <div class="pr-3">
-      <app-user-info [mode]="'edit'" (infoChange)="changeInfo($event)"></app-user-info>
+      <app-user-info [mode]="'edit'" [userModel]="model" (infoChange)="changeInfo($event)"></app-user-info>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">

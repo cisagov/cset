@@ -26,6 +26,7 @@ import { CreateUser } from '../models/user.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { EmailService } from '../services/email.service';
 import { SecurityQuestion } from './../models/reset-pass.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-user-info',
@@ -38,7 +39,7 @@ export class UserInfoComponent implements OnInit {
   @Input() submitted = false;
   @Output() infoChange = new EventEmitter<CreateUser>();
 
-  model: CreateUser = {};
+  @Input() userModel: CreateUser = {};
   SecurityQuestions: SecurityQuestion[];
 
   constructor(
@@ -53,9 +54,9 @@ export class UserInfoComponent implements OnInit {
     }
   }
 
-  send() {
-    this.infoChange.emit(this.model);
-  }
+  // send() {
+  //   this.infoChange.emit(this.model);
+  // }
 
   getSecurityList() {
     this.auth
@@ -72,14 +73,21 @@ export class UserInfoComponent implements OnInit {
     this.auth.getUserInfo()
       .subscribe(
         (data: CreateUser) => {
-          this.model = data;
+          this.userModel = data;
         },
         error => console.log('Error retrieving security questions: ' + error.message)
       );
   }
 
+  submit(myForm: NgForm) {
+    console.log(myForm);
+  }
+
   updateUserInfo() {
-    this.auth.editUser(this.model).subscribe(
+    this.submitted = true;
+    console.log();
+
+    this.auth.updateUser(this.userModel).subscribe(
       () => { },
       error => console.log('Error updating the user information' + error.message)
     );
