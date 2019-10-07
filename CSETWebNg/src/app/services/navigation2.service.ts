@@ -51,7 +51,8 @@ export class Navigation2Service {
     { pageClass: 'acetDashboard', path: 'assessment/{:id}/results/acetDashboard', condition: 'ACET' },
 
     { pageClass: 'overview', path: 'assessment/{:id}/results/overview' },
-    { pageClass: 'reports', path: 'assessment/{:id}/results/reports' }
+    { pageClass: 'reports', path: 'assessment/{:id}/results/reports' },
+    { pageClass: 'feedback', path: 'assessment/{:id}/results/analysis/feedback'}
   ];
 
   /**

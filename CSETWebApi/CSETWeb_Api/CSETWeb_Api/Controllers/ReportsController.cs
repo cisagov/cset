@@ -55,7 +55,7 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
-        [HttpGet]
+    [HttpGet]
         [Route("api/reports/discoveries")]
         public BasicReportData getDiscoveries()
         {
@@ -88,6 +88,7 @@ namespace CSETWeb_Api.Controllers
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();            
             return data;
         }
+
 
         [HttpGet]
         [Route("api/reports/detail")]
@@ -127,6 +128,7 @@ namespace CSETWeb_Api.Controllers
                 return mode;
             }
         }
+
 
         private void SetMode(string mode)
         { 

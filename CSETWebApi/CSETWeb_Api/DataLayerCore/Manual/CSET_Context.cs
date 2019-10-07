@@ -167,6 +167,21 @@ namespace DataLayerCore.Model
         }
 
 
+        public virtual IList<usp_GetQuestionsWithFeedback> usp_GetQuestionsWithFeedbacks(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("sql parameters may not be null");
+
+            IList<usp_GetQuestionsWithFeedback> rval = null;
+            this.LoadStoredProc("usp_GetQuestionsWithFeedBack")
+                .WithSqlParam("assessment_id", assessment_id)
+                .ExecuteStoredProc((handler) =>
+                {
+                    rval = handler.ReadToList<usp_GetQuestionsWithFeedback>();
+                });
+            return rval;
+        }
+
         public virtual IList<usp_MaturityDetailsCalculations_Result> usp_MaturityDetailsCalculations(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
