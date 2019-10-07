@@ -36,6 +36,7 @@ import { AuthenticationService } from './../../../services/authentication.servic
 import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 
 @Component({
   selector: 'app-question-extras',
@@ -76,6 +77,13 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
 
+  showOverrideDialog(componentType):void{
+    const dialogRef = this.dialog.open(ComponentOverrideComponent, {
+      width: '600px',
+      height: '600px',
+      data: {componentType: componentType}
+    });
+  }
   /**
  * Shows/hides the "expand" section.
  * @param q
