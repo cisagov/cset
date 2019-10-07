@@ -77,10 +77,10 @@ export class AddQuestionComponent implements OnInit {
    */
   addCustomQuestion() {
     // validate that they typed something
-    this.customQuestionText = this.customQuestionText.trim();
+    this.customQuestionText = this.customQuestionText && this.customQuestionText.trim();
 
     this.isCustomQuestionEmpty = (this.customQuestionText.length === 0);
-    this.isCatOrSubcatEmpty = this.selectedGHId === 0 || this.subcatText.trim().length === 0;
+    this.isCatOrSubcatEmpty = this.selectedGHId.toString() === "0" || (!this.subcatText || this.subcatText.trim().length === 0);
     this.isSalSelectionEmpty = !this.customSalL && !this.customSalM && !this.customSalH && !this.customSalVH;
     this.isDupeQuestion = false;
 
