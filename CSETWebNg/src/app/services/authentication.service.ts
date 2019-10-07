@@ -112,7 +112,7 @@ export class AuthenticationService {
     login(email: string, password: string) {
         sessionStorage.clear();
         sessionStorage.setItem('email', email);
-      
+
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(
                 {
@@ -202,7 +202,7 @@ export class AuthenticationService {
         return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), headers);
     }
 
-    editUser(data: CreateUser): Observable<CreateUser> {
+    updateUser(data: CreateUser): Observable<CreateUser> {
         return this.http.post(this.apiUrl + 'contacts/UpdateUser', data, headers);
     }
 
