@@ -53,6 +53,46 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/analysis/Feedback")]
+        public FullFeedbackText getFeedback()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            RequirementsManager rm = new RequirementsManager(assessmentId);
+            FullFeedbackText FeedbackResult = new FullFeedbackText();
+
+            string AssessmentMode = GetAssessmentMode(assessmentId);
+
+            if (AssessmentMode == "Q")
+            {
+                using (CSET_Context context = new CSET_Context())
+                {
+                    var QuestionsWithFeedbackList = context.usp_GetQuestionsWithFeedbacks(assessmentId).ToList();
+                    bool FaaMail = QuestionsWithFeedbackList.Any(q => q.SetName.Contains("FAA_MAINT"));
+                    string FaaEmail = "FAAPEDModule@faa.gov";
+                    string DHSEmail = "csetPEDFeedback@dhs.gov";
+                    FeedbackResult.FeedbackText = "Please email to: ";
+                    if (FaaMail) FeedbackResult.FeedbackText += FaaEmail + ";   ";
+                    FeedbackResult.FeedbackText += DHSEmail + "\n\n\n";
+                    FeedbackResult.FeedbackText += "Dear PED Module Administrator: \n\n";
+                    FeedbackResult.FeedbackText += "The following comments were provided for each of the questions: \n\n";
+
+                    foreach (usp_GetQuestionsWithFeedback q in QuestionsWithFeedbackList)
+                    {
+                        q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementId, q.AnswerId, q.QuestionText);
+                        q.Feedback = rm.ResolveParameters(q.QuestionOrRequirementId, q.AnswerId, q.Feedback);
+                        FeedbackResult.FeedbackText += "Question #" + q.QuestionOrRequirementId + ". \n";
+                        FeedbackResult.FeedbackText += q.QuestionText + "\n\n";
+                        FeedbackResult.FeedbackText += "Users Feedback: \n" + q.Feedback + "\n\n\n";
+                    }
+
+                    return FeedbackResult;
+                }
+            }
+            return FeedbackResult;
+        }
+
+
 
         [HttpGet]
         [Route("api/analysis/dashboard")]
