@@ -19,20 +19,95 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-profile fs-base-6 mr-3"></span>
     <span>User Profile</span>
   </div>
-  
+
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="pr-3">
-      <app-user-info [mode]="'edit'" [userModel]="model" (infoChange)="changeInfo($event)"></app-user-info>
-    </div>
+    <form name="form" #userForm="ngForm" (ngSubmit)="save(userForm)">
+      <div class="pr-3">
+
+        <div class="form-group" [ngClass]="{ 'has-error': !firstName.valid }">
+          <label required for="firstName">First Name</label>
+          <input type="text" maxlength="150" class="form-control" id="firstName" name="firstName"
+            [(ngModel)]="model.FirstName" #firstName="ngModel" required />
+          <div *ngIf="!firstName.valid" class="alert alert-danger">First Name is required</div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': !lastName.valid }">
+          <label required for="lastName">Last Name</label>
+          <input type="text" maxlength="150" class="form-control" id="lastName" name="lastName"
+            [(ngModel)]="model.LastName" #lastName="ngModel" required />
+          <div *ngIf="!lastName.valid" class="alert alert-danger">Last Name is required</div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': (email?.errors?.notValidEmail || email?.errors?.required) }">
+          <label required for="email">Email</label>
+          <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail"
+            #email="ngModel" required appEmailValidator />
+          <div class="alert alert-danger" *ngIf="email?.errors">
+            <div *ngIf="email?.errors?.required">Email is required</div>
+            <div *ngIf="email?.errors?.notValidEmail">Not a valid email</div>
+          </div>
+        </div>
+
+        <div class="form-group"
+          [ngClass]="{ 'has-error': (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail) }">
+          <label required for="confirmEmail">Confirm Email</label>
+          <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail"
+            #confirmEmail="ngModel" required appEmailValidator appConfirmEqualValidator="email" />
+          <div class="alert alert-danger" *ngIf="confirmEmail?.errors">
+            <div *ngIf="confirmEmail?.errors?.required">Email is required</div>
+            <div *ngIf="confirmEmail?.errors?.notValidEmail">Not a valid email</div>
+            <div *ngIf="confirmEmail?.errors?.notEqual">Emails do not match</div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h4>Security Questions</h4>
+          <div class="fs-base mb-3">Providing security questions is optional but allows you to recover your password
+            should you forget it.
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="mb-1 fw-600" for="securityQuestion1">Security Question 1</label>
+              <select class="form-control" id="securityQuestion1" name="securityQuestion1"
+                [(ngModel)]="model.SecurityQuestion1">
+                <option *ngFor="let question of SecurityQuestions"
+                  [attr.selected]="question.SecurityQuestion === model.SecurityQuestion1">
+                  {{question.SecurityQuestion}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="mb-1 fw-600" for="SecurityAnswer1">Security Answer 1</label>
+              <input type="text" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1"
+                [(ngModel)]="model.SecurityAnswer1" placeholder="Answer">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="mb-1 fw-600" for="SecurityQuestion2">Security Question 2</label>
+              <input type="text" maxlength="250" class="form-control" id="SecurityQuestion2"
+                placeholder="Your own custom security question" name="SecurityQuestion2"
+                [(ngModel)]="model.SecurityQuestion2">
+            </div>
+            <div class="form-group col-md-6">
+              <label class="mb-1 fw-600" for="SecurityAnswer2">Security Answer 2</label>
+              <input type="text" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer"
+                name="SecurityAnswer2" [(ngModel)]="model.SecurityAnswer2">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+        <button class="m-0 btn btn-primary">Save</button>
+        <button class="m-0 btn btn-secondary" (click)="cancel()">Cancel</button>
+      </mat-dialog-actions>
+    </form>
   </mat-dialog-content>
-  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
-    <button class="m-0 btn btn-primary" (click)="save()">Save</button>
-    <button class="m-0 btn btn-secondary" (click)="cancel()">Cancel</button>
-  </mat-dialog-actions>
 </div>

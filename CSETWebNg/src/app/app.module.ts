@@ -128,7 +128,6 @@ import { NavigationService } from './services/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { UserInfoComponent } from './user-info/user-info.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
@@ -219,7 +218,6 @@ import { DiagramService } from './services/diagram.service';
         SalSimpleComponent,
         StandardsComponent,
         ResetPassComponent,
-        UserInfoComponent,
         EmailComponent,
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
