@@ -311,10 +311,12 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (item.GetType() == objectType)
                     {
+                       
                         var addLayerVisible = (mxGraphModelRootObject) item;
-                        var layerVisibility = layers.GetLastLayer(addLayerVisible.parent);
-                        addLayerVisible.visible = layerVisibility.visible;
-                        addLayerVisible.layerName = layerVisibility.layerName;
+                        string parentId = !string.IsNullOrEmpty(addLayerVisible.mxCell.parent) ? addLayerVisible.mxCell.parent : addLayerVisible.parent??"0";
+                        var layerVisibility = layers.GetLastLayer(parentId);
+                        addLayerVisible.visible = layerVisibility.visible??"true";
+                        addLayerVisible.layerName = layerVisibility.layerName??string.Empty;
                         
                         vertices.Add(addLayerVisible);
                     }
