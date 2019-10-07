@@ -29,6 +29,7 @@ import { SitesummaryComponent} from './sitesummary/sitesummary.component';
 import { DetailComponent } from './detail/detail.component';
 import { SecurityplanComponent } from './securityplan/securityplan.component';
 import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearouts.component';
+// import { FAAReportComponent} from './faareport/faareport.component';
 import { RedirectComponent } from './redirect/redirect.component';
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'securityplan', component: SecurityplanComponent },
   { path: 'detail', component: DetailComponent },
   { path: 'discoveries', component: DiscoveryTearoutsComponent },
+  // {path: 'faareport'. component: FAAReportComponent },
   { path: '**', component: RedirectComponent }
 ];
 

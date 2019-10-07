@@ -75,6 +75,7 @@ import { StandardsRankedComponent } from './assessment/results/analysis/standard
 import { StandardsResultsComponent } from './assessment/results/analysis/standards-results/standards-results.component';
 import { StandardsSummaryComponent } from './assessment/results/analysis/standards-summary/standards-summary.component';
 import { OverviewComponent } from './assessment/results/overview/overview.component';
+import { FeedbackComponent} from './assessment/results/analysis/feedback/feedback.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
 import { AboutComponent } from './dialogs/about/about.component';
@@ -265,6 +266,7 @@ import { DiagramService } from './services/diagram.service';
         ComponentsWarningsComponent,
         DashboardComponent,
         RankedQuestionsComponent,
+        FeedbackComponent,
         EnableProtectedComponent,
         TermsOfUseComponent,
         QuestionFiltersComponent,
