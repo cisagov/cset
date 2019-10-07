@@ -29,10 +29,10 @@ import { CreateUser } from '../../models/user.model';
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class EditUserComponent implements OnInit {
-  model: CreateUser = {};
+  userModel: CreateUser = {};
 
   constructor(private dialog: MatDialogRef<EditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -41,12 +41,15 @@ export class EditUserComponent implements OnInit {
   }
 
   changeInfo(info: CreateUser) {
-    this.model = info;
+    this.userModel = info;
   }
 
+
   save() {
-    if (this.model) {
-      this.dialog.close(this.model);
+    if (this.userModel
+      // && this.validationMessage.length === 0
+    ) {
+      this.dialog.close(this.userModel);
     }
   }
 

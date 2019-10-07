@@ -20,27 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<form name="form" (change)="send()" #UserInfoForm="ngForm">
+<form name="form" #userInfoForm="ngForm" (ngSubmit)="submit(userInfoForm)">
 
   <div class="form-group" [ngClass]="{ 'has-error': submitted && !firstName.valid }">
     <label required for="firstName">First Name</label>
-    <input type="text" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
+    <input type="text" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="userModel.FirstName" #firstName="ngModel"
       required />
     <div *ngIf="submitted && !firstName.valid" class="alert alert-danger">First Name is required</div>
   </div>
 
   <div class="form-group" [ngClass]="{ 'has-error': submitted && !lastName.valid }">
     <label required for="lastName">Last Name</label>
-    <input type="text" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
+    <input type="text" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="userModel.LastName" #lastName="ngModel"
       required />
     <div *ngIf="submitted && !lastName.valid" class="alert alert-danger">Last Name is required</div>
   </div>
 
   <div class="form-group" [ngClass]="{ 'has-error': submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
     <label required for="email">Email</label>
-    <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
+    <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="userModel.PrimaryEmail" #email="ngModel" required
       appEmailValidator />
-    <div class="alert alert-danger" *ngIf="submitted">
+    <div class="alert alert-danger" *ngIf="submitted && email?.errors">
       <div *ngIf="email?.errors?.required">Email is required</div>
       <div *ngIf="email?.errors?.notValidEmail">Not a valid email</div>
     </div>
@@ -48,9 +48,9 @@
 
   <div class="form-group" [ngClass]="{ 'has-error': submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
     <label required for="confirmEmail">Confirm Email</label>
-    <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
+    <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="userModel.ConfirmEmail" required
       #confirmEmail="ngModel" appConfirmEqualValidator="email" appEmailValidator />
-    <div class="alert alert-danger" *ngIf="submitted">
+    <div class="alert alert-danger" *ngIf="submitted && confirmEmail?.errors">
       <div *ngIf="confirmEmail?.errors?.required">Email is required</div>
       <div *ngIf="confirmEmail?.errors?.notValidEmail">Not a valid email</div>
       <div *ngIf="confirmEmail?.errors?.notEqual">Emails do not match</div>
@@ -67,13 +67,13 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label class="mb-1 fw-600" for="securityQuestion1">Security Question 1</label>
-          <select class="form-control" id="securityQuestion1" name="securityQuestion1" [(ngModel)]="model.SecurityQuestion1">
-            <option *ngFor="let question of SecurityQuestions" [attr.selected]="question.SecurityQuestion === model.SecurityQuestion1">{{question.SecurityQuestion}}</option>
+          <select class="form-control" id="securityQuestion1" name="securityQuestion1" [(ngModel)]="userModel.SecurityQuestion1">
+            <option *ngFor="let question of SecurityQuestions" [attr.selected]="question.SecurityQuestion === userModel.SecurityQuestion1">{{question.SecurityQuestion}}</option>
           </select>
         </div>
         <div class="form-group col-md-6">
           <label class="mb-1 fw-600" for="SecurityAnswer1">Security Answer 1</label>
-          <input type="text" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.SecurityAnswer1"
+          <input type="text" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="userModel.SecurityAnswer1"
             placeholder="Answer">
         </div>
       </div>
@@ -81,12 +81,12 @@
         <div class="form-group col-md-6">
           <label class="mb-1 fw-600" for="SecurityQuestion2">Security Question 2</label>
           <input type="text" maxlength="250" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
-            name="SecurityQuestion2" [(ngModel)]="model.SecurityQuestion2">
+            name="SecurityQuestion2" [(ngModel)]="userModel.SecurityQuestion2">
         </div>
         <div class="form-group col-md-6">
           <label class="mb-1 fw-600" for="SecurityAnswer2">Security Answer 2</label>
           <input type="text" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
-            [(ngModel)]="model.SecurityAnswer2">
+            [(ngModel)]="userModel.SecurityAnswer2">
         </div>
       </div>
     </form>
