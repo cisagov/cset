@@ -28,7 +28,7 @@ SOFTWARE.
 @import 'cset-font-styles.css';
 @import 'cset2-font-styles.css';
 
-* {
+*:not(font) {
   font-family: 'Roboto', sans-serif;
 }
 
@@ -199,7 +199,7 @@ label[required]::after {
 
 .footer-section-2 {
   color: $gray-50;
-  background-color: $secondary-color;
+  background-color: $primary-color;
   line-height: 2em;
 }
 
@@ -1765,6 +1765,17 @@ mat-sidenav {
   background-position: 50% 50%;
 }
 
+.component-override .icon2 {
+  display: inline-block;
+  font-size: 0;
+  width: 100px;
+  height: 25px;
+  margin: 0 auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
 
 // Email
 ///////////////////////////////////////////////////////////////////////
@@ -1922,6 +1933,40 @@ mat-sidenav {
   max-width: 300px;
 }
 
+// Component Override
+.component-override article {
+  //width: 75%;
+  margin-right:$spacer * 3;
+}
+.component-override article:nth-child(3)  {
+  margin-right: 0rem;
+}
+@media only screen and (max-width: 360px) {
+  .component-override article {
+    margin-right: 0rem;
+  }
+}
+
+.component-override hr {
+  border-top: 1px solid $gray-200;
+  width: 100%;
+  background-color: $gray-200;
+  margin-left: 0;
+}
+
+.component-override .homeland-security {
+  font-family: Joanna, 'Times New Roman', Times, serif;
+  font-size: 36px;
+}
+
+.component-override .nccic {
+  font-family: 'ITC Franklin Gothic', Arial, Times, serif;
+  font-size: 30px;
+}
+
+.component-override article {
+  max-width: 600px;
+}
 
 // Terms
 .terms-dialog {

@@ -16,5 +16,6 @@ namespace DataLayerCore.Model
         [Required]
         public bool? Is_Visible { get; set; }
         public string Diagram_Markup { get; set; }
+        public string Image_Source { get; set; }
     }
 }

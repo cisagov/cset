@@ -7,22 +7,31 @@ import { DiagramService } from '../../../../services/diagram.service';
   styleUrls: ['./components.component.scss']
 })
 export class ComponentsComponent implements OnInit {
-  components = [];
-  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layer', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visible'];
+  components: any;
+  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
   sal: any;
   criticality: any;
-  constructor(public diagrmSvc: DiagramService) {
+  constructor(public diagramSvc: DiagramService) {
 
    }
 
   ngOnInit() {
     // Summary Percent Compliance
-    this.diagrmSvc.getSymbols().subscribe((x:any) => {
+    this.diagramSvc.getAllSymbols().subscribe((x:any) => {
       this.assetTypes = x;
     });
-
+    this.getComponents();
   }
+
+  getComponents(){
+    this.diagramSvc.getDiagramComponents().subscribe((x:any) =>{
+      this.components = x;
+      console.log(x);
+    });
+  }
+
+  
 
 
 

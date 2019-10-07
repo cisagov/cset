@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DiagramService } from '../../../../services/diagram.service';
 
 @Component({
   selector: 'text',
@@ -8,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class TextComponent implements OnInit {
   texts = [];
   displayedColumns = ['label', 'layer']
-  constructor() { }
+  constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
+    this.getTexts();
   }
 
+  getTexts(){
+    this.diagramSvc.getDiagramText().subscribe((x:any) =>{
+      this.texts = x;
+      console.log(x)
+    });
+  }
+
+  
 }

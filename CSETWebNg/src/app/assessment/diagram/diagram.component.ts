@@ -11,8 +11,8 @@ import { ConfigService } from '../../services/config.service';
 })
 export class DiagramComponent implements OnInit {
 
-    msgDiagramExists = "Edit the network diagram";
-    msgNoDiagramExists = "Create a network diagram";
+    msgDiagramExists = 'Edit the network diagram';
+    msgNoDiagramExists = 'Create a network diagram';
     buttonText: string = this.msgNoDiagramExists;
 
     constructor(private router: Router,
@@ -27,7 +27,7 @@ export class DiagramComponent implements OnInit {
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.buttonText = resp ? this.msgDiagramExists : this.msgNoDiagramExists;
         });
-        this.assessSvc.currentTab = "diagram";
+        this.assessSvc.currentTab = 'diagram';
     }
 
     populateTree() {
@@ -36,15 +36,17 @@ export class DiagramComponent implements OnInit {
     }
 
     sendToDiagram() {
-        const jwt = sessionStorage.getItem("userToken");
+        const jwt = sessionStorage.getItem('userToken');
         const apiUrl = this.configSvc.apiUrl;
         let host = this.configSvc.apiUrl;
         if (host.endsWith('/api/')) {
             host = host.substr(0, host.length - 4);
         }
 
-        window.location.href = host + "diagram/src/main/webapp/index.html" +
-            "?j=" + jwt +
-            "&h=" + apiUrl, sessionStorage.getItem('assessmentId');
+        window.location.href = host + 'diagram/src/main/webapp/index.html' +
+            '?j=' + jwt +
+            '&h=' + apiUrl +
+            '&c=' + window.location.origin,
+            sessionStorage.getItem('assessmentId');
     }
 }

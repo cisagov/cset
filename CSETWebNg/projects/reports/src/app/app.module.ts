@@ -30,7 +30,6 @@ import { ExecutiveComponent } from './executive/executive.component';
 import { SitesummaryComponent } from './sitesummary/sitesummary.component';
 import { SecurityplanComponent } from './securityplan/securityplan.component';
 import { DetailComponent } from './detail/detail.component';
-// import { FeedbackComponent} from './faareport/faareport.component';
 import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearouts.component';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReportService } from './services/report.service';
@@ -54,6 +53,7 @@ import { MatDialogModule } from '@angular/material';
     ExecutiveComponent,
     SitesummaryComponent,
     SecurityplanComponent,
+    // FAAReportComponent,
     DetailComponent,
     FeedbackComponent,
     DiscoveryTearoutsComponent,
@@ -79,9 +79,9 @@ import { MatDialogModule } from '@angular/material';
     },
     AuthenticationService,
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: JwtInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
     },
     ReportService,
     AnalysisService,

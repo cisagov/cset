@@ -1250,25 +1250,20 @@ DrawioFile.prototype.installListeners = function()
  * Returns the location as a new object.
  * @type mx.Point
  */
-DrawioFile.prototype.addAllSavedStatus = function(status)
-{
-	if (this.ui.statusContainer != null && this.ui.getCurrentFile() == this)
-	{
-		status = (status != null) ? status : mxUtils.htmlEntities(mxResources.get(this.allChangesSavedKey));
-		this.ui.editor.setStatus('<div title="'+ status + '">' + status + '</div>');
-		var links = this.ui.statusContainer.getElementsByTagName('div');
-		
-		if (links.length > 0 && this.isRevisionHistorySupported())
-		{
-			links[0].style.cursor = 'pointer';
-			links[0].style.textDecoration = 'underline';
-			
-			mxEvent.addListener(links[0], 'click', mxUtils.bind(this, function()
-			{
-				this.ui.actions.get('revisionHistory').funct();
-			}));
-		}
-	}
+DrawioFile.prototype.addAllSavedStatus = function (status) {
+    if (this.ui.statusContainer && this.ui.getCurrentFile() === this) {
+        status = status || mxUtils.htmlEntities(mxResources.get(this.allChangesSavedKey));
+        this.ui.editor.setStatus(`<div title="${status}">${status}</div>`);
+        const links = this.ui.statusContainer.getElementsByTagName('div');
+
+        if (links[0] && this.isRevisionHistorySupported()) {
+            links[0].style.cursor = 'pointer';
+            links[0].style.textDecoration = 'underline';
+            mxEvent.addListener(links[0], 'click', mxUtils.bind(this, () => {
+                this.ui.actions.get('revisionHistory').funct();
+            }));
+        }
+    }
 };
 
 /**

@@ -165,8 +165,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public int Assessment_ID { get; set; }
         public int Answer_ID { get; set; }
         public bool Is_Requirement { get; set; }
-        public int Question_Or_Requirement_ID { get; set; }
-        public int Component_ID { get; set; }
+        public int Question_Or_Requirement_ID { get; set; }        
         public bool Mark_For_Review { get; set; }
         public string Comment { get; set; }
         public string Alternate_Justification { get; set; }

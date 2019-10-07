@@ -2570,886 +2570,463 @@ var ParseDialog = function(editorUi, title, defaultType)
 /**
  * Constructs a new dialog for creating files from templates.
  */
-var NewDialog = function(editorUi, compact, showName, callback, createOnly, cancelCallback,
-		leftHighlight, rightHighlight, rightHighlightBorder, itemPadding, templateFile,
-		recentDocsCallback, searchDocsCallback, openExtDocCallback, showImport, createButtonLabel, customTempCallback)
-{
-	showName = (showName != null) ? showName : true;
-	createOnly = (createOnly != null) ? createOnly : false;
-	leftHighlight = (leftHighlight != null) ? leftHighlight : '#ebf2f9';
-	rightHighlight = (rightHighlight != null) ? rightHighlight : '#e6eff8';
-	rightHighlightBorder = (rightHighlightBorder != null) ? rightHighlightBorder : '1px solid #ccd9ea';
-	templateFile = (templateFile != null) ? templateFile : EditorUi.templateFile;
-	
-	var outer = document.createElement('div');
-	outer.style.height = '100%';
-	
-	var header = document.createElement('div');
-	header.style.whiteSpace = 'nowrap';
-	header.style.height = '46px';
-	
-	if (showName)
-	{
-		outer.appendChild(header);
-	}
-	
-	var logo = document.createElement('img');
-	logo.setAttribute('border', '0');
-	logo.setAttribute('align', 'absmiddle');
-	logo.style.width = '40px';
-	logo.style.height = '40px';
-	logo.style.marginRight = '10px';
-	logo.style.paddingBottom = '4px';
-	
-	if (editorUi.mode == App.MODE_GOOGLE)
-	{
-		logo.src = IMAGE_PATH + '/google-drive-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_DROPBOX)
-	{
-		logo.src = IMAGE_PATH + '/dropbox-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_ONEDRIVE)
-	{
-		logo.src = IMAGE_PATH + '/onedrive-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_GITHUB)
-	{
-		logo.src = IMAGE_PATH + '/github-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_TRELLO)
-	{
-		logo.src = IMAGE_PATH + '/trello-logo.svg';
-	}
-	else if (editorUi.mode == App.MODE_BROWSER)
-	{
-		logo.src = IMAGE_PATH + '/osa_database.png';
-	}
-	else
-	{
-		logo.src = IMAGE_PATH + '/osa_drive-harddisk.png';
-	}
+var NewDialog = function (editorUi, opts) {
+    opts.showName = opts.hasOwnProperty('showName') ? opts.showName : true;
+    opts.createOnly = opts.createOnly || false;
+    opts.leftHighlight = opts.leftHighlight || '#ebf2f9';
+    opts.rightHighlight = opts.rightHighlight || '#e6eff8';
+    opts.rightHighlightBorder = opts.rightHighlightBorder || '1px solid #ccd9ea';
+    opts.templateFile = opts.templateFile || EditorUi.templateFile;
 
-	if (!compact && showName)
-	{
-		header.appendChild(logo);
-	}
-	
-	if (showName)
-	{
-		mxUtils.write(header, ((editorUi.mode == null || editorUi.mode == App.MODE_GOOGLE ||
-				editorUi.mode == App.MODE_BROWSER) ? mxResources.get('diagramName') : mxResources.get('filename')) + ':');
-	}
-	
-    var ext = '.drawio';
+    const outer = document.createElement('div');
+    outer.style.height = '100%';
 
-	if (editorUi.mode == App.MODE_GOOGLE && editorUi.drive != null)
-	{
-		ext = editorUi.drive.extension;
-	}
-	else if (editorUi.mode == App.MODE_DROPBOX && editorUi.dropbox != null)
-	{
-		ext = editorUi.dropbox.extension;
-	}
-	else if (editorUi.mode == App.MODE_ONEDRIVE && editorUi.oneDrive != null)
-	{
-		ext = editorUi.oneDrive.extension;
-	}
-	else if (editorUi.mode == App.MODE_GITHUB && editorUi.gitHub != null)
-	{
-		ext = editorUi.gitHub.extension;
-	}
-	else if (editorUi.mode == App.MODE_TRELLO && editorUi.trello != null)
-	{
-		ext = editorUi.trello.extension;
-	}
-	
-	var nameInput = document.createElement('input');
-	nameInput.setAttribute('value', editorUi.defaultFilename + ext);
-	nameInput.style.marginLeft = '10px';
-	nameInput.style.width = (compact) ? '220px' : '430px';
-	
-	this.init = function()
-	{
-		if (showName)
-		{
-			nameInput.focus();
-			
-			if (mxClient.IS_GC || mxClient.IS_FF || document.documentMode >= 5 || mxClient.IS_QUIRKS)
-			{
-				nameInput.select();
-			}
-			else
-			{
-				document.execCommand('selectAll', false, null);
-			}
-		}
-	};
+    const header = document.createElement('div');
+    header.style.whiteSpace = 'nowrap';
+    header.style.height = '46px';
 
-	if (showName)
-	{
-		header.appendChild(nameInput);
-		
-		if (editorUi.editor.fileExtensions != null)
-		{
-			var hint = FilenameDialog.createTypeHint(
-					editorUi, nameInput, editorUi.editor.fileExtensions);
-			hint.style.marginTop = '12px';
-			
-			header.appendChild(hint);
-		}
-	}
+    if (opts.showName) {
+        outer.appendChild(header);
+    }
 
-	var hasTabs = false;
-	var i0 = 0;
-	
-	// Dynamic loading
-	function addTemplates()
-	{
-		var first = true;
-		
-		//TODO support paging of external templates
-		if (templates != null)
-		{
-			while (i0 < templates.length && (first || mxUtils.mod(i0, 30) != 0))
-			{
-				var tmp = templates[i0++];
-				addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
-					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg);
-				first = false;
-			}
-		}		
-	};
-	
-	var spinner = new Spinner({
-		lines: 12, // The number of lines to draw
-		length: 10, // The length of each line
-		width: 5, // The line thickness
-		radius: 10, // The radius of the inner circle
-		rotate: 0, // The rotation offset
-		color: '#000', // #rgb or #rrggbb
-		speed: 1.5, // Rounds per second
-		trail: 60, // Afterglow percentage
-		shadow: false, // Whether to render a shadow
-		hwaccel: false, // Whether to use hardware acceleration
-		top: '40%',
-		zIndex: 2e9 // The z-index (defaults to 2000000000)
-	});
-	
-	var createButton = mxUtils.button(createButtonLabel || mxResources.get('create'), function()
-	{
-		createButton.setAttribute('disabled', 'disabled');
-		create();
-		createButton.removeAttribute('disabled');
-	});
-	
-	createButton.className = 'geBtn gePrimaryBtn';
+    let ext = '.drawio';
+    let resourceimg;
+    let resourceName = 'filename';
+    switch (editorUi.mode) {
+        case App.MODE_GOOGLE:
+            ext = editorUi.drive && editorUi.drive.extension || ext;
+            resourceimg = 'google-drive-logo.svg';
+            resourceName = 'diagramName';
+            break;
+        case App.MODE_DROPBOX:
+            ext = editorUi.dropbox && editorUi.dropbox.extension || ext;
+            resourceimg = 'dropbox-logo.svg';
+            break;
+        case App.MODE_ONEDRIVE:
+            ext = editorUi.oneDrive && editorUi.oneDrive.extension || ext;
+            resourceimg = 'onedrive-logo.svg';
+            break;
+        case App.MODE_GITHUB:
+            ext = editorUi.gitHub && editorUi.gitHub.extension || ext;
+            resourceimg = 'github-logo.svg';
+            break;
+        case App.MODE_TRELLO:
+            ext = editorUi.trello && editorUi.trello.extension || ext;
+            resourceimg = 'trello-logo.svg';
+            break;
+        case App.MODE_BROWSER:
+            resourceimg = 'osa_database.png';
+            resourceName = 'diagramName';
+            break;
+        default:
+            resourceimg = 'osa_drive-harddisk.png';
+            break;
+    }
 
-	if (recentDocsCallback || searchDocsCallback)
-	{
-		var tabsEl = [];
-		var oldTemplates = null, origCategories = null, origCustomCatCount = null;
-		
-		var setActiveTab = function(index)
-		{
-			createButton.setAttribute('disabled', 'disabled');
-			
-			for (var i = 0; i < tabsEl.length; i++)
-			{
-				if (i == index)
-					tabsEl[i].className = 'geBtn gePrimaryBtn';
-				else
-					tabsEl[i].className = 'geBtn';
-			}
-		}
-		
-		hasTabs = true;
-		var tabs = document.createElement('div');
-		tabs.style.whiteSpace = 'nowrap';
-		tabs.style.height = '30px';
-		outer.appendChild(tabs);
-		
-		var templatesTab = mxUtils.button(mxResources.get('Templates', null, 'Templates'), function()
-		{
-			list.style.display = '';
-			div.style.left = '160px';
-			setActiveTab(0);
+    var logo = document.createElement('img');
+    logo.setAttribute('border', '0');
+    logo.setAttribute('align', 'absmiddle');
+    logo.style.width = '40px';
+    logo.style.height = '40px';
+    logo.style.marginRight = '10px';
+    logo.style.paddingBottom = '4px';
+    logo.src = IMAGE_PATH + '/' + resourceimg;
 
-			div.scrollTop = 0;
-			div.innerHTML = '';
-			i0 = 0;
-			
-			if (oldTemplates != templates)
-			{
-				templates = oldTemplates;
-				categories = origCategories;
-				customCatCount = origCustomCatCount;
-				list.innerHTML = '';
-				initUi();	
-				oldTemplates = null;
-			}
-		});
-		
-		tabsEl.push(templatesTab);
-		tabs.appendChild(templatesTab);
-		
-		var getExtTemplates = function(isSearch)
-		{
-			list.style.display = 'none';
-			div.style.left = '30px';				
-			
-			setActiveTab(isSearch? -1 : 1); //deselect all of them if isSearch 
-			
-			if (oldTemplates == null) 
-			{
-				oldTemplates = templates;
-			}
-			
-			div.scrollTop = 0;
-			div.innerHTML = '';
-			spinner.spin(div);
+    if (!opts.compact && opts.showName) {
+        header.appendChild(logo);
+    }
 
-			var callback2 = function(docList, errorMsg, searchImportCats) 
-			{
-				i0 = 0;
-				spinner.stop();
-				templates = docList;
-				searchImportCats = searchImportCats || {};
-				var importListsCount = 0;
-				
-				for (var cat in searchImportCats)
-				{
-					importListsCount += searchImportCats[cat].length;
-				}
-				
-				if (errorMsg)
-				{
-					div.innerHTML = errorMsg;
-				}
-				else if (docList.length == 0 && importListsCount == 0)
-				{
-					div.innerHTML = mxUtils.htmlEntities(mxResources.get('noDiagrams', null, 'No Diagrams Found'));
-				}
-				else
-				{
-					div.innerHTML = '';
-					
-					if (importListsCount > 0)
-					{
-						list.style.display = '';
-						div.style.left = '160px';
-						list.innerHTML = '';
+    if (opts.showName) {
+        mxUtils.write(header, mxResources.get(resourceName) + ':');
+    }
 
-						customCatCount = 0;
-						categories = {'draw.io': docList};
-						
-						for (var cat in searchImportCats)
-						{	
-							categories[cat] = searchImportCats[cat];
-						}
-						
-						initUi();
-					}
-					else
-					{
-						addTemplates();
-					}
-				}
-			}
-			
-			if (isSearch)
-			{
-				searchDocsCallback(searchInput.value, callback2);
-			}
-			else
-			{
-				recentDocsCallback(callback2);
-			}
-		}
-		
-		if (recentDocsCallback)
-		{
-			var recentTab = mxUtils.button(mxResources.get('Recent', null, 'Recent'), function()
-			{
-				getExtTemplates();
-			});
+    const nameInput = document.createElement('input');
+    nameInput.setAttribute('value', editorUi.defaultFilename + ext);
+    nameInput.style.marginLeft = '10px';
+    nameInput.style.width = (opts.compact) ? '220px' : '430px';
 
-			tabs.appendChild(recentTab);
-			tabsEl.push(recentTab);
-		}
-		
-		if (searchDocsCallback)
-		{
-			var searchTab = document.createElement('span');
-			searchTab.style.marginLeft = '10px';
-			searchTab.innerHTML = mxUtils.htmlEntities(mxResources.get('search') + ':');
-			tabs.appendChild(searchTab);
+    this.init = function () {
+        if (opts.showName) {
+            nameInput.focus();
+            if (document.documentMode > 6 || mxClient.IS_GC || mxClient.IS_FF || mxClient.IS_QUIRKS) {
+                nameInput.select();
+            } else {
+                document.execCommand('selectAll', false, null);
+            }
+        }
+    };
 
-			var searchInput = document.createElement('input');
-			searchInput.style.marginRight = '10px';
-			searchInput.style.marginLeft = '10px';
-			searchInput.style.width = '220px';
+    if (opts.showName) {
+        header.appendChild(nameInput);
+        const fileExts = editorUi.editor.fileExtensions;
+        if (fileExts) {
+            const hint = FilenameDialog.createTypeHint(editorUi, nameInput, fileExts);
+            hint.style.marginTop = '12px';
+            header.appendChild(hint);
+        }
+    }
 
-			mxEvent.addListener(searchInput, 'keypress', function(e)
-			{
-				if (e.keyCode == 13)
-				{
-					getExtTemplates(true);
-				}
-			});
+    // Dynamic loading
+    const addTemplates = templates => {
+        const items = templates || [];
+        for (const item of items) {
+            item.tooltip = item.tooltip || item.title;
+            addButton(item);
+        }
+    };
 
-			tabs.appendChild(searchInput);
+    const spinner = new Spinner({
+        lines: 12, // The number of lines to draw
+        length: 10, // The length of each line
+        width: 5, // The line thickness
+        radius: 10, // The radius of the inner circle
+        rotate: 0, // The rotation offset
+        color: '#000', // #rgb or #rrggbb
+        speed: 1.5, // Rounds per second
+        trail: 60, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        top: '40%',
+        zIndex: 2e9 // The z-index (defaults to 2000000000)
+    });
 
-			var searchBtn = mxUtils.button(mxResources.get('search'), function()
-			{
-				getExtTemplates(true);
-			});
-					
-			searchBtn.className = 'geBtn';
+    const create = tmplt => {
+        if (!tmplt.extUrl && !opts.callback) {
+            const title = nameInput.value;
+            if (title) {
+                if (tmplt.import) {
+                    editorUi.importXml(tmplt.xml);
+                } else {
+                    const folderId = editorUi.stateArg && editorUi.stateArg.folderId;
+                    const enabled = editorUi.mode !== App.MODE_GOOGLE || !folderId;
+                    editorUi.pickFolder(editorUi.mode, fldid => {
+                        editorUi.createFile(title, tmplt.xml, tmplt.libs, undefined, () => {
+                            editorUi.hideDialog();
+                        }, true, fldid);
+                    }, enabled);
+                }
+            }
+        } else {
+            if (!opts.showName) {
+                editorUi.hideDialog();
+            }
+            if (tmplt.extUrl) {
+                opts.openExtDocCallback(tmplt.extUrl, tmplt.infoObj, nameInput.value);
+            } else if (opts.callback) {
+                opts.callback(tmplt.xml, nameInput.value);
+            }
+        }
+    };
 
-			tabs.appendChild(searchBtn);
-		}
-		
-		setActiveTab(0);
-	}
-	
-	var templateLibs = null;
-	var templateXml = null;
-	var selectedElt = null;
-	var templateExtUrl = null;
-	var templateInfoObj = null;
-	
-	function create()
-	{
-		if (templateExtUrl)
-		{
-			if (!showName)
-			{
-				editorUi.hideDialog();
-			}
-			
-			openExtDocCallback(templateExtUrl, templateInfoObj, nameInput.value);
-		}
-		else if (callback)
-		{
-			if (!showName)
-			{
-				editorUi.hideDialog();
-			}
-			
-			callback(templateXml, nameInput.value);
-		}
-		else
-		{
-			var title = nameInput.value;
-				
-			if (title != null && title.length > 0)
-			{
-				editorUi.pickFolder(editorUi.mode, function(folderId)
-				{
-					editorUi.createFile(title, templateXml, (templateLibs != null &&
-						templateLibs.length > 0) ? templateLibs : null, null, function()
-					{
-						editorUi.hideDialog();
-					}, null, folderId);
-				}, editorUi.mode != App.MODE_GOOGLE ||
-					editorUi.stateArg == null ||
-					editorUi.stateArg.folderId == null);
-			}
-		}
-	};
-	
-	var div = document.createElement('div');
-	div.style.border = '1px solid #d3d3d3';
-	div.style.position = 'absolute';
-	div.style.left = '160px';
-	div.style.right = '34px';
-	var divTop = (showName) ? 72 : 40;
-	divTop += hasTabs? 30 : 0;
-	div.style.top = divTop + 'px';
-	div.style.bottom = '68px';
-	div.style.margin = '6px 0 0 -1px';
-	div.style.padding = '6px';
-	div.style.overflow = 'auto';
-	
-	var list = document.createElement('div');
-	list.style.cssText = 'position:absolute;left:30px;width:128px;top:' + divTop + 'px;bottom:68px;margin-top:6px;overflow:auto;border:1px solid #d3d3d3;';
-	
-	var w = 140;
-	var h = 140;
+    const createButton = mxUtils.button(opts.createButtonLabel || mxResources.get('create'), () => {
+        if (selected.template) {
+            createButton.setAttribute('disabled', 'disabled');
+            create({
+                import: selected.template.import,
+                xml: selected.template.xml,
+                libs: selected.template.libs,
+                extUrl: selected.template.exturl,
+                infoObj: selected.template.infoobj
+            });
+            createButton.removeAttribute('disabled');
+        }
+    });
+    createButton.className = 'geBtn gePrimaryBtn';
 
-	function selectElement(elt, xml, libs, extUrl, infoObj)
-	{
-		if (selectedElt != null)
-		{
-			selectedElt.style.backgroundColor = 'transparent';
-			selectedElt.style.border = '1px solid transparent';
-		}
-		
-		createButton.removeAttribute('disabled');
-		
-		templateXml = xml;
-		templateLibs = libs;
-		selectedElt = elt;
-		templateExtUrl = extUrl;
-		templateInfoObj = infoObj;
-		
-		selectedElt.style.backgroundColor = rightHighlight;
-		selectedElt.style.border = rightHighlightBorder;
-	};
+    const divTop = opts.showName ? 72 : 40;
+    const div = document.createElement('div');
+    div.style.border = '1px solid #d3d3d3';
+    div.style.position = 'absolute';
+    div.style.left = '160px';
+    div.style.right = '34px';
+    div.style.top = `${divTop}px`;
+    div.style.bottom = '68px';
+    div.style.margin = '6px 0 0 -1px';
+    div.style.padding = '6px';
+    div.style.overflow = 'auto';
 
-	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg)
-	{
-		var elt = document.createElement('div');
-		elt.className = 'geTemplate';
-		elt.style.height = w + 'px';
-		elt.style.width = h + 'px';
-		
-		if (tooltip != null && tooltip.length > 0)
-		{
-			elt.setAttribute('title', tooltip);
-		}
+    const list = document.createElement('div');
+    list.style.cssText = `position:absolute;left:30px;width:128px;top:${divTop}px;bottom:68px;margin-top:6px;overflow:auto;border:1px solid #d3d3d3;'`;
 
-		if (imgUrl != null)
-		{
-			elt.style.backgroundImage = 'url(' + imgUrl + ')';
-			elt.style.backgroundSize = 'contain';
-			elt.style.backgroundPosition = 'center center';
-			elt.style.backgroundRepeat = 'no-repeat';
-			
-			mxEvent.addListener(elt, 'click', function(evt)
-			{
-				selectElement(elt, null, null, url, infoObj);
-			});
-			
-			mxEvent.addListener(elt, 'dblclick', function(evt)
-			{
-				create();
-			});
+    const selected = {
+        element: undefined,
+        template: undefined
+    };
+    const selectElement = (elt, tmplt) => {
+        if (selected.element) {
+            selected.element.style.backgroundColor = 'transparent';
+            selected.element.style.border = '1px solid transparent';
+        }
+        elt.style.backgroundColor = opts.rightHighlight;
+        elt.style.border = opts.rightHighlightBorder;
 
-		}
-		else if (!noImg && url != null && url.length > 0)
-		{
-			var png = preview || (TEMPLATE_PATH + '/' + url.substring(0, url.length - 4) + '.png');
-			
-			elt.style.backgroundImage = 'url(' + png + ')';
-			elt.style.backgroundPosition = 'center center';
-			elt.style.backgroundRepeat = 'no-repeat';
-			
-			var createIt = false;
-			
-			mxEvent.addListener(elt, 'click', function(evt)
-			{
-				createButton.setAttribute('disabled', 'disabled');
-				elt.style.backgroundColor = 'transparent';
-				elt.style.border = '1px solid transparent';
-				var realUrl = url;
-				
-				if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl))
-				{
-					realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
-				}
-				else
-				{
-					realUrl = TEMPLATE_PATH + '/' + realUrl;
-				}
-				
-				spinner.spin(div);
-				
-				mxUtils.get(realUrl, mxUtils.bind(this, function(req)
-				{
-					spinner.stop();
-					
-					if (req.getStatus() >= 200 && req.getStatus() <= 299)
-					{
-						selectElement(elt, req.getText(), libs);
-						
-						if (createIt)
-						{
-							create();
-						}
-					}
-				}));
-			});
-			
-			mxEvent.addListener(elt, 'dblclick', function(evt)
-			{
-				// Asynchronous double click handling after loading template
-				createIt = true;
-			});
-		}
-		else
-		{
-			elt.innerHTML = '<table width="100%" height="100%" style="line-height:1em;word-break: break-all;"><tr>' +
-				'<td align="center" valign="middle">' + mxResources.get(title, null, title) + '</td></tr></table>';
-			
-			if (select)
-			{
-				selectElement(elt);
-			}
-			
-			if (onClick != null)
-			{
-				mxEvent.addListener(elt, 'click', onClick);
-			}
-			else
-			{
-				mxEvent.addListener(elt, 'click', function(evt)
-				{
-					selectElement(elt, null, null, url, infoObj);
-				});
-				
-				mxEvent.addListener(elt, 'dblclick', function(evt)
-				{
-					create();
-				});
-			}
-		}
+        selected.element = elt;
+        selected.template = tmplt;
+        createButton.removeAttribute('disabled');
+    };
 
-		div.appendChild(elt);
-	};
+    const addButton = tmplt => {
+        const elt = document.createElement('div');
+        elt.className = 'geTemplate';
+        elt.style.height = '140px';
+        elt.style.width = '140px';
 
-	var categories = {}, customCats = {};
-	var customCatCount = 0, firstInitUi = true;
-	
-	// Adds local basic templates
-	categories['basic'] = [{title: 'blankDiagram', select: true}];
-	
-	var templates = categories['basic'];
-	
-	function initUi()
-	{
-		if (firstInitUi)
-		{
-			firstInitUi = false;
-			
-			mxEvent.addListener(div, 'scroll', function(evt)
-			{
-				if (div.scrollTop + div.clientHeight >= div.scrollHeight)
-				{
-					addTemplates();
-					mxEvent.consume(evt);
-				}
-			});
-		}
-		
-		var currentEntry = null;
-		
-		if (customCatCount > 0)
-		{
-			var titleCss = 'font-weight: bold;background: #f9f9f9;padding: 5px 0 5px 0;text-align: center;';
-			var title = document.createElement('div');
-			title.style.cssText = titleCss;
-			mxUtils.write(title, mxResources.get('custom'));
-			list.appendChild(title);
-			
-			for (var cat in customCats)
-			{
-				var entry = document.createElement('div');
-				var label = cat;
-				var templateList = customCats[cat];
-				
-				if (label.length > 18)
-				{
-					label = label.substring(0, 18) + '&hellip;';
-				}
-				
-				entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
-				entry.setAttribute('title', label + ' (' + templateList.length + ')');
-				mxUtils.write(entry, entry.getAttribute('title'));
-				
-				if (itemPadding != null)
-				{
-					entry.style.padding = itemPadding;
-				}
+        if (tmplt.tooltip) {
+            elt.setAttribute('title', tmplt.tooltip);
+        }
 
-				list.appendChild(entry);
-				
-				(function(cat2, entry2)
-				{
-					mxEvent.addListener(entry, 'click', function()
-					{
-						if (currentEntry != entry2)
-						{
-							currentEntry.style.backgroundColor = '';
-							currentEntry = entry2;
-							currentEntry.style.backgroundColor = leftHighlight;
-							
-							div.scrollTop = 0;
-							div.innerHTML = '';
-							i0 = 0;
-							
-							templates = customCats[cat2];
-							oldTemplates = null;
-							addTemplates();
-						}
-					});
-				})(cat, entry);
-			}
-			
-			title = document.createElement('div');
-			title.style.cssText = titleCss;
-			mxUtils.write(title, 'draw.io');
-			list.appendChild(title);
-		}
-		
-		for (var cat in categories)
-		{
-			var entry = document.createElement('div');
-			var label = mxResources.get(cat);
-			var templateList = categories[cat];
-			
-			if (label == null)
-			{
-				label = cat.substring(0, 1).toUpperCase() + cat.substring(1);
-			}
-			
-			if (label.length > 18)
-			{
-				label = label.substring(0, 18) + '&hellip;';
-			}
-			
-			entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
-			entry.setAttribute('title', label + ' (' + templateList.length + ')');
-			mxUtils.write(entry, entry.getAttribute('title'));
-			
-			if (itemPadding != null)
-			{
-				entry.style.padding = itemPadding;
-			}
+        let onclick = tmplt.onClick || (() => {
+            selectElement(elt, tmplt);
+        });
+        let ondblclick = tmplt.onDblClick || (() => {
+            create({
+                import: tmplt.import,
+                xml: tmplt.xml,
+                libs: tmplt.libs,
+                extUrl: tmplt.url,
+                infoObj: tmplt.infoObj
+            });
+        });
 
-			list.appendChild(entry);
-			
-			if (currentEntry == null && templateList.length > 0)
-			{
-				currentEntry = entry;
-				currentEntry.style.backgroundColor = leftHighlight;
-				templates = templateList;
-			}
-			
-			(function(cat2, entry2)
-			{
-				mxEvent.addListener(entry, 'click', function()
-				{
-					if (currentEntry != entry2)
-					{
-						currentEntry.style.backgroundColor = '';
-						currentEntry = entry2;
-						currentEntry.style.backgroundColor = leftHighlight;
-						
-						div.scrollTop = 0;
-						div.innerHTML = '';
-						i0 = 0;
-						
-						templates = categories[cat2];
-						oldTemplates = null;
-						addTemplates();
-					}
-				});
-			})(cat, entry);
-		}
-		
-		addTemplates();
-	}
+        if (tmplt.imgUrl) {
+            elt.style.backgroundImage = `url(${tmplt.imgUrl})`;
+            elt.style.backgroundSize = 'contain';
+            elt.style.backgroundPosition = 'center center';
+            elt.style.backgroundRepeat = 'no-repeat';
+        } else if (!tmplt.noImg && tmplt.url) {
+            const png = tmplt.preview || `${TEMPLATE_PATH}/${tmplt.url.substring(0, tmplt.url.length - 4)}.png`;
+            elt.style.backgroundImage = `url(${png})`;
+            elt.style.backgroundPosition = 'center center';
+            elt.style.backgroundRepeat = 'no-repeat';
 
-	if (!compact)
-	{
-		outer.appendChild(list);
-		outer.appendChild(div);
-		var indexLoaded = false;
-		var realUrl = templateFile;
-		
-		if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl))
-		{
-			realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
-		}
-		
-		function loadDrawioTemplates()
-		{
-			mxUtils.get(realUrl, function(req)
-			{
-				// Workaround for index loaded 3 times in iOS offline mode
-				if (!indexLoaded)
-				{
-					indexLoaded = true;
-					var tmpDoc = req.getXml();
-					var node = tmpDoc.documentElement.firstChild;
-		
-					while (node != null)
-					{
-						if (typeof(node.getAttribute) !== 'undefined')
-						{
-							var url = node.getAttribute('url');
-							
-							if (url != null)
-							{
-								var category = node.getAttribute('section');
-								
-								if (category == null)
-								{
-									var slash = url.indexOf('/');
-									category = url.substring(0, slash);
-								}
-								
-								var list = categories[category];
-								
-								if (list == null)
-								{
-									list = [];
-									categories[category] = list;
-								}
-								
-								list.push({url: node.getAttribute('url'), libs: node.getAttribute('libs'),
-									title: node.getAttribute('title'), tooltip: node.getAttribute('url'),
-									preview: node.getAttribute('preview')});
-							}
-						}
-						
-						node = node.nextSibling;
-					}
-					
-					spinner.stop();
-					initUi();
-				}
-			});
-		};
-		
-		spinner.spin(div);
-		
-		if (customTempCallback != null)
-		{
-			customTempCallback(function(cats, count)
-			{
-				customCats = cats;
-				customCatCount = count;
-				//Custom templates doesn't change after being loaded, so cache them here. Also, only count is overridden
-				origCustomCatCount = count;
+            let createIt = false;
+            onclick = () => {
+                createButton.setAttribute('disabled', 'disabled');
+                elt.style.backgroundColor = 'transparent';
+                elt.style.border = '1px solid transparent';
 
-				loadDrawioTemplates();
-			}, 
-			loadDrawioTemplates); //In case of an error, just load draw.io templates only
-		}
-		else
-		{
-			loadDrawioTemplates();
-		}
-		
-		//draw.io templates doesn't change after being loaded, so cache them here
-		origCategories = categories;
-	}
-	
-	mxEvent.addListener(nameInput, 'keypress', function(e)
-	{
-		if (editorUi.dialog.container.firstChild == outer &&
-			e.keyCode == 13)
-		{
-			create();
-		}
-	});
-	
-	var btns = document.createElement('div');
-	btns.style.marginTop = (compact) ? '4px' : '16px';
-	btns.style.textAlign = 'right';
-	btns.style.position = 'absolute';
-	btns.style.left = '40px';
-	btns.style.bottom = '24px';
-	btns.style.right = '40px';
+                let realUrl = tmplt.url;
+                if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl)) {
+                    realUrl = `${PROXY_URL}?url=${encodeURIComponent(realUrl)}`;
+                }
+                else {
+                    realUrl = `${TEMPLATE_PATH}/${realUrl}`;
+                }
 
-	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
-	{
-		if (cancelCallback != null)
-		{
-			cancelCallback();
-		}
-		
-		editorUi.hideDialog(true);
-	});
-	
-	cancelBtn.className = 'geBtn';
-	
-	if (editorUi.editor.cancelFirst && (!createOnly || cancelCallback != null))
-	{
-		btns.appendChild(cancelBtn);
-	}
-	
-	if (!compact && !editorUi.isOffline() && showName && callback == null && !createOnly)
-	{
-		var helpBtn = mxUtils.button(mxResources.get('help'), function()
-		{
-			editorUi.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
-		});
-		
-		helpBtn.className = 'geBtn';	
-		btns.appendChild(helpBtn);
-	}
+                spinner.spin(div);
 
-	if (!compact && urlParams['embed'] != '1' && !createOnly)
-	{
-		var fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), function()
-		{
-			var dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), function(fileUrl)
-			{
-				if (fileUrl != null && fileUrl.length > 0)
-				{
-					var url = editorUi.getUrl(window.location.pathname + '?mode=' + editorUi.mode +
-							'&title=' + encodeURIComponent(nameInput.value) +
-							'&create=' + encodeURIComponent(fileUrl));
-					
-					if (editorUi.getCurrentFile() == null)
-					{
-						window.location.href = url;
-					}
-					else
-					{
-						window.openWindow(url);
-					}
-				}
-			}, mxResources.get('url'));
-			editorUi.showDialog(dlg.container, 300, 80, true, true);
-			dlg.init();
-		});
-		fromTmpBtn.className = 'geBtn';
-		btns.appendChild(fromTmpBtn);
-	}
-	
-	if (Graph.fileSupport && showImport)
-	{
-		var importBtn = mxUtils.button(mxResources.get('import'), function()
-		{
-			if (editorUi.newDlgFileInputElt == null) 
-			{
-				var fileInput = document.createElement('input');
-				fileInput.setAttribute('multiple', 'multiple');
-				fileInput.setAttribute('type', 'file');
-				
-				mxEvent.addListener(fileInput, 'change', function(evt)
-				{
-					editorUi.openFiles(fileInput.files, true);
-					fileInput.value = '';
-				});
-				
-				fileInput.style.display = 'none';
-				document.body.appendChild(fileInput);
-				editorUi.newDlgFileInputElt = fileInput;
-			}
-			
-			editorUi.newDlgFileInputElt.click();
-		});
-				
-		importBtn.className = 'geBtn';
-		btns.appendChild(importBtn);
-	}
-	
-	btns.appendChild(createButton);
-	
-	if (!editorUi.editor.cancelFirst && callback == null && (!createOnly || cancelCallback != null))
-	{
-		btns.appendChild(cancelBtn);
-	}
-	
-	outer.appendChild(btns);
-	
-	this.container = outer;
+                mxUtils.get(realUrl, mxUtils.bind(this, req => {
+                    spinner.stop();
+                    if (req.getStatus() >= 200 && req.getStatus() <= 299) {
+                        selectElement(elt, tmplt);
+                        if (createIt) {
+                            const xml = req.getText();
+                            create({
+                                import: false,
+                                xml: xml,
+                                libs: tmplt.libs,
+                                extUrl: tmplt.url,
+                                infoObj: tmplt.infoObj
+                            });
+                        }
+                    }
+                }));
+            };
+
+            ondblclick = () => {
+                // Asynchronous double click handling after loading template
+                createIt = true;
+            };
+        } else {
+            elt.innerHTML = '<table width="100%" height="100%" style="line-height:1em;word-break: break-all;"><tr>' +
+                `<td align="center" valign="middle">${mxResources.get(tmplt.title, null, tmplt.title)}</td></tr></table>`;
+        }
+
+        if (tmplt.select) {
+            selectElement(elt, tmplt);
+        }
+        if (onclick) {
+            mxEvent.addListener(elt, 'click', onclick);
+        }
+        if (ondblclick) {
+            mxEvent.addListener(elt, 'dblclick', ondblclick);
+        }
+        div.appendChild(elt);
+    };
+
+    let categories = {
+        basic: [{
+            title: 'blankDiagram',
+            select: true
+        }]
+    };
+
+    const initUi = () => {
+        let currentEntry;
+
+        const addCatClick = (cat, entry) => {
+            const cattemplates = categories[cat];
+            mxEvent.addListener(entry, 'click', () => {
+                if (currentEntry === entry) {
+                    return;
+                }
+
+                currentEntry.style.backgroundColor = '';
+
+                entry.style.backgroundColor = opts.leftHighlight;
+                currentEntry = entry;
+
+                div.scrollTop = 0;
+                div.innerHTML = '';
+                addTemplates(cattemplates);
+            });
+        };
+
+        for (var cat of Object.keys(categories)) {
+            let label = mxResources.get(cat) || cat.substring(0, 1).toUpperCase() + cat.substring(1);
+            if (label.length > 18) {
+                label = `${label.substring(0, 18)}&hellip;`;
+            }
+
+            const templateList = categories[cat] || [];
+            const entry = document.createElement('div');
+            entry.style.cssText = 'display:block;cursor:pointer;padding:6px;white-space:nowrap;margin-bottom:-1px;overflow:hidden;text-overflow:ellipsis;';
+            entry.setAttribute('title', `${label} (${templateList.length})`);
+            mxUtils.write(entry, entry.getAttribute('title'));
+
+            if (opts.itemPadding) {
+                entry.style.padding = opts.itemPadding;
+            }
+            list.appendChild(entry);
+
+            if (!currentEntry && templateList.length) {
+                currentEntry = entry;
+                currentEntry.style.backgroundColor = opts.leftHighlight;
+            }
+            addCatClick(cat, entry);
+        }
+
+        addTemplates(categories.basic);
+    }
+
+    if (!opts.compact) {
+        outer.appendChild(list);
+        outer.appendChild(div);
+
+        const loadCsetTemplates = async () => {
+            const category = 'CSET';
+            categories[category] = categories[category] || [];
+
+            const csetTemplates = await CsetUtils.getCsetTemplates();
+            for (const tmplt of csetTemplates) {
+                categories[category].push({
+                    import: true,
+                    xml: tmplt.Markup,
+                    title: tmplt.Name.trim(),
+                    tooltip: tmplt.Name.trim(),
+                    select: csetTemplates[0] === tmplt,
+                    imgUrl: tmplt.ImageSource && `'data: image/png;base64,${tmplt.ImageSource}'`
+                });
+            }
+            spinner.stop();
+            initUi();
+        };
+
+        spinner.spin(div);
+        loadCsetTemplates();
+    }
+
+    mxEvent.addListener(nameInput, 'keypress', e => {
+        if (editorUi.dialog.container.firstChild === outer && e.keyCode === 13) {
+            if (selected.template) {
+                createButton.setAttribute('disabled', 'disabled');
+                create({
+                    import: selected.template.import,
+                    xml: selected.template.xml,
+                    libs: selected.template.libs,
+                    extUrl: selected.template.exturl,
+                    infoObj: selected.template.infoobj
+                });
+                createButton.removeAttribute('disabled');
+            }
+        }
+    });
+
+    const btns = document.createElement('div');
+    btns.style.marginTop = opts.compact ? '4px' : '16px';
+    btns.style.textAlign = 'right';
+    btns.style.position = 'absolute';
+    btns.style.left = '40px';
+    btns.style.bottom = '24px';
+    btns.style.right = '40px';
+
+    const cancelBtn = mxUtils.button(mxResources.get('cancel'), () => {
+        opts.cancelCallback && opts.cancelCallback();
+        editorUi.hideDialog(true);
+    });
+    cancelBtn.className = 'geBtn';
+    if (editorUi.editor.cancelFirst && (!opts.createOnly || opts.cancelCallback)) {
+        btns.appendChild(cancelBtn);
+    }
+
+    if (!opts.compact && !editorUi.isOffline() && opts.showName && !opts.callback && !opts.createOnly) {
+        const helpBtn = mxUtils.button(mxResources.get('help'), () => {
+            editorUi.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
+        });
+        helpBtn.className = 'geBtn';
+        btns.appendChild(helpBtn);
+    }
+
+    if (!opts.compact && urlParams.embed !== '1' && !opts.createOnly && !opts.hideFromTemplateUrl) {
+        const fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), () => {
+            const dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), fileUrl => {
+                if (fileUrl) {
+                    const url = editorUi.getUrl(`${window.location.pathname}?mode=${editorUi.mode || ''}` +
+                        `&title=${encodeURIComponent(nameInput.value)} ` +
+                        `&create=${encodeURIComponent(fileUrl)}`);
+                    if (!editorUi.getCurrentFile()) {
+                        window.location.href = url;
+                    } else {
+                        window.openWindow(url);
+                    }
+                }
+            }, mxResources.get('url'));
+            editorUi.showDialog(dlg.container, 300, 80, true, true);
+            dlg.init();
+        });
+        fromTmpBtn.className = 'geBtn';
+        btns.appendChild(fromTmpBtn);
+    }
+
+    if (Graph.fileSupport && opts.showImport) {
+        const importBtn = mxUtils.button(mxResources.get('import'), () => {
+            if (!editorUi.newDlgFileInputElt) {
+                const fileInput = document.createElement('input');
+                fileInput.setAttribute('multiple', 'multiple');
+                fileInput.setAttribute('type', 'file');
+                mxEvent.addListener(fileInput, 'change', () => {
+                    editorUi.openFiles(fileInput.files, true);
+                    fileInput.value = '';
+                });
+                fileInput.style.display = 'none';
+                document.body.appendChild(fileInput);
+                editorUi.newDlgFileInputElt = fileInput;
+            }
+            editorUi.newDlgFileInputElt.click();
+        });
+        importBtn.className = 'geBtn';
+        btns.appendChild(importBtn);
+    }
+
+    btns.appendChild(createButton);
+
+    if (!editorUi.editor.cancelFirst && !opts.callback && (!opts.createOnly || opts.cancelCallback)) {
+        btns.appendChild(cancelBtn);
+    }
+
+    outer.appendChild(btns);
+
+    this.container = outer;
 };
 
 /**
@@ -4877,63 +4454,86 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn, showPages)
 /**
  * Constructs a new about dialog
  */
-var AboutDialog = function(editorUi)
-{
-	var div = document.createElement('div');
-	div.style.marginTop = '6px';
-	div.setAttribute('align', 'center');
-	
-	var img = document.createElement('img');
-	img.style.border = '0px';
-	
-	if (mxClient.IS_SVG)
-	{
-		img.setAttribute('width', '164');
-		img.setAttribute('height', '221');
-		img.style.width = '164px';
-		img.style.height = '221px';
-		img.setAttribute('src', IMAGE_PATH + '/drawlogo-text-bottom.svg');
-	}
-	else
-	{
-		img.setAttribute('width', '176');
-		img.setAttribute('height', '219');
-		img.style.width = '170px';
-		img.style.height = '219px';
-		img.setAttribute('src', IMAGE_PATH + '/logo-flat.png');
-	}
-	
-	if (uiTheme == 'dark')
-	{
-		img.style.filter = 'grayscale(100%) invert(100%)';
-	}
-	
-	div.appendChild(img);
-	mxUtils.br(div);
-	
-	var clr = (uiTheme == 'dark') ? '#cccccc' : '#505050';
-	var v = document.createElement('small');
-	v.innerHTML = 'v ' + EditorUi.VERSION;
-	v.style.color = clr;
-	div.appendChild(v);
-	
-	mxUtils.br(div);
-	mxUtils.br(div);
+var AboutDialog = function (editorUi) {
+    const div = document.createElement('div');
+    div.style.marginTop = '6px';
+    div.setAttribute('align', 'center');
 
-	var small = document.createElement('small');
-	small.style.color = clr;
-	small.innerHTML = '&copy; 2005-2019 <a href="https://about.draw.io/" style="color:inherit;" target="_blank">JGraph Ltd</a>.<br>All Rights Reserved.';
-	div.appendChild(small);
-	
-	mxEvent.addListener(div, 'click', function(e)
-	{
-		if (mxEvent.getSource(e).nodeName != 'A')
-		{
-			editorUi.hideDialog();
-		}
-	});
-	
-	this.container = div;
+    CsetUtils.makeHttpRequest({
+        method: 'GET',
+        url: 'about-diag.html',
+        onreadystatechange: e => {
+            if (e.readyState !== 4) {
+                return;
+            }
+
+            switch (e.status) {
+                case 200:
+                    div.innerHTML = e.responseText;
+                    break
+            }
+        }
+    });
+
+    mxEvent.addListener(div, 'click', e => {
+        if (mxEvent.getSource(e).nodeName !== 'A') {
+            editorUi.hideDialog();
+        }
+    });
+
+    this.container = div;
+};
+
+var DrawIoAboutDialog = function (editorUi) {
+    const div = document.createElement('div');
+    div.style.marginTop = '6px';
+    div.setAttribute('align', 'center');
+
+    const img = document.createElement('img');
+    img.style.border = '0px';
+
+    if (mxClient.IS_SVG) {
+        img.setAttribute('width', '164');
+        img.setAttribute('height', '221');
+        img.style.width = '164px';
+        img.style.height = '221px';
+        img.setAttribute('src', IMAGE_PATH + '/drawlogo-text-bottom.svg');
+    } else {
+        img.setAttribute('width', '176');
+        img.setAttribute('height', '219');
+        img.style.width = '170px';
+        img.style.height = '219px';
+        img.setAttribute('src', IMAGE_PATH + '/logo-flat.png');
+    }
+
+    if (uiTheme == 'dark') {
+        img.style.filter = 'grayscale(100%) invert(100%)';
+    }
+
+    div.appendChild(img);
+    mxUtils.br(div);
+
+    const clr = (uiTheme == 'dark') ? '#cccccc' : '#505050';
+    const v = document.createElement('small');
+    v.innerHTML = 'v ' + EditorUi.VERSION;
+    v.style.color = clr;
+    div.appendChild(v);
+
+    mxUtils.br(div);
+    mxUtils.br(div);
+
+    const small = document.createElement('small');
+    small.style.color = clr;
+    small.innerHTML = '&copy; 2005-2019 <a href="https://about.draw.io/" style="color:inherit;" target="_blank">JGraph Ltd</a>.<br>All Rights Reserved.';
+    div.appendChild(small);
+
+    mxEvent.addListener(div, 'click', e => {
+        if (mxEvent.getSource(e).nodeName !== 'A') {
+            editorUi.hideDialog();
+        }
+    });
+
+    this.container = div;
 };
 
 /**

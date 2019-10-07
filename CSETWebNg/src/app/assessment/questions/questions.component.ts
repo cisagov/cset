@@ -202,7 +202,7 @@ export class QuestionsComponent implements AfterViewInit {
               label: q.GroupHeadingText,
               elementType: 'QUESTION-HEADING',
               value: {
-                target: 'Q' + q.GroupHeadingId + '.' + q.StandardShortName,
+                target: this.formatID('Q' + q.GroupHeadingId + '.' + q.GroupHeadingText + '.' + q.StandardShortName),
                 question: q.GroupHeadingId
               },
               children: []
@@ -268,7 +268,7 @@ export class QuestionsComponent implements AfterViewInit {
     const heading = {
       label: q.GroupHeadingText,
       value: {
-        target: 'Q' + q.GroupHeadingId + '.' + q.StandardShortName,
+        target: this.formatID('Q' + q.GroupHeadingId + '.' + q.GroupHeadingText + '.' + q.StandardShortName),
         question: q.GroupHeadingId
       },
       elementType: 'QUESTION-HEADING',
@@ -356,5 +356,12 @@ export class QuestionsComponent implements AfterViewInit {
       .subscribe(() => {
         this.refreshQuestionVisibility();
       });
+  }
+
+  /**
+   * Builds category IDs in a consistent way.
+   */
+  formatID(s) {
+    return s.toLowerCase().replace(/ /g, '-');
   }
 }

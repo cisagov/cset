@@ -725,7 +725,7 @@ namespace CSET_Main.Questions.POCO
             {
                 if (Answer.Is_Component)
                 {
-                    if (Component_Id == 0)
+                    if (Component_Guid == Guid.Empty)
                         return true;                    
                 }
                 return false;               
@@ -765,13 +765,6 @@ namespace CSET_Main.Questions.POCO
                     return Question.Weight.GetValueOrDefault();
                 else
                     return 1;               
-            }
-        }
-        public int Component_Id
-        {
-            get
-            {
-                return Answer.Component_Id;
             }
         }
 
@@ -988,7 +981,7 @@ namespace CSET_Main.Questions.POCO
         {
             if (IsComponent)
             {
-                if (Component_Id != 0)
+                if (Component_Guid == Guid.Empty)
                 {
                     return QuestionPocoTypeEnum.SpecificComponent;
                 }
@@ -1120,6 +1113,9 @@ namespace CSET_Main.Questions.POCO
                 return shortSupplemental;
             }
         }
+
+        public Guid Component_Guid { get; private set; }
+
         internal void AddSet(SETS set)
         {
             this.DictionaryStandards[set.Set_Name] = set;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DiagramService } from '../../../../services/diagram.service';
 
 @Component({
   selector: 'links',
@@ -8,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class LinksComponent implements OnInit {
   links = [];
   displayedColumns = ['label', 'subnetName', 'security', 'layer', 'headLineDecorator', 'tailLineDecorator', 'lineType', 'thickness', 'color', 'color', 'linkType', 'visible']
-  constructor() { }
+  constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
+    this.getLinks();
   }
 
+  getLinks(){
+    this.diagramSvc.getDiagramLinks().subscribe((x:any) =>{
+      this.links = x;
+    });
+  }
+
+  
 }

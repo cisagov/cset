@@ -4,13 +4,16 @@
 // 
 // 
 //////////////////////////////// 
+using BusinessLogic.Helpers;
 using CSET_Main.Data.ControlData;
 using CSET_Main.Questions.InformationTabData;
 using CSET_Main.Views.Questions.QuestionDetails;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
+using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -110,14 +113,6 @@ namespace CSETWeb_Api.BusinessManagers
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
 
-                // Set the Discovery/Finding indicator 
-                //foreach (var aaa in answers.ToList())
-                //{
-                //    if (db.FINDINGs.Any(x => x.Answer_Id == aaa.a.Answer_Id))
-                //    {
-                //        aaa.FindingsExist = true;
-                //    }
-                //}
 
 
                 // Get any subcategory answers for the assessment
@@ -209,7 +204,8 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {
                         GroupHeadingId = dbQ.QuestionGroupHeadingId,
-                        GroupHeadingText = dbQ.QuestionGroupHeading
+                        GroupHeadingText = dbQ.QuestionGroupHeading,
+                        StandardShortName = "Standard Questions"
                     };
 
                     groupList.Add(qg);
@@ -256,7 +252,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = answer?.a?.Comment,
                     FeedBack = answer?.a?.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
-                    Reviewed = answer?.a.Reviewed ?? false
+                    Reviewed = answer?.a.Reviewed ?? false,
+                    Is_Component = answer?.a.Is_Component ?? false
                 };
                 if (answer != null)
                 {
@@ -275,7 +272,144 @@ namespace CSETWeb_Api.BusinessManagers
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
 
+            BuildComponentsResponse(resp);
             return resp;
+        }
+
+        /// <summary>
+        /// get the exploded view where assessment
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="shouldSave"></param>
+        public void HandleGuid(string guid, bool shouldSave)
+        {
+            using (CSET_Context context = new CSET_Context())
+            {
+                if (shouldSave)
+                {
+                    Guid g = new Guid(guid);
+                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == g).FirstOrDefault();
+                    if (componentName != null)
+                    {
+                        var creates = from a in context.Answer_Components_Exploded
+                                      where a.Assessment_Id == this._assessmentId &&
+                                      a.ComponentName == componentName.label &&
+                                      a.Component_GUID == null
+                                      select a;
+                        foreach (var c in creates.ToList())
+                        {
+                            context.ANSWER.Add(new ANSWER()
+                            {
+                                Answer_Text = Constants.UNANSWERED,
+                                Assessment_Id = this._assessmentId,
+                                Component_Guid = guid,
+                                Is_Component = true,
+                                Is_Requirement = false,
+                                Question_Or_Requirement_Id = c.Question_Id
+                            });
+                        }
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new ApplicationException("could not find component for guid:" + guid);
+                    }
+                }
+                else
+                {
+                    foreach (var a in context.ANSWER.Where(x => x.Component_Guid == guid).ToList())
+                    {
+                        context.ANSWER.Remove(a);
+                    }
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Not my favorite but passing in the 
+        /// response adding the components to it
+        /// and then returning
+        /// </summary>
+        /// <param name="resp"></param>        
+        private void BuildComponentsResponse(QuestionResponse resp)
+        {
+            using (CSET_Context context = new CSET_Context())
+            {
+                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>().ToList();
+                AddResponse(resp, context, list, "Component Defaults");
+                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>().ToList();
+                AddResponse(resp, context, dlist, "Component Overrides");
+            }
+        }
+
+        private void AddResponse(QuestionResponse resp, CSET_Context context, List<Answer_Components_Base> list, string listname)
+        {
+            List<QuestionGroup> groupList = new List<QuestionGroup>();
+            QuestionGroup qg = new QuestionGroup();
+            QuestionSubCategory sc = new QuestionSubCategory();
+            QuestionAnswer qa = new QuestionAnswer();
+
+            string curGroupHeading = null;
+            int curHeadingPairId = 0;
+
+
+            int displayNumber = 0;
+            
+            
+            foreach (var dbQ in list)
+            {
+                if (dbQ.Question_Group_Heading != curGroupHeading)
+                {
+                    qg = new QuestionGroup()
+                    {  
+                        GroupHeadingText = dbQ.Question_Group_Heading,
+                        StandardShortName = listname
+                    };
+                    groupList.Add(qg);
+                    curGroupHeading = qg.GroupHeadingText;
+                    // start numbering again in new group
+                    displayNumber = 0;
+                }
+
+                // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
+                if (dbQ.heading_pair_id != curHeadingPairId)
+                {
+                    sc = new QuestionSubCategory()
+                    {   
+                        SubCategoryHeadingText = dbQ.Universal_Sub_Category,
+                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
+                        SubCategoryAnswer = this.subCatAnswers.Where(x=> x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                    };
+
+                    qg.SubCategories.Add(sc);
+
+                    curHeadingPairId = dbQ.heading_pair_id;
+                }
+
+                qa = new QuestionAnswer()
+                {
+                    DisplayNumber = (++displayNumber).ToString(),
+                    QuestionId = dbQ.Question_Id,
+                    QuestionText = FormatLineBreaks(dbQ.Simple_Question),
+                    Answer = dbQ.Answer_Text,
+                    Answer_Id = dbQ.Answer_Id,
+                    AltAnswerText = dbQ.Alternate_Justification,
+                    Comment = dbQ.Comment,
+                    MarkForReview = dbQ.Mark_For_Review ?? false,
+                    Reviewed = dbQ.Reviewed ?? false,
+                    Is_Component = dbQ.Is_Component
+                };
+                    
+                sc.Questions.Add(qa);
+            }
+
+                
+            resp.QuestionGroups.AddRange(groupList);
+            resp.QuestionCount += list.Count;
+            resp.DefaultComponentsCount = list.Count;
         }
 
 
