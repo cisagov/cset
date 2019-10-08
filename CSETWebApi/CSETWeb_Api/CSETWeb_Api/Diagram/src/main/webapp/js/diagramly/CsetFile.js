@@ -10,7 +10,7 @@ CSETFile = function (ui, data, title, temp) {
     DrawioFile.call(this, ui, data);
 
     this.title = title;
-    this.mode = temp ? null : App.MODE_DEVICE;
+    this.mode = App.MODE_CSET;
 };
 
 //Extends mxEventSource
@@ -83,53 +83,53 @@ CSETFile.prototype.saveAs = function (title, success, error) {
  * @param {number} dy Y-coordinate of the translation.
  */
 CSETFile.prototype.saveFile = function (title, revision, success, error) {
-    this.title = title;
+    //this.title = title;
 
-    // Updates data after changing file name
-    this.updateFileData();
-    var data = this.getData();
-    var binary = this.ui.useCanvasForExport && /(\.png)$/i.test(this.getTitle());
+    //// Updates data after changing file name
+    //this.updateFileData();
+    //var data = this.getData();
+    //var binary = this.ui.useCanvasForExport && /(\.png)$/i.test(this.getTitle());
 
-    var doSave = mxUtils.bind(this, function (data) {
-        if (this.ui.isOfflineApp() || this.ui.isLocalFileSave()) {
-            this.ui.doSaveLocalFile(data, title, (binary) ?
-                'image/png' : 'text/xml', binary);
-        }
-        else {
-            if (data.length < MAX_REQUEST_SIZE) {
-                var dot = title.lastIndexOf('.');
-                var format = (dot > 0) ? title.substring(dot + 1) : 'xml';
+    //var doSave = mxUtils.bind(this, function (data) {
+    //    if (this.ui.isOfflineApp() || this.ui.isLocalFileSave()) {
+    //        this.ui.doSaveLocalFile(data, title, (binary) ?
+    //            'image/png' : 'text/xml', binary);
+    //    }
+    //    else {
+    //        if (data.length < MAX_REQUEST_SIZE) {
+    //            var dot = title.lastIndexOf('.');
+    //            var format = (dot > 0) ? title.substring(dot + 1) : 'xml';
 
-                // Do not update modified flag
-                new mxXmlRequest(SAVE_URL, 'format=' + format +
-                    '&xml=' + encodeURIComponent(data) +
-                    '&filename=' + encodeURIComponent(title) +
-                    ((binary) ? '&binary=1' : '')).
-                    simulate(document, '_blank');
-            }
-            else {
-                this.ui.handleError({ message: mxResources.get('drawingTooLarge') }, mxResources.get('error'), mxUtils.bind(this, function () {
-                    mxUtils.popup(data);
-                }));
-            }
-        }
+    //            // Do not update modified flag
+    //            new mxXmlRequest(SAVE_URL, 'format=' + format +
+    //                '&xml=' + encodeURIComponent(data) +
+    //                '&filename=' + encodeURIComponent(title) +
+    //                ((binary) ? '&binary=1' : '')).
+    //                simulate(document, '_blank');
+    //        }
+    //        else {
+    //            this.ui.handleError({ message: mxResources.get('drawingTooLarge') }, mxResources.get('error'), mxUtils.bind(this, function () {
+    //                mxUtils.popup(data);
+    //            }));
+    //        }
+    //    }
 
-        this.setModified(false);
-        this.contentChanged();
+    //    this.setModified(false);
+    //    this.contentChanged();
 
-        if (success != null) {
-            success();
-        }
-    });
+    //    if (success != null) {
+    //        success();
+    //    }
+    //});
 
-    if (binary) {
-        this.ui.getEmbeddedPng(mxUtils.bind(this, function (imageData) {
-            doSave(imageData);
-        }), error, (this.ui.getCurrentFile() != this) ? this.getData() : null);
-    }
-    else {
-        doSave(data);
-    }
+    //if (binary) {
+    //    this.ui.getEmbeddedPng(mxUtils.bind(this, function (imageData) {
+    //        doSave(imageData);
+    //    }), error, (this.ui.getCurrentFile() != this) ? this.getData() : null);
+    //}
+    //else {
+    //    doSave(data);
+    //}
 };
 
 /**
@@ -153,6 +153,48 @@ CSETFile.prototype.rename = function (title, success, error) {
  * @type mx.Point
  */
 CSETFile.prototype.open = function () {
-    this.ui.setFileData(this.getData());
+    const data = this.getData();
+    if (data) {
+        this.ui.setFileData(data);
+        if (!this.isModified()) {
+            this.shadowData = mxUtils.getXml(this.ui.getXmlFileData());
+            this.shadowPages = null;
+        }
+    }
     this.installListeners();
+};
+
+CSETFile.prototype.emptyXmlRegx = /<mxGraphModel(?:\s+grid=["']\d+["'])?(?:\s+gridSize=["']\d+["'])?><root><mxCell id=["']0["']\s*(?:\/>|>(?:<mxCell id=["']1["'] parent=["']0["']\s+\/>)?<\/mxCell>)<\/root><\/mxGraphModel>/g;
+
+CSETFile.prototype.isDiagramEmpty = function () {
+    // mxgraph\EditorUi.prototype.isDiagramEmpty
+    return this.ui.isDiagramEmpty();
+}
+
+CSETFile.prototype.isXmlEmpty = function () {
+    const data = this.getData();
+    return !data || this.emptyXmlRegx.test(data);
+}
+
+CSETFile.prototype.isEmpty = function () {
+    return this.isDiagramEmpty() || this.isXmlEmpty();
+}
+
+CSETFile.prototype.setFileData = function (data, success, error) {
+    try {
+        if (data && data !== this.getData()) {
+            this.setData(data);
+            this.ui.setFileData(data);
+            this.shadowData = mxUtils.getXml(this.ui.getXmlFileData());
+            this.shadowPages = null;
+        }
+
+        if (success) {
+            success();
+        }
+    } catch (err) {
+        if (error) {
+            error(err);
+        }
+    }
 };

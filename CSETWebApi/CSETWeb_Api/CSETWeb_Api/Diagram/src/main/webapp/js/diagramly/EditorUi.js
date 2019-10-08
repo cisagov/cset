@@ -1892,8 +1892,6 @@
                 window.location.hash = '';
             }
 
-            let istemp = urlParams.local !== '1';
-
             // CSET - don't alter the 'filename'
             var CSET = true;
             if (!CSET && this.fname) {
@@ -1906,17 +1904,8 @@
             this.updateUi();
 
             if (CSET) {
-                istemp = false;
-                this.setMode(App.MODE_CSET);
-                this.fname.innerHTML = sessionStorage.getItem('assessment.name');
-
-                if (!oldFile) {
-                    this.createFile(this.defaultFilename, null, null, this.mode, null, null, null, istemp);
-                }
-
-                CsetUtils.LoadFileFromCSET(this, this.fname).then(() => {
-                    const isempty = this.isDiagramEmpty() || this.isGraphModelEmpty();
-                    if (isempty && !noDialogs) {
+                CsetUtils.LoadFileFromCSET(this).then(file => {
+                    if (!noDialogs && file.isEmpty()) {
                         const compact = this.isOffline();
                         const width = compact ? 350 : 620;
                         const height = compact ? 70 : 440;
@@ -1930,7 +1919,7 @@
                         dlg.init();
                     }
                 });
-            } else {
+            } else if (!noDialogs) {
                 this.showSplash();
             }
         }
@@ -2065,22 +2054,6 @@
 
         return result;
     };
-
-    EditorUi.prototype.getGraphModelXml = function () {
-        const xmlserializer = new XMLSerializer();
-        const model = this.editor.graph.getModel();
-        if (model) {
-            const enc = new mxCodec();
-            const node = enc.encode(model);
-            const xml = xmlserializer.serializeToString(node);
-            return xml;
-        }
-    }
-
-    EditorUi.prototype.isGraphModelEmpty = function () {
-        const xml = this.getGraphModelXml();
-        return xml === this.emptyDiagramXml || xml === this.emptyGraphModelXml;
-    }
 
 	/**
 	 * Creates a hash value for the current file.
@@ -3063,17 +3036,20 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.handleError = function (resp, title, fn, invokeFnOnClose, notFoundMessage) {
-        var resume = (this.spinner != null && this.spinner.pause != null) ? this.spinner.pause() : function () { };
-        var e = (resp != null && resp.error != null) ? resp.error : resp;
+        const resume = this.spinner && this.spinner.pause ? this.spinner.pause() : function () { };
+        const e = resp && resp.error ? resp.error : resp;
 
-        if (e != null || title != null) {
-            var msg = mxUtils.htmlEntities(mxResources.get('unknownError'));
-            var btn = mxResources.get('ok');
-            var retry = null;
-            title = (title != null) ? title : mxResources.get('error');
+        if (e || title) {
+            let msg = mxUtils.htmlEntities(mxResources.get('unknownError'));
+            let btn = mxResources.get('ok');
+            let retry = null;
 
-            if (e != null) {
-                if (e.retry != null) {
+            title = title || mxResources.get('error');
+
+            if (e) {
+                console.error('EditorUi.prototype.handleError: ', e);
+
+                if (e.retry) {
                     btn = mxResources.get('cancel');
                     retry = function () {
                         resume();
@@ -3081,40 +3057,38 @@
                     };
                 }
 
-                if (e.code == 404 || e.status == 404 || e.code == 403) {
-                    if (e.code == 403) {
+                if (e.code === 404 || e.status === 404 || e.code === 403) {
+                    if (e.code === 403) {
                         if (e.message != null) {
                             msg = mxUtils.htmlEntities(e.message);
-                        }
-                        else {
+                        } else {
                             msg = mxUtils.htmlEntities(mxResources.get('accessDenied'));
                         }
-                    }
-                    else {
-                        msg = (notFoundMessage != null) ? notFoundMessage :
-                            mxUtils.htmlEntities(mxResources.get('fileNotFoundOrDenied') +
-                                ((this.drive != null && this.drive.user != null) ? ' (' + this.drive.user.displayName +
-                                    ', ' + this.drive.user.email + ')' : ''));
+                    } else {
+                        msg = notFoundMessage || mxUtils.htmlEntities(mxResources.get('fileNotFoundOrDenied') +
+                            (this.drive && this.drive.user ? ` (${this.drive.user.displayName}, ${this.drive.user.email})` : '')
+                        );
                     }
 
-                    var id = window.location.hash;
+                    let id = window.location.hash;
 
                     // #U handles case where we tried to fallback to Google File and
                     // hash property still shows the public URL we tried to load
-                    if (id != null && (id.substring(0, 2) == '#G' ||
-                        id.substring(0, 45) == '#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D') &&
-                        ((resp != null && resp.error != null && ((resp.error.errors != null &&
-                            resp.error.errors.length > 0 && resp.error.errors[0].reason == 'fileAccess') ||
-                            (resp.error.data != null && resp.error.data.length > 0 &&
-                                resp.error.data[0].reason == 'fileAccess'))) ||
-                            e.code == 404 || e.status == 404)) {
-                        id = (id.substring(0, 2) == '#U') ? id.substring(45, id.lastIndexOf('%26ex')) : id.substring(2);
+                    if (id && (
+                        id.substring(0, 2) === '#G' ||
+                        id.substring(0, 45) === '#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D'
+                    ) && ((resp && resp.error && (
+                        (resp.error.errors && resp.error.errors[0] && resp.error.errors[0].reason === 'fileAccess') ||
+                        (resp.error.data && resp.error.data[0] && resp.error.data[0].reason === 'fileAccess')
+                    )) || e.code == 404 || e.status == 404
+                        )) {
+                        id = (id.substring(0, 2) === '#U') ? id.substring(45, id.lastIndexOf('%26ex')) : id.substring(2);
 
                         // Special case where the button must have a different label and function
-                        this.showError(title, msg, mxResources.get('openInNewWindow'), mxUtils.bind(this, function () {
-                            this.editor.graph.openLink('https://drive.google.com/open?id=' + id);
+                        this.showError(title, msg, mxResources.get('openInNewWindow'), mxUtils.bind(this, () => {
+                            this.editor.graph.openLink(`https://drive.google.com/open?id=${id}`);
                             this.handleError(resp, title, fn, invokeFnOnClose, notFoundMessage)
-                        }), retry, mxResources.get('changeUser'), mxUtils.bind(this, function () {
+                        }), retry, mxResources.get('changeUser'), mxUtils.bind(this, () => {
                             if (this.spinner.spin(document.body, mxResources.get('loading'))) {
                                 this.drive.clearUserId();
                                 gapi.auth.signOut();
@@ -3122,33 +3096,27 @@
                                 // Reload page to reset client auth
                                 window.location.reload();
                             }
-                        }), mxResources.get('cancel'), mxUtils.bind(this, function () {
+                        }), mxResources.get('cancel'), mxUtils.bind(this, () => {
                             window.location.hash = '';
                         }), 480, 150);
-
                         return;
                     }
-                }
-                else if (e.message != null) {
+                } else if (e.message) {
                     msg = mxUtils.htmlEntities(e.message);
-                }
-                else if (e.response != null && e.response.error != null) {
+                } else if (e.response && e.response.error) {
                     msg = mxUtils.htmlEntities(e.response.error);
-                }
-                else if (window.App !== 'undefined') {
-                    if (e.code == App.ERROR_TIMEOUT) {
+                } else if (window.App) {
+                    if (e.code === App.ERROR_TIMEOUT) {
                         msg = mxUtils.htmlEntities(mxResources.get('timeout'));
-                    }
-                    else if (e.code == App.ERROR_BUSY) {
+                    } else if (e.code == App.ERROR_BUSY) {
                         msg = mxUtils.htmlEntities(mxResources.get('busy'));
                     }
                 }
             }
 
             this.showError(title, msg, btn, fn, retry, null, null, null, null,
-                null, null, null, (invokeFnOnClose) ? fn : null);
-        }
-        else if (fn != null) {
+                null, null, null, invokeFnOnClose ? fn : null);
+        } else if (fn) {
             fn();
         }
     };
@@ -3160,11 +3128,10 @@
 	 * @param {number} dy Y-coordinate of the translation.
 	 */
     EditorUi.prototype.showError = function (title, msg, btn, fn, retry, btn2, fn2, btn3, fn3, w, h, hide, onClose) {
-        var height = (msg != null && msg.length > 120) ? 180 : 150;
-        var dlg = new ErrorDialog(this, title, msg, btn || mxResources.get('ok'),
-            fn, retry, btn2, fn2, hide, btn3, fn3);
-        this.showDialog(dlg.container, w || 340, h || ((msg != null && msg.length > 120) ?
-            180 : 150), true, false, onClose);
+        const width = 340;
+        const height = msg && msg.length > 120 ? 180 : 150;
+        const dlg = new ErrorDialog(this, title, msg, btn || mxResources.get('ok'), fn, retry, btn2, fn2, hide, btn3, fn3);
+        this.showDialog(dlg.container, w || width, h || height, true, false, onClose);
         dlg.init();
     };
 
