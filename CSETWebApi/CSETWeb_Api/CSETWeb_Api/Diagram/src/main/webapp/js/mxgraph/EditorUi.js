@@ -800,6 +800,11 @@ EditorUi.compactUi = true;
 EditorUi.prototype.splitSize = (mxClient.IS_TOUCH || mxClient.IS_POINTER) ? 12 : 8;
 
 /**
+ * Specifies the height of the local installation ribbon.
+ */
+EditorUi.prototype.ribbonHeight = 17;
+
+/**
  * Specifies the height of the menubar. Default is 34.
  */
 EditorUi.prototype.menubarHeight = 30;
@@ -2535,7 +2540,7 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
     }
 
     if (this.toolbar != null) {
-        this.toolbarContainer.style.top = this.menubarHeight + 'px';
+        this.toolbarContainer.style.top = (this.menubarHeight + 17) + 'px';
         this.toolbarContainer.style.height = this.toolbarHeight + 'px';
         tmp += this.toolbarHeight;
     }
@@ -2625,7 +2630,9 @@ EditorUi.prototype.createTabContainer = function () {
 /**
  * Creates the required containers.
  */
-EditorUi.prototype.createDivs = function () {
+EditorUi.prototype.createDivs = function ()
+{
+    this.localInstallRibbon = this.createDiv('local-install');
     this.menubarContainer = this.createDiv('geMenubarContainer');
     this.toolbarContainer = this.createDiv('geToolbarContainer');
     this.sidebarContainer = this.createDiv('geSidebarContainer');
@@ -2636,7 +2643,7 @@ EditorUi.prototype.createDivs = function () {
     this.hsplit.setAttribute('title', mxResources.get('collapseExpand'));
 
     // Sets static style for containers
-    this.menubarContainer.style.top = '0px';
+    this.menubarContainer.style.top = this.ribbonHeight;     // RKW - used to be 0px
     this.menubarContainer.style.left = '0px';
     this.menubarContainer.style.right = '0px';
     this.toolbarContainer.style.left = '0px';
@@ -2703,6 +2710,8 @@ EditorUi.prototype.createUi = function () {
         }
 
         // Inserts into DOM
+        this.localInstallRibbon.innerHTML = "Local Installation";
+        this.container.appendChild(this.localInstallRibbon);
         this.container.appendChild(this.menubarContainer);
     }
 
