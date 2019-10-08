@@ -204,7 +204,6 @@ export class StandardsComponent implements OnInit {
    */
   doBasicAssessment() {
     this.standardSvc.postSelections(["***DEFAULT***"]).subscribe(() => {
-      // this.assessSvc.currentTab = 'questions';
       this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
     });
   }
