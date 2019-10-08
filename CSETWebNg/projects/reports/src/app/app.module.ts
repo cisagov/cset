@@ -45,6 +45,7 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { ConfigService } from '../../../../src/app/services/config.service';
 import { ACETService } from '../../../../src/app/services/acet.service';
 import { MatDialogModule } from '@angular/material';
+import { FeedbackComponent } from '../../../../src/app/assessment/results/analysis/feedback/feedback.component';
 
 
 @NgModule({
