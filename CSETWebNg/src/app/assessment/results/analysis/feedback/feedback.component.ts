@@ -54,7 +54,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
 
       setupTable(data: any) {
         this.initialized = false;
-        this.feedbackText = data;
+        this.feedbackText = data.FeedbackText;
         this.initialized = true;
         }
 }
