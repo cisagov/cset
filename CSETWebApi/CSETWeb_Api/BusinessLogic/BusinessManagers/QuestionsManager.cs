@@ -294,7 +294,7 @@ namespace CSETWeb_Api.BusinessManagers
                         var creates = from a in context.Answer_Components_Exploded
                                       where a.Assessment_Id == this._assessmentId &&
                                       a.ComponentName == componentName.label &&
-                                      a.Component_GUID == null
+                                      a.Component_GUID == Guid.Empty.ToString()
                                       select a;
                         foreach (var c in creates.ToList())
                         {
