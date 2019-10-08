@@ -112,6 +112,11 @@ export class RequirementDetailComponent implements OnInit {
       this.r = result;
       this.rBackup = this.r;
       this.setBuilderSvc.activeRequirement = this.r;
+
+      // Default to a low SAL
+      if (this.r.SalLevels.length === 0) {
+        this.r.SalLevels.push('L');
+      }
     });
 
     this.setBuilderSvc.getReferenceDocumentsForSet().subscribe((docs: ReferenceDoc[]) => {
@@ -171,6 +176,11 @@ export class RequirementDetailComponent implements OnInit {
     let state = false;
     const checked = e.target.checked;
     const a = r.SalLevels.indexOf(level);
+
+    // trying to remove the last SAL is prohibited
+    if (r.SalLevels.length === 1 && r.SalLevels[0] === level) {
+      return;
+    }
 
     if (checked) {
       if (a <= 0) {
