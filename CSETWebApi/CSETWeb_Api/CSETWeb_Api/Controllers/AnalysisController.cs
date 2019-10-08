@@ -63,32 +63,42 @@ namespace CSETWeb_Api.Controllers
 
             string AssessmentMode = GetAssessmentMode(assessmentId);
 
-            if (AssessmentMode == "Q")
+            try
             {
                 using (CSET_Context context = new CSET_Context())
                 {
-                    var QuestionsWithFeedbackList = context.usp_GetQuestionsWithFeedbacks(assessmentId).ToList();
-                    bool FaaMail = QuestionsWithFeedbackList.Any(q => q.SetName.Contains("FAA_MAINT"));
+                    var QuestionsWithFeedbackList = from a in context.Answer_Standards_InScope
+                                                    where a.assessment_id == assessmentId &&
+                                                    a.mode == AssessmentMode && a.FeedBack != null
+                                                    select a;
+
+                    bool FaaMail = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
+                    && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA")).FirstOrDefault() != null;
                     string FaaEmail = "FAAPEDModule@faa.gov";
-                    string DHSEmail = "csetPEDFeedback@dhs.gov";
+                    string DHSEmail = "cset@dhs.gov";
                     FeedbackResult.FeedbackText = "Please email to: ";
                     if (FaaMail) FeedbackResult.FeedbackText += FaaEmail + ";   ";
                     FeedbackResult.FeedbackText += DHSEmail + "\n\n\n";
                     FeedbackResult.FeedbackText += "Dear PED Module Administrator: \n\n";
                     FeedbackResult.FeedbackText += "The following comments were provided for each of the questions: \n\n";
 
-                    foreach (usp_GetQuestionsWithFeedback q in QuestionsWithFeedbackList)
+                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
                     {
-                        q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementId, q.AnswerId, q.QuestionText);
-                        q.Feedback = rm.ResolveParameters(q.QuestionOrRequirementId, q.AnswerId, q.Feedback);
-                        FeedbackResult.FeedbackText += "Question #" + q.QuestionOrRequirementId + ". \n";
-                        FeedbackResult.FeedbackText += q.QuestionText + "\n\n";
-                        FeedbackResult.FeedbackText += "Users Feedback: \n" + q.Feedback + "\n\n\n";
+                        q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
+                        q.FeedBack = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
+                        FeedbackResult.FeedbackText += "Question #" + q.question_number + ". \n";
+                        FeedbackResult.FeedbackText += q.Question_Text + "\n\n";
+                        FeedbackResult.FeedbackText += "Users Feedback: \n" + q.FeedBack + "\n\n\n";
                     }
 
                     return FeedbackResult;
                 }
             }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
             return FeedbackResult;
         }
 

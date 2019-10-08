@@ -37,9 +37,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
   })
 
   export class FeedbackComponent implements OnInit {
-    dataRows: {
-      FeedbackText: string
-    }[];
+    dataRow: any;
     initialized = false;
     docUrl: string;
 
@@ -56,21 +54,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
 
       setupTable(data: any) {
         this.initialized = false;
-        this.dataRows = data;
-
-        let i = 1;
-
-        for (const row of this.dataRows) {
-            i ++;
-        //   row.rank = i++;
-        //   switch (row.AnswerText) {
-        //     case 'U':
-        //       row.displayAnswer = this.configSvc.answerLabels['U'];
-        //       break;
-        //     case 'N':
-        //       row.displayAnswer = this.configSvc.answerLabels['N'];
-        //       break;
-          }
+        this.dataRow = data;
         this.initialized = true;
         }
 }
