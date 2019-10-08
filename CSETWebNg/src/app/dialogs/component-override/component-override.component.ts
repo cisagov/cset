@@ -21,29 +21,27 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ExecutiveComponent } from './executive/executive.component';
-import { SitesummaryComponent} from './sitesummary/sitesummary.component';
-import { DetailComponent } from './detail/detail.component';
-import { SecurityplanComponent } from './securityplan/securityplan.component';
-import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearouts.component';
-// import { FAAReportComponent} from './faareport/faareport.component';
-import { RedirectComponent } from './redirect/redirect.component';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { environment } from '../../../environments/environment';
+import { ConfigService } from '../../services/config.service';
 
-const routes: Routes = [
-  { path: 'executive', component: ExecutiveComponent },
-  { path: 'sitesummary', component: SitesummaryComponent },
-  { path: 'securityplan', component: SecurityplanComponent },
-  { path: 'detail', component: DetailComponent },
-  { path: 'discoveries', component: DiscoveryTearoutsComponent },
-  // {path: 'faareport'. component: FAAReportComponent },
-  { path: '**', component: RedirectComponent }
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+@Component({
+  selector: 'component-override',
+  templateUrl: './component-override.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: {class: 'd-flex flex-column flex-11a'}
 })
-export class AppRoutingModule { }
+export class ComponentOverrideComponent {
+  version = environment.version;
+  helpContactEmail = this.configSvc.helpContactEmail;
+  helpContactPhone = this.configSvc.helpContactPhone;
+
+  constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
+    public configSvc: ConfigService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  close() {
+    return this.dialog.close();
+  }
+}

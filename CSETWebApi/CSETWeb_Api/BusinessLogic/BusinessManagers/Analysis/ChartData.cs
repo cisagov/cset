@@ -95,5 +95,6 @@ namespace CSETWeb_Api.BusinessManagers.Analysis
         public int? alt { get; set; }
         public int? unanswered { get; set; }
     }
+
 }
 
