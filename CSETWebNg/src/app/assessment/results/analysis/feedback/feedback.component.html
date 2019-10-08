@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="mb-4 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized">
-    <textarea style="height: 400px;" id="feedback" class="form-control" type="text" [(ngModel)]="dataRows.FeedbackText"></textarea>
+    <textarea style="height: 400px;" id="feedback" class="form-control" type="text" [ngModel]="feedbackText"></textarea>
     </div>
     <div style="border: 1px solid; padding: 5px; box-shadow:3px 8px 5px #888888; ">
         <p>Copy text to clipboard and paste into an email</p>
