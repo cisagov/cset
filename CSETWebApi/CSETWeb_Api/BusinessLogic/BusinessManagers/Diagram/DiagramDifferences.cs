@@ -38,7 +38,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             this.DeletedLayers = processLayers(oldDiagram.Layers, newDiagram.Layers);
             this.AddedZones = processZones(newDiagram.Zones, oldDiagram.Zones);
             this.DeletedZones = processZones(oldDiagram.Zones, newDiagram.Zones);
-
         }
 
         private Dictionary<string, NetworkZone> processZones(Dictionary<string, NetworkZone> sourcedictionary, Dictionary<string, NetworkZone> destinationDictionary)
