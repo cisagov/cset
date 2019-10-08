@@ -1892,6 +1892,8 @@
                 window.location.hash = '';
             }
 
+            let istemp = urlParams.local !== '1';
+
             // CSET - don't alter the 'filename'
             var CSET = true;
             if (!CSET && this.fname) {
@@ -1899,34 +1901,38 @@
                 this.fname.innerHTML = '';
                 this.fname.setAttribute('title', mxResources.get('rename'));
             }
-            if (CSET) {
-                this.fname.innerHTML = sessionStorage.getItem('assessment.name');
-            }
 
             this.editor.setStatus('');
             this.updateUi();
 
-            if (!oldFile) {
-                this.createFile(this.defaultFilename, null, null, null, null, null, null, urlParams.local !== '1');
-                const file = this.getCurrentFile();
-                console.log('file created.', { file, isModified: file.isModified() });
-            }
-            this.LoadGraphFromCSET(this.editor, this.fname, this).then(() => {
-                const isempty = this.isDiagramEmpty() || this.isGraphModelEmpty();
-                if (isempty && !noDialogs) {
-                    const compact = this.isOffline();
-                    const width = compact ? 350 : 620;
-                    const height = compact ? 70 : 440;
-                    const modal = true;
-                    const canclose = true;
-                    const onclose = mxUtils.bind(this, cancel => {
-                        this.hideDialog();
-                    });
-                    const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
-                    this.showDialog(dlg.container, width, height, modal, canclose, onclose);
-                    dlg.init();
+            if (CSET) {
+                istemp = false;
+                this.setMode(App.MODE_CSET);
+                this.fname.innerHTML = sessionStorage.getItem('assessment.name');
+
+                if (!oldFile) {
+                    this.createFile(this.defaultFilename, null, null, this.mode, null, null, null, istemp);
                 }
-            });
+
+                CsetUtils.LoadFileFromCSET(this, this.fname).then(() => {
+                    const isempty = this.isDiagramEmpty() || this.isGraphModelEmpty();
+                    if (isempty && !noDialogs) {
+                        const compact = this.isOffline();
+                        const width = compact ? 350 : 620;
+                        const height = compact ? 70 : 440;
+                        const modal = true;
+                        const canclose = true;
+                        const onclose = mxUtils.bind(this, cancel => {
+                            this.hideDialog();
+                        });
+                        const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
+                        this.showDialog(dlg.container, width, height, modal, canclose, onclose);
+                        dlg.init();
+                    }
+                });
+            } else {
+                this.showSplash();
+            }
         }
 
         if (!file) {
@@ -1947,7 +1953,6 @@
             file.addListener('descriptorChanged', this.descriptorChangedListener);
             file.addListener('contentChanged', this.descriptorChangedListener);
             file.open();
-            console.log('file opened.', { file, isModified: file.isModified() });
             delete this.openingFile;
 
             const filemode = file.getMode();
@@ -2060,13 +2065,6 @@
 
         return result;
     };
-
-    /**
-     * Retrieves the graph from the CSET API if it has been stored.
-     */
-    EditorUi.prototype.LoadGraphFromCSET = CsetUtils.LoadGraphFromCSET;
-
-    EditorUi.prototype.PersistGraphToCSET = CsetUtils.PersistGraphToCSET;
 
     EditorUi.prototype.getGraphModelXml = function () {
         const xmlserializer = new XMLSerializer();

@@ -152,8 +152,7 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
                     const assessmentName = resp.AssessmentName;
 
                     filename.innerHTML = assessmentName;
-                    if (app.currentFile)
-                    {
+                    if (app.currentFile) {
                         app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
                     }
                     sessionStorage.setItem('assessment.name', assessmentName);
@@ -162,6 +161,51 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
                     var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
                     updateGraph(editor, data);
                     CsetUtils.clearWarningsFromDiagram(editor.graph);
+                    break;
+                case 401:
+                    window.location.replace(localStorage.getItem('cset.client'));
+                    break;
+            }
+        }
+    });
+}
+
+/**
+ * Retrieves the graph from the CSET API if it has been stored.
+ */
+CsetUtils.LoadFileFromCSET = async function (app, filenameElmt) {
+    let file = app.getCurrentFile();
+    if (!file) {
+        app.createFile(app.defaultFilename, null, null, App.MODE_CSET, null, null, null, false);
+    }
+    file = app.getCurrentFile();
+
+    const data = await makeRequest({
+        method: 'GET',
+        url: localStorage.getItem('cset.host') + 'diagram/get',
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
+                return;
+            }
+
+            switch (e.status) {
+                case 200:
+                    const resp = JSON.parse(e.responseText);
+                    const assessmentName = resp.AssessmentName;
+
+                    file.rename(`${assessmentName}.csetwd`, () => {
+                        filenameElmt.innerHTML = assessmentName;
+                        sessionStorage.setItem('assessment.name', assessmentName);
+                        sessionStorage.setItem('last.number', resp.LastUsedComponentNumber);
+                    });
+
+                    const csetdata = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
+                    const filedata = file.getData();
+                    console.log('setting file data: ', { csetdata, filedata });
+                    if (filedata !== csetdata) {
+                        file.setData(csetdata);
+                        file.ui.setFileData(csetdata);
+                    }
                     break;
                 case 401:
                     window.location.replace(localStorage.getItem('cset.client'));
