@@ -30,7 +30,6 @@ import { ExecutiveComponent } from './executive/executive.component';
 import { SitesummaryComponent } from './sitesummary/sitesummary.component';
 import { SecurityplanComponent } from './securityplan/securityplan.component';
 import { DetailComponent } from './detail/detail.component';
-// import { FAAReportComponent} from './faareport/faareport.component';
 import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearouts.component';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReportService } from './services/report.service';
@@ -56,10 +55,10 @@ import { MatDialogModule } from '@angular/material';
     SecurityplanComponent,
     // FAAReportComponent,
     DetailComponent,
+    FeedbackComponent,
     DiscoveryTearoutsComponent,
     EvalAgainstComponent,
     RedirectComponent
-
   ],
   imports: [
     BrowserModule,

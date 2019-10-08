@@ -49,6 +49,10 @@ export class AnalysisService {
     return this.http.get(this.apiUrl + 'RankedQuestions');
   }
 
+  getFeedback(): any {
+    return this.http.get(this.apiUrl + 'Feedback');
+  }
+
   getTopCategories(num: number) {
     return this.http.get(this.apiUrl + 'TopCategories?total=' + num);
   }

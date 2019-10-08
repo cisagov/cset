@@ -40,6 +40,7 @@ import { ComponentsTypesComponent } from './assessment/results/analysis/componen
 import { ComponentsWarningsComponent } from './assessment/results/analysis/components-warnings/components-warnings.component';
 import { DashboardComponent } from './assessment/results/analysis/dashboard/dashboard.component';
 // tslint:disable-next-line:max-line-length
+import { FeedbackComponent } from './assessment/results/analysis/feedback/feedback.component';
 import { RankedQuestionsComponent } from './assessment/results/analysis/ranked-questions/ranked-questions.component';
 import { StandardsRankedComponent } from './assessment/results/analysis/standards-ranked/standards-ranked.component';
 import { StandardsResultsComponent } from './assessment/results/analysis/standards-results/standards-results.component';
@@ -139,6 +140,7 @@ const appRoutes: Routes = [
           { path: 'analysis', component: AnalysisComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'ranked-questions', component: RankedQuestionsComponent },
+          { path: 'feedback', component: FeedbackComponent },
           // { path: 'overall-ranked-categories', component: OverallRankedCategoriesComponent },
           { path: 'standards-summary', component: StandardsSummaryComponent },
           { path: 'standards-ranked', component: StandardsRankedComponent },
@@ -154,6 +156,7 @@ const appRoutes: Routes = [
           { path: 'acetDashboard', component: ACETDashboardComponent },
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
+          { path: 'feedback', component: FeedbackComponent},
           { path: '', component: DashboardComponent },
         ]
       },
