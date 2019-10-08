@@ -11,8 +11,7 @@
 /**
  * A collection of CSET-specific utilities and functionality.
  */
-CsetUtils = function ()
-{
+CsetUtils = function () {
 }
 
 /**
@@ -137,75 +136,22 @@ CsetUtils.adjustConnectability = function (edit) {
 /**
  * Retrieves the graph from the CSET API if it has been stored.
  */
-CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
-    await makeRequest({
-        method: 'GET',
-        url: localStorage.getItem('cset.host') + 'diagram/get',
-        onreadystatechange: function (e) {
-            if (e.readyState !== 4) {
-                return;
-            }
-
-            switch (e.status) {
-                case 200:
-                    const resp = JSON.parse(e.responseText);
-                    const assessmentName = resp.AssessmentName;
-
-                    filename.innerHTML = assessmentName;
-                    if (app.currentFile) {
-                        app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
-                    }
-                    sessionStorage.setItem('assessment.name', assessmentName);
-                    sessionStorage.setItem('last.number', resp.LastUsedComponentNumber);
-
-                    var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
-                    updateGraph(editor, data);
-                    CsetUtils.clearWarningsFromDiagram(editor.graph);
-                    break;
-                case 401:
-                    window.location.replace(localStorage.getItem('cset.client'));
-                    break;
-            }
-        }
-    });
-}
-
-/**
- * Retrieves the graph from the CSET API if it has been stored.
- */
-CsetUtils.LoadFileFromCSET = async function (app, filenameElmt) {
+CsetUtils.LoadFileFromCSET = async function (app) {
     let file = app.getCurrentFile();
     if (!file) {
-        app.createFile(app.defaultFilename, null, null, App.MODE_CSET, null, null, null, false);
+        app.createFile(app.defaultFilename, null, null, App.MODE_CSET, null, null, null, null);
     }
     file = app.getCurrentFile();
 
-    const data = await makeRequest({
+    const resp = await makeRequest({
         method: 'GET',
         url: localStorage.getItem('cset.host') + 'diagram/get',
         onreadystatechange: function (e) {
             if (e.readyState !== 4) {
                 return;
             }
-
             switch (e.status) {
                 case 200:
-                    const resp = JSON.parse(e.responseText);
-                    const assessmentName = resp.AssessmentName;
-
-                    file.rename(`${assessmentName}.csetwd`, () => {
-                        filenameElmt.innerHTML = assessmentName;
-                        sessionStorage.setItem('assessment.name', assessmentName);
-                        sessionStorage.setItem('last.number', resp.LastUsedComponentNumber);
-                    });
-
-                    const csetdata = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
-                    const filedata = file.getData();
-                    console.log('setting file data: ', { csetdata, filedata });
-                    if (filedata !== csetdata) {
-                        file.setData(csetdata);
-                        file.ui.setFileData(csetdata);
-                    }
                     break;
                 case 401:
                     window.location.replace(localStorage.getItem('cset.client'));
@@ -213,6 +159,20 @@ CsetUtils.LoadFileFromCSET = async function (app, filenameElmt) {
             }
         }
     });
+
+    const data = JSON.parse(resp);
+    const assessmentName = data.AssessmentName;
+
+    file.rename(`${assessmentName}.csetwd`, () => {
+        const filenameelmt = app.fname;
+        filenameelmt.innerHTML = assessmentName;
+        sessionStorage.setItem('assessment.name', assessmentName);
+        sessionStorage.setItem('last.number', data.LastUsedComponentNumber);
+    });
+
+    const csetdata = data.DiagramXml || EditorUi.prototype.emptyDiagramXml;
+    file.setFileData(csetdata);
+    return file;
 }
 
 /**

@@ -3054,7 +3054,8 @@ Graph.prototype.getTooltipForCell = function (cell)
             }
 
             // Hide certain CSET attributes
-            CsetUtils.ignoredAttributes.forEach(i => ignored.push(i));
+            const ignoredAttributes = CsetUtils.ignoredAttributes || [];
+            ignoredAttributes.forEach(i => ignored.push(i));
 
             for (var i = 0; i < attrs.length; i++)
             {

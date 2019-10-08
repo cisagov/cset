@@ -3415,7 +3415,9 @@ App.prototype.getPeerForMode = function (mode) {
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.createFile = function (title, data, libs, mode, done, replace, folderId, tempFile) {
-    mode = !!tempFile && tempFile ? undefined : mode || this.mode;
+    if (mode !== App.MODE_CSET) {
+        mode = !!tempFile && tempFile ? undefined : mode || this.mode;
+    }
 
     if (title && this.spinner.spin(document.body, mxResources.get('inserting'))) {
         data = data || this.emptyDiagramXml;
@@ -3601,14 +3603,18 @@ App.prototype.fileCreated = function (file, libs, replace, done) {
         });
         complete({ done });
 
-        // Updates data in memory for local files
-        if (file.constructor === LocalFile) {
-            file.setModified(true);
-            fn();
-        } else {
-            file.saveFile(title, false, fn, err => {
-                complete({ err });
-            });
+        switch (file.constructor) {
+            case LocalFile:
+            case CSETFile:
+                // Updates data in memory for local files
+                file.setModified(true);
+                fn();
+                break;
+            default:
+                file.saveFile(title, false, fn, err => {
+                    complete({ err });
+                });
+                break;
         }
     }
 };

@@ -2570,7 +2570,7 @@ var ParseDialog = function(editorUi, title, defaultType)
 /**
  * Constructs a new dialog for creating files from templates.
  */
-var NewDialog = function (editorUi, opts) {
+var NewDialog = function (app, opts) {
     opts.showName = opts.hasOwnProperty('showName') ? opts.showName : true;
     opts.createOnly = opts.createOnly || false;
     opts.leftHighlight = opts.leftHighlight || '#ebf2f9';
@@ -2592,26 +2592,26 @@ var NewDialog = function (editorUi, opts) {
     let ext = '.drawio';
     let resourceimg;
     let resourceName = 'filename';
-    switch (editorUi.mode) {
+    switch (app.mode) {
         case App.MODE_GOOGLE:
-            ext = editorUi.drive && editorUi.drive.extension || ext;
+            ext = app.drive && app.drive.extension || ext;
             resourceimg = 'google-drive-logo.svg';
             resourceName = 'diagramName';
             break;
         case App.MODE_DROPBOX:
-            ext = editorUi.dropbox && editorUi.dropbox.extension || ext;
+            ext = app.dropbox && app.dropbox.extension || ext;
             resourceimg = 'dropbox-logo.svg';
             break;
         case App.MODE_ONEDRIVE:
-            ext = editorUi.oneDrive && editorUi.oneDrive.extension || ext;
+            ext = app.oneDrive && app.oneDrive.extension || ext;
             resourceimg = 'onedrive-logo.svg';
             break;
         case App.MODE_GITHUB:
-            ext = editorUi.gitHub && editorUi.gitHub.extension || ext;
+            ext = app.gitHub && app.gitHub.extension || ext;
             resourceimg = 'github-logo.svg';
             break;
         case App.MODE_TRELLO:
-            ext = editorUi.trello && editorUi.trello.extension || ext;
+            ext = app.trello && app.trello.extension || ext;
             resourceimg = 'trello-logo.svg';
             break;
         case App.MODE_BROWSER:
@@ -2641,7 +2641,7 @@ var NewDialog = function (editorUi, opts) {
     }
 
     const nameInput = document.createElement('input');
-    nameInput.setAttribute('value', editorUi.defaultFilename + ext);
+    nameInput.setAttribute('value', app.defaultFilename + ext);
     nameInput.style.marginLeft = '10px';
     nameInput.style.width = (opts.compact) ? '220px' : '430px';
 
@@ -2658,9 +2658,9 @@ var NewDialog = function (editorUi, opts) {
 
     if (opts.showName) {
         header.appendChild(nameInput);
-        const fileExts = editorUi.editor.fileExtensions;
+        const fileExts = app.editor.fileExtensions;
         if (fileExts) {
-            const hint = FilenameDialog.createTypeHint(editorUi, nameInput, fileExts);
+            const hint = FilenameDialog.createTypeHint(app, nameInput, fileExts);
             hint.style.marginTop = '12px';
             header.appendChild(hint);
         }
@@ -2692,19 +2692,28 @@ var NewDialog = function (editorUi, opts) {
 
     const create = tmplt => {
         if (!tmplt.extUrl && !opts.callback) {
-            const title = nameInput.value;
-            if (title) {
-                const folderId = editorUi.stateArg && editorUi.stateArg.folderId;
-                const enabled = editorUi.mode !== App.MODE_GOOGLE || !folderId;
-                editorUi.pickFolder(editorUi.mode, fldid => {
-                    editorUi.createFile(title, tmplt.xml, tmplt.libs, undefined, () => {
-                        editorUi.hideDialog();
-                    }, true, fldid);
-                }, enabled);
+            if (tmplt.iscset) {
+                const csetfile = app.getCurrentFile();
+                if (csetfile) {
+                    csetfile.setFileData(tmplt.xml, () => {
+                        app.hideDialog();
+                    });
+                }
+            } else {
+                const title = nameInput.value;
+                if (title) {
+                    const folderId = app.stateArg && app.stateArg.folderId;
+                    const enabled = app.mode !== App.MODE_GOOGLE || !folderId;
+                    app.pickFolder(app.mode, fldid => {
+                        app.createFile(title, tmplt.xml, tmplt.libs, undefined, () => {
+                            app.hideDialog();
+                        }, true, fldid);
+                    }, enabled);
+                }
             }
         } else {
             if (!opts.showName) {
-                editorUi.hideDialog();
+                app.hideDialog();
             }
             if (tmplt.extUrl) {
                 opts.openExtDocCallback(tmplt.extUrl, tmplt.infoObj, nameInput.value);
@@ -2718,6 +2727,7 @@ var NewDialog = function (editorUi, opts) {
         if (selected.template) {
             createButton.setAttribute('disabled', 'disabled');
             create({
+                iscset: selected.template.iscset,
                 xml: selected.template.xml,
                 libs: selected.template.libs,
                 extUrl: selected.template.exturl,
@@ -2775,6 +2785,7 @@ var NewDialog = function (editorUi, opts) {
         });
         let ondblclick = tmplt.onDblClick || (() => {
             create({
+                iscset: tmplt.iscset,
                 xml: tmplt.xml,
                 libs: tmplt.libs,
                 extUrl: tmplt.url,
@@ -2800,7 +2811,7 @@ var NewDialog = function (editorUi, opts) {
                 elt.style.border = '1px solid transparent';
 
                 let realUrl = tmplt.url;
-                if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl)) {
+                if (/^https?:\/\//.test(realUrl) && !app.editor.isCorsEnabledForUrl(realUrl)) {
                     realUrl = `${PROXY_URL}?url=${encodeURIComponent(realUrl)}`;
                 }
                 else {
@@ -2816,6 +2827,7 @@ var NewDialog = function (editorUi, opts) {
                         if (createIt) {
                             const xml = req.getText();
                             create({
+                                iscset: false,
                                 xml: xml,
                                 libs: tmplt.libs,
                                 extUrl: tmplt.url,
@@ -2913,6 +2925,7 @@ var NewDialog = function (editorUi, opts) {
             const csetTemplates = await CsetUtils.getCsetTemplates();
             for (const tmplt of csetTemplates) {
                 categories[category].push({
+                    iscset: true,
                     xml: tmplt.Markup,
                     title: tmplt.Name.trim(),
                     tooltip: tmplt.Name.trim(),
@@ -2929,10 +2942,11 @@ var NewDialog = function (editorUi, opts) {
     }
 
     mxEvent.addListener(nameInput, 'keypress', e => {
-        if (editorUi.dialog.container.firstChild === outer && e.keyCode === 13) {
+        if (app.dialog.container.firstChild === outer && e.keyCode === 13) {
             if (selected.template) {
                 createButton.setAttribute('disabled', 'disabled');
                 create({
+                    iscset: selected.template.iscset,
                     xml: selected.template.xml,
                     libs: selected.template.libs,
                     extUrl: selected.template.exturl,
@@ -2953,16 +2967,16 @@ var NewDialog = function (editorUi, opts) {
 
     const cancelBtn = mxUtils.button(mxResources.get('cancel'), () => {
         opts.cancelCallback && opts.cancelCallback();
-        editorUi.hideDialog(true);
+        app.hideDialog(true);
     });
     cancelBtn.className = 'geBtn';
-    if (editorUi.editor.cancelFirst && (!opts.createOnly || opts.cancelCallback)) {
+    if (app.editor.cancelFirst && (!opts.createOnly || opts.cancelCallback)) {
         btns.appendChild(cancelBtn);
     }
 
-    if (!opts.compact && !editorUi.isOffline() && opts.showName && !opts.callback && !opts.createOnly) {
+    if (!opts.compact && !app.isOffline() && opts.showName && !opts.callback && !opts.createOnly) {
         const helpBtn = mxUtils.button(mxResources.get('help'), () => {
-            editorUi.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
+            app.openLink('https://support.draw.io/display/DO/Creating+and+Opening+Files');
         });
         helpBtn.className = 'geBtn';
         btns.appendChild(helpBtn);
@@ -2970,19 +2984,19 @@ var NewDialog = function (editorUi, opts) {
 
     if (!opts.compact && urlParams.embed !== '1' && !opts.createOnly && !opts.hideFromTemplateUrl) {
         const fromTmpBtn = mxUtils.button(mxResources.get('fromTemplateUrl'), () => {
-            const dlg = new FilenameDialog(editorUi, '', mxResources.get('create'), fileUrl => {
+            const dlg = new FilenameDialog(app, '', mxResources.get('create'), fileUrl => {
                 if (fileUrl) {
-                    const url = editorUi.getUrl(`${window.location.pathname}?mode=${editorUi.mode || ''}` +
+                    const url = app.getUrl(`${window.location.pathname}?mode=${app.mode || ''}` +
                         `&title=${encodeURIComponent(nameInput.value)} ` +
                         `&create=${encodeURIComponent(fileUrl)}`);
-                    if (!editorUi.getCurrentFile()) {
+                    if (!app.getCurrentFile()) {
                         window.location.href = url;
                     } else {
                         window.openWindow(url);
                     }
                 }
             }, mxResources.get('url'));
-            editorUi.showDialog(dlg.container, 300, 80, true, true);
+            app.showDialog(dlg.container, 300, 80, true, true);
             dlg.init();
         });
         fromTmpBtn.className = 'geBtn';
@@ -2991,19 +3005,19 @@ var NewDialog = function (editorUi, opts) {
 
     if (Graph.fileSupport && opts.showImport) {
         const importBtn = mxUtils.button(mxResources.get('import'), () => {
-            if (!editorUi.newDlgFileInputElt) {
+            if (!app.newDlgFileInputElt) {
                 const fileInput = document.createElement('input');
                 fileInput.setAttribute('multiple', 'multiple');
                 fileInput.setAttribute('type', 'file');
                 mxEvent.addListener(fileInput, 'change', () => {
-                    editorUi.openFiles(fileInput.files, true);
+                    app.openFiles(fileInput.files, true);
                     fileInput.value = '';
                 });
                 fileInput.style.display = 'none';
                 document.body.appendChild(fileInput);
-                editorUi.newDlgFileInputElt = fileInput;
+                app.newDlgFileInputElt = fileInput;
             }
-            editorUi.newDlgFileInputElt.click();
+            app.newDlgFileInputElt.click();
         });
         importBtn.className = 'geBtn';
         btns.appendChild(importBtn);
@@ -3011,7 +3025,7 @@ var NewDialog = function (editorUi, opts) {
 
     btns.appendChild(createButton);
 
-    if (!editorUi.editor.cancelFirst && !opts.callback && (!opts.createOnly || opts.cancelCallback)) {
+    if (!app.editor.cancelFirst && !opts.callback && (!opts.createOnly || opts.cancelCallback)) {
         btns.appendChild(cancelBtn);
     }
 
