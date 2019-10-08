@@ -37,7 +37,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
   })
 
   export class FeedbackComponent implements OnInit {
-    dataRow: any;
+    feedbackText: string;
     initialized = false;
     docUrl: string;
 
@@ -54,7 +54,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
 
       setupTable(data: any) {
         this.initialized = false;
-        this.dataRow = data;
+        this.feedbackText = data;
         this.initialized = true;
         }
 }
