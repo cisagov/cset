@@ -241,6 +241,7 @@
     <Compile Include="BusinessManagers\Analysis\usp_getStandardsRankedCategories.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getStandardsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\AnswerManager.cs" />
+    <Compile Include="BusinessManagers\Answer_Components_Exploded_ForJSON.cs" />
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />

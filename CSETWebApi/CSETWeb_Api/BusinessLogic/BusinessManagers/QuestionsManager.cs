@@ -276,6 +276,26 @@ namespace CSETWeb_Api.BusinessManagers
             return resp;
         }
 
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, string component_Type)
+        {
+            List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
+            using (CSET_Context context = new CSET_Context())
+            {
+                var questionlist = from a in context.Answer_Components_Exploded
+                                   where a.Assessment_Id == assessmentId
+                                    && a.Question_Id == question_id
+                                    && a.Component_Type == component_Type
+                                   select a;
+                foreach(var question in questionlist.ToList())
+                {
+                    Answer_Components_Exploded_ForJSON tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                    tmp.Component_GUID = question.Component_GUID.ToString();
+                    rlist.Add(tmp);
+                }
+                return rlist;
+            }
+        }
+
         /// <summary>
         /// get the exploded view where assessment
         /// </summary>
@@ -294,7 +314,7 @@ namespace CSETWeb_Api.BusinessManagers
                         var creates = from a in context.Answer_Components_Exploded
                                       where a.Assessment_Id == this._assessmentId &&
                                       a.ComponentName == componentName.label &&
-                                      a.Component_GUID == Guid.Empty.ToString()
+                                      a.Component_GUID == Guid.Empty
                                       select a;
                         foreach (var c in creates.ToList())
                         {
