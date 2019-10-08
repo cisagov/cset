@@ -19,9 +19,9 @@ namespace DataLayerCore.Model
         public bool Is_Requirement { get; set; }
         public int Question_Or_Requirement_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
-        [Column(TypeName = "ntext")]
+        [StringLength(2048)]
         public string Comment { get; set; }
-        [Column(TypeName = "ntext")]
+        [StringLength(2048)]
         public string Alternate_Justification { get; set; }
         public int? Question_Number { get; set; }
         [Required]
@@ -36,7 +36,7 @@ namespace DataLayerCore.Model
         public bool Is_Framework { get; set; }
         public int? Old_Answer_Id { get; set; }
         public bool Reviewed { get; set; }
-        [Column(TypeName = "ntext")]
+        [StringLength(2048)]
         public string FeedBack { get; set; }
 
         [ForeignKey("Answer_Text")]

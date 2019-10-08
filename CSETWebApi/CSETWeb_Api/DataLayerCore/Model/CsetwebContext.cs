@@ -27,7 +27,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
         public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
-        public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
+        public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }        
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
@@ -211,15 +211,21 @@ namespace DataLayerCore.Model
                     .HasName("IX_ANSWER_1")
                     .IsUnique();
 
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
                 entity.Property(e => e.Answer_Text)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('U')");
+
+                entity.Property(e => e.Comment).IsUnicode(false);
 
                 entity.Property(e => e.Component_Guid)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('00000000-0000-0000-0000-000000000000')");
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.ANSWER)
@@ -274,8 +280,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.CreditUnionName).IsUnicode(false);
 
                 entity.Property(e => e.Diagram_Image).IsUnicode(false);
-
-                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
 
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
 
