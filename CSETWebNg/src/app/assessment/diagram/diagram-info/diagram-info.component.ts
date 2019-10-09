@@ -34,6 +34,14 @@ export class DiagramInfoComponent implements OnInit {
             this.hasDiagram = resp;
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
         });
+
+        // When returning from Diagram, we get a brand new authSvc.
+        // This refreshes the isLocal flag.
+        if (this.authSvc.isLocal === undefined) {
+            this.authSvc.checkLocalInstallStatus().subscribe((resp: boolean) => {
+                this.authSvc.isLocal = resp;
+            });
+        }
     }
 
     populateTree() {
