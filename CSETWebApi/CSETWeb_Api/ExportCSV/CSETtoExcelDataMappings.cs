@@ -326,7 +326,7 @@ namespace ExportCSV
         public int Answer_Id { get; set; }
         public string Comment { get; set; }
         public string Alternate_Justification { get; set; }
-        public string Component_Guid { get; set; }
+        public Guid Component_Guid { get; set; }
 
     }
 
