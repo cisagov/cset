@@ -49,12 +49,12 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                 {
                     QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
 
-                    string guid = test.Component_Guid.ToString();
-                    manager.HandleGuid(guid, true);
-                    var list = db.ANSWER.Where(x => x.Component_Guid == guid).ToList();
+                      
+                    manager.HandleGuid(test.Component_Guid, true);
+                    var list = db.ANSWER.Where(x => x.Component_Guid == test.Component_Guid).ToList();
                     Assert.IsTrue(list.Count > 0);
-                    manager.HandleGuid(guid, false);
-                    list = db.ANSWER.Where(x => x.Component_Guid == guid).ToList();
+                    manager.HandleGuid(test.Component_Guid, false);
+                    list = db.ANSWER.Where(x => x.Component_Guid == test.Component_Guid).ToList();
                     Assert.IsTrue(list.Count == 0);
                 }
                 catch (Exception e)

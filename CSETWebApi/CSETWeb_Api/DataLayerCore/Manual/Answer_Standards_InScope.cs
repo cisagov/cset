@@ -25,7 +25,7 @@ namespace DataLayerCore.Model
         public string answer_text { get; set; }
         [Required]
         [StringLength(36)]
-        public string component_guid { get; set; }
+        public Guid component_guid { get; set; }
         public bool is_component { get; set; }
         [StringLength(50)]
         public string custom_question_guid { get; set; }
