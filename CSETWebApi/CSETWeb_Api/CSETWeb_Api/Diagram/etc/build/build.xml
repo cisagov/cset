@@ -193,6 +193,7 @@
 			
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
+				<file name="CsetFile.js" />
 				<file name="LocalFile.js" />
 				<file name="Editor.js" />
 				<file name="EditorUi.js" />
@@ -260,6 +261,7 @@
 		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp1.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
+				<file name="CsetFile.js" />
 				<file name="LocalFile.js" />
 				<file name="LocalLibrary.js" />
 				<file name="StorageFile.js" />
@@ -320,6 +322,7 @@
 		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp1.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
+				<file name="CsetFile.js" />
 				<file name="LocalFile.js" />
 				<file name="LocalLibrary.js" />
 				<file name="StorageFile.js" />
