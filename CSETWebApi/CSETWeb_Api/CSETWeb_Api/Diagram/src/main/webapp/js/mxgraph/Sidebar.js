@@ -404,7 +404,7 @@ Sidebar.prototype.addDataEntry = function(tags, width, height, title, data)
  * Hides the current tooltip.
  */
 Sidebar.prototype.addEntry = function (tags, fn) {
-    const doAddEntry = mxUtils.bind(this, tag => {
+    const doAddEntry = mxUtils.bind(this, function (tag) {
         if (tag) {
             let entry = this.taglist[tag];
             if (typeof entry !== 'object') {

@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+// tslint:disable-next-line:max-line-length
 import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, SubCategoryAnswers, ACETDomain } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
@@ -90,44 +91,42 @@ export class QuestionsService {
   initializeMatFilters(irp: number) {
     this.overallIRP = irp;
 
-    console.log("filter called");
     // if we have an IRP, default the maturity filters based on the stairstep.
-    
+
 
     // this.domainMatFilters = new Map<string, Map<string, boolean>>();
     this.domainMatFilters = new Map();
 
-    
+
     // if we don't have domain names in this array of questions, there's no maturity filters to worry about
     if (!this.domains || !this.domains[0].DomainName) {
       return;
     }
 
-     this.filterSvc.getFilters().subscribe((x: ACETFilter[])  => {       
-        // set the filters based on the bands
-        if ((x === undefined) || (x.length === 0)) {          
-           this.getDefaultBand(irp);
-          if ((x === undefined) || (x.length === 0)) {          
-            this.filterSvc.saveFilters(this.domainMatFilters).subscribe();
-          }
+    this.filterSvc.getFilters().subscribe((x: ACETFilter[]) => {
+      // set the filters based on the bands
+      if ((x === undefined) || (x.length === 0)) {
+        this.getDefaultBand(irp);
+        if ((x === undefined) || (x.length === 0)) {
+          this.filterSvc.saveFilters(this.domainMatFilters).subscribe();
         }
-        else{                    
-          for(let entry of x){
-            let tmpMap = new Map();
-            this.domainMatFilters.set(entry.DomainName, tmpMap);
-            tmpMap.set('B', entry.B);
-            tmpMap.set('E', entry.E);
-            tmpMap.set('Int', entry.Int);
-            tmpMap.set('A', entry.A);
-            tmpMap.set('Inn', entry.Inn);            
-          }          
+      } else {
+        for (const entry of x) {
+          const tmpMap = new Map();
+          this.domainMatFilters.set(entry.DomainName, tmpMap);
+          tmpMap.set('B', entry.B);
+          tmpMap.set('E', entry.E);
+          tmpMap.set('Int', entry.Int);
+          tmpMap.set('A', entry.A);
+          tmpMap.set('Inn', entry.Inn);
         }
-        this.evaluateFilters(this.domains);
-      });
+      }
+      this.evaluateFilters(this.domains);
+    });
   }
 
-  resetBandS(irp: number){
-    this.filterSvc.getACETDomains().subscribe((domains: ACETDomain) =>{
+  resetBandS(irp: number) {
+    this.filterSvc.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
       this.domainMatFilters = new Map();
       this.getDefaultBand(irp);
@@ -135,7 +134,7 @@ export class QuestionsService {
     });
   }
 
-  getDefaultBand(irp: number){
+  getDefaultBand(irp: number) {
     const bands = this.getStairstepOrig(irp);
     const dmf = this.domainMatFilters;
 

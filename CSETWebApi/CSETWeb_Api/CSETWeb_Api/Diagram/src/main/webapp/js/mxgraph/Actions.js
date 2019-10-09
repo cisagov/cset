@@ -1184,48 +1184,45 @@ Actions.prototype.init = function () {
 /**
  * Registers the given action under the given name.
  */
-Actions.prototype.addAction = function(key, funct, enabled, iconCls, shortcut)
-{
-	var title;
-	
-	if (key.substring(key.length - 3) == '...')
-	{
-		key = key.substring(0, key.length - 3);
-		title = mxResources.get(key) + '...';
-	}
-	else
-	{
-		title = mxResources.get(key);
-	}
-	
-	return this.put(key, new Action(title, funct, enabled, iconCls, shortcut));
+Actions.prototype.addAction = function (key, funct, enabled, iconCls, shortcut) {
+    let title;
+    if (key.substring(key.length - 3) == '...') {
+        key = key.substring(0, key.length - 3);
+        title = mxResources.get(key) + '...';
+    } else {
+        title = mxResources.get(key);
+    }
+    return this.put(key, new Action(title, funct, enabled, iconCls, shortcut));
 };
 
 /**
  * Registers the given action under the given name.
  */
-Actions.prototype.put = function(name, action)
-{
-	this.actions[name] = action;
-	
-	return action;
+Actions.prototype.rmAction = function (key) {
+    return this.remove(key);
+};
+
+/**
+ * Registers the given action under the given name.
+ */
+Actions.prototype.put = function (name, action) {
+    this.actions[name] = action;
+    return action;
 };
 
 /**
  * Returns the action for the given name or null if no such action exists.
  */
-Actions.prototype.get = function(name)
-{
-	return this.actions[name];
+Actions.prototype.get = function (name) {
+    return this.actions[name];
 };
 
 /**
  * CSET - Removes the given action from the Actions collection.
  * @param {any} name
  */
-Actions.prototype.remove = function (name)
-{
-    this.actions.delete(name);
+Actions.prototype.remove = function (name) {
+    delete this.actions[name];
 }
 
 /**
