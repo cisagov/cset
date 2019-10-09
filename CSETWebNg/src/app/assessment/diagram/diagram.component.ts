@@ -4,6 +4,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { Navigation2Service } from '../../services/navigation2.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
 import { ConfigService } from '../../services/config.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-diagram',
@@ -19,7 +20,8 @@ export class DiagramComponent implements OnInit {
         private navSvc: NavigationService,
         public assessSvc: AssessmentService,
         public navSvc2: Navigation2Service,
-        public configSvc: ConfigService
+        public configSvc: ConfigService,
+        public authSvc: AuthenticationService
     ) { }
     tree: NavTree[] = [];
     ngOnInit() {
@@ -46,7 +48,8 @@ export class DiagramComponent implements OnInit {
         window.location.href = host + 'diagram/src/main/webapp/index.html' +
             '?j=' + jwt +
             '&h=' + apiUrl +
-            '&c=' + window.location.origin,
+            '&c=' + window.location.origin +
+            '&l=' + this.authSvc.isLocal,
             sessionStorage.getItem('assessmentId');
     }
 }
