@@ -11,8 +11,7 @@
 /**
  * A collection of CSET-specific utilities and functionality.
  */
-CsetUtils = function ()
-{
+CsetUtils = function () {
 }
 
 /**
@@ -27,7 +26,8 @@ function updateGraph(editor, data, finalize) {
     return new Promise(function (resolve, reject) {
         editor.graph.model.beginUpdate();
         try {
-            editor.setGraphXml(mxUtils.parseXml(graph).documentElement);
+            const xml = mxUtils.parseXml(graph);
+            editor.setGraphXml(xml.documentElement);
             resolve();
         } catch (err) {
             console.warn('Failed to set graph xml:', err);
@@ -113,7 +113,7 @@ CsetUtils.makeHttpRequest = makeRequest;
  * @param {any} edit
  */
 CsetUtils.adjustConnectability = function (edit) {
-    const changes = edit.changes || [];
+    const changes = edit && edit.changes || [];
     for (const change of changes) {
         if (change instanceof mxChildChange) {
             const c = change.child;
@@ -136,31 +136,22 @@ CsetUtils.adjustConnectability = function (edit) {
 /**
  * Retrieves the graph from the CSET API if it has been stored.
  */
-CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
-    await makeRequest({
+CsetUtils.LoadFileFromCSET = async function (app) {
+    let file = app.getCurrentFile();
+    if (!file) {
+        app.createFile(app.defaultFilename, null, null, App.MODE_CSET, null, null, null, null);
+    }
+    file = app.getCurrentFile();
+
+    const resp = await makeRequest({
         method: 'GET',
         url: localStorage.getItem('cset.host') + 'diagram/get',
         onreadystatechange: function (e) {
             if (e.readyState !== 4) {
                 return;
             }
-
             switch (e.status) {
                 case 200:
-                    const resp = JSON.parse(e.responseText);
-                    const assessmentName = resp.AssessmentName;
-
-                    filename.innerHTML = assessmentName;
-                    if (app.currentFile)
-                    {
-                        app.currentFile.title = app.defaultFilename = `${assessmentName}.csetwd`;
-                    }
-                    sessionStorage.setItem('assessment.name', assessmentName);
-                    sessionStorage.setItem('last.number', resp.LastUsedComponentNumber);
-
-                    var data = resp.DiagramXml || EditorUi.prototype.emptyDiagramXml;
-                    updateGraph(editor, data);
-                    CsetUtils.clearWarningsFromDiagram(editor.graph);
                     break;
                 case 401:
                     window.location.replace(localStorage.getItem('cset.client'));
@@ -168,19 +159,31 @@ CsetUtils.LoadGraphFromCSET = async function (editor, filename, app) {
             }
         }
     });
+
+    const data = JSON.parse(resp);
+    const assessmentName = data.AssessmentName;
+
+    file.rename(`${assessmentName}.csetwd`, () => {
+        const filenameelmt = app.fname;
+        filenameelmt.innerHTML = assessmentName;
+        sessionStorage.setItem('assessment.name', assessmentName);
+        sessionStorage.setItem('last.number', data.LastUsedComponentNumber);
+    });
+
+    const csetdata = data.DiagramXml || EditorUi.prototype.emptyDiagramXml;
+    file.setFileData(csetdata);
+    return file;
 }
 
 /**
  * Make sure edges (links) are not hidden behind zones or other objects
  */
-CsetUtils.edgesToTop = function (graph, edit)
-{
-    var model = graph.getModel();
-    for (var i = 0; i < edit.changes.length; i++)
-    {
-        if (edit.changes[i] instanceof mxChildChange && model.isVertex(edit.changes[i].child))
-        {
-            var edges = CsetUtils.getAllChildEdges(edit.changes[i].child);
+CsetUtils.edgesToTop = function (graph, edit) {
+    const model = graph.getModel();
+    const changes = edit && edit.changes || [];
+    for (const change of changes) {
+        if (change instanceof mxChildChange && model.isVertex(change.child)) {
+            const edges = CsetUtils.getAllChildEdges(change.child);
             graph.orderCells(false, edges);
         }
     }
@@ -189,8 +192,7 @@ CsetUtils.edgesToTop = function (graph, edit)
 /**
  * Persists the graph to the CSET API.
  */
-CsetUtils.PersistGraphToCSET = async function (editor)
-{
+CsetUtils.PersistGraphToCSET = async function (editor) {
     const analysisReq = {
         DiagramXml: ''
     };
@@ -198,13 +200,11 @@ CsetUtils.PersistGraphToCSET = async function (editor)
     const xmlserializer = new XMLSerializer();
 
     const model = editor.graph.getModel();
-    if (model)
-    {
+    if (model) {
         const enc = new mxCodec();
         const node = enc.encode(model);
         const sXML = xmlserializer.serializeToString(node);
-        if (sXML !== EditorUi.prototype.emptyDiagramXml)
-        {
+        if (sXML !== EditorUi.prototype.emptyDiagramXml) {
             analysisReq.DiagramXml = sXML;
         }
     }
@@ -212,13 +212,17 @@ CsetUtils.PersistGraphToCSET = async function (editor)
     CsetUtils.clearWarningsFromDiagram(editor.graph);
 
     await CsetUtils.analyzeDiagram(analysisReq, editor);
+    await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
+}
 
+CsetUtils.PersistDataToCSET = async function (editor, xml) {
     const req = {
-        DiagramXml: analysisReq.DiagramXml,
+        DiagramXml: xml,
         LastUsedComponentNumber: sessionStorage.getItem("last.number")
     };
 
     const bg = '#ffffff';
+    const xmlserializer = new XMLSerializer();
     let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = xmlserializer.serializeToString(svgRoot);
     req.DiagramSvg = svgRoot;
@@ -226,26 +230,21 @@ CsetUtils.PersistGraphToCSET = async function (editor)
     await CsetUtils.saveDiagram(req);
 }
 
-
 /**
  * Send the diagram to the API for analysis
  */
-CsetUtils.analyzeDiagram = async function (req, editor)
-{
+CsetUtils.analyzeDiagram = async function (req, editor) {
     const response = await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
         url: localStorage.getItem('cset.host') + 'diagram/warnings',
         payload: JSON.stringify(req),
-        onreadystatechange: function (e)
-        {
-            if (e.readyState !== 4)
-            {
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
                 return;
             }
 
-            switch (e.status)
-            {
+            switch (e.status) {
                 case 200:
                     // successful post            
                     break;
@@ -256,37 +255,30 @@ CsetUtils.analyzeDiagram = async function (req, editor)
         }
     });
 
-    if (response)
-    {
-        if (editor.analyzeDiagram)
-        {
+    if (response) {
+        if (editor.analyzeDiagram) {
             const warnings = JSON.parse(response);
             CsetUtils.addWarningsToDiagram(warnings, editor.graph);
         }
     }
 }
 
-
 /**
  * Posts the diagram and supporting information to the API.
  * @param {any} req
  */
-CsetUtils.saveDiagram = async function (req)
-{
+CsetUtils.saveDiagram = async function (req) {
     await makeRequest({
         method: 'POST',
         overrideMimeType: 'application/json',
         url: localStorage.getItem('cset.host') + 'diagram/save',
         payload: JSON.stringify(req),
-        onreadystatechange: function (e)
-        {
-            if (e.readyState !== 4)
-            {
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
                 return;
             }
 
-            switch (e.status)
-            {
+            switch (e.status) {
                 case 200:
                     // successful post            
                     break;
@@ -374,17 +366,14 @@ CsetUtils.initializeZones = function (graph)
 /**
  * 
  */
-CsetUtils.handleZoneChanges = function (edit)
-{
-    edit.changes.forEach(change =>
-    {
-        if (change instanceof mxValueChange && change.cell.isZone())
-        {
-            var c = change.cell;
+CsetUtils.handleZoneChanges = function (edit) {
+    const changes = edit && edit.changes || [];
+    changes.forEach(change => {
+        if (change instanceof mxValueChange && change.cell.isZone()) {
+            const c = change.cell;
 
             // if they just changed the label, update the internal label
-            if (change.value.attributes.label.value != change.previous.attributes.label.value)
-            {
+            if (change.value.attributes.label.value !== change.previous.attributes.label.value) {
                 c.setAttribute('internalLabel', change.value.attributes.label.value);
             }
 
