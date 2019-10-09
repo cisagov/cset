@@ -51,6 +51,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         public virtual DbQuery<Answer_Components_Default> Answer_Components_Default { get; set; }
         public virtual DbQuery<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
+        public virtual DbQuery<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
 
         /// <summary>
         /// Maps to the view. When given an assessment ID, questions/answers for visible components are returned.

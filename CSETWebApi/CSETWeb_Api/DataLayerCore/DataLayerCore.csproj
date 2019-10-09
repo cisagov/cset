@@ -171,6 +171,7 @@
     <Compile Include="Model\ANSWER.cs" />
     <Compile Include="Manual\Answer_Components_Default.cs" />
     <Compile Include="Model\ANSWER_LOOKUP.cs" />
+    <Compile Include="Manual\Answer_Standards_InScope.cs" />
     <Compile Include="Model\APP_CODE.cs" />
     <Compile Include="Model\ASSESSMENTS.cs" />
     <Compile Include="Model\ASSESSMENTS_REQUIRED_DOCUMENTATION.cs" />
