@@ -477,4 +477,11 @@ export class QuestionsService {
     }
     return true;
   }
+
+  getOverrideQuestions(questionId, componentType){
+    let params = new HttpParams();
+    params = params.append('question_id', questionId);
+    params = params.append('Component_Type', componentType);
+    return this.http.get( this.configSvc.apiUrl +'GetOverrideQuestions', {params: params});
+  }
 }

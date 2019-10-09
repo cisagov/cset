@@ -216,7 +216,8 @@ export class QuestionBlockComponent implements OnInit {
         FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed,
-        Is_Component: false
+        Is_Component: false, 
+        ComponentGuid:''
       };
 
       subCatAnswers.Answers.push(answer);
@@ -254,7 +255,8 @@ export class QuestionBlockComponent implements OnInit {
       FeedBack: q.FeedBack,
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component
+      Is_Component: q.Is_Component, 
+      ComponentGuid: ''
     };
 
     this.refreshReviewIndicator();
@@ -283,7 +285,8 @@ export class QuestionBlockComponent implements OnInit {
         FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed,
-        Is_Component: q.Is_Component
+        Is_Component: q.Is_Component,
+        ComponentGuid: ''
       };
 
       this.refreshReviewIndicator();
@@ -330,7 +333,8 @@ export class QuestionBlockComponent implements OnInit {
       FeedBack: '',
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component
+      Is_Component: q.Is_Component, 
+      ComponentGuid: ''
     };
 
     this.refreshReviewIndicator();
