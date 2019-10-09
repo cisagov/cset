@@ -2540,7 +2540,7 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
     }
 
     if (this.toolbar != null) {
-        this.toolbarContainer.style.top = (this.menubarHeight + 17) + 'px';
+        this.toolbarContainer.style.top = (this.menubarHeight + this.ribbonHeight) + 'px';
         this.toolbarContainer.style.height = this.toolbarHeight + 'px';
         tmp += this.toolbarHeight;
     }
@@ -2642,8 +2642,14 @@ EditorUi.prototype.createDivs = function ()
     this.hsplit = this.createDiv('geHsplit');
     this.hsplit.setAttribute('title', mxResources.get('collapseExpand'));
 
+    // Do not show the 'local installation' ribbon if not running locally
+    if (localStorage.getItem('cset.isLocal') != 'true')
+    {
+        this.ribbonHeight = 0;
+    }
+
     // Sets static style for containers
-    this.menubarContainer.style.top = this.ribbonHeight;     // RKW - used to be 0px
+    this.menubarContainer.style.top = this.ribbonHeight;
     this.menubarContainer.style.left = '0px';
     this.menubarContainer.style.right = '0px';
     this.toolbarContainer.style.left = '0px';
@@ -3711,3 +3717,4 @@ EditorUi.prototype.toggleAnalyzer = function (e) {
         CsetUtils.PersistGraphToCSET(this.editor);
     }
 };
+
