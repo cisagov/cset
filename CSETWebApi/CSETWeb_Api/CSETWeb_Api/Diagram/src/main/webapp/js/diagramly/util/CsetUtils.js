@@ -510,11 +510,11 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
 {
     CsetUtils.clearWarningsFromDiagram(graph);
 
-    var root = graph.getModel().root;
+    //var root = graph.getModel().root;
 
     warnings.forEach(w =>
     {
-        var coords = CsetUtils.getCoords(w, graph);
+        var coords = CsetUtils.getCoordsAndLayer(w, graph);
 
         // don't overlay any other red dots on the same component
         if (CsetUtils.isRedDotAtCoords(graph, coords))
@@ -522,7 +522,10 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
             coords.x += 33;
         }
 
-        var redDot = graph.insertVertex(root, null, w.Number, coords.x, coords.y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+        var redDot = graph.insertVertex(coords.layer, null, 
+            w.Number, 
+            coords.x, coords.y, 30, 30,
+            'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
         redDot.warningMsg = w.Message;
     });
 }
@@ -531,11 +534,12 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
  * Determines where to place the red dot, based on the component or link it 
  * is describing.
  */
-CsetUtils.getCoords = function (warning, graph)
+CsetUtils.getCoordsAndLayer = function (warning, graph)
 {
     var coords = {
         x: 100,
-        y: 100
+        y: 100,
+        layer: null
     };
 
     // if only one node provided, then the dot goes on that component
@@ -545,6 +549,7 @@ CsetUtils.getCoords = function (warning, graph)
         const g = component.getGeometry();
         coords.x = g.x;
         coords.y = g.y - 40;
+        coords.layer = component.myLayer();
         return coords;
     }
 
@@ -563,13 +568,16 @@ CsetUtils.getCoords = function (warning, graph)
         // temporarily place the dot at the midpoint of a straight line between components.
         coords.x = (s1.origin.x + s2.origin.x) / 2;
         coords.y = (s1.origin.y + s2.origin.y) / 2;
+        coords.layer = e.myLayer();
 
         // then, try to place the dot so that it will be on the line no matter what.
-        // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
+        CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
 
         // fine-tune here if needed
         // coords.x = coords.x - 15;
         // coords.y = coords.y - 40;
+
+        console.log('x:' + coords.x + 'y:' + coords.y);
 
         return coords;
     }

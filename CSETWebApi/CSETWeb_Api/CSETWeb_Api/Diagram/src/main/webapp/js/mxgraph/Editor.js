@@ -47,7 +47,9 @@ Editor = function (chromeless, themes, model, graph, editable)
             this.setModified(true);
         }
 
-        var isRedDotAddEvent = edit.changes[0] instanceof mxChildChange && edit.changes[0].child.style.indexOf('redDot') >= 0;
+        var isRedDotAddEvent = edit.changes[0] instanceof mxChildChange
+            && !!edit.changes[0].child.style
+            && edit.changes[0].child.style.indexOf('redDot') >= 0;
 
         // Only persist if actual changes occurred.  
         // An mxRootChange is likely a new diagram.
