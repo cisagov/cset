@@ -13150,7 +13150,9 @@ function mxGraph(a, b, c, d) {
     this.setStylesheet(null != d ? d : this.createStylesheet());
     this.view = this.createGraphView();
     this.graphModelChangeListener = mxUtils.bind(this, function (a, b) {
-        this.graphModelChanged(b.getProperty("edit").changes)
+        //console.log('mxClient.graphModelChangeListener: ', { a, b });
+        const edit = b.getProperty('edit');
+        this.graphModelChanged(edit && edit.changes || []);
     });
     this.model.addListener(mxEvent.CHANGE, this.graphModelChangeListener);
     this.createHandlers();
@@ -20917,6 +20919,7 @@ mxCodec.prototype.encode = function (a) {
     return b
 };
 mxCodec.prototype.decode = function (a, b) {
+    //console.log('mxCodec.prototype.decode: ', { a, b });
     this.updateElements();
     var c = null;
     if (null != a && a.nodeType == mxConstants.NODETYPE_ELEMENT) {
@@ -20940,6 +20943,7 @@ mxCodec.prototype.isCellCodec = function (a) {
     return null != a && "function" == typeof a.isCellCodec ? a.isCellCodec() : !1
 };
 mxCodec.prototype.decodeCell = function (a, b) {
+    //console.log('mxCodec.prototype.decodeCell: ', { a, b });
     b = null != b ? b : !0;
     var c = null;
     if (null != a && a.nodeType == mxConstants.NODETYPE_ELEMENT) {
@@ -21071,6 +21075,7 @@ mxObjectCodec.prototype.afterEncode = function (a, b, c) {
     return c
 };
 mxObjectCodec.prototype.decode = function (a, b, c) {
+    //console.log('mxObjectCodec.prototype.decode: ', { a, b, c });
     var d = b.getAttribute("id"),
         e = a.objects[d];
     null == e && (e = c || this.cloneTemplate(), null != d && a.putObject(d, e));
@@ -21079,6 +21084,7 @@ mxObjectCodec.prototype.decode = function (a, b, c) {
     return this.afterDecode(a, b, e)
 };
 mxObjectCodec.prototype.decodeNode = function (a, b, c) {
+    //console.log('mxObjectCodec.prototype.decodeNode: ', { a, b, c });
     null != b && (this.decodeAttributes(a, b, c), this.decodeChildren(a, b, c))
 };
 mxObjectCodec.prototype.decodeAttributes = function (a, b, c) {
@@ -21106,6 +21112,7 @@ mxObjectCodec.prototype.decodeAttribute = function (a, b, c) {
     }
 };
 mxObjectCodec.prototype.decodeChildren = function (a, b, c) {
+    //console.log('mxObjectCodec.prototype.decodeChildren: ', { a, b, c });
     for (b = b.firstChild; null != b;) {
         var d = b.nextSibling;
         b.nodeType != mxConstants.NODETYPE_ELEMENT || this.processInclude(a, b, c) || this.decodeChild(a, b, c);
@@ -21113,6 +21120,7 @@ mxObjectCodec.prototype.decodeChildren = function (a, b, c) {
     }
 };
 mxObjectCodec.prototype.decodeChild = function (a, b, c) {
+    //console.log('mxObjectCodec.prototype.decodeChild: ', { a, b, c });
     var d = this.getFieldName(b.getAttribute("as"));
     if (null == d || !this.isExcluded(c, d, b, !1)) {
         var e = this.getFieldTemplate(c, d, b);
@@ -21130,7 +21138,8 @@ mxObjectCodec.prototype.getFieldTemplate = function (a, b, c) {
     return a
 };
 mxObjectCodec.prototype.addObjectValue = function (a, b, c, d) {
-    null != c && c != d && (null != b && 0 < b.length ? a[b] = c : a.push(c))
+    //console.log('mxObjectCodec.prototype.addObjectValue: ', { a, b, c, d });
+    null != c && c != d && (null != b && 0 < b.length ? a[b] = c : a.push && a.push(c))
 };
 mxObjectCodec.prototype.processInclude = function (a, b, c) {
     if ("include" == b.nodeName) {
@@ -21200,9 +21209,11 @@ mxCodecRegistry.register(function () {
         d.appendChild(b)
     };
     a.decodeChild = function (a, c, d) {
+        //console.log('a.decodeChild: ', { a, c, d });
         "root" == c.nodeName ? this.decodeRoot(a, c, d) : mxObjectCodec.prototype.decodeChild.apply(this, arguments)
     };
     a.decodeRoot = function (a, c, d) {
+        //console.log('a.decodeRoot: ', { a, c, d });
         var b = null;
         for (c = c.firstChild; null != c;) {
             var f = a.decodeCell(c);

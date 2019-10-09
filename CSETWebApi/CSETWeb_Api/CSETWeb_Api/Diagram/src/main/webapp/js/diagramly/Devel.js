@@ -80,6 +80,7 @@ mxscript(drawDevUrl + 'js/diagramly/util/mxJsCanvas.js');
 mxscript(drawDevUrl + 'js/diagramly/util/mxAsyncCanvas.js');
 
 mxscript(drawDevUrl + 'js/diagramly/DrawioFile.js');
+mxscript(drawDevUrl + 'js/diagramly/CsetFile.js');
 mxscript(drawDevUrl + 'js/diagramly/LocalFile.js');
 mxscript(drawDevUrl + 'js/diagramly/LocalLibrary.js');
 mxscript(drawDevUrl + 'js/diagramly/StorageFile.js');

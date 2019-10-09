@@ -1259,7 +1259,7 @@ DrawioFile.prototype.addAllSavedStatus = function (status) {
         if (links[0] && this.isRevisionHistorySupported()) {
             links[0].style.cursor = 'pointer';
             links[0].style.textDecoration = 'underline';
-            mxEvent.addListener(links[0], 'click', mxUtils.bind(this, () => {
+            mxEvent.addListener(links[0], 'click', mxUtils.bind(this, function () {
                 this.ui.actions.get('revisionHistory').funct();
             }));
         }
