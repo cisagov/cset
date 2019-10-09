@@ -20,6 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
+<style>
+.container {
+    height: 70%;
+    width: 100%;    
+}
+.container textarea {
+    width: 100%;
+    height: 100%;    
+    box-sizing: border-box;
+}
+.container .textarea-wrapper {    
+    height: calc(100% - 26px);
+}
+</style>
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
     <h3 class="d-flex flex-column flex-00a">Submit Feedback to FAA and DHS</h3>
     <div class="flex-container">
@@ -28,17 +42,15 @@
         information.  These comments should be considered part of a public community discussion with regard
         to the FAA PED module
       </p>
+      <p>Copy text to clipboard and paste into an email</p>
     </div>
     <div *ngIf="!initialized" class="d-flex flex-11a w-100">
         <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
           <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
     </div>
-    <div class="mb-4 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized">
-    <textarea style="height: 400px;" id="feedback" class="form-control" type="text" [(ngModel)]="dataRows.FeedbackText"></textarea>
-    </div>
-    <div style="border: 1px solid; padding: 5px; box-shadow:3px 8px 5px #888888; ">
-        <p>Copy text to clipboard and paste into an email</p>
+    <div class="mb-4 d-flex flex-column justify-content-between flex-00a container" [hidden]="!initialized">
+        <textarea class="textarea-wrapper" style="min-height: 400px;" id="feedback" type="text" [ngModel]="feedbackText"></textarea>
     </div>
     <div class="mt-3 d-flex justify-content-between flex-00a">
         <button class="btn btn-primary" (click)="navSvc2.navBack('overview')">Back</button>

@@ -262,7 +262,8 @@ namespace CSETWeb_Api.Controllers
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            qm.HandleGuid(guid, ShouldSave);
+            Guid g = new Guid(guid);
+            qm.HandleGuid(g, ShouldSave);
         }
 
 
@@ -347,6 +348,17 @@ namespace CSETWeb_Api.Controllers
             RequirementsManager rm = new RequirementsManager(assessmentId);
 
             return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
+        }
+
+        [HttpGet]
+        [Route("api/GetOverrideQuestions")]
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromUri] int question_id, string Component_Type)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            QuestionsManager questionsManager = new QuestionsManager(assessmentId);
+
+            return questionsManager.GetOverrideQuestions(assessmentId, question_id, Component_Type);
         }
     }
 

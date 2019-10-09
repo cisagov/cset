@@ -12,6 +12,8 @@ using CSET_Main.Questions.POCO;
 using CSET_Main.Common.EnumHelper;
 using System;
 using System.Linq;
+using BusinessLogic.Helpers;
+using System.Collections.Generic;
 
 namespace CSETWeb_Api.BusinessManagers.Tests
 {
@@ -40,19 +42,19 @@ namespace CSETWeb_Api.BusinessManagers.Tests
         {
             using (CSET_Context db = new CSET_Context())
             {
-                var test = db.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid!=null).FirstOrDefault();
+                var test = db.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid != null).FirstOrDefault();
                 if (test == null)
                     Assert.Fail("no data to test");
                 try
                 {
                     QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
 
-                    string guid =  test.Component_Guid.ToString();
-                    manager.HandleGuid(guid, true);
-                    var list = db.ANSWER.Where(x => x.Component_Guid == guid).ToList();
+                      
+                    manager.HandleGuid(test.Component_Guid, true);
+                    var list = db.ANSWER.Where(x => x.Component_Guid == test.Component_Guid).ToList();
                     Assert.IsTrue(list.Count > 0);
-                    manager.HandleGuid(guid, false);
-                    list = db.ANSWER.Where(x => x.Component_Guid == guid).ToList();
+                    manager.HandleGuid(test.Component_Guid, false);
+                    list = db.ANSWER.Where(x => x.Component_Guid == test.Component_Guid).ToList();
                     Assert.IsTrue(list.Count == 0);
                 }
                 catch (Exception e)
@@ -60,6 +62,31 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                     throw e;
                 }
             }
+        }
+
+        [TestMethod()]
+        public void GetOverrideQuestionsTest()
+        {
+            using (CSET_Context db = new CSET_Context())
+            {
+                var test = db.ASSESSMENTS.FirstOrDefault();
+                if (test == null)
+                    Assert.Fail("no data to test");
+                try
+                {
+                    QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
+
+
+                    List<Answer_Components_Exploded_ForJSON> list =  manager.GetOverrideQuestions(16, 1586, Constants.FIREWALL_TYPE);
+                    
+                    Assert.IsTrue(list.Count>0);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+
         }
     }
 }
