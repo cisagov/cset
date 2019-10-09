@@ -82,7 +82,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                 layers.Add(id, new NetworkLayer()
                 {
                     ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DefaultLayerName,
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DEFAULT_LAYER_NAME,
                     Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
                 });
             }

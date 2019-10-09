@@ -418,7 +418,7 @@ namespace BusinessLogic.Helpers
         public const string MostIrp = "Most";
 
 
-        public const string DefaultLayerName ="Background";
+        public const string DEFAULT_LAYER_NAME ="Background";
     }
     
 
