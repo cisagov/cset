@@ -69,19 +69,18 @@ export class QuestionExtrasComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService) {
-    }
-
-
-  ngOnInit() { 
-    console.log(this.myQuestion);
   }
 
 
-  showOverrideDialog(componentType):void{
+  ngOnInit() {
+  }
+
+
+  showOverrideDialog(componentType): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '600px',
-      data: {componentType: componentType}
+      data: { componentType: componentType }
     });
   }
   /**
@@ -123,18 +122,17 @@ export class QuestionExtrasComponent implements OnInit {
         // add questionIDs to related questions for debug if configured to do so
         if (this.configSvc.showQuestionAndRequirementIDs()) {
           if (this.tab) {
-            if(this.tab.IsComponent){
-
-            }
-            else{
-              this.tab.QuestionsList.forEach((q: any) => {
-                q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
-              });
+            if (this.tab.IsComponent) {
+            } else {
+              if (!!this.tab.QuestionsList) {
+                this.tab.QuestionsList.forEach((q: any) => {
+                  q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+                });
+              }
             }
           }
         }
-      }
-    );
+      });
   }
 
   /**
@@ -147,16 +145,16 @@ export class QuestionExtrasComponent implements OnInit {
     this.saveAnswer();
   }
 
-   /**
-   *
-   * @param e
-   */
+  /**
+  *
+  * @param e
+  */
   saveFeedBack(e) {
     this.defaultEmptyAnswer();
     this.answer.FeedBack = e.srcElement.value;
     this.saveAnswer();
   }
- 
+
   /**
    *
    * @param q
@@ -418,10 +416,10 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe((qlist: number[]) => {
         const array = [];
 
-        
+
         // Traverse the local model to get the "display" question numbers
-        if(this.questionsSvc.domains){
-          this.questionsSvc.domains.forEach(d => {            
+        if (this.questionsSvc.domains) {
+          this.questionsSvc.domains.forEach(d => {
             d.QuestionGroups.forEach(qg => {
               qg.SubCategories.forEach(sc => {
                 sc.Questions.forEach(q => {
@@ -432,11 +430,10 @@ export class QuestionExtrasComponent implements OnInit {
               });
             });
           });
-        }
-        else{
+        } else {
           console.log('there were no domains for questions!!!');
         }
-        
+
 
         // Format a list of questions
         let msg = "This document is attached to the following questions: <ul>";
@@ -498,15 +495,16 @@ export class QuestionExtrasComponent implements OnInit {
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
 
-  
+
 
   /**
    * check if approach exists for acet questions
-   * @param approach 
+   * @param approach
    */
-  checkForApproach(approach: string){
-    if (typeof approach != 'undefined' && approach)
+  checkForApproach(approach: string) {
+    if (typeof approach !== 'undefined' && approach) {
       return true;
+    }
 
     return false;
   }
