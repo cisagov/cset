@@ -24,14 +24,16 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatDialogModule, MatDividerModule,
-  MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-  MatTooltipModule, MatTreeModule, MatTabsModule, } from '@angular/material';
+import {
+    MatAutocompleteModule, MatDialogModule, MatDividerModule,
+    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
+    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
+    MatTooltipModule, MatTreeModule, MatTabsModule,
+} from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
@@ -68,14 +70,12 @@ import { ComponentsSummaryComponent } from './assessment/results/analysis/compon
 import { ComponentsTypesComponent } from './assessment/results/analysis/components-types/components-types.component';
 import { ComponentsWarningsComponent } from './assessment/results/analysis/components-warnings/components-warnings.component';
 import { DashboardComponent } from './assessment/results/analysis/dashboard/dashboard.component';
-// tslint:disable-next-line:max-line-length
-
 import { RankedQuestionsComponent } from './assessment/results/analysis/ranked-questions/ranked-questions.component';
 import { StandardsRankedComponent } from './assessment/results/analysis/standards-ranked/standards-ranked.component';
 import { StandardsResultsComponent } from './assessment/results/analysis/standards-results/standards-results.component';
 import { StandardsSummaryComponent } from './assessment/results/analysis/standards-summary/standards-summary.component';
 import { OverviewComponent } from './assessment/results/overview/overview.component';
-import { FeedbackComponent} from './assessment/results/analysis/feedback/feedback.component';
+import { FeedbackComponent } from './assessment/results/analysis/feedback/feedback.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
 import { AboutComponent } from './dialogs/about/about.component';
@@ -129,7 +129,6 @@ import { NavigationService } from './services/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { UserInfoComponent } from './user-info/user-info.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
@@ -156,7 +155,7 @@ import { MaturityFilterComponent } from './assessment/questions/maturity-filter/
 import { ResourceLibraryService } from './services/resource-library.service';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
 import { DiagramComponent } from './assessment/diagram/diagram.component';
-import { DiagramInfoComponent} from './assessment/diagram/diagram-info/diagram-info.component'
+import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
 import { ComponentsComponent } from './assessment/diagram/diagram-inventory/components/components.component';
 import { LinksComponent } from './assessment/diagram/diagram-inventory/links/links.component';
@@ -220,7 +219,6 @@ import { DiagramService } from './services/diagram.service';
         SalSimpleComponent,
         StandardsComponent,
         ResetPassComponent,
-        UserInfoComponent,
         EmailComponent,
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
@@ -293,12 +291,12 @@ import { DiagramService } from './services/diagram.service';
         IrpSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
-        ComponentsComponent, 
+        ComponentsComponent,
         LinksComponent,
         NetworkWarningsComponent,
         ShapesComponent,
         TextComponent,
-        ZonesComponent, 
+        ZonesComponent,
         ComponentOverrideComponent
     ],
     providers: [
@@ -338,27 +336,27 @@ import { DiagramService } from './services/diagram.service';
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-      EmailComponent,
-      EditUserComponent,
-      EjectionComponent,
-      AlertComponent,
-      ConfirmComponent,
-      ChangePasswordComponent,
-      AboutComponent,
-      AdvisoryComponent,
-      OkayComponent,
-      TermsOfUseComponent,
-      FindingsComponent,
-      EnableProtectedComponent,
-      QuestionFiltersComponent,
-      AssessmentDocumentsComponent,
-      UploadExportComponent,
-      InlineParameterComponent,
-      GlobalParametersComponent,
-      KeyboardShortcutsComponent,
-      LicenseComponent,
-      AddRequirementComponent,
-      ComponentOverrideComponent
+        EmailComponent,
+        EditUserComponent,
+        EjectionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        ChangePasswordComponent,
+        AboutComponent,
+        AdvisoryComponent,
+        OkayComponent,
+        TermsOfUseComponent,
+        FindingsComponent,
+        EnableProtectedComponent,
+        QuestionFiltersComponent,
+        AssessmentDocumentsComponent,
+        UploadExportComponent,
+        InlineParameterComponent,
+        GlobalParametersComponent,
+        KeyboardShortcutsComponent,
+        LicenseComponent,
+        AddRequirementComponent,
+        ComponentOverrideComponent
     ]
 })
 

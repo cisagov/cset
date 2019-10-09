@@ -782,7 +782,7 @@
             </tr>
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2">{{c.Question}}</td>
+                <td class="tint2" [innerHTML]="c.Question"></td>
                 <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(c.Answer)}}</td>
             </tr>
             <tr>
@@ -820,7 +820,7 @@
             </tr>
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2">{{t.Question}}</td>
+                <td class="tint2" [innerHTML]="t.Question"></td>
                 <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.Answer)}}</td>
             </tr>
             <tr>

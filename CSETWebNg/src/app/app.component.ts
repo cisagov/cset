@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         (data: CreateUser) => {
           if (data && data.PrimaryEmail) {
             // don't send anything unless there's something sane to send
-            this.auth.editUser(data).subscribe(() => this.auth.setUserInfo(data));
+            this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
           }
           this.dialogRef = undefined;
         },

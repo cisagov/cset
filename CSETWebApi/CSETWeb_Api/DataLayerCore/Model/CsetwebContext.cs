@@ -211,15 +211,17 @@ namespace DataLayerCore.Model
                     .HasName("IX_ANSWER_1")
                     .IsUnique();
 
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
                 entity.Property(e => e.Answer_Text)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('U')");
 
-                entity.Property(e => e.Component_Guid)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('00000000-0000-0000-0000-000000000000')");
+                entity.Property(e => e.Comment).IsUnicode(false);
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.ANSWER)
@@ -274,8 +276,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.CreditUnionName).IsUnicode(false);
 
                 entity.Property(e => e.Diagram_Image).IsUnicode(false);
-
-                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
 
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
 

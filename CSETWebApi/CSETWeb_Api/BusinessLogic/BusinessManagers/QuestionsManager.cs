@@ -276,37 +276,61 @@ namespace CSETWeb_Api.BusinessManagers
             return resp;
         }
 
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, string component_Type)
+        {
+            List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
+            using (CSET_Context context = new CSET_Context())
+            {
+                var questionlist = from a in context.Answer_Components_Exploded
+                                   where a.Assessment_Id == assessmentId
+                                    && a.Question_Id == question_id
+                                    && a.Component_Type == component_Type
+                                   select a;
+                foreach(var question in questionlist.ToList())
+                {
+                    Answer_Components_Exploded_ForJSON tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                    tmp.Component_GUID = question.Component_GUID.ToString();
+                    rlist.Add(tmp);
+                }
+                return rlist;
+            }
+        }
+
         /// <summary>
         /// get the exploded view where assessment
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="shouldSave"></param>
-        public void HandleGuid(string guid, bool shouldSave)
+        public void HandleGuid(Guid guid, bool shouldSave)
         {
             using (CSET_Context context = new CSET_Context())
             {
                 if (shouldSave)
-                {
-                    Guid g = new Guid(guid);
-                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == g).FirstOrDefault();
+                {   
+                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == guid).FirstOrDefault();
                     if (componentName != null)
                     {
-                        var creates = from a in context.Answer_Components_Exploded
-                                      where a.Assessment_Id == this._assessmentId &&
-                                      a.ComponentName == componentName.label &&
-                                      a.Component_GUID == null
+                        var creates = from a in context.COMPONENT_QUESTIONS
+                                      where a.Component_Type == componentName.Diagram_Component_Type
                                       select a;
+                        var alreadyThere = (from a in context.ANSWER
+                                            where a.Assessment_Id == _assessmentId
+                                            && a.Component_Guid == guid
+                                            select a).ToDictionary(x => x.Question_Or_Requirement_Id, x=> x);
                         foreach (var c in creates.ToList())
                         {
-                            context.ANSWER.Add(new ANSWER()
+                            if (!alreadyThere.ContainsKey(c.Question_Id))
                             {
-                                Answer_Text = Constants.UNANSWERED,
-                                Assessment_Id = this._assessmentId,
-                                Component_Guid = guid,
-                                Is_Component = true,
-                                Is_Requirement = false,
-                                Question_Or_Requirement_Id = c.Question_Id
-                            });
+                                context.ANSWER.Add(new ANSWER()
+                                {
+                                    Answer_Text = Constants.UNANSWERED,
+                                    Assessment_Id = this._assessmentId,
+                                    Component_Guid = guid,
+                                    Is_Component = true,
+                                    Is_Requirement = false,
+                                    Question_Or_Requirement_Id = c.Question_Id
+                                });
+                            }
                         }
                         context.SaveChanges();
                     }

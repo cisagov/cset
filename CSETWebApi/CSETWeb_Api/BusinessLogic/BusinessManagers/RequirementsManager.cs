@@ -109,105 +109,113 @@ namespace CSETWeb_Api.BusinessManagers
             string currentGroupHeading = string.Empty;
             string currentSubcategoryHeading = string.Empty;
 
-
-            foreach (var dbRPlus in requirements)
+            try
             {
-                var dbR = dbRPlus.Requirement;
 
-                // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
-                dbR.Standard_Category = dbR.Standard_Category.Trim();
-                dbR.Standard_Sub_Category = dbR.Standard_Sub_Category.Trim();
-
-                // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
-                if (dbR.Standard_Sub_Category == null)
+                foreach (var dbRPlus in requirements)
                 {
-                    dbR.Standard_Sub_Category = dbR.Standard_Category;
-                }
 
+                    
+                    var dbR = dbRPlus.Requirement;
 
-                if (dbR.Standard_Category != currentGroupHeading)
-                {
-                    g = new QuestionGroup()
+                    // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
+                    dbR.Standard_Category = dbR.Standard_Category==null?null: dbR.Standard_Category.Trim();
+                    dbR.Standard_Sub_Category = dbR.Standard_Sub_Category==null?null: dbR.Standard_Sub_Category.Trim();
+
+                    // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
+                    if (dbR.Standard_Sub_Category == null)
                     {
-                        GroupHeadingId = dbR.Question_Group_Heading_Id,
-                        GroupHeadingText = dbR.Standard_Category,
-                        StandardShortName = dbRPlus.SetShortName,
-                        
-                    };
-
-                    if (domains.Any(x=>x.AssessmentFactorName == g.GroupHeadingText))
-                    {
-                        g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
-                            .DomainName;
+                        dbR.Standard_Sub_Category = dbR.Standard_Category;
                     }
 
-                    groupList.Add(g);
 
-                    currentGroupHeading = g.GroupHeadingText;
-                }
-
-                // new subcategory
-                if (dbR.Standard_Sub_Category != currentSubcategoryHeading)
-                {
-                    sg = new QuestionSubCategory()
+                    if (dbR.Standard_Category != currentGroupHeading)
                     {
-                        SubCategoryId = 0,
-                        SubCategoryHeadingText = dbR.Standard_Sub_Category,
-                        GroupHeadingId = g.GroupHeadingId
-                    };
+                        g = new QuestionGroup()
+                        {
+                            GroupHeadingId = dbR.Question_Group_Heading_Id,
+                            GroupHeadingText = dbR.Standard_Category,
+                            StandardShortName = dbRPlus.SetShortName,
 
-                    g.SubCategories.Add(sg);
+                        };
 
-                    currentSubcategoryHeading = dbR.Standard_Sub_Category;
+                        if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
+                        {
+                            g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
+                                .DomainName;
+                        }
+
+                        groupList.Add(g);
+
+                        currentGroupHeading = g.GroupHeadingText;
+                    }
+
+                    // new subcategory
+                    if (dbR.Standard_Sub_Category != currentSubcategoryHeading)
+                    {
+                        sg = new QuestionSubCategory()
+                        {
+                            SubCategoryId = 0,
+                            SubCategoryHeadingText = dbR.Standard_Sub_Category,
+                            GroupHeadingId = g.GroupHeadingId
+                        };
+
+                        g.SubCategories.Add(sg);
+
+                        currentSubcategoryHeading = dbR.Standard_Sub_Category;
+                    }
+                    
+
+
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
+
+                        qa = new QuestionAnswer()
+                        {
+                            DisplayNumber = dbR.Requirement_Title,
+                            QuestionId = dbR.Requirement_Id,
+                            QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                            Answer = answer?.a.Answer_Text,
+                            AltAnswerText = answer?.a.Alternate_Justification,
+                            Comment = answer?.a.Comment,
+                            MarkForReview = answer?.a.Mark_For_Review ?? false,
+                            Reviewed = answer?.a.Reviewed ?? false,
+                            MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                            SetName = dbRPlus.SetName,
+                            Is_Component = answer?.a.Is_Component ?? false
+                        };
+                        if (answer != null)
+                        {
+                            TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                        }
+
+                        qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+
+                        sg.Questions.Add(qa);
+                   
                 }
 
-
-
-                FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
-
-
-                qa = new QuestionAnswer()
+                QuestionResponse resp = new QuestionResponse
                 {
-                    DisplayNumber = dbR.Requirement_Title,
-                    QuestionId = dbR.Requirement_Id,
-                    QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
-                    Answer = answer?.a.Answer_Text,
-                    AltAnswerText = answer?.a.Alternate_Justification,
-                    Comment = answer?.a.Comment,
-                    MarkForReview = answer?.a.Mark_For_Review ?? false,
-                    Reviewed = answer?.a.Reviewed ?? false,
-                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
-                    SetName = dbRPlus.SetName,
-                    Is_Component = answer?.a.Is_Component??false
+                    QuestionGroups = groupList,
+                    ApplicationMode = this.applicationMode
                 };
-                if (answer != null)
+
+                resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+                resp.RequirementCount = this.NumberOfRequirements();
+
+                // Get the overall risk level
+                var acetDash = new ACETDashboardManager().LoadDashboard(this._assessmentId);
+                resp.OverallIRP = acetDash.SumRiskLevel;
+                if (acetDash.Override > 0)
                 {
-                    TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);                    
+                    resp.OverallIRP = acetDash.Override;
                 }
 
-                qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
-
-                sg.Questions.Add(qa);
-            }
-
-            QuestionResponse resp = new QuestionResponse
+                return resp;
+            }catch(Exception e)
             {
-                QuestionGroups = groupList,
-                ApplicationMode = this.applicationMode
-            };
-
-            resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
-            resp.RequirementCount = this.NumberOfRequirements();
-
-            // Get the overall risk level
-            var acetDash = new ACETDashboardManager().LoadDashboard(this._assessmentId);
-            resp.OverallIRP = acetDash.SumRiskLevel;
-            if (acetDash.Override > 0)
-            {
-                resp.OverallIRP = acetDash.Override;
-            }
-
-            return resp;
+                throw e;
+            }         
         }
 
 
