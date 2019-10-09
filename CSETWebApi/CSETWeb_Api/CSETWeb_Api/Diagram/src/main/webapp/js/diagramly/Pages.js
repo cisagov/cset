@@ -313,140 +313,115 @@ EditorUi.prototype.getPageById = function(id)
 /**
  * Returns true if the given string contains an mxfile.
  */
-EditorUi.prototype.initPages = function()
-{
-	this.actions.addAction('previousPage', mxUtils.bind(this, function()
-	{
-		this.selectNextPage(false);
-	}));
-	
-	this.actions.addAction('nextPage', mxUtils.bind(this, function()
-	{
-		this.selectNextPage(true);
-	}));
-	
-	this.keyHandler.bindAction(33, true, 'previousPage', true); // Ctrl+Shift+PageUp
-	this.keyHandler.bindAction(34, true, 'nextPage', true); // Ctrl+Shift+PageDown
-	
-	// Updates the tabs after loading the diagram
-	var graph = this.editor.graph;
-	var graphViewValidateBackground = graph.view.validateBackground; 
-	
-	graph.view.validateBackground = mxUtils.bind(this, function()
-	{
-		if (this.tabContainer != null)
-		{
-			var prevHeight = this.tabContainer.style.height;
-			
-			if (this.fileNode == null || this.pages == null ||
-				(this.pages.length == 1 && urlParams['pages'] == '0'))
-			{
-				this.tabContainer.style.height = '0px';
-			}
-			else
-			{
-				this.tabContainer.style.height = this.tabContainerHeight + 'px';
-			}
-			
-			if (prevHeight != this.tabContainer.style.height)
-			{
-				this.refresh(false);
-			}
-		}
-		
-		graphViewValidateBackground.apply(graph.view, arguments);
-	});
+EditorUi.prototype.initPages = function () {
+    this.actions.addAction('previousPage', mxUtils.bind(this, function () {
+        this.selectNextPage(false);
+    }));
 
-	var lastPage = null;
-	
-	var updateTabs = mxUtils.bind(this, function()
-	{
-		this.updateTabContainer();
-		
-		// Updates scrollbar positions and backgrounds after validation	
-		var p = this.currentPage;
-		
-		if (p != null && p != lastPage)
-		{
-			if (p.viewState == null || p.viewState.scrollLeft == null)
-			{
-				this.resetScrollbars();
+    this.actions.addAction('nextPage', mxUtils.bind(this, function () {
+        this.selectNextPage(true);
+    }));
 
-				if (graph.isLightboxView())
-				{
-					this.lightboxFit();
-				}
-				
-				if (this.chromelessResize != null)
-				{
-					graph.container.scrollLeft = 0;
-					graph.container.scrollTop = 0;
-					this.chromelessResize();
-				}
-			}
-			else
-			{
-				graph.container.scrollLeft = graph.view.translate.x * graph.view.scale + p.viewState.scrollLeft;
-				graph.container.scrollTop = graph.view.translate.y * graph.view.scale + p.viewState.scrollTop;
-			}
-			
-			lastPage = p;
-		}
-		
-		// Updates layers window
-		if (this.actions.layersWindow != null)
-		{
-			this.actions.layersWindow.refreshLayers();
-		}
-		
-		// Workaround for math if tab is switched before typesetting has stopped
-		if (typeof(MathJax) !== 'undefined' && typeof(MathJax.Hub) !== 'undefined')
-		{
-			// Pending math should not be rendered if the graph has no math enabled
-			if (MathJax.Hub.queue.pending == 1 && this.editor != null && !this.editor.graph.mathEnabled)
-			{
-				// Since there is no way to stop/undo mathjax or
-				// clear the queue we have to refresh after typeset
-				MathJax.Hub.Queue(mxUtils.bind(this, function()
-				{
-					if (this.editor != null)
-					{
-						this.editor.graph.refresh();
-					}
-				}));
-			}
-		}
-		else if (typeof(Editor.MathJaxClear) !== 'undefined' && (this.editor == null || !this.editor.graph.mathEnabled))
-		{
-			// Clears our own queue for async loading
-			Editor.MathJaxClear();
-		}
-	});
-	
-	// Adds a graph model listener to update the view
-	this.editor.graph.model.addListener(mxEvent.CHANGE, mxUtils.bind(this, function(sender, evt)
-	{
-		var edit = evt.getProperty('edit');
-		var changes = edit.changes;
-		
-		for (var i = 0; i < changes.length; i++)
-		{
-			if (changes[i] instanceof SelectPage ||
-				changes[i] instanceof RenamePage ||
-				changes[i] instanceof MovePage ||
-				changes[i] instanceof mxRootChange)
-			{
-				updateTabs();
-				break;	
-			}
-		}
-	}));
-	
-	// Updates zoom in toolbar
-	if (this.toolbar != null)
-	{
-		this.editor.addListener('pageSelected', this.toolbar.updateZoom);
-	}
+    this.keyHandler.bindAction(33, true, 'previousPage', true); // Ctrl+Shift+PageUp
+    this.keyHandler.bindAction(34, true, 'nextPage', true); // Ctrl+Shift+PageDown
+
+    // Updates the tabs after loading the diagram
+    var graph = this.editor.graph;
+    var graphViewValidateBackground = graph.view.validateBackground;
+
+    graph.view.validateBackground = mxUtils.bind(this, function () {
+        if (this.tabContainer != null) {
+            var prevHeight = this.tabContainer.style.height;
+
+            if (this.fileNode == null || this.pages == null ||
+                (this.pages.length == 1 && urlParams['pages'] == '0')) {
+                this.tabContainer.style.height = '0px';
+            }
+            else {
+                this.tabContainer.style.height = this.tabContainerHeight + 'px';
+            }
+
+            if (prevHeight != this.tabContainer.style.height) {
+                this.refresh(false);
+            }
+        }
+
+        graphViewValidateBackground.apply(graph.view, arguments);
+    });
+
+    var lastPage = null;
+
+    var updateTabs = mxUtils.bind(this, function () {
+        this.updateTabContainer();
+
+        // Updates scrollbar positions and backgrounds after validation	
+        var p = this.currentPage;
+
+        if (p != null && p != lastPage) {
+            if (p.viewState == null || p.viewState.scrollLeft == null) {
+                this.resetScrollbars();
+
+                if (graph.isLightboxView()) {
+                    this.lightboxFit();
+                }
+
+                if (this.chromelessResize != null) {
+                    graph.container.scrollLeft = 0;
+                    graph.container.scrollTop = 0;
+                    this.chromelessResize();
+                }
+            }
+            else {
+                graph.container.scrollLeft = graph.view.translate.x * graph.view.scale + p.viewState.scrollLeft;
+                graph.container.scrollTop = graph.view.translate.y * graph.view.scale + p.viewState.scrollTop;
+            }
+
+            lastPage = p;
+        }
+
+        // Updates layers window
+        if (this.actions.layersWindow != null) {
+            this.actions.layersWindow.refreshLayers();
+        }
+
+        // Workaround for math if tab is switched before typesetting has stopped
+        if (typeof (MathJax) !== 'undefined' && typeof (MathJax.Hub) !== 'undefined') {
+            // Pending math should not be rendered if the graph has no math enabled
+            if (MathJax.Hub.queue.pending == 1 && this.editor != null && !this.editor.graph.mathEnabled) {
+                // Since there is no way to stop/undo mathjax or
+                // clear the queue we have to refresh after typeset
+                MathJax.Hub.Queue(mxUtils.bind(this, function () {
+                    if (this.editor != null) {
+                        this.editor.graph.refresh();
+                    }
+                }));
+            }
+        }
+        else if (typeof (Editor.MathJaxClear) !== 'undefined' && (this.editor == null || !this.editor.graph.mathEnabled)) {
+            // Clears our own queue for async loading
+            Editor.MathJaxClear();
+        }
+    });
+
+    // Adds a graph model listener to update the view
+    this.editor.graph.model.addListener(mxEvent.CHANGE, mxUtils.bind(this, function (sender, evt) {
+        const edit = evt && evt.getProperty('edit');
+        const changes = edit && edit.changes || [];
+        for (const change of changes) {
+            if (change instanceof SelectPage ||
+                change instanceof RenamePage ||
+                change instanceof MovePage ||
+                change instanceof mxRootChange) {
+                updateTabs();
+                break;
+            }
+        }
+    }));
+
+    // Updates zoom in toolbar
+    if (this.toolbar != null) {
+        this.editor.addListener('pageSelected', this.toolbar.updateZoom);
+    }
 };
 
 /**

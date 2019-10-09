@@ -44,10 +44,8 @@
                 {
                     symbol.isSearchable = true;
                 }
-                sidebar.addPalette(group.SymbolGroupTitle, group.SymbolGroupTitle, false, mxUtils.bind(sidebar, content =>
-                {
-                    for (const symbol of symbols)
-                    {
+                sidebar.addPalette(group.SymbolGroupTitle, group.SymbolGroupTitle, false, mxUtils.bind(sidebar, function (content) {
+                    for (const symbol of symbols) {
                         content.appendChild(symbol(content));
                     }
                 }));
@@ -61,10 +59,8 @@
             {
                 symbol.isSearchable = true;
             }
-            sidebar.addPalette('zone', 'Zone', false, mxUtils.bind(sidebar, content =>
-            {
-                for (const symbol of symbolsZone)
-                {
+            sidebar.addPalette('zone', 'Zone', false, mxUtils.bind(sidebar, function (content) {
+                for (const symbol of symbolsZone) {
                     content.appendChild(symbol(content));
                 }
             }));
@@ -86,10 +82,8 @@
             {
                 symbol.isSearchable = true;
             }
-            sidebar.addPalette('shapes', 'Shapes', false, mxUtils.bind(sidebar, content =>
-            {
-                for (const symbol of symbolsShapes)
-                {
+            sidebar.addPalette('shapes', 'Shapes', false, mxUtils.bind(sidebar, function (content) {
+                for (const symbol of symbolsShapes) {
                     content.appendChild(symbol(content));
                 }
             }));

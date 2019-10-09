@@ -4,70 +4,65 @@
 /**
  * Editor constructor executed on page load.
  */
-Editor = function (chromeless, themes, model, graph, editable)
-{
+Editor = function (chromeless, themes, model, graph, editable) {
     mxEventSource.call(this);
-    this.chromeless = (chromeless != null) ? chromeless : this.chromeless;
+    this.chromeless = chromeless || this.chromeless;
     this.initStencilRegistry();
     this.graph = graph || this.createGraph(themes, model);
-    this.editable = (editable != null) ? editable : !chromeless;
+    this.editable = editable || !chromeless;
     this.undoManager = this.createUndoManager();
     this.status = '';
 
-    this.getOrCreateFilename = function ()
-    {
+    this.getOrCreateFilename = function () {
         return this.filename || mxResources.get('drawing', [Editor.pageCounter]) + '.xml';
-    };
+    }
 
-    this.getFilename = function ()
-    {
+    this.getFilename = function () {
         return this.filename;
-    };
+    }
 
     // Sets the status and fires a statusChanged event
-    this.setStatus = function (value)
-    {
+    this.setStatus = function (value) {
         this.status = value;
         this.fireEvent(new mxEventObject('statusChanged'));
     };
 
     // Returns the current status
-    this.getStatus = function ()
-    {
+    this.getStatus = function () {
         return this.status;
     };
 
     // Updates modified state if graph changes
-    this.graphChangeListener = function (sender, eventObject)
-    {
-        var edit = (eventObject != null) ? eventObject.getProperty('edit') : null;
+    this.graphChangeListener = function (sender, eventObject) {
+        const edit = eventObject && eventObject.getProperty('edit');
+        const changes = edit && edit.changes || [];
 
-        if (edit == null || !edit.ignoreEdit)
-        {
+        if (!edit || !edit.ignoreEdit) {
             this.setModified(true);
         }
 
-        var isRedDotAddEvent = edit.changes[0] instanceof mxChildChange && edit.changes[0].child.style.indexOf('redDot') >= 0;
+        let haschanges;
+        for (const change of changes) {
+            const isrootchange = change instanceof mxRootChange;
+            const ischildchange = change instanceof mxChildChange;
+            const isRedDotAddEvent = ischildchange && change.child.style.indexOf('redDot') > -1;
 
-        // Only persist if actual changes occurred.  
-        // An mxRootChange is likely a new diagram.
-        // Also ignore 'red dot add' events.  
-        if (!(edit.changes[0] instanceof mxRootChange) && !isRedDotAddEvent)
-        {
+            // Only persist if actual changes occurred.
+            // An mxRootChange is likely a new diagram.
+            // Also ignore 'red dot add' events.
+            haschanges = haschanges || (!isrootchange && !isRedDotAddEvent);
+        }
+
+        if (haschanges) {
             CsetUtils.adjustConnectability(edit);
-
             CsetUtils.edgesToTop(this.graph, edit);
-
             CsetUtils.handleZoneChanges(edit);
-
             this.graph.refresh();
-
             CsetUtils.PersistGraphToCSET(this);
         }
     };
 
-    this.graph.getModel().addListener(mxEvent.CHANGE, mxUtils.bind(this, function ()
-    {
+    this.graph.getModel().addListener(mxEvent.CHANGE, mxUtils.bind(this, function () {
         this.graphChangeListener.apply(this, arguments);
     }));
 
@@ -75,9 +70,6 @@ Editor = function (chromeless, themes, model, graph, editable)
     this.graph.resetViewOnRootChange = false;
     this.init();
 };
-
-
-
 
 /**
  * Counts open editor tabs (must be global for cross-window access)
@@ -586,33 +578,23 @@ Editor.prototype.readGraphState = function (node)
 /**
  * Sets the XML node for the current diagram.
  */
-Editor.prototype.setGraphXml = function (node)
-{
-    if (node != null)
-    {
-        var dec = new mxCodec(node.ownerDocument);
-
-        if (node.nodeName == 'mxGraphModel')
-        {
+Editor.prototype.setGraphXml = function (node) {
+    if (node) {
+        const dec = new mxCodec(node.ownerDocument);
+        if (node.nodeName === 'mxGraphModel') {
             this.graph.model.beginUpdate();
-
-            try
-            {
+            try {
                 this.graph.model.clear();
                 this.graph.view.scale = 1;
                 this.readGraphState(node);
                 this.updateGraphComponents();
                 dec.decode(node, this.graph.getModel());
-            }
-            finally
-            {
+            } finally {
                 this.graph.model.endUpdate();
             }
 
             this.fireEvent(new mxEventObject('resetGraphView'));
-        }
-        else if (node.nodeName == 'root')
-        {
+        } else if (node.nodeName === 'root') {
             this.resetGraph();
 
             // Workaround for invalid XML output in Firefox 20 due to bug in mxUtils.getXml
@@ -622,18 +604,14 @@ Editor.prototype.setGraphXml = function (node)
             dec.decode(wrapper, this.graph.getModel());
             this.updateGraphComponents();
             this.fireEvent(new mxEventObject('resetGraphView'));
-        }
-        else
-        {
+        } else {
             throw {
                 message: mxResources.get('cannotOpenFile'),
                 node: node,
                 toString: function () { return this.message; }
             };
         }
-    }
-    else
-    {
+    } else {
         this.resetGraph();
         this.graph.model.clear();
         this.fireEvent(new mxEventObject('resetGraphView'));

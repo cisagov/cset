@@ -1881,8 +1881,7 @@ EditorUi.prototype.lightboxFit = function (maxHeight) {
  */
 EditorUi.prototype.isDiagramEmpty = function () {
     var model = this.editor.graph.getModel();
-
-    return model.getChildCount(model.root) == 1 && model.getChildCount(model.getChildAt(model.root, 0)) == 0;
+    return model.getChildCount(model.root) === 1 && model.getChildCount(model.getChildAt(model.root, 0)) === 0;
 };
 
 /**
