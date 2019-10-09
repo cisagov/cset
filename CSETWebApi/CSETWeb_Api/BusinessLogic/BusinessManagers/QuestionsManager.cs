@@ -301,14 +301,13 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="shouldSave"></param>
-        public void HandleGuid(string guid, bool shouldSave)
+        public void HandleGuid(Guid guid, bool shouldSave)
         {
             using (CSET_Context context = new CSET_Context())
             {
                 if (shouldSave)
-                {
-                    Guid g = new Guid(guid);
-                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == g).FirstOrDefault();
+                {   
+                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == guid).FirstOrDefault();
                     if (componentName != null)
                     {
                         var creates = from a in context.COMPONENT_QUESTIONS

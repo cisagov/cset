@@ -262,7 +262,8 @@ namespace CSETWeb_Api.Controllers
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            qm.HandleGuid(guid, ShouldSave);
+            Guid g = new Guid(guid);
+            qm.HandleGuid(g, ShouldSave);
         }
 
 
