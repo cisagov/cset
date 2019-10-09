@@ -32,7 +32,8 @@ import { QuestionsService } from '../../services/questions.service';
   selector: 'component-override',
   templateUrl: './component-override.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: {class: 'd-flex flex-column flex-11a'},
+  styleUrls: ['./component-override.component.scss']
 })
 export class ComponentOverrideComponent {
 
@@ -68,7 +69,7 @@ export class ComponentOverrideComponent {
         MarkForReview: false,
         Reviewed: true,
         Is_Component: q.Is_Component, 
-        ComponentGuid: q.Component_Guid
+        ComponentGuid: q.Component_GUID
       };
       
       this.questionsSvc.storeAnswer(answer)

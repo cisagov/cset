@@ -112,6 +112,11 @@
                 localStorage.setItem('cset.client', decodeURIComponent(urlParams['c']));
             }
 
+            if (!!urlParams['l'])
+            {
+                localStorage.setItem('cset.isLocal', decodeURIComponent(urlParams['l']));
+            }
+
             if (localStorage.getItem('jwt') == null || localStorage.getItem('cset.host') == null) {
                 window.location = 'error.html';
             }
@@ -446,7 +451,6 @@
         /**
          * Main
          */
-        console.log("before app main");
         App.main();
     </script>
 

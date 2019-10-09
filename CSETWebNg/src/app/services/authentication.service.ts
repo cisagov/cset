@@ -83,12 +83,22 @@ export class AuthenticationService {
                         this.isLocal = true;
                         this.storeUserData(response);
                     }
+
+                    localStorage.setItem('cset.isLocal', (this.isLocal + ''));
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
                     this.isLocal = false;
                 });
     }
+
+    /**
+     * Calls the API to find out whether this is a local install
+     */
+    checkLocalInstallStatus() {
+        return this.http.get(this.apiUrl + 'auth/islocal', headers);
+    }
+
 
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');

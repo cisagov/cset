@@ -123,6 +123,12 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
+            if (answer.Is_Component)
+            {
+                QuestionsManager qm = new QuestionsManager(assessmentId);
+                return qm.StoreComponentAnswer(answer);
+            }
+
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 QuestionsManager qm = new QuestionsManager(assessmentId);
@@ -262,7 +268,8 @@ namespace CSETWeb_Api.Controllers
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            qm.HandleGuid(guid, ShouldSave);
+            Guid g = new Guid(guid);
+            qm.HandleGuid(g, ShouldSave);
         }
 
 

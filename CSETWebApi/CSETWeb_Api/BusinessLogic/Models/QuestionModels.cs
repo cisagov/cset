@@ -125,6 +125,8 @@ namespace CSETWeb_Api.Models
         /// This field was added for NCUA/ACET support.
         /// </summary>
         public bool Reviewed;
+
+        public bool Is_Component;
     }
 
 

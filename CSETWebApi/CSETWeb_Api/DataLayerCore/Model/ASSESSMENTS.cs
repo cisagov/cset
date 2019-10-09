@@ -50,6 +50,7 @@ namespace DataLayerCore.Model
         public string IRPTotalOverrideReason { get; set; }
         [Required]
         public bool? MatDetail_targetBandOnly { get; set; }
+        [Column(TypeName = "xml")]
         public string Diagram_Markup { get; set; }
         public int LastUsedComponentNumber { get; set; }
         public string Diagram_Image { get; set; }
