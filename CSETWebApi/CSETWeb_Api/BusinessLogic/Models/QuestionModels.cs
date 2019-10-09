@@ -118,6 +118,7 @@ namespace CSETWeb_Api.Models
         public string Comment;
         public string FeedBack;
         public bool MarkForReview;
+        public Guid ComponentGuid;
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  

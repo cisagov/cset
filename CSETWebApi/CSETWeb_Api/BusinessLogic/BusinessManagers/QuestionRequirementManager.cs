@@ -169,8 +169,13 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             ANSWER dbAnswer = null;
-
-            if (answer != null)
+            if (answer != null && answer.ComponentGuid != Guid.Empty)
+            {
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                            && x.Question_Or_Requirement_Id == answer.QuestionId
+                            && x.Is_Requirement == isRequirement && x.Component_Guid == answer.ComponentGuid.ToString()).FirstOrDefault();
+            }
+            else if (answer != null)
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId 
                 && x.Question_Or_Requirement_Id == answer.QuestionId
@@ -192,6 +197,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.FeedBack = answer.FeedBack;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid.ToString();
 
             db.ANSWER.AddOrUpdate(dbAnswer, x=> x.Answer_Id);
             db.SaveChanges();
