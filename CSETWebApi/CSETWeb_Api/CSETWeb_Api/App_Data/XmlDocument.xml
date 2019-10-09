@@ -690,6 +690,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AuthController.IsLocalInstallation">
+            <summary>
+            Tells the client if this is a local installation.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AuthController.IssueToken(System.Int32,System.String,System.Int32)">
             <summary>
             Returns a token cloned from the requesting token.  The new refresh clone

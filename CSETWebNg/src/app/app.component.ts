@@ -39,9 +39,8 @@ import { CreateUser } from './models/user.model';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
-import { NgbPanelChangeEvent, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { Title } from '@angular/platform-browser';
-import { ResourceLibraryService } from "./services/resource-library.service"
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+
 
 declare var $: any;
 
@@ -65,9 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService,
-    private route: ActivatedRoute,
-    private titleSvc: Title
+    private _hotkeysService: HotkeysService
   ) { }
 
 
@@ -106,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (!rpath) {
       return false;
     }
-    if ( rpath === '/set-list'
+    if (rpath === '/set-list'
       || rpath.indexOf('/set-detail') > -1
       || rpath.indexOf('/requirement-list') > -1
       || rpath.indexOf('/standard-documents') > -1
