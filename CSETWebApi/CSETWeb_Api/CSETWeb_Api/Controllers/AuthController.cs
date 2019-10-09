@@ -63,6 +63,20 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
+        /// Tells the client if this is a local installation.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/auth/islocal")]
+        public bool IsLocalInstallation()
+        {
+            TokenManager tm = new TokenManager();
+            string scope = tm.Payload(Constants.Token_Scope);
+            return UserAuthentication.IsLocalInstallation(scope);
+        }
+
+
+        /// <summary>
         /// Returns a token cloned from the requesting token.  The new refresh clone
         /// will have a new expiration timestamp and will optionally contain an
         /// assessment ID in the payload.
