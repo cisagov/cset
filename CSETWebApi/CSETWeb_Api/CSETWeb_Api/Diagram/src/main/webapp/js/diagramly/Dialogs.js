@@ -2820,7 +2820,7 @@ var NewDialog = function (app, opts) {
 
                 spinner.spin(div);
 
-                mxUtils.get(realUrl, mxUtils.bind(this, req => {
+                mxUtils.get(realUrl, mxUtils.bind(this, function (req) {
                     spinner.stop();
                     if (req.getStatus() >= 200 && req.getStatus() <= 299) {
                         selectElement(elt, tmplt);

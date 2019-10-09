@@ -13,21 +13,27 @@ Editor = function (chromeless, themes, model, graph, editable) {
     this.undoManager = this.createUndoManager();
     this.status = '';
 
-    this.getOrCreateFilename =  () => this.filename || mxResources.get('drawing', [Editor.pageCounter]) + '.xml';
+    this.getOrCreateFilename = function () {
+        return this.filename || mxResources.get('drawing', [Editor.pageCounter]) + '.xml';
+    }
 
-    this.getFilename = () => this.filename;
+    this.getFilename = function () {
+        return this.filename;
+    }
 
     // Sets the status and fires a statusChanged event
-    this.setStatus = value => {
+    this.setStatus = function (value) {
         this.status = value;
         this.fireEvent(new mxEventObject('statusChanged'));
     };
 
     // Returns the current status
-    this.getStatus = () => this.status;
+    this.getStatus = function () {
+        return this.status;
+    };
 
     // Updates modified state if graph changes
-    this.graphChangeListener = (sender, eventObject) => {
+    this.graphChangeListener = function (sender, eventObject) {
         const edit = eventObject && eventObject.getProperty('edit');
         const changes = edit && edit.changes || [];
 
@@ -56,7 +62,7 @@ Editor = function (chromeless, themes, model, graph, editable) {
         }
     };
 
-    this.graph.getModel().addListener(mxEvent.CHANGE, mxUtils.bind(this, () => {
+    this.graph.getModel().addListener(mxEvent.CHANGE, mxUtils.bind(this, function () {
         this.graphChangeListener.apply(this, arguments);
     }));
 

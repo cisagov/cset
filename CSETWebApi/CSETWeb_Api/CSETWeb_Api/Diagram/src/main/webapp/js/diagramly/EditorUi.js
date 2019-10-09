@@ -1911,7 +1911,10 @@
                         const height = compact ? 70 : 440;
                         const modal = true;
                         const canclose = true;
-                        const onclose = mxUtils.bind(this, cancel => {
+                        const onclose = mxUtils.bind(this, function (cancel) {
+                            if (!cancel) {
+                                file.save();
+                            }
                             this.hideDialog();
                         });
                         const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
@@ -2034,7 +2037,7 @@
             }
 
             // Asynchronous handling of errors
-            const fn = mxUtils.bind(this, () => {
+            const fn = mxUtils.bind(this, function () {
                 // Removes URL parameter and reloads the page
                 if (urlParams.url && this.spinner.spin(document.body, mxResources.get('reconnecting'))) {
                     window.location.search = this.getSearch(['url']);
@@ -3085,10 +3088,10 @@
                         id = (id.substring(0, 2) === '#U') ? id.substring(45, id.lastIndexOf('%26ex')) : id.substring(2);
 
                         // Special case where the button must have a different label and function
-                        this.showError(title, msg, mxResources.get('openInNewWindow'), mxUtils.bind(this, () => {
+                        this.showError(title, msg, mxResources.get('openInNewWindow'), mxUtils.bind(this, function () {
                             this.editor.graph.openLink(`https://drive.google.com/open?id=${id}`);
                             this.handleError(resp, title, fn, invokeFnOnClose, notFoundMessage)
-                        }), retry, mxResources.get('changeUser'), mxUtils.bind(this, () => {
+                        }), retry, mxResources.get('changeUser'), mxUtils.bind(this, function () {
                             if (this.spinner.spin(document.body, mxResources.get('loading'))) {
                                 this.drive.clearUserId();
                                 gapi.auth.signOut();
@@ -3096,7 +3099,7 @@
                                 // Reload page to reset client auth
                                 window.location.reload();
                             }
-                        }), mxResources.get('cancel'), mxUtils.bind(this, () => {
+                        }), mxResources.get('cancel'), mxUtils.bind(this, function () {
                             window.location.hash = '';
                         }), 480, 150);
                         return;
