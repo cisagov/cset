@@ -3094,7 +3094,7 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
 
         const xml = this.createLibraryDataFromImages(images);
 
-        const error = mxUtils.bind(this, err => {
+        const error = mxUtils.bind(this, function (err) {
             this.spinner.stop();
             if (fn) {
                 fn();
@@ -3108,7 +3108,7 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
         }
 
         if (file) {
-            const complete = mxUtils.bind(this, newFile => {
+            const complete = mxUtils.bind(this, function (newFile) {
                 this.spinner.stop();
                 this.hideDialog(true);
                 this.libraryLoaded(newFile, images);
@@ -3142,10 +3142,10 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
                         }
                         break;
                     case App.MODE_BROWSER:
-                        const fn = mxUtils.bind(this, () => {
+                        const fn = mxUtils.bind(this, function () {
                             const file = new StorageLibrary(this, xml, name);
                             // Inserts data into local storage
-                            file.saveFile(name, false, mxUtils.bind(this, () => {
+                            file.saveFile(name, false, mxUtils.bind(this, function () {
                                 this.hideDialog(true);
                                 this.libraryLoaded(file, images);
                             }), error);
@@ -3165,8 +3165,8 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
         } else if (noSpin || this.spinner.spin(document.body, mxResources.get('saving'))) {
             file.setData(xml);
 
-            const doSave = mxUtils.bind(this, () => {
-                file.save(true, mxUtils.bind(this, () => {
+            const doSave = mxUtils.bind(this, function () {
+                file.save(true, mxUtils.bind(this, function () {
                     this.spinner.stop();
                     this.hideDialog(true);
                     if (!noReload) {
@@ -3180,7 +3180,7 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
 
             if (name !== file.getTitle()) {
                 const oldHash = file.getHash();
-                file.rename(name, mxUtils.bind(this, () => {
+                file.rename(name, mxUtils.bind(this, function () {
                     // Change hash in stored settings
                     if (file.constructor !== LocalLibrary && oldHash !== file.getHash()) {
                         mxSettings.removeCustomLibrary(oldHash);
@@ -3422,12 +3422,12 @@ App.prototype.createFile = function (title, data, libs, mode, done, replace, fol
     if (title && this.spinner.spin(document.body, mxResources.get('inserting'))) {
         data = data || this.emptyDiagramXml;
 
-        const complete = mxUtils.bind(this, file => {
+        const complete = mxUtils.bind(this, function (file) {
             this.spinner.stop();
             this.fileCreated(file, libs, replace, done);
         });
 
-        const error = mxUtils.bind(this, err => {
+        const error = mxUtils.bind(this, function (err) {
             this.spinner.stop();
             if (!err && !this.getCurrentFile() && !this.dialog) {
                 this.showSplash();
@@ -3466,10 +3466,10 @@ App.prototype.createFile = function (title, data, libs, mode, done, replace, fol
                     break;
                 case App.MODE_BROWSER:
                     this.spinner.stop();
-                    const fn = mxUtils.bind(this, () => {
+                    const fn = mxUtils.bind(this, function () {
                         const file = new StorageFile(this, data, title);
                         // Inserts data into local storage
-                        file.saveFile(title, false, mxUtils.bind(this, () => {
+                        file.saveFile(title, false, mxUtils.bind(this, function () {
                             this.fileCreated(file, libs, replace, done);
                         }), error);
                     });
@@ -3477,7 +3477,7 @@ App.prototype.createFile = function (title, data, libs, mode, done, replace, fol
                     if (!localStorage.getItem(title)) {
                         fn();
                     } else {
-                        this.confirm(mxResources.get('replaceIt', [title]), fn, mxUtils.bind(this, () => {
+                        this.confirm(mxResources.get('replaceIt', [title]), fn, mxUtils.bind(this, function () {
                             if (!this.getCurrentFile() && !this.dialog) {
                                 this.showSplash();
                             }
@@ -3547,7 +3547,7 @@ App.prototype.fileCreated = function (file, libs, replace, done) {
             graph.container.parentNode.removeChild(graph.container);
         }
 
-        const complete = mxUtils.bind(this, e => {
+        const complete = mxUtils.bind(this, function (e) {
             if (!e.err) {
                 if (e.done) {
                     e.done();
@@ -3558,13 +3558,13 @@ App.prototype.fileCreated = function (file, libs, replace, done) {
             this.spinner.stop();
         });
 
-        var fn = mxUtils.bind(this, () => {
+        var fn = mxUtils.bind(this, function () {
             const currentFile = this.getCurrentFile();
             if (!replace && currentFile) {
                 replace = !currentFile.isModified() && !currentFile.getMode();
             }
 
-            var fn3 = mxUtils.bind(this, () => {
+            var fn3 = mxUtils.bind(this, function () {
                 window.openFile = null;
                 this.fileLoaded(file);
 
@@ -3577,7 +3577,7 @@ App.prototype.fileCreated = function (file, libs, replace, done) {
                 }
             });
 
-            var fn2 = mxUtils.bind(this, () => {
+            var fn2 = mxUtils.bind(this, function () {
                 if (replace || !currentFile || !currentFile.isModified()) {
                     fn3();
                 } else {
@@ -4535,9 +4535,9 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
             if (this.dropbox && this.spinner.spin(document.body, mxResources.get('saving'))) {
                 // LATER: Add folder picker
                 this.dropbox.insertFile(filename, (base64Encoded) ? this.base64ToBlob(data, mimeType) :
-                    data, mxUtils.bind(this, () => {
+                    data, mxUtils.bind(this, function () {
                         this.spinner.stop();
-                    }), mxUtils.bind(this, err => {
+                    }), mxUtils.bind(this, function (err) {
                         this.spinner.stop();
                         this.handleError(err);
                     }));
@@ -4545,9 +4545,9 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
             break;
         case App.MODE_GOOGLE:
             if (this.drive && this.spinner.spin(document.body, mxResources.get('saving'))) {
-                this.drive.insertFile(filename, data, folderId, mxUtils.bind(this, () => {
+                this.drive.insertFile(filename, data, folderId, mxUtils.bind(this, function () {
                     this.spinner.stop();
-                }), mxUtils.bind(this, err => {
+                }), mxUtils.bind(this, function (err) {
                     this.spinner.stop();
                     this.handleError(err);
                 }), mimeType, base64Encoded);
@@ -4557,9 +4557,9 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
             if (this.oneDrive && this.spinner.spin(document.body, mxResources.get('saving'))) {
                 // KNOWN: OneDrive does not show .svg extension
                 this.oneDrive.insertFile(filename, (base64Encoded) ? this.base64ToBlob(data, mimeType) :
-                    data, mxUtils.bind(this, () => {
+                    data, mxUtils.bind(this, function () {
                         this.spinner.stop();
-                    }), mxUtils.bind(this, err => {
+                    }), mxUtils.bind(this, function (err) {
                         this.spinner.stop();
                         this.handleError(err);
                     }), false, folderId);
@@ -4568,9 +4568,9 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
         case App.MODE_GITHUB:
             if (this.gitHub != null && this.spinner.spin(document.body, mxResources.get('saving'))) {
                 // Must insert file as library to force the file to be written
-                this.gitHub.insertFile(filename, data, mxUtils.bind(this, () => {
+                this.gitHub.insertFile(filename, data, mxUtils.bind(this, function () {
                     this.spinner.stop();
-                }), mxUtils.bind(this, err => {
+                }), mxUtils.bind(this, function (err) {
                     this.spinner.stop();
                     this.handleError(err);
                 }), true, folderId, base64Encoded);
@@ -4579,16 +4579,16 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
         case App.MODE_TRELLO:
             if (this.trello != null && this.spinner.spin(document.body, mxResources.get('saving'))) {
                 this.trello.insertFile(filename, (base64Encoded) ? this.base64ToBlob(data, mimeType) :
-                    data, mxUtils.bind(this, () => {
+                    data, mxUtils.bind(this, function () {
                         this.spinner.stop();
-                    }), mxUtils.bind(this, err => {
+                    }), mxUtils.bind(this, function (err) {
                         this.spinner.stop();
                         this.handleError(err);
                     }), false, folderId);
             }
             break;
         case App.MODE_BROWSER:
-            const fn = mxUtils.bind(this, () => {
+            const fn = mxUtils.bind(this, function () {
                 localStorage.setItem(filename, data);
             });
 
