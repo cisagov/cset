@@ -82,6 +82,11 @@ export class QuestionExtrasComponent implements OnInit {
       height: '600px',
       data: {componentType: componentType, myQuestion: this.myQuestion}
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`I'm hit`);
+    });
+    
+    
   }
   /**
  * Shows/hides the "expand" section.
