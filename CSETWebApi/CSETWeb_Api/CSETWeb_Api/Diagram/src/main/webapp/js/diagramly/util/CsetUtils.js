@@ -560,7 +560,7 @@ CsetUtils.getCoordsAndLayer = function (warning, graph)
         coords.layer = e.myLayer();
 
         // then, try to place the dot so that it will be on the line no matter what.
-        CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
+        // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
 
         // fine-tune here if needed
         // coords.x = coords.x - 15;
