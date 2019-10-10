@@ -287,6 +287,7 @@ namespace CSETWeb_Api.BusinessManagers
                                    where a.Assessment_Id == assessmentId
                                     && a.Question_Id == question_id
                                     && a.Component_Type == component_Type
+                                    && a.Component_GUID == Guid.Empty
                                    select a;
                 foreach(var question in questionlist.ToList())
                 {
