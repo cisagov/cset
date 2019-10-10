@@ -23,8 +23,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
     /// </summary>
     public class DiagramDifferenceManager
     {
-        private CSET_Context context;
-        private static readonly object _object = new object();        
+        private const string CONTAINER_TYPE_LAYER = "Layer";
+        private CSET_Context context;             
         private List<COMPONENT_SYMBOLS> componentSymbols;
 
         //I don't like this here 
@@ -68,12 +68,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
         public void SaveDifferences(int assessment_id)
         {
-            bool _lockTaken = false;
-            Monitor.Enter(_object, ref _lockTaken);
-            try
-            {
-                lock (_object)
-                {
+            
                     ///when saving if the parent object is a layer then there is not default zone
                     ///if the parent object is zone then all objects in that zone inherit the layer of the zone            
 
@@ -120,7 +115,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                             context.DIAGRAM_CONTAINER.Add(new DIAGRAM_CONTAINER()
                              {
                                  Assessment_Id = assessment_id,
-                                 ContainerType = "Layer",
+                                 ContainerType = CONTAINER_TYPE_LAYER,
                                  DrawIO_id = layer.Key,
                                  Parent_Draw_IO_Id = layer.Value.Parent_id,
                                  Name = layer.Value.LayerName,
@@ -147,14 +142,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
                     context.SaveChanges();
                     Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
-                    int defaultLayer = context.DIAGRAM_CONTAINER
-                        .Where(x => x.Assessment_Id == assessment_id && x.ContainerType == "Layer")
-                        .DefaultIfEmpty(new DIAGRAM_CONTAINER { Assessment_Id = -1 })
-                        .ToList()
-                        .Min(x => x.Assessment_Id);
-                    if (defaultLayer < 0)
+                    int defaultLayer;
+                    //if we didn't find the default layer then just add it.
+                    //no sure why we wouldn't but some how that is the case.
+                    if (!layerLookup.TryGetValue("1", out defaultLayer ))
                     {
-                        return;
+                        var layer = new DIAGRAM_CONTAINER()
+                        {
+                            Assessment_Id = assessment_id,
+                            ContainerType = CONTAINER_TYPE_LAYER,
+                            DrawIO_id = "1",
+                            Name = Constants.DEFAULT_LAYER_NAME,
+                            Parent_Id = 0,
+                            Parent_Draw_IO_Id = null,
+                            Universal_Sal_Level = "L",
+                            Visible = true
+                        };
+                        context.DIAGRAM_CONTAINER.Add(layer);
+                        defaultLayer = layer.Container_Id;
                     }
 
                     foreach (var zone in differences.AddedZones)
@@ -219,17 +224,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     }
                     context.SaveChanges();
                     layers.UpdateAllLayersAndZones();                    
-                    context.FillNetworkDiagramQuestions(assessment_id);
-                }
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
-            finally
-            {
-                System.Threading.Monitor.Exit(_object);
-            }
+                    context.FillNetworkDiagramQuestions(assessment_id);            
         }
 
 
@@ -282,7 +277,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 diagram.Layers.Add(id, new NetworkLayer()
                 {
                     ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DefaultLayerName,
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DEFAULT_LAYER_NAME,
                     Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
                 });
             }
