@@ -211,7 +211,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
 
-    let sema = new Semaphore(2);
+    let sema = new Semaphore(20);
     try {
         await sema.acquire();
 
@@ -220,7 +220,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
 
         setTimeout(() => {
             sema.release();
-        }, 2000);
+        }, 10);
     } catch (e) {
         console.error(e);
     }
@@ -671,7 +671,7 @@ function Semaphore(max) {
             let promise = waiting.shift();
             */
             // instead of letting the first guy in line go, 
-            // let the last guy go and dismiss the queue.
+            // resolve the last promise in the queue and dismiss the queue.
             let promise = waiting.pop();
             purge();
 
