@@ -12,8 +12,63 @@
  * A collection of CSET-specific utilities and functionality.
  */
 CsetUtils = function () {
+    
 }
 
+/**
+ * Prevent async requests from occurring out of order
+ * @param {any} max
+ */
+function Semaphore(max) {
+    var counter = 0;
+    var waiting = [];
+    
+    var take = function() {
+      if (waiting.length > 0 && counter < max){
+        counter++;
+        let promise = waiting.shift();
+        promise.resolve();
+      }
+    }
+    
+    this.acquire = function() {
+      if(counter < max) {
+        counter++
+        return new Promise(resolve => {
+        resolve();
+      });
+      } else {
+        return new Promise((resolve, err) => {
+          waiting.push({resolve: resolve, err: err});
+        });
+      }
+    }
+      
+    this.release = function() {
+     counter--;
+     take();
+    }
+    
+    this.purgeAllButLast = function() {
+      if(waiting.length<1)
+          return;
+      let unresolved = waiting.length-1;
+    
+      for (let i = 0; i < unresolved; i++) {
+        waiting[i].err('Task has been purged.');
+      }
+      var last  = waiting.pop();
+  
+      waiting = [];
+      waiting.push(last);
+      counter = waiting.length;
+      
+      console.log('purged:' + unresolved);
+      //return unresolved;
+    }
+  }
+
+  let myTestSema = new Semaphore(1);
 /**
  * Component properties we don't want to show in the tooltip or in the Ctrl+M dialog
  */
@@ -51,20 +106,20 @@ function makeRequest(e)
 {
     const jwt = localStorage.getItem('jwt');
     return new Promise(function (resolve, reject) 
-{
+    {
         const xhr = new XMLHttpRequest();
         xhr.open(e.method, e.url);
         xhr.setRequestHeader('Authorization', jwt);
         xhr.setRequestHeader('Content-Type', e.contentType || 'application/json');
         if (e.overrideMimeType) 
-{
+        {
             xhr.overrideMimeType(e.overrideMimeType);
         }
 
         if (e.onreadystatechange) 
-{
+        {
             xhr.onreadystatechange = function () 
-{
+            {
                 e.onreadystatechange({
                     readyState: this.readyState,
                     status: this.status,
@@ -73,12 +128,12 @@ function makeRequest(e)
             };
         }
         xhr.onload = function () 
-{
+        {
             if (this.status >= 200 && this.status < 300) 
-{
+            {
                 resolve(xhr.response);
             } else 
-{
+            {
                 reject({
                     status: this.status,
                     statusText: xhr.statusText
@@ -86,7 +141,7 @@ function makeRequest(e)
             }
         };
         xhr.onerror = function () 
-{
+        {
             reject({
                 status: this.status,
                 statusText: xhr.statusText
@@ -94,7 +149,7 @@ function makeRequest(e)
         };
 
         switch (e.method) 
-{
+        {
             case 'GET':
                 xhr.send();
                 break;
@@ -192,7 +247,7 @@ CsetUtils.edgesToTop = function (graph, edit) {
 /**
  * Persists the graph to the CSET API.
  */
-CsetUtils.PersistGraphToCSET = async function (editor) {
+CsetUtils.PersistGraphToCSET = function (editor) {
     const analysisReq = {
         DiagramXml: ''
     };
@@ -210,23 +265,11 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     }
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
-
-    let sema = new Semaphore(20);
-    try {
-        await sema.acquire();
-
-        await CsetUtils.analyzeDiagram(analysisReq, editor);
-        await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
-
-        setTimeout(() => {
-            sema.release();
-        }, 10);
-    } catch (e) {
-        console.error(e);
-    }
+    CsetUtils.analyzeDiagram(analysisReq, editor);
+    CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
 }
 
-CsetUtils.PersistDataToCSET = async function (editor, xml) {
+CsetUtils.PersistDataToCSET = function (editor, xml) {
     const req = {
         DiagramXml: xml,
         LastUsedComponentNumber: sessionStorage.getItem("last.number")
@@ -238,39 +281,42 @@ CsetUtils.PersistDataToCSET = async function (editor, xml) {
     svgRoot = xmlserializer.serializeToString(svgRoot);
     req.DiagramSvg = svgRoot;
 
-    await CsetUtils.saveDiagram(req);
+    CsetUtils.saveDiagram(req);
 }
 
 /**
  * Send the diagram to the API for analysis
  */
 CsetUtils.analyzeDiagram = async function (req, editor) {
-    const response = await makeRequest({
-        method: 'POST',
-        overrideMimeType: 'application/json',
-        url: localStorage.getItem('cset.host') + 'diagram/warnings',
-        payload: JSON.stringify(req),
-        onreadystatechange: function (e) {
-            if (e.readyState !== 4) {
-                return;
-            }
+    try{
+        const response = await makeRequest({
+            method: 'POST',
+            overrideMimeType: 'application/json',
+            url: localStorage.getItem('cset.host') + 'diagram/warnings',
+            payload: JSON.stringify(req),
+            onreadystatechange: function (e) {
+                if (e.readyState !== 4) {
+                    return;
+                }
 
-            switch (e.status) {
-                case 200:
-                    // successful post            
-                    break;
-                case 401:
-                    window.location.replace(localStorage.getItem('cset.client'));
-                    break;
+                switch (e.status) {
+                    case 200:
+                        // successful post            
+                        break;
+                    case 401:
+                        window.location.replace(localStorage.getItem('cset.client'));
+                        break;
+                }
+            }
+        });
+        if (response) {
+            if (editor.analyzeDiagram) {
+                const warnings = JSON.parse(response);
+                CsetUtils.addWarningsToDiagram(warnings, editor.graph);
             }
         }
-    });
-
-    if (response) {
-        if (editor.analyzeDiagram) {
-            const warnings = JSON.parse(response);
-            CsetUtils.addWarningsToDiagram(warnings, editor.graph);
-        }
+    }catch(e){
+        console.log(e);
     }
 }
 
@@ -279,26 +325,53 @@ CsetUtils.analyzeDiagram = async function (req, editor) {
  * @param {any} req
  */
 CsetUtils.saveDiagram = async function (req) {
-    await makeRequest({
-        method: 'POST',
-        overrideMimeType: 'application/json',
-        url: localStorage.getItem('cset.host') + 'diagram/save',
-        payload: JSON.stringify(req),
-        onreadystatechange: function (e) {
-            if (e.readyState !== 4) {
-                return;
-            }
+        await myTestSema.acquire();
+       // create a new div element 
+       var newDiv = document.createElement("div");
+       // and give it some content 
+       var newContent = document.createTextNode("Saving");
+       // add the text node to the newly created div
+       newDiv.appendChild(newContent);
+       document.body.appendChild(newDiv);
+       newDiv.id = "CSETSaving";
+       newDiv.style.position = 'absolute';
+       newDiv.style.top = '0';
+       newDiv.style.right = '0';
+       newDiv.style.padding = '5px';
+       newDiv.style.color = 'green';
+       try {
+        await makeRequest({
+            method: 'POST',
+            overrideMimeType: 'application/json',
+            url: localStorage.getItem('cset.host') + 'diagram/save',
+            payload: JSON.stringify(req),
+            onreadystatechange: function (e) {
+                if (e.readyState !== 4) {
+                    return;
+                } 
+                hideSaving();
+                myTestSema.release();
+                myTestSema.purgeAllButLast();
 
-            switch (e.status) {
-                case 200:
-                    // successful post            
-                    break;
-                case 401:
-                    window.location.replace(localStorage.getItem('cset.client'));
-                    break;
+                switch (e.status) {
+                    case 200:
+                        // successful post            
+                        break;
+                    case 401:
+                        window.location.replace(localStorage.getItem('cset.client'));
+                        break;
+                }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.log(error);
+    } finally{       
+    }
+}
+CsetUtils.hideSaving =function() {
+    var div = document.body;
+    var img = document.getElementById('CSETSaving');
+    div.removeChild(img);
 }
 
 
@@ -309,14 +382,14 @@ CsetUtils.saveDiagram = async function (req) {
 CsetUtils.importFilesCSETD = function (files, editor) 
 {
     if (files.length == 0) 
-{
+    {
         return;
     }
 
     var file = files[0];
     var reader = new FileReader();
     reader.onload = function (e) 
-{
+    {
         TranslateToMxGraph(editor, e.target.result);
     };
     reader.readAsText(file);
@@ -336,19 +409,19 @@ async function TranslateToMxGraph(editor, sXML)
         url: localStorage.getItem('cset.host') + 'diagram/importcsetd',
         payload: JSON.stringify(req),
         onreadystatechange: function (e) 
-{
+        {
             if (e.readyState !== 4) 
-{
+            {
                 return;
             }
 
             switch (e.status) 
-{
+            {
                 case 200:
                 case 204:
                     // successful post - drop the XML that came back into the graph
                     updateGraph(editor, e.responseText, function () 
-{
+                    {
                         CsetUtils.initializeZones(editor.graph)
                     });
                     break;
@@ -367,7 +440,7 @@ CsetUtils.initializeZones = function (graph)
 {
     var allCells = graph.getChildVertices(graph.getDefaultParent());
     allCells.forEach(x => 
-{
+    {
         x.setAttribute('internalLabel', x.getAttribute('label'));
         x.initZone();
     });
@@ -403,39 +476,39 @@ CsetUtils.getAllChildEdges = function (parent)
     var result = [];
 
     if (!!parent.edges) 
-{
+    {
         parent.edges.forEach(e => result.push(e));
     }
 
     if (!!parent.children)
  {
         for (var i = 0; i < parent.children.length; i++) 
-{
+        {
             getChildren(parent.children[i]);
         }
     }
 
     function getChildren(cell) 
-{
+    {
         if (result.indexOf(cell) > -1) 
-{
+        {
             return;
         }
 
         if (cell.isEdge()) 
-{
+        {
             result.push(cell);
         }
 
         if (!!cell.edges) 
-{
+        {
             cell.edges.forEach(e => result.push(e));
         }
 
         if (!!cell.children) 
-{
+        {
             for (var i = 0; i < cell.children.length; i++) 
-{
+            {
                 getChildren(cell.children[i]);
             }
         }
@@ -452,12 +525,12 @@ CsetUtils.findComponentInMap = function (filename)
 {
     var m = Editor.componentSymbols;
     for (var i = 0; i < m.length; i++) 
-{
+    {
         var group = m[i];
         for (var j = 0; j < group.Symbols.length; j++) 
-{
+        {
             if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName) 
-{
+            {
                 return group.Symbols[j];
             }
         }
@@ -470,15 +543,15 @@ CsetUtils.findComponentInMap = function (filename)
 CsetUtils.getFilenameFromPath = function (path) 
 {
     if (!path) 
-{
+    {
         return '';
     }
 
     var s = path.lastIndexOf('/');
     if (s > 0) 
-{
+    {
         if (path.length > (s + 1)) 
-{
+        {
             return path.substring(s + 1);
         }
         return '';
@@ -495,9 +568,9 @@ CsetUtils.clearWarningsFromDiagram = function (graph)
     var allCells = m.getDescendants();
 
     allCells.forEach(c => 
-{
+    {
         if (!!c.style && c.style.indexOf('redDot') >= 0)
-{
+        {
             m.remove(c);
         }
     });
@@ -510,19 +583,22 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
 {
     CsetUtils.clearWarningsFromDiagram(graph);
 
-    var root = graph.getModel().root;
+    //var root = graph.getModel().root;
 
     warnings.forEach(w =>
-{
-        var coords = CsetUtils.getCoords(w, graph);
+    {
+        var coords = CsetUtils.getCoordsAndLayer(w, graph);
 
         // don't overlay any other red dots on the same component
         if (CsetUtils.isRedDotAtCoords(graph, coords))
-{
+        {
             coords.x += 33;
         }
 
-        var redDot = graph.insertVertex(root, null, w.Number, coords.x, coords.y, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
+        var redDot = graph.insertVertex(coords.layer, null, 
+            w.Number, 
+            coords.x, coords.y, 30, 30,
+            'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
         redDot.warningMsg = w.Message;
     });
 }
@@ -531,26 +607,28 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
  * Determines where to place the red dot, based on the component or link it 
  * is describing.
  */
-CsetUtils.getCoords = function (warning, graph) 
+CsetUtils.getCoordsAndLayer = function (warning, graph)
 {
     var coords = {
         x: 100,
-        y: 100
+        y: 100,
+        layer: null
     };
 
     // if only one node provided, then the dot goes on that component
     if (warning.NodeId1 && !warning.NodeId2) 
-{
+    {
         const component = graph.getModel().getCell(warning.NodeId1);
         const g = component.getGeometry();
         coords.x = g.x;
         coords.y = g.y - 40;
+        coords.layer = component.myLayer();
         return coords;
     }
 
     // if both are provided, the dot goes on the edge
     if (warning.NodeId1 && warning.NodeId2) 
-{
+    {
         const component1 = graph.getModel().getCell(warning.NodeId1);
         const component2 = graph.getModel().getCell(warning.NodeId2);
         const edges = graph.getModel().getEdgesBetween(component1, component2);
@@ -563,6 +641,7 @@ CsetUtils.getCoords = function (warning, graph)
         // temporarily place the dot at the midpoint of a straight line between components.
         coords.x = (s1.origin.x + s2.origin.x) / 2;
         coords.y = (s1.origin.y + s2.origin.y) / 2;
+        coords.layer = e.myLayer();
 
         // then, try to place the dot so that it will be on the line no matter what.
         // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
@@ -570,6 +649,8 @@ CsetUtils.getCoords = function (warning, graph)
         // fine-tune here if needed
         // coords.x = coords.x - 15;
         // coords.y = coords.y - 40;
+
+        console.log('x:' + coords.x + 'y:' + coords.y);
 
         return coords;
     }
@@ -616,11 +697,11 @@ CsetUtils.isRedDotAtCoords = function (graph, coords)
     var found = false;
 
     graph.getModel().getDescendants().forEach(c => 
-{
+    {
         if (c instanceof mxCell && c.isRedDot()) 
-{
+        {
             if (c.getGeometry().x == coords.x && c.getGeometry().y == coords.y) 
-{
+            {
                 found = true;
             }
         }
@@ -655,58 +736,49 @@ CsetUtils.getCsetTemplates = async function () {
     return templates;
 }
 
+async function showSaving(requestId) {
+    // create a new div element 
+    var newDiv = document.createElement("div");
+    // and give it some content 
+    var newContent = document.createTextNode("Saving");
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
 
-/**
- * Prevent async requests from occurring out of order
- * @param {any} max
- */
-function Semaphore(max) {
-    var counter = 0;
-    var waiting = [];
-
-    var take = function () {
-        if (waiting.length > 0 && counter < max) {
-            /*
-            counter++;
-            let promise = waiting.shift();
-            */
-            // instead of letting the first guy in line go, 
-            // resolve the last promise in the queue and dismiss the queue.
-            let promise = waiting.pop();
-            purge();
-
-            promise.resolve();
+    var tmppayload = JSON.stringify(requestId);
+    console.log(tmppayload);
+    document.body.appendChild(newDiv);
+    newDiv.id = "CSETSaving";
+    newDiv.style.position = 'absolute';
+    newDiv.style.top = '0';
+    newDiv.style.right = '0';
+    newDiv.style.padding = '5px';
+    newDiv.style.color = 'green';
+    const resp = await makeRequest({
+        method: 'POST',
+        url: 'http://localhost:46000/api/diagram/testqueue',
+        payload: tmppayload,
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
+                return;
+            }
+            console.log(e);
+            hideSaving();
+            myTestSema.release();
+            myTestSema.purgeAllButLast();
+            switch (e.status) {
+                case 200:
+                    break;
+                case 401:
+                    window.location.replace(localStorage.getItem('cset.client'));
+                    break;
+            }
         }
-    }
-
-    this.acquire = function () {
-        if (counter < max) {
-            counter++
-            return new Promise(resolve => {
-                resolve();
-            });
-        } else {
-            return new Promise((resolve, err) => {
-                waiting.push({ resolve: resolve, err: err });
-            });
-        }
-    }
-
-    this.release = function () {
-        counter--;
-        take();
-    }
-
-    this.purge = function () {
-        let unresolved = waiting.length;
-
-        for (let i = 0; i < unresolved; i++) {
-            waiting[i].err('Task has been purged.');
-        }
-
-        counter = 0;
-        waiting = [];
-
-        return unresolved;
-    }
+    });
 }
+
+function hideSaving() {
+    var div = document.body;
+    var img = document.getElementById('CSETSaving');
+    div.removeChild(img);
+}
+
