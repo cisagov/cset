@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Net.Http.Headers;
 using CSETWeb_Api.BusinessLogic.Models;
 using ExportCSV;
+using System.Threading;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -34,6 +35,8 @@ namespace CSETWeb_Api.Controllers
     [CSETAuthorize]
     public class DiagramController : ApiController
     {
+        private static readonly object _object = new object();
+
         /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
@@ -47,17 +50,32 @@ namespace CSETWeb_Api.Controllers
             TokenManager tm = new TokenManager();
             int userId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            using (var db = new CSET_Context())
+            lock (_object)
             {
-                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
-                XmlDocument xDoc = new XmlDocument();
-                if (string.IsNullOrEmpty(req.DiagramXml))
+                using (var db = new CSET_Context())
                 {
-                    req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
+
+                    try
+                    {
+
+
+                        BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                        XmlDocument xDoc = new XmlDocument();
+                        if (string.IsNullOrEmpty(req.DiagramXml))
+                        {
+                            req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
+                        }
+                        xDoc.LoadXml(req.DiagramXml);
+                        dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
+
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
                 }
-                xDoc.LoadXml(req.DiagramXml);
-                dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
             }
+
         }
 
         [CSETAuthorize]
@@ -261,8 +279,8 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
 
-                var diagramXml = dm.GetDiagramXml((int) assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml,assessmentId??0);
+                var diagramXml = dm.GetDiagramXml((int)assessmentId);
+                var vertices = dm.ProcessDiagramVertices(diagramXml, assessmentId ?? 0);
 
                 var components = dm.GetDiagramComponents(vertices);
                 return Ok(components);
@@ -291,7 +309,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramVertices(diagramXml,assessmentId??0);
+                var vertices = dm.ProcessDiagramVertices(diagramXml, assessmentId ?? 0);
                 var zones = dm.GetDiagramZones(vertices);
                 return Ok(zones);
             }
@@ -319,7 +337,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var edges = dm.ProcessDigramEdges(diagramXml, assessmentId??0);
+                var edges = dm.ProcessDigramEdges(diagramXml, assessmentId ?? 0);
                 var links = dm.GetDiagramLinks(edges);
                 return Ok(links);
             }
@@ -347,7 +365,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramShapes(diagramXml, assessmentId??0);
+                var vertices = dm.ProcessDiagramShapes(diagramXml, assessmentId ?? 0);
                 var shapes = dm.GetDiagramShapes(vertices);
                 return Ok(shapes);
             }
@@ -375,7 +393,7 @@ namespace CSETWeb_Api.Controllers
                 int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
                 var dm = new DiagramManager(new CSET_Context());
                 var diagramXml = dm.GetDiagramXml((int)assessmentId);
-                var vertices = dm.ProcessDiagramShapes(diagramXml, assessmentId??0);
+                var vertices = dm.ProcessDiagramShapes(diagramXml, assessmentId ?? 0);
                 var texts = dm.GetDiagramText(vertices);
                 return Ok(texts);
             }
@@ -401,7 +419,7 @@ namespace CSETWeb_Api.Controllers
         {
             TokenManager tm = new TokenManager();
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            var stream = new ExcelExporter().ExportToExcellDiagram(assessmentId??0);
+            var stream = new ExcelExporter().ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
