@@ -80,8 +80,13 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '600px',
-      data: { componentType: componentType }
+      data: {componentType: componentType, myQuestion: this.myQuestion}
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`I'm hit`);
+    });
+    
+    
   }
   /**
  * Shows/hides the "expand" section.
@@ -180,7 +185,8 @@ export class QuestionExtrasComponent implements OnInit {
         FeedBack: '',
         MarkForReview: false,
         Reviewed: false,
-        Is_Component: this.myQuestion.Is_Component
+        Is_Component: this.myQuestion.Is_Component, 
+        ComponentGuid: ''
       };
 
       this.answer = newAnswer;

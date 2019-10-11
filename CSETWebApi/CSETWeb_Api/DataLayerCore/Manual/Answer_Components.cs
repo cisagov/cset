@@ -24,7 +24,7 @@ namespace DataLayerCore.Model
         public int Question_Or_Requirement_Id { get; set; }        
         public Nullable<int> Question_Number { get; set; }
         public string Answer_Text { get; set; }
-        public string Component_Guid { get; set; }
+        public Guid Component_Guid { get; set; }
         public bool Is_Component { get; set; }
         public bool Is_Framework { get; set; }
     }
