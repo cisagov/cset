@@ -27,6 +27,7 @@ import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
 import { Answer, Question } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
+import { StylesCompileDependency } from '@angular/compiler';
 
 @Component({
   selector: 'component-override',
@@ -43,10 +44,7 @@ export class ComponentOverrideComponent {
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
     public configSvc: ConfigService, public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x:any) =>{
-        this.questions = x;
-        console.log(this.questions);
-      });
+      this.questions = data.questions;
     }
 
     storeAnswer(q: any, newAnswerValue: string) {
@@ -77,5 +75,10 @@ export class ComponentOverrideComponent {
       }
   close() {
     return this.dialog.close();
+  }
+
+  applyHeight(){
+    const styles =  {'max-height': window.screen.availHeight};
+    return styles;
   }
 }

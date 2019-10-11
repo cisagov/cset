@@ -297,24 +297,9 @@ namespace CSETWeb_Api.BusinessManagers
                 foreach(var question in questionlist.ToList())
                 {
                     Answer_Components_Exploded_ForJSON tmp = null;
-                    
-                    Answer_Components qAnswered = answeredQuestionList.FirstOrDefault(x => x.Component_Guid == question.Component_GUID);
-                    if (qAnswered != null)
-                    {
-                        if (qAnswered.Answer_Text == question.Answer_Text)
-                        {
-                            tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                            tmp.Component_GUID = question.Component_GUID.ToString();
-                            rlist.Add(tmp);
-                        }
-                    }
-                    else
-                    {
-                        tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                        tmp.Component_GUID = question.Component_GUID.ToString();
-                        rlist.Add(tmp);
-                    }
-                   
+                    tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                    tmp.Component_GUID = question.Component_GUID.ToString();
+                    rlist.Add(tmp);
                 }
                 return rlist;
             }
