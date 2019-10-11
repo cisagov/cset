@@ -77,16 +77,20 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   showOverrideDialog(componentType): void {
-    const dialogRef = this.dialog.open(ComponentOverrideComponent, {
-      width: '600px',
-      height: '600px',
-      data: {componentType: componentType, myQuestion: this.myQuestion}
+    this.questionsSvc.getOverrideQuestions(this.myQuestion.QuestionId, componentType.Type).subscribe((x: any) =>{
+      const height =  300 + (x.length * 60);
+
+      const dialogRef = this.dialog.open(ComponentOverrideComponent, {
+        width: '400px',
+        height: height+'px',
+        maxHeight: window.screen.availHeight,
+        minHeight: '600px',
+        data: {componentType: componentType, myQuestion: this.myQuestion, questions: x},
+      });
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`I'm hit`);
-    });
-    
-    
   }
   /**
  * Shows/hides the "expand" section.
