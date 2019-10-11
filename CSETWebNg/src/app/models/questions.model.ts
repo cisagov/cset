@@ -100,6 +100,7 @@ export class Answer {
     MarkForReview: boolean;
     Reviewed: boolean;
     Is_Component: boolean;
+    ComponentGuid: string;
 }
 
 export class SubToken {

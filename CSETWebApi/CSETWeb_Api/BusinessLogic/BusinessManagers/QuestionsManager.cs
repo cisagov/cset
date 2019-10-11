@@ -16,6 +16,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -135,6 +136,8 @@ namespace CSETWeb_Api.BusinessManagers
                 return BuildResponse();
             }
         }
+
+      
 
 
         /// <summary>
@@ -281,16 +284,37 @@ namespace CSETWeb_Api.BusinessManagers
             List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
             using (CSET_Context context = new CSET_Context())
             {
-                var questionlist = from a in context.Answer_Components_Exploded
+                IQueryable<Answer_Components_Exploded> questionlist = from a in context.Answer_Components_Exploded
                                    where a.Assessment_Id == assessmentId
                                     && a.Question_Id == question_id
                                     && a.Component_Type == component_Type
-                                   select a;
+                                    //&& a.Component_GUID == Guid.Empty
+                                    select a;
+                IQueryable<Answer_Components> answeredQuestionList = context.Answer_Components.Where(a =>
+                    a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
+                    
+
                 foreach(var question in questionlist.ToList())
                 {
-                    Answer_Components_Exploded_ForJSON tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                    tmp.Component_GUID = question.Component_GUID.ToString();
-                    rlist.Add(tmp);
+                    Answer_Components_Exploded_ForJSON tmp = null;
+                    
+                    Answer_Components qAnswered = answeredQuestionList.FirstOrDefault(x => x.Component_Guid == question.Component_GUID);
+                    if (qAnswered != null)
+                    {
+                        if (qAnswered.Answer_Text == question.Answer_Text)
+                        {
+                            tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                            tmp.Component_GUID = question.Component_GUID.ToString();
+                            rlist.Add(tmp);
+                        }
+                    }
+                    else
+                    {
+                        tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                        tmp.Component_GUID = question.Component_GUID.ToString();
+                        rlist.Add(tmp);
+                    }
+                   
                 }
                 return rlist;
             }

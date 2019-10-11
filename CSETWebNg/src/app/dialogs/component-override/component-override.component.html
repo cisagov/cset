@@ -30,33 +30,58 @@
           <section class="pr-4 d-flex flex-11a flex-row flex-wrap">
             <article class="mb-4 d-flex flex-column flex-11a w-100">
               <div class="d-flex flex-column justify-content-start flex-00a">
+                <div class="container">
                     <div class="row">
                             <div class="col-12" style="padding-bottom:15px;">
                                 Change the default answers that will be automatically assigned to the component types
                                 listed below.  Setting the default answer from this screen will automatically answer all 
                                 component questions associated to the indicated component type.
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <span style="font-weight: bold">ComponentType: </span>
-                            </div>
-                            <div class="col-10">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 col-md-3 col-xs-12">
+                          <span style="font-weight: bold">Component: </span>
+                        </div>
+                        <div class="col-sm-9 col-md-9 col-xs-12">
+                            {{data.componentType.Type}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 col-md-3 col-xs-12">
+                            <span style="font-weight: bold">Question:</span>
+                        </div>
+                        <div class="col-sm-9 col-md-9 col-xs-12">
+                          {{data.myQuestion.QuestionText}}
+                        </div>
+                    </div>
+                    <div class="row" style="
+                    overflow-y: auto;
+                    max-height: 219px;
+                    ">
+                        <table mat-table class="assessment-summary" style='overflow:auto'>
+                            <th>Component Name</th>
+                            <th></th>
+                            <tr *ngFor="let q of questions; let i = index">
+                                <td>{{q.ComponentName}}</td>
+                                <td>
+                                    <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                                        <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer_Text === 'Y'" (click)="storeAnswer(q, 'Y')">
+                                          <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'Y'">Yes
+                                        </label>
+                                        <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer_Text === 'N'" (click)="storeAnswer(q, 'N')">
+                                          <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'N'">No
+                                        </label>
+                                        <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer_Text === 'NA'" (click)="storeAnswer(q, 'NA')">
+                                          <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'NA'">NA
+                                        </label>
+                                      </div>
+                                </td>
                                 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <span style="font-weight: bold">Question:</span>
-                            </div>
-                            <div class="col-10">
-                                
-                            </div>
-                        </div>
-                        <div class="row">
-                        
-                        </div>
+                            </tr>
+                        </table>
+                    </div>
               </div>
+            </div>
             </article>
           </section>
         </mat-dialog-content>
