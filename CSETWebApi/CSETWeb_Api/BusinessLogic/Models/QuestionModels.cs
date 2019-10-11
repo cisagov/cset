@@ -118,12 +118,15 @@ namespace CSETWeb_Api.Models
         public string Comment;
         public string FeedBack;
         public bool MarkForReview;
+        public Guid ComponentGuid;
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  
         /// This field was added for NCUA/ACET support.
         /// </summary>
         public bool Reviewed;
+
+        public bool Is_Component;
     }
 
 
