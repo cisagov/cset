@@ -389,7 +389,7 @@ namespace CSETWeb_Api.BusinessManagers
             QuestionGroup qg = new QuestionGroup();
             QuestionSubCategory sc = new QuestionSubCategory();
             QuestionAnswer qa = new QuestionAnswer();
-
+            
             string curGroupHeading = null;
             int curHeadingPairId = 0;
 
@@ -404,7 +404,9 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {  
                         GroupHeadingText = dbQ.Question_Group_Heading,
-                        StandardShortName = listname
+                        StandardShortName = listname,
+                        ComponentType = dbQ.Component_Type,
+                        ComponentName = dbQ.ComponentName
                     };
                     groupList.Add(qg);
                     curGroupHeading = qg.GroupHeadingText;

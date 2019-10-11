@@ -55,6 +55,8 @@ export interface QuestionGroup {
     SubCategories: SubCategory[];
     Visible: boolean;
     DomainName: string;
+    ComponentType: string;
+    ComponentName: string;
 }
 
 export interface SubCategory {

@@ -288,6 +288,7 @@
     <Compile Include="BusinessManagers\MaturityManager.cs" />
     <Compile Include="BusinessManagers\ModuleCloner.cs" />
     <Compile Include="BusinessManagers\NoSuchUserException.cs" />
+    <Compile Include="BusinessManagers\QuestionTypeGroup.cs" />
     <Compile Include="BusinessManagers\RequiredDocumentationManager.cs" />
     <Compile Include="BusinessManagers\SalManager.cs" />
     <Compile Include="BusinessManagers\ModuleBuilderManager.cs" />
