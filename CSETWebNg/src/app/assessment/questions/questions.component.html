@@ -81,7 +81,7 @@
       [id]="formatID('Q' + g.GroupHeadingId  + '.' + g.GroupHeadingText + '.' + g.StandardShortName)">
     
         <!-- Question Group Heading / Category-->
-        <div *ngIf="getHeader(g)" class="group-heading">
+        <div *ngIf="g.ShowOverrideHeader" class="group-heading">
           {{ g.ComponentType + ' - ' + g.ComponentName }}
         </div>
 
