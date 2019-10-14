@@ -282,7 +282,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     { DisplayName = data.Display_Name, XMLName = data.Diagram_Type_Xml });
 
                 var stuff = from a in this.DataContext.Answer_Components_Exploded
-                            join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Universal_Sal_Level1
+                            join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
                             where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
                             select new { a.Component_Type, a.SAL, l.Sal_Level_Order };
 
