@@ -49,6 +49,7 @@ export interface Domain {
 }
 
 export interface QuestionGroup {
+  ShowOverrideHeader: boolean;
     GroupHeadingId: number;
     GroupHeadingText: string;
     StandardShortName: string;
