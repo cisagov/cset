@@ -139,6 +139,63 @@ namespace CSETWeb_Api.BusinessManagers
             AssessmentUtil.TouchAssessment(_assessmentId);
         }
 
+        public int StoreComponentAnswer(Answer answer)
+        {
+            var db = new CSET_Context();
+
+            // Find the Question or Requirement
+            var question = db.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
+            
+            if (question == null)
+            {
+                throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
+            }
+
+            if (answer.ComponentGuid == Guid.Empty)
+            {
+                throw new ApplicationException("Unknown component identifier");
+            }
+
+           // in case a null is passed, store 'unanswered'
+            if (string.IsNullOrEmpty(answer.AnswerText))
+            {
+                answer.AnswerText = "U";
+            }
+
+            ANSWER dbAnswer = null;
+            if (answer != null && answer.ComponentGuid != Guid.Empty)
+            {
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                            && x.Question_Or_Requirement_Id == answer.QuestionId
+                            && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+            }
+         
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+            dbAnswer.Assessment_Id = _assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Is_Requirement = false;
+            dbAnswer.Answer_Text = answer.AnswerText;
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Comment = answer.Comment;
+            dbAnswer.FeedBack = answer.FeedBack;
+            dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+            dbAnswer.Is_Component = true;
+
+            db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
+            db.SaveChanges();
+
+            AssessmentUtil.TouchAssessment(_assessmentId);
+
+            return dbAnswer.Answer_Id;
+        }
 
         /// <summary>
         /// Stores an answer.
@@ -169,8 +226,13 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             ANSWER dbAnswer = null;
-
-            if (answer != null)
+            if (answer != null && answer.ComponentGuid != Guid.Empty)
+            {
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                            && x.Question_Or_Requirement_Id == answer.QuestionId
+                            && x.Is_Requirement == isRequirement && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+            }
+            else if (answer != null)
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId 
                 && x.Question_Or_Requirement_Id == answer.QuestionId
@@ -192,6 +254,8 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.FeedBack = answer.FeedBack;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+            dbAnswer.Is_Component = answer.Is_Component;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x=> x.Answer_Id);
             db.SaveChanges();

@@ -238,6 +238,12 @@ export class QuestionsComponent implements AfterViewInit {
    * @param q
    */
   insertWithParents(tree: NavTree[], q: QuestionGroup) {
+
+    if(!!q.ComponentType){
+      this.insertComponentSpecificOverride(tree,q);
+      return;
+    }
+
     let standard = tree.find(elem => elem.elementType === 'STANDARD' && elem.label === q.StandardShortName);
     if (!standard) {
       tree.push({
@@ -281,6 +287,57 @@ export class QuestionsComponent implements AfterViewInit {
     } else {
       standard.children.push(heading);
     }
+  }
+
+  insertComponentSpecificOverride(tree: NavTree[], q: QuestionGroup){
+    let standard = tree.find(elem => elem.elementType === 'STANDARD' && elem.label === q.StandardShortName);
+    if (!standard) {
+      tree.push({
+        label: q.StandardShortName,
+        elementType: 'STANDARD',
+        value: '',
+        children: []
+      });
+      standard = tree[tree.length - 1];
+    }
+
+    let componenttype = standard.children.find(elem => elem.elementType === 'COMPONENT-TYPE' && elem.label === q.ComponentType);
+    if (!componenttype) {
+      standard.children.push({
+        label: q.ComponentType,
+        elementType: 'COMPONENT-TYPE',
+        value: '',
+        children: []
+      });
+      componenttype = standard.children[standard.children.length - 1];
+    }
+
+    let componentname = componenttype.children.find(elem => elem.elementType === 'COMPONENT-NAME' && elem.label === q.ComponentName);
+    if (!componentname) {
+      componenttype.children.push({
+        label: q.ComponentName,
+        elementType: 'COMPONENT-NAME',
+        value: '',
+        children: []
+      });
+      componentname = componenttype.children[standard.children.length - 1];
+    }
+    // get the header
+    // get the componenttype
+    // get the componentname
+
+    // build the question group heading element
+    const heading = {
+      label: q.GroupHeadingText,
+      value: {
+        target: this.formatID('Q' + q.GroupHeadingId + '.' + q.GroupHeadingText + '.' + q.StandardShortName),
+        question: q.GroupHeadingId
+      },
+      elementType: 'QUESTION-HEADING',
+      children: []
+    };
+    componentname.children.push(heading);
+    
   }
 
 

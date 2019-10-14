@@ -55,6 +55,8 @@ export interface QuestionGroup {
     SubCategories: SubCategory[];
     Visible: boolean;
     DomainName: string;
+    ComponentType: string;
+    ComponentName: string;
 }
 
 export interface SubCategory {
@@ -100,6 +102,7 @@ export class Answer {
     MarkForReview: boolean;
     Reviewed: boolean;
     Is_Component: boolean;
+    ComponentGuid: string;
 }
 
 export class SubToken {
