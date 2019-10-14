@@ -838,6 +838,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.testQueue(System.Int32)">
+            <summary>
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExport(System.String)">
             <summary>
             

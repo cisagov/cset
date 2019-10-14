@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations;
 namespace DataLayerCore.Model
 {
     public partial class Answer_Components_Overrides:Answer_Components_Base
-    {  
+    {
+      
     }
 }
