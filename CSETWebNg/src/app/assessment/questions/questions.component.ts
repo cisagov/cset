@@ -352,11 +352,6 @@ export class QuestionsComponent implements AfterViewInit {
     componentname.children.push(heading);
   }
 
-  getHeader(g: QuestionGroup) {
-    //return (g.ComponentType);
-    
-  }
-
   visibleGroupCount() {
     if (!this.domains) {
       return 1;
