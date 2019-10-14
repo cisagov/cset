@@ -15094,12 +15094,6 @@ mxGraph.prototype.isLabelClipped = function (a) {
 };
 mxGraph.prototype.getTooltip = function (a, b, c, d)
 {
-    // Override content for red dots (CSET)
-    if (a.cell.isRedDot())
-    {
-        return (!!a.cell.warningMsg) ? '<div style="max-width: 300px">' + a.cell.warningMsg + '</div>' : 'RED DOT';
-    }
-
     var e = null;
     null != a && (null == a.control || b != a.control.node && b.parentNode != a.control.node || (e = this.collapseExpandResource, e = mxUtils.htmlEntities(mxResources.get(e) || e).replace(/\\n/g, "<br>")), null == e && null != a.overlays && a.overlays.visit(function (a, c) {
             null != e || b != c.node && b.parentNode != c.node || (e = c.overlay.toString())
