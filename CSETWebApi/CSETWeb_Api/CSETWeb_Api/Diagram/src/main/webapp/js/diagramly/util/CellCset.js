@@ -85,6 +85,20 @@ mxCell.prototype.isLayer = function ()
 
 
 /**
+ * Returns the cell that represents the component's layer.
+ */
+mxCell.prototype.myLayer = function ()
+{
+    var c = this;
+    while (!c.isLayer())
+    {
+        c = c.getParent();
+    }
+    return c;
+}
+
+
+/**
  * Returns a boolean indicating if the cell is a Zone.
  */
 mxCell.prototype.isZone = function ()
@@ -101,15 +115,6 @@ mxCell.prototype.isZone = function ()
     }
 
     return (!!z);
-}
-
-
-/**
- * 
- */
-mxCell.prototype.isRedDot = function ()
-{
-    return (!!this.style && this.style.indexOf('redDot') >= 0);
 }
 
 
