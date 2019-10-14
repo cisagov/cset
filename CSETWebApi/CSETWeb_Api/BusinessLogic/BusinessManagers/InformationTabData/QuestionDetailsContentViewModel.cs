@@ -180,8 +180,8 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                                           select b
                                          ).ToDictionary(x => x.Set_Name, x=> x);
 
-                qp.DefaultSetName = qp.DictionaryStandards.Keys.First();
-                qp.SetName = qp.DictionaryStandards.Keys.First();
+                qp.DefaultSetName = qp.DictionaryStandards.Keys.FirstOrDefault();
+                qp.SetName = qp.DictionaryStandards.Keys.FirstOrDefault();
                 LoadData(qp,assessmentId);
 
                 // Get any findings/discoveries for the question

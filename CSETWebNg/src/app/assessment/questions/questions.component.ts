@@ -52,6 +52,7 @@ export class QuestionsComponent implements AfterViewInit {
 
   currentDomain: string;
 
+  PreviousComponentGroup = null;
 
   /**
    * Constructor
@@ -337,9 +338,21 @@ export class QuestionsComponent implements AfterViewInit {
       children: []
     };
     componentname.children.push(heading);
-    
   }
 
+  getHeader(g: QuestionGroup) {
+    let rval = true;
+    if (g.ComponentType) {
+      if (this.PreviousComponentGroup) {
+        rval = (g.ComponentType === this.PreviousComponentGroup.ComponentType)
+        && (g.ComponentName === this.PreviousComponentGroup.ComponentName);
+      }
+      this.PreviousComponentGroup = g;
+      return rval;
+    } else {
+      return false;
+    }
+  }
 
   visibleGroupCount() {
     if (!this.domains) {
