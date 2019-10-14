@@ -22,9 +22,7 @@
 //
 ////////////////////////////////
 
-import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../../../node_modules/@angular/router';
-import { AssessmentService } from '../../../../services/assessment.service';
+import { Component, OnInit} from '@angular/core';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
 import { Navigation2Service } from '../../../../services/navigation2.service';
@@ -33,7 +31,8 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
     selector: 'app-feedback',
     templateUrl: './feedback.component.html',
     // tslint:disable-next-line:use-host-property-decorator
-    host: { class: 'd-flex flex-column flex-11a' }
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./feedback.component.css']
   })
 
   export class FeedbackComponent implements OnInit {
@@ -42,14 +41,24 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
     docUrl: string;
 
     constructor(private analysisSvc: AnalysisService,
-        private assessSvc: AssessmentService,
         public navSvc2: Navigation2Service,
-        private router: Router,
         private configSvc: ConfigService) { }
 
-    ngOnInit() {
+        ngOnInit() {
         this.docUrl = this.configSvc.docUrl;
         this.analysisSvc.getFeedback().subscribe(x => this.setupTable(x));
+      }
+
+      copyText(div: HTMLDivElement) {
+        if (window.getSelection) {
+          const range = document.createRange();
+          range.selectNodeContents(div);
+
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          document.execCommand('Copy');
+        }
       }
 
       setupTable(data: any) {
