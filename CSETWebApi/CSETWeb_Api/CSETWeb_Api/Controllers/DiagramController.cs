@@ -446,5 +446,22 @@ namespace CSETWeb_Api.Controllers
             var templates = dm.GetDiagramTemplates();
             return Ok(templates);
         }
+
+        /// <summary>
+        /// Returns the details for symbols.  This is used to build palettes and icons
+        /// in the browser.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("api/diagram/testqueue")]
+        [HttpPost]
+        public int testQueue([FromBody]int requestId)
+        {
+            lock (_object)
+            {
+                Thread.Sleep(1000);
+                return requestId;
+            }
+        }
     }
 }
