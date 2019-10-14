@@ -52,6 +52,7 @@ export class QuestionsComponent implements AfterViewInit {
 
   currentDomain: string;
 
+  PreviousComponentGroup = null;
 
   /**
    * Constructor
@@ -162,7 +163,19 @@ export class QuestionsComponent implements AfterViewInit {
         this.domains = bigStructure.Domains;
         this.questionsSvc.domains = bigStructure.Domains;
         // ------------------------------------------------------------------------------------
-
+        data.QuestionGroups.forEach(g => {
+          let rval = true;
+          if (g.ComponentType) {
+            if (this.PreviousComponentGroup) {
+              rval = !((g.ComponentType === this.PreviousComponentGroup.ComponentType)
+              && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
+            }
+            this.PreviousComponentGroup = g;
+          } else {
+            rval = false;
+          }
+          g.ShowOverrideHeader = rval;
+        });
 
 
         // default the selected maturity filters
@@ -337,9 +350,12 @@ export class QuestionsComponent implements AfterViewInit {
       children: []
     };
     componentname.children.push(heading);
-    
   }
 
+  getHeader(g: QuestionGroup) {
+    //return (g.ComponentType);
+    
+  }
 
   visibleGroupCount() {
     if (!this.domains) {

@@ -80,8 +80,14 @@
     <div *ngFor="let g of d.QuestionGroups" style="margin-bottom: 2em;"
       [id]="formatID('Q' + g.GroupHeadingId  + '.' + g.GroupHeadingText + '.' + g.StandardShortName)">
     
+        <!-- Question Group Heading / Category-->
+        <div *ngIf="g.ShowOverrideHeader" class="group-heading">
+          {{ g.ComponentType + ' - ' + g.ComponentName }}
+        </div>
+
+
       <!-- Question Group Heading / Category-->
-      <div class="group-heading" [ngClass]="addDomainPad(g.DomainName)" [class.display-none]="!g.Visible">
+      <div *ngIf="!g.ComponentType" class="group-heading" [ngClass]="addDomainPad(g.DomainName)" [class.display-none]="!g.Visible">
         {{ g.GroupHeadingText }}
         {{ (!g.DomainName && !!g.StandardShortName) ? ' - ' + g.StandardShortName : '' }}
       </div>
