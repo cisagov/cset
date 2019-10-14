@@ -42,6 +42,8 @@ namespace CSETWeb_Api.Models
         public string GroupHeadingText;
         public string StandardShortName;
         public string DomainName;
+        public string ComponentType;
+        public string ComponentName;
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
     }
 

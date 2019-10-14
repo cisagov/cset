@@ -26,10 +26,8 @@
           
           <span>Component Question Overrides</span>
         </div>
-        <mat-dialog-content class="p-4 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-          <section class="pr-4 d-flex flex-11a flex-row flex-wrap">
-            <article class="mb-4 d-flex flex-column flex-11a w-100">
-              <div class="d-flex flex-column justify-content-start flex-00a">
+        <mat-dialog-content class="p-3 oy-auto d-flex flex-column flex-11a">          
+              <div class="d-flex flex-column justify-content-start flex-00a w-100">
                 <div class="container">
                     <div class="row">
                             <div class="col-12" style="padding-bottom:15px;">
@@ -54,12 +52,9 @@
                           {{data.myQuestion.QuestionText}}
                         </div>
                     </div>
-                    <div class="row" style="
-                    overflow-y: auto;
-                    max-height: 219px;
-                    ">
-                        <table mat-table class="assessment-summary" style='overflow:auto'>
-                            <th>Component Name</th>
+                    <div class="row" [ngStyle]="applyHeight()" style="overflow-y:auto">
+                        <table mat-table class="assessment-summary" style='overflow-y:auto'>
+                            <th>Specific Component Name</th>
                             <th></th>
                             <tr *ngFor="let q of questions; let i = index">
                                 <td style="padding-left:10px;">{{q.ComponentName}}</td>
@@ -81,12 +76,10 @@
                         </table>
                     </div>
               </div>
-            </div>
-            </article>
-          </section>
+            </div>                      
         </mat-dialog-content>
       
-        <mat-dialog-actions class="p-4 mb-0">
+        <div class="pl-4 p-1 mb-0">
           <button class="btn btn-secondary" (click)="close()">OK</button>
-        </mat-dialog-actions>
+        </div>
       </div>

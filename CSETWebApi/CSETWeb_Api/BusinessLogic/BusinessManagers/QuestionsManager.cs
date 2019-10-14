@@ -297,24 +297,9 @@ namespace CSETWeb_Api.BusinessManagers
                 foreach(var question in questionlist.ToList())
                 {
                     Answer_Components_Exploded_ForJSON tmp = null;
-                    
-                    Answer_Components qAnswered = answeredQuestionList.FirstOrDefault(x => x.Component_Guid == question.Component_GUID);
-                    if (qAnswered != null)
-                    {
-                        if (qAnswered.Answer_Text == question.Answer_Text)
-                        {
-                            tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                            tmp.Component_GUID = question.Component_GUID.ToString();
-                            rlist.Add(tmp);
-                        }
-                    }
-                    else
-                    {
-                        tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                        tmp.Component_GUID = question.Component_GUID.ToString();
-                        rlist.Add(tmp);
-                    }
-                   
+                    tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                    tmp.Component_GUID = question.Component_GUID.ToString();
+                    rlist.Add(tmp);
                 }
                 return rlist;
             }
@@ -386,9 +371,14 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (CSET_Context context = new CSET_Context())
             {
-                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>().ToList();
+                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
+                    .OrderBy(x=> x.Question_Group_Heading).ThenBy(x=>x.Universal_Sub_Category).ToList();
+                
                 AddResponse(resp, context, list, "Component Defaults");
-                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>().ToList();
+                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
+                    .OrderBy(x=> x.Component_Type).ThenBy(x=>x.ComponentName)
+                    .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
+                    .ToList();
                 AddResponse(resp, context, dlist, "Component Overrides");
             }
         }
@@ -399,7 +389,7 @@ namespace CSETWeb_Api.BusinessManagers
             QuestionGroup qg = new QuestionGroup();
             QuestionSubCategory sc = new QuestionSubCategory();
             QuestionAnswer qa = new QuestionAnswer();
-
+            
             string curGroupHeading = null;
             int curHeadingPairId = 0;
 
@@ -414,7 +404,9 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {  
                         GroupHeadingText = dbQ.Question_Group_Heading,
-                        StandardShortName = listname
+                        StandardShortName = listname,
+                        ComponentType = dbQ.Component_Type,
+                        ComponentName = dbQ.ComponentName
                     };
                     groupList.Add(qg);
                     curGroupHeading = qg.GroupHeadingText;
