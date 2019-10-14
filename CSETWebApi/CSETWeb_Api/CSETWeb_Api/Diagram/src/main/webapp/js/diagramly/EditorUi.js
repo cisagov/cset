@@ -1912,10 +1912,10 @@
                         const modal = true;
                         const canclose = true;
                         const onclose = mxUtils.bind(this, function (cancel) {
+                            this.hideDialog();
                             if (!cancel) {
                                 file.save();
-                            }
-                            this.hideDialog();
+                            }                 
                         });
                         const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
                         this.showDialog(dlg.container, width, height, modal, canclose, onclose);

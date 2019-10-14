@@ -50,21 +50,17 @@ function Semaphore(max) {
     }
     
     this.purgeAllButLast = function() {
-      if(waiting.length<1)
-          return;
-      let unresolved = waiting.length-1;
-    
-      for (let i = 0; i < unresolved; i++) {
-        waiting[i].err('Task has been purged.');
-      }
-      var last  = waiting.pop();
-  
-      waiting = [];
-      waiting.push(last);
-      counter = waiting.length;
-      
-      console.log('purged:' + unresolved);
-      //return unresolved;
+        if(waiting.length<1)
+            return;
+        let unresolved = waiting.length-1;
+        
+        for (let i = 0; i < unresolved; i++) {        
+            waiting[i].err('Task has been purged.');
+        }
+        var last  = waiting.pop();
+        waiting = [];
+        waiting.push(last);
+        counter = waiting.length;
     }
   }
 
@@ -247,7 +243,7 @@ CsetUtils.edgesToTop = function (graph, edit) {
 /**
  * Persists the graph to the CSET API.
  */
-CsetUtils.PersistGraphToCSET = function (editor) {
+CsetUtils.PersistGraphToCSET = async function (editor) {
     const analysisReq = {
         DiagramXml: ''
     };
@@ -265,11 +261,11 @@ CsetUtils.PersistGraphToCSET = function (editor) {
     }
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
-    CsetUtils.analyzeDiagram(analysisReq, editor);
-    CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
+    await CsetUtils.analyzeDiagram(analysisReq, editor);
+    await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
 }
 
-CsetUtils.PersistDataToCSET = function (editor, xml) {
+CsetUtils.PersistDataToCSET = async function (editor, xml) {
     const req = {
         DiagramXml: xml,
         LastUsedComponentNumber: sessionStorage.getItem("last.number")
@@ -281,7 +277,10 @@ CsetUtils.PersistDataToCSET = function (editor, xml) {
     svgRoot = xmlserializer.serializeToString(svgRoot);
     req.DiagramSvg = svgRoot;
 
-    CsetUtils.saveDiagram(req);
+    //may need to add this in to the save
+    //editor.menubarContainer;
+    
+    await CsetUtils.saveDiagram(req);
 }
 
 /**
@@ -325,7 +324,8 @@ CsetUtils.analyzeDiagram = async function (req, editor) {
  * @param {any} req
  */
 CsetUtils.saveDiagram = async function (req) {
-        await myTestSema.acquire();
+       try {
+       await myTestSema.acquire();
        // create a new div element 
        var newDiv = document.createElement("div");
        // and give it some content 
@@ -339,20 +339,17 @@ CsetUtils.saveDiagram = async function (req) {
        newDiv.style.right = '0';
        newDiv.style.padding = '5px';
        newDiv.style.color = 'green';
-       try {
+        
         await makeRequest({
             method: 'POST',
             overrideMimeType: 'application/json',
             url: localStorage.getItem('cset.host') + 'diagram/save',
             payload: JSON.stringify(req),
             onreadystatechange: function (e) {
+                console.log(e.readyState);
                 if (e.readyState !== 4) {
                     return;
                 } 
-                hideSaving();
-                myTestSema.release();
-                myTestSema.purgeAllButLast();
-
                 switch (e.status) {
                     case 200:
                         // successful post            
@@ -363,9 +360,13 @@ CsetUtils.saveDiagram = async function (req) {
                 }
             }
         });
+        myTestSema.release();
+        myTestSema.purgeAllButLast();
+        hideSaving();
     } catch (error) {
-        console.log(error);
-    } finally{       
+        //console.log(error);
+    } finally{  
+        
     }
 }
 CsetUtils.hideSaving =function() {
