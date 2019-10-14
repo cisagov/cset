@@ -121,15 +121,6 @@ mxCell.prototype.isZone = function ()
 /**
  * 
  */
-mxCell.prototype.isRedDot = function ()
-{
-    return (!!this.style && this.style.indexOf('redDot') >= 0);
-}
-
-
-/**
- * 
- */
 mxCell.prototype.initZone = function ()
 {
     if (!this.isZone())
