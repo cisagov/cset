@@ -37,7 +37,6 @@ import { QuestionsService } from '../../services/questions.service';
 })
 export class ComponentOverrideComponent {
 
-  @Output() answerChanged = new EventEmitter();
   questions:any[]=[];
 
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
@@ -50,8 +49,7 @@ export class ComponentOverrideComponent {
     }
 
     storeAnswer(q: any, newAnswerValue: string) {
-      this.answerChanged.emit(null);
-  
+       
       // if they clicked on the same answer that was previously set, "un-set" it
       if (q.Answer === newAnswerValue) {
         newAnswerValue = "U";
