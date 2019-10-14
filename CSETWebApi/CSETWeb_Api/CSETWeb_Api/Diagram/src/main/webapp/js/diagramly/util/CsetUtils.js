@@ -12,7 +12,6 @@
  * A collection of CSET-specific utilities and functionality.
  */
 CsetUtils = function () {
-    
 }
 
 CsetUtils.sema = new Semaphore(5);
@@ -53,21 +52,21 @@ function updateGraph(editor, data, finalize) {
 function makeRequest(e)
 {
     const jwt = localStorage.getItem('jwt');
-    return new Promise(function (resolve, reject)
-    {
+    return new Promise(function (resolve, reject) 
+{
         const xhr = new XMLHttpRequest();
         xhr.open(e.method, e.url);
         xhr.setRequestHeader('Authorization', jwt);
         xhr.setRequestHeader('Content-Type', e.contentType || 'application/json');
-        if (e.overrideMimeType)
-        {
+        if (e.overrideMimeType) 
+{
             xhr.overrideMimeType(e.overrideMimeType);
         }
 
-        if (e.onreadystatechange)
-        {
-            xhr.onreadystatechange = function ()
-            {
+        if (e.onreadystatechange) 
+{
+            xhr.onreadystatechange = function () 
+{
                 e.onreadystatechange({
                     readyState: this.readyState,
                     status: this.status,
@@ -75,29 +74,29 @@ function makeRequest(e)
                 });
             };
         }
-        xhr.onload = function ()
-        {
-            if (this.status >= 200 && this.status < 300)
-            {
+        xhr.onload = function () 
+{
+            if (this.status >= 200 && this.status < 300) 
+{
                 resolve(xhr.response);
-            } else
-            {
+            } else 
+{
                 reject({
                     status: this.status,
                     statusText: xhr.statusText
                 });
             }
         };
-        xhr.onerror = function ()
-        {
+        xhr.onerror = function () 
+{
             reject({
                 status: this.status,
                 statusText: xhr.statusText
             });
         };
 
-        switch (e.method)
-        {
+        switch (e.method) 
+{
             case 'GET':
                 xhr.send();
                 break;
@@ -311,17 +310,17 @@ CsetUtils.saveDiagram = async function (req) {
  * Sends the file content to the CSET API for translation into an mxGraph diagram and drops it
  * into the existing diagram.
  */
-CsetUtils.importFilesCSETD = function (files, editor)
+CsetUtils.importFilesCSETD = function (files, editor) 
 {
-    if (files.length == 0)
-    {
+    if (files.length == 0) 
+{
         return;
     }
 
     var file = files[0];
     var reader = new FileReader();
-    reader.onload = function (e)
-    {
+    reader.onload = function (e) 
+{
         TranslateToMxGraph(editor, e.target.result);
     };
     reader.readAsText(file);
@@ -331,7 +330,7 @@ CsetUtils.importFilesCSETD = function (files, editor)
  * Persists the CSETD XML to the CSET API.  The mxGraph translation
  * is returned, and dropped into the existing graph.
  */
-async function TranslateToMxGraph(editor, sXML)
+async function TranslateToMxGraph(editor, sXML) 
 {
     var req = {};
     req.DiagramXml = sXML;
@@ -340,20 +339,20 @@ async function TranslateToMxGraph(editor, sXML)
         method: 'POST',
         url: localStorage.getItem('cset.host') + 'diagram/importcsetd',
         payload: JSON.stringify(req),
-        onreadystatechange: function (e)
-        {
-            if (e.readyState !== 4)
-            {
+        onreadystatechange: function (e) 
+{
+            if (e.readyState !== 4) 
+{
                 return;
             }
 
-            switch (e.status)
-            {
+            switch (e.status) 
+{
                 case 200:
                 case 204:
                     // successful post - drop the XML that came back into the graph
-                    updateGraph(editor, e.responseText, function ()
-                    {
+                    updateGraph(editor, e.responseText, function () 
+{
                         CsetUtils.initializeZones(editor.graph)
                     });
                     break;
@@ -368,11 +367,11 @@ async function TranslateToMxGraph(editor, sXML)
 /**
  * 
  */
-CsetUtils.initializeZones = function (graph)
+CsetUtils.initializeZones = function (graph) 
 {
     var allCells = graph.getChildVertices(graph.getDefaultParent());
-    allCells.forEach(x =>
-    {
+    allCells.forEach(x => 
+{
         x.setAttribute('internalLabel', x.getAttribute('label'));
         x.initZone();
     });
@@ -403,44 +402,44 @@ CsetUtils.handleZoneChanges = function (edit) {
  * 
  * @param {any} parent
  */
-CsetUtils.getAllChildEdges = function (parent)
+CsetUtils.getAllChildEdges = function (parent) 
 {
     var result = [];
 
-    if (!!parent.edges)
-    {
+    if (!!parent.edges) 
+{
         parent.edges.forEach(e => result.push(e));
     }
 
     if (!!parent.children)
-    {
-        for (var i = 0; i < parent.children.length; i++)
-        {
+ {
+        for (var i = 0; i < parent.children.length; i++) 
+{
             getChildren(parent.children[i]);
         }
     }
 
-    function getChildren(cell)
-    {
-        if (result.indexOf(cell) > -1)
-        {
+    function getChildren(cell) 
+{
+        if (result.indexOf(cell) > -1) 
+{
             return;
         }
 
-        if (cell.isEdge())
-        {
+        if (cell.isEdge()) 
+{
             result.push(cell);
         }
 
-        if (!!cell.edges)
-        {
+        if (!!cell.edges) 
+{
             cell.edges.forEach(e => result.push(e));
         }
 
-        if (!!cell.children)
-        {
-            for (var i = 0; i < cell.children.length; i++)
-            {
+        if (!!cell.children) 
+{
+            for (var i = 0; i < cell.children.length; i++) 
+{
                 getChildren(cell.children[i]);
             }
         }
@@ -453,16 +452,16 @@ CsetUtils.getAllChildEdges = function (parent)
  * 
  * @param {any} filename
  */
-CsetUtils.findComponentInMap = function (filename)
+CsetUtils.findComponentInMap = function (filename) 
 {
     var m = Editor.componentSymbols;
-    for (var i = 0; i < m.length; i++)
-    {
+    for (var i = 0; i < m.length; i++) 
+{
         var group = m[i];
-        for (var j = 0; j < group.Symbols.length; j++)
-        {
-            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName)
-            {
+        for (var j = 0; j < group.Symbols.length; j++) 
+{
+            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName) 
+{
                 return group.Symbols[j];
             }
         }
@@ -472,7 +471,7 @@ CsetUtils.findComponentInMap = function (filename)
 /**
  * 
  */
-CsetUtils.getFilenameFromPath = function (path)
+CsetUtils.getFilenameFromPath = function (path) 
 {
     if (!path)
     {
@@ -525,7 +524,6 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
     });
 }
 
-
 /**
  * Returns the cell that the warning belongs to, whether component (vertex) or link (edge).
  */
@@ -568,7 +566,6 @@ CsetUtils.isRedDotAtCoords = function (graph, coords)
     return found;
 }
 
-
 /**
  * 
  */
@@ -595,6 +592,51 @@ CsetUtils.getCsetTemplates = async function () {
     return templates;
 }
 
+async function showSaving(requestId) {
+    // create a new div element 
+    var newDiv = document.createElement("div");
+    // and give it some content 
+    var newContent = document.createTextNode("Saving");
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
+
+    var tmppayload = JSON.stringify(requestId);
+    console.log(tmppayload);
+    document.body.appendChild(newDiv);
+    newDiv.id = "CSETSaving";
+    newDiv.style.position = 'absolute';
+    newDiv.style.top = '0';
+    newDiv.style.right = '0';
+    newDiv.style.padding = '5px';
+    newDiv.style.color = 'green';
+    const resp = await makeRequest({
+        method: 'POST',
+        url: 'http://localhost:46000/api/diagram/testqueue',
+        payload: tmppayload,
+        onreadystatechange: function (e) {
+            if (e.readyState !== 4) {
+                return;
+            }
+            console.log(e);
+            hideSaving();
+            myTestSema.release();
+            myTestSema.purgeAllButLast();
+            switch (e.status) {
+                case 200:
+                    break;
+                case 401:
+                    window.location.replace(localStorage.getItem('cset.client'));
+                    break;
+            }
+        }
+    });
+}
+
+function hideSaving() {
+    var div = document.body;
+    var img = document.getElementById('CSETSaving');
+    div.removeChild(img);
+}
 
 /**
  * Prevent async requests from occurring out of order
@@ -611,11 +653,8 @@ function Semaphore(max) {
             let promise = waiting.shift();
             */
             // instead of letting the first guy in line go, 
-            // let the last guy go and dismiss the queue.
+            // resolve the last promise in the queue and dismiss the queue.
             let promise = waiting.pop();
-            console.log('just grabbed promise');
-            console.log(promise);
-            console.log(waiting);
             purge();
 
             promise.resolve();

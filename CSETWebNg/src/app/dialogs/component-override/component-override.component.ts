@@ -21,27 +21,64 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
+import { Answer, Question } from '../../models/questions.model';
+import { QuestionsService } from '../../services/questions.service';
+import { StylesCompileDependency } from '@angular/compiler';
 
 @Component({
   selector: 'component-override',
   templateUrl: './component-override.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: {class: 'd-flex flex-column flex-11a'},
+  styleUrls: ['./component-override.component.scss']
 })
 export class ComponentOverrideComponent {
-  version = environment.version;
-  helpContactEmail = this.configSvc.helpContactEmail;
-  helpContactPhone = this.configSvc.helpContactPhone;
+
+  @Output() answerChanged = new EventEmitter();
+  questions:any[]=[];
 
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
-    public configSvc: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public configSvc: ConfigService, public questionsSvc: QuestionsService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.questions = data.questions;
+    }
 
+    storeAnswer(q: any, newAnswerValue: string) {
+      this.answerChanged.emit(null);
+  
+      // if they clicked on the same answer that was previously set, "un-set" it
+      if (q.Answer === newAnswerValue) {
+        newAnswerValue = "U";
+      }
+  
+      q.Answer_Text = newAnswerValue;
+  
+      const answer: Answer = {
+        QuestionId: q.Question_Id,
+        QuestionNumber: q.Question_Number,
+        AnswerText: q.Answer_Text,
+        AltAnswerText: '',
+        Comment: '',
+        FeedBack: '',
+        MarkForReview: false,
+        Reviewed: true,
+        Is_Component: q.Is_Component, 
+        ComponentGuid: q.Component_GUID
+      };
+      
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+      }
   close() {
     return this.dialog.close();
+  }
+
+  applyHeight(){
+    const styles =  {'max-height': window.screen.availHeight};
+    return styles;
   }
 }

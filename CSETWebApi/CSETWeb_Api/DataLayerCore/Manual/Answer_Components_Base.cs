@@ -44,5 +44,7 @@ namespace DataLayerCore.Manual
             public bool? Reviewed { get; set; }
             public string Diagram_Component_Type { get; set; }
             public string label { get; set; }
+            public string ComponentName { get; set; }
+            public string Component_Type { get; set; }
     }
 }
