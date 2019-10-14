@@ -45,7 +45,7 @@ Editor = function (chromeless, themes, model, graph, editable) {
         for (const change of changes) {
             const isrootchange = change instanceof mxRootChange;
             const ischildchange = change instanceof mxChildChange;
-            const isRedDotAddEvent = ischildchange && !!edit.changes[0].child.style && change.child.style.indexOf('redDot') > -1;
+            const isRedDotAddEvent = ischildchange && !!change.child.style && change.child.style.indexOf('redDot') > -1;
 
             // Only persist if actual changes occurred.
             // An mxRootChange is likely a new diagram.

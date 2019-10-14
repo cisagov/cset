@@ -12,7 +12,10 @@
  * A collection of CSET-specific utilities and functionality.
  */
 CsetUtils = function () {
+    
 }
+
+CsetUtils.sema = new Semaphore(5);
 
 /**
  * Component properties we don't want to show in the tooltip or in the Ctrl+M dialog
@@ -211,8 +214,21 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
 
-    await CsetUtils.analyzeDiagram(analysisReq, editor);
-    await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
+    
+    try {
+        await CsetUtils.sema.acquire();
+
+        console.log('just acquired');
+
+        await CsetUtils.analyzeDiagram(analysisReq, editor);
+        await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
+
+        setTimeout(() => {
+            CsetUtils.sema.release();
+        }, 5000);
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 CsetUtils.PersistDataToCSET = async function (editor, xml) {
@@ -485,10 +501,7 @@ CsetUtils.clearWarningsFromDiagram = function (graph)
 
     allCells.forEach(c =>
     {
-        if (!!c.style && c.style.indexOf('redDot') >= 0)
-        {
-            m.remove(c);
-        }
+        graph.removeCellOverlay(c);
     });
 }
 
@@ -499,113 +512,42 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
 {
     CsetUtils.clearWarningsFromDiagram(graph);
 
-    //var root = graph.getModel().root;
-
     warnings.forEach(w =>
     {
-        var coords = CsetUtils.getCoordsAndLayer(w, graph);
+        var taggedCell = CsetUtils.getTaggedCell(w, graph);
 
-        // don't overlay any other red dots on the same component
-        if (CsetUtils.isRedDotAtCoords(graph, coords))
-        {
-            coords.x += 33;
-        }
-
-        var redDot = graph.insertVertex(coords.layer, null, 
-            w.Number, 
-            coords.x, coords.y, 30, 30,
-            'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#ff0000;strokeColor=#ff0000;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
-        redDot.warningMsg = w.Message;
+        var dot = "data:image/svg+xml;utf8,"
+            + "<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'>"
+            + "<circle fill='rgb(255,0,0)' cx='5' cy='5' r='5' />"
+            + "<text x='50%' y='50%' text-anchor='middle' fill='rgb(255,255,255)' alignment-baseline='central' style='font-family: arial; font-size: 40%;'>" + w.Number + "</text>"
+            + "</svg>";
+        const overlay = graph.setCellWarning(taggedCell, w.Message, new mxImage(dot, 30, 30));
     });
 }
 
-/**
- * Determines where to place the red dot, based on the component or link it 
- * is describing.
- */
-CsetUtils.getCoordsAndLayer = function (warning, graph)
-{
-    var coords = {
-        x: 100,
-        y: 100,
-        layer: null
-    };
 
+/**
+ * Returns the cell that the warning belongs to, whether component (vertex) or link (edge).
+ */
+CsetUtils.getTaggedCell = function(warning, graph)
+{
     // if only one node provided, then the dot goes on that component
-    if (warning.NodeId1 && !warning.NodeId2)
-    {
-        const component = graph.getModel().getCell(warning.NodeId1);
-        const g = component.getGeometry();
-        coords.x = g.x;
-        coords.y = g.y - 40;
-        coords.layer = component.myLayer();
-        return coords;
+    if (warning.NodeId1 && !warning.NodeId2) {
+        return graph.getModel().getCell(warning.NodeId1);
     }
 
     // if both are provided, the dot goes on the edge
-    if (warning.NodeId1 && warning.NodeId2)
-    {
+    if (warning.NodeId1 && warning.NodeId2) {
         const component1 = graph.getModel().getCell(warning.NodeId1);
         const component2 = graph.getModel().getCell(warning.NodeId2);
         const edges = graph.getModel().getEdgesBetween(component1, component2);
-        const e = edges[0];
-
-        const v = graph.view;
-        const s1 = v.getState(component1);
-        const s2 = v.getState(component2);
-
-        // temporarily place the dot at the midpoint of a straight line between components.
-        coords.x = (s1.origin.x + s2.origin.x) / 2;
-        coords.y = (s1.origin.y + s2.origin.y) / 2;
-        coords.layer = e.myLayer();
-
-        // then, try to place the dot so that it will be on the line no matter what.
-        // CsetUtils.getTrueEdgeCoordinates(graph, e, coords);
-
-        // fine-tune here if needed
-        // coords.x = coords.x - 15;
-        // coords.y = coords.y - 40;
-
-        console.log('x:' + coords.x + 'y:' + coords.y);
-
-        return coords;
+        return edges[0];
     }
-
-    return coords;
 }
 
 
 /**
- * Still experimenting with this.  The goal is to find the correct location for
- * the red dot on the edge, regardless of where the edge is routed.
- */
-CsetUtils.getTrueEdgeCoordinates = function (graph, e, coords)
-{
-    const v = graph.view;
-    const s = v.getState(e);
-
-
-    const overlay = graph.setCellWarning(e, 'XYZ');
-    var pt = s.view.getPoint(s, { x: 0, y: 0, relative: true });
-    console.log(pt);
-    // REMOVE THE OVERLAY AFTER WE HAVE THE COORDS - graph.removeCellOverlay(e);
-
-    var xxx = graph.insertVertex(graph.getModel().root, null, 'X', null, null, 30, 30, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#007700;strokeColor=#007700;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
-    var ptDot = graph.insertVertex(graph.getModel().root, null, 'PT', pt.x, pt.y, 10, 10, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#0000ff;strokeColor=#0000ff;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
-    const refPoint = v.graphBounds.getPoint(1);
-    console.log(refPoint);
-
-    var refDot = graph.insertVertex(graph.getModel().root, null, 'R', refPoint.x, refPoint.y, 10, 10, 'redDot;shape=ellipse;fontColor=#ffffff;fillColor=#5500ff;strokeColor=#5500ff;connectable=0;recursiveResize=0;movable=0;editable=0;resizable=0;rotatable=0;cloneable=0;deletable=0;');
-
-    console.log('state');
-    console.log(s);  
-
-    coords.x = pt.x - refPoint.x;
-    coords.y = pt.y - refPoint.y;
-}
-
-
-/**
+ * SOON TO BE CHANGED.  This will have to evaluate overlay position.
  * Returns a boolean indicating if a red dot is positioned at the specified coordinates.
  */
 CsetUtils.isRedDotAtCoords = function (graph, coords)
@@ -625,6 +567,7 @@ CsetUtils.isRedDotAtCoords = function (graph, coords)
 
     return found;
 }
+
 
 /**
  * 
@@ -650,4 +593,63 @@ CsetUtils.getCsetTemplates = async function () {
         }
     });
     return templates;
+}
+
+
+/**
+ * Prevent async requests from occurring out of order
+ * @param {any} max
+ */
+function Semaphore(max) {
+    var counter = 0;
+    var waiting = [];
+
+    var take = function () {
+        if (waiting.length > 0 && counter < max) {
+            /*
+            counter++;
+            let promise = waiting.shift();
+            */
+            // instead of letting the first guy in line go, 
+            // let the last guy go and dismiss the queue.
+            let promise = waiting.pop();
+            console.log('just grabbed promise');
+            console.log(promise);
+            console.log(waiting);
+            purge();
+
+            promise.resolve();
+        }
+    }
+
+    this.acquire = function () {
+        if (counter < max) {
+            counter++
+            return new Promise(resolve => {
+                resolve();
+            });
+        } else {
+            return new Promise((resolve, err) => {
+                waiting.push({ resolve: resolve, err: err });
+            });
+        }
+    }
+
+    this.release = function () {
+        counter--;
+        take();
+    }
+
+    this.purge = function () {
+        let unresolved = waiting.length;
+
+        for (let i = 0; i < unresolved; i++) {
+            waiting[i].err('Task has been purged.');
+        }
+
+        counter = 0;
+        waiting = [];
+
+        return unresolved;
+    }
 }
