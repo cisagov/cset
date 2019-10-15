@@ -63,6 +63,7 @@ export class ChangePasswordComponent implements OnInit {
         error => {
           console.log((<Error>error).message);
           this.warning = true;
+          this.message = 'Check password inputs.'
         });
     }
   }

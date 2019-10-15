@@ -47,7 +47,8 @@ namespace CSETWeb_Api.Controllers
                 var rval = db.USERS.Where(x => x.UserId == userid).FirstOrDefault();
                 if (rval != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, rval.PasswordResetRequired);
+                    var resetRequired = rval.PasswordResetRequired;
+                    return Request.CreateResponse(HttpStatusCode.OK, resetRequired);
                 }
                 else
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, "Unknown error");
@@ -100,7 +101,7 @@ namespace CSETWeb_Api.Controllers
                 bool rval = await resetter.ChangePassword(changePass);
                 if (rval)
                 {
-                    resp.PasswordResetRequired = false;
+                    resp.ResetRequired = false;
                     await db.SaveChangesAsync();
                     return Request.CreateResponse(HttpStatusCode.OK, "Created Successfully");
                 }
