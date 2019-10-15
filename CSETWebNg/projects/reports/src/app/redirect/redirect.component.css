@@ -8,14 +8,14 @@ with any questions regarding Web Fonts:  http://webfonts.fonts.com
 
 /* END fonts helvetica */
 .page-subtitle {
-	font-family: HelveticaNeueW01-45Ligh, HelveticaNeueW02-45Ligh, HelveticaNeueW10-45Ligh, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 34px;
 	line-height: 48px
 }
 
 .page-title,
 .published-not-available .page-secondary-title {
-	font-family: HelveticaNeueW01-55Roma, HelveticaNeueW02-55Roma, HelveticaNeueW10-55Roma, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 45px;
 	line-height: 50px
 }
@@ -34,7 +34,7 @@ with any questions regarding Web Fonts:  http://webfonts.fonts.com
 }
 
 .secondary-font {
-	font-family: HelveticaNeueW01-45Ligh, HelveticaNeueW02-45Ligh, HelveticaNeueW10-45Ligh, sans-serif
+	font-family: Arial, sans-serif
 }
 
 .authorization-not-supported .help-link,
@@ -45,7 +45,7 @@ with any questions regarding Web Fonts:  http://webfonts.fonts.com
 .thick-font,
 .undocumented-error .help-link,
 .unsupported-browser .continue-link {
-	font-family: HelveticaNeueW01-65Medi, HelveticaNeueW02-65Medi, HelveticaNeueW10-65Medi, sans-serif
+	font-family: Arial, sans-serif
 }
 
 .support-link,
@@ -310,7 +310,7 @@ body[lang=ja] .page-content-wrapper {
 
 .error-404-non-branded>.error-contents>.image-404 .error-code {
 	fill: #fff;
-	font-family: HelveticaNeueW01-45Ligh;
+	font-family: Arial;
 	font-size: 80px
 }
 
@@ -318,7 +318,7 @@ body[lang=ja] .page-content-wrapper {
 	margin-top: 62px;
 	color: #3eb8ea;
 	font-size: 66px;
-	font-family: HelveticaNeueW01-45Ligh;
+	font-family: Arial;
 	letter-spacing: 1px;
 	line-height: 90px
 }
@@ -340,7 +340,7 @@ body[lang=ja] .page-content-wrapper {
 
 .error-404-non-branded>.error-contents>.description {
 	margin-top: 19px;
-	font-family: HelveticaNeueW01-45Ligh;
+	font-family: Arial;
 	letter-spacing: 1px;
 	font-size: 20px;
 	line-height: 39px;
@@ -370,7 +370,7 @@ body[lang=ja] .page-content-wrapper {
 	font-size: 22px;
 	text-align: center;
 	border-radius: 28px;
-	font-family: HelveticaNeueW01-45Ligh;
+	font-family: Arial;
 	cursor: pointer;
 	border: 2px solid #3eb8ea;
 	background-color: #fff;
