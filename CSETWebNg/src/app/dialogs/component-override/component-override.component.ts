@@ -43,7 +43,9 @@ export class ComponentOverrideComponent {
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
     public configSvc: ConfigService, public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.questions = data.questions;
+      this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x:any) =>{
+        this.questions = x;
+      });
     }
 
     storeAnswer(q: any, newAnswerValue: string) {
@@ -63,7 +65,7 @@ export class ComponentOverrideComponent {
         Comment: '',
         FeedBack: '',
         MarkForReview: false,
-        Reviewed: true,
+        Reviewed: false,
         Is_Component: q.Is_Component, 
         ComponentGuid: q.Component_GUID
       };
