@@ -21,15 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
 import { CreateUser, PotentialQuestions } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material';
 import { ChangeDetectorRef } from '@angular/core';
-import { ConfigService } from '../../services/config.service';
 import { environment } from '../../../environments/environment';
 
 @Component({

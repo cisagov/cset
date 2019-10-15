@@ -22,14 +22,9 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpParams, HttpClient } from '../../../node_modules/@angular/common/http';
+import { HttpClient } from '../../../node_modules/@angular/common/http';
 import { ConfigService } from './config.service';
 import { Chart } from 'chart.js';
-
-const headers = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  params: new HttpParams()
-};
 
 @Injectable({
   providedIn: 'root'

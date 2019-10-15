@@ -21,13 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChildren, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { MatDialog } from '@angular/material';
 import { Question, BasicResponse } from '../../models/set-builder.model';
-import { query } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-question-list',
