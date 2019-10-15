@@ -21,65 +21,64 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="component-override d-flex flex-column justify-content-center flex-11a">
-        <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-          
-          <span>Component Question Overrides</span>
-        </div>
-        <mat-dialog-content class="p-3 oy-auto d-flex flex-column flex-11a">          
-              <div class="d-flex flex-column justify-content-start flex-00a w-100">
-                <div class="container">
-                    <div class="row">
-                            <div class="col-12" style="padding-bottom:15px;">
-                                Change the default answers that will be automatically assigned to the component types
-                                listed below.  Setting the default answer from this screen will automatically answer all 
-                                component questions associated to the indicated component type.
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 col-md-3 col-xs-12">
-                          <span style="font-weight: bold">Component: </span>
-                        </div>
-                        <div class="col-sm-9 col-md-9 col-xs-12">
-                            {{data.componentType.Type}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 col-md-3 col-xs-12">
-                            <span style="font-weight: bold">Question:</span>
-                        </div>
-                        <div class="col-sm-9 col-md-9 col-xs-12">
-                          {{data.myQuestion.QuestionText}}
-                        </div>
-                    </div>
-                    <div class="row" [ngStyle]="applyHeight()" style="overflow-y:auto">
-                        <table mat-table class="assessment-summary" style='overflow-y:auto'>
-                            <th>Specific Component Name</th>
-                            <th></th>
-                            <tr *ngFor="let q of questions; let i = index">
-                                <td style="padding-left:10px;">{{q.ComponentName}}</td>
-                                <td>
-                                    <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons"  style="float:right;">
-                                        <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer_Text === 'Y'" (click)="storeAnswer(q, 'Y')">
-                                          <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'Y'">Yes
-                                        </label>
-                                        <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer_Text === 'N'" (click)="storeAnswer(q, 'N')">
-                                          <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'N'">No
-                                        </label>
-                                        <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer_Text === 'NA'" (click)="storeAnswer(q, 'NA')">
-                                          <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'NA'">NA
-                                        </label>
-                                      </div>
-                                </td>
-                                
-                            </tr>
-                        </table>
-                    </div>
+
+  <div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    
+    <span>Component Question Overrides</span>
+  </div>
+  <mat-dialog-content >          
+        <div>
+          <div class="container">
+              <div class="row">
+                      <div class="col-12" style="padding-bottom:15px;">
+                          Change the default answers that will be automatically assigned to the component types
+                          listed below.  Setting the default answer from this screen will automatically answer all 
+                          component questions associated to the indicated component type.
+                  </div>
               </div>
-            </div>                      
-        </mat-dialog-content>
-      
-        <div class="pl-4 p-1 mb-0">
-          <button class="btn btn-secondary" (click)="close()">OK</button>
+              <div class="row">
+                  <div class="col-sm-3 col-md-3 col-xs-12">
+                    <span style="font-weight: bold">Component: </span>
+                  </div>
+                  <div class="col-sm-9 col-md-9 col-xs-12">
+                      {{data.componentType.Type}}
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-3 col-md-3 col-xs-12">
+                      <span style="font-weight: bold">Question:</span>
+                  </div>
+                  <div class="col-sm-9 col-md-9 col-xs-12" style="padding-bottom:15px">
+                    {{data.myQuestion.QuestionText}}
+                  </div>
+              </div>
+              <div class="row" [ngStyle]="applyHeight()">
+                  <table mat-table class="assessment-summary" style='overflow-y:auto'>
+                      <th>Specific Component Name</th>
+                      <th></th>
+                      <tr *ngFor="let q of questions; let i = index">
+                          <td style="padding-left:10px;">{{q.ComponentName}}</td>
+                          <td>
+                              <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons"  style="float:right;">
+                                  <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer_Text === 'Y'" (click)="storeAnswer(q, 'Y')">
+                                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'Y'">Yes
+                                  </label>
+                                  <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer_Text === 'N'" (click)="storeAnswer(q, 'N')">
+                                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'N'">No
+                                  </label>
+                                  <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer_Text === 'NA'" (click)="storeAnswer(q, 'NA')">
+                                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer_Text === 'NA'">NA
+                                  </label>
+                                </div>
+                          </td>
+                          
+                      </tr>
+                  </table>
+              </div>
         </div>
-      </div>
+      </div>                      
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="pl-4 p-1 mb-0">
+    <button class="btn btn-secondary" (click)="close()">OK</button>
+  </mat-dialog-actions>
