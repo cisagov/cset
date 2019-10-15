@@ -38,7 +38,7 @@ import { environment } from '../../environments/environment';
 
 export interface LoginResponse {
     Token: string;
-    PasswordResetRequired: boolean;
+    ResetRequired: boolean;
     IsSuperUser: boolean;
     UserLastName: string;
     UserFirstName: string;
@@ -107,7 +107,6 @@ export class AuthenticationService {
         }
         sessionStorage.setItem('firstName', user.UserFirstName);
         sessionStorage.setItem('lastName', user.UserLastName);
-        sessionStorage.setItem('resetPassword', '' + user.PasswordResetRequired);
         sessionStorage.setItem('superUser', '' + user.IsSuperUser);
         sessionStorage.setItem('userId', '' + user.UserId);
         sessionStorage.setItem('email', user.Email);
