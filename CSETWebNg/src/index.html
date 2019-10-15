@@ -36,14 +36,16 @@
             switch (this.status) {
                 case 200:
                     const resp = JSON.parse(this.responseText);
-                    sessionStorage.setItem("appAPIURL", resp.apiUrl || 'false');
+                    sessionStorage.setItem('appAPIURL', resp.apiUrl);
+                    sessionStorage.setItem('isAPI_together_With_Web', true);
                     break;
                 default:
-                    sessionStorage.setItem("isAPI_together_With_Web", "false");
+                    sessionStorage.setItem('isAPI_together_With_Web', false);
                     break;
             }
-            console.log("cset api/assets/config:", {
-                isAPI_together_With_Web: sessionStorage.getItem("isAPI_together_With_Web")
+            console.log('cset api/assets/config:', {
+                appAPIURL: sessionStorage.getItem('appAPIURL'),
+                isAPI_together_With_Web: sessionStorage.getItem('isAPI_together_With_Web')
             });
         };
         xhttp.onerror = function () {
