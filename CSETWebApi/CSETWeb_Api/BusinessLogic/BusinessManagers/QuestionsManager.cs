@@ -320,7 +320,7 @@ namespace CSETWeb_Api.BusinessManagers
                     if (componentName != null)
                     {
                         var creates = from a in context.COMPONENT_QUESTIONS
-                                      where a.Component_Type == componentName.Diagram_Component_Type
+                                      where a.Component_Symbol_Id == componentName.Component_Symbol_Id
                                       select a;
                         var alreadyThere = (from a in context.ANSWER
                                             where a.Assessment_Id == _assessmentId

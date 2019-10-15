@@ -200,7 +200,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                         {
                             Assessment_Id = assessment_id,
                             Component_Guid = newNode.Key,
-                            Diagram_Component_Type = newNode.Value.ComponentType,
+                            Component_Symbol_Id = newNode.Value.Component_Symbol_Id,
                             DrawIO_id = newNode.Value.ID,
                             Parent_DrawIO_Id = newNode.Value.Parent_id,
                             label = newNode.Value.ComponentName,
@@ -219,7 +219,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                                      select new { a, b };
                     foreach(var pair in updateList.ToList())
                     {
-                        pair.a.Diagram_Component_Type = pair.b.Value.ComponentType;
+                        pair.a.Component_Symbol_Id = pair.b.Value.Component_Symbol_Id;
                         pair.a.label = pair.b.Value.ComponentName;
                     }
                     context.SaveChanges();
@@ -403,9 +403,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     cn.Parent_id = GetParentId(cell);
 
                     // determine the component type
-                    string ctype = GetComponentType(cell);
-                    if(ctype!=null)
-                        cn.ComponentType =  ctype;
+                    int ctype = GetComponentType(cell);
+                    if(ctype!=0)
+                        cn.Component_Symbol_Id =  ctype;
 
                     nodesList.Add(cn.ComponentGuid, cn);
                 }
@@ -440,17 +440,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
         /// </summary>
         /// <param name="cell"></param>
         /// <returns></returns>
-        private string GetComponentType(XmlElement cell)
+        private int GetComponentType(XmlElement cell)
         {
             var mxCell = cell.SelectSingleNode("mxCell");
             if (mxCell == null)
             {
-                return null;
+                return 0;
             }
 
             if (mxCell.Attributes["style"] == null)
             {
-                return null;
+                return 0;
             }
 
             string style = mxCell.Attributes["style"].InnerText;
@@ -463,12 +463,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     var symbol = this.componentSymbols.FirstOrDefault(x => x.File_Name.EndsWith(imagePath.Substring(imagePath.LastIndexOf('/') + 1)));
                     if (symbol != null)
                     {
-                        return symbol.Diagram_Type_Xml;
+                        return symbol.Component_Symbol_Id;
                     }
                 }
             }
 
-            return null;
+            return 0;
         }
     }
 }

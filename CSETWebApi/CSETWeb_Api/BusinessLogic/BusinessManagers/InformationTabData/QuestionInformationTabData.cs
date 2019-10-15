@@ -412,16 +412,16 @@ namespace CSET_Main.Questions.InformationTabData
 
                 foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x=> x.Question_Id == info.QuestionID))
                 {
-                    bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Type, salLevel);
-                    SymbolComponentInfoData componentTypeData = info.DictionaryComponentInfo[componentType.Component_Type];
+                    bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Symbol_Id, salLevel);
+                    SymbolComponentInfoData componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
                     tmpList.Add(new ComponentOverrideLinkInfo()
                     {
-                        TypeComponetXML = componentTypeData.XMLName,
-                        Type = componentTypeData.DisplayName,
+                        Component_Symbol_Id = componentTypeData.Component_Symbol_Id,
+                        Symbol_Name = componentTypeData.Symbol_Name,
                         Enabled = enabled
                     });
                 }
-                ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Type).ToList();
+                ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
                 var reqid = controlContext.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
                 BuildDocuments(reqid, controlContext);
                 var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
