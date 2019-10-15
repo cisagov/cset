@@ -97,18 +97,11 @@ export class FindingsComponent implements OnInit {
 
 
   update() {
-    console.log("finding in the update answerid:" + this.answerID + " questionid:" + this.questionID);
-    console.log(this.finding);
-    // if(this.checkFinding(this.finding)) {
     this.finding.Answer_Id = this.answerID;
     this.finding.Question_Id = this.questionID;
     this.findSvc.SaveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
-    // }
-    // else{
-    //   this.dialog.close(true);
-    // }
   }
 
   updateImportance(importid) {
