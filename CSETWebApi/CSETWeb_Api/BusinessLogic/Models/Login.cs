@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Models
         public string Email;
         public string UserFirstName;
         public string UserLastName;
-        public bool PasswordResetRequired;
+        public bool ResetRequired;
         public bool IsSuperUser;
         public string ExportExtension;
     }

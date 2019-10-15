@@ -21,7 +21,6 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { String, StringBuilder } from 'typescript-string-operations';
 import { Finding } from './../assessment/questions/findings/findings.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';

@@ -44,10 +44,9 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
   constructor(
     private analysisSvc: AnalysisService,
-    private assessSvc: AssessmentService,
     public navSvc2: Navigation2Service,
     public configSvc: ConfigService,
-    private router: Router) { }
+    ) { }
 
   ngOnInit() {
   }
@@ -61,7 +60,6 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     this.dataRows = x.DataRowsPie;
     this.dataSets = x.dataSets;
 
-    const colors = x.Colors;
     if (this.dataSets.length > 1) {
       this.chart = new Chart('canvasStandardSummary', {
         type: 'horizontalBar',

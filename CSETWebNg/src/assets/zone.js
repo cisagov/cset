@@ -994,7 +994,7 @@ function _tryDefineProperty(obj, prop, desc, originalConfigurableFlag) {
                     descJson = JSON.stringify(desc);
                 }
                 catch (e) {
-                    descJson = descJson.toString();
+                    descJson = descJson.toString();//lgtm [js/property-access-on-non-object]
                 }
                 console.log("Attempting to configure '" + prop + "' with descriptor '" + descJson + "' on object '" + obj + "' and got error, giving up: " + e);
             }

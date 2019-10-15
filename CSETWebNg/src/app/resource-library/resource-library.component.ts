@@ -27,7 +27,6 @@ import { ConfigService } from '../services/config.service';
 import { NavigationService, NavTree } from '../services/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material";
-import { SafePipe } from '../helpers/safe.pipe';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
