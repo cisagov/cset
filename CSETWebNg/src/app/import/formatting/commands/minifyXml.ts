@@ -24,7 +24,6 @@
 import * as monaco from "monaco-editor";
 
 import { XmlFormatterFactory } from "../xml-formatter";
-import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 import { XmlFormattingOptionsFactory } from "../xml-formatting-options";
 
 export function minifyXml(editor: monaco.editor.ICodeEditor, edit: monaco.editor.ISingleEditOperation): void {
@@ -34,7 +33,7 @@ export function minifyXml(editor: monaco.editor.ICodeEditor, edit: monaco.editor
         tabSize: 2
     }, editor.getModel());
 
-    const range = editor.getModel().getFullModelRange();
+    const range = editor.getModel().getFullModelRange();//lgtm [js/unused-local-variable]
 
     edit.text = xmlFormatter.minifyXml(editor.getModel().getValue(), xmlFormattingOptions);
 }

@@ -125,7 +125,6 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   get configOptions(): monaco.editor.IEditorConstructionOptions {
-    const uri = monaco.Uri.parse('internal://server/foo.json');
     return {
       autoIndent: true,
       formatOnPaste: true,
