@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="question-group">
 
   <div class="subcat-header" [class.flat-bottom]="mySubCategory.Expanded">
@@ -84,40 +84,50 @@
         <div class="number-and-text">
           <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.DisplayNumber }}</div>
           <div style="width: 100%;">
-            <div [style.word-break]="applyWordBreak(q)" 
-                [innerHTML]="applyTokensToText(q)" 
-                (click)="questionTextClicked(q, $event)">
+            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+              (click)="questionTextClicked(q, $event)">
             </div>
             <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ q.QuestionId }}</span>
-            <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"></app-question-extras>
+            <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()">
+            </app-question-extras>
           </div>
         </div>
       </div>
 
       <div>
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-          <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'" (click)="storeAnswer(q, 'Y')">
-            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer === 'Y'">Yes
+          <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'"
+            (click)="storeAnswer(q, 'Y')">
+            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+              [checked]="q.Answer === 'Y'">Yes
           </label>
-          <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer === 'N'" (click)="storeAnswer(q, 'N')">
-            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer === 'N'">No
+          <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer === 'N'"
+            (click)="storeAnswer(q, 'N')">
+            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+              [checked]="q.Answer === 'N'">No
           </label>
-          <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer === 'NA'" (click)="storeAnswer(q, 'NA')">
-            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer === 'NA'">NA
+          <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer === 'NA'"
+            (click)="storeAnswer(q, 'NA')">
+            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+              [checked]="q.Answer === 'NA'">NA
           </label>
-          <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'" (click)="storeAnswer(q, 'A')">
-            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off" [checked]="q.Answer === 'A'">Alt
+          <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'"
+            (click)="storeAnswer(q, 'A')">
+            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+              [checked]="q.Answer === 'A'">Alt
           </label>
 
-          <!-- Mark For Review Flag  --> 
-          <label class="mr-0 ml-2 btn form-check-label btn-mfr"  [class.answer-selected]="q.MarkForReview === true" (click)="saveMFR(q);" matTooltip="This control requires further review.">
-              <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" checked="{{q.MarkForReview === true}}" >
-              <span class="cset-icons-flag-dark fs-base"></span>
+          <!-- Mark For Review Flag  -->
+          <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.MarkForReview === true"
+            (click)="saveMFR(q);" matTooltip="This control requires further review.">
+            <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" checked="{{q.MarkForReview === true}}">
+            <span class="cset-icons-flag-dark fs-base"></span>
           </label>
         </div>
 
         <div *ngIf="q.Answer === 'A'">
-          <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;" placeholder="Description, explanation and/or justification for alternate answer"
+          <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;"
+            placeholder="Description, explanation and/or justification for alternate answer"
             [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
         </div>
       </div>
