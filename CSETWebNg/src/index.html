@@ -35,19 +35,16 @@
 
             switch (this.status) {
                 case 200:
-                    // sessionStorage.setItem("isAPI_together_With_Web", "true");
-                    const jsonResponse = JSON.parse(this.responseText);
-                    sessionStorage.setItem("appAPIURL", jsonResponse.apiUrl || 'false');
+                    const json = JSON.parse(this.responseText);
+                    sessionStorage.setItem("appAPIURL", json.apiUrl || 'false');
                     break;
                 default:
                     sessionStorage.setItem("isAPI_together_With_Web", "false");
                     break;
             }
-            // console.log("get api/assets/config:", {
-            //     status: this.status,
-            //     readyState: this.readyState,
-            //     isAPI_together_With_Web: sessionStorage.getItem("isAPI_together_With_Web")
-            // });
+            console.log("cset api/assets/config:", {
+                isAPI_together_With_Web: sessionStorage.getItem("isAPI_together_With_Web")
+            });
         };
         xhttp.onerror = function () {
             alert('returned error');
