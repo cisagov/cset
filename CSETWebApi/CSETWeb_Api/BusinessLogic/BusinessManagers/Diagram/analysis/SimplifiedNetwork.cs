@@ -25,7 +25,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
         //drawio id to zone lookup
         private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
-        private Dictionary<string, string> imageToTypePath;
+        private Dictionary<string, int> imageToTypePath;
         private string defaultSal;
         private NetworkZone defaultZone;
 
@@ -47,7 +47,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
         
 
 
-        public SimplifiedNetwork(Dictionary<string, string> imageToTypePath, string defaultSAL)
+        public SimplifiedNetwork(Dictionary<string, int> imageToTypePath, string defaultSAL)
         {
             this.imageToTypePath = imageToTypePath;
             this.defaultSal = defaultSAL;
@@ -136,7 +136,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                 }
 
 
-                string nodeType = null;
+                int nodeType = 0;
 
                 string imgPath;
                 if (DrawIOParsingHelps.DecodeQueryParameters(styleString.Replace("image;", "")).TryGetValue("image", out imgPath))
@@ -149,7 +149,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                 else
                 {
                     //I think we can assume
-                    nodeType = "MSC";
+                    nodeType = 49;// "MSC";
                 }
 
                 //get the parent value if it is in the layers dictionary then set the
@@ -184,7 +184,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                         ComponentGuid = ((XmlElement)node).HasAttribute("ComponentGuid") ? Guid.Parse(node.Attributes["ComponentGuid"].Value) : new Guid(),
                         ID = node.Attributes["id"].Value,
                         ComponentName = ((XmlElement)node).HasAttribute("label") ? node.Attributes["label"].Value : "",
-                        ComponentType = nodeType,
+                        Component_Symbol_Id = nodeType,
+                        //ComponentType = nodeType,
                         IsVisible = IsVisible,
                         Parent_id = layername,
                         Geometry = geometry

@@ -325,20 +325,20 @@ namespace BusinessLogic.Helpers
         public const String DIAGRAM_FILE_NAME = "Diagram.csetd";
         public const String UNIDIRECTIONAL_TYPE = "Unidirectional Device";
         public const String FIREWALL_TYPE = "Firewall";
-        public const String CONNECTOR_TYPE = "Connector";
-        public const String VLAN_ROUTER = "VLAN Router";
-        public const String VLAN_SWITTCH = "VLAN Switch";
-        public const String IDS_TYPE = "IDS";
-        public const String IPS_TYPE = "IPS";
-        public const String WEB_TYPE = "Web";
-        public const String VENDOR_TYPE = "Vendor";
-        public const String PARTNER_TYPE = "Partner";
-        public const String LINK_ENCRYPTION = "Link Encryption";
-        public const String SERIAL_RADIO = "Serial Radio";
-        public const String SERIAL_SWITCH = "Serial Switch";
-        public const String UNKNOWN_TYPE = "Unknown";
-        public const String HUB_TYPE = "Hub";
-        public const String MULTIPLESERVICESCOMPONENT_TYPE = "Multiple Services Component";
+        public const int CONNECTOR_TYPE = 4;//"Connector";
+        public const int VLAN_ROUTER = 32; //"VLAN Router";
+        public const int VLAN_SWITTCH = 33;//"VLAN Switch";
+        public const int IDS_TYPE = 12;//"IDS";
+        public const int IPS_TYPE = 14;//"IPS";
+        public const int WEB_TYPE = 35;//"Web";
+        public const int VENDOR_TYPE = 31; //"Vendor";
+        public const int PARTNER_TYPE = 20; //"Partner";
+        public const int LINK_ENCRYPTION = 15;//"Link Encryption";
+        public const int SERIAL_RADIO = 25; //"Serial Radio";
+        public const int SERIAL_SWITCH = 26;// "Serial Switch";
+        public const int UNKNOWN_TYPE = 30; //"Unknown";
+        public const int HUB_TYPE = 11;//"Hub";
+        public const int MULTIPLESERVICESCOMPONENT_TYPE = 49;// "Multiple Services Component";
         // *************************************************************************************************************************
 
         // Error Messages
@@ -393,6 +393,8 @@ namespace BusinessLogic.Helpers
         public static string BuildFileName = "BuildNumber.txt";
         public static string AssessmentFileBuildFileName = "BuildNumberDatabase.txt";
         public static string ASSESSMENT_FILE_LOG = "_log";
+        public const int ZONE = 121;
+        public const int UNIDIRECTIONAL_DEVICE = 29;
         public const string UnTrusted = "Untrusted";
         public const string Trusted = "Trusted";
         public const string Availabilty = "Availability";
@@ -419,6 +421,8 @@ namespace BusinessLogic.Helpers
 
 
         public const string DEFAULT_LAYER_NAME ="Background";
+
+        public const int FIREWALL = 8;
     }
     
 

@@ -13,14 +13,15 @@ namespace CSETWeb_Api.BusinessManagers
         public bool IsUnidirectional {
             get
             {
-                return string.Equals(this.ComponentType, "Unidirectional Device", StringComparison.OrdinalIgnoreCase);
+                return this.Component_Symbol_Id == Constants.UNIDIRECTIONAL_DEVICE;// = 29;
             }
         }
 
         public NetworkZone Zone { get; internal set; }
         public bool IsFirewall { get
             {
-                return string.Equals(this.ComponentType, "Firewall", StringComparison.OrdinalIgnoreCase);
+                return this.Component_Symbol_Id == Constants.FIREWALL;// = 29;
+                //return string.Equals(this.ComponentType, "Firewall", StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -30,8 +31,7 @@ namespace CSETWeb_Api.BusinessManagers
                 //TODO if this is an MSC
                 //look to see if the MSC contains 
                 //an ips or ids
-                return string.Equals(this.ComponentType, Constants.IDS_TYPE, StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(this.ComponentType, Constants.IPS_TYPE, StringComparison.OrdinalIgnoreCase);
+                return this.Component_Symbol_Id == Constants.IDS_TYPE || this.Component_Symbol_Id == Constants.IPS_TYPE;
 
             }
         }
@@ -46,7 +46,7 @@ namespace CSETWeb_Api.BusinessManagers
         public bool IsLinkConnector {
             get
             {
-                return string.Equals(this.ComponentType, Constants.CONNECTOR_TYPE, StringComparison.OrdinalIgnoreCase);
+                return this.Component_Symbol_Id == Constants.CONNECTOR_TYPE;
             }
         }
 
@@ -54,12 +54,12 @@ namespace CSETWeb_Api.BusinessManagers
         {
             get
             {
-                return string.Equals(this.ComponentType, Constants.VLAN_ROUTER, StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(this.ComponentType, Constants.VLAN_SWITTCH, StringComparison.OrdinalIgnoreCase);
+                return this.Component_Symbol_Id == Constants.VLAN_ROUTER || this.Component_Symbol_Id == Constants.VLAN_SWITTCH;
             }
         }
 
         public bool IsPartnerVendorOrWeb { get; internal set; }
+        public int Component_Symbol_Id { get; internal set; }
 
         public NetworkComponent()
         {
@@ -94,7 +94,7 @@ namespace CSETWeb_Api.BusinessManagers
                     this.ID = value;
                     break;               
                 case "zone":
-                    this.ComponentType = "Zone";
+                    this.Component_Symbol_Id = Constants.ZONE;// 121;
                     break;
                 case "parent":
                     this.Parent_id = value;
@@ -103,10 +103,10 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-        public bool IsNotComponentTypes(HashSet<string> types)
+        public bool IsNotComponentTypes(HashSet<int> types)
         {
             //I am concerned about this being case sensitive
-            return !types.Contains(this.ComponentType);
+            return !types.Contains(this.Component_Symbol_Id);
         }
     }
 }

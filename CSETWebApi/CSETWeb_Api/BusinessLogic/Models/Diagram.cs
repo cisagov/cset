@@ -50,17 +50,15 @@ namespace CSETWeb_Api.Models
     }
 
     public class ComponentSymbol
-    {
-        public string Name;
-        public string DiagramTypeXml;
+    {   
         public string FileName;
         public string Abbreviation;
-        public string LongName;
-        public string DisplayName;
-        public string ComponentFamilyName;
-        public string Tags;
+        public string ComponentFamilyName;        
         public int Width;
         public int Height;
+        public string Symbol_Name { get; internal set; }
+        public string Search_Tags { get; internal set; }
+        public int Component_Symbol_Id { get; internal set; }
     }
 
     public class DiagramTemplate
