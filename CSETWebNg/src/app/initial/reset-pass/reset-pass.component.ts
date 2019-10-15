@@ -26,7 +26,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
-import { ConfigService } from '../../services/config.service';
 import { environment } from '../../../environments/environment.prod';
 
 @Component({

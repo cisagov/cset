@@ -21,7 +21,6 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { element } from "protractor";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { MatTreeNestedDataSource } from "@angular/material";
@@ -95,9 +94,4 @@ export class NavigationService {
     }
     return false;
   }
-}
-
-
-function frameworkIndex(elementf) {
-  return elementf.value === "framework";
 }

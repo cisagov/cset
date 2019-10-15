@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { ActivatedRoute } from '@angular/router';

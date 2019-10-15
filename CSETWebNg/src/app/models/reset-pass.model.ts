@@ -45,5 +45,5 @@ export interface ChangePassword {
   export interface PasswordStatusResponse {
     PrimaryEmail: string;
     UserId: number;
-    PasswordResetRequired: boolean;
+    ResetRequired: boolean;
   }

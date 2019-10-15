@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { map } from 'rxjs/operators';
-import { timer, Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { timer, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -33,12 +33,11 @@ import { JwtParser } from '../helpers/jwt-parser';
 import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
-import { isNullOrUndefined } from 'util';
 import { environment } from '../../environments/environment';
 
 export interface LoginResponse {
     Token: string;
-    PasswordResetRequired: boolean;
+    ResetRequired: boolean;
     IsSuperUser: boolean;
     UserLastName: string;
     UserFirstName: string;
@@ -107,7 +106,6 @@ export class AuthenticationService {
         }
         sessionStorage.setItem('firstName', user.UserFirstName);
         sessionStorage.setItem('lastName', user.UserLastName);
-        sessionStorage.setItem('resetPassword', '' + user.PasswordResetRequired);
         sessionStorage.setItem('superUser', '' + user.IsSuperUser);
         sessionStorage.setItem('userId', '' + user.UserId);
         sessionStorage.setItem('email', user.Email);

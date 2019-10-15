@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { DemographicService } from '../../../services/demographic.service';
@@ -37,7 +37,6 @@ export class AssessmentInfoComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public navSvc2: Navigation2Service,
-    private router: Router,
     private demoSvc: DemographicService) { }
 
   @ViewChild('assessmentDetail') assessmentDetail;

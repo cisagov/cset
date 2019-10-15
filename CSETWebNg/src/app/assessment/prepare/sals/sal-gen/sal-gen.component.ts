@@ -73,7 +73,7 @@ export class SalGenComponent implements OnInit {
       });
   }
   myOnChange(event, slidername) {
-    const k = 0;
+    const k = 0;//lgtm [js/unused-local-variable]
   }
 
   saveLevel(level: string) {
