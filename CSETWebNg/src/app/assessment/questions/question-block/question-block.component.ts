@@ -51,7 +51,7 @@ export class QuestionBlockComponent implements OnInit {
   answer: Answer;
 
   matLevelMap = new Map<string, string>();
-  private _timeoutId: any;
+  private _timeoutId: NodeJS.Timeout;
 
   constructor(
     public questionsSvc: QuestionsService,
@@ -99,7 +99,8 @@ export class QuestionBlockComponent implements OnInit {
    * Spawns a dialog to capture the new substitution text.
    */
   questionTextClicked(q: Question, e: Event) {
-    const parameterId = this.getParameterId(e.srcElement);
+    const target: Element = (e.target || e.srcElement || e.currentTarget) as Element;
+    const parameterId = this.getParameterId(target);
 
     // If they did not click on a parameter, do nothing
     if (parameterId === 0) {
@@ -169,7 +170,7 @@ export class QuestionBlockComponent implements OnInit {
 
     this.mySubCategory.Questions.forEach(q => {
       totalCount++;
-      if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
+      if (q.Answer && q.Answer !== "U") {
         answeredCount++;
       }
     });
@@ -182,7 +183,7 @@ export class QuestionBlockComponent implements OnInit {
    * level.  All of the subcategory questions are answered en masse.
    * @param ans
    */
-  setBlockAnswer(ans) {
+  setBlockAnswer(ans: string) {
     this.answerChanged.emit(null);
 
     // if they clicked on the same answer that was previously set, "un-set" it
@@ -216,8 +217,8 @@ export class QuestionBlockComponent implements OnInit {
         FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed,
-        Is_Component: false, 
-        ComponentGuid:''
+        Is_Component: false,
+        ComponentGuid: ''
       };
 
       subCatAnswers.Answers.push(answer);
@@ -255,7 +256,7 @@ export class QuestionBlockComponent implements OnInit {
       FeedBack: q.FeedBack,
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component, 
+      Is_Component: q.Is_Component,
       ComponentGuid: ''
     };
 
@@ -333,7 +334,7 @@ export class QuestionBlockComponent implements OnInit {
       FeedBack: '',
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component, 
+      Is_Component: q.Is_Component,
       ComponentGuid: ''
     };
 
