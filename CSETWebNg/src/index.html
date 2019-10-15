@@ -35,8 +35,8 @@
 
             switch (this.status) {
                 case 200:
-                    const json = JSON.parse(this.responseText);
-                    sessionStorage.setItem("appAPIURL", json.apiUrl || 'false');
+                    const resp = JSON.parse(this.responseText);
+                    sessionStorage.setItem("appAPIURL", resp.apiUrl || 'false');
                     break;
                 default:
                     sessionStorage.setItem("isAPI_together_With_Web", "false");
