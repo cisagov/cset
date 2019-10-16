@@ -8609,9 +8609,11 @@
                         const enableSearchDocs = data.enableSearch === 1;
                         const enableCustomTemp = data.enableCustomTemp === 1;
 
+                        const cset = true;
                         const dlg = new NewDialog(this, {
                             compact: false,
-                            showName: !!data.callback,
+                            showName: !cset && !!data.callback,
+                            hideFromTemplateUrl: cset,
                             callback: mxUtils.bind(this, function (xml, name) {
                                 xml = xml || this.emptyDiagramXml;
                                 // LATER: Add autosave option in template message
@@ -9837,7 +9839,6 @@
         //remove menu items
         this.actions.get('makeCopy').visible = false;
         this.actions.get('rename').visible = false;
-        this.actions.get('new').visible = false;
         this.actions.get('save').visible = false;
 
         this.menus.get('embed').setEnabled(!restricted);
@@ -10001,15 +10002,14 @@
     EditorUi.prototype.updateActionStates = function () {
         editorUiUpdateActionStates.apply(this, arguments);
 
-        var graph = this.editor.graph;
-        var active = this.isDiagramActive();
-        var file = this.getCurrentFile();
-        var enabled = file != null || urlParams['embed'] == '1';
+        const graph = this.editor.graph;
+        const active = this.isDiagramActive();
+        const file = this.getCurrentFile();
 
         this.actions.get('pageSetup').setEnabled(active);
-        this.actions.get('autosave').setEnabled(file != null && file.isEditable() && file.isAutosaveOptional());
+        this.actions.get('autosave').setEnabled(file && file.isEditable() && file.isAutosaveOptional());
         this.actions.get('guides').setEnabled(active);
-        this.actions.get('editData').setEnabled(active);
+        //this.actions.get('editData').setEnabled(active);
         this.actions.get('shadowVisible').setEnabled(active);
         this.actions.get('connectionArrows').setEnabled(active);
         this.actions.get('connectionPoints').setEnabled(active);
@@ -10018,26 +10018,25 @@
         this.actions.get('editGeometry').setEnabled(graph.getModel().isVertex(graph.getSelectionCell()));
         this.actions.get('createShape').setEnabled(active);
         this.actions.get('createRevision').setEnabled(active);
-        this.actions.get('moveToFolder').setEnabled(file != null);
-        this.actions.get('makeCopy').setEnabled(file != null && !file.isRestricted());
-        this.actions.get('editDiagram').setEnabled(active && (file == null || !file.isRestricted()));
-        this.actions.get('publishLink').setEnabled(file != null && !file.isRestricted());
+        this.actions.get('moveToFolder').setEnabled(!!file);
+        this.actions.get('makeCopy').setEnabled(file && !file.isRestricted());
+        this.actions.get('editDiagram').setEnabled(active && file && !file.isRestricted());
+        this.actions.get('publishLink').setEnabled(file && !file.isRestricted());
         this.actions.get('tags').setEnabled(this.diagramContainer.style.visibility != 'hidden');
         this.actions.get('find').setEnabled(this.diagramContainer.style.visibility != 'hidden');
         this.actions.get('layers').setEnabled(this.diagramContainer.style.visibility != 'hidden');
         this.actions.get('outline').setEnabled(this.diagramContainer.style.visibility != 'hidden');
-        this.actions.get('rename').setEnabled((file != null && file.isRenamable()) || urlParams['embed'] == '1');
-        this.actions.get('close').setEnabled(file != null);
-        this.menus.get('publish').setEnabled(file != null && !file.isRestricted());
+        this.actions.get('rename').setEnabled((file && file.isRenamable()) || urlParams['embed'] == '1');
+        this.actions.get('close').setEnabled(!!file);
+        this.menus.get('publish').setEnabled(file && !file.isRestricted());
 
-        var state = graph.view.getState(graph.getSelectionCell());
-        this.actions.get('editShape').setEnabled(active && state != null && state.shape != null && state.shape.stencil != null);
+        const state = graph.view.getState(graph.getSelectionCell());
+        this.actions.get('editShape').setEnabled(active && state && state.shape && state.shape.stencil);
 
 
         // RKW - hide menu actions that CSET doesn't use
-        var CSET = false;
-        if (CSET) {
-            this.actions.get('new').visible = false;
+        const CSET = true;
+        if (!CSET) {
             this.actions.get('rename').visible = false;
             this.actions.get('makeCopy').visible = false;
         }

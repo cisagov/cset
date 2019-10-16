@@ -98,7 +98,6 @@ export class ContactItemComponent implements OnInit {
   }
 
   openEmailDialog() {
-    const invitees: EditableUser[] = [this.contact];
     const subject = this.configSvc.config.defaultInviteSubject;
     const body = this.configSvc.config.defaultInviteTemplate;
 

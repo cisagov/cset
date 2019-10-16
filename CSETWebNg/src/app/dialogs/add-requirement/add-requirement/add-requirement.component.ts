@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Requirement, CategoryEntry } from '../../../models/set-builder.model';
 import { SetBuilderService } from '../../../services/set-builder.service';

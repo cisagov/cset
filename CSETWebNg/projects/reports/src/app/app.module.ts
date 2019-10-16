@@ -37,8 +37,6 @@ import { ReportsConfigService } from './services/config.service';
 import { AnalysisService } from './services/analysis.service';
 import { createCustomElement } from '@angular/elements';
 import { EvalAgainstComponent } from './eval-against/eval-against.component';
-import { timer } from 'rxjs';
-import { JwtParser } from '../../../../src/app/helpers/jwt-parser';
 import { AuthenticationService } from '../../../../src/app/services/authentication.service';
 import { JwtInterceptor } from '../../../../src/app/helpers/jwt.interceptor';
 import { RedirectComponent } from './redirect/redirect.component';

@@ -24,7 +24,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { SetBuilderService } from '../../services/set-builder.service';
-import { Category, Requirement } from '../../models/set-builder.model';
+import {Requirement } from '../../models/set-builder.model';
 import { RequirementResult, CategoryEntry } from '../../models/set-builder.model';
 import { AddRequirementComponent } from '../../dialogs/add-requirement/add-requirement/add-requirement.component';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';

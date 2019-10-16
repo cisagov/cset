@@ -72,7 +72,7 @@ namespace CSETWeb_Api.Helpers
                 UserFirstName = loginUser.FirstName,
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
-                PasswordResetRequired = loginUser.PasswordResetRequired ?? true,
+                ResetRequired = loginUser.PasswordResetRequired ?? true,
                 ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
             };
 
@@ -146,7 +146,7 @@ namespace CSETWeb_Api.Helpers
                 UserFirstName = name,
                 UserLastName = "",
                 IsSuperUser = false,
-                PasswordResetRequired = false,
+                ResetRequired = false,
                 ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
             };
 

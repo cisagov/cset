@@ -2859,11 +2859,11 @@ var NewDialog = function (app, opts) {
         div.appendChild(elt);
     };
 
-    let categories = {
-        basic: [{
-            title: 'blankDiagram',
-            select: true
-        }]
+    const categories = {
+        //basic: [{
+        //    title: 'blankDiagram',
+        //    select: true
+        //}]
     };
 
     const initUi = () => {
@@ -2911,7 +2911,7 @@ var NewDialog = function (app, opts) {
             addCatClick(cat, entry);
         }
 
-        addTemplates(categories.basic);
+        //addTemplates(categories.basic);
     }
 
     if (!opts.compact) {
@@ -2933,6 +2933,7 @@ var NewDialog = function (app, opts) {
                     imgUrl: tmplt.ImageSource && `'data: image/png;base64,${tmplt.ImageSource}'`
                 });
             }
+            addTemplates(categories[category]);
             spinner.stop();
             initUi();
         };
