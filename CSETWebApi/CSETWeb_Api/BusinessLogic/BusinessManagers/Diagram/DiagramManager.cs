@@ -206,20 +206,17 @@ namespace CSETWeb_Api.BusinessManagers
                     resp.Add(group);
 
                     var symbols = db.COMPONENT_SYMBOLS.Where(x => x.Symbol_Group_Id == group.SymbolGroupID)
-                        .OrderBy(x => x.Name).ToList();
+                        .OrderBy(x => x.Symbol_Name).ToList();
 
                     foreach (COMPONENT_SYMBOLS s in symbols)
                     {
                         var symbol = new ComponentSymbol
-                        {
-                            Name = s.Name,
-                            DiagramTypeXml = s.Diagram_Type_Xml,
+                        {   
+                            Symbol_Name = s.Symbol_Name,
                             Abbreviation = s.Abbreviation,
-                            FileName = s.File_Name,
-                            DisplayName = s.Display_Name,
-                            LongName = s.Long_Name,
+                            FileName = s.File_Name,                            
                             ComponentFamilyName = s.Component_Family_Name,
-                            Tags = s.Tags,
+                            Search_Tags = s.Search_Tags,
                             Width = (int)s.Width,
                             Height = (int)s.Height
                         };
@@ -244,20 +241,18 @@ namespace CSETWeb_Api.BusinessManagers
             {
 
 
-                var symbols = db.COMPONENT_SYMBOLS.OrderBy(x => x.Name).ToList();
+                var symbols = db.COMPONENT_SYMBOLS.OrderBy(x => x.Symbol_Name).ToList();
 
                 foreach (COMPONENT_SYMBOLS s in symbols)
                 {
                     var symbol = new ComponentSymbol
-                    {
-                        Name = s.Name,
-                        DiagramTypeXml = s.Diagram_Type_Xml,
+                    {   
                         Abbreviation = s.Abbreviation,
                         FileName = s.File_Name,
-                        DisplayName = s.Display_Name,
-                        LongName = s.Long_Name,
+                        Symbol_Name = s.Symbol_Name,
+                        Component_Symbol_Id = s.Component_Symbol_Id,
                         ComponentFamilyName = s.Component_Family_Name,
-                        Tags = s.Tags,
+                        Search_Tags = s.Search_Tags,
                         Width = (int)s.Width,
                         Height = (int)s.Height
                     };
@@ -443,7 +438,7 @@ namespace CSETWeb_Api.BusinessManagers
                     if (!string.IsNullOrEmpty(imageTag))
                     {
                         var image = imageTag.Split('/').LastOrDefault();
-                        diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.DisplayName;
+                        diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.Symbol_Name;
                     }
 
                     diagramComponents[i].zoneLabel = diagramZones.FirstOrDefault(x=>x.id == diagramComponents[i].mxCell.parent)?.label;
@@ -573,7 +568,8 @@ namespace CSETWeb_Api.BusinessManagers
                     if (item.id == vertice.id)
                     {
                         item.label = vertice.label;
-                        item.mxCell.style = this.SetImage(vertice.assetType, item.mxCell.style);
+                        int Component_Symbol_Id = getFromLegacyName(vertice.assetType).Component_Symbol_Id;
+                        item.mxCell.style = this.SetImage(Component_Symbol_Id, item.mxCell.style);
                         item.internalLabel = vertice.label;
                         item.HasUniqueQuestions = vertice.HasUniqueQuestions;
                         item.Criticality = vertice.Criticality;
@@ -594,6 +590,25 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             
+        }
+
+        private static Dictionary<string, COMPONENT_SYMBOLS> legacyNamesList =null; 
+
+        private COMPONENT_SYMBOLS getFromLegacyName(string name)
+        {
+            if (legacyNamesList == null)
+            {
+                using (CSET_Context db = new CSET_Context())
+                {
+
+                    legacyNamesList =  (from a in db.COMPONENT_NAMES_LEGACY
+                            join b in db.COMPONENT_SYMBOLS on a.Component_Symbol_id equals
+                            b.Component_Symbol_Id
+                            select new { a, b }).ToDictionary(x => x.a.Old_Symbol_Name, x => x.b);
+                }
+            }
+            return legacyNamesList[name];
+
         }
 
         /// <summary>
@@ -699,7 +714,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-        public string SetImage(string asset, string style)
+        public string SetImage(int Component_Symbol_Id, string style)
         {
             var symbols = this.GetAllComponentSymbols();
             var styles = style.Split(';');
@@ -709,7 +724,7 @@ namespace CSETWeb_Api.BusinessManagers
                 if (styles[i].Contains("image="))
                 {
                     styles[i] = string.Format("image=img/cset/{0}",
-                        symbols.FirstOrDefault(x => x.DisplayName == asset)?.FileName);
+                        symbols.FirstOrDefault(x => x.Component_Symbol_Id == Component_Symbol_Id)?.FileName);
                 }
             }
 

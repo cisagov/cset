@@ -15,7 +15,8 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 {
     public interface IComponentSettings
     {
-        string NodeType { get;  }
+        int NodeType { get;  }
+        string Symbol_Name { get; }
     }
 }
 

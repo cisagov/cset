@@ -166,9 +166,9 @@ export class QuestionsComponent implements AfterViewInit {
         // ------------------------------------------------------------------------------------
         data.QuestionGroups.forEach(g => {
           let rval = true;
-          if (g.ComponentType) {
+          if (g.Symbol_Name) {
             if (this.PreviousComponentGroup) {
-              rval = !((g.ComponentType === this.PreviousComponentGroup.ComponentType)
+              rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
               && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
             }
             this.PreviousComponentGroup = g;
@@ -253,7 +253,7 @@ export class QuestionsComponent implements AfterViewInit {
    */
   insertWithParents(tree: NavTree[], q: QuestionGroup) {
 
-    if(!!q.ComponentType){
+    if(!!q.Symbol_Name){
       this.insertComponentSpecificOverride(tree,q);
       return;
     }
@@ -315,10 +315,10 @@ export class QuestionsComponent implements AfterViewInit {
       standard = tree[tree.length - 1];
     }
 
-    let componenttype = standard.children.find(elem => elem.elementType === 'COMPONENT-TYPE' && elem.label === q.ComponentType);
+    let componenttype = standard.children.find(elem => elem.elementType === 'COMPONENT-TYPE' && elem.label === q.Symbol_Name);
     if (!componenttype) {
       standard.children.push({
-        label: q.ComponentType,
+        label: q.Symbol_Name,
         elementType: 'COMPONENT-TYPE',
         value: '',
         children: []
@@ -351,11 +351,6 @@ export class QuestionsComponent implements AfterViewInit {
       children: []
     };
     componentname.children.push(heading);
-  }
-
-  getHeader(g: QuestionGroup) {
-    //return (g.ComponentType);
-    
   }
 
   visibleGroupCount() {

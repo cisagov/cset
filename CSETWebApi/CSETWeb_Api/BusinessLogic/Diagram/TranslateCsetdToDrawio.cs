@@ -53,6 +53,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// Store the properties we know about each symbol.
         /// </summary>
         List<COMPONENT_SYMBOLS> symbols = null;
+        Dictionary<string,COMPONENT_SYMBOLS> legacyNames = null;
         #endregion
 
         /// <summary>
@@ -343,8 +344,9 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
                 int.TryParse(ChildValue(component, "c:width"), out int width);
                 int.TryParse(ChildValue(component, "c:height"), out int height);
-                var symbol = symbols.Where(s => s.Diagram_Type_Xml == assetName).FirstOrDefault();
-                if (symbol != null)
+
+                COMPONENT_SYMBOLS symbol;
+                if (legacyNames.TryGetValue(assetName, out symbol))
                 {
                     width = symbol.Width;
                     height = symbol.Height;
@@ -642,6 +644,10 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
             using (CSET_Context db = new CSET_Context())
             {
                 symbols = db.COMPONENT_SYMBOLS.ToList();
+                legacyNames = (from a in db.COMPONENT_NAMES_LEGACY
+                               join b in db.COMPONENT_SYMBOLS on a.Component_Symbol_id equals
+                               b.Component_Symbol_Id
+                               select new { a, b }).ToDictionary(x => x.a.Old_Symbol_Name, x => x.b);
             }
         }
 
@@ -654,8 +660,16 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
         /// <returns></returns>
         private string GetImagePath(string assetName)
         {
-            var symbol = symbols.Where(s => s.Diagram_Type_Xml == assetName).FirstOrDefault();
-            return string.Format("image;image=img/cset/{0};", symbol.File_Name);
+            COMPONENT_SYMBOLS symbol;
+            if (legacyNames.TryGetValue(assetName, out symbol))
+            {
+                return string.Format("image;image=img/cset/{0};", symbol.File_Name);
+            }
+            else
+            {
+                throw new ApplicationException("could not find component symbol for" + assetName);
+            }
+
         }
 
 

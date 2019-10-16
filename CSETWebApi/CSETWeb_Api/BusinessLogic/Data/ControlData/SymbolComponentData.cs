@@ -12,11 +12,11 @@ using System;
 namespace CSET_Main.Data.ControlData
 {
     public class SymbolComponentData 
-	{
-		public String Name { get; set; }
-		public String XML_Name { get; set; }
+	{	
 		public String Abbreviation { get; set; }
 		public String File_Name { get; set; }
+        public string Symbol_Name { get; set; }
+        public int Component_Symbol_Id { get; set; }
         public bool IsService { get; set; }
 
 		public String Long_Name { get; set; }
@@ -25,20 +25,18 @@ namespace CSET_Main.Data.ControlData
 		
 		public SymbolComponentData(COMPONENT_SYMBOLS componentSymbol) 
 		{
-			this.Name = componentSymbol.Name;
-			this.XML_Name = componentSymbol.Diagram_Type_Xml;
+
+            this.Component_Symbol_Id = componentSymbol.Component_Symbol_Id;
 			this.Abbreviation = componentSymbol.Abbreviation;
 			this.File_Name = componentSymbol.File_Name;
-            
-			this.Long_Name = componentSymbol.Long_Name;
-			this.Display_Name = componentSymbol.Display_Name;
+            this.Symbol_Name = componentSymbol.Symbol_Name;			
             this.IsService = componentSymbol.IsService;
 		}
 
 
         internal bool IsLinkConnector()
         {
-            if (this.XML_Name == Constants.CONNECTOR_TYPE)
+            if (this.Component_Symbol_Id == Constants.CONNECTOR_TYPE)
                 return true;
             else
                 return false;
