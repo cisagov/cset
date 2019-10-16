@@ -151,11 +151,6 @@ namespace CSETWeb_Api.BusinessManagers
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
             }
 
-            if (answer.ComponentGuid == Guid.Empty)
-            {
-                throw new ApplicationException("Unknown component identifier");
-            }
-
            // in case a null is passed, store 'unanswered'
             if (string.IsNullOrEmpty(answer.AnswerText))
             {
@@ -163,7 +158,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             ANSWER dbAnswer = null;
-            if (answer != null && answer.ComponentGuid != Guid.Empty)
+            if (answer != null)
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
