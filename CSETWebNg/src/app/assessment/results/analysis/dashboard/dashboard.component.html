@@ -27,7 +27,7 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <div class="d-flex flex-column flex-11a" [hidden]="!initialized">
+  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
     <div class="chart d-flex flex-column flex-00a">
       <h3>Score</h3>
       <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
@@ -64,14 +64,23 @@
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Standards Summary</h3>
+      <div *ngIf="stdsSummChart == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
       <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
     </div>
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Components Summary</h3>
-      <canvas id="canvasComponentSummary" *ngIf="componentCount > 0"
-        style="max-width: 800px; margin: 0 auto;">{{compSummChart}}</canvas>
-      <div *ngIf="componentCount === 0">
+      <div *ngIf="!compSummInitialized">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+      <canvas id="canvasComponentSummary" style="max-width: 800px; margin: 0 auto;" [class.d-none]="compSummInitialized && componentCount === 0">{{compSummChart}}</canvas>
+      <div [class.d-none]="!compSummInitialized || componentCount > 0">
         <hr style="width: 30%"> There are no components on the diagram.
       </div>
     </div>
