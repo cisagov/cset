@@ -142,6 +142,7 @@ export class QuestionsComponent implements AfterViewInit {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
 
+        this.questionsSvc.questions = data;
 
         // Reformat the response to create domain groupings ---------------------------------
         const bigStructure: QuestionResponseWithDomains = {

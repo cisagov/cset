@@ -297,10 +297,10 @@ Actions.prototype.init = function () {
             graph.startEditingAtCell();
         }
     }, null, null, 'F2/Enter');
-    this.addAction('editData...', function () {
-        var cell = graph.getSelectionCell() || graph.getModel().getRoot();
-        ui.showDataDialog(cell);
-    }, null, null, Editor.ctrlKey + '+M');
+    //this.addAction('editData...', function () {
+    //    var cell = graph.getSelectionCell() || graph.getModel().getRoot();
+    //    ui.showDataDialog(cell);
+    //}, null, null, Editor.ctrlKey + '+M');
     this.addAction('editTooltip...', function () {
         var graph = ui.editor.graph;
 

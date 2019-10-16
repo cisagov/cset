@@ -29,17 +29,24 @@
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                sessionStorage.setItem("isAPI_together_With_Web", "true");
-                var jsonResponse = JSON.parse(xhttp.responseText);
-                sessionStorage.setItem("appAPIURL", jsonResponse.apiUrl);
+            if (this.readyState !== 4) {
+                return;
             }
-            else if (this.readyState == 4) {
-                sessionStorage.setItem("isAPI_together_With_Web", "false");
-            }
-            console.log("isAPI_together_With_Web");
-            console.log(sessionStorage.getItem("isAPI_together_With_Web"));
 
+            switch (this.status) {
+                case 200:
+                    const resp = JSON.parse(this.responseText);
+                    sessionStorage.setItem('appAPIURL', resp.apiUrl);
+                    sessionStorage.setItem('isAPI_together_With_Web', true);
+                    break;
+                default:
+                    sessionStorage.setItem('isAPI_together_With_Web', false);
+                    break;
+            }
+            console.log('cset api/assets/config:', {
+                appAPIURL: sessionStorage.getItem('appAPIURL'),
+                isAPI_together_With_Web: sessionStorage.getItem('isAPI_together_With_Web')
+            });
         };
         xhttp.onerror = function () {
             alert('returned error');
@@ -101,14 +108,14 @@
     </app-root>
 </body>
 <script>
-$(document).ready(function(){
-		$('body').on('click', 'ul.dropdown-menu [data-toggle=dropdown]', function(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			$(this).parent().siblings().removeClass('open');
-			$(this).parent().toggleClass('open');
-		});
+    $(document).ready(function () {
+        $('body').on('click', 'ul.dropdown-menu [data-toggle=dropdown]', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).parent().siblings().removeClass('open');
+            $(this).parent().toggleClass('open');
+        });
     });
 </script>
-</html>
 
+</html>

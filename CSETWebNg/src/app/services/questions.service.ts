@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, SubCategoryAnswers, ACETDomain } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { AcetFiltersService, ACETFilter } from './acet-filters.service';
@@ -83,6 +83,11 @@ export class QuestionsService {
    * The page can store its model here for accessibility by question-extras
    */
   domains = null;
+
+  /**
+   * A reference to the current question list.
+   */
+  questions: QuestionResponse = null;
 
   /**
    * Sets the starting value of the maturity filters, based on the 'stairstep.'
@@ -477,10 +482,33 @@ export class QuestionsService {
     return true;
   }
 
-  getOverrideQuestions(questionId, componentType){
+  /**
+   *
+   */
+  getOverrideQuestions(questionId, componentType) {
     let params = new HttpParams();
     params = params.append('question_id', questionId);
     params = params.append('Component_Type', componentType);
-    return this.http.get( this.configSvc.apiUrl +'GetOverrideQuestions', {params: params});
+    return this.http.get(this.configSvc.apiUrl + 'GetOverrideQuestions', { params: params });
+  }
+
+  /**
+   * Finds the question in the master collection and updates its answer.
+   * This function was built specifically for Component Overrides,
+   * so it's currently limited to those.  But it could be expanded if there was
+   * a general need to update answers anywhre in the master structure.
+   */
+  setAnswerInQuestionList(questionId: number, answerId: number, answerText: string) {
+    this.questions.QuestionGroups.forEach((group: QuestionGroup) => {
+      if (group.StandardShortName === 'Component Overrides') {
+        group.SubCategories.forEach((sc: SubCategory) => {
+          sc.Questions.forEach((q: Question) => {
+            if (q.QuestionId === questionId && q.Answer_Id === answerId) {
+              q.Answer = answerText;
+            }
+          });
+        });
+      }
+    });
   }
 }

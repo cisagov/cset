@@ -1684,16 +1684,16 @@ ArrangePanel.prototype.addGroupOps = function (div)
             mxUtils.br(div);
         }
 
-        btn = mxUtils.button(mxResources.get('editData'), mxUtils.bind(this, function (evt)
-        {
-            this.editorUi.actions.get('editData').funct();
-        }));
+        //btn = mxUtils.button(mxResources.get('editData'), mxUtils.bind(this, function (evt)
+        //{
+        //    this.editorUi.actions.get('editData').funct();
+        //}));
 
-        btn.setAttribute('title', mxResources.get('editData') + ' (' + this.editorUi.actions.get('editData').shortcut + ')');
-        btn.style.width = '100px';
-        btn.style.marginBottom = '2px';
-        div.appendChild(btn);
-        count++;
+        //btn.setAttribute('title', mxResources.get('editData') + ' (' + this.editorUi.actions.get('editData').shortcut + ')');
+        //btn.style.width = '100px';
+        //btn.style.marginBottom = '2px';
+        //div.appendChild(btn);
+        //count++;
 
         btn = mxUtils.button(mxResources.get('editLink'), mxUtils.bind(this, function (evt)
         {
@@ -6072,19 +6072,19 @@ DiagramFormatPanel.prototype.addPaperSize = function (div)
  */
 DiagramFormatPanel.prototype.addStyleOps = function (div)
 {
-    var btn = mxUtils.button(mxResources.get('editData'), mxUtils.bind(this, function (evt)
-    {
-        this.editorUi.actions.get('editData').funct();
-    }));
+    //var btn = mxUtils.button(mxResources.get('editData'), mxUtils.bind(this, function (evt)
+    //{
+    //    this.editorUi.actions.get('editData').funct();
+    //}));
 
-    btn.setAttribute('title', mxResources.get('editData') + ' (' + this.editorUi.actions.get('editData').shortcut + ')');
-    btn.style.width = '202px';
-    btn.style.marginBottom = '2px';
-    div.appendChild(btn);
+    //btn.setAttribute('title', mxResources.get('editData') + ' (' + this.editorUi.actions.get('editData').shortcut + ')');
+    //btn.style.width = '202px';
+    //btn.style.marginBottom = '2px';
+    //div.appendChild(btn);
 
-    mxUtils.br(div);
+    //mxUtils.br(div);
 
-    btn = mxUtils.button(mxResources.get('clearDefaultStyle'), mxUtils.bind(this, function (evt)
+    const btn = mxUtils.button(mxResources.get('clearDefaultStyle'), mxUtils.bind(this, function (evt)
     {
         this.editorUi.actions.get('clearDefaultStyle').funct();
     }));
