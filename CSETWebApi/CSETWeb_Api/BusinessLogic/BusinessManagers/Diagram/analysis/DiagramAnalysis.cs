@@ -29,7 +29,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
     {
         private CSET_Context db;
         private int assessment_id;
-        private Dictionary<string, string> imageToTypePath;
+        private Dictionary<string, int> imageToTypePath;
 
         public XmlDocument NetworkWarningsXml { get; private set; }
         public List<IDiagramAnalysisNodeMessage> NetworkWarnings { get; private set; }
@@ -38,7 +38,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         {
             this.db = db;
             this.assessment_id = assessment_id;
-            imageToTypePath = db.COMPONENT_SYMBOLS.ToDictionary(x => x.File_Name, x => x.Diagram_Type_Xml);
+            imageToTypePath = db.COMPONENT_SYMBOLS.ToDictionary(x => x.File_Name, x => x.Component_Symbol_Id);
             NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
         }
 

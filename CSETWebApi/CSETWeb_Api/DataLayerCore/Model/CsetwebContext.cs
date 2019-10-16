@@ -33,8 +33,8 @@ namespace DataLayerCore.Model
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
+        public virtual DbSet<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
         public virtual DbSet<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
-        public virtual DbSet<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
         public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
@@ -51,7 +51,6 @@ namespace DataLayerCore.Model
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
-        public virtual DbSet<DIAGRAM_TYPES_XML> DIAGRAM_TYPES_XML { get; set; }
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
@@ -340,8 +339,6 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Component_Guid })
                     .HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
 
-                entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
-
                 entity.Property(e => e.DrawIO_id).IsUnicode(false);
 
                 entity.Property(e => e.Parent_DrawIO_Id).IsUnicode(false);
@@ -353,12 +350,10 @@ namespace DataLayerCore.Model
                     .HasForeignKey(d => d.Assessment_Id)
                     .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_ASSESSMENTS");
 
-                entity.HasOne(d => d.Diagram_Component_TypeNavigation)
+                entity.HasOne(d => d.Component_Symbol_)
                     .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
-                    .HasPrincipalKey(p => p.Diagram_Type_Xml)
-                    .HasForeignKey(d => d.Diagram_Component_Type)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_COMPONENT_SYMBOLS");
+                    .HasForeignKey(d => d.Component_Symbol_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_COMPONENT_SYMBOLS1");
 
                 entity.HasOne(d => d.Layer_)
                     .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSLayer_)
@@ -508,19 +503,27 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
             });
 
+            modelBuilder.Entity<COMPONENT_NAMES_LEGACY>(entity =>
+            {
+                entity.Property(e => e.Old_Symbol_Name)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+
+                entity.HasOne(d => d.Component_Symbol_)
+                    .WithMany(p => p.COMPONENT_NAMES_LEGACY)
+                    .HasForeignKey(d => d.Component_Symbol_id)
+                    .HasConstraintName("FK_COMPONENT_NAMES_LEGACY_COMPONENT_SYMBOLS");
+            });
+
             modelBuilder.Entity<COMPONENT_QUESTIONS>(entity =>
             {
-                entity.HasKey(e => new { e.Question_Id, e.Component_Type })
-                    .HasName("PK_Component_Questions");
-
-                entity.Property(e => e.Component_Type).IsUnicode(false);
+                entity.HasKey(e => new { e.Question_Id, e.Component_Symbol_Id });
 
                 entity.Property(e => e.Seq).IsUnicode(false);
 
-                entity.HasOne(d => d.Component_TypeNavigation)
+                entity.HasOne(d => d.Component_Symbol_)
                     .WithMany(p => p.COMPONENT_QUESTIONS)
-                    .HasPrincipalKey(p => p.Diagram_Type_Xml)
-                    .HasForeignKey(d => d.Component_Type)
+                    .HasForeignKey(d => d.Component_Symbol_Id)
                     .HasConstraintName("FK_COMPONENT_QUESTIONS_COMPONENT_SYMBOLS");
 
                 entity.HasOne(d => d.Question_)
@@ -529,33 +532,13 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_Component_Questions_NEW_QUESTION");
             });
 
-            modelBuilder.Entity<COMPONENT_STANDARD_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Requirement_id, e.Component_Type })
-                    .HasName("PK_STANDARD_COMPONENT_QUESTIONS");
-
-                entity.Property(e => e.Component_Type).IsUnicode(false);
-
-                entity.HasOne(d => d.Component_TypeNavigation)
-                    .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
-                    .HasPrincipalKey(p => p.Diagram_Type_Xml)
-                    .HasForeignKey(d => d.Component_Type)
-                    .HasConstraintName("FK_COMPONENT_STANDARD_QUESTIONS_COMPONENT_SYMBOLS");
-
-                entity.HasOne(d => d.Question_)
-                    .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_STANDARD_COMPONENT_QUESTIONS_NEW_QUESTION");
-
-                entity.HasOne(d => d.Requirement_)
-                    .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
-                    .HasForeignKey(d => d.Requirement_id)
-                    .HasConstraintName("FK_STANDARD_COMPONENT_QUESTIONS_NEW_REQUIREMENT");
-            });
-
             modelBuilder.Entity<COMPONENT_SYMBOLS>(entity =>
             {
-                entity.HasIndex(e => e.Diagram_Type_Xml)
+                entity.HasIndex(e => e.Abbreviation)
+                    .HasName("IX_COMPONENT_SYMBOLS_1")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.File_Name)
                     .HasName("IX_COMPONENT_SYMBOLS")
                     .IsUnique();
 
@@ -563,23 +546,15 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Component_Family_Name).IsUnicode(false);
 
-                entity.Property(e => e.Diagram_Type_Xml).IsUnicode(false);
-
-                entity.Property(e => e.Display_Name)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('')");
-
                 entity.Property(e => e.File_Name).IsUnicode(false);
 
                 entity.Property(e => e.Height).HasDefaultValueSql("((60))");
 
-                entity.Property(e => e.Long_Name)
+                entity.Property(e => e.Search_Tags).IsUnicode(false);
+
+                entity.Property(e => e.Symbol_Name)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.Name).IsUnicode(false);
-
-                entity.Property(e => e.Tags).IsUnicode(false);
 
                 entity.Property(e => e.Width).HasDefaultValueSql("((60))");
 
@@ -587,12 +562,6 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.COMPONENT_SYMBOLS)
                     .HasForeignKey(d => d.Component_Family_Name)
                     .HasConstraintName("FK_COMPONENT_SYMBOLS_COMPONENT_FAMILY");
-
-                entity.HasOne(d => d.Diagram_Type_XmlNavigation)
-                    .WithOne(p => p.COMPONENT_SYMBOLS)
-                    .HasForeignKey<COMPONENT_SYMBOLS>(d => d.Diagram_Type_Xml)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COMPONENT_SYMBOLS_CSET_DIAGRAM_TYPES");
 
                 entity.HasOne(d => d.Symbol_Group_)
                     .WithMany(p => p.COMPONENT_SYMBOLS)
@@ -606,12 +575,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.GM_FingerType)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.COMPONENT_SYMBOLS_GM_TO_CSET)
-                    .HasForeignKey(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COMPONENT_SYMBOLS_GM_TO_CSET_COMPONENT_SYMBOLS");
             });
 
             modelBuilder.Entity<COUNTRIES>(entity =>
@@ -815,25 +778,10 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Object_Type).IsUnicode(false);
 
-                entity.HasOne(d => d.Diagram_Type_XMLNavigation)
-                    .WithMany(p => p.DIAGRAM_TYPES)
-                    .HasForeignKey(d => d.Diagram_Type_XML)
-                    .HasConstraintName("FK_DIAGRAM_TYPES_CSET_DIAGRAM_TYPES");
-
                 entity.HasOne(d => d.Object_TypeNavigation)
                     .WithMany(p => p.DIAGRAM_TYPES)
                     .HasForeignKey(d => d.Object_Type)
                     .HasConstraintName("FK_DIAGRAM_TYPES_DIAGRAM_OBJECT_TYPES");
-            });
-
-            modelBuilder.Entity<DIAGRAM_TYPES_XML>(entity =>
-            {
-                entity.HasKey(e => e.Diagram_Type_XML)
-                    .HasName("PK_CSET_DIAGRAM_TYPES");
-
-                entity.Property(e => e.Diagram_Type_XML)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<DOCUMENT_ANSWERS>(entity =>
@@ -2305,12 +2253,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Telerik_Shape_Type).IsUnicode(false);
 
                 entity.Property(e => e.Visio_Shape_Type).IsUnicode(false);
-
-                entity.HasOne(d => d.Diagram_Type_XMLNavigation)
-                    .WithOne(p => p.SHAPE_TYPES)
-                    .HasForeignKey<SHAPE_TYPES>(d => d.Diagram_Type_XML)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Shape_Types_CSET_DIAGRAM_TYPES");
             });
 
             modelBuilder.Entity<SP80053_FAMILY_ABBREVIATIONS>(entity =>

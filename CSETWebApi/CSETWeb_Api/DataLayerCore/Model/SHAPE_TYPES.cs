@@ -18,9 +18,5 @@ namespace DataLayerCore.Model
         public bool IsDefault { get; set; }
         [StringLength(50)]
         public string DisplayName { get; set; }
-
-        [ForeignKey("Diagram_Type_XML")]
-        [InverseProperty("SHAPE_TYPES")]
-        public virtual DIAGRAM_TYPES_XML Diagram_Type_XMLNavigation { get; set; }
     }
 }
