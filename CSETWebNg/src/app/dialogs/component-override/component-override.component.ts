@@ -39,12 +39,13 @@ import { StylesCompileDependency } from '@angular/compiler';
 export class ComponentOverrideComponent {
 
   questions:any[]=[];
-
+  loading:boolean=true;
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
     public configSvc: ConfigService, public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x:any) =>{
         this.questions = x;
+        this.loading = false;
       });
     }
 
