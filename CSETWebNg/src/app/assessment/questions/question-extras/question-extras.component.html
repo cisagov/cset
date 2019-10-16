@@ -159,14 +159,14 @@
         </ng-template>
         <div *ngIf="extras !== null && mode === 'CMNT'">
             <div class="form-group">
-                <textarea autosize [(ngModel)]="myQuestion.Comment" (change)="saveComment($event)" style="min-height: 72px; width: 100%"
+                <textarea autosize [(ngModel)]="myQuestion.Comment" (change)="saveComment($event)" style="min-height: 72px; width: 100%" maxlength="2048"
                     class="form-control"></textarea>
             </div>
         </div>
 
         <div *ngIf="extras !== null && mode === 'FDBK'">
             <div class="form-group">
-                <textarea appAutoSize [(ngModel)]="myQuestion.FeedBack" (change)="saveFeedBack($event)"
+                <textarea appAutoSize [(ngModel)]="myQuestion.FeedBack" (change)="saveFeedBack($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
