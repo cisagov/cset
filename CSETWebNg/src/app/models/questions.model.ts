@@ -49,14 +49,14 @@ export interface Domain {
 }
 
 export interface QuestionGroup {
-  ShowOverrideHeader: boolean;
+    ShowOverrideHeader: boolean;
     GroupHeadingId: number;
     GroupHeadingText: string;
     StandardShortName: string;
     SubCategories: SubCategory[];
     Visible: boolean;
     DomainName: string;
-    ComponentType: string;
+    Symbol_Name: string;
     ComponentName: string;
 }
 

@@ -376,7 +376,7 @@ namespace CSETWeb_Api.BusinessManagers
                 
                 AddResponse(resp, context, list, "Component Defaults");
                 var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
-                    .OrderBy(x=> x.Component_Type).ThenBy(x=>x.ComponentName)
+                    .OrderBy(x=> x.Symbol_Name).ThenBy(x=>x.ComponentName)
                     .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
                     .ToList();
                 AddResponse(resp, context, dlist, "Component Overrides");
@@ -405,7 +405,7 @@ namespace CSETWeb_Api.BusinessManagers
                     {  
                         GroupHeadingText = dbQ.Question_Group_Heading,
                         StandardShortName = listname,
-                        ComponentType = dbQ.Component_Type,
+                        Symbol_Name = dbQ.Symbol_Name,
                         ComponentName = dbQ.ComponentName
                     };
                     groupList.Add(qg);
