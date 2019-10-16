@@ -46,8 +46,9 @@ export class DashboardComponent implements OnInit {
 
   assessComplChart: Chart;
   topCategChart: Chart;
-  stdsSummChart: Chart;
-  compSummChart: Chart;
+  stdsSummChart: Chart = null;
+  compSummChart: Chart = null;
+  compSummInitialized = false;
   componentCount = 0;
   initialized = false;
 
@@ -98,10 +99,11 @@ export class DashboardComponent implements OnInit {
     // Component Summary
     this.analysisSvc.getComponentsSummary().subscribe(resp => {
       this.componentCount = resp.ComponentCount;
+      this.compSummInitialized = true;
       if (this.componentCount > 0) {
         setTimeout(() => {
           this.compSummChart = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', resp);
-        }, 0);
+        }, 10);
       }
     });
 
