@@ -390,7 +390,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
         public Int32 Question_Or_Requirement_Id { get; set; }
 
         [Required]
-        public Int32 Component_Id { get; set; }
+        public Guid Component_Guid { get; set; }
 
         public Boolean Mark_For_Review { get; set; }
 
@@ -408,9 +408,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
         [MaxLength(50)]
         public String Answer_Text { get; set; }
 
-        [MaxLength(36)]
-        public String Component_Guid { get; set; }
-
         [Required]
         public Boolean Is_Component { get; set; }
 
@@ -421,6 +418,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
         public Boolean Is_Framework { get; set; }
 
         public int Old_Answer_Id { get; internal set; }
+
+        public string FeedBack { get; set; }
     }
 
     public class jNIST_SAL_INFO_TYPES
