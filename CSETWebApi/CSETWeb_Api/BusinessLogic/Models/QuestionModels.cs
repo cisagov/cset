@@ -41,10 +41,11 @@ namespace CSETWeb_Api.Models
         public int GroupHeadingId;
         public string GroupHeadingText;
         public string StandardShortName;
-        public string DomainName;
-        public string ComponentType;
-        public string ComponentName;
+        public string DomainName;        
+        public string ComponentName;        
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
+
+        public string Symbol_Name { get; internal set; }
     }
 
     /// <summary>

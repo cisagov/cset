@@ -41,10 +41,17 @@ namespace DataLayerCore.Manual
             public int heading_pair_id { get; private set; }
             public string Sub_Heading_Question_Description { get; set; }
             public string Simple_Question { get; set; }
-            public bool? Reviewed { get; set; }
-            public string Diagram_Component_Type { get; set; }
+            public bool? Reviewed { get; set; }            
             public string label { get; set; }
             public string ComponentName { get; set; }
-            public string Component_Type { get; set; }
+            public string Symbol_Name { get; set; }
+            public int Component_Symbol_Id { get; set; }
+
+      //,[Layer_Id]
+      //,[LayerName]
+      //,[Container_Id]
+      //,[ZoneName]
+
+
     }
 }

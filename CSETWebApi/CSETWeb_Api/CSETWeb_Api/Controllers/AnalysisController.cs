@@ -585,14 +585,15 @@ namespace CSETWeb_Api.Controllers
 
                              // re-order the list 
                              var sortedList = new List<usp_getComponentsSummmary>();
-                             sortedList.Add(answerTotals.FirstOrDefault(x => x.Answer_Text == "Y"));
-                             sortedList.Add(answerTotals.FirstOrDefault(x => x.Answer_Text == "N"));
-                             sortedList.Add(answerTotals.FirstOrDefault(x => x.Answer_Text == "NA"));
-                             sortedList.Add(answerTotals.FirstOrDefault(x => x.Answer_Text == "A"));
-                             sortedList.Add(answerTotals.FirstOrDefault(x => x.Answer_Text == "U"));
+                             AddItem("Y",  sortedList, answerTotals);
+                             AddItem("N",  sortedList, answerTotals);
+                             AddItem("NA", sortedList, answerTotals);
+                             AddItem("A",  sortedList, answerTotals);
+                             AddItem("U",  sortedList, answerTotals);
                              answerTotals = sortedList;
 
-                             var totalQuestionCount = answerTotals.Sum(x => x.vcount);
+                             
+                             var totalQuestionCount = answerTotals==null?0:answerTotals.Sum(x => x.vcount);
 
                              foreach (usp_getComponentsSummmary c in answerTotals)
                              {
@@ -626,6 +627,15 @@ namespace CSETWeb_Api.Controllers
             });
 
             return chartData;
+        }
+
+        private List<usp_getComponentsSummmary> AddItem(String AnswerName, List<usp_getComponentsSummmary> sortedList, IList<usp_getComponentsSummmary> unorderedList)
+        {
+            var y = unorderedList.FirstOrDefault(x => x.Answer_Text == "Y");
+            if (y != null) {
+                sortedList.Add(y);
+            }
+            return sortedList;
         }
 
 

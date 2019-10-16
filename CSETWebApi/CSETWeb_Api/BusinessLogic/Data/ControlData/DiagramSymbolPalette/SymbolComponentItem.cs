@@ -25,13 +25,11 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 
 		
 		//public Geometry Geometry { get; set; }
-		public string ComponentTitle { get { return NodeType; } }
+		public string ComponentTitle { get { return Symbol_Name; } }
 
-		public string Name { get { return ComponentSymbolData.Name; } }
-
-		public string NodeType
+		public int NodeType
 		{
-			get { return ComponentSymbolData.XML_Name; }
+			get { return ComponentSymbolData.Component_Symbol_Id; }
 		}
 
         public Boolean IsLinkConnector
@@ -47,29 +45,14 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 		public string DisplayName { get { return ComponentSymbolData.Display_Name; } }
 		public string LongName { get { return ComponentSymbolData.Long_Name; } }
 
-	
-		//public DataTemplate ComponentDiagramVisualTemplate
-		//{
-		//	get
-		//	{				
-  //              return ComponentSymbolData.ComponentDiagramVisualTemplate;
-		//	}
-		//}
-      
-  //      public DataTemplate SymbolPaletteComponentVisualTemplate
-  //      {
-  //          get
-  //          {
-  //              if (ComponentSymbolData != null)
-  //                  return ComponentSymbolData.SymbolPaletteComponentVisualTemplate;
-  //              else
-  //                  return null;
-  //          }
-  //      }
-		#endregion
+        public string Symbol_Name { get; set; }
 
 
-        internal bool IsComponentType(string type)
+       
+        #endregion
+
+
+        internal bool IsComponentType(int type)
         {
             return (this.NodeType == type) ? true : false;
         }

@@ -240,7 +240,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             return req;
         }
 
-        private Dictionary<string, SymbolComponentInfoData> symbolInfo;
+        private Dictionary<int, SymbolComponentInfoData> symbolInfo;
 
         private void LoadData(QuestionPoco question, int assessment_id)
         {
@@ -276,21 +276,16 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             }
             else if (question.IsComponent)
             {
-                if(symbolInfo == null)
-                    symbolInfo = this.DataContext.COMPONENT_SYMBOLS
-                    .ToDictionary(x => x.Diagram_Type_Xml, data => new SymbolComponentInfoData()
-                    { DisplayName = data.Display_Name, XMLName = data.Diagram_Type_Xml });
-
                 var stuff = from a in this.DataContext.Answer_Components_Exploded
                             join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
                             where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
-                            select new { a.Component_Type, a.SAL, l.Sal_Level_Order };
+                            select new { a.Component_Symbol_Id, a.SAL, l.Sal_Level_Order };
 
-                Dictionary<string, ComponentTypeSalData> dictionaryComponentTypes = new Dictionary<string, ComponentTypeSalData>();
+                Dictionary<int, ComponentTypeSalData> dictionaryComponentTypes = new Dictionary<int, ComponentTypeSalData>();
                 foreach(var item in stuff.ToList())
                 {
                     ComponentTypeSalData salData;
-                    if(dictionaryComponentTypes.TryGetValue(item.Component_Type,out salData)){
+                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id,out salData)){
                         salData.SALLevels.Add(item.Sal_Level_Order);
                     }
                     else
@@ -299,11 +294,11 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         SALLevels.Add(item.Sal_Level_Order);
                         salData = new ComponentTypeSalData()
                         {
-                            ComponentType = item.Component_Type,
+                            Component_Symbol_Id = item.Component_Symbol_Id,
                             SALLevels = SALLevels
                         };
                         
-                        dictionaryComponentTypes.Add(item.Component_Type, salData);
+                        dictionaryComponentTypes.Add(item.Component_Symbol_Id, salData);
                     }
                 }
 
