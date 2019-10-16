@@ -939,3 +939,4 @@ confALibExist=This library already exists
 confAUploadSucc=Uploaded successfully
 confAUploadFailErr=Upload Failed (Unexpected Error)
 analyze=Analyze Network Diagram
+fromTemplate=New From Template

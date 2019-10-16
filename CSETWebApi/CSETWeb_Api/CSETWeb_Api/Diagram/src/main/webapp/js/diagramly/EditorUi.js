@@ -8609,9 +8609,11 @@
                         const enableSearchDocs = data.enableSearch === 1;
                         const enableCustomTemp = data.enableCustomTemp === 1;
 
+                        const cset = true;
                         const dlg = new NewDialog(this, {
                             compact: false,
-                            showName: !!data.callback,
+                            showName: !cset && !!data.callback,
+                            hideFromTemplateUrl: cset,
                             callback: mxUtils.bind(this, function (xml, name) {
                                 xml = xml || this.emptyDiagramXml;
                                 // LATER: Add autosave option in template message
@@ -9837,7 +9839,6 @@
         //remove menu items
         this.actions.get('makeCopy').visible = false;
         this.actions.get('rename').visible = false;
-        this.actions.get('new').visible = false;
         this.actions.get('save').visible = false;
 
         this.menus.get('embed').setEnabled(!restricted);
@@ -10036,7 +10037,6 @@
         // RKW - hide menu actions that CSET doesn't use
         const CSET = true;
         if (!CSET) {
-            this.actions.get('new').visible = false;
             this.actions.get('rename').visible = false;
             this.actions.get('makeCopy').visible = false;
         }

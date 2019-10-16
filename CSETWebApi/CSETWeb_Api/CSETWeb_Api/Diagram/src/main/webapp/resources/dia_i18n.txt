@@ -927,3 +927,5 @@ uploading=uploading
 confALibExist=confALibExist
 confAUploadSucc=confAUploadSucc
 confAUploadFailErr=confAUploadFailErr
+analyze=Analyze Network Diagram
+fromTemplate=New From Template
