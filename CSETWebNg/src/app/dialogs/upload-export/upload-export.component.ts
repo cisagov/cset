@@ -24,7 +24,7 @@
 import { ImportAssessmentService } from './../../services/import-assessment.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialogRef, MatListModule, MatProgressBarModule } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { AssessmentService } from '../../services/assessment.service';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';

@@ -237,6 +237,9 @@ CsetUtils.edgesToTop = function (graph, edit) {
             const edges = CsetUtils.getAllChildEdges(change.child);
             graph.orderCells(false, edges);
         }
+        if (change instanceof mxTerminalChange) {
+            graph.orderCells(false, [change.cell]);
+        }
     }
 }
 
@@ -346,7 +349,6 @@ CsetUtils.saveDiagram = async function (req) {
             url: localStorage.getItem('cset.host') + 'diagram/save',
             payload: JSON.stringify(req),
             onreadystatechange: function (e) {
-                console.log(e.readyState);
                 if (e.readyState !== 4) {
                     return;
                 } 
@@ -680,7 +682,6 @@ async function showSaving(requestId) {
     newDiv.appendChild(newContent);
 
     var tmppayload = JSON.stringify(requestId);
-    console.log(tmppayload);
     document.body.appendChild(newDiv);
     newDiv.id = "CSETSaving";
     newDiv.style.position = 'absolute';

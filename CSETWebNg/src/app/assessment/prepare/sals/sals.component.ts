@@ -21,11 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SalService } from '../../../services/sal.service';
 import { Sal } from '../../../models/sal.model';
-import { AssessmentService } from '../../../services/assessment.service';
-import { Router } from '@angular/router';
 import { Navigation2Service } from '../../../services/navigation2.service';
 
 @Component({
@@ -43,9 +41,7 @@ export class SalsComponent implements OnInit {
 
   constructor(
     public salsSvc: SalService,
-    public navSvc2: Navigation2Service,
-    private router: Router,
-    private assessSvc: AssessmentService) {
+    public navSvc2: Navigation2Service) {
   }
 
   ngOnInit() {

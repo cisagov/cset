@@ -29,8 +29,6 @@ import {
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
-import { Observable, of, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { EmailService } from './email.service';
 

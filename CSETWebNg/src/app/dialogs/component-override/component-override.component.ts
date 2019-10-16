@@ -33,50 +33,58 @@ import { StylesCompileDependency } from '@angular/compiler';
   selector: 'component-override',
   templateUrl: './component-override.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'},
+  host: { class: 'd-flex flex-column flex-11a' },
   styleUrls: ['./component-override.component.scss']
 })
 export class ComponentOverrideComponent {
 
-  questions:any[]=[];
+  questions: any[] = [];
 
-  constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
-    public configSvc: ConfigService, public questionsSvc: QuestionsService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.questions = data.questions;
+  constructor(
+    private dialog: MatDialogRef<ComponentOverrideComponent>,
+    public configSvc: ConfigService,
+    public questionsSvc: QuestionsService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x: any) => {
+      this.questions = x;
+    });
+  }
+
+  storeAnswer(q: any, newAnswerValue: string) {
+
+    // if they clicked on the same answer that was previously set, "un-set" it
+    if (q.Answer === newAnswerValue) {
+      newAnswerValue = "U";
     }
 
-    storeAnswer(q: any, newAnswerValue: string) {
-       
-      // if they clicked on the same answer that was previously set, "un-set" it
-      if (q.Answer === newAnswerValue) {
-        newAnswerValue = "U";
-      }
-  
-      q.Answer_Text = newAnswerValue;
-  
-      const answer: Answer = {
-        QuestionId: q.Question_Id,
-        QuestionNumber: q.Question_Number,
-        AnswerText: q.Answer_Text,
-        AltAnswerText: '',
-        Comment: '',
-        FeedBack: '',
-        MarkForReview: false,
-        Reviewed: true,
-        Is_Component: q.Is_Component, 
-        ComponentGuid: q.Component_GUID
-      };
-      
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe();
-      }
+    q.Answer_Text = newAnswerValue;
+
+    const answer: Answer = {
+      QuestionId: q.Question_Id,
+      QuestionNumber: q.Question_Number,
+      AnswerText: q.Answer_Text,
+      AltAnswerText: '',
+      Comment: '',
+      FeedBack: '',
+      MarkForReview: false,
+      Reviewed: false,
+      Is_Component: q.Is_Component,
+      ComponentGuid: q.Component_GUID
+    };
+
+    // update the master question structure
+    this.questionsSvc.setAnswerInQuestionList(q.Question_Id, q.Answer_Id, q.Answer_Text);
+
+    this.questionsSvc.storeAnswer(answer)
+      .subscribe();
+  }
   close() {
     return this.dialog.close();
   }
 
-  applyHeight(){
-    const styles =  {'max-height': window.screen.availHeight};
+  applyHeight() {
+    const styles = { 'max-height': window.screen.availHeight };
     return styles;
   }
 }
