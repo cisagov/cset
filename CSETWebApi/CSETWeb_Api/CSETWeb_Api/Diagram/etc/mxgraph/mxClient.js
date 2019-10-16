@@ -9616,6 +9616,19 @@ mxGraphModel.prototype.add = function (a, b, c) {
     return b
 };
 
+mxGraphModel.prototype.cellClonedCSET = function (graph, cell) {
+    // assign a new component GUID to the clone and its children
+    if (cell.getCsetAttribute('ComponentGuid') != null) {
+        var nextGuid = guidService.getInstance().getNextGuid();
+        cell.setCsetAttribute('ComponentGuid', nextGuid);
+        if (cell.children) {
+            cell.children.forEach(c => {
+                this.cellClonedCSET(graph, c);
+            });
+        }
+    }
+}
+
 /**
  * CSET - things to do when new objects are added to the graph
  */
@@ -10088,6 +10101,11 @@ mxGraphModel.prototype.cloneCells = function (a, b, c) {
     c = null != c ? c : {};
     for (var d = [], e = 0; e < a.length; e++) null != a[e] ? d.push(this.cloneCellImpl(a[e], c, b)) : d.push(null);
     for (e = 0; e < d.length; e++) null != d[e] && this.restoreClone(d[e], a[e], c);
+
+    d.forEach(clone => {
+        this.cellClonedCSET(this, clone);    
+    });
+
     return d
 };
 mxGraphModel.prototype.cloneCellImpl = function (a, b, c) {
