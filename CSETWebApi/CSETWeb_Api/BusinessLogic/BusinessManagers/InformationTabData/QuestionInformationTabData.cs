@@ -410,10 +410,11 @@ namespace CSET_Main.Questions.InformationTabData
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
+
                 foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x=> x.Question_Id == info.QuestionID))
                 {
                     bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Symbol_Id, salLevel);
-                    SymbolComponentInfoData componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
+                    COMPONENT_SYMBOLS componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
                     tmpList.Add(new ComponentOverrideLinkInfo()
                     {
                         Component_Symbol_Id = componentTypeData.Component_Symbol_Id,
