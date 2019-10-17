@@ -32,7 +32,7 @@ namespace DataLayerCore.Manual
             public string Universal_Sub_Category { get; private set; }
             public bool Is_Component { get; private set; }            
             [StringLength(36)]
-            public Guid Component_Guid { get; private set; }
+            public Guid? Component_Guid { get; private set; }
             [StringLength(10)]
             public string SAL { get; private set; }
             public bool? Mark_For_Review { get; private set; }
