@@ -24,7 +24,7 @@ SOFTWARE.
 
 .supplemental *:not(font) {
   font-size: 90%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .supplemental table {
@@ -37,9 +37,6 @@ SOFTWARE.
     border: 1px solid #000;
     padding: .5rem;
     vertical-align: top;
-
-    /* border: 1px solid $gray-400;
-    padding: 6px; */
 }
 
 .supplemental table td ol {
