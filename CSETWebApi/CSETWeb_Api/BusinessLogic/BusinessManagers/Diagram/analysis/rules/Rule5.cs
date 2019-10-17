@@ -36,7 +36,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             {
                 HashSet<String> VisitedNodes = new HashSet<string>();
                 VisitedNodes.Add(component.ID);
-                List<NetworkComponent> list = GetNodeEdges(component, new HashSet<String>() { Constants.FIREWALL_TYPE });
+                List<NetworkComponent> list = GetNodeEdges(component, new HashSet<int>() { Constants.FIREWALL });
                 foreach (NetworkComponent info in list)
                 {
                     String componentName = "unnamed";

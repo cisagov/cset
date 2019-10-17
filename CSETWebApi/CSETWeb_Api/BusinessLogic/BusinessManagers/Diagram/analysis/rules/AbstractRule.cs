@@ -84,7 +84,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             messageNode.AddMessage(text);
         }
 
-        protected List<NetworkComponent> GetNodeEdges(NetworkComponent component, HashSet<String> typeNodes, HashSet<string> SetVisted = null)
+        protected List<NetworkComponent> GetNodeEdges(NetworkComponent component, HashSet<int> typeNodes, HashSet<string> SetVisted = null)
         {
             SetVisted = SetVisted ?? new HashSet<String>();
             SetVisted.Add(component.ID);
@@ -93,7 +93,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             return listInfo;
         }
 
-        private void GetNodeInfoRecursive(ref List<NetworkComponent> listNode, HashSet<String> typeNodes, HashSet<string> visitedNodes, NetworkComponent component)
+        private void GetNodeInfoRecursive(ref List<NetworkComponent> listNode, HashSet<int> typeNodes, HashSet<string> visitedNodes, NetworkComponent component)
         {
 
             foreach (NetworkComponent edge in component.Connections)

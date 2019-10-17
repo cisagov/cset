@@ -113,11 +113,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
 
                 var rval1 = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
+                             join s in db.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
                             where c.Assessment_Id == _assessmentId && c.Zone_Id == null
-                            orderby c.Diagram_Component_Type, c.label
+                            orderby s.Symbol_Name, c.label
                             select new DiagramZones
                             {
-                                Diagram_Component_Type = c.Diagram_Component_Type,
+                                Diagram_Component_Type = s.Symbol_Name,
                                 label = c.label,
                                 Zone_Name = "No Assigned Zone",
                                 Universal_Sal_Level = level == null ? "Low" : level.Selected_Sal_Level
@@ -125,11 +126,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 var rval = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
                             join z in db.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
+                            join s in db.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
                             where c.Assessment_Id == _assessmentId
-                            orderby c.Diagram_Component_Type, c.label
+                            orderby s.Symbol_Name, c.label
                             select new DiagramZones
                             {
-                                Diagram_Component_Type = c.Diagram_Component_Type,
+                                Diagram_Component_Type = s.Symbol_Name,
                                 label = c.label,
                                 Zone_Name = z.Name,
                                 Universal_Sal_Level = z.Universal_Sal_Level
