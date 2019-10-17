@@ -21,13 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
-import { Answer, Question } from '../../models/questions.model';
+import { Answer } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
-import { StylesCompileDependency } from '@angular/compiler';
 
 @Component({
   selector: 'component-override',
@@ -38,23 +36,21 @@ import { StylesCompileDependency } from '@angular/compiler';
 })
 export class ComponentOverrideComponent {
 
-  questions: any[] = [];
-
-  constructor(
-    private dialog: MatDialogRef<ComponentOverrideComponent>,
-    public configSvc: ConfigService,
-    public questionsSvc: QuestionsService,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x: any) => {
+  questions:any[]=[];
+  loading:boolean=true;
+  constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
+  public configSvc: ConfigService, public questionsSvc: QuestionsService,
+  @Inject(MAT_DIALOG_DATA) public data: any) { 
+    this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x:any) =>{
       this.questions = x;
+      this.loading = false;
     });
   }
+  
+  storeAnswer(q: any, newAnswerValue: string) {	
 
-  storeAnswer(q: any, newAnswerValue: string) {
-
-    // if they clicked on the same answer that was previously set, "un-set" it
-    if (q.Answer === newAnswerValue) {
+    // if they clicked on the same answer that was previously set, "un-set" it	
+    if (q.Answer === newAnswerValue) {	
       newAnswerValue = "U";
     }
 
@@ -79,6 +75,7 @@ export class ComponentOverrideComponent {
     this.questionsSvc.storeAnswer(answer)
       .subscribe();
   }
+
   close() {
     return this.dialog.close();
   }

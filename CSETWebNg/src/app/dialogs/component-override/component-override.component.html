@@ -53,7 +53,8 @@
                   </div>
               </div>
               <div class="row" [ngStyle]="applyHeight()">
-                  <table mat-table class="assessment-summary" style='overflow-y:auto'>
+                <div class="col-12">
+                  <table mat-table class="assessment-summary" >
                       <th>Specific Component Name</th>
                       <th></th>
                       <tr *ngFor="let q of questions; let i = index">
@@ -74,11 +75,19 @@
                           
                       </tr>
                   </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                    <div class="spinner-container" style="margin: .5em auto" *ngIf="loading" >
+                        <div style="max-width: 30px; max-height: 30px;"></div>
+                    </div>
+                </div>
               </div>
         </div>
       </div>                      
   </mat-dialog-content>
 
-  <mat-dialog-actions class="pl-4 p-1 mb-0">
+  <mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
     <button class="btn btn-secondary" (click)="close()">OK</button>
   </mat-dialog-actions>
