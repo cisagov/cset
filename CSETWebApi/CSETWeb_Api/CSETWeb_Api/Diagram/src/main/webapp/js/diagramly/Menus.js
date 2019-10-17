@@ -345,17 +345,17 @@
 		{
 			editorUi.actions.get('save').funct();
 		}, null, null, Editor.ctrlKey + '+S');
-		
-		var action = editorUi.actions.addAction('synchronize', function()
-		{
-			editorUi.synchronizeCurrentFile(DrawioFile.SYNC == 'none');
-		}, null, null, 'Alt+Shift+S');
-		
-		// Changes the label if synchronization is disabled
-		if (DrawioFile.SYNC == 'none')
-		{
-			action.label = mxResources.get('refresh');
-		}
+
+        if (!CSET) {
+            var action = editorUi.actions.addAction('synchronize', function () {
+                editorUi.synchronizeCurrentFile(DrawioFile.SYNC === 'none');
+            }, null, null, 'Alt+Shift+S');
+
+            // Changes the label if synchronization is disabled
+            if (DrawioFile.SYNC === 'none') {
+                action.label = mxResources.get('refresh');
+            }
+        }
 
 		editorUi.actions.addAction('upload...', function()
 		{
@@ -2952,53 +2952,43 @@
 			{
 				var file = this.editorUi.getCurrentFile();
 				
-				if (file != null && file.constructor == DriveFile)
-				{
-					if (file.isRestricted())
-					{
-						this.addMenuItems(menu, ['exportOptionsDisabled'], parent);
-					}
-					
-					this.addMenuItems(menu, ['save', '-', 'share'], parent);
-					
-					var item = this.addMenuItem(menu, 'synchronize', parent);
-					
-					if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
-					{
-						this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
-					}
-					
-					menu.addSeparator(parent);
-				}
-				else
-				{
-					this.addMenuItems(menu, ['new'], parent);
-				}
+                if (file && file.constructor === DriveFile) {
+                    if (file.isRestricted()) {
+                        this.addMenuItems(menu, ['exportOptionsDisabled'], parent);
+                    }
+
+                    this.addMenuItems(menu, ['save', '-', 'share'], parent);
+
+                    if (!CSET) {
+                        var item = this.addMenuItem(menu, 'synchronize', parent);
+                        if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) {
+                            this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
+                        }
+                        menu.addSeparator(parent);
+                    }
+                } else {
+                    this.addMenuItems(menu, ['new'], parent);
+                }
 				
 				//this.addSubmenu('openFrom', menu, parent);
 
-				if (isLocalStorage)
-				{
-					//this.addSubmenu('openRecent', menu, parent);
-				}
+                if (isLocalStorage) {
+                    //this.addSubmenu('openRecent', menu, parent);
+                }
 				
-				if (file != null && file.constructor == DriveFile)
-				{
-					this.addMenuItems(menu, ['new', '-', 'rename', 'makeCopy', 'moveToFolder'], parent);
-				}
-				else
-				{
-					if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp &&
-						file != null && file.constructor != LocalFile)
-					{	
-						menu.addSeparator(parent);
-						var item = this.addMenuItem(menu, 'synchronize', parent);
-						
-						if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
-						{
-							this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
-						}
-					}
+				if (file && file.constructor === DriveFile) {
+                    this.addMenuItems(menu, ['new', '-', 'rename', 'makeCopy', 'moveToFolder'], parent);
+                } else {
+                    if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && file && file.constructor !== LocalFile) {
+                        if (!CSET) {
+                            menu.addSeparator(parent);
+                            var item = this.addMenuItem(menu, 'synchronize', parent);
+
+                            if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) {
+                                this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
+                            }
+                        }
+                    }
 					
 					this.addMenuItems(menu, ['-', 'save', 'saveAs'], parent);
 					
