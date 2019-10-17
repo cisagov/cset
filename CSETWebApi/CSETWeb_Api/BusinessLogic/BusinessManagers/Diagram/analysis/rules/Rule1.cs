@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
@@ -39,16 +40,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             //get the list of vendors, partners, or web
             //if the vendor, partner, or web is connected to anything other than a firewall
             //add a message and let the user know.
-            List<string> suspects = new List<string>();
-            suspects.Add("Web");
-            suspects.Add("Vendor");
-            suspects.Add("Partner");
-            var suspectslist = nodes.Values.Where(x => suspects.Contains(x.ComponentType));
+            List<int> suspects = new List<int>();
+            suspects.Add(Constants.WEB_TYPE);
+            suspects.Add(Constants.VENDOR_TYPE);
+            suspects.Add(Constants.PARTNER_TYPE);
+            var suspectslist = nodes.Values.Where(x => suspects.Contains(x.Component_Symbol_Id));
             foreach (var node in suspectslist)
             {
                 foreach (var child in node.Connections)
                 {
-                    if (child.ComponentType != "Firewall")
+                    if (child.Component_Symbol_Id != Constants.FIREWALL)
                     {
                         String text = String.Format(rule1, node.ComponentName, child.ComponentName);
                         SetLineMessage(node,child, text);

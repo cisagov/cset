@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
@@ -41,6 +41,8 @@ import { ComponentOverrideComponent } from '../../../dialogs/component-override/
 @Component({
   selector: 'app-question-extras',
   templateUrl: './question-extras.component.html',
+  styleUrls: ['./question-extras.component.css'],
+  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
@@ -83,7 +85,7 @@ export class QuestionExtrasComponent implements OnInit {
       //maxHeight: window.screen.availHeight,
       data: {componentType: componentType, myQuestion: this.myQuestion},
     });
-    
+
   }
   /**
  * Shows/hides the "expand" section.
@@ -182,7 +184,7 @@ export class QuestionExtrasComponent implements OnInit {
         FeedBack: '',
         MarkForReview: false,
         Reviewed: false,
-        Is_Component: this.myQuestion.Is_Component, 
+        Is_Component: this.myQuestion.Is_Component,
         ComponentGuid: ''
       };
 

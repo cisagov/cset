@@ -39,7 +39,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         /// <param name="component"></param>
         private void CheckRule34(NetworkComponent component)
         {   
-            List<NetworkComponent> list = GetNodeEdges(component, new HashSet<string>() { Constants.FIREWALL_TYPE, Constants.UNIDIRECTIONAL_TYPE });
+            List<NetworkComponent> list = GetNodeEdges(component, new HashSet<int>() { Constants.FIREWALL, Constants.UNIDIRECTIONAL_DEVICE });
             int countSALs = list.Select(x => x.Zone.SAL).Distinct().Count();
             if (countSALs > 1)
             {

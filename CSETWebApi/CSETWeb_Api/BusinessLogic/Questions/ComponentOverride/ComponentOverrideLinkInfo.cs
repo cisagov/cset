@@ -14,8 +14,8 @@ namespace CSET_Main.Questions.ComponentOverride
 {
     public class ComponentOverrideLinkInfo
     {
-        public string TypeComponetXML { get; set; }
-        public string Type { get; set; }     
+        public int Component_Symbol_Id { get; set; }
+        public string Symbol_Name { get; set; }     
         public bool Enabled { get; set; }        
       
     }

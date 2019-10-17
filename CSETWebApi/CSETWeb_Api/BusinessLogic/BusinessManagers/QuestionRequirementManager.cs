@@ -151,7 +151,7 @@ namespace CSETWeb_Api.BusinessManagers
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
             }
 
-           // in case a null is passed, store 'unanswered'
+            // in case a null is passed, store 'unanswered'
             if (string.IsNullOrEmpty(answer.AnswerText))
             {
                 answer.AnswerText = "U";
