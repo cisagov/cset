@@ -1,6 +1,15 @@
 .example-container.mat-elevation-z8 {    
-    overflow-y: auto;
-  }
-  .example-container .mat-table.mat-table {
-    min-height: 300px;
-  }
+  overflow-y: auto;
+}
+.example-container .mat-table.mat-table {
+  min-height: 300px;
+}
+.bottom-fix {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+.mat-dialog-content {
+  flex-grow:1;
+}
