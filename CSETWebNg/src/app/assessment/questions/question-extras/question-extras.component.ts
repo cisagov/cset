@@ -80,8 +80,7 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
-      maxHeight: window.screen.availHeight,
-      minHeight: '600px',
+      //maxHeight: window.screen.availHeight,
       data: {componentType: componentType, myQuestion: this.myQuestion},
     });
     
