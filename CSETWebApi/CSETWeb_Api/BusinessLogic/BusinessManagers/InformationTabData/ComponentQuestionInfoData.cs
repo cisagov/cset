@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace CSET_Main.Questions.InformationTabData
     public class ComponentQuestionInfoData : BaseQuestionInfoData
     {
         public Dictionary<int, ComponentTypeSalData> DictionaryComponentTypes { get; set; }
-        public Dictionary<int, SymbolComponentInfoData> DictionaryComponentInfo { get; set; }
+        public Dictionary<int, COMPONENT_SYMBOLS> DictionaryComponentInfo { get; set; }
 
 
         public bool HasComponentsForTypeAtSal(int componentType, int salLevel)

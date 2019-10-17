@@ -240,7 +240,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             return req;
         }
 
-        private Dictionary<int, SymbolComponentInfoData> symbolInfo;
+        private Dictionary<int, COMPONENT_SYMBOLS> symbolInfo;
 
         private void LoadData(QuestionPoco question, int assessment_id)
         {
@@ -301,6 +301,10 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         dictionaryComponentTypes.Add(item.Component_Symbol_Id, salData);
                     }
                 }
+                if (symbolInfo == null)
+                    symbolInfo = this.DataContext.COMPONENT_SYMBOLS
+                    .ToDictionary(x => x.Component_Symbol_Id, data => data);
+
 
                 //select component_type, ComponentName, SAL from Answer_Components_Exploded
                 //where Assessment_Id = 6 and question_id = 1586
