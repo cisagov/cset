@@ -485,10 +485,10 @@ export class QuestionsService {
   /**
    *
    */
-  getOverrideQuestions(questionId, componentType) {
+  getOverrideQuestions(questionId, Component_Symbol_Id) {
     let params = new HttpParams();
     params = params.append('question_id', questionId);
-    params = params.append('Component_Type', componentType);
+    params = params.append('Component_Symbol_Id', Component_Symbol_Id);
     return this.http.get(this.configSvc.apiUrl + 'GetOverrideQuestions', { params: params });
   }
 
