@@ -20,8 +20,8 @@ namespace CSETWeb_Api.Controllers
     public class AssessmentExportController : ApiController
     {
         [HttpGet]
-        [Route("api/assessment/export/{token}")]
-        public Task<HttpResponseMessage> ExportAssessment([FromUri] string token)
+        [Route("api/assessment/export")]
+        public Task<HttpResponseMessage> ExportAssessment(string token)
         {
             var tm = new TokenManager(token);
             var assessmentId = Auth.AssessmentForUser(token);
