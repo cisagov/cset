@@ -72,7 +72,7 @@
             (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
         <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
           <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="ml-1">
-            <button (click)="selectItem(node?.value)" [disabled]="checkText(node?.label)" class="btn btn-link ta-left">
+            <button (click)="selectItem(node?.value)" [disabled]="checkText(node?.label)" class="btn btn-link no-underline ta-left">
               <span class="menu-link ws-normal">
                 {{node?.label}}
               </span>
