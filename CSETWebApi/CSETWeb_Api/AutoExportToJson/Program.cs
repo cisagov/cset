@@ -10,8 +10,13 @@ namespace AutoExportToJson
     {
         static void Main(string[] args)
         {
-            var e = new ExportDbToJson();
-            e.Go();
+            //var e = new ExportDbToJson();
+            //e.Go();
+
+
+
+            var i = new ImportDbFromJson();
+            i.Go();
         }
     }
 }

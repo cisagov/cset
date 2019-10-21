@@ -17,6 +17,7 @@ using CSET_Main.Data.AssessmentData;
 using BusinessLogic.Helpers;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 
 
@@ -433,7 +434,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// <param name="context"></param>
         internal void RunImportAutomatic(string jsonObject, CSET_Context context)
         {
-            throw new NotImplementedException();
+            var genericImporter = new GenericImporter();
+            genericImporter.Go(jsonObject);
         }
     }
 }

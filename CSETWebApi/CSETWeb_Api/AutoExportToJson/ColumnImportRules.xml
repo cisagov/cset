@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tables>
+
+  <Table name="INFORMATION">
+    <Column name="eMass_Document_Id">
+      <Rule action="ignore" />
+    </Column>
+  </Table>
+
+  <Table name="STANDARD_SELECTION" />
+  <Table name="NETWORK_WARNINGS" />
+  <Table name="CNSS_CIA_JUSTIFICATIONS" />
+  <!--<Table name="NIST_SAL_QUESTION_ANSWERS" />-->
+  <Table name="NIST_SAL_INFO_TYPES" />
+  <Table name="DEMOGRAPHICS" />
+  
+  <Table name="DOCUMENT_FILE">
+    <Column name="CreatedTimestamp">
+      <Rule action="defaultDatetime" />
+    </Column>
+    <Column name="UpdatedTimestamp">
+      <Rule action="defaultDatetime" />
+    </Column>
+  </Table>
+  
+  <Table name="FINANCIAL_DOMAIN_FILTERS" />
+  <Table name="REPORT_DETAIL_SECTION_SELECTION" />
+  <Table name="FiltersNormalized" />
+  <Table name="REPORT_OPTIONS_SELECTION" />
+  <Table name="FINANCIAL_ASSESSMENT_VALUES" />
+  <Table name="ASSESSMENT_IRP" />
+  <Table name="ASSESSMENT_IRP_HEADER" />
+  <Table name="FINANCIAL_HOURS" />
+  <Table name="ANSWER" />
+  <Table name="RequirementsCustomFramework" />
+  <Table name="RequirementsSetsCustomFramework" />
+  <Table name="ASSESSMENT_DIAGRAM_COMPONENTS" />
+  <Table name="FRAMEWORK_TIER_TYPE_ANSWER" />
+  <Table name="DIAGRAM_CONTAINER" />
+  <Table name="PARAMETER_ASSESSMENT" />
+  <Table name="ASSESSMENT_SELECTED_LEVELS" />
+  <Table name="GENERAL_SAL" />
+  <Table name="ASSESSMENTS_REQUIRED_DOCUMENTATION" />
+  <Table name="AVAILABLE_STANDARDS" />
+
+
+  <Table name="FINDING"></Table>
+  
+</Tables>

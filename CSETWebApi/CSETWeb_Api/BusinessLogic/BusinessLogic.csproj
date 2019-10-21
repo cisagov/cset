@@ -382,7 +382,9 @@
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="ImportAssessment\BulkSqlUpload.cs" />
+    <Compile Include="ImportAssessment\DBIO.cs" />
     <Compile Include="ImportAssessment\export\ExportAssessment.cs" />
+    <Compile Include="ImportAssessment\GenericImporter.cs" />
     <Compile Include="ImportAssessment\Importer.cs" />
     <Compile Include="ImportAssessment\Models\Version_9.0.1\AllGeneralJsonModels.cs" />
     <Compile Include="ImportAssessment\Models\Version_9.0.1\UploadAssessmentModel.cs" />

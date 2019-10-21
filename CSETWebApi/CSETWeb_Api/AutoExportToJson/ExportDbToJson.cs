@@ -21,7 +21,8 @@ namespace AutoExportToJson
     {
         public void Go()
         {
-            var dtAssessments = DBIO.Select("select * from assessments where assessment_id = @id", 
+            var dbio = new DBIO();
+            var dtAssessments = dbio.Select("select * from assessments where assessment_id = @id", 
                 new Dictionary<string, object> {
                 { "@id", 3 }
             });
