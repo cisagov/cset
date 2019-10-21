@@ -109,8 +109,8 @@ export class CustomDocument {
 }
 
 export interface ComponentOverrideLinkInfo {
-  TypeComponetXML: string;
-  Type: string;
+  Component_Symbol_Id: number;
+  Symbol_Name: string;
   Enabled: boolean;
 }
 

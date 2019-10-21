@@ -279,7 +279,7 @@ namespace CSETWeb_Api.BusinessManagers
             return resp;
         }
 
-        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, string component_Type)
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, int Component_Symbol_Id)
         {
             List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
             using (CSET_Context context = new CSET_Context())
@@ -287,7 +287,7 @@ namespace CSETWeb_Api.BusinessManagers
                 IQueryable<Answer_Components_Exploded> questionlist = from a in context.Answer_Components_Exploded
                                    where a.Assessment_Id == assessmentId
                                     && a.Question_Id == question_id
-                                    && a.Component_Type == component_Type
+                                    && a.Component_Symbol_Id == Component_Symbol_Id
                                     //&& a.Component_GUID == Guid.Empty
                                     select a;
                 IQueryable<Answer_Components> answeredQuestionList = context.Answer_Components.Where(a =>

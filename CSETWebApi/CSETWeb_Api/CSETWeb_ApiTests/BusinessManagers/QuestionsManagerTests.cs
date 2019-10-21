@@ -77,7 +77,7 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                     QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
 
 
-                    List<Answer_Components_Exploded_ForJSON> list =  manager.GetOverrideQuestions(16, 1586, Constants.FIREWALL_TYPE);
+                    List<Answer_Components_Exploded_ForJSON> list =  manager.GetOverrideQuestions(16, 1586, Constants.FIREWALL);
                     
                     Assert.IsTrue(list.Count>0);
                 }
