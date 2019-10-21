@@ -22,14 +22,14 @@ using System.Web.Http;
 namespace CSETWeb_Api.Controllers
 {
     [CSETAuthorize]
-    public class SetController : ApiController
+    public class SetsController : ApiController
     {
-        public SetController() : base()
+        public SetsController() : base()
         {
         }
 
         [HttpGet]
-        [Route("api/set")]
+        [Route("api/sets")]
         public Task<HttpResponseMessage> GetAllSets()
         {
             using (var db = new CSET_Context())
@@ -42,7 +42,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
-        [Route("api/set/import/status/{id}")]
+        [Route("api/sets/import/status/{id}")]
         [HttpGet]
         public Task<HttpResponseMessage> GetImportStatus([FromUri] string id)
         {
@@ -78,7 +78,7 @@ namespace CSETWeb_Api.Controllers
         /// Import new standards into CSET
         /// </summary>
         [HttpPost]
-        [Route("api/set/import")]
+        [Route("api/sets/import")]
         public Task<HttpResponseMessage> Import([FromBody] ExternalStandard externalStandard)
         {
             var response = default(HttpResponseMessage);
@@ -103,7 +103,7 @@ namespace CSETWeb_Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/set/export/{setName}")]
+        [Route("api/sets/export/{setName}")]
         public Task<HttpResponseMessage> Export([FromUri] string setName)
         {
             var response = default(HttpResponseMessage);
