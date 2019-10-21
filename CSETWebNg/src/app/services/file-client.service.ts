@@ -119,29 +119,29 @@ export class FileUploadClientService {
     return this.http.request(req);
   }
   moduleStatus(moduleId: string): Observable<any> {
-    const moduleEndpoint = this.configSvc.apiUrl + 'import/' + moduleId;
+    const moduleEndpoint = this.configSvc.apiUrl + 'sets/import/status/' + moduleId;
     return this.http.get(moduleEndpoint);
   }
   getSchema(): Observable<any> {
     return this.http.get(this.configSvc.apiUrl + 'schema');
   }
   getExports(): Observable<Array<LinkedSet>> {
-    const moduleEndpoint = this.configSvc.apiUrl + 'export';
+    const moduleEndpoint = this.configSvc.apiUrl + 'sets';
     return this.http.get<Array<LinkedSet>>(moduleEndpoint);
   }
   getXMLExportSet(setName: string): Observable<string> {
-    const moduleEndpoint = this.configSvc.apiUrl + 'export/' + setName;
+    const moduleEndpoint = this.configSvc.apiUrl + 'sets/export/' + setName;
     const headers = new HttpHeaders({ "Accept": "application/xml" });
     return this.http.get(moduleEndpoint, { headers: headers, responseType: "text" });
   }
   getJSONExportSet(setName: string): Observable<string> {
-    const moduleEndpoint = this.configSvc.apiUrl + 'export/' + setName;
+    const moduleEndpoint = this.configSvc.apiUrl + 'sets/export/' + setName;
     const headers = new HttpHeaders({ "Accept": "application/json" });
     const options = { headers: headers, responseType: 'text' as 'text' };
     return this.http.get(moduleEndpoint, options);
   }
   moduleUpload(module: string): Observable<any> {
-    const moduleEndpoint = this.configSvc.apiUrl + 'import';
+    const moduleEndpoint = this.configSvc.apiUrl + 'sets/import';
     let contentType = "application/json";
     if (module.startsWith("<")) {
       contentType = "application/xml";
