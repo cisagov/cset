@@ -31,6 +31,7 @@ import { AcetFiltersService, ACETFilter } from './acet-filters.service';
 
 
 
+
 const headers = {
   headers: new HttpHeaders()
     .set('Content-Type', 'application/json'),
@@ -198,8 +199,11 @@ export class QuestionsService {
    * Retrieves the extra detail content for the question.
    * @param questionId
    */
-  getDetails(questionId: number): any {
-    return this.http.post(this.configSvc.apiUrl + 'details?questionid=' + questionId, headers);
+  getDetails(questionId: number, IsComponent: boolean): any {
+    return this.http.post(this.configSvc.apiUrl
+      + 'details?questionid=' + questionId
+      + '&&IsComponent=' + IsComponent
+    , headers);
   }
 
   /**
@@ -485,10 +489,10 @@ export class QuestionsService {
   /**
    *
    */
-  getOverrideQuestions(questionId, componentType) {
+  getOverrideQuestions(questionId, Component_Symbol_Id) {
     let params = new HttpParams();
     params = params.append('question_id', questionId);
-    params = params.append('Component_Type', componentType);
+    params = params.append('Component_Symbol_Id', Component_Symbol_Id);
     return this.http.get(this.configSvc.apiUrl + 'GetOverrideQuestions', { params: params });
   }
 

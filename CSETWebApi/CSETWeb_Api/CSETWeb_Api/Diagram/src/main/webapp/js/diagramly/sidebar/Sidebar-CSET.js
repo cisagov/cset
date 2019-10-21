@@ -33,7 +33,7 @@
                             symbol.Width,
                             symbol.Height,
                             '',
-                            symbol.DisplayName,
+                            symbol.Symbol_Name,
                             null,
                             null,
                             sidebar.getTagsForSymbol(symbol))
@@ -95,7 +95,7 @@
      * @param {any} symbol
      */
     Sidebar.prototype.getTagsForSymbol = function (symbol) {
-        tag = symbol.Abbreviation + ' ' + symbol.LongName + ' ' + symbol.DisplayName + ' ' + (!!symbol.Tags ? symbol.Tags : '');
+        tag = symbol.Abbreviation + ' ' + symbol.Symbol_Name + ' ' + (!!symbol.Tags ? symbol.Tags : '');
         return tag;
     }
 })();

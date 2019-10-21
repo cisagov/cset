@@ -211,7 +211,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     l.Add(new ComponentQuestion {
                         Answer = q.Answer_Text,
                         ComponentName = q.ComponentName,
-                        ComponentType = q.Component_Type,
+                        Component_Symbol_Id = q.Component_Symbol_Id,
                         Question = q.QuestionText,
                         LayerName = q.LayerName,
                         SAL = q.SAL,
