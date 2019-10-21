@@ -104,6 +104,10 @@ a:not([href]).btn-link-dark:hover {
   pointer-events: none;
 }
 
+.no-underline{
+  text-decoration:none !important;
+}
+
 h2,
 h3,
 h4 {
