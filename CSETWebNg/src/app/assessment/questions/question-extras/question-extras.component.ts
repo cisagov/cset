@@ -78,12 +78,12 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
 
-  showOverrideDialog(componentType): void {
+  showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
       //maxHeight: window.screen.availHeight,
-      data: {componentType: componentType, myQuestion: this.myQuestion},
+      data: {ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id,  myQuestion: this.myQuestion},
     });
 
   }

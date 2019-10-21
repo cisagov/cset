@@ -20,8 +20,7 @@ namespace DataLayerCore.Model
         public Nullable<int> Question_Number { get; set; }
         public string QuestionText { get; set; }
         public string ComponentName { get; set; }
-        public int Component_Symbol_Id { get; set; }
-        public string Component_Type { get; set; }
+        public int Component_Symbol_Id { get; set; }        
         public bool Is_Component { get; set; }        
         public Guid Component_GUID { get; set; }
         public Nullable<int> Layer_Id { get; set; }
