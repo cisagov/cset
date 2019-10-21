@@ -1203,7 +1203,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.SetController.Import(BusinessLogic.Models.ExternalStandard)">
+        <member name="M:CSETWeb_Api.Controllers.SetsController.Import(BusinessLogic.Models.ExternalStandard)">
             <summary>
             Import new standards into CSET
             </summary>
