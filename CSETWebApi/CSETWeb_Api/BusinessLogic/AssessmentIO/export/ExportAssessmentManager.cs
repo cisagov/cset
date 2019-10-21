@@ -273,7 +273,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
 
                     model.CustomStandards.Add(setname);
 
-                    var files = extStandard.Requirements.SelectMany(s => s.References.Concat(new ExternalResource[] { s.Source })).Distinct();
+                    var files = extStandard.Requirements.SelectMany(s => s.References.Concat(new ExternalResource[] { s.Source })).OfType<ExternalResource>().Distinct();
                     foreach (var file in files)
                     {
                         var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.FileName && (s.Is_Uploaded ?? false));
