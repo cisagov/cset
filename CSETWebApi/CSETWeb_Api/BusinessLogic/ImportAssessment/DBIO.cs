@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AutoExportToJson
+namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 {
     /// <summary>
-    /// 
+    /// Database helper class.
     /// </summary>
     public class DBIO
     {
