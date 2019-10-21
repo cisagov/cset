@@ -47,7 +47,7 @@ namespace CSETWeb_Api.BusinessManagers
                                 )
                             select new { s, sc.Set_Category_Name };
 
-                var result = query.OrderBy(x => x.Set_Category_Name).ToList();
+                var result = query.OrderBy(x => x.Set_Category_Name).ThenBy(x=> x.s.Order_In_Category).ToList();
 
 
                 string currCategoryName = string.Empty;

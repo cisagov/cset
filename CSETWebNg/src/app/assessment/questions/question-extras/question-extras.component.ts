@@ -78,12 +78,12 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
 
-  showOverrideDialog(componentType): void {
+  showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
       //maxHeight: window.screen.availHeight,
-      data: {componentType: componentType, myQuestion: this.myQuestion},
+      data: {ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id,  myQuestion: this.myQuestion},
     });
 
   }
@@ -117,7 +117,8 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.QuestionId).subscribe(
+    this.questionsSvc.getDetails(this.myQuestion.QuestionId,
+        this.myQuestion.Is_Component).subscribe(
       (details) => {
         this.extras = details;
         // populate my details with the first "non-null" tab

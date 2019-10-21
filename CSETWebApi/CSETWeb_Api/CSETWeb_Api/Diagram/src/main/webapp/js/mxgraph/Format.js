@@ -2709,8 +2709,8 @@ populateComponentTypes = function (ctl, cell)
     }
     c.sort((a, b) =>
     {
-        if (a.LongName < b.LongName) return -1;
-        if (a.LongName > b.LongName) return 1;
+        if (a.Symbol_Name < b.Symbol_Name) return -1;
+        if (a.Symbol_Name > b.Symbol_Name) return 1;
         return 0;
     });
 
@@ -2719,7 +2719,7 @@ populateComponentTypes = function (ctl, cell)
         var option = document.createElement('option');
         ctl.appendChild(option);
         option.setAttribute('value', t.FileName);
-        mxUtils.write(option, t.LongName);
+        mxUtils.write(option, t.Symbol_Name);
 
         // set the existing value
         for (var o = 0; o < ctl.options.length; o++)
@@ -2757,6 +2757,7 @@ diagramElementProperties = function ()
                 type: 'input'
             }, {
                 fieldLabel: 'Asset Type',
+                attributeName: 'Symbol_Name',
                 comment: 'Defined in the style',
                 isComponentTypeField: true,
                 type: 'select'

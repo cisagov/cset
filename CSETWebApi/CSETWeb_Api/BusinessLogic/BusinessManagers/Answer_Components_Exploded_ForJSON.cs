@@ -16,8 +16,7 @@ namespace CSETWeb_Api.BusinessManagers
         public string Answer_Text { get; set; }
         public Nullable<int> Question_Number { get; set; }
         public string QuestionText { get; set; }
-        public string ComponentName { get; set; }
-        public string Component_Type { get; set; }
+        public string ComponentName { get; set; }        
         public bool Is_Component { get; set; }
         public string Component_GUID { get; set; }        
         public string ZoneName { get; set; }

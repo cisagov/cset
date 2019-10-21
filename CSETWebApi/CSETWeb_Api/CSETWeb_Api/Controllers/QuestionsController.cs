@@ -148,13 +148,13 @@ namespace CSETWeb_Api.Controllers
         /// <param name="QuestionId"></param>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId)
+        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId);
+            return qm.GetDetails(QuestionId, assessmentId,IsComponent);
 
         }
 
@@ -358,13 +358,13 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/GetOverrideQuestions")]
-        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromUri] int question_id, string Component_Type)
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromUri] int question_id, int Component_Symbol_Id)
         {
             int assessmentId = Auth.AssessmentForUser();
 
             QuestionsManager questionsManager = new QuestionsManager(assessmentId);
 
-            return questionsManager.GetOverrideQuestions(assessmentId, question_id, Component_Type);
+            return questionsManager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id);
         }
     }
 

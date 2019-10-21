@@ -382,6 +382,7 @@
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="ImportAssessment\BulkSqlUpload.cs" />
+    <Compile Include="ImportAssessment\ICSETJSONFileUpgrade.cs" />
     <Compile Include="ImportAssessment\DBIO.cs" />
     <Compile Include="ImportAssessment\export\ExportAssessment.cs" />
     <Compile Include="ImportAssessment\GenericImporter.cs" />
