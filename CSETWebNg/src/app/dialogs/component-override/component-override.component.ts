@@ -40,17 +40,18 @@ export class ComponentOverrideComponent {
   loading:boolean=true;
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
   public configSvc: ConfigService, public questionsSvc: QuestionsService,
-  @Inject(MAT_DIALOG_DATA) public data: any) { 
-    this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId, data.componentType.Type).subscribe((x:any) =>{
+  @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log(data);
+    this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId,
+      data.Component_Symbol_Id).subscribe((x:any) =>{
       this.questions = x;
       this.loading = false;
     });
   }
-  
-  storeAnswer(q: any, newAnswerValue: string) {	
 
+  storeAnswer(q: any, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it	
-    if (q.Answer === newAnswerValue) {	
+    if (q.Answer === newAnswerValue) {
       newAnswerValue = "U";
     }
 
