@@ -132,4 +132,8 @@ export class AssessmentComponent implements OnInit {
   openStateChange(e) {
     this.expandNav = e;
   }
+
+  checkText(s){
+    return s === "Please wait" || s === "Loading questions";
+  }
 }
