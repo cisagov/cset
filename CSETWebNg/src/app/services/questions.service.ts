@@ -28,6 +28,7 @@ import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, Su
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { AcetFiltersService, ACETFilter } from './acet-filters.service';
+import { isComponent } from '@angular/core/src/render3/util';
 
 
 
@@ -198,8 +199,11 @@ export class QuestionsService {
    * Retrieves the extra detail content for the question.
    * @param questionId
    */
-  getDetails(questionId: number): any {
-    return this.http.post(this.configSvc.apiUrl + 'details?questionid=' + questionId, headers);
+  getDetails(questionId: number, IsComponent: boolean): any {
+    return this.http.post(this.configSvc.apiUrl
+      + 'details?questionid=' + questionId
+      + '&&IsComponent=' + IsComponent
+    , headers);
   }
 
   /**
