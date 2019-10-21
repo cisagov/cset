@@ -31,7 +31,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId)
         {
-            using (CSET_Context web = new CSET_Context())
+            using (CSET_Context context = new CSET_Context())
             {
                 //* read from db and set as memory stream here.
                 using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -49,30 +49,30 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
                     foreach (var doc in model.CustomStandardDocs)
                     {
-                        var genFile = web.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
+                        var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
                         if (genFile == null)
                         {
                             StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = docModel.ToGenFile();
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                            genFile.File_Type_ = web.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                            genFile.File_Type_ = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
 
                             try
                             {
-                                web.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
-                                await web.SaveChangesAsync();
+                                context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
+                                await context.SaveChangesAsync();
                             }
                             catch
                             {
                             }
-                            web.GEN_FILE.Add(genFile);
-                            web.SaveChanges();
+                            context.GEN_FILE.Add(genFile);
+                            context.SaveChanges();
                         }
                     }
                     foreach (var standard in model.CustomStandards)
                     {
-                        var sets = web.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
+                        var sets = context.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
                         SETS set = null;
                         StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
                         var setJson = setReader.ReadToEnd();
@@ -103,15 +103,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             var setResult = await setModel.ToSet();
                             if (setResult.IsSuccess)
                             {
-                                web.SETS.Add(setResult.Result);
+                                context.SETS.Add(setResult.Result);
 
                                 foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
                                 {
-                                    web.Entry(question).State = EntityState.Unchanged;
+                                    context.Entry(question).State = EntityState.Unchanged;
                                 }
                                 try
                                 {
-                                    await web.SaveChangesAsync();
+                                    await context.SaveChangesAsync();
                                 }
                                 catch(Exception e)
                                 {
@@ -143,10 +143,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     }
 
-                    string email = web.USERS.Where(x => x.UserId == currentUserId).First().PrimaryEmail;
+                    string email = context.USERS.Where(x => x.UserId == currentUserId).First().PrimaryEmail;
 
                     Importer import = new Importer();
-                    Tuple<int, Dictionary<int, DOCUMENT_FILE>> t = import.RunImport(model, currentUserId, email, web);
+                    Tuple<int, Dictionary<int, DOCUMENT_FILE>> t = import.RunImportManualPortion(model, currentUserId, email, context);
+                    import.RunImportAutomatic(jsonObject, context);
                     Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = t.Item2;
                     foreach (jDOCUMENT_FILE d in model.jDOCUMENT_FILE)
                     {
@@ -157,7 +158,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             entry = zip.GetEntry(d.Path);
                         if(entry!=null)
                             SaveFileToDB(entry, docDB);
-                        web.SaveChanges();
+                        context.SaveChanges();
                     }
                 }
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -17,29 +18,40 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <summary>
         /// The list of versions for which incremental updates are supported.
         /// </summary>
-        private List<string> versionSequence = new List<string>() { "9.0", "9.0.1", "9.0.2" };
+        static Dictionary<string, ICSETJSONFileUpgrade> upgraders = new Dictionary<string, ICSETJSONFileUpgrade>();
+        
+        static ImportUpgradeManager()
+        {
+            upgraders.Add("9.0", new CSET90_to_901Upgrade());
+            upgraders.Add("9.0.1", new CSET901_to_92Upgrade());
+        }
+         
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public string Upgrade(string json)
         {
             JObject j = JObject.Parse(json);
 
+            
             // Determine the version of the data
             JToken versionToken = j.SelectToken("jCSET_VERSION[0].Version_Id");
             if (versionToken == null)
             {
-                return json;
+                throw new ApplicationException("Version could not be identifed corrupted assessment json");
             }
-
+            
             string version = versionToken.Value<string>();
 
-            while (VersionIsLatest(version))
+            while (!VersionIsLatest(version))
             {
-                return json;
+                ICSETJSONFileUpgrade fileUpgrade =  upgraders[version];
+                json = fileUpgrade.ExecuteUpgrade(json);
+                version = fileUpgrade.GetVersion();
             }
-           
-
-
             return json;
         }
 
