@@ -28,7 +28,7 @@ import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, Su
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { AcetFiltersService, ACETFilter } from './acet-filters.service';
-import { isComponent } from '@angular/core/src/render3/util';
+
 
 
 
