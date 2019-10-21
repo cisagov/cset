@@ -148,13 +148,13 @@ namespace CSETWeb_Api.Controllers
         /// <param name="QuestionId"></param>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId)
+        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId);
+            return qm.GetDetails(QuestionId, assessmentId,IsComponent);
 
         }
 
