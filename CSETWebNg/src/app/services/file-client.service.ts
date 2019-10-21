@@ -46,7 +46,7 @@ export class FileUploadClientService {
   constructor(private http: HttpClient, private configSvc: ConfigService,
     private authSvc: AuthenticationService) {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
-    this.exportUrl = this.configSvc.apiUrl + 'files/export';
+    this.exportUrl = this.configSvc.apiUrl + 'assessment/export';
     this.reportsUrl = this.configSvc.reportsUrl;
     this.Token = this.authSvc.userToken();
   }
