@@ -152,7 +152,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid)
+        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid, bool IsComponent)
         {
             using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
@@ -160,7 +160,7 @@ namespace CSETWeb_Api.BusinessManagers
                     new InformationTabBuilder(datacontext),
                     datacontext
                 );
-                qvm.getQuestionDetails(questionId, assessmentid);
+                qvm.getQuestionDetails(questionId, assessmentid, IsComponent);
                 return qvm;
             }
         }
