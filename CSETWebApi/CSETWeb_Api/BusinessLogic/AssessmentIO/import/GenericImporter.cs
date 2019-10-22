@@ -37,7 +37,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             schema = dbio.GetSchema();
 
             var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("CSETWeb_Api.BusinessLogic.ImportAssessment.ColumnImportRules.xml"))
+            using (Stream stream = assembly.GetManifestResourceStream("CSETWeb_Api.BusinessLogic.AssessmentIO.import.ColumnImportRules.xml"))
             using (StreamReader reader = new StreamReader(stream))
             {
                 string result = reader.ReadToEnd();
