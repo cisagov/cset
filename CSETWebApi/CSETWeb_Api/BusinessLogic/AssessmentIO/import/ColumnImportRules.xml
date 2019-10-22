@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tables>
+  <!-- 
+    The manual portion currently does ASSESSMENTS, ASSESSMENT_CONTACTS and USER_DETAIL_INFORMATION tables.
+  -->
+
+  <Table name="ANSWER" />
+  <Table name="STANDARD_SELECTION" />
+  <Table name="ASSESSMENT_SELECTED_LEVELS" />
+  <Table name="AVAILABLE_STANDARDS" />
+  <Table name="CNSS_CIA_JUSTIFICATIONS" />
+  
+  <!-- custom base standards? custom questionaires? custom questionaire questions?-->
+  
+  <Table name="DEMOGRAPHICS" />
+  
+  <Table name="DOCUMENT_FILE">
+    <Column name="CreatedTimestamp">
+      <Rule action="defaultDatetime" />
+    </Column>
+    <Column name="UpdatedTimestamp">
+      <Rule action="defaultDatetime" />
+    </Column>
+  </Table>
+  
+  <Table name="DOCUMENT_ANSWERS">
+    <Column name="Document_Id">
+      <Rule action="useMap">DOCUMENT_FILE</Rule>
+    </Column>
+    <Column name="Answer_Id">
+      <Rule action="useMap">ANSWER</Rule>
+    </Column>
+  </Table>
+  <Table name="FINDING"></Table>
+  <Table name="FINDING_CONTACT"></Table>
+  <Table name="FRAMEWORK_TIER_TYPE_ANSWER" />
+  <Table name="GENERAL_SAL" />
+  
+  <!-- <Table name="INFORMATION" />  this is created when the ASSESSMENTS record gets created   -->
+    
+  
+  <Table name="NIST_SAL_INFO_TYPES" />
+  <!--<Table name="NIST_SAL_QUESTION_ANSWERS" />-->
+
+  <Table name="PARAMETER_VALUES" />
+  <Table name="PARAMETER_ASSESSMENT" />
+
+  <Table name="SUB_CATEGORY_ANSWERS" />
+  
+  <Table name="NETWORK_WARNINGS" />
+  
+  <!-- NCUA tables -->
+  <Table name="ASSESSMENTS_REQUIRED_DOCUMENTATION" />
+  <Table name="FINANCIAL_ASSESSMENT_VALUES" />
+  <Table name="FINANCIAL_HOURS" />
+  <Table name="FINANCIAL_DOMAIN_FILTERS" />
+  <Table name="ASSESSMENT_IRP_HEADER" />
+  <Table name="ASSESSMENT_IRP" />
+  
+  
+  <Table name="REPORT_DETAIL_SECTION_SELECTION" />
+  <Table name="FiltersNormalized" />
+  <Table name="REPORT_OPTIONS_SELECTION" />
+  <Table name="RequirementsCustomFramework" />
+  <Table name="RequirementsSetsCustomFramework" />
+  <Table name="ASSESSMENT_DIAGRAM_COMPONENTS" />
+  <Table name="DIAGRAM_CONTAINER" />
+
+
+
+  
+</Tables>

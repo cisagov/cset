@@ -4272,7 +4272,6 @@
     <Content Include="Documents\ffiec_itbooklet_wholesalepaymentsystems.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="LOCAL-INSTALLATION" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />

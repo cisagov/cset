@@ -41,10 +41,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     string jsonObject = r.ReadToEnd();
 
 
+
+
                     // Apply any data updates to older versions
                     ImportUpgradeManager upgrader = new ImportUpgradeManager();
                     jsonObject = upgrader.Upgrade(jsonObject);
-
 
                     UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
                     foreach (var doc in model.CustomStandardDocs)
@@ -113,7 +114,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 {
                                     await context.SaveChangesAsync();
                                 }
-                                catch(Exception e)
+                                catch (Exception e)
                                 {
                                     throw (e);
                                 }
@@ -146,23 +147,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     string email = context.USERS.Where(x => x.UserId == currentUserId).First().PrimaryEmail;
 
                     Importer import = new Importer();
-                    Tuple<int, Dictionary<int, DOCUMENT_FILE>> t = import.RunImportManualPortion(model, currentUserId, email, context);
-                    import.RunImportAutomatic(jsonObject, context);
-                    Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = t.Item2;
-                    foreach (jDOCUMENT_FILE d in model.jDOCUMENT_FILE)
-                    {
-                        DOCUMENT_FILE docDB = oldIdToNewDocument[d.Document_Id];
-                        string newPath = Path.GetFileName(d.Path);// getPath(d.Path);                        
-                        ZipArchiveEntry entry = zip.GetEntry(newPath);
-                        if (entry == null)
-                            entry = zip.GetEntry(d.Path);
-                        if(entry!=null)
-                            SaveFileToDB(entry, docDB);
-                        context.SaveChanges();
-                    }
+                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
+                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);
                 }
             }
         }
+
 
         private void SaveFileToDB(ZipArchiveEntry entry, DOCUMENT_FILE doc)
         {
