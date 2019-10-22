@@ -177,6 +177,7 @@ namespace CSETWeb_Api.BusinessManagers
                             Answer = answer?.a.Answer_Text,
                             AltAnswerText = answer?.a.Alternate_Justification,
                             Comment = answer?.a.Comment,
+                            FeedBack = answer?.a.FeedBack,
                             MarkForReview = answer?.a.Mark_For_Review ?? false,
                             Reviewed = answer?.a.Reviewed ?? false,
                             MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
