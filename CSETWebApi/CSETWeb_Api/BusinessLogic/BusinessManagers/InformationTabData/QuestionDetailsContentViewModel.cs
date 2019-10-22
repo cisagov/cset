@@ -139,7 +139,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             this.IsNoQuestion = true;       
         }
         
-        internal List<QuestionInformationTabData> getQuestionDetails(int? questionId, int assessmentId)
+        internal List<QuestionInformationTabData> getQuestionDetails(int? questionId, int assessmentId, bool IsComponent)
         {
             if (questionId == null)
             {
@@ -155,15 +155,17 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             if (questionId != null)
             {
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
+                bool IsRequirement = IsComponent ? IsComponent : mode.IsRequirement;
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Is_Requirement == (mode.IsRequirement)  && a.Assessment_Id == assessmentId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId 
+                    && a.Is_Requirement == IsRequirement  && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
                 if (newAnswer == null)                    
                 {
                     newAnswer = new ANSWER()
                     {
-                        Is_Requirement = mode.IsRequirement,
+                        Is_Requirement = IsRequirement,
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
