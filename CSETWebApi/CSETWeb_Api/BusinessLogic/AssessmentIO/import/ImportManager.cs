@@ -113,7 +113,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 {
                                     await context.SaveChangesAsync();
                                 }
-                                catch(Exception e)
+                                catch (Exception e)
                                 {
                                     throw (e);
                                 }
@@ -146,21 +146,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     string email = context.USERS.Where(x => x.UserId == currentUserId).First().PrimaryEmail;
 
                     Importer import = new Importer();
-                    Tuple<int, Dictionary<int, DOCUMENT_FILE>> manualImportReturnValue = import.RunImportManualPortion(model, currentUserId, email, context);
-                    import.RunImportAutomatic(jsonObject, context);
-                    Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = manualImportReturnValue.Item2;
-                    foreach (jDOCUMENT_FILE d in model.jDOCUMENT_FILE)
-                    {
-                        DOCUMENT_FILE docDB = oldIdToNewDocument[d.Document_Id];
-                        string newPath = Path.GetFileName(d.Path);// getPath(d.Path);                        
-                        ZipArchiveEntry entry = zip.GetEntry(newPath);
-                        if (entry == null)
-                            entry = zip.GetEntry(d.Path);
-                        if(entry!=null)
-                            SaveFileToDB(entry, docDB);
-                        context.SaveChanges();
-                    }
-                    //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
+                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
+                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);
+		    //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
                     //IMPORT
                     ZipArchiveEntry importLegacyDiagram = zip.GetEntry("Diagram.csetd");
                     if (importLegacyDiagram != null)
@@ -173,6 +161,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
             }
         }
+
 
         private void SaveFileToDB(ZipArchiveEntry entry, DOCUMENT_FILE doc)
         {

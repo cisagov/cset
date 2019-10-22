@@ -34,7 +34,7 @@ namespace CSETWeb_Api.BusinessManagers.Tests
             };
             //TODO a setup and teardown that creates the assessment and then destroys it
             QuestionsManager manager = new QuestionsManager(26);
-            QuestionDetailsContentViewModel viewModel = manager.GetDetails(14, 26);
+            QuestionDetailsContentViewModel viewModel = manager.GetDetails(14, 26, false);
         }
 
         [TestMethod()]
