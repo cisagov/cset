@@ -35,7 +35,7 @@
 }
 </style>
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3 class="d-flex flex-column flex-00a">Submit Feedback to FAA and DHS</h3>
+    <h3 class="d-flex flex-column flex-00a">{{feedbackHeader}}</h3>
     <div class="flex-container">
       <p>
         Please ensure that the feedback you provide does not include any proprietary or assessment related 
@@ -43,7 +43,7 @@
         to the FAA PED module
       </p>
       <p>Copy text to clipboard and paste into an email</p>
-      <button (click)="copyText(divtoView)" value = 'click to copy' class='textAreaCopyBtn'>CopyText</button>
+      <button (click)="copyText(divtoView)" title='Copy Feedback Text To Clipboard' class='textAreaCopyBtn btn btn-primary'>CopyText</button>
     </div>
     <div *ngIf="!initialized" class="d-flex flex-11a w-100">
         <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
@@ -54,7 +54,6 @@
       <div #divtoView class="copytxt" [innerHTML]="feedbackText"></div>
     </div>
     <div class="mt-3 d-flex justify-content-between flex-00a">
-        <button class="btn btn-primary" (click)="navSvc2.navBack('overview')">Back</button>
-        <button class="btn btn-primary" (click)="navSvc2.navNext('overview')">Next</button>
+        <button class="btn btn-primary" (click)="navSvc2.navBack('feedback')">Back</button>
     </div>
 </div>    

@@ -3460,7 +3460,7 @@ mxPopupMenu.prototype.addItem = function (a, b, c, d, e, f, g) {
     null != b ? (e = document.createElement("img"), e.src = b, l.appendChild(e)) : null != e && (b = document.createElement("div"), b.className = e, l.appendChild(b));
     k.appendChild(l);
     this.labels && (l = document.createElement("td"),
-        l.className = "mxPopupMenuItem" + (null == f || f ? "" : " mxDisabled"), mxUtils.write(l, a), l.align = "left", k.appendChild(l), a = document.createElement("td"), a.className = "mxPopupMenuItem" + (null == f || f ? "" : " mxDisabled"), a.style.paddingRight = "6px", a.style.textAlign = "right", k.appendChild(a), null == d.div && this.createSubmenu(d));
+        l.className = "mxPopupMenuItem" + (null == f || f ? "" : " mxDisabled"), mxUtils.write(l, a), l.align = "left", k.appendChild(l), a = document.createElement("td"), a.className = "mxPopupMenuItem" + (null == f || f ? "" : " mxDisabled"), a.className += (a.className ? " " : "") + "mxPopupMenuItemContent", k.appendChild(a), null == d.div && this.createSubmenu(d));
     d.tbody.appendChild(k);
     if (0 != g && 0 != f) {
         var m = null;

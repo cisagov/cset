@@ -4352,6 +4352,7 @@
     <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\AngularConfigController.cs" />
     <Compile Include="Controllers\AssessmentController.cs" />
+    <Compile Include="Controllers\AssessmentExportController.cs" />
     <Compile Include="Controllers\AssessmentImportController.cs" />
     <Compile Include="Controllers\CommentData.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
@@ -4361,13 +4362,11 @@
     <Compile Include="Controllers\DiagnosticController.cs" />
     <Compile Include="Controllers\DiagramController.cs" />
     <Compile Include="Controllers\ExcelExportController.cs" />
-    <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\FileDownloadController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\FrameworkController.cs" />
     <Compile Include="Controllers\GuidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\IRP2Controller.cs" />
     <Compile Include="Controllers\MaturityController.cs" />
     <Compile Include="Controllers\ProtectedFeatureController.cs" />
@@ -4381,6 +4380,7 @@
     <Compile Include="Controllers\sal\GeneralSalController.cs" />
     <Compile Include="Controllers\SchemaController.cs" />
     <Compile Include="Controllers\ModuleBuilderController.cs" />
+    <Compile Include="Controllers\SetsController.cs" />
     <Compile Include="Controllers\StandardsController.cs" />
     <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
