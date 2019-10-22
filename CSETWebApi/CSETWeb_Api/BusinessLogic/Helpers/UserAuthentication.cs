@@ -4,26 +4,17 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security;
-using System.Linq;
-using System.Text;
-using System.Web;
+using CSETWeb_Api.BusinessLogic.AssessmentIO;
+using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
-using Microsoft.Win32;
-using CSETWeb_Api.BusinessManagers;
-using System.IO;
-using System.Security.Principal;
-using BusinessLogic.Helpers;
-using System.Reflection;
-using System.Diagnostics;
-using CSETWeb_Api.BusinessLogic.Version;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Security.Principal;
+using System.Web;
 
 namespace CSETWeb_Api.Helpers
 {
@@ -73,7 +64,7 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
                 ResetRequired = loginUser.PasswordResetRequired ?? true,
-                ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
+                ExportExtension = IOHelper.GetFileExtension(login.Scope)
             };
 
             return resp;
@@ -147,7 +138,7 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = "",
                 IsSuperUser = false,
                 ResetRequired = false,
-                ExportExtension = BusinessLogic.ImportAssessment.Export.ExportAssessment.GetFileExtension(login.Scope)
+                ExportExtension = IOHelper.GetFileExtension(login.Scope)
             };
 
 
