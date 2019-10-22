@@ -296,15 +296,6 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                 {
                     writer.Write(json);
                 }
-
-                foreach (var doc in context.DOCUMENT_FILE.Where(x => x.Assessment_Id == assessmentId && x.Data != null))
-                {
-                    var dest = archive.CreateEntry(doc.Path);
-                    using (var destStream = dest.Open())
-                    {
-                        destStream.Write(doc.Data, 0, doc.Data.Length);
-                    }
-                }
             }
 
             archiveStream.Seek(0, SeekOrigin.Begin);
