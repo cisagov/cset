@@ -20,45 +20,47 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-  <head>
-    <style>
-      .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
+-------------------------->
 
-.btn {
-  border: 2px solid gray;
-  color: gray;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-}
+<head>
+  <style>
+    .upload-btn-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
 
-.upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-}
+    .btn {
+      border: 2px solid gray;
+      color: gray;
+      background-color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-      </style>
-  </head>
-  <body>
+    .upload-btn-wrapper input[type=file] {
+      font-size: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
 
 
-<form id="uploadbanner" enctype="multipart/form-data" method="post"  enctype="multipart/form-data" action="http://localhost:46000/api/ImportLegacyAssessment">
-  <div class="upload-btn-wrapper">
-  <button class="btn">Upload a file</button>
-  <input id="fileupload" name="myfile" type="file" />
-</div>
-   <input type="submit" value="submit" id="submit" />
-</form>
+  <form id="uploadbanner" enctype="multipart/form-data" method="post" enctype="multipart/form-data"
+    action="http://localhost:46000/api/assessment/legacy/import">
+    <div class="upload-btn-wrapper">
+      <button class="btn">Upload a file</button>
+      <input id="fileupload" name="myfile" type="file" />
+    </div>
+    <input type="submit" value="submit" id="submit" />
+  </form>
 </body>
-</html>
 
+</html>
