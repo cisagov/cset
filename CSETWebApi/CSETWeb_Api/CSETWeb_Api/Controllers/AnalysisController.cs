@@ -55,11 +55,11 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/Feedback")]
-        public FullFeedbackText getFeedback()
+        public FeedbackDisplayContainer getFeedback()
         {
             int assessmentId = Auth.AssessmentForUser();
             RequirementsManager rm = new RequirementsManager(assessmentId);
-            FullFeedbackText FeedbackResult = new FullFeedbackText();
+            FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
 
             string AssessmentMode = GetAssessmentMode(assessmentId);
 
@@ -74,6 +74,9 @@ namespace CSETWeb_Api.Controllers
 
                     bool FaaMail = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
                     && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA")).FirstOrDefault() != null;
+                    FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
+                    if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
+
                     if (QuestionsWithFeedbackList.Count() > 0)
                     {
                         string FaaEmail = "FAAPEDModule@faa.gov";
@@ -96,9 +99,9 @@ namespace CSETWeb_Api.Controllers
                         return FeedbackResult;
                     } else
                     {
-                        FullFeedbackText NoFeedback = new FullFeedbackText();
-                        NoFeedback.FeedbackText = "No feedback given for this assessment";
-                        return NoFeedback;
+                        //FeedbackDisplayContainer NoFeedback = new FeedbackDisplayContainer();
+                        FeedbackResult.FeedbackText = "No feedback given for this assessment";
+                        return FeedbackResult;
                     }
                 }
             }

@@ -27,7 +27,7 @@ import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
 
 const headers = {
-  headers: new HttpHeaders() .set('Content-Type', 'application/json'),
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
@@ -36,13 +36,13 @@ const headers = {
 })
 export class ImportAssessmentService {
 
-  apiAssessmentImport = this.configSvc.apiUrl + 'files/zipImport';
-  apiLegacyAssessmentImport = this.configSvc.apiUrl + 'ImportLegacyAssessment';
+  apiAssessmentImport = this.configSvc.apiUrl + 'assessment/import';
+  apiLegacyAssessmentImport = this.configSvc.apiUrl + 'assessment/legacy/import';
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
 
-  public upload(files: Set<File>, isNormalLoad: boolean): {[key: string]: Observable<number>} {
+  public upload(files: Set<File>, isNormalLoad: boolean): { [key: string]: Observable<number> } {
 
     // this will be the our resulting map
     const status = {};
@@ -99,11 +99,11 @@ export class ImportAssessmentService {
    * Retrieves the list of frameworks.
    */
   postAssessmentImport(assessmentModel: any) {
-    return this.http.post(this.configSvc.apiUrl + 'ImportAssessment', assessmentModel, headers);
+    return this.http.post(this.configSvc.apiUrl + 'assessment/import', assessmentModel, headers);
   }
 
   legacyAssessmentImport(importFilepath: string) {
-    return this.http.post(this.configSvc.apiUrl + 'ImportLegacyAssessment', importFilepath, headers);
+    return this.http.post(this.configSvc.apiUrl + 'assessment/legacy/import', importFilepath, headers);
   }
 
 }
