@@ -6057,26 +6057,24 @@ var TagsWindow = function(editorUi, x, y, w, h)
 	div.appendChild(showBtn);
 	
 	var action = editorUi.actions.get('tags');
+    if (action) {
+        var btn = mxUtils.button(mxResources.get('close'), function () {
+            action.funct();
+        });
 
-	var btn = mxUtils.button(mxResources.get('close'), function()
-	{
-		action.funct();
-	});
-	
-	btn.setAttribute('title', mxResources.get('close') + ' (Enter/Esc)');
-	btn.style.marginTop = '8px';
-	btn.className = 'geBtn gePrimaryBtn';
-	
-	div.appendChild(btn);
-		
-	mxEvent.addListener(searchInput, 'keyup', function(evt)
-	{
-		// Ctrl or Cmd keys
-		if (evt.keyCode == 13 || evt.keyCode == 27)
-		{
-			action.funct();
-		}
-	});
+        btn.setAttribute('title', mxResources.get('close') + ' (Enter/Esc)');
+        btn.style.marginTop = '8px';
+        btn.className = 'geBtn gePrimaryBtn';
+
+        div.appendChild(btn);
+
+        mxEvent.addListener(searchInput, 'keyup', function (evt) {
+            // Ctrl or Cmd keys
+            if (evt.keyCode == 13 || evt.keyCode == 27) {
+                action.funct();
+            }
+        });
+    }
 
 	this.window = new mxWindow(mxResources.get('tags'), div, x, y, w, h, true, true);
 	this.window.destroyOnClose = false;
