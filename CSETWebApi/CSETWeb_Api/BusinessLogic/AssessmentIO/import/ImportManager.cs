@@ -148,7 +148,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     Importer import = new Importer();
                     int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
-		    //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
+		            //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
                     //IMPORT
                     ZipArchiveEntry importLegacyDiagram = zip.GetEntry("Diagram.csetd");
                     if (importLegacyDiagram != null)
@@ -156,7 +156,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
                         string oldXml = ldr.ReadToEnd();
                         DiagramManager dm = new DiagramManager(context);
-                        dm.ImportOldCSETDFile(oldXml, manualImportReturnValue.Item1);                        
+                        dm.ImportOldCSETDFile(oldXml, newAssessmentId);                        
                     }
                 }
             }
