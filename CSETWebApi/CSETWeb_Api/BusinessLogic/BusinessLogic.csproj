@@ -550,7 +550,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AssessmentIO\import\ColumnImportRules.xml" />
+    <EmbeddedResource Include="AssessmentIO\import\ColumnImportRules.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

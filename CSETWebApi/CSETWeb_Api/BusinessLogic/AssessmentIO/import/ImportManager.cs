@@ -8,6 +8,7 @@ using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
+using CSETWeb_Api.BusinessManagers;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -39,13 +40,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     ZipArchive zip = new ZipArchive(fs);
                     StreamReader r = new StreamReader(zip.GetEntry("model.json").Open());
                     string jsonObject = r.ReadToEnd();
-
-
-
-
+                 
                     // Apply any data updates to older versions
                     ImportUpgradeManager upgrader = new ImportUpgradeManager();
                     jsonObject = upgrader.Upgrade(jsonObject);
+
 
                     UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
                     foreach (var doc in model.CustomStandardDocs)
@@ -149,6 +148,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     Importer import = new Importer();
                     int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
+		            //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
+                    //IMPORT
+                    ZipArchiveEntry importLegacyDiagram = zip.GetEntry("Diagram.csetd");
+                    if (importLegacyDiagram != null)
+                    {
+                        StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
+                        string oldXml = ldr.ReadToEnd();
+                        DiagramManager dm = new DiagramManager(context);
+                        dm.ImportOldCSETDFile(oldXml, newAssessmentId);                        
+                    }
                 }
             }
         }
