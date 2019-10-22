@@ -37,13 +37,11 @@ namespace CSETWeb_Api.Controllers
                     filename = $"{assessmentName}{ext}";
 
                 var export = new AssessmentExportManager(context);
-                using (var stream = export.ArchiveStream(assessmentId))
-                {
-                    var result = Request.CreateResponse(HttpStatusCode.OK, new StreamContent(stream));
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                    result.Content.Headers.Add("content-disposition", $@"attachment; filename=""{filename}""");
-                    return Task.FromResult(result);
-                }
+                var result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(export.ArchiveStream(assessmentId));
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                result.Content.Headers.Add("content-disposition", $@"attachment; filename=""{filename}""");
+                return Task.FromResult(result);
             }
         }
     }

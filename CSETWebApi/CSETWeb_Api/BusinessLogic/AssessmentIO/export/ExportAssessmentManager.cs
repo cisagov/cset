@@ -234,9 +234,8 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                         .Include(s => s.NEW_REQUIREMENT)
                         .Include(s => s.Set_Category_)
                         .FirstOrDefault(s => s.Set_Name == standard.Set_Name && standard.Selected);
-                    var iscustom = set?.Is_Custom ?? false;
 
-                    if (!iscustom)
+                    if (set == null || !set.Is_Custom)
                         continue;
 
                     var extStandard = set.ToExternalStandard();
