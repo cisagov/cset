@@ -883,11 +883,6 @@
             Persists the selected tier value to the database.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.ImportController.Post(BusinessLogic.Models.ExternalStandard)">
-            <summary>
-            Import new standards into CSET
-            </summary>
-        </member>
         <member name="T:CSETWeb_Api.Controllers.IRP2Controller">
             <summary>
             why is it IRP2 and not just IRP?
@@ -1207,6 +1202,11 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.SetsController.Import(BusinessLogic.Models.ExternalStandard)">
+            <summary>
+            Import new standards into CSET
+            </summary>
         </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
