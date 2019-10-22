@@ -212,6 +212,7 @@ namespace CSETWeb_Api.BusinessManagers
                     resp.OverallIRP = acetDash.Override;
                 }
 
+                BuildComponentsResponse(resp);
                 return resp;
             }catch(Exception e)
             {

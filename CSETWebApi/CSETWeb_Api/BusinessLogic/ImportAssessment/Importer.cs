@@ -49,7 +49,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             //});
         }
 
-        public Tuple<int, Dictionary<int, DOCUMENT_FILE>> RunImport(UploadAssessmentModel model,
+        public Tuple<int, Dictionary<int, DOCUMENT_FILE>> RunImportManualPortion(UploadAssessmentModel model,
             int currentUserId, string primaryEmail
             , CSET_Context db)
         {
@@ -423,6 +423,17 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
             return new Tuple<int, Dictionary<int, DOCUMENT_FILE>>(_assessmentId, oldIdToNewDocument);
+        }
+
+        /// <summary>
+        /// Randy you need to fill this out it should process all the tables 
+        /// that can be automatically 
+        /// </summary>
+        /// <param name="jsonObject"></param>
+        /// <param name="context"></param>
+        internal void RunImportAutomatic(string jsonObject, CSET_Context context)
+        {
+            throw new NotImplementedException();
         }
     }
 }
