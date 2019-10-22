@@ -23,9 +23,13 @@
 ////////////////////////////////
 
 import { Component, OnInit} from '@angular/core';
-import { AnalysisService } from '../../../../services/analysis.service';
-import { ConfigService } from '../../../../services/config.service';
-import { Navigation2Service } from '../../../../services/navigation2.service';
+import { AnalysisService } from '../../../services/analysis.service';
+import { ConfigService } from '../../../services/config.service';
+import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
+import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { AssessmentService } from '../../../services/assessment.service';
+
 
 @Component({
     selector: 'app-feedback',
@@ -37,16 +41,28 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
 
   export class FeedbackComponent implements OnInit {
     feedbackText: string;
+    feedbackHeader: string;
     initialized = false;
     docUrl: string;
 
-    constructor(private analysisSvc: AnalysisService,
-        public navSvc2: Navigation2Service,
-        private configSvc: ConfigService) { }
+    constructor(
+      private assessSvc: AssessmentService,
+      private navSvc: NavigationService,
+      private router: Router,
+      private route: ActivatedRoute,
+      private analysisSvc: AnalysisService,
+      public navSvc2: Navigation2Service,
+      private configSvc: ConfigService
+      ) { }
 
         ngOnInit() {
+        this.assessSvc.currentTab = 'results';
         this.docUrl = this.configSvc.docUrl;
         this.analysisSvc.getFeedback().subscribe(x => this.setupTable(x));
+
+        this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+          this.router.navigate([value], { relativeTo: this.route.parent });
+        });
       }
 
       copyText(div: HTMLDivElement) {
@@ -64,6 +80,7 @@ import { Navigation2Service } from '../../../../services/navigation2.service';
       setupTable(data: any) {
         this.initialized = false;
         this.feedbackText = data.FeedbackText;
+        this.feedbackHeader = data.FeedbackHeader;
         this.initialized = true;
         }
 }
