@@ -46,6 +46,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
         }
 
+
         /// <summary>
         /// Executes a sql query.  Returns the identity, if any.
         /// </summary>
@@ -54,15 +55,18 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// <returns></returns>
         public int Execute(string sql, Dictionary<string, object> parms)
         {
-            int rows = 0;
+            int modified = -1;
 
             var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
+
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
+                cmd.CommandText += "; select SCOPE_IDENTITY();";
+
                 cmd.Transaction = conn.BeginTransaction();
 
                 try
@@ -79,7 +83,11 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         cmd.Parameters.Add(parm);
                     }
 
-                    rows = cmd.ExecuteNonQuery();
+                    object identityResponse = cmd.ExecuteScalar();
+                    if (identityResponse != DBNull.Value)
+                    {
+                        modified = Convert.ToInt32(identityResponse);
+                    }
 
                     cmd.Transaction.Commit();
 
@@ -94,7 +102,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 }
             }
 
-            return rows;
+            return modified;
         }
 
 

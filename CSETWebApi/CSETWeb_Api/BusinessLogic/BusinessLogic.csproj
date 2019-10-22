@@ -245,6 +245,8 @@
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
+    <Compile Include="ImportAssessment\CSET901_to_92Upgrade.cs" />
+    <Compile Include="ImportAssessment\CSET90_to_901Upgrade.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
@@ -278,8 +280,8 @@
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />
-    <Compile Include="BusinessManagers\ImportManager.cs" />
-    <Compile Include="BusinessManagers\ImportUpgradeManager.cs" />
+    <Compile Include="ImportAssessment\ImportManager.cs" />
+    <Compile Include="ImportAssessment\ImportUpgradeManager.cs" />
     <Compile Include="BusinessManagers\InformationTabData\BaseQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
@@ -546,6 +548,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ImportAssessment\ColumnImportRules.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

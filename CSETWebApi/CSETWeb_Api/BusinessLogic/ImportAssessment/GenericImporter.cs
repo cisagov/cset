@@ -21,15 +21,14 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         XmlDocument xColumnRules = new XmlDocument();
 
 
+        Dictionary<string, Dictionary<int, int>> mapIdentity = new Dictionary<string, Dictionary<int, int>>();
+
+
         /// <summary>
         /// 
         /// </summary>
-        public void Go(string json)
+        public void SaveFromJson(int assessmentId, string json)
         {
-            // string exportJson = File.ReadAllText(@"c:\users\woodrk\downloads\Assess 0417 A.export.json");
-            // exportJson = File.ReadAllText(@"c:\users\woodrk\downloads\with_findings.json");
-
-
             JObject oAssessment = JObject.Parse(json);
 
             dbio = new DBIO();
@@ -38,7 +37,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             schema = dbio.GetSchema();
 
             var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream("AutoExportToJson.ColumnImportRules.xml"))
+            using (Stream stream = assembly.GetManifestResourceStream("CSETWeb_Api.BusinessLogic.ImportAssessment.ColumnImportRules.xml"))
             using (StreamReader reader = new StreamReader(stream))
             {
                 string result = reader.ReadToEnd();
@@ -46,11 +45,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
 
 
-
-            // TEMP TEMP
-            int assessmentId = 1011;
-
-
+            // process the tables defined in the XML in order
             var tableList = xColumnRules.SelectNodes("//Table");
             foreach (var xTable in tableList)
             {
@@ -62,7 +57,22 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 {
                     foreach (var jObj in jObjs)
                     {
-                        CreateDbRow(assessmentId, jObj, tableName);
+                        var idMap = CreateDbRow(assessmentId, jObj, tableName);
+                        if (idMap.Item1 != -1 || idMap.Item2 != -1)
+                        {
+                            if (mapIdentity.ContainsKey(tableName))
+                            {
+                                mapIdentity[tableName].Add(idMap.Item1, idMap.Item2);
+                            }
+                            else
+                            {
+                                var d = new Dictionary<int, int>
+                            {
+                                { idMap.Item1, idMap.Item2 }
+                            };
+                                mapIdentity.Add(tableName, d);
+                            }
+                        }
                     }
                 }
             }
@@ -75,8 +85,11 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// <param name="assessmentId"></param>
         /// <param name="jObj"></param>
         /// <param name="tableName"></param>
-        private void CreateDbRow(int assessmentId, JToken jObj, string tableName)
+        private Tuple<int, int> CreateDbRow(int assessmentId, JToken jObj, string tableName)
         {
+            int oldIdentity = -1;
+            int newIdentity = -1;
+
             List<string> columnNamesForInsert = new List<string>();
             Dictionary<string, object> parms = new Dictionary<string, object>();
 
@@ -103,6 +116,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     if (identityColumns.ContainsKey(tableName)
                         && colName.Equals(identityColumns[tableName], StringComparison.InvariantCultureIgnoreCase))
                     {
+                        oldIdentity = Convert.ToInt32(prop.Value);
                         continue;
                     }
 
@@ -121,7 +135,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
                     // set assessment ID
                     if (colName.ToLower() == "assessment_id"
-                        || tableName.ToLower() == "information" && colName.ToLower() == "id")
+                        || colName.ToLower() == "assessement_id"
+                        || (tableName.ToLower() == "information" && colName.ToLower() == "id"))
                     {
                         prop.Value = assessmentId;
                     }
@@ -134,10 +149,18 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         continue;
                     }
 
+                    // default null dates
                     var ruleDefaultDate = xColumnRules.SelectSingleNode(string.Format("//Table[@name='{0}']/Column[@name='{1}']/Rule[@action='defaultDatetime']", tableName, colName));
                     if (prop.Value.Type == JTokenType.Null && ruleDefaultDate != null)
                     {
                         prop.Value = DateTime.Now;
+                    }
+
+                    // mapped ID
+                    var ruleMappedID = xColumnRules.SelectSingleNode(string.Format("//Table[@name='{0}']/Column[@name='{1}']/Rule[@action='useMap']", tableName, colName));
+                    if (ruleMappedID != null)
+                    {
+                        prop.Value = mapIdentity[ruleMappedID.InnerText][Convert.ToInt32(prop.Value)];
                     }
 
 
@@ -154,7 +177,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             String sqlCommandInsert = string.Format("INSERT INTO dbo.{0}({1}) VALUES ({2})", tableName, columns, values);
 
 
-            dbio.Execute(sqlCommandInsert, parms);
+            newIdentity = dbio.Execute(sqlCommandInsert, parms);
+            return new Tuple<int, int>(oldIdentity, newIdentity);
         }
     }
 }
