@@ -1224,6 +1224,12 @@
             Persists the current Standards selection in the database.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardsController.PersistDefaultSelectedStandards">
+            <summary>
+            Set default standard for basic assessment
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.StandardsController.GetFrameworkSelected">
             <summary>
             Persists the current Standards selection in the database.
