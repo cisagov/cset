@@ -73,19 +73,19 @@ namespace CSETWeb_Api.Helpers
             await manager.LaunchLegacyCSETProcess(csetFilePath, token, processPath, apiURL);
         }
 
-        public static async Task SaveAssessmentImportAsync(byte[] zipFileToDatabase, int currentUserId, PerformContext context)
-        {
-            var logger = new HangfireLogger(context);
-            ImportManager manager = new ImportManager();
-            try
-            {
-                await manager.ProcessCSETAssessmentImport(zipFileToDatabase, currentUserId);
-            }catch(Exception e)
-            {
-                logger.Log(e.Message);
-                logger.Log(e.StackTrace);
-            }
-        }
+        //public static async Task SaveAssessmentImportAsync(byte[] zipFileToDatabase, int currentUserId, PerformContext context)
+        //{
+        //    var logger = new HangfireLogger(context);
+        //    ImportManager manager = new ImportManager();
+        //    try
+        //    {
+        //        await manager.ProcessCSETAssessmentImport(zipFileToDatabase, currentUserId);
+        //    }catch(Exception e)
+        //    {
+        //        logger.Log(e.Message);
+        //        logger.Log(e.StackTrace);
+        //    }
+        //}
     }
 }
 
