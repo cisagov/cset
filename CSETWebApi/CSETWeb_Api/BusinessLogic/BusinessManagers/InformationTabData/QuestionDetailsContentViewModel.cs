@@ -155,7 +155,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             if (questionId != null)
             {
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
-                bool IsRequirement = IsComponent ? IsComponent : mode.IsRequirement;
+                bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
                 var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId 
                     && a.Is_Requirement == IsRequirement  && a.Assessment_Id == assessmentId).FirstOrDefault();
