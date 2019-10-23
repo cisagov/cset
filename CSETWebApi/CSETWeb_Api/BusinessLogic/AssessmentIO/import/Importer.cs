@@ -88,7 +88,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             // if the contact does exist update the id
             foreach (var a in model.jASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail != primaryEmail))
             {
-
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = _assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
@@ -439,8 +438,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// <param name="context"></param>
         internal void RunImportAutomatic(int assessmentId, string jsonObject, CSET_Context context)
         {
-            var genericImporter = new GenericImporter();
-            genericImporter.SaveFromJson(assessmentId, jsonObject);
+            var genericImporter = new GenericImporter(assessmentId);
+            genericImporter.SaveFromJson(jsonObject);
         }
     }
 }

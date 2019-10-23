@@ -4,6 +4,15 @@
     The manual portion currently does ASSESSMENTS, ASSESSMENT_CONTACTS and USER_DETAIL_INFORMATION tables.
   -->
 
+
+  <Table name="INFORMATION">
+    <Rule action="overlay" />
+    <Column name="Id" pk="true" />
+    <Column name="eMass_Document_Id">
+      <Rule action="ignore"></Rule>
+    </Column>
+  </Table>
+
   <Table name="ANSWER" />
   <Table name="STANDARD_SELECTION" />
   <Table name="ASSESSMENT_SELECTED_LEVELS" />
@@ -36,11 +45,13 @@
   <Table name="FRAMEWORK_TIER_TYPE_ANSWER" />
   <Table name="GENERAL_SAL" />
   
-  <!-- <Table name="INFORMATION" />  this is created when the ASSESSMENTS record gets created   -->
-    
   
   <Table name="NIST_SAL_INFO_TYPES" />
-  <!--<Table name="NIST_SAL_QUESTION_ANSWERS" />-->
+  <Table name="NIST_SAL_QUESTION_ANSWERS">
+    <Column name="Question_Answer">
+      <Rule action="convertNullTo">No</Rule>
+    </Column>
+  </Table>
 
   <Table name="PARAMETER_VALUES" />
   <Table name="PARAMETER_ASSESSMENT" />
