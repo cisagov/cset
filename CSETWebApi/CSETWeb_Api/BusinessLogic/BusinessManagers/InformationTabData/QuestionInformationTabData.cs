@@ -23,7 +23,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSET_Main.Questions.InformationTabData
 {
-    public class QuestionInformationTabData : TabObject
+    public class QuestionInformationTabData
     {
         public String RequirementFrameworkTitle { get; set; }
         public String RelatedFrameworkCategory { get; set; }
@@ -143,8 +143,7 @@ namespace CSET_Main.Questions.InformationTabData
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
             RequirementTabData tabData = new RequirementTabData();
-            string shortStandardName = set.Short_Name;
-            HeaderName = shortStandardName;
+            
             Question_or_Requirement_Id = infoData.QuestionID;
 
             this.LevelName = (from a in controlContext.NEW_QUESTION_SETS.Where(t => t.Question_Id == infoData.QuestionID && t.Set_Name == infoData.Set.Set_Name)
@@ -246,8 +245,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 set = controlContext.SETS.Where(x => x.Set_Name == requirementData.SetName).FirstOrDefault();
             }
-            String shortStandardName = set.Short_Name;
-            HeaderName = shortStandardName;
+            
             if (!IsComponent)
                 RequirementFrameworkTitle = requirement.Requirement_Title;
 
@@ -345,9 +343,8 @@ namespace CSET_Main.Questions.InformationTabData
                 RequirementFrameworkTitle = frameworkData.Title;
             RelatedFrameworkCategory = frameworkData.Category;
             ShowRequirementFrameworkTitle = true;
-            String shortStandardName = controlContext.SETS.Where(x => x.Set_Name == frameworkData.SetName).FirstOrDefault().Short_Name;
-            HeaderName = shortStandardName;
-
+            
+            
             if (String.IsNullOrWhiteSpace(References))
                 References = "None";
             Question_or_Requirement_Id = frameworkData.RequirementID;
