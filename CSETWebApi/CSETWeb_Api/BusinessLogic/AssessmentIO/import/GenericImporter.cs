@@ -153,7 +153,22 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     var ruleMappedID = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='useMap']", tableName, colName));
                     if (ruleMappedID != null)
                     {
-                        prop.Value = mapIdentity[ruleMappedID.InnerText][Convert.ToInt32(prop.Value)];
+                        var sourceTable = ruleMappedID.Attributes["sourcetable"]?.InnerText;
+
+                        if (prop.Value.Type != JTokenType.Null)
+                        {
+                            int oldValue = Convert.ToInt32(prop.Value);
+
+                            var d = mapIdentity[sourceTable];
+                            if (d.ContainsKey(oldValue))
+                            {
+                                prop.Value = d[oldValue];
+                            }
+                            else
+                            {
+                                // we didn't find the old key - do nothing
+                            }
+                        }
                     }
 
 
