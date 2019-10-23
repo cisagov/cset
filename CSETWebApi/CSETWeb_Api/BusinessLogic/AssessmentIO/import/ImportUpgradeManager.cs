@@ -22,7 +22,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         
         static ImportUpgradeManager()
         {
-            upgraders.Add("9.0", new CSET90_to_901Upgrade());
+            upgraders.Add("9", new CSET90_to_901Upgrade());
             upgraders.Add("9.0.1", new CSET901_to_92Upgrade());
         }
          
@@ -38,14 +38,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             
             // Determine the version of the data
-            JToken versionToken = j.SelectToken("jCSET_VERSION[0].Version_Id");
-            if (versionToken == null)
+            String version = (string) j.SelectToken("jCSET_VERSION[0].Version_Id");
+            if (version == null)
             {
                 throw new ApplicationException("Version could not be identifed corrupted assessment json");
             }
             
-            string version = versionToken.Value<string>();
-
             while (!VersionIsLatest(version))
             {
                 ICSETJSONFileUpgrade fileUpgrade =  upgraders[version];
