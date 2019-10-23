@@ -46,7 +46,7 @@
                         matTooltip="Import an assessment from an external CSET file. ({{ exportExtension }})">
                         <span class="mr-2 fs-base cset-icons-import"></span>
                         <label for="importFile" class="m-0">Import</label>
-                        <input type="file" class="display-none" id="importFile" multiple accept="{{ exportExtension }}"
+                        <input type="file" class="display-none" id="importFile" multiple accept="{{ exportExtension }},.cset"
                             (change)="importAssessmentFile($event)">
                     </label>
                     <label *ngIf="!authSvc.isLocal" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
@@ -62,7 +62,7 @@
                     <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
                     <div class="p-2 d-flex flex-column justify-content-center flex-01a">
                         <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                            imported for enterprise CSET installations.</span>
+                            imported for enterprise installations.</span>
                         <span class="fs-base-1"><a href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm"
                                 target="_blank" rel="noopener noreferrer">For more information, see the import section of the user
                                 guide</a></span>
@@ -88,7 +88,7 @@
                             <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
                             <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">Import an
                                 existing assessment</label>
-                            <input type="file" class="display-none" id="importFile" multiple accept="{{ exportExtension }}"
+                            <input type="file" class="display-none" id="importFile" multiple accept="{{ exportExtension }},.cset"
                                 (change)="importAssessmentFile($event)">
                         </label>
                         <label *ngIf="!authSvc.isLocal"
@@ -107,7 +107,7 @@
                     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
                     <div class="p-md-3 p-2 d-flex flex-column justify-content-center flex-01a">
                         <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                            imported for enterprise ACET installations.</span>
+                            imported for enterprise installations.</span>
                         <span class="fs-base-1 mt-2"><a
                                 href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank" rel="noopener noreferrer">For
                                 more information, see the import section of the user guide</a></span>
