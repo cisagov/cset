@@ -32,6 +32,17 @@ namespace CSETWeb_Api.Versioning
 
         }
 
+        public static bool IsCurrentVersion(String testVersion)
+        {
+            Version temp; 
+            if(Version.TryParse(testVersion, out temp))
+            {
+                return temp == VersionHandler.Version;
+            }
+            throw new ApplicationException("invalid verison string");            
+        }
+
+
         public static String CSETVersionStringStatic
         {
             get
