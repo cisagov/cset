@@ -555,6 +555,20 @@ namespace CSETWeb_Api.BusinessManagers
 
             return requirementText;
         }
+
+        public string RichTextParameters (int reqId, int ansId, string requirementText)
+        {
+            List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
+            foreach (ParameterToken t in tokens)
+            {
+                requirementText = requirementText.Replace(t.Token, t.Substitution);
+            }
+
+            requirementText = requirementText.Replace("\r\n", "%0D%0A").Replace("\r", "%0D%0A").Replace("\n", "%0D%0A");
+
+            return requirementText;
+
+        }
     }
 
 
