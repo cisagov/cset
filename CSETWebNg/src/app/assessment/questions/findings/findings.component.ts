@@ -116,8 +116,4 @@ export class FindingsComponent implements OnInit {
       this.finding.Finding_Contacts[element.value.split(':')[0]].Selected = element.selected;
     });
   }
-
-  navToContacts() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'info']);
-  }
 }
