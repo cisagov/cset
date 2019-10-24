@@ -20,6 +20,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return oAssessment.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public System.Version GetVersion()
         {
             return System.Version.Parse(versionString);
