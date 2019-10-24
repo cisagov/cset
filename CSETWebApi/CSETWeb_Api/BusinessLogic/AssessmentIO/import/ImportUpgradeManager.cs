@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
     /// Applies incremental upgrades to bring older exported 
     /// data up to date.
     /// </summary>
-    class ImportUpgradeManager
+    public class ImportUpgradeManager
     {
         /// <summary>
         /// The list of versions for which incremental updates are supported.
@@ -55,12 +55,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
             // Version class can't parse a version number with less than 2 parts
-            var versionString = versionToken.Value<string>();
-            if (int.Parse(versionString).ToString() == versionString)
-            {
-                versionString += ".0";
-            }
-            System.Version version = System.Version.Parse(versionString);
+            var versionString = versionToken.Value<string>();            
+            System.Version version = ConvertFromStringToVersion(versionString);
 
 
             while (version < latestVersion)
@@ -74,6 +70,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
             return json;
         }
+
+private System.Version ConvertFromStringToVersion(String v)
+        {
+            int version;
+            if (int.TryParse(v, out version))
+            {
+                return new System.Version(version, 0);
+            }
+            return new System.Version(v);
+        }
     }
 }
+
 

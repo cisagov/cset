@@ -11,12 +11,15 @@ using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Versioning;
 using DataLayerCore.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+
 
 namespace CSETWeb_Api.Controllers
 {
@@ -90,12 +93,16 @@ namespace CSETWeb_Api.Controllers
                     return file.LocalFileName;
                 });
 
-                var apiURL = Request.RequestUri.ToString().Replace("api/ImportLegacyAssessment", null);
+                var apiURL = Request.RequestUri.GetLeftPart(UriPartial.Authority).ToString();//.Replace("api/ImportLegacyAssessment", null);
                 if (LegacyImportProcessExists())
                 {
-                    var tm = new TokenManager();
-                    var manager = new ImportManager();
-                    await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, GetLegacyImportProcessPath(), apiURL);
+                    IEnumerable<string> stuff  = this.Request.Headers.GetValues("Authorization");
+                    foreach (String auth in stuff)
+                    {
+                        var tm = new TokenManager(auth);
+                        var manager = new ImportManager();
+                        await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, GetLegacyImportProcessPath(), apiURL);
+                    }
                 }
                 else
                 {
