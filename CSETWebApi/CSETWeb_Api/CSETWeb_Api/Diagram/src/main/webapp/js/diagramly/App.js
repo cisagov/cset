@@ -3088,7 +3088,7 @@ App.prototype.pickLibrary = function (mode) {
  */
 App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload, fn) {
     try {
-        mode = modemode || this.mode;
+        mode = mode || this.mode;
         noSpin = noSpin || false;
         noReload = noReload || false;
 

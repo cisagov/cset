@@ -9,8 +9,9 @@
         public string SetName { get; set; }
     }
 
-    public partial class FullFeedbackText
+    public partial class FeedbackDisplayContainer
     {
         public string FeedbackText { get; set; }
+        public string FeedbackHeader { get; set; }
     }
 }

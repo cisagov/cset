@@ -224,6 +224,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentIO\export\ExportAssessmentManager.cs" />
+    <Compile Include="AssessmentIO\import\BulkSqlUpload.cs" />
+    <Compile Include="AssessmentIO\import\CSET901_to_92Upgrade.cs" />
+    <Compile Include="AssessmentIO\import\CSET90_to_901Upgrade.cs" />
+    <Compile Include="AssessmentIO\import\DBIO.cs" />
+    <Compile Include="AssessmentIO\import\GenericImporter.cs" />
+    <Compile Include="AssessmentIO\import\ICSETJSONFileUpgrade.cs" />
+    <Compile Include="AssessmentIO\import\Importer.cs" />
+    <Compile Include="AssessmentIO\import\ImportManager.cs" />
+    <Compile Include="AssessmentIO\import\ImportUpgradeManager.cs" />
+    <Compile Include="AssessmentIO\IOHelper.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0.1\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0.1\UploadAssessmentModel.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0\UploadAssessmentModel.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\UploadAssessmentModel.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminSaveData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabManager.cs" />
@@ -245,8 +262,6 @@
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
-    <Compile Include="ImportAssessment\CSET901_to_92Upgrade.cs" />
-    <Compile Include="ImportAssessment\CSET90_to_901Upgrade.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
@@ -280,8 +295,6 @@
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />
-    <Compile Include="ImportAssessment\ImportManager.cs" />
-    <Compile Include="ImportAssessment\ImportUpgradeManager.cs" />
     <Compile Include="BusinessManagers\InformationTabData\BaseQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
@@ -383,14 +396,6 @@
     <Compile Include="Helpers\upload\UploadFormException.cs" />
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
-    <Compile Include="ImportAssessment\BulkSqlUpload.cs" />
-    <Compile Include="ImportAssessment\ICSETJSONFileUpgrade.cs" />
-    <Compile Include="ImportAssessment\export\ExportAssessment.cs" />
-    <Compile Include="ImportAssessment\Importer.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0.1\AllGeneralJsonModels.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0.1\UploadAssessmentModel.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0\AllGeneralJsonModels.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0\UploadAssessmentModel.cs" />
     <Compile Include="Models\ACETDashboard.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
@@ -546,6 +551,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="AssessmentIO\import\ColumnImportRules.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
