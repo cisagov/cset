@@ -75,8 +75,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         private System.Version ConvertFromStringToVersion(String v)
         {
-            int version;
-            if (int.TryParse(v, out version))
+            // The version string may come in from a float and not be interpreted correctly.  
+            // This attempts to turn "9.04" into "9.0.4"
+            string[] parts = v.Split(".".ToCharArray());
+            if (parts.Length > 1 && parts[1].StartsWith("0"))
+            {
+                parts[1] = "0." + parts[1].Substring(1);
+            }
+            v = String.Join(".", parts);
+            if (v.EndsWith("."))
+            {
+                v = v.TrimEnd('.');
+            }
+
+
+            if (int.TryParse(v, out int version))
             {
                 return new System.Version(version, 0);
             }
