@@ -8,10 +8,11 @@ namespace CSETWeb_Api.BusinessLogic.Version
 {
     public class VersionInjected
     {
-        public static String Version
+        public static String VersionString
         {
             get;
             set;
         }
+        public static System.Version Version { get; set; }
     }
 }
