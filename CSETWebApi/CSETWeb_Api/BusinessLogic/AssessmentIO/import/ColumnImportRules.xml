@@ -95,15 +95,5 @@
   <Table name="FINANCIAL_DOMAIN_FILTERS" />
   <Table name="ASSESSMENT_IRP_HEADER" />
   <Table name="ASSESSMENT_IRP" />
-  
-  
-  <Table name="REPORT_DETAIL_SECTION_SELECTION" />
-  <Table name="FiltersNormalized" />
-  <Table name="REPORT_OPTIONS_SELECTION" />
-  <Table name="RequirementsCustomFramework" />
-  <Table name="RequirementsSetsCustomFramework" />
-
-
-
-  
+    
 </Tables>
