@@ -1915,7 +1915,7 @@
                             this.hideDialog();
                             if (!cancel) {
                                 file.save();
-                            }                 
+                            }
                         });
                         const dlg = new NewDialog(this, { compact, showName: false, hideFromTemplateUrl: true });
                         this.showDialog(dlg.container, width, height, modal, canclose, onclose);
@@ -8661,6 +8661,13 @@
                         this.showDialog(dlg.container, 620, 440, true, false, mxUtils.bind(this, function (cancel) {
                             if (cancel) {
                                 this.actions.get('exit').funct();
+                            }
+
+                            if (cset) {
+                                const file = this.getCurrentFile();
+                                if (file) {
+                                    file.save();
+                                }
                             }
                         }));
                         dlg.init();
