@@ -72,37 +72,57 @@ namespace CSETWeb_Api.Controllers
                                                     a.mode == AssessmentMode && a.FeedBack != null
                                                     select a;
 
+                    if (QuestionsWithFeedbackList.Count() == 0)
+                    {
+                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";
+                        return FeedbackResult;
+                    }
+
+                    string FeedbackSalutations = "Dear PED Module Administrator:";
+                    string FeedbackDescription = "The following comments were provided for each of the questions: ";
+                    string FeedbackWarning = " *** Required *** Keep This Question ID ***";
+
                     bool FaaMail = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
                     && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA")).FirstOrDefault() != null;
                     FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                     if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 
-                    if (QuestionsWithFeedbackList.Count() > 0)
-                    {
-                        string FaaEmail = "FAAPEDModule@faa.gov";
-                        string DHSEmail = "cset@dhs.gov";
-                        FeedbackResult.FeedbackText = "Please email to: ";
-                        if (FaaMail) FeedbackResult.FeedbackText += FaaEmail + ";   ";
-                        FeedbackResult.FeedbackText += DHSEmail + "\n\n\n";
-                        FeedbackResult.FeedbackText += "Dear PED Module Administrator: \n\n";
-                        FeedbackResult.FeedbackText += "The following comments were provided for each of the questions: \n\n";
+                    string FaaEmail = "FAAPEDModule@faa.gov";
+                    string DHSEmail = "cset@dhs.gov";
+                    if (FaaMail) FeedbackResult.FeedbackEmailTo = FaaEmail + ";  ";
+                    FeedbackResult.FeedbackEmailTo += DHSEmail;
 
-                        foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
-                        {
-                            q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                            q.FeedBack = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
-                            FeedbackResult.FeedbackText += "Question #" + q.question_number + ". \n";
-                            FeedbackResult.FeedbackText += q.Question_Text + "\n\n";
-                            FeedbackResult.FeedbackText += "Users Feedback: \n" + q.FeedBack + "\n\n\n";
-                        }
+                    FeedbackResult.FeedbackBody = "Please email to: <br/><br/>";
+                    FeedbackResult.FeedbackBody += FeedbackResult.FeedbackEmailTo + "<br/><br/><br/>";
 
-                        return FeedbackResult;
-                    } else
+                    FeedbackResult.FeedbackBody += FeedbackSalutations + "<br/><br/>";
+                    FeedbackResult.FeedbackBody += FeedbackDescription + "<br/><br/>";
+
+                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
                     {
-                        //FeedbackDisplayContainer NoFeedback = new FeedbackDisplayContainer();
-                        FeedbackResult.FeedbackText = "No feedback given for this assessment";
-                        return FeedbackResult;
+                        q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
+                        q.FeedBack = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
+                        FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
+                        FeedbackResult.FeedbackBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". <br/>";
+                        FeedbackResult.FeedbackBody += q.Question_Text + "<br/><br/>";
+                        FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.FeedBack + "<br/><br/><br/><br/>";
                     }
+
+                    FeedbackResult.FeedbackEmailSubject = "CSET Questions Feedback";
+                    FeedbackResult.FeedbackEmailBody += FeedbackSalutations + "%0D%0A%0D%0A";
+                    FeedbackResult.FeedbackEmailBody += FeedbackDescription + "%0D%0A%0D%0A";
+
+                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    {
+                        q.Question_Text = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
+                        q.FeedBack = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
+                        FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". %0D%0A";
+                        FeedbackResult.FeedbackEmailBody += q.Question_Text + "%0D%0A%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.FeedBack + "%0D%0A%0D%0A%0D%0A";
+                    }
+
+                    return FeedbackResult;
                 }
             }
             catch (Exception e)
@@ -110,7 +130,6 @@ namespace CSETWeb_Api.Controllers
                 throw e;
             }
 
-            return FeedbackResult;
         }
 
 
