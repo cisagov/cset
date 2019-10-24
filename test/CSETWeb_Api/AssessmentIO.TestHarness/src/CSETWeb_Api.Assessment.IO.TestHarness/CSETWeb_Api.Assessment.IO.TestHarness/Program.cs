@@ -124,7 +124,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
             return ht;
         }
 
-        private static void ShowHelp()
+        static void ShowHelp()
         {
             Console.WriteLine("CSETWeb_Api.AssessmentIO.TestHarness");
             Console.WriteLine("For tesing export and import capabilities of CSETWeb_Api service.");
