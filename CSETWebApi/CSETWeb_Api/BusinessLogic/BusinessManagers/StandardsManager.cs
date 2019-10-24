@@ -154,23 +154,54 @@ namespace CSETWeb_Api.BusinessManagers
                 var result = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_STANDARDS.RemoveRange(result);
 
-
-                // If we were handed an empty list, get the default standards
-                if (selectedStandards.Count == 1 && selectedStandards[0] == "***DEFAULT***")
+                if (selectedStandards != null)
                 {
-                    selectedStandards = GetDefaultStandardsList();
-                }
 
-                foreach (string std in selectedStandards)
-                {
-                    db.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+
+                    foreach (string std in selectedStandards)
                     {
-                        Assessment_Id = assessmentId,
-                        Set_Name = std,
-                        Selected = true
-                    });
+                        db.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Set_Name = std,
+                            Selected = true
+                        });
+                    }
+
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+            }
+
+            AssessmentUtil.TouchAssessment(assessmentId);
+
+            // Return the numbers of active Questions and Requirements
+            QuestionRequirementCounts counts = new QuestionRequirementCounts();
+            counts.QuestionCount = new QuestionsManager(assessmentId).NumberOfQuestions();
+            counts.RequirementCount = new RequirementsManager(assessmentId).NumberOfRequirements();
+            return counts;
+        }
+
+        public QuestionRequirementCounts PersistDefaultSelectedStandard(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var selectedStandards = GetDefaultStandardsList();
+                if (selectedStandards.Any())
+                {
+
+
+                    foreach (string std in selectedStandards)
+                    {
+                        db.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Set_Name = std,
+                            Selected = true
+                        });
+                    }
+
+                    db.SaveChanges();
+                }
             }
 
             AssessmentUtil.TouchAssessment(assessmentId);

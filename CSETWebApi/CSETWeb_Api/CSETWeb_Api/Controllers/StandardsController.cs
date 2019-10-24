@@ -47,6 +47,18 @@ namespace CSETWeb_Api.Controllers
         }
 
         /// <summary>
+        /// Set default standard for basic assessment
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/basicStandard")]
+        public QuestionRequirementCounts PersistDefaultSelectedStandards()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            return new StandardsManager().PersistDefaultSelectedStandard(assessmentId);
+        }
+
+        /// <summary>
         /// Persists the current Standards selection in the database.
         /// </summary>
         [HttpGet]
