@@ -300,9 +300,86 @@ namespace CSETWeb_Api.BusinessManagers
                     .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName)
                     .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
                     .ToList();
-                AddResponse(resp, context, dlist, "Component Overrides");
+                AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
             }
         }
+
+        private void AddResponseComponentOverride(QuestionResponse resp, CSET_Context context, List<Answer_Components_Base> list, string listname)
+        {
+            List<QuestionGroup> groupList = new List<QuestionGroup>();
+            QuestionGroup qg = new QuestionGroup();
+            QuestionSubCategory sc = new QuestionSubCategory();
+            QuestionAnswer qa = new QuestionAnswer();
+
+            string symbolType = null;
+            string componentName = null;
+            string curGroupHeading = null;
+            string curSubHeading = null;
+            QuestionSubCategoryComparator comparator =  new QuestionSubCategoryComparator();
+
+            int displayNumber = 0;
+
+            //push a new group if component_type, component_name, or question_group_heading changes
+            
+            foreach (var dbQ in list)
+            {
+                if ((dbQ.Symbol_Name != symbolType)
+                    ||(dbQ.ComponentName != componentName))
+                {
+                    qg = new QuestionGroup()
+                    {
+                        GroupHeadingText = dbQ.Question_Group_Heading,
+                        StandardShortName = listname,
+                        Symbol_Name = dbQ.Symbol_Name,
+                        ComponentName = dbQ.ComponentName
+                    };
+                    groupList.Add(qg);
+                    symbolType = dbQ.Symbol_Name;
+                    componentName = dbQ.ComponentName;                   
+
+                    curGroupHeading = qg.GroupHeadingText;
+                    // start numbering again in new group
+                    displayNumber = 0;                    
+                }
+
+                // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
+                if ((dbQ.Universal_Sub_Category != curSubHeading))
+                {
+                    sc = new QuestionSubCategory()
+                    {
+                        SubCategoryHeadingText = dbQ.Universal_Sub_Category,
+                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
+                        SubCategoryAnswer = this.subCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                    };
+
+                    qg.SubCategories.Add(sc);
+                    curSubHeading = dbQ.Universal_Sub_Category;
+                }
+
+                qa = new QuestionAnswer()
+                {
+                    DisplayNumber = (++displayNumber).ToString(),
+                    QuestionId = dbQ.Question_Id,
+                    QuestionText = FormatLineBreaks(dbQ.Simple_Question),
+                    Answer = dbQ.Answer_Text,
+                    Answer_Id = dbQ.Answer_Id,
+                    AltAnswerText = dbQ.Alternate_Justification,
+                    Comment = dbQ.Comment,
+                    MarkForReview = dbQ.Mark_For_Review ?? false,
+                    Reviewed = dbQ.Reviewed ?? false,
+                    Is_Component = dbQ.Is_Component
+                };
+
+                sc.Questions.Add(qa);
+            }
+
+
+            resp.QuestionGroups.AddRange(groupList);
+            resp.QuestionCount += list.Count;
+            resp.DefaultComponentsCount = list.Count;
+        }
+
+        
 
         private void AddResponse(QuestionResponse resp, CSET_Context context, List<Answer_Components_Base> list, string listname)
         {
@@ -376,6 +453,21 @@ namespace CSETWeb_Api.BusinessManagers
         public static string FormatLineBreaks(string s)
         {
             return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
+        }
+    }
+
+    class QuestionSubCategoryComparator : IComparer<QuestionSubCategory>
+    {
+        public int Compare(QuestionSubCategory x, QuestionSubCategory y)
+        {
+            if (x.SubCategoryHeadingText == y.SubCategoryHeadingText)
+            {
+                return 0;
+            }
+
+            // CompareTo() method 
+            return x.SubCategoryHeadingText.CompareTo(y.SubCategoryHeadingText);
+
         }
     }
 }
