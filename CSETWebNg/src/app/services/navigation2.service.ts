@@ -51,7 +51,7 @@ export class Navigation2Service {
 
     { pageClass: 'overview', path: 'assessment/{:id}/results/overview' },
     { pageClass: 'reports', path: 'assessment/{:id}/results/reports' },
-    { pageClass: 'feedback', path: 'assessment/{:id}/results/analysis/feedback'}
+    { pageClass: 'feedback', path: 'assessment/{:id}/results/feedback' }
   ];
 
   /**

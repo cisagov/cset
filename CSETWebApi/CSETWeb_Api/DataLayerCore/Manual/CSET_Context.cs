@@ -167,8 +167,7 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
-
-
+      
         public virtual IList<usp_GetQuestionsWithFeedback> usp_GetQuestionsWithFeedbacks(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)

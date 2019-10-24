@@ -10000,6 +10000,8 @@
 	 */
     var editorUiUpdateActionStates = EditorUi.prototype.updateActionStates;
     EditorUi.prototype.updateActionStates = function () {
+        const CSET = true;
+
         editorUiUpdateActionStates.apply(this, arguments);
 
         const graph = this.editor.graph;
@@ -10022,7 +10024,9 @@
         this.actions.get('makeCopy').setEnabled(file && !file.isRestricted());
         this.actions.get('editDiagram').setEnabled(active && file && !file.isRestricted());
         this.actions.get('publishLink').setEnabled(file && !file.isRestricted());
-        this.actions.get('tags').setEnabled(this.diagramContainer.style.visibility != 'hidden');
+        if (!CSET) {
+            this.actions.get('tags').setEnabled(this.diagramContainer.style.visibility != 'hidden');
+        }
         this.actions.get('find').setEnabled(this.diagramContainer.style.visibility != 'hidden');
         this.actions.get('layers').setEnabled(this.diagramContainer.style.visibility != 'hidden');
         this.actions.get('outline').setEnabled(this.diagramContainer.style.visibility != 'hidden');
@@ -10035,7 +10039,6 @@
 
 
         // RKW - hide menu actions that CSET doesn't use
-        const CSET = true;
         if (!CSET) {
             this.actions.get('rename').visible = false;
             this.actions.get('makeCopy').visible = false;
