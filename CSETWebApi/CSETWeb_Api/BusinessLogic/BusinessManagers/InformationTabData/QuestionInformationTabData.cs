@@ -145,7 +145,6 @@ namespace CSET_Main.Questions.InformationTabData
             RequirementTabData tabData = new RequirementTabData();
             
             Question_or_Requirement_Id = infoData.QuestionID;
-
             this.LevelName = (from a in controlContext.NEW_QUESTION_SETS.Where(t => t.Question_Id == infoData.QuestionID && t.Set_Name == infoData.Set.Set_Name)
                               join l in controlContext.NEW_QUESTION_LEVELS on a.New_Question_Set_Id equals l.New_Question_Set_Id
                               join u in controlContext.UNIVERSAL_SAL_LEVEL on l.Universal_Sal_Level equals u.Universal_Sal_Level1
