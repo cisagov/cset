@@ -4,6 +4,10 @@
     The manual portion currently does ASSESSMENTS, ASSESSMENT_CONTACTS and USER_DETAIL_INFORMATION tables.
   -->
 
+  <Table name="ASSESSMENTS">
+    <Rule action="overlay" />
+    <Column name="Assessment_Id" pk="true" />
+  </Table>
 
   <Table name="INFORMATION">
     <Rule action="overlay" />
@@ -34,10 +38,10 @@
   
   <Table name="DOCUMENT_ANSWERS">
     <Column name="Document_Id">
-      <Rule action="useMap">DOCUMENT_FILE</Rule>
+      <Rule action="useMap" sourcetable="DOCUMENT_FILE" />
     </Column>
     <Column name="Answer_Id">
-      <Rule action="useMap">ANSWER</Rule>
+      <Rule action="useMap" sourcetable="ANSWER" />
     </Column>
   </Table>
   <Table name="FINDING"></Table>
@@ -57,6 +61,18 @@
   <Table name="PARAMETER_ASSESSMENT" />
 
   <Table name="SUB_CATEGORY_ANSWERS" />
+
+  
+  <Table name="DIAGRAM_CONTAINER" />
+  
+  <Table name="ASSESSMENT_DIAGRAM_COMPONENTS">
+    <Column name="Layer_Id">
+      <Rule action="useMap" sourcetable="DIAGRAM_CONTAINER" />
+    </Column>
+    <Column name="Zone_Id">
+      <Rule action="useMap" sourcetable="DIAGRAM_CONTAINER" />
+    </Column>
+  </Table>
   
   <Table name="NETWORK_WARNINGS" />
   
@@ -74,8 +90,6 @@
   <Table name="REPORT_OPTIONS_SELECTION" />
   <Table name="RequirementsCustomFramework" />
   <Table name="RequirementsSetsCustomFramework" />
-  <Table name="ASSESSMENT_DIAGRAM_COMPONENTS" />
-  <Table name="DIAGRAM_CONTAINER" />
 
 
 

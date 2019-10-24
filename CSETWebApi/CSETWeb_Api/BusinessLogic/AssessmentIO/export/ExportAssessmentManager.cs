@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -215,6 +215,16 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
             foreach (var item in context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jASSESSMENT_IRP.Add(TinyMapper.Map<jASSESSMENT_IRP>(item));
+            }
+
+            foreach (var item in context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jASSESSMENT_DIAGRAM_COMPONENTS.Add(TinyMapper.Map<jASSESSMENT_DIAGRAM_COMPONENTS>(item));
+            }
+
+            foreach (var item in context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jDIAGRAM_CONTAINER.Add(TinyMapper.Map<jDIAGRAM_CONTAINER>(item));
             }
 
             return model;

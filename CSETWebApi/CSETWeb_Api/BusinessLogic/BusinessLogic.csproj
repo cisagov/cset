@@ -239,6 +239,8 @@
     <Compile Include="AssessmentIO\models\Version_9.0.1\UploadAssessmentModel.cs" />
     <Compile Include="AssessmentIO\models\Version_9.0\AllGeneralJsonModels.cs" />
     <Compile Include="AssessmentIO\models\Version_9.0\UploadAssessmentModel.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\UploadAssessmentModel.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminSaveData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabManager.cs" />
