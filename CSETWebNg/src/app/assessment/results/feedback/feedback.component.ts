@@ -40,8 +40,11 @@ import { AssessmentService } from '../../../services/assessment.service';
   })
 
   export class FeedbackComponent implements OnInit {
-    feedbackText: string;
+    feedbackBody: string;
     feedbackHeader: string;
+    feedbackEmailTo: string;
+    feedbackEmailSubject: string;
+    feedbackEmailBody: string;
     initialized = false;
     docUrl: string;
 
@@ -77,10 +80,23 @@ import { AssessmentService } from '../../../services/assessment.service';
         }
       }
 
+      defaultClientEmail() {
+        const createEmail = document.createElement('a');
+        createEmail.setAttribute('href', 'mailto:' + this.feedbackEmailTo
+                + "?" + "subject=" + this.feedbackEmailSubject
+                + "&" + "body=" + this.feedbackEmailBody);
+        document.body.appendChild(createEmail);
+        //createEmail.style = "display: none";
+        createEmail.click();
+      }
+
       setupTable(data: any) {
         this.initialized = false;
-        this.feedbackText = data.FeedbackText;
+        this.feedbackBody = data.FeedbackBody;
         this.feedbackHeader = data.FeedbackHeader;
+        this.feedbackEmailTo = data.FeedbackEmailTo;
+        this.feedbackEmailSubject = data.FeedbackEmailSubject;
+        this.feedbackEmailBody = data.FeedbackEmailBody;
         this.initialized = true;
         }
 }
