@@ -150,6 +150,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AssessmentIO\import\ImportUpgradeManagerTests.cs" />
     <Compile Include="BusinessManagers\DiagramManagerTests.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisTests.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramManagerTests.cs" />
@@ -198,6 +199,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestItems\Rule7.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestItems\Sample90Json.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestItems\SampleDiagram.txt">
