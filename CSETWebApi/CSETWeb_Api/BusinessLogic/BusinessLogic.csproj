@@ -228,6 +228,8 @@
     <Compile Include="AssessmentIO\import\BulkSqlUpload.cs" />
     <Compile Include="AssessmentIO\import\CSET901_to_92Upgrade.cs" />
     <Compile Include="AssessmentIO\import\CSET90_to_901Upgrade.cs" />
+    <Compile Include="AssessmentIO\import\DBIO.cs" />
+    <Compile Include="AssessmentIO\import\GenericImporter.cs" />
     <Compile Include="AssessmentIO\import\ICSETJSONFileUpgrade.cs" />
     <Compile Include="AssessmentIO\import\Importer.cs" />
     <Compile Include="AssessmentIO\import\ImportManager.cs" />
@@ -237,6 +239,8 @@
     <Compile Include="AssessmentIO\models\Version_9.0.1\UploadAssessmentModel.cs" />
     <Compile Include="AssessmentIO\models\Version_9.0\AllGeneralJsonModels.cs" />
     <Compile Include="AssessmentIO\models\Version_9.0\UploadAssessmentModel.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\UploadAssessmentModel.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminSaveData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabManager.cs" />
@@ -309,7 +313,6 @@
     <Compile Include="BusinessManagers\InformationTabData\QuestionInformationTabData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\RelatedQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\RequirementInfoData.cs" />
-    <Compile Include="BusinessManagers\InformationTabData\TabObject.cs" />
     <Compile Include="BusinessManagers\NistSalManager.cs" />
     <Compile Include="BusinessManagers\NotificationManager.cs" />
     <Compile Include="BusinessManagers\QuestionRequirementManager.cs" />
@@ -547,6 +550,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="AssessmentIO\import\ColumnImportRules.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
