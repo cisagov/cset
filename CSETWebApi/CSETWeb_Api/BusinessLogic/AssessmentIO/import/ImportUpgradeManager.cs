@@ -52,11 +52,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 throw new ApplicationException("Version could not be identifed corrupted assessment json");
             }
-
-
-            // Version class can't parse a version number with less than 2 parts
-            var versionString = versionToken.Value<string>();            
-            System.Version version = ConvertFromStringToVersion(versionString);
+            System.Version version = ConvertFromStringToVersion(versionToken.Value<string>());
 
 
             while (version < latestVersion)
@@ -71,7 +67,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return json;
         }
 
-private System.Version ConvertFromStringToVersion(String v)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private System.Version ConvertFromStringToVersion(String v)
         {
             int version;
             if (int.TryParse(v, out version))
