@@ -313,7 +313,6 @@
     <Compile Include="BusinessManagers\InformationTabData\QuestionInformationTabData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\RelatedQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\RequirementInfoData.cs" />
-    <Compile Include="BusinessManagers\InformationTabData\TabObject.cs" />
     <Compile Include="BusinessManagers\NistSalManager.cs" />
     <Compile Include="BusinessManagers\NotificationManager.cs" />
     <Compile Include="BusinessManagers\QuestionRequirementManager.cs" />
