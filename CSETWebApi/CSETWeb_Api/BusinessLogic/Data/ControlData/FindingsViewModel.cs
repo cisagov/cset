@@ -113,31 +113,24 @@ namespace CSETWeb_Api.Data.ControlData
             {
                 var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == this.answer_id).FirstOrDefault();
 
-                return new Finding()
+                FINDING f = new FINDING()
                 {
-                    Answer_Id = this.answer_id,
-                    Question_Id = q != null ? q.Question_Or_Requirement_Id: 0,
-                    Finding_Id = finding_id
+                    Answer_Id = answer_id
                 };
 
-                //FINDING f = new FINDING()
-                //{
-                //    Answer_Id = answer_id
-                //};
-                
 
-                //assessmentContext.FINDING.Add(f);
-                //assessmentContext.SaveChanges();
-                //webF = TinyMapper.Map<Finding>(f);
-                //webF.Finding_Contacts = new List<FindingContact>();
-                //foreach (var contact in assessmentContext.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessment_id))
-                //{
-                //    FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
-                //    webContact.Finding_Id = f.Finding_Id;
-                //    webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
-                //    webContact.Selected = false;
-                //    webF.Finding_Contacts.Add(webContact);
-                //}
+                assessmentContext.FINDING.Add(f);
+                assessmentContext.SaveChanges();
+                webF = TinyMapper.Map<Finding>(f);
+                webF.Finding_Contacts = new List<FindingContact>();
+                foreach (var contact in assessmentContext.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessment_id))
+                {
+                    FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
+                    webContact.Finding_Id = f.Finding_Id;
+                    webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
+                    webContact.Selected = false;
+                    webF.Finding_Contacts.Add(webContact);
+                }
             }
 
             return webF;
