@@ -83,6 +83,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 parts[1] = "0." + parts[1].Substring(1);
             }
             v = String.Join(".", parts);
+            if (v.EndsWith("."))
+            {
+                v = v.TrimEnd('.');
+            }
 
 
             if (int.TryParse(v, out int version))
