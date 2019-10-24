@@ -216,7 +216,7 @@ export class QuestionsComponent implements AfterViewInit {
               label: q.GroupHeadingText,
               elementType: 'QUESTION-HEADING',
               value: {
-                target: this.formatID('Q' + q.GroupHeadingId + '.' + q.GroupHeadingText + '.' + q.StandardShortName),
+                target: q.NavigationGUID,
                 question: q.GroupHeadingId
               },
               children: []
@@ -288,7 +288,7 @@ export class QuestionsComponent implements AfterViewInit {
     const heading = {
       label: q.GroupHeadingText,
       value: {
-        target: this.formatID('Q' + q.GroupHeadingId + '.' + q.GroupHeadingText + '.' + q.StandardShortName),
+        target:  q.NavigationGUID,
         question: q.GroupHeadingId
       },
       elementType: 'QUESTION-HEADING',
@@ -334,23 +334,26 @@ export class QuestionsComponent implements AfterViewInit {
         value: '',
         children: []
       });
-      componentname = componenttype.children[standard.children.length - 1];
+      componentname = componenttype.children[componenttype.children.length - 1];
     }
     // get the header
     // get the componenttype
     // get the componentname
 
     // build the question group heading element
-    const heading = {
-      label: q.GroupHeadingText,
-      value: {
-        target: this.formatID('Q' + q.GroupHeadingId + '.' + q.GroupHeadingText + '.' + q.StandardShortName),
-        question: q.GroupHeadingId
-      },
-      elementType: 'QUESTION-HEADING',
-      children: []
-    };
-    componentname.children.push(heading);
+    q.SubCategories.forEach(sub => {
+      const heading = {
+        label: sub.SubCategoryHeadingText,//q.GroupHeadingText,
+        value: {
+          target: q.NavigationGUID,
+          question: q.GroupHeadingId
+        },
+        elementType: 'QUESTION-HEADING',
+        children: []
+      };
+      componentname.children.push(heading);
+    });
+    
   }
 
   visibleGroupCount() {

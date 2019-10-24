@@ -45,8 +45,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     ImportUpgradeManager upgrader = new ImportUpgradeManager();
                     jsonObject = upgrader.Upgrade(jsonObject);
 
-
-                    UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
+                    try
+                    {
+                        UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
+                   
                     foreach (var doc in model.CustomStandardDocs)
                     {
                         var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
@@ -158,6 +160,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         string oldXml = ldr.ReadToEnd();
                         DiagramManager dm = new DiagramManager(context);
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);                        
+                    }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
                     }
                 }
             }

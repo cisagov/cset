@@ -58,6 +58,7 @@ export interface QuestionGroup {
     DomainName: string;
     Symbol_Name: string;
     ComponentName: string;
+    NavigationGUID: string;
 }
 
 export interface SubCategory {
