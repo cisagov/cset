@@ -38,6 +38,7 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionGroup
     {
+        public Guid NavigationGUID;
         public int GroupHeadingId;
         public string GroupHeadingText;
         public string StandardShortName;
@@ -46,6 +47,10 @@ namespace CSETWeb_Api.Models
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
 
         public string Symbol_Name { get; internal set; }
+        public QuestionGroup()
+        {
+            this.NavigationGUID = Guid.NewGuid();
+        }
     }
 
     /// <summary>
