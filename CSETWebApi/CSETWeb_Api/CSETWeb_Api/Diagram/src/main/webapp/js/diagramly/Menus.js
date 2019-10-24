@@ -87,8 +87,19 @@
             const compact = editorUi.isOffline();
             const dlg = new NewDialog(editorUi, { compact, showName: !CSET, hideFromTemplateUrl: CSET });
             editorUi.showDialog(dlg.container, compact ? 350 : 620, compact ? 70 : 440, true, true, function (cancel) {
-                if (cancel && !editorUi.getCurrentFile()) {
-                    editorUi.showSplash();
+
+                if (!CSET) {
+                    if (cancel && !editorUi.getCurrentFile()) {
+                        editorUi.showSplash();
+                    }
+                } else {
+                    editorUi.hideDialog();
+                    if (!cancel) {
+                        const file = editorUi.getCurrentFile();
+                        if (file) {
+                            file.save();
+                        }
+                    }
                 }
             });
             dlg.init();
@@ -130,7 +141,17 @@
                 createButtonLabel: mxResources.get('insert')
             });
 
-            editorUi.showDialog(dlg.container, 620, 440, true, true);
+            editorUi.showDialog(dlg.container, 620, 440, true, true, function (cancel) {
+                if (CSET) {
+                    editorUi.hideDialog();
+                    if (!cancel) {
+                        const file = editorUi.getCurrentFile();
+                        if (file) {
+                            file.save();
+                        }
+                    }
+                }
+            });
         })).isEnabled = isGraphEnabled;
 		
 		editorUi.actions.put('exportXml', new Action(mxResources.get('formatXml') + '...', function()
