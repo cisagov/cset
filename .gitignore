@@ -30,3 +30,6 @@ bin
 /CSETWebApi/CSETWeb_Api/package-lock.json
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/LOCAL-INSTALLATION
 /CSETWebNg/.snyk
+obj/
+v15/
+DesignTimeBuild/
