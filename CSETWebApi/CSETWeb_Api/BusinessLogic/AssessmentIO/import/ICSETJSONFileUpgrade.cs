@@ -9,6 +9,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
     interface ICSETJSONFileUpgrade
     {
         string ExecuteUpgrade(string json);
-        string GetVersion();
+
+        System.Version GetVersion();        
     }
 }
