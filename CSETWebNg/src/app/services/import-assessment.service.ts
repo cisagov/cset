@@ -55,13 +55,17 @@ export class ImportAssessmentService {
       // create a http-post request and pass the form
       // tell it to report the upload progress
       let req = null;
+      const tmpheader = new HttpHeaders({'Authorization': sessionStorage.getItem('userToken')});
+      tmpheader.append('Authorization', sessionStorage.getItem('userToken'));
       if (isNormalLoad) {
         req = new HttpRequest('POST', this.apiAssessmentImport, formData,
-          { reportProgress: true }
+          { headers: tmpheader,
+            reportProgress: true }
         );
       } else {
         req = new HttpRequest('POST', this.apiLegacyAssessmentImport, formData,
-          { reportProgress: true }
+          { headers: tmpheader,
+            reportProgress: true },
         );
       }
 

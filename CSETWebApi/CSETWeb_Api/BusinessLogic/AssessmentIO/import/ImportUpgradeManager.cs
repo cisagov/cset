@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
+using CSETWeb_Api.BusinessLogic.Version;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -13,7 +14,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
     /// Applies incremental upgrades to bring older exported 
     /// data up to date.
     /// </summary>
-    class ImportUpgradeManager
+    public class ImportUpgradeManager
     {
         /// <summary>
         /// The list of versions for which incremental updates are supported.
@@ -38,30 +39,40 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             
             // Determine the version of the data
-            JToken versionToken = j.SelectToken("jCSET_VERSION[0].Version_Id");
-            if (versionToken == null)
+            String str_version = (string) j.SelectToken("jCSET_VERSION[0].Version_Id");
+            if (str_version == null)
             {
                 throw new ApplicationException("Version could not be identifed corrupted assessment json");
             }
-            
-            string version = versionToken.Value<string>();
-
+            System.Version version = ConvertFromIntToVersion(str_version);
+                
             while (!VersionIsLatest(version))
             {
-                ICSETJSONFileUpgrade fileUpgrade =  upgraders[version];
+                ICSETJSONFileUpgrade fileUpgrade =  upgraders[version.ToString()];
                 json = fileUpgrade.ExecuteUpgrade(json);
-                version = fileUpgrade.GetVersion();
+                str_version = fileUpgrade.GetVersion();
+                version = new System.Version(str_version);
             }
             return json;
+        }
+
+        private System.Version ConvertFromIntToVersion(String v)
+        {
+            int version;
+            if (int.TryParse(v, out version))
+            {
+                return new System.Version(version, 0);
+            }
+            return new System.Version(v);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        private bool VersionIsLatest(string v)
-        {
-            return true;
+        private bool VersionIsLatest(System.Version v)
+        {   
+            return VersionInjected.Version == v;
         }
 
 

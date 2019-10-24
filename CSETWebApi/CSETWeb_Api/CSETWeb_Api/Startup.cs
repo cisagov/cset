@@ -29,7 +29,8 @@ namespace CSETWeb_Api
             TransactionSecurity.GenerateSecret();
             GlobalConfiguration.Configuration.UseSqlServerStorage("HangfireConn").UseConsole();
             VersionHandler version = new VersionHandler();
-            VersionInjected.Version = version.CSETVersionString;
+            VersionInjected.VersionString = version.CSETVersionString;
+            VersionInjected.Version = VersionHandler.Version;
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
