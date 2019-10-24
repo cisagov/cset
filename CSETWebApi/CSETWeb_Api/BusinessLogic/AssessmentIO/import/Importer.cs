@@ -431,8 +431,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         }
 
         /// <summary>
-        /// Randy you need to fill this out it should process all the tables 
-        /// that can be automatically 
+        /// Processes tables automatically. 
         /// </summary>
         /// <param name="jsonObject"></param>
         /// <param name="context"></param>
