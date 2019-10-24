@@ -138,6 +138,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     }
 
 
+                    // if the assessment ID was exported as 0, don't try to import this record.  The record is likely not valid.
+                    if (colName.ToLower() == "assessment_id" && Convert.ToInt32(prop.Value) == 0)
+                    {
+                        return new Tuple<int, int>(-1, -1);
+                    }
+
+
                     // set assessment ID
                     if (colName.ToLower() == "assessment_id"
                         || colName.ToLower() == "assessement_id"

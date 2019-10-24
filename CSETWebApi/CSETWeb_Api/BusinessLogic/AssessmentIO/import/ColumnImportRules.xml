@@ -61,6 +61,7 @@
   
   
   <Table name="NIST_SAL_INFO_TYPES" />
+
   <Table name="NIST_SAL_QUESTION_ANSWERS">
     <Column name="Question_Answer">
       <Rule action="convertNullTo">No</Rule>
@@ -72,7 +73,7 @@
 
   <Table name="SUB_CATEGORY_ANSWERS" />
 
-  
+  <!-- Diagram tables -->
   <Table name="DIAGRAM_CONTAINER" />
   
   <Table name="ASSESSMENT_DIAGRAM_COMPONENTS">
