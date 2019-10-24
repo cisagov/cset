@@ -147,14 +147,18 @@ tr.mxPopupMenuItemHover {
 	cursor: pointer;
 }
 td.mxPopupMenuItem {
-	padding: 2px 30px 2px 10px;
-	white-space: nowrap;
-	font-family: Arial;
-	font-size: 8pt;
+    padding: 2px 30px 2px 10px;
+    white-space: nowrap;
+    font-family: Arial;
+    font-size: 8pt;
 }
-td.mxPopupMenuIcon {
-	background-color: #D0D0D0;
-	padding: 2px 4px 2px 4px;
+td.mxPopupMenuItemContent {
+    padding-right: 1em !important;
+    text-align: right;
+}
+td .mxPopupMenuIcon {
+    background-color: #D0D0D0;
+    padding: 2px 4px 2px 4px;
 }
 .mxDisabled {
 	opacity: 0.2 !important;

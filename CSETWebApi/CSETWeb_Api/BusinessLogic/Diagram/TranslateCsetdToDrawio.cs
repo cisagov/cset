@@ -117,7 +117,12 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xL.SetAttribute("id", GetID(""));
                 xL.SetAttribute("parent", "0");
                 xL.SetAttribute("value", ChildValue(layer, "c:layername"));
-                xL.SetAttribute("visible", bool.Parse(ChildValue(layer, "c:visible")) ? "1" : "0");
+                string visible = ChildValue(layer, "c:visible"); 
+                if(visible == null)
+                {
+                    visible = "true";
+                }
+                xL.SetAttribute("visible", bool.Parse(visible) ? "1" : "0");
                 // translating <defaultlayer> not supported in draw.io
             }
         }

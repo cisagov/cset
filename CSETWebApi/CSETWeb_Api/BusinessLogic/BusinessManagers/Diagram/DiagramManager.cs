@@ -19,6 +19,8 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers;
+using CSETWeb_Api.BusinessLogic.Diagram;
+using System.Data.SqlClient;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -227,6 +229,23 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
             return resp;
+        }
+
+        public string ImportOldCSETDFile(string diagramXml, int assessmentId)
+        {
+            var t = new TranslateCsetdToDrawio();
+            string newDiagramXml = t.Translate(diagramXml).OuterXml;
+            db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First().Diagram_Markup = null;
+            string sql =
+            "delete [dbo].ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
+            "delete [dbo].[DIAGRAM_CONTAINER] where assessment_id = @id;";
+            db.Database.ExecuteSqlCommand(sql,
+                new SqlParameter("@Id", assessmentId));
+            db.SaveChanges();
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(newDiagramXml);
+            SaveDiagram(assessmentId, xDoc, 0, String.Empty);
+            return newDiagramXml;
         }
 
 
