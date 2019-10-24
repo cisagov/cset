@@ -25,6 +25,8 @@ namespace CSETWeb_Api.Helpers
         /// The encoded string as passed in each request
         /// </summary>
         private string tokenString = null;
+        
+
         public String Token
         {
             get
@@ -40,6 +42,7 @@ namespace CSETWeb_Api.Helpers
 
         public TokenManager(String tokenString)
         {
+            this.tokenString = tokenString;
             Init(tokenString);
         }
 
@@ -82,7 +85,6 @@ namespace CSETWeb_Api.Helpers
                 Init(tokenString);
             }
         }
-
 
         /// <summary>
         /// This just wraps the static method of the same name in TransactionSecurity.
