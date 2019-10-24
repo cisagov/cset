@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -217,6 +217,16 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                 model.jASSESSMENT_IRP.Add(TinyMapper.Map<jASSESSMENT_IRP>(item));
             }
 
+            foreach (var item in context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jASSESSMENT_DIAGRAM_COMPONENTS.Add(TinyMapper.Map<jASSESSMENT_DIAGRAM_COMPONENTS>(item));
+            }
+
+            foreach (var item in context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jDIAGRAM_CONTAINER.Add(TinyMapper.Map<jDIAGRAM_CONTAINER>(item));
+            }
+
             return model;
         }
 
@@ -295,15 +305,6 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                 using (var writer = new StreamWriter(modelEntry.Open()))
                 {
                     writer.Write(json);
-                }
-
-                foreach (var doc in context.DOCUMENT_FILE.Where(x => x.Assessment_Id == assessmentId && x.Data != null))
-                {
-                    var dest = archive.CreateEntry(doc.Path);
-                    using (var destStream = dest.Open())
-                    {
-                        destStream.Write(doc.Data, 0, doc.Data.Length);
-                    }
                 }
             }
 

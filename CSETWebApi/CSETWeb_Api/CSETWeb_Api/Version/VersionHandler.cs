@@ -18,7 +18,7 @@ namespace CSETWeb_Api.Versioning
         public string Application_Accept_Path { get { return Constants.APPLICATION_NAME + " " + CSETVersionString; } }
 
         private static Version version;
-        private static Version Version
+        public static Version Version
         {
             get
             {

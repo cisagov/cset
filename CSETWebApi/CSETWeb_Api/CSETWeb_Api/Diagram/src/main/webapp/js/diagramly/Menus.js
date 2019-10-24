@@ -640,30 +640,26 @@
 		//{
 		//	editorUi.openLink('https://www.youtube.com/watch?v=Z0D96ZikMkc');
 		//});
-		
-		action = editorUi.actions.addAction('tags...', mxUtils.bind(this, function()
-		{
-			if (this.tagsWindow == null)
-			{
-				this.tagsWindow = new TagsWindow(editorUi, document.body.offsetWidth - 380, 230, 300, 120);
-				this.tagsWindow.window.addListener('show', function()
-				{
-					editorUi.fireEvent(new mxEventObject('tags'));
-				});
-				this.tagsWindow.window.addListener('hide', function()
-				{
-					editorUi.fireEvent(new mxEventObject('tags'));
-				});
-				this.tagsWindow.window.setVisible(true);
-				editorUi.fireEvent(new mxEventObject('tags'));
-			}
-			else
-			{
-				this.tagsWindow.window.setVisible(!this.tagsWindow.window.isVisible());
-			}
-		}));
-		action.setToggleAction(true);
-		action.setSelectedCallback(mxUtils.bind(this, function() { return this.tagsWindow != null && this.tagsWindow.window.isVisible(); }));
+
+        if (!CSET) {
+            action = editorUi.actions.addAction('tags...', mxUtils.bind(this, function () {
+                if (!this.tagsWindow) {
+                    this.tagsWindow = new TagsWindow(editorUi, document.body.offsetWidth - 380, 230, 300, 120);
+                    this.tagsWindow.window.addListener('show', function () {
+                        editorUi.fireEvent(new mxEventObject('tags'));
+                    });
+                    this.tagsWindow.window.addListener('hide', function () {
+                        editorUi.fireEvent(new mxEventObject('tags'));
+                    });
+                    this.tagsWindow.window.setVisible(true);
+                    editorUi.fireEvent(new mxEventObject('tags'));
+                } else {
+                    this.tagsWindow.window.setVisible(!this.tagsWindow.window.isVisible());
+                }
+            }));
+            action.setToggleAction(true);
+            action.setSelectedCallback(mxUtils.bind(this, function () { return this.tagsWindow != null && this.tagsWindow.window.isVisible(); }));
+        }
 		
 		action = editorUi.actions.addAction('find...', mxUtils.bind(this, function()
 		{
