@@ -7,6 +7,9 @@
   <Table name="ASSESSMENTS">
     <Rule action="overlay" />
     <Column name="Assessment_Id" pk="true" />
+    <Column name="AssessmentCreatorId">
+      <Rule action="ignore" />
+    </Column>
   </Table>
 
   <Table name="INFORMATION">
@@ -24,8 +27,15 @@
   <Table name="CNSS_CIA_JUSTIFICATIONS" />
   
   <!-- custom base standards? custom questionaires? custom questionaire questions?-->
-  
-  <Table name="DEMOGRAPHICS" />
+
+  <Table name="DEMOGRAPHICS">
+    <Column name="SectorId">
+      <Rule action="zeroToNull" />
+    </Column>
+    <Column name="IndustryId">
+      <Rule action="zeroToNull" />
+    </Column>
+  </Table>
   
   <Table name="DOCUMENT_FILE">
     <Column name="CreatedTimestamp">
@@ -51,6 +61,7 @@
   
   
   <Table name="NIST_SAL_INFO_TYPES" />
+
   <Table name="NIST_SAL_QUESTION_ANSWERS">
     <Column name="Question_Answer">
       <Rule action="convertNullTo">No</Rule>
@@ -62,7 +73,7 @@
 
   <Table name="SUB_CATEGORY_ANSWERS" />
 
-  
+  <!-- Diagram tables -->
   <Table name="DIAGRAM_CONTAINER" />
   
   <Table name="ASSESSMENT_DIAGRAM_COMPONENTS">
@@ -77,7 +88,8 @@
   <Table name="NETWORK_WARNINGS" />
   
   <!-- NCUA tables -->
-  <Table name="ASSESSMENTS_REQUIRED_DOCUMENTATION" />
+  <Table name="REQUIRED_DOCUMENTATION" />
+  <Table name="ASSESSMENTS_REQUIRED_DOCUMENTATION" />  
   <Table name="FINANCIAL_ASSESSMENT_VALUES" />
   <Table name="FINANCIAL_HOURS" />
   <Table name="FINANCIAL_DOMAIN_FILTERS" />
