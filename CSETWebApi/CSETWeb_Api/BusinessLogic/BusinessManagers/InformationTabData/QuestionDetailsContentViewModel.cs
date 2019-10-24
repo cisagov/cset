@@ -310,12 +310,12 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
                 //select component_type, ComponentName, SAL from Answer_Components_Exploded
                 //where Assessment_Id = 6 and question_id = 1586
-
+                ;
                 ComponentQuestionInfoData componentQuestionInfoData = new ComponentQuestionInfoData()
                 {
                     QuestionID = question.Question_or_Requirement_ID,
                     Question = question.Question,
-                    Set = question.DictionaryStandards.Values.FirstOrDefault(),                    
+                    Set = this.DataContext.SETS.Where(x => x.Set_Name == "Components").First(),                    
                     DictionaryComponentTypes = dictionaryComponentTypes,
                     DictionaryComponentInfo = symbolInfo
                 };                
