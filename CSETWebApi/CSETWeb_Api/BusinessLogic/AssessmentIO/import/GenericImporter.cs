@@ -30,6 +30,11 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
         /// <summary>
+        /// A list of any database errors that occurred.
+        /// </summary>
+        List<string> errors = new List<string>();
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="assessmentId"></param>
@@ -74,9 +79,16 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 {
                     foreach (var jObj in jObjs)
                     {
-                        var idMap = UpdateDatabaseRow(jObj, xTable as XmlElement);
+                        try
+                        {
+                            var idMap = UpdateDatabaseRow(jObj, xTable as XmlElement);
 
-                        AddKeyMapping(tableName, idMap);
+                            AddKeyMapping(tableName, idMap);
+                        }
+                        catch (Exception exc)
+                        {
+                            throw new Exception("CSET import data exception", exc);
+                        }
                     }
                 }
             }
@@ -148,6 +160,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         HandleNulls(xTable, tableName, colName, prop);
                     }
 
+                    // convert dummy '0' ID values to null 
+                    var ruleZeroToNull = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='zeroToNull']", tableName, colName));
+                    if (ruleZeroToNull != null && Convert.ToInt32(prop.Value) == 0)
+                    {
+                        prop.Value = null;
+                    }
+
 
                     // mapped ID
                     var ruleMappedID = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='useMap']", tableName, colName));
@@ -191,7 +210,14 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 sql = BuildInsertQuery(xTable, columnNames);
             }
 
-            newIdentity = dbio.Execute(sql, parms);
+            try
+            {
+                newIdentity = dbio.Execute(sql, parms);
+            }
+            catch (Exception exc)
+            {
+                errors.Add(exc.Message);
+            }
             return new Tuple<int, int>(oldIdentity, newIdentity);
         }
 
