@@ -203,7 +203,7 @@ export class StandardsComponent implements OnInit {
    * standards for a basic assessment.
    */
   doBasicAssessment() {
-    this.standardSvc.postSelections(["***DEFAULT***"]).subscribe(() => {
+    this.standardSvc.postDefaultSelection().subscribe(() => {
       this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
     });
   }

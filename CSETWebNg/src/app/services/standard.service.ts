@@ -62,6 +62,16 @@ export class StandardService {
     );
   }
 
+  /**
+   * Post default for basic standard
+   */
+  postDefaultSelection(){
+    return this.http.post(
+      this.configSvc.apiUrl +"basicStandard", 
+      headers
+    );
+  }
+
   getFramework() {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
   }

@@ -2,7 +2,7 @@
   <root>
     <mxCell id="0"/>
     <mxCell id="1" value="Main Layer" parent="0"/>
-    <object SAL="Low" label="Zone-Test" internalLabel="Zone-Test" zoneType="Other" zone="1" Criticality="Low" id="2">
+    <object SAL="Low" label="Zone-Test" internalLabel="Zone-Test" ZoneType="Other" zone="1" Criticality="Low" id="2">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1">
         <mxGeometry x="-1542" y="-1284" width="562" height="490" as="geometry"/>
       </mxCell>
@@ -72,7 +72,7 @@
         <mxGeometry x="246.9408" y="343.5447" width="60" height="60" as="geometry"/>
       </mxCell>
     </object>
-    <object SAL="Low" label="Zone-15" internalLabel="Zone-15" zoneType="Other" zone="1" Criticality="Low" id="3">
+    <object SAL="Low" label="Zone-15" internalLabel="Zone-15" ZoneType="Other" zone="1" Criticality="Low" id="3">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1">
         <mxGeometry x="-947" y="-1292" width="758" height="866" as="geometry"/>
       </mxCell>
@@ -315,7 +315,7 @@
     <mxCell id="106" value="new link" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="3" source="21" target="22" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <object SAL="Low" label="Zone-63" internalLabel="Zone-63" zoneType="Other" zone="1" Criticality="Low" id="4">
+    <object SAL="Low" label="Zone-63" internalLabel="Zone-63" ZoneType="Other" zone="1" Criticality="Low" id="4">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1">
         <mxGeometry x="-143" y="-1288" width="610" height="344" as="geometry"/>
       </mxCell>
@@ -370,7 +370,7 @@
         <mxGeometry x="425.3492" y="210.9501" width="60" height="60" as="geometry"/>
       </mxCell>
     </object>
-    <object SAL="Low" label="Zone-74" internalLabel="Zone-74" zoneType="Other" zone="1" Criticality="Low" id="5">
+    <object SAL="Low" label="Zone-74" internalLabel="Zone-74" ZoneType="Other" zone="1" Criticality="Low" id="5">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1">
         <mxGeometry x="489" y="-1284" width="629" height="544" as="geometry"/>
       </mxCell>
@@ -470,7 +470,7 @@
         <mxGeometry x="34.9093" y="428.7159" width="60" height="60" as="geometry"/>
       </mxCell>
     </object>
-    <object SAL="Low" label="Zone-94" internalLabel="Zone-94" zoneType="Other" zone="1" Criticality="Low" id="6">
+    <object SAL="Low" label="Zone-94" internalLabel="Zone-94" ZoneType="Other" zone="1" Criticality="Low" id="6">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1">
         <mxGeometry x="1158" y="-1280" width="790" height="199" as="geometry"/>
       </mxCell>

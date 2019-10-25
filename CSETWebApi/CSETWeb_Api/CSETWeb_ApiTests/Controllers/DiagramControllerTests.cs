@@ -16,15 +16,39 @@ namespace CSETWeb_Api.Controllers.Tests
     public class DiagramControllerTests
     {
         [TestMethod()]
+        public void CleanDiagramAnalysisTest()
+        {
+            DiagramController controller = new DiagramController();
+            DiagramRequest request = new DiagramRequest();
+            request.DiagramXml = File.ReadAllText("TestItems\\CleanDiagram.txt");
+            var test = controller.performAnalysis(request, 1);
+            Assert.AreEqual(test.Count, 0);
+            var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
+            Trace.Write(jstring);
+        }
+
+        [TestMethod()]
+        public void PerformAnalysisTestRule2()
+        {
+            DiagramController controller = new DiagramController();
+            DiagramRequest request = new DiagramRequest();
+            request.DiagramXml = File.ReadAllText("TestItems\\Rule2.txt");
+            var test = controller.performAnalysis(request, 1);
+            Assert.AreEqual(test.Count, 1);
+            var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
+            Trace.Write(jstring);
+        }
+
+        [TestMethod()]
         public void PerformAnalysisTestRule1()
         {
             DiagramController controller = new DiagramController();
             DiagramRequest request = new DiagramRequest();
             request.DiagramXml = File.ReadAllText("TestItems\\SampleDiagram.txt");
-            var test = controller.performAnalysis(request, 2);
-            Assert.AreEqual(test.Count,2);
+            var test = controller.performAnalysis(request, 1);            
             var jstring =  Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);
+            Assert.AreEqual(test.Count, 3);
         }
 
         [TestMethod()]
@@ -43,7 +67,7 @@ namespace CSETWeb_Api.Controllers.Tests
             foreach (string path in testDiagrams)
             {
                 request.DiagramXml = File.ReadAllText(path);
-                var test = controller.performAnalysis(request, 2);
+                var test = controller.performAnalysis(request, 1);
                 Assert.IsTrue(test.Count > 0,path);
                 var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
                 Trace.Write(jstring);
@@ -51,12 +75,25 @@ namespace CSETWeb_Api.Controllers.Tests
         }
 
         [TestMethod()]
+        public void PerformAnalysisTestRule5()
+        {
+            DiagramController controller = new DiagramController();
+            DiagramRequest request = new DiagramRequest();
+            request.DiagramXml = File.ReadAllText("TestItems\\Rule5.txt");
+            var test = controller.performAnalysis(request, 1);
+            Assert.AreEqual(test.Count, 3);
+            var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
+            Trace.Write(jstring);
+        }
+
+
+        [TestMethod()]
         public void PerformAnalysisTestRule7()
         {
             DiagramController controller = new DiagramController();
             DiagramRequest request = new DiagramRequest();
             request.DiagramXml = File.ReadAllText("TestItems\\Rule7.txt");
-            var test = controller.performAnalysis(request, 2);
+            var test = controller.performAnalysis(request, 1);
             Assert.AreEqual(test.Count, 1);
             var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);
@@ -68,8 +105,8 @@ namespace CSETWeb_Api.Controllers.Tests
             DiagramController controller = new DiagramController();
             DiagramRequest request = new DiagramRequest();
             request.DiagramXml = File.ReadAllText("TestItems\\Rule4.xml");
-            var test = controller.performAnalysis(request, 2);
-            Assert.IsTrue(test.Count>=1, "Rule 4");
+            var test = controller.performAnalysis(request, 1);
+            Assert.IsTrue(test.Count==7, "Rule 4");
             var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);
         }
@@ -81,7 +118,7 @@ namespace CSETWeb_Api.Controllers.Tests
             DiagramController controller = new DiagramController();
             DiagramRequest request = new DiagramRequest();
             request.DiagramXml = File.ReadAllText("TestItems\\Rule6.xml");
-            var test = controller.performAnalysis(request, 2);
+            var test = controller.performAnalysis(request, 1);
             Assert.IsTrue(test.Count >= 1, "Rule 6");
             var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);

@@ -12,7 +12,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
     class Rule7 : AbstractRule, IRuleEvaluate
     {
         private String rule7 = "Data flow between two distinct SAL zones via a unidirectional {0} must only flow from a higher SAL to a lower SAL." +
-            " Example Control or SCADA network SAL High to Corporate Network SAL Low, but not SAL Low to SAL High.";
+            " Example Control or SCADA network SAL High to Corporate Network SAL Low, but not SAL Low to SAL High." +
+            " Unless the component is in a classified zone then information can flow in but not out";
 
         private static Dictionary<string, UNIVERSAL_SAL_LEVEL> sals = null;
         private SimplifiedNetwork simplifiedNetwork;
