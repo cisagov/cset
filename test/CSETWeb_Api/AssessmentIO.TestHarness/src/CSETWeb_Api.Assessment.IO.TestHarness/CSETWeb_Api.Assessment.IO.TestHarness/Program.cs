@@ -91,7 +91,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
             };
 
             var arguments = (args ?? new string[] { })
-                .Select(x => Regex.Replace(x.ToLower(), "[-:]+", string.Empty))
+                .Select(x => Regex.Replace(x.ToLower(), "[-]+", string.Empty))
                 .Where(x => !string.IsNullOrEmpty(x))
                 .ToArray();
             for (var i = 0; i < arguments.Length; i++)
