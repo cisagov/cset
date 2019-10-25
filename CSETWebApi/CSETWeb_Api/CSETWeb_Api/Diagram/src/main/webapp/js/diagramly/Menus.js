@@ -55,9 +55,6 @@
 
 	var menusInit = Menus.prototype.init;
     Menus.prototype.init = function () {
-        // CSET will not display certain menu items.
-        const CSET = true;
-
         menusInit.apply(this, arguments);
         const editorUi = this.editorUi;
         const graph = editorUi.editor.graph;
@@ -85,10 +82,10 @@
 		
         editorUi.actions.addAction('new...', function () {
             const compact = editorUi.isOffline();
-            const dlg = new NewDialog(editorUi, { compact, showName: !CSET, hideFromTemplateUrl: CSET });
+            const dlg = new NewDialog(editorUi, { compact, showName: !App.CSET, hideFromTemplateUrl: App.CSET });
             editorUi.showDialog(dlg.container, compact ? 350 : 620, compact ? 70 : 440, true, true, function (cancel) {
 
-                if (!CSET) {
+                if (!App.CSET) {
                     if (cancel && !editorUi.getCurrentFile()) {
                         editorUi.showSplash();
                     }
@@ -105,7 +102,7 @@
             dlg.init();
         });
 
-        if (CSET) {
+        if (App.CSET) {
             editorUi.actions.get('new').label = mxResources.get('fromTemplate');
         }
 
@@ -126,7 +123,7 @@
         editorUi.actions.put('insertTemplate', new Action(mxResources.get('template') + '...', function () {
             var dlg = new NewDialog(editorUi, {
                 showName: false,
-                hideFromTemplateUrl: CSET,
+                hideFromTemplateUrl: App.CSET,
                 callback: function (xml) {
                     editorUi.hideDialog();
                     if (xml) {
@@ -142,7 +139,7 @@
             });
 
             editorUi.showDialog(dlg.container, 620, 440, true, true, function (cancel) {
-                if (CSET) {
+                if (App.CSET) {
                     editorUi.hideDialog();
                     if (!cancel) {
                         const file = editorUi.getCurrentFile();
@@ -367,7 +364,7 @@
 			editorUi.actions.get('save').funct();
 		}, null, null, Editor.ctrlKey + '+S');
 
-        if (!CSET) {
+        if (!App.CSET) {
             var action = editorUi.actions.addAction('synchronize', function () {
                 editorUi.synchronizeCurrentFile(DrawioFile.SYNC === 'none');
             }, null, null, 'Alt+Shift+S');
@@ -662,7 +659,7 @@
 		//	editorUi.openLink('https://www.youtube.com/watch?v=Z0D96ZikMkc');
 		//});
 
-        if (!CSET) {
+        if (!App.CSET) {
             action = editorUi.actions.addAction('tags...', mxUtils.bind(this, function () {
                 if (!this.tagsWindow) {
                     this.tagsWindow = new TagsWindow(editorUi, document.body.offsetWidth - 380, 230, 300, 120);
@@ -1753,7 +1750,7 @@
 			});
 		}
 
-        if (CSET) {
+        if (App.CSET) {
             this.put('exportAs', new Menu(mxUtils.bind(this, function (menu, parent) {
                 if (editorUi.isExportToCanvas()) {
                     this.addMenuItems(menu, ['exportPng'], parent);
@@ -2413,7 +2410,7 @@
         })));
         
 
-        if (CSET) {
+        if (App.CSET) {
             this.put('openRecent', new Menu(function (menu, parent) {
                 var recent = editorUi.getRecent();
 
@@ -2976,7 +2973,7 @@
 
                     this.addMenuItems(menu, ['save', '-', 'share'], parent);
 
-                    if (!CSET) {
+                    if (!App.CSET) {
                         var item = this.addMenuItem(menu, 'synchronize', parent);
                         if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) {
                             this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
@@ -2997,7 +2994,7 @@
                     this.addMenuItems(menu, ['new', '-', 'rename', 'makeCopy', 'moveToFolder'], parent);
                 } else {
                     if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && file && file.constructor !== LocalFile) {
-                        if (!CSET) {
+                        if (!App.CSET) {
                             menu.addSeparator(parent);
                             var item = this.addMenuItem(menu, 'synchronize', parent);
 
