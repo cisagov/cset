@@ -32,29 +32,27 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         private void CheckRule5(NetworkComponent component)
         {
-            if (component.IsPartnerVendorOrWeb)//Is it Firewall,Vendor,Partner
+            HashSet<String> VisitedNodes = new HashSet<string>();
+            VisitedNodes.Add(component.ID);
+            List<NetworkComponent> list = GetNodeEdges(component, new HashSet<int>() { Constants.FIREWALL });
+            foreach (NetworkComponent info in list)
             {
-                HashSet<String> VisitedNodes = new HashSet<string>();
-                VisitedNodes.Add(component.ID);
-                List<NetworkComponent> list = GetNodeEdges(component, new HashSet<int>() { Constants.FIREWALL });
-                foreach (NetworkComponent info in list)
+                String componentName = "unnamed";
+                if (!String.IsNullOrWhiteSpace(component.ComponentName))
                 {
-                    String componentName = "unnamed";
-                    if (!String.IsNullOrWhiteSpace(component.ComponentName))
-                    {
-                        componentName = component.ComponentName;
-                    }
-
-                    String endComponentName = "unnamed";
-                    if (!String.IsNullOrWhiteSpace(info.ComponentName))
-                    {
-                        endComponentName = info.ComponentName;
-                    }
-
-                    String text = String.Format(rule5, componentName, endComponentName);
-                    SetLineMessage(component, info, text);
+                    componentName = component.ComponentName;
                 }
+
+                String endComponentName = "unnamed";
+                if (!String.IsNullOrWhiteSpace(info.ComponentName))
+                {
+                    endComponentName = info.ComponentName;
+                }
+
+                String text = String.Format(rule5, componentName, endComponentName);
+                SetLineMessage(component, info, text);
             }
+
         }
 
     }
