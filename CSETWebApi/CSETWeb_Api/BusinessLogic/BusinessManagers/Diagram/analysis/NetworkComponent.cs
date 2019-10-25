@@ -58,7 +58,14 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-        public bool IsPartnerVendorOrWeb { get; internal set; }
+        public bool IsPartnerVendorOrWeb {
+            get
+            {
+                return this.Component_Symbol_Id == Constants.PARTNER_TYPE
+                    || this.Component_Symbol_Id == Constants.VENDOR_TYPE
+                    || this.Component_Symbol_Id == Constants.WEB_TYPE;
+            }
+        }
         public int Component_Symbol_Id { get; internal set; }
 
         public NetworkComponent()

@@ -2,7 +2,7 @@
   <root>
     <mxCell id="0"/>
     <mxCell id="1" value="Main Layer" parent="0"/>
-    <object SAL="Low" label="Zone-1-Low" internalLabel="Zone-1-Low" zoneType="Corporate" zone="1" Criticality="Low" id="2">
+    <object SAL="Low" label="Zone-1-Low" internalLabel="Zone-1-Low" ZoneType="Corporate" zone="1" Criticality="Low" id="2">
       <mxCell style="swimlane;zone=1;fillColor=#fdf9d9;swimlaneFillColor=#fffef4;" parent="1" vertex="1" connectable="0">
         <mxGeometry x="381" y="482" width="132" height="194" as="geometry"/>
       </mxCell>
@@ -20,7 +20,7 @@
     <mxCell id="18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="2" source="12" target="9" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zoneType="Other" zone="1" Criticality="Low" id="3">
+    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" ZoneType="Other" zone="1" Criticality="Low" id="3">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
         <mxGeometry x="167" y="280" width="186" height="167" as="geometry"/>
       </mxCell>

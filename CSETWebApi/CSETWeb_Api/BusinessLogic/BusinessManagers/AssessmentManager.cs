@@ -48,7 +48,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             new SalManager().SetDefaultSALs(assessment_id);
 
-            new StandardsManager().PersistSelectedStandards(assessment_id, new List<string> { "***DEFAULT***" });
+            new StandardsManager().PersistSelectedStandards(assessment_id, null);
             CreateIrpHeaders(assessment_id);
             return newAssessment;
         }

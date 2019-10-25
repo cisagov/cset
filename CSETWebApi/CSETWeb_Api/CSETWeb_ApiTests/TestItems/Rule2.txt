@@ -2,25 +2,7 @@
   <root>
     <mxCell id="0"/>
     <mxCell id="1" value="Main Layer" parent="0"/>
-    <object SAL="Moderate" label="Zone-1-Moderate" internalLabel="Zone-1" zoneType="Other" zone="1" Criticality="Low" id="2">
-      <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
-        <mxGeometry x="381" y="482" width="132" height="194" as="geometry"/>
-      </mxCell>
-    </object>
-    <object label="AD-4" ComponentGuid="7e033cb5-49dc-4c9a-90a9-17101423ca2e" parent="2" Criticality="Low" id="9">
-      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/active_directory.svg;" parent="2" vertex="1">
-        <mxGeometry x="10.21069" y="88.97198" width="60" height="60" as="geometry"/>
-      </mxCell>
-    </object>
-    <object label="VLANS-7" ComponentGuid="2336ef54-eec4-4229-a709-d4c47919c39b" parent="2" Criticality="Low" id="12">
-      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/vlan_switch.svg;" parent="2" vertex="1">
-        <mxGeometry x="50.23355" y="34.3327" width="60" height="60" as="geometry"/>
-      </mxCell>
-    </object>
-    <mxCell id="18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="2" source="12" target="9" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zoneType="Other" zone="1" Criticality="Low" id="3">
+    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zone="1" Criticality="Low" ZoneType="Other" id="3">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
         <mxGeometry x="167" y="280" width="186" height="167" as="geometry"/>
       </mxCell>
@@ -38,17 +20,15 @@
     <mxCell id="15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="3" source="7" target="6" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <object SAL="Low" label="Zone-1-Low" internalLabel="Zone-1" zoneType="Other" zone="1" Criticality="Low" id="4">
-      <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
-        <mxGeometry x="690" y="512" width="121" height="149" as="geometry"/>
+    <object ComponentGuid="6d022722-c6d7-45c6-8390-9e947e7e1883" Criticality="Low" label="IDS-16" internalLabel="IDS-16" id="rjaqDTqi3eYoq7X8cV16-21">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/ids.svg" parent="3" vertex="1">
+        <mxGeometry x="23" y="30" width="60" height="17" as="geometry"/>
       </mxCell>
     </object>
-    <object label="AD-6" ComponentGuid="3599ffbf-4f3f-4f45-aad9-a46f4f190d13" parent="4" Criticality="Low" id="10">
-      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/active_directory.svg;" parent="4" vertex="1">
-        <mxGeometry x="10.08032" y="34.12244" width="60" height="60" as="geometry"/>
-      </mxCell>
-    </object>
-    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zoneType="Other" zone="1" Criticality="Low" id="5">
+    <mxCell id="rjaqDTqi3eYoq7X8cV16-22" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" parent="3" source="rjaqDTqi3eYoq7X8cV16-21" target="6" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zone="1" Criticality="Low" ZoneType="Other" id="5">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
         <mxGeometry x="617" y="221" width="196" height="167" as="geometry"/>
       </mxCell>
@@ -63,27 +43,10 @@
         <mxGeometry x="352.9995927640606" y="183.39184670781896" width="60" height="60" as="geometry"/>
       </mxCell>
     </object>
-    <object label="VLANR-9" ComponentGuid="60378ef0-f1ce-4c27-b2e2-d70c31c08986" Criticality="Low" internalLabel="VLANR-9" id="13">
-      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/vlan_router.svg;" parent="1" vertex="1">
-        <mxGeometry x="169.85236625514426" y="566.4870370370369" width="60" height="60" as="geometry"/>
-      </mxCell>
-    </object>
     <mxCell id="14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="11" target="6" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="11" target="8" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="17" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="12" target="10" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="19" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="10" target="8" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="20" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="13" target="6" edge="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-    <mxCell id="21" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="13" target="9" edge="1">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>

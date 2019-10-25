@@ -35,93 +35,42 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         }
 
 
+        private HashSet<String> NotYetVisited = new HashSet<string>();
+
         private void checkRule1()
         {
-            //get the list of vendors, partners, or web
-            //if the vendor, partner, or web is connected to anything other than a firewall
-            //add a message and let the user know.
-            List<int> suspects = new List<int>();
-            suspects.Add(Constants.WEB_TYPE);
-            suspects.Add(Constants.VENDOR_TYPE);
-            suspects.Add(Constants.PARTNER_TYPE);
-            var suspectslist = nodes.Values.Where(x => suspects.Contains(x.Component_Symbol_Id));
+            List<int> allowToConnect = new List<int>();
+            allowToConnect.Add(Constants.FIREWALL);
+            allowToConnect.Add(Constants.UNIDIRECTIONAL_DEVICE);
+
+            //check all of a components immediate connections
+            //if it is outside of it's zone and it does not connect to a firewall 
+            //then we need to flag this component     
+            List<int> exempt = new List<int>();
+            exempt.Add(Constants.WEB_TYPE);
+            exempt.Add(Constants.VENDOR_TYPE);
+            exempt.Add(Constants.PARTNER_TYPE);
+            exempt.Add(Constants.FIREWALL);
+            exempt.Add(Constants.UNIDIRECTIONAL_DEVICE);
+
+            var suspectslist = nodes.Values.Where(x => !exempt.Contains(x.Component_Symbol_Id));
             foreach (var node in suspectslist)
             {
-                foreach (var child in node.Connections)
+                if (NotYetVisited.Add(node.ID))
                 {
-                    if (child.Component_Symbol_Id != Constants.FIREWALL)
+                    foreach (var child in node.Connections)
                     {
-                        String text = String.Format(rule1, node.ComponentName, child.ComponentName);
-                        SetLineMessage(node,child, text);
+                        if (!node.IsInSameZone(child))
+                        {
+                            if (!allowToConnect.Contains(child.Component_Symbol_Id))
+                            {
+                                String text = String.Format(rule1, node.ComponentName, child.ComponentName);
+                                SetLineMessage(node, child, text);
+                            }
+                        }
                     }
                 }
             }
         }
-
-        //private void CheckRule12(NetworkLink link, NetworkNode headComponent, NetworkNode tailComponent)
-        //{
-        //    if (!headComponent.IsInSameZone(tailComponent))
-        //    {
-        //        //Debug.WriteLine("HeadComponent: " + headComponent.Node.ID + " " + headComponent.Node.Label);
-        //        //Debug.WriteLine("tailComponent: " + tailComponent.Node.ID + " " + tailComponent.Node.Label);
-
-        //        //Get All components that are not firewalls or unidirectional devices not connectors on head side of edge
-        //        List<EdgeNodeInfo> listHead = CheckFirewallUni(link, headComponent, new HashSet<Guid>() { tailComponent.ID });
-
-        //        //Get All that are not firewalls or unidirectional devices components that are not connectors on tail side of edge
-        //        List<EdgeNodeInfo> listTail = CheckFirewallUni(link, tailComponent, new HashSet<Guid>() { headComponent.ID });
-
-        //        //If one of these lists is empty then has sufficient filter because it means all the nodes on one
-        //        //side have a firewall
-        //        bool isFilterTrafficHead = listHead.Count == 0;
-        //        bool isFilterTrafficTail = listTail.Count == 0;
-
-        //        if (isFilterTrafficTail || isFilterTrafficHead)
-        //            return;
-        //        else
-        //        {
-        //            foreach (EdgeNodeInfo info in listHead)
-        //            {
-        //                if (info.EndComponent.IsPartnerVendorOrWeb)
-        //                {
-        //                    return;
-        //                }
-        //            }
-        //            foreach (EdgeNodeInfo info in listTail)
-        //            {
-        //                if (info.EndComponent.IsPartnerVendorOrWeb)
-        //                {
-        //                    return;
-        //                }
-        //            }
-
-        //            String headName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(headComponent.TextNodeLabel))
-        //            {
-        //                headName = headComponent.TextNodeLabel;
-        //            }
-
-        //            String tailName = "unnamed";
-        //            if (!String.IsNullOrWhiteSpace(tailComponent.TextNodeLabel))
-        //            {
-        //                tailName = tailComponent.TextNodeLabel;
-        //            }
-
-        //            String text = String.Format(rule1, headName, tailName);
-        //            AddMessage(link, text);
-        //        }
-        //    }
-
-        //    if (headComponent.IsFirewall)
-        //    {
-        //        CheckRule2(headComponent);
-        //    }
-
-        //    if (tailComponent.IsFirewall)
-        //    {
-        //        CheckRule2(tailComponent);
-        //    }
-        //}
-
     }
 }
