@@ -9,7 +9,7 @@ namespace CSETWeb_Api.Controllers
     public class usp_getComponentTypes
     {
         public int? Assessment_Id { get; set; }
-        public string component_type { get; set; }
+        public string Symbol_Name { get; set; }
         public int? Total { get; set; }
         public int? Y { get; set; }
         public int? N { get; set; }
