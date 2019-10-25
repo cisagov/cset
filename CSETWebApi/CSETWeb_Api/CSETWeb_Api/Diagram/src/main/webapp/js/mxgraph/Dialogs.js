@@ -1459,16 +1459,13 @@ var EditDataDialog = function (ui, cell)
         parent.appendChild(wrapper);
     };
 
-    var addTextArea = function (index, name, value)
-    {
+    var addTextArea = function (index, name, value) {
         names[index] = name;
         texts[index] = form.addTextarea(names[count] + ':', value, 2);
         texts[index].style.width = '94%';
 
         // In CSET we don't give them the right to remove properties
-        var CSET = true;
-        if (!CSET)
-        {
+        if (!App.CSET) {
             addRemoveButton(texts[index], name);
         }
     };
