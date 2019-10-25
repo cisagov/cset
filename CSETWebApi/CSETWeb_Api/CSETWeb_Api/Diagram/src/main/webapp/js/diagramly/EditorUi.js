@@ -1893,8 +1893,7 @@
             }
 
             // CSET - don't alter the 'filename'
-            var CSET = true;
-            if (!CSET && this.fname) {
+            if (!App.CSET && this.fname) {
                 this.fnameWrapper.style.display = 'none';
                 this.fname.innerHTML = '';
                 this.fname.setAttribute('title', mxResources.get('rename'));
@@ -1903,7 +1902,7 @@
             this.editor.setStatus('');
             this.updateUi();
 
-            if (CSET) {
+            if (App.CSET) {
                 CsetUtils.LoadFileFromCSET(this).then(file => {
                     if (!noDialogs && file.isEmpty()) {
                         const compact = this.isOffline();
@@ -8609,11 +8608,10 @@
                         const enableSearchDocs = data.enableSearch === 1;
                         const enableCustomTemp = data.enableCustomTemp === 1;
 
-                        const cset = true;
                         const dlg = new NewDialog(this, {
                             compact: false,
-                            showName: !cset && !!data.callback,
-                            hideFromTemplateUrl: cset,
+                            showName: !App.CSET && !!data.callback,
+                            hideFromTemplateUrl: App.CSET,
                             callback: mxUtils.bind(this, function (xml, name) {
                                 xml = xml || this.emptyDiagramXml;
                                 // LATER: Add autosave option in template message
@@ -8663,7 +8661,7 @@
                                 this.actions.get('exit').funct();
                             }
 
-                            if (cset) {
+                            if (App.CSET) {
                                 const file = this.getCurrentFile();
                                 if (file) {
                                     file.save();
@@ -9838,8 +9836,7 @@
         this.actions.get('makeCopy').setEnabled(!restricted);
         this.actions.get('print').setEnabled(!restricted);
 
-        var CSET = false;
-        if (!CSET) {
+        if (App.CSET) {
             this.menus.get('exportAs').setEnabled(!restricted);
         }
 
@@ -9856,7 +9853,7 @@
             this.editor.graph.isEnabled();
         this.menus.get('extras').setEnabled(libsEnabled);
 
-        if (!CSET) {
+        if (App.CSET) {
             if (Editor.enableCustomLibraries) {
                 this.menus.get('openLibraryFrom').setEnabled(libsEnabled);
                 this.menus.get('newLibrary').setEnabled(libsEnabled);
@@ -9879,7 +9876,7 @@
         // Disables menus
         this.menus.get('edit').setEnabled(active);
         this.menus.get('view').setEnabled(active);
-        if (!CSET) {
+        if (App.CSET) {
             this.menus.get('importFrom').setEnabled(editable);
         }
         this.menus.get('arrange').setEnabled(editable);
@@ -10007,8 +10004,6 @@
 	 */
     var editorUiUpdateActionStates = EditorUi.prototype.updateActionStates;
     EditorUi.prototype.updateActionStates = function () {
-        const CSET = true;
-
         editorUiUpdateActionStates.apply(this, arguments);
 
         const graph = this.editor.graph;
@@ -10031,7 +10026,7 @@
         this.actions.get('makeCopy').setEnabled(file && !file.isRestricted());
         this.actions.get('editDiagram').setEnabled(active && file && !file.isRestricted());
         this.actions.get('publishLink').setEnabled(file && !file.isRestricted());
-        if (!CSET) {
+        if (!App.CSET) {
             this.actions.get('tags').setEnabled(this.diagramContainer.style.visibility != 'hidden');
         }
         this.actions.get('find').setEnabled(this.diagramContainer.style.visibility != 'hidden');
@@ -10046,7 +10041,7 @@
 
 
         // RKW - hide menu actions that CSET doesn't use
-        if (!CSET) {
+        if (!App.CSET) {
             this.actions.get('rename').visible = false;
             this.actions.get('makeCopy').visible = false;
         }
