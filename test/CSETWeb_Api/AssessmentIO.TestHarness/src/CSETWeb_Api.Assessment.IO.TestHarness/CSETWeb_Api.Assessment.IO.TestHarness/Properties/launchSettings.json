@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CSETWeb_Api.AssessmentIO.TestHarness": {
+      "commandName": "Project",
+      "commandLineArgs": "export import email: barry.hansen@inl.gov password: abc"
+    }
+  }
+}
