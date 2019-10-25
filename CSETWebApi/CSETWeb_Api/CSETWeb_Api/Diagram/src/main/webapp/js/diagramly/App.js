@@ -415,8 +415,7 @@ App.getStoredMode = function ()
                         // Immediately loads client
                         if (App.mode == App.MODE_DROPBOX || (window.location.hash != null &&
                             window.location.hash.substring(0, 2) == '#D')) {
-                            const cset = true;
-                            if (!cset) {
+                            if (!App.CSET) {
                                 mxscript(App.DROPBOX_URL);
 
                                 // Must load this after the dropbox SDK since they use the same namespace
@@ -673,8 +672,7 @@ App.main = function (callback, createUi)
                             (((urlParams['embed'] != '1' && urlParams['db'] != '0') ||
                                 (urlParams['embed'] == '1' && urlParams['db'] == '1')) &&
                                 isSvgBrowser && (document.documentMode == null || document.documentMode > 9)))) {
-                        const cset = true;
-                        if (!cset) {
+                        if (!App.CSET) {
                             mxscript(App.DROPBOX_URL, function () {
                                 // Must load this after the dropbox SDK since they use the same namespace
                                 mxscript(App.DROPINS_URL, function () {
@@ -4608,13 +4606,12 @@ App.prototype.exportFile = function (data, filename, mimeType, base64Encoded, mo
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.descriptorChanged = function () {
-    const CSET = true;
     const graph = this.editor.graph;
     const file = this.getCurrentFile();
 
     if (file) {
         // CSET - don't set fname to the filename
-        if (!CSET && this.fname) {
+        if (!App.CSET && this.fname) {
             this.fnameWrapper.style.display = 'block';
             this.fname.innerHTML = '';
             const filename = file.getTitle() || this.defaultFilename;
@@ -4955,8 +4952,7 @@ App.prototype.updateHeader = function ()
         this.fnameWrapper.style.textOverflow = 'ellipsis';
 
         // CSET - show assessment name in the 'file name' location
-        var CSET = true;
-        if (CSET)
+        if (App.CSET)
         {
             this.fnameWrapper.style.display = 'inline';
 
