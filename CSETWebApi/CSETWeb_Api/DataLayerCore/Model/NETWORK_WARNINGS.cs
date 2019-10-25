@@ -9,7 +9,7 @@ namespace DataLayerCore.Model
     {
         public int Assessment_Id { get; set; }
         public int Id { get; set; }
-        [StringLength(1000)]
+        [StringLength(2000)]
         public string WarningText { get; set; }
 
         [ForeignKey("Assessment_Id")]
