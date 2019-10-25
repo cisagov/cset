@@ -7,8 +7,6 @@
 EditorUi = function (editor, container, lightbox) {
     mxEventSource.call(this);
 
-    this.CSET = false;
-
     this.destroyFunctions = [];
     this.editor = editor || new Editor();
     this.container = container || document.body;
@@ -1924,8 +1922,7 @@ EditorUi.prototype.onBeforeUnload = function () {
 EditorUi.prototype.open = function () {
     console.log("EditorUi.prototype.open");
 
-    this.CSET = true;
-    if (this.CSET) {
+    if (App.CSET) {
         return;
     }
 
