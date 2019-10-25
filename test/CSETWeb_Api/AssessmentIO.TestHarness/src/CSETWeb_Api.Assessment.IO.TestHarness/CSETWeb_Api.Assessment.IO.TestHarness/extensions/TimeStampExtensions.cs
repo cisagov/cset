@@ -5,10 +5,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 {
     public static class TimeStamp
     {
-        public static string Now()
-        {
-            return DateTime.Now.ToTimeStamp();
-        }
+        public static string Now { get { return DateTime.Now.ToTimeStamp(); } }
     }
 
     public static class TimeStampExtensions
