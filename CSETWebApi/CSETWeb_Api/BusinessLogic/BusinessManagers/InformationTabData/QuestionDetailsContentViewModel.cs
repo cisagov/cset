@@ -339,7 +339,10 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     Category = question.Category,
                     Sets = sets,
                     Requirement=question.NEW_REQUIREMENT
-                };                
+                };
+
+                reqInfoData.Requirement.REQUIREMENT_LEVELS = this.DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
+
                 list = informationTabBuilder.CreateRequirementInformationTab(reqInfoData, levelManager);
             }
           
