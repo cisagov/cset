@@ -49,6 +49,8 @@ CSETFile.prototype.saveFile = function (title, revision, success, error) {
                 error(reason);
             }
         });
+    } else if (success) {
+        success();
     }
 };
 
