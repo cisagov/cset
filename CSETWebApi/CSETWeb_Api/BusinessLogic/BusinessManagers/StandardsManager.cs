@@ -234,7 +234,7 @@ namespace CSETWeb_Api.BusinessManagers
             switch (appCode.ToLower())
             {
                 case "cset":
-                    //basicStandards.Add("Key");
+                    basicStandards.Add("Key");
                     break;
                 case "acet":
                     basicStandards.Add("ACET_V1");
