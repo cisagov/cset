@@ -236,7 +236,7 @@
           var flashvars = embedProvider.embedtag.flashvars || '';
           var tag = embedProvider.embedtag.tag || 'embed';
           var width = embedProvider.embedtag.width || 'auto';
-          var nocache = embedProvider.embedtag.nocache || 0;//lgtm [js/unused-local-variable]
+          var nocache = embedProvider.embedtag.nocache || 0;
           var height = embedProvider.embedtag.height || 'auto';
           var src =externalUrl.replace(embedProvider.templateRegex,embedProvider.apiendpoint);
           if(!embedProvider.nocache) src += '&jqoemcache='+rand(5);
@@ -316,7 +316,7 @@
         if (params === null) return null;
         var key, normalizedParams = {};
         for (key in params) {
-            if (key !== null) normalizedParams[key.toLowerCase()] = params[key];//lgtm [js/unneeded-defensive-code] 
+            if (key !== null) normalizedParams[key.toLowerCase()] = params[key];
         }
         return normalizedParams;
     }
@@ -721,7 +721,7 @@
           if(data.picture) out += '<a href="'+data.link+'"><img src="'+data.picture+'"></a>';
           else out += '<img src="https://graph.facebook.com/'+data.id+'/picture">';
           if(data.from) out += '<a href="'+data.link+'">'+data.name+'</a>';
-          if (data.founded) out += 'Founded: <strong>' + data.founded + '</strong><br>';
+          if(data.founded) out += 'Founded: <strong>'+data.founded+'</strong><br>'
           if(data.category) out += 'Category: <strong>'+data.category+'</strong><br>';
           if(data.website) out += 'Website: <strong><a href="'+data.website+'">'+data.website+'</a></strong><br>';
           if(data.gender) out += 'Gender: <strong>'+data.gender+'</strong><br>';
