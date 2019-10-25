@@ -3204,108 +3204,90 @@ App.prototype.saveLibrary = function (name, images, file, mode, noSpin, noReload
 /**
  * Adds the label menu items to the given menu and parent.
  */
-App.prototype.saveFile = function (forceDialog, success)
-{
-    var file = this.getCurrentFile();
-
-    if (file != null)
-    {
-        // FIXME: Invoke for local files
-        var done = mxUtils.bind(this, function ()
-        {
-            this.removeDraft();
-
-            if (this.getCurrentFile() != file && !file.isModified())
-            {
-                // Workaround for possible status update while save as dialog is showing
-                // is to show no saved status for device files
-                if (file.getMode() != App.MODE_DEVICE)
-                {
-                    this.editor.setStatus(mxUtils.htmlEntities(mxResources.get('allChangesSaved')));
-                }
-                else
-                {
-                    this.editor.setStatus('');
-                }
-            }
-
-            if (success != null)
-            {
-                success();
-            }
-        });
-
-        if (!forceDialog && file.getTitle() != null && this.mode != null)
-        {
-            this.save(file.getTitle(), done);
+App.prototype.saveFile = function (forceDialog, success) {
+    const file = this.getCurrentFile();
+    if (!file) {
+        if (success) {
+            success();
         }
-        else
-        {
-            var filename = (file.getTitle() != null) ? file.getTitle() : this.defaultFilename;
-            var allowTab = !mxClient.IS_IOS || !navigator.standalone;
-            var prev = this.mode;
-            var serviceCount = this.getServiceCount(true);
+        return;
+    }
 
-            if (isLocalStorage)
-            {
-                serviceCount++;
+    // FIXME: Invoke for local files
+    const done = mxUtils.bind(this, function () {
+        this.removeDraft();
+
+        if (this.getCurrentFile() !== file && !file.isModified()) {
+            // Workaround for possible status update while save as dialog is showing
+            // is to show no saved status for device files
+            if (file.getMode() !== App.MODE_DEVICE) {
+                this.editor.setStatus(mxUtils.htmlEntities(mxResources.get('allChangesSaved')));
+            } else {
+                this.editor.setStatus('');
+            }
+        }
+
+        if (success) {
+            success();
+        }
+    });
+
+    const title = file.getTitle();
+    if (!forceDialog && title && this.mode) {
+        this.save(file.getTitle(), done);
+    } else {
+        const filename = title || this.defaultFilename;
+        const allowTab = !mxClient.IS_IOS || !navigator.standalone;
+        const prev = this.mode;
+
+        let serviceCount = this.getServiceCount(true);
+        if (isLocalStorage) {
+            serviceCount++;
+        }
+
+        const rowLimit = serviceCount < 5 ? 2 : (serviceCount > 6 ? 4 : 3);
+
+        const dlg = new CreateDialog(this, filename, mxUtils.bind(this, function (name, mode) {
+            if (!name) {
+                return;
             }
 
-            var rowLimit = (serviceCount <= 4) ? 2 : (serviceCount > 6 ? 4 : 3);
+            if (!prev && mode === App.MODE_DEVICE) {
+                this.setMode(App.MODE_DEVICE);
+                this.save(name, done);
+            } else if (mode === 'download') {
+                const tmp = new LocalFile(this, null, name);
+                tmp.save();
+            } else if (mode === '_blank') {
+                window.openFile = new OpenFile(function () {
+                    window.openFile = null;
+                });
 
-            var dlg = new CreateDialog(this, filename, mxUtils.bind(this, function (name, mode)
-            {
-                if (name != null && name.length > 0)
-                {
-                    if (prev == null && mode == App.MODE_DEVICE)
-                    {
-                        this.setMode(App.MODE_DEVICE);
-                        this.save(name, done);
-                    }
-                    else if (mode == 'download')
-                    {
-                        var tmp = new LocalFile(this, null, name);
-                        tmp.save();
-                    }
-                    else if (mode == '_blank')
-                    {
-                        window.openFile = new OpenFile(function ()
-                        {
-                            window.openFile = null;
-                        });
+                // Do not use a filename to use undefined mode
+                window.openFile.setData(this.getFileData(true));
+                this.openLink(this.getUrl(window.location.pathname), null, true);
+            } else if (prev !== mode) {
+                this.pickFolder(mode, mxUtils.bind(this, function (folderId) {
+                    this.createFile(name, this.getFileData(/(\.xml)$/i.test(name) ||
+                        name.indexOf('.') < 0 || /(\.drawio)$/i.test(name),
+                        /(\.svg)$/i.test(name), /(\.html)$/i.test(name)),
+                        null, mode, done, this.mode == null, folderId);
+                }));
+            } else if (mode) {
+                this.save(name, done);
+            }
+        }), mxUtils.bind(this, function () {
+            this.hideDialog();
+        }), mxResources.get('saveAs'), mxResources.get('download'), null, null, allowTab,
+            this.isOffline() ? null : 'https://desk.draw.io/support/solutions/articles/16000042485',
+            true, rowLimit, null, null, null, this.editor.fileExtensions);
 
-                        // Do not use a filename to use undefined mode
-                        window.openFile.setData(this.getFileData(true));
-                        this.openLink(this.getUrl(window.location.pathname), null, true);
-                    }
-                    else if (prev != mode)
-                    {
-                        this.pickFolder(mode, mxUtils.bind(this, function (folderId)
-                        {
-                            this.createFile(name, this.getFileData(/(\.xml)$/i.test(name) ||
-                                name.indexOf('.') < 0 || /(\.drawio)$/i.test(name),
-                                /(\.svg)$/i.test(name), /(\.html)$/i.test(name)),
-                                null, mode, done, this.mode == null, folderId);
-                        }));
-                    }
-                    else if (mode != null)
-                    {
-                        this.save(name, done);
-                    }
-                }
-            }), mxUtils.bind(this, function ()
-            {
-                this.hideDialog();
-            }), mxResources.get('saveAs'), mxResources.get('download'), null, null, allowTab,
-                (this.isOffline()) ? null :
-                    'https://desk.draw.io/support/solutions/articles/16000042485',
-                true, rowLimit, null, null, null, this.editor.fileExtensions);
-
-            // CSET - reduce height of Save dialog
-            // this.showDialog(dlg.container, 460, (serviceCount > rowLimit) ? 390 : 270, true, true);
-            this.showDialog(dlg.container, 460, 150, true, true);
-            dlg.init();
+        let height = serviceCount > rowLimit ? 390 : 270;
+        if (App.CSET) {
+            height = 150;
         }
+        this.showDialog(dlg.container, 460, height, true, true);
+        dlg.init();
     }
 };
 
