@@ -249,6 +249,13 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {
+                if (finding.IsFindingEmpty())
+                {
+                    DeleteFinding(finding.Finding_Id);
+                    return;
+                }
+
+
                 FindingViewModel fm = new FindingViewModel(finding, context);
                 fm.Save();
             }
