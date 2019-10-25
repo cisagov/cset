@@ -37,6 +37,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         {
             NetworkComponent headComponent = link.SourceComponent;
             NetworkComponent tailComponent = link.TargetComponent;
+            if ((headComponent == null) || (tailComponent == null))
+                return;
             if (link.Security == Constants.UnTrusted)
             {
                 if (headComponent.IsFirewall || tailComponent.IsFirewall)

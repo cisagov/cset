@@ -29,6 +29,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             return this.Messages;
         }
 
+        private HashSet<String> notYetVisited = new HashSet<string>();
 
         /// <summary>
         /// Check Firewall for IPS and IDS past the firewall
@@ -37,8 +38,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         /// <param name="visitedNodes"></param>
         private void CheckRule2(NetworkComponent firewall)
         {
-            if (firewall.IsIDSOrIPS) // This code is here because component can be a multiple service component that is IDS and IPS
-            {
+            // This code is here because component can be a multiple service component that is IDS and IPS
+            if (firewall.IsIDSOrIPS) 
+            {  
                 return;
             }
 
@@ -46,11 +48,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             //if it is in the same zone             
             foreach (NetworkComponent child in firewall.Connections)
             {
-                if (child.IsInSameZone(firewall))
+                if (notYetVisited.Add(child.ID))
                 {
-                    if (child.IsIDSOrIPS)
+                    if (child.IsInSameZone(firewall))
                     {
-                        return;
+                        if (child.IsIDSOrIPS)
+                        {
+                            return;
+                        }
+                        else if (RecurseDownConnections(child, firewall))
+                        {
+                            return;
+                        }
                     }
                 }
             }
@@ -63,6 +72,28 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
             String text = String.Format(rule2, componentName);
             SetNodeMessage(firewall, text);
+        }
+
+        private bool RecurseDownConnections(NetworkComponent itemToCheck, NetworkComponent firewall)
+        {
+            foreach (NetworkComponent child in itemToCheck.Connections)
+            {
+                if (notYetVisited.Add(child.ID))
+                {
+                    if (child.IsInSameZone(firewall))
+                    {
+                        if (child.IsIDSOrIPS)
+                        {
+                            return true;
+                        }
+                        else if(RecurseDownConnections(child, firewall))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }

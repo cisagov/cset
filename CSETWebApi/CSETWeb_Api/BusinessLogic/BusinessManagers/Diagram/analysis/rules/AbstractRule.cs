@@ -30,9 +30,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             }
         }
 
-        /// <summary>
-        /// TODO fix this to process lines instead of nodes
-        /// </summary>
+        
         /// <param name="component1"></param>
         /// <param name="component2"></param>
         /// <param name="text"></param>
@@ -41,7 +39,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             DiagramAnalysisNodeMessage messageNode;
             //flag node and put up the message
             //if the message is already there over write with the latest edition
-            if (dictionaryNodeMessages.ContainsKey(component1.ComponentGuid))
+            if (dictionaryNodeMessages.ContainsKey(component2.ComponentGuid))
+            {
+                messageNode = dictionaryNodeMessages[component2.ComponentGuid];
+            }
+            else if (dictionaryNodeMessages.ContainsKey(component1.ComponentGuid))
             {
                 messageNode = dictionaryNodeMessages[component1.ComponentGuid];
             }
