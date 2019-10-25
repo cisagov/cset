@@ -651,13 +651,13 @@ namespace CSETWeb_Api.Controllers
             return chartData;
         }
 
-        private List<usp_getComponentsSummmary> AddItem(String AnswerName, List<usp_getComponentsSummmary> sortedList, IList<usp_getComponentsSummmary> unorderedList)
+
+        private void AddItem(String answerName, List<usp_getComponentsSummmary> sortedList, IList<usp_getComponentsSummmary> unorderedList)
         {
-            var y = unorderedList.FirstOrDefault(x => x.Answer_Text == "Y");
-            if (y != null) {
-                sortedList.Add(y);
+            var element = unorderedList.FirstOrDefault(x => x.Answer_Text == answerName);
+            if (element != null) {
+                sortedList.Add(element);
             }
-            return sortedList;
         }
 
 
