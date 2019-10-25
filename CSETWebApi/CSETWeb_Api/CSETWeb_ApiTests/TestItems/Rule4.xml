@@ -2,7 +2,7 @@
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
-    <object Criticality="Low" zone="1" zoneType="Other" SAL="Low" label="Zone-6" internalLabel="Zone-6" id="GNHcdCZE6_BdkaoNZ0lZ-4">
+    <object Criticality="Low" zone="1" ZoneType="Other" SAL="Low" label="Zone-6" internalLabel="Zone-6" id="GNHcdCZE6_BdkaoNZ0lZ-4">
       <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" vertex="1" connectable="0" parent="1">
         <mxGeometry x="-280" y="100" width="200" height="200" as="geometry"/>
       </mxCell>
@@ -25,7 +25,7 @@
         <mxGeometry x="-170" y="398" width="60" height="25" as="geometry"/>
       </mxCell>
     </object>
-    <object Criticality="Low" zone="1" zoneType="Control DMZ" SAL="Moderate" label="Zone-5" internalLabel="Zone-5" id="GNHcdCZE6_BdkaoNZ0lZ-3">
+    <object Criticality="Low" zone="1" ZoneType="Control DMZ" SAL="Moderate" label="Zone-5" internalLabel="Zone-5" id="GNHcdCZE6_BdkaoNZ0lZ-3">
       <mxCell style="swimlane;zone=1;fillColor=#ffe7e9;swimlaneFillColor=#fff1f2;" vertex="1" connectable="0" parent="1">
         <mxGeometry x="-560" y="120" width="200" height="200" as="geometry"/>
       </mxCell>
@@ -35,7 +35,7 @@
         <mxGeometry x="70" y="70" width="43" height="60" as="geometry"/>
       </mxCell>
     </object>
-    <object Criticality="Low" zone="1" zoneType="Safety" SAL="High" label="Zone-7" internalLabel="Zone-7" id="GNHcdCZE6_BdkaoNZ0lZ-5">
+    <object Criticality="Low" zone="1" ZoneType="Safety" SAL="High" label="Zone-7" internalLabel="Zone-7" id="GNHcdCZE6_BdkaoNZ0lZ-5">
       <mxCell style="swimlane;zone=1;fillColor=#f6d06b;swimlaneFillColor=#ffe7a5;" vertex="1" connectable="0" parent="1">
         <mxGeometry x="50" y="90" width="200" height="200" as="geometry"/>
       </mxCell>
