@@ -296,10 +296,12 @@ namespace CSETWeb_Api.BusinessManagers
                     .OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
                 AddResponse(resp, context, list, "Component Defaults");
+
                 var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
                     .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName)
                     .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
                     .ToList();
+
                 AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
             }
         }
@@ -329,6 +331,7 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {
                         GroupHeadingText = dbQ.Question_Group_Heading,
+                        GroupHeadingId = dbQ.GroupHeadingId,
                         StandardShortName = listname,
                         Symbol_Name = dbQ.Symbol_Name,
                         ComponentName = dbQ.ComponentName
@@ -347,6 +350,8 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     sc = new QuestionSubCategory()
                     {
+                        GroupHeadingId = dbQ.GroupHeadingId,
+                        SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
                         SubCategoryAnswer = this.subCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
@@ -402,6 +407,7 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {
                         GroupHeadingText = dbQ.Question_Group_Heading,
+                        GroupHeadingId = dbQ.GroupHeadingId,                        
                         StandardShortName = listname,
                         Symbol_Name = dbQ.Symbol_Name,
                         ComponentName = dbQ.ComponentName
@@ -417,6 +423,8 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     sc = new QuestionSubCategory()
                     {
+                        GroupHeadingId = dbQ.GroupHeadingId,
+                        SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
                         SubCategoryAnswer = this.subCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
