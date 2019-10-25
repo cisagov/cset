@@ -77,95 +77,93 @@ function getVisibleArea() {
 }
 
 document.showItem = function(objid) {
-    var curobj = document.getElementById('Tooltip_' + objid);
-    var x = -1;
-    var dx = 20;
-    var y = -1;
-    var dy = 20;
+	var curobj = document.getElementById('Tooltip_' + objid);
+	var x = -1;
+	var dx = 20;
+	var y = -1;
+	var dy = 20;
 
-    if (eventPageX) {
-        x = eventPageX;
-    } else if (eventClientX) {
-        x = eventClientX +
-            (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-    } else {
-        x = 0;
-    }
+	if (eventPageX) {
+		x = eventPageX;
+	} else if (eventClientX) {
+		x = eventClientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+	} else {
+		x = 0;
+	}
 
-    if (eventPageY) {
-        y = eventPageY;
-    } else if (eventClientY) {
-        y = eventClientY +
-            (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-    } else {
-        y = 0;
-    }
+	if (eventPageY) {
+		y = eventPageY;
+	} else if (eventClientY) {
+		y = eventClientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+	} else {
+		y = 0;
+	}
 
-    var isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+	var isRtl = document.documentElement.getAttribute('dir') === 'rtl';
 
-    var visArea = getVisibleArea();
+	var visArea = getVisibleArea();
 
-    curobj.style.left = x + dx + 'px';
-    curobj.style.right = 'auto';
-    curobj.style.top = y + dy + 'px';
-    curobj.style.display = 'block';
+	curobj.style.left = x + dx + 'px';
+	curobj.style.right = 'auto';
+	curobj.style.top = y + dy + 'px';
+	curobj.style.display = 'block';
 
-    var divArea = getAreaSize(curobj);
+	var divArea = getAreaSize(curobj);
 
-    if (isRtl) {
-        divArea.right = x - dx;
-        divArea.left = divArea.right - divArea.width;
-    } else {
-        divArea.left = x + dx;
-        divArea.right = divArea.left + divArea.width;
-    }
+	if (isRtl) {
+		divArea.right = x - dx;
+		divArea.left = divArea.right - divArea.width;
+	} else {
+		divArea.left = x + dx;
+		divArea.right = divArea.left + divArea.width;
+	}
 
-    divArea.top = y + dy;
-    divArea.bottom = divArea.top + divArea.height;
+	divArea.top = y + dy;
+	divArea.bottom = divArea.top + divArea.height;
 
-    if (isRtl) {
-        var extraL = visArea.left - divArea.left;
-        if (extraL >= 0) {
-            divArea.right += extraL + 10;
-        }
+	if (isRtl) {
+		var extraL = visArea.left - divArea.left;
+		if (extraL >= 0) {
+			divArea.right += extraL + 10;
+		}
 
-        var extraR = divArea.right - visArea.right;
-        if (extraR >= 0) {
-            divArea.right -= extraR + 16;
-        }
-    } else {
-        var extraR = divArea.right - visArea.right;
-        if (extraR >= 0) {
-            divArea.left -= extraR + 16;
-        }
-        var extraL = visArea.left - divArea.left;
-        if (extraL >= 0) {
-            divArea.left += extraL + 10;
-        }
-    }
-    var extraB = divArea.bottom - visArea.bottom;
-    if (extraB > 0) {
-        divArea.top -= extraB + 16;
-    }
-    var extraT = visArea.top - divArea.top;
-    if (extraT > 0) {
-        divArea.top += extraT + 10;
-    }
+		var extraR = divArea.right - visArea.right;
+		if (extraR >= 0) {
+			divArea.right -= extraR + 16;
+		}
+	} else {
+		var extraR = divArea.right - visArea.right;
+		if (extraR >= 0) {
+			divArea.left -= extraR + 16;
+		}
+		var extraL = visArea.left - divArea.left;
+		if (extraL >= 0) {
+			divArea.left += extraL + 10;
+		}
+	}
+	var extraB = divArea.bottom - visArea.bottom;
+	if (extraB > 0) {
+		divArea.top -= extraB + 16;
+	}
+	var extraT = visArea.top - divArea.top;
+	if (extraT > 0) {
+		divArea.top += extraT + 10;
+	}
 
-    var oTable = document.getElementById(curobj.id + 'table');
-    oTable.style.width = $(curobj).width() + 'px';
-    if (isRtl) {
-        curobj.style.right = visArea.width - divArea.right + 'px';
-        curobj.style.left = 'auto';
-    } else {
-        curobj.style.left = divArea.left + 'px';
-        curobj.style.right = 'auto';
-    }
-    curobj.style.top = divArea.top + 'px';
+	var oTable = document.getElementById(curobj.id + 'table');
+	oTable.style.width = $(curobj).width() + 'px';
+	if (isRtl) {
+		curobj.style.right = visArea.width - divArea.right + 'px';
+		curobj.style.left = 'auto';
+	} else {
+		curobj.style.left = divArea.left + 'px';
+		curobj.style.right = 'auto';
+	}
+	curobj.style.top = divArea.top + 'px';
 
-    Positioned[objid] = true;
-    TShowTime[objid] = null;
-};
+	Positioned[objid] = true;
+	TShowTime[objid] = null;
+}
 
 function ShowItem(event, objid) {
 	eventClientX = event.clientX;
