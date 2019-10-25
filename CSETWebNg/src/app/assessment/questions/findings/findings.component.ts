@@ -41,11 +41,13 @@ export class FindingsComponent implements OnInit {
   answerID: number;
   questionID: number;
 
-  constructor(private findSvc: FindingsService,
+  constructor(
+    private findSvc: FindingsService,
     private dialog: MatDialogRef<FindingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
     private router: Router,
-    private assessSvc: AssessmentService) {
+    private assessSvc: AssessmentService
+  ) {
     this.finding = data;
     this.answerID = data.Answer_Id;
     this.questionID = data.Question_Id;
@@ -65,6 +67,8 @@ export class FindingsComponent implements OnInit {
       this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id)
         .subscribe((response: Finding) => {
           this.finding = response;
+          this.answerID = this.finding.Answer_Id;
+          this.questionID = this.finding.Question_Id;
           this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,
             { 'Selected': true }),
             'Assessment_Contact_Id');
@@ -109,11 +113,10 @@ export class FindingsComponent implements OnInit {
   }
 
   updateContact(contactid) {
-    Array.from(this.finding.Finding_Contacts).forEach((fc: FindingContact) => {
-      fc.Selected = false;
-    });
-    Array.from(contactid).forEach((element: HTMLOptionElement) => {
-      this.finding.Finding_Contacts[element.value.split(':')[0]].Selected = element.selected;
+    this.finding.Finding_Contacts.forEach((fc: FindingContact) => {
+      if (fc.Assessment_Contact_Id === contactid.Assessment_Contact_Id) {
+        fc.Selected = contactid.Selected;
+      }
     });
   }
 }
