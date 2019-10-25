@@ -920,7 +920,7 @@ namespace CSETWeb_Api.Controllers
 
                              foreach (var total in componentTotals)
                              {
-                                 chartData.Labels.Add(total.component_type);
+                                 chartData.Labels.Add(total.Symbol_Name);
 
                                  // adjust the percentages to equal 100% after rounding
                                  var adjTotal = new BusinessLogic.Common.PercentageFixer(total.Y, total.N, total.NA, total.A, total.U);
@@ -935,7 +935,7 @@ namespace CSETWeb_Api.Controllers
                                  // create a new DataRows entry with answer percentages for this component
                                  var row = new DataRows
                                  {
-                                     title = total.component_type,
+                                     title = total.Symbol_Name,
                                      yes = adjTotal.Y,
                                      no = adjTotal.N,
                                      na = adjTotal.NA,
