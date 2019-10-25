@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,8 +14,6 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
     class Program
     {
         internal static IConfigurationRoot config;
-        internal static readonly string apiUrl = config["apiUrl"];
-        internal static readonly string scope = config["scope"];
 
         static void Main(string[] args)
         {
@@ -23,51 +22,62 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 .AddJsonFile("appsettings.json", true, true)
                 .Build();
 
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File($@"logs\CSETWeb_Api.ImportExport.{DateTime.Now.ToTimeStamp()}.log")
+                .CreateLogger();
+
             var ht = ArgsToHashtable(args);
             if (ht.ContainsKey("?"))
                 ShowHelp();
 
-            var export = ht.GetValueOrDefault<bool>("export");
-            var import = ht.GetValueOrDefault<bool>("import");
-            if (!export && !import)
+            try
             {
-                // nothing to do.
-                Console.WriteLine("Please provide an export and/or import directive paramater.");
-                Environment.Exit(-1);
-            }
-
-            var token = ht.GetValueOrDefault<string>("token");
-            var notoken = ht.GetValueOrDefault<bool>("notoken");
-            if (notoken)
-            {
-                var email = ht.GetValueOrDefault<string>("email");
-                if (string.IsNullOrEmpty(email))
+                var export = ht.GetValueOrDefault<bool>("export");
+                var import = ht.GetValueOrDefault<bool>("import");
+                if (!export && !import)
                 {
-                    // no token or email
-                    Console.WriteLine("Insufficient authentication paramaters provided.");
-                    Environment.Exit(-2);
+                    // nothing to do.
+                    Console.WriteLine("Please provide an export and/or import directive paramater.");
+                    Environment.Exit(-1);
                 }
-                var password = ht.GetValueOrDefault<string>("password");
-                if (string.IsNullOrEmpty(password))
+
+                var token = ht.GetValueOrDefault<string>("token");
+                var notoken = ht.GetValueOrDefault<bool>("notoken");
+                if (notoken)
                 {
-                    // no password
-                    Console.WriteLine("Insufficient authentication paramaters provided.");
-                    Environment.Exit(-3);
+                    var email = ht.GetValueOrDefault<string>("email");
+                    if (string.IsNullOrEmpty(email))
+                    {
+                        // no token or email
+                        Console.WriteLine("Insufficient authentication paramaters provided.");
+                        Environment.Exit(-2);
+                    }
+                    var password = ht.GetValueOrDefault<string>("password");
+                    if (string.IsNullOrEmpty(password))
+                    {
+                        // no password
+                        Console.WriteLine("Insufficient authentication paramaters provided.");
+                        Environment.Exit(-3);
+                    }
+                    token = GetToken(email, password);
                 }
-                token = GetToken(email, password);
-            }
 
-            var files = new List<KeyValuePair<string, byte[]>>();
-            if (export)
-            {
-                var exportdir = ht.GetValueOrDefault<string>("exportdir");
-                files = Export(token, exportdir);
-            }
+                var files = new List<KeyValuePair<string, byte[]>>();
+                if (export)
+                {
+                    var exportdir = ht.GetValueOrDefault<string>("exportdir");
+                    files = Export(token, exportdir);
+                }
 
-            if (import)
+                if (import)
+                {
+                    var importdir = ht.GetValueOrDefault<string>("importdir");
+                    Import(token, importdir, files);
+                }
+            }
+            catch (Exception ex)
             {
-                var importdir = ht.GetValueOrDefault<string>("importdir");
-                Import(token, importdir, files);
+                Log.Error(ex, "Exiting with error.");
             }
         }
 
@@ -163,6 +173,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
         static string GetToken(string email, string password)
         {
+            string apiUrl = config["apiUrl"];
             var req = new WebRequestOptions { UriString = $"{apiUrl}{Urls.login}" };
             var resp = req.Post(new HttpPostPayload
             {
@@ -178,6 +189,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
         static List<KeyValuePair<string, byte[]>> Export(string token, string exportdir)
         {
+            string apiUrl = config["apiUrl"];
             var req = new WebRequestOptions
             {
                 UriString = $"{apiUrl}{Urls.assessments}",
@@ -197,6 +209,9 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                     {
                         var filename = bs.FileName.SanitizePathPart();
                         files.Add(new KeyValuePair<string, byte[]>(filename, bs.Buffer));
+                        var log = $"{filename} | \"Assessment was successfully exported\"";
+                        Console.WriteLine(log);
+                        Log.Information(log);
                     }
                 }
             }
@@ -219,6 +234,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
         static void Import(string token, string importdir, List<KeyValuePair<string, byte[]>> files)
         {
+            string apiUrl = config["apiUrl"];
             if (Directory.Exists(importdir))
             {
                 files.Clear();
@@ -252,6 +268,9 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                                 ContentType = data.ContentType,
                                 Data = data.Buffer
                             });
+                            var log = $"{filename} | {resp}";
+                            Console.WriteLine(log);
+                            Log.Information(log);
                         }
                         catch (WebException ex)
                         {
@@ -261,15 +280,13 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                                 {
                                     var json = reader.ReadToEnd();
                                     var err = JObject.Parse(json);
-                                    throw new Exception(err.Value<string>("Message"),
-                                        new Exception(err.Value<string>("ExceptionMessage"), ex)
-                                        {
-                                            Data =
-                                            {
-                                                { "Server-ExceptionType", err.Value<string>("ExceptionType") },
-                                                { "Server-StackTrace", err.Value<string>("StackTrace") },
-                                            }
-                                        });
+                                    var log = $"{filename} | \"Failed to import assessment\"";
+                                    Console.WriteLine(log);
+                                    Log.Error(ex, log);
+                                    Log.Error("Server-Message: {0}", err.Value<string>("Message"));
+                                    Log.Error("Server-ExceptionType: {0}", err.Value<string>("ExceptionType"));
+                                    Log.Error("Server-ExceptionMessage: {0}", err.Value<string>("ExceptionMessage"));
+                                    Log.Error("Server-StackTrace: {0}", err.Value<string>("StackTrace"));
                                 }
                             }
                         }
