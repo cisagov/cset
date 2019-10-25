@@ -23,7 +23,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File($@"logs\CSETWeb_Api.ImportExport.{DateTime.Now.ToTimeStamp()}.log")
+                .WriteTo.File($@"logs\CSETWeb_Api.ImportExport.{TimeStamp.Now}.log")
                 .CreateLogger();
 
             var ht = ArgsToHashtable(args);
@@ -90,10 +90,13 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 { "import", false }
             };
 
-            var arguments = args ?? new string[] { };
+            var arguments = (args ?? new string[] { })
+                .Select(x => Regex.Replace(x.ToLower(), "[-:]+", string.Empty))
+                .Where(x => !string.IsNullOrEmpty(x))
+                .ToArray();
             for (var i = 0; i < arguments.Length; i++)
             {
-                var arg = Regex.Replace(arguments[i].ToLower(), "[-:]+", string.Empty);
+                var arg = arguments[i];
                 switch (arg)
                 {
                     case "token":
