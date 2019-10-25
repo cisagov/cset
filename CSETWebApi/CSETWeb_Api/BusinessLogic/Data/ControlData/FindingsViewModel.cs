@@ -152,7 +152,7 @@ namespace CSETWeb_Api.Data.ControlData
         public Importance Importance { get; set; }
         public List<FindingContact> Finding_Contacts { get; set; }
 
-        public bool CheckFinding()
+        public bool IsFindingEmpty()
         {
             bool noValue = true;
 
@@ -164,9 +164,9 @@ namespace CSETWeb_Api.Data.ControlData
             noValue = noValue && String.IsNullOrWhiteSpace(Summary);
             noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
             noValue = noValue && Resolution_Date == null;
+            noValue = noValue && Finding_Contacts.Count(x => x.Selected) == 0;
 
             return noValue;
-
         }
     }
 
