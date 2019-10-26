@@ -45,7 +45,7 @@ export class QuestionBlockComponent implements OnInit {
 
   percentAnswered = 0;
 
-  @Output() answerChanged = new EventEmitter();
+  @Output() changeComponents = new EventEmitter();
 
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
@@ -95,6 +95,11 @@ export class QuestionBlockComponent implements OnInit {
   baselineLevel(q: Question) {
     return this.matLevelMap.get(q.MaturityLevel);
   }
+
+  refreshComponentOverrides(){
+    this.changeComponents.emit();
+  }
+
   /**
    * Spawns a dialog to capture the new substitution text.
    */
@@ -150,8 +155,6 @@ export class QuestionBlockComponent implements OnInit {
    * are marked for review.
    */
   refreshReviewIndicator() {
-    this.answerChanged.emit(null);
-
     this.mySubCategory.HasReviewItems = false;
     this.mySubCategory.Questions.forEach(q => {
       if (q.MarkForReview) {
@@ -184,8 +187,6 @@ export class QuestionBlockComponent implements OnInit {
    * @param ans
    */
   setBlockAnswer(ans: string) {
-    this.answerChanged.emit(null);
-
     // if they clicked on the same answer that was previously set, "un-set" it
     if (this.mySubCategory.SubCategoryAnswer === ans) {
       ans = "U";
@@ -238,8 +239,6 @@ export class QuestionBlockComponent implements OnInit {
    * @param ans
    */
   storeAnswer(q: Question, newAnswerValue: string) {
-    this.answerChanged.emit(null);
-
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.Answer === newAnswerValue) {
       newAnswerValue = "U";
@@ -322,7 +321,6 @@ export class QuestionBlockComponent implements OnInit {
    *
    */
   saveMFR(q: Question) {
-    this.answerChanged.emit(null);
     q.MarkForReview = !q.MarkForReview; // Toggle Bind
 
     const newAnswer: Answer = {

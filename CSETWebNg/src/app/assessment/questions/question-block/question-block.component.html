@@ -88,7 +88,8 @@
               (click)="questionTextClicked(q, $event)">
             </div>
             <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ q.QuestionId }}</span>
-            <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()">
+            <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
+             (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
           </div>
         </div>

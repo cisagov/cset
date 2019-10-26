@@ -97,7 +97,9 @@
         [class.display-none]="!sg.Visible" [id]="'Q' + g.GroupHeadingId + 'S' + sg.SubCategoryId">
 
         <!-- Questions within subcategory -->
-        <app-question-block #questionBlock [mySubCategory]="sg"></app-question-block>
+        <app-question-block #questionBlock [mySubCategory]="sg"
+          (changeComponents)="updateComponentsOverride()"
+        ></app-question-block>
 
       </div>
 

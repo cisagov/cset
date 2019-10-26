@@ -317,6 +317,7 @@ namespace CSETWeb_Api.BusinessManagers
             string componentName = null;
             string curGroupHeading = null;
             string curSubHeading = null;
+            int prevQuestionId = 0;
             QuestionSubCategoryComparator comparator =  new QuestionSubCategoryComparator();
 
             int displayNumber = 0;
@@ -346,7 +347,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
-                if ((dbQ.Universal_Sub_Category != curSubHeading))
+                if ((dbQ.Universal_Sub_Category != curSubHeading)||(dbQ.Question_Id == prevQuestionId))
                 {
                     sc = new QuestionSubCategory()
                     {
@@ -360,7 +361,7 @@ namespace CSETWeb_Api.BusinessManagers
                     qg.SubCategories.Add(sc);
                     curSubHeading = dbQ.Universal_Sub_Category;
                 }
-
+                prevQuestionId = dbQ.Question_Id;
                 qa = new QuestionAnswer()
                 {
                     DisplayNumber = (++displayNumber).ToString(),
