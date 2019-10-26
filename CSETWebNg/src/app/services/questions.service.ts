@@ -105,7 +105,10 @@ export class QuestionsService {
 
 
     // if we don't have domain names in this array of questions, there's no maturity filters to worry about
-    if (!this.domains || !this.domains[0].DomainName) {
+    if (!this.domains){
+      return;
+    } 
+    else if(!this.domains[0] || !this.domains[0].DomainName) {
       return;
     }
 

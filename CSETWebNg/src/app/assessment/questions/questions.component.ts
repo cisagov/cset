@@ -91,6 +91,12 @@ export class QuestionsComponent implements AfterViewInit {
     }
   }
 
+  updateComponentsOverride(){
+    //divide the component override processing 
+    //and component questions into two portions
+    //and call and update from here.    
+    console.log("and recieved");
+  }
   /**
    *
    */
@@ -163,21 +169,7 @@ export class QuestionsComponent implements AfterViewInit {
         });
         this.domains = bigStructure.Domains;
         this.questionsSvc.domains = bigStructure.Domains;
-        // ------------------------------------------------------------------------------------
-        data.QuestionGroups.forEach(g => {
-          let rval = true;
-          if (g.Symbol_Name) {
-            if (this.PreviousComponentGroup) {
-              rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
-              && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
-            }
-            this.PreviousComponentGroup = g;
-          } else {
-            rval = false;
-          }
-          g.ShowOverrideHeader = rval;
-        });
-
+        this.processComponentOverrides(data.QuestionGroups);
 
         // default the selected maturity filters
         this.questionsSvc.initializeMatFilters(data.OverallIRP);
@@ -194,6 +186,23 @@ export class QuestionsComponent implements AfterViewInit {
       }
     );
   }
+
+  processComponentOverrides(QuestionGroups: QuestionGroup[]){
+    QuestionGroups.forEach(g => {
+      let rval = true;
+      if (g.Symbol_Name) {
+        if (this.PreviousComponentGroup) {
+          rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
+          && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
+        }
+        this.PreviousComponentGroup = g;
+      } else {
+        rval = false;
+      }
+      g.ShowOverrideHeader = rval;
+    });
+  }
+
 
   /**
    * Builds the side nav tree structure.
