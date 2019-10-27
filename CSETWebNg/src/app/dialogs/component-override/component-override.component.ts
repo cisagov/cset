@@ -38,14 +38,16 @@ export class ComponentOverrideComponent {
 
   questions:any[]=[];
   loading:boolean=true;
+  questionChanged: boolean;
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
   public configSvc: ConfigService, public questionsSvc: QuestionsService,
   @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data);
+    dialog.beforeClose().subscribe(() => dialog.close(this.questionChanged));
     this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId,
       data.Component_Symbol_Id).subscribe((x:any) =>{
       this.questions = x;
       this.loading = false;
+      this.questionChanged = false;
     });
   }
 
@@ -73,12 +75,13 @@ export class ComponentOverrideComponent {
     // update the master question structure
     this.questionsSvc.setAnswerInQuestionList(q.Question_Id, q.Answer_Id, q.Answer_Text);
 
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+    this.questionsSvc.storeAnswer(answer).subscribe();
+    this.questionChanged = true;
   }
 
   close() {
-    return this.dialog.close();
+
+    return this.dialog.close(this.questionChanged);
   }
 
   applyHeight() {
