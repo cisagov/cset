@@ -12,6 +12,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers
         public static Dictionary<String, NetworkComponent> RemoveConnectors(Dictionary<String, NetworkComponent> nodes)
         {
             PostProcessConnectors processor = new PostProcessConnectors(nodes);
+            processor.SetIsMultiHomed();
             processor.ProcessConnectors();
             return processor.nodes;
         }
@@ -23,7 +24,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers
 
         private Dictionary<string, NetworkComponent> nodes { get; set; }
         
-        
+        private void SetIsMultiHomed()
+        {
+            foreach(NetworkComponent nc in nodes.Values)
+            {
+                nc.isMultipleConnections = (nc.Connections.Count > 1);
+            }
+        }
+
 
         /// <summary>
         /// Connectors are actually a visualization thing only 

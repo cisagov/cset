@@ -42,6 +42,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             List<int> allowToConnect = new List<int>();
             allowToConnect.Add(Constants.FIREWALL);
             allowToConnect.Add(Constants.UNIDIRECTIONAL_DEVICE);
+            allowToConnect.Add(Constants.IDS_TYPE);
 
             //check all of a components immediate connections
             //if it is outside of it's zone and it does not connect to a firewall 
@@ -52,6 +53,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             exempt.Add(Constants.PARTNER_TYPE);
             exempt.Add(Constants.FIREWALL);
             exempt.Add(Constants.UNIDIRECTIONAL_DEVICE);
+            exempt.Add(Constants.IDS_TYPE);
 
             var suspectslist = nodes.Values.Where(x => !exempt.Contains(x.Component_Symbol_Id));
             foreach (var node in suspectslist)
