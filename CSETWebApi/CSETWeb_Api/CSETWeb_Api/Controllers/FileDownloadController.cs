@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.Helpers;
 using DataAccess;
 using DataLayerCore.Model;
 using System.IO;
@@ -28,10 +29,15 @@ namespace CSETWeb_Api.Controllers
         [Route("api/files/download/{id}")]
         public Task<HttpResponseMessage> Download(int id, string token)
         {
-            var result = default(HttpResponseMessage);
-            using (var context = new CSET_Context())
+            int assessmentId = Auth.AssessmentForUser(token);
+            var fileDescription = _fileRepository.GetFileDescription(id);
+
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            using (CSET_Context context = new CSET_Context())
             {
-                foreach (var f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
+                foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
                 {
                     var stream = new MemoryStream(f.Data);
                     result.Content = new StreamContent(stream);
@@ -40,6 +46,7 @@ namespace CSETWeb_Api.Controllers
                     result = Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
+
             return Task.FromResult(result);
         }
     }

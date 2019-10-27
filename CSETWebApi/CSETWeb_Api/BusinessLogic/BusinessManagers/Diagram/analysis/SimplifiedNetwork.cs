@@ -21,7 +21,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
     public class SimplifiedNetwork
     {
         private Dictionary<String, NetworkComponent> nodes = new Dictionary<string, NetworkComponent>();
-        private List<NetworkLink> Links = new List<NetworkLink>();        
+        private List<NetworkLink> Links = new List<NetworkLink>();
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
         //drawio id to zone lookup
         private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
@@ -253,8 +253,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                     target?.AddEdge(start);
                 }
             }
-          
+            this.nodes = PostProcessConnectors.RemoveConnectors(nodes);
         }
+
+       
+
+       
 
         private NetworkComponent findNode(string id)
         {

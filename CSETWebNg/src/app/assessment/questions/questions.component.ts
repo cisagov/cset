@@ -91,6 +91,31 @@ export class QuestionsComponent implements AfterViewInit {
     }
   }
 
+  updateComponentsOverride(){
+    //divide the component override processing 
+    //and component questions into two portions
+    //and call and update from here.    
+    console.log("called");
+    //clear out the navigation overrides
+    //then call the get overrides questions api
+    //and refressh overrides navigation
+    const magic = this.navSvc.getMagic();
+    this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
+
+      console.log("and recieved");
+      this.processComponentOverrides(data.QuestionGroups);
+      for(let i = this.domains[0].QuestionGroups.length-1; i > 0; i--){
+          const q = this.domains[0].QuestionGroups[i];
+         if(q.IsOverride){
+           this.domains[0].QuestionGroups.pop();
+         }
+      }
+      for(let newgroup of data.QuestionGroups){
+        this.domains[0].QuestionGroups.push(newgroup);
+      }
+      this.refreshQuestionVisibility(magic);
+    });
+  }
   /**
    *
    */
@@ -163,21 +188,7 @@ export class QuestionsComponent implements AfterViewInit {
         });
         this.domains = bigStructure.Domains;
         this.questionsSvc.domains = bigStructure.Domains;
-        // ------------------------------------------------------------------------------------
-        data.QuestionGroups.forEach(g => {
-          let rval = true;
-          if (g.Symbol_Name) {
-            if (this.PreviousComponentGroup) {
-              rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
-              && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
-            }
-            this.PreviousComponentGroup = g;
-          } else {
-            rval = false;
-          }
-          g.ShowOverrideHeader = rval;
-        });
-
+        this.processComponentOverrides(data.QuestionGroups);
 
         // default the selected maturity filters
         this.questionsSvc.initializeMatFilters(data.OverallIRP);
@@ -194,6 +205,23 @@ export class QuestionsComponent implements AfterViewInit {
       }
     );
   }
+
+  processComponentOverrides(QuestionGroups: QuestionGroup[]){
+    QuestionGroups.forEach(g => {
+      let rval = true;
+      if (g.Symbol_Name) {
+        if (this.PreviousComponentGroup) {
+          rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
+          && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
+        }
+        this.PreviousComponentGroup = g;
+      } else {
+        rval = false;
+      }
+      g.ShowOverrideHeader = rval;
+    });
+  }
+
 
   /**
    * Builds the side nav tree structure.

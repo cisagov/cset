@@ -52,7 +52,7 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             return msgs;
         }
 
-        public List<IDiagramAnalysisNodeMessage> AnalyzeNetwork(SimplifiedNetwork network)
+        private List<IDiagramAnalysisNodeMessage> AnalyzeNetwork(SimplifiedNetwork network)
         {
             List<IRuleEvaluate> rules = new List<IRuleEvaluate>();
             rules.Add(new Rule1(network));
@@ -78,13 +78,15 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
                 int n = 0;
                 msgs.ForEach(m =>
                 {
-                    m.Number = ++n;
-
-                    context.NETWORK_WARNINGS.Add(new NETWORK_WARNINGS
+                    m.SetMessages.ToList().ForEach(m2 =>
                     {
-                        Assessment_Id = assessment_id,
-                        Id = m.Number,
-                        WarningText = m.Message
+                        m.Number = ++n;
+                        context.NETWORK_WARNINGS.Add(new NETWORK_WARNINGS
+                        {
+                            Assessment_Id = assessment_id,
+                            Id = m.Number,
+                            WarningText = m2
+                        });
                     });
 
                 });
