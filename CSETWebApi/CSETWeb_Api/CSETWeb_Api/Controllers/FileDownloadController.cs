@@ -25,9 +25,9 @@ namespace CSETWeb_Api.Controllers
         {
         }
 
-        [HttpGet]
         [Route("api/files/download/{id}")]
-        public Task<HttpResponseMessage> Download(int id, string token)
+        [HttpGet]
+        public HttpResponseMessage Download(int id, string token)
         {
             int assessmentId = Auth.AssessmentForUser(token);
             var fileDescription = _fileRepository.GetFileDescription(id);
@@ -43,11 +43,11 @@ namespace CSETWeb_Api.Controllers
                     result.Content = new StreamContent(stream);
                     result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.ContentType);
                     result.Content.Headers.Add("content-disposition", "attachment; filename=\"" + f.Name + "\"");
-                    result = Request.CreateResponse(HttpStatusCode.OK);
+                    return result;
                 }
             }
 
-            return Task.FromResult(result);
+            return null;
         }
     }
 }

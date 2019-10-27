@@ -106,7 +106,7 @@ namespace CSETWeb_Api.Controllers.Tests
             DiagramRequest request = new DiagramRequest();
             request.DiagramXml = File.ReadAllText("TestItems\\Rule4.xml");
             var test = controller.performAnalysis(request, 1);
-            Assert.IsTrue(test.Count==7, "Rule 4");
+            Assert.IsTrue(test.Count==5, "Rule 4");
             var jstring = Newtonsoft.Json.JsonConvert.SerializeObject(test);
             Trace.Write(jstring);
         }
