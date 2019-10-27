@@ -40,6 +40,7 @@ const headers = {
 
 @Injectable()
 export class QuestionsService {
+  
 
   /**
    * Filter settings
@@ -183,6 +184,9 @@ export class QuestionsService {
     return this.http.post(this.configSvc.apiUrl + 'questionlist', '*', headers);
   }
 
+  getQuestionListOverridesOnly() {
+    return this.http.post(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', '*', headers);
+  }
   /**
    * Posts an Answer to the API.
    * @param answer
