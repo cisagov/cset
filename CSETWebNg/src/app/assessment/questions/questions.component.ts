@@ -95,7 +95,26 @@ export class QuestionsComponent implements AfterViewInit {
     //divide the component override processing 
     //and component questions into two portions
     //and call and update from here.    
-    console.log("and recieved");
+    console.log("called");
+    //clear out the navigation overrides
+    //then call the get overrides questions api
+    //and refressh overrides navigation
+    const magic = this.navSvc.getMagic();
+    this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
+
+      console.log("and recieved");
+      this.processComponentOverrides(data.QuestionGroups);
+      for(let i = this.domains[0].QuestionGroups.length-1; i > 0; i--){
+          const q = this.domains[0].QuestionGroups[i];
+         if(q.IsOverride){
+           this.domains[0].QuestionGroups.pop();
+         }
+      }
+      for(let newgroup of data.QuestionGroups){
+        this.domains[0].QuestionGroups.push(newgroup);
+      }
+      this.refreshQuestionVisibility(magic);
+    });
   }
   /**
    *

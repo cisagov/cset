@@ -38,6 +38,7 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionGroup
     {
+        public bool IsOverride;
         public Guid NavigationGUID;
         public int GroupHeadingId;
         public string GroupHeadingText;
@@ -50,6 +51,7 @@ namespace CSETWeb_Api.Models
         public QuestionGroup()
         {
             this.NavigationGUID = Guid.NewGuid();
+            this.IsOverride = false;
         }
     }
 
