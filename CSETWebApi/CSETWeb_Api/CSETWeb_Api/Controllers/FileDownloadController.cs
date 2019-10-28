@@ -6,9 +6,7 @@
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
 using DataAccess;
-using DataLayerCore.Model;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,35 +17,22 @@ namespace CSETWeb_Api.Controllers
 {
     public class FileDownloadController : ApiController
     {
-        private readonly FileRepository _fileRepository = new FileRepository();
+        private readonly FileRepository fileRepo = new FileRepository();
 
-        public FileDownloadController()
-        {
-        }
-
-        [Route("api/files/download/{id}")]
         [HttpGet]
-        public HttpResponseMessage Download(int id, string token)
+        [Route("api/files/download/{id}")]
+        public Task<HttpResponseMessage> Download(int id, string token)
         {
-            int assessmentId = Auth.AssessmentForUser(token);
-            var fileDescription = _fileRepository.GetFileDescription(id);
+            var assessmentId = Auth.AssessmentForUser(token);
 
+            var file = fileRepo.GetFileDescription(id);
+            var stream = new MemoryStream(file.Data);
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
 
-            var result = new HttpResponseMessage(HttpStatusCode.OK);
-
-            using (CSET_Context context = new CSET_Context())
-            {
-                foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
-                {
-                    var stream = new MemoryStream(f.Data);
-                    result.Content = new StreamContent(stream);
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.ContentType);
-                    result.Content.Headers.Add("content-disposition", "attachment; filename=\"" + f.Name + "\"");
-                    return result;
-                }
-            }
-
-            return null;
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new MultipartContent { fileContent };
+            return Task.FromResult(result);
         }
     }
 }
