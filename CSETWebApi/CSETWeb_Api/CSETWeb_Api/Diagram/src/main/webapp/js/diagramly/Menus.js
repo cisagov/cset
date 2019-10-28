@@ -617,7 +617,7 @@
 		
 		editorUi.actions.addAction('userManual...', function()
 		{
-			editorUi.openLink('../../../../Documents/htmlhelp/index.htm');
+            editorUi.openLink('../../../../Documents/htmlhelp/diagram_screen.htm?ms=AAAA&st=MA%3D%3D&sct=MTQwMA%3D%3D&mw=NTEx');
 		});
 
 		//editorUi.actions.addAction('support...', function()
