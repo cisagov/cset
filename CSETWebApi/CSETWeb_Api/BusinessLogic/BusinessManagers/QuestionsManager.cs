@@ -264,6 +264,22 @@ namespace CSETWeb_Api.BusinessManagers
             return resp;
         }
 
+        public QuestionResponse GetOverrideListOnly()
+        {
+            QuestionResponse resp = new QuestionResponse
+            {
+                QuestionGroups = new List<QuestionGroup>(),
+                ApplicationMode = this.applicationMode
+            };
+
+            resp.QuestionCount = 0;
+            resp.RequirementCount = 0;
+
+            BuildOverridesOnly(resp, new CSET_Context());
+            return resp;
+        }
+
+
         public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, int Component_Symbol_Id)
         {
             List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();

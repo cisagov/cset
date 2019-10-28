@@ -52,6 +52,17 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/QuestionListComponentOverridesOnly")]
+        public QuestionResponse GetComponentOverridesList()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            QuestionsManager qm = new QuestionsManager(assessmentId);
+            QuestionResponse resp = qm.GetOverrideListOnly();
+            return resp;
+            
+        }
+
         /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>

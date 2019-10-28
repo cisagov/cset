@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.Helpers;
 using DataAccess;
 using DataLayerCore.Model;
 using System.IO;
@@ -24,23 +25,29 @@ namespace CSETWeb_Api.Controllers
         {
         }
 
-        [HttpGet]
         [Route("api/files/download/{id}")]
-        public Task<HttpResponseMessage> Download(int id, string token)
+        [HttpGet]
+        public HttpResponseMessage Download(int id, string token)
         {
-            var result = default(HttpResponseMessage);
-            using (var context = new CSET_Context())
+            int assessmentId = Auth.AssessmentForUser(token);
+            var fileDescription = _fileRepository.GetFileDescription(id);
+
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            using (CSET_Context context = new CSET_Context())
             {
-                foreach (var f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
+                foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
                 {
                     var stream = new MemoryStream(f.Data);
                     result.Content = new StreamContent(stream);
                     result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.ContentType);
                     result.Content.Headers.Add("content-disposition", "attachment; filename=\"" + f.Name + "\"");
-                    result = Request.CreateResponse(HttpStatusCode.OK);
+                    return result;
                 }
             }
-            return Task.FromResult(result);
+
+            return null;
         }
     }
 }

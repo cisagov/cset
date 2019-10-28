@@ -19,7 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
-            var firewalls = network.Nodes.Values.Where(x => !x.IsFirewallUnidirectional).ToList();
+            var firewalls = network.Nodes.Values.Where(x => !x.IsFirewallUnidirectional && x.isMultipleConnections).ToList();
             foreach (var firewall in firewalls)
             {
                 CheckRule34(firewall);
