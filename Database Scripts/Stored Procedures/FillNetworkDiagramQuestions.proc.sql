@@ -40,5 +40,7 @@ BEGIN
 		) t 		
 		on a.Question_Or_Requirement_Id = t.question_id
 		where assessment_id is null
+		and Question_Or_Requirement_Id not in 
+		(select [Question_Or_Requirement_Id] from [ANSWER] where [Assessment_Id] = @assessment_id and [Component_Guid] = CAST(CAST(0 AS BINARY) AS UNIQUEIDENTIFIER))
 END
 
