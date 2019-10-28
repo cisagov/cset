@@ -24,14 +24,13 @@ namespace CSETWeb_Api.Controllers
         public Task<HttpResponseMessage> Download(int id, string token)
         {
             var assessmentId = Auth.AssessmentForUser(token);
-
             var file = fileRepo.GetFileDescription(id);
             var stream = new MemoryStream(file.Data);
-            var fileContent = new StreamContent(stream);
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-
+            
             var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new MultipartContent { fileContent };
+            result.Content = new StreamContent(stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+            result.Content.Headers.Add("content-disposition", $"attachment; filename=\"{file.Name}\"");
             return Task.FromResult(result);
         }
     }
