@@ -54,11 +54,8 @@ namespace CSETWeb_Api.Controllers
             {
                 using (var db = new CSET_Context())
                 {
-
                     try
                     {
-
-
                         BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
                         XmlDocument xDoc = new XmlDocument();
                         if (string.IsNullOrEmpty(req.DiagramXml))
@@ -67,7 +64,6 @@ namespace CSETWeb_Api.Controllers
                         }
                         xDoc.LoadXml(req.DiagramXml);
                         dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
-
                     }
                     catch (Exception e)
                     {
