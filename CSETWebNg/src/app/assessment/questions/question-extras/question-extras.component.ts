@@ -50,6 +50,7 @@ export class QuestionExtrasComponent implements OnInit {
 
   @Input() myQuestion: Question;
   @Output() changeExtras = new EventEmitter();
+  @Output() changeComponents = new EventEmitter();
 
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
@@ -82,9 +83,14 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
-      //maxHeight: window.screen.availHeight,
       data: {ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id,  myQuestion: this.myQuestion},
     });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.changeComponents.emit(result);
+      }
+    });
+
 
   }
   /**

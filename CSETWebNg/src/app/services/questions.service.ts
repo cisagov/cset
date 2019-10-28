@@ -40,6 +40,7 @@ const headers = {
 
 @Injectable()
 export class QuestionsService {
+  
 
   /**
    * Filter settings
@@ -105,7 +106,10 @@ export class QuestionsService {
 
 
     // if we don't have domain names in this array of questions, there's no maturity filters to worry about
-    if (!this.domains || !this.domains[0].DomainName) {
+    if (!this.domains){
+      return;
+    } 
+    else if(!this.domains[0] || !this.domains[0].DomainName) {
       return;
     }
 
@@ -180,6 +184,9 @@ export class QuestionsService {
     return this.http.post(this.configSvc.apiUrl + 'questionlist', '*', headers);
   }
 
+  getQuestionListOverridesOnly() {
+    return this.http.post(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', '*', headers);
+  }
   /**
    * Posts an Answer to the API.
    * @param answer

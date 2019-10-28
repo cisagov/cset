@@ -296,14 +296,18 @@ namespace CSETWeb_Api.BusinessManagers
                     .OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
                 AddResponse(resp, context, list, "Component Defaults");
-
-                var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
-                    .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName)
-                    .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
-                    .ToList();
-
-                AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
+                BuildOverridesOnly(resp, context);
             }
+        }
+
+        public void BuildOverridesOnly(QuestionResponse resp, CSET_Context context)
+        {
+            var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
+                .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName)
+                .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
+                .ToList();
+
+            AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
         }
 
         private void AddResponseComponentOverride(QuestionResponse resp, CSET_Context context, List<Answer_Components_Base> list, string listname)
@@ -317,6 +321,7 @@ namespace CSETWeb_Api.BusinessManagers
             string componentName = null;
             string curGroupHeading = null;
             string curSubHeading = null;
+            int prevQuestionId = 0;
             QuestionSubCategoryComparator comparator =  new QuestionSubCategoryComparator();
 
             int displayNumber = 0;
@@ -334,7 +339,9 @@ namespace CSETWeb_Api.BusinessManagers
                         GroupHeadingId = dbQ.GroupHeadingId,
                         StandardShortName = listname,
                         Symbol_Name = dbQ.Symbol_Name,
-                        ComponentName = dbQ.ComponentName
+                        ComponentName = dbQ.ComponentName,
+                        IsOverride = true
+                        
                     };
                     groupList.Add(qg);
                     symbolType = dbQ.Symbol_Name;
@@ -346,7 +353,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
-                if ((dbQ.Universal_Sub_Category != curSubHeading))
+                if ((dbQ.Universal_Sub_Category != curSubHeading)||(dbQ.Question_Id == prevQuestionId))
                 {
                     sc = new QuestionSubCategory()
                     {
@@ -360,7 +367,7 @@ namespace CSETWeb_Api.BusinessManagers
                     qg.SubCategories.Add(sc);
                     curSubHeading = dbQ.Universal_Sub_Category;
                 }
-
+                prevQuestionId = dbQ.Question_Id;
                 qa = new QuestionAnswer()
                 {
                     DisplayNumber = (++displayNumber).ToString(),
