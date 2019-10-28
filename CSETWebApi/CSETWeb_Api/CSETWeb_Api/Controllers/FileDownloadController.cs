@@ -19,35 +19,28 @@ namespace CSETWeb_Api.Controllers
 {
     public class FileDownloadController : ApiController
     {
-        private readonly FileRepository _fileRepository = new FileRepository();
+        private readonly FileRepository fileRepo = new FileRepository();
 
-        public FileDownloadController()
-        {
-        }
-
-        [Route("api/files/download/{id}")]
         [HttpGet]
-        public HttpResponseMessage Download(int id, string token)
+        [Route("api/files/download/{id}")]
+        public Task<HttpResponseMessage> Download(int id, string token)
         {
-            int assessmentId = Auth.AssessmentForUser(token);
-            var fileDescription = _fileRepository.GetFileDescription(id);
-
-
-            var result = new HttpResponseMessage(HttpStatusCode.OK);
-
-            using (CSET_Context context = new CSET_Context())
+            var assessmentId = Auth.AssessmentForUser(token);
+            var fileDescription = fileRepo.GetFileDescription(id);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            using (var context = new CSET_Context())
             {
-                foreach (DOCUMENT_FILE f in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
+                var content = new MultipartContent();
+                foreach (var file in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
                 {
-                    var stream = new MemoryStream(f.Data);
-                    result.Content = new StreamContent(stream);
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.ContentType);
-                    result.Content.Headers.Add("content-disposition", "attachment; filename=\"" + f.Name + "\"");
-                    return result;
+                    var stream = new MemoryStream(file.Data);
+                    var fileContent = new StreamContent(stream);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+                    content.Add(fileContent);
                 }
+                result.Content = content;
             }
-
-            return null;
+            return Task.FromResult(result);
         }
     }
 }
