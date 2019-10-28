@@ -361,14 +361,13 @@ CsetUtils.saveDiagram = async function (req) {
                         break;
                 }
             }
-        });
-        myTestSema.release();
-        myTestSema.purgeAllButLast();
-        hideSaving();
+        });               
     } catch (error) {
         //console.log(error);
     } finally{  
-        
+           myTestSema.release();
+           myTestSema.purgeAllButLast();
+           hideSaving();
     }
 }
 CsetUtils.hideSaving =function() {
