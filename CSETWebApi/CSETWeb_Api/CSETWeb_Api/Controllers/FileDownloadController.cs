@@ -6,9 +6,7 @@
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
 using DataAccess;
-using DataLayerCore.Model;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,20 +24,14 @@ namespace CSETWeb_Api.Controllers
         public Task<HttpResponseMessage> Download(int id, string token)
         {
             var assessmentId = Auth.AssessmentForUser(token);
-            var fileDescription = fileRepo.GetFileDescription(id);
+
+            var file = fileRepo.GetFileDescription(id);
+            var stream = new MemoryStream(file.Data);
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+
             var result = Request.CreateResponse(HttpStatusCode.OK);
-            using (var context = new CSET_Context())
-            {
-                var content = new MultipartContent();
-                foreach (var file in context.DOCUMENT_FILE.Where(x => x.Document_Id == id))
-                {
-                    var stream = new MemoryStream(file.Data);
-                    var fileContent = new StreamContent(stream);
-                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-                    content.Add(fileContent);
-                }
-                result.Content = content;
-            }
+            result.Content = new MultipartContent { fileContent };
             return Task.FromResult(result);
         }
     }
