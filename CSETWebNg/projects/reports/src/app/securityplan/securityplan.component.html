@@ -279,12 +279,15 @@
 
     <!--Network Diagram-->
     <div class="page-break" *ngIf="componentCount > 0">
-        <h2>1.2 Network Diagram</h2>
-
-        <div style="text-align: center;" [innerHTML]="networkDiagramImage">
+        <h1>Network Diagram</h1>
+        <div style="display: table; height: 8in">
+            <div style="padding: 50% 0; height: 0">
+                <div style="width: 8in; display: block; transform-origin: top left; transform: rotate(90deg) translate(0, -100%); margin-top: -50%"
+                    [innerHTML]="networkDiagramImage">
+                </div>
+            </div>
         </div>
     </div>
-
 
 
     <div class="page-break">
@@ -818,16 +821,16 @@
         <h1>
             Diagram Component Inventory
         </h1>
-        <div *ngFor="let zoneList of response?.Zones">            
+        <div *ngFor="let zoneList of response?.Zones">
             <table class="cset-table">
                 <tr>
-                    <th>Zone &nbsp;-&nbsp;{{zoneList[0].Zone_Name}}</th>                
+                    <th>Zone &nbsp;-&nbsp;{{zoneList[0].Zone_Name}}</th>
                     <th>SAL Level&nbsp;-&nbsp;{{zoneList[0].Universal_Sal_Level}}</th>
-                </tr>            
+                </tr>
                 <tr *ngFor="let inventoryItem of zoneList">
                     <td>{{inventoryItem.Diagram_Component_Type}}</td>
                     <td>{{inventoryItem.label}}</td>
-                </tr>                
+                </tr>
             </table>
         </div>
     </div>

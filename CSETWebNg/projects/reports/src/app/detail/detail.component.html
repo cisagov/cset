@@ -274,8 +274,12 @@
     <!--Network Diagram-->
     <div class="page-break" *ngIf="componentCount > 0">
         <h1>Network Diagram</h1>
-
-        <div style="text-align: center;" [innerHTML]="networkDiagramImage">
+        <div style="display: table; height: 8in">
+            <div style="padding: 50% 0; height: 0">
+                <div style="width: 8in; display: block; transform-origin: top left; transform: rotate(90deg) translate(0, -100%); margin-top: -50%"
+                    [innerHTML]="networkDiagramImage">
+                </div>
+            </div>
         </div>
     </div>
 
