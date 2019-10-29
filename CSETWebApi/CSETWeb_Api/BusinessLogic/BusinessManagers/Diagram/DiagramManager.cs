@@ -178,9 +178,9 @@ namespace CSETWeb_Api.BusinessManagers
                     }
                 }
 
-                // set width to 8 inches to fit print layout
-                xImage.DocumentElement.SetAttribute("width", "8in");
-                xImage.DocumentElement.SetAttribute("height", "");
+                XmlElement xDoc = xImage.DocumentElement;
+                xDoc.SetAttribute("width", "100%");
+                xDoc.SetAttribute("height", "100%");
 
                 return xImage.OuterXml;
             }
