@@ -178,6 +178,10 @@ namespace CSETWeb_Api.BusinessManagers
                     }
                 }
 
+                XmlElement xDoc = xImage.DocumentElement;
+                xDoc.SetAttribute("width", "100%");
+                xDoc.SetAttribute("height", "100%");
+
                 return xImage.OuterXml;
             }
         }

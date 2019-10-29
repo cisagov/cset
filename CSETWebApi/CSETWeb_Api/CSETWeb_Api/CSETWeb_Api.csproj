@@ -4268,7 +4268,6 @@
     <Content Include="Diagram\.travis.yml" />
     <Content Include="Diagram\ChangeLog" />
     <Content Include="Diagram\etc\build\build.properties" />
-    <Content Include="Diagram\etc\build\build.xml.bak" />
     <Content Include="Diagram\etc\build\Xml2Js.class" />
     <Content Include="Diagram\etc\docker\Dockerfile" />
     <Content Include="Diagram\etc\docker\README.md" />

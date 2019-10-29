@@ -567,7 +567,12 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 styleString += "strokeColor=#" + hex + ";";
 
                 // always seems to be exported as '1', regardless of width in 8.1
-                styleString += "strokeWidth=" + ChildValue(edge, "c:linethickness") + ";";
+                var lineThickness = ChildValue(edge, "c:linethickness");
+                if (lineThickness == "2")
+                {
+                    lineThickness = "1";
+                }
+                styleString += "strokeWidth=" + ((lineThickness != null) ? lineThickness : "1") + ";";
 
                 styleString += "endArrow=none;";
 
