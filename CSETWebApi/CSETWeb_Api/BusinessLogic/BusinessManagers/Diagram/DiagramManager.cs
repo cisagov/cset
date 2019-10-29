@@ -178,6 +178,10 @@ namespace CSETWeb_Api.BusinessManagers
                     }
                 }
 
+                // set width to 8 inches to fit print layout
+                xImage.DocumentElement.SetAttribute("width", "8in");
+                xImage.DocumentElement.SetAttribute("height", "");
+
                 return xImage.OuterXml;
             }
         }
