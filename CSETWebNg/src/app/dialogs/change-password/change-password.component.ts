@@ -32,13 +32,14 @@ import { AuthenticationService } from '../../services/authentication.service';
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ChangePasswordComponent implements OnInit {
   message = '';
   warning = false;
   cpwd: ChangePassword = {};
   forceChangePassword = false;
+  msgChangeTempPw = 'Temporary password must be changed on first logon.';
 
   constructor(private auth: AuthenticationService,
     private router: Router,
@@ -50,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
     if (this.warning) {
-      this.message = 'Temporary password must be changed on first logon.';
+      this.message = this.msgChangeTempPw;
     }
   }
 
@@ -61,9 +62,8 @@ export class ChangePasswordComponent implements OnInit {
           this.dialogRef.close();
         },
         error => {
-          console.log((<Error>error).message);
           this.warning = true;
-          this.message = 'Check password inputs.'
+          this.message = error.error;
         });
     }
   }
@@ -71,8 +71,9 @@ export class ChangePasswordComponent implements OnInit {
   cancel() {
     this.dialogRef.close();
 
-    // if canceling out of a change temp password, navigate back to the login
-    if (this.warning) {
+    // if canceling out of a change TEMP password, navigate back to the login
+    // but if cancelling out of a NON-TEMP password change, don't do anything.
+    if (this.warning && this.message === this.msgChangeTempPw) {
       this.auth.logout();
     }
   }
