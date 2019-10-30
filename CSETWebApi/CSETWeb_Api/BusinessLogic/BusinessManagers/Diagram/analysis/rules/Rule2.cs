@@ -10,7 +10,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
     class Rule2 : AbstractRule, IRuleEvaluate
     {
-        
+
         private String rule2 = "The subnet should have an IDS (Intrusion Detection System) or IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, {0}, is correct and that malware has not been able to penetrate past the firewall.";
         private SimplifiedNetwork network;
 
@@ -22,7 +22,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
-            foreach(var firewall in firewalls)
+            foreach (var firewall in firewalls)
             {
                 CheckRule2(firewall);
             }
@@ -39,8 +39,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         private void CheckRule2(NetworkComponent firewall)
         {
             // This code is here because component can be a multiple service component that is IDS and IPS
-            if (firewall.IsIDSOrIPS) 
-            {  
+            if (firewall.IsIDSOrIPS)
+            {
                 return;
             }
 
@@ -48,22 +48,19 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             //if it is in the same zone             
             foreach (NetworkComponent child in firewall.Connections)
             {
-                if (notYetVisited.Add(child.ID))
+                if (child.IsInSameZone(firewall))
                 {
-                    if (child.IsInSameZone(firewall))
+                    if (child.IsIDSOrIPS)
                     {
-                        if (child.IsIDSOrIPS)
-                        {
-                            return;
-                        }
-                        else if (RecurseDownConnections(child, firewall))
-                        {
-                            return;
-                        }
+                        return;
+                    }
+                    else if (RecurseDownConnections(child, firewall))
+                    {
+                        return;
                     }
                 }
             }
-            
+
             String componentName = "unnamed";
             if (!String.IsNullOrWhiteSpace(firewall.ComponentName))
             {
@@ -86,13 +83,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                         {
                             return true;
                         }
-                        else if(RecurseDownConnections(child, firewall))
+                        else if (RecurseDownConnections(child, firewall))
                         {
                             return true;
                         }
                     }
                 }
             }
+
             return false;
         }
     }
