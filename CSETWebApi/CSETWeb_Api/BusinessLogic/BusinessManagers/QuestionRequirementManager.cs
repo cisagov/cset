@@ -231,10 +231,6 @@ namespace CSETWeb_Api.BusinessManagers
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
             }
 
-            InitializeApplicationMode(db);
-            bool isRequirement = (applicationMode == "R");
-
-
 
             // in case a null is passed, store 'unanswered'
             if (string.IsNullOrEmpty(answer.AnswerText))
@@ -247,13 +243,13 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Is_Requirement == isRequirement && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+                            && x.Is_Requirement == answer.Is_Requirement && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
             else if (answer != null)
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId 
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Is_Requirement == isRequirement).FirstOrDefault();
+                && x.Is_Requirement == answer.Is_Requirement).FirstOrDefault();
             }
 
             if (dbAnswer == null)
@@ -264,7 +260,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Assessment_Id = _assessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Number = answer.QuestionNumber;
-            dbAnswer.Is_Requirement = isRequirement;
+            dbAnswer.Is_Requirement = answer.Is_Requirement;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
@@ -379,7 +375,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
-                    Is_Component = dbQ.Is_Component
+                    Is_Component = dbQ.Is_Component,
+                    Is_Requirement = dbQ.Is_Requirement
                 };
 
                 sc.Questions.Add(qa);
@@ -453,7 +450,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
-                    Is_Component = dbQ.Is_Component
+                    Is_Component = dbQ.Is_Component,
+                    Is_Requirement = dbQ.Is_Requirement
                 };
 
                 sc.Questions.Add(qa);
