@@ -373,7 +373,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     // determine the component type
                     int ctype = GetComponentType(cell);
                     if (ctype != 0)
+                    {
                         cn.Component_Symbol_Id = ctype;
+                    }
+                    else
+                    {
+                        throw new Exception("Unrecognized component: " + cell.OuterXml);
+                    }
 
                     nodesList.Add(cn.ComponentGuid, cn);
                 }
@@ -406,7 +412,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
 
 
         /// <summary>
-        /// Determines component type from its image.
+        /// Determines component type from its image or other attributes.
         /// </summary>
         /// <param name="cell"></param>
         /// <returns></returns>
@@ -431,6 +437,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 {
                     string imagePath = styleElement.Substring("image=".Length);
                     var symbol = this.componentSymbols.FirstOrDefault(x => x.File_Name.EndsWith(imagePath.Substring(imagePath.LastIndexOf('/') + 1)));
+                    if (symbol != null)
+                    {
+                        return symbol.Component_Symbol_Id;
+                    }
+                }
+
+                if (styleElement == "msc=1")
+                {
+                    var symbol = this.componentSymbols.FirstOrDefault(x => x.Abbreviation == "MSC");
                     if (symbol != null)
                     {
                         return symbol.Component_Symbol_Id;
