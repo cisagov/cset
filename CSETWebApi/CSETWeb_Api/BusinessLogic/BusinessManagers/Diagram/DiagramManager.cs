@@ -38,8 +38,11 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, int lastUsedComponentNumber, string diagramImage)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req)
         {
+            int lastUsedComponentNumber = req.LastUsedComponentNumber;
+            string diagramImage = req.DiagramSvg;
+
             // the front end sometimes calls 'save' with an empty graph on open.  
             // Need to prevent the javascript from doing that on open, but for now,
             // let's detect an empty graph and not save it.
@@ -59,8 +62,9 @@ namespace CSETWeb_Api.BusinessManagers
                 if (assessmentRecord != null)
                 {
                     DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(db);
+                    
                     XmlDocument oldDoc = new XmlDocument();
-                    if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup))
+                    if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup) && req.revision)
                     {
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
@@ -248,7 +252,11 @@ namespace CSETWeb_Api.BusinessManagers
             db.SaveChanges();
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(newDiagramXml);
-            SaveDiagram(assessmentId, xDoc, 0, String.Empty);
+            SaveDiagram(assessmentId, xDoc, new DiagramRequest()
+            {
+                LastUsedComponentNumber = 0,
+                DiagramSvg = String.Empty
+            });
             return newDiagramXml;
         }
 
@@ -732,7 +740,10 @@ namespace CSETWeb_Api.BusinessManagers
                     var xDoc = new XmlDocument();
                     xDoc.LoadXml(xml);
                     if (assessment != null)
-                        SaveDiagram(assessmentId, xDoc, assessment.LastUsedComponentNumber, assessment.Diagram_Image);
+                        SaveDiagram(assessmentId, xDoc, new DiagramRequest(){
+                           LastUsedComponentNumber =  assessment.LastUsedComponentNumber,
+                            DiagramSvg = assessment.Diagram_Image
+                        });
                 }
             }
         }
