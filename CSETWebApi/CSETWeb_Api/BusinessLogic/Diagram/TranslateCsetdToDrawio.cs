@@ -263,7 +263,7 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
                 xObject.AppendChild(xZone);
                 xZone.SetAttribute("vertex", "1");
 
-                xZone.SetAttribute("style", "swimlane;fillColor=#FFF;swimlaneFillColor=#FFF;");
+                xZone.SetAttribute("style", "swimlane;msc=1;fillColor=#FFF;swimlaneFillColor=#FFF;");
 
 
                 // determine the parent layer
