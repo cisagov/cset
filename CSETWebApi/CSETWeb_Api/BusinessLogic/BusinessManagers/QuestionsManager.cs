@@ -241,7 +241,8 @@ namespace CSETWeb_Api.BusinessManagers
                     FeedBack = answer?.a?.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
-                    Is_Component = answer?.a.Is_Component ?? false
+                    Is_Component = answer?.a.Is_Component ?? false,
+                    Is_Requirement = answer?.a.Is_Requirement ?? false
                 };
                 if (answer != null)
                 {

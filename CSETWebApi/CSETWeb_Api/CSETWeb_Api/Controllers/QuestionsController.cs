@@ -140,15 +140,15 @@ namespace CSETWeb_Api.Controllers
                 return qm.StoreComponentAnswer(answer);
             }
 
-            if (applicationMode.ToLower().StartsWith("questions"))
-            {
-                QuestionsManager qm = new QuestionsManager(assessmentId);
-                return qm.StoreAnswer(answer);
-            }
-            else
+            if (answer.Is_Requirement)
             {
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 return rm.StoreAnswer(answer);
+            }
+            else
+            {
+                QuestionsManager qm = new QuestionsManager(assessmentId);
+                return qm.StoreAnswer(answer);
             }
         }
 

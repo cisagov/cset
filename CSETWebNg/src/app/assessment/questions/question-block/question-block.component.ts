@@ -96,7 +96,7 @@ export class QuestionBlockComponent implements OnInit {
     return this.matLevelMap.get(q.MaturityLevel);
   }
 
-  refreshComponentOverrides(){
+  refreshComponentOverrides() {
     this.changeComponents.emit();
   }
 
@@ -218,7 +218,8 @@ export class QuestionBlockComponent implements OnInit {
         FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed,
-        Is_Component: false,
+        Is_Component: q.Is_Component,
+        Is_Requirement: q.Is_Requirement,
         ComponentGuid: ''
       };
 
@@ -256,6 +257,7 @@ export class QuestionBlockComponent implements OnInit {
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
+      Is_Requirement: q.Is_Requirement,
       ComponentGuid: ''
     };
 
@@ -286,6 +288,7 @@ export class QuestionBlockComponent implements OnInit {
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
+        Is_Requirement: q.Is_Requirement,
         ComponentGuid: ''
       };
 
@@ -333,6 +336,7 @@ export class QuestionBlockComponent implements OnInit {
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
+      Is_Requirement: q.Is_Requirement,
       ComponentGuid: ''
     };
 
