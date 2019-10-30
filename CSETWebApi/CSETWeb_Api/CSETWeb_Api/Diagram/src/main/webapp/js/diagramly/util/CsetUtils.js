@@ -268,10 +268,11 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
 }
 
-CsetUtils.PersistDataToCSET = async function (editor, xml) {
+CsetUtils.PersistDataToCSET = async function (editor, xml,revision) {
     const req = {
         DiagramXml: xml,
-        LastUsedComponentNumber: sessionStorage.getItem("last.number")
+        LastUsedComponentNumber: sessionStorage.getItem("last.number"),
+        revision: revision
     };
 
     const bg = '#ffffff';

@@ -38,7 +38,7 @@ CSETFile.prototype.saveFile = function (title, revision, success, error) {
     const data = this.getData();
     const empty = this.isEmpty();
     if (data && !empty) {
-        CsetUtils.PersistDataToCSET(this.ui.editor, data).then(() => {
+        CsetUtils.PersistDataToCSET(this.ui.editor, data, revision).then(() => {
             this.setModified(false);
             this.contentChanged();
             if (success) {

@@ -63,7 +63,7 @@ namespace CSETWeb_Api.Controllers
                             req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
                         }
                         xDoc.LoadXml(req.DiagramXml);
-                        dm.SaveDiagram((int)assessmentId, xDoc, req.LastUsedComponentNumber, req.DiagramSvg);
+                        dm.SaveDiagram((int)assessmentId, xDoc, req);
                     }
                     catch (Exception e)
                     {
