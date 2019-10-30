@@ -12,9 +12,14 @@ namespace CSETWeb_Api.Models
 {
     public class DiagramRequest
     {
+        public DiagramRequest()
+        {
+            this.revision = true;
+        }
         public string DiagramXml;
         public int LastUsedComponentNumber;
         public string DiagramSvg;
+        public bool revision;
     }
 
     public class DiagramResponse
