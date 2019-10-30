@@ -156,8 +156,6 @@ namespace CSETWeb_Api.BusinessManagers
 
                 if (selectedStandards != null)
                 {
-
-
                     foreach (string std in selectedStandards)
                     {
                         db.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
@@ -181,15 +179,22 @@ namespace CSETWeb_Api.BusinessManagers
             return counts;
         }
 
+
+        /// <summary>
+        /// Clears any other selected standards and adds the default standard.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public QuestionRequirementCounts PersistDefaultSelectedStandard(int assessmentId)
         {
             using (var db = new CSET_Context())
             {
+                var result = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
+                db.AVAILABLE_STANDARDS.RemoveRange(result);
+
                 var selectedStandards = GetDefaultStandardsList();
                 if (selectedStandards.Any())
                 {
-
-
                     foreach (string std in selectedStandards)
                     {
                         db.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
