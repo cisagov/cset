@@ -218,7 +218,7 @@ export class QuestionBlockComponent implements OnInit {
         FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
         Reviewed: q.Reviewed,
-        Is_Component: false,
+        Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
         ComponentGuid: ''
       };
