@@ -83,10 +83,10 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
-      data: {ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id,  myQuestion: this.myQuestion},
+      data: { ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id, myQuestion: this.myQuestion },
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.changeComponents.emit(result);
       }
     });
@@ -124,26 +124,26 @@ export class QuestionExtrasComponent implements OnInit {
 
     // Call the API for content
     this.questionsSvc.getDetails(this.myQuestion.QuestionId,
-        this.myQuestion.Is_Component).subscribe(
-      (details) => {
-        this.extras = details;
-        // populate my details with the first "non-null" tab
-        this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
+      this.myQuestion.Is_Component).subscribe(
+        (details) => {
+          this.extras = details;
+          // populate my details with the first "non-null" tab
+          this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
 
-        // add questionIDs to related questions for debug if configured to do so
-        if (this.configSvc.showQuestionAndRequirementIDs()) {
-          if (this.tab) {
-            if (this.tab.IsComponent) {
-            } else {
-              if (!!this.tab.QuestionsList) {
-                this.tab.QuestionsList.forEach((q: any) => {
-                  q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
-                });
+          // add questionIDs to related questions for debug if configured to do so
+          if (this.configSvc.showQuestionAndRequirementIDs()) {
+            if (this.tab) {
+              if (this.tab.IsComponent) {
+              } else {
+                if (!!this.tab.QuestionsList) {
+                  this.tab.QuestionsList.forEach((q: any) => {
+                    q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+                  });
+                }
               }
             }
           }
-        }
-      });
+        });
   }
 
   /**
@@ -192,6 +192,7 @@ export class QuestionExtrasComponent implements OnInit {
         MarkForReview: false,
         Reviewed: false,
         Is_Component: this.myQuestion.Is_Component,
+        Is_Requirement: this.myQuestion.Is_Requirement,
         ComponentGuid: ''
       };
 

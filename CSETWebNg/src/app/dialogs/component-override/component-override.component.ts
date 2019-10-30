@@ -36,23 +36,23 @@ import { QuestionsService } from '../../services/questions.service';
 })
 export class ComponentOverrideComponent {
 
-  questions:any[]=[];
-  loading:boolean=true;
+  questions: any[] = [];
+  loading: boolean = true;
   questionChanged: boolean;
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
-  public configSvc: ConfigService, public questionsSvc: QuestionsService,
-  @Inject(MAT_DIALOG_DATA) public data: any) {
+    public configSvc: ConfigService, public questionsSvc: QuestionsService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     dialog.beforeClose().subscribe(() => dialog.close(this.questionChanged));
     this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId,
-      data.Component_Symbol_Id).subscribe((x:any) =>{
-      this.questions = x;
-      this.loading = false;
-      this.questionChanged = false;
-    });
+      data.Component_Symbol_Id).subscribe((x: any) => {
+        this.questions = x;
+        this.loading = false;
+        this.questionChanged = false;
+      });
   }
 
   storeAnswer(q: any, newAnswerValue: string) {
-    // if they clicked on the same answer that was previously set, "un-set" it	
+    // if they clicked on the same answer that was previously set, "un-set" it
     if (q.Answer === newAnswerValue) {
       newAnswerValue = "U";
     }
@@ -69,6 +69,7 @@ export class ComponentOverrideComponent {
       MarkForReview: false,
       Reviewed: false,
       Is_Component: q.Is_Component,
+      Is_Requirement: q.Is_Requirement,
       ComponentGuid: q.Component_GUID
     };
 
