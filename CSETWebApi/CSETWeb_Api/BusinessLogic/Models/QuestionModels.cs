@@ -107,6 +107,7 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string MaturityLevel { get; set; }
         public bool Is_Component { get; set; }
+        public bool Is_Requirement { get; set; }
     }
 
 
@@ -135,6 +136,8 @@ namespace CSETWeb_Api.Models
         /// This field was added for NCUA/ACET support.
         /// </summary>
         public bool Reviewed;
+
+        public bool Is_Requirement;
 
         public bool Is_Component;
     }

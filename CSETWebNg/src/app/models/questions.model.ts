@@ -91,6 +91,7 @@ export interface Question {
     Reviewed: boolean;
     MaturityLevel: string;
     Is_Component: boolean;
+    Is_Requirement: boolean;
     ExtrasExpanded: boolean;
     Visible: boolean;
 }
@@ -105,6 +106,7 @@ export class Answer {
     MarkForReview: boolean;
     Reviewed: boolean;
     Is_Component: boolean;
+    Is_Requirement: boolean;
     ComponentGuid: string;
 }
 
