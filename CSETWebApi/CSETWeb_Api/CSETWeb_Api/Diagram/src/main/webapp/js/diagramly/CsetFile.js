@@ -25,7 +25,7 @@ CSETFile.prototype.isRenamable = function () {
 };
 
 CSETFile.prototype.save = function (revision, success, error) {
-    this.saveFile(this.title, revision, success, error);
+    this.saveAs(this.title, success, error);
 };
 
 CSETFile.prototype.saveAs = function (title, success, error) {
