@@ -25,7 +25,7 @@ CSETFile.prototype.isRenamable = function () {
 };
 
 CSETFile.prototype.save = function (revision, success, error) {
-    this.saveAs(this.title, success, error);
+    this.saveFile(this.title, revision, success, error);
 };
 
 CSETFile.prototype.saveAs = function (title, success, error) {
@@ -38,7 +38,7 @@ CSETFile.prototype.saveFile = function (title, revision, success, error) {
     const data = this.getData();
     const empty = this.isEmpty();
     if (data && !empty) {
-        CsetUtils.PersistDataToCSET(this.ui.editor, data).then(() => {
+        CsetUtils.PersistDataToCSET(this.ui.editor, data, revision).then(() => {
             this.setModified(false);
             this.contentChanged();
             if (success) {

@@ -193,23 +193,38 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             context.SaveChanges();
 
             LayerManager layers = new LayerManager(context, assessment_id);
-
+            Dictionary<Guid, ASSESSMENT_DIAGRAM_COMPONENTS> adcDictionary = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessment_id).ToDictionary(x => x.Component_Guid, x => x);
             foreach (var newNode in differences.AddedNodes)
             {
-                ASSESSMENT_DIAGRAM_COMPONENTS adc = new ASSESSMENT_DIAGRAM_COMPONENTS()
+                ASSESSMENT_DIAGRAM_COMPONENTS adc;
+                if (adcDictionary.TryGetValue(newNode.Key, out adc))
                 {
-                    Assessment_Id = assessment_id,
-                    Component_Guid = newNode.Key,
-                    Component_Symbol_Id = newNode.Value.Component_Symbol_Id,
-                    DrawIO_id = newNode.Value.ID,
-                    Parent_DrawIO_Id = newNode.Value.Parent_id,
-                    label = newNode.Value.ComponentName,
-                    Layer_Id = null,
-                    Zone_Id = null
-                };
-                context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(adc);
+                    adc.Assessment_Id = assessment_id;
+                    adc.Component_Guid = newNode.Key;
+                    adc.Component_Symbol_Id = newNode.Value.Component_Symbol_Id;
+                    adc.DrawIO_id = newNode.Value.ID;
+                    adc.Parent_DrawIO_Id = newNode.Value.Parent_id;
+                    adc.label = newNode.Value.ComponentName;
+                }
+                else
+                {
+
+                    adc = new ASSESSMENT_DIAGRAM_COMPONENTS()
+                    {
+                        Assessment_Id = assessment_id,
+                        Component_Guid = newNode.Key,
+                        Component_Symbol_Id = newNode.Value.Component_Symbol_Id,
+                        DrawIO_id = newNode.Value.ID,
+                        Parent_DrawIO_Id = newNode.Value.Parent_id,
+                        label = newNode.Value.ComponentName,
+                        Layer_Id = null,
+                        Zone_Id = null
+                    };
+                    context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(adc);
+                }                
             }
             context.SaveChanges();
+
 
             //tossing the whole approach and doing something different
             //save all containers, layers, and nodes
