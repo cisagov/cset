@@ -29,5 +29,6 @@ namespace DataLayerCore.Model
         public string ZoneName { get; set; }
         public string SAL { get; set; }
         public Nullable<bool> Mark_For_Review { get; set; }
+        public string Feedback { get; set; }
     }
 }
