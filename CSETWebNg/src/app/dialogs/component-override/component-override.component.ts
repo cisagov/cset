@@ -24,7 +24,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ConfigService } from '../../services/config.service';
-import { Answer } from '../../models/questions.model';
+import { Answer, Question } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
@@ -39,6 +39,11 @@ export class ComponentOverrideComponent {
   questions: any[] = [];
   loading: boolean = true;
   questionChanged: boolean;
+  private _timeoutId: NodeJS.Timeout;
+
+  /**
+   * Constructor.
+   */
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
     public configSvc: ConfigService, public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -48,6 +53,10 @@ export class ComponentOverrideComponent {
         this.questions = x;
         this.loading = false;
         this.questionChanged = false;
+
+        this.questions.forEach(q => {
+          q.AltAnswerText = q.Alternate_Justification;
+        });
       });
   }
 
@@ -63,11 +72,11 @@ export class ComponentOverrideComponent {
       QuestionId: q.Question_Id,
       QuestionNumber: q.Question_Number,
       AnswerText: q.Answer_Text,
-      AltAnswerText: '',
-      Comment: '',
-      FeedBack: '',
-      MarkForReview: false,
-      Reviewed: false,
+      AltAnswerText: q.AltAnswerText,
+      Comment: q.Comment,
+      FeedBack: q.Feedback,
+      MarkForReview: q.MarkForReview,
+      Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
       ComponentGuid: q.Component_GUID
@@ -80,8 +89,8 @@ export class ComponentOverrideComponent {
     this.questionChanged = true;
   }
 
-  close() {
 
+  close() {
     return this.dialog.close(this.questionChanged);
   }
 

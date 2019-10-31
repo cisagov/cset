@@ -220,7 +220,7 @@ export class QuestionBlockComponent implements OnInit {
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
-        ComponentGuid: ''
+        ComponentGuid: q.ComponentGuid
       };
 
       subCatAnswers.Answers.push(answer);
@@ -289,7 +289,7 @@ export class QuestionBlockComponent implements OnInit {
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
-        ComponentGuid: ''
+        ComponentGuid: q.ComponentGuid
       };
 
       this.refreshReviewIndicator();
@@ -337,7 +337,7 @@ export class QuestionBlockComponent implements OnInit {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
-      ComponentGuid: ''
+      ComponentGuid: q.ComponentGuid
     };
 
     this.refreshReviewIndicator();
