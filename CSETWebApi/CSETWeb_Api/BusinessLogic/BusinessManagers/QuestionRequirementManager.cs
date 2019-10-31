@@ -377,7 +377,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Reviewed = dbQ.Reviewed ?? false,
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Is_Requirement = dbQ.Is_Requirement
+                    Is_Requirement = dbQ.Is_Requirement,
+                    FeedBack = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);
@@ -453,7 +454,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Reviewed = dbQ.Reviewed ?? false,
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Is_Requirement = dbQ.Is_Requirement
+                    Is_Requirement = dbQ.Is_Requirement,
+                    FeedBack = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);
