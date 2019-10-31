@@ -298,9 +298,10 @@ namespace CSETWeb_Api.BusinessManagers
 
         public void BuildOverridesOnly(QuestionResponse resp, CSET_Context context)
         {
+            // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
                 .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName).ThenBy(x => x.Component_Guid)
-                .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
+                .ThenBy(x => x.Universal_Sub_Category)
                 .ToList();
 
             AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
@@ -377,7 +378,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Reviewed = dbQ.Reviewed ?? false,
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Is_Requirement = dbQ.Is_Requirement
+                    Is_Requirement = dbQ.Is_Requirement,
+                    FeedBack = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);
@@ -453,7 +455,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Reviewed = dbQ.Reviewed ?? false,
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Is_Requirement = dbQ.Is_Requirement
+                    Is_Requirement = dbQ.Is_Requirement,
+                    FeedBack = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);
