@@ -56,7 +56,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers
                     component = item
                 });
             }
-
             var list2 = (from b in db.DIAGRAM_CONTAINER
                          where b.Assessment_Id == assessment_id
                          select b);

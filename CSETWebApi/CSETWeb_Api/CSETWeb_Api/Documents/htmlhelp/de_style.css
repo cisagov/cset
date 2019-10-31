@@ -117,12 +117,6 @@ span.de_065E82921A
 	font-size: 14pt;
 	color:#4951b6;
 }
-span.de_066BA0965E
-{
-	font-family: "Arial";
-	font-size: 11pt;
-	color:#ffa800;
-}
 span.de_1FF6BF54A0
 {
 	font-family: "Arial";
@@ -135,10 +129,6 @@ span.de_23C19DE48C
 	font-size: 11pt;
 	color:#000000;
 }
-span.de_28DC4261C2
-{
-	color:#003366;
-}
 span.de_2B94C39861
 {
 	color:#0000ff;
@@ -149,12 +139,6 @@ span.de_2BB7AA1836
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#0066b2;
-}
-span.de_3B07C16F62
-{
-	font-family: "Arial";
-	font-size: 11pt;
-	color:#004000;
 }
 span.de_3E0818D7F1
 {
@@ -192,13 +176,6 @@ span.de_51752156DC
 {
 	color:#000000;
 }
-span.de_520314A21F
-{
-	font-family: "Arial";
-	font-size: 11pt;
-	color:#ff003c;
-	text-decoration:underline;
-}
 span.de_56F4564E24
 {
 	font-family: "Arial";
@@ -210,11 +187,6 @@ span.de_5D94B843DD
 	font-family: "Segoe UI Semilight";
 	font-size: 12pt;
 	color:#000000;
-}
-span.de_5FAC22D144
-{
-	color:#ff3600;
-	text-decoration:underline;
 }
 span.de_68B99ACC5C
 {
@@ -246,10 +218,6 @@ span.de_8441C0A894
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#ff003c;
-}
-span.de_8875473D98
-{
-	color:#ff3600;
 }
 span.de_8C403700ED
 {
@@ -287,10 +255,6 @@ span.de_CC7DAF531E
 	font-size: 10pt;
 	color:#000000;
 }
-span.de_CED2805213
-{
-	color:#ff003c;
-}
 span.de_D3F94E6A1D
 {
 	font-family: "Arial";
@@ -309,13 +273,6 @@ span.de_E71183D815
 	font-family: "Times New Roman";
 	font-size: 13pt;
 	color:#000000;
-}
-span.de_EECA0A62F9
-{
-	font-family: "Arial";
-	font-size: 11pt;
-	color:#ff3600;
-	text-decoration:underline;
 }
 span.de_FE04B87F3C
 {
@@ -1710,42 +1667,6 @@ span.de_FFB638AC42
 	counter-increment: list-counter-76;
 }
 .list-counter-76 > div > div[class='list-marker-chm'] {
-	display: inline-block;
-	text-align: left;
-	zoom: 1;
-	padding: 0;
-	margin: 0;
-	*display: inline;
-}
-.list-counter-77 > div > * {
-	text-indent: 0px;}
-.list-counter-77 > div > div[class='list-marker']:before {
-	display: inline-block;
-	text-align: left;
-	padding: 0;
-	margin: 0;
-	content: '' counter(list-counter-77, disc) '\00a0';
-	counter-increment: list-counter-77;
-}
-.list-counter-77 > div > div[class='list-marker-chm'] {
-	display: inline-block;
-	text-align: left;
-	zoom: 1;
-	padding: 0;
-	margin: 0;
-	*display: inline;
-}
-.list-counter-78 > div > * {
-	text-indent: 0px;}
-.list-counter-78 > div > div[class='list-marker']:before {
-	display: inline-block;
-	text-align: left;
-	padding: 0;
-	margin: 0;
-	content: '' counter(list-counter-78, disc) '\00a0';
-	counter-increment: list-counter-78;
-}
-.list-counter-78 > div > div[class='list-marker-chm'] {
 	display: inline-block;
 	text-align: left;
 	zoom: 1;

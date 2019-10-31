@@ -164,7 +164,7 @@
 	/**
 	 * Link for scratchpad help.
 	 */
-    EditorUi.scratchpadHelpLink = 'https://desk.draw.io/support/solutions/articles/16000042367';
+    EditorUi.scratchpadHelpLink = '../../../../Documents/htmlhelp/home__view_menu.htm?ms=AAAA&st=MA%3D%3D&sct=MTUwMA%3D%3D&mw=MjQy#ScratchPad';
 
 	/**
 	 * Contains the default XML for an empty diagram.
