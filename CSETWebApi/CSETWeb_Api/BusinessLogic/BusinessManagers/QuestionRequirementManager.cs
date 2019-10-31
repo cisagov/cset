@@ -299,7 +299,7 @@ namespace CSETWeb_Api.BusinessManagers
         public void BuildOverridesOnly(QuestionResponse resp, CSET_Context context)
         {
             var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
-                .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName)
+                .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName).ThenBy(x => x.Component_Guid)
                 .ThenBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category)
                 .ToList();
 
