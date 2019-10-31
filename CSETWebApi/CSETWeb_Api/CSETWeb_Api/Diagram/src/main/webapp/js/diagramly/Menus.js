@@ -2819,7 +2819,7 @@
 				
 				if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
 				{
-					this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000042367');
+					this.addLinkToItem(item, '../../../../Documents/htmlhelp/home__view_menu.htm?ms=AAAA&st=MA%3D%3D&sct=MTUwMA%3D%3D&mw=MjQy#ScratchPad');
 				}
 			}
 			
