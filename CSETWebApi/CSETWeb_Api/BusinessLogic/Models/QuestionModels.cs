@@ -107,6 +107,7 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string MaturityLevel { get; set; }
         public bool Is_Component { get; set; }
+        public Guid ComponentGuid { get; set; }
         public bool Is_Requirement { get; set; }
     }
 

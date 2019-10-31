@@ -242,6 +242,7 @@ namespace CSETWeb_Api.BusinessManagers
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
                     Is_Component = answer?.a.Is_Component ?? false,
+                    ComponentGuid = answer?.a.Component_Guid ?? Guid.Empty,
                     Is_Requirement = answer?.a.Is_Requirement ?? false
                 };
                 if (answer != null)
@@ -290,7 +291,6 @@ namespace CSETWeb_Api.BusinessManagers
                                    where a.Assessment_Id == assessmentId
                                     && a.Question_Id == question_id
                                     && a.Component_Symbol_Id == Component_Symbol_Id
-                                    //&& a.Component_GUID == Guid.Empty
                                     select a;
                 IQueryable<Answer_Components> answeredQuestionList = context.Answer_Components.Where(a =>
                     a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
