@@ -245,9 +245,6 @@
 <loc>http://using_the_multiple_services_component__msc_.htm</loc>
 </url>
 <url>
-<loc>http://msc_service_details.htm</loc>
-</url>
-<url>
 <loc>http://component_types.htm</loc>
 </url>
 <url>
@@ -371,7 +368,13 @@
 <loc>http://components_summary.htm</loc>
 </url>
 <url>
-<loc>http://components_by_component_type.htm</loc>
+<loc>http://ranked_categories.htm</loc>
+</url>
+<url>
+<loc>http://results_by_category.htm</loc>
+</url>
+<url>
+<loc>http://component_type.htm</loc>
 </url>
 <url>
 <loc>http://network_warnings.htm</loc>

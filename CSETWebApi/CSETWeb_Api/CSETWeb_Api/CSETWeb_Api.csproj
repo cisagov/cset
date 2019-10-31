@@ -3434,6 +3434,7 @@
     <Content Include="Documents\htmlhelp\drex_components_summary_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_component_information_custom.png" />
     <Content Include="Documents\htmlhelp\drex_component_information_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_component_type_custom.png" />
     <Content Include="Documents\htmlhelp\drex_component_type_override_custom.png" />
     <Content Include="Documents\htmlhelp\drex_component_type_override_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_component_type_override_custom_3.png" />
@@ -3453,6 +3454,8 @@
     <Content Include="Documents\htmlhelp\drex_cybersecurity_framework_description_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom.png" />
     <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_4.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_3.png" />
@@ -3466,6 +3469,7 @@
     <Content Include="Documents\htmlhelp\drex_diagram_inventory_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_screen_layout_custom.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_screen_layout_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_diagram_screen_layout_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_2.png" />
@@ -3810,6 +3814,7 @@
     <Content Include="Documents\htmlhelp\sal_window_fips_selection.htm" />
     <Content Include="Documents\htmlhelp\sal_window_general_selection.htm" />
     <Content Include="Documents\htmlhelp\sal_window_simple_selection.htm" />
+    <Content Include="Documents\htmlhelp\scratch_pad.htm" />
     <Content Include="Documents\htmlhelp\search_screen.htm" />
     <Content Include="Documents\htmlhelp\sitemap.xml" />
     <Content Include="Documents\htmlhelp\sitemap_index.xml" />
