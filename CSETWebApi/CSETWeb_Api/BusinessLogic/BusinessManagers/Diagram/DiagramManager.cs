@@ -22,6 +22,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers;
 using CSETWeb_Api.BusinessLogic.Diagram;
 using System.Data.SqlClient;
 
+
 namespace CSETWeb_Api.BusinessManagers
 {
     public class DiagramManager
@@ -58,6 +59,23 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
+                HashSet<string> validGuid = new HashSet<string>();
+                XmlNodeList cells  = xDoc.SelectNodes("//root/object[@ComponentGuid]");
+                foreach(XmlElement c in cells)
+                {   
+                    validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
+                }
+
+                var list = db.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentID).ToList();
+                foreach(var i in list)
+                {
+                    if (!validGuid.Contains(i.Component_Guid.ToString()))
+                    {
+                        db.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(i);
+                    }
+                }
+                db.SaveChanges();
+
                 var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
                 if (assessmentRecord != null)
                 {
