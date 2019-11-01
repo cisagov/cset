@@ -11,7 +11,9 @@ Download Windows Installer
 						
 -------------------------------------------------------------------------
 File Checksum Integrity Verifier version 2.05.
+
 MD5     9c60a0a10d81b66de59e6578079e0158 
+
 SHA-1   49b5b96531aad99571063b984b3c30686210bbd9 csetstandalone.exe
 ## License
 
