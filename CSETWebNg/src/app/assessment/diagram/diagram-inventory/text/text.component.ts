@@ -15,12 +15,9 @@ export class TextComponent implements OnInit {
     this.getTexts();
   }
 
-  getTexts(){
-    this.diagramSvc.getDiagramText().subscribe((x:any) =>{
+  getTexts() {
+    this.diagramSvc.getDiagramText().subscribe((x: any) => {
       this.texts = x;
-      console.log(x)
     });
   }
-
-  
 }

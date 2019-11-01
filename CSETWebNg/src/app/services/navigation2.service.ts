@@ -25,7 +25,7 @@ export class Navigation2Service {
     { pageClass: 'irp-summary', path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },
 
     //  Diagram
-    { pageClass: 'diagram', path: 'assessment/{:id}/diagram'},
+    { pageClass: 'diagram', path: 'assessment/{:id}/diagram' },
 
     // Questions/Requirements/Statements
     { pageClass: 'questions', path: 'assessment/{:id}/questions' },
@@ -118,7 +118,6 @@ export class Navigation2Service {
     }
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
-    console.log(newPath);
     this.router.navigate([newPath]);
   }
 
