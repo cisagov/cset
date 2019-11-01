@@ -6,7 +6,12 @@
 
 Download Windows Installer
 [CSET 9.2.0 StandAlone Installer](https://github.com/cisagov/cset2/releases/download/v9.2.0/CSETStandAlone.exe)
-
+//
+// File Checksum Integrity Verifier version 2.05.
+//						
+-------------------------------------------------------------------------
+MD5     9c60a0a10d81b66de59e6578079e0158 
+SHA-1   49b5b96531aad99571063b984b3c30686210bbd9 csetstandalone.exe
 ## License
 
 MIT License, Apache License 2.0
