@@ -16,12 +16,9 @@ export class ShapesComponent implements OnInit {
     this.getShapes();
   }
 
-  getShapes(){
-    this.diagramSvc.getDiagramShapes().subscribe((x:any) =>{
+  getShapes() {
+    this.diagramSvc.getDiagramShapes().subscribe((x: any) => {
       this.shapes = x;
-      console.log(x);
     });
   }
-
-  
 }

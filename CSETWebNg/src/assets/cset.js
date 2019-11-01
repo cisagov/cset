@@ -4,5 +4,5 @@
 //   }
 
 function customTooltip(tooltip) {
-    console.log('it got called');
+    
 }

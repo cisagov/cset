@@ -187,7 +187,6 @@ export class SetBuilderService {
      * the application.
      */
     navBreadcrumb(navPath: string) {
-        console.log('navBreadcrumb! ' + navPath);
     }
 
 

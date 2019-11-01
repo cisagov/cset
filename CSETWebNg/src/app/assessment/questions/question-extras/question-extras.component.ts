@@ -465,9 +465,9 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   downloadFile(document) {
-    this.fileSvc.downloadFile(document.Document_Id).subscribe((data: Response) =>
-      console.log(data),
+    this.fileSvc.downloadFile(document.Document_Id).subscribe((data: Response) => {
       // this.downloadFileData(data),
+    },
       error => console.log(error)
     );
   }
