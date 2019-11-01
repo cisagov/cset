@@ -146,18 +146,6 @@ export class LandingPageComponent implements OnInit {
     }
   }
 
-  // newAssessment() {
-  //   this.assessSvc
-  //     .createAssessment()
-  //     .subscribe(
-  //       (response: any) => this.loadAssessment(response.Id),
-  //       error =>
-  //         console.log(
-  //           'Unable to create new assessment: ' + (<Error>error).message
-  //         )
-  //     );
-  // }
-
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
     // first, call the API to see if this is a legal move
     this.assessSvc
@@ -186,7 +174,6 @@ export class LandingPageComponent implements OnInit {
                 this.sortedAssessments.splice(assessmentIndex, 1);
               },
               x => {
-                console.log(x);
                 this.dialog.open(AlertComponent, {
                   data: { messageText: x.statusText }
                 });
