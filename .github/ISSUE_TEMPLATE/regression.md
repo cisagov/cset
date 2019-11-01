@@ -1,7 +1,10 @@
 ---
-
-name: 💥 Regression Report
+name: "\U0001F4A5 Regression Report"
 about: Report unexpected behavior that worked in previous versions
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 ## 💥 Regression Report
