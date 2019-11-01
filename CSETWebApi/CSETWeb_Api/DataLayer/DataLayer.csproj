@@ -92,10 +92,19 @@
     <Compile Include="ASSESSMENT.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ASSESSMENTS_REQUIRED_DOCUMENTATION.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ASSESSMENT_CONTACTS.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ASSESSMENT_DIAGRAM_COMPONENTS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ASSESSMENT_IRP.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ASSESSMENT_IRP_HEADER.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ASSESSMENT_ROLES.cs">
@@ -176,10 +185,49 @@
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FileRepository.cs" />
+    <Compile Include="FILE_KEYWORDS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FILE_REF_KEYS.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FILE_TYPE.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_ASSESSMENT_FACTORS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_COMPONENTS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_DETAILS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_DOMAINS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_FFIEC_MAPPINGS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_HOURS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_HOURS_COMPONENT.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_MATURITY.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_QUESTIONS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_REQUIREMENTS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_REVIEWTYPE.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINANCIAL_TIERS.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FINDING.cs">
@@ -239,6 +287,9 @@
     <Compile Include="GetComparisonFileSummary_Result.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetPercentageOverall_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GLOBAL_PROPERTIES.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
@@ -247,6 +298,12 @@
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="INFORMATION.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IRP.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IRP_HEADER.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="JWT.cs">
@@ -349,6 +406,18 @@
     <Compile Include="REPORT_STANDARDS_SELECTION.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="REQUIRED_DOCUMENTATION.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="REQUIRED_DOCUMENTATION_HEADERS.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequirementsCustomFramework.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequirementsSetsCustomFramework.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="REQUIREMENT_LEVELS.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
@@ -397,6 +466,9 @@
     <Compile Include="SP80053_FAMILY_ABBREVIATIONS.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Split_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="STANDARD_CATEGORY.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
@@ -436,10 +508,46 @@
     <Compile Include="USER_SECURITY_QUESTIONS.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="usp_GetAssessmentPie_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetComponentsSummaryPage_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_getComponentsSummary_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetComponentTypesPage_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_getComponentTypes_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="usp_GetOverallRankedCategoriesPage_Result.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="usp_GetRankedQuestions_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_GetStandardsSummaryPage_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_getStandardsSummary_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_getStandardSummaryOverall_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_MaturityDetailsCalculations_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_MaturityDetailsCalculations_Result1.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_StatementsReviewedTabTotals_Result.cs">
+      <DependentUpon>WebDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usp_StatementsReviewed_Result.cs">
       <DependentUpon>WebDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="VIEW_QUESTIONS_STATUS.cs">

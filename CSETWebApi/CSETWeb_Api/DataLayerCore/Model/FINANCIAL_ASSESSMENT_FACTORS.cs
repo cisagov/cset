@@ -18,6 +18,8 @@ namespace DataLayerCore.Model
         [StringLength(255)]
         public string AssessmentFactor { get; set; }
         public int AssessmentFactorWeight { get; set; }
+        [StringLength(50)]
+        public string Acronym { get; set; }
 
         [InverseProperty("AssessmentFactor")]
         public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }

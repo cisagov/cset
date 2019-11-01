@@ -1,0 +1,76 @@
+<div *ngIf="acetDashboard" class="white-panel oy-auto d-flex flex-column flex-11a">  
+  <div class="mt-3 mb-3">
+      <h4>Inherent Risk Profile Summary</h4>
+      <table class="cset-table irp-table mb-2">
+          <tr>
+              <th rowspan="2">Category</th>
+              <th colspan="5" class="text-center">Inherent Risk</th>
+              <th rowspan="2">Risk Level</th>
+          </tr>
+          <tr>
+              <th class="text-center">1</th>
+              <th class="text-center">2</th>
+              <th class="text-center">3</th>
+              <th class="text-center">4</th>
+              <th class="text-center">5</th>
+          </tr>
+          <tr *ngFor="let irp of acetDashboard.IRPs; let index = index;">
+              <td>{{ irp.HeaderText }}</td>
+              <td class="text-right">{{ irp.RiskCount[0] }}</td>
+              <td class="text-right">{{ irp.RiskCount[1] }}</td>
+              <td class="text-right">{{ irp.RiskCount[2] }}</td>
+              <td class="text-right">{{ irp.RiskCount[3] }}</td>
+              <td class="text-right">{{ irp.RiskCount[4] }}</td>
+              <td class="text-nowrap">{{ irp.Comment }}</td>
+          </tr>
+          <tr class="total-row">
+              <td class="border-table">Totals</td>
+              <td class="border-table text-right">{{ acetDashboard.SumRisk[0] }}</td>
+              <td class="border-table text-right">{{ acetDashboard.SumRisk[1] }}</td>
+              <td class="border-table text-right">{{ acetDashboard.SumRisk[2] }}</td>
+              <td class="border-table text-right">{{ acetDashboard.SumRisk[3] }}</td>
+              <td class="border-table text-right">{{ acetDashboard.SumRisk[4] }}</td>
+              <td class="border-table"></td>
+          </tr>
+      </table>
+
+      <div class="d-table w-100">
+          <div class="d-table-row">
+              <div class="d-table-cell pb-3">
+                  Overall Risk Level is <span class="blue-text font-weight-bold">{{ overrideLabel }}</span>
+              </div>
+          </div>
+          <div class="d-table-row">
+              <div class="d-table-cell pl-3 align-top">
+                  Override Risk Level
+              </div>
+              <div class="d-table-cell align-top">
+                  <select [(ngModel)]="acetDashboard.Override" class="form-control override-select"
+                      (change)="changeInfoIrp();">
+                      <option [ngValue]="0">No Override</option>
+                      <option [ngValue]="1">1 - Least</option>
+                      <option [ngValue]="2">2 - Minimal</option>
+                      <option [ngValue]="3">3 - Moderate</option>
+                      <option [ngValue]="4">4 - Significant</option>
+                      <option [ngValue]="5">5 - Most</option>
+                  </select>
+              </div>
+          </div>
+          <div class="d-table-row"
+              *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+              <div class="d-table-cell pl-3 align-top">
+                  Override Reason
+              </div>
+              <div class="d-table-cell align-top">
+                  <textarea appAutoSize maxlength="150" class="form-control override-div"
+                      [(ngModel)]="acetDashboard.OverrideReason" (blur)="changeInfo();"
+                      placeholder="Please provide an explanation for why the total inherent risk profile is being overriden."></textarea>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="mt-3 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="navSvc2.navBack('irp-summary')">Back</button>
+      <button class="btn btn-primary" (click)="navSvc2.navNext('irp-summary')">Next</button>
+  </div>
+</div>

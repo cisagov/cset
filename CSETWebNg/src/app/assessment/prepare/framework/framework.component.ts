@@ -26,6 +26,7 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { FrameworkService } from '../../../services/framework.service';
 import { Frameworks, SelectedTier } from '../../../models/frameworks.model';
+import { Navigation2Service } from '../../../services/navigation2.service';
 
 @Component({
   selector: 'app-framework',
@@ -38,8 +39,11 @@ export class FrameworkComponent implements OnInit {
 
   selectedTier: SelectedTier;
 
-  constructor(private router: Router, private assessSvc: AssessmentService,
-    private frameworkSvc: FrameworkService) { }
+  constructor(
+    public navSvc2: Navigation2Service,
+    private assessSvc: AssessmentService,
+    private frameworkSvc: FrameworkService
+    ) { }
 
   ngOnInit() {
     this.loadFrameworks();
@@ -63,19 +67,5 @@ export class FrameworkComponent implements OnInit {
     };
 
     this.frameworkSvc.postSelections(this.selectedTier).subscribe();
-  }
-
-  /**
-   * Navigate to the previous page
-   */
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'standards']);
-  }
-
-  /**
-     * Navigate to the next page
-     */
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'questions']);
   }
 }

@@ -26,3 +26,6 @@ declare var module: NodeModule;
 interface NodeModule {
   id: string;
 }
+
+//export  = customTooltip;
+declare function customTooltip(tooltip: any):any;

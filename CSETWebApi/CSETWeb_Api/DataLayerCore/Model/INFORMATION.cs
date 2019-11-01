@@ -36,6 +36,7 @@ namespace DataLayerCore.Model
         [StringLength(70)]
         public string Real_Property_Unique_Id { get; set; }
         public int? eMass_Document_Id { get; set; }
+        public bool? IsAcetOnly { get; set; }
 
         [ForeignKey("Id")]
         [InverseProperty("INFORMATION")]

@@ -27,13 +27,15 @@ import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConfigService } from '../../../services/config.service';
+import { AssessmentService } from '../../../services/assessment.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
  */
 @Component({
   selector: 'app-question-block',
-  templateUrl: './question-block.component.html'
+  templateUrl: './question-block.component.html',
+  styleUrls: ['./question-block.component.css']
 })
 export class QuestionBlockComponent implements OnInit {
 
@@ -43,15 +45,25 @@ export class QuestionBlockComponent implements OnInit {
 
   percentAnswered = 0;
 
-  @Output() answerChanged = new EventEmitter();
+  @Output() changeComponents = new EventEmitter();
 
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
 
+  matLevelMap = new Map<string, string>();
+  private _timeoutId: NodeJS.Timeout;
+
   constructor(
     public questionsSvc: QuestionsService,
     private dialog: MatDialog,
-    public configSvc: ConfigService) { }
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService) {
+    this.matLevelMap.set("B", "Baseline");
+    this.matLevelMap.set("E", "Evolving");
+    this.matLevelMap.set("Int", "Intermediate");
+    this.matLevelMap.set("A", "Advanced");
+    this.matLevelMap.set("Inn", "Innovative");
+  }
 
   ngOnInit() {
     this.refreshReviewIndicator();
@@ -77,15 +89,23 @@ export class QuestionBlockComponent implements OnInit {
       text = this.replaceAll(text, t.Token, "<span class='sub-me pid-" + t.Id + "'>" + s + "</span>");
     });
 
-    // return text + " [" + q.QuestionId + "]";
     return text;
+  }
+
+  baselineLevel(q: Question) {
+    return this.matLevelMap.get(q.MaturityLevel);
+  }
+
+  refreshComponentOverrides() {
+    this.changeComponents.emit();
   }
 
   /**
    * Spawns a dialog to capture the new substitution text.
    */
   questionTextClicked(q: Question, e: Event) {
-    const parameterId = this.getParameterId(e.srcElement);
+    const target: Element = (e.target || e.srcElement || e.currentTarget) as Element;
+    const parameterId = this.getParameterId(target);
 
     // If they did not click on a parameter, do nothing
     if (parameterId === 0) {
@@ -135,8 +155,6 @@ export class QuestionBlockComponent implements OnInit {
    * are marked for review.
    */
   refreshReviewIndicator() {
-    this.answerChanged.emit(null);
-
     this.mySubCategory.HasReviewItems = false;
     this.mySubCategory.Questions.forEach(q => {
       if (q.MarkForReview) {
@@ -155,8 +173,7 @@ export class QuestionBlockComponent implements OnInit {
 
     this.mySubCategory.Questions.forEach(q => {
       totalCount++;
-
-      if (q.Answer !== "U" && q.Answer !== "" && q.Answer !== null) {
+      if (q.Answer && q.Answer !== "U") {
         answeredCount++;
       }
     });
@@ -169,9 +186,7 @@ export class QuestionBlockComponent implements OnInit {
    * level.  All of the subcategory questions are answered en masse.
    * @param ans
    */
-  setBlockAnswer(ans) {
-    this.answerChanged.emit(null);
-
+  setBlockAnswer(ans: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
     if (this.mySubCategory.SubCategoryAnswer === ans) {
       ans = "U";
@@ -200,8 +215,12 @@ export class QuestionBlockComponent implements OnInit {
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
         Comment: q.Comment,
+        FeedBack: q.FeedBack,
         MarkForReview: q.MarkForReview,
-        Reviewed: q.Reviewed
+        Reviewed: q.Reviewed,
+        Is_Component: q.Is_Component,
+        Is_Requirement: q.Is_Requirement,
+        ComponentGuid: q.ComponentGuid
       };
 
       subCatAnswers.Answers.push(answer);
@@ -221,8 +240,6 @@ export class QuestionBlockComponent implements OnInit {
    * @param ans
    */
   storeAnswer(q: Question, newAnswerValue: string) {
-    this.answerChanged.emit(null);
-
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.Answer === newAnswerValue) {
       newAnswerValue = "U";
@@ -236,8 +253,12 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
+      FeedBack: q.FeedBack,
       MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
+      Reviewed: q.Reviewed,
+      Is_Component: q.Is_Component,
+      Is_Requirement: q.Is_Requirement,
+      ComponentGuid: q.ComponentGuid
     };
 
     this.refreshReviewIndicator();
@@ -254,20 +275,29 @@ export class QuestionBlockComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
-    const answer: Answer = {
-      QuestionId: q.QuestionId,
-      QuestionNumber: q.DisplayNumber,
-      AnswerText: q.Answer,
-      AltAnswerText: q.AltAnswerText,
-      Comment: q.Comment,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
-    };
 
-    this.refreshReviewIndicator();
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        QuestionId: q.QuestionId,
+        QuestionNumber: q.DisplayNumber,
+        AnswerText: q.Answer,
+        AltAnswerText: q.AltAnswerText,
+        Comment: q.Comment,
+        FeedBack: q.FeedBack,
+        MarkForReview: q.MarkForReview,
+        Reviewed: q.Reviewed,
+        Is_Component: q.Is_Component,
+        Is_Requirement: q.Is_Requirement,
+        ComponentGuid: q.ComponentGuid
+      };
 
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
+
   }
 
   replaceAll(origString: string, searchStr: string, replaceStr: string) {
@@ -294,7 +324,6 @@ export class QuestionBlockComponent implements OnInit {
    *
    */
   saveMFR(q: Question) {
-    this.answerChanged.emit(null);
     q.MarkForReview = !q.MarkForReview; // Toggle Bind
 
     const newAnswer: Answer = {
@@ -303,8 +332,12 @@ export class QuestionBlockComponent implements OnInit {
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
       Comment: '',
+      FeedBack: '',
       MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed
+      Reviewed: q.Reviewed,
+      Is_Component: q.Is_Component,
+      Is_Requirement: q.Is_Requirement,
+      ComponentGuid: q.ComponentGuid
     };
 
     this.refreshReviewIndicator();

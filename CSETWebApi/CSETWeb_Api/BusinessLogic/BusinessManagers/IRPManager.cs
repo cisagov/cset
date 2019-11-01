@@ -30,6 +30,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             IRP_Id = irp.IRP_ID,
                             Item_Number = irp.Item_Number ?? 0,
                             Description = irp.Description,
+                            DescriptionComment = irp.DescriptionComment,
                             Risk_1_Description = irp.Risk_1_Description,
                             Risk_2_Description = irp.Risk_2_Description,
                             Risk_3_Description = irp.Risk_3_Description,

@@ -28,12 +28,21 @@ SOFTWARE.
 @import 'cset-font-styles.css';
 @import 'cset2-font-styles.css';
 
-* {
+*:not(font) {
   font-family: 'Roboto', sans-serif;
 }
 
 body {
   background-color: $gray-50;
+  outline:none;
+}
+
+:focus{
+  outline:none;
+}
+
+*:focus{
+  outline:none !important;
 }
 
 .gutter-background {
@@ -43,19 +52,23 @@ body {
   background-size: auto 100%;
 }
 
-a {
+a, a:not([href]) {
   color: $link-color-dark;
   cursor: pointer;
 }
 
-.btn-link,
-.btn-link-dark {
+a:not([href]).btn-link-dark:hover {
+  color: #0056b3;
+}
+
+.btn-link, a:not([href]).btn-link, 
+.btn-link-dark, a:not([href]).btn-link-dark {
   color: $link-color-dark;
   font-weight: 500;
   border: none;
 }
 
-.btn-link-dark:hover,
+.btn-link-dark:hover, a:not([href]).btn-link-dark:hover,
 .icon-link-button-text-dark:hover {
   text-decoration: underline;
 }
@@ -89,6 +102,10 @@ a {
 .btn-link-subtle.disabled {
   color: #6c757d;
   pointer-events: none;
+}
+
+.no-underline{
+  text-decoration:none !important;
 }
 
 h2,
@@ -186,7 +203,7 @@ label[required]::after {
 
 .footer-section-2 {
   color: $gray-50;
-  background-color: $secondary-color;
+  background-color: $primary-color;
   line-height: 2em;
 }
 
@@ -350,7 +367,16 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
 }
-/*@media only screen and (max-width: 1200px) {
+@media only screen and (max-width:767px){
+  .navbar-collapse.collapse.show
+  {
+    background-color: #052637;
+    z-index:10000;
+    padding:10px;
+  }
+}
+/*
+@media only screen and (max-width: 1200px) {
   table.assessment-summary td > button > span {
     display: none;
   }
@@ -385,8 +411,8 @@ table.assessment-summary th {
   table.assessment-summary th:nth-child(4) {
     display: none;
   }
-}
-*/
+}*/
+
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
@@ -398,18 +424,17 @@ table.td-align-top td {
 
 .reference-table {
   width: 100%;
-  margin-bottom: .8em;
+  margin-bottom: 10px;
 }
 
 .reference-table td,
 .reference-table th {
-  vertical-align: top;
-  padding-right: .8em;
-  padding-bottom: .8em;
+  padding-right: 10px;
 }
 
-.builder-requirement-docs td {
+.irp-table th, .irp-table td {
   vertical-align: top;
+  padding: .5rem .3rem;
 }
 
 .login-logo {
@@ -682,22 +707,8 @@ table.td-align-top td {
   background: $primary-400;
 }
 
-.supplemental {
-  font-size: 90%;
-}
-
-.supplemental table {
-  width: 100%;
-}
-
-.supplemental table td {
-  border: 1px solid $gray-400;
-  padding: 6px;
-  vertical-align: top;
-}
-
-.supplemental table td ol {
-  padding-left: 1em;
+.align-left {
+  text-align: left;
 }
 
 .align-right {
@@ -848,6 +859,12 @@ ul.mat-tree-node mat-tree-node {
   font-weight: bold;
   text-align: center;
   color: $primary-color;
+}
+
+.default-mat-filter {
+  font-weight: 700 !important;
+  font-style: italic !important;
+  font-size: 1.1rem;
 }
 
 .parameter-orig-value {
@@ -1036,6 +1053,11 @@ ul.nav-tabs li.active button .tab-icon {
   flex: 0 0  auto;
   padding: 5px;
 }
+
+#csetNavbarCollapse {
+  margin-top: 4px;
+}
+
 .navbar-toggler-icon:before {
   content: '\e5d2';
 }
@@ -1051,9 +1073,14 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 20px;
   padding: 5px;
 }
+
 .navbar-brand {
   padding: 0rem;
-  margin-top: -15px;
+  margin-top: -4px;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 
 .dropdown-menu > li > a {
@@ -1063,6 +1090,10 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .navbar-brand:hover {
   background-color: $secondary-color;
   color: $white;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 
 .navbar .rll:hover,
@@ -1362,6 +1393,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter:  "FlipH";
+  margin-top: -10px;
 }
 
 .open-desc {
@@ -1499,6 +1531,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter:  "FlipH";
+  margin-top: -10px;
 }
 
 .header-question {
@@ -1648,6 +1681,7 @@ ul.related-questions li {
   color: $white;
   border-radius: 4px;
   padding: .3em;
+  margin: 4px 0;
 }
 
 .score-container div:nth-child(1) {
@@ -1663,6 +1697,10 @@ ul.related-questions li {
   width: 100%;
   text-align: center;
   padding: .2em;
+}
+
+.score-container .has-score {
+  font-size: 2rem;
 }
 
 // Assessment Cpmponent
@@ -1703,6 +1741,17 @@ mat-sidenav {
 }
 
 .about .icon2 {
+  display: inline-block;
+  font-size: 0;
+  width: 100px;
+  height: 25px;
+  margin: 0 auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.component-override .icon2 {
   display: inline-block;
   font-size: 0;
   width: 100px;
@@ -1870,6 +1919,40 @@ mat-sidenav {
   max-width: 300px;
 }
 
+// Component Override
+.component-override article {
+  //width: 75%;
+  margin-right:$spacer * 3;
+}
+.component-override article:nth-child(3)  {
+  margin-right: 0rem;
+}
+@media only screen and (max-width: 360px) {
+  .component-override article {
+    margin-right: 0rem;
+  }
+}
+
+.component-override hr {
+  border-top: 1px solid $gray-200;
+  width: 100%;
+  background-color: $gray-200;
+  margin-left: 0;
+}
+
+.component-override .homeland-security {
+  font-family: Joanna, 'Times New Roman', Times, serif;
+  font-size: 36px;
+}
+
+.component-override .nccic {
+  font-family: 'ITC Franklin Gothic', Arial, Times, serif;
+  font-size: 30px;
+}
+
+.component-override article {
+  max-width: 600px;
+}
 
 // Terms
 .terms-dialog {
@@ -2155,6 +2238,9 @@ hr.ranked-questions {
 .oy-auto {
   overflow-y: auto!important;
 }
+.ox-auto {
+  overflow-x: auto!important;
+}
 
 .ox-hidden{
   overflow-x: hidden !important;
@@ -2164,7 +2250,7 @@ hr.ranked-questions {
   text-align: left!important;
 }
 
-.ws-normal {
+.ws-normal, .text-wrap {
   white-space: normal!important;
 }
 
@@ -2185,6 +2271,10 @@ hr.ranked-questions {
 }
 .br-standard {
   border-radius: .4rem;
+}
+
+.mb-2r {
+  margin-bottom: 2rem;
 }
 
 
@@ -2610,4 +2700,60 @@ hr.ranked-questions {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
+
+
+/////////////////// ACET DASHBOARD CLASSES ///////////////////
+.alert-incomplete{
+  color: #fff;
+  background-color: #909090;
+  border-color: #787878;
+  padding: 0.5rem 0.75rem !important;
+}
+.alert-baseline{
+  color: #fff;
+  background-color: #3498DB;
+  border-color: #2E86C1;
+  padding: .50rem .75rem !important;
+}
+.alert-evolving{
+  color: #fff;
+  background-color: #2E86C1;
+  border-color: #2874A6;
+  padding: .50rem .75rem !important;
+}
+.alert-intermediate{
+  background-color: #2874A6;
+  border-color: #21618C;
+  color: #fff !important;
+  padding: .50rem .75rem !important;
+}
+.alert-advanced{
+  background-color: #21618C;
+  border-color: #1B4F72;
+  color: #fff !important;
+  padding: .50rem .75rem !important;
+}
+.alert-innovative{
+  background-color: #1B4F72;
+  border-color: #154360;
+  color: #fff !important;
+  padding: .50rem .75rem !important;
+  
+}
+
+.alert-domain{
+  background-color: #fff;
+  border-color: #ccc;
+  color: #000 !important;
+  padding: .50rem 2.5rem .50rem .75rem !important;
+  text-align: left !important;
+}
+.alert{
+  text-align: center !important;
+}
+
+.domain-pad{
+  margin-left:20px;
+}
+
 

@@ -1,0 +1,397 @@
+﻿<mxGraphModel dx="2434" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" value="Main Layer" parent="0"/>
+    <object SAL="Low" label="Corporate-Low" internalLabel="Corporate" ZoneType="Corporate" zone="1" Criticality="Low" id="2">
+      <mxCell style="swimlane;zone=1;labelBackgroundColor=none;fillColor=#fdf9d9;swimlaneFillColor=#fffef4;" parent="1" vertex="1" connectable="0">
+        <mxGeometry x="65" y="100" width="315" height="520" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="External Firewall" ComponentGuid="f325df2f-5009-4cdf-a483-87bd933dde8e" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="5">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/firewall.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="117.1701" y="30.70621" width="60" height="51" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Public Historian" ComponentGuid="300811c8-1d91-4d95-abc4-2aab2b677919" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="6">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/historian.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="206.9701" y="414.4826" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Corp IDS" ComponentGuid="028f4b2d-be7b-4c9f-b226-7d86355a3e0f" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="7">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/ids.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="206.9701" y="148.3062" width="60" height="17" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_4a" ComponentGuid="eb368476-bd88-470c-b6a2-d00cfa78ca39" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="8">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="139.1701" y="148.3062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Corp Router" ComponentGuid="c000b048-28f3-4a83-afc6-efba158a0ef4" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="9">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/router.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="120.1701" y="225.5062" width="60" height="25" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Corp Switch" ComponentGuid="7811e6a1-c0d9-4ad6-bbd7-dbf27a819571" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="10">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="121.1701" y="320.8812" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Remote Access Server" ComponentGuid="a37950ea-73b7-4e36-bcf4-b15419a65d2c" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="2" id="11">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/remote_access_server.svg;labelBackgroundColor=none;" parent="2" vertex="1">
+        <mxGeometry x="35.47005" y="406.4826" width="34" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="53" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="2" source="5" target="8" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="54" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="2" source="8" target="7" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="56" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="2" source="8" target="9" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="57" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="2" source="9" target="10" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="58" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="2" source="10" target="6" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="59" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="2" source="10" target="11" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object SAL="High" label="Nuclear Plant Control System-High" internalLabel="Nuclear Plant Control System" ZoneType="Control System" zone="1" Criticality="Low" id="3">
+      <mxCell style="swimlane;zone=1;labelBackgroundColor=none;fillColor=#d3eef2;swimlaneFillColor=#f2f8f9;" parent="1" vertex="1" connectable="0">
+        <mxGeometry x="402" y="100" width="885" height="710" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_39" ComponentGuid="4cdb0742-4a5c-4941-b22c-3a431f6c6a86" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="12">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="122.9935" y="228.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Operator Station(s)" ComponentGuid="edc712d7-186a-45c2-9484-f7f838f9acdb" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="13">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/hmi.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="258.7042" y="123.3062" width="60" height="50" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Engineering &#xa;Workstation(s)" ComponentGuid="aa11a01d-c180-4b20-b512-3a41b431bfb5" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="14">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/hmi.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="357.2115" y="123.3062" width="60" height="50" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Switch(s)" ComponentGuid="39df6af7-b99c-42bc-bcaf-3aa9d7aca88c" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="15">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="180.0172" y="226.5062" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="RTU1" ComponentGuid="a2eceddb-fa68-47ab-a33e-c2014e79ddbf" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="16">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/rtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="15.1767" y="508.828" width="60" height="33" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="RTU 2" ComponentGuid="b612d2ae-d9bc-421c-8b7b-7cb7065989e9" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="17">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/rtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="351.2115" y="606" width="60" height="33" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="PLC 1" ComponentGuid="f605423d-a241-4823-9661-68df051bd3b9" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="18">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/plc.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="15.1767" y="414.4826" width="60" height="29" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="PLC 2" ComponentGuid="794c5fcd-41d2-4675-bcb4-8aee468e1ddc" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="19">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/plc.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="261.7042" y="606" width="60" height="29" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="SPDS" ComponentGuid="becd9c99-14d9-4b83-a71b-41944ba03914" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="20">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/application_server.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="455.2115" y="123.3062" width="44" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="LAN Access &#xa;Policy Manager" ComponentGuid="fa655379-74f4-4e11-9f19-498afa6ba069" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="21">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/application_server.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="710.9951" y="107.3062" width="44" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Real-Time &#xa;Server(s)" ComponentGuid="a08d1284-9570-4143-8bec-53e3a29b80d3" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="22">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/database_server.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="806.3868" y="320.8812" width="43" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="IPS" ComponentGuid="03bbfe6a-3287-4231-9127-730fef59591f" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="23">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/ips.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="616.6403" y="123.3062" width="60" height="17" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_132" ComponentGuid="15ea57fb-8e38-42f9-863d-0e4ebbfa3acb" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="24">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="379.2115" y="231.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_135" ComponentGuid="624616fd-8e1b-43a2-9baa-7eca52067958" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="25">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="469.2115" y="231.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_136" ComponentGuid="edc26723-5faa-42d8-8f5e-85e4b44f3299" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="26">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="639.6404" y="232.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Secure VPN" ComponentGuid="bca8c551-ac1a-414f-a282-c56cd47d5512" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="27">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/vpn.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="98.99344" y="123.3062" width="60" height="56" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Plant Process &#xa;Computer System" ComponentGuid="f2ef1778-f929-4a9d-84b8-47fe0b8faee7" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="28">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/application_server.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="801.3868" y="108.3062" width="44" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_143" ComponentGuid="206d54ff-e8a3-4200-b4ef-1ba7a7ec54be" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="29">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="725.9951" y="233.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Connector_144" ComponentGuid="d1813c36-03d0-4aa6-ad76-f7c85c9e0eed" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="30">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="816.3868" y="233.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Network Printer(s)" ComponentGuid="8da84ce4-0607-42d8-8808-d2ae096ba4cf" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="31">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/network_printer.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="536.469" y="123.3062" width="60" height="54" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Industrial Switch 1" ComponentGuid="151cfdb5-4d31-41b6-8fa1-90a9cfcf3d45" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="32">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="260.7042" y="320.8812" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Network Ring" ComponentGuid="19f725ba-e5cc-4129-b597-1c2d232646f3" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="33">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/optical_ring.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="260.7042" y="400.4826" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Industrial Switch 2" ComponentGuid="8e79e65f-6c79-4e2b-8d94-b098b260e111" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="34">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="98.99344" y="417.4826" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Industrial Switch3" ComponentGuid="195c4298-8adb-4a6c-b4ac-0a0aa76a711c" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="35">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="260.7042" y="508.828" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Industrial Switch 4" ComponentGuid="f15b43e0-1678-4418-b146-e3a7f37f780f" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="36">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="449.2115" y="508.828" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Industrial Switch 5" ComponentGuid="183b888b-d824-4ca3-908b-416361ca8e08" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="37">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/switch.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="448.2115" y="341.8812" width="60" height="23" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="MTU 1" ComponentGuid="0465f083-226e-4798-b978-f1402bec90c5" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="38">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/mtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="106.99344" y="497.828" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="MTU 2" ComponentGuid="d5cfe277-64ae-4a25-acbe-e33b51c236a4" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="39">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/mtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="355.2115" y="493.828" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="PLC 3" ComponentGuid="950bf06a-af23-4983-bb4c-e28e7dc9722a" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="40">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/plc.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="533.469" y="508.828" width="60" height="29" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="MTU 3" ComponentGuid="ffd33d52-7160-4b40-b3b1-b6acf22acf7a" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="41">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/mtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="457.2115" y="596" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="RTU 3" ComponentGuid="dfe9b872-9734-4931-a4ec-d16f01533c9c" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="42">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/rtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="533.469" y="610" width="60" height="33" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="PLC 4" ComponentGuid="815acca7-cd03-47ff-a6d8-07f026488d63" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="43">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/plc.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="616.6403" y="340.8812" width="60" height="29" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="MTU 4" ComponentGuid="162beaf9-b2e6-46fb-af8e-754842be328a" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="44">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/mtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="544.469" y="414.4826" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="RTU 4" ComponentGuid="ba03e269-27ca-4c85-b38c-1955601856e3" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="45">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/rtu.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="616.6403" y="427.4826" width="60" height="33" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="IDS" ComponentGuid="30c841c9-58e4-44a2-a5b4-2bf953bc5ffa" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="46">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/ids.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="103.99344" y="320.8812" width="60" height="17" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="Data Diode" ComponentGuid="64eaf308-e7fd-4162-95b5-693869861728" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="47">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/unidirectional_device.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="15.1767" y="216.5062" width="60" height="40" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="CON-38" ComponentGuid="c927eda4-e3e1-4ca6-a0cd-3e0d8afbd9bf" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="48">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="280.7042" y="229.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="CON-38" ComponentGuid="dca349c3-66a8-4a99-a9c2-32bafa29f793" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="49">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="557.469" y="232.5062" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="CON-38" ComponentGuid="26304c74-e6fd-4737-9b36-7485fac1d6af" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="50">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="469.2115" y="422.4826" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="CON-38" ComponentGuid="a16562b9-f526-4d0a-bbd3-f49c1ad48771" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" parent="3" id="51">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/connector.svg;labelBackgroundColor=none;" parent="3" vertex="1">
+        <mxGeometry x="557.469" y="344.8812" width="20" height="20" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="60" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="12" target="15" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="61" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="15" target="48" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="62" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="24" target="14" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="63" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="24" target="25" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="64" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="25" target="20" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="65" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="26" target="23" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="66" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="13" target="48" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="67" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="12" target="27" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="68" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="26" target="29" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="69" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="29" target="30" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="70" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="30" target="22" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="71" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="30" target="28" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="72" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="29" target="21" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="73" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="49" target="31" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="74" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="48" target="32" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="75" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="32" target="33" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="76" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="34" target="33" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="77" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="33" target="35" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="78" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="50" target="36" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="79" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="33" target="50" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="80" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="34" target="38" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="81" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="38" target="16" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="82" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="18" target="34" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="83" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="35" target="19" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="84" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="35" target="39" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="85" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="39" target="17" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="86" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="36" target="40" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="87" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="36" target="41" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="88" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="41" target="42" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="89" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="51" target="43" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="90" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="51" target="44" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="91" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="44" target="45" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="92" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="12" target="46" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="93" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="3" source="12" target="47" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="94" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;" parent="3" source="24" target="48" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="95" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;" parent="3" source="25" target="49" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="96" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;" parent="3" source="49" target="26" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="97" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;" parent="3" source="37" target="50" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="98" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;" parent="3" source="37" target="51" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object label="Web" ComponentGuid="b4b542f8-b25d-436e-97e8-52ff0bb03ac5" HasUniqueQuestions="" IPAddress="" Description="" Criticality="" HostName="" internalLabel="Web" id="4">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/web.svg;labelBackgroundColor=none;" parent="1" vertex="1">
+        <mxGeometry x="-30.46553672316385" y="126.70621468926555" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="52" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="1" source="4" target="5" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="55" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;endArrow=none;labelBackgroundColor=none;" parent="1" source="9" target="47" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>

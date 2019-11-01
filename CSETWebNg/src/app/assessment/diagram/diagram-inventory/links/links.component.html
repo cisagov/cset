@@ -1,0 +1,18 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="label">Label</th>
+    <th mat-sort-header="subnetName" style="width:15%;">Subnet Name(s)</th>
+    <th mat-sort-header="security" style="width:20%;">Security</th>
+    <th mat-sort-header="layer">Layer</th>
+    <th mat-sort-header="visible">Visible</th>
+
+    <tr *ngFor="let link of links; let i = index">
+        <td>{{link.valueField}}</td>
+        <td>{{link.subnetNameField}}</td>
+        <td>{{link.securityField}}</td>
+        <td>{{link.layerNameField}}</td>
+        <td>
+            <input type="checkbox" name="{{ link.visibleField }}" class="mt-1" [(ngModel)]="link.visibleField"
+              [checked]="link.visibleField" [disabled]="true" >
+         </td>
+    </tr>
+</table>

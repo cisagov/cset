@@ -394,206 +394,6 @@ DR_EXPLAIN.namespace = function( ns_string ) {
     });
 
 
-    window.NavTree__ItemDecoration_View = 
-    {
-        html_root: function(){
-          var span = document.createElement("span");
-          span.className = "b-tree__spacer";
-          return span;
-        },
-        html_expander_doClose: function(){
-          var span = document.createElement("span");
-          span.className = "b-tree__i_expander_doClose";
-          var img = document.createElement("span");
-          img.className = "expander_img b-tree__i_expander_doClose_inner";
-          span.appendChild(img);
-          return span;
-        },
-        html_expander_doOpen: function(){
-          var span = document.createElement("span");
-          span.className = "b-tree__i_expander_doOpen";
-          var img = document.createElement("span");
-          img.className = "expander_img b-tree__i_expander_doOpen_inner";
-          span.appendChild(img);
-          return span;
-        },
-        html_folder_opened: function(){
-          var span = document.createElement("span");
-          span.className = "b-tree__i_folder_opened";
-          var innerSpan = document.createElement("span");
-          innerSpan.className = "b-tree__i_folder_opened_inner";
-          span.appendChild(innerSpan);
-          return span;
-        },
-        html_folder_closed: function(){
-          var span = document.createElement("span");
-          span.className = "b-tree__i_folder_closed";
-          var innerSpan = document.createElement("span");
-          innerSpan.className = "b-tree__i_folder_closed_inner";
-          span.appendChild(innerSpan);
-          return span;
-        },
-        html_article: function(){
-          var span = document.createElement("span");
-          span.className = "b-tree__i_article";
-          var innerSpan = document.createElement("span");
-          innerSpan.className = "b-tree__i_article_inner";
-          span.appendChild(innerSpan);
-          return span;
-        },
-        html_article_icon_cached: function(){
-          var wrapper = this.html_root();
-          wrapper.appendChild(this.html_article());
-          return wrapper;
-        },
-        
-        html_render_childs_isVLineTB_cached: function(){
-          return this.html_root();
-        },
-        html_folder_icon_cached: function(bVisible){
-          var wrapper = this.html_root();
-          if (bVisible)
-            wrapper.appendChild(this.html_folder_opened());
-          else
-            wrapper.appendChild(this.html_folder_closed());
-          return wrapper;
-        },
-        html_render_article_line_bl_cached: function(){
-          return this.html_root();
-        },
-        html_render_article_line_tl_cached: function(){
-          return this.html_root();
-        },
-        html_render_article_line_tl_tb_cached: function(){
-          return this.html_root();
-        },
-        html_render_folder_expander_cached: function(bVisible){
-          var wrapper = this.html_root();
-          if (bVisible)
-            wrapper.appendChild(this.html_expander_doClose());
-          else
-            wrapper.appendChild(this.html_expander_doOpen());
-          return wrapper;
-        },
-        html_render_folder_expander_angle_tl_cached: function(bVisible){
-          return this.html_render_folder_expander_cached(bVisible);
-        },
-        html_render_folder_expander_hline_mr_cached: function(bVisible){
-          return this.html_render_folder_expander_cached(bVisible);
-        },
-        html_render_folder_expander_angle_bl_cached: function(bVisible){
-          return this.html_render_folder_expander_cached(bVisible);
-        },
-        html_render_folder_expander_angle_tl_tb_cached: function(bVisible){
-          return this.html_render_folder_expander_cached(bVisible);
-        },
-        html_render_folder_expander_doclose_cached: function(bVisible){
-          return this.html_render_folder_expander_cached(bVisible);
-        },
-        
-        initialize: function( options ) {
-            this.isRoot = options.isRoot;
-            this.isFolder = this.model.hasChilds();
-            this.isArticle = !this.isFolder;
-        },
-        render: function(currModel, isRoot, bVisible) {
-            var $output = null;
-            if (typeof bVisible === "undefined")
-              bVisible = true;
-
-            this.model = currModel;
-            
-            this.isRoot = isRoot;
-            this.isFolder = this.model.hasChilds();
-            this.isArticle = !this.isFolder;
-            
-            if ( this.isRoot ) {
-                if ( this.isFolder ) {
-                    $output = this.renderFolder(bVisible);
-                }
-                else {
-                    $output = this.renderArticle();
-                }
-            }
-            else {
-                $output = this.renderChilds(bVisible);
-            }
-
-            return $output;
-        },
-
-        renderFolder: function(bVisible) {
-            if (!this.model.hasParent() && (DR_EXPLAIN.data_menu.DREX_HAS_ROOT_NODE || DR_EXPLAIN.data_menu.DREX_MENU_TYPE == 1))
-                return [this.renderFolderIcon(bVisible)];
-            return [this.renderFolderExpander(bVisible), ( this.renderFolderIcon(bVisible) )];
-        },
-
-        renderFolderExpander: function(bVisible) {
-            var isAngleTL = ( !this.model.hasPrevItem() && !this.model.hasParent() && this.model.hasNextItem() );
-            var isHLine = ( !this.model.hasPrevItem() && !this.model.hasParent() && !this.model.hasNextItem() );
-            var isAngleBL = ( !this.model.hasNextItem() );
-
-            if ( isAngleTL ) {
-                return ( this.html_render_folder_expander_angle_tl_cached(bVisible) )
-            }
-            else if ( isHLine ) {
-                return ( this.html_render_folder_expander_hline_mr_cached(bVisible) );
-            }
-            else if ( isAngleBL ) {
-                return ( this.html_render_folder_expander_angle_bl_cached(bVisible) );
-            }
-            else {
-                return ( this.html_render_folder_expander_angle_tl_tb_cached(bVisible) );
-            }
-            return ( this.html_render_folder_expander_doclose_cached(bVisible) )
-        },
-
-        renderFolderIcon: function(bVisible) {
-            return ( this.html_folder_icon_cached(bVisible) );
-        },
-
-        renderArticle: function() {
-            if (!this.model.hasParent() && (DR_EXPLAIN.data_menu.DREX_HAS_ROOT_NODE || DR_EXPLAIN.data_menu.DREX_MENU_TYPE == 1))
-                return [this.renderArticleIcon()];
-            return [this.renderArticleLine(), ( this.renderArticleIcon() )];
-        },
-
-        renderArticleLine: function() {
-            var isAngleTL = ( !this.model.hasPrevItem() && !this.model.hasParent() );
-            var isAngleBL = ( !this.model.hasNextItem() );
-
-            if ( isAngleBL ) {
-                return ( this.html_render_article_line_bl_cached() );
-            }
-            else if ( isAngleTL ) {
-                return ( this.html_render_article_line_tl_cached() );
-            }
-            else {
-                return ( this.html_render_article_line_tl_tb_cached() );
-            }
-            return ( this.html_root() );
-        },
-        
-        renderArticleIcon: function() {
-            return ( this.html_article_icon_cached() );
-        },
-        
-
-        renderChilds: function( ) {
-            if ((DR_EXPLAIN.data_menu.DREX_HAS_ROOT_NODE || DR_EXPLAIN.data_menu.DREX_MENU_TYPE == 1) && !this.model.hasParent())
-                return [];
-                
-            var isVLineTB = ( this.model.hasNextItem() );
-
-            if ( isVLineTB ) {
-                return [( this.html_render_childs_isVLineTB_cached() )];
-            }
-
-            return [( this.html_root() )];
-        }
-    }
-
-
     window.NavTree__ItemDecoration_Keyword_View =
     Backbone.View.extend({
         tagName: "span",
@@ -738,46 +538,6 @@ DR_EXPLAIN.namespace = function( ns_string ) {
         },
 
 
-        hideExpander: function(e) {
-            this.$el.children( "ul" ).hide();
-
-            var $content = this.$el.children( "div" );
-
-            var $expander = $content.find( ".b-tree__i_expander_doClose" );
-            var $folder = $content.find( ".b-tree__i_folder_opened" );
-            var $vLine = $content.find( ".b-tree__i_vLine_b_folder_opened" );
-
-            this.toggleClasses( $expander, $folder, $vLine );
-
-
-            this.model.set({ "isVisible": 0 });
-        },
-
-        showExpander: function(e) {
-            this.$el.children( "ul" ).show();
-
-            var $content = this.$el.children( "div" );
-
-            var $expander = $content.find( ".b-tree__i_expander_doOpen" );
-            var $folder = $content.find( ".b-tree__i_folder_closed" );
-            var $vLine = $content.find( ".b-tree__i_vLine_b_folder_closed" );
-
-            this.toggleClasses( $expander, $folder, $vLine );
-
-            this.model.set({ "isVisible": 1 });
-        },
-
-        toggleClasses: function( $expander, $folder, $vLine ) {
-            $expander.toggleClass( "b-tree__i_expander_doClose b-tree__i_expander_doOpen" );
-            $expander.children( ".expander_img" ).toggleClass( "b-tree__i_expander_doClose_inner b-tree__i_expander_doOpen_inner" );
-
-            $folder.toggleClass( "b-tree__i_folder_opened b-tree__i_folder_closed" );
-            $folder.children( "span" ).toggleClass( "b-tree__i_folder_opened_inner b-tree__i_folder_closed_inner" );
-
-            $vLine.toggleClass( "b-tree__i_vLine_b_folder_opened b-tree__i_vLine_b_folder_closed" );
-            $vLine.children( "span" ).toggleClass( "b-tree__i_vLine_b_folder_opened_inner b-tree__i_vLine_b_folder_closed_inner" );
-        },
-
         render: function( childsOutput ) {
             var tpl = '<div class="b-tree__itemContent" title="<%- title %>"><span class="b-tree__itemText"><a href="<%- link %>" class="b-tree__itemLink"><%- title %></a></span></div>';
             var tplSelected = '<div class="b-tree__itemContent m-tree__itemContent__selected" title="<%- title %>"><span class="b-tree__itemText m-tree__itemText__selected"><%- title %></span></div>';
@@ -790,49 +550,10 @@ DR_EXPLAIN.namespace = function( ns_string ) {
 
             $(this.el).html(this.template(this.model.toJSON()));
             
-            if ( childsOutput !== null ) {
-                $( this.el ).append( $( childsOutput ) );
-                this.bindEvents();
-            }
             var decoration = this.getDecoration( );
             $( this.el ).children( ".b-tree__itemContent" ).prepend( decoration );
             
-            if ( !this.model.get( "isVisible" ) ) {
-                this.hideExpander();
-            }
-
             return this;
-        },
-
-        bindEvents: function() {
-            var that = this;
-
-            this.$el.children( "div" ).on( "click", ".b-tree__i_expander_doClose", function(e){
-                that.hideExpander(e);
-            });
-
-            this.$el.children( "div" ).on( "click", ".b-tree__i_expander_doOpen", function(e){
-                that.showExpander(e);
-            });
-        },
-
-        getDecoration: function(bVisible) {
-            var $output = null;
-
-            var currModel = this.model;
-            var isRoot = true;
-            do {
-                if ( $output === null ) {
-                    $output = NavTree__ItemDecoration_View.render(currModel, isRoot, bVisible);
-                }
-                else {
-                    $output = ( NavTree__ItemDecoration_View.render(currModel, isRoot, bVisible) ).concat( $output );
-                }
-                currModel = currModel.get( "parent" );
-                isRoot = false;
-            
-            } while ( currModel !== null );
-            return $( $output );
         }
     });
 
@@ -1421,10 +1142,10 @@ InputSync.prototype ={
 DR_EXPLAIN.namespace( 'DR_EXPLAIN.data_menu' );
 DR_EXPLAIN.data_menu = {
     // menu
-    DREX_NODE_NAMES: ["CSET Help","Table of Contents","Introduction to CSET","System Basics","Title Bar","Operation Menus","Main CSET Window Sections","Initiation Scenarios","Glossary","Frequently Asked Questions (FAQs)","CSET Revision History","Introduction","Overview","Disclaimer","System Requirements","Installation Procedure","Evaluation Preparation","Register a User Account","Import/Export a CSET Assessment","Tools Menu","Resource Library","User Profile","Help Menu","Preparation Menu","Questions Menu","Results Menu","Prepare Section","Assessment Section","Results Section","Stand-alone Install","Enterprise Install","Importing a .csetw File","Importing a .cset File","Exporting a CSET Assessment","Assessment Documents","Parameter Editor","Protected Features","Export to Excel","Import Module","Module Builder","Search Screen","Browse Screen","User Profile","Change Password","Accessibility Document","Keyboard Shortcuts","Terms of Use","About CSET","Advisory","CSET Landing Page","Assessment Details","Contacts Management","Sector and Demographic Information Screen","Security Assurance Level (SAL) Selection","Cybersecurity Standard Selection","Cybersecurity Framework Description","Mode Selection","Assessment Screen","Analysis Screen","Reports Section","Using the Stand-alone","Create a New Module","Add Requirements","Add Questions","Manage Documents","Standard SAL Selection","General SAL Selection","FIPS 199 SAL Selection","CSET Standards and Groupings","C2M2 Maturity Indicator Levels","CFATS Tiers","Framework Implementation Tiers","Assessment Modes","Assessment Modes","Assessment Categories","Question Details, Resources, and Comments","Dashboard in Questions/Requirements Mode","Control Priorities","Standards Analysis","Category Rankings","Executive Summary, Overview, and Comments Screen","Report Builder","Executive Summary Report","Site Summary Report","Site Detail Report","Site Cyber Security Plan","Observation Tear Out Sheets","General SAL – Injury","General SAL - Hospital","General SAL - Death","General SAL - Capital Assets","General SAL - Economic Impact","General SAL - Environmental Cleanup","General SAL Considerations","Assessment Screen Questions Mode","Assessment Screen Requirements Mode","Details Section Question Mode","Supplemental Section","Comments Section","Documents Section","References Section","Observations Section","Question Filter","Standards Summary","Ranked Categories","Results By Category Single Standard","Details Section Requirements Mode","Question Observations","Results by Category Multiple Standards"],
-    DREX_NODE_LINKS: ["index.htm","table_of_contents.htm","introduction_to_cset.htm","system_basics.htm","title_bar.htm","operation_menus.htm","main_cset_window_sections.htm","initiation_scenarios.htm","glossary.htm","frequently_asked_questions__faqs_.htm","cset_revision_history.htm","introduction.htm","overview.htm","disclaimer.htm","system_requirements.htm","installation_procedure.htm","evaluation_preparation.htm","register_a_user_account.htm","import_export_a_cset_assessment.htm","tools_menu.htm","resource_library_window.htm","user_profile_1.htm","help_menu.htm","preparation_menu.htm","questions_menu.htm","results_menu.htm","prepare_section.htm","assessment_section.htm","results_section.htm","stand_alone_install.htm","enterprise_install.htm","importing_a__csetw_file.htm","importing_a__cset_file.htm","exporting_a_cset_assessment.htm","document_manager_window.htm","parameter_editor_window.htm","protected_features_window.htm","export_to_excel.htm","import_module.htm","module_builder.htm","search_screen.htm","browse_screen.htm","user_profile_2.htm","change_password.htm","accessibility_document.htm","keyboard_shortcuts.htm","terms_of_use.htm","about_cset.htm","advisory.htm","prepare_start_new_assessment.htm","prepare_assessment_info.htm","contacts_management.htm","prepare_demographics_selection.htm","prepare_sal_selection.htm","prepare_standard_selection.htm","cybersecurity_framework_description.htm","prepare_mode_selection.htm","questions_screen.htm","analysis_screen.htm","reports_screen.htm","using_the_stand_alone.htm","create_a_new_module.htm","add_requirements.htm","add_questions.htm","manage_documents.htm","sal_window_simple_selection.htm","sal_window_general_selection.htm","sal_window_fips_selection.htm","cset_standards_and_groupings.htm","c2m2_maturity_indicator_levels.htm","cfats_tiers.htm","framework_implementation_tiers.htm","assessment_modes_1.htm","assessment_modes_2.htm","assessment_categories.htm","question_details__resources__and_comments.htm","dashboard_in_questions_requirements_mode.htm","results_ranked_questions_screen.htm","standards_analysis.htm","category_rankings.htm","executive_summary__overview__and_comments_screen.htm","report_builder.htm","executive_summary_report.htm","site_summary_report.htm","site_detail_report.htm","site_cyber_security_plan.htm","observation_tear_out_sheets.htm","general_sal___injury.htm","general_sal___hospital.htm","general_sal___death.htm","general_sal___capital_assets.htm","general_sal___economic_impact.htm","general_sal___environmental_cleanup.htm","general_sal_considerations.htm","assessment_screen_questions_mode.htm","assessment_screen_requirements_mode.htm","details_section_question_mode.htm","supplemental_section.htm","comments_section.htm","documents_section.htm","references_section.htm","observations_section.htm","question_filter.htm","results_standards_summary_screen.htm","results_standards_ranked_categories_screen.htm","results_standards_results_by_category_screen.htm","details_section_requirements_mode.htm","questions_discoveries_window.htm","results_by_category_multiple_standards.htm"],
-    DREX_NODE_CHILD_START: [1,11,11,14,19,23,26,29,29,29,29,29,29,29,29,29,31,31,31,34,40,42,44,49,49,49,49,57,58,60,61,61,61,61,61,61,61,61,61,61,65,65,65,65,65,65,65,65,65,65,65,65,65,65,68,71,72,73,76,80,87,87,87,87,87,87,87,94,94,94,94,94,94,94,96,96,103,103,103,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,107,107,107,107,107,108,108,108,108,109,109,109],
-    DREX_NODE_CHILD_END: [11,11,14,19,23,26,29,29,29,29,29,29,29,29,29,31,31,31,34,40,42,44,49,49,49,49,57,58,60,61,61,61,61,61,61,61,61,61,61,65,65,65,65,65,65,65,65,65,65,65,65,65,65,68,71,72,73,76,80,87,87,87,87,87,87,87,94,94,94,94,94,94,94,96,96,103,103,103,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,107,107,107,107,107,108,108,108,108,109,109,109,109],
+    DREX_NODE_NAMES: ["CSET Help","Table of Contents","Introduction to CSET","System Basics","Title Bar","Operation Menus","Main CSET Window Sections","Initiation Scenarios","Glossary","Frequently Asked Questions (FAQs)","CSET Revision History","Introduction","Overview","Disclaimer","System Requirements","Installation Procedure","Evaluation Preparation","Register a User Account","Import/Export a CSET Assessment","Tools Menu","Resource Library","User Profile","Help Menu","Preparation Menu","Diagram","Questions Menu","Results Menu","Prepare Section","Diagram Screen","Assessment Section","Results Section","Stand-alone Install","Enterprise Install","Importing a .csetw File","Importing a .cset File","Exporting a CSET Assessment","Assessment Documents","Parameter Editor","Protected Features","Export to Excel","Import Module","Module Builder","Search Screen","Browse Screen","User Profile","Change Password","Accessibility Document","Keyboard Shortcuts","Terms of Use","About CSET","Advisory","CSET Landing Page","Assessment Details","Contacts Management","Sector and Demographic Information Screen","Security Assurance Level (SAL) Selection","Cybersecurity Standard Selection","Cybersecurity Framework Description","Mode Selection","Diagram Section","Diagram Screen Layout","Diagram Inventory","Drawing the Network Diagram","Home  Menu Options","Format Menu Options","Assessment Screen","Analysis Screen","Reports Section","Submit Feedback","Using the Stand-alone","Create a New Module","Add Requirements","Add Questions","Manage Documents","Standard SAL Selection","General SAL Selection","FIPS 199 SAL Selection","CSET Standards and Groupings","C2M2 Maturity Indicator Levels","CFATS Tiers","Framework Implementation Tiers","Assessment Modes","Adding Links","Adding Text","Adding Symbols","Adding Zones","Using the Multiple Services Component (MSC)","Component Types","Home- File Menu","Home- Edit Menu","Home- View Menu","Home- Arrange Menu","Home- Extras Menu","Home- Help Menu","Network Deficiency","Assessment Modes","Assessment Categories","Question Details, Resources, and Comments","Component Information","Dashboard in Questions/Requirements Mode","Control Priorities","Standards Analysis","Category Rankings","Components Summary","Executive Summary, Overview, and Comments Screen","Report Builder","Executive Summary Report","Site Summary Report","Site Detail Report","Site Cyber Security Plan","Observation Tear Out Sheets","General SAL – Injury","General SAL - Hospital","General SAL - Death","General SAL - Capital Assets","General SAL - Economic Impact","General SAL - Environmental Cleanup","General SAL Considerations","Diagram Keyboard Shortcuts","Assessment Screen Questions Mode","Assessment Screen Requirements Mode","Details Section Question Mode","Supplemental Section","Comments Section","Documents Section","References Section","Observations Section","Feedback Section","Question Filter","Network Component Overrides","Standards Summary","Ranked Categories","Results By Category Single Standard","Ranked Categories","Results by Category","Component Type","Network Warnings","Details Section Requirements Mode","Question Observations","Results by Category Multiple Standards"],
+    DREX_NODE_LINKS: ["index.htm","table_of_contents.htm","introduction_to_cset.htm","system_basics.htm","title_bar.htm","operation_menus.htm","main_cset_window_sections.htm","initiation_scenarios.htm","glossary.htm","frequently_asked_questions__faqs_.htm","cset_revision_history.htm","introduction.htm","overview.htm","disclaimer.htm","system_requirements.htm","installation_procedure.htm","evaluation_preparation.htm","register_a_user_account.htm","import_export_a_cset_assessment.htm","tools_menu.htm","resource_library_window.htm","user_profile_1.htm","help_menu.htm","preparation_menu.htm","diagram.htm","questions_menu.htm","results_menu.htm","prepare_section.htm","diagram_screen.htm","assessment_section.htm","results_section.htm","stand_alone_install.htm","enterprise_install.htm","importing_a__csetw_file.htm","importing_a__cset_file.htm","exporting_a_cset_assessment.htm","document_manager_window.htm","parameter_editor_window.htm","protected_features_window.htm","export_to_excel.htm","import_module.htm","module_builder.htm","search_screen.htm","browse_screen.htm","user_profile_2.htm","change_password.htm","accessibility_document.htm","keyboard_shortcuts.htm","terms_of_use.htm","about_cset.htm","advisory.htm","prepare_start_new_assessment.htm","prepare_assessment_info.htm","contacts_management.htm","prepare_demographics_selection.htm","prepare_sal_selection.htm","prepare_standard_selection.htm","cybersecurity_framework_description.htm","prepare_mode_selection.htm","diagram_section.htm","diagram_screen_layout.htm","diagram_inventory.htm","drawing_the_network_diagram.htm","home__menu_options.htm","format_menu_options.htm","questions_screen.htm","analysis_screen.htm","reports_screen.htm","submit_feedback.htm","using_the_stand_alone.htm","create_a_new_module.htm","add_requirements.htm","add_questions.htm","manage_documents.htm","sal_window_simple_selection.htm","sal_window_general_selection.htm","sal_window_fips_selection.htm","cset_standards_and_groupings.htm","c2m2_maturity_indicator_levels.htm","cfats_tiers.htm","framework_implementation_tiers.htm","assessment_modes_1.htm","adding_links.htm","adding_text.htm","adding_symbols.htm","adding_zones.htm","using_the_multiple_services_component__msc_.htm","component_types.htm","home__file_menu.htm","home__edit_menu.htm","home__view_menu.htm","home__arrange_menu.htm","home__extras_menu.htm","home__help_menu.htm","network_deficiency.htm","assessment_modes_2.htm","assessment_categories.htm","question_details__resources__and_comments.htm","component_information.htm","dashboard_in_questions_requirements_mode.htm","results_ranked_questions_screen.htm","standards_analysis.htm","category_rankings.htm","components_summary.htm","executive_summary__overview__and_comments_screen.htm","report_builder.htm","executive_summary_report.htm","site_summary_report.htm","site_detail_report.htm","site_cyber_security_plan.htm","observation_tear_out_sheets.htm","general_sal___injury.htm","general_sal___hospital.htm","general_sal___death.htm","general_sal___capital_assets.htm","general_sal___economic_impact.htm","general_sal___environmental_cleanup.htm","general_sal_considerations.htm","diagram_keyboard_shortcuts.htm","assessment_screen_questions_mode.htm","assessment_screen_requirements_mode.htm","details_section_question_mode.htm","supplemental_section.htm","comments_section.htm","documents_section.htm","references_section.htm","observations_section.htm","feedback_section.htm","question_filter.htm","component_type_override.htm","results_standards_summary_screen.htm","results_standards_ranked_categories_screen.htm","results_standards_results_by_category_screen.htm","ranked_categories.htm","results_by_category.htm","component_type.htm","network_warnings.htm","details_section_requirements_mode.htm","questions_discoveries_window.htm","results_by_category_multiple_standards.htm"],
+    DREX_NODE_CHILD_START: [1,11,11,14,19,23,27,31,31,31,31,31,31,31,31,31,33,33,33,36,42,44,46,51,51,51,51,51,59,65,66,69,70,70,70,70,70,70,70,70,70,70,74,74,74,74,74,74,74,74,74,74,74,74,74,74,77,80,81,82,82,82,82,88,94,95,99,104,111,111,111,111,111,111,111,111,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,119,119,121,121,129,130,130,130,133,133,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,138,138,138,138,138,139,139,139,139,139,139,140,140,140,140,140,140,140],
+    DREX_NODE_CHILD_END: [11,11,14,19,23,27,31,31,31,31,31,31,31,31,31,33,33,33,36,42,44,46,51,51,51,51,51,59,65,66,69,70,70,70,70,70,70,70,70,70,70,74,74,74,74,74,74,74,74,74,74,74,74,74,74,77,80,81,82,82,82,82,88,94,95,99,104,111,111,111,111,111,111,111,111,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,119,119,121,121,129,130,130,130,133,133,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,137,138,138,138,138,138,139,139,139,139,139,139,140,140,140,140,140,140,140,140],
     DREX_MENU_TYPE: 1,
     DREX_HAS_ROOT_NODE: 0};
 
@@ -1438,7 +1159,8 @@ DR_EXPLAIN.data_search = {
     DREXPLAIN_EMPTY_STRING: "Please enter text for search",
     DREXPLAIN_IN_PROGRESS: "Searching...",
     DREXPLAIN_PREVIEW_MODE_SEARCH_IS_DISABLED_NOTICE : "In the preview mode the search is disabled.",
-    DREXPLAIN_ERROR_LOCAL_SEARCH : "Google Chrome and Opera 12.02 and above do not support search in local HTML files. Upload your files to web server or use another browser."
+    DREXPLAIN_ERROR_LOCAL_SEARCH : "Unable to download search index files. Please, upload HTML files to a web server and access them via URL starting with https:// or http:// .",
+    DREXPLAIN_ERROR_REMOTE_SEARCH : "Unable to download search index files. Please, ask your web server administrator to enable the downloading of files with .json extension or contact help@drexplain.com. Error code: {0}"
 
 };
 

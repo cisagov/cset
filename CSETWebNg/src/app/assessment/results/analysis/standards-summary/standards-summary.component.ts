@@ -26,20 +26,27 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { ConfigService } from '../../../../services/config.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-standards-summary',
   templateUrl: './standards-summary.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   chart: Chart;
   dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[];
   // tslint:disable-next-line:max-line-length
-  dataSets: { dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[], label: string, Colors: string[], backgroundColor: string[]}[];
+  dataSets: { dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[], label: string, Colors: string[], backgroundColor: string[] }[];
   initialized = false;
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+
+  constructor(
+    private analysisSvc: AnalysisService,
+    public navSvc2: Navigation2Service,
+    public configSvc: ConfigService,
+    ) { }
 
   ngOnInit() {
   }
@@ -48,23 +55,13 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     this.analysisSvc.getStandardsSummary().subscribe(x => this.setupChart(x));
   }
 
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'standards-ranked']);
-  }
-
-  navBack() {
-    // this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'overall-ranked-categories']);
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'ranked-questions']);
-  }
-
   setupChart(x: any) {
     this.initialized = false;
     this.dataRows = x.DataRowsPie;
     this.dataSets = x.dataSets;
 
-    const colors = x.Colors;
     if (this.dataSets.length > 1) {
-      this.chart = new Chart('stdSumCanvas', {
+      this.chart = new Chart('canvasStandardSummary', {
         type: 'horizontalBar',
         data: {
           labels: x.Labels,
@@ -79,6 +76,13 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
           legend: {
             display: true
           },
+          tooltips: {
+            callbacks: {
+              label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+            }
+          },
           scales: {
             xAxes: [{
               stacked: true,
@@ -90,7 +94,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
         }
       });
      } else {
-      this.chart = new Chart('stdSumCanvas', {
+      this.chart = new Chart('canvasStandardSummary', {
         type: 'doughnut',
         data: {
           labels: [
@@ -165,7 +169,6 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
     }
 
-    this.dataSets.map(r => r.backgroundColor = r.Colors);
     this.initialized = true;
   }
 }

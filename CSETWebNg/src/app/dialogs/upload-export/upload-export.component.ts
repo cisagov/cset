@@ -24,7 +24,7 @@
 import { ImportAssessmentService } from './../../services/import-assessment.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialogRef, MatListModule, MatProgressBarModule } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { AssessmentService } from '../../services/assessment.service';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -33,7 +33,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
   selector: 'app-upload-export',
   templateUrl: './upload-export.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100 h-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class UploadExportComponent implements OnInit {
 

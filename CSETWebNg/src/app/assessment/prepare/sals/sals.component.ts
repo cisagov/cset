@@ -21,11 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SalService } from '../../../services/sal.service';
 import { Sal } from '../../../models/sal.model';
-import { AssessmentService } from '../../../services/assessment.service';
-import { Router } from '@angular/router';
+import { Navigation2Service } from '../../../services/navigation2.service';
 
 @Component({
   selector: 'app-sals',
@@ -40,7 +39,9 @@ export class SalsComponent implements OnInit {
   Sal_Levels: Sal;
 
 
-  constructor(public salsSvc: SalService, private router: Router, private assessSvc: AssessmentService) {
+  constructor(
+    public salsSvc: SalService,
+    public navSvc2: Navigation2Service) {
   }
 
   ngOnInit() {
@@ -75,20 +76,6 @@ export class SalsComponent implements OnInit {
         console.log('Error posting change: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error posting change: ' + (<Error>error).stack);
       });
-  }
-
-  /**
-   * Navigate to the previous page
-   */
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'info']);
-  }
-
-  /**
-     * Navigate to the next page
-     */
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'standards']);
   }
 }
 

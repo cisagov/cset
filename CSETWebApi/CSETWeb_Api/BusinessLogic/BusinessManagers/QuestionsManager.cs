@@ -4,15 +4,19 @@
 // 
 // 
 //////////////////////////////// 
+using BusinessLogic.Helpers;
 using CSET_Main.Data.ControlData;
 using CSET_Main.Questions.InformationTabData;
 using CSET_Main.Views.Questions.QuestionDetails;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
+using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -23,7 +27,7 @@ namespace CSETWeb_Api.BusinessManagers
     {
         // 
         List<QuestionPlusHeaders> questions;
-        List<SubCategoryAnswersPlus> subCatAnswers;
+        
         List<FullAnswer> Answers;
 
         /// <summary>
@@ -110,29 +114,6 @@ namespace CSETWeb_Api.BusinessManagers
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
 
-                // Set the Discovery/Finding indicator 
-                //foreach (var aaa in answers.ToList())
-                //{
-                //    if (db.FINDINGs.Any(x => x.Answer_Id == aaa.a.Answer_Id))
-                //    {
-                //        aaa.FindingsExist = true;
-                //    }
-                //}
-
-
-                // Get any subcategory answers for the assessment
-                this.subCatAnswers = (from sca in db.SUB_CATEGORY_ANSWERS
-                                      join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on sca.Heading_Pair_Id equals usch.Heading_Pair_Id
-                                      where sca.Assessement_Id == _assessmentId
-                                      select new SubCategoryAnswersPlus()
-                                      {
-                                          AssessmentId = sca.Assessement_Id,
-                                          HeadingId = sca.Heading_Pair_Id,
-                                          AnswerText = sca.Answer_Text,
-                                          GroupHeadingId = usch.Question_Group_Heading_Id,
-                                          SubCategoryId = usch.Universal_Sub_Category_Id
-                                      }).ToList();
-
                 this.questions = query.Distinct().ToList();
                 this.Answers = answers.ToList();
 
@@ -140,6 +121,8 @@ namespace CSETWeb_Api.BusinessManagers
                 return BuildResponse();
             }
         }
+
+      
 
 
         /// <summary>
@@ -169,7 +152,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid)
+        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid, bool IsComponent)
         {
             using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
@@ -177,7 +160,7 @@ namespace CSETWeb_Api.BusinessManagers
                     new InformationTabBuilder(datacontext),
                     datacontext
                 );
-                qvm.getQuestionDetails(questionId, assessmentid);
+                qvm.getQuestionDetails(questionId, assessmentid, IsComponent);
                 return qvm;
             }
         }
@@ -209,7 +192,8 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {
                         GroupHeadingId = dbQ.QuestionGroupHeadingId,
-                        GroupHeadingText = dbQ.QuestionGroupHeading
+                        GroupHeadingText = dbQ.QuestionGroupHeading,
+                        StandardShortName = "Standard Questions"
                     };
 
                     groupList.Add(qg);
@@ -254,8 +238,12 @@ namespace CSETWeb_Api.BusinessManagers
                     Answer_Id = answer?.a?.Answer_Id,
                     AltAnswerText = answer?.a?.Alternate_Justification,
                     Comment = answer?.a?.Comment,
+                    FeedBack = answer?.a?.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
-                    Reviewed = answer?.a.Reviewed ?? false
+                    Reviewed = answer?.a.Reviewed ?? false,
+                    Is_Component = answer?.a.Is_Component ?? false,
+                    ComponentGuid = answer?.a.Component_Guid ?? Guid.Empty,
+                    Is_Requirement = answer?.a.Is_Requirement ?? false
                 };
                 if (answer != null)
                 {
@@ -274,8 +262,110 @@ namespace CSETWeb_Api.BusinessManagers
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
 
+            BuildComponentsResponse(resp);
             return resp;
         }
+
+        public QuestionResponse GetOverrideListOnly()
+        {
+            QuestionResponse resp = new QuestionResponse
+            {
+                QuestionGroups = new List<QuestionGroup>(),
+                ApplicationMode = this.applicationMode
+            };
+
+            resp.QuestionCount = 0;
+            resp.RequirementCount = 0;
+
+            BuildOverridesOnly(resp, new CSET_Context());
+            return resp;
+        }
+
+
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, int Component_Symbol_Id)
+        {
+            List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
+            using (CSET_Context context = new CSET_Context())
+            {
+                IQueryable<Answer_Components_Exploded> questionlist = from a in context.Answer_Components_Exploded
+                                   where a.Assessment_Id == assessmentId
+                                    && a.Question_Id == question_id
+                                    && a.Component_Symbol_Id == Component_Symbol_Id
+                                    select a;
+                IQueryable<Answer_Components> answeredQuestionList = context.Answer_Components.Where(a =>
+                    a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
+                    
+
+                foreach(var question in questionlist.ToList())
+                {
+                    Answer_Components_Exploded_ForJSON tmp = null;
+                    tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                    tmp.Component_GUID = question.Component_GUID.ToString();
+                    rlist.Add(tmp);
+                }
+                return rlist;
+            }
+        }
+
+        /// <summary>
+        /// get the exploded view where assessment
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="shouldSave"></param>
+        public void HandleGuid(Guid guid, bool shouldSave)
+        {
+            using (CSET_Context context = new CSET_Context())
+            {
+                if (shouldSave)
+                {   
+                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == guid).FirstOrDefault();
+                    if (componentName != null)
+                    {
+                        var creates = from a in context.COMPONENT_QUESTIONS
+                                      where a.Component_Symbol_Id == componentName.Component_Symbol_Id
+                                      select a;
+                        var alreadyThere = (from a in context.ANSWER
+                                            where a.Assessment_Id == _assessmentId
+                                            && a.Component_Guid == guid
+                                            select a).ToDictionary(x => x.Question_Or_Requirement_Id, x=> x);
+                        foreach (var c in creates.ToList())
+                        {
+                            if (!alreadyThere.ContainsKey(c.Question_Id))
+                            {
+                                context.ANSWER.Add(new ANSWER()
+                                {
+                                    Answer_Text = Constants.UNANSWERED,
+                                    Assessment_Id = this._assessmentId,
+                                    Component_Guid = guid,
+                                    Is_Component = true,
+                                    Is_Requirement = false,
+                                    Question_Or_Requirement_Id = c.Question_Id
+                                });
+                            }
+                        }
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new ApplicationException("could not find component for guid:" + guid);
+                    }
+                }
+                else
+                {
+                    foreach (var a in context.ANSWER.Where(x => x.Component_Guid == guid).ToList())
+                    {
+                        context.ANSWER.Remove(a);
+                    }
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
+
+      
+
+     
 
 
         /// <summary>
@@ -368,11 +458,6 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 StoreAnswer(ans);
             }
-        }
-
-        public static string FormatLineBreaks(string s)
-        {
-            return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
         }
     }
 

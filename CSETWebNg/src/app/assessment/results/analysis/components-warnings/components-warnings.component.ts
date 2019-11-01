@@ -26,62 +26,34 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-components-warnings',
   templateUrl: './components-warnings.component.html'
 })
 export class ComponentsWarningsComponent implements OnInit {
-  chart: Chart;
+
   initialized = false;
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+  warnings: any;
+
+  /**
+   *
+   */
+  constructor(
+    private analysisSvc: AnalysisService,
+    private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.analysisSvc.getNetworkWarnings().subscribe(x => this.setupChart(x));
-  }
-
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'overview']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-types']);
-  }
-
-  setupChart(x: any) {
-    this.initialized = false;
-    this.chart = new Chart('netWarnCanvas', {
-      type: 'pie',
-      data: {
-        labels: x.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.data,
-            backgroundColor: 'red',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Network Warnings'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+    this.analysisSvc.getNetworkWarnings().subscribe(x => {
+      this.warnings = x;
+      this.initialized = true;
     });
-    this.initialized = true;
   }
+
+
+
 }

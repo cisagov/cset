@@ -105,11 +105,11 @@
             <span class="cset-icons-module fs-base mr-2"></span>
             <span>Import Modules</span>
           </button>
-          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            href="index.html?returnPath=set-list" target="csetSetBuilder">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [routerLink]="['/set-list']">
             <span class="cset-icons-module fs-base mr-2"></span>
             <span>Module Builder</span>
-          </a>
+          </button>
         </div>
       </div>
 
@@ -130,17 +130,17 @@
           <span class="">Help</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" rel="noopener noreferrer" target="_blank"
             href="{{docUrl}}htmlhelp/index.htm">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>User Guide</span>
           </a>
-          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" rel="noopener noreferrer" target="_blank"
             href="{{docUrl}}cdDocs/UserGuide.pdf">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>User Guide (PDF)</span>
           </a>
-          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" rel="noopener noreferrer" target="_blank"
             href="{{docUrl}}AccessibilityFeatures/index.htm">
             <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
@@ -225,59 +225,21 @@
           [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
-        <div class="footer-section-1 bgc-primary px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
-          <div class="px-4 mb-2 d-flex flex-column justify-content-start flex-00a">
-            <div class="f1-head c-gray-50">I Want To</div>
-            <div>
-              <a href="mailto:ics-cert@hq.dhs.gov?Subject=Report an ICS Incident">Report an ICS incident</a>
-            </div>
-            <div>
-              <a href="mailto:ics-cert@hq.dhs.gov?Subject=Report an ICS Software Vulnerability">Report an ICS software
-                vulnerability</a>
-            </div>
-            <div>
-              <a target="_blank" href="http://www.dhs.gov/report-cyber-risks">Get information about reporting</a>
-            </div>
-          </div>
-          <div class="px-4 d-flex flex-column justify-content-start flex-00a">
-            <div class="f1-head c-gray-50">Contact NCCIC (ICS)</div>
-            <div class="d-flex align-items-center flex-00a">
-              <span class="cset-icons-phone fs-base-1 mr-2"></span>
-              <span>US Toll Free: (877) 282-0870</span>
-            </div>
-            <div class="d-flex align-items-center flex-00a">
-              <span class="cset-icons-envelope fs-base-1 mr-2"></span>
-              <a href="mailto:ics-cert@hq.dhs.gov?Subject=ICS-Related Cyber Activity">ICS-Related Cyber Activity</a>
-            </div>
-            <div class="d-flex align-items-center flex-00a">
-              <span class="cset-icons-envelope fs-base-1 mr-2"></span>
-              <a href="mailto:CSCExternalAffairs@hq.dhs.gov ">General ICS Questions</a>
-            </div>
-            <div class="d-flex align-items-center flex-00a">
-              <span class="cset-icons-import fs-base-1 mr-2"></span>
-              <a class="d-flex align-items-center flex-00a" target="_blank"
-                href="https://urldefense.proofpoint.com/v2/url?u=https-3A__ics-2Dcert.us-2Dcert.gov_sites_default_files_documents_ICS-2DCERT-5FPGP-5FPub-5FKey.asc&d=DwMFAg&c=54IZrppPQZKX9mLzcGdPfFD1hxrcB__aEkJFOKJFd00&r=KUZGhTpyhFuT194Cu_O2Q9FWMT7vNzyaKs0s81_-NBo&m=3ePze1BsWjWCM2I6x_FbNdejSJ1viFDwLcSnDNLh1mU&s=NKc4hm9rIXJDx1ppx5R0kA5G3ssdzLmZvo50A4MTfpM&e=">
-                Get PGP/GPG keys
-              </a>
-            </div>
-          </div>
-        </div>
-
         <div class="footer-section-2 p-2">
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <a class="mr-2" target="_blank" href="https://ics-cert.us-cert.gov/node/3">FAQ</a>
+            <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
             <span class="mr-2 ml-2">|</span>
-            <a target="_blank" href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
+            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
             <span class="mr-2 ml-2">|</span>
-            <a target="_blank" href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
+            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
             <span class="mr-2 ml-2">|</span>
-            <a target="_blank" href="http://www.us-cert.gov/accessibility/">Accessibility</a>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/accessibility/">Accessibility</a>
             <span class="mr-2 ml-2">|</span>
-            <a target="_blank" href="http://www.us-cert.gov/pdf/">Get a PDF Reader</a>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/pdf/">Get a PDF Reader</a>
           </div>
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <span class="mr-1">US-CERT is part of the</span>
-            <a target="_blank" href="http://www.dhs.gov">Department of Homeland Security</a>
+            <span class="mr-1"><a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a> is part of the</span>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
           </div>
         </div>
       </ng-template>

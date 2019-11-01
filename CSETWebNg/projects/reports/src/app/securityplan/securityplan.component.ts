@@ -22,9 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ReportService } from '../services/report.service';
+import { ReportsConfigService } from '../services/config.service';
 import { AnalysisService } from '../services/analysis.service';
+import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
+import { ACETService } from '../../../../../src/app/services/acet.service';
 
 @Component({
   selector: 'rapp-securityplan',
@@ -35,14 +38,23 @@ export class SecurityplanComponent implements OnInit {
 
   response: any;
 
+  componentCount = 0;
+  networkDiagramImage: SafeHtml;
+
+  acetDashboard: AcetDashboard;
+
   // FIPS SAL answers
   nistSalC = '';
   nistSalI = '';
   nistSalA = '';
 
-  public constructor(private titleService: Title,
-    private reportSvc: ReportService,
-    public analysisSvc: AnalysisService
+  public constructor(
+    private titleService: Title,
+    public reportSvc: ReportService,
+    public analysisSvc: AnalysisService,
+    public configSvc: ReportsConfigService,
+    public acetSvc: ACETService,
+    private sanitizer: DomSanitizer
   ) { }
 
   /**
@@ -54,7 +66,6 @@ export class SecurityplanComponent implements OnInit {
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {
         this.response = r;
-
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
         if (!!v) {
@@ -71,11 +82,42 @@ export class SecurityplanComponent implements OnInit {
 
         // convert line breaks to HTML
         this.response.ControlList.forEach(control => {
-          control.ControlDescription = control.ControlDescription.replace('\r', '<br/>');
+          control.ControlDescription = control.ControlDescription.replace(/\r/g, '<br/>');
         });
       },
       error => console.log('Security Plan report load Error: ' + (<Error>error).message)
     );
+
+    // Component Types (stacked bar chart)
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.componentCount = x.Labels.length;
+
+      // Network Diagram
+      this.reportSvc.getNetworkDiagramImage().subscribe(y => {
+        this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(y);
+      });
+    });
+
+
+
+
+    // ACET-specific content
+    this.reportSvc.getACET().subscribe((x: boolean) => {
+      this.reportSvc.hasACET = x;
+    });
+
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+
+        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
+          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        }
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
   }
 
 

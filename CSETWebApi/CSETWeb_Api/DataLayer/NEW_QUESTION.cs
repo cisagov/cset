@@ -25,11 +25,12 @@ namespace DataLayer
         {
             this.COMPONENT_QUESTIONS = new HashSet<COMPONENT_QUESTIONS>();
             this.COMPONENT_STANDARD_QUESTIONS = new HashSet<COMPONENT_STANDARD_QUESTIONS>();
+            this.FINANCIAL_QUESTIONS = new HashSet<FINANCIAL_QUESTIONS>();
             this.NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
+            this.NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
             this.QUESTION_SUB_QUESTION = new HashSet<QUESTION_SUB_QUESTION>();
             this.REQUIREMENT_QUESTIONS_SETS = new HashSet<REQUIREMENT_QUESTIONS_SETS>();
             this.NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
-            this.NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
         }
     
         public int Question_Id { get; set; }
@@ -40,20 +41,23 @@ namespace DataLayer
         public Nullable<int> Weight { get; set; }
         public Nullable<int> Question_Group_Id { get; set; }
         public Nullable<int> Question_Group_Number { get; set; }
-        public string Std_Ref_Id { get; set; }
         public string Original_Set_Name { get; set; }
         public byte[] Question_Hash { get; set; }
         public Nullable<int> Ranking { get; set; }
         public int Heading_Pair_Id { get; set; }
+        public string Std_Ref_Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
-        public virtual QUESTION_GROUP_TYPE QUESTION_GROUP_TYPE { get; set; }
         public virtual SET SET { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
         public virtual UNIVERSAL_SAL_LEVEL UNIVERSAL_SAL_LEVEL1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QUESTION_SUB_QUESTION> QUESTION_SUB_QUESTION { get; set; }
@@ -61,8 +65,6 @@ namespace DataLayer
         public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
     }
 }
 

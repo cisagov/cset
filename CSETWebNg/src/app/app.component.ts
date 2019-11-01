@@ -40,7 +40,8 @@ import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { Title } from '@angular/platform-browser';
+
+
 declare var $: any;
 
 @Component({
@@ -63,9 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService,
-    private route: ActivatedRoute,
-    private titleSvc: Title
+    private _hotkeysService: HotkeysService
   ) { }
 
 
@@ -119,12 +118,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   goHome() {
-    if (this.isModuleBuilder(this.router.url)) {
-      this.router.navigate(['/set-list']);
-    } else {
-      this.assessSvc.dropAssessment();
-      this.router.navigate(['/home']);
-    }
+    this.assessSvc.dropAssessment();
+    this.router.navigate(['/home']);
   }
 
   about() {
@@ -168,7 +163,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         (data: CreateUser) => {
           if (data && data.PrimaryEmail) {
             // don't send anything unless there's something sane to send
-            this.auth.editUser(data).subscribe(() => this.auth.setUserInfo(data));
+            this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
           }
           this.dialogRef = undefined;
         },

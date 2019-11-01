@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
@@ -142,13 +143,13 @@ namespace CSETWeb_Api.BusinessManagers
                 // See if the set to be deleted is the original set for other sets' requirements.
                 // If so, don't allow the delete.
                 var query = from req in db.NEW_REQUIREMENT
-                          join rs in db.REQUIREMENT_SETS on req.Requirement_Id equals rs.Requirement_Id
-                          where req.Original_Set_Name == setName
-                          && rs.Set_Name != req.Original_Set_Name
-                          select req;
+                            join rs in db.REQUIREMENT_SETS on req.Requirement_Id equals rs.Requirement_Id
+                            where req.Original_Set_Name == setName
+                            && rs.Set_Name != req.Original_Set_Name
+                            select req;
 
                 if (query.ToList().Count > 0)
-                {                    
+                {
                     resp.ErrorMessages.Add("Cannot perform delete. " +
                         "One or more of this Module's requirements " +
                         "are referenced by other Modules.");
@@ -236,7 +237,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 db.SETS.Update(dbSet);
             }
-           
+
             db.SaveChanges();
 
             return set.SetName;
@@ -453,17 +454,30 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                NEW_QUESTION q = new NEW_QUESTION();
-                q.Simple_Question = request.CustomQuestionText;
+                // get the max Std_Ref_Number for the std_ref
+                int newStdRefNum = 1;
+                var fellowQuestions = db.NEW_QUESTION.Where(x => x.Std_Ref == request.SetName).ToList();
+                if (fellowQuestions.Count > 0)
+                {
+                    newStdRefNum = fellowQuestions.Max(x => x.Std_Ref_Number) + 1;
+                }
 
-                // TODO:  std_ref + std_ref_number must be unique
-                q.Std_Ref = DateTime.Now.Millisecond.ToString();
-                q.Std_Ref_Number = 0;
 
-                q.Universal_Sal_Level = "L";
-                q.Weight = 0;
-                q.Original_Set_Name = request.SetName;
-                q.Heading_Pair_Id = GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName);
+
+
+                NEW_QUESTION q = new NEW_QUESTION
+                {
+                    Simple_Question = request.CustomQuestionText,
+
+                    // TODO:  std_ref + std_ref_number must be unique
+                    Std_Ref = request.SetName,
+                    Std_Ref_Number = newStdRefNum,
+
+                    Universal_Sal_Level = "L",
+                    Weight = 0,
+                    Original_Set_Name = request.SetName,
+                    Heading_Pair_Id = GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName)
+                };
 
                 db.NEW_QUESTION.Add(q);
                 db.SaveChanges();
@@ -1017,23 +1031,23 @@ namespace CSETWeb_Api.BusinessManagers
 
                 // Update text.  Try/catch in case they are setting duplicate question text.
                 try
-                {                    
-                var question = db.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefault();
-                if (question == null)
                 {
+                    var question = db.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefault();
+                    if (question == null)
+                    {
                         resp.ErrorMessages.Add("Question ID is not defined");
                         return resp;
-                }
+                    }
 
-                question.Simple_Question = text;
+                    question.Simple_Question = text;
 
-                db.NEW_QUESTION.Update(question);
-                db.SaveChanges();
+                    db.NEW_QUESTION.Update(question);
+                    db.SaveChanges();
 
                     return resp;
                 }
                 catch (Microsoft.EntityFrameworkCore.DbUpdateException exc)
-                {                    
+                {
                     resp.ErrorMessages.Add("DUPLICATE QUESTION TEXT");
                     return resp;
                 }
@@ -1227,12 +1241,12 @@ namespace CSETWeb_Api.BusinessManagers
 
                 NEW_REQUIREMENT req = new NEW_REQUIREMENT
                 {
-                    Requirement_Title = parms.Title,
-                    Requirement_Text = parms.RequirementText,
-                    Standard_Category = parms.Category,
-                    Standard_Sub_Category = parms.Subcategory,
+                    Requirement_Title = parms.Title == null ? "" : parms.Title.Trim().Truncate(250),
+                    Requirement_Text = parms.RequirementText.Trim(),
+                    Standard_Category = parms.Category.Trim().Truncate(250),
+                    Standard_Sub_Category = parms.Subcategory == null ? "" : parms.Subcategory.Trim().Truncate(250),
                     Question_Group_Heading_Id = parms.QuestionGroupHeadingID,
-                    Original_Set_Name = parms.SetName
+                    Original_Set_Name = parms.SetName.Truncate(50)
                 };
 
                 db.NEW_REQUIREMENT.Add(req);
@@ -1265,6 +1279,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             return parms;
         }
+
 
 
         /// <summary>
@@ -1740,7 +1755,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         public int RecordDocInDB(FileUploadStreamResult result)
         {
-            
+
             using (var db = new CSET_Context())
             {
                 // Determine file type ID.  Store null if not known.
@@ -1749,37 +1764,37 @@ namespace CSETWeb_Api.BusinessManagers
                 foreach (var file in result.FileResultList)
                 {
                     var type = db.FILE_TYPE.Where(x => x.Mime_Type == file.ContentType).FirstOrDefault();
-                if (type != null)
-                {
-                    fileType = (int)type.File_Type_Id;
-                }
+                    if (type != null)
+                    {
+                        fileType = (int)type.File_Type_Id;
+                    }
 
 
-                GEN_FILE gf = new GEN_FILE
-                {
+                    GEN_FILE gf = new GEN_FILE
+                    {
                         File_Name = file.FileName,
-                    Title = "(no title)",
-                    File_Type_Id = fileType,
+                        Title = "(no title)",
+                        File_Type_Id = fileType,
                         File_Size = file.FileSize,
-                    Doc_Num = "NONE",
+                        Doc_Num = "NONE",
                         Short_Name = "(no short name)",
                         Data = file.FileBytes
-                };
-                db.GEN_FILE.Add(gf);
-                db.SaveChanges();
+                    };
+                    db.GEN_FILE.Add(gf);
+                    db.SaveChanges();
 
 
-                SET_FILES sf = new SET_FILES
-                {
+                    SET_FILES sf = new SET_FILES
+                    {
                         SetName = result.FormNameValues["setName"],
-                    Gen_File_Id = gf.Gen_File_Id
-                };
-                db.SET_FILES.Add(sf);
-                db.SaveChanges();
+                        Gen_File_Id = gf.Gen_File_Id
+                    };
+                    db.SET_FILES.Add(sf);
+                    db.SaveChanges();
 
-                return gf.Gen_File_Id;
+                    return gf.Gen_File_Id;
                 }
-                return 0; 
+                return 0;
             }
         }
     }

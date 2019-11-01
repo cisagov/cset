@@ -1,0 +1,11 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="id">ID</th>
+    <th mat-sort-header="message" style="width:75%;">Message</th>
+    
+    <tr *ngFor="let warning of warnings; let i = index">
+        <td>{{warning.id}}</td>
+        <td>{{warning.message}}</td>
+    </tr>
+</table>
+
+

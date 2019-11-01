@@ -1,0 +1,119 @@
+<!---------------------- 
+
+   Copyright 2019 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div *ngIf="acetDashboard" class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3>ACET Dashboard</h3>
+    <div class="d-table">
+        <div class="d-table-row">
+            <div class="d-table-cell">Credit Union Name</div>
+            <div class="d-table-cell">{{ acetDashboard.CreditUnionName }}</div>
+        </div>
+        <div class="d-table-row mb-3">
+            <div class="d-table-cell mr-3">Charter</div>
+            <div class="d-table-cell">{{ acetDashboard.Charter }}</div>
+        </div>
+        <div class="d-table-row mb-3">
+            <div class="d-table-cell mr-3">Assets</div>
+            <div class="d-table-cell">{{ acetDashboard.Assets | currency:'USD':'symbol':'1.0' }}</div>
+        </div>
+        <div class="d-table-row mb-3">
+            <div class="d-table-cell mr-3">Hours</div>
+            <div class="d-table-cell">{{ acetDashboard.Hours }}</div>
+        </div>
+    </div>
+    <div class="mt-3 mb-3">
+        <h4>Inherent Risk Profile</h4>
+        <table class="cset-table irp-table mb-2">
+            <tr>
+                <th rowspan="2">Category</th>
+                <th colspan="5" class="text-center">Inherent Risk</th>
+                <th rowspan="2">Risk Level</th>
+            </tr>
+            <tr>
+                <th class="text-center">1</th>
+                <th class="text-center">2</th>
+                <th class="text-center">3</th>
+                <th class="text-center">4</th>
+                <th class="text-center">5</th>
+            </tr>
+            <tr *ngFor="let irp of acetDashboard.IRPs; let index = index;">
+                <td>{{ irp.HeaderText }}</td>
+                <td class="text-right">{{ irp.RiskCount[0] }}</td>
+                <td class="text-right">{{ irp.RiskCount[1] }}</td>
+                <td class="text-right">{{ irp.RiskCount[2] }}</td>
+                <td class="text-right">{{ irp.RiskCount[3] }}</td>
+                <td class="text-right">{{ irp.RiskCount[4] }}</td>
+                <td class="text-nowrap">{{ irp.Comment }}</td>
+            </tr>
+            <tr class="total-row">
+                <td class="border-table">Totals</td>
+                <td class="border-table text-right">{{ acetDashboard.SumRisk[0] }}</td>
+                <td class="border-table text-right">{{ acetDashboard.SumRisk[1] }}</td>
+                <td class="border-table text-right">{{ acetDashboard.SumRisk[2] }}</td>
+                <td class="border-table text-right">{{ acetDashboard.SumRisk[3] }}</td>
+                <td class="border-table text-right">{{ acetDashboard.SumRisk[4] }}</td>
+                <td class="border-table"></td>
+            </tr>
+        </table>
+
+        <div class="d-table w-100">
+            <div class="d-table-row">
+                <div class="d-table-cell pb-3 pl-3">
+                    Overall Risk Level is <span class="blue-text font-weight-bold">{{ overrideLabel }}</span>
+                </div>
+            </div>
+            <div class="d-table-row">
+                <div class="d-table-cell pl-3 align-top">
+                    Override Risk Level is <span class="blue-text font-weight-bold">{{overriddenLabel}}</span>
+                </div>
+                
+            </div>
+            <div class="d-table-row"
+                *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+                <div class="d-table-cell pl-3 align-top">
+                    Override Reason: <span>{{acetDashboard.OverrideReason}}</span>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div class="mt-3 mb-3">
+        <h4>Cybersecurity Maturity</h4>
+        <table class="dash-table">
+            <tr>
+                <th width="50%" class="table-head">Domain</th>
+                <th width="50%" class="table-head">Maturity Level</th>
+            </tr>
+            <tr *ngFor="let domain of acetDashboard.Domains; let i = index" style="margin-bottom:10px;">
+                <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+                <td class="mid-align">
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.Maturity)"
+                        style="width:150px; margin-top: 10px;">{{ acetSvc.translateMaturity(domain.Maturity) }}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+        <button class="btn btn-primary" (click)="navSvc2.navBack('acetDashboard')">Back</button>
+        <button class="btn btn-primary" (click)="navSvc2.navNext('acetDashboard')">Next</button>
+    </div>
+</div>

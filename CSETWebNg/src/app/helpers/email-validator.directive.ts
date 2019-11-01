@@ -41,6 +41,6 @@ export class EmailValidatorDirective implements Validator {
             return { 'notValidEmail' : true };
         }
 
-        return { 'notValidEmail' : false };
+        return null;
     }
 }

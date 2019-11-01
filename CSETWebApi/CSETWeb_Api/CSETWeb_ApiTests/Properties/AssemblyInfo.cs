@@ -1,10 +1,4 @@
-//////////////////////////////// 
-// 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
-// 
-// 
-//////////////////////////////// 
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -26,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("18e1caf3-160e-49a7-b0fa-52dbbecfed5b")]
+[assembly: Guid("a524c760-c67c-448f-a8c1-12191e63cf31")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -40,5 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-

@@ -23,11 +23,11 @@
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
 import { FindingsService } from '../../../services/findings.service';
+import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Finding, Importance, FindingContact } from './findings.model';
-import { Router } from '@angular/router';
 import * as _ from 'lodash';
-import { AssessmentService } from '../../../services/assessment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-findings',
@@ -38,13 +38,19 @@ export class FindingsComponent implements OnInit {
   finding: Finding;
   importances: Importance[];
   contactsmodel: any[];
+  answerID: number;
+  questionID: number;
 
-
-  constructor(private findSvc: FindingsService,
+  constructor(
+    private findSvc: FindingsService,
     private dialog: MatDialogRef<FindingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Finding, 
-    private router: Router, private assessSvc: AssessmentService) {
+    @Inject(MAT_DIALOG_DATA) public data: Finding,
+    private router: Router,
+    private assessSvc: AssessmentService
+  ) {
     this.finding = data;
+    this.answerID = data.Answer_Id;
+    this.questionID = data.Question_Id;
   }
 
   ngOnInit() {
@@ -61,6 +67,8 @@ export class FindingsComponent implements OnInit {
       this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id)
         .subscribe((response: Finding) => {
           this.finding = response;
+          this.answerID = this.finding.Answer_Id;
+          this.questionID = this.finding.Question_Id;
           this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,
             { 'Selected': true }),
             'Assessment_Contact_Id');
@@ -74,7 +82,27 @@ export class FindingsComponent implements OnInit {
     });
   }
 
+  checkFinding(finding: Finding) {
+    // and a bunch of fields together
+    // if they are all null then false
+    // else true;
+    let findingCompleted = true;
+
+    findingCompleted = (finding.Impact == null);
+    findingCompleted = (finding.Importance == null) && (findingCompleted);
+    findingCompleted = (finding.Issue == null) && (findingCompleted);
+    findingCompleted = (finding.Recommendations == null) && (findingCompleted);
+    findingCompleted = (finding.Resolution_Date == null) && (findingCompleted);
+    findingCompleted = (finding.Summary == null) && (findingCompleted);
+    findingCompleted = (finding.Vulnerabilities == null) && (findingCompleted);
+
+    return !finding;
+  }
+
+
   update() {
+    this.finding.Answer_Id = this.answerID;
+    this.finding.Question_Id = this.questionID;
     this.findSvc.SaveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
@@ -85,16 +113,10 @@ export class FindingsComponent implements OnInit {
   }
 
   updateContact(contactid) {
-    Array.from(this.finding.Finding_Contacts).forEach((fc: FindingContact) => {
-      fc.Selected = false;
-    });
-    Array.from(contactid).forEach((element: HTMLOptionElement) => {
-      this.finding.Finding_Contacts[element.value.split(':')[0]].Selected = element.selected;
+    this.finding.Finding_Contacts.forEach((fc: FindingContact) => {
+      if (fc.Assessment_Contact_Id === contactid.Assessment_Contact_Id) {
+        fc.Selected = contactid.Selected;
+      }
     });
   }
-
-  navToContacts() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'prepare', 'info']);
-  }
-
 }

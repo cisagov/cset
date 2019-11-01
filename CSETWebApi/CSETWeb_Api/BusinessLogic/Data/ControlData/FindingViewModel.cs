@@ -38,21 +38,38 @@ namespace CSETWeb_Api.Data.ControlData
             //get all the contacts in this assessment
             //get all the contexts on this finding
             this.webFinding = f;
+
+            if (f.IsFindingEmpty())
+            {
+                return;
+            }
+
             this.context = context;
+
             this.dbFinding = context.FINDING
                 .Include(x => x.FINDING_CONTACT)
                 .Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id)
                 .FirstOrDefault();
             if (dbFinding == null)
             {
-                var finding = new FINDING();                
-                finding.Answer_Id = f.Answer_Id;
+                var finding = new FINDING
+                {
+                    Answer_Id = f.Answer_Id,
+                    Summary = f.Summary,
+                    Impact = f.Impact,
+                    Issue = f.Issue,
+                    Recommendations = f.Recommendations,
+                    Vulnerabilities = f.Vulnerabilities,
+                    Resolution_Date = f.Resolution_Date
+                };
+
                 this.dbFinding = finding;
                 context.FINDING.Add(finding);
             }
-            TinyMapper.Map(f, this.dbFinding);
-            int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
 
+            TinyMapper.Map(f, this.dbFinding);
+
+            int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
             this.dbFinding.Importance_ = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
 
             if (f.Finding_Contacts != null)
@@ -106,6 +123,11 @@ namespace CSETWeb_Api.Data.ControlData
             {
                 return;
             }
+          
+
+
+            if (this.webFinding.IsFindingEmpty())
+                return;
 
             //var contacts = Contacts.Where(s => s.Id != new Guid()).Distinct().ToList();
             //finding.FINDING_CONTACT.Where(s => !contacts.Select(se => se.Id).Contains(s.Assessment_Contact_Id)).ToList().ForEach(t => finding.FINDING_CONTACT.Remove(t));
