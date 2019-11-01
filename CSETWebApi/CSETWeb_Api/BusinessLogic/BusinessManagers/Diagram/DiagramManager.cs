@@ -59,51 +59,58 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                HashSet<string> validGuid = new HashSet<string>();
-                XmlNodeList cells  = xDoc.SelectNodes("//root/object[@ComponentGuid]");
-                foreach(XmlElement c in cells)
-                {   
-                    validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
-                }
-
-                var list = db.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentID).ToList();
-                foreach(var i in list)
-                {
-                    if (!validGuid.Contains(i.Component_Guid.ToString()))
-                    {
-                        db.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(i);
-                    }
-                }
-                db.SaveChanges();
-
                 var assessmentRecord = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
                 if (assessmentRecord != null)
                 {
-                    DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(db);
-                    
-                    XmlDocument oldDoc = new XmlDocument();
-                    if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup) && req.revision)
+                    try
                     {
-                        oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
+                        HashSet<string> validGuid = new HashSet<string>();
+                        XmlNodeList cells = xDoc.SelectNodes("//root/object[@ComponentGuid]");
+                        foreach (XmlElement c in cells)
+                        {
+                            validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
+                        }
+
+                        var list = db.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentID).ToList();
+                        foreach (var i in list)
+                        {
+                            if (!validGuid.Contains(i.Component_Guid.ToString()))
+                            {
+                                db.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(i);
+                            }
+                        }
+                        db.SaveChanges();
+
+                        DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(db);
+                        XmlDocument oldDoc = new XmlDocument();
+                        if (!String.IsNullOrWhiteSpace(assessmentRecord.Diagram_Markup) && req.revision)
+                        {
+                            oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
+                        }
+                        differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
+                        differenceManager.SaveDifferences(assessmentID);
+                    
                     }
-                    differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
-                    differenceManager.SaveDifferences(assessmentID);
+                    catch (Exception e)
+                    {
+                    }
+                    finally
+                    {
+                        assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
+                        String diagramXML = xDoc.OuterXml;
+                        if (!String.IsNullOrWhiteSpace(diagramXML))
+                        {
+                            assessmentRecord.Diagram_Markup = diagramXML;
+                        }
+                        assessmentRecord.Diagram_Image = diagramImage;
+                        db.SaveChanges();
+                    }
                 }
                 else
                 {
                     //what the?? where is our assessment
                     throw new ApplicationException("Assessment record is missing for id" + assessmentID);
                 }
-
-                assessmentRecord.LastUsedComponentNumber = lastUsedComponentNumber;
-                String diagramXML = xDoc.OuterXml;
-                if (!String.IsNullOrWhiteSpace(diagramXML))
-                {
-                    assessmentRecord.Diagram_Markup = diagramXML;
-                }
-                assessmentRecord.Diagram_Image = diagramImage;
-
-                db.SaveChanges();
             }
             
          
