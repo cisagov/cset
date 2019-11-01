@@ -49,24 +49,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers
                          select a);
             foreach (var item in list1)
             {
-                allValues.Add(item.DrawIO_id, new IDToParent()
+                allValues[item.DrawIO_id] =  new IDToParent()
                 {
                     DrawIO_Id = item.DrawIO_id,
                     Parent_DrawIO_Id = item.Parent_DrawIO_Id,
                     component = item
-                });
+                };
             }
             var list2 = (from b in db.DIAGRAM_CONTAINER
                          where b.Assessment_Id == assessment_id
                          select b);
             foreach (var item in list2)
             {
-                allValues.Add(item.DrawIO_id, new IDToParent()
+                allValues[item.DrawIO_id] = new IDToParent()
                 {
                     DrawIO_Id = item.DrawIO_id,
                     Parent_DrawIO_Id = item.Parent_Draw_IO_Id,
                     container = item
-                });
+                };
             }
             foreach (IDToParent item in allValues.Values.Where(x=> x.component!=null).ToList())
             {
