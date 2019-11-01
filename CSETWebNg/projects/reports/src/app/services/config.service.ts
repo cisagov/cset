@@ -39,17 +39,26 @@ export class ReportsConfigService {
 
   config: any;
 
+  // button labels
+  buttonLabels = {};
+
+  // labels for graph legends and report answers
+  answerLabels = {};
+
+  // labels for SAL values
+  salLabels = {};
+
   private initialized = false;
   isAPI_together_With_Web = false;
 
   constructor(private http: HttpClient) {
-        if (/reports/i.test(window.location.href)) {
-          this.configUrl = "../" + this.configUrl;
-        }
-      this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
-      if (this.isAPI_together_With_Web) {
-        this.apiUrl = sessionStorage.getItem("appAPIURL");
-      }
+    if (/reports/i.test(window.location.href)) {
+      this.configUrl = "../" + this.configUrl;
+    }
+    this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
+    if (this.isAPI_together_With_Web) {
+      this.apiUrl = sessionStorage.getItem("appAPIURL");
+    }
   }
 
   loadConfig() {
@@ -76,18 +85,44 @@ export class ReportsConfigService {
       return this.http.get(this.configUrl)
         .toPromise() // APP_INITIALIZER doesn't seem to work with observables
         .then((data: any) => {
-                if (this.isAPI_together_With_Web) {
-                  this.apiUrl = data.apiUrl;
-                  this.appUrl = data.appUrl;
-                  this.docUrl = data.docUrl;
-                  this.reportsUrl = data.reportsUrl;
-                  this.helpContactEmail = data.helpContactEmail;
-                  this.helpContactPhone = data.helpContactPhone;
-                }
-                this.config = data;
-                this.initialized = true;
-              }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
+          if (this.isAPI_together_With_Web) {
+            this.apiUrl = data.apiUrl;
+            this.appUrl = data.appUrl;
+            this.docUrl = data.docUrl;
+            this.reportsUrl = data.reportsUrl;
+            this.helpContactEmail = data.helpContactEmail;
+            this.helpContactPhone = data.helpContactPhone;
+          }
+          this.config = data;
+
+          this.populateLabelValues();
+
+          this.initialized = true;
+        }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
     }
+  }
+
+
+  /**
+   * Populates label values.
+   */
+  populateLabelValues() {
+    // Apply any overrides to button and graph labels
+    this.buttonLabels['Y'] = this.config.buttonLabelY;
+    this.buttonLabels['N'] = this.config.buttonLabelN;
+    this.buttonLabels['NA'] = this.config.buttonLabelNA;
+    this.buttonLabels['A'] = this.config.buttonLabelA;
+
+    this.answerLabels['Y'] = this.config.answerLabelY;
+    this.answerLabels['N'] = this.config.answerLabelN;
+    this.answerLabels['NA'] = this.config.answerLabelNA;
+    this.answerLabels['A'] = this.config.answerLabelA;
+    this.answerLabels['U'] = this.config.answerLabelU;
+
+    this.salLabels['L'] = "Low";
+    this.salLabels['M'] = "Moderate";
+    this.salLabels['H'] = "High";
+    this.salLabels['VH'] = "Very High";
   }
 
 

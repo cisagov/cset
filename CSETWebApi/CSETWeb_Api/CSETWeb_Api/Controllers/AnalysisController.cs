@@ -53,6 +53,85 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/analysis/Feedback")]
+        public FeedbackDisplayContainer getFeedback()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            RequirementsManager rm = new RequirementsManager(assessmentId);
+            FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
+
+            string AssessmentMode = GetAssessmentMode(assessmentId);
+
+            try
+            {
+                using (CSET_Context context = new CSET_Context())
+                {
+                    var QuestionsWithFeedbackList = from a in context.Answer_Standards_InScope
+                                                    where a.assessment_id == assessmentId &&
+                                                    a.mode == AssessmentMode && a.FeedBack != null
+                                                    select a;
+
+                    if (QuestionsWithFeedbackList.Count() == 0)
+                    {
+                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";
+                        return FeedbackResult;
+                    }
+
+                    string FeedbackSalutations = "Dear PED Module Administrator:";
+                    string FeedbackDescription = "The following comments were provided for each of the questions: ";
+                    string FeedbackWarning = " *** Required *** Keep This Question ID ***";
+
+                    bool FaaMail = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
+                    && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA")).FirstOrDefault() != null;
+                    FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
+                    if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
+
+                    string FaaEmail = "FAAPEDModule@faa.gov";
+                    string DHSEmail = "cset@dhs.gov";
+                    if (FaaMail) FeedbackResult.FeedbackEmailTo = FaaEmail + ";  ";
+                    FeedbackResult.FeedbackEmailTo += DHSEmail;
+
+                    FeedbackResult.FeedbackBody = "Please email to: <br/><br/>";
+                    FeedbackResult.FeedbackBody += FeedbackResult.FeedbackEmailTo + "<br/><br/><br/>";
+
+                    FeedbackResult.FeedbackBody += FeedbackSalutations + "<br/><br/>";
+                    FeedbackResult.FeedbackBody += FeedbackDescription + "<br/><br/>";
+
+                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    {
+                        q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
+                        q.FeedBack = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
+                        FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.FeedBack + "<br/><br/>";
+                        FeedbackResult.FeedbackBody += q.Question_Text + "<br/><br/>";
+                        FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
+                        FeedbackResult.FeedbackBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". <br/><br/><br/>";
+                    }
+
+                    FeedbackResult.FeedbackEmailSubject = "CSET Questions Feedback";
+                    FeedbackResult.FeedbackEmailBody += FeedbackSalutations + "%0D%0A%0D%0A";
+                    FeedbackResult.FeedbackEmailBody += FeedbackDescription + "%0D%0A%0D%0A";
+
+                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    {
+                        q.Question_Text = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
+                        q.FeedBack = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
+                        FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.FeedBack + "%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += q.Question_Text + "%0D%0A%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". %0D%0A%0D%0A%0D%0A";
+                    }
+
+                    return FeedbackResult;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
 
         [HttpGet]
         [Route("api/analysis/dashboard")]
@@ -69,79 +148,88 @@ namespace CSETWeb_Api.Controllers
                   .WithSqlParam("assessment_id", assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {
-                      results.Result1 =  handler.ReadToList<GetCombinedOveralls>().ToList();
+                      results.Result1 = handler.ReadToList<GetCombinedOveralls>().ToList();
                       handler.NextResult();
                       results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
-                   });
+                  });
 
-              
+
 
                 if (results.Count >= 2)
                 {
-                    List<double> data = new List<double>();
-                    List<String> labels = new List<String>();
+                    // for the compliance graph
+                    List<Tuple<string, double>> compliance = new List<Tuple<string, double>>();
+
                     ChartData stand = null;
                     ChartData comp = null;
+
+
                     foreach (GetCombinedOveralls c in results.Result1)
                     {
-                        // Questions or Requirements are included only if we are in that 'mode'
-                        // Do not include 'Framework' entry.
                         string mode = this.GetAssessmentMode(assessmentId);
-                        if ((c.StatType.ToLower() == "questions" && mode != "Q")
-                            || (c.StatType.ToLower() == "requirement" && mode != "R")
-                            || c.StatType.ToLower() == "framework")
-                        {
-                            // do not include the label and data
-                        }
-                        else { 
-                            labels.Add(c.StatType);
-                            data.Add(c.Value);
-                        }
+
+                        string label = c.StatType;
 
                         if (c.StatType == "Components")
                         {
-                            comp = transformToChart(c);
+                            comp = TransformToChart(c);
                         }
-                        
+
                         if ((c.StatType == "Questions" && mode == "Q")
                             || (c.StatType == "Requirement" && mode == "R"))
                         {
-                            stand = transformToChart(c);
+                            stand = TransformToChart(c);
+                            label = stand.label;
+                        }
+
+
+                        if ((c.StatType.ToLower() == "overall")
+                            || (c.StatType.ToLower() == "components"))
+                        {
+                            compliance.Add(new Tuple<string, double>(c.StatType, c.Value));
+                        }
+                        else if ((c.StatType.ToLower() == "questions" && mode == "Q")
+                            || (c.StatType.ToLower() == "requirement" && mode == "R"))
+                        {
+                            // Questions or Requirements are included only if we are in that 'mode', renamed as 'Standards'
+                            compliance.Add(new Tuple<string, double>("Standards", c.Value));
                         }
                     }
+
                     ChartData overallBars = new ChartData()
                     {
                         backgroundColor = "red",
                         borderWidth = "1",
-                        label = "overalls",
-                        Labels = labels,
-                        data = data
+                        label = "overalls"
                     };
 
-                    ChartData red = new ChartData();
-
-                    int rcount = 0;
-                    foreach (usp_getRankedCategories c in results.Result2)
+                    // order the compliance elements for display
+                    var complianceOrdered = new List<Tuple<string, double>>();
+                    complianceOrdered.Add(compliance.First(x => x.Item1 == "Overall"));
+                    complianceOrdered.Add(compliance.First(x => x.Item1 == "Standards"));
+                    complianceOrdered.Add(compliance.First(x => x.Item1 == "Components"));
+                    foreach (var j in complianceOrdered)
                     {
-                        if (rcount < 5)
-                        {
-                            red.data.Add((double)(c.prc ?? 0.0M));
-                            red.Labels.Add(c.Question_Group_Heading);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        rcount++;
+                        overallBars.Labels.Add(j.Item1);
+                        overallBars.data.Add(j.Item2);
+                    }
+
+
+                    ChartData chartData = new ChartData();
+
+                    foreach (usp_getRankedCategories c in results.Result2.Take(5))
+                    {
+                        chartData.data.Add((double)(c.prc ?? 0.0M));
+                        chartData.Labels.Add(c.Question_Group_Heading);
                     }
 
 
                     rval = new FirstPage()
                     {
                         OverallBars = overallBars,
-                        ComponentSummaryPie = comp,
                         StandardsSummaryPie = stand,
-                        RedBars = red
+                        ComponentSummaryPie = comp,
+                        RedBars = chartData
                     };
 
                 }
@@ -153,23 +241,26 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/TopCategories")]
-        public ChartData GetTopCategories()
+        public ChartData GetTopCategories([FromUri] int? total)
         {
+            if (total == null)
+            {
+                total = 10000;
+            }
+
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+            ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-
                 var results = new RankedCategoriesMultiResult();
                 context.LoadStoredProc("[dbo].[usp_GetRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
                   results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
-                  
+
               });
 
-                
 
                 if (results.Count >= 1)
                 {
@@ -182,21 +273,22 @@ namespace CSETWeb_Api.Controllers
                         data = data
                     };
 
-                    red = new ChartData();
-                    foreach (usp_getRankedCategories c in results.Result1)
+                    chartData = new ChartData();
+                    foreach (usp_getRankedCategories c in results.Result1.Take((int)total))
                     {
-                        red.data.Add((double)c.prc);
-                        red.Labels.Add(c.Question_Group_Heading);
-
+                        chartData.data.Add((double)c.prc);
+                        chartData.Labels.Add(c.Question_Group_Heading);
                     }
                 }
             }
 
-            return red;
+            return chartData;
         }
-		
-		/// <summary>
-        /// Re-orders the pieces into Y|N|NA|A|U order
+
+
+        /// <summary>
+        /// Re-orders the pieces into Y|N|NA|A|U order.
+        /// Also adjusts percentages to equal 100.
         /// </summary>
         /// <param name="r"></param>
         void SortIntoAnswerOrder(StandardSummaryOverallMultiResult r)
@@ -214,31 +306,54 @@ namespace CSETWeb_Api.Controllers
                     r.Result1.Where(p => p.Answer_Text == "A" && p.Short_Name == s).FirstOrDefault(),
                     r.Result1.Where(p => p.Answer_Text == "U" && p.Short_Name == s).FirstOrDefault()
                 };
+
+                // adjust the percentages to equal 100% after rounding
+                var cAdjusted = new BusinessLogic.Common.PercentageFixer(tempOList[0].Percent,
+                    tempOList[1].Percent, tempOList[2].Percent, tempOList[3].Percent, tempOList[4].Percent);
+
+                tempOList[0].Percent = cAdjusted.Y;
+                tempOList[1].Percent = cAdjusted.N;
+                tempOList[2].Percent = cAdjusted.NA;
+                tempOList[3].Percent = cAdjusted.A;
+                tempOList[4].Percent = cAdjusted.U;
+
                 orderedList = orderedList.Union(tempOList).ToList();
             }
-            
+
 
             r.Result1 = orderedList;
         }
-		
-        private ChartData transformToChart(GetCombinedOveralls c)
+
+
+        /// <summary>
+        /// Returns a ChartData object with the answer distribution for the StatType.
+        /// The answer distribution is ordered and normalized to total 100%,
+        /// fixing any rounding anomaly.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private ChartData TransformToChart(GetCombinedOveralls c)
         {
+            // adjust the percentages to equal 100% after rounding
+            var cAdjusted = new BusinessLogic.Common.PercentageFixer(c.Y, c.N, c.NA, c.A, c.U);
+
+
             List<double> data = new List<double>();
             List<String> labels = new List<string>();
-            data.Add((double)c.Y);
+            data.Add((int)cAdjusted.Y);
             labels.Add(answerColorDefs["Y"]);
-            data.Add((double)c.N);
+            data.Add((int)cAdjusted.N);
             labels.Add(answerColorDefs["N"]);
-            data.Add((double)c.NA);
+            data.Add((int)cAdjusted.NA);
             labels.Add(answerColorDefs["NA"]);
-            data.Add((double)c.A);
+            data.Add((int)cAdjusted.A);
             labels.Add(answerColorDefs["A"]);
-            data.Add((double)c.U);
+            data.Add((int)cAdjusted.U);
             labels.Add(answerColorDefs["U"]);
 
             return new ChartData()
             {
-                label = c.StatType,
+                label = new List<string>() { "Questions", "Requirements" }.Contains(c.StatType) ? "Standards" : c.StatType,
                 Labels = labels,
                 data = data
             };
@@ -249,7 +364,7 @@ namespace CSETWeb_Api.Controllers
         public ChartData GetOverallRankedCategories()
         {
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+            ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new RankedCategoriesMultiResult();
@@ -258,9 +373,8 @@ namespace CSETWeb_Api.Controllers
               .ExecuteStoredProc((handler) =>
               {
                   results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
-
               });
-             
+
 
                 if (results.Count >= 1)
                 {
@@ -273,15 +387,15 @@ namespace CSETWeb_Api.Controllers
                         data = data
                     };
 
-                    red = new ChartData();
-                    red.DataRows = new List<DataRows>();
+                    chartData = new ChartData();
+                    chartData.DataRows = new List<DataRows>();
                     int i = 1;
                     foreach (usp_getRankedCategories c in results.Result1)
                     {
-                        red.data.Add((double)(c.prc ?? 0));
-                        red.Labels.Add(c.Question_Group_Heading);
+                        chartData.data.Add((double)(c.prc ?? 0));
+                        chartData.Labels.Add(c.Question_Group_Heading);
 
-                        red.DataRows.Add(new DataRows()
+                        chartData.DataRows.Add(new DataRows()
                         {
                             failed = (c.nuCount ?? 0),
                             percent = (c.prc ?? 0),
@@ -294,7 +408,7 @@ namespace CSETWeb_Api.Controllers
                 }
             }
 
-            return red;
+            return chartData;
         }
 
         [HttpGet]
@@ -304,7 +418,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {
-                return getStandardsSummarySingle(context, assessmentId);
+                return GetStandardsSummarySingle(context, assessmentId);
             }
         }
 
@@ -318,37 +432,38 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
-            {   
+            {
                 if (context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Count() > 1)
                 {
                     return GetStandardsSummaryMultiple(context, assessmentId);
                 }
-                return getStandardsSummarySingle(context, assessmentId);
+                return GetStandardsSummarySingle(context, assessmentId);
             }
         }
 
 
-        private ChartData getStandardsSummarySingle(CSET_Context context, int assessmentId)
+        private ChartData GetStandardsSummarySingle(CSET_Context context, int assessmentId)
         {
-            ChartData summary = null;
+            ChartData myChartData = null;
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
           .WithSqlParam("assessment_id", assessmentId)
           .ExecuteStoredProc((handler) =>
           {
               results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
           });
-         
+
             if (results.Count >= 1)
             {
-				SortIntoAnswerOrder(results);							 
+                SortIntoAnswerOrder(results);
+
                 List<double> data = new List<double>();
                 List<String> Colors = new List<string>();
                 List<string> Labels = new List<string>();
                 List<DataRowsPie> rows = new List<DataRowsPie>();
-                summary = new ChartData();
+                myChartData = new ChartData();
                 Labels = new List<string>();
                 Dictionary<string, ChartData> charts = new Dictionary<string, ChartData>();
                 foreach (DataRowsPie c in results.Result1)
@@ -357,16 +472,16 @@ namespace CSETWeb_Api.Controllers
                     if (!charts.TryGetValue(c.Answer_Full_Name, out next))
                     {
                         data = new List<double>();
-                       
                         next = new ChartData()
                         {
                             Colors = Colors,
                             DataRowsPie = rows,
-                            borderWidth = "1",
+                            borderWidth = "0",
+                            borderColor = "transparent",
                             label = c.Answer_Full_Name,
                             Labels = Labels,
                             data = data
-                        };                        
+                        };
                         charts.Add(c.Answer_Full_Name, next);
                     }
                     else
@@ -375,23 +490,29 @@ namespace CSETWeb_Api.Controllers
                         rows = next.DataRowsPie;
                     }
                     data.Add((double)(c.Percent ?? 0));
-                    summary.data.Add((double)(c.Percent ?? 0));
+                    myChartData.data.Add((double)(c.Percent ?? 0));
                     if (!Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
                         Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
                     Labels.Add(c.Answer_Full_Name);
                     rows.Add(c);
                 }
-                summary.borderWidth = "1";
-                summary.label = "Standards Summary";
-                summary.Labels = Labels;
-                summary.Colors = Colors;
+                myChartData.borderWidth = "0";
+                myChartData.borderColor = "transparent";
+                myChartData.label = "Standards Summary";
+                myChartData.Labels = Labels;
+                myChartData.Colors = Colors;
 
-                summary.DataRowsPie = rows;
-                summary.DataRows = new List<DataRows>();
+                myChartData.DataRowsPie = rows;
+                myChartData.DataRows = new List<DataRows>();
             }
 
+            myChartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "transparent";
+            });
 
-            return summary;
+            return myChartData;
         }
 
 
@@ -400,7 +521,7 @@ namespace CSETWeb_Api.Controllers
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
             myChartData.Colors = new List<string>();
-            
+
 
             var results = new StandardSummaryOverallMultiResult();
             context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
@@ -410,6 +531,7 @@ namespace CSETWeb_Api.Controllers
                 results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
             });
+
             SortIntoAnswerOrder(results);
 
             /** 
@@ -423,83 +545,147 @@ namespace CSETWeb_Api.Controllers
 
             string previousStandard = "";
 
-            
+
             Dictionary<string, ChartData> answers = new Dictionary<string, ChartData>();
             foreach (var data in results.Result1.OrderBy(x => x.Short_Name).ThenBy(x => x.Answer_Order))
             {
                 //this only adds the labels
-                if (previousStandard !=data.Short_Name)
+                if (previousStandard != data.Short_Name)
                 {
                     myChartData.Labels.Add(data.Short_Name);
                     previousStandard = data.Short_Name;
                 }
+
                 ChartData chartData;
-                
+
                 if (!answers.TryGetValue(data.Answer_Full_Name, out chartData))
                 {
-                    chartData = new ChartData();
-      
-                    chartData.label = data.Answer_Full_Name;
-                    chartData.backgroundColor = answerColorDefs[data.Answer_Text];
+                    chartData = new ChartData
+                    {
+                        label = data.Answer_Full_Name,
+                        backgroundColor = answerColorDefs[data.Answer_Text]
+                    };
+
+                    myChartData.Colors.Add(answerColorDefs[data.Answer_Text]);
+
                     myChartData.dataSets.Add(chartData);
                     answers.Add(data.Answer_Full_Name, chartData);
-                    
                 }
+
                 myChartData.DataRowsPie.Add(data);
                 chartData.data.Add((double)(data.Percent ?? 0));
             }
 
+            myChartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "transparent";
+            });
+
             return myChartData;
         }
+
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]
         public ChartData GetComponentsSummary()
         {
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+
+            // initialize the response container
+            ChartData chartData = new ChartData();
+            chartData.Colors = new List<string>();
+            chartData.DataRowsPie = new List<DataRowsPie>();
+
             using (CSET_Context context = new CSET_Context())
-            {   
+            {
                 context.LoadStoredProc("[dbo].[usp_getComponentsSummary]")
                          .WithSqlParam("assessment_Id", assessmentId)
                          .ExecuteStoredProc((handler) =>
                          {
-                             var fooResults = handler.ReadToList<usp_getComponentsSummmary>();
-                             red = new ChartData();
-                             foreach (usp_getComponentsSummmary c in fooResults)
+                             var answerTotals = handler.ReadToList<usp_getComponentsSummmary>();
+
+                             // re-order the list 
+                             var sortedList = new List<usp_getComponentsSummmary>();
+                             AddItem("Y",  sortedList, answerTotals);
+                             AddItem("N",  sortedList, answerTotals);
+                             AddItem("NA", sortedList, answerTotals);
+                             AddItem("A",  sortedList, answerTotals);
+                             AddItem("U",  sortedList, answerTotals);
+                             answerTotals = sortedList;
+
+                             
+                             var totalQuestionCount = answerTotals==null?0:answerTotals.Sum(x => x.vcount);
+
+                             foreach (usp_getComponentsSummmary c in answerTotals)
                              {
-                                 red.data.Add((double)c.value);
-                                 red.Labels.Add(c.Answer_Full_Name);
+                                 // build DataRowsPie for each answer total
+                                 DataRowsPie pie = new DataRowsPie();
+                                 pie.Answer_Full_Name = c.Answer_Full_Name;
+                                 pie.Short_Name = "";
+                                 pie.Answer_Text = c.Answer_Text;
+                                 pie.qc = c.vcount;
+                                 pie.Total = totalQuestionCount;
+                                 pie.Percent = (int)Math.Round(c.value, 0);
+                                 chartData.DataRowsPie.Add(pie);
+
+                                 chartData.data.Add((double)c.value);
+                                 chartData.Labels.Add(c.Answer_Full_Name);
+
+                                 if (!chartData.Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
+                                     chartData.Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
                              }
                          });
+
+
+                // include component count so front end can know whether components are present
+                chartData.ComponentCount = context.Answer_Components_Exploded.Where(a => a.Assessment_Id == assessmentId).Distinct().Count();
             }
 
-            return red;
+            chartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "transparent";
+            });
+
+            return chartData;
         }
 
-		[HttpGet]
+
+        private void AddItem(String answerName, List<usp_getComponentsSummmary> sortedList, IList<usp_getComponentsSummmary> unorderedList)
+        {
+            var element = unorderedList.FirstOrDefault(x => x.Answer_Text == answerName);
+            if (element != null) {
+                sortedList.Add(element);
+            }
+        }
+
+
+        [HttpGet]
         [Route("api/analysis/DocumentComments")]
         public List<CommentData> GetDocumentComments()
         {
-            int assessmentId = Auth.AssessmentForUser();                        
+            int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {
                 var items = from a in context.ASSESSMENTS_REQUIRED_DOCUMENTATION
                             join d in context.REQUIRED_DOCUMENTATION on a.Documentation_Id equals d.Documentation_Id
                             where a.Assessment_Id == assessmentId
                             orderby d.Document_Order
-                            select new CommentData() {Number=d.Number,  AssociatedHeader = d.Document_Description, Comment = a.Comment, Answer = a.Answer };
+                            select new CommentData() { Number = d.Number, AssociatedHeader = d.Document_Description, Comment = a.Comment, Answer = a.Answer };
 
                 return items.ToList();
-            }            
+            }
         }
+
+
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]
         public ChartData GetStandardsResultsByCategory()
         {
-
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = new ChartData();
+            ChartData chartData = new ChartData();
+
             using (CSET_Context context = new CSET_Context())
             {
                 context.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
@@ -511,12 +697,12 @@ namespace CSETWeb_Api.Controllers
                                           orderby an.Question_Group_Heading
                                           select an.Question_Group_Heading).Distinct().ToList();
 
-                            red.DataRows = new List<DataRows>();
+                            chartData.DataRows = new List<DataRows>();
                             foreach (string c in labels)
                             {
-                                //    red.data.Add((double) c.prc);
-                                red.Labels.Add(c);
-                                //    red.DataRows.Add(new DataRows()
+                                //    chartData.data.Add((double) c.prc);
+                                chartData.Labels.Add(c);
+                                //    chartData.DataRows.Add(new DataRows()
                                 //    {
                                 //        failed =c.yaCount,
                                 //        percent = c.prc,
@@ -534,7 +720,7 @@ namespace CSETWeb_Api.Controllers
                             {
 
                                 ChartData nextChartData = new ChartData();
-                                red.dataSets.Add(nextChartData);
+                                chartData.dataSets.Add(nextChartData);
                                 nextChartData.DataRows = new List<DataRows>();
                                 var nextSet = (from usp_getStandardsResultsByCategory an in result
                                                where an.Set_Name == set.Set_Name
@@ -559,15 +745,16 @@ namespace CSETWeb_Api.Controllers
                         });
             }
 
-            return red;
+            return chartData;
         }
+
 
         [HttpGet]
         [Route("api/analysis/StandardsRankedCategories")]
         public ChartData GetStandardsRankedCategories()
         {
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+            ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
                 context.LoadStoredProc("[dbo].[usp_getStandardsRankedCategories]")
@@ -578,13 +765,13 @@ namespace CSETWeb_Api.Controllers
                           List<double> data = new List<double>();
                           List<DataRows> rows = new List<DataRows>();
 
-                          red = new ChartData();
-                          red.DataRows = new List<DataRows>();
+                          chartData = new ChartData();
+                          chartData.DataRows = new List<DataRows>();
                           foreach (usp_getStandardsRankedCategories c in result)
                           {
-                              red.data.Add((double)(c.prc ?? 0));
-                              red.Labels.Add(c.Question_Group_Heading);
-                              red.DataRows.Add(new DataRows()
+                              chartData.data.Add((double)(c.prc ?? 0));
+                              chartData.Labels.Add(c.Question_Group_Heading);
+                              chartData.DataRows.Add(new DataRows()
                               {
                                   failed = c.nuCount ?? 0,
                                   title = c.Question_Group_Heading,
@@ -598,15 +785,16 @@ namespace CSETWeb_Api.Controllers
 
             }
 
-            return red;
+            return chartData;
         }
+
+
         [HttpGet]
         [Route("api/analysis/ComponentsResultsByCategory")]
         public ChartData GetComponentsResultsByCategory()
         {
-
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+            ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
                 context.LoadStoredProc("[dbo].[usp_getComponentsResultsByCategory]")
@@ -614,24 +802,34 @@ namespace CSETWeb_Api.Controllers
                       .ExecuteStoredProc((handler) =>
                       {
                           var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
-                          red = new ChartData();
+
+                          chartData = new ChartData();
+
                           foreach (usp_getComponentsResultsByCategory c in result)
                           {
-                              red.data.Add((double)c.prc);
-                              red.Labels.Add(c.Question_Group_Heading);
-
+                              chartData.Labels.Add(c.Question_Group_Heading);
+                              chartData.data.Add((double)c.percent);
+                              chartData.DataRows.Add(new DataRows
+                              {
+                                  title = c.Question_Group_Heading,
+                                  passed = c.passed,
+                                  total = c.total,
+                                  percent = c.percent
+                              });
                           }
                       });
             }
 
-            return red;
+            return chartData;
         }
+
+
         [HttpGet]
         [Route("api/analysis/ComponentsRankedCategories")]
         public ChartData GetComponentsRankedCategories()
         {
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+            ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
                 context.LoadStoredProc("[dbo].[usp_getComponentsRankedCategories]")
@@ -639,65 +837,137 @@ namespace CSETWeb_Api.Controllers
                     .ExecuteStoredProc((handler) =>
                     {
                         var result = handler.ReadToList<usp_getComponentsRankedCategories>();
-                        red = new ChartData();
+                        chartData = new ChartData();
                         foreach (usp_getComponentsRankedCategories c in result)
                         {
-                            red.data.Add((double)c.prc);
-                            red.Labels.Add(c.Question_Group_Heading);
+                            chartData.data.Add((double)c.prc);
+                            chartData.Labels.Add(c.Question_Group_Heading);
 
+
+                            // create a new DataRows entry with answer percentages for this component
+                            chartData.DataRows.Add(new DataRows
+                            {
+                                title = c.Question_Group_Heading,
+                                rank = c.prc,
+                                failed = c.nuCount,  /// ??????
+                                total = c.qc,
+                                percent = c.Percent
+                            });
                         }
                     });
             }
 
-            return red;
+            return chartData;
         }
+
+
         [HttpGet]
         [Route("api/analysis/ComponentTypes")]
-        public ChartData GetComponentTypes()
+        public ChartData ComponentTypes()
         {
             int assessmentId = Auth.AssessmentForUser();
-            ChartData red = null;
+
+            // initialize the response container
+            ChartData chartData = new ChartData
+            {
+                Colors = new List<string>(),
+                DataRowsPie = new List<DataRowsPie>()
+            };
+
             using (CSET_Context context = new CSET_Context())
             {
                 context.LoadStoredProc("[dbo].[usp_getComponentTypes]")
-                   .WithSqlParam("assessment_Id", assessmentId)
-                   .ExecuteStoredProc((handler) =>
-                   {
-                       var result = handler.ReadToList<usp_getComponentTypes>();
-                       red = new ChartData();
-                       foreach (usp_getComponentTypes c in result)
-                       {
-                           red.data.Add((double)c.Value);
-                           red.Labels.Add(c.component_type);
+                         .WithSqlParam("assessment_Id", assessmentId)
+                         .ExecuteStoredProc((handler) =>
+                         {
+                             var componentTotals = handler.ReadToList<usp_getComponentTypes>();
 
-                       }
-                   });            
+                             var cdY = new ChartData
+                             {
+                                 label = "Yes",
+                                 backgroundColor = answerColorDefs["Y"]
+                             };
+                             chartData.dataSets.Add(cdY);
+
+                             var cdN = new ChartData
+                             {
+                                 label = "No",
+                                 backgroundColor = answerColorDefs["N"]
+                             };
+                             chartData.dataSets.Add(cdN);
+
+                             var cdNA = new ChartData
+                             {
+                                 label = "N/A",
+                                 backgroundColor = answerColorDefs["NA"]
+                             };
+                             chartData.dataSets.Add(cdNA);
+
+                             var cdAlt = new ChartData
+                             {
+                                 label = "Alt",
+                                 backgroundColor = answerColorDefs["A"]
+                             };
+                             chartData.dataSets.Add(cdAlt);
+
+                             var cdU = new ChartData
+                             {
+                                 label = "Unanswered",
+                                 backgroundColor = answerColorDefs["U"]
+                             };
+                             chartData.dataSets.Add(cdU);
+
+
+                             foreach (var total in componentTotals)
+                             {
+                                 chartData.Labels.Add(total.Symbol_Name);
+
+                                 // adjust the percentages to equal 100% after rounding
+                                 var adjTotal = new BusinessLogic.Common.PercentageFixer(total.Y, total.N, total.NA, total.A, total.U);
+
+                                 cdY.data.Add((int)adjTotal.Y);
+                                 cdN.data.Add((int)adjTotal.N);
+                                 cdNA.data.Add((int)adjTotal.NA);
+                                 cdAlt.data.Add((int)adjTotal.A);
+                                 cdU.data.Add((int)adjTotal.U);
+
+
+                                 // create a new DataRows entry with answer percentages for this component
+                                 var row = new DataRows
+                                 {
+                                     title = total.Symbol_Name,
+                                     yes = adjTotal.Y,
+                                     no = adjTotal.N,
+                                     na = adjTotal.NA,
+                                     alt = adjTotal.A,
+                                     unanswered = adjTotal.U,
+                                     total = total.Total
+                                 };
+                                 chartData.DataRows.Add(row);
+                             }
+                         });
             }
 
-            return red;
+            chartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "transparent";
+            });
+
+            return chartData;
         }
 
 
         [HttpGet]
         [Route("api/analysis/NetworkWarnings")]
-        public List<usp_getNetworkWarnings> GetNetworkWarnings()
+        public List<NETWORK_WARNINGS> GetNetworkWarnings()
         {
             int assessmentId = Auth.AssessmentForUser();
-            using (CSET_Context context = new CSET_Context())
+            using (CSET_Context db = new CSET_Context())
             {
-                List<usp_getNetworkWarnings> wlist = new List<usp_getNetworkWarnings>();
-                context.LoadStoredProc("[dbo].[usp_getNetworkWarnings]")
-                .WithSqlParam("assessment_Id", assessmentId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    var result = handler.ReadToList<usp_getNetworkWarnings>();
-                    
-                    foreach (usp_getNetworkWarnings w in result)
-                    {
-                        wlist.Add(w);
-                    }
-                });
-                return wlist;
+                return (List<NETWORK_WARNINGS>)db.NETWORK_WARNINGS
+                    .Where(x => x.Assessment_Id == assessmentId)
+                    .OrderBy(x => x.Id).ToList();
             }
         }
 

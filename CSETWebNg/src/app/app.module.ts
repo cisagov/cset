@@ -28,15 +28,17 @@ import {
     MatAutocompleteModule, MatDialogModule, MatDividerModule,
     MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
     MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-    MatTooltipModule, MatTreeModule
+    MatTooltipModule, MatTreeModule, MatTabsModule,
 } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { IonRangeSliderModule } from 'ng2-ion-range-slider';
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +51,8 @@ import { AssessmentDemographicsComponent } from './assessment/prepare/assessment
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
+import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
+import { IRPComponent } from './assessment/prepare/irp/irp.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.component';
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
@@ -66,16 +70,16 @@ import { ComponentsSummaryComponent } from './assessment/results/analysis/compon
 import { ComponentsTypesComponent } from './assessment/results/analysis/components-types/components-types.component';
 import { ComponentsWarningsComponent } from './assessment/results/analysis/components-warnings/components-warnings.component';
 import { DashboardComponent } from './assessment/results/analysis/dashboard/dashboard.component';
-// tslint:disable-next-line:max-line-length
-import { OverallRankedCategoriesComponent } from './assessment/results/analysis/overall-ranked-categories/overall-ranked-categories.component';
 import { RankedQuestionsComponent } from './assessment/results/analysis/ranked-questions/ranked-questions.component';
 import { StandardsRankedComponent } from './assessment/results/analysis/standards-ranked/standards-ranked.component';
 import { StandardsResultsComponent } from './assessment/results/analysis/standards-results/standards-results.component';
 import { StandardsSummaryComponent } from './assessment/results/analysis/standards-summary/standards-summary.component';
 import { OverviewComponent } from './assessment/results/overview/overview.component';
+import { FeedbackComponent } from './assessment/results/feedback/feedback.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
 import { AboutComponent } from './dialogs/about/about.component';
+import { ComponentOverrideComponent } from './dialogs/component-override/component-override.component';
 import { AdvisoryComponent } from './dialogs/advisory/advisory.component';
 import { AlertComponent } from './dialogs/alert/alert.component';
 import { AssessmentDocumentsComponent } from './dialogs/assessment-documents/assessment-documents.component';
@@ -99,6 +103,7 @@ import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validato
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
 import { AutoSizeDirective } from './helpers/auto-size.directive';
+import { DigitsOnlyDirective } from './helpers/digits-only.directive';
 import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
@@ -124,7 +129,6 @@ import { NavigationService } from './services/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { UserInfoComponent } from './user-info/user-info.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
@@ -140,6 +144,26 @@ import { AddRequirementComponent } from './dialogs/add-requirement/add-requireme
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
+import { RequiredDocumentService } from './services/required-document.service';
+import { IRPService } from './services/irp.service';
+import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
+import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AdminComponent } from './assessment/results/admin/admin.component';
+import { ACETService } from './services/acet.service';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
+import { ResourceLibraryService } from './services/resource-library.service';
+import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
+import { DiagramComponent } from './assessment/diagram/diagram.component';
+import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
+import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
+import { ComponentsComponent } from './assessment/diagram/diagram-inventory/components/components.component';
+import { LinksComponent } from './assessment/diagram/diagram-inventory/links/links.component';
+import { NetworkWarningsComponent } from './assessment/diagram/diagram-inventory/network-warnings/network-warnings.component';
+import { ShapesComponent } from './assessment/diagram/diagram-inventory/shapes/shapes.component';
+import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.component';
+import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
+import { DiagramService } from './services/diagram.service';
 
 @NgModule({
     imports: [
@@ -153,12 +177,14 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         MatNativeDateModule,
         MatFormFieldModule,
         MatSortModule,
+        MatExpansionModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
         MatDialogModule,
         MatTooltipModule,
         IonRangeSliderModule,
         MatSidenavModule,
+        TextareaAutosizeModule,
         MatTreeModule,
         MatIconModule,
         MatDividerModule,
@@ -168,7 +194,9 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
+        CurrencyMaskModule,
         NgbModule,
+        MatTabsModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -191,12 +219,12 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         SalSimpleComponent,
         StandardsComponent,
         ResetPassComponent,
-        UserInfoComponent,
         EmailComponent,
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
         AutoSizeDirective,
+        DigitsOnlyDirective,
         SalGenComponent,
         SalNistComponent,
         SalsComponent,
@@ -207,6 +235,10 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         AlertComponent,
         ConfirmComponent,
         FrameworkComponent,
+        RequiredDocsComponent,
+        IRPComponent,
+        DiagramComponent,
+        MatDetailComponent,
         AboutComponent,
         AdvisoryComponent,
         QuestionsComponent,
@@ -232,7 +264,7 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         ComponentsWarningsComponent,
         DashboardComponent,
         RankedQuestionsComponent,
-        OverallRankedCategoriesComponent,
+        FeedbackComponent,
         EnableProtectedComponent,
         TermsOfUseComponent,
         QuestionFiltersComponent,
@@ -243,6 +275,8 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         UploadExportComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
+        ACETDashboardComponent,
+        AdminComponent,
         SetListComponent,
         CustomSetComponent,
         RequirementListComponent,
@@ -252,7 +286,18 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         RequirementDetailComponent,
         AddRequirementComponent,
         StandardDocumentsComponent,
-        RefDocumentComponent
+        RefDocumentComponent,
+        MaturityFilterComponent,
+        IrpSummaryComponent,
+        DiagramInventoryComponent,
+        DiagramInfoComponent,
+        ComponentsComponent,
+        LinksComponent,
+        NetworkWarningsComponent,
+        ShapesComponent,
+        TextComponent,
+        ZonesComponent,
+        ComponentOverrideComponent
     ],
     providers: [
         ConfigService,
@@ -277,12 +322,17 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         SalService,
         StandardService,
         FrameworkService,
+        RequiredDocumentService,
+        IRPService,
         FindingsService,
         NavigationService,
         FileUploadClientService,
         AnalysisService,
         EnableFeatureService,
-        SetBuilderService
+        SetBuilderService,
+        ACETService,
+        ResourceLibraryService,
+        DiagramService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
@@ -305,7 +355,8 @@ import { RefDocumentComponent } from './builder/ref-document/ref-document.compon
         GlobalParametersComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
-        AddRequirementComponent
+        AddRequirementComponent,
+        ComponentOverrideComponent
     ]
 })
 

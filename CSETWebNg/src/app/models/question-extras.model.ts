@@ -78,6 +78,8 @@ export interface QuestionInformationTabData {
   SetsList: string[];
   QuestionsList: string[];
   ShowNoQuestionInformation: boolean;
+  ExaminationApproach: String;
+  Is_Component: boolean;
 }
 
 export interface RequirementTabData {
@@ -107,8 +109,8 @@ export class CustomDocument {
 }
 
 export interface ComponentOverrideLinkInfo {
-  TypeComponetXML: string;
-  Type: string;
+  Component_Symbol_Id: number;
+  Symbol_Name: string;
   Enabled: boolean;
 }
 

@@ -47,13 +47,11 @@ export class RefDocumentComponent implements OnInit {
    */
   ngOnInit() {
     this.docID = this.route.snapshot.params['id'];
-    console.log('ref-doc init.  docID = ' + this.docID);
     if (isNaN(this.docID)) {
       return;
     }
 
     this.setBuilderSvc.getDocumentDetail(this.docID).subscribe((result: ReferenceDoc) => {
-      console.log(result);
       this.doc = result;
     });
   }

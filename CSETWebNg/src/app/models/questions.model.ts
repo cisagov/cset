@@ -26,14 +26,40 @@ export interface QuestionResponse {
     ApplicationMode: string;
     QuestionCount: number;
     RequirementCount: number;
+    OverallIRP: number;
+}
+
+export interface QuestionResponseWithDomains {
+    Domains: Domain[];
+    ApplicationMode: string;
+    QuestionCount: number;
+    RequirementCount: number;
+    OverallIRP: number;
+}
+
+export interface ACETDomain {
+    DomainName: string;
+    DomainId: number;
+    Acronym: string;
+}
+
+export interface Domain {
+    DomainName: string;
+    QuestionGroups: QuestionGroup[];
 }
 
 export interface QuestionGroup {
+    ShowOverrideHeader: boolean;
+    IsOverride: boolean;
     GroupHeadingId: number;
     GroupHeadingText: string;
     StandardShortName: string;
     SubCategories: SubCategory[];
     Visible: boolean;
+    DomainName: string;
+    Symbol_Name: string;
+    ComponentName: string;
+    NavigationGUID: string;
 }
 
 export interface SubCategory {
@@ -58,11 +84,15 @@ export interface Question {
     Answer: string;
     AltAnswerText: string;
     Comment: string;
+    FeedBack: string;
     HasDiscovery: boolean;
     HasDocument: boolean;
     MarkForReview: boolean;
     Reviewed: boolean;
-
+    MaturityLevel: string;
+    Is_Component: boolean;
+    ComponentGuid: string;
+    Is_Requirement: boolean;
     ExtrasExpanded: boolean;
     Visible: boolean;
 }
@@ -73,8 +103,12 @@ export class Answer {
     AnswerText: string;
     AltAnswerText: string;
     Comment: string;
+    FeedBack: string;
     MarkForReview: boolean;
     Reviewed: boolean;
+    Is_Component: boolean;
+    Is_Requirement: boolean;
+    ComponentGuid: string;
 }
 
 export class SubToken {
@@ -98,7 +132,6 @@ export class DefaultParameter {
     ParameterId: number;
     EditMode: boolean;
 }
-
 
 /**
  * Encapsulates an in-line Parameter when changing the value
@@ -128,3 +161,17 @@ export interface SubCategoryAnswers {
     Answers: Answer[];
 }
 
+/**
+ * Represents
+ */
+export interface MaturityFilter {
+    label: string;
+    isSet: boolean;
+}
+
+/**
+ *
+ */
+export class DomainMaturityFilterSet {
+    
+}

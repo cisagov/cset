@@ -481,11 +481,29 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.GetACETFilters">
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.ResetAllAcetFilters">
+            <summary>
+            Removes all maturity filters for the current assessment.
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
-            Re-orders the pieces into Y|N|NA|A|U order
+            Re-orders the pieces into Y|N|NA|A|U order.
+            Also adjusts percentages to equal 100.
             </summary>
             <param name="r"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalysisController.TransformToChart(CSETWeb_Api.BusinessManagers.Analysis.GetCombinedOveralls)">
+            <summary>
+            Returns a ChartData object with the answer distribution for the StatType.
+            The answer distribution is ordered and normalized to total 100%,
+            fixing any rounding anomaly.
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.GetStandardsSummary">
             <summary>
@@ -672,6 +690,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AuthController.IsLocalInstallation">
+            <summary>
+            Tells the client if this is a local installation.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AuthController.IssueToken(System.Int32,System.String,System.Int32)">
             <summary>
             Returns a token cloned from the requesting token.  The new refresh clone
@@ -720,6 +744,129 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:CSETWeb_Api.Controllers.DiagramController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.SaveDiagram(CSETWeb_Api.Models.DiagramRequest)">
+            <summary>
+            Persists the diagram XML in the database.
+            </summary>
+            <param name="req"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagram">
+            <summary>
+            Returns the diagram XML for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetDiagramImage">
+            <summary>
+            Returns the diagram image for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.HasDiagram">
+            <summary>
+            Returns a boolean indicating the existence of a diagram.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.ImportCsetd(CSETWeb_Api.Models.DiagramRequest)">
+            <summary>
+            Translates XML from CSETD file to XML for Draw.io.
+            </summary>
+            <param name="importRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetComponentSymbols">
+            <summary>
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetAllSymbols">
+            <summary>
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetComponents">
+            <summary>
+            Returns list of diagram components
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetZones">
+            <summary>
+            Returns list of diagram zones
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetLinks">
+            <summary>
+            Returns list of diagram lines
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetShapes">
+            <summary>
+            Returns list of diagram shapes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTexts">
+            <summary>
+            Returns list of diagram shapes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetExcelExportDiagram">
+            <summary>
+            Generates an Excel spreadsheet with a row for every assessment that
+            the current user has access to that uses the ACET standard.
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.GetTemplates">
+            <summary>
+            get cset diagram templates
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.DiagramController.testQueue(System.Int32)">
+            <summary>
+            Returns the details for symbols.  This is used to build palettes and icons
+            in the browser.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExport(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExportNCUA(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetExcelExportAllNCUA(System.String)">
+            <summary>
+            Generates an Excel spreadsheet with a row for every assessment that
+            the current user has access to that uses the ACET standard.
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.
@@ -734,11 +881,6 @@
         <member name="M:CSETWeb_Api.Controllers.FrameworkController.PersistSelectedTierAnswer(CSETWeb_Api.Models.TierSelection)">
             <summary>
             Persists the selected tier value to the database.
-            </summary>
-        </member>
-        <member name="M:CSETWeb_Api.Controllers.ImportController.Post(BusinessLogic.Models.ExternalStandard)">
-            <summary>
-            Import new standards into CSET
             </summary>
         </member>
         <member name="T:CSETWeb_Api.Controllers.IRP2Controller">
@@ -757,6 +899,36 @@
             <summary>
             Persists the selected required docs value to the database.
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
+            <summary>
+            Get maturity calculations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityRange">
+            <summary>
+            Get maturity range based on IRP rating
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetOverallIrp">
+            <summary>
+            Get IRP total for maturity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetTargetBand">
+            <summary>
+            Get target band for maturity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetTargetBand(System.Boolean)">
+            <summary>
+            Set target band for maturity rating
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
             <summary>
@@ -789,7 +961,7 @@
             Persists an answer.  This includes Y/N/NA/A as well as comments and alt text.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.Boolean)">
             <summary>
             Returns the details under a given questions details
             </summary>
@@ -809,6 +981,13 @@
             </summary>
             <param name="Answer_Id"></param>
             <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.SaveComponentOverride(System.String,System.Boolean)">
+            <summary>
+            this will explode the provided guid and 
+            </summary>
+            <param name="guid"></param>
+            <param name="ShouldSave">true means explode and save false is delete these questions</param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.RenameDocument(System.Int32,System.String)">
             <summary>
@@ -1024,6 +1203,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.SetsController.Import(BusinessLogic.Models.ExternalStandard)">
+            <summary>
+            Import new standards into CSET
+            </summary>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.StandardsController">
             <summary>
             Manages questions and their answers. 
@@ -1039,6 +1223,12 @@
             <summary>
             Persists the current Standards selection in the database.
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.StandardsController.PersistDefaultSelectedStandards">
+            <summary>
+            Set default standard for basic assessment
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.StandardsController.GetFrameworkSelected">
             <summary>

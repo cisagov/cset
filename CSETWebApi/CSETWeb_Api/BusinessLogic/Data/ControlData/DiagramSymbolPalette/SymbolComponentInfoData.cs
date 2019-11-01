@@ -14,8 +14,9 @@ namespace CSET_Main.Data.ControlData.DiagramSymbolPalette
 {
     public class SymbolComponentInfoData
     {
-        public String XMLName { get; set; }
-        public String DisplayName { get; set; }
+        public int Component_Symbol_Id { get; set; }
+        public string Symbol_Name { get; set; }
+        
     }
 }
 

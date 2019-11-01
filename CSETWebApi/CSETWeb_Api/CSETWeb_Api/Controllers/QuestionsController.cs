@@ -52,6 +52,16 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/QuestionListComponentOverridesOnly")]
+        public QuestionResponse GetComponentOverridesList()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            QuestionsManager qm = new QuestionsManager(assessmentId);
+            QuestionResponse resp = qm.GetOverrideListOnly();
+            return resp;
+            
+        }
 
         /// <summary>
         /// Sets the application mode to be question or requirements based.
@@ -124,15 +134,21 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
-            if (applicationMode.ToLower().StartsWith("questions"))
+            if (answer.Is_Component)
             {
                 QuestionsManager qm = new QuestionsManager(assessmentId);
-                return qm.StoreAnswer(answer);
+                return qm.StoreComponentAnswer(answer);
             }
-            else
+
+            if (answer.Is_Requirement)
             {
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 return rm.StoreAnswer(answer);
+            }
+            else
+            {
+                QuestionsManager qm = new QuestionsManager(assessmentId);
+                return qm.StoreAnswer(answer);
             }
         }
 
@@ -141,15 +157,15 @@ namespace CSETWeb_Api.Controllers
         /// Returns the details under a given questions details
         /// </summary>
         /// <param name="QuestionId"></param>
-        [HttpPost]
+        [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId)
+        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId);
+            return qm.GetDetails(QuestionId, assessmentId,IsComponent);
 
         }
 
@@ -244,9 +260,34 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {
+                if (finding.IsFindingEmpty())
+                {
+                    DeleteFinding(finding.Finding_Id);
+                    return;
+                }
+
+
                 FindingViewModel fm = new FindingViewModel(finding, context);
                 fm.Save();
             }
+        }
+
+
+        /// <summary>
+        /// this will explode the provided guid and 
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
+        [HttpGet]
+        [Route("api/AnswerSaveComponentOverrides")]
+        public void SaveComponentOverride([FromUri]String guid, Boolean ShouldSave)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            string applicationMode = GetApplicationMode(assessmentId);
+
+            QuestionsManager qm = new QuestionsManager(assessmentId);
+            Guid g = new Guid(guid);
+            qm.HandleGuid(g, ShouldSave);
         }
 
 
@@ -332,7 +373,19 @@ namespace CSETWeb_Api.Controllers
 
             return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
+
+        [HttpGet]
+        [Route("api/GetOverrideQuestions")]
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromUri] int question_id, int Component_Symbol_Id)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            QuestionsManager questionsManager = new QuestionsManager(assessmentId);
+
+            return questionsManager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id);
+        }
     }
+
 }
 
 

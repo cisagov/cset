@@ -29,7 +29,6 @@ import {
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
 import { StandardService } from '../../services/standard.service';
-import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-results',
@@ -43,8 +42,7 @@ export class ResultsComponent implements OnInit {
     private navSvc: NavigationService,
     private stdSvc: StandardService,
     private router: Router,
-    private route: ActivatedRoute,
-    private configSvc: ConfigService
+    private route: ActivatedRoute
   ) {
 
     // Store the active results view based on the new navigation target
@@ -78,6 +76,7 @@ export class ResultsComponent implements OnInit {
       this.router.navigate([value], { relativeTo: this.route });
     });
 
+
     // Jump to the previously active view (if known)
     if (!!this.navSvc.activeResultsView) {
 
@@ -90,7 +89,7 @@ export class ResultsComponent implements OnInit {
           this.navSvc.activeResultsView = 'dashboard';
         }
 
-      this.navSvc.selectItem(this.navSvc.activeResultsView);
+        this.navSvc.selectItem(this.navSvc.activeResultsView);
       });
     }
   }
@@ -101,40 +100,37 @@ export class ResultsComponent implements OnInit {
       {
         label: 'Analysis Dashboard', value: 'dashboard', children: [
           { label: 'Control Priorities', value: 'ranked-questions', children: [] },
-          // { label: 'Overall Ranked Categories', value: 'overall-ranked-categories', children: [] },
           {
             label: 'Standards Summary', value: 'standards-summary', children: [
               { label: 'Ranked Categories', value: 'standards-ranked', children: [] },
               { label: 'Results by Category', value: 'standards-results', children: [] }
             ]
           },
-          // { label: 'Components Summary', value: 'components-summary', children: [
-          //   { label: 'Ranked Categories', value: 'components-ranked', children: [] },
-          //   { label: 'Results by Category', value: 'components-results', children: [] },
-          //   { label: 'Component Types', value: 'components-types', children: [] },
-          //   { label: 'Network Warnings', value: 'components-warnings', children: [] }
-          // ] },
+          { label: 'Components Summary', value: 'components-summary', children: [
+            { label: 'Ranked Categories', value: 'components-ranked', children: [] },
+            { label: 'Results by Category', value: 'components-results', children: [] },
+            { label: 'Component Types', value: 'components-types', children: [] },
+            { label: 'Network Warnings', value: 'components-warnings', children: [] }
+          ] },
         ]
       },
       // { label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] },
       // { label: 'Reports', value: 'reports', children: [] }
     ];
 
-    if(this.configSvc.config.appCode=="ACET"){
-      if (acet) {
-        this.tree.push({
-          label: 'ACET Information', value: '', children: [
-            { children: [], label: 'Cybersecurity Maturity', value: 'maturity' },
-            { children: [], label: 'Administration - Review Hours', value: 'admin' },
-            { children: [], label: 'ACET Dashboard', value: 'acetDashboard' }
-          ]
-        });
-      }
+    if (acet) {
+      this.tree.push({
+        label: 'ACET Information', value: '', children: [
+          { children: [], label: 'Cybersecurity Maturity', value: 'maturity' },
+          { children: [], label: 'Administration - Review Hours', value: 'admin' },
+          { children: [], label: 'ACET Dashboard', value: 'acetDashboard' }
+        ]
+      });
     }
 
     this.tree.push({ label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] });
     this.tree.push({ label: 'Reports', value: 'reports', children: [] });
-
+    this.tree.push({ label: 'Submit Feedback', value: 'feedback', children: [] });
     this.navSvc.setTree(this.tree, magic);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[0]);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[1]);

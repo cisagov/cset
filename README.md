@@ -1,11 +1,11 @@
-# CSET 9.0.1
+# CSET 9.2.0
  
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/alerts/)
 [![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:csharp)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
 
 Download Windows Installer
-[CSET 9.0.1 StandAlone Installer](https://github.com/cisagov/cset2/releases/download/v9.0.1/CSETStandAlone.exe)
+[CSET 9.2.0 StandAlone Installer](https://github.com/cisagov/cset2/releases/download/v9.2.0/CSETStandAlone.exe)
 
 ## License
 
@@ -25,11 +25,92 @@ LGPL dependencies are required to build CSET. You will be required to aquire the
 
 This application uses Hangfire software as a nuGet dependency.
 
-## CSET 9.0.1 Enterprise Installation Instructions
+## Using the CSET Stand-alone Installer
+
+Double-click on the CSETStandAlone program.
+
+The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
+
+![][fig1]
+ 
+Figure 1: User Account Control box
+
+A CSET 9.2.0 dialogue will open asking if you want to install CSET 9.2.0 Desktop (Fig.2). Select &quot;Yes&quot;.
+
+![][fig1]
+ 
+Figure 2: Install dialogue
+
+The program will begin extracting.
+
+After extracting a CSET 9.2.0 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
+
+![][fig3]
+ 
+Figure 3. CSET Setup
+
+CSET will begin to install. If the user doesn&#39;t have IIS 10.0 Express, CSET will install it. The IIS 10.0 Express Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, and then select &quot;Install&quot;.
+
+![][fig4]
+ 
+Figure 4. IIS Setup
+
+IIS will install. Select &quot;Finish&quot; when it completes.
+
+The CSET 9.2.0 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
+
+![][fig5]
+ 
+Figure 5: Setup Wizard
+
+A disclaimer will open (Fig.6). Read through and then click the box &quot;I read the disclaimer&quot;, and select &quot;next&quot;.
+
+![][fig6]
+ 
+Figure 6: Disclaimer
+
+CSET will choose a default folder to install CSET 9.2.0 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
+
+![][fig7]
+ 
+Figure 7: Destination Folder
+
+The CSET Installer will show that it is ready to install (Fig. 8), select &quot;Install&quot;.
+
+![][fig8]
+ 
+Figure 8: Ready to Install
+
+CSET 9.2.0 will be installed. Make sure that the &quot;Launch CSET 9.2.0 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+
+The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
+
+![][fig9]
+ 
+Figure 9: Setup Successful
+
+The user has access to CSET 9.2.0 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
+
+![][fig10]
+ 
+Figure 10: Local Install Landing Page
+
+[fig1]: img/fig1.png
+[fig2]: img/fig2.png
+[fig3]: img/fig3.png
+[fig4]: img/fig4.png
+[fig5]: img/fig5.png
+[fig6]: img/fig6.png
+[fig7]: img/fig7.png
+[fig8]: img/fig8.png
+[fig9]: img/fig9.png
+[fig10]: img/fig10.png
+
+## CSET 9.2.0 Enterprise Installation Instructions
 
 ### Overview
 
-This guide will detail the procedure for installing the latest version of the Cyber Security Evaluation Tool (CSET 9.0.1) in a web-based configuration on a Microsoft Windows Server 2016 instance running Microsoft SQL Server 2016.
+This guide will detail the procedure for installing the latest version of the Cyber Security Evaluation Tool (CSET 9.2.0) in a web-based configuration on a Microsoft Windows Server 2016 instance running Microsoft SQL Server 2016.
 
 ### Prerequisites
 
@@ -150,7 +231,6 @@ In order for the CSET application to use the database, it needs a user account t
 - In the &quot;Permissions for dbo:&quot; list, locate the Execute line, and select the Grant checkbox
 - In the navigation pane of the &quot;Database User&quot; window, select Membership
 - In the &quot;Database role membership:&quot; list, select db\_datareader and db\_datawriter, and click OK
-
 #### CSET Installation
 
 With the system properly configured, CSET itself can now be installed.
@@ -187,84 +267,3 @@ Now that CSET is installed, it must be configured before it can be used.
     - E.g.: user id=cset\_user;password=AbC!2#;
   - If Windows domain authentication will be used, then the user id and password will need to be replaced with _Trusted\_Connection=SSPI;_
 
-
-## Using the CSET Stand-alone Installer
-
-Double-click on the CSETStandAlone program.
-
-The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
-
-![][fig1]
- 
-Figure 1: User Account Control box
-
-A CSET 9.0.1 dialogue will open asking if you want to install CSET 9.0.1 Desktop (Fig.2). Select &quot;Yes&quot;.
-
-![][fig1]
- 
-Figure 2: Install dialogue
-
-The program will begin extracting.
-
-After extracting a CSET 9.0.1 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
-
-![][fig3]
- 
-Figure 3. CSET Setup
-
-CSET will begin to install. If the user doesn&#39;t have IIS 10.0 Express, CSET will install it. The IIS 10.0 Express Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, and then select &quot;Install&quot;.
-
-![][fig4]
- 
-Figure 4. IIS Setup
-
-IIS will install. Select &quot;Finish&quot; when it completes.
-
-The CSET 9.0.1 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
-
-![][fig5]
- 
-Figure 5: Setup Wizard
-
-A disclaimer will open (Fig.6). Read through and then click the box &quot;I read the disclaimer&quot;, and select &quot;next&quot;.
-
-![][fig6]
- 
-Figure 6: Disclaimer
-
-CSET will choose a default folder to install CSET 9.0.1 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
-
-![][fig7]
- 
-Figure 7: Destination Folder
-
-The CSET Installer will show that it is ready to install (Fig. 8), select &quot;Install&quot;.
-
-![][fig8]
- 
-Figure 8: Ready to Install
-
-CSET 9.0.1 will be installed. Make sure that the &quot;Launch CSET 9.0.1 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
-
-The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
-
-![][fig9]
- 
-Figure 9: Setup Successful
-
-The user has access to CSET 9.0.1 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
-
-![][fig10]
- 
-Figure 10: Local Install Landing Page
-
-[fig1]: img/fig1.png
-[fig2]: img/fig2.png
-[fig3]: img/fig3.png
-[fig4]: img/fig4.png
-[fig5]: img/fig5.png
-[fig6]: img/fig6.png
-[fig7]: img/fig7.png
-[fig8]: img/fig8.png
-[fig9]: img/fig9.png
-[fig10]: img/fig10.png

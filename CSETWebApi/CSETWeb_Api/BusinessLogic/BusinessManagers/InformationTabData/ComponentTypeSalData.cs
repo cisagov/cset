@@ -14,7 +14,8 @@ namespace CSET_Main.Questions.InformationTabData
 {
     public class ComponentTypeSalData
     {
-        public String ComponentType { get; set; }
+        //public String ComponentType { get; set; }
+        public int Component_Symbol_Id { get; set; }
         public HashSet<int> SALLevels { get; set; }
 
         internal bool HasComponentAtSALLevels(int salLevel)

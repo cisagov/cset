@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { map } from 'rxjs/operators';
-import { timer, Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { timer, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -33,17 +33,17 @@ import { JwtParser } from '../helpers/jwt-parser';
 import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
-import { isNullOrUndefined } from 'util';
 import { environment } from '../../environments/environment';
 
 export interface LoginResponse {
     Token: string;
-    PasswordResetRequired: boolean;
+    ResetRequired: boolean;
     IsSuperUser: boolean;
     UserLastName: string;
     UserFirstName: string;
     UserId: number;
     Email: string;
+    ExportExtension: string;
 }
 
 const headers = {
@@ -67,7 +67,6 @@ export class AuthenticationService {
     }
 
     checkLocal() {
-        //console.log('Heres my appCode in checkLocal: ' + environment.appCode);
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
@@ -83,12 +82,22 @@ export class AuthenticationService {
                         this.isLocal = true;
                         this.storeUserData(response);
                     }
+
+                    localStorage.setItem('cset.isLocal', (this.isLocal + ''));
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
                     this.isLocal = false;
                 });
     }
+
+    /**
+     * Calls the API to find out whether this is a local install
+     */
+    checkLocalInstallStatus() {
+        return this.http.get(this.apiUrl + 'auth/islocal', headers);
+    }
+
 
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');
@@ -97,10 +106,10 @@ export class AuthenticationService {
         }
         sessionStorage.setItem('firstName', user.UserFirstName);
         sessionStorage.setItem('lastName', user.UserLastName);
-        sessionStorage.setItem('resetPassword', '' + user.PasswordResetRequired);
         sessionStorage.setItem('superUser', '' + user.IsSuperUser);
         sessionStorage.setItem('userId', '' + user.UserId);
         sessionStorage.setItem('email', user.Email);
+        sessionStorage.setItem('exportExtension', user.ExportExtension);
         sessionStorage.setItem('developer', String(false));
 
 
@@ -191,17 +200,17 @@ export class AuthenticationService {
      * Requests a JWT with a short lifespan.
      */
     getShortLivedToken() {
-        return this.http.get(this.apiUrl + 'auth/token?expSeconds=30');
+        return this.http.get(this.apiUrl + 'auth/token?expSeconds=30000');
     }
     getShortLivedTokenForAssessment(assessment_id: number) {
-        return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30');
+        return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }
 
     changePassword(data: ChangePassword) {
         return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), headers);
     }
 
-    editUser(data: CreateUser): Observable<CreateUser> {
+    updateUser(data: CreateUser): Observable<CreateUser> {
         return this.http.post(this.apiUrl + 'contacts/UpdateUser', data, headers);
     }
 

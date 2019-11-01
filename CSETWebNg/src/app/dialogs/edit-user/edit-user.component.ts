@@ -24,32 +24,80 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CreateUser } from '../../models/user.model';
+import { AuthenticationService } from '../../services/authentication.service';
+import { SecurityQuestion } from '../../models/reset-pass.model';
+import { NgForm, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class EditUserComponent implements OnInit {
   model: CreateUser = {};
+  SecurityQuestions: SecurityQuestion[];
 
-  constructor(private dialog: MatDialogRef<EditUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+  /**
+   * Constructor.
+   */
+  constructor(
+    private dialog: MatDialogRef<EditUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private auth: AuthenticationService
+  ) { }
 
+  /**
+   * Init.
+   */
   ngOnInit() {
+    this.getSecurityList();
+    this.getUserInformation();
   }
 
-  changeInfo(info: CreateUser) {
-    this.model = info;
+  /**
+   *
+   */
+  getSecurityList() {
+    this.auth
+      .getSecurityQuestionsPotentialList()
+      .subscribe(
+        (data: SecurityQuestion[]) => {
+          this.SecurityQuestions = data;
+        },
+        error => console.log('Error retrieving security questions: ' + error.message)
+      );
   }
 
-  save() {
-    if (this.model) {
+  /**
+   *
+   */
+  getUserInformation() {
+    this.auth.getUserInfo()
+      .subscribe(
+        (data: CreateUser) => {
+          this.model = data;
+        },
+        error => console.log('Error retrieving security questions: ' + error.message)
+      );
+  }
+
+  /**
+   *
+   */
+  save(form: NgForm) {
+    if (this.model && form.valid) {
+      this.auth.updateUser(this.model).subscribe(
+        () => { },
+        error => console.log('Error updating the user information' + error.message)
+      );
       this.dialog.close(this.model);
     }
   }
 
+  /**
+   *
+   */
   cancel() {
     this.dialog.close();
   }

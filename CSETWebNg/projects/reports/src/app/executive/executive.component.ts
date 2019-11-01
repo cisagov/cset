@@ -21,28 +21,47 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
+import { AcetDashboard } from '../../../../../src/app/models/acet-dashboard.model';
+import { ACETService } from '../../../../../src/app/services/acet.service';
 
 
 @Component({
   selector: 'rapp-executive',
-  templateUrl: './executive.component.html',
-  styleUrls: ['./executive.component.scss'
-  ]
+  templateUrl: './executive.component.html'
 })
-export class ExecutiveComponent implements OnInit, AfterViewInit {
+export class ExecutiveComponent implements OnInit, AfterViewChecked {
   response: any;
 
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  chartStandardResultsByCategory: Chart;
+  canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
 
 
-  constructor(private reportSvc: ReportService, private analysisSvc: AnalysisService, private titleService: Title) { }
+  // Charts for Components
+  componentCount = 0;
+  chartComponentSummary: Chart;
+  chartComponentsTypes: Chart;
+  warningCount = 0;
+  chart1: Chart;
+
+  numberOfStandards = -1;
+
+  pageInitialized = false;
+
+  acetDashboard: AcetDashboard;
+
+
+  constructor(
+    public reportSvc: ReportService,
+    private analysisSvc: AnalysisService,
+    private titleService: Title,
+    public acetSvc: ACETService
+  ) { }
 
   ngOnInit() {
     this.titleService.setTitle("Executive Summary - CSET");
@@ -53,22 +72,68 @@ export class ExecutiveComponent implements OnInit, AfterViewInit {
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
-  }
 
-  ngAfterViewInit() {
 
     // Populate charts
+
+    // Summary Percent Compliance
     this.analysisSvc.getDashboard().subscribe(x => {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
     });
 
-    this.analysisSvc.getStandardsSummaryOverall().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardsSummary', x);
+
+    // Standards Summary (pie or stacked bar)
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
+      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
+
+    // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.responseResultsByCategory = x;
-      this.chartStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('chartStandardResultsByCategory', x);
+
+      // Standard Or Question Set (multi-bar graph)
+      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
     });
+
+
+    // Component Summary
+    this.analysisSvc.getComponentSummary().subscribe(x => {
+      setTimeout(() => {
+        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+      }, 0);
+    });
+
+
+    // Component Types (stacked bar chart)
+    this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.componentCount = x.Labels.length;
+      setTimeout(() => {
+        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
+      }, 0);
+    });
+
+
+    // ACET-specific content
+    this.reportSvc.getACET().subscribe((x: boolean) => {
+      this.reportSvc.hasACET = x;
+    });
+
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+
+        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
+          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        }
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
+  }
+
+  ngAfterViewChecked() {
+
   }
 }

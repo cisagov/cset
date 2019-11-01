@@ -30,10 +30,10 @@ export class EditableUser implements User {
   AssessmentId?: number;
   AssessmentRoleId?: number;
   ContactId?: string;
-  FirstName?: string;
+  FirstName?: string = '';
+  LastName?: string = '';
   Id?: string;
   Invited?: boolean;
-  LastName?: string;
   PrimaryEmail?: string;
   editOverride: boolean;
   saveFirstName: string;
@@ -67,6 +67,26 @@ export class EditableUser implements User {
     } else {
       this.IsNew = true;
     }
+  }
+
+  /**
+   * Returns a formatted name.
+   */
+  fullName() {
+    if (this.FirstName === null && this.LastName === null) {
+      return '';
+    }
+
+    if (this.FirstName.length > 0 && this.LastName.length > 0) {
+      return this.FirstName + ' ' + this.LastName;
+    }
+
+    // local install stores the full domain-qualified userid in firstname
+    if (this.FirstName.indexOf('\\') >= 0 && this.FirstName.indexOf(' ') < 0 && this.LastName.length === 0) {
+      return this.FirstName.substr(this.FirstName.lastIndexOf('\\') + 1);
+    }
+
+    return (this.FirstName + ' ' + this.LastName).trim();
   }
 
   // tell edit mode to turn on

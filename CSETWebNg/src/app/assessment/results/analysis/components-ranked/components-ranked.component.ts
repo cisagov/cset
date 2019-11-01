@@ -26,74 +26,35 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-components-ranked',
   templateUrl: './components-ranked.component.html'
 })
 export class ComponentsRankedComponent implements OnInit {
-  chart: Chart;
+  canvasComponentRank: Chart;
   dataRows: { title: string; rank: number; failed: number; total: number; percent: number; }[];
   initialized = false;
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+
+  constructor(
+    private analysisSvc: AnalysisService,
+    private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.analysisSvc.getComponentsRankedCategories().subscribe(x => this.setupChart(x));
+    this.analysisSvc.getComponentsRankedCategories().subscribe(x => {
+      this.analysisSvc.buildComponentsRankedCategories('canvasComponentRank', x);
 
-    this.dataRows = [ // TODO: Pull data from API
-      {
-        title: 'test',
-        rank: 10.0,
-        failed: 5,
-        total: 17,
-        percent: 100
-      }
-    ];
+      this.dataRows = x.DataRows;
+      this.dataRows.map(r => {
+        r.percent = parseFloat((r.percent * 100).toFixed(2));
+        r.rank = parseFloat(r.rank.toFixed(2));
+      });
 
-  }
-
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-results']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-summary']);
-  }
-
-  setupChart(x: any) {
-    this.initialized = false;
-    this.chart = new Chart('compRankCanvas', {
-      type: 'pie',
-      data: {
-        labels: x.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.data,
-            backgroundColor: 'red',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Ranked Categories'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+      this.initialized = true;
     });
-    this.initialized = true;
   }
 }

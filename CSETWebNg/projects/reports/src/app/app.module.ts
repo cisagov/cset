@@ -37,13 +37,15 @@ import { ReportsConfigService } from './services/config.service';
 import { AnalysisService } from './services/analysis.service';
 import { createCustomElement } from '@angular/elements';
 import { EvalAgainstComponent } from './eval-against/eval-against.component';
-import { timer } from 'rxjs';
-import { JwtParser } from '../../../../src/app/helpers/jwt-parser';
 import { AuthenticationService } from '../../../../src/app/services/authentication.service';
 import { JwtInterceptor } from '../../../../src/app/helpers/jwt.interceptor';
 import { RedirectComponent } from './redirect/redirect.component';
 import { ConfigService } from '../../../../src/app/services/config.service';
+import { ACETService } from '../../../../src/app/services/acet.service';
 import { MatDialogModule } from '@angular/material';
+import { FeedbackComponent } from '../../../../src/app/assessment/results/feedback/feedback.component';
+
+
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { MatDialogModule } from '@angular/material';
     ExecutiveComponent,
     SitesummaryComponent,
     SecurityplanComponent,
+    // FAAReportComponent,
     DetailComponent,
+    FeedbackComponent,
     DiscoveryTearoutsComponent,
     EvalAgainstComponent,
     RedirectComponent
@@ -75,12 +79,13 @@ import { MatDialogModule } from '@angular/material';
     },
     AuthenticationService,
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: JwtInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
     },
     ReportService,
     AnalysisService,
+    ACETService,
     ConfigService
   ],
   entryComponents: [

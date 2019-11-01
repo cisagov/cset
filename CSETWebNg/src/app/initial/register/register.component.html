@@ -40,7 +40,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
       <label required for="email">Email</label>
-      <input type="email" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
+      <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
         email />
       <div *ngIf="email.invalid && (email.dirty)">
         <div *ngIf="email?.errors?.required" class="alert alert-danger">Email is required</div>

@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { FileUploadClientService } from "./../../services/file-client.service";
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, Sort, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialog, Sort } from "@angular/material";
 import { Router } from "@angular/router";
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { PasswordStatusResponse } from "../../models/reset-pass.model";
@@ -34,6 +34,7 @@ import { ConfirmComponent } from "../../dialogs/confirm/confirm.component";
 import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { ImportAssessmentService } from "../../services/import-assessment.service";
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
+import { Title } from "@angular/platform-browser";
 
 interface UserAssessment {
   AssessmentId: number;
@@ -56,6 +57,9 @@ export class LandingPageComponent implements OnInit {
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
+  exportExtension: string;
+  displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -63,11 +67,15 @@ export class LandingPageComponent implements OnInit {
     public assessSvc: AssessmentService,
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
-    public fileSvc: FileUploadClientService
+    public fileSvc: FileUploadClientService,
+    public titleSvc: Title
   ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+    this.exportExtension = sessionStorage.getItem('exportExtension');
+
+    this.titleSvc.setTitle('CSET');
 
     this.checkPasswordReset();
   }
@@ -82,7 +90,7 @@ export class LandingPageComponent implements OnInit {
       this.authSvc.passwordStatus()
         .subscribe((result: PasswordStatusResponse) => {
           if (result) {
-            if (!result.PasswordResetRequired) {
+            if (!result.ResetRequired) {
               this.openPasswordDialog(true);
             }
           } else {
@@ -138,18 +146,6 @@ export class LandingPageComponent implements OnInit {
     }
   }
 
-  // newAssessment() {
-  //   this.assessSvc
-  //     .createAssessment()
-  //     .subscribe(
-  //       (response: any) => this.loadAssessment(response.Id),
-  //       error =>
-  //         console.log(
-  //           'Unable to create new assessment: ' + (<Error>error).message
-  //         )
-  //     );
-  // }
-
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
     // first, call the API to see if this is a legal move
     this.assessSvc
@@ -173,16 +169,15 @@ export class LandingPageComponent implements OnInit {
           "?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-              this.assessSvc.removeContact(0, assessment.AssessmentId).subscribe(
-                x => {
-                  this.sortedAssessments.splice(assessmentIndex, 1);
-                },
-                x => {
-                  console.log(x);
-                  this.dialog.open(AlertComponent, {
-                    data: { messageText: x.statusText }
-                  });
+            this.assessSvc.removeContact(0, assessment.AssessmentId).subscribe(
+              x => {
+                this.sortedAssessments.splice(assessmentIndex, 1);
+              },
+              x => {
+                this.dialog.open(AlertComponent, {
+                  data: { messageText: x.statusText }
                 });
+              });
           }
         });
       });

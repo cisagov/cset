@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { NistSalModel, NistQuestionsAnswers, NistModel, SALLevelNIST, SALLevelNISTC } from './nist-sal.models';
+import { NistSalModel, NistQuestionsAnswers, NistModel } from './nist-sal.models';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
