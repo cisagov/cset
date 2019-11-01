@@ -95,7 +95,6 @@ export class LoginComponent implements OnInit {
   }
 
   setMode(newMode: string) {
-    console.log(newMode);
     this.mode = newMode;
   }
 
