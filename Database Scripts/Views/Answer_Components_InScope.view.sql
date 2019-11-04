@@ -1,8 +1,5 @@
 
--- 16-Oct-19 RKW - This is a prototype view to list visible component answers.  
---                 It's probably not 100% correct.
-
-ALTER VIEW [dbo].[Answer_Components_InScope]
+CREATE VIEW [dbo].[Answer_Components_InScope]
 AS
 SELECT DISTINCT 
                          a.Assessment_Id, a.Answer_Id, a.Question_Or_Requirement_Id, a.Answer_Text, CONVERT(nvarchar(1000), a.Comment) AS Comment, CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification, 
@@ -16,4 +13,3 @@ FROM            dbo.ANSWER AS a INNER JOIN
                          dbo.DIAGRAM_CONTAINER AS l ON adc.Layer_Id = l.Container_Id 
 						 LEFT OUTER JOIN dbo.DIAGRAM_CONTAINER AS z ON z.Assessment_Id = adc.Assessment_Id AND z.Container_Id = adc.Zone_Id
 WHERE        (a.Is_Component = 1) AND (COALESCE (l.Visible, 1) = 1)
-GO
