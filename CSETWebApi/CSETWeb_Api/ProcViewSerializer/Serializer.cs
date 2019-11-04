@@ -35,7 +35,7 @@ namespace ProcViewSerializer
                "INNER JOIN " +
                "sys.objects o " +
                "ON m.object_id = o.object_id " +
-               "WHERE type_desc in ('VIEW', 'SQL_STORED_PROCEDURE') " +
+               "WHERE type_desc in ('VIEW', 'SQL_STORED_PROCEDURE', 'SQL_TABLE_VALUED_FUNCTION', 'SQL_TRIGGER') " +
                "order by type_desc, object_name";
 
             var dtObjects = dbio.Select(sql, null);
@@ -76,6 +76,14 @@ namespace ProcViewSerializer
                 case "SQL_STORED_PROCEDURE":
                     filePath = Path.Combine(this.basePath, "Stored Procedures");
                     fileType = "proc";
+                    break;
+                case "SQL_TABLE_VALUED_FUNCTION":
+                    filePath = Path.Combine(this.basePath, "Functions");
+                    fileType = "func";
+                    break;
+                case "SQL_TRIGGER":
+                    filePath = Path.Combine(this.basePath, "Triggers");
+                    fileType = "trigger";
                     break;
             }
 

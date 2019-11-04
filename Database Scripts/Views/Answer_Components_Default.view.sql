@@ -1,8 +1,5 @@
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
-GO
+
 
 
 /**
@@ -11,7 +8,7 @@ joined on the types in the diagram
 filtered by level 
 left joined by the answers
 */
-ALTER VIEW [dbo].[Answer_Components_Default]
+CREATE VIEW [dbo].[Answer_Components_Default]
 AS
 
 SELECT                   
@@ -22,6 +19,7 @@ SELECT
 	a.Question_Number, q.Simple_Question AS QuestionText, 		
 	h.Question_Group_Heading, usch.Question_Group_Heading_Id as GroupHeadingId, 
 	h.Universal_Sub_Category, usch.Universal_Sub_Category_Id as SubCategoryId,
+	a.FeedBack,
 	a.Is_Component, a.Component_Guid, 
 	dbo.convert_sal(ss.Selected_Sal_Level) AS SAL, 
 	a.Mark_For_Review, a.Is_Requirement, a.Is_Framework,	
@@ -47,8 +45,3 @@ from   STANDARD_SELECTION ss
 			join Answer_Components AS a on f.Question_Id = a.Question_Or_Requirement_Id and f.assessment_id = a.assessment_id	  
 where component_guid = '00000000-0000-0000-0000-000000000000'
 --order by question_group_heading,universal_sub_category
-GO
-
-
-
-
