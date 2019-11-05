@@ -590,7 +590,7 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph)
         var dot = "data:image/svg+xml;utf8,"
             + "<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'>"
             + "<circle fill='rgb(255,0,0)' cx='5' cy='5' r='5' />"
-            + "<text x='50%' y='50%' text-anchor='middle' fill='rgb(255,255,255)' alignment-baseline='central' style='font-family: arial; font-size: 40%;'>" + w.Number + "</text>"
+            + "<text x='50%' y='50%' dy='25%' text-anchor='middle' fill='rgb(255,255,255)' style='font-family: arial; font-size: 40%;'>" + w.Number + "</text>"
             + "</svg>";
 
 
