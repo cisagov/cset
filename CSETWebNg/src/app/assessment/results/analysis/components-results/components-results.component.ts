@@ -48,6 +48,10 @@ export class ComponentsResultsComponent implements OnInit {
       this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
       this.dataRows = x.DataRows;
 
+      this.dataRows.map(r => {
+        r.percent = parseFloat((r.percent).toFixed(2));
+      });
+
       this.initialized = true;
     });
   }

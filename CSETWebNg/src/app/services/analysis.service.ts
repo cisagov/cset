@@ -98,11 +98,11 @@ export class AnalysisService {
   // let's migrate the chart building to this service
   // ---------------------------------------------------------
 
-   /**
-   * Builds a horizontal bar chart from the Dashboard API response.
-   * @param canvasId
-   * @param x
-   */
+  /**
+  * Builds a horizontal bar chart from the Dashboard API response.
+  * @param canvasId
+  * @param x
+  */
   buildPercentComplianceChart(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'horizontalBar',
@@ -111,7 +111,7 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
+            data: x.OverallBars.data.map((n: number) => parseFloat(n.toFixed(0))),
             backgroundColor: '#0A5278',
             borderColor: [],
             borderWidth: 1
@@ -123,6 +123,13 @@ export class AnalysisService {
           display: false,
           fontSize: 20,
           text: 'Assessment Compliance'
+        },
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
         },
         legend: {
           display: false
@@ -138,7 +145,7 @@ export class AnalysisService {
       }
     });
   }
-  
+
   /**
    *
    */
@@ -424,7 +431,7 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: x.data,
+            data: x.data.map((n: number) => parseFloat(n.toFixed(2))),
             backgroundColor: '#a00',
             borderColor: [],
             borderWidth: 1
@@ -436,7 +443,7 @@ export class AnalysisService {
           callbacks: {
             label: ((tooltipItem, data) => {
               return data.labels[tooltipItem.index] + ': '
-                + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+                + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
             })
           }
         },
@@ -470,7 +477,7 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: x.data,
+            data: x.data.map((n: number) => parseFloat(n.toFixed(2))),
             backgroundColor: '#0a0',
             borderColor: [],
             borderWidth: 1
