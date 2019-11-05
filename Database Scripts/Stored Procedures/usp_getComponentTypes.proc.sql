@@ -1,13 +1,9 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Author:		hansbk
 -- Create date: 8/1/2018
 -- Description:	remember the answer values are percents
 -- =============================================
-ALTER PROCEDURE [dbo].[usp_getComponentTypes]
+CREATE PROCEDURE [dbo].[usp_getComponentTypes]
 	@assessment_id int
 AS
 BEGIN
