@@ -1,10 +1,4 @@
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-ALTER VIEW [dbo].[Answer_Standards_InScope]
+CREATE VIEW [dbo].[Answer_Standards_InScope]
 AS
 		select distinct mode='Q', a.assessment_id, a.answer_id, is_requirement=0, a.question_or_requirement_id, a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
@@ -34,6 +28,3 @@ AS
 				join NEW_REQUIREMENT req on rs.Requirement_Id = req.Requirement_Id
 				join REQUIREMENT_LEVELS rl on rl.Requirement_Id = req.Requirement_Id and rl.Standard_Level=dbo.convert_sal(ss.Selected_Sal_Level)
 			where v.selected=1 
-GO
-
-

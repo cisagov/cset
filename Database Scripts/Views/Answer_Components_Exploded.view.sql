@@ -1,15 +1,11 @@
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
-GO
-
-ALTER VIEW [dbo].[Answer_Components_Exploded]
+CREATE VIEW [dbo].[Answer_Components_Exploded]
 AS
 
 SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) as UniqueKey,
-	a.Assessment_Id, b.Answer_Id, a.Question_Id, isnull(b.Answer_Text, 'U') as Answer_Text, 
+	a.Assessment_Id, b.Answer_Id, a.Question_Id, isnull(b.Answer_Text, c.Answer_Text) as Answer_Text, 
 	CONVERT(nvarchar(1000), b.Comment) AS Comment, CONVERT(nvarchar(1000), b.Alternate_Justification) AS Alternate_Justification, 
+	b.FeedBack,
 	b.Question_Number, a.Simple_Question AS QuestionText, 	
 	a.label AS ComponentName, a.Symbol_Name, 
 	a.Question_Group_Heading, a.GroupHeadingId, 
@@ -17,7 +13,7 @@ SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) as Uniq
 	isnull(b.Is_Component,1) as Is_Component, a.Component_Guid, 
 	a.Layer_Id, a.LayerName, a.Container_Id, 
 	a.ZoneName, dbo.convert_sal(a.SAL) as SAL, 
-	b.Mark_For_Review, b.Is_Requirement, b.Is_Framework,
+	b.Mark_For_Review, Is_Requirement=cast(0 as bit), Is_Framework=cast(0 as bit),
 	b.Reviewed, a.Simple_Question, a.Sub_Heading_Question_Description, a.heading_pair_id, a.label, a.Component_Symbol_Id
 from (
 SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as UniqueKey,
@@ -40,6 +36,19 @@ from     dbo.ASSESSMENT_DIAGRAM_COMPONENTS AS adc
 			left join dbo.UNIVERSAL_SUB_CATEGORY_HEADINGS usch on usch.Heading_Pair_Id = h.Heading_Pair_Id
 			join NEW_QUESTION_LEVELS nql on s.New_Question_Set_Id = nql.New_Question_Set_Id and nql.Universal_Sal_Level = dbo.convert_sal_short(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))		
 WHERE l.Visible = 1) a left join Answer_Components AS b on a.Question_Id = b.Question_Or_Requirement_Id and a.Assessment_Id = b.Assessment_Id and a.component_guid = b.component_guid
-GO
+left join (SELECT a.Assessment_Id, q.Question_Id, a.Answer_Text		
+from   (SELECT distinct q.question_id,adc.assessment_id
+				FROM [dbo].[ASSESSMENT_DIAGRAM_COMPONENTS] adc 			
+				join component_questions q on adc.Component_Symbol_Id = q.Component_Symbol_Id
+				join STANDARD_SELECTION ss on adc.Assessment_Id = ss.Assessment_Id
+				join new_question nq on q.question_id=nq.question_id		
+				join new_question_sets qs on nq.question_id=qs.question_id	and qs.Set_Name = 'Components'						
+				join NEW_QUESTION_LEVELS nql on qs.New_Question_Set_Id = nql.New_Question_Set_Id 
+					and nql.Universal_Sal_Level = dbo.convert_sal(ss.Selected_Sal_Level)) as f  
+            join dbo.NEW_QUESTION AS q ON f.Question_Id = q.Question_Id 			
+			join Answer_Components AS a on f.Question_Id = a.Question_Or_Requirement_Id and f.assessment_id = a.assessment_id	  
+where component_guid = '00000000-0000-0000-0000-000000000000') c on a.Assessment_Id=c.Assessment_Id and a.Question_Id = c.Question_Id
+
+
 
 
