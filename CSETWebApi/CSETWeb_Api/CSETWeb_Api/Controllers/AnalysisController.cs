@@ -69,7 +69,7 @@ namespace CSETWeb_Api.Controllers
                 {
                     var QuestionsWithFeedbackList = from a in context.Answer_Standards_InScope
                                                     where a.assessment_id == assessmentId &&
-                                                    a.mode == AssessmentMode && a.FeedBack != null
+                                                    a.mode == AssessmentMode && a.Feedback != null
                                                     select a;
 
                     if (QuestionsWithFeedbackList.Count() == 0)
@@ -101,8 +101,8 @@ namespace CSETWeb_Api.Controllers
                     foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
                     {
                         q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                        q.FeedBack = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
-                        FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.FeedBack + "<br/><br/>";
+                        q.Feedback = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Feedback);
+                        FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.Feedback + "<br/><br/>";
                         FeedbackResult.FeedbackBody += q.Question_Text + "<br/><br/>";
                         FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
                         FeedbackResult.FeedbackBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". <br/><br/><br/>";
@@ -115,8 +115,8 @@ namespace CSETWeb_Api.Controllers
                     foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
                     {
                         q.Question_Text = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                        q.FeedBack = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.FeedBack);
-                        FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.FeedBack + "%0D%0A";
+                        q.Feedback = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Feedback);
+                        FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.Feedback + "%0D%0A";
                         FeedbackResult.FeedbackEmailBody += q.Question_Text + "%0D%0A%0D%0A";
                         FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
                         FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". %0D%0A%0D%0A%0D%0A";

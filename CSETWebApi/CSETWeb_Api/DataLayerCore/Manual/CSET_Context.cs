@@ -174,7 +174,7 @@ namespace DataLayerCore.Model
                 throw new ApplicationException("sql parameters may not be null");
 
             IList<usp_GetQuestionsWithFeedback> rval = null;
-            this.LoadStoredProc("usp_GetQuestionsWithFeedBack")
+            this.LoadStoredProc("usp_GetQuestionsWithFeedback")
                 .WithSqlParam("assessment_id", assessment_id)
                 .ExecuteStoredProc((handler) =>
                 {
