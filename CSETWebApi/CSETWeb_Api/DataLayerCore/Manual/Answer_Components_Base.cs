@@ -48,7 +48,7 @@ namespace DataLayerCore.Manual
         public string ComponentName { get; set; }
         public string Symbol_Name { get; set; }
         public int Component_Symbol_Id { get; set; }
-        public string FeedBack { get; set; }
+        public string Feedback { get; set; }
 
         //,[Layer_Id]
         //,[LayerName]

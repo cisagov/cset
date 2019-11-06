@@ -74,7 +74,7 @@ export class ComponentOverrideComponent {
       AnswerText: q.Answer_Text,
       AltAnswerText: q.AltAnswerText,
       Comment: q.Comment,
-      FeedBack: q.Feedback,
+      Feedback: q.Feedback,
       MarkForReview: q.MarkForReview,
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,

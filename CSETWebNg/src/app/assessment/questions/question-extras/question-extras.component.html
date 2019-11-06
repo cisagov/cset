@@ -88,7 +88,7 @@
         </button>
 
         <button class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
-            matTooltip="FeedBack" matTooltipPosition="above">
+            matTooltip="Feedback" matTooltipPosition="above">
             <!-- <svg version="1.1" id="Edit_Comment_Icon_-_Edit" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" -->
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px" viewBox="44.5 44.5 33 35"
                 enable-background="new 44.5 44.5 31 31">
@@ -193,7 +193,7 @@
 
         <div *ngIf="extras !== null && mode === 'FDBK'">
             <div class="form-group">
-                <textarea appAutoSize [(ngModel)]="myQuestion.FeedBack" (change)="saveFeedBack($event)" maxlength="2048"
+                <textarea appAutoSize [(ngModel)]="myQuestion.Feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>

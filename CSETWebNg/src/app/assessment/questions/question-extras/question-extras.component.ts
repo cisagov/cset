@@ -160,9 +160,9 @@ export class QuestionExtrasComponent implements OnInit {
   *
   * @param e
   */
-  saveFeedBack(e) {
+  saveFeedback(e) {
     this.defaultEmptyAnswer();
-    this.answer.FeedBack = e.srcElement.value;
+    this.answer.Feedback = e.srcElement.value;
     this.saveAnswer();
   }
 
@@ -188,7 +188,7 @@ export class QuestionExtrasComponent implements OnInit {
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
         Comment: '',
-        FeedBack: '',
+        Feedback: '',
         MarkForReview: false,
         Reviewed: false,
         Is_Component: this.myQuestion.Is_Component,
@@ -212,7 +212,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.MarkForReview = this.myQuestion.MarkForReview;
     this.answer.Reviewed = this.myQuestion.Reviewed;
     this.answer.Comment = this.myQuestion.Comment;
-    this.answer.FeedBack = this.myQuestion.FeedBack;
+    this.answer.Feedback = this.myQuestion.Feedback;
     this.answer.ComponentGuid = this.myQuestion.ComponentGuid;
 
     // Tell the parent (subcategory) component that something changed
@@ -238,7 +238,7 @@ export class QuestionExtrasComponent implements OnInit {
         return (this.myQuestion.Comment && this.myQuestion.Comment.length > 0) ? 'inline' : 'none';
 
       case 'FDBK':
-        return (this.myQuestion.FeedBack && this.myQuestion.FeedBack.length > 0) ? 'inline' : 'none';
+        return (this.myQuestion.Feedback && this.myQuestion.Feedback.length > 0) ? 'inline' : 'none';
 
       case 'DOCS':
         // if the extras have not been pulled, get the indicator from the question list JSON

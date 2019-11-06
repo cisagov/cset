@@ -33,7 +33,7 @@ namespace DataLayerCore.Model
         public int? old_answer_id { get; set; }
         public bool reviewed { get; set; }
         [StringLength(2048)]
-        public string FeedBack { get; set; }
+        public string Feedback { get; set; }
         public string Question_Text { get; set; }
     }
 }

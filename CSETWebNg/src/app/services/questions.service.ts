@@ -281,7 +281,7 @@ export class QuestionsService {
               q.Visible = true;
             }
 
-            if (this.showFilters.includes('FB') && q.FeedBack && q.FeedBack.length > 0) {
+            if (this.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
               q.Visible = true;
             }
 
