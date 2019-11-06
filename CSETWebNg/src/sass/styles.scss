@@ -1881,6 +1881,14 @@ mat-sidenav {
   height: 200px;
 }
 
+.warning-text>div {
+  margin-bottom: 1rem;
+}
+
+.warning-text>div:last-child {
+  margin-bottom: 0;
+}
+
 // Dialogs
 ///////////////////////////////////////////////////////////////////////
 
