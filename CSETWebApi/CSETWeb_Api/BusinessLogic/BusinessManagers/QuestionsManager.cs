@@ -238,7 +238,7 @@ namespace CSETWeb_Api.BusinessManagers
                     Answer_Id = answer?.a?.Answer_Id,
                     AltAnswerText = answer?.a?.Alternate_Justification,
                     Comment = answer?.a?.Comment,
-                    FeedBack = answer?.a?.FeedBack,
+                    Feedback = answer?.a?.Feedback,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
                     Is_Component = answer?.a.Is_Component ?? false,
