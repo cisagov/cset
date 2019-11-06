@@ -84,7 +84,7 @@ export interface Question {
     Answer: string;
     AltAnswerText: string;
     Comment: string;
-    FeedBack: string;
+    Feedback: string;
     HasDiscovery: boolean;
     HasDocument: boolean;
     MarkForReview: boolean;
@@ -103,7 +103,7 @@ export class Answer {
     AnswerText: string;
     AltAnswerText: string;
     Comment: string;
-    FeedBack: string;
+    Feedback: string;
     MarkForReview: boolean;
     Reviewed: boolean;
     Is_Component: boolean;
@@ -173,5 +173,5 @@ export interface MaturityFilter {
  *
  */
 export class DomainMaturityFilterSet {
-    
+
 }

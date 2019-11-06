@@ -419,7 +419,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
 
         public int Old_Answer_Id { get; internal set; }
 
-        public string FeedBack { get; set; }
+        public string Feedback { get; set; }
     }
 
     public class jNIST_SAL_INFO_TYPES

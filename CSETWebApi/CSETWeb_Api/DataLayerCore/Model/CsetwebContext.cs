@@ -220,7 +220,7 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
 
-                entity.Property(e => e.FeedBack).IsUnicode(false);
+                entity.Property(e => e.Feedback).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.ANSWER)

@@ -200,7 +200,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.FeedBack;
+            dbAnswer.Feedback = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
@@ -264,7 +264,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.FeedBack;
+            dbAnswer.Feedback = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
@@ -379,7 +379,7 @@ namespace CSETWeb_Api.BusinessManagers
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
                     Is_Requirement = dbQ.Is_Requirement,
-                    FeedBack = dbQ.FeedBack
+                    Feedback = dbQ.Feedback
                 };
 
                 sc.Questions.Add(qa);
@@ -456,7 +456,7 @@ namespace CSETWeb_Api.BusinessManagers
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
                     Is_Requirement = dbQ.Is_Requirement,
-                    FeedBack = dbQ.FeedBack
+                    Feedback = dbQ.Feedback
                 };
 
                 sc.Questions.Add(qa);
