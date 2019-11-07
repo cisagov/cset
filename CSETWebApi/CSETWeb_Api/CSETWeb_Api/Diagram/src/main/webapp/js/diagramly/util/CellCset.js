@@ -71,6 +71,15 @@ mxCell.prototype.isParentMSC = function ()
 
 
 /**
+ * Returns a boolean indicating if the cell is the blue connector 'component'
+ */
+mxCell.prototype.isBlueConnector = function ()
+{
+    return this.getStyleValue('image').indexOf('connector.svg') >= 0;
+}
+
+
+/**
  * Returns a boolean indicating if the cell is a Layer.
  */
 mxCell.prototype.isLayer = function ()
