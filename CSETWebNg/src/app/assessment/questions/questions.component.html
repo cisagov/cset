@@ -81,7 +81,7 @@
       [id]="g.NavigationGUID">
     
         <!-- Question Group Heading / Category-->
-        <div *ngIf="g.ShowOverrideHeader" class="group-heading">
+        <div *ngIf="g.ShowOverrideHeader" class="group-heading" [class.display-none]="!g.Visible">
           {{ g.Symbol_Name + ' - ' + g.ComponentName }}
         </div>
 
