@@ -91,24 +91,24 @@ export class QuestionsComponent implements AfterViewInit {
     }
   }
 
-  updateComponentsOverride(){
+  updateComponentsOverride() {
     //divide the component override processing 
     //and component questions into two portions
     //and call and update from here.    
-    
+
     //clear out the navigation overrides
     //then call the get overrides questions api
     //and refressh overrides navigation
     const magic = this.navSvc.getMagic();
     this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
       this.processComponentOverrides(data.QuestionGroups);
-      for(let i = this.domains[0].QuestionGroups.length-1; i > 0; i--){
-          const q = this.domains[0].QuestionGroups[i];
-         if(q.IsOverride){
-           this.domains[0].QuestionGroups.pop();
-         }
+      for (let i = this.domains[0].QuestionGroups.length - 1; i > 0; i--) {
+        const q = this.domains[0].QuestionGroups[i];
+        if (q.IsOverride) {
+          this.domains[0].QuestionGroups.pop();
+        }
       }
-      for(let newgroup of data.QuestionGroups){
+      for (let newgroup of data.QuestionGroups) {
         this.domains[0].QuestionGroups.push(newgroup);
       }
       this.refreshQuestionVisibility(magic);
@@ -204,13 +204,13 @@ export class QuestionsComponent implements AfterViewInit {
     );
   }
 
-  processComponentOverrides(QuestionGroups: QuestionGroup[]){
+  processComponentOverrides(QuestionGroups: QuestionGroup[]) {
     QuestionGroups.forEach(g => {
       let rval = true;
       if (g.Symbol_Name) {
         if (this.PreviousComponentGroup) {
           rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
-          && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
+            && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
         }
         this.PreviousComponentGroup = g;
       } else {
@@ -263,10 +263,18 @@ export class QuestionsComponent implements AfterViewInit {
                   val => val.SubCategoryId === tgt.subcategory
                 ).Expanded = true;
             });
-            document.getElementById(tgt.parent).scrollIntoView();
+
+            const t = document.getElementById(tgt.parent);
+            if (!!t) {
+              t.scrollIntoView();
+            }
           }
+
           if (!!tgt.target) {
-            document.getElementById(tgt.target).scrollIntoView();
+            const t = document.getElementById(tgt.target);
+            if (!!t) {
+              t.scrollIntoView();
+            }
           }
         }
       );
@@ -279,8 +287,8 @@ export class QuestionsComponent implements AfterViewInit {
    */
   insertWithParents(tree: NavTree[], q: QuestionGroup) {
 
-    if(!!q.Symbol_Name){
-      this.insertComponentSpecificOverride(tree,q);
+    if (!!q.Symbol_Name) {
+      this.insertComponentSpecificOverride(tree, q);
       return;
     }
 
@@ -314,7 +322,7 @@ export class QuestionsComponent implements AfterViewInit {
     const heading = {
       label: q.GroupHeadingText,
       value: {
-        target:  q.NavigationGUID,
+        target: q.NavigationGUID,
         question: q.GroupHeadingId
       },
       elementType: 'QUESTION-HEADING',
@@ -329,7 +337,7 @@ export class QuestionsComponent implements AfterViewInit {
     }
   }
 
-  insertComponentSpecificOverride(tree: NavTree[], q: QuestionGroup){
+  insertComponentSpecificOverride(tree: NavTree[], q: QuestionGroup) {
     let standard = tree.find(elem => elem.elementType === 'STANDARD' && elem.label === q.StandardShortName);
     if (!standard) {
       tree.push({
@@ -369,9 +377,9 @@ export class QuestionsComponent implements AfterViewInit {
     // build the question group heading element
     q.SubCategories.forEach(sub => {
       const heading = {
-        label: sub.SubCategoryHeadingText,//q.GroupHeadingText,
+        label: sub.SubCategoryHeadingText,
         value: {
-          target: q.NavigationGUID,
+          target: sub.NavigationGUID,
           question: q.GroupHeadingId
         },
         elementType: 'QUESTION-HEADING',
@@ -379,7 +387,6 @@ export class QuestionsComponent implements AfterViewInit {
       };
       componentname.children.push(heading);
     });
-    
   }
 
   visibleGroupCount() {
