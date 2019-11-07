@@ -2293,8 +2293,23 @@ PropertiesPanel.prototype.addProperties = function (container) {
             var ctl = evt.srcElement;
 
             if (ctl.getAttribute('propname') == 'ComponentType') {
+
+                // change component/asset type image and set its new height and width
                 cell.removeStyleValue('image');
                 cell.setStyleValue('image;image', 'img/cset/' + ctl.value);
+
+                var foundSymbol = null;
+                for (var group of Editor.componentSymbols) {
+                    var s = group.Symbols.find(x => x.FileName == ctl.value);
+                    if (!!s) {
+                        foundSymbol = s;
+                        break;
+                    }
+                }
+                if (!!foundSymbol) {
+                    cell.geometry.height = foundSymbol.Height;
+                    cell.geometry.width = foundSymbol.Width;
+                }
             }
             else if (ctl.getAttribute('type') === 'checkbox') {
                 cell.setCsetAttribute(ctl.getAttribute('propname'), ctl.checked);
