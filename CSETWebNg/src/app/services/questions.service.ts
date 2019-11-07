@@ -308,7 +308,9 @@ export class QuestionsService {
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
+      
     });
+    
   }
 
 
