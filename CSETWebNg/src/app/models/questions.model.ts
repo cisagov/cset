@@ -72,6 +72,7 @@ export interface SubCategory {
     Expanded: boolean;
     HasReviewItems: boolean;
     Visible: boolean;
+    NavigationGUID: string;
 }
 
 export interface Question {
