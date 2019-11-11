@@ -75,18 +75,18 @@ namespace CSETWeb_Api.Controllers
         }
 
         [CSETAuthorize]
-        [Route("api/diagram/warnings")]
+        [Route("api/diagram/analysis")]
         [HttpPost]
         public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             TokenManager tm = new TokenManager();
             int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
-            return performAnalysis(req, assessmentId ?? 0);
+            return PerformAnalysis(req, assessmentId ?? 0);
 
         }
 
-        public List<IDiagramAnalysisNodeMessage> performAnalysis(DiagramRequest req, int assessmentId)
+        public List<IDiagramAnalysisNodeMessage> PerformAnalysis(DiagramRequest req, int assessmentId)
         {
             try
             {
@@ -95,7 +95,11 @@ namespace CSETWeb_Api.Controllers
                 {
                     using (var db = new CSET_Context())
                     {
-                        BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                        // persist the analysis switch setting
+                        var assessment = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First();
+                        assessment.AnalyzeDiagram = req.AnalyzeDiagram;
+                        db.SaveChanges();
+
                         XmlDocument xDoc = new XmlDocument();
                         xDoc.LoadXml(req.DiagramXml);
 
@@ -103,12 +107,14 @@ namespace CSETWeb_Api.Controllers
                         messages = analysis.PerformAnalysis(xDoc);
                     }
                 }
+
                 return messages;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
-                
+
         }
 
 
@@ -207,7 +213,7 @@ namespace CSETWeb_Api.Controllers
                     DiagramManager dm = new DiagramManager(db);
                     return dm.ImportOldCSETDFile(importRequest.DiagramXml, (int)assessmentId);
                 }
-                
+
             }
             catch (Exception exc)
             {
