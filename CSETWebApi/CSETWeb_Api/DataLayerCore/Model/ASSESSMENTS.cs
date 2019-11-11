@@ -54,6 +54,7 @@ namespace DataLayerCore.Model
         public string Diagram_Markup { get; set; }
         public int LastUsedComponentNumber { get; set; }
         public string Diagram_Image { get; set; }
+        public bool AnalyzeDiagram { get; set; }
 
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]

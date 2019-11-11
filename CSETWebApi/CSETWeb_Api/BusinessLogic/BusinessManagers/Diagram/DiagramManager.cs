@@ -133,6 +133,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     resp.DiagramXml = assessmentRecord.Diagram_Markup;
                     resp.LastUsedComponentNumber = assessmentRecord.LastUsedComponentNumber;
+                    resp.AnalyzeDiagram = assessmentRecord.AnalyzeDiagram;
                     return resp;
                 }
 
