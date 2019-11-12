@@ -2556,9 +2556,9 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
     }
 
     var fw = this.format ? this.formatWidth : 0;
-    this.sidebarContainer.style.top = tmp + 'px';
+    this.sidebarContainer.style.top = (tmp + this.ribbonHeight) + 'px';
     this.sidebarContainer.style.width = effHsplitPosition + 'px';
-    this.formatContainer.style.top = tmp + 'px';
+    this.formatContainer.style.top = (tmp + this.ribbonHeight) + 'px';
     this.formatContainer.style.width = fw + 'px';
     this.formatContainer.style.display = (this.format != null) ? '' : 'none';
 
