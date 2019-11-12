@@ -728,49 +728,14 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                List<CategoryEntry> categoryList = new List<CategoryEntry>();
-                var categories = db.QUESTION_GROUP_HEADING.ToList();
-                foreach (var c in categories)
-                {
-                    CategoryEntry entry = new CategoryEntry
-                    {
-                        Text = c.Question_Group_Heading1,
-                        ID = c.Question_Group_Heading_Id
-                    };
-                    categoryList.Add(entry);
-                }
+                var categories = db.QUESTION_GROUP_HEADING.Select(q => new CategoryEntry { Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id }).ToList();
+                response.Categories = categories;
 
-                response.Categories = categoryList;
+                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.Select(u=> new CategoryEntry{Text = u.Universal_Sub_Category, ID = u.Universal_Sub_Category_Id}).ToList();
+                response.Subcategories = subcategories;
 
-
-                List<CategoryEntry> subcategoryList = new List<CategoryEntry>();
-                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.ToList();
-                foreach (var s in subcategories)
-                {
-                    CategoryEntry entry = new CategoryEntry
-                    {
-                        Text = s.Universal_Sub_Category,
-                        ID = s.Universal_Sub_Category_Id
-                    };
-                    subcategoryList.Add(entry);
-                }
-
-                response.Subcategories = subcategoryList;
-
-
-                List<CategoryEntry> groupHeadingsList = new List<CategoryEntry>();
-                var groupHeadings = db.QUESTION_GROUP_HEADING.ToList();
-                foreach (var h in groupHeadings)
-                {
-                    CategoryEntry entry = new CategoryEntry
-                    {
-                        Text = h.Question_Group_Heading1,
-                        ID = h.Question_Group_Heading_Id
-                    };
-                    groupHeadingsList.Add(entry);
-                }
-
-                response.GroupHeadings = groupHeadingsList;
+                var groupHeadings = db.QUESTION_GROUP_HEADING.Where(x=>x.Universal_Weight != 0).Select(q => new CategoryEntry{ Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id}).ToList();
+                response.GroupHeadings = groupHeadings;
             }
 
             return response;
