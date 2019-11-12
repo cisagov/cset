@@ -64,7 +64,7 @@ export class AddQuestionComponent implements OnInit {
   ngOnInit() {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
-        this.groupheadings = data.Categories;
+        this.groupheadings = data.GroupHeadings;
         this.subcategories = data.Subcategories;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
