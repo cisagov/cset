@@ -1698,7 +1698,7 @@
 	 */
     if (window.ColorDialog)
     {
-        FilenameDialog.filenameHelpLink = 'https://desk.draw.io/support/solutions/articles/16000091426';
+        FilenameDialog.filenameHelpLink = '../../../../Documents/htmlhelp/home__file_menu.htm?ms=AAAA&st=MA%3D%3D&sct=MTcxOS4zMzMzNzQwMjM0Mzc1&mw=NTEx';
 
         var colorDialogAddRecentColor = ColorDialog.addRecentColor;
 
