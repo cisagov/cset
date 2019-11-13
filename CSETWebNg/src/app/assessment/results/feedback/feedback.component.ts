@@ -41,7 +41,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 
 export class FeedbackComponent implements OnInit {
   feedbackBody: string;
-  feedbackHeader: string;
+  feedbackHeader: string = 'Feedback';
   feedbackEmailTo: string;
   feedbackEmailSubject: string;
   feedbackEmailBody: string;
@@ -93,7 +93,6 @@ export class FeedbackComponent implements OnInit {
   setupTable(data: any) {
     this.initialized = false;
     this.feedbackBody = data.FeedbackBody;
-    this.feedbackHeader = data.FeedbackHeader;
     this.feedbackEmailTo = data.FeedbackEmailTo;
     this.feedbackEmailSubject = data.FeedbackEmailSubject;
     this.feedbackEmailBody = data.FeedbackEmailBody;
