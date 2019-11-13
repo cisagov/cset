@@ -8,7 +8,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
     internal abstract class AbstractRule
     {
-        private Dictionary<Guid, DiagramAnalysisLineMessage> dictionaryLineMessages = new Dictionary<Guid, DiagramAnalysisLineMessage>();
+        private Dictionary<ComponentPairing, DiagramAnalysisNodeMessage> dictionaryLineMessages = new Dictionary<ComponentPairing, DiagramAnalysisNodeMessage>();
         private Dictionary<Guid, DiagramAnalysisNodeMessage> dictionaryNodeMessages = new Dictionary<Guid, DiagramAnalysisNodeMessage>();
         private bool IsMessageAdded = false;
         private List<IDiagramAnalysisNodeMessage> allMessages = new List<IDiagramAnalysisNodeMessage>();
@@ -18,7 +18,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         {
             get
             {
-
                 if (IsMessageAdded)
                 {
                     var lineMsgs = dictionaryLineMessages.Values.Cast<IDiagramAnalysisNodeMessage>();
@@ -30,35 +29,37 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             }
         }
 
-        
+
         /// <param name="component1"></param>
         /// <param name="component2"></param>
         /// <param name="text"></param>
-        public void SetLineMessage(NetworkNode component1, NetworkNode component2,  string text)
+        public void SetLineMessage(NetworkNode component1, NetworkNode component2, string text)
         {
             DiagramAnalysisNodeMessage messageNode;
             //flag node and put up the message
             //if the message is already there over write with the latest edition
-            if (dictionaryNodeMessages.ContainsKey(component2.ComponentGuid))
+            ComponentPairing pair = (new ComponentPairing()
             {
-                messageNode = dictionaryNodeMessages[component2.ComponentGuid];
-            }
-            else if (dictionaryNodeMessages.ContainsKey(component1.ComponentGuid))
+                Source = component1.ComponentGuid,
+                Target = component2.ComponentGuid
+            });
+
+            if (dictionaryLineMessages.ContainsKey(pair))
             {
-                messageNode = dictionaryNodeMessages[component1.ComponentGuid];
+                return;// messageNode = dictionaryNodeMessages[component2.ComponentGuid];
             }
-            else
+
+            messageNode = new DiagramAnalysisNodeMessage()
             {
-                messageNode = new DiagramAnalysisNodeMessage()
-                {
-                    Component = (NetworkComponent)component1,
-                    NodeId1 = component1.ID,
-                    NodeId2 = component2.ID,                    
-                    SetMessages = new HashSet<string>()
-                };
-                dictionaryNodeMessages.Add(component1.ComponentGuid, messageNode);
-                IsMessageAdded = true;
-            }
+
+                Component = (NetworkComponent)component1,
+                NodeId1 = component1.ID,
+                NodeId2 = component2.ID,
+                SetMessages = new HashSet<string>()
+            };
+
+            dictionaryLineMessages.Add(pair, messageNode);
+            IsMessageAdded = true;
             messageNode.AddMessage(text);
         }
 
@@ -86,6 +87,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             messageNode.AddMessage(text);
         }
 
+
         protected List<NetworkComponent> GetNodeEdges(NetworkComponent component, HashSet<int> typeNodes, HashSet<string> SetVisted = null)
         {
             SetVisted = SetVisted ?? new HashSet<String>();
@@ -95,9 +97,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             return listInfo;
         }
 
+
         private void GetNodeInfoRecursive(ref List<NetworkComponent> listNode, HashSet<int> typeNodes, HashSet<string> visitedNodes, NetworkComponent component)
         {
-
             foreach (NetworkComponent edge in component.Connections)
             {
                 if (CheckAddVisited(visitedNodes, edge))
@@ -120,10 +122,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         }
 
 
-
         private bool CheckAddVisited(HashSet<String> visitedNodes, NetworkComponent otherComponent)
         {
-
             if (visitedNodes.Contains(otherComponent.ID))
                 return true;
             else

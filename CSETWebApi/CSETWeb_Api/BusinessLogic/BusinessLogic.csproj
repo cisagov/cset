@@ -281,6 +281,7 @@
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeViewModelBase.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\rules\AbstractRule.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\ComponentPairing.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\rules\IRuleEvaluate.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule7.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule6.cs" />
