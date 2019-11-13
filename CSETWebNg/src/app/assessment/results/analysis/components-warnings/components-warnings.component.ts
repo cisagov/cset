@@ -54,6 +54,18 @@ export class ComponentsWarningsComponent implements OnInit {
     });
   }
 
-
-
+  /**
+   * Put a double break to separate paragraphs
+   */
+  public fixWarningNewlines(text: string) {
+    const pieces = text.split("\n");
+    let divs: string = "";
+    pieces.forEach(p => {
+      if (p.trim() !== '') {
+        p = "<div>" + p + "</div>";
+        divs += p;
+      }
+    });
+    return divs;
+  }
 }

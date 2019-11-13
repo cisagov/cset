@@ -62,4 +62,20 @@ export class ReportService {
     getNetworkDiagramImage(): any {
         return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
     }
+
+    /**
+     * Split paragraphs into divs
+     */
+    public fixWarningNewlines(text: string) {
+        const pieces = text.split("\n");
+        let divs: string = "";
+        pieces.forEach(p => {
+            if (p.trim() !== '') {
+                p = "<div>" + p + "</div>";
+                divs += p;
+            }
+        });
+        return divs;
+    }
 }
+
