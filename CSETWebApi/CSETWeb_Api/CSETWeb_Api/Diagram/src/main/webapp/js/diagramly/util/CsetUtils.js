@@ -659,7 +659,7 @@ async function showSaving(requestId) {
     newDiv.style.color = 'green';
     const resp = await makeRequest({
         method: 'POST',
-        url: 'http://localhost:46000/api/diagram/testqueue',
+        url: localStorage.getItem('cset.host') + 'diagram/testqueue',
         payload: tmppayload,
         onreadystatechange: function (e) {
             if (e.readyState !== 4) {
