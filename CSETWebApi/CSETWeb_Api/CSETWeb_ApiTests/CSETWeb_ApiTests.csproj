@@ -154,6 +154,7 @@
     <Compile Include="BusinessManagers\DiagramManagerTests.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisTests.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\PermutationsGeneratorTests.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\ComponentPairingTests.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramManagerTests.cs" />
     <Compile Include="BusinessManagers\Diagram\DictionaryCompareTests.cs" />
     <Compile Include="BusinessManagers\ImportManagerTests.cs" />

@@ -116,5 +116,15 @@ namespace CSETWeb_Api.BusinessManagers
             //I am concerned about this being case sensitive
             return !types.Contains(this.Component_Symbol_Id);
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("{0}", this.ComponentName);
+        }
     }
 }
