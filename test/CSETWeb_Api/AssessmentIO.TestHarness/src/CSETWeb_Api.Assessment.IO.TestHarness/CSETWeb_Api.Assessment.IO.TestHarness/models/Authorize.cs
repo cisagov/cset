@@ -6,7 +6,8 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public int TzOffset { get { return (int)getTimezoneOffset(); } }
+        //{ return (int)getTimezoneOffset(); }
+        public int TzOffset { get; set; }
         public string Scope { get { return Program.config["apiUrl"]; } }
 
         static double getTimezoneOffset()
