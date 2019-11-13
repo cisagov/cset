@@ -208,7 +208,8 @@ namespace CSETWeb_Api.BusinessManagers
                 Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5,'0'),
                 CreditUnionName = assessment.CreditUnion,
                 Assets = assessment.Assets, 
-                MatDetail_targetBandOnly = app_code == "ACET"
+                MatDetail_targetBandOnly = app_code == "ACET",
+                AnalyzeDiagram = false
             };
 
             db.ASSESSMENTS.AddOrUpdate( dbAssessment, x=> x.Assessment_Id);

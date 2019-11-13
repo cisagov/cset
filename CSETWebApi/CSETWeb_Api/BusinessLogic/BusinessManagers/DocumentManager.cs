@@ -149,6 +149,7 @@ namespace CSETWeb_Api.BusinessManagers
             return qlist;
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -207,8 +208,8 @@ namespace CSETWeb_Api.BusinessManagers
                 db.SaveChanges();
                 CSETWeb_Api.BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(doc.Assessment_Id);
             }
-            
         }
+
 
         /// <summary>
         /// Returns an array of all Document instances that are attached to 
@@ -221,17 +222,23 @@ namespace CSETWeb_Api.BusinessManagers
 
             List<int> answerIds = new List<int>();
 
-            // Get the answers for questions or requirements, depending on the application mode
-            QuestionsManager qm = new QuestionsManager(assessmentId);
-            if (qm.ApplicationMode == "Q")
-            {
-                answerIds = qm.GetActiveAnswerIds();
-            }
-            else
-            {
-                RequirementsManager rm = new RequirementsManager(assessmentId);
-                answerIds = rm.GetActiveAnswerIds();
-            }
+            // Use views for faster performance
+            var inScopeStandardsAnswers = from a in db.Answer_Standards_InScope
+                                 join s in db.STANDARD_SELECTION on a.assessment_id equals s.Assessment_Id
+                                 where a.assessment_id == assessmentId
+                                    && (a.mode == s.Application_Mode.Substring(0, 1).ToUpper()
+                                    || a.mode == "Q" && s.Application_Mode == null)
+                                 select a;
+
+            answerIds = inScopeStandardsAnswers.Select(x => x.answer_id).ToList();
+
+            var componentAnswers = from a in db.Answer_Components
+                                          join s in db.STANDARD_SELECTION on a.Assessment_Id equals s.Assessment_Id
+                                          where a.Assessment_Id == assessmentId
+                                          select a;
+
+            answerIds.AddRange(componentAnswers.Select(x => x.Answer_Id).ToList());
+
 
             List<int> docIDs = db.DOCUMENT_ANSWERS
                 .Where(x => answerIds.Contains(x.Answer_Id))
