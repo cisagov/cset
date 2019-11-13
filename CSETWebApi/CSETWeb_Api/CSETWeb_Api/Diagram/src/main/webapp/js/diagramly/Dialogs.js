@@ -5708,7 +5708,7 @@ var FindWindow = function(ui, x, y, w, h)
 	
 	mxUtils.write(div, mxResources.get('regularExpression'));
 
-    var help = ui.menus.createHelpLink('https://desk.draw.io/support/solutions/articles/16000088250');
+    var help = ui.menus.createHelpLink('../../../../Documents/htmlhelp/home__edit_menu.htm?ms=AAAA&st=MA%3D%3D&sct=MTcxOS4zMzMzNzQwMjM0Mzc1&mw=NTEx');
     help.style.position = 'relative';
     help.style.marginLeft = '6px';
     help.style.top = '-1px';
