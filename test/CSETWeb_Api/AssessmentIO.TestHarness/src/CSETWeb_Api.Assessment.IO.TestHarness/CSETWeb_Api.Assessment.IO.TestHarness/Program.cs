@@ -7,7 +7,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Threading;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace CSETWeb_Api.AssessmentIO.TestHarness
 {
@@ -30,6 +35,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
             if (ht.ContainsKey("?"))
                 ShowHelp();
 
+            initClient();
             try
             {
                 var export = ht.GetValueOrDefault<bool>("export");
@@ -59,7 +65,9 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                         Console.WriteLine("Insufficient authentication paramaters provided.");
                         Environment.Exit(-3);
                     }
-                    token = GetToken(email, password);
+                    Task<string> t = Task.Run(()=> GetToken(email, password));
+                    t.Wait();
+                    token = t.Result;
                 }
 
                 var files = new List<KeyValuePair<string, byte[]>>();
@@ -80,6 +88,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 Log.Error(ex, "Exiting with error.");
             }
         }
+
 
         static Hashtable ArgsToHashtable(string[] args)
         {
@@ -174,25 +183,49 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
             Environment.Exit(0);
         }
 
-        static string GetToken(string email, string password)
+        private static HttpClient client;
+        static void initClient()
+        {
+            var handler = new TimeoutHandler
+            {
+                InnerHandler = new HttpClientHandler()
+            };
+            client = new HttpClient(handler);
+            client.Timeout = Timeout.InfiniteTimeSpan;
+            client.BaseAddress = new Uri(config["apiUrl"]);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        private static async Task<string> GetToken(string email, string password)
         {
             string apiUrl = config["apiUrl"];
             var req = new WebRequestOptions { UriString = $"{apiUrl}{Urls.login}" };
-            var resp = req.Post(new HttpPostPayload
+
+            HttpResponseMessage response = await client.PostAsJsonAsync(req.UriString, 
+            new Authorize()
             {
-                ContentType = "application/json",
-                Data = new Authorize
-                {
-                    Email = email,
-                    Password = password
-                }.ToJson()
-            }).FromJson<Credential>();
-            return resp.Token;
+                Email = email,
+                Password = password,
+                TzOffset = 360
+            });
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                var loginResponse = JsonConvert.DeserializeObject<Credential>(json);
+                return loginResponse.Token;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+            return "";
         }
 
         static List<KeyValuePair<string, byte[]>> Export(string token, string exportdir)
         {
             string apiUrl = config["apiUrl"];
+            
             var req = new WebRequestOptions
             {
                 UriString = $"{apiUrl}{Urls.assessments}",
@@ -296,6 +329,71 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                     }
                 }
             }
+        }
+    }
+
+    class TimeoutHandler : DelegatingHandler
+    {
+        protected async override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            using (var cts = GetCancellationTokenSource(request, cancellationToken))
+            {
+                return await base.SendAsync(
+                    request,
+                    cts?.Token ?? cancellationToken);
+            }
+        }
+
+        private CancellationTokenSource GetCancellationTokenSource(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            var timeout = request.GetTimeout() ?? DefaultTimeout;
+            if (timeout == Timeout.InfiniteTimeSpan)
+            {
+                // No need to create a CTS if there's no timeout
+                return null;
+            }
+            else
+            {
+                var cts = CancellationTokenSource
+                    .CreateLinkedTokenSource(cancellationToken);
+                cts.CancelAfter(timeout);
+                return cts;
+            }
+        }
+
+        public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(15);
+
+    }
+
+    public static class HttpRequestExtensions
+    {
+        private static string TimeoutPropertyKey = "RequestTimeout";
+
+        public static void SetTimeout(
+            this HttpRequestMessage request,
+            TimeSpan? timeout)
+        {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            request.Properties[TimeoutPropertyKey] = timeout;
+        }
+
+        public static TimeSpan? GetTimeout(this HttpRequestMessage request)
+        {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            if (request.Properties.TryGetValue(
+                    TimeoutPropertyKey,
+                    out var value)
+                && value is TimeSpan timeout)
+                return timeout;
+            return null;
         }
     }
 }
