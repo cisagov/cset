@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 
 namespace CSETWeb_Api.AssessmentIO.TestHarness
@@ -57,10 +58,11 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
         public static string ReadStringResponse(this WebRequest request, string encodingName = "UTF-8")
         {
+            
             using (var response = request.GetResponse())
             {
                 using (var stream = response.GetResponseStream())
-                {
+                {  
                     var encode = System.Text.Encoding.GetEncoding(encodingName);
                     using (var reader = new StreamReader(stream, encode))
                     {
