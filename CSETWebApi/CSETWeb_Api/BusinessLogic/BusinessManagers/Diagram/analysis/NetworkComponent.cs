@@ -68,18 +68,20 @@ namespace CSETWeb_Api.BusinessManagers
         }
         public int Component_Symbol_Id { get; internal set; }
         public bool isMultipleConnections { get; internal set; }
+        public NetworkLink Link { get; set; }
 
         public NetworkComponent()
         {
             Connections = new List<NetworkComponent>();
             ParentChanged = false;
         }
-        internal void AddEdge(NetworkComponent target)
+        internal void AddEdge(NetworkComponent target, NetworkLink link)
         {
             if (target == null)
             {
                 return;
             }
+            this.Link = link;
             Connections.Add(target);
         }
 
