@@ -227,8 +227,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                     //map any other attributes
                     link.SourceComponent = start;
                     link.TargetComponent = target;
-                    start?.AddEdge(target);
-                    target?.AddEdge(start);
+                    start?.AddEdge(target,link);
+                    target?.AddEdge(start,link);
                 }
             }
             foreach (XmlNode node in mxCellLinks)
@@ -246,11 +246,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                     NetworkComponent target = findNode(node.Attributes["target"].Value);
                     //map any other attributes
                     var link = new NetworkLink();
+                    link.ID = xNode.Attributes["id"].Value;                    
                     link.SourceComponent = start;
                     link.TargetComponent = target;                    
                     Links.Add(link);
-                    start?.AddEdge(target);
-                    target?.AddEdge(start);
+                    start?.AddEdge(target,link);
+                    target?.AddEdge(start, link);
                 }
             }
             this.nodes = PostProcessConnectors.RemoveConnectors(nodes);
