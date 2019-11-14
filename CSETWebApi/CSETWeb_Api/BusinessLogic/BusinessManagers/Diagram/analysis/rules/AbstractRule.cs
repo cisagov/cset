@@ -54,7 +54,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
                 Component = (NetworkComponent)component1,
                 NodeId1 = component1.ID,
-                NodeId2 = component2.ID,
+                NodeId2 = component2.ID,                
+                edgeId = ((NetworkComponent)component1).Link.ID,
                 SetMessages = new HashSet<string>()
             };
 
@@ -79,8 +80,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                 {
                     Component = (NetworkComponent)component,
                     SetMessages = new HashSet<string>(),
-                    NodeId1 = component.ID,
-                    edgeId = ((NetworkComponent)component).Link.ID
+                    NodeId1 = component.ID
                 };
                 dictionaryNodeMessages.Add(component.ComponentGuid, messageNode);
                 IsMessageAdded = true;
