@@ -17,6 +17,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
         public string layerId { get; set; }
         public string value { get; set; }
         
+        public string edgeId { get; set; }
+
         public string vertex { get; set; }
         public string parent { get; set; }
         
