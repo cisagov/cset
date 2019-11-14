@@ -59,10 +59,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                         tailName = tailComponent.ComponentName;
                     }
 
-                    String text = String.Format(rule6, headName, tailName);
+                    String text = String.Format(rule6, headName, tailName).Replace("\n", " ");
                     SetLineMessage(headComponent,tailComponent, text);
                 }
-
             }
         }
     }
