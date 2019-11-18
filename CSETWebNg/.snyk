@@ -6,3 +6,21 @@ patch:
   SNYK-JS-LODASH-450202:
     - handlebars > async > lodash:
         patched: '2019-11-01T22:42:11.958Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/cocoapods-lockfile-parser > @snyk/dep-graph > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/cocoapods-lockfile-parser > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
