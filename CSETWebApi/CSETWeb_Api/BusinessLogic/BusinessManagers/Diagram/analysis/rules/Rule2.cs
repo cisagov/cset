@@ -11,7 +11,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
     class Rule2 : AbstractRule, IRuleEvaluate
     {
 
-        private String rule2 = "The subnet should have an IDS (Intrusion Detection System) or IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, {0}, is correct and that malware has not been able to penetrate past the firewall.";
+        private String rule2 = "The subnet should have an IDS (Intrusion Detection System) or " +
+            "IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, " +
+            "{0}, is correct and that malware has not been able to penetrate past the firewall.";
+
         private SimplifiedNetwork network;
 
         public Rule2(SimplifiedNetwork simplifiedNetwork)
@@ -67,7 +70,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                 componentName = firewall.ComponentName;
             }
 
-            String text = String.Format(rule2, componentName);
+            String text = String.Format(rule2, componentName).Replace("\n", " ");
             SetNodeMessage(firewall, text);
         }
 

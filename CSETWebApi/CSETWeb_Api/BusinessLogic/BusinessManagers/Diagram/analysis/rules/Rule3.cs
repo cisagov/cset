@@ -27,8 +27,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             return this.Messages;
         }
 
-        private String rule3 = "The separate subnets handled by the VLAN component, {0}, carry traffic of different SALs.  The incorrect configuration of the component, or the possible compromise of the component, allow the critical traffic to be visible on the less protected network segment.";
-        private String rule4 = "The component, {0}, has multiple interfaces where the subnets of those interfaces carry traffic of different SALs.  If the component is compromised, the critical traffic could be visible from the less protected network.";
+        private String rule3 = "The separate subnets handled by the VLAN component, {0}, carry traffic " +
+            "of different SALs.  The incorrect configuration of the component, or the possible compromise " +
+            "of the component, allow the critical traffic to be visible on the less protected network segment.";
+
+        private String rule4 = "The component, {0}, has multiple interfaces where the subnets of those " +
+            "interfaces carry traffic of different SALs.  If the component is compromised, the critical traffic " +
+            "could be visible from the less protected network.";
+
         private SimplifiedNetwork network;
 
 
@@ -39,7 +45,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         /// <param name="component"></param>
         private void CheckRule34(NetworkComponent component)
         {   
-            List<NetworkComponent> list = GetNodeEdges(component, new HashSet<int>() { Constants.FIREWALL, Constants.UNIDIRECTIONAL_DEVICE, Constants.IDS_TYPE, Constants.IPS_TYPE });
+            List<NetworkComponent> list = GetNodeEdges(component, 
+                new HashSet<int>() {
+                    Constants.FIREWALL,
+                    Constants.UNIDIRECTIONAL_DEVICE,
+                    Constants.IDS_TYPE,
+                    Constants.IPS_TYPE,
+                    Constants.SERIAL_RADIO
+                });
+
             int countSALs = list.Select(x => x.Zone.SAL).Distinct().Count();
             if (countSALs > 1)
             {
@@ -51,7 +65,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                         componentName = component.ComponentName;
                     }
 
-                    String text = String.Format(rule3, componentName);
+                    String text = String.Format(rule3, componentName).Replace("\n", " ");
                     SetNodeMessage(component, text);
                 }
                 else
@@ -62,12 +76,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                         componentName = component.ComponentName;
                     }
 
-                    String text = String.Format(rule4, componentName);
+                    String text = String.Format(rule4, componentName).Replace("\n", " ");
                     SetNodeMessage(component, text);
                 }
             }
         }
-
-   
     }
 }
