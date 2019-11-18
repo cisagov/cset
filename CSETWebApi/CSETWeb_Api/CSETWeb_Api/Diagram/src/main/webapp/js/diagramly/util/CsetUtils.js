@@ -602,16 +602,13 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph) {
  */
 CsetUtils.getTaggedCell = function (warning, graph) {
     // if only one node provided, then the dot goes on that component
-    if (warning.NodeId1 && !warning.NodeId2) {
+    if (warning.NodeId1 && !warning.NodeId2 && !warning.edgeId) {
         return graph.getModel().getCell(warning.NodeId1);
     }
 
-    // if both are provided, the dot goes on the edge
-    if (warning.NodeId1 && warning.NodeId2) {
-        const component1 = graph.getModel().getCell(warning.NodeId1);
-        const component2 = graph.getModel().getCell(warning.NodeId2);
-        const edges = graph.getModel().getEdgesBetween(component1, component2);
-        return edges[0];
+    // if an edgeId is provided, the dot goes on the edge
+    if (!!warning.edgeId) {
+        return graph.getModel().getCell(warning.edgeId);
     }
 }
 
