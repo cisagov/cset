@@ -90,8 +90,6 @@ export class QuestionExtrasComponent implements OnInit {
         this.changeComponents.emit(result);
       }
     });
-
-
   }
   /**
  * Shows/hides the "expand" section.
