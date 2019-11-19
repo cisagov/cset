@@ -6,8 +6,8 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NJsonSchema;
-using NJsonSchema.Generation.TypeMappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +21,18 @@ namespace CSETWeb_Api.Controllers
 {
     public class SchemaController : ApiController
     {
-        public async Task<HttpResponseMessage> Get()
+        public HttpResponseMessage Get()
         {
-            var schema = await JsonSchema4.FromTypeAsync<ExternalStandard>(new NJsonSchema.Generation.JsonSchemaGeneratorSettings() { FlattenInheritanceHierarchy = true });
-            return Request.CreateResponse(JsonConvert.DeserializeObject(schema.ToJson()));
+            try
+            {
+                var settings = new NJsonSchema.Generation.JsonSchemaGeneratorSettings() { FlattenInheritanceHierarchy = true };
+                var schema = NJsonSchema.JsonSchema.FromType<ExternalStandard>(settings);
+                return Request.CreateResponse(JsonConvert.DeserializeObject(schema.ToJson()));
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
     }

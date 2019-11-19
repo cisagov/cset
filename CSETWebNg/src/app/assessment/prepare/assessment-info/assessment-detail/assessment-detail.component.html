@@ -52,4 +52,16 @@
                 (change)="update($event)">
         </div>
     </div>
+    <div class="form-row" [hidden]="!hasACET">
+            <div class="form-group col-md-6">
+                    <label class="mb-1" for="charter">Charter</label>
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" (change)="update($event)">
+                </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="assets">Assets</label>
+            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" 
+                [(ngModel)]="assessment.Assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+        </div>
+        <div class="col-md-6"></div>
+    </div>
 </form>

@@ -1,0 +1,81 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="mxGraphModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="root">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="mxCell" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:byte" name="id" use="optional"/>
+                      <xs:attribute type="xs:string" name="value" use="optional"/>
+                      <xs:attribute type="xs:byte" name="parent" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="object">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mxCell">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="mxGeometry">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:float" name="x" use="optional"/>
+                                  <xs:attribute type="xs:float" name="y" use="optional"/>
+                                  <xs:attribute type="xs:short" name="width" use="optional"/>
+                                  <xs:attribute type="xs:short" name="height" use="optional"/>
+                                  <xs:attribute type="xs:string" name="as" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="style" use="optional"/>
+                        <xs:attribute type="xs:byte" name="parent" use="optional"/>
+                        <xs:attribute type="xs:byte" name="vertex" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="SAL" use="optional"/>
+                  <xs:attribute type="xs:string" name="label" use="optional"/>
+                  <xs:attribute type="xs:string" name="internalLabel" use="optional"/>
+                  <xs:attribute type="xs:string" name="zoneType" use="optional"/>
+                  <xs:attribute type="xs:byte" name="zone" use="optional"/>
+                  <xs:attribute type="xs:string" name="Criticality" use="optional"/>
+                  <xs:attribute type="xs:byte" name="id" use="optional"/>
+                  <xs:attribute type="xs:string" name="ComponentGuid" use="optional"/>
+                  <xs:attribute type="xs:string" name="HasUniqueQuestions" use="optional"/>
+                  <xs:attribute type="xs:string" name="IPAddress" use="optional"/>
+                  <xs:attribute type="xs:string" name="Description" use="optional"/>
+                  <xs:attribute type="xs:string" name="HostName" use="optional"/>
+                  <xs:attribute type="xs:byte" name="parent" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:short" name="dx"/>
+      <xs:attribute type="xs:short" name="dy"/>
+      <xs:attribute type="xs:byte" name="grid"/>
+      <xs:attribute type="xs:byte" name="gridSize"/>
+      <xs:attribute type="xs:byte" name="guides"/>
+      <xs:attribute type="xs:byte" name="tooltips"/>
+      <xs:attribute type="xs:byte" name="connect"/>
+      <xs:attribute type="xs:byte" name="arrows"/>
+      <xs:attribute type="xs:byte" name="fold"/>
+      <xs:attribute type="xs:byte" name="page"/>
+      <xs:attribute type="xs:byte" name="pageScale"/>
+      <xs:attribute type="xs:byte" name="pageWidth"/>
+      <xs:attribute type="xs:byte" name="pageHeight"/>
+      <xs:attribute type="xs:byte" name="math"/>
+      <xs:attribute type="xs:byte" name="shadow"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

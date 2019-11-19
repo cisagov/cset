@@ -21,12 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { StandardService } from '../../../services/standard.service';
+import { Navigation2Service } from '../../../services/navigation2.service';
 
 @Component({
   selector: 'app-overview',
@@ -43,6 +44,7 @@ export class OverviewComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
     private navSvc: NavigationService,
+    public navSvc2: Navigation2Service,
     private stdSvc: StandardService,
     private router: Router,
     private route: ActivatedRoute
@@ -71,13 +73,5 @@ export class OverviewComponent implements OnInit {
 
   updateAssessmentDetails() {
     this.assessSvc.updateAssessmentDetails(this.o);
-  }
-
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'reports']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'standards-results']);
   }
 }

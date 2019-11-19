@@ -1,0 +1,32 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="tag" style="width:200px">Label</th>
+    <th mat-sort-header="hasUniqueQuestions">Has Unique Questions</th>
+    <th mat-sort-header="sal">Sal</th>
+    <th mat-sort-header="criticality" >Criticality</th>
+    <th mat-sort-header="layerC">Layer</th>
+    <th mat-sort-header="ipAddress">IP Address</th>
+    <th mat-sort-header="assetType">Asset Type</th>
+    <th mat-sort-header="zone">Zone</th>
+    <th mat-sort-header="subnetNames">Subnet Name(s)</th>
+    <th mat-sort-header="descriptions">Description</th> 
+    <th mat-sort-header="hostName">Host Name</th>
+    <th mat-sort-header="visibleC">Visible</th>
+    <tr *ngFor="let component of components; let i = index">
+        <td>{{component.labelField}}</td>
+        <td><input type="checkbox" name="{{ component.label }}" class="mt-1" [(ngModel)]="component.hasUniqueQuestionsField" [disabled]="true" 
+          [checked]="component.hasUniqueQuestionsField" > </td>
+        <td>{{component.salField}}</td>
+        <td> {{component.criticalityField}} </td>
+        <td>{{component.layerNameField}}</td>
+        <td>{{component.ipAddressField}}</td>
+        <td>{{component.assetTypeField}}</td>
+        <td>{{component.zoneLabelField}}</td>
+        <td>{{component.subnetNames}}</td>
+        <td>{{component.descriptionField}}</td>
+        <td>{{component.hostNameField}}</td>
+        <td>
+            <input type="checkbox" name="{{ component.visibleField }}" class="mt-1" [(ngModel)]="component.visibleField"
+              [checked]="component.visibleField" [disabled]="true" >
+         </td>
+    </tr>
+</table>

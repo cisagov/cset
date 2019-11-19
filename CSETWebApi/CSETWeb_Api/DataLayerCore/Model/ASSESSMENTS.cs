@@ -12,15 +12,18 @@ namespace DataLayerCore.Model
             ANSWER = new HashSet<ANSWER>();
             ASSESSMENTS_REQUIRED_DOCUMENTATION = new HashSet<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
+            ASSESSMENT_DIAGRAM_COMPONENTS = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
             ASSESSMENT_IRP = new HashSet<ASSESSMENT_IRP>();
             ASSESSMENT_IRP_HEADER = new HashSet<ASSESSMENT_IRP_HEADER>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
+            FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
+            NETWORK_WARNINGS = new HashSet<NETWORK_WARNINGS>();
             PARAMETER_ASSESSMENT = new HashSet<PARAMETER_ASSESSMENT>();
             REPORT_DETAIL_SECTION_SELECTION = new HashSet<REPORT_DETAIL_SECTION_SELECTION>();
             REPORT_OPTIONS_SELECTION = new HashSet<REPORT_OPTIONS_SELECTION>();
@@ -45,6 +48,13 @@ namespace DataLayerCore.Model
         public int? IRPTotalOverride { get; set; }
         [StringLength(150)]
         public string IRPTotalOverrideReason { get; set; }
+        [Required]
+        public bool? MatDetail_targetBandOnly { get; set; }
+        [Column(TypeName = "xml")]
+        public string Diagram_Markup { get; set; }
+        public int LastUsedComponentNumber { get; set; }
+        public string Diagram_Image { get; set; }
+
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
@@ -61,8 +71,10 @@ namespace DataLayerCore.Model
         [InverseProperty("Assessment_")]
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         [InverseProperty("Assessment_")]
-        public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
+        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
         [InverseProperty("Assessment_")]
+        public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
+        [InverseProperty("ASSESSMENT_")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
@@ -73,11 +85,15 @@ namespace DataLayerCore.Model
         [InverseProperty("Assessment_")]
         public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
         [InverseProperty("Assessment_")]
+        public virtual ICollection<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
+        [InverseProperty("Assessment_")]
         public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<GENERAL_SAL> GENERAL_SAL { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
         [InverseProperty("Assessment_")]

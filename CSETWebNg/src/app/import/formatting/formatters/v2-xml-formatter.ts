@@ -248,10 +248,7 @@ export class V2XmlFormatter implements XmlFormatter {
     }
     private _stripLineBreaks(options: XmlFormattingOptions, xml: string): string {
         let output = "";
-        const inTag = false;
-        const inTagName = false;
         let inCdata = false;
-        const inAttribute = false;
 
         for (let i = 0; i < xml.length; i++) {
             const char: string = xml.charAt(i);
@@ -310,7 +307,7 @@ export class V2XmlFormatter implements XmlFormatter {
             const cc = xml[i];
             const nc = xml.charAt(i + 1);
             const nnc = xml.charAt(i + 2);
-            const pc = xml.charAt(i - 1);
+            const pc = xml.charAt(i - 1);//lgtm [js/unused-local-variable]
 
             if (!inComment && cc === "<" && nc === "!" && nnc === "-") {
                 inComment = true;

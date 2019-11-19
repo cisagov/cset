@@ -37,8 +37,10 @@
     <button (click)="clickReportLink('detail')" class="btn btn-link btn-link-dark">Site Detail Report</button>
 
     <button (click)="clickReportLink('discoveries')" class="btn btn-link btn-link-dark">Observations Tear-Out Sheets</button>
+
   </div>
-  <div class="mt-3 justify-content-end flex-00a">
-    <button class="btn btn-primary" (click)="navBack()">Back</button>
+  <div class="mt-3 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary" (click)="navSvc2.navBack('reports')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc2.navNext('reports')">Next</button>
   </div>
 </div>

@@ -29,8 +29,6 @@ import {
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
-import { Observable, of, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { EmailService } from './email.service';
 
@@ -46,12 +44,13 @@ const headers = {
 
 @Injectable()
 export class AssessmentService {
+
   userRoleId: number;
   roles: Role[];
   currentTab: string;
   private apiUrl: string;
   private initialized = false;
-  applicationMode: string;
+  public applicationMode: string;
 
   constructor(
     private emailSvc: EmailService,
@@ -173,7 +172,7 @@ export class AssessmentService {
   removeContact(userId: number, assessment_id: number) {
     return this.http.post(
       this.apiUrl + 'contacts/remove',
-      { UserId: userId, Assessment_ID: assessment_id},
+      { UserId: userId, Assessment_ID: assessment_id },
       headers
     );
   }
@@ -227,5 +226,19 @@ export class AssessmentService {
 
   getAssessmentDocuments() {
     return this.http.get(this.apiUrl + 'assessmentdocuments');
+  }
+
+  hasDiagram() {
+    return this.http.get(this.apiUrl + 'diagram/has');
+  }
+
+  /**
+   * Converts linebreak characters to HTML <br> tag.
+   */
+  formatLinebreaks(text: string) {
+    if (!text) {
+      return '';
+    }
+    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
 }

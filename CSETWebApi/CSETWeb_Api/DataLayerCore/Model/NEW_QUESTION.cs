@@ -10,11 +10,9 @@ namespace DataLayerCore.Model
         public NEW_QUESTION()
         {
             COMPONENT_QUESTIONS = new HashSet<COMPONENT_QUESTIONS>();
-            COMPONENT_STANDARD_QUESTIONS = new HashSet<COMPONENT_STANDARD_QUESTIONS>();
             FINANCIAL_QUESTIONS = new HashSet<FINANCIAL_QUESTIONS>();
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
-            QUESTION_SUB_QUESTION = new HashSet<QUESTION_SUB_QUESTION>();
             REQUIREMENT_QUESTIONS = new HashSet<REQUIREMENT_QUESTIONS>();
             REQUIREMENT_QUESTIONS_SETS = new HashSet<REQUIREMENT_QUESTIONS_SETS>();
         }
@@ -52,15 +50,11 @@ namespace DataLayerCore.Model
         [InverseProperty("Question_")]
         public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
         [InverseProperty("Question_")]
-        public virtual ICollection<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
-        [InverseProperty("Question_")]
         public virtual ICollection<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; }
         [InverseProperty("Question_")]
         public virtual ICollection<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
         [InverseProperty("Question_")]
         public virtual ICollection<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
-        [InverseProperty("Question_")]
-        public virtual ICollection<QUESTION_SUB_QUESTION> QUESTION_SUB_QUESTION { get; set; }
         [InverseProperty("Question_")]
         public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
         [InverseProperty("Question_")]

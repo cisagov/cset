@@ -21,7 +21,6 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { element } from "protractor";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { MatTreeNestedDataSource } from "@angular/material";
@@ -35,6 +34,7 @@ export interface NavTree {
   HeadingTitle?: string;
   HeadingText?: string;
   DocId?: string;
+  elementType?: string;
 }
 
 @Injectable({
@@ -86,7 +86,7 @@ export class NavigationService {
 
       if (t.value === path) {
         return true;
-}
+      }
 
       if (this.isPathInTree(t.children, path)) {
         return true;
@@ -94,9 +94,4 @@ export class NavigationService {
     }
     return false;
   }
-}
-
-
-function frameworkIndex(elementf) {
-  return elementf.value === "framework";
 }

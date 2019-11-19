@@ -26,6 +26,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
+import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
+import { IRPComponent } from './assessment/prepare/irp/irp.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
 import { StandardsComponent } from './assessment/prepare/standards/standards.component';
@@ -38,7 +40,7 @@ import { ComponentsTypesComponent } from './assessment/results/analysis/componen
 import { ComponentsWarningsComponent } from './assessment/results/analysis/components-warnings/components-warnings.component';
 import { DashboardComponent } from './assessment/results/analysis/dashboard/dashboard.component';
 // tslint:disable-next-line:max-line-length
-import { OverallRankedCategoriesComponent } from './assessment/results/analysis/overall-ranked-categories/overall-ranked-categories.component';
+import { FeedbackComponent } from './assessment/results/feedback/feedback.component';
 import { RankedQuestionsComponent } from './assessment/results/analysis/ranked-questions/ranked-questions.component';
 import { StandardsRankedComponent } from './assessment/results/analysis/standards-ranked/standards-ranked.component';
 import { StandardsResultsComponent } from './assessment/results/analysis/standards-results/standards-results.component';
@@ -54,6 +56,9 @@ import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
 import { ImportComponent } from './import/import.component';
+import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
+import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AdminComponent } from './assessment/results/admin/admin.component';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
 import { RequirementListComponent } from './builder/requirement-list/requirement-list.component';
@@ -62,10 +67,15 @@ import { AddQuestionComponent } from './builder/add-question/add-question.compon
 import { RequirementDetailComponent } from './builder/requirement-detail/requirement-detail.component';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
+import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
+import { DiagramComponent } from './assessment/diagram/diagram.component';
+import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
+import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
   { path: 'importModule', component: ImportComponent },
+  { path: 'set-list', component: SetListComponent },
   {
     path: 'home',
     component: InitialComponent,
@@ -100,10 +110,26 @@ const appRoutes: Routes = [
           { path: 'sal', component: SalsComponent },
           { path: 'standards', component: StandardsComponent },
           { path: 'framework', component: FrameworkComponent },
+          { path: 'required', component: RequiredDocsComponent },
+          { path: 'irp', component: IRPComponent },
+          { path: 'irp-summary', component: IrpSummaryComponent },
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: '**', redirectTo: 'info' }
         ]
       },
+      {
+        path: 'diagram',
+        component: DiagramComponent,
+        canActivate: [AssessGuard],
+        canActivateChild: [AssessGuard],
+        children: [
+          { path: 'info', component: DiagramInfoComponent },
+          { path: 'inventory', component: DiagramInventoryComponent },
+          { path: '', redirectTo: 'info', pathMatch: 'full' },
+          { path: '**', redirectTo: 'info' }
+        ]
+      },
+
       { path: 'questions', component: QuestionsComponent },
       {
         path: 'results',
@@ -114,6 +140,7 @@ const appRoutes: Routes = [
           { path: 'analysis', component: AnalysisComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'ranked-questions', component: RankedQuestionsComponent },
+          { path: 'feedback', component: FeedbackComponent },
           // { path: 'overall-ranked-categories', component: OverallRankedCategoriesComponent },
           { path: 'standards-summary', component: StandardsSummaryComponent },
           { path: 'standards-ranked', component: StandardsRankedComponent },
@@ -124,8 +151,12 @@ const appRoutes: Routes = [
           { path: 'components-types', component: ComponentsTypesComponent },
           { path: 'components-warnings', component: ComponentsWarningsComponent },
 
+          { path: 'maturity', component: MatDetailComponent },
+          { path: 'admin', component: AdminComponent },
+          { path: 'acetDashboard', component: ACETDashboardComponent },
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
+          { path: 'feedback', component: FeedbackComponent},
           { path: '', component: DashboardComponent },
         ]
       },

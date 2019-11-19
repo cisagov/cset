@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace CSET_Main.Questions.InformationTabData
 {
-    public class ComponentQuestionInfoData:BaseQuestionInfoData
+    public class ComponentQuestionInfoData : BaseQuestionInfoData
     {
-        public Dictionary<String, ComponentTypeSalData> DictionaryComponentTypes { get; set; }
-        public Dictionary<String, SymbolComponentInfoData> DictionaryComponentInfo { get; set; }
+        public Dictionary<int, ComponentTypeSalData> DictionaryComponentTypes { get; set; }
+        public Dictionary<int, COMPONENT_SYMBOLS> DictionaryComponentInfo { get; set; }
 
 
-        public bool HasComponentsForTypeAtSal(String componentType, int salLevel)
+        public bool HasComponentsForTypeAtSal(int componentType, int salLevel)
         {
             ComponentTypeSalData data;
             if (DictionaryComponentTypes.TryGetValue(componentType, out data))
@@ -33,7 +34,7 @@ namespace CSET_Main.Questions.InformationTabData
             return false;
         }
 
-        
+
 
     }
 }

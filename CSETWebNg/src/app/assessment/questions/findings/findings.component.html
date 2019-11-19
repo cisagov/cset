@@ -21,75 +21,81 @@
   SOFTWARE.
 -------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a">
-<div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
     <span>Observation Details</span>
   </div>
 
-<mat-dialog-content class="py-3">
-  <div class="item bigitem">
-    <p>The question observation section is for advanced users that want to collect extra information about specific questions
-      in the assessment.</p>
+  <mat-dialog-content class="py-3">
+    <div class="item bigitem">
+      <p>The question observation section is for advanced users that want to collect extra information about specific
+        questions
+        in the assessment.</p>
 
-    <div class="form-group">
-      <label for="title" class="form-label">Title</label>
-      <input id="title" type="text" class="form-control" [(ngModel)]="finding.Summary">
-    </div>
+      <div class="form-group">
+        <label for="title" class="form-label">Title</label>
+        <input id="title" type="text" class="form-control" [(ngModel)]="finding.Summary">
+      </div>
 
-    <div class="form-group">
-      <label for="importance" class="form-label">Importance</label>
-      <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.Importance_Id" (change)="updateImportance($event.target.value)">
-        <option *ngFor="let import of importances" [value]="import?.Importance_Id">{{import?.Value}}</option>
-      </select>
-    </div>
+      <div class="form-group">
+        <label for="importance" class="form-label">Importance</label>
+        <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.Importance_Id"
+          (change)="updateImportance($event.target.value)">
+          <option *ngFor="let import of importances" [value]="import?.Importance_Id">{{import?.Value}}</option>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label for="date" class="form-label">Resolution Date</label>
-      <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="finding.Resolution_Date" [matDatepicker]="picker"
-        (focus)="picker.open()" (click)="picker.open()" (change)="update()">
-      <mat-datepicker #picker></mat-datepicker>
-    </div>
+      <div class="form-group">
+        <label for="date" class="form-label">Resolution Date</label>
+        <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+          [(ngModel)]="finding.Resolution_Date" [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
+          (change)="update()">
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
 
-    <div class="form-group">
-      <label for="issue" class="form-label">Issue</label>
-      <textarea id="issue" class="form-control" type="text" [(ngModel)]="finding.Issue"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="impact" class="form-label">Impacts</label>
-      <textarea id="impact" class="form-control" type="text" [(ngModel)]="finding.Impact"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="recommendations" class="form-label">Recommendations</label>
-      <textarea id="recommendations" class="form-control" type="text" [(ngModel)]="finding.Recommendations"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="vulnerabilities" class="form-label">Vulnerabilities</label>
-      <textarea id="vulnerabilities" class="form-control" type="text" [(ngModel)]="finding.Vulnerabilities"></textarea>
-    </div>
-  </div>
-
-  <div class="card" (click)="navToContacts()">
-    <div class="card-body">
-      See Prepare -> Assessment Information -> Contacts -> Add Contact to add additional individuals to this assessment.
-    </div>
-  </div>
-  <!-- interested parties -->
-  <div class="form-group">
-    <div class="d-flex justify-content-between align-items-center flex-11a">
-      <label for="contacts" class="form-label">Individuals Responsible</label>
-      <button class="btn-link fs-smaller" (click)="clearMulti()">Clear Selections</button>
-  </div>
-
-    <div class="pl-3">
-      <div *ngFor="let contact of finding.Finding_Contacts" class="indiv-responsible form-check">
-        <input class="form-check-input" type="checkbox" id="{{contact.Assessment_Contact_Id}}" [(ngModel)]="contact.Selected">
-        <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
+      <div class="form-group">
+        <label for="issue" class="form-label">Issue</label>
+        <textarea id="issue" class="form-control" type="text" [(ngModel)]="finding.Issue"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="impact" class="form-label">Impacts</label>
+        <textarea id="impact" class="form-control" type="text" [(ngModel)]="finding.Impact"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="recommendations" class="form-label">Recommendations</label>
+        <textarea id="recommendations" class="form-control" type="text"
+          [(ngModel)]="finding.Recommendations"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="vulnerabilities" class="form-label">Vulnerabilities</label>
+        <textarea id="vulnerabilities" class="form-control" type="text"
+          [(ngModel)]="finding.Vulnerabilities"></textarea>
       </div>
     </div>
-  </div>
-</mat-dialog-content>
 
-<mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+
+    <!-- interested parties -->
+    <div class="form-group">
+      <div class="d-flex justify-content-between align-items-center flex-11a">
+        <label for="contacts" class="form-label">Individuals Responsible</label>
+        <button class="btn-link fs-smaller" (click)="clearMulti()">Clear Selections</button>
+      </div>
+      <div class="mt-1 mb-2">
+        See Prepare -> Assessment Information -> Contacts -> Add Contact to add additional individuals to this
+        assessment.
+      </div>
+
+      <div class="pl-3">
+        <div *ngFor="let contact of finding.Finding_Contacts" class="indiv-responsible form-check">
+          <input class="form-check-input" type="checkbox" id="{{contact.Assessment_Contact_Id}}" (change)="updateContact(contact)"
+            [(ngModel)]="contact.Selected">
+          <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
     <button class="btn btn-primary" (click)="update()">Close</button>
   </mat-dialog-actions>
 </div>

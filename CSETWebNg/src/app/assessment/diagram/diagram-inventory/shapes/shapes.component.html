@@ -1,0 +1,16 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="label">Label</th>
+    <th mat-sort-header="layer">Layer</th>
+    <th mat-sort-header="visible">Visible</th>
+    
+    <tr *ngFor="let shape of shapes; let i = index">
+        <td>{{shape.valueField}}</td>
+        <td>{{shape.layerNameField}}</td>
+        <td>
+            <input type="checkbox" name="{{ shape.visibleField }}" class="mt-1" [(ngModel)]="shape.visibleField"
+              [checked]="shape.visibleField" [disabled]="true" >
+         </td>
+    </tr>
+</table>
+
+  

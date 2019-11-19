@@ -26,72 +26,29 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { Navigation2Service } from '../../../../services/navigation2.service';
 
 @Component({
   selector: 'app-components-results',
   templateUrl: './components-results.component.html'
 })
 export class ComponentsResultsComponent implements OnInit {
-  chart: Chart;
+  canvasComponentCompliance: Chart;
   dataRows: { title: string; passed: number; total: number; percent: number; }[];
   initialized = false;
-  constructor(private analysisSvc: AnalysisService, private assessSvc: AssessmentService, private router: Router) { }
+  constructor(
+    private analysisSvc: AnalysisService,
+    private assessSvc: AssessmentService,
+    public navSvc2: Navigation2Service,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => this.setupChart(x));
+    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
+      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+      this.dataRows = x.DataRows;
 
-    this.dataRows = [ // TODO: Pull data from API
-      {
-        title: 'test',
-        passed: 30,
-        total: 17,
-        percent: 100
-      }
-    ];
-  }
-
-  navNext() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-types']);
-  }
-
-  navBack() {
-    this.router.navigate(['/assessment', this.assessSvc.id(), 'results', 'components-ranked']);
-  }
-
-  setupChart(x: any) {
-    this.initialized = false;
-    this.chart = new Chart('compResCanvas', {
-      type: 'pie',
-      data: {
-        labels: x.Labels,
-        datasets: [
-          {
-            label: '',
-            data: x.data,
-            backgroundColor: 'red',
-            borderColor: [],
-            borderWidth: 1
-          }
-        ],
-      },
-      options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Results by Category'
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+      this.initialized = true;
     });
-    this.initialized = true;
   }
 }

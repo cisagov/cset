@@ -27,7 +27,6 @@ import { ConfigService } from '../services/config.service';
 import { NavigationService, NavTree } from '../services/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material";
-import { SafePipe } from '../helpers/safe.pipe';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -54,7 +53,7 @@ interface LibrarySearchResponse {
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+  host: {class: 'd-flex flex-column flex-11a w-100'}
 })
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
@@ -135,7 +134,7 @@ export class ResourceLibraryComponent implements OnInit {
       headers)
       .subscribe(
         (docHtml: string) => {
-          this.dialog.open(OkayComponent, { data: { messageText: docHtml } });
+          this.dialog.open(OkayComponent, {data: {messageText: docHtml}});
           this.dialogRef.componentInstance.hasHeader = false;
         });
   }

@@ -4,30 +4,18 @@ ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   SNYK-JS-LODASH-450202:
-    - '@angular/cli > inquirer > lodash':
-        patched: '2019-07-03T21:52:46.452Z'
     - handlebars > async > lodash:
-        patched: '2019-07-03T21:52:46.452Z'
-    - node-sass > sass-graph > lodash:
-        patched: '2019-07-03T21:52:46.452Z'
-    - node-sass > gaze > globule > lodash:
-        patched: '2019-07-03T21:52:46.452Z'
-    - snyk > inquirer > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
-    - snyk > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
-    - snyk > snyk-nodejs-lockfile-parser > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
-    - snyk > snyk-mvn-plugin > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
-    - snyk > snyk-config > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
-    - snyk > snyk-nuget-plugin > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
+        patched: '2019-11-01T22:42:11.958Z'
     - snyk > @snyk/dep-graph > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2019-11-18T15:58:58.706Z'
     - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
-        patched: '2019-07-09T13:59:32.348Z'
+        patched: '2019-11-18T15:58:58.706Z'
     - snyk > snyk-go-plugin > graphlib > lodash:
         patched: '2019-07-09T13:59:32.348Z'
     - snyk > @snyk/dep-graph > graphlib > lodash:

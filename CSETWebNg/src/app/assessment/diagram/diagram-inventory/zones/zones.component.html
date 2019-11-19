@@ -1,0 +1,19 @@
+<table mat-table matSort class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="type">Type</th>
+    <th mat-sort-header="label">Label</th>
+    <th mat-sort-header="sal">Sal</th>
+    <th mat-sort-header="layer">Layer</th>
+    <th mat-sort-header="visible">Visible</th>
+    <tr *ngFor="let zone of zones; let i = index">
+        <td>{{zone.zoneTypeField}}</td>
+        <td>{{zone.labelField}}</td>
+        <td>{{zone.sALField}}</td>
+        <td>{{zone.layerNameField}}</td>
+        <td>
+          <input type="checkbox" name="{{ zone.visibleField }}" class="mt-1" [(ngModel)]="zone.visibleField"
+            [checked]="zone.visibleField" [disabled]="true" >
+       </td>
+    </tr>
+</table>
+
+

@@ -13,7 +13,7 @@ namespace CSETWeb_Api.Controllers.Tests
     [TestClass()]
     public class ResourceLibraryControllerTests
     {
-        [TestMethod()]
+       [TestMethod()]
         public void GetDetailsTest()
         {
             ResourceLibraryController controller = new ResourceLibraryController();

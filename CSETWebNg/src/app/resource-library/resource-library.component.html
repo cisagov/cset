@@ -46,7 +46,7 @@
       </span>
       <mat-tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a" style="margin-bottom:1rem;" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
         <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="d-flex flex-column justify-content-start align-items-start flex-11a">
-          <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" *ngIf="node?.value" class="mt-2 d-flex justify-content-start flex-00a">
+          <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" rel="noopener noreferrer" *ngIf="node?.value" class="mt-2 d-flex justify-content-start flex-00a">
             <h4><span class="btn-link">
               {{node?.label}}
             </span></h4>
@@ -61,7 +61,7 @@
               <span class="cset-icons-chevron-down" *ngIf="navSvc?.treeControl?.isExpanded(node)"></span>
               <span class="cset-icons-chevron-right" *ngIf="!navSvc?.treeControl?.isExpanded(node)"></span>
             </button>
-            <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" *ngIf="node?.value">
+            <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" rel="noopener noreferrer" *ngIf="node?.value">
               <span class="fs-base-2 btn-link">
                 {{node?.label}}
               </span>
@@ -111,7 +111,7 @@
           </div>
           <ng-template #normal_title>
             <!-- <h4 *ngIf="result.HeadingTitle">{{result.HeadingTitle}}</h4> -->
-            <a *ngIf="result.PathDoc.indexOf('?id=') < 0" target="_blank" href="{{docUrl}}{{result.FileName}}">
+            <a *ngIf="result.PathDoc.indexOf('?id=') < 0" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.FileName}}">
               <h4><span class="btn-link mb-3">{{result.HeadingTitle}}</span></h4>
             </a>
           </ng-template>
