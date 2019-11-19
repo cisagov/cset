@@ -164,6 +164,7 @@ import { ShapesComponent } from './assessment/diagram/diagram-inventory/shapes/s
 import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.component';
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
+import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
 
 @NgModule({
     imports: [
@@ -297,7 +298,8 @@ import { DiagramService } from './services/diagram.service';
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent
+        ComponentOverrideComponent, 
+        ExcelExportComponent
     ],
     providers: [
         ConfigService,
@@ -356,7 +358,8 @@ import { DiagramService } from './services/diagram.service';
         KeyboardShortcutsComponent,
         LicenseComponent,
         AddRequirementComponent,
-        ComponentOverrideComponent
+        ComponentOverrideComponent, 
+        ExcelExportComponent
     ]
 })
 
