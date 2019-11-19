@@ -476,12 +476,15 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public ParameterToken SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText)
         {
-            // do we have an answerid?  
+            // create an answer if there isn't one already
             if (answerId == 0)
             {
                 Answer ans = new Answer()
                 {
                     QuestionId = requirementId,
+                    Is_Requirement = true,
+                    MarkForReview = false,
+                    QuestionNumber = 0,
                     AnswerText = "U"                    
                 };
                 answerId = StoreAnswer(ans);
