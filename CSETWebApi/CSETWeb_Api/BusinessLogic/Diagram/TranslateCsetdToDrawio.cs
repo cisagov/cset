@@ -158,13 +158,17 @@ namespace CSETWeb_Api.BusinessLogic.Diagram
 
                 // zone type
                 string zoneType = ChildValue(zone, "c:type");
+                if (zoneType == null)
+                {
+                    zoneType = "Other";
+                }                    
+
                 if (zoneType.ToLower() == "externaldmz")
                 {
                     // add space for readability
                     zoneType = "External DMZ";
                 }
                 xObject.SetAttribute("ZoneType", zoneType);
-
                 xObject.SetAttribute("zone", "1");
 
                 // zone colors

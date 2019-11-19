@@ -71,7 +71,12 @@
   <Table name="PARAMETER_VALUES" />
   <Table name="PARAMETER_ASSESSMENT" />
 
-  <Table name="SUB_CATEGORY_ANSWERS" />
+  <Table name="SUB_CATEGORY_ANSWERS">
+    <Column name="Heading_Pair_Id">
+      <Rule action="custom" name="SubCategoryLookupRule">          
+      </Rule>
+    </Column>
+  </Table>
 
   <!-- Diagram tables -->
   <Table name="DIAGRAM_CONTAINER" />

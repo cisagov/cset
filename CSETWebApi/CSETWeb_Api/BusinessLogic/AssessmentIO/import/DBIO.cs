@@ -53,7 +53,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// <param name="sql"></param>
         /// <param name="parms"></param>
         /// <returns></returns>
-        public int Execute(string sql, Dictionary<string, object> parms)
+        public int Execute(string sql, Dictionary<string, ObjectTypePair> parms)
         {
             int modified = -1;
 
@@ -71,15 +71,33 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
                 try
                 {
-                    foreach (var key in parms.Keys)
+                    foreach (KeyValuePair<string, ObjectTypePair> pair in parms)
                     {
-                        SqlParameter parm = new SqlParameter(key, parms[key]);
-
-                        if (parm.Value == null)
+                        SqlParameter parm = null;
+                        switch (pair.Value.Type)
                         {
-                            parm.Value = DBNull.Value;
+                            case 1: //normal type
+                                parm = new SqlParameter(pair.Key, pair.Value.ParmValue);
+                                if (pair.Value.ParmValue == null)
+                                {
+                                    parm.Value = DBNull.Value;
+                                }
+                                break;
+                            case 2: //varbinary
+                                if ((pair.Value.ParmValue) == DBNull.Value)
+                                {
+                                    parm = new SqlParameter(pair.Key, SqlDbType.VarBinary, -1);
+                                    parm.Value = DBNull.Value;
+                                }
+                                else
+                                {
+                                    byte[] bytes = (byte[])pair.Value.ParmValue;
+                                    parm = new SqlParameter(pair.Key, SqlDbType.VarBinary, bytes.Length);
+                                    parm.Value = bytes;
+                                }
+                                break;
                         }
-
+                        
                         cmd.Parameters.Add(parm);
                     }
 
@@ -93,7 +111,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
                 }
                 catch (Exception exc1)
-                {
+                {   
                     throw exc1;
                 }
                 finally
