@@ -40,6 +40,7 @@ import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
 
 
 declare var $: any;
@@ -208,10 +209,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
-  }
-
   enableProtectedFeature() {
     if (this.dialog.openDialogs[0]) {
 
@@ -226,6 +223,23 @@ export class AppComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
+  }
+
+  showExcelExportDialog(){
+    var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+    var doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+    if (this.dialog.openDialogs[0] || doNotShow) {
+      this.exportToExcel();
+      return;
+    }
+    this.dialogRef = this.dialog.open(ExcelExportComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
+  }
+
+  exportToExcel() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
   }
 
   setupShortCutKeys() {

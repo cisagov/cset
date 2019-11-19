@@ -19,17 +19,32 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public string ExecuteUpgrade(string json)
         {
             JObject oAssessment = JObject.Parse(json);
-            
+
             // ANSWER needs a GUID.  Null no longer allowed.
             foreach (var answer in oAssessment.SelectTokens("$.jANSWER").Children())
             {
-                var guid = answer.SelectToken("$.Component_Guid");
-                if (guid.Value<string>() == null)
+                var componentGuid = answer.SelectToken("$.Component_Guid");
+                if (componentGuid.Value<string>() == null)
                 {
-                    answer.SelectToken("$.Component_Guid").Replace(Guid.Empty);
-                }               
+                    componentGuid.Replace(Guid.Empty);
+                }
             }
 
+            foreach (var answer in oAssessment.SelectTokens("$.jNIST_SAL_QUESTION_ANSWERS").Children())
+            {
+                var qa = answer.SelectToken("$.Question_Answer");
+                switch (qa.Value<string>())
+                {
+                    case "Y":
+                        qa.Replace("Yes");
+                        break;
+                    case "N":
+                    case "U":
+                    default:
+                        qa.Replace("No");
+                        break;
+                }
+            }
 
             return oAssessment.ToString();
         }

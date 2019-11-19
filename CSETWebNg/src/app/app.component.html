@@ -95,7 +95,7 @@
             <span>Parameter Editor</span>
           </button>
           <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? exportToExcel() : null">
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="showExcelExportDialog()">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export Assessment to Excel</span>
           </button>

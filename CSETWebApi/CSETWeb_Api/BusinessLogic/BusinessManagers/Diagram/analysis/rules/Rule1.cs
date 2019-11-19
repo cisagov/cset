@@ -20,9 +20,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();               
         private List<IDiagramAnalysisNodeMessage> NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
 
-        private int nextMessage = 1;
 
-        private String rule1 = "The network path identified by the components, {0} and {1}, appears to connect network segments whose components reside in different zones.  A firewall to filter the traffic on this path is recommended to protect the components in one zone from a compromised component in the other zone.";
+        private String rule1 = "The network path identified by the components, {0} and {1}, appears to connect network " +
+            "segments whose components reside in different zones.  A firewall to filter the traffic on this path is " +
+            "recommended to protect the components in one zone from a compromised component in the other zone.";
+
         public Rule1(SimplifiedNetwork simplifiedNetwork)
         {
             this.nodes = simplifiedNetwork.Nodes;
@@ -39,21 +41,26 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         private void checkRule1()
         {
-            List<int> allowToConnect = new List<int>();
-            allowToConnect.Add(Constants.FIREWALL);
-            allowToConnect.Add(Constants.UNIDIRECTIONAL_DEVICE);
-            allowToConnect.Add(Constants.IDS_TYPE);
+            List<int> allowToConnect = new List<int>
+            {
+                Constants.FIREWALL,
+                Constants.UNIDIRECTIONAL_DEVICE,
+                Constants.IDS_TYPE,
+                Constants.SERIAL_RADIO
+            };
 
             //check all of a components immediate connections
             //if it is outside of it's zone and it does not connect to a firewall 
             //then we need to flag this component     
-            List<int> exempt = new List<int>();
-            exempt.Add(Constants.WEB_TYPE);
-            exempt.Add(Constants.VENDOR_TYPE);
-            exempt.Add(Constants.PARTNER_TYPE);
-            exempt.Add(Constants.FIREWALL);
-            exempt.Add(Constants.UNIDIRECTIONAL_DEVICE);
-            exempt.Add(Constants.IDS_TYPE);
+            List<int> exempt = new List<int>
+            {
+                Constants.WEB_TYPE,
+                Constants.VENDOR_TYPE,
+                Constants.PARTNER_TYPE,
+                Constants.FIREWALL,
+                Constants.UNIDIRECTIONAL_DEVICE,
+                Constants.IDS_TYPE
+            };
 
             var suspectslist = nodes.Values.Where(x => !exempt.Contains(x.Component_Symbol_Id));
             foreach (var node in suspectslist)
@@ -66,7 +73,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                         {
                             if (!allowToConnect.Contains(child.Component_Symbol_Id))
                             {
-                                String text = String.Format(rule1, node.ComponentName, child.ComponentName);
+                                String text = String.Format(rule1, node.ComponentName, child.ComponentName).Replace("\n", " ");
                                 SetLineMessage(node, child, text);
                             }
                         }
