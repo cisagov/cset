@@ -65,8 +65,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
                                 await context.SaveChangesAsync();
                             }
-                            catch
+                            catch(Exception e)
                             {
+                                  
                             }
                             context.GEN_FILE.Add(genFile);
                             context.SaveChanges();
