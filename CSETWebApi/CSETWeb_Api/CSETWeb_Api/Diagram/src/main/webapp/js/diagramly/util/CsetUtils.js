@@ -606,6 +606,16 @@ CsetUtils.getTaggedCell = function (warning, graph) {
         return graph.getModel().getCell(warning.NodeId1);
     }
 
+    // if two components are provided, look for any edges that connect them directly
+    if (warning.NodeId1 && warning.NodeId2) {
+        const component1 = graph.getModel().getCell(warning.NodeId1);
+        const component2 = graph.getModel().getCell(warning.NodeId2);
+        const edges = graph.getModel().getEdgesBetween(component1, component2);
+        if (edges.length > 0) {
+            return edges[0];
+        }
+    }
+
     // if an edgeId is provided, the dot goes on the edge
     if (!!warning.edgeId) {
         return graph.getModel().getCell(warning.edgeId);
