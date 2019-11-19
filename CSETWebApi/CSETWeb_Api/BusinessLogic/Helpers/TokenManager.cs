@@ -25,6 +25,8 @@ namespace CSETWeb_Api.Helpers
         /// The encoded string as passed in each request
         /// </summary>
         private string tokenString = null;
+        
+
         public String Token
         {
             get
@@ -40,6 +42,7 @@ namespace CSETWeb_Api.Helpers
 
         public TokenManager(String tokenString)
         {
+            this.tokenString = tokenString;
             Init(tokenString);
         }
 
@@ -75,11 +78,13 @@ namespace CSETWeb_Api.Helpers
         {
             /* Get the token string from the Authorization header and
                strip off the Bearer prefix if present. */
-            HttpRequest req = HttpContext.Current.Request;
-            tokenString = req.Headers["Authorization"];
-            Init(tokenString);
+            if (HttpContext.Current != null)
+            {
+                HttpRequest req = HttpContext.Current.Request;
+                tokenString = req.Headers["Authorization"];
+                Init(tokenString);
+            }
         }
-
 
         /// <summary>
         /// This just wraps the static method of the same name in TransactionSecurity.

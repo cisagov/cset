@@ -8,9 +8,11 @@ using CSET_Main.Data.ControlData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Collections.ObjectModel;
 using CSET_Main.Data.ControlData.DiagramSymbolPalette;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using CSET_Main.Questions.ComponentOverride;
 using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
@@ -21,7 +23,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSET_Main.Questions.InformationTabData
 {
-    public class QuestionInformationTabData : TabObject
+    public class QuestionInformationTabData
     {
         public String RequirementFrameworkTitle { get; set; }
         public String RelatedFrameworkCategory { get; set; }
@@ -34,6 +36,8 @@ namespace CSET_Main.Questions.InformationTabData
         public List<CustomDocument> ResourceDocumentList { get; set; }
         public List<CustomDocument> SourceDocumentsList { get; set; }
         public string References { get; set; }
+
+        public string ExaminationApproach { get; set; }
 
         /// <summary>
         /// Contains a list of multiServiceComponent types for the current multiServiceComponent question
@@ -139,10 +143,8 @@ namespace CSET_Main.Questions.InformationTabData
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
             RequirementTabData tabData = new RequirementTabData();
-            string shortStandardName = set.Short_Name;
-            HeaderName = shortStandardName;
+            
             Question_or_Requirement_Id = infoData.QuestionID;
-
             this.LevelName = (from a in controlContext.NEW_QUESTION_SETS.Where(t => t.Question_Id == infoData.QuestionID && t.Set_Name == infoData.Set.Set_Name)
                               join l in controlContext.NEW_QUESTION_LEVELS on a.New_Question_Set_Id equals l.New_Question_Set_Id
                               join u in controlContext.UNIVERSAL_SAL_LEVEL on l.Universal_Sal_Level equals u.Universal_Sal_Level1
@@ -242,8 +244,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 set = controlContext.SETS.Where(x => x.Set_Name == requirementData.SetName).FirstOrDefault();
             }
-            String shortStandardName = set.Short_Name;
-            HeaderName = shortStandardName;
+            
             if (!IsComponent)
                 RequirementFrameworkTitle = requirement.Requirement_Title;
 
@@ -327,6 +328,8 @@ namespace CSET_Main.Questions.InformationTabData
             QuestionsVisible = true;
             ShowRequirementStandards = true;
             ShowSALLevel = true;
+            ExaminationApproach = requirement.ExaminationApproach;
+
             BuildDocuments(requirementData.RequirementID, controlContext);
         }
 
@@ -339,9 +342,8 @@ namespace CSET_Main.Questions.InformationTabData
                 RequirementFrameworkTitle = frameworkData.Title;
             RelatedFrameworkCategory = frameworkData.Category;
             ShowRequirementFrameworkTitle = true;
-            String shortStandardName = controlContext.SETS.Where(x => x.Set_Name == frameworkData.SetName).FirstOrDefault().Short_Name;
-            HeaderName = shortStandardName;
-
+            
+            
             if (String.IsNullOrWhiteSpace(References))
                 References = "None";
             Question_or_Requirement_Id = frameworkData.RequirementID;
@@ -395,6 +397,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 IsComponent = true;
                 ShowRequirementFrameworkTitle = false;
+                this.RequirementFrameworkTitle = "Components";
                 NEW_QUESTION question = BuildFromNewQuestion(info, info.Set, controlContext);
                 ComponentVisibility = true;
                 // Build multiServiceComponent types list if any
@@ -403,18 +406,38 @@ namespace CSET_Main.Questions.InformationTabData
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
-                foreach (COMPONENT_QUESTIONS componentType in question.COMPONENT_QUESTIONS)
+
+                foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x=> x.Question_Id == info.QuestionID))
                 {
-                    bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Type, salLevel);
-                    SymbolComponentInfoData componentTypeData = info.DictionaryComponentInfo[componentType.Component_Type];
+                    bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Symbol_Id, salLevel);
+                    COMPONENT_SYMBOLS componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
                     tmpList.Add(new ComponentOverrideLinkInfo()
                     {
-                        TypeComponetXML = componentTypeData.XMLName,
-                        Type = componentTypeData.DisplayName,
+                        Component_Symbol_Id = componentTypeData.Component_Symbol_Id,
+                        Symbol_Name = componentTypeData.Symbol_Name,
                         Enabled = enabled
                     });
                 }
-                ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Type).ToList();
+                ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
+                var reqid = controlContext.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
+                BuildDocuments(reqid, controlContext);
+                var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
+                {
+                    Question_or_Requirement_Id = t.Requirement_Id,
+                    Text = FormatRequirementText(t.Requirement_Text),
+                    SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info)                    
+                }).FirstOrDefault();
+                if (requirement != null)
+                {
+                    RequirementsData = new RequirementTabData()
+                    {
+                        RequirementID = requirement.Question_or_Requirement_Id,
+                        Text = requirement.Text,
+                        SupplementalInfo = FormatSupplementalInfo(requirement.SupplementalInfo),
+                    };
+                    QuestionsVisible = false;
+                    ShowSALLevel = true;                    
+                }
             }
             catch (Exception ex)
             {
@@ -422,19 +445,37 @@ namespace CSET_Main.Questions.InformationTabData
             }
         }
 
+        /// <summary>
+        /// Returns a list of physical files in the Documents folder.
+        /// Some installations may not have documents installed to reduce installation overhead.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetBuildDocuments()
+        {
+            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documents");
+            List<string> availableRefDocs = new DirectoryInfo(dir).GetFiles()
+                .Select(f => f.Name).ToList();
+            return availableRefDocs;
+        }
+
         private void BuildDocuments(int requirement_ID, CSET_Context controlContext)
         {
+            // Build a list of available documents
+
+            List<string> availableRefDocs = GetBuildDocuments();
+
             var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded }).Concat(
                 controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
+
             // Source Documents        
             var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            SourceDocumentsList = sourceDocuments.ToList();
+            SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
 
-            // Help Documents
-            // This gets all help documents for the question
+
+            // Help (Resource) Documents
             var helpDocuments = documents.Where(t => !t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            ResourceDocumentList = helpDocuments.ToList();
+            ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
         }
 
 
@@ -505,6 +546,14 @@ namespace CSET_Main.Questions.InformationTabData
             }
 
             // Convert any linefeed characters to HTML line break tags
+            const string pattern = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+            Regex reg = new Regex(pattern);
+            var matches = reg.Matches(supp);
+            if (matches.Count > 0)
+            {
+                return supp;
+            }
+
             return supp.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
         }
 

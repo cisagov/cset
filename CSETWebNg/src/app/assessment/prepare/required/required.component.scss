@@ -1,0 +1,22 @@
+.active-req-doc {
+    background-color: lightgray;
+}
+
+.reqd-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.reqd-table td {
+    padding-bottom: .3rem;
+}
+
+@media only screen and (max-width: 500px) {
+    .reqd-table td {
+        display: block;
+    }
+
+    .reqd-table td:last-child {
+        float: left !important;
+    }
+}

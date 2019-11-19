@@ -1,0 +1,29 @@
+﻿<mxGraphModel dx="2834" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" value="Main Layer" parent="0"/>
+    <object Security="Untrusted" LinkType="Fiber" label="testline" internalLabel="testline" id="GNHcdCZE6_BdkaoNZ0lZ-23">
+      <mxCell style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;strokeColor=#808080;" parent="1" source="GNHcdCZE6_BdkaoNZ0lZ-21" target="GNHcdCZE6_BdkaoNZ0lZ-22" edge="1">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="15c88942-f5dd-4172-81d1-eaf5956831b2" Criticality="Low" label="DCS-1" internalLabel="DCS-1" id="GNHcdCZE6_BdkaoNZ0lZ-21">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/dcs.svg" parent="1" vertex="1">
+        <mxGeometry x="-110" y="400" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object ComponentGuid="08505cc8-eed8-4a95-86fd-f698303177dd" Criticality="Low" label="DCS-2" internalLabel="DCS-2" id="GNHcdCZE6_BdkaoNZ0lZ-22">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/dcs.svg" parent="1" vertex="1">
+        <mxGeometry x="350" y="420" width="48" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="_ITSn5KbUjPKtXvxudwX-2" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" edge="1" parent="1" source="_ITSn5KbUjPKtXvxudwX-1" target="GNHcdCZE6_BdkaoNZ0lZ-21">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object ComponentGuid="b8ccf2f4-0fe1-45cd-9e1c-aa1c9ceca1e5" Criticality="Low" label="CNFIG-14" internalLabel="CNFIG-14" id="_ITSn5KbUjPKtXvxudwX-1">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/configuration_server.svg" vertex="1" parent="1">
+        <mxGeometry x="-550" y="380" width="45" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+  </root>
+</mxGraphModel>

@@ -97,16 +97,16 @@
     <p>The FIPS 199 guide below will help you learn how to determine the overall security categorization of the system under
       assessment. If you are unfamiliar with the FIPS 199 SAL Determination screen, please read the guide before proceeding.</p>
     <div class="fips-reference">
-      <a href="{{configSvc.docUrl}}ApplicationDocuments/FIPS199Language.html" target="_blank">
+      <a href="{{configSvc.docUrl}}ApplicationDocuments/FIPS199Language.html" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;FIPS 199 SAL Selection Guidance</a>
     </div>
     <p>Other Guides:</p>
     <div class="fips-reference">
-      <a href="{{configSvc.docUrl}}FIPS%20199.pdf" target="_blank">
+      <a href="{{configSvc.docUrl}}FIPS%20199.pdf" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;FIPS 199</a>
-      <a href="{{configSvc.docUrl}}NIST%20SP800-60%20V1.pdf" target="_blank">
+      <a href="{{configSvc.docUrl}}NIST%20SP800-60%20V1.pdf" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;NIST SP800-60 Vol I</a>
-      <a href="{{configSvc.docUrl}}SP800-60_Vol2-Rev1.pdf" target="_blank">
+      <a href="{{configSvc.docUrl}}SP800-60_Vol2-Rev1.pdf" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;NIST SP800-60 Vol II</a>
     </div>
   </div>
@@ -183,12 +183,12 @@
     <div class="form-group special-factors">
       <label for="ConfidentialitySpecialFactor">Confidentiality Special Factor</label>
       <textarea class="form-control" id="ConfidentialitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Confidentiality_Special_Factor"
-        (change)="specialFactor()" maxlength="1500"></textarea>
+        (change)="specialFactor()"></textarea>
       <label for="IntegritySpecialFactor">Integrity Special Factor</label>
       <textarea class="form-control" id="IntegritySpecialFactor" [(ngModel)]="topModel?.specialFactors.Integrity_Special_Factor"
-        (change)="specialFactor()" maxlength="1500"></textarea>
+        (change)="specialFactor()"></textarea>
       <label for="AvailabilitySpecialFactor">Availability Special Factor</label>
       <textarea class="form-control" id="AvailabilitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Availability_Special_Factor"
-        (change)="specialFactor()" maxlength="1500"></textarea>
+        (change)="specialFactor()"></textarea>
     </div>
   </div>

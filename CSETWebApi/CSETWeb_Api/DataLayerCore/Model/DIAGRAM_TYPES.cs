@@ -20,9 +20,6 @@ namespace DataLayerCore.Model
         [StringLength(100)]
         public string Object_Type { get; set; }
 
-        [ForeignKey("Diagram_Type_XML")]
-        [InverseProperty("DIAGRAM_TYPES")]
-        public virtual DIAGRAM_TYPES_XML Diagram_Type_XMLNavigation { get; set; }
         [ForeignKey("Object_Type")]
         [InverseProperty("DIAGRAM_TYPES")]
         public virtual DIAGRAM_OBJECT_TYPES Object_TypeNavigation { get; set; }

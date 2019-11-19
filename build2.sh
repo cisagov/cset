@@ -79,9 +79,11 @@ build_ng() {
     cd CSETWebNg
 
     echo 'building CSET app'
-    ng build  --source-map=false | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
+#    ng build --configuration=production --source-map=false
+    ng build --configuration=$ng_config --source-map=false | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
 
     echo 'building Reports app'
+#   ng build reports --configuration=production --source-map=false --base-href="./" 
     ng build reports --configuration=$reports_config --source-map=false --base-href="./" | sed "s/^/REPORTS: /" > ../reports-build.log 2> ../reports-errors.log
 
     echo 'done building Angular project'

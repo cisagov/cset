@@ -54,9 +54,6 @@ export class AssessGuard implements CanActivate, CanActivateChild {
       return true;
     }
 
-    // console.log('assess guard fail. user token is: ' + JSON.stringify(this.parser.decodeToken(this.authSvc.userToken())));
-    // console.log('assessSvc.id: ' + this.assessSvc.id());
-    // this.router.navigate(['/home/landing-page']);
     this.router.navigate(['/home/login/assessment', route.params['id']]);
     return false;
   }

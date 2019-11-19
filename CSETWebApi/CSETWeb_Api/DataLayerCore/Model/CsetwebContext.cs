@@ -33,10 +33,11 @@ namespace DataLayerCore.Model
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
+        public virtual DbSet<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
         public virtual DbSet<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
-        public virtual DbSet<COMPONENT_STANDARD_QUESTIONS> COMPONENT_STANDARD_QUESTIONS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
+        public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
         public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
         public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
@@ -45,10 +46,11 @@ namespace DataLayerCore.Model
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
+        public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
+        public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
-        public virtual DbSet<DIAGRAM_TYPES_XML> DIAGRAM_TYPES_XML { get; set; }
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
@@ -61,6 +63,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<FINANCIAL_COMPONENTS> FINANCIAL_COMPONENTS { get; set; }
         public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
         public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
+        public virtual DbSet<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
         public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
         public virtual DbSet<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
         public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
@@ -93,6 +96,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
         public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
+        public virtual DbSet<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
         public virtual DbSet<NEW_QUESTION> NEW_QUESTION { get; set; }
         public virtual DbSet<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
         public virtual DbSet<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
@@ -111,7 +115,6 @@ namespace DataLayerCore.Model
         public virtual DbSet<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
         public virtual DbSet<QUESTION_GROUP_HEADING> QUESTION_GROUP_HEADING { get; set; }
         public virtual DbSet<QUESTION_GROUP_TYPE> QUESTION_GROUP_TYPE { get; set; }
-        public virtual DbSet<QUESTION_SUB_QUESTION> QUESTION_SUB_QUESTION { get; set; }
         public virtual DbSet<RECENT_FILES> RECENT_FILES { get; set; }
         public virtual DbSet<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
         public virtual DbSet<REFERENCES_DATA> REFERENCES_DATA { get; set; }
@@ -147,6 +150,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
         public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
         public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
+        public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
@@ -202,17 +206,21 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Answer_Id)
                     .HasName("PK_ANSWER_1");
 
-                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Is_Requirement, e.Component_Id })
-                    .HasName("IX_ANSWER")
+                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Component_Guid, e.Is_Requirement })
+                    .HasName("IX_ANSWER_1")
                     .IsUnique();
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
 
                 entity.Property(e => e.Answer_Text)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('U')");
 
-                entity.Property(e => e.Component_Guid).IsUnicode(false);
+                entity.Property(e => e.Comment).IsUnicode(false);
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
 
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.ANSWER)
@@ -266,7 +274,11 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.CreditUnionName).IsUnicode(false);
 
+                entity.Property(e => e.Diagram_Image).IsUnicode(false);
+
                 entity.Property(e => e.IRPTotalOverrideReason).IsUnicode(false);
+
+                entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.AssessmentCreator)
                     .WithMany(p => p.ASSESSMENTS)
@@ -281,7 +293,7 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Answer)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('N')");
+                    .HasDefaultValueSql("('U')");
 
                 entity.Property(e => e.Comment).IsUnicode(false);
 
@@ -324,9 +336,34 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.Diagram_Component_Type });
+                entity.HasKey(e => new { e.Assessment_Id, e.Component_Guid })
+                    .HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
 
-                entity.Property(e => e.Diagram_Component_Type).IsUnicode(false);
+                entity.Property(e => e.DrawIO_id).IsUnicode(false);
+
+                entity.Property(e => e.Parent_DrawIO_Id).IsUnicode(false);
+
+                entity.Property(e => e.label).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_ASSESSMENTS");
+
+                entity.HasOne(d => d.Component_Symbol_)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
+                    .HasForeignKey(d => d.Component_Symbol_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_COMPONENT_SYMBOLS1");
+
+                entity.HasOne(d => d.Layer_)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSLayer_)
+                    .HasForeignKey(d => d.Layer_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER");
+
+                entity.HasOne(d => d.Zone_)
+                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSZone_)
+                    .HasForeignKey(d => d.Zone_Id)
+                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER1");
             });
 
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
@@ -352,18 +389,18 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Header_Id });
+                entity.HasKey(e => new { e.ASSESSMENT_ID, e.IRP_HEADER_ID });
 
-                entity.Property(e => e.Comment).IsUnicode(false);
+                entity.Property(e => e.COMMENT).IsUnicode(false);
 
-                entity.HasOne(d => d.Assessment_)
+                entity.HasOne(d => d.ASSESSMENT_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasForeignKey(d => d.ASSESSMENT_ID)
                     .HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
 
-                entity.HasOne(d => d.IRP_Header_)
+                entity.HasOne(d => d.IRP_HEADER_)
                     .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.IRP_Header_Id)
+                    .HasForeignKey(d => d.IRP_HEADER_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
             });
@@ -466,19 +503,27 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
             });
 
+            modelBuilder.Entity<COMPONENT_NAMES_LEGACY>(entity =>
+            {
+                entity.Property(e => e.Old_Symbol_Name)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+
+                entity.HasOne(d => d.Component_Symbol_)
+                    .WithMany(p => p.COMPONENT_NAMES_LEGACY)
+                    .HasForeignKey(d => d.Component_Symbol_id)
+                    .HasConstraintName("FK_COMPONENT_NAMES_LEGACY_COMPONENT_SYMBOLS");
+            });
+
             modelBuilder.Entity<COMPONENT_QUESTIONS>(entity =>
             {
-                entity.HasKey(e => new { e.Question_Id, e.Component_Type })
-                    .HasName("PK_Component_Questions");
-
-                entity.Property(e => e.Component_Type).IsUnicode(false);
+                entity.HasKey(e => new { e.Question_Id, e.Component_Symbol_Id });
 
                 entity.Property(e => e.Seq).IsUnicode(false);
 
-                entity.HasOne(d => d.Component_TypeNavigation)
+                entity.HasOne(d => d.Component_Symbol_)
                     .WithMany(p => p.COMPONENT_QUESTIONS)
-                    .HasPrincipalKey(p => p.Diagram_Type_Xml)
-                    .HasForeignKey(d => d.Component_Type)
+                    .HasForeignKey(d => d.Component_Symbol_Id)
                     .HasConstraintName("FK_COMPONENT_QUESTIONS_COMPONENT_SYMBOLS");
 
                 entity.HasOne(d => d.Question_)
@@ -487,33 +532,13 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_Component_Questions_NEW_QUESTION");
             });
 
-            modelBuilder.Entity<COMPONENT_STANDARD_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Requirement_id, e.Component_Type })
-                    .HasName("PK_STANDARD_COMPONENT_QUESTIONS");
-
-                entity.Property(e => e.Component_Type).IsUnicode(false);
-
-                entity.HasOne(d => d.Component_TypeNavigation)
-                    .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
-                    .HasPrincipalKey(p => p.Diagram_Type_Xml)
-                    .HasForeignKey(d => d.Component_Type)
-                    .HasConstraintName("FK_COMPONENT_STANDARD_QUESTIONS_COMPONENT_SYMBOLS");
-
-                entity.HasOne(d => d.Question_)
-                    .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_STANDARD_COMPONENT_QUESTIONS_NEW_QUESTION");
-
-                entity.HasOne(d => d.Requirement_)
-                    .WithMany(p => p.COMPONENT_STANDARD_QUESTIONS)
-                    .HasForeignKey(d => d.Requirement_id)
-                    .HasConstraintName("FK_STANDARD_COMPONENT_QUESTIONS_NEW_REQUIREMENT");
-            });
-
             modelBuilder.Entity<COMPONENT_SYMBOLS>(entity =>
             {
-                entity.HasIndex(e => e.Diagram_Type_Xml)
+                entity.HasIndex(e => e.Abbreviation)
+                    .HasName("IX_COMPONENT_SYMBOLS_1")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.File_Name)
                     .HasName("IX_COMPONENT_SYMBOLS")
                     .IsUnique();
 
@@ -521,30 +546,22 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Component_Family_Name).IsUnicode(false);
 
-                entity.Property(e => e.Diagram_Type_Xml).IsUnicode(false);
-
-                entity.Property(e => e.Display_Name)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('')");
-
                 entity.Property(e => e.File_Name).IsUnicode(false);
 
-                entity.Property(e => e.Long_Name)
+                entity.Property(e => e.Height).HasDefaultValueSql("((60))");
+
+                entity.Property(e => e.Search_Tags).IsUnicode(false);
+
+                entity.Property(e => e.Symbol_Name)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Name).IsUnicode(false);
+                entity.Property(e => e.Width).HasDefaultValueSql("((60))");
 
                 entity.HasOne(d => d.Component_Family_NameNavigation)
                     .WithMany(p => p.COMPONENT_SYMBOLS)
                     .HasForeignKey(d => d.Component_Family_Name)
                     .HasConstraintName("FK_COMPONENT_SYMBOLS_COMPONENT_FAMILY");
-
-                entity.HasOne(d => d.Diagram_Type_XmlNavigation)
-                    .WithOne(p => p.COMPONENT_SYMBOLS)
-                    .HasForeignKey<COMPONENT_SYMBOLS>(d => d.Diagram_Type_Xml)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COMPONENT_SYMBOLS_CSET_DIAGRAM_TYPES");
 
                 entity.HasOne(d => d.Symbol_Group_)
                     .WithMany(p => p.COMPONENT_SYMBOLS)
@@ -558,12 +575,13 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.GM_FingerType)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
+            });
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.COMPONENT_SYMBOLS_GM_TO_CSET)
-                    .HasForeignKey(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COMPONENT_SYMBOLS_GM_TO_CSET_COMPONENT_SYMBOLS");
+            modelBuilder.Entity<COUNTRIES>(entity =>
+            {
+                entity.HasIndex(e => e.ISO_code)
+                    .HasName("IX_COUNTRIES")
+                    .IsUnique();
             });
 
             modelBuilder.Entity<CSET_VERSION>(entity =>
@@ -698,6 +716,42 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Description).IsUnicode(false);
             });
 
+            modelBuilder.Entity<DIAGRAM_CONTAINER>(entity =>
+            {
+                entity.Property(e => e.ContainerType).IsUnicode(false);
+
+                entity.Property(e => e.DrawIO_id).IsUnicode(false);
+
+                entity.Property(e => e.Name).IsUnicode(false);
+
+                entity.Property(e => e.Parent_Draw_IO_Id).IsUnicode(false);
+
+                entity.Property(e => e.Universal_Sal_Level)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('L')");
+
+                entity.Property(e => e.Visible).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.ContainerTypeNavigation)
+                    .WithMany(p => p.DIAGRAM_CONTAINER)
+                    .HasForeignKey(d => d.ContainerType)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER_TYPES");
+
+                entity.HasOne(d => d.Parent_)
+                    .WithMany(p => p.InverseParent_)
+                    .HasForeignKey(d => d.Parent_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER");
+            });
+
+            modelBuilder.Entity<DIAGRAM_CONTAINER_TYPES>(entity =>
+            {
+                entity.Property(e => e.ContainerType)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<DIAGRAM_OBJECT_TYPES>(entity =>
             {
                 entity.Property(e => e.Object_Type)
@@ -707,6 +761,8 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<DIAGRAM_TEMPLATES>(entity =>
             {
+                entity.Property(e => e.Diagram_Markup).IsUnicode(false);
+
                 entity.Property(e => e.Is_Read_Only).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
@@ -722,25 +778,10 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Object_Type).IsUnicode(false);
 
-                entity.HasOne(d => d.Diagram_Type_XMLNavigation)
-                    .WithMany(p => p.DIAGRAM_TYPES)
-                    .HasForeignKey(d => d.Diagram_Type_XML)
-                    .HasConstraintName("FK_DIAGRAM_TYPES_CSET_DIAGRAM_TYPES");
-
                 entity.HasOne(d => d.Object_TypeNavigation)
                     .WithMany(p => p.DIAGRAM_TYPES)
                     .HasForeignKey(d => d.Object_Type)
                     .HasConstraintName("FK_DIAGRAM_TYPES_DIAGRAM_OBJECT_TYPES");
-            });
-
-            modelBuilder.Entity<DIAGRAM_TYPES_XML>(entity =>
-            {
-                entity.HasKey(e => e.Diagram_Type_XML)
-                    .HasName("PK_CSET_DIAGRAM_TYPES");
-
-                entity.Property(e => e.Diagram_Type_XML)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<DOCUMENT_ANSWERS>(entity =>
@@ -832,6 +873,8 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINANCIAL_ASSESSMENT_VALUES>(entity =>
@@ -867,6 +910,8 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.FinComponentId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINANCIAL_DETAILS>(entity =>
@@ -889,6 +934,24 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.DomainId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.DomainId });
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_ASSESSMENTS");
+
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
+                    .HasForeignKey(d => d.DomainId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_FINANCIAL_DOMAINS");
             });
 
             modelBuilder.Entity<FINANCIAL_FFIEC_MAPPINGS>(entity =>
@@ -975,6 +1038,8 @@ namespace DataLayerCore.Model
                     .IsUnique();
 
                 entity.Property(e => e.MaturityId).ValueGeneratedNever();
+
+                entity.Property(e => e.Acronym).IsUnicode(false);
             });
 
             modelBuilder.Entity<FINANCIAL_QUESTIONS>(entity =>
@@ -1172,6 +1237,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.File_Name).IsUnicode(false);
 
+                entity.Property(e => e.Is_Uploaded).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.Property(e => e.Short_Name).IsUnicode(false);
@@ -1191,7 +1258,7 @@ namespace DataLayerCore.Model
                 entity.HasOne(d => d.File_Type_)
                     .WithMany(p => p.GEN_FILE)
                     .HasForeignKey(d => d.File_Type_Id)
-                    .HasConstraintName("SYS_C0014719");
+                    .HasConstraintName("FK_GEN_FILE_FILE_TYPE");
             });
 
             modelBuilder.Entity<GEN_FILE_LIB_PATH_CORL>(entity =>
@@ -1265,6 +1332,8 @@ namespace DataLayerCore.Model
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
+                entity.Property(e => e.IsAcetOnly).HasDefaultValueSql("((0))");
+
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.INFORMATION)
                     .HasForeignKey<INFORMATION>(d => d.Id)
@@ -1282,6 +1351,8 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.IRP_ID).ValueGeneratedNever();
 
                 entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.DescriptionComment).IsUnicode(false);
 
                 entity.Property(e => e.Risk_1_Description).IsUnicode(false);
 
@@ -1386,6 +1457,19 @@ namespace DataLayerCore.Model
                     .HasForeignKey(d => d.Requirement_Id)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_NERC_RISK_RANKING_NEW_REQUIREMENT");
+            });
+
+            modelBuilder.Entity<NETWORK_WARNINGS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Id })
+                    .HasName("PK__network_warnings_001");
+
+                entity.Property(e => e.WarningText).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.NETWORK_WARNINGS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_NETWORK_WARNING_ASSESSMENTS");
             });
 
             modelBuilder.Entity<NEW_QUESTION>(entity =>
@@ -1756,17 +1840,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Scoring_Group).IsUnicode(false);
 
                 entity.Property(e => e.Scoring_Type).IsUnicode(false);
-            });
-
-            modelBuilder.Entity<QUESTION_SUB_QUESTION>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Sub_Question_Id, e.Question_Group_Id })
-                    .HasName("PK_Question_Sub_Question_1");
-
-                entity.HasOne(d => d.Question_)
-                    .WithMany(p => p.QUESTION_SUB_QUESTION)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_QUESTION_SUB_QUESTION_NEW_QUESTION");
             });
 
             modelBuilder.Entity<RECENT_FILES>(entity =>
@@ -2180,12 +2253,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Telerik_Shape_Type).IsUnicode(false);
 
                 entity.Property(e => e.Visio_Shape_Type).IsUnicode(false);
-
-                entity.HasOne(d => d.Diagram_Type_XMLNavigation)
-                    .WithOne(p => p.SHAPE_TYPES)
-                    .HasForeignKey<SHAPE_TYPES>(d => d.Diagram_Type_XML)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Shape_Types_CSET_DIAGRAM_TYPES");
             });
 
             modelBuilder.Entity<SP80053_FAMILY_ABBREVIATIONS>(entity =>
@@ -2311,9 +2378,23 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_UNIVERSAL_SAL_LEVEL");
             });
 
+            modelBuilder.Entity<STATES_AND_PROVINCES>(entity =>
+            {
+                entity.HasOne(d => d.Country_CodeNavigation)
+                    .WithMany(p => p.STATES_AND_PROVINCES)
+                    .HasPrincipalKey(p => p.ISO_code)
+                    .HasForeignKey(d => d.Country_Code)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_STATES_AND_PROVINCES_COUNTRIES");
+            });
+
             modelBuilder.Entity<SUB_CATEGORY_ANSWERS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessement_Id, e.Heading_Pair_Id, e.Component_Id, e.Is_Component });
+                entity.HasKey(e => new { e.Assessement_Id, e.Heading_Pair_Id, e.Component_Guid, e.Is_Component });
+
+                entity.Property(e => e.Component_Guid)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Answer_Text).IsUnicode(false);
 
@@ -2424,7 +2505,7 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.UserId)
                     .HasName("PK_USERS_1");
 
-                entity.HasIndex(e => e.UserId)
+                entity.HasIndex(e => e.PrimaryEmail)
                     .HasName("IX_USERS")
                     .IsUnique();
 

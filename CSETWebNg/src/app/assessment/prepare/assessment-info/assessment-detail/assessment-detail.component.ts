@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
+import { StandardService } from '../../../../services/standard.service';
 
 
 
@@ -32,12 +33,21 @@ import { AssessmentDetail } from '../../../../models/assessment-info.model';
   selector: 'app-assessment-detail',
   templateUrl: './assessment-detail.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDetailComponent implements OnInit {
   assessment: AssessmentDetail = {};
+  hasACET: boolean = true;
 
-  constructor(private route: ActivatedRoute, private assessSvc: AssessmentService) { }
+  constructor(private route: ActivatedRoute,
+    private assessSvc: AssessmentService,
+    private standardSvc: StandardService
+  ) {
+    this.standardSvc.getACET().subscribe((x: boolean) => {
+      this.hasACET = x;
+      sessionStorage.setItem('ACET', x.toString());
+    });
+  }
 
   ngOnInit() {
     if (this.assessSvc.id()) {
@@ -45,10 +55,19 @@ export class AssessmentDetailComponent implements OnInit {
     }
   }
 
+  setCharterPad() {
+    this.assessment.Charter = this.padLeft(this.assessment.Charter, '0', 5);
+  }
+
+  padLeft(text: string, padChar: string, size: number): string {
+    return (String(padChar).repeat(size) + text).substr((size * -1), size);
+  }
+
   getAssessmentDetail() {
     this.assessSvc.getAssessmentDetail().subscribe(
       (data: AssessmentDetail) => {
         this.assessment = data;
+        this.setCharterPad();
 
         // Null out a 'low date' so that we display a blank
         const assessDate: Date = new Date(this.assessment.AssessmentDate);
@@ -58,18 +77,18 @@ export class AssessmentDetailComponent implements OnInit {
       },
       error => console.log('Assessment Detail load Error: ' + (<Error>error).message)
     );
+    // this.hasACET = this.standardSvc.acetSelected;
   }
+
+
 
   update(e) {
     // default Assessment Name if it is left empty
     if (this.assessment.AssessmentName.trim().length === 0) {
       this.assessment.AssessmentName = "(Untitled Assessment)";
     }
-
-    this.updateAssessmentDetails();
-  }
-
-  updateAssessmentDetails() {
+    this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
+    this.standardSvc.makeNavTree();
   }
 }

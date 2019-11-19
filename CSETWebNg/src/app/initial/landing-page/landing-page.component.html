@@ -23,9 +23,9 @@
 <!-- <div class="d-flex flex-11a"> -->
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <!-- <p>{{this.authSvc.userToken()}}</p> -->
-    <div *ngIf="!!sortedAssessments" class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a">
-    
-    <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100">
+    <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a ">
+
+        <div *ngIf="browserIsIE" class="alert alert-danger text-left">
             Internet Explorer has been detected as your current browser.
             Some functionality of CSET is not fully supported by Internet Explorer.
             Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
@@ -36,32 +36,37 @@
             <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
             <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
                 <div class="d-flex justify-content-between flex-00a">
-                    <button class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="this.assessSvc.newAssessment()"
-                        matTooltip="Start a new and empty assessment.">
+                    <button class="m-0 btn btn-primary d-flex align-items-center flex-00a"
+                        (click)="this.assessSvc.newAssessment()" matTooltip="Start a new and empty assessment.">
                         <span class="mr-2 fs-base cset-icons-document"></span>
                         <span>New Assessment</span>
                     </button>
-                    <label *ngIf="authSvc.isLocal" class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
-                        matTooltip="Import an assessment from an external CSET file. (.cset or .csetw)">
+                    <label *ngIf="authSvc.isLocal"
+                        class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
+                        matTooltip="Import an assessment from an external CSET file. ({{ exportExtension }})">
                         <span class="mr-2 fs-base cset-icons-import"></span>
                         <label for="importFile" class="m-0">Import</label>
-                        <input type="file" class="display-none" id="importFile" multiple accept=".cset, .csetw"
-                            (change)="importAssessmentFile($event)">
+                        <input type="file" class="display-none" id="importFile" multiple
+                            accept="{{ exportExtension }},.cset" (change)="importAssessmentFile($event)">
                     </label>
                     <label *ngIf="!authSvc.isLocal" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                        matTooltip="Import an assessment from an external CSET file. (.csetw)">
+                        matTooltip="Import an assessment from an external ACET file. ({{ exportExtension }})">
                         <span class="mr-2 fs-base cset-icons-import"></span>
                         <label for="importFile" class="m-0">Import</label>
-                        <input type="file" class="display-none" id="importFile" multiple accept=".csetw" (change)="importAssessmentFile($event)">
+                        <input type="file" class="display-none" id="importFile" multiple accept="{{ exportExtension }}"
+                            (change)="importAssessmentFile($event)">
                     </label>
                 </div>
-                <div *ngIf="unsupportedImportFile" class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
+                <div *ngIf="unsupportedImportFile"
+                    class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
                     <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
                     <div class="p-2 d-flex flex-column justify-content-center flex-01a">
                         <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                            imported for enterprise CSET installations.</span>
+                            imported for enterprise installations.</span>
                         <span class="fs-base-1"><a href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm"
-                                target="_blank">For more information, see the import section of the user guide</a></span>
+                                target="_blank" rel="noopener noreferrer">For more information, see the import section
+                                of the user
+                                guide</a></span>
                     </div>
                 </div>
             </div>
@@ -72,80 +77,101 @@
             <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
                 <div class="flex-row d-flex flex-00a">
                     <div class="d-flex flex-wrap justify-content-between flex-11a">
-                        <button class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg" (click)="this.assessSvc.newAssessment()"
-                            matTooltip="Start a new and empty assessment.">
+                        <button
+                            class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                            (click)="this.assessSvc.newAssessment()" matTooltip="Start a new and empty assessment.">
                             <span class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                             <span class="landing-button-text landing-button-text-sm">Start a New Assessment</span>
                         </button>
                         <!-- <hr class="landing my-4"> -->
-                        <label *ngIf="authSvc.isLocal" class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                            matTooltip="Import an assessment from an external CSET file. (.cset or .csetw)">
+                        <label *ngIf="authSvc.isLocal"
+                            class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                            matTooltip="Import an assessment from an external CSET file. ({{ exportExtension }})">
                             <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                            <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">Import an
-                                existing assessment</label>
-                            <input type="file" class="display-none" id="importFile" multiple accept=".cset, .csetw"
-                                (change)="importAssessmentFile($event)">
+                            <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                                Import an Existing Assessment
+                            </label>
+                            <input type="file" class="display-none" id="importFile" multiple
+                                accept="{{ exportExtension }},.cset" (change)="importAssessmentFile($event)">
                         </label>
-                        <label *ngIf="!authSvc.isLocal" class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                            matTooltip="Import an assessment from an external CSET file. (.csetw)">
+                        <label *ngIf="!authSvc.isLocal"
+                            class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                            matTooltip="Import an assessment from an external CSET file. ({{ exportExtension }})">
                             <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                            <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">Import an
-                                existing assessment</label>
-                            <input type="file" class="display-none" id="importFile" multiple accept=".csetw" (change)="importAssessmentFile($event)">
+                            <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                                Import an Existing Assessment
+                            </label>
+                            <input type="file" class="display-none" id="importFile" multiple
+                                accept="{{ exportExtension }}" (change)="importAssessmentFile($event)">
                         </label>
                     </div>
                 </div>
-                <div *ngIf="unsupportedImportFile" class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+                <div *ngIf="unsupportedImportFile"
+                    class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a">
                     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
                     <div class="p-md-3 p-2 d-flex flex-column justify-content-center flex-01a">
                         <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                            imported for enterprise CSET installations.</span>
-                        <span class="fs-base-1 mt-2"><a href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm"
-                                target="_blank">For more information, see the import section of the user guide</a></span>
+                            imported for enterprise installations.</span>
+                        <span class="fs-base-1 mt-2"><a
+                                href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
+                                rel="noopener noreferrer">For
+                                more information, see the import section of the user guide</a></span>
                     </div>
                 </div>
             </div>
             <p class="mt-3 fst-italic">
-                    The Cyber Security Evaluation Tool (CSET®) is a Department of Homeland Security (DHS) product that assists organizations in protecting their key national cyber assets. It was developed under the direction of the DHS National Cybersecurity Assessments and Technical Services team (NCATS) by cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes both high-level and detailed questions related to all industrial control and IT systems.​​
+                The Cyber Security Evaluation Tool (CSET®) is a Department of Homeland Security (DHS) product that
+                assists organizations in protecting their key national cyber assets. It was developed under the
+                direction of the DHS National Cybersecurity Assessments and Technical Services team (NCATS) by
+                cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing
+                the security posture of their cyber systems and networks. It includes both high-level and detailed
+                questions related to all industrial control and IT systems.​​
             </p>
         </ng-template>
     </div>
 
-    <div *ngIf="!sortedAssessments">
-        <div class="spinner-container m-0 mt-5 d-flex justify-content-center align-items-center flex-11a">
+    <div *ngIf="sortedAssessments == null">
+        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
             <div class="spinner-size-50"></div>
         </div>
     </div>
 
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 ">
-        <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary">
+
+
+        <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
             <th mat-sort-header="assessment">Assessment Name</th>
             <th mat-sort-header="date" style="width:15%;">Last Modified</th>
             <th mat-sort-header="assessor" style="width:20%;">Primary Assessor</th>
             <th mat-sort-header="status" style="width:20%;">Status</th>
-            <th style="width:5%;"></th>
+            <th style="width:5%; min-width:25px;"></th>
             <th style="width:5%;"></th>
             <tr *ngFor="let assessment of sortedAssessments; let i = index">
                 <td>
-                    <button class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                    <button
+                        class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
                         (click)="this.assessSvc.loadAssessment(assessment.AssessmentId)">
                         {{assessment.AssessmentName}}
                     </button>
                 </td>
                 <td>{{assessment.LastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{assessment.CreatorName}}</td>
-                <td><span *ngIf="assessment.MarkedForReview" class="" matTooltip="This assessment contains answers that require further review.">Needs
+                <td><span *ngIf="assessment.MarkedForReview" class=""
+                        matTooltip="This assessment contains answers that require further review.">Needs
                         Review</span></td>
                 <td>
-                    <button class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                    <button
+                        class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                         (click)="removeAssessment(assessment, i)" matTooltip="Permanently remove this assessment.">
                         <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
                         <span class="icon-link-button-text-dark">Remove</span>
                     </button>
                 </td>
                 <td>
-                    <button class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                        (click)="clickDownloadLink(assessment.AssessmentId)" matTooltip="Export a copy of this assessment to another location (.csetw).">
+                    <button
+                        class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                        (click)="clickDownloadLink(assessment.AssessmentId)"
+                        matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
                         <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                         <span class="icon-link-button-text-dark">Export</span>
                     </button>
@@ -153,6 +179,7 @@
             </tr>
         </table>
     </div>
+
     <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">
         <p>There are no assessments available.</p>
     </div> -->

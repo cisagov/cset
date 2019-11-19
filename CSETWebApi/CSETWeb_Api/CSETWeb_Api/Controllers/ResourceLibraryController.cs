@@ -25,6 +25,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using CSET_Main.Questions.InformationTabData;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -52,6 +53,14 @@ namespace CSETWeb_Api.Controllers
                 SearchDocs search = new SearchDocs(props, new ResourceLibraryRepository(context, props));
                 return search.Search(searchRequest);
             }
+        }
+
+        [HttpGet]
+        [Route("api/ShowResourceLibrary")]
+        public IHttpActionResult ShowResourceLibrary()
+        {
+            var buildDocuments = new QuestionInformationTabData().GetBuildDocuments();
+            return Ok(buildDocuments != null && buildDocuments.Count > 100);
         }
 
         [HttpGet]

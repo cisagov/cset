@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
@@ -35,10 +35,14 @@ import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
+import { AssessmentService } from '../../../services/assessment.service';
+import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 
 @Component({
   selector: 'app-question-extras',
   templateUrl: './question-extras.component.html',
+  styleUrls: ['./question-extras.component.css'],
+  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
@@ -46,11 +50,12 @@ export class QuestionExtrasComponent implements OnInit {
 
   @Input() myQuestion: Question;
   @Output() changeExtras = new EventEmitter();
+  @Output() changeComponents = new EventEmitter();
 
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
   expanded = false;
-  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC'.
+  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC', 'FDBK'.
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
 
@@ -65,12 +70,29 @@ export class QuestionExtrasComponent implements OnInit {
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
-    public authSvc: AuthenticationService) { }
+    public authSvc: AuthenticationService,
+    public assessSvc: AssessmentService) {
+  }
 
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
 
+  showOverrideDialog(componentType: any): void {
+    const dialogRef = this.dialog.open(ComponentOverrideComponent, {
+      width: '600px',
+      height: '800px',
+      data: { ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id, myQuestion: this.myQuestion },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.changeComponents.emit(result);
+      }
+    });
+
+
+  }
   /**
  * Shows/hides the "expand" section.
  * @param q
@@ -101,21 +123,27 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.QuestionId).subscribe(
-      (details) => {
-        this.extras = details;
+    this.questionsSvc.getDetails(this.myQuestion.QuestionId,
+      this.myQuestion.Is_Component).subscribe(
+        (details) => {
+          this.extras = details;
+          // populate my details with the first "non-null" tab
+          this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
 
-        // populate my details with the first "non-null" tab
-        this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
-
-        // add questionIDs to related questions for debug if configured to do so
-        if (this.configSvc.showQuestionAndRequirementIDs()) {
-          this.tab.QuestionsList.forEach((q: any) => {
-            q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
-          });
-        }
-      }
-    );
+          // add questionIDs to related questions for debug if configured to do so
+          if (this.configSvc.showQuestionAndRequirementIDs()) {
+            if (this.tab) {
+              if (this.tab.IsComponent) {
+              } else {
+                if (!!this.tab.QuestionsList) {
+                  this.tab.QuestionsList.forEach((q: any) => {
+                    q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+                  });
+                }
+              }
+            }
+          }
+        });
   }
 
   /**
@@ -125,6 +153,16 @@ export class QuestionExtrasComponent implements OnInit {
   saveComment(e) {
     this.defaultEmptyAnswer();
     this.answer.Comment = e.srcElement.value;
+    this.saveAnswer();
+  }
+
+  /**
+  *
+  * @param e
+  */
+  saveFeedBack(e) {
+    this.defaultEmptyAnswer();
+    this.answer.FeedBack = e.srcElement.value;
     this.saveAnswer();
   }
 
@@ -150,8 +188,12 @@ export class QuestionExtrasComponent implements OnInit {
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
         Comment: '',
+        FeedBack: '',
         MarkForReview: false,
-        Reviewed: false
+        Reviewed: false,
+        Is_Component: this.myQuestion.Is_Component,
+        Is_Requirement: this.myQuestion.Is_Requirement,
+        ComponentGuid: ''
       };
 
       this.answer = newAnswer;
@@ -169,6 +211,9 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.AltAnswerText = this.myQuestion.AltAnswerText;
     this.answer.MarkForReview = this.myQuestion.MarkForReview;
     this.answer.Reviewed = this.myQuestion.Reviewed;
+    this.answer.Comment = this.myQuestion.Comment;
+    this.answer.FeedBack = this.myQuestion.FeedBack;
+    this.answer.ComponentGuid = this.myQuestion.ComponentGuid;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
@@ -191,6 +236,9 @@ export class QuestionExtrasComponent implements OnInit {
     switch (mode) {
       case 'CMNT':
         return (this.myQuestion.Comment && this.myQuestion.Comment.length > 0) ? 'inline' : 'none';
+
+      case 'FDBK':
+        return (this.myQuestion.FeedBack && this.myQuestion.FeedBack.length > 0) ? 'inline' : 'none';
 
       case 'DOCS':
         // if the extras have not been pulled, get the indicator from the question list JSON
@@ -382,16 +430,24 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe((qlist: number[]) => {
         const array = [];
 
+
         // Traverse the local model to get the "display" question numbers
-        this.questionsSvc.questionGroups.forEach(qg => {
-          qg.SubCategories.forEach(sc => {
-            sc.Questions.forEach(q => {
-              if (qlist.includes(q.QuestionId)) {
-                array.push(qg.GroupHeadingText + " #" + q.DisplayNumber);
-              }
+        if (this.questionsSvc.domains) {
+          this.questionsSvc.domains.forEach(d => {
+            d.QuestionGroups.forEach(qg => {
+              qg.SubCategories.forEach(sc => {
+                sc.Questions.forEach(q => {
+                  if (qlist.includes(q.QuestionId)) {
+                    array.push(qg.GroupHeadingText + " #" + q.DisplayNumber);
+                  }
+                });
+              });
             });
           });
-        });
+        } else {
+          console.log('there were no domains for questions!!!');
+        }
+
 
         // Format a list of questions
         let msg = "This document is attached to the following questions: <ul>";
@@ -409,9 +465,9 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   downloadFile(document) {
-    this.fileSvc.downloadFile(document.Document_Id).subscribe((data: Response) =>
-      console.log(data),
+    this.fileSvc.downloadFile(document.Document_Id).subscribe((data: Response) => {
       // this.downloadFileData(data),
+    },
       error => console.log(error)
     );
   }
@@ -441,6 +497,30 @@ export class QuestionExtrasComponent implements OnInit {
     this.expanded = false;
     const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.QuestionId) as HTMLElement;
     btn.click();
+  }
+
+  /**
+   * Converts linebreak characters to HTML <br> tag.
+   */
+  formatLinebreaks(text: string) {
+    if (!text) {
+      return '';
+    }
+    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  }
+
+
+
+  /**
+   * check if approach exists for acet questions
+   * @param approach
+   */
+  checkForApproach(approach: string) {
+    if (typeof approach !== 'undefined' && approach) {
+      return true;
+    }
+
+    return false;
   }
 }
 

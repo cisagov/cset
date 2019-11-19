@@ -101,13 +101,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         /// A list of documents attached to the answer.
         /// </summary>
         public List<Document> Documents { get; private set; }
+        public bool Is_Component { get; private set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private ISymbolRepository symbolRepository;
-        
 
         /// <summary>
         /// 
@@ -143,7 +139,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             this.IsNoQuestion = true;       
         }
         
-        internal List<QuestionInformationTabData> getQuestionDetails(int? questionId, int assessmentId)
+        internal List<QuestionInformationTabData> getQuestionDetails(int? questionId, int assessmentId, bool IsComponent)
         {
             if (questionId == null)
             {
@@ -158,25 +154,25 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
             if (questionId != null)
             {
-                var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId && a.Assessment_Id == assessmentId).FirstOrDefault();
-                var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
-
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
+                bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
+                var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId 
+                    && a.Is_Requirement == IsRequirement  && a.Assessment_Id == assessmentId).FirstOrDefault();
+                var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
                 if (newAnswer == null)                    
                 {
                     newAnswer = new ANSWER()
                     {
-                        Is_Requirement = mode.IsRequirement,
+                        Is_Requirement = IsRequirement,
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
-                        Reviewed = false,
-                        Component_Id = 0,
+                        Reviewed = false,                        
                         Is_Component = false
                     };
-                    DataContext.ANSWER.Add(newAnswer);
+                    DataContext.ANSWER.Add(newAnswer);                    
                 }
                 var qp = new QuestionPoco(newAnswer, newqp);
                 qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
@@ -186,9 +182,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                                           select b
                                          ).ToDictionary(x => x.Set_Name, x=> x);
 
-                qp.DefaultSetName = qp.DictionaryStandards.Keys.First();
-                qp.SetName = qp.DictionaryStandards.Keys.First();
-                LoadData(qp);
+                qp.DefaultSetName = qp.DictionaryStandards.Keys.FirstOrDefault();
+                qp.SetName = qp.DictionaryStandards.Keys.FirstOrDefault();
+                LoadData(qp,assessmentId);
 
                 // Get any findings/discoveries for the question
                 FindingsViewModel fm = new FindingsViewModel(this.DataContext, assessmentId, newAnswer.Answer_Id);
@@ -197,6 +193,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 // Get any documents attached to the question
                 DocumentManager dm = new DocumentManager(assessmentId);
                 this.Documents = dm.GetDocumentsForAnswer(newAnswer.Answer_Id);
+
+                //Get any components
+
             }
 
             return ListTabs;            
@@ -243,8 +242,9 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             return req;
         }
 
+        private Dictionary<int, COMPONENT_SYMBOLS> symbolInfo;
 
-        private void LoadData(QuestionPoco question)
+        private void LoadData(QuestionPoco question, int assessment_id)
         {
             List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
 
@@ -278,16 +278,46 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             }
             else if (question.IsComponent)
             {
+                var stuff = from a in this.DataContext.Answer_Components_Exploded
+                            join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
+                            where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
+                            select new { a.Component_Symbol_Id, a.SAL, l.Sal_Level_Order };
+
+                Dictionary<int, ComponentTypeSalData> dictionaryComponentTypes = new Dictionary<int, ComponentTypeSalData>();
+                foreach(var item in stuff.ToList())
+                {
+                    ComponentTypeSalData salData;
+                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id,out salData)){
+                        salData.SALLevels.Add(item.Sal_Level_Order);
+                    }
+                    else
+                    {
+                        HashSet<int> SALLevels = new HashSet<int>();
+                        SALLevels.Add(item.Sal_Level_Order);
+                        salData = new ComponentTypeSalData()
+                        {
+                            Component_Symbol_Id = item.Component_Symbol_Id,
+                            SALLevels = SALLevels
+                        };
+                        
+                        dictionaryComponentTypes.Add(item.Component_Symbol_Id, salData);
+                    }
+                }
+                if (symbolInfo == null)
+                    symbolInfo = this.DataContext.COMPONENT_SYMBOLS
+                    .ToDictionary(x => x.Component_Symbol_Id, data => data);
+
+
+                //select component_type, ComponentName, SAL from Answer_Components_Exploded
+                //where Assessment_Id = 6 and question_id = 1586
+                ;
                 ComponentQuestionInfoData componentQuestionInfoData = new ComponentQuestionInfoData()
                 {
                     QuestionID = question.Question_or_Requirement_ID,
                     Question = question.Question,
-                    Set = question.DictionaryStandards.Values.FirstOrDefault(),
-                    //TODO !!!NEED to get the list of component types at sal levels here
-                    //DictionaryComponentTypes = assessmentModel.NetworkModel.NetworkData.DictionaryComponentTypes,
-                    //I can't do this until I actually have a diagram to pull the information from. 
-                    DictionaryComponentTypes = new Dictionary<string, ComponentTypeSalData>(),
-                    DictionaryComponentInfo = symbolRepository.GetComponentInfoTabData()
+                    Set = this.DataContext.SETS.Where(x => x.Set_Name == "Components").First(),                    
+                    DictionaryComponentTypes = dictionaryComponentTypes,
+                    DictionaryComponentInfo = symbolInfo
                 };                
                 list = informationTabBuilder.CreateComponentInformationTab(componentQuestionInfoData);
             }
@@ -296,8 +326,10 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 var sets = question.GetRequirementSets().Distinct().ToDictionary(s=>s.Set_Name);
 
                 var set = question.GetRequirementSet().Set_Name;
+                
                 if (question.NEW_REQUIREMENT == null)
-                {   
+                {
+                    //var rs = this.DataContext.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == question.Question_or_Requirement_ID && x.Set_Name == set).First();
                     question.NEW_REQUIREMENT = this.DataContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).FirstOrDefault();
                 }
                 RequirementInfoData reqInfoData = new RequirementInfoData()
@@ -307,12 +339,16 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     Category = question.Category,
                     Sets = sets,
                     Requirement=question.NEW_REQUIREMENT
-                };                
+                };
+
+                reqInfoData.Requirement.REQUIREMENT_LEVELS = this.DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
+
                 list = informationTabBuilder.CreateRequirementInformationTab(reqInfoData, levelManager);
             }
           
 
             SetTabDataList(list);
+            this.Is_Component = question.IsComponent;
         }
 
         internal async void SetFrameworkQuestionInfoTab(CSET_Main.Questions.QuestionList.FrameworkQuestionItem questionViewItem)

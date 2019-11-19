@@ -1,10 +1,7 @@
 ---
-name: "\U0001F4AC Questions / Help"
-about: If you have questions, please send us an Email
-title: ''
-labels: ''
-assignees: ''
 
+name: 💬 Questions / Help
+about: If you have questions, please send us an Email
 ---
 
 ## 💬 Questions and Help

@@ -22,6 +22,15 @@ namespace CSETWeb_Api.Models
 
         public int QuestionCount;
         public int RequirementCount;
+
+        public List<QuestionGroup> DefaultComponents;
+
+        /// <summary>
+        /// The calculated IRP.  If overridden, the override is returned.
+        /// </summary>
+        public int OverallIRP;
+
+        public int DefaultComponentsCount { get; internal set; }
     }
 
     /// <summary>
@@ -29,10 +38,21 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionGroup
     {
+        public bool IsOverride;
+        public Guid NavigationGUID;
         public int GroupHeadingId;
         public string GroupHeadingText;
         public string StandardShortName;
+        public string DomainName;        
+        public string ComponentName;        
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
+
+        public string Symbol_Name { get; internal set; }
+        public QuestionGroup()
+        {
+            this.NavigationGUID = Guid.NewGuid();
+            this.IsOverride = false;
+        }
     }
 
     /// <summary>
@@ -65,7 +85,10 @@ namespace CSETWeb_Api.Models
         public string Answer;
         public string AltAnswerText;
         public string Comment;
+        public string FeedBack;
         public bool MarkForReview;
+        public string SetName;
+
         /// <summary>
         /// Indicates an answer that has been reviewed.  
         /// This field was added for NCUA/ACET support.
@@ -73,10 +96,19 @@ namespace CSETWeb_Api.Models
         public bool Reviewed;
         public bool HasComment { get; set; }        
         public bool HasDocument { get; set; }
+        public bool HasFeedBack { get; set; }
         public int docnum { get; set; }
         public bool HasDiscovery { get; set; }
         public int findingnum { get; set; }
         public int? Answer_Id { get; set; }
+
+        /// <summary>
+        /// Indicates the maturity level of the question/requirement/statement
+        /// </summary>
+        public string MaturityLevel { get; set; }
+        public bool Is_Component { get; set; }
+        public Guid ComponentGuid { get; set; }
+        public bool Is_Requirement { get; set; }
     }
 
 
@@ -96,13 +128,19 @@ namespace CSETWeb_Api.Models
         public string AnswerText;
         public string AltAnswerText;
         public string Comment;
+        public string FeedBack;
         public bool MarkForReview;
+        public Guid ComponentGuid;
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  
         /// This field was added for NCUA/ACET support.
         /// </summary>
         public bool Reviewed;
+
+        public bool Is_Requirement;
+
+        public bool Is_Component;
     }
 
 

@@ -27,7 +27,7 @@ namespace ExportCSV
         private CSET_Context assessmentEntity;
         private int assessment_id;
 
-        public CSETtoExcelDataMappings(int assessment_id , CSET_Context assessmentEntity)
+        public CSETtoExcelDataMappings(int assessment_id, CSET_Context assessmentEntity)
         {
             this.assessmentEntity = assessmentEntity;
             this.assessment_id = assessment_id;
@@ -38,7 +38,7 @@ namespace ExportCSV
         /// 
         /// </summary>
         /// <param name="stream"></param>
-        public void processTables(MemoryStream stream)
+        public void ProcessTables(MemoryStream stream)
         {
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
             IEnumerable<QuestionExport> list;
@@ -69,8 +69,7 @@ namespace ExportCSV
                            Is_Framework = a.Is_Framework,
                            Comment = a.Comment,
                            Alternate_Justification = a.Alternate_Justification,
-                           Component_Guid = a.Component_Guid,
-                           Component_Id = a.Component_Id,
+                           Component_Guid = a.Component_Guid,                           
                            Answer_Id = a.Answer_Id
                        };
 
@@ -98,8 +97,7 @@ namespace ExportCSV
                            Is_Framework = a.Is_Framework,
                            Comment = a.Comment,
                            Alternate_Justification = a.Alternate_Justification,
-                           Component_Guid = a.Component_Guid,
-                           Component_Id = a.Component_Id,
+                           Component_Guid = a.Component_Guid,                           
                            Answer_Id = a.Answer_Id
                        };
 
@@ -126,13 +124,22 @@ namespace ExportCSV
                             Comment = a.Comment,
                             Alternate_Justification = a.Alternate_Justification,
                             Component_Guid = a.Component_Guid,
-                            Component_Id = a.Component_Id,
                             Answer_Id = a.Answer_Id
                         };
             doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
 
 
-            List<DataMap> maps = new List<DataMap>();        
+            // Add a worksheet with the product version
+            List<VersionExport> versionList = new List<VersionExport>();
+            VersionExport v = new VersionExport
+            {
+                Version = assessmentEntity.CSET_VERSION.FirstOrDefault().Cset_Version1
+            };
+            versionList.Add(v);
+            doc.AddList<VersionExport>(versionList, "Version", null);
+
+
+            List<DataMap> maps = new List<DataMap>();
             doc.WriteExcelFile(stream, maps);
         }
 
@@ -269,7 +276,7 @@ namespace ExportCSV
         //    }
         //}
 
-        //private void BuildNetworkWarningDataSet(IOrderedEnumerable<INetworkAnalysisMessage> list, DataMap map)
+        //private void BuildNetworkWarningDataSet(IOrderedEnumerable<IDiagramAnalysisNodeMessage> list, DataMap map)
         //{
         //    DataTable table = map.Table;
         //    foreach (NetworkAnalysisMessage c in list)
@@ -293,14 +300,13 @@ namespace ExportCSV
             "Is_Question",
             "Is_Requirement",
             "Is_Component",
-            "Is_Framework",
-            "Component_Id",
+            "Is_Framework",            
             "Answer_Id",
             "Comment",
             "Alternate_Justification",
             "Component_Guid"};
 
-       
+
 
         public static String[] Headings
         {
@@ -316,16 +322,16 @@ namespace ExportCSV
         public Boolean? Is_Question { get { return !Is_Requirement; } }
         public Boolean? Is_Requirement { get; set; }
         public Boolean? Is_Component { get; set; }
-        public Boolean? Is_Framework { get; set; }
-        public int Component_Id { get; set; }
+        public Boolean? Is_Framework { get; set; }        
         public int Answer_Id { get; set; }
         public string Comment { get; set; }
         public string Alternate_Justification { get; set; }
-        public string Component_Guid { get; set; }
-        
+        public Guid Component_Guid { get; set; }
+
     }
 
-    public class CompQuestionExport:QuestionExport{
+    public class CompQuestionExport : QuestionExport
+    {
         private static string[] compheadings = new String[] { "Question_Id",
             "Question_Group_Heading",
             "Simple_Question",
@@ -335,8 +341,7 @@ namespace ExportCSV
             "Is_Question",
             "Is_Requirement",
             "Is_Component",
-            "Is_Framework",
-            "Component_Id",
+            "Is_Framework",            
             "Answer_Id",
             "Comment",
             "Alternate_Justification",
@@ -350,7 +355,18 @@ namespace ExportCSV
         public string Related_Components { get; internal set; }
     }
 
+    public class VersionExport
+    {
+        private static string[] headings = new string[] { "Version" };
 
+        public static string[] Headings
+        {
+            get { return headings; }
+            set { headings = value; }
+        }
+
+        public string Version { get; set; }
     }
+}
 
 

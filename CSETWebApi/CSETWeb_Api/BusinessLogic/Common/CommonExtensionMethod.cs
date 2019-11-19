@@ -11,10 +11,10 @@ namespace CSET_Main.Common
 {
     public static class CommonExtensionMethod
     {
-        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
-        {
-            return new HashSet<T>(source);
-        }
+        //public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
+        //{
+        //    return new HashSet<T>(source);
+        //}
 
         public static void TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dictionary,
                  TKey key, TValue value)

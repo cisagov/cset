@@ -1,0 +1,53 @@
+﻿<mxGraphModel dx="2034" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" value="Main Layer" parent="0"/>
+    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zone="1" Criticality="Low" ZoneType="Other" id="3">
+      <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
+        <mxGeometry x="167" y="280" width="186" height="167" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="FW-1" ComponentGuid="6c37494a-ab00-47e6-84ce-7c0114005ff0" parent="3" Criticality="Low" id="6">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/firewall.svg;" parent="3" vertex="1">
+        <mxGeometry x="101.2364" y="77.90536" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="AD-4" ComponentGuid="6cc50608-3bbb-4ae1-9a52-d06d71b0028d" parent="3" Criticality="Low" id="7">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/active_directory.svg;" parent="3" vertex="1">
+        <mxGeometry x="9.674942" y="65.18365" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="3" source="7" target="6" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object ComponentGuid="6d022722-c6d7-45c6-8390-9e947e7e1883" Criticality="Low" label="IDS-16" internalLabel="IDS-16" id="rjaqDTqi3eYoq7X8cV16-21">
+      <mxCell style="aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/ids.svg" parent="3" vertex="1">
+        <mxGeometry x="23" y="30" width="60" height="17" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="rjaqDTqi3eYoq7X8cV16-22" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#808080;" parent="3" source="rjaqDTqi3eYoq7X8cV16-21" target="6" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <object SAL="Moderate" label="Zone-2-Moderate" internalLabel="Zone-2" zone="1" Criticality="Low" ZoneType="Other" id="5">
+      <mxCell style="swimlane;zone=1;fillColor=#ece4d7;swimlaneFillColor=#f6f3ed;" parent="1" vertex="1" connectable="0">
+        <mxGeometry x="617" y="221" width="196" height="167" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="FW-5" ComponentGuid="254aaa30-2db8-4f3f-9ff0-589256836c71" parent="5" Criticality="Low" id="8">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/firewall.svg;" parent="5" vertex="1">
+        <mxGeometry x="101.8884" y="67.68854" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <object label="WEB-6" ComponentGuid="964026a6-6f2b-4771-8f8b-e36596839463" Criticality="Low" internalLabel="WEB-6" id="11">
+      <mxCell style="whiteSpace=wrap;html=1;image;image=img/cset/web.svg;" parent="1" vertex="1">
+        <mxGeometry x="352.9995927640606" y="183.39184670781896" width="60" height="60" as="geometry"/>
+      </mxCell>
+    </object>
+    <mxCell id="14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="11" target="6" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;" parent="1" source="11" target="8" edge="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';

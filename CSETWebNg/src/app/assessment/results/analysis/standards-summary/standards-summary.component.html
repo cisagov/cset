@@ -22,8 +22,8 @@
 --------------------------> 
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
   <h3>Standards Summary</h3>
-  <div id="chart">
-    <canvas id="stdSumCanvas" style="max-width: 800px; margin: 0 auto;">{{chart}}</canvas>
+  <div id="chart" class="mb-3">
+    <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{chart}}</canvas>
   </div>
   <div *ngIf="!initialized">
     <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
@@ -44,11 +44,10 @@
         <td class="align-right">{{row.Total}}</td>
         <td class="align-right">{{row.Percent}}%</td>
       </tr>
-      
     </table>
   </div>
   <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navBack()">Back</button>
-    <button class="btn btn-primary" (click)="navNext()">Next</button>
+    <button class="btn btn-primary" (click)="navSvc2.navBack('standards-summary')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc2.navNext('standards-summary')">Next</button>
   </div>
 </div>

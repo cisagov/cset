@@ -27,7 +27,7 @@
       Question Listing
     </h3>
     <div class="card p-3 mb-3">
-      <button class="btn btn-link text-left pl-0" (click)="setBuilderSvc.navSetDetail()">
+      <button class="btn btn-link text-left pl-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
         <h4>
           {{questionResponse?.SetFullName}}
         </h4>
@@ -72,7 +72,7 @@
             </button>
           </div>
           <div *ngIf="headingBeingEdited === subcat" class="w-100">
-            <textarea maxlength="1000" appAutoSize #editH [(ngModel)]="subcat.SubHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
+            <textarea appAutoSize #editH [(ngModel)]="subcat.SubHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
               (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-left"></textarea>
           </div>
         </div>
@@ -95,8 +95,8 @@
                 <div class="alert alert-danger" *ngIf="editedQuestionInUse">
                   This question is in use in other standards/question sets or assessments.
                   Changing the meaning of the question text may have an undesired effect.                  
-                </div>
-                <textarea maxlength="7000" appAutoSize id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
+                </div>               
+                <textarea appAutoSize id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
                   (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>

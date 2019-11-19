@@ -33,13 +33,12 @@ import { MatSidenav } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { NavigationService } from '../services/navigation.service';
-import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-assessment',
   templateUrl: './assessment.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
@@ -56,7 +55,7 @@ export class AssessmentComponent implements OnInit {
    * or auto-hides when the screen is narrow (false).
    */
   lockNav = true;
-  
+
   minWidth = 960;
   scrollTop = 0;
 
@@ -120,10 +119,21 @@ export class AssessmentComponent implements OnInit {
   }
 
   /**
+   * Returns the text for the Requirements label.  It might be Statements for ACET assessments.
+   */
+  requirementsLabel() {
+    return 'Requirements';
+  }
+
+  /**
    * Fired when the sidenav's opened state changes.
    * @param e
    */
   openStateChange(e) {
     this.expandNav = e;
+  }
+
+  checkText(s){
+    return s === "Please wait" || s === "Loading questions";
   }
 }

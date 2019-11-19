@@ -42,6 +42,8 @@ export class ContactItemComponent implements OnInit {
   @Input()
   contact: EditableUser;
   @Input()
+  enableMyControls: boolean = true;
+  @Input()
   contactsList: EditableUser[];
   @Output()
   add = new EventEmitter<EditableUser>();
@@ -49,6 +51,10 @@ export class ContactItemComponent implements OnInit {
   create = new EventEmitter<EditableUser>();
   @Output()
   remove = new EventEmitter<boolean>();
+  @Output()
+  startEditEvent = new EventEmitter<boolean>();
+  @Output()
+  abandonEditEvent = new EventEmitter<boolean>();
   @Output()
   edit = new EventEmitter<EditableUser>();
 
@@ -92,7 +98,6 @@ export class ContactItemComponent implements OnInit {
   }
 
   openEmailDialog() {
-    const invitees: EditableUser[] = [this.contact];
     const subject = this.configSvc.config.defaultInviteSubject;
     const body = this.configSvc.config.defaultInviteTemplate;
 
@@ -169,6 +174,7 @@ export class ContactItemComponent implements OnInit {
 
   editContact() {
     this.contact.startEdit();
+    this.startEditEvent.emit();
     this.editMode = false;
   }
 
@@ -209,6 +215,7 @@ export class ContactItemComponent implements OnInit {
 
   abandonEdit() {
     this.contact.abandonEdit();
+    this.abandonEditEvent.emit();
     this.editMode = true;
     if (this.contact.IsNew) {
       this.remove.emit(true);
