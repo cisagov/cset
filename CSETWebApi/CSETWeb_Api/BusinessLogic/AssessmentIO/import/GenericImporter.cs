@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using CSETWeb_Api.BusinessLogic.AssessmentIO.import.customRules;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWeb_Api.BusinessLogic.ImportAssessment
@@ -16,6 +17,12 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         int _assessmentId;
 
         private DBIO dbio = null;
+        private static Type byteArray; 
+        static GenericImporter()
+        {
+            System.Byte[] b = new Byte[0];
+            byteArray = b.GetType();
+        }
 
         Dictionary<string, string> identityColumns = null;
         DataTable schema = null;
@@ -94,6 +101,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
         }
 
+        private Dictionary<string, DataTable> tableStructures = new Dictionary<string, DataTable>();
 
         /// <summary>
         /// 
@@ -108,10 +116,20 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             int newIdentity = -1;
 
             List<string> columnNames = new List<string>();
-            Dictionary<string, object> parms = new Dictionary<string, object>();
+            Dictionary<string, ObjectTypePair> parms = new Dictionary<string, ObjectTypePair>();
 
 
-            DataTable dt = dbio.Select(string.Format("select * from {0} where 1 = 2", tableName), null);
+            DataTable dt;
+            if(!tableStructures.TryGetValue(tableName, out dt))
+            {
+                dt = dbio.Select(string.Format("select * from {0} where 1 = 2", tableName), null);
+                tableStructures.Add(tableName, dt);
+            }
+            else
+            {
+                dt.Rows.Clear();                
+            }
+            
 
             DataRow row = dt.NewRow();
             foreach (JToken token in jObj.Children<JToken>())
@@ -153,6 +171,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         prop.Value = _assessmentId;
                     }
 
+                    // ignore any columns that we are supposed to ignore
+                    var ruleCustom = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='custom']", tableName, colName));
+                    if (ruleCustom != null)
+                    {
+                        SubCategoryLookupRule sublookup = new SubCategoryLookupRule();
+                        sublookup.ProcessRule(jObj, xTable, dbio);
+                    }
 
                     // ignore any columns that we are supposed to ignore
                     var ruleIgnore = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='ignore']", tableName, colName));
@@ -201,8 +226,18 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     // Add column names and values to collections used to build queries
                     columnNames.Add(colName);
                     Type t = dt.Columns[colName].DataType;
+                    int valueType = 1;
+
+                    if (t == byteArray)
+                    {
+                        valueType = 2;
+                    }
                     parms.Add(string.Format("@{0}", colName),
-                        (prop.Value.Type == JTokenType.Null) ? System.DBNull.Value : Convert.ChangeType(prop.Value, t));
+                        new ObjectTypePair()
+                        {
+                            ParmValue = (prop.Value.Type == JTokenType.Null) ? System.DBNull.Value : Convert.ChangeType(prop.Value, t),
+                            Type = valueType
+                        });
                 }
             }
 
@@ -328,5 +363,12 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 mapIdentity.Add(tableName, d);
             }
         }
+    }
+
+    public class ObjectTypePair
+    {
+        public object ParmValue { get; set; }
+        public int Type { get; set; }
+
     }
 }

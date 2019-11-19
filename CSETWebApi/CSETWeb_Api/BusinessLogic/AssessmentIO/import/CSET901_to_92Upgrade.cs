@@ -23,7 +23,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             // ANSWER needs a GUID.  Null no longer allowed.
             foreach (var answer in oAssessment.SelectTokens("$.jANSWER").Children())
             {
-                answer.SelectToken("$.Component_Guid").Replace(Guid.Empty);
+                var guid = answer.SelectToken("$.Component_Guid");
+                if (guid.Value<string>() == null)
+                {
+                    answer.SelectToken("$.Component_Guid").Replace(Guid.Empty);
+                }               
             }
 
 
