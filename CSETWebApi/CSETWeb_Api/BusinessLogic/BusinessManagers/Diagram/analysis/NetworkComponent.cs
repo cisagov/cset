@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml;
 using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 
@@ -10,6 +11,7 @@ namespace CSETWeb_Api.BusinessManagers
     public class NetworkComponent : NetworkNode
     {
         public List<NetworkComponent> Connections { get; set; }        
+        public List<FullNode> FullyConnectedConnections { get; set; }
         public bool IsUnidirectional {
             get
             {
@@ -68,11 +70,11 @@ namespace CSETWeb_Api.BusinessManagers
         }
         public int Component_Symbol_Id { get; internal set; }
         public bool isMultipleConnections { get; internal set; }
-        public NetworkLink Link { get; set; }
-
+        
         public NetworkComponent()
         {
             Connections = new List<NetworkComponent>();
+            FullyConnectedConnections = new List<FullNode>();
             ParentChanged = false;
         }
         internal void AddEdge(NetworkComponent target, NetworkLink link)
@@ -81,8 +83,14 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 return;
             }
-            this.Link = link;
+            ComponentPairing t = new ComponentPairing()
+            {
+                Source = this.ComponentGuid,
+                Target = target.ComponentGuid
+            };
+            
             Connections.Add(target);
+            FullyConnectedConnections.Add(new FullNode() { Source = this, Target = target, Link = link });
         }
 
         internal bool IsInSameZone(NetworkComponent tailComponent)

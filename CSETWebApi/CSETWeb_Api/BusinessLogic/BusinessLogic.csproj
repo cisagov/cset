@@ -268,10 +268,12 @@
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisNodeMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\FullNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\DrawIOParsingHelps.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\ExtractLeafSpanningTree.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\PermutationsGenerator.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\PostProcessConnectors.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\PrintNetwork.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />

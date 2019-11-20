@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         public Guid Source { get; set; }
         public Guid Target { get; set; }
 
-        
         public static bool operator ==(ComponentPairing obj1, ComponentPairing obj2)
         {
             if (ReferenceEquals(obj1, obj2))

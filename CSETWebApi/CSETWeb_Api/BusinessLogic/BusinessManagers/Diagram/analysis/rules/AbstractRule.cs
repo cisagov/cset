@@ -1,4 +1,5 @@
-﻿using CSETWeb_Api.BusinessManagers;
+﻿using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers;
+using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 using System;
 using System.Collections.Generic;
@@ -49,13 +50,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                 return;// messageNode = dictionaryNodeMessages[component2.ComponentGuid];
             }
 
+            //
+            string appropriateEdgeId = findEdgeId(component1, component2, pair);
+
             messageNode = new DiagramAnalysisNodeMessage()
             {
 
                 Component = (NetworkComponent)component1,
                 NodeId1 = component1.ID,
                 NodeId2 = component2.ID,                
-                edgeId = ((NetworkComponent)component1).Link.ID,
+                edgeId = appropriateEdgeId,
                 SetMessages = new HashSet<string>()
             };
 
@@ -64,6 +68,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             messageNode.AddMessage(text);
         }
 
+        private string findEdgeId(NetworkNode component1, NetworkNode component2, ComponentPairing pair)
+        {
+            //if we didn't find it here then it's a connector and we need to walk the tree. 
+            //We will need to walk the tree and find the node we are looking for
+            //printGraph(new List<NetworkComponent>(component1));
+            WalkNetwork printer = new WalkNetwork();
+            NetworkLink link = printer.FindNodeEdge(component1, component2);
+
+            return link.ID;
+        }
 
         public void SetNodeMessage(NetworkNode component, string text)
         {
