@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers
 {
-    public class WalkNetwork
+    public class NetworkWalk
     {
         private HashSet<NetworkComponent> alreadySeenNodes = new HashSet<NetworkComponent>();
 
@@ -33,6 +33,29 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.helpers
             {
                 if (!alreadySeenNodes.Contains(f.Target))
                     printNode(f.Target, nextIndent);
+            }
+        }
+
+        public void printGraphSimple(List<NetworkComponent> nodes)
+        {
+            alreadySeenNodes.Clear();
+            foreach (NetworkComponent n in nodes)
+            {
+                if (!alreadySeenNodes.Contains(n))
+                    printNodeSimple(n, 0);
+            }
+        }
+
+        private void printNodeSimple(NetworkComponent top, int indent)
+        {
+            Trace.Write(new String('\t', indent));
+            Trace.WriteLine("-->" + top.ID + ":" + top.ComponentName);
+            int nextIndent = indent + 1;
+            alreadySeenNodes.Add(top);
+            foreach (NetworkComponent f in top.Connections)
+            {
+                if (!alreadySeenNodes.Contains(f))
+                    printNode(f, nextIndent);
             }
         }
 

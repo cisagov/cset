@@ -73,7 +73,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             //if we didn't find it here then it's a connector and we need to walk the tree. 
             //We will need to walk the tree and find the node we are looking for
             //printGraph(new List<NetworkComponent>(component1));
-            WalkNetwork printer = new WalkNetwork();
+            NetworkWalk printer = new NetworkWalk();
             NetworkLink link = printer.FindNodeEdge(component1, component2);
 
             return link.ID;
