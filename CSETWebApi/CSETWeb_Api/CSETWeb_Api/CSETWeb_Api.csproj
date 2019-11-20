@@ -4395,6 +4395,7 @@
     <Content Include="Documents\htmlhelp\de_search\0xu005a.json" />
     <Content Include="Documents\htmlhelp\de_search\ids.json" />
     <Content Include="Documents\htmlhelp\de_search\prefixes.json" />
+    <Content Include="Documents\ISA 62443-2013.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
