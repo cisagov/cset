@@ -112,7 +112,12 @@
                 </g>
             </svg>
         </button>
-
+        <span class="btn-group btn-group-toggle">
+            <label class="btn btn-level form-check-label" [class.active]="myQuestion?.Reviewed">
+              <input class="form-check-input" type="checkbox" data-toggle="toggle"
+                (click)="storeReviewed($event)" [checked]="myQuestion?.Reviewed" />Reviewed
+            </label>
+        </span>
     </div>
 
     <app-in-view *ngIf="autoLoadSupplemental()" (inView$)="forceLoadSupplemental()"></app-in-view>
