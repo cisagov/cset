@@ -62,7 +62,8 @@ namespace CSETWeb_Api.BusinessManagers.Diagram.Analysis
             rules.Add(new Rule5(network));
             rules.Add(new Rule6(network));
             rules.Add(new Rule7(network));
-
+            //NetworkWalk walk = new NetworkWalk();
+            //walk.printGraphSimple(network.Nodes.Values.ToList());
             List<IDiagramAnalysisNodeMessage> msgs = new List<IDiagramAnalysisNodeMessage>();
             foreach (IRuleEvaluate rule in rules)
             {
