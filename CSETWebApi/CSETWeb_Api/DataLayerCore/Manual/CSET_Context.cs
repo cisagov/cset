@@ -49,6 +49,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
 
         public virtual DbSet<Answer_Components> Answer_Components { get; set; }
+        public virtual DbQuery<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbQuery<Answer_Components_Default> Answer_Components_Default { get; set; }
         public virtual DbQuery<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
         public virtual DbQuery<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }

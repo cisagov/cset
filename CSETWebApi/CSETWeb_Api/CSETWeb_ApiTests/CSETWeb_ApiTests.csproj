@@ -152,6 +152,7 @@
   <ItemGroup>
     <Compile Include="AssessmentIO\import\DBIOTests.cs" />
     <Compile Include="AssessmentIO\import\ImportUpgradeManagerTests.cs" />
+    <Compile Include="BusinessManagers\AssessmentManagerTests.cs" />
     <Compile Include="BusinessManagers\DiagramManagerTests.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisTests.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\PermutationsGeneratorTests.cs" />
