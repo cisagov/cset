@@ -978,7 +978,8 @@ namespace CSETWeb_Api.Controllers
             {
                 string applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
-
+                if (applicationMode == null)
+                    return "Q";
                 if (applicationMode.ToLower().StartsWith("questions"))
                 {
                     return "Q";

@@ -148,6 +148,7 @@
     <Compile Include="Manual\Answer_Components_Overrides.cs" />
     <Compile Include="Manual\Answer_Questions.cs" />
     <Compile Include="Manual\Answer_Questions_No_Components.cs" />
+    <Compile Include="Manual\Assessments_For_User.cs" />
     <Compile Include="Manual\CSET_Context.cs" />
     <Compile Include="Manual\DOCUMENT_FILE.cs" />
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
