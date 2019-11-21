@@ -88,48 +88,6 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
-                
-
-                //var query = (from uu in db.USERS
-                //             join ac in db.ASSESSMENT_CONTACTS on uu.UserId equals ac.UserId
-                //             join aa in db.ASSESSMENTS on ac.Assessment_Id equals aa.Assessment_Id
-                //             join ii in db.INFORMATION on aa.Assessment_Id equals ii.Id
-                //             join cc in db.USERS on aa.AssessmentCreatorId equals cc.UserId
-                //             where uu.UserId == userId
-
-                //             select new
-                //             {
-                //                 ID = aa.Assessment_Id,
-                //                 AssessmentName = ii.Assessment_Name,
-                //                 StartDate = aa.AssessmentCreatedDate,
-                //                 CreatorName = cc.FirstName + " " + cc.LastName,
-                //                 LastModifiedDate = aa.LastAccessedDate
-                //             });
-
-                //var hits = query.ToList();
-                //foreach (var h in hits)
-                //{
-                //    Assessments_For_User a = new Assessments_For_User
-                //    {
-                //        AssessmentId = h.ID,
-                //        AssessmentName = h.AssessmentName,
-                //        AssessmentCreatedDate = Utilities.UtcToLocal(h.StartDate),
-                //        CreatorName = h.CreatorName
-                //    };
-
-                //    if (h.LastModifiedDate != null)
-                //    {
-                //        a.LastModifiedDate = Utilities.UtcToLocal((DateTime)h.LastModifiedDate);
-                //    }
-
-                //    // See if any of the assessment's active answers are marked for review
-                //    AnswerManager ansMan = new AnswerManager(a.AssessmentId);
-                //    List<int> myAnswerIds = ansMan.ActiveAnswerIds();
-                //    a.MarkedForReview = db.ANSWER.Where(ans => myAnswerIds.Contains(ans.Answer_Id) && (ans.Mark_For_Review ?? false)).Count() > 0;
-
-                //    list.Add(a);
-                //}
-
             }
 
             return list;
