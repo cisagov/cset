@@ -4,18 +4,17 @@
 // 
 // 
 //////////////////////////////// 
- 
-using BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic.BusinessManagers;
-using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.Helpers;
-using CSETWeb_Api.Models;
-using DataLayerCore.Model;
-using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.Helpers;
+using CSETWeb_Api.Models;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -177,7 +176,7 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                     assessment.CreditUnion = result.aa.CreditUnionName;
                     assessment.Assets = result.aa.Assets;
-                    
+
                     // Fields located on the Overview page
                     assessment.ExecutiveSummary = result.ii.Executive_Summary;
                     assessment.AssessmentDescription = result.ii.Assessment_Description;
@@ -198,52 +197,67 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            var db = new DataLayerCore.Model.CSET_Context();
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Token_Scope);
-            // Add or update the ASSESSMENT record
-            var dbAssessment = new ASSESSMENTS()
+            using (var db = new DataLayerCore.Model.CSET_Context())
             {
-                Assessment_Id = assessment.Id,
-                AssessmentCreatedDate = assessment.CreatedDate,
-                AssessmentCreatorId = assessment.CreatorId,
-                Assessment_Date = assessment.AssessmentDate??DateTime.Now,
-                LastAccessedDate = assessment.LastModifiedDate,
-                Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5,'0'),
-                CreditUnionName = assessment.CreditUnion,
-                Assets = assessment.Assets, 
-                MatDetail_targetBandOnly = app_code == "ACET",
-                AnalyzeDiagram = false
-            };
+                TokenManager tm = new TokenManager();
+                string app_code = tm.Payload(Constants.Token_Scope);
 
-            db.ASSESSMENTS.AddOrUpdate( dbAssessment, x=> x.Assessment_Id);
+                // Add or update the ASSESSMENTS record
+                var dbAssessment = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
-            db.SaveChanges();
-            assessmentId = dbAssessment.Assessment_Id;
-            var user = db.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-            // then use its key for the INFORMATION record
-            var dbInfo = new INFORMATION
-            {
-                Id = assessmentId,
-                Assessment_Name = assessment.AssessmentName,                
-                Facility_Name = assessment.FacilityName,
-                City_Or_Site_Name = assessment.CityOrSiteName,
-                State_Province_Or_Region = assessment.StateProvRegion,
-                Executive_Summary = assessment.ExecutiveSummary,
-                Assessment_Description = assessment.AssessmentDescription,
-                Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments, 
-                IsAcetOnly = assessment.IsAcetOnly
-            };
+                if (dbAssessment == null)
+                {
+                    dbAssessment = new ASSESSMENTS();
+                    db.ASSESSMENTS.Add(dbAssessment);
+                    db.SaveChanges();
+                    assessmentId = dbAssessment.Assessment_Id;
+                }
 
-            db.INFORMATION.AddOrUpdate( dbInfo, x=> x.Id);
+                dbAssessment.Assessment_Id = assessmentId;
+                dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
+                dbAssessment.AssessmentCreatorId = assessment.CreatorId;
+                dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
+                dbAssessment.LastAccessedDate = assessment.LastModifiedDate;
+                dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5, '0');
+                dbAssessment.CreditUnionName = assessment.CreditUnion;
+                dbAssessment.Assets = assessment.Assets;
+                dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
+                dbAssessment.AnalyzeDiagram = false;
 
-            db.SaveChanges();
+                db.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
+                db.SaveChanges();
+
+                
+                var user = db.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
 
 
-            AssessmentUtil.TouchAssessment(assessmentId);
-            
+                var dbInformation = db.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+                if (dbInformation == null)
+                {
+                    dbInformation = new INFORMATION()
+                    {
+                        Id = assessmentId
+                    };
+                }
 
-            return dbInfo.Id;
+                // add or update the INFORMATION record
+                dbInformation.Assessment_Name = assessment.AssessmentName;
+                dbInformation.Facility_Name = assessment.FacilityName;
+                dbInformation.City_Or_Site_Name = assessment.CityOrSiteName;
+                dbInformation.State_Province_Or_Region = assessment.StateProvRegion;
+                dbInformation.Executive_Summary = assessment.ExecutiveSummary;
+                dbInformation.Assessment_Description = assessment.AssessmentDescription;
+                dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
+                dbInformation.IsAcetOnly = assessment.IsAcetOnly;
+
+                db.INFORMATION.AddOrUpdate(dbInformation, x => x.Id);
+                db.SaveChanges();
+
+
+                AssessmentUtil.TouchAssessment(assessmentId);
+
+                return assessmentId;
+            }
         }
 
         /// <summary>
@@ -364,7 +378,7 @@ namespace CSETWeb_Api.BusinessManagers
                 AssetValue = assetValue
             };
 
-            db.DEMOGRAPHICS.AddOrUpdate( dbDemographics, x=> x.Assessment_Id);
+            db.DEMOGRAPHICS.AddOrUpdate(dbDemographics, x => x.Assessment_Id);
             db.SaveChanges();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
 

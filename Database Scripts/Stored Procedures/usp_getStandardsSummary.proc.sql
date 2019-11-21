@@ -32,7 +32,7 @@ begin
 		from (select Short_Name,l.Answer_Full_Name,l.Answer_Text from AVAILABLE_STANDARDS a 
 		join SETS s on a.Set_Name = s.Set_Name
 		, ANSWER_LOOKUP l
-		where a.Assessment_Id = @assessment_id) a join (
+		where a.Assessment_Id = @assessment_id) a left join (
 		SELECT ms.Short_Name, a.Answer_Text, isnull(count(c.question_id),0) qc, SUM(count(c.question_id)) OVER(PARTITION BY Short_Name) AS Total
 				FROM Answer_Questions a 
 				join NEW_QUESTION c on a.Question_Or_Requirement_Id = c.Question_Id				
@@ -56,7 +56,7 @@ begin
 		from (select Short_Name,l.Answer_Full_Name,l.Answer_Text from AVAILABLE_STANDARDS a 
 		join SETS s on a.Set_Name = s.Set_Name
 		, ANSWER_LOOKUP l
-		where a.Assessment_Id = @assessment_id) a join (
+		where a.Assessment_Id = @assessment_id) a left join (
 		SELECT ms.Short_Name, a.Answer_Text, isnull(count(c.Requirement_Id),0) qc, SUM(count(c.Requirement_Id)) OVER(PARTITION BY Short_Name) AS Total  
 				FROM Answer_Requirements a 
 				join NEW_REQUIREMENT c on a.Question_Or_Requirement_Id = c.Requirement_Id				
