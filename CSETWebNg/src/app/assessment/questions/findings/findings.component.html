@@ -34,7 +34,7 @@
 
       <div class="form-group">
         <label for="title" class="form-label">Title</label>
-        <input id="title" type="text" class="form-control" [(ngModel)]="finding.Summary">
+        <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.Summary">
       </div>
 
       <div class="form-group">
@@ -55,20 +55,20 @@
 
       <div class="form-group">
         <label for="issue" class="form-label">Issue</label>
-        <textarea id="issue" class="form-control" type="text" [(ngModel)]="finding.Issue"></textarea>
+        <textarea id="issue" autocomplete="off" class="form-control" type="text" [(ngModel)]="finding.Issue"></textarea>
       </div>
       <div class="form-group">
         <label for="impact" class="form-label">Impacts</label>
-        <textarea id="impact" class="form-control" type="text" [(ngModel)]="finding.Impact"></textarea>
+        <textarea id="impact" autocomplete="off" class="form-control" type="text" [(ngModel)]="finding.Impact"></textarea>
       </div>
       <div class="form-group">
         <label for="recommendations" class="form-label">Recommendations</label>
-        <textarea id="recommendations" class="form-control" type="text"
+        <textarea id="recommendations" autocomplete="off" class="form-control" type="text"
           [(ngModel)]="finding.Recommendations"></textarea>
       </div>
       <div class="form-group">
         <label for="vulnerabilities" class="form-label">Vulnerabilities</label>
-        <textarea id="vulnerabilities" class="form-control" type="text"
+        <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text"
           [(ngModel)]="finding.Vulnerabilities"></textarea>
       </div>
     </div>
@@ -80,11 +80,7 @@
         <label for="contacts" class="form-label">Individuals Responsible</label>
         <button class="btn-link fs-smaller" (click)="clearMulti()">Clear Selections</button>
       </div>
-      <div class="mt-1 mb-2">
-        See Prepare -> Assessment Information -> Contacts -> Add Contact to add additional individuals to this
-        assessment.
-      </div>
-
+     
       <div class="pl-3">
         <div *ngFor="let contact of finding.Finding_Contacts" class="indiv-responsible form-check">
           <input class="form-check-input" type="checkbox" id="{{contact.Assessment_Contact_Id}}" (change)="updateContact(contact)"
@@ -92,6 +88,8 @@
           <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
         </div>
       </div>
+      <br/><br/>
+      <app-assessment-contacts (triggerChange)="reloadContacts()" class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
     </div>
   </mat-dialog-content>
 

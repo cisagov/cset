@@ -48,47 +48,35 @@
 
   <!-- Edit Mode -->
   <ng-template #contact_search [ngIf]="!editMode">
-    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (input)="search()" class="my-2 p-3 b-light br-standard d-flex flex-column flex-11a">
+    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (blur)="search()" class="my-2 p-3 b-light br-standard d-flex flex-column flex-11a">
       <div class="d-flex justify-content-start align-items-center flex-11a">
         <div class="d-flex flex-column flex-11a">
           <div class="d-flex flex-wrap flex-11a">
 
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="fName">First Name</label>
-              <input class="form-control" type="text" maxlength="150" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel"
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel"
                 placeholder="First Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactFName"
                 required>
-              <mat-autocomplete #autoContactFName="matAutocomplete">
-                <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.FirstName">
-                  {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
-                </mat-option>
-              </mat-autocomplete>
+              
               <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">First name is required</div>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
               <label class="mb-1" for="lName">Last Name</label>
-              <input class="form-control" type="text" maxlength="150" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel"
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel"
                 placeholder="Last Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactLName"
                 required>
-              <mat-autocomplete #autoContactLName="matAutocomplete">
-                <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.LastName">
-                  {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
-                </mat-option>
-              </mat-autocomplete>
+              
               <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">Last name is required</div>
             </div>
           </div>
 
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">Email</label>
-            <input class="form-control" type="email" maxlength="150" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel"
+            <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel"
               placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContact" email>
-            <mat-autocomplete #autoContact="matAutocomplete">
-              <mat-option *ngFor="let result of results" (onSelectionChange)="select(result)" [value]="result.PrimaryEmail">
-                {{result.FirstName}} {{result.LastName}} &lt;{{result.PrimaryEmail}}&gt;
-              </mat-option>
-            </mat-autocomplete>
+           
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email addresss.</div>
           </div>
 
@@ -98,7 +86,7 @@
             <div class="btn-group btn-group-toggle" id="role" data-toggle="buttons" ngbRadioGroup name="contactRoles"
               [(ngModel)]="contact.AssessmentRoleId">
               <label ngbButtonLabel class="btn btn-secondary active" *ngFor="let role of roles" (click)="contactRoleSelected(role.AssessmentRoleId)">
-                <input ngbButton type="radio" name="contact-role" [value]="role.AssessmentRoleId">
+                <input ngbButton type="radio" autocomplete="off" name="contact-role" [value]="role.AssessmentRoleId">
                 {{role.AssessmentRole}}
               </label>
             </div>
