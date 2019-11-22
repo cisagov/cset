@@ -47,6 +47,24 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         }
 
 
+        public void BulkExecute(DataTable dataTable, string tableName)
+        {
+            var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connStr)) {
+                var transaction =  connection.BeginTransaction();
+                SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.TableLock | SqlBulkCopyOptions.FireTriggers | SqlBulkCopyOptions.UseInternalTransaction
+                    ,transaction);
+
+                // set the destination table name
+                bulkCopy.DestinationTableName = tableName;
+                connection.Open();
+                // write the data in the "dataTable"
+                bulkCopy.WriteToServer(dataTable);
+                connection.Close();
+            }
+        }
+
+
         /// <summary>
         /// Executes a sql query.  Returns the identity, if any.
         /// </summary>

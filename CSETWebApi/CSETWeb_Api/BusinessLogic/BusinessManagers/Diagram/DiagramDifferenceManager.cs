@@ -162,7 +162,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                 defaultLayer = layer.Container_Id;
             }
 
-            foreach (var zone in differences.AddedZones)
+            foreach (var zone in newDiagram.Zones)
             {
                 var z = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key).FirstOrDefault();
                 if (z == null)
@@ -189,12 +189,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     z.Universal_Sal_Level = zone.Value.SAL;
                     z.Name = zone.Value.ComponentName;
                 }
-            }
+            }            
             context.SaveChanges();
 
             LayerManager layers = new LayerManager(context, assessment_id);
             Dictionary<Guid, ASSESSMENT_DIAGRAM_COMPONENTS> adcDictionary = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessment_id).ToDictionary(x => x.Component_Guid, x => x);
-            foreach (var newNode in differences.AddedNodes)
+            foreach (var newNode in newDiagram.NetworkComponents)
             {
                 ASSESSMENT_DIAGRAM_COMPONENTS adc;
                 if (adcDictionary.TryGetValue(newNode.Key, out adc))
