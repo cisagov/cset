@@ -298,7 +298,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                     using (var data = MimeMultipartStream.FromContent(content))
                     {
                         try
-                        {
+                        {   
                             var resp = req.Post(new HttpPostPayload
                             {
                                 ContentType = data.ContentType,
