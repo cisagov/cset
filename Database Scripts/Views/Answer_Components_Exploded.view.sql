@@ -1,4 +1,5 @@
 
+
 CREATE VIEW [dbo].[Answer_Components_Exploded]
 AS
 
@@ -48,7 +49,6 @@ from   (SELECT distinct q.question_id,adc.assessment_id
             join dbo.NEW_QUESTION AS q ON f.Question_Id = q.Question_Id 			
 			join Answer_Components AS a on f.Question_Id = a.Question_Or_Requirement_Id and f.assessment_id = a.assessment_id	  
 where component_guid = '00000000-0000-0000-0000-000000000000') c on a.Assessment_Id=c.Assessment_Id and a.Question_Id = c.Question_Id
-
 
 
 
