@@ -88,6 +88,7 @@ namespace ProcViewSerializer
             }
 
             string fileName = Path.Combine(filePath, procName + "." + fileType + ".sql");
+            Directory.CreateDirectory(filePath);
 
             File.WriteAllLines(fileName, lines);            
         }
