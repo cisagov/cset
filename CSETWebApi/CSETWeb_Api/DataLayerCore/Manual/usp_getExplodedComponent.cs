@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayerCore.Model
+namespace DataLayerCore.Manual
 {
-    public partial class Answer_Components_Exploded
-    {        
+    public class usp_getExplodedComponent
+    {
         [Key]
         public string UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
@@ -20,8 +20,8 @@ namespace DataLayerCore.Model
         public Nullable<int> Question_Number { get; set; }
         public string QuestionText { get; set; }
         public string ComponentName { get; set; }
-        public int Component_Symbol_Id { get; set; }        
-        public bool Is_Component { get; set; }        
+        public int Component_Symbol_Id { get; set; }
+        public bool Is_Component { get; set; }
         public Guid Component_GUID { get; set; }
         public Nullable<int> Layer_Id { get; set; }
         public string LayerName { get; set; }
