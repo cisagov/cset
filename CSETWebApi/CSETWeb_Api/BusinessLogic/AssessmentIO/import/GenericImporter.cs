@@ -80,10 +80,17 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var tableName = xTable.Attributes["name"].Value;
 
 
-                // find all objects for the target table and convert each to a database row
+                // find all objects for the target table and convert each to a query
+                // send the whole batch off
+                // select out all the id's and add to mapping
+                //
                 var jObjs = oAssessment.SelectToken("$.j" + tableName);
                 if (jObjs != null)
                 {
+                    //create the temp table
+                    //CREATE TABLE #IdMap(tablename VARCHAR(250),OldIdentity int,NewIdentity int)
+                    
+                    //get all the 
                     foreach (var jObj in jObjs)
                     {
                         try
@@ -97,6 +104,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                             throw new Exception("CSET import data exception", exc);
                         }
                     }
+                    //
                 }
             }
         }
@@ -129,7 +137,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             {
                 dt.Rows.Clear();                
             }
-            
+
 
             DataRow row = dt.NewRow();
             foreach (JToken token in jObj.Children<JToken>())
@@ -249,7 +257,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
             else
             {
-                sql = BuildInsertQuery(xTable, columnNames);
+                sql = BuildInsertQuery(xTable, columnNames);                
             }
 
             try
