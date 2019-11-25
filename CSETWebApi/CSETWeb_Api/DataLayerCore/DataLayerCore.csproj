@@ -154,6 +154,7 @@
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
     <Compile Include="Manual\NEW_REQUIREMENT.cs" />
     <Compile Include="Manual\usp_financial_attributes_result.cs" />
+    <Compile Include="Manual\usp_getExplodedComponent.cs" />
     <Compile Include="Manual\usp_getFinancialQuestions_Result.cs" />
     <Compile Include="Manual\usp_GetOverallRankedCategoriesPage_Result.cs" />
     <Compile Include="Manual\usp_GetQuestionsWithFeedback.cs" />
@@ -164,7 +165,6 @@
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
     <Compile Include="Manual\vParameter.cs" />
     <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
-    <Compile Include="Manual\Answer_Components_Exploded.cs" />
     <Compile Include="ModelDataAccess\FileDescription.cs" />
     <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
     <Compile Include="ModelDataAccess\FileResult.cs" />
