@@ -54,11 +54,6 @@ namespace DataLayerCore.Model
         public virtual DbQuery<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
         public virtual DbQuery<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
 
-        /// <summary>
-        /// Maps to the view. When given an assessment ID, questions/answers for visible components are returned.
-        /// </summary>
-        public virtual DbSet<Answer_Components_Exploded> Answer_Components_Exploded { get; set; }
-
 
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }

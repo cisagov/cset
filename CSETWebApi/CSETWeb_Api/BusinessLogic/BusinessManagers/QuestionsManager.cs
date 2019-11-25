@@ -13,6 +13,7 @@ using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
+using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -287,11 +288,16 @@ namespace CSETWeb_Api.BusinessManagers
             List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
             using (CSET_Context context = new CSET_Context())
             {
-                IQueryable<Answer_Components_Exploded> questionlist = from a in context.Answer_Components_Exploded
-                                   where a.Assessment_Id == assessmentId
-                                    && a.Question_Id == question_id
-                                    && a.Component_Symbol_Id == Component_Symbol_Id
-                                    select a;
+                List<usp_getExplodedComponent> questionlist = null;
+
+                context.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                  .WithSqlParam("assessment_id", _assessmentId)
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      questionlist = handler.ReadToList<usp_getExplodedComponent>().Where(c => c.Question_Id == question_id
+                                    && c.Component_Symbol_Id == Component_Symbol_Id).ToList();
+                  });
+
                 IQueryable<Answer_Components> answeredQuestionList = context.Answer_Components.Where(a =>
                     a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
                     
