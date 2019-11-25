@@ -8,6 +8,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
+using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Snickler.EFCore;
 using System;
@@ -607,15 +608,15 @@ namespace CSETWeb_Api.Controllers
 
                              // re-order the list 
                              var sortedList = new List<usp_getComponentsSummmary>();
-                             AddItem("Y",  sortedList, answerTotals);
-                             AddItem("N",  sortedList, answerTotals);
+                             AddItem("Y", sortedList, answerTotals);
+                             AddItem("N", sortedList, answerTotals);
                              AddItem("NA", sortedList, answerTotals);
-                             AddItem("A",  sortedList, answerTotals);
-                             AddItem("U",  sortedList, answerTotals);
+                             AddItem("A", sortedList, answerTotals);
+                             AddItem("U", sortedList, answerTotals);
                              answerTotals = sortedList;
 
-                             
-                             var totalQuestionCount = answerTotals==null?0:answerTotals.Sum(x => x.vcount);
+
+                             var totalQuestionCount = answerTotals == null ? 0 : answerTotals.Sum(x => x.vcount);
 
                              foreach (usp_getComponentsSummmary c in answerTotals)
                              {
@@ -639,7 +640,12 @@ namespace CSETWeb_Api.Controllers
 
 
                 // include component count so front end can know whether components are present
-                chartData.ComponentCount = context.Answer_Components_Exploded.Where(a => a.Assessment_Id == assessmentId).Distinct().Count();
+                context.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                  .WithSqlParam("assessment_id", assessmentId)
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      chartData.ComponentCount = handler.ReadToList<usp_getExplodedComponent>().Distinct().Count();
+                  });
             }
 
             chartData.dataSets.ForEach(ds =>
@@ -655,7 +661,8 @@ namespace CSETWeb_Api.Controllers
         private void AddItem(String answerName, List<usp_getComponentsSummmary> sortedList, IList<usp_getComponentsSummmary> unorderedList)
         {
             var element = unorderedList.FirstOrDefault(x => x.Answer_Text == answerName);
-            if (element != null) {
+            if (element != null)
+            {
                 sortedList.Add(element);
             }
         }
