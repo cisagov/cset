@@ -5,7 +5,7 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
 
 Download Windows Installer
-[CSET 9.2.0 StandAlone Installer](https://github.com/cisagov/cset2/releases/download/v9.2.0/CSETStandAlone.exe)
+[CSET 9.2.1 StandAlone Installer](https://github.com/cisagov/cset2/releases/download/v9.2.1/CSETStandAlone.exe)
 
 
 						
