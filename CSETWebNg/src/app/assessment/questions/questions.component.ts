@@ -160,6 +160,7 @@ export class QuestionsComponent implements AfterViewInit {
    */
   loadQuestions() {
     const magic = this.navSvc.getMagic();
+    this.domains = null;
     this.questionsSvc.getQuestionsList().subscribe(
       (data: QuestionResponse) => {
         this.assessSvc.applicationMode = data.ApplicationMode;
