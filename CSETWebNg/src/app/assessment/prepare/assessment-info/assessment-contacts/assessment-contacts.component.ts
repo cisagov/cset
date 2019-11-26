@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChildren } from "@angular/core";
+import { Component, OnInit, ViewChildren, Output, EventEmitter } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
 import { ConfirmComponent } from "../../../../dialogs/confirm/confirm.component";
@@ -42,6 +42,8 @@ import { ContactItemComponent } from "./contact-item/contact-item.component";
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentContactsComponent implements OnInit {
+  @Output() triggerChange = new EventEmitter();
+
   contacts: EditableUser[] = [];
   emailDialog: MatDialogRef<EmailComponent>;
   userRole: any;
@@ -74,6 +76,10 @@ export class AssessmentContactsComponent implements OnInit {
           this.moveUser();
         });
     }
+  }
+
+  changeOccurred(){
+    this.triggerChange.next();
   }
 
   moveUser() {
@@ -118,6 +124,7 @@ export class AssessmentContactsComponent implements OnInit {
       (response: { ContactList: User[] }) => {
         contact.ContactId = response.ContactList[0].ContactId;
         contact.UserId = response.ContactList[0].UserId;
+        this.changeOccurred();
       },
       error => {
         this.dialog
@@ -147,6 +154,7 @@ export class AssessmentContactsComponent implements OnInit {
     if (this.adding && contact.IsNew) {
       this.contacts.splice(indx, 1);
       this.adding = false;
+      this.changeOccurred();
       return;
     }
     this.adding = false;
@@ -155,6 +163,7 @@ export class AssessmentContactsComponent implements OnInit {
       || contact.PrimaryEmail === undefined
     ) {
       this.dropContact(contact);
+      this.changeOccurred();
       return;
     }
 
@@ -169,6 +178,7 @@ export class AssessmentContactsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dropContact(contact);
+        this.changeOccurred();
       }
     });
   }
@@ -202,7 +212,7 @@ export class AssessmentContactsComponent implements OnInit {
     );
     // zero on the assessement_id implies the current assessment
     this.assessSvc.removeContact(contact.UserId, 0).subscribe(
-      (response: { ContactList: User[] }) => { },
+      (response: { ContactList: User[] }) => { this.changeOccurred();},
       error => {
         this.dialog
           .open(AlertComponent, { data: "Error removing assessment contact" })

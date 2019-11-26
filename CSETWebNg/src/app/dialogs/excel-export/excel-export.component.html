@@ -35,7 +35,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <input type="checkbox" name="doNotShowAgain" class="mt-1" (change)="setDoNotShow()" [(ngModel)]="doNotShow"
+                    <input type="checkbox" name="doNotShowAgain" class="mt-1" autocomplete="off" (change)="setDoNotShow()" [(ngModel)]="doNotShow"
                     [checked]="doNotShow" >
                     <label for="doNotShowAgain">&nbsp;Do not show this message again</label>
                 </div>

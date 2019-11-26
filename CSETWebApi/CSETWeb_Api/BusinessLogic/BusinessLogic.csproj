@@ -268,10 +268,12 @@
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisNodeMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\FullNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\DrawIOParsingHelps.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\ExtractLeafSpanningTree.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\PermutationsGenerator.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\PostProcessConnectors.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\NetworkWalk.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
@@ -402,7 +404,6 @@
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Models\ACETDashboard.cs" />
-    <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />

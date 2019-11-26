@@ -76,6 +76,16 @@ export class FindingsComponent implements OnInit {
     });
   }
 
+  reloadContacts():void{
+    this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id)
+        .subscribe((response: Finding) => {
+          this.finding = response;
+          this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,
+            { 'Selected': true }),
+            'Assessment_Contact_Id');
+        });
+  }
+
   clearMulti() {
     this.finding.Finding_Contacts.forEach(c => {
       c.Selected = false;

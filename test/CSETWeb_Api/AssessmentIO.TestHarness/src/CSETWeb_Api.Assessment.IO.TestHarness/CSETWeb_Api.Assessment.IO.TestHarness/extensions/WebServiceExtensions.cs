@@ -11,7 +11,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
         public static WebRequest BuildRequest(this WebRequestOptions parms)
         {
             var request = (HttpWebRequest)WebRequest.Create(parms.UriString);
-
+            request.Timeout = 300000;
             if (!string.IsNullOrWhiteSpace(parms.Username))
             {
                 var credentials = new NetworkCredential(parms.Username, parms.Password);
