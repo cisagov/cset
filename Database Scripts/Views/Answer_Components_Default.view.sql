@@ -2,7 +2,6 @@
 
 
 
-
 /**
 The default consists of one one question 
 joined on the types in the diagram
