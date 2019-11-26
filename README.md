@@ -1,4 +1,4 @@
-# CSET 9.2.0
+# CSET 9.2.1
  
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/alerts/)
 [![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:csharp)
@@ -12,8 +12,8 @@ Download Windows Installer
 -------------------------------------------------------------------------
 File Checksum Integrity Verifier version 2.05.
 csetstandalone.exe  
-MD5     9c60a0a10d81b66de59e6578079e0158  
-SHA-1   49b5b96531aad99571063b984b3c30686210bbd9  
+MD5     e486deb49f16c29bdd04bb7273985f66
+SHA-1   ac1515ccd6b9d19ee8ef84d6090346dbadd548bb
 ## License
 
 MIT License, Apache License 2.0
@@ -42,7 +42,7 @@ The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
  
 Figure 1: User Account Control box
 
-A CSET 9.2.0 dialogue will open asking if you want to install CSET 9.2.0 Desktop (Fig.2). Select &quot;Yes&quot;.
+A CSET 9.2.1 dialogue will open asking if you want to install CSET 9.2.1 Desktop (Fig.2). Select &quot;Yes&quot;.
 
 ![][fig1]
  
@@ -50,7 +50,7 @@ Figure 2: Install dialogue
 
 The program will begin extracting.
 
-After extracting a CSET 9.2.0 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
+After extracting a CSET 9.2.1 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
 
 ![][fig3]
  
@@ -64,7 +64,7 @@ Figure 4. IIS Setup
 
 IIS will install. Select &quot;Finish&quot; when it completes.
 
-The CSET 9.2.0 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
+The CSET 9.2.1 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
 ![][fig5]
  
@@ -76,7 +76,7 @@ A disclaimer will open (Fig.6). Read through and then click the box &quot;I read
  
 Figure 6: Disclaimer
 
-CSET will choose a default folder to install CSET 9.2.0 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
+CSET will choose a default folder to install CSET 9.2.1 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
 
 ![][fig7]
  
@@ -88,7 +88,7 @@ The CSET Installer will show that it is ready to install (Fig. 8), select &quot;
  
 Figure 8: Ready to Install
 
-CSET 9.2.0 will be installed. Make sure that the &quot;Launch CSET 9.2.0 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+CSET 9.2.0 will be installed. Make sure that the &quot;Launch CSET 9.2.1 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
 The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
 
@@ -96,7 +96,7 @@ The user should see a setup successful dialogue (Fig.9), and then have an option
  
 Figure 9: Setup Successful
 
-The user has access to CSET 9.2.0 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
+The user has access to CSET 9.2.1 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
 
 ![][fig10]
  
@@ -113,7 +113,7 @@ Figure 10: Local Install Landing Page
 [fig9]: img/fig9.png
 [fig10]: img/fig10.png
 
-## CSET 9.2.0 Enterprise Installation Instructions
+## CSET 9.2.1 Enterprise Installation Instructions
 
 ### Overview
 
