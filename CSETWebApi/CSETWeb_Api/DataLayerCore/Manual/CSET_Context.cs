@@ -51,6 +51,28 @@ namespace DataLayerCore.Model
         public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         public virtual DbQuery<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbQuery<Answer_Components_Default> Answer_Components_Default { get; set; }
+        public virtual IList<Answer_Components_Default> usp_Answer_Components_Default(Nullable<int> assessment_id)
+        {
+            try
+            {
+                if (!assessment_id.HasValue)
+                    throw new ApplicationException("parameters may not be null");
+
+                IList<Answer_Components_Default> myrval = null;
+                this.LoadStoredProc("usp_Answer_Components_Default")
+                         .WithSqlParam("assessment_id", assessment_id)
+
+                         .ExecuteStoredProc((handler) =>
+                         {
+                             myrval = handler.ReadToList<Answer_Components_Default>();
+                         });
+                return myrval;
+            }catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
         public virtual DbQuery<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
         public virtual DbQuery<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
 
