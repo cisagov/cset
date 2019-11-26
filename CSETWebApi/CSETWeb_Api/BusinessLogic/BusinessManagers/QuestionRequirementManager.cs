@@ -288,8 +288,10 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (CSET_Context context = new CSET_Context())
             {
-                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
-                    .OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
+
+                var list = context.usp_Answer_Components_Default(this._assessmentId).Cast<Answer_Components_Base>().ToList();
+                    //.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
+                    //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
                 AddResponse(resp, context, list, "Component Defaults");
                 BuildOverridesOnly(resp, context);
