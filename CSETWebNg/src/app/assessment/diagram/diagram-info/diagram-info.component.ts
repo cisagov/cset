@@ -13,8 +13,8 @@ import { AuthenticationService } from '../../../services/authentication.service'
 })
 export class DiagramInfoComponent implements OnInit {
 
-    msgDiagramExists = 'Edit the network diagram';
-    msgNoDiagramExists = 'Create a network diagram';
+    msgDiagramExists = 'Edit the Network Diagram';
+    msgNoDiagramExists = 'Create a Network Diagram';
     buttonDiagramInventory = 'Diagram Inventory';
     buttonText: string = this.msgNoDiagramExists;
     hasDiagram: boolean = false;
