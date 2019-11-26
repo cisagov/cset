@@ -14,6 +14,7 @@ using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
 using BusinessLogic.Helpers;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -46,7 +47,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentsforuser")]
-        public IEnumerable<Assessment> GetMyAssessments()
+        public IEnumerable<Assessments_For_User> GetMyAssessments()
         {
             // get all Assessments that the current user is associated with
             AssessmentManager assessmentManager = new AssessmentManager();

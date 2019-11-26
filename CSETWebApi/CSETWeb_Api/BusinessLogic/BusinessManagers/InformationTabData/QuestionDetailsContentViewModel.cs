@@ -20,6 +20,8 @@ using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
 using DataLayerCore.Model;
+using DataLayerCore.Manual;
+using Snickler.EFCore;
 
 namespace CSET_Main.Views.Questions.QuestionDetails
 {
@@ -278,7 +280,16 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             }
             else if (question.IsComponent)
             {
-                var stuff = from a in this.DataContext.Answer_Components_Exploded
+                List<usp_getExplodedComponent> exploded = null;
+
+                this.DataContext.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                  .WithSqlParam("assessment_id", assessment_id)
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      exploded = handler.ReadToList<usp_getExplodedComponent>().ToList();
+                  });
+
+                var stuff = from a in exploded
                             join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
                             where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
                             select new { a.Component_Symbol_Id, a.SAL, l.Sal_Level_Order };

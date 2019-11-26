@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +28,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
             foreach (var firewall in firewalls)
             {
+                Visited.Clear();
                 CheckRule2(firewall);
             }
             return this.Messages;
         }
 
-        private HashSet<String> notYetVisited = new HashSet<string>();
+        private HashSet<String> Visited = new HashSet<string>();
 
         /// <summary>
         /// Check Firewall for IPS and IDS past the firewall
@@ -77,13 +79,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         private bool RecurseDownConnections(NetworkComponent itemToCheck, NetworkComponent firewall)
         {
             foreach (NetworkComponent child in itemToCheck.Connections)
-            {
-                if (notYetVisited.Add(child.ID))
+            {   
+                if (Visited.Add(child.ID))
                 {
+                    //Trace.WriteLine("->" + child.ComponentName + ":" + firewall.ComponentName);
                     if (child.IsInSameZone(firewall))
                     {
                         if (child.IsIDSOrIPS)
                         {
+                            //Trace.WriteLine("Found it");
                             return true;
                         }
                         else if (RecurseDownConnections(child, firewall))

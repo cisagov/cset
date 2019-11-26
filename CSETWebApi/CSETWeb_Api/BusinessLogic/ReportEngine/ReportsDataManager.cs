@@ -17,6 +17,8 @@ using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Manual;
+using DataLayerCore;
+using Snickler.EFCore;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -108,21 +110,22 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public List<List<DiagramZones>> getDiagramZones()
         {
-            using(var db=new CSET_Context()){
+            using (var db = new CSET_Context())
+            {
                 var level = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
 
                 var rval1 = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
                              join s in db.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
-                            where c.Assessment_Id == _assessmentId && c.Zone_Id == null
-                            orderby s.Symbol_Name, c.label
-                            select new DiagramZones
-                            {
-                                Diagram_Component_Type = s.Symbol_Name,
-                                label = c.label,
-                                Zone_Name = "No Assigned Zone",
-                                Universal_Sal_Level = level == null ? "Low" : level.Selected_Sal_Level
-                            }).ToList();
+                             where c.Assessment_Id == _assessmentId && c.Zone_Id == null
+                             orderby s.Symbol_Name, c.label
+                             select new DiagramZones
+                             {
+                                 Diagram_Component_Type = s.Symbol_Name,
+                                 label = c.label,
+                                 Zone_Name = "No Assigned Zone",
+                                 Universal_Sal_Level = level == null ? "Low" : level.Selected_Sal_Level
+                             }).ToList();
 
                 var rval = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
                             join z in db.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
@@ -136,17 +139,17 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 Zone_Name = z.Name,
                                 Universal_Sal_Level = z.Universal_Sal_Level
                             }).ToList();
-                     
-                return rval.Union(rval1).GroupBy(u=> u.Zone_Name).Select(grp => grp.ToList()).ToList();
+
+                return rval.Union(rval1).GroupBy(u => u.Zone_Name).Select(grp => grp.ToList()).ToList();
             }
         }
 
         public List<usp_getFinancialQuestions_Result> getFinancialQuestions()
         {
-            using(var db = new CSET_Context())
+            using (var db = new CSET_Context())
             {
                 return db.usp_getFinancialQuestions(_assessmentId).ToList();
-            }            
+            }
         }
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
@@ -203,12 +206,19 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
-                foreach (Answer_Components_Exploded q in db.Answer_Components_Exploded
-                    .Where(a => a.Assessment_Id == _assessmentId)
-                    .OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText)
-                    .ToList())
+                List<usp_getExplodedComponent> results = null;
+
+                db.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                  .WithSqlParam("assessment_id", _assessmentId)
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      results = handler.ReadToList<usp_getExplodedComponent>().OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText).ToList();
+                  });
+
+                foreach (usp_getExplodedComponent q in results)
                 {
-                    l.Add(new ComponentQuestion {
+                    l.Add(new ComponentQuestion
+                    {
                         Answer = q.Answer_Text,
                         ComponentName = q.ComponentName,
                         Component_Symbol_Id = q.Component_Symbol_Id,
@@ -646,7 +656,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
     public class DiagramZones
     {
         public string Diagram_Component_Type { get; set; }
-        public string label { get; set; }        
+        public string label { get; set; }
         public string Universal_Sal_Level { get; set; }
         public string Zone_Name { get; set; }
     }

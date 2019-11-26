@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using BusinessLogic.Helpers;
+using System.Diagnostics;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
 {
@@ -254,12 +255,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis
                     target?.AddEdge(start, link);
                 }
             }
-            this.nodes = PostProcessConnectors.RemoveConnectors(nodes);
+            this.nodes = PostProcessConnectors.RemoveConnectors(nodes);            
         }
-
-       
-
-       
 
         private NetworkComponent findNode(string id)
         {

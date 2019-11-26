@@ -13,6 +13,7 @@ using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
+using Snickler.EFCore;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -93,7 +94,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <returns></returns>
         protected void InitializeApplicationMode(CSET_Context db)
-        {   
+        {
             applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
 
@@ -120,13 +121,13 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         protected void InitializeSalLevel(CSET_Context db)
         {
-            
+
             var querySalLevel = from usl in db.UNIVERSAL_SAL_LEVEL
                                 from ss in db.STANDARD_SELECTION
                                     .Where(s => s.Assessment_Id == _assessmentId && s.Selected_Sal_Level == usl.Full_Name_Sal)
                                 select usl.Universal_Sal_Level1;
             _standardLevel = querySalLevel.ToList().FirstOrDefault();
-            
+
         }
 
 
@@ -136,7 +137,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         protected void InitializeStandardsForAssessment(CSET_Context db)
         {
-            List<string> result = new List<string>();            
+            List<string> result = new List<string>();
             var sets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId && x.Selected)
                 .Select(x => x.Set_Name);
             _setNames = sets.ToList();
@@ -154,7 +155,7 @@ namespace CSETWeb_Api.BusinessManagers
             if (standardSelection != null)
             {
                 standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
-                db.STANDARD_SELECTION.AddOrUpdate( standardSelection,x=> x.Assessment_Id);
+                db.STANDARD_SELECTION.AddOrUpdate(standardSelection, x => x.Assessment_Id);
                 db.SaveChanges();
             }
 
@@ -167,7 +168,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             // Find the Question or Requirement
             var question = db.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
-            
+
             if (question == null)
             {
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
@@ -186,7 +187,7 @@ namespace CSETWeb_Api.BusinessManagers
                             && x.Question_Or_Requirement_Id == answer.QuestionId
                             && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
-         
+
 
             if (dbAnswer == null)
             {
@@ -247,7 +248,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
             else if (answer != null)
             {
-                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId 
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
                 && x.Is_Requirement == answer.Is_Requirement).FirstOrDefault();
             }
@@ -270,7 +271,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Component_Guid = answer.ComponentGuid;
             dbAnswer.Is_Component = answer.Is_Component;
 
-            db.ANSWER.AddOrUpdate(dbAnswer, x=> x.Answer_Id);
+            db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();
 
             AssessmentUtil.TouchAssessment(_assessmentId);
@@ -288,8 +289,10 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (CSET_Context context = new CSET_Context())
             {
-                var list = context.Answer_Components_Default.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
-                    .OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
+
+                var list = context.usp_Answer_Components_Default(this._assessmentId).Cast<Answer_Components_Base>().ToList();
+                    //.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
+                    //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
                 AddResponse(resp, context, list, "Component Defaults");
                 BuildOverridesOnly(resp, context);
@@ -299,10 +302,16 @@ namespace CSETWeb_Api.BusinessManagers
         public void BuildOverridesOnly(QuestionResponse resp, CSET_Context context)
         {
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
-            var dlist = context.Answer_Components_Overrides.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
-                .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName).ThenBy(x => x.Component_Guid)
-                .ThenBy(x => x.Universal_Sub_Category)
-                .ToList();
+            List<Answer_Components_Base> dlist = null;
+            context.LoadStoredProc("[dbo].[usp_getAnswerComponentOverrides]")
+              .WithSqlParam("assessment_id", this._assessmentId)
+              .ExecuteStoredProc((handler) =>
+              {
+                  dlist = handler.ReadToList<Answer_Components_Base>()
+                    .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName).ThenBy(x => x.Component_Guid)
+                    .ThenBy(x => x.Universal_Sub_Category)
+                    .ToList();
+              });
 
             AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
         }
@@ -319,16 +328,16 @@ namespace CSETWeb_Api.BusinessManagers
             string curGroupHeading = null;
             string curSubHeading = null;
             int prevQuestionId = 0;
-            QuestionSubCategoryComparator comparator =  new QuestionSubCategoryComparator();
+            QuestionSubCategoryComparator comparator = new QuestionSubCategoryComparator();
 
             int displayNumber = 0;
 
             //push a new group if component_type, component_name, or question_group_heading changes
-            
+
             foreach (var dbQ in list)
             {
                 if ((dbQ.Symbol_Name != symbolType)
-                    ||(dbQ.ComponentName != componentName))
+                    || (dbQ.ComponentName != componentName))
                 {
                     qg = new QuestionGroup()
                     {
@@ -338,19 +347,19 @@ namespace CSETWeb_Api.BusinessManagers
                         Symbol_Name = dbQ.Symbol_Name,
                         ComponentName = dbQ.ComponentName,
                         IsOverride = true
-                        
+
                     };
                     groupList.Add(qg);
                     symbolType = dbQ.Symbol_Name;
-                    componentName = dbQ.ComponentName;                   
+                    componentName = dbQ.ComponentName;
 
                     curGroupHeading = qg.GroupHeadingText;
                     // start numbering again in new group
-                    displayNumber = 0;                    
+                    displayNumber = 0;
                 }
 
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
-                if ((dbQ.Universal_Sub_Category != curSubHeading)||(dbQ.Question_Id == prevQuestionId))
+                if ((dbQ.Universal_Sub_Category != curSubHeading) || (dbQ.Question_Id == prevQuestionId))
                 {
                     sc = new QuestionSubCategory()
                     {
@@ -391,7 +400,7 @@ namespace CSETWeb_Api.BusinessManagers
             resp.DefaultComponentsCount = list.Count;
         }
 
-        
+
 
         private void AddResponse(QuestionResponse resp, CSET_Context context, List<Answer_Components_Base> list, string listname)
         {
@@ -414,7 +423,7 @@ namespace CSETWeb_Api.BusinessManagers
                     qg = new QuestionGroup()
                     {
                         GroupHeadingText = dbQ.Question_Group_Heading,
-                        GroupHeadingId = dbQ.GroupHeadingId,                        
+                        GroupHeadingId = dbQ.GroupHeadingId,
                         StandardShortName = listname,
                         Symbol_Name = dbQ.Symbol_Name,
                         ComponentName = dbQ.ComponentName

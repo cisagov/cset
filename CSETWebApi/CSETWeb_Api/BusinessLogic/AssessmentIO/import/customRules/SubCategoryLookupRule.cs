@@ -20,10 +20,13 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import.customRules
             oldToNewValues.Add("Integrated Info Security", "Integrated Information Security");
             oldToNewValues.Add("Info System Recovery", "Information System Recovery");
             oldToNewValues.Add("Info Protection", "Information Protection");
+            oldToNewValues.Add("System Level Least Priviledges", "System Level Least Privileges");
         }
         private string DataExceptions(string value)
         {
             string newValue;
+            if (String.IsNullOrWhiteSpace(value))
+                return value;
             if(oldToNewValues.TryGetValue(value, out newValue))
             {
                 return newValue;
