@@ -10,7 +10,7 @@ namespace DataLayerCore.Manual
     public class Answer_Components_Base
     {
         [StringLength(100)]
-        public string UniqueKey { get; private set; }
+        public int UniqueKey { get; private set; }
         public int Assessment_Id { get; private set; }
         public int Answer_Id { get; private set; }
         public int Question_Id { get; private set; }
