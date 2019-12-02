@@ -6,21 +6,6 @@ shopt extglob dotglob nullglob
 ############################
 
 #if not passed in on command line, set to web deployment values
-# if [ -z "$ng_config" ]; then
-# 	ng_config=production
-# fi
-# if [ -z "$reports_config" ]; then
-# 	reports_config=production
-# fi
-# if [ -z "$msbuild_config" ]; then
-# 	msbuild_config=Release
-# fi
-# if [ -z "$mspublish_config" ]; then
-# 	mspublish_config=FolderProfile
-# fi
-# if [ -z "$mspublish_folder" ]; then
-# 	mspublish_folder=$msbuild_config
-# fi
 if [ -z "$ng_config" ]; then
 	ng_config=production
 fi
@@ -28,14 +13,15 @@ if [ -z "$reports_config" ]; then
 	reports_config=production
 fi
 if [ -z "$msbuild_config" ]; then
-	msbuild_config=localdb
+	msbuild_config=Release
 fi
 if [ -z "$mspublish_config" ]; then
-	mspublish_config=runlocal
+	mspublish_config=FolderProfile
 fi
 if [ -z "$mspublish_folder" ]; then
 	mspublish_folder=$msbuild_config
 fi
+
 #StandAlone values
 # ng_config=local reports_config=local msbuild_config=localdb mspublish_config=runlocal
 
