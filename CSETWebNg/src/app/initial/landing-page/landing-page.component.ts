@@ -222,6 +222,7 @@ export class LandingPageComponent implements OnInit {
 
   importAssessmentFile(event) {
     let dialogRef = null;
+    this.unsupportedImportFile = false;
     if (event.srcElement.files[0].name.endsWith(".csetw") > 0) {
       // Call Standard import service
       dialogRef = this.dialog.open(UploadExportComponent, {
