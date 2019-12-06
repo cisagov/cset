@@ -88,7 +88,7 @@ namespace CSETWeb_Api.Controllers
                     FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                     if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 
-                    string FaaEmail = "FAAPEDModule@faa.gov";
+                    string FaaEmail = "PEDCRA@faa.gov";
                     string DHSEmail = "cset@dhs.gov";
                     if (FaaMail) FeedbackResult.FeedbackEmailTo = FaaEmail + ";  ";
                     FeedbackResult.FeedbackEmailTo += DHSEmail;
