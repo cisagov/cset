@@ -18,8 +18,8 @@ using System.Web.Http;
 
 namespace CSETWeb_Api.Controllers
 {
-    
-   // [CSETWeb_Api.Helpers.CSETAuthorize]
+
+    // [CSETWeb_Api.Helpers.CSETAuthorize]
     public class ReportsController : ApiController
     {
         [HttpGet]
@@ -36,10 +36,10 @@ namespace CSETWeb_Api.Controllers
             data.salTable = reportsDataManager.GetSals();
             data.nistTypes = reportsDataManager.GetNistInfoTypes();
             data.nistSalTable = reportsDataManager.GetNistSals();
-            data.Zones = reportsDataManager.getDiagramZones();            
+            data.Zones = reportsDataManager.GetDiagramZones();
             return data;
-            
         }
+
 
         [HttpGet]
         [Route("api/reports/executive")]
@@ -55,7 +55,8 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
-    [HttpGet]
+
+        [HttpGet]
         [Route("api/reports/discoveries")]
         public BasicReportData getDiscoveries()
         {
@@ -67,6 +68,7 @@ namespace CSETWeb_Api.Controllers
             data.Individuals = reportsDataManager.GetFindingIndividuals();
             return data;
         }
+
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
@@ -83,9 +85,9 @@ namespace CSETWeb_Api.Controllers
             data.nistSalTable = reportsDataManager.GetNistSals();
             data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.FinancialQuestionsTable = reportsDataManager.getFinancialQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();            
+            data.FinancialQuestionsTable = reportsDataManager.GetFinancialQuestions();
+            data.QuestionsWithCommentsTable = reportsDataManager.GetQuestionsWithCommentsOrMarkedForReview();
+            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             return data;
         }
 
@@ -105,12 +107,13 @@ namespace CSETWeb_Api.Controllers
             data.nistSalTable = reportsDataManager.GetNistSals();
             data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
+            data.QuestionsWithCommentsTable = reportsDataManager.GetQuestionsWithCommentsOrMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
             data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
             return data;
         }
+
 
         protected string GetApplicationMode(int assessmentId)
         {
@@ -131,7 +134,7 @@ namespace CSETWeb_Api.Controllers
 
 
         private void SetMode(string mode)
-        { 
+        {
             int assessmentId = Auth.AssessmentForUser();
             QuestionsManager qm = new QuestionsManager(assessmentId);
             qm.SetApplicationMode(mode);
