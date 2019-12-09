@@ -246,6 +246,7 @@
     <Compile Include="Model\GLOBAL_PROPERTIES.cs" />
     <Compile Include="Model\IMPORTANCE.cs" />
     <Compile Include="Model\INFORMATION.cs" />
+    <Compile Include="Model\INSTALLATION.cs" />
     <Compile Include="Model\IRP.cs" />
     <Compile Include="Model\IRP_HEADER.cs" />
     <Compile Include="Model\JWT.cs" />
