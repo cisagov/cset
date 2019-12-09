@@ -108,7 +108,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return controls;
         }
 
-        public List<List<DiagramZones>> getDiagramZones()
+
+        public List<List<DiagramZones>> GetDiagramZones()
         {
             using (var db = new CSET_Context())
             {
@@ -144,13 +145,15 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
-        public List<usp_getFinancialQuestions_Result> getFinancialQuestions()
+
+        public List<usp_getFinancialQuestions_Result> GetFinancialQuestions()
         {
             using (var db = new CSET_Context())
             {
                 return db.usp_getFinancialQuestions(_assessmentId).ToList();
             }
         }
+
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
@@ -243,6 +246,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         }
 
+
         public List<RankedQuestions> GetTop5Questions()
         {
             return GetRankedQuestions().Take(5).ToList();
@@ -309,7 +313,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// Returns a list of questions that have been marked for review or have comments.
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsWithComments> getQuestionsWithCommentsOrMarkedForReview()
+        public List<QuestionsWithComments> GetQuestionsWithCommentsOrMarkedForReview()
         {
             using (var db = new CSET_Context())
             {
@@ -317,7 +321,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 // get any "marked for review" or commented answers that currently apply
                 var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
-                    .Where(ans => ans.Mark_For_Review == true || ans.Comment != null)
+                    .Where(ans => ans.Mark_For_Review == true || !string.IsNullOrEmpty(ans.Comment))
                     .ToList();
 
                 if (relevantAnswers.Count == 0)
@@ -360,39 +364,9 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                     return query.ToList();
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-                var dblist = from a in db.AVAILABLE_STANDARDS
-                             join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
-                             join c in db.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
-                             join q in db.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
-                             join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
-                             where a.Selected == true && a.Assessment_Id == _assessmentId
-                                && c.Assessment_Id == _assessmentId
-                                && (c.Mark_For_Review == true || c.Comment != null)
-                             orderby h.Question_Group_Heading
-                             select new QuestionsWithComments()
-                             {
-                                 Answer = c.Answer_Text,
-                                 CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
-                                 MarkedForReview = c.Mark_For_Review.ToString(),
-                                 Question = q.Simple_Question,
-                                 Comment = c.Comment
-                             };
-
-                return dblist.ToList<QuestionsWithComments>();
             }
         }
+
 
         public List<RankedQuestions> GetRankedQuestions()
         {
@@ -419,6 +393,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
         public List<DocumentLibraryTable> GetDocumentLibrary()
         {
             using (var db = new CSET_Context())
@@ -438,6 +413,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return list;
             }
         }
+
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
@@ -471,6 +447,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
         public List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes()
         {
             using (var db = new CSET_Context())
@@ -489,6 +466,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
 
         }
+
 
         public BasicReportData.OverallSALTable GetSals()
         {
@@ -631,6 +609,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         }
 
+
         public GenSALTable GetGenSals()
         {
             using (var db = new CSET_Context())
@@ -652,6 +631,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
     }
+
 
     public class DiagramZones
     {
