@@ -273,7 +273,7 @@ namespace CSETWeb_Api.Helpers
                 var installRec = new INSTALLATION
                 {
                     JWT_Secret = newSecret,
-                    Generated = DateTime.UtcNow,
+                    Generated_UTC = DateTime.UtcNow,
                     Installation_ID = newInstallID
                 };
                 db.INSTALLATION.Add(installRec);

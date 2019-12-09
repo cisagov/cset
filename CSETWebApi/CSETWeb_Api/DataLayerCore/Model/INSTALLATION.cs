@@ -11,7 +11,7 @@ namespace DataLayerCore.Model
         [StringLength(200)]
         public string JWT_Secret { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime Generated { get; set; }
+        public DateTime Generated_UTC { get; set; }
         [Required]
         [StringLength(200)]
         public string Installation_ID { get; set; }
