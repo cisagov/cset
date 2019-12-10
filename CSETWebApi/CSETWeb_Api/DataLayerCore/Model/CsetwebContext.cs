@@ -90,7 +90,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
-        public virtual DbSet<JWT> JWT { get; set; }
+        public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
@@ -1378,13 +1378,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.IRP_Header_Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Header).IsUnicode(false);
-            });
-
-            modelBuilder.Entity<JWT>(entity =>
-            {
-                entity.Property(e => e.Secret)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<LEVEL_NAMES>(entity =>

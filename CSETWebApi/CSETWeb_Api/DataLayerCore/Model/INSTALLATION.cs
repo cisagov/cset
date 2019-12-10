@@ -5,12 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
-    public partial class JWT
+    public partial class INSTALLATION
     {
         [Key]
         [StringLength(200)]
-        public string Secret { get; set; }
+        public string JWT_Secret { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime Generated { get; set; }
+        public DateTime Generated_UTC { get; set; }
+        [Required]
+        [StringLength(200)]
+        public string Installation_ID { get; set; }
     }
 }
