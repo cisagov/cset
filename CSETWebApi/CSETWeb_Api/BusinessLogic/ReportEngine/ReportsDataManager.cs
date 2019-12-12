@@ -523,7 +523,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
 
+                TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
+                {
+                    config.Ignore(x => x.Additional_Contacts);
+                });
                 var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
+
 
                 var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
                 info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
@@ -543,6 +548,13 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 foreach (var c in contacts)
                 {
                     info.Additional_Contacts.Add(Utilities.FormatName(c.FirstName, c.LastName));
+                }
+
+                // Include anything that was in the INFORMATION record's Additional_Contacts column
+                string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string c in acLines)
+                {
+                    info.Additional_Contacts.Add(c);
                 }
 
 
