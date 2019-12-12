@@ -85,7 +85,7 @@ export class AssessmentContactsComponent implements OnInit {
   moveUser() {
     // move the user's contact to the top of the list
     const myIndex = this.contacts.findIndex(
-      contact => contact.PrimaryEmail === this.auth.email()
+      contact => contact.PrimaryEmail.toUpperCase() === this.auth.email().toUpperCase()
     );
     this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
     this.contacts[0].IsFirst = true;
