@@ -82,6 +82,18 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[COMBINED_ANSWER]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMBINED_CATEGORY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMBINED_DOCUMENT_ANSWERS]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[COMPONENT_FAMILY]"
       },
       {
@@ -303,10 +315,6 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[INFORMATION]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[INSTALLATION]"
       },
       {
          "HasPrimaryKey": true,

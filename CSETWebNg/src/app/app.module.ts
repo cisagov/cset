@@ -165,6 +165,8 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { MergeComponent } from './aggregation/merge/merge.component';
+import { AggregationService } from './services/aggregation.service';
 
 @NgModule({
     imports: [
@@ -298,8 +300,8 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent
+        ComponentOverrideComponent,
+        ExcelExportComponent, MergeComponent
     ],
     providers: [
         ConfigService,
@@ -334,7 +336,8 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         SetBuilderService,
         ACETService,
         ResourceLibraryService,
-        DiagramService
+        DiagramService,
+        AggregationService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
@@ -358,7 +361,7 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         KeyboardShortcutsComponent,
         LicenseComponent,
         AddRequirementComponent,
-        ComponentOverrideComponent, 
+        ComponentOverrideComponent,
         ExcelExportComponent
     ]
 })

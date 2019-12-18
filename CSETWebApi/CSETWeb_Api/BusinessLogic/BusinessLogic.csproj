@@ -224,6 +224,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregation\AggregationManager.cs" />
     <Compile Include="AssessmentIO\export\ExportAssessmentManager.cs" />
     <Compile Include="AssessmentIO\import\BulkSqlUpload.cs" />
     <Compile Include="AssessmentIO\import\CSET901_to_92Upgrade.cs" />
@@ -404,6 +405,7 @@
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Models\ACETDashboard.cs" />
+    <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />
@@ -560,5 +562,6 @@
   <ItemGroup>
     <EmbeddedResource Include="AssessmentIO\import\ColumnImportRules.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

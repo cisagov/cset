@@ -489,6 +489,16 @@
             Removes all maturity filters for the current assessment.
             </summary>
         </member>
+        <member name="T:CSETWeb_Api.Controllers.AggregationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.SetAnswerCombined(System.Int32,System.String)">
+            <summary>
+            Sets a single answer text into the COMBINED_ANSWER table.
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
             Re-orders the pieces into Y|N|NA|A|U order.

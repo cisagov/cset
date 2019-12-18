@@ -32,6 +32,9 @@ namespace DataLayerCore.Model
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
+        public virtual DbSet<COMBINED_ANSWER> COMBINED_ANSWER { get; set; }
+        public virtual DbSet<COMBINED_CATEGORY> COMBINED_CATEGORY { get; set; }
+        public virtual DbSet<COMBINED_DOCUMENT_ANSWERS> COMBINED_DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
         public virtual DbSet<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
         public virtual DbSet<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
@@ -491,6 +494,45 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.CIA_Type)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<COMBINED_ANSWER>(entity =>
+            {
+                entity.Property(e => e.Answer_Text)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('U')");
+
+                entity.Property(e => e.Component_Guid).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<COMBINED_CATEGORY>(entity =>
+            {
+                entity.HasKey(e => e.CombinedCategoryId)
+                    .HasName("PK_COMBINED_CATEGORY_1");
+
+                entity.Property(e => e.CategoryName).IsUnicode(false);
+
+                entity.Property(e => e.Component_Guid).IsUnicode(false);
+
+                entity.Property(e => e.Component_Type).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<COMBINED_DOCUMENT_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Document_Id, e.AnswerID })
+                    .HasName("PK_COMBINED_DOCUMENT_ANSWERS_1");
+
+                entity.HasOne(d => d.Answer)
+                    .WithMany(p => p.COMBINED_DOCUMENT_ANSWERS)
+                    .HasForeignKey(d => d.AnswerID)
+                    .HasConstraintName("FK_COMBINED_DOCUMENT_ANSWERS_COMBINED_ANSWER");
+
+                entity.HasOne(d => d.Document_)
+                    .WithMany(p => p.COMBINED_DOCUMENT_ANSWERS)
+                    .HasForeignKey(d => d.Document_Id)
+                    .HasConstraintName("FK_COMBINED_DOCUMENT_ANSWERS_DOCUMENT_FILE");
             });
 
             modelBuilder.Entity<COMPONENT_FAMILY>(entity =>
