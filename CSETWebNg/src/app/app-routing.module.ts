@@ -71,6 +71,7 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
+import { MergeComponent } from './aggregation/merge/merge.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -156,7 +157,7 @@ const appRoutes: Routes = [
           { path: 'acetDashboard', component: ACETDashboardComponent },
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
-          { path: 'feedback', component: FeedbackComponent},
+          { path: 'feedback', component: FeedbackComponent },
           { path: '', component: DashboardComponent },
         ]
       },
@@ -196,6 +197,10 @@ const appRoutes: Routes = [
   {
     path: 'add-question/:id',
     component: AddQuestionComponent
+  },
+  {
+    path: 'merge',
+    component: MergeComponent
   },
   { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
