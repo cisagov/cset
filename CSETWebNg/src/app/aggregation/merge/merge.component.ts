@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-merge',
@@ -15,7 +16,8 @@ export class MergeComponent implements OnInit {
    * @param aggregationSvc
    */
   constructor(
-    private aggregationSvc: AggregationService
+    private aggregationSvc: AggregationService,
+    public assessmentSvc: AssessmentService
   ) { }
 
   /**
@@ -29,21 +31,12 @@ export class MergeComponent implements OnInit {
    */
   startMerge() {
     this.aggregationSvc.getSourceAnswers().subscribe((resp: any) => {
-
-      console.log(resp);
-
       this.enchilada = resp;
-
       this.mergeID = resp.MergeID;
-
-
-
-      console.log(this.mergeID);
-
     });
   }
 
-    /**
+  /**
    * If there are no spaces in the question text assume it's a hex string
    * @param q
    */
@@ -54,11 +47,11 @@ export class MergeComponent implements OnInit {
     return "break-all";
   }
 
-
+  /**
+   * Send the merge answer to the API.
+   */
   storeAnswer(q: any, ans: string) {
-    console.log(q);
-    console.log(ans);
     q.DefaultAnswer = ans;
-    this.aggregationSvc.setMergeAnswer(q.CombinedAnswerID, ans).subscribe(x => {});
+    this.aggregationSvc.setMergeAnswer(q.CombinedAnswerID, ans).subscribe();
   }
 }
