@@ -42,4 +42,23 @@ export class MergeComponent implements OnInit {
 
     });
   }
+
+    /**
+   * If there are no spaces in the question text assume it's a hex string
+   * @param q
+   */
+  applyWordBreak(q: any) {
+    if (q.QuestionText.indexOf(' ') >= 0) {
+      return "normal";
+    }
+    return "break-all";
+  }
+
+
+  storeAnswer(q: any, ans: string) {
+    console.log(q);
+    console.log(ans);
+    q.DefaultAnswer = ans;
+    this.aggregationSvc.setMergeAnswer(q.CombinedAnswerID, ans).subscribe(x => {});
+  }
 }

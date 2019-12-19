@@ -494,7 +494,7 @@
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationController.SetAnswerCombined(System.Int32,System.String)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.SetMergeAnswer(System.Int32,System.String)">
             <summary>
             Sets a single answer text into the COMBINED_ANSWER table.
             </summary>

@@ -91,6 +91,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string QuestionText;
         public int CombinedAnswerID;
         public List<MergeAnswer> SourceAnswers = new List<MergeAnswer>();
+        public string DefaultAnswer;
         public int CategoryID;
         public string CategoryText;
         public bool Is_Component;

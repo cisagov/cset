@@ -2159,6 +2159,38 @@ hr.ranked-questions {
 }
 
 
+// Aggregation
+.merge-source-answer {
+  min-width: 2rem;
+  text-align: center;
+  margin: 3px 1px;
+  border-radius: 3px;
+  color: #a0a0a0;
+  border: 1px solid #c0c0c0;
+  background-color: #f0f0f0;
+}
+
+.merge-source-answer.Y {
+  color: #006000;
+  border-color: #006000;
+}
+
+.merge-source-answer.N {
+  color: #990000;
+  border-color: #990000;
+}
+
+.merge-source-answer.NA {
+  color: #367190;
+  border-color: #367190;
+}
+
+.merge-source-answer.A {
+  color: #b17300;
+  border-color: #b17300;
+}
+
+
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

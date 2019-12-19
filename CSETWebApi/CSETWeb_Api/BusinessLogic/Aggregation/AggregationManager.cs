@@ -120,6 +120,8 @@ namespace CSETWeb_Api.BusinessLogic
                 // sort the questions into their appropriate lists/categories
                 foreach (MergeQuestion q in QuestionDictionary.Values)
                 {
+                    SetDefaultAnswer(q);
+
                     if (!q.Is_Component)
                     {
                         AddQuestionToStructure(mergeResponse, mergeResponse.QuestionsCategories, q);
@@ -148,6 +150,23 @@ namespace CSETWeb_Api.BusinessLogic
             mergeResponse.ComponentOverrideCategories.RemoveAll(x => x.Questions.Count() == 0);
 
             return mergeResponse;
+        }
+
+
+        /// <summary>
+        /// Determines a default answer based on the source answers, the leftmost assessment with an actual answer.
+        /// </summary>
+        /// <param name="q"></param>
+        private void SetDefaultAnswer(MergeQuestion q)
+        {
+            foreach (var ans in q.SourceAnswers)
+            {
+                if (ans.AnswerText != "" && ans.AnswerText != "U")
+                {
+                    q.DefaultAnswer = ans.AnswerText;
+                    return;
+                }
+            }
         }
 
 
@@ -183,7 +202,7 @@ namespace CSETWeb_Api.BusinessLogic
         /// </summary>
         /// <param name="answerId"></param>
         /// <param name="answerText"></param>
-        public void SetAnswerCombined(int combinedAnswerId, string answerText)
+        public void SetMergeAnswer(int combinedAnswerId, string answerText)
         {
             using (var db = new CSET_Context())
             {

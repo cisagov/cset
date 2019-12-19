@@ -39,4 +39,8 @@ export class AggregationService {
   getSourceAnswers() {
     return this.http.post(this.apiUrl + 'getanswers', '');
   }
+
+  setMergeAnswer(answerId: number, answerText: string) {
+    return this.http.post(this.apiUrl + 'setmergeanswer?answerId=' + answerId + '&answerText=' + answerText, null);
+  }
 }

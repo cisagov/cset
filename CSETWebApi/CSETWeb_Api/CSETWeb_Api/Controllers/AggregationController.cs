@@ -18,7 +18,7 @@ namespace CSETWeb_Api.Controllers
         public MergeStructure GetAnswers()
         {
             var aggreg = new BusinessLogic.AggregationManager();
-            return aggreg.GetAnswers(new List<int>() { 4, 5, 6 });
+            return aggreg.GetAnswers(new List<int>() { 4, 5 });
         }
 
 
@@ -26,10 +26,11 @@ namespace CSETWeb_Api.Controllers
         /// Sets a single answer text into the COMBINED_ANSWER table.
         /// </summary>
         [HttpPost]
-        [Route("api/aggregation/answercombined")]
-        public void SetAnswerCombined(int answerId, string answerText)
+        [Route("api/aggregation/setmergeanswer")]
+        public void SetMergeAnswer([FromUri] int answerId, [FromUri] string answerText)
         {
-            
+            var aggreg = new BusinessLogic.AggregationManager();
+            aggreg.SetMergeAnswer(answerId, answerText);
         }
     }
 }
