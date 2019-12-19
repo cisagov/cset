@@ -119,9 +119,4 @@ export class SecurityplanComponent implements OnInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
   }
-
-
-  public fixNewline(text: string) {
-    return text.replace('\n', '<br/>');
-  }
 }
