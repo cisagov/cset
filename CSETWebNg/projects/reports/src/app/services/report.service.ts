@@ -64,6 +64,16 @@ export class ReportService {
     }
 
     /**
+     * Converts linebreak characters to HTML <br> tag.
+     */
+    formatLinebreaks(text: string) {
+        if (!text) {
+            return '';
+        }
+        return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    }
+
+    /**
      * Split paragraphs into divs
      */
     public fixWarningNewlines(text: string) {
