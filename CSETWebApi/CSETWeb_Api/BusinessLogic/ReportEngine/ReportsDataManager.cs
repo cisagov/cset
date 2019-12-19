@@ -551,10 +551,13 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 }
 
                 // Include anything that was in the INFORMATION record's Additional_Contacts column
-                string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string c in acLines)
+                if (infodb.Additional_Contacts != null)
                 {
-                    info.Additional_Contacts.Add(c);
+                    string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string c in acLines)
+                    {
+                        info.Additional_Contacts.Add(c);
+                    }
                 }
 
 
