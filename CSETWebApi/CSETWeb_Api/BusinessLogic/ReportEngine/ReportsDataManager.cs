@@ -310,10 +310,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
 
         /// <summary>
-        /// Returns a list of questions that have been marked for review or have comments.
+        /// Returns a list of questions that have comments.
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsWithComments> GetQuestionsWithCommentsOrMarkedForReview()
+        public List<QuestionsWithComments> GetQuestionsWithComments()
         {
             using (var db = new CSET_Context())
             {
@@ -321,7 +321,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 // get any "marked for review" or commented answers that currently apply
                 var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
-                    .Where(ans => ans.Mark_For_Review == true || !string.IsNullOrEmpty(ans.Comment))
+                    .Where(ans => !string.IsNullOrEmpty(ans.Comment))
                     .ToList();
 
                 if (relevantAnswers.Count == 0)
@@ -340,7 +340,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 {
                                     Answer = ans.Answer_Text,
                                     CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                    MarkedForReview = ans.Mark_For_Review.ToString(),
                                     Question = req.Requirement_Text,
                                     Comment = ans.Comment
                                 };
@@ -357,9 +356,63 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 {
                                     Answer = ans.Answer_Text,
                                     CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
-                                    MarkedForReview = ans.Mark_For_Review.ToString(),
                                     Question = q.Simple_Question,
                                     Comment = ans.Comment
+                                };
+
+                    return query.ToList();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a list of questions that have been marked for review.
+        /// </summary>
+        /// <returns></returns>
+        public List<QuestionsMarkedForReview> GetQuestionsMarkedForReview()
+        {
+            using (var db = new CSET_Context())
+            {
+                var results = new List<QuestionsMarkedForReview>();
+
+                // get any "marked for review" or commented answers that currently apply
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                    .Where(ans => ans.Mark_For_Review)
+                    .ToList();
+
+                if (relevantAnswers.Count == 0)
+                {
+                    return results;
+                }
+
+                bool requirementMode = relevantAnswers[0].Is_Requirement;
+
+                // include Question or Requirement contextual information
+                if (requirementMode)
+                {
+                    var query = from ans in relevantAnswers
+                                join req in db.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                                select new QuestionsMarkedForReview()
+                                {
+                                    Answer = ans.Answer_Text,
+                                    CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                    Question = req.Requirement_Text
+                                };
+
+                    return query.ToList();
+                }
+                else
+                {
+                    var query = from ans in relevantAnswers
+                                join q in db.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
+                                join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                                orderby h.Question_Group_Heading
+                                select new QuestionsMarkedForReview()
+                                {
+                                    Answer = ans.Answer_Text,
+                                    CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
+                                    Question = q.Simple_Question
                                 };
 
                     return query.ToList();

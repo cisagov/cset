@@ -30,7 +30,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<Individual> Individuals { get; set; }
         public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
         public List<RankedQuestions> RankedQuestionsTable { get; set; }
-        public List<QuestionsWithComments> QuestionsWithCommentsTable { get; set; }
+        public List<QuestionsWithComments> QuestionsWithComments { get; set; }
+        public List<QuestionsMarkedForReview> QuestionsMarkedForReview { get; set; }
         public List<QuestionsWithAlternateJustifi> QuestionsWithAlternateJustifi { get; set; }
         public List<RankedQuestions> top5Questions { get; set; }
         public List<StandardQuestions> StandardsQuestions { get; set; }
@@ -145,13 +146,20 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string Answer { get; set; }
 
     }
+
     public class QuestionsWithComments
     {
         public string CategoryAndNumber { get; set; }
-        public string MarkedForReview { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
         public string Comment { get; set; }
+    }
+
+    public class QuestionsMarkedForReview
+    {
+        public string CategoryAndNumber { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
     }
 
     /// <summary>
