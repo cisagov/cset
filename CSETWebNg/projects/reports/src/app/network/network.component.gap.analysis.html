@@ -192,7 +192,7 @@
             </tr> -->
             <tr>
                 <td>Additional Notes and Comments:</td>
-                <td>{{response?.information.Additional_Notes_And_Comments}}</td>
+                <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.Additional_Notes_And_Comments)"></td>
             </tr>
             <tr>
                 <td>Contact(s):</td>
