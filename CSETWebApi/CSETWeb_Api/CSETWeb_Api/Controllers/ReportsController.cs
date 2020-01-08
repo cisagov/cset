@@ -86,7 +86,8 @@ namespace CSETWeb_Api.Controllers
             data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
             data.FinancialQuestionsTable = reportsDataManager.GetFinancialQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.GetQuestionsWithCommentsOrMarkedForReview();
+            data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             return data;
         }
@@ -107,7 +108,8 @@ namespace CSETWeb_Api.Controllers
             data.nistSalTable = reportsDataManager.GetNistSals();
             data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.GetQuestionsWithCommentsOrMarkedForReview();
+            data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
             data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
