@@ -1,3 +1,4 @@
+
 ////////////////////////////////
 //
 //   Copyright 2020 Battelle Energy Alliance, LLC
@@ -21,28 +22,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ConfigService } from './config.service';
+import { Component, OnInit, Inject } from '@angular/core';
+import { EditUserComponent } from '../edit-user/edit-user.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-@Injectable()
-export class AggregationService {
-  private apiUrl: string;
-
-  public aggregationType: string;
+@Component({
+  selector: 'app-merge-question-detail',
+  templateUrl: './merge-question-detail.component.html'
+})
+export class MergeQuestionDetailComponent implements OnInit {
 
   constructor(
-    private http: HttpClient,
-    private configSvc: ConfigService
-  ) {
-    this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+    private dialog: MatDialogRef<EditUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+
+  ngOnInit() {
   }
 
-  getMergeSourceAnswers() {
-    return this.http.post(this.apiUrl + 'getanswers', '');
-  }
-
-  setMergeAnswer(answerId: number, answerText: string) {
-    return this.http.post(this.apiUrl + 'setmergeanswer?answerId=' + answerId + '&answerText=' + answerText, null);
-  }
 }

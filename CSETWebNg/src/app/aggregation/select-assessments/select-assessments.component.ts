@@ -21,28 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ConfigService } from './config.service';
+import { Component, OnInit } from '@angular/core';
 
-@Injectable()
-export class AggregationService {
-  private apiUrl: string;
+@Component({
+  selector: 'app-select-assessments',
+  templateUrl: './select-assessments.component.html'
+})
+export class SelectAssessmentsComponent implements OnInit {
 
-  public aggregationType: string;
+  constructor() { }
 
-  constructor(
-    private http: HttpClient,
-    private configSvc: ConfigService
-  ) {
-    this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+  ngOnInit() {
   }
 
-  getMergeSourceAnswers() {
-    return this.http.post(this.apiUrl + 'getanswers', '');
-  }
-
-  setMergeAnswer(answerId: number, answerText: string) {
-    return this.http.post(this.apiUrl + 'setmergeanswer?answerId=' + answerId + '&answerText=' + answerText, null);
-  }
 }

@@ -21,28 +21,36 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ConfigService } from './config.service';
+import { Component, OnInit } from '@angular/core';
+import { AggregationService } from '../../services/aggregation.service';
 
-@Injectable()
-export class AggregationService {
-  private apiUrl: string;
+@Component({
+  selector: 'app-aggregation-home',
+  templateUrl: './aggregation-home.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: {class: 'd-flex flex-column flex-11a'}
+})
+export class AggregationHomeComponent implements OnInit {
 
-  public aggregationType: string;
+  aggregationType: string;
+
+  aggregations: any[] = [];
+
+  /**
+   * Used for display
+   */
+  aggregationTypePlural: string;
 
   constructor(
-    private http: HttpClient,
-    private configSvc: ConfigService
-  ) {
-    this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+    public aggregationSvc: AggregationService
+  ) { }
+
+  ngOnInit() {
+    this.aggregationType = this.aggregationSvc.aggregationType;
+    this.aggregationTypePlural = this.aggregationSvc.aggregationType + "s";
   }
 
-  getMergeSourceAnswers() {
-    return this.http.post(this.apiUrl + 'getanswers', '');
-  }
-
-  setMergeAnswer(answerId: number, answerText: string) {
-    return this.http.post(this.apiUrl + 'setmergeanswer?answerId=' + answerId + '&answerText=' + answerText, null);
+  newAggregation() {
+    console.log('newAggregation');
   }
 }

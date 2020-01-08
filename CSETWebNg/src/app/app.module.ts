@@ -167,6 +167,13 @@ import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
 import { MergeComponent } from './aggregation/merge/merge.component';
 import { AggregationService } from './services/aggregation.service';
+import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
+import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
+import { SelectAssessmentsComponent } from './aggregation/select-assessments/select-assessments.component';
+import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias-assessments.component';
+import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
+import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
+import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 
 @NgModule({
     imports: [
@@ -301,7 +308,15 @@ import { AggregationService } from './services/aggregation.service';
         TextComponent,
         ZonesComponent,
         ComponentOverrideComponent,
-        ExcelExportComponent, MergeComponent
+        ExcelExportComponent,
+        MergeComponent,
+        MergeQuestionDetailComponent,
+        AggregationHomeComponent,
+        SelectAssessmentsComponent,
+        AliasAssessmentsComponent,
+        AggregationDetailComponent,
+        TrendAnalyticsComponent,
+        CompareAnalyticsComponent
     ],
     providers: [
         ConfigService,
@@ -362,7 +377,8 @@ import { AggregationService } from './services/aggregation.service';
         LicenseComponent,
         AddRequirementComponent,
         ComponentOverrideComponent,
-        ExcelExportComponent
+        ExcelExportComponent,
+        MergeQuestionDetailComponent
     ]
 })
 
