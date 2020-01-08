@@ -21,18 +21,18 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>Saved {{ aggregationTypePlural }}</h3>
+  <h3>Saved {{ this.aggregationSvc.aggregationTypeDisplay(true) }}</h3>
 
   <div>
-    <button class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation(aggregationType)"
+    <button class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
       matTooltip="Start a new thing">
       <span class="mr-2 fs-base cset-icons-document"></span>
-      <span>New {{ aggregationType }}</span>
+      <span>New {{ this.aggregationSvc.aggregationTypeDisplay(false) }}</span>
     </button>
 
     <div class="mt-3 mb-3">      
-      <div *ngIf="aggregations.length === 0">No {{ aggregationTypePlural }} have been saved.
-        Click 'New {{ aggregationType }}' to start a new {{ aggregationType }}.
+      <div *ngIf="aggregations.length === 0">No {{ this.aggregationSvc.aggregationTypeDisplay(true) }} have been saved.
+        Click 'New {{ this.aggregationSvc.aggregationTypeDisplay(false) }}' to start a new {{ this.aggregationSvc.aggregationTypeDisplay(false) }}.
       </div>
       <div *ngFor="let agg of aggregations">
         {{ agg }}

@@ -27,15 +27,34 @@ import { ConfigService } from './config.service';
 
 @Injectable()
 export class AggregationService {
+
   private apiUrl: string;
 
   public aggregationType: string;
 
+  /**
+   * Constructor.
+   * @param http
+   * @param configSvc
+   */
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService
   ) {
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+  }
+
+  /**
+   * Returns the singluar or plural name for the aggretation type.
+   * @param plural
+   */
+  aggregationTypeDisplay(plural: boolean) {
+    switch (this.aggregationType.toLowerCase()) {
+      case 'trend':
+        return plural ? 'Trends' : 'Trend';
+      case 'compare':
+        return plural ? 'Comparisons' : 'Comparison';
+    }
   }
 
   getMergeSourceAnswers() {
