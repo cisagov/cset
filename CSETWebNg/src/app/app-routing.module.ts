@@ -71,9 +71,13 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
+import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
 import { MergeComponent } from './aggregation/merge/merge.component';
 
 const appRoutes: Routes = [
+  { path: 'trend', component: AggregationHomeComponent },
+  { path: 'compare', component: AggregationHomeComponent },
+  { path: 'merge', component: MergeComponent },
   { path: 'resource-library', component: ResourceLibraryComponent },
   { path: 'importModule', component: ImportComponent },
   { path: 'set-list', component: SetListComponent },
@@ -197,10 +201,6 @@ const appRoutes: Routes = [
   {
     path: 'add-question/:id',
     component: AddQuestionComponent
-  },
-  {
-    path: 'merge',
-    component: MergeComponent
   },
   { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }

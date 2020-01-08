@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { MergeQuestionDetailComponent } from '../../dialogs/merge-question-detail/merge-question-detail.component';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-merge',
@@ -11,13 +13,16 @@ export class MergeComponent implements OnInit {
   mergeID: string;
   enchilada: any;
 
+  dialogRef: MatDialogRef<any>;
+
   /**
    * Constructor.
    * @param aggregationSvc
    */
   constructor(
     private aggregationSvc: AggregationService,
-    public assessmentSvc: AssessmentService
+    public assessmentSvc: AssessmentService,
+    public dialog: MatDialog
   ) { }
 
   /**
@@ -30,7 +35,7 @@ export class MergeComponent implements OnInit {
    *
    */
   startMerge() {
-    this.aggregationSvc.getSourceAnswers().subscribe((resp: any) => {
+    this.aggregationSvc.getMergeSourceAnswers().subscribe((resp: any) => {
       this.enchilada = resp;
       this.mergeID = resp.MergeID;
     });
@@ -53,5 +58,18 @@ export class MergeComponent implements OnInit {
   storeAnswer(q: any, ans: string) {
     q.DefaultAnswer = ans;
     this.aggregationSvc.setMergeAnswer(q.CombinedAnswerID, ans).subscribe();
+  }
+
+  editDetail() {
+    this.dialogRef = this.dialog.open(MergeQuestionDetailComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe(
+        (data: any) => {
+          // do something?
+          this.dialogRef = undefined;
+        },
+        error => console.log(error.message)
+      );
   }
 }

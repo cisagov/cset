@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@ import { ConfigService } from './config.service';
 export class AggregationService {
   private apiUrl: string;
 
+  public aggregationType: string;
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService
@@ -36,7 +38,7 @@ export class AggregationService {
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
   }
 
-  getSourceAnswers() {
+  getMergeSourceAnswers() {
     return this.http.post(this.apiUrl + 'getanswers', '');
   }
 

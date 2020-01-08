@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2019 Battelle Energy Alliance, LLC  
+   Copyright 2020 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -30,10 +30,15 @@
     <button class="btn btn-primary" (click)="startMerge()">Continue</button>
   </div>
 
+  <div class="mb-4">
+    The selected assessments have conflicting answers.  The individual answers from the selected assessments are shown.  
+    The answers from the default assessment have been pre-selected.
+  </div>
+
   <div *ngIf="enchilada != null">
 
     <div *ngIf="enchilada.QuestionsCategories.length > 0">
-      <h4>Questions</h4>
+      <h3>Questions</h3>
       <div *ngFor="let cat of enchilada.QuestionsCategories">
         <div class="group-heading">
           {{ cat.Category }}
@@ -46,12 +51,17 @@
             </div>
           </div>
 
-          <div class="d-flex flex-row btn-group">
+          <div class="answer-group">
+            <button (click)="editDetail()" class="icon-link-button-dark btn bgc-trans" matTooltip="Show Merge Question Detail">
+              <i class="fa fa-file fs-base-4"></i>
+            </button>
+          </div>
+
+          <div class="d-flex flex-row btn-group answer-group">
             <div *ngFor="let ans of q.SourceAnswers" class="merge-source-answer {{ans.AnswerText}}">
               {{ ans.AnswerText }}
             </div>
           </div>
-
 
           <div>
             <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
