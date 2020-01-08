@@ -28,29 +28,22 @@ import { AggregationService } from '../../services/aggregation.service';
   selector: 'app-aggregation-home',
   templateUrl: './aggregation-home.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AggregationHomeComponent implements OnInit {
 
-  aggregationType: string;
-
   aggregations: any[] = [];
 
-  /**
-   * Used for display
-   */
-  aggregationTypePlural: string;
 
   constructor(
     public aggregationSvc: AggregationService
   ) { }
 
   ngOnInit() {
-    this.aggregationType = this.aggregationSvc.aggregationType;
-    this.aggregationTypePlural = this.aggregationSvc.aggregationType + "s";
   }
 
   newAggregation() {
-    console.log('newAggregation');
+    const aggType = this.aggregationSvc.aggregationType;
+    console.log('newAggregation - ' + aggType);
   }
 }
