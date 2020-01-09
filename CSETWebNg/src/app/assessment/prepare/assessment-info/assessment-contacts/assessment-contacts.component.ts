@@ -78,7 +78,7 @@ export class AssessmentContactsComponent implements OnInit {
     }
   }
 
-  changeOccurred(){
+  changeOccurred() {
     this.triggerChange.next();
   }
 
@@ -212,7 +212,7 @@ export class AssessmentContactsComponent implements OnInit {
     );
     // zero on the assessement_id implies the current assessment
     this.assessSvc.removeContact(contact.UserId, 0).subscribe(
-      (response: { ContactList: User[] }) => { this.changeOccurred();},
+      (response: { ContactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog
           .open(AlertComponent, { data: "Error removing assessment contact" })

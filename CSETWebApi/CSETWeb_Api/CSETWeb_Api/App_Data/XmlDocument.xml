@@ -494,6 +494,16 @@
             
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.GetAggregations(System.String)">
+            <summary>
+            Returns a list of aggregations that the current user is allowed to see.
+            The user must be authorized to view all assessments involved in the aggregation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.GetAnswers">
+            Merge
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AggregationController.SetMergeAnswer(System.Int32,System.String)">
             <summary>
             Sets a single answer text into the COMBINED_ANSWER table.

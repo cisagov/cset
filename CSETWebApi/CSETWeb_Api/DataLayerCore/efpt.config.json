@@ -18,6 +18,18 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[AGGREGATION_ASSESSMENT]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[AGGREGATION_INFORMATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[AGGREGATION_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[ANSWER]"
       },
       {

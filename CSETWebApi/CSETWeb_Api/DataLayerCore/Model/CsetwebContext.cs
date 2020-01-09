@@ -16,6 +16,10 @@ namespace DataLayerCore.Model
         }
 
         public virtual DbSet<ADDRESS> ADDRESS { get; set; }
+        public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
+        public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
+        public virtual DbSet<AGGREGATION_TYPES> AGGREGATION_TYPES { get; set; }
+
         public virtual DbSet<ANSWER> ANSWER { get; set; }
         public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
         public virtual DbSet<APP_CODE> APP_CODE { get; set; }
@@ -202,6 +206,44 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.ADDRESS)
                     .HasForeignKey(d => d.Id)
                     .HasConstraintName("FK_ADDRESS_USER_DETAIL_INFORMATION1");
+            });
+
+            modelBuilder.Entity<AGGREGATION_ASSESSMENT>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Aggregation_Id })
+                    .HasName("PK__AGGREGAT__985B1205C06FF728");
+
+                entity.HasOne(d => d.Aggregation_)
+                    .WithMany(p => p.AGGREGATION_ASSESSMENT)
+                    .HasForeignKey(d => d.Aggregation_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AGGREGATI__Aggre__6EAB62A3");
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.AGGREGATION_ASSESSMENT)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AGGREGATI__Asses__6CC31A31");
+            });
+
+            modelBuilder.Entity<AGGREGATION_INFORMATION>(entity =>
+            {
+                entity.HasKey(e => e.AggregationID)
+                    .HasName("PK__AggregationInformation");
+
+                entity.Property(e => e.Aggregation_Mode).IsUnicode(false);
+
+                entity.HasOne(d => d.Aggregation_ModeNavigation)
+                    .WithMany(p => p.AGGREGATION_INFORMATION)
+                    .HasForeignKey(d => d.Aggregation_Mode)
+                    .HasConstraintName("FK_AGGREGATION_INFORMATION_AGGREGATION_TYPES");
+            });
+
+            modelBuilder.Entity<AGGREGATION_TYPES>(entity =>
+            {
+                entity.Property(e => e.Aggregation_Mode)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<ANSWER>(entity =>
