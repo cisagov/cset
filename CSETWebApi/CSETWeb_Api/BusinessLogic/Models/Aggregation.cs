@@ -11,7 +11,9 @@ namespace CSETWeb_Api.BusinessLogic.Models
     /// </summary>
     public class Aggregation
     {
+        public int AggregationId { get; set; }
         public string AggregationName { get; set; }
+        public DateTime? AggregationDate { get; set; }
     }
 
 

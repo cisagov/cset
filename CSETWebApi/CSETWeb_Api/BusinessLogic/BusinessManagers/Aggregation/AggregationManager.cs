@@ -8,6 +8,8 @@ using DataLayerCore.Manual;
 using Snickler.EFCore;
 using BusinessLogic.Helpers;
 using BusinessLogic.Models;
+using Microsoft.EntityFrameworkCore;
+
 using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.BusinessLogic
@@ -29,20 +31,45 @@ namespace CSETWeb_Api.BusinessLogic
 
             using (var db = new CSET_Context())
             {
-                var agg = db.AGGREGATION_INFORMATION.Where(x => x.Aggregation_Mode == mode).ToList();
-                foreach (var agg1 in agg)
-                {
-                    var agg2 = new Aggregation()
-                    {
-                        AggregationName = agg1.Aggregation_Name
-                    };
+                // Find all aggregations of the desired type that the current user has access to one or more of its assessments
+                var q1 = from ac in db.ASSESSMENT_CONTACTS
+                         join aa in db.AGGREGATION_ASSESSMENT on ac.Assessment_Id equals aa.Assessment_Id
+                         join ai in db.AGGREGATION_INFORMATION on aa.Aggregation_Id equals ai.AggregationID
+                         where ai.Aggregation_Mode == mode && ac.UserId == currentUserId
+                         select new { ai, aa, ac };
 
-                    l.Add(agg2);
+                var aggCandidates = q1.ToList();
+
+                List<int> myAllowedAggregIDs = new List<int>();
+
+                foreach (var agg in aggCandidates)
+                {
+                    var assessmentIDs = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == agg.ai.AggregationID).Select(x => x.Assessment_Id).ToList();
+
+                    // Hopefully this can be refactored.  We need to make sure that the current user is connected to all assessments in this aggregation.
+                    if (db.ASSESSMENT_CONTACTS.Where(x => assessmentIDs.Contains(x.Assessment_Id) && x.UserId == currentUserId).Count() < assessmentIDs.Count)
+                    {
+                        continue;
+                    }
+
+                    if (myAllowedAggregIDs.Contains(agg.ai.AggregationID))
+                    {
+                        continue;
+                    }
+
+                    l.Add(new Aggregation()
+                    {
+                        AggregationId = agg.ai.AggregationID,
+                        AggregationName = agg.ai.Aggregation_Name,
+                        AggregationDate = agg.ai.Aggregation_Date
+                    });
+
+                    myAllowedAggregIDs.Add(agg.ai.AggregationID);
                 }
             }
 
-            return l;
-        }        
+            return l.OrderBy(x => x.AggregationDate).ToList();
+        }
 
 
         /// <summary>

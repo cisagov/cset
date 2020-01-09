@@ -32,14 +32,27 @@ import { AggregationService } from '../../services/aggregation.service';
 })
 export class AggregationHomeComponent implements OnInit {
 
-  aggregations: any[] = [];
+  aggregations: any[] = null;
 
 
   constructor(
     public aggregationSvc: AggregationService
   ) { }
 
+  /**
+   * ngOnInit.
+   */
   ngOnInit() {
+    this.listAggregationsForType();
+  }
+
+  /**
+   * Build list of existing trends/compares that the user is authorized to see.
+   */
+  listAggregationsForType() {
+    this.aggregationSvc.getList().subscribe((resp: any) => {
+      this.aggregations = resp;
+    });
   }
 
   newAggregation() {

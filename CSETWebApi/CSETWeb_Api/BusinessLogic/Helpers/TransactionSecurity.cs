@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Helpers
         /// </param>
         /// <param name="assesmentId">Optionally brands the new token with an assessment ID in the payload</param>
         /// <returns></returns>
-        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, string scope)
+        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
@@ -82,6 +82,12 @@ namespace CSETWeb_Api.Helpers
             if (assessmentId != null)
             {
                 payload.Add(Constants.Token_AssessmentId, assessmentId);
+            }
+
+            // Include the current AggregationId if one was provided
+            if (aggregationId != null)
+            {
+                payload.Add(Constants.Token_AggregationId, aggregationId);
             }
 
             // Build the token

@@ -99,6 +99,7 @@ import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.compone
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { AggregationGuard } from './guards/aggregation.guard';
 import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validator.directive';
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
@@ -174,6 +175,7 @@ import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
+
 
 @NgModule({
     imports: [
@@ -334,6 +336,7 @@ import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compa
         },
         AuthGuard,
         AssessGuard,
+        AggregationGuard,
         DemographicService,
         AssessmentService,
         EmailService,

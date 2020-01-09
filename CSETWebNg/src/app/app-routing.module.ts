@@ -73,9 +73,23 @@ import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
 import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
 import { MergeComponent } from './aggregation/merge/merge.component';
+import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias-assessments.component';
+import { AggregationGuard } from './guards/aggregation.guard';
 
 const appRoutes: Routes = [
-  { path: 'trend', component: AggregationHomeComponent },
+  {
+    path: 'trend',
+    component: AggregationHomeComponent,
+    children: [
+      {
+        path: 'alias-assessments/:id',
+        component: AliasAssessmentsComponent,
+        canActivate: [AggregationGuard]
+      },
+      { path: '', redirectTo: 'trend', pathMatch: 'full' },
+      { path: '**', redirectTo: 'trend' }
+    ]
+  },
   { path: 'compare', component: AggregationHomeComponent },
   { path: 'merge', component: MergeComponent },
   { path: 'resource-library', component: ResourceLibraryComponent },

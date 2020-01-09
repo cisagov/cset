@@ -24,6 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AggregationService {
@@ -39,9 +40,15 @@ export class AggregationService {
    */
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private router: Router
   ) {
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+  }
+
+
+  id(): number {
+    return +sessionStorage.getItem('aggregationId');
   }
 
   /**
@@ -55,6 +62,55 @@ export class AggregationService {
       case 'compare':
         return plural ? 'Comparisons' : 'Comparison';
     }
+  }
+
+
+  getList() {
+    return this.http.post(this.apiUrl + 'getaggregations?mode=' + this.aggregationType, '');
+  }
+
+  /**
+   * Calls the API to create a new aggregation record
+   */
+  createAggregation() {
+    return this.http.get(this.apiUrl + 'createaggregation');
+  }
+
+
+  newAggregation() {
+    this.createAggregation()
+      .toPromise()
+      .then(
+        (response: any) => this.loadAggregation(response.Id),
+        error =>
+          console.log(
+            'Unable to create new assessment: ' + (<Error>error).message
+          )
+      );
+  }
+
+
+  loadAggregation(id: number) {
+    this.getAggregationToken(id).then(() => {
+      this.router.navigate(['/trend/alias-assessments', id]);
+    });
+  }
+
+  getAggregationToken(aggId: number) {
+    return this.http
+      .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
+      .toPromise()
+      .then((response: { Token: string }) => {
+        sessionStorage.removeItem('userToken');
+        sessionStorage.setItem('userToken', response.Token);
+        if (aggId) {
+          sessionStorage.removeItem('aggregationId');
+          sessionStorage.setItem(
+            'aggregationId',
+            aggId ? aggId.toString() : ''
+          );
+        }
+      });
   }
 
   getMergeSourceAnswers() {
