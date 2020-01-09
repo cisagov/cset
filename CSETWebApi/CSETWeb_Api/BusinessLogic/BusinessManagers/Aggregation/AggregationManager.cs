@@ -18,6 +18,34 @@ namespace CSETWeb_Api.BusinessLogic
     public class AggregationManager
     {
         /// <summary>
+        /// Returns a list of AGGREGATION_INFORMATION records for the specified type, Trend or Compare.
+        /// Returns only AGGREGATION_INFORMATION records where the current user is authorized
+        /// to view all Assessments involved in the aggregation.
+        /// </summary>
+        /// <returns></returns>
+        public List<Aggregation> GetAggregations(string mode, int currentUserId)
+        {
+            var l = new List<Aggregation>();
+
+            using (var db = new CSET_Context())
+            {
+                var agg = db.AGGREGATION_INFORMATION.Where(x => x.Aggregation_Mode == mode).ToList();
+                foreach (var agg1 in agg)
+                {
+                    var agg2 = new Aggregation()
+                    {
+                        AggregationName = agg1.Aggregation_Name
+                    };
+
+                    l.Add(agg2);
+                }
+            }
+
+            return l;
+        }        
+
+
+        /// <summary>
         /// 
         /// </summary>
         public MergeStructure GetAnswers(List<int> mergeCandidates)
