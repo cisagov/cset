@@ -44,7 +44,7 @@ export class AggregationGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
 
-
+    console.log('AggregationGuard canActivate');
     return true;
 
 
@@ -69,8 +69,8 @@ export class AggregationGuard implements CanActivate, CanActivateChild {
   }
 
   checkToken() {
-    if (this.parser.decodeToken(this.authSvc.userToken()).assess
-      && this.parser.decodeToken(this.authSvc.userToken()).assess === this.aggregationSvc.id()) {
+    if (this.parser.decodeToken(this.authSvc.userToken()).aggregation
+      && this.parser.decodeToken(this.authSvc.userToken()).aggregation === this.aggregationSvc.id()) {
       return true;
     }
     this.router.navigate(['home']);

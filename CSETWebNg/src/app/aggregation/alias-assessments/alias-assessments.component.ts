@@ -27,18 +27,31 @@ import { Route, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-alias-assessments',
-  templateUrl: './alias-assessments.component.html'
+  templateUrl: './alias-assessments.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AliasAssessmentsComponent implements OnInit {
+
+  data: any;
 
   constructor(
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute
   ) {
+    console.log('alias-assessments constructor');
     this.aggregationSvc.getAggregationToken(+this.route.snapshot.params['id']);
   }
 
   ngOnInit() {
+    console.log('alias-assessments on init');
+    console.log(sessionStorage.getItem('aggregationId'));
+
+    // get the assessments for this aggregation
+    this.aggregationSvc.getAssessments().subscribe(resp => {
+      this.data = resp;
+    });
+
   }
 
 }

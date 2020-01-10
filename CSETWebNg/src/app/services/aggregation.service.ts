@@ -48,6 +48,7 @@ export class AggregationService {
 
 
   id(): number {
+    console.log('aggregation service id()');
     return +sessionStorage.getItem('aggregationId');
   }
 
@@ -92,7 +93,7 @@ export class AggregationService {
 
   loadAggregation(id: number) {
     this.getAggregationToken(id).then(() => {
-      this.router.navigate(['/trend/alias-assessments', id]);
+      this.router.navigate(['/alias-assessments', id]);
     });
   }
 
@@ -112,6 +113,12 @@ export class AggregationService {
         }
       });
   }
+
+  getAssessments() {
+    return this.http.post(this.apiUrl + 'getassessments?aggregationId=' + this.id(), '');
+  }
+
+
 
   getMergeSourceAnswers() {
     return this.http.post(this.apiUrl + 'getanswers', '');
