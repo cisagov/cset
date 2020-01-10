@@ -539,13 +539,13 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     OSV = s.a.Selected_Sal_Level;
                     switch (s.b.Level_Name)
                     {
-                        case "Q_CV":
+                        case "Confidence_Level":
                             Q_CV = s.b.Standard_Specific_Sal_Level;
                             break;
-                        case "Q_IV":
+                        case "Integrity_Level":
                             Q_IV = s.b.Standard_Specific_Sal_Level;
                             break;
-                        case "Q_AV":
+                        case "Availability_Level":
                             Q_AV = s.b.Standard_Specific_Sal_Level;
                             break;
                     }
