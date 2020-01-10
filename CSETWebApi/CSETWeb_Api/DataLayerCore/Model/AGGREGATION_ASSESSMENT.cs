@@ -11,6 +11,8 @@ namespace DataLayerCore.Model
         public int Assessment_Id { get; set; }
         public int Aggregation_Id { get; set; }
         public int? Sequence { get; set; }
+        [StringLength(15)]
+        public string Alias { get; set; }
 
         [ForeignKey("Aggregation_Id")]
         [InverseProperty("AGGREGATION_ASSESSMENT")]

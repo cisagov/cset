@@ -17,6 +17,23 @@ namespace CSETWeb_Api.BusinessLogic.Models
     }
 
 
+    public class AssessmentListResponse
+    {
+        public Aggregation Aggregation;
+        public List<AggregAssessment> Assessments;
+    }
+
+
+    /// <summary>
+    /// Contains minimal data for assessments involved in a trend or compare.
+    /// </summary>
+    public class AggregAssessment
+    {
+        public int AssessmentId { get; set; }
+        public string AssessmentName { get; set; }
+        public string Alias { get; set; }
+    }
+
     /// <summary>
     /// 
     /// </summary>

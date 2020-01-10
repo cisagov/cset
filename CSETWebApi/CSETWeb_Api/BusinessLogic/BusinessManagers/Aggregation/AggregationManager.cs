@@ -75,6 +75,80 @@ namespace CSETWeb_Api.BusinessLogic
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="aggregationId"></param>
+        public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+                var resp = new AssessmentListResponse
+                {
+                    Aggregation = new Aggregation()
+                    {
+                        AggregationId = ai.AggregationID,
+                        AggregationName = ai.Aggregation_Name,
+                        AggregationDate = ai.Aggregation_Date
+                    }
+                };
+
+
+                var ggg = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).Include(x => x.Assessment_).ThenInclude(x => x.INFORMATION).ToList();
+
+                var l = new List<AggregAssessment>();
+                foreach (var g in ggg)
+                {
+                    l.Add(new AggregAssessment() {
+                        AssessmentId = g.Assessment_Id,
+                        Alias = g.Alias,
+                        AssessmentName = g.Assessment_.INFORMATION.Assessment_Name
+                    });
+                }
+
+                // assign default aliases
+                // TODO:  If they are comparing 100 assessments, this will have to be done a different way.
+                var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var aliasPosition = 0;
+                foreach (var a in l)
+                {
+                    if (string.IsNullOrEmpty(a.Alias))
+                    {
+                        while (l.Exists(x => x.Alias == aliasLetters[aliasPosition].ToString()))
+                        {
+                            aliasPosition++;
+                        }
+                        a.Alias = aliasLetters[aliasPosition].ToString();
+                    }
+                }
+               
+                resp.Assessments = l;
+                return resp;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void GetAssessmentStandardGrid(int aggregationId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).Include(x => x.AGGREGATION_ASSESSMENT).ToList();
+
+                foreach (var a in ai)
+                {
+                    a.AGGREGATION_ASSESSMENT.
+                }
+
+                var abc = 1;
+               // db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public MergeStructure GetAnswers(List<int> mergeCandidates)
         {
             if (mergeCandidates.Count == 0)
