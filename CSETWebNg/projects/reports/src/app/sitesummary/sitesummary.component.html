@@ -382,52 +382,55 @@
             </tr>
             <tr>
                 <td>Overall Values</td>
-                <td>{{response?.salTable.Q_AV}}</td>
                 <td>{{response?.salTable.Q_CV}}</td>
                 <td>{{response?.salTable.Q_IV}}</td>
+                <td>{{response?.salTable.Q_AV}}</td>
             </tr>
         </table>
 
-        <p>
-            <b>Calculated General Security Assurance Levels (SAL)</b>
-        </p>
-        <table class="cset-table" style="table-layout: fixed">
-            <tr>
-                <th style="width: 33%"></th>
-                <th style="width: 33%">Onsite</th>
-                <th style="width: 33%">Offsite</th>
-            </tr>
-            <tr>
-                <td>Physical Injury</td>
-                <td>{{response?.genSalTable.On_Site_Physical_Injury}}</td>
-                <td>{{response?.genSalTable.Off_Site_Physical_Injury}}</td>
-            </tr>
-            <tr>
-                <td>Hospital Injury</td>
-                <td>{{response?.genSalTable.On_Site_Hospital_Injury}}</td>
-                <td>{{response?.genSalTable.Off_Site_Hospital_Injury}}</td>
-            </tr>
-            <tr>
-                <td>Death</td>
-                <td>{{response?.genSalTable.On_Site_Death}}</td>
-                <td>{{response?.genSalTable.Off_Site_Death}}</td>
-            </tr>
-            <tr>
-                <td>Capital Assets</td>
-                <td>{{response?.genSalTable.On_Site_Capital_Assets}}</td>
-                <td>{{response?.genSalTable.Off_Site_Capital_Assets}}</td>
-            </tr>
-            <tr>
-                <td>Economic Impact</td>
-                <td>{{response?.genSalTable.On_Site_Economic_Impact}}</td>
-                <td>{{response?.genSalTable.Off_Site_Economic_Impact}}</td>
-            </tr>
-            <tr>
-                <td>Environmental Impact</td>
-                <td>{{response?.genSalTable.On_Site_Environmental_Cleanup}}</td>
-                <td>{{response?.genSalTable.Off_Site_Environmental_Cleanup}}</td>
-            </tr>
-        </table>
+        
+        <div *ngIf="response?.salTable.LastSalDeterminationType === 'GENERAL'">
+            <p>
+                <b>Calculated General Security Assurance Levels (SAL)</b>
+            </p>
+            <table class="cset-table" style="table-layout: fixed">
+                <tr>
+                    <th style="width: 33%"></th>
+                    <th style="width: 33%">Onsite</th>
+                    <th style="width: 33%">Offsite</th>
+                </tr>
+                <tr>
+                    <td>Physical Injury</td>
+                    <td>{{response?.genSalTable.On_Site_Physical_Injury}}</td>
+                    <td>{{response?.genSalTable.Off_Site_Physical_Injury}}</td>
+                </tr>
+                <tr>
+                    <td>Hospital Injury</td>
+                    <td>{{response?.genSalTable.On_Site_Hospital_Injury}}</td>
+                    <td>{{response?.genSalTable.Off_Site_Hospital_Injury}}</td>
+                </tr>
+                <tr>
+                    <td>Death</td>
+                    <td>{{response?.genSalTable.On_Site_Death}}</td>
+                    <td>{{response?.genSalTable.Off_Site_Death}}</td>
+                </tr>
+                <tr>
+                    <td>Capital Assets</td>
+                    <td>{{response?.genSalTable.On_Site_Capital_Assets}}</td>
+                    <td>{{response?.genSalTable.Off_Site_Capital_Assets}}</td>
+                </tr>
+                <tr>
+                    <td>Economic Impact</td>
+                    <td>{{response?.genSalTable.On_Site_Economic_Impact}}</td>
+                    <td>{{response?.genSalTable.Off_Site_Economic_Impact}}</td>
+                </tr>
+                <tr>
+                    <td>Environmental Impact</td>
+                    <td>{{response?.genSalTable.On_Site_Environmental_Cleanup}}</td>
+                    <td>{{response?.genSalTable.Off_Site_Environmental_Cleanup}}</td>
+                </tr>
+            </table>
+        </div>
 
 
         <div *ngIf="response?.salTable.LastSalDeterminationType === 'NIST'">
