@@ -39,22 +39,13 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        [CSETAuthorize]
+        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/getassessments")]
         public AssessmentListResponse GetAssessmentsForAggregation([FromUri] int aggregationId)
         {
             var manager = new BusinessLogic.AggregationManager();
             return manager.GetAssessmentsForAggregation(aggregationId);
-        }
-
-
-        [HttpPost]
-        [Route("api/aggregation/standardgrid")]
-        public void GetAssessmentStandardGrid([FromUri] int aggregationId)
-        {
-            var manager = new BusinessLogic.AggregationManager();
-            manager.GetAssessmentStandardGrid(aggregationId);
         }
 
 

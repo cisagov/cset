@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,12 +93,17 @@ namespace CSETWeb_Api.BusinessLogic
                 };
 
 
-                var ggg = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).Include(x => x.Assessment_).ThenInclude(x => x.INFORMATION).ToList();
+                var ggg = db.AGGREGATION_ASSESSMENT
+                    .Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_)
+                    .ThenInclude(x => x.INFORMATION)
+                    .ToList();
 
                 var l = new List<AggregAssessment>();
                 foreach (var g in ggg)
                 {
-                    l.Add(new AggregAssessment() {
+                    l.Add(new AggregAssessment()
+                    {
                         AssessmentId = g.Assessment_Id,
                         Alias = g.Alias,
                         AssessmentName = g.Assessment_.INFORMATION.Assessment_Name
@@ -105,7 +111,7 @@ namespace CSETWeb_Api.BusinessLogic
                 }
 
                 // assign default aliases
-                // TODO:  If they are comparing 100 assessments, this will have to be done a different way.
+                // TODO:  If they are comparing more than 26 assessments, this will have to be done a different way.
                 var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 var aliasPosition = 0;
                 foreach (var a in l)
@@ -119,8 +125,11 @@ namespace CSETWeb_Api.BusinessLogic
                         a.Alias = aliasLetters[aliasPosition].ToString();
                     }
                 }
-               
+
                 resp.Assessments = l;
+
+                GetAssessmentStandardGrid(ref resp);
+
                 return resp;
             }
         }
@@ -129,19 +138,60 @@ namespace CSETWeb_Api.BusinessLogic
         /// <summary>
         /// 
         /// </summary>
-        public void GetAssessmentStandardGrid(int aggregationId)
+        public void GetAssessmentStandardGrid(ref AssessmentListResponse response)
         {
+            // For each standard, list any assessments that use it.
+            Dictionary<string, List<int>> selectedStandards = new Dictionary<string, List<int>>();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("AssessmentName");
+            dt.Columns.Add("AssessmentId", typeof(int));
+            dt.Columns.Add("Alias");
+            int startColumn = dt.Columns.Count;
+
             using (var db = new CSET_Context())
             {
-                var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).Include(x => x.AGGREGATION_ASSESSMENT).ToList();
-
-                foreach (var a in ai)
+                foreach (var a in response.Assessments)
                 {
-                    a.AGGREGATION_ASSESSMENT.
+                    var info = db.INFORMATION.Where(x => x.Id == a.AssessmentId).FirstOrDefault();
+                    DataRow rowAssess = dt.NewRow();
+                    rowAssess["AssessmentId"] = info.Id;
+                    rowAssess["AssessmentName"] = info.Assessment_Name;
+                    rowAssess["Alias"] = a.Alias;
+                    dt.Rows.Add(rowAssess);
+
+                    List<AVAILABLE_STANDARDS> standards = db.AVAILABLE_STANDARDS
+                        .Include(x => x.Set_NameNavigation)
+                        .Where(x => x.Assessment_Id == a.AssessmentId && x.Selected).ToList();
+                    foreach (var s in standards)
+                    {
+                        if (!dt.Columns.Contains(s.Set_NameNavigation.Short_Name))
+                        {
+                            dt.Columns.Add(s.Set_NameNavigation.Short_Name, typeof(bool));
+                        }
+                        rowAssess[s.Set_NameNavigation.Short_Name] = true;
+                    }
                 }
 
-                var abc = 1;
-               // db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id);
+                // Build an alphabetical list of standards involved (ignore first column)
+                List<string> setNames = new List<string>();
+                for (int i = startColumn; i < dt.Columns.Count; i++)
+                {
+                    setNames.Add(dt.Columns[i].ColumnName);
+                }
+                setNames.Sort();
+
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    var assessment = response.Assessments.Where(x => x.AssessmentId == (int)row["AssessmentId"]).FirstOrDefault();
+                    foreach (string setName in setNames)
+                    {
+                        var ss = new SelectedStandards();
+                        assessment.SelectedStandards.Add(ss);
+                        ss.StandardName = setName;
+                        ss.Selected = row[setName] == DBNull.Value ? false : (bool)row[setName];
+                    }
+                }
             }
         }
 

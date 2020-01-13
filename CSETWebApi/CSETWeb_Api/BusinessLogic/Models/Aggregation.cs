@@ -21,6 +21,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public Aggregation Aggregation;
         public List<AggregAssessment> Assessments;
+
+        public AssessmentListResponse()
+        {
+            this.Aggregation = new Aggregation();
+            this.Assessments = new List<AggregAssessment>();
+        }
     }
 
 
@@ -32,7 +38,31 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int AssessmentId { get; set; }
         public string AssessmentName { get; set; }
         public string Alias { get; set; }
+        public List<SelectedStandards> SelectedStandards;
+
+        public AggregAssessment()
+        {
+            this.SelectedStandards = new List<SelectedStandards>();
+        }
     }
+
+
+    public class SelectedStandards
+    {
+        public string StandardName;
+        public bool Selected;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AssessmentStandardGrid
+    {
+        public Aggregation Aggregation;
+        public List<AggregAssessment> Assessments;
+    }
+
 
     /// <summary>
     /// 
