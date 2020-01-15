@@ -25,6 +25,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from './assessment.service';
 import { StandardService } from './standard.service';
+import { AggregationService } from './aggregation.service';
 
 /**
  * A service that provides intelligent NEXT and BACK routing.
@@ -40,7 +41,8 @@ export class NavigationAggregService {
   pages = [
     { pageClass: 'aggregation-home', path: 'aggregation-home' },
     { pageClass: 'alias-assessments', path: 'alias-assessments/{:id}' },
-    { pageClass: 'aggregation-detail', path: 'aggregation-detail/{:id}', condition: true }
+    { pageClass: 'aggregation-detail', path: 'aggregation-detail/{:id}', condition: true },
+    { pageClass: 'trend-analytics', path: 'trend-analytics/{:id}', condition: true }
   ];
 
   /**
@@ -48,8 +50,7 @@ export class NavigationAggregService {
    * @param router
    */
   constructor(
-    private assessSvc: AssessmentService,
-    private standardSvc: StandardService,
+    private aggregationSvc: AggregationService,
     private router: Router
   ) { }
 
@@ -77,7 +78,7 @@ export class NavigationAggregService {
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
 
-    const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
+    const newPath = this.pages[newPageIndex].path.replace('{:id}', this.aggregationSvc.id().toString());
     this.router.navigate([newPath]);
   }
 
@@ -106,7 +107,7 @@ export class NavigationAggregService {
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
 
-    const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
+    const newPath = this.pages[newPageIndex].path.replace('{:id}', this.aggregationSvc.id().toString());
     this.router.navigate([newPath]);
   }
 
@@ -118,18 +119,6 @@ export class NavigationAggregService {
   shouldIShow(condition: any): boolean {
     if (condition === undefined || condition === null) {
       return true;
-    }
-
-    if (condition === '!ACET') {
-      return !this.standardSvc.acetSelected;
-    }
-
-    if (condition === 'ACET') {
-      return this.standardSvc.acetSelected;
-    }
-
-    if (condition === 'FRAMEWORK') {
-      return this.standardSvc.frameworkSelected;
     }
 
     if (condition === 'FALSE') {

@@ -29,7 +29,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [CSETAuthorize]
         [HttpPost]
-        [Route("api/aggregation/getaggregations")]       
+        [Route("api/aggregation/getaggregations")]
         public List<Aggregation> GetAggregations([FromUri] string mode)
         {
             // Get the current userid to set as the Assessment creator and first attached user
@@ -47,6 +47,26 @@ namespace CSETWeb_Api.Controllers
         {
             var manager = new BusinessLogic.AggregationManager();
             return manager.CreateAggregation(mode);
+        }
+
+
+        //[CSETAuthorize]
+        [HttpPost]
+        [Route("api/aggregation/get")]
+        public Aggregation GetAggregation([FromUri] int aggregationId)
+        {
+            var manager = new BusinessLogic.AggregationManager();
+            return manager.GetAggregation(aggregationId);
+        }
+
+
+        //[CSETAuthorize]
+        [HttpPost]
+        [Route("api/aggregation/update")]
+        public void UpdateAggregation([FromBody] Aggregation aggregation)
+        {
+            var manager = new BusinessLogic.AggregationManager();
+            manager.SaveAggregationInformation(aggregation.AggregationId, aggregation);
         }
 
 
@@ -76,6 +96,24 @@ namespace CSETWeb_Api.Controllers
             var aggreg = new BusinessLogic.AggregationManager();
             aggreg.SaveAssessmentSelection((int)aggregationID, request.AssessmentId, request.Selected);
         }
+
+
+        //[CSETAuthorize]
+        [HttpPost]
+        [Route("api/aggregation/saveassessmentalias")]
+        public void SaveAssessmentAlias([FromBody] AssessmentSelection request)
+        {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return;
+            }
+
+            var aggreg = new BusinessLogic.AggregationManager();
+            aggreg.SaveAssessmentAlias((int)aggregationID, request.AssessmentId, request.Alias);
+        }
+
 
 
 

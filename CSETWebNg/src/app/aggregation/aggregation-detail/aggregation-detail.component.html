@@ -21,12 +21,12 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>Trend/Compare Information</h3>
+  <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Information</h3>
 
-  <div>
+  <div class="w-100">
     <div class="form-group">
-      <label>Aggregation Name</label>
-      <input type="text" class="form-control" />
+      <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name</label>
+      <input type="text" class="form-control" [(ngModel)]="aggregationSvc.currentAggregation.AggregationName" (change)="updateAggregation()" />
     </div>
   </div>
 

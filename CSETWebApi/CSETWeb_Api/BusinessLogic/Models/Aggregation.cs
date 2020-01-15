@@ -69,8 +69,9 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     public class AssessmentSelection
     {
-        public bool Selected { get; set; }
         public int AssessmentId { get; set; }
+        public bool Selected { get; set; }
+        public string Alias { get; set; }
     }
 
 
