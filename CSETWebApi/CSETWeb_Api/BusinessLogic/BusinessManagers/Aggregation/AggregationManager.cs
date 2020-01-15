@@ -33,11 +33,9 @@ namespace CSETWeb_Api.BusinessLogic
             using (var db = new CSET_Context())
             {
                 // Find all aggregations of the desired type that the current user has access to one or more of its assessments
-                var q1 = from ac in db.ASSESSMENT_CONTACTS
-                         join aa in db.AGGREGATION_ASSESSMENT on ac.Assessment_Id equals aa.Assessment_Id
-                         join ai in db.AGGREGATION_INFORMATION on aa.Aggregation_Id equals ai.AggregationID
-                         where ai.Aggregation_Mode == mode && ac.UserId == currentUserId
-                         select new { ai, aa, ac };
+                var q1 = from ai in db.AGGREGATION_INFORMATION
+                         where ai.Aggregation_Mode == mode
+                         select ai;
 
                 var aggCandidates = q1.ToList();
 
@@ -45,7 +43,7 @@ namespace CSETWeb_Api.BusinessLogic
 
                 foreach (var agg in aggCandidates)
                 {
-                    var assessmentIDs = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == agg.ai.AggregationID).Select(x => x.Assessment_Id).ToList();
+                    var assessmentIDs = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == agg.AggregationID).Select(x => x.Assessment_Id).ToList();
 
                     // Hopefully this can be refactored.  We need to make sure that the current user is connected to all assessments in this aggregation.
                     if (db.ASSESSMENT_CONTACTS.Where(x => assessmentIDs.Contains(x.Assessment_Id) && x.UserId == currentUserId).Count() < assessmentIDs.Count)
@@ -53,23 +51,77 @@ namespace CSETWeb_Api.BusinessLogic
                         continue;
                     }
 
-                    if (myAllowedAggregIDs.Contains(agg.ai.AggregationID))
+                    if (myAllowedAggregIDs.Contains(agg.AggregationID))
                     {
                         continue;
                     }
 
                     l.Add(new Aggregation()
                     {
-                        AggregationId = agg.ai.AggregationID,
-                        AggregationName = agg.ai.Aggregation_Name,
-                        AggregationDate = agg.ai.Aggregation_Date
+                        AggregationId = agg.AggregationID,
+                        AggregationName = agg.Aggregation_Name,
+                        AggregationDate = agg.Aggregation_Date
                     });
 
-                    myAllowedAggregIDs.Add(agg.ai.AggregationID);
+                    myAllowedAggregIDs.Add(agg.AggregationID);
                 }
             }
 
             return l.OrderBy(x => x.AggregationDate).ToList();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Aggregation CreateAggregation(string mode)
+        {
+            Aggregation newAgg = new Aggregation()
+            {
+                AggregationDate = DateTime.Today,
+                AggregationName = "New " + mode,
+                Mode = mode
+            };
+
+            // Commit the new assessment
+            int aggregationId = SaveAggregationInformation(0, newAgg);
+            newAgg.AggregationId = aggregationId;
+
+            return newAgg;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int SaveAggregationInformation(int aggregationId, Aggregation aggreg)
+        {
+            using (var db = new CSET_Context())
+            {
+                var agg = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+
+                if (agg == null)
+                {
+                    agg = new AGGREGATION_INFORMATION()
+                    {
+                        Aggregation_Name = aggreg.AggregationName,
+                        Aggregation_Date = DateTime.Today,
+                        Aggregation_Mode = aggreg.Mode
+                    };
+
+                    db.AGGREGATION_INFORMATION.Add(agg);
+                    db.SaveChanges();
+                    aggregationId = agg.AggregationID;
+                }
+
+                agg.AggregationID = aggregationId;
+
+                db.AGGREGATION_INFORMATION.AddOrUpdate(agg, x => x.AggregationID);
+                db.SaveChanges();
+
+                return aggregationId;
+            }
         }
 
 
@@ -128,7 +180,11 @@ namespace CSETWeb_Api.BusinessLogic
 
                 resp.Assessments = l;
 
-                GetAssessmentStandardGrid(ref resp);
+                IncludeStandards(ref resp);
+
+                resp.Aggregation.QuestionsCompatibility = CalcCompatibility("Q", resp.Assessments.Select(x => x.AssessmentId).ToList());
+                resp.Aggregation.RequirementsCompatibility = CalcCompatibility("R", resp.Assessments.Select(x => x.AssessmentId).ToList());
+
 
                 return resp;
             }
@@ -138,7 +194,44 @@ namespace CSETWeb_Api.BusinessLogic
         /// <summary>
         /// 
         /// </summary>
-        public void GetAssessmentStandardGrid(ref AssessmentListResponse response)
+        /// <param name="aggregationId"></param>
+        /// <param name="assessmentId"></param>
+        /// <param name="selected"></param>
+        public void SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
+        {
+            using (var db = new CSET_Context())
+            {
+                var g = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                if (selected)
+                {                    
+                    if (g == null)
+                    {
+                        g = new AGGREGATION_ASSESSMENT() { 
+                            Aggregation_Id = aggregationId,
+                            Assessment_Id = assessmentId,
+                            Alias = ""
+                        };
+                        db.AGGREGATION_ASSESSMENT.Add(g);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (g != null)
+                    {
+                        db.AGGREGATION_ASSESSMENT.Remove(g);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
+       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void IncludeStandards(ref AssessmentListResponse response)
         {
             // For each standard, list any assessments that use it.
             Dictionary<string, List<int>> selectedStandards = new Dictionary<string, List<int>>();
@@ -153,6 +246,7 @@ namespace CSETWeb_Api.BusinessLogic
                 foreach (var a in response.Assessments)
                 {
                     var info = db.INFORMATION.Where(x => x.Id == a.AssessmentId).FirstOrDefault();
+
                     DataRow rowAssess = dt.NewRow();
                     rowAssess["AssessmentId"] = info.Id;
                     rowAssess["AssessmentName"] = info.Assessment_Name;
@@ -172,7 +266,7 @@ namespace CSETWeb_Api.BusinessLogic
                     }
                 }
 
-                // Build an alphabetical list of standards involved (ignore first column)
+                // Build an alphabetical list of standards involved
                 List<string> setNames = new List<string>();
                 for (int i = startColumn; i < dt.Columns.Count; i++)
                 {
@@ -181,18 +275,40 @@ namespace CSETWeb_Api.BusinessLogic
                 setNames.Sort();
 
 
-                foreach (DataRow row in dt.Rows)
+                foreach (DataRow rowAssessment in dt.Rows)
                 {
-                    var assessment = response.Assessments.Where(x => x.AssessmentId == (int)row["AssessmentId"]).FirstOrDefault();
+                    var assessment = response.Assessments.Where(x => x.AssessmentId == (int)rowAssessment["AssessmentId"]).FirstOrDefault();
+                    if (assessment == null)
+                    {
+                        continue;
+                    }
+
                     foreach (string setName in setNames)
                     {
-                        var ss = new SelectedStandards();
-                        assessment.SelectedStandards.Add(ss);
-                        ss.StandardName = setName;
-                        ss.Selected = row[setName] == DBNull.Value ? false : (bool)row[setName];
+                        var set = new SelectedStandards();
+                        assessment.SelectedStandards.Add(new SelectedStandards()
+                        {
+                            StandardName = setName,
+                            Selected = rowAssessment[setName] == DBNull.Value ? false : (bool)rowAssessment[setName]
+                        });
                     }
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        private float CalcCompatibility(string mode, List<int> assessmentIds)
+        {
+            // TODO: figure out how stored proc GetCompatibilityCounts can be adjusted for 9.x
+
+
+
+            return 50.0f;
         }
 
 
@@ -207,8 +323,10 @@ namespace CSETWeb_Api.BusinessLogic
             }
 
 
-            MergeStructure mergeResponse = new MergeStructure();
-            mergeResponse.MergeID = Guid.NewGuid();
+            MergeStructure mergeResponse = new MergeStructure
+            {
+                MergeID = Guid.NewGuid()
+            };
 
             Dictionary<int, MergeQuestion> QuestionDictionary = new Dictionary<int, MergeQuestion>();
 

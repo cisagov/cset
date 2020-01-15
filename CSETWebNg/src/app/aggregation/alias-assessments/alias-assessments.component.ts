@@ -21,9 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
-import { Route, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
+import { NavigationAggregService } from '../../services/navigationAggreg.service';
 
 @Component({
   selector: 'app-alias-assessments',
@@ -33,25 +36,43 @@ import { Route, ActivatedRoute } from '@angular/router';
 })
 export class AliasAssessmentsComponent implements OnInit {
 
-  data: any;
+  aliasData: any;
+  dialogRef: MatDialogRef<SelectAssessmentsComponent>;
 
   constructor(
     public aggregationSvc: AggregationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public dialog: MatDialog,
+    public navSvc: NavigationAggregService
   ) {
-    console.log('alias-assessments constructor');
     this.aggregationSvc.getAggregationToken(+this.route.snapshot.params['id']);
   }
 
   ngOnInit() {
-    console.log('alias-assessments on init');
-    console.log(sessionStorage.getItem('aggregationId'));
+    this.getRelatedAssessments();
+  }
 
+  getRelatedAssessments() {
     // get the assessments for this aggregation
     this.aggregationSvc.getAssessments().subscribe(resp => {
-      this.data = resp;
+      this.aliasData = resp;
     });
+  }
 
+  /**
+   * Open dialog for assessment selection.
+   */
+  openDialog() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(SelectAssessmentsComponent, {
+      width: '300px',
+      data: {}
+    });
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.getRelatedAssessments();
+    });
   }
 
 }

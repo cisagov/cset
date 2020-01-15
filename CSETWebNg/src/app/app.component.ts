@@ -227,7 +227,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
   }
 
-  showExcelExportDialog(){
+  showExcelExportDialog() {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
     if (this.dialog.openDialogs[0] || doNotShow) {
@@ -246,12 +246,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   navigateTrend() {
-    this.aggregationSvc.aggregationType = 'TREND';
+    this.aggregationSvc.mode = 'TREND';
     this.router.navigate(['/trend']);
   }
 
   navigateCompare() {
-    this.aggregationSvc.aggregationType = 'COMPARE';
+    this.aggregationSvc.mode = 'COMPARE';
     this.router.navigate(['/compare']);
   }
 

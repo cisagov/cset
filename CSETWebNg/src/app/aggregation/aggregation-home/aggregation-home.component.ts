@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aggregation-home',
@@ -36,7 +37,8 @@ export class AggregationHomeComponent implements OnInit {
 
 
   constructor(
-    public aggregationSvc: AggregationService
+    public aggregationSvc: AggregationService,
+    public router: Router,
   ) { }
 
   /**
@@ -56,7 +58,13 @@ export class AggregationHomeComponent implements OnInit {
   }
 
   newAggregation() {
-    const aggType = this.aggregationSvc.aggregationType;
-    console.log('newAggregation - ' + aggType);
+    const mode = this.aggregationSvc.mode;
+
+    // call API to create new aggregation, it will return the new ID
+    this.aggregationSvc.createAggregation().subscribe((x: any) => {
+      console.log(x);
+      this.router.navigate(['select-assessments', x.AggregationId]);
+    });
+
   }
 }

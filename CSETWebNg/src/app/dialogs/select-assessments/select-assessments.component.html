@@ -20,15 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>Select Assessments for Trend/Compare</h3>
-
-  <div>
-    [ page content here ]
+<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-profile fs-base-6 mr-3"></span>
+    <span>Select Assessments</span>
   </div>
 
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc2.navBack('select-assessments')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc2.navNext('select-assessments')">Next</button>
-  </div>
-</div>
+  <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <form name="form" #userForm="ngForm">
+      <div class="p-3">
+        <div *ngFor="let a of assessments">
+          <input type="checkbox" class="mr-2" (change)="toggleSelection($event, a)" [checked]="a.Selected"><label>{{ a.AssessmentName }}</label>
+        </div>
+
+        <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+          <button class="m-0 btn btn-primary" (click)="close()">OK</button>
+        </mat-dialog-actions>
+      </div>
+    </form>
+  </mat-dialog-content>

@@ -170,11 +170,11 @@ import { MergeComponent } from './aggregation/merge/merge.component';
 import { AggregationService } from './services/aggregation.service';
 import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
 import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
-import { SelectAssessmentsComponent } from './aggregation/select-assessments/select-assessments.component';
 import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias-assessments.component';
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
+import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 
 
 @NgModule({
@@ -314,11 +314,11 @@ import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compa
         MergeComponent,
         MergeQuestionDetailComponent,
         AggregationHomeComponent,
-        SelectAssessmentsComponent,
         AliasAssessmentsComponent,
         AggregationDetailComponent,
         TrendAnalyticsComponent,
-        CompareAnalyticsComponent
+        CompareAnalyticsComponent,
+        SelectAssessmentsComponent
     ],
     providers: [
         ConfigService,
@@ -381,7 +381,8 @@ import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compa
         AddRequirementComponent,
         ComponentOverrideComponent,
         ExcelExportComponent,
-        MergeQuestionDetailComponent
+        MergeQuestionDetailComponent,
+        SelectAssessmentsComponent
     ]
 })
 

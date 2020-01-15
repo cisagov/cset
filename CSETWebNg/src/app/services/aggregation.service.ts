@@ -31,7 +31,7 @@ export class AggregationService {
 
   private apiUrl: string;
 
-  public aggregationType: string;
+  public mode: string;
 
   /**
    * Constructor.
@@ -48,7 +48,6 @@ export class AggregationService {
 
 
   id(): number {
-    console.log('aggregation service id()');
     return +sessionStorage.getItem('aggregationId');
   }
 
@@ -56,8 +55,8 @@ export class AggregationService {
    * Returns the singluar or plural name for the aggretation type.
    * @param plural
    */
-  aggregationTypeDisplay(plural: boolean) {
-    switch (this.aggregationType.toLowerCase()) {
+  modeDisplay(plural: boolean) {
+    switch (this.mode.toLowerCase()) {
       case 'trend':
         return plural ? 'Trends' : 'Trend';
       case 'compare':
@@ -67,14 +66,14 @@ export class AggregationService {
 
 
   getList() {
-    return this.http.post(this.apiUrl + 'getaggregations?mode=' + this.aggregationType, '');
+    return this.http.post(this.apiUrl + 'getaggregations?mode=' + this.mode, '');
   }
 
   /**
    * Calls the API to create a new aggregation record
    */
   createAggregation() {
-    return this.http.get(this.apiUrl + 'createaggregation');
+    return this.http.post(this.apiUrl + 'create?mode=' + this.mode, '');
   }
 
 
@@ -82,7 +81,9 @@ export class AggregationService {
     this.createAggregation()
       .toPromise()
       .then(
-        (response: any) => this.loadAggregation(response.Id),
+        (response: any) => {
+          this.loadAggregation(response.Id);
+        },
         error =>
           console.log(
             'Unable to create new assessment: ' + (<Error>error).message
@@ -117,6 +118,14 @@ export class AggregationService {
   getAssessments() {
     return this.http.post(this.apiUrl + 'getassessments?aggregationId=' + this.id(), '');
   }
+
+
+  saveAssessmentSelection(selected: boolean, assessment: any) {
+    return this.http.post(this.apiUrl + 'saveassessmentselection',
+      { Selected: selected, AssessmentId: assessment.AssessmentId });
+  }
+
+
 
 
 
