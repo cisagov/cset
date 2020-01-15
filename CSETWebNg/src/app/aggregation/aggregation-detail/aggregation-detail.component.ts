@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { NavigationAggregService } from '../../services/navigationAggreg.service';
 
 @Component({
   selector: 'app-aggregation-detail',
@@ -29,7 +30,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AggregationDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public navSvc: NavigationAggregService
+  ) { }
 
   ngOnInit() {
   }

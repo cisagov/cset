@@ -13,6 +13,7 @@ using System.Web.Http;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using BusinessLogic;
+using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -41,11 +42,39 @@ namespace CSETWeb_Api.Controllers
 
         //[CSETAuthorize]
         [HttpPost]
+        [Route("api/aggregation/create")]
+        public Aggregation CreateAggregation([FromUri] string mode)
+        {
+            var manager = new BusinessLogic.AggregationManager();
+            return manager.CreateAggregation(mode);
+        }
+
+
+        //[CSETAuthorize]
+        [HttpPost]
         [Route("api/aggregation/getassessments")]
         public AssessmentListResponse GetAssessmentsForAggregation([FromUri] int aggregationId)
         {
             var manager = new BusinessLogic.AggregationManager();
             return manager.GetAssessmentsForAggregation(aggregationId);
+        }
+
+
+        //[CSETAuthorize]
+        [HttpPost]
+        [Route("api/aggregation/saveassessmentselection")]
+        public void SaveAssessmentSelection([FromBody] AssessmentSelection request)
+        {
+
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return;
+            }
+
+            var aggreg = new BusinessLogic.AggregationManager();
+            aggreg.SaveAssessmentSelection((int)aggregationID, request.AssessmentId, request.Selected);
         }
 
 

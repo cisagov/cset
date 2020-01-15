@@ -14,13 +14,16 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int AggregationId { get; set; }
         public string AggregationName { get; set; }
         public DateTime? AggregationDate { get; set; }
+        public string Mode { get; set; }
+        public float QuestionsCompatibility;
+        public float RequirementsCompatibility;
     }
 
 
     public class AssessmentListResponse
     {
         public Aggregation Aggregation;
-        public List<AggregAssessment> Assessments;
+        public List<AggregAssessment> Assessments;        
 
         public AssessmentListResponse()
         {
@@ -62,6 +65,16 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public Aggregation Aggregation;
         public List<AggregAssessment> Assessments;
     }
+
+
+    public class AssessmentSelection
+    {
+        public bool Selected { get; set; }
+        public int AssessmentId { get; set; }
+    }
+
+
+
 
 
     /// <summary>
