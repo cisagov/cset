@@ -21,13 +21,13 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>Saved {{ this.aggregationSvc.modeDisplay(true) }}</h3>
+  <h3>Saved {{ this.aggregationSvc?.modeDisplay(true) }}</h3>
 
   <div>
     <button class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
       matTooltip="Start a new thing">
       <span class="mr-2 fs-base cset-icons-document"></span>
-      <span>New {{ this.aggregationSvc.modeDisplay(false) }}</span>
+      <span>New {{ this.aggregationSvc?.modeDisplay(false) }}</span>
     </button>
 
     <div *ngIf="aggregations == null">
@@ -37,14 +37,14 @@
     </div>
 
     <div class="mt-3 mb-3">
-      <div *ngIf="aggregations?.length === 0">No {{ this.aggregationSvc.modeDisplay(true) }} have been saved.
-        Click 'New {{ this.aggregationSvc.modeDisplay(false) }}' to start a new
-        {{ this.aggregationSvc.modeDisplay(false) }}.
+      <div *ngIf="aggregations?.length === 0">No {{ this.aggregationSvc?.modeDisplay(true) }} have been saved.
+        Click 'New {{ this.aggregationSvc?.modeDisplay(false) }}' to start a new
+        {{ this.aggregationSvc?.modeDisplay(false) }}.
       </div>
 
       <div *ngIf="aggregations?.length > 0">
         <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-          <th mat-sort-header="assessment">{{ this.aggregationSvc.modeDisplay(false) }} Name</th>
+          <th mat-sort-header="assessment">{{ this.aggregationSvc?.modeDisplay(false) }} Name</th>
           <th mat-sort-header="date">Date</th>
           <tr *ngFor="let agg of aggregations; let i = index">
             <td>

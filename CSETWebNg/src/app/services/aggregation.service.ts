@@ -30,8 +30,8 @@ import { Router } from '@angular/router';
 export class AggregationService {
 
   private apiUrl: string;
-
   public mode: string;
+  public currentAggregation: any;
 
   /**
    * Constructor.
@@ -50,6 +50,7 @@ export class AggregationService {
   id(): number {
     return +sessionStorage.getItem('aggregationId');
   }
+
 
   /**
    * Returns the singluar or plural name for the aggretation type.
@@ -91,13 +92,25 @@ export class AggregationService {
       );
   }
 
-
+  /**
+   *
+   * @param id
+   */
   loadAggregation(id: number) {
     this.getAggregationToken(id).then(() => {
-      this.router.navigate(['/alias-assessments', id]);
+      this.getAggregation().subscribe((agg: any) => {
+        this.currentAggregation = agg;
+        console.log('just called API get aggregation');
+        console.log(this.currentAggregation);
+        this.router.navigate(['/alias-assessments', id]);
+      });
     });
   }
 
+  /**
+   *
+   * @param aggId
+   */
   getAggregationToken(aggId: number) {
     return this.http
       .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
@@ -115,6 +128,24 @@ export class AggregationService {
       });
   }
 
+  getAggregation() {
+    return this.http.post(this.apiUrl + 'get?aggregationId=' + this.id(), '');
+  }
+
+  updateAggregation() {
+    console.log('updateAggregation');
+    const agg = this.currentAggregation;
+    console.log(agg);
+    const aggForSubmit = {
+      AggregationId: agg.AggregationId,
+      AggregationName: agg.AggregationName,
+      AggregationDate: agg.AggregationDate
+    };
+    console.log(aggForSubmit);
+    return this.http.post(this.apiUrl + 'update', aggForSubmit);
+  }
+
+
   getAssessments() {
     return this.http.post(this.apiUrl + 'getassessments?aggregationId=' + this.id(), '');
   }
@@ -125,9 +156,14 @@ export class AggregationService {
       { Selected: selected, AssessmentId: assessment.AssessmentId });
   }
 
+  saveAssessmentAlias(assessment: any) {
+    return this.http.post(this.apiUrl + 'saveassessmentalias',
+      { AssessmentId: assessment.AssessmentId, Alias: assessment.Alias });
+  }
 
 
 
+  //////////////////////////////// Merge //////////////////////////////////////
 
   getMergeSourceAnswers() {
     return this.http.post(this.apiUrl + 'getanswers', '');

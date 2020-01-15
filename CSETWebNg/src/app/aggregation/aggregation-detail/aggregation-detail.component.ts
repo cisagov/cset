@@ -23,18 +23,35 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
+import { AggregationService } from '../../services/aggregation.service';
 
 @Component({
   selector: 'app-aggregation-detail',
-  templateUrl: './aggregation-detail.component.html'
+  templateUrl: './aggregation-detail.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AggregationDetailComponent implements OnInit {
 
+  public aggregationName: string;
+
+  /**
+   * Constructor
+   * @param navSvc
+   */
   constructor(
-    public navSvc: NavigationAggregService
+    public navSvc: NavigationAggregService,
+    public aggregationSvc: AggregationService
   ) { }
 
+  /**
+   *
+   */
   ngOnInit() {
+    // this.aggregationName = this.aggregationSvc.;
   }
 
+  updateAggregation() {
+    this.aggregationSvc.updateAggregation().subscribe();
+  }
 }

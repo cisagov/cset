@@ -23,12 +23,38 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3>Trend Analytics</h3>
 
-  <div>
-    [ page content here ]
+  <div class="trend-graph-layout">
+    <div class="d-flex flex-column mr-4">
+      <div>
+        <h5>
+          Overall Percent Compliance Score
+        </h5>
+        <canvas style="border: 1px solid red; padding: 15px"></canvas>
+      </div>
+
+      <div>
+        <h5>
+          Top 5 Most Improved Areas
+        </h5>
+        <canvas style="border: 1px solid red; padding: 15px"></canvas>
+      </div>
+
+      <div>
+        <h5>
+          Top 5 Areas of Concern
+        </h5>
+        <canvas style="border: 1px solid red; padding: 15px"></canvas>
+      </div>
+    </div>
+
+    <div>
+      <h5>Category Percent Comparisons</h5>
+      <canvas style="border: 1px solid red; padding: 15px"></canvas>
+    </div>
   </div>
 
   <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc2.navBack('trend-analytics')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc2.navNext('trend-analytics')">Next</button>
+    <button class="btn btn-primary" (click)="navSvc.navBack('trend-analytics')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc.navNext('trend-analytics')">Next</button>
   </div>
 </div>

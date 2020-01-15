@@ -75,4 +75,8 @@ export class AliasAssessmentsComponent implements OnInit {
     });
   }
 
+  changeAlias(assessment) {
+    this.aggregationSvc.saveAssessmentAlias(assessment).subscribe();
+  }
+
 }

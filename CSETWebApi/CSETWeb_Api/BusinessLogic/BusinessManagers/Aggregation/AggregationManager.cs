@@ -94,9 +94,42 @@ namespace CSETWeb_Api.BusinessLogic
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        public Aggregation GetAggregation(int aggregationId)
+        {
+            using (var db = new CSET_Context())
+            {
+                // Find all aggregations of the desired type that the current user has access to one or more of its assessments
+                var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+                if (ai == null)
+                {
+                    return null;
+                }
+
+                return new Aggregation() { 
+                    AggregationDate = ai.Aggregation_Date,
+                    AggregationId = ai.AggregationID,
+                    AggregationName = ai.Aggregation_Name,
+                    Mode = ai.Aggregation_Mode
+                };
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public int SaveAggregationInformation(int aggregationId, Aggregation aggreg)
         {
+
+            // TEMP TEMP
+            if (aggreg.AggregationId == 0)
+            {
+                return 0;
+            }
+
             using (var db = new CSET_Context())
             {
                 var agg = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -116,6 +149,8 @@ namespace CSETWeb_Api.BusinessLogic
                 }
 
                 agg.AggregationID = aggregationId;
+                agg.Aggregation_Name = aggreg.AggregationName;
+                agg.Aggregation_Date = aggreg.AggregationDate;
 
                 db.AGGREGATION_INFORMATION.AddOrUpdate(agg, x => x.AggregationID);
                 db.SaveChanges();
@@ -226,12 +261,30 @@ namespace CSETWeb_Api.BusinessLogic
                 }
             }
         }
-       
+
 
         /// <summary>
         /// 
         /// </summary>
-        public void IncludeStandards(ref AssessmentListResponse response)
+        public void SaveAssessmentAlias(int aggregationId, int assessmentId, string alias)
+        {
+            using (var db = new CSET_Context())
+            {
+                var g = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (g == null)
+                {
+                    return;
+                }
+                g.Alias = alias;
+                db.SaveChanges();
+            }
+        }
+
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void IncludeStandards(ref AssessmentListResponse response)
         {
             // For each standard, list any assessments that use it.
             Dictionary<string, List<int>> selectedStandards = new Dictionary<string, List<int>>();
