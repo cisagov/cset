@@ -41,7 +41,7 @@ export class NavigationAggregService {
   pages = [
     { pageClass: 'aggregation-home', path: 'aggregation-home' },
     { pageClass: 'alias-assessments', path: 'alias-assessments/{:id}' },
-    { pageClass: 'aggregation-detail', path: 'aggregation-detail/{:id}', condition: true },
+    // { pageClass: 'aggregation-detail', path: 'aggregation-detail/{:id}', condition: true },
     { pageClass: 'trend-analytics', path: 'trend-analytics/{:id}', condition: true }
   ];
 

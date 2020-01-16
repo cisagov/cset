@@ -23,38 +23,38 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3>Trend Analytics</h3>
 
-  <div class="trend-graph-layout">
-    <div class="d-flex flex-column mr-4">
-      <div>
-        <h5>
-          Overall Percent Compliance Score
-        </h5>
-        <canvas style="border: 1px solid red; padding: 15px"></canvas>
-      </div>
-
-      <div>
-        <h5>
-          Top 5 Most Improved Areas
-        </h5>
-        <canvas style="border: 1px solid red; padding: 15px"></canvas>
-      </div>
-
-      <div>
-        <h5>
-          Top 5 Areas of Concern
-        </h5>
-        <canvas style="border: 1px solid red; padding: 15px"></canvas>
-      </div>
+  <div class="ml-5 mr-5">
+    <div class="mb-5">
+      <h5>
+        Overall Percent Compliance Score
+      </h5>
+      <canvas id="canvasOverallCompliance">{{ chartOverallCompl }}</canvas>
     </div>
 
-    <div>
+    <div class="mb-5">
+      <h5>
+        Top 5 Most Improved Areas
+      </h5>
+      <canvas id="canvasTop5">{{ chartTop5 }}</canvas>
+    </div>
+
+    <div class="mb-5">
+      <h5>
+        Top 5 Areas of Concern
+      </h5>
+      <canvas id="canvasBottom5">{{ chartBottom5 }}</canvas>
+    </div>
+
+    <div class="mb-5">
       <h5>Category Percent Comparisons</h5>
-      <canvas style="border: 1px solid red; padding: 15px"></canvas>
+      <div class="chart-container" style="position: relative; height:80vh; width: 100%">
+        <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
+      </div>
     </div>
   </div>
 
+
   <div class="mt-3 d-flex justify-content-between flex-00a">
     <button class="btn btn-primary" (click)="navSvc.navBack('trend-analytics')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('trend-analytics')">Next</button>
   </div>
 </div>

@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
+import { AggregationChartService } from '../../services/aggregation-chart.service';
 
 @Component({
   selector: 'app-trend-analytics',
@@ -33,12 +34,39 @@ import { AggregationService } from '../../services/aggregation.service';
 })
 export class TrendAnalyticsComponent implements OnInit {
 
+  chartOverallCompl: Chart;
+  chartTop5: Chart;
+  chartBottom5: Chart;
+  chartCategoryPercent: Chart;
+
   constructor(
     public navSvc: NavigationAggregService,
-    public aggregationSvc: AggregationService
+    public aggregationSvc: AggregationService,
+    public aggregChartSvc: AggregationChartService
   ) { }
 
   ngOnInit() {
+    // call service to get the big enchilada of data. subscribe(x => { this.populateGraphs(x) });
+
+    this.populateGraphs();
   }
 
+  populateGraphs() {
+    // Overall Compliance
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+      this.chartOverallCompl = this.aggregChartSvc.buildPercentComplianceChart('canvasOverallCompliance', x);
+    });
+
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+      this.chartTop5 = this.aggregChartSvc.buildTop5Chart('canvasTop5', x);
+    });
+
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+      this.chartBottom5 = this.aggregChartSvc.buildBottom5Chart('canvasBottom5', x);
+    });
+
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+    });
+  }
 }

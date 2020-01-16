@@ -162,6 +162,11 @@ export class AggregationService {
   }
 
 
+  getCategoryPercentageComparisons() {
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + 3, {});
+  }
+
+
 
   //////////////////////////////// Merge //////////////////////////////////////
 

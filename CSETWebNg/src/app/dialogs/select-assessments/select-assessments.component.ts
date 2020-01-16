@@ -28,7 +28,7 @@ export class SelectAssessmentsComponent implements OnInit {
     private dialog: MatDialogRef<SelectAssessmentsComponent>,
     private assessmentSvc: AssessmentService,
     private authSvc: AuthenticationService,
-    public aggregSvc: AggregationService
+    public aggregationSvc: AggregationService
   ) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class SelectAssessmentsComponent implements OnInit {
     this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
       this.assessments = resp;
 
-      this.aggregSvc.getAssessments().subscribe((resp2: any) => {
+      this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
         resp2.Assessments.forEach(selectedAssess => {
           this.assessments.find(x => x.AssessmentId === selectedAssess.AssessmentId).Selected = true;
         });
@@ -61,7 +61,7 @@ export class SelectAssessmentsComponent implements OnInit {
    * @param assessment
    */
   toggleSelection(event, assessment) {
-    this.aggregSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe();
+    this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe();
   }
 
   /**
