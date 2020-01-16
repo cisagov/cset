@@ -4,17 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
-using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.BusinessManagers.Analysis;
-using CSETWeb_Api.Helpers;
-using DataLayerCore.Manual;
 using DataLayerCore.Model;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.Models;
@@ -25,19 +19,159 @@ namespace CSETWeb_Api.Controllers
     //[CSETAuthorize]
     public class AggregationAnalysisController : ApiController
     {
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpPost]
-        [Route("api/aggregation/analysis/categorypercentcompare")]
+        [Route("api/aggregation/analysis/overallcompliancescore")]
+        public LineChart OverallComplianceScore([FromUri] int aggregationId)
+        {
+            var response = new LineChart();
+            response.reportType = "Trend Overall Compliance Score";
+
+            // create the 4 compliance categories
+            List<string> lineNames = new List<string>() { "Overall", "Components", "Standards", "Framework" };
+            foreach (string name in lineNames)
+            {
+                var ds = new ChartDataSet();
+                ds.label = name;
+                response.datasets.Add(ds);
+            }
+
+
+            // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
+            //                  modified for the 9.x database.
+
+            var rnd = new Random(DateTime.Now.Millisecond);
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d"));
+
+                    foreach (var ds1 in response.datasets)
+                    {
+                        ds1.data.Add(rnd.Next(0, 100));
+                    }
+                }
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpPost]
+        [Route("api/aggregation/analysis/top5")]
+        public LineChart Top5([FromUri] int aggregationId)
+        {
+            var response = new LineChart();
+            response.reportType = "Top 5 Most Improved Areas";
+
+            // create the 4 compliance categories
+            List<string> lineNames = new List<string>() { "System Protection", "Training", "Incident Response", "Physical Security", "Access Control" };
+            foreach (string name in lineNames)
+            {
+                var ds = new ChartDataSet();
+                ds.label = name;
+                response.datasets.Add(ds);
+            }
+
+
+            // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
+            //                  modified for the 9.x database.
+
+            var rnd = new Random(DateTime.Now.Millisecond);
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d"));
+
+                    foreach (var ds1 in response.datasets)
+                    {
+                        ds1.data.Add(rnd.Next(0, 100));
+                    }
+                }
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpPost]
+        [Route("api/aggregation/analysis/bottom5")]
+        public LineChart Bottom5([FromUri] int aggregationId)
+        {
+            var response = new LineChart();
+            response.reportType = "Top 5 Areas of Concern";
+
+            // create the 4 compliance categories
+            List<string> lineNames = new List<string>() { "Information Protection", "Communication Protection", "Monitoring & Malware", "Continuity", "Configuration Management" };
+            foreach (string name in lineNames)
+            {
+                var ds = new ChartDataSet();
+                ds.label = name;
+                response.datasets.Add(ds);
+            }
+
+
+            // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
+            //                  modified for the 9.x database.
+
+            var rnd = new Random(DateTime.Now.Millisecond);
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d"));
+
+                    foreach (var ds1 in response.datasets)
+                    {
+                        ds1.data.Add(rnd.Next(0, 100));
+                    }
+                }
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Returns a data structure for the Category Percent Compare chart.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/categorypercentcompare")]        
         public HorizBarChart CategoryPercentCompare([FromUri] int aggregationId)
         {
             var response = new HorizBarChart();
             response.reportType = "Trend Category Percent Comparisons";
 
-
             DataTable dt = new DataTable();
             dt.Columns.Add("AssessmentId", typeof(int));
             dt.Columns.Add("Alias");
-
-
 
             using (CSET_Context db = new CSET_Context())
             {
@@ -63,7 +197,6 @@ namespace CSETWeb_Api.Controllers
 
                         row[r.Question_Group_Heading] = r.prc;
                     }
-
                 }
 
                 // build the response
@@ -83,7 +216,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (DataRow rowAssessment in dt.Rows)
                 {
-                    var ds = new BusinessLogic.Models.DataSet();
+                    var ds = new ChartDataSet();
                     response.datasets.Add(ds);
                     ds.label = rowAssessment["Alias"].ToString();
 
@@ -96,7 +229,6 @@ namespace CSETWeb_Api.Controllers
 
             return response;
         }
-
 
 
         /// <summary>
@@ -122,6 +254,6 @@ namespace CSETWeb_Api.Controllers
                         });
 
             return response;
-        }
+        }        
     }
 }

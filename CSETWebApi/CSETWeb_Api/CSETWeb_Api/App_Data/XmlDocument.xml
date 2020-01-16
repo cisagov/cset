@@ -489,6 +489,28 @@
             Removes all maturity filters for the current assessment.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.OverallComplianceScore(System.Int32)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Top5(System.Int32)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Bottom5(System.Int32)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.CategoryPercentCompare(System.Int32)">
+            <summary>
+            Returns a data structure for the Category Percent Compare chart.
+            </summary>
+            <param name="aggregationId"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetCategoryPercentages(System.Int32,DataLayerCore.Model.CSET_Context)">
             <summary>
             Returns the category percentages for an assessment.
