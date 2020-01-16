@@ -45,27 +45,36 @@ export class TrendAnalyticsComponent implements OnInit {
     public aggregChartSvc: AggregationChartService
   ) { }
 
+  /**
+   *
+   */
   ngOnInit() {
-    // call service to get the big enchilada of data. subscribe(x => { this.populateGraphs(x) });
-
-    this.populateGraphs();
+    this.populateCharts();
   }
 
-  populateGraphs() {
+  /**
+   * Get the data from the API and build the charts for the page.
+   */
+  populateCharts() {
+    const aggregationId = this.aggregationSvc.id();
+
     // Overall Compliance
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
-      this.chartOverallCompl = this.aggregChartSvc.buildPercentComplianceChart('canvasOverallCompliance', x);
+    this.aggregationSvc.getOverallComplianceScores(aggregationId).subscribe((x: any) => {
+      this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
     });
 
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
-      this.chartTop5 = this.aggregChartSvc.buildTop5Chart('canvasTop5', x);
+    // Top 5
+    this.aggregationSvc.getTrendTop5(aggregationId).subscribe((x: any) => {
+      this.chartTop5 = this.aggregChartSvc.buildLineChart('canvasTop5', x);
     });
 
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
-      this.chartBottom5 = this.aggregChartSvc.buildBottom5Chart('canvasBottom5', x);
+    // Bottom 5
+    this.aggregationSvc.getTrendBottom5(aggregationId).subscribe((x: any) => {
+      this.chartBottom5 = this.aggregChartSvc.buildLineChart('canvasBottom5', x);
     });
 
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+    // Category Percentage Comparison
+    this.aggregationSvc.getCategoryPercentageComparisons(aggregationId).subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
     });
   }

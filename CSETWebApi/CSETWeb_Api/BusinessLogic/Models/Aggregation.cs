@@ -1,4 +1,10 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2020 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,25 +85,45 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public string reportType { get; set; }
         public List<string> categories { get; set; }
-        public List<DataSet> datasets { get; set; }
+        public List<ChartDataSet> datasets { get; set; }
 
         public HorizBarChart()
         {
             this.categories = new List<string>();
-            this.datasets = new List<DataSet>();
+            this.datasets = new List<ChartDataSet>();
         }
     }
 
-    public class DataSet
+    public class ChartDataSet
     {
         public string label { get; set; }
         public List<float> data { get; set; }
 
-        public DataSet()
+        public ChartDataSet()
         {
             this.data = new List<float>();
         }
     }
+
+    public class LineChart
+    {
+        public string reportType { get; set; }
+
+        /// <summary>
+        /// The labels for the x-axis.  Typically dates.
+        /// </summary>
+        public List<string> labels { get; set; }
+
+        public List<ChartDataSet> datasets { get; set; }
+
+
+        public LineChart()
+        {
+            this.labels = new List<string>();
+            this.datasets = new List<ChartDataSet>();
+        }
+    }
+
 
 
 

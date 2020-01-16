@@ -100,8 +100,6 @@ export class AggregationService {
     this.getAggregationToken(id).then(() => {
       this.getAggregation().subscribe((agg: any) => {
         this.currentAggregation = agg;
-        console.log('just called API get aggregation');
-        console.log(this.currentAggregation);
         this.router.navigate(['/alias-assessments', id]);
       });
     });
@@ -133,15 +131,12 @@ export class AggregationService {
   }
 
   updateAggregation() {
-    console.log('updateAggregation');
     const agg = this.currentAggregation;
-    console.log(agg);
     const aggForSubmit = {
       AggregationId: agg.AggregationId,
       AggregationName: agg.AggregationName,
       AggregationDate: agg.AggregationDate
     };
-    console.log(aggForSubmit);
     return this.http.post(this.apiUrl + 'update', aggForSubmit);
   }
 
@@ -162,8 +157,20 @@ export class AggregationService {
   }
 
 
-  getCategoryPercentageComparisons() {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + 3, {});
+  getOverallComplianceScores(id: number) {
+    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore?aggregationId=' + id, {});
+  }
+
+  getTrendTop5(id: number) {
+    return this.http.post(this.apiUrl + 'analysis/top5?aggregationId=' + id, {});
+  }
+
+  getTrendBottom5(id: number) {
+    return this.http.post(this.apiUrl + 'analysis/bottom5?aggregationId=' + id, {});
+  }
+
+  getCategoryPercentageComparisons(id: number) {
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + id, {});
   }
 
 
