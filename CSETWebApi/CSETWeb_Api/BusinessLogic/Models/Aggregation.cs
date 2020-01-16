@@ -75,7 +75,34 @@ namespace CSETWeb_Api.BusinessLogic.Models
     }
 
 
+    public class HorizBarChart
+    {
+        public string reportType { get; set; }
+        public List<string> categories { get; set; }
+        public List<DataSet> datasets { get; set; }
 
+        public HorizBarChart()
+        {
+            this.categories = new List<string>();
+            this.datasets = new List<DataSet>();
+        }
+    }
+
+    public class DataSet
+    {
+        public string label { get; set; }
+        public List<float> data { get; set; }
+
+        public DataSet()
+        {
+            this.data = new List<float>();
+        }
+    }
+
+
+
+
+    ////////////////////////////////   MERGE    //////////////////////////////////////////////////
 
 
     /// <summary>

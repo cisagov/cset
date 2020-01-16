@@ -52,6 +52,10 @@ export class AliasAssessmentsComponent implements OnInit {
     this.getRelatedAssessments();
   }
 
+  updateAggregation() {
+    this.aggregationSvc.updateAggregation().subscribe();
+  }
+
   getRelatedAssessments() {
     // get the assessments for this aggregation
     this.aggregationSvc.getAssessments().subscribe(resp => {

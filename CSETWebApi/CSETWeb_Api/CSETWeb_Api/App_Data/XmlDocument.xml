@@ -489,6 +489,13 @@
             Removes all maturity filters for the current assessment.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetCategoryPercentages(System.Int32,DataLayerCore.Model.CSET_Context)">
+            <summary>
+            Returns the category percentages for an assessment.
+            </summary>
+            <param name="assessmentId"></param>
+            <param name="db"></param>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.AggregationController">
             <summary>
             

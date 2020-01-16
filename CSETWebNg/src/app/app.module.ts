@@ -175,6 +175,7 @@ import { AggregationDetailComponent } from './aggregation/aggregation-detail/agg
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
+import { AggregationChartService } from './services/aggregation-chart.service';
 
 
 @NgModule({
@@ -355,7 +356,8 @@ import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-
         ACETService,
         ResourceLibraryService,
         DiagramService,
-        AggregationService
+        AggregationService,
+        AggregationChartService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

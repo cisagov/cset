@@ -28,9 +28,18 @@
 
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <form name="form" #userForm="ngForm">
-      <div class="p-3">
+      <div>
+        <div>
+          Selected Assessments Questions Compatibility: 0.000%
+        </div>
+        <div>
+          Selected Assessments Requirements Compatibilty: 0.000%
+        </div>
+      </div>
+      <div class="p-3" style="overflow-y: auto;">
         <div *ngFor="let a of assessments">
-          <input type="checkbox" class="mr-2" (change)="toggleSelection($event, a)" [checked]="a.Selected"><label>{{ a.AssessmentName }}</label>
+          <input type="checkbox" [id]="'assess-' + a.AssessmentId" class="mr-2" (change)="toggleSelection($event, a)"
+            [checked]="a.Selected"><label [for]="'assess-' + a.AssessmentId">{{ a.AssessmentName }}</label>
         </div>
 
         <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
