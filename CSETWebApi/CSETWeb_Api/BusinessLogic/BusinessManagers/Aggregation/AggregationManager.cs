@@ -10,6 +10,7 @@ using Snickler.EFCore;
 using BusinessLogic.Helpers;
 using BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 using CSETWeb_Api.BusinessLogic.Models;
 
@@ -107,7 +108,8 @@ namespace CSETWeb_Api.BusinessLogic
                     return null;
                 }
 
-                return new Aggregation() { 
+                return new Aggregation()
+                {
                     AggregationDate = ai.Aggregation_Date,
                     AggregationId = ai.AggregationID,
                     AggregationName = ai.Aggregation_Name,
@@ -123,7 +125,6 @@ namespace CSETWeb_Api.BusinessLogic
         /// <returns></returns>
         public int SaveAggregationInformation(int aggregationId, Aggregation aggreg)
         {
-
             // TEMP TEMP
             if (aggreg.AggregationId == 0)
             {
@@ -164,8 +165,34 @@ namespace CSETWeb_Api.BusinessLogic
         /// 
         /// </summary>
         /// <param name="aggregationId"></param>
+        public void DeleteAggregation(int aggregationId)
+        {
+            using (var db = new CSET_Context())
+            {
+                db.AGGREGATION_ASSESSMENT.RemoveRange(
+                    db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    );
+
+                db.AGGREGATION_INFORMATION.RemoveRange(
+                    db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId)
+                    );
+
+                db.SaveChanges();
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aggregationId"></param>
         public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
         {
+            // assign default aliases
+            // TODO:  If they are comparing more than 26 assessments, this will have to be done a different way.
+            var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var aliasPosition = 0;
+
             using (var db = new CSET_Context())
             {
                 var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -180,38 +207,40 @@ namespace CSETWeb_Api.BusinessLogic
                 };
 
 
-                var ggg = db.AGGREGATION_ASSESSMENT
+                var dbAaList = db.AGGREGATION_ASSESSMENT
                     .Where(x => x.Aggregation_Id == aggregationId)
                     .Include(x => x.Assessment_)
                     .ThenInclude(x => x.INFORMATION)
+                    .OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
                 var l = new List<AggregAssessment>();
-                foreach (var g in ggg)
-                {
-                    l.Add(new AggregAssessment()
-                    {
-                        AssessmentId = g.Assessment_Id,
-                        Alias = g.Alias,
-                        AssessmentName = g.Assessment_.INFORMATION.Assessment_Name
-                    });
-                }
 
-                // assign default aliases
-                // TODO:  If they are comparing more than 26 assessments, this will have to be done a different way.
-                var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                var aliasPosition = 0;
-                foreach (var a in l)
+                foreach (var dbAA in dbAaList)
                 {
-                    if (string.IsNullOrEmpty(a.Alias))
+                    var aa = new AggregAssessment()
+                    {
+                        AssessmentId = dbAA.Assessment_Id,
+                        Alias = dbAA.Alias,
+                        AssessmentName = dbAA.Assessment_.INFORMATION.Assessment_Name,
+                        AssessmentDate = dbAA.Assessment_.Assessment_Date
+                    };
+
+                    l.Add(aa);
+
+                    if (string.IsNullOrEmpty(aa.Alias))
                     {
                         while (l.Exists(x => x.Alias == aliasLetters[aliasPosition].ToString()))
                         {
                             aliasPosition++;
                         }
-                        a.Alias = aliasLetters[aliasPosition].ToString();
+                        aa.Alias = aliasLetters[aliasPosition].ToString();
+                        dbAA.Alias = aa.Alias;
                     }
                 }
+
+                // Make sure the aliases are persisted
+                db.SaveChanges();
 
                 resp.Assessments = l;
 
@@ -239,10 +268,11 @@ namespace CSETWeb_Api.BusinessLogic
                 var g = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
 
                 if (selected)
-                {                    
+                {
                     if (g == null)
                     {
-                        g = new AGGREGATION_ASSESSMENT() { 
+                        g = new AGGREGATION_ASSESSMENT()
+                        {
                             Aggregation_Id = aggregationId,
                             Assessment_Id = assessmentId,
                             Alias = ""
@@ -281,10 +311,10 @@ namespace CSETWeb_Api.BusinessLogic
         }
 
 
-            /// <summary>
-            /// 
-            /// </summary>
-            public void IncludeStandards(ref AssessmentListResponse response)
+        /// <summary>
+        /// 
+        /// </summary>
+        public void IncludeStandards(ref AssessmentListResponse response)
         {
             // For each standard, list any assessments that use it.
             Dictionary<string, List<int>> selectedStandards = new Dictionary<string, List<int>>();

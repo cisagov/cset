@@ -23,8 +23,6 @@
 ////////////////////////////////
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AssessmentService } from './assessment.service';
-import { StandardService } from './standard.service';
 import { AggregationService } from './aggregation.service';
 
 /**
@@ -39,9 +37,8 @@ import { AggregationService } from './aggregation.service';
 export class NavigationAggregService {
 
   pages = [
-    { pageClass: 'aggregation-home', path: 'aggregation-home' },
+    { pageClass: 'trend', path: 'trend' },
     { pageClass: 'alias-assessments', path: 'alias-assessments/{:id}' },
-    // { pageClass: 'aggregation-detail', path: 'aggregation-detail/{:id}', condition: true },
     { pageClass: 'trend-analytics', path: 'trend-analytics/{:id}', condition: true }
   ];
 

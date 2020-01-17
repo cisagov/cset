@@ -48,13 +48,12 @@ export class AggregationChartService {
   * @param x
   */
   buildLineChart(canvasId: string, x: any) {
-
-    const colorSvc = new ColorService();
+    const chartColors = new ChartColors();
 
     // add display characteristics
     for (let i = 0; i < x.datasets.length; i++) {
       const ds = x.datasets[i];
-      ds.borderColor = colorSvc.getLineColor(i);
+      ds.borderColor = chartColors.getLineColor(i);
       ds.backgroundColor = ds.borderColor;
       ds.pointRadius = 8;
       ds.lineTension = 0;
@@ -81,14 +80,14 @@ export class AggregationChartService {
   * @param x
   */
   buildCategoryPercentChart(canvasId: string, x: any) {
-    const colorSvc = new ColorService();
+    const chartColors = new ChartColors();
 
     for (let i = 0; i < x.datasets.length; i++) {
       const ds = x.datasets[i];
       if (ds.label === '') {
         ds.label = 'A';
       }
-      ds.borderColor = colorSvc.getNextBarColor();
+      ds.borderColor = chartColors.getNextBarColor();
       ds.backgroundColor = ds.borderColor;
     }
 
@@ -104,13 +103,15 @@ export class AggregationChartService {
       }
     });
   }
-
 }
 
 /**
  * A service that supplies colors for charts.
  */
-export class ColorService {
+export class ChartColors {
+  /**
+   * These colors are used for bar charts with multiple assessments.
+   */
   colorSequence = [
     '#0000FF',
     '#FFD700',
@@ -135,6 +136,9 @@ export class ColorService {
   ];
   nextSequence: number = -1;
 
+  /**
+   * These colors are used for line charts.
+   */
   lineColors = [
     '#3e7bc4',
     '#81633f',
@@ -149,11 +153,10 @@ export class ColorService {
    */
   getNextBarColor() {
     if (this.nextSequence > this.colorSequence.length - 1) {
-      this.nextSequence = 0;
+      this.nextSequence = -1;
     }
-    this.nextSequence++;
 
-    return this.colorSequence[this.nextSequence];
+    return this.colorSequence[++this.nextSequence];
   }
 
   /**

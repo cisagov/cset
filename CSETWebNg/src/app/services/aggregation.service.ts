@@ -77,7 +77,6 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'create?mode=' + this.mode, '');
   }
 
-
   newAggregation() {
     this.createAggregation()
       .toPromise()
@@ -138,6 +137,10 @@ export class AggregationService {
       AggregationDate: agg.AggregationDate
     };
     return this.http.post(this.apiUrl + 'update', aggForSubmit);
+  }
+
+  deleteAggregation(id: any) {
+    return this.http.post(this.apiUrl + 'delete?aggregationId=' + id, '');
   }
 
 

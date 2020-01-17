@@ -52,7 +52,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d"));
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
 
                     foreach (var ds1 in response.datasets)
                     {
@@ -98,7 +98,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d"));
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
 
                     foreach (var ds1 in response.datasets)
                     {
@@ -144,7 +144,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d"));
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
 
                     foreach (var ds1 in response.datasets)
                     {
