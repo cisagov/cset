@@ -72,6 +72,16 @@ namespace CSETWeb_Api.Controllers
 
         //[CSETAuthorize]
         [HttpPost]
+        [Route("api/aggregation/delete")]
+        public void DeleteAggregation([FromUri] int aggregationId)
+        {
+            var manager = new BusinessLogic.AggregationManager();
+            manager.DeleteAggregation(aggregationId);
+        }
+
+
+        //[CSETAuthorize]
+        [HttpPost]
         [Route("api/aggregation/getassessments")]
         public AssessmentListResponse GetAssessmentsForAggregation([FromUri] int aggregationId)
         {

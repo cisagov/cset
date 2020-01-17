@@ -46,6 +46,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public int AssessmentId { get; set; }
         public string AssessmentName { get; set; }
+        public DateTime AssessmentDate { get; set; }
         public string Alias { get; set; }
         public List<SelectedStandards> SelectedStandards;
 

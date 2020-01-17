@@ -24,6 +24,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { Router } from '@angular/router';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { AlertComponent } from '../../dialogs/alert/alert.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-aggregation-home',
@@ -39,6 +42,7 @@ export class AggregationHomeComponent implements OnInit {
   constructor(
     public aggregationSvc: AggregationService,
     public router: Router,
+    public dialog: MatDialog
   ) { }
 
   /**
@@ -65,6 +69,27 @@ export class AggregationHomeComponent implements OnInit {
       console.log(x);
       this.router.navigate(['select-assessments', x.AggregationId]);
     });
+  }
 
+  removeAggregation(agg: any, idx: number) {
+    // if it's legal, see if they really want to
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to remove '" +
+      agg.AggregationName +
+      "'?";
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.aggregationSvc.deleteAggregation(agg.AggregationId).subscribe(
+          x => {
+            this.aggregations.splice(idx, 1);
+          },
+          x => {
+            this.dialog.open(AlertComponent, {
+              data: { messageText: x.statusText }
+            });
+          });
+      }
+    });
   }
 }

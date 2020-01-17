@@ -47,6 +47,9 @@
       <th>
         Assessment Name
       </th>
+      <th>
+        Assessment Date
+      </th>
     </tr>
     <tr *ngFor="let assess of aliasData.Assessments">
       <td class="pr-3">
@@ -54,6 +57,9 @@
       </td>
       <td>
         {{ assess.AssessmentName }}
+      </td>
+      <td>
+        {{ assess.AssessmentDate | date:'dd-MMM-yyyy' }}
       </td>
     </tr>
   </table>

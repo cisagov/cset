@@ -46,6 +46,7 @@
         <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
           <th mat-sort-header="assessment">{{ this.aggregationSvc?.modeDisplay(false) }} Name</th>
           <th mat-sort-header="date">Date</th>
+          <th></th>
           <tr *ngFor="let agg of aggregations; let i = index">
             <td>
               <button
@@ -55,6 +56,14 @@
               </button>
             </td>
             <td>{{agg.AggregationDate | date:'dd-MMM-yyyy'}}</td>
+            <td>
+              <button
+                class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                (click)="removeAggregation(agg, i)" matTooltip="Permanently remove this trend.">
+                <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
+                <span class="icon-link-button-text-dark">Remove</span>
+              </button>
+            </td>
           </tr>
         </table>
       </div>
