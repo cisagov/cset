@@ -404,6 +404,8 @@
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Models\ACETDashboard.cs" />
+    <Compile Include="Models\AnalyticsDemographic.cs" />
+    <Compile Include="Models\AnalyticsQuestionAnswer.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />

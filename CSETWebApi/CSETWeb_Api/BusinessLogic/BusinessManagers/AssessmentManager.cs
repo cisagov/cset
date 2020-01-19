@@ -301,6 +301,39 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
+        /// <summary>
+        /// Returns the Demographics instance for the assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public AnalyticsDemographic GetAnonymousDemographics(int assessmentId)
+        {
+            AnalyticsDemographic demographics = new AnalyticsDemographic();
+
+            using (var db = new CSET_Context())
+            {
+                var query = from ddd in db.DEMOGRAPHICS
+                    from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
+                    from dav in db.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
+                    where ddd.Assessment_Id == assessmentId
+                    select new { ddd, ds, dav };
+
+
+                var hit = query.FirstOrDefault();
+                if (hit != null)
+                {
+                    demographics.SectorName = hit.ddd.Sector?.SectorName;
+                    demographics.IndustryName = hit.ddd.Industry?.IndustryName;
+                    demographics.AssetValue = hit.ddd.AssetValue;
+                    demographics.Size = hit.ddd.Size;
+                }
+
+                return demographics;
+            }
+        }
+
+
+
 
         /// <summary>
         /// Persists data to the DEMOGRAPHICS table.
