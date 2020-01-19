@@ -59,7 +59,7 @@
     "ng2-ion-range-slider": "^2.0.0",
     "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "npm": "^6.9.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
