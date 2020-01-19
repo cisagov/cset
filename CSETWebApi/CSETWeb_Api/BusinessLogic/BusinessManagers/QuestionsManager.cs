@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -123,7 +124,31 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-      
+        /// <summary>
+        /// Map Questions and answers to view
+        /// </summary>
+        /// <param name="questionResponse"></param>
+        /// <returns></returns>
+        public List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse)
+        {
+            List<AnalyticsQuestionAnswer> analyticQuestionAnswers = new List<AnalyticsQuestionAnswer>();
+            foreach (var questionGroup in questionResponse.QuestionGroups)
+            {
+                foreach (var subCategory in questionGroup.SubCategories)
+                {
+                    foreach (var question in subCategory.Questions)
+                    {
+                        analyticQuestionAnswers.Add(new AnalyticsQuestionAnswer
+                        {
+                            QuestionId = question.QuestionId,
+                            QuestionText = question.QuestionText,
+                            Answer = question.Answer
+                        });
+                    }
+                }
+            }
+            return analyticQuestionAnswers;
+        }
 
 
         /// <summary>
