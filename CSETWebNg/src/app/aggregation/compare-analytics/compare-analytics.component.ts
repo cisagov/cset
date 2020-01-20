@@ -22,6 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { AggregationService } from '../../services/aggregation.service';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { NavigationAggregService } from '../../services/navigationAggreg.service';
 
 @Component({
   selector: 'app-compare-analytics',
@@ -29,7 +33,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompareAnalyticsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public aggregationSvc: AggregationService,
+    public route: ActivatedRoute,
+    public dialog: MatDialog,
+    public navSvc: NavigationAggregService
+  ) { }
 
   ngOnInit() {
   }
