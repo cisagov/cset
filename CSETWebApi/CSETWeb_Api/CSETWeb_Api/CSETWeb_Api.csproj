@@ -389,7 +389,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="CSETWeb_Api.csproj.user" />
     <Content Include="Diagram\.gitignore" />
     <Content Include="Diagram\.gitmodules" />
     <Content Include="Diagram\etc\build\base-viewer.min.js" />
@@ -4674,6 +4673,7 @@
     <Delete Files="Web.temp.config" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)Diagram\etc\build\build.bat"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
