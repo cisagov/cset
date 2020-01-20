@@ -4491,6 +4491,7 @@
     <Compile Include="Controllers\AdminTabController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\AngularConfigController.cs" />
+    <Compile Include="Controllers\AnalyticsController.cs" />
     <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentExportController.cs" />
     <Compile Include="Controllers\AssessmentImportController.cs" />

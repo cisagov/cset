@@ -1,0 +1,51 @@
+
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12" style="padding-bottom:15px;">
+                <h4>Analytics</h4>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:5px;">
+            <div class="col-12">
+                <mat-tab-group style="overflow: auto">
+                    <mat-tab label="Pretty Data">
+                        <div class="container">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h5>Demographics</h5>
+                                </div>
+                                <div class="row">
+                                    <h5>Questions/Anwers</h5>
+                                    <div class="col-12">
+                                        <div class="row" *ngFor="let qa of questionAnswers; let i = index">
+                                            <div class="col-2">
+                                                <div class="row">{{qa.QuestionId}}</div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="row">{{qa.QuestionText}}</div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="row">{{qa.Answer}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Raw Data">
+                        <div class="container">
+                            <div class="col-12">
+                                <div class="row"><pre>{{questionAnswers | json}}</pre></div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
+
+
