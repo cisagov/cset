@@ -165,6 +165,8 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsService } from './services/analytics.service';
 
 @NgModule({
     imports: [
@@ -299,7 +301,8 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         TextComponent,
         ZonesComponent,
         ComponentOverrideComponent, 
-        ExcelExportComponent
+        ExcelExportComponent, 
+        AnalyticsComponent
     ],
     providers: [
         ConfigService,
@@ -334,7 +337,8 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         SetBuilderService,
         ACETService,
         ResourceLibraryService,
-        DiagramService
+        DiagramService, 
+        AnalyticsService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

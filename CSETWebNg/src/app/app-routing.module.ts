@@ -71,6 +71,7 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 
 const appRoutes: Routes = [
   { path: 'resource-library', component: ResourceLibraryComponent },
@@ -157,6 +158,7 @@ const appRoutes: Routes = [
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
           { path: 'feedback', component: FeedbackComponent},
+          { path: 'analytics', component: AnalyticsComponent},
           { path: '', component: DashboardComponent },
         ]
       },
