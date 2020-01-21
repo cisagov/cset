@@ -2160,6 +2160,19 @@ hr.ranked-questions {
 
 
 // Aggregation
+///////////////////////////////////////////////////////////////////////
+.analytics-wrapper {
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+@media (max-width: 500px) {
+  .analytics-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 .merge-source-answer {
   min-width: 2rem;
   text-align: center;

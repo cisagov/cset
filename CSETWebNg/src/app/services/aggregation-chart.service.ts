@@ -68,7 +68,14 @@ export class AggregationChartService {
       },
       options: {
         maintainAspectRatio: true,
-        legend: { position: 'left' }
+        legend: { position: 'left' },
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        }
       }
     });
   }
@@ -99,7 +106,14 @@ export class AggregationChartService {
         datasets: x.datasets
       },
       options: {
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        }
       }
     });
   }

@@ -125,12 +125,6 @@ namespace CSETWeb_Api.BusinessLogic
         /// <returns></returns>
         public int SaveAggregationInformation(int aggregationId, Aggregation aggreg)
         {
-            // TEMP TEMP
-            if (aggreg.AggregationId == 0)
-            {
-                return 0;
-            }
-
             using (var db = new CSET_Context())
             {
                 var agg = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -389,9 +383,51 @@ namespace CSETWeb_Api.BusinessLogic
         {
             // TODO: figure out how stored proc GetCompatibilityCounts can be adjusted for 9.x
 
+            // get lists of question IDs, then use LINQ to do the intersection
+            var l = new List<List<int>>();
 
+            // master hash set of all questions
+            var m = new HashSet<int>();
 
-            return 50.0f;
+            using (var db = new CSET_Context())
+            {
+                foreach (int id in assessmentIds)
+                {
+                    if (mode == "Q")
+                    {
+                        var listQuestionID = db.Answer_Questions.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        l.Add(listQuestionID);
+                        m.UnionWith(listQuestionID);
+                    }
+
+                    if (mode == "R")
+                    {
+                        var listRequirementID = db.Answer_Requirements.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        l.Add(listRequirementID);
+                        m.UnionWith(listRequirementID);
+                    }
+
+                }
+            }
+
+            if (l.Count == 0)
+            {
+                return 0f;
+            }
+
+            var intersection = l
+                .Skip(1)
+                .Aggregate(
+                    new HashSet<int>(l.First()),
+                    (h, e) => { h.IntersectWith(e); return h; }
+                );
+
+            if (m.Count == 0)
+            {
+                return 0f;
+            }
+
+            return ((float)intersection.Count / (float)m.Count);
         }
 
 

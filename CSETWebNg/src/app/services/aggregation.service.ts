@@ -44,6 +44,7 @@ export class AggregationService {
     private router: Router
   ) {
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+    this.currentAggregation = {};
   }
 
 
@@ -57,6 +58,10 @@ export class AggregationService {
    * @param plural
    */
   modeDisplay(plural: boolean) {
+    if (!this.mode) {
+      return '';
+    }
+
     switch (this.mode.toLowerCase()) {
       case 'trend':
         return plural ? 'Trends' : 'Trend';
@@ -71,24 +76,30 @@ export class AggregationService {
   }
 
   /**
-   * Calls the API to create a new aggregation record
+   * 
    */
-  createAggregation() {
-    return this.http.post(this.apiUrl + 'create?mode=' + this.mode, '');
-  }
-
   newAggregation() {
     this.createAggregation()
       .toPromise()
       .then(
         (response: any) => {
-          this.loadAggregation(response.Id);
+          console.log('newAggregation just came back with response:');
+          console.log(response);
+          sessionStorage.setItem('aggregationId', response.AggregationId);
+          this.loadAggregation(response.AggregationId);
         },
         error =>
           console.log(
             'Unable to create new assessment: ' + (<Error>error).message
           )
       );
+  }
+
+  /**
+   * Calls the API to create a new aggregation record
+   */
+  createAggregation() {
+    return this.http.post(this.apiUrl + 'create?mode=' + this.mode, '');
   }
 
   /**
@@ -153,6 +164,7 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'saveassessmentselection',
       { Selected: selected, AssessmentId: assessment.AssessmentId });
   }
+
 
   saveAssessmentAlias(assessment: any) {
     return this.http.post(this.apiUrl + 'saveassessmentalias',
