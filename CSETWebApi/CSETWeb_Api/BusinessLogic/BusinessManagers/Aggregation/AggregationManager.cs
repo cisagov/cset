@@ -430,6 +430,59 @@ namespace CSETWeb_Api.BusinessLogic
             return ((float)intersection.Count / (float)m.Count);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
+        {
+            var resp = new List<MissedQuestion>();
+
+            // get lists of question IDs, then use LINQ to do the intersection
+            var l = new List<List<int>>();
+
+            using (var db = new CSET_Context())
+            {
+                var assessmentIds = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).ToList().Select(x => x.Assessment_Id);
+
+                foreach (int assessmentId in assessmentIds)
+                {
+                    var answeredNo = db.Answer_Questions.Where(x => x.Assessment_Id == assessmentId && x.Answer_Text == "N").Select(x => x.Question_Or_Requirement_Id).ToList();
+                    l.Add(answeredNo);
+                }
+
+                if (l.Count > 0)
+                {
+                    var intersection = l
+                    .Skip(1)
+                    .Aggregate(
+                        new HashSet<int>(l.First()),
+                        (h, e) => { h.IntersectWith(e); return h; }
+                    );
+
+                    var query1 = from nq in db.NEW_QUESTION
+                                 join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on nq.Heading_Pair_Id equals usch.Heading_Pair_Id
+                                 join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                                 join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                                 where intersection.Contains(nq.Question_Id)
+                                 orderby qgh.Question_Group_Heading1, usc.Universal_Sub_Category, nq.Simple_Question
+                                 select new { nq, qgh, usc };
+
+                    foreach (var q in query1.ToList())
+                    {
+                        resp.Add(new MissedQuestion()
+                        {
+                            QuestionId = q.nq.Question_Id,
+                            QuestionText = q.nq.Simple_Question,
+                            Category = q.qgh.Question_Group_Heading1,
+                            Subcategory = q.usc.Universal_Sub_Category
+                        });
+                    }
+                }
+
+                return resp;
+            }
+        }
 
         /// <summary>
         /// 

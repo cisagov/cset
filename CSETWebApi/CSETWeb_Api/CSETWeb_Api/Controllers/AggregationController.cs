@@ -125,6 +125,15 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        //[CSETAuthorize]
+        [HttpPost]
+        [Route("api/aggregation/getmissedquestions")]
+        public List<MissedQuestion> GetCommonlyMissedQuestions([FromUri] int aggregationId)
+        {
+            var manager = new BusinessLogic.AggregationManager();
+            return manager.GetCommonlyMissedQuestions(aggregationId);
+        }
+
 
 
         //////////////////////////////////////////

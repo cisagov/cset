@@ -2162,6 +2162,7 @@ hr.ranked-questions {
 // Aggregation
 ///////////////////////////////////////////////////////////////////////
 .analytics-wrapper {
+  width: 100%;
   margin-left: 3rem;
   margin-right: 3rem;
 }
@@ -2339,6 +2340,10 @@ table.td-p-1 td {
 
 table.td-p-2 td {
   padding: .5rem !important;
+}
+
+table.td-text-left th, table.td-text-left td {
+  text-align: left !important;
 }
 
 
