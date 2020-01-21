@@ -30,6 +30,10 @@ import { Router } from '@angular/router';
 export class AggregationService {
 
   private apiUrl: string;
+
+  /**
+   * Contains 'TREND' or 'COMPARE'
+   */
   public mode: string;
   public currentAggregation: any;
 
@@ -76,7 +80,7 @@ export class AggregationService {
   }
 
   /**
-   * 
+   *
    */
   newAggregation() {
     this.createAggregation()

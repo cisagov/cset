@@ -77,6 +77,7 @@ import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias
 import { AggregationGuard } from './guards/aggregation.guard';
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
+import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 
 const appRoutes: Routes = [
   {
@@ -96,6 +97,7 @@ const appRoutes: Routes = [
 
   { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
   { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
+  { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
   { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
 
