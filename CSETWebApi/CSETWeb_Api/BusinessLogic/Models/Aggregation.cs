@@ -82,6 +82,18 @@ namespace CSETWeb_Api.BusinessLogic.Models
     }
 
 
+    /// <summary>
+    /// Shown in Compare Analytics
+    /// </summary>
+    public class MissedQuestion
+    {
+        public int QuestionId { get; set; }
+        public string Category { get; set; }
+        public string Subcategory { get; set; }
+        public string QuestionText { get; set; }
+    }
+
+
     public class HorizBarChart
     {
         public string reportType { get; set; }

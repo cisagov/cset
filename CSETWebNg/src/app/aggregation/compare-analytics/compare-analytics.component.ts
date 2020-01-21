@@ -33,6 +33,8 @@ import { NavigationAggregService } from '../../services/navigationAggreg.service
 })
 export class CompareAnalyticsComponent implements OnInit {
 
+  tab: string;
+
   constructor(
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute,
@@ -41,6 +43,14 @@ export class CompareAnalyticsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.tab = 'SUMMARY';
   }
 
+  /**
+   * Change the current tab based on user selection.
+   * @param clickedTab
+   */
+  changeState(clickedTab: string) {
+    this.tab = clickedTab;
+  }
 }

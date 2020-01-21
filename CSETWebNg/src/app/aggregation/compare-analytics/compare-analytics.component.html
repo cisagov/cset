@@ -21,14 +21,46 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>Compare Analytics</h3>
+  <h3 class="mb-4">Compare Analytics</h3>
 
-  <div>
-    [ page content here ]
+    <div class="btn-group-toggle mt-3" data-toggle="buttons">
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'SUMMARY'"
+        (click)="changeState('SUMMARY')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'SUMMARY'">Overall Summary
+      </label>
+
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
+        (click)="changeState('MISSED')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'MISSED'">Commonly Missed Questions
+      </label>
+
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
+        (click)="changeState('INDIVIDUAL')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
+      </label>
+
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
+      (click)="changeState('BESTWORST')">
+      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        [checked]="tab === 'BESTWORST'">Best to Worst
+    </label>
+    
+    <hr class="w-100 hr-sal mt-1" />
+
+    <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
+      <div [ngSwitch]="tab" class="d-flex flex-column justify-content-start flex-00a">
+        <app-compare-summary *ngSwitchCase="'SUMMARY'"></app-compare-summary>
+        <app-compare-missed *ngSwitchCase="'MISSED'"></app-compare-missed>
+        <app-compare-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual>
+        <app-compare-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-bestworst>
+      </div>
+    </div>
   </div>
 
   <div class="mt-3 d-flex justify-content-between flex-00a">
     <button class="btn btn-primary" (click)="navSvc.navBack('compare-analytics')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('compare-analytics')">Next</button>
   </div>
 </div>

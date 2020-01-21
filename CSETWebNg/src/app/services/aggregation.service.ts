@@ -176,6 +176,9 @@ export class AggregationService {
   }
 
 
+
+  ////////////////////////////////  Trend  //////////////////////////////////
+
   getOverallComplianceScores(id: number) {
     return this.http.post(this.apiUrl + 'analysis/overallcompliancescore?aggregationId=' + id, {});
   }
@@ -190,6 +193,14 @@ export class AggregationService {
 
   getCategoryPercentageComparisons(id: number) {
     return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + id, {});
+  }
+
+
+
+  ////////////////////////////////  Compare  //////////////////////////////////
+
+  getMissedQuestions(id: number) {
+    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + id, {});
   }
 
 
