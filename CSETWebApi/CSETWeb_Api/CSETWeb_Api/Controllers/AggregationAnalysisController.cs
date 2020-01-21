@@ -30,7 +30,7 @@ namespace CSETWeb_Api.Controllers
             response.reportType = "Trend Overall Compliance Score";
 
             // create the 4 compliance categories
-            List<string> lineNames = new List<string>() { "Overall", "Components", "Standards", "Framework" };
+            List<string> lineNames = new List<string>() { "Overall", "Components", "Standards" };
             foreach (string name in lineNames)
             {
                 var ds = new ChartDataSet();

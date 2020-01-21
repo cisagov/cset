@@ -83,4 +83,7 @@ export class AliasAssessmentsComponent implements OnInit {
     this.aggregationSvc.saveAssessmentAlias(assessment).subscribe();
   }
 
+  showDot(b: boolean) {
+    return b ? '<i class="fa fa-dot-circle primary-900"></i>' : '';
+  }
 }
