@@ -38,8 +38,17 @@ export class NavigationAggregService {
 
   pages = [
     { pageClass: 'trend', path: 'trend' },
-    { pageClass: 'alias-assessments', path: 'alias-assessments/{:id}' },
-    { pageClass: 'trend-analytics', path: 'trend-analytics/{:id}', condition: true }
+    {
+      pageClass: 'alias-assessments', path: 'alias-assessments/{:id}'
+    },
+    {
+      pageClass: 'compare-analytics', path: 'compare-analytics/{:id}',
+      condition: () => this.aggregationSvc.mode === 'COMPARE'
+    },
+    {
+      pageClass: 'trend-analytics', path: 'trend-analytics/{:id}',
+      condition: () => this.aggregationSvc.mode === 'TREND'
+    }
   ];
 
   /**
@@ -114,8 +123,16 @@ export class NavigationAggregService {
    * @param condition
    */
   shouldIShow(condition: any): boolean {
-    if (condition === undefined || condition === null) {
+    if (!condition) {
       return true;
+    }
+
+    if (typeof condition === 'boolean') {
+      return condition;
+    }
+
+    if (typeof condition === 'function') {
+      return condition();
     }
 
     if (condition === 'FALSE') {
