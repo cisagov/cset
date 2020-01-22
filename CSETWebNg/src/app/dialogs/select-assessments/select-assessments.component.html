@@ -26,21 +26,33 @@
     <span>Select Assessments</span>
   </div>
 
+  <div class="p-3 pr-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
+    <div>
+      Selected Assessments Questions Compatibility: <span
+        class="font-weight-bold">{{ aggregation.QuestionsCompatibility | percent : '0.3' }}</span>
+    </div>
+    <div>
+      Selected Assessments Requirements Compatibilty: <span
+        class="font-weight-bold">{{ aggregation.RequirementsCompatibility | percent : '0.3' }}</span>
+    </div>
+  </div>
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <form name="form" #userForm="ngForm">
-      <div>
-        <div>
-          Selected Assessments Questions Compatibility: 0.000%
-        </div>
-        <div>
-          Selected Assessments Requirements Compatibilty: 0.000%
-        </div>
-      </div>
-      <div class="p-3" style="overflow-y: auto;">
-        <div *ngFor="let a of assessments">
-          <input type="checkbox" [id]="'assess-' + a.AssessmentId" class="mr-2" (change)="toggleSelection($event, a)"
-            [checked]="a.Selected"><label [for]="'assess-' + a.AssessmentId">{{ a.AssessmentName }}</label>
-        </div>
+      <div class="mt-0 mr-3 ml=3 mb-3">
+        <table>
+          <tr *ngFor="let a of assessments">
+            <td>
+              <input type="checkbox" [id]="'assess-' + a.AssessmentId" class="mr-2"
+                (change)="toggleSelection($event, a)" [checked]="a.Selected">
+            </td>
+            <td>
+              <label [for]="'assess-' + a.AssessmentId" class="mb-0 pr-5">{{ a.AssessmentName }}</label>
+            </td>
+            <td>
+              {{ a.AssessmentDate | date:'dd-MMM-yyyy' }}
+            </td>
+          </tr>
+        </table>
 
         <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
           <button class="m-0 btn btn-primary" (click)="close()">OK</button>

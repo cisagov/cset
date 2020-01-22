@@ -25,6 +25,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
+import { Aggregation } from '../models/aggregation.model';
 
 @Injectable()
 export class AggregationService {
@@ -35,7 +36,8 @@ export class AggregationService {
    * Contains 'TREND' or 'COMPARE'
    */
   public mode: string;
-  public currentAggregation: any;
+
+  public currentAggregation: Aggregation;
 
   /**
    * Constructor.
@@ -48,14 +50,13 @@ export class AggregationService {
     private router: Router
   ) {
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
-    this.currentAggregation = {};
+    this.currentAggregation = null;
   }
 
 
   id(): number {
     return +sessionStorage.getItem('aggregationId');
   }
-
 
   /**
    * Returns the singluar or plural name for the aggretation type.
@@ -87,8 +88,6 @@ export class AggregationService {
       .toPromise()
       .then(
         (response: any) => {
-          console.log('newAggregation just came back with response:');
-          console.log(response);
           sessionStorage.setItem('aggregationId', response.AggregationId);
           this.loadAggregation(response.AggregationId);
         },

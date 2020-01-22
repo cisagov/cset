@@ -20,6 +20,7 @@ namespace CSETWeb_Api.Controllers
     /// <summary>
     /// 
     /// </summary>
+    [CSETAuthorize]
     public class AggregationController : ApiController
     {
         /// <summary>
@@ -27,7 +28,6 @@ namespace CSETWeb_Api.Controllers
         /// The user must be authorized to view all assessments involved in the aggregation.
         /// </summary>
         /// <returns></returns>
-        [CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/getaggregations")]
         public List<Aggregation> GetAggregations([FromUri] string mode)
@@ -40,7 +40,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/create")]
         public Aggregation CreateAggregation([FromUri] string mode)
@@ -50,7 +49,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/get")]
         public Aggregation GetAggregation([FromUri] int aggregationId)
@@ -60,7 +58,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/update")]
         public void UpdateAggregation([FromBody] Aggregation aggregation)
@@ -70,7 +67,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/delete")]
         public void DeleteAggregation([FromUri] int aggregationId)
@@ -80,7 +76,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/getassessments")]
         public AssessmentListResponse GetAssessmentsForAggregation([FromUri] int aggregationId)
@@ -90,25 +85,22 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/saveassessmentselection")]
-        public void SaveAssessmentSelection([FromBody] AssessmentSelection request)
+        public Aggregation SaveAssessmentSelection([FromBody] AssessmentSelection request)
         {
-
             TokenManager tm = new TokenManager();
             var aggregationID = tm.PayloadInt("aggreg");
             if (aggregationID == null)
             {
-                return;
+                return null;
             }
 
             var aggreg = new BusinessLogic.AggregationManager();
-            aggreg.SaveAssessmentSelection((int)aggregationID, request.AssessmentId, request.Selected);
+            return aggreg.SaveAssessmentSelection((int)aggregationID, request.AssessmentId, request.Selected);
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/saveassessmentalias")]
         public void SaveAssessmentAlias([FromBody] AssessmentSelection request)
@@ -125,7 +117,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-        //[CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/getmissedquestions")]
         public List<MissedQuestion> GetCommonlyMissedQuestions([FromUri] int aggregationId)
@@ -140,7 +131,6 @@ namespace CSETWeb_Api.Controllers
         /// Merge
         //////////////////////////////////////////
 
-        [CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/getanswers")]
         public MergeStructure GetAnswers()
@@ -153,7 +143,6 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Sets a single answer text into the COMBINED_ANSWER table.
         /// </summary>
-        [CSETAuthorize]
         [HttpPost]
         [Route("api/aggregation/setmergeanswer")]
         public void SetMergeAnswer([FromUri] int answerId, [FromUri] string answerText)

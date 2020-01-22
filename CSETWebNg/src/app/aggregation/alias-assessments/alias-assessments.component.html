@@ -84,7 +84,7 @@
 
   <div class="mt-3 d-flex justify-content-between flex-00a">
     <button class="btn btn-primary" (click)="navSvc.navBack('alias-assessments')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('alias-assessments')">Next</button>
+    <button class="btn btn-primary" [disabled]="aliasData?.Assessments.length < 2" (click)="navSvc.navNext('alias-assessments')">Next</button>
   </div>
 
 </div>

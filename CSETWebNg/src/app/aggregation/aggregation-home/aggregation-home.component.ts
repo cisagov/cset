@@ -27,6 +27,8 @@ import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material';
+import { AggregationChartService } from '../../services/aggregation-chart.service';
+import { Aggregation } from '../../models/aggregation.model';
 
 @Component({
   selector: 'app-aggregation-home',
@@ -36,7 +38,7 @@ import { MatDialog } from '@angular/material';
 })
 export class AggregationHomeComponent implements OnInit {
 
-  aggregations: any[] = null;
+  aggregations: Aggregation[] = null;
 
 
   constructor(
@@ -49,7 +51,12 @@ export class AggregationHomeComponent implements OnInit {
    * ngOnInit.
    */
   ngOnInit() {
+    if (!this.aggregationSvc.mode) {
+      this.router.navigate(['/landing-page']);
+    }
+
     this.listAggregationsForType();
+    sessionStorage.removeItem('aggregationId');
   }
 
   /**
@@ -66,12 +73,20 @@ export class AggregationHomeComponent implements OnInit {
 
     // call API to create new aggregation, it will return the new ID
     this.aggregationSvc.createAggregation().subscribe((x: any) => {
-      sessionStorage.setItem('aggregationId', x.AggregationId);
+      console.log('just called createAggregation');
+      console.log(x);
+      sessionStorage.setItem('aggregationId', x.AggregationId);      
+      this.aggregationSvc.currentAggregation = {      
+        AggregationId: x.AggregationId,
+        AggregationName: x.AggregationName,
+        AggregationDate: x.AggregationDate,
+        Mode: x.Mode     
+      };
       this.router.navigate(['alias-assessments', x.AggregationId]);
     });
   }
 
-  removeAggregation(agg: any, idx: number) {
+  removeAggregation(agg: Aggregation, idx: number) {
     // if it's legal, see if they really want to
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
