@@ -37,34 +37,43 @@ vs_install_dir=$( echo "$(./vswhere.bat | tail -n 1)" | sed -e 's/\\/\//g' -e 's
 echo "Visual Studio Installation Directory: $vs_install_dir"
 echo ''
 
-echo 'Finding MSBuild Versions...'
-msbuild_version=0.0
 build_dir=$(pwd) # so we can get back to the build directory after finding MSBuild
-cd "$vs_install_dir/MSBuild"
-for i in *.*; # the directories we are looking for are all similar to 5.0/
-do
-    if [ -d $i ]; # make sure it is a directory
-    then 
-        echo "Found Version $i"; 
-    fi
-
-    if [ ${i%.*} -eq ${msbuild_version%.*} ] && [ ${i#*.} \> ${msbuild_version#*.} ] || [ ${i%.*} -gt ${msbuild_version%.*} ];
-    then
-        msbuild_version=$i
-    fi
-done
-if [ $msbuild_version = 0.0 ];
-then
-    echo 'MSBuild not found! Build cancelled!'
-    exit 1
-fi
-cd $build_dir
-
-echo "Selected MSBuild version: $msbuild_version"
-echo ''
 
 # The path to the MSBuild executable
-msbuild="'$vs_install_dir/MSBuild/$msbuild_version/Bin/MSBuild.exe'"
+if [ -d "$vs_install_dir/MSBuild/Current" ]
+then
+    echo 'MSBuild version >= 2019 found. Using current version'
+    msbuild="'$vs_install_dir/MSBuild/Current/Bin/MSBuild.exe'"
+else
+    # Delete Me. please
+    echo 'Finding MSBuild Versions...'
+    pushd "$vs_install_dir/MSBuild"
+    msbuild_version=0.0
+    for i in *.*; # the directories we are looking for are all similar to 5.0/
+    do
+        if [ -d $i ]; # make sure it is a directory
+        then 
+            echo "Found Version $i"; 
+            if [ ${i%.*} -eq ${msbuild_version%.*} ] && [ ${i#*.} \> ${msbuild_version#*.} ] || [ ${i%.*} -gt ${msbuild_version%.*} ];
+            then
+                msbuild_version=$i
+            fi
+        fi
+
+    done
+    if [ $msbuild_version = 0.0 ];
+    then
+        echo 'MSBuild not found! Build cancelled!'
+        exit 1
+    fi
+    echo "Selected MSBuild version: $msbuild_version"
+    echo ''
+    msbuild="'$vs_install_dir/MSBuild/$msbuild_version/Bin/MSBuild.exe'"
+    popd
+    # cd $build_dir
+fi
+
+
 echo "MSBuild Path: $msbuild"
 echo ''
 
@@ -118,6 +127,12 @@ publish_dist() {
 ############################
 ##########  MAIN  ##########
 ############################
+
+if [ -d dist ]
+then
+    echo 'Deleting existing dist folder'
+    rm -rf dist
+fi
 
 echo 'Beginning asynchronous build processes...'
 build_ng | sed "s/^/NG BUILD: /" &
