@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
@@ -42,6 +42,7 @@ export class AliasAssessmentsComponent implements OnInit {
   constructor(
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute,
+    public router: Router,
     public dialog: MatDialog,
     public navSvc: NavigationAggregService
   ) {
@@ -49,6 +50,9 @@ export class AliasAssessmentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.aggregationSvc.currentAggregation) {
+      this.router.navigate(['/compare']);
+    }
     this.getRelatedAssessments();
   }
 
@@ -56,15 +60,17 @@ export class AliasAssessmentsComponent implements OnInit {
     this.aggregationSvc.updateAggregation().subscribe();
   }
 
+  /**
+   * Gets the assessments for this aggregation.
+   */
   getRelatedAssessments() {
-    // get the assessments for this aggregation
     this.aggregationSvc.getAssessments().subscribe(resp => {
       this.aliasData = resp;
     });
   }
 
   /**
-   * Open dialog for assessment selection.
+   * Opens dialog for assessment selection.
    */
   openDialog() {
     if (this.dialog.openDialogs[0]) {
@@ -79,10 +85,18 @@ export class AliasAssessmentsComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   * @param assessment 
+   */
   changeAlias(assessment) {
     this.aggregationSvc.saveAssessmentAlias(assessment).subscribe();
   }
 
+  /**
+   * 
+   * @param b
+   */
   showDot(b: boolean) {
     return b ? '<i class="fa fa-dot-circle primary-900"></i>' : '';
   }

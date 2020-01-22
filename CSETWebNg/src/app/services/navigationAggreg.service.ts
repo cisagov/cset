@@ -37,7 +37,12 @@ import { AggregationService } from './aggregation.service';
 export class NavigationAggregService {
 
   pages = [
-    { pageClass: 'trend', path: 'trend' },
+    { pageClass: 'trend', path: 'trend',
+      condition:  () => this.aggregationSvc.mode === 'TREND'
+    },
+    { pageClass: 'compare', path: 'compare',
+      condition:  () => this.aggregationSvc.mode === 'COMPARE'
+    },
     {
       pageClass: 'alias-assessments', path: 'alias-assessments/{:id}'
     },

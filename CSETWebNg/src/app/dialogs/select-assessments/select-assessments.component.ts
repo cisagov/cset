@@ -18,6 +18,7 @@ interface UserAssessment {
 export class SelectAssessmentsComponent implements OnInit {
 
   assessments: UserAssessment[];
+  aggregation: any = {};
 
   /**
    * CTOR
@@ -41,6 +42,8 @@ export class SelectAssessmentsComponent implements OnInit {
       this.assessments = resp;
 
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
+        this.aggregation = resp2.Aggregation;
+
         resp2.Assessments.forEach(selectedAssess => {
           this.assessments.find(x => x.AssessmentId === selectedAssess.AssessmentId).Selected = true;
         });
@@ -61,7 +64,9 @@ export class SelectAssessmentsComponent implements OnInit {
    * @param assessment
    */
   toggleSelection(event, assessment) {
-    this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe();
+    this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
+      this.aggregation = resp;
+    });
   }
 
   /**

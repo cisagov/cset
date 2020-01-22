@@ -250,12 +250,13 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Creates or deletes an AGGREGATION_ASSESSMENT bridge record.
+        /// Returns the compatibility scores for the current set of assessments.
         /// </summary>
         /// <param name="aggregationId"></param>
         /// <param name="assessmentId"></param>
         /// <param name="selected"></param>
-        public void SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
+        public Aggregation SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
         {
             using (var db = new CSET_Context())
             {
@@ -283,6 +284,23 @@ namespace CSETWeb_Api.BusinessLogic
                         db.SaveChanges();
                     }
                 }
+
+
+                // Recalculate the compatibility scores and build the response
+                var agg = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+                var assessmentIDs = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).Select(x => x.Assessment_Id).ToList();
+
+                var resp = new Aggregation()
+                {
+                    AggregationId = aggregationId,
+                    AggregationName = agg.Aggregation_Name,
+                    AggregationDate = agg.Aggregation_Date,
+                    Mode = agg.Aggregation_Mode
+                };
+
+                resp.QuestionsCompatibility = CalcCompatibility("Q", assessmentIDs);
+                resp.RequirementsCompatibility = CalcCompatibility("R", assessmentIDs);
+                return resp;
             }
         }
 

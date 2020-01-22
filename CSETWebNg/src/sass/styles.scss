@@ -2485,11 +2485,17 @@ table.td-text-left th, table.td-text-left td {
 .bgc-primary {
   background-color: $primary-color;
 }
+.bgc-primary-50 {
+  background-color: $primary-50;
+}
 .bgc-primary-100 {
   background-color: $primary-100;
 }
-.bgc-primary-50 {
-  background-color: $primary-50;
+.bgc-primary-200 {
+  background-color: $primary-200;
+}
+.bgc-primary-300 {
+  background-color: $primary-300;
 }
 
 .c-warning {

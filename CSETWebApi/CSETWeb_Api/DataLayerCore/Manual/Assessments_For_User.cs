@@ -21,6 +21,7 @@ namespace DataLayerCore.Model
         //public int RowNumber { get; set; }
         public int AssessmentId { get; set; }
         public string AssessmentName { get; set; }
+        public DateTime AssessmentDate { get; set; }
         public DateTime AssessmentCreatedDate { get; set; }
         public string CreatorName { get; set; }        
         public DateTime LastModifiedDate { get; set; }
