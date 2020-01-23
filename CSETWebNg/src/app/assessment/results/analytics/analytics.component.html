@@ -9,26 +9,47 @@
         </div>
         <div class="row" style="padding-bottom:5px;">
             <div class="col-12">
-                <mat-tab-group style="overflow: auto">
+                <mat-tab-group style="overflow: auto; height:800px;">
                     <mat-tab label="Pretty Data">
-                        <div class="container">
+                        <div class="container" style="margin-top:10px;">
                             <div class="col-12">
                                 <div class="row">
                                     <h5>Demographics</h5>
+                                    <div class='col-12'>
+                                        <div class="row" *ngIf="checkValue(analytics.Demographics.SectorName)">
+                                            <div class="col-3"><b>Sector Name:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.SectorName}}</div>
+                                        </div>
+                                        <div class="row" *ngIf="checkValue(analytics.Demographics.IndustryName)">
+                                            <div class="col-3"><b>Industry Name:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.IndustryName}}</div>
+                                        </div>
+                                        <div class="row" *ngIf="checkValue(analytics.Demographics.AssetValue)">
+                                            <div class="col-3"><b>Asset Value:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.AssetValue}}</div>
+                                        </div>
+                                        <div class="row" *ngIf="checkValue(analytics.Demographics.Size)">
+                                            <div class="col-3"><b>Size:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.Size}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
-                                    <h5>Questions/Anwers</h5>
+                                    <h5 style="margin-top:10px;">Questions/Anwers</h5>
                                     <div class="col-12">
-                                        <div class="row" *ngFor="let qa of questionAnswers; let i = index">
-                                            <div class="col-2">
-                                                <div class="row">{{qa.QuestionId}}</div>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="row">{{qa.QuestionText}}</div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="row">{{qa.Answer}}</div>
-                                            </div>
+                                        <div class="table-container">
+                                            <table mat-table matSort class="assessment-summary" style='overflow-x:auto'>
+                                                <tr class="sticky">
+                                                    <th width="15%" mat-sort-header="QuestionId">Question Id</th>
+                                                    <th mat-sort-header="QuestionText">Question Text</th>
+                                                    <th width="15%" mat-sort-header="Answer">Answer</th>
+                                                </tr>   
+                                                <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
+                                                    <td>{{qa.QuestionId}}</td>
+                                                    <td>{{qa.QuestionText}}</td>
+                                                    <td>{{qa.Answer}}</td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -38,12 +59,19 @@
                     <mat-tab label="Raw Data">
                         <div class="container">
                             <div class="col-12">
-                                <div class="row"><pre>{{questionAnswers | json}}</pre></div>
+                                <div class="row"><pre>{{analytics | json}}</pre></div>
                             </div>
                         </div>
                     </mat-tab>
                 </mat-tab-group>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" type="button">Submit</button>
+                <button class="btn btn-primary" type="button">Submit With Login</button>
+            </div>
+
         </div>
     </div>
 </div>

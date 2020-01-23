@@ -313,19 +313,21 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var query = from ddd in db.DEMOGRAPHICS
+                    join s in db.SECTOR on ddd.SectorId equals s.SectorId
+                    join i in db.SECTOR_INDUSTRY on ddd.IndustryId equals i.IndustryId
                     from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
                     from dav in db.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
                     where ddd.Assessment_Id == assessmentId
-                    select new { ddd, ds, dav };
+                    select new { ddd, ds, dav, s, i };
 
 
                 var hit = query.FirstOrDefault();
                 if (hit != null)
                 {
-                    demographics.SectorName = hit.ddd.Sector?.SectorName;
-                    demographics.IndustryName = hit.ddd.Industry?.IndustryName;
-                    demographics.AssetValue = hit.ddd.AssetValue;
-                    demographics.Size = hit.ddd.Size;
+                    demographics.SectorName = hit.s.SectorName ?? string.Empty;
+                    demographics.IndustryName = hit.i.IndustryName ?? string.Empty;
+                    demographics.AssetValue = hit.ddd.AssetValue ?? string.Empty;
+                    demographics.Size = hit.ddd.Size ?? string.Empty;
                 }
 
                 return demographics;
