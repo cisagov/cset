@@ -78,6 +78,7 @@ import { AggregationGuard } from './guards/aggregation.guard';
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 
 const appRoutes: Routes = [
   {
@@ -187,6 +188,7 @@ const appRoutes: Routes = [
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
           { path: 'feedback', component: FeedbackComponent },
+          { path: 'analytics', component: AnalyticsComponent },
           { path: '', component: DashboardComponent },
         ]
       },

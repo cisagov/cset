@@ -181,6 +181,8 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { AggregationChartService } from './services/aggregation-chart.service';
 import { ChartColors } from './services/aggregation-chart.service';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsService } from './services/analytics.service';
 
 
 @NgModule({
@@ -328,7 +330,10 @@ import { ChartColors } from './services/aggregation-chart.service';
         CompareSummaryComponent,
         CompareMissedComponent,
         CompareIndividualComponent,
-        CompareBestworstComponent
+        CompareBestworstComponent,
+        ComponentOverrideComponent, 
+        ExcelExportComponent, 
+        AnalyticsComponent
     ],
     providers: [
         ConfigService,
@@ -365,6 +370,7 @@ import { ChartColors } from './services/aggregation-chart.service';
         ACETService,
         ResourceLibraryService,
         DiagramService,
+        AnalyticsService,
         AggregationService,
         AggregationChartService,
         ChartColors

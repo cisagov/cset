@@ -373,7 +373,7 @@
             </div>
         </div>
 
-        <table class="cset-table">
+        <table class="cset-table" *ngIf="response?.salTable.LastSalDeterminationType !== 'GENERAL'">
             <tr>
                 <th style="width: 25%"></th>
                 <th style="width: 25%">Confidentiality</th>

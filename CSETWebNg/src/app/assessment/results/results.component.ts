@@ -131,6 +131,7 @@ export class ResultsComponent implements OnInit {
     this.tree.push({ label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] });
     this.tree.push({ label: 'Reports', value: 'reports', children: [] });
     this.tree.push({ label: 'Submit Feedback', value: 'feedback', children: [] });
+    this.tree.push({ label: 'Submit Data', value: 'analytics', children: []});
     this.navSvc.setTree(this.tree, magic);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[0]);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[1]);

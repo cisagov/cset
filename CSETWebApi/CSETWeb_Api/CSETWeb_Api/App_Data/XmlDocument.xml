@@ -590,6 +590,24 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalyticsController.GetAnalytics">
+            <summary>
+            Get analytic information
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalyticsController.GetDemographics">
+            <summary>
+            Returns an instance of Demographics for Anonymous export 
+            </summary>        
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalyticsController.GetQuestionsAnswers">
+            <summary>
+            Returns questions/answers for current selected assessment
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.AssessmentController">
             <summary>
             Manages assessments.
