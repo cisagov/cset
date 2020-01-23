@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationAggregService } from '../../../services/navigationAggreg.service';
+import { AggregationService } from '../../../services/aggregation.service';
+import { AggregationChartService } from '../../../services/aggregation-chart.service';
 
 @Component({
   selector: 'app-compare-bestworst',
@@ -8,9 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompareBestworstComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public navSvc: NavigationAggregService,
+    public aggregationSvc: AggregationService,
+    public aggregChartSvc: AggregationChartService
+  ) { }
 
   ngOnInit() {
+
+  }
+
+  loadPage() {
+    this.loadCategoryList();
+  }
+
+
+  loadCategoryList() {
+    this.aggregationSvc.getBestToWorst().subscribe((x: any) => {
+      console.log(x);
+    });
   }
 
 }

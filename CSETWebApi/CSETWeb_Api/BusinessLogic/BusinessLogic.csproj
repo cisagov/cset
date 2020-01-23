@@ -252,8 +252,11 @@
     <Compile Include="BusinessManagers\Analysis\ColorsList.cs" />
     <Compile Include="BusinessManagers\Analysis\DataRowsPie.cs" />
     <Compile Include="BusinessManagers\Analysis\FirstPageMultiResult.cs" />
+    <Compile Include="BusinessManagers\Analysis\GetComparisonBestToWorst.cs" />
     <Compile Include="BusinessManagers\Analysis\MultiResultBase.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsRankedCategories.cs" />
+    <Compile Include="BusinessManagers\Analysis\GetPercentageOverall.cs" />
+    <Compile Include="BusinessManagers\Analysis\usp_getStandardSummaryOverall.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsSummmary.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentTypes.cs" />

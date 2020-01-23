@@ -180,6 +180,7 @@ import { CompareIndividualComponent } from './aggregation/compare-analytics/comp
 import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { AggregationChartService } from './services/aggregation-chart.service';
+import { ChartColors } from './services/aggregation-chart.service';
 
 
 @NgModule({
@@ -365,7 +366,8 @@ import { AggregationChartService } from './services/aggregation-chart.service';
         ResourceLibraryService,
         DiagramService,
         AggregationService,
-        AggregationChartService
+        AggregationChartService,
+        ChartColors
     ],
     bootstrap: [AppComponent],
     entryComponents: [

@@ -80,6 +80,120 @@ export class AggregationChartService {
     });
   }
 
+  /**
+   * Builds a horizontal bar chart.
+   * @param canvasId 
+   * @param x 
+   */
+  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean) {
+
+    // add display characteristics
+    // for (let i = 0; i < x.datasets.length; i++) {
+    //   const ds = x.datasets[i];
+    //   ds.borderColor = '#004c75';
+    //   ds.backgroundColor = ds.borderColor;
+    // }
+
+    return new Chart(canvasId, {
+      type: 'horizontalBar',
+      data: {
+        labels: x.labels,
+        datasets: x.datasets
+      },
+      options: {
+        maintainAspectRatio: true,
+        legend: { display: showLegend, position: 'top' },
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * 
+   * @param canvasId 
+   * @param x 
+   */
+  buildDoughnutChart(canvasId: string, x: any) {
+    return new Chart(canvasId, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          this.configSvc.answerLabels['Y'],
+          this.configSvc.answerLabels['N'],
+          this.configSvc.answerLabels['NA'],
+          this.configSvc.answerLabels['A'],
+          this.configSvc.answerLabels['U']
+        ],
+        datasets: [
+          {
+            label: x.label,
+            data: x.data,
+            backgroundColor: x.colors
+          }
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        },
+        title: {
+          display: false,
+          fontSize: 20,
+          text: x.title
+        },
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            generateLabels: function (chart) { // Add values to legend labels
+              const data = chart.data;
+              if (data.labels.length && data.datasets.length) {
+                return data.labels.map(function (label, i) {
+                  const meta = chart.getDatasetMeta(0);
+                  const ds = data.datasets[0];
+                  const arc = meta.data[i];
+                  const custom = arc && arc.custom || {};
+                  const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                  const arcOpts = chart.options.elements.arc;
+                  const fill = custom.backgroundColor ? custom.backgroundColor :
+                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                  const stroke = custom.borderColor ? custom.borderColor :
+                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                  const bw = custom.borderWidth ? custom.borderWidth :
+                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                  let value = '';
+                  if (!!arc) {
+                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                  }
+                  return {
+                    text: label + ' : ' + value + '%',
+                    fillStyle: fill,
+                    strokeStyle: stroke,
+                    lineWidth: bw,
+                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    index: i
+                  };
+                });
+              } else {
+                return [];
+              }
+            }
+          }
+        },
+        circumference: Math.PI,
+        rotation: -Math.PI
+      }
+    });
+  }
 
   /**
   * Builds a horizontal bar chart from the Dashboard API response.
@@ -122,6 +236,7 @@ export class AggregationChartService {
 /**
  * A service that supplies colors for charts.
  */
+@Injectable()
 export class ChartColors {
   /**
    * These colors are used for bar charts with multiple assessments.
@@ -150,6 +265,13 @@ export class ChartColors {
   ];
   nextSequence: number = -1;
 
+
+  bluesColorSequence = [
+    '#7e97c2',
+    '#b0bfdb'
+  ];
+  nextBluesSequence: number = -1;
+
   /**
    * These colors are used for line charts.
    */
@@ -171,6 +293,18 @@ export class ChartColors {
     }
 
     return this.colorSequence[++this.nextSequence];
+  }
+
+  /**
+   * Returns the next color in the sequence.
+   * Wraps around when exhausted.
+   */
+  getNextBluesBarColor() {
+    if (this.nextBluesSequence > this.bluesColorSequence.length - 1) {
+      this.nextBluesSequence = -1;
+    }
+
+    return this.bluesColorSequence[++this.nextBluesSequence];
   }
 
   /**

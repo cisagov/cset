@@ -14,7 +14,7 @@ BEGIN
 
     SELECT                   
 		-- This guarantees a unique column to key on in the model
-		cast(ROW_NUMBER() OVER (ORDER BY q.Question_id) as int) as UniqueKey,
+		cast(ROW_NUMBER() OVER (ORDER BY q.Question_id)as int) as UniqueKey,
 		a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text, 
 		CONVERT(nvarchar(1000), a.Comment) AS Comment, CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification, 
 		a.Question_Number, q.Simple_Question AS QuestionText, 		
