@@ -26,6 +26,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsService } from '../../../services/analytics.service';
 import { Navigation2Service } from '../../../services/navigation2.service';
 import { NavigationService } from '../../../services/navigation.service';
+import { strict } from 'assert';
 
 @Component({
     selector: 'app-analytics',
@@ -33,9 +34,15 @@ import { NavigationService } from '../../../services/navigation.service';
     styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
-    demographics:any = null;
-    questionAnswers:any = null;
-
+    analytics:any = {
+        Demographics:{
+            SectorName:'',
+            IndustryName:'',
+            AssetValue:'',
+            Size:''
+        },
+        QuestionAnswers:[]
+    };
     constructor(private router: Router,
         public navSvc2: Navigation2Service,
         public navSvc: NavigationService,
@@ -44,33 +51,17 @@ export class AnalyticsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.loadAnalytics();
+        this.getAnalytics();
 
         this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
           });
     }
 
-    loadAnalytics() {
-       this.getDemographics();
-       this.getQuestionAnswers();
-    }
-
-    getDemographics(){
-        this.analyticsSvc.getDemographics().subscribe(
+    getAnalytics(){
+        this.analyticsSvc.getAnalytics().subscribe(
             (data: any) => {
-                this.demographics = data;
-            },
-            error => {
-                console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error getting all documents: ' + (<Error>error).stack);
-            });
-    }
-
-    getQuestionAnswers(){
-        this.analyticsSvc.getQuestionsAnswers().subscribe(
-            (data: any) => {
-                this.questionAnswers = data;
+                this.analytics = data;
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -79,26 +70,13 @@ export class AnalyticsComponent implements OnInit {
     }
 
     getRawData(){
-        return JSON.stringify(this.questionAnswers);
+        return JSON.stringify(this.analytics);
     }
 
-    syntaxHighlight() {
-        var json = this.getRawData();
-        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-            var cls = 'number';
-            if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                    cls = 'key';
-                } else {
-                    cls = 'string';
-                }
-            } else if (/true|false/.test(match)) {
-                cls = 'boolean';
-            } else if (/null/.test(match)) {
-                cls = 'null';
-            }
-            return '<span class="' + cls + '">' + match + '</span>';
-        });
+    checkValue(val){
+        if(val){
+            return true;
+        }
+        return false;
     }
 }

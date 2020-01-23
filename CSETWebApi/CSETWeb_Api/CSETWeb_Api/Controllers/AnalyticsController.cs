@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CSET_Main.Data.AssessmentData;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
@@ -16,21 +17,36 @@ namespace CSETWeb_Api.Controllers
     public class AnalyticsController : ApiController
     {
         /// <summary>
+        /// Get analytic information
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/analytics/getAnalytics")]
+        public IHttpActionResult GetAnalytics()
+        {
+            return Ok(new Analytics
+            {
+                Demographics = GetDemographics(),
+                QuestionAnswers = GetQuestionsAnswers()
+            });
+        }
+
+        /// <summary>
         /// Returns an instance of Demographics for Anonymous export 
         /// </summary>        
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/analyitcs/getDemographics")]
-        public IHttpActionResult GetDemographics()
+        private AnalyticsDemographic GetDemographics()
         {
             int assessmentId = Auth.AssessmentForUser();
             AssessmentManager assessmentManager = new AssessmentManager();
-            return Ok(assessmentManager.GetAnonymousDemographics(assessmentId));
+            return assessmentManager.GetAnonymousDemographics(assessmentId);
         }
 
-        [HttpGet]
-        [Route("api/analytics/getQuestionsAnswers")]
-        public IHttpActionResult GetQuestionsAnswers()
+        /// <summary>
+        /// Returns questions/answers for current selected assessment
+        /// </summary>
+        /// <returns></returns>
+        private List<AnalyticsQuestionAnswer> GetQuestionsAnswers()
         {
             int assessmentId = Auth.AssessmentForUser();
             var questionsController = new QuestionsController();
@@ -40,13 +56,13 @@ namespace CSETWeb_Api.Controllers
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 QuestionResponse resp = qm.GetQuestionList("*");
-                return Ok(qm.GetAnalyticQuestionAnswers(resp));
+                return qm.GetAnalyticQuestionAnswers(resp).OrderBy(x=>x.QuestionId).ToList();
             }
             else
             {
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 QuestionResponse resp = rm.GetRequirementsList();
-                return Ok(qm.GetAnalyticQuestionAnswers(resp));
+                return qm.GetAnalyticQuestionAnswers(resp).OrderBy(x=>x.QuestionId).ToList();
             }
         }
 
