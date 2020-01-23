@@ -103,7 +103,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        protected string GetApplicationMode(int assessmentId)
+        public string GetApplicationMode(int assessmentId)
         {
             using (var db = new CSET_Context())
             {
