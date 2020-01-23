@@ -163,7 +163,7 @@ namespace CSETWeb_Api.Controllers
         /// <param name="aggregationId"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/aggregation/analysis/categorypercentcompare")]        
+        [Route("api/aggregation/analysis/categorypercentcompare")]
         public HorizBarChart CategoryPercentCompare([FromUri] int aggregationId)
         {
             var response = new HorizBarChart();
@@ -254,6 +254,137 @@ namespace CSETWeb_Api.Controllers
                         });
 
             return response;
-        }        
+        }
+
+
+        /// <summary>
+        /// Returns answer breakdown for all associated assessments.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/getanswertotals")]
+        public List<AnswerCounts> GetAnswerTotals([FromUri] int aggregationId)
+        {
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                List<AnswerCounts> response = new List<AnswerCounts>();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var result = handler.ReadToList<usp_getStandardSummaryOverall>();
+                            var g = (List<usp_getStandardSummaryOverall>)result;
+
+
+                            var abc = new AnswerCounts()
+                            {
+                                AssessmentId = a.Assessment_Id,
+                                Alias = a.Alias,
+                                Total = g.Max(x => x.Total),
+                                Y = g.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
+                                N = g.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
+                                A = g.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
+                                NA = g.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
+                                U = g.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
+                            };
+
+                            response.Add(abc);
+                        });
+                }
+
+                return response;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns answer breakdown for all associated assessments.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/getbesttoworst")]
+        public List<BestToWorstCategory> GetBestToWorst([FromUri] int aggregationId)
+        {
+            Dictionary<string, List<GetComparisonBestToWorst>> dict = new Dictionary<string, List<GetComparisonBestToWorst>>();
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                var response = new List<BestToWorstCategory>();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[GetComparisonBestToWorst]")
+                            .WithSqlParam("assessment_id", a.Assessment_Id)
+                            .ExecuteStoredProc((handler) =>
+                            {
+                                var result = handler.ReadToList<GetComparisonBestToWorst>();
+                                foreach (var r in result)
+                                {
+                                    if (!dict.ContainsKey(r.Name))
+                                    {
+                                        dict[r.Name] = new List<GetComparisonBestToWorst>();
+                                    }
+                                    dict[r.Name].Add(r);
+                                }
+                            });
+                }
+
+                // repackage the data 
+                var keys = dict.Keys.ToList();
+                keys.Sort();
+                foreach (string k in keys)
+                {
+                    response.Add(new BestToWorstCategory()
+                    {
+                        Category = k,
+                        Assessments = dict[k]
+                    });
+                }
+
+                return response;
+            }
+        }
     }
+
+
+    /// <summary>
+    /// Contains an answer breakdown for an assessment.  The Y, N 
+    /// fields can hold a question count or a rounded percentage, depending on need.
+    /// </summary>
+    public class AnswerCounts
+    {
+        public int AssessmentId { get; set; }
+        public string Alias { get; set; }
+        public int Total { get; set; }
+        public int Y { get; set; }
+        public int N { get; set; }
+        public int NA { get; set; }
+        public int A { get; set; }
+        public int U { get; set; }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class BestToWorstCategory
+    {
+        public string Category { get; set; }
+        public List<GetComparisonBestToWorst> Assessments { get; set; }
+    }
+
+
 }

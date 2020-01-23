@@ -174,29 +174,41 @@ export class AggregationService {
       { AssessmentId: assessment.AssessmentId, Alias: assessment.Alias });
   }
 
+  getAnswerTotals() {
+    return this.http.post(this.apiUrl + 'analysis/getanswertotals?aggregationId=' + this.id(), '');
+  }
+
+  getBestToWorst() {
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+  }
+
 
 
   ////////////////////////////////  Trend  //////////////////////////////////
 
-  getOverallComplianceScores(id: number) {
-    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore?aggregationId=' + id, {});
+  getOverallComplianceScores() {
+    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore?aggregationId=' + this.id(), {});
   }
 
-  getTrendTop5(id: number) {
-    return this.http.post(this.apiUrl + 'analysis/top5?aggregationId=' + id, {});
+  getTrendTop5() {
+    return this.http.post(this.apiUrl + 'analysis/top5?aggregationId=' + this.id(), {});
   }
 
-  getTrendBottom5(id: number) {
-    return this.http.post(this.apiUrl + 'analysis/bottom5?aggregationId=' + id, {});
+  getTrendBottom5() {
+    return this.http.post(this.apiUrl + 'analysis/bottom5?aggregationId=' + this.id(), {});
   }
 
-  getCategoryPercentageComparisons(id: number) {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + id, {});
+  getCategoryPercentageComparisons() {
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + this.id(), {});
   }
 
 
 
   ////////////////////////////////  Compare  //////////////////////////////////
+
+  getOverallAverageSummary(id: number) {
+    return this.http.post(this.apiUrl + 'overallaverage?aggregationId=' + id, {});
+  }
 
   getMissedQuestions(id: number) {
     return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + id, {});
