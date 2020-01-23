@@ -71,9 +71,39 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
+import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
+import { MergeComponent } from './aggregation/merge/merge.component';
+import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias-assessments.component';
+import { AggregationGuard } from './guards/aggregation.guard';
+import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
+import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
+import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 
 const appRoutes: Routes = [
+  {
+    path: 'trend',
+    component: AggregationHomeComponent,
+    children: [
+      {
+        path: 'alias-assessments/:id',
+        component: AliasAssessmentsComponent,
+        canActivate: [AggregationGuard]
+      },
+      { path: '', redirectTo: 'trend', pathMatch: 'full' },
+      { path: '**', redirectTo: 'trend' }
+    ]
+  },
+
+
+  { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
+  { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
+  { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
+  { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
+
+
+  { path: 'compare', component: AggregationHomeComponent },
+  { path: 'merge', component: MergeComponent },
   { path: 'resource-library', component: ResourceLibraryComponent },
   { path: 'importModule', component: ImportComponent },
   { path: 'set-list', component: SetListComponent },
@@ -157,8 +187,8 @@ const appRoutes: Routes = [
           { path: 'acetDashboard', component: ACETDashboardComponent },
           { path: 'overview', component: OverviewComponent },
           { path: 'reports', component: ReportsComponent },
-          { path: 'feedback', component: FeedbackComponent},
-          { path: 'analytics', component: AnalyticsComponent},
+          { path: 'feedback', component: FeedbackComponent },
+          { path: 'analytics', component: AnalyticsComponent },
           { path: '', component: DashboardComponent },
         ]
       },

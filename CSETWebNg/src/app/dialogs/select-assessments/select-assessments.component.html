@@ -1,0 +1,62 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-profile fs-base-6 mr-3"></span>
+    <span>Select Assessments</span>
+  </div>
+
+  <div class="p-3 pr-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
+    <div>
+      Selected Assessments Questions Compatibility: <span
+        class="font-weight-bold">{{ aggregation.QuestionsCompatibility | percent : '0.3' }}</span>
+    </div>
+    <div>
+      Selected Assessments Requirements Compatibilty: <span
+        class="font-weight-bold">{{ aggregation.RequirementsCompatibility | percent : '0.3' }}</span>
+    </div>
+  </div>
+  <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <form name="form" #userForm="ngForm">
+      <div class="mt-0 mr-3 ml=3 mb-3">
+        <table>
+          <tr *ngFor="let a of assessments">
+            <td>
+              <input type="checkbox" [id]="'assess-' + a.AssessmentId" class="mr-2"
+                (change)="toggleSelection($event, a)" [checked]="a.Selected">
+            </td>
+            <td>
+              <label [for]="'assess-' + a.AssessmentId" class="mb-0 pr-5">{{ a.AssessmentName }}</label>
+            </td>
+            <td>
+              {{ a.AssessmentDate | date:'dd-MMM-yyyy' }}
+            </td>
+          </tr>
+        </table>
+
+        <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+          <button class="m-0 btn btn-primary" (click)="close()">OK</button>
+        </mat-dialog-actions>
+      </div>
+    </form>
+  </mat-dialog-content>
