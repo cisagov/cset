@@ -35,11 +35,7 @@ export class AnalyticsService {
     this.apiUrl = this.configSvc.apiUrl + "analytics/";
   }
 
-  getDemographics():any {
-    return this.http.get(this.apiUrl+'getDemographics');
-  }
-
-  getQuestionsAnswers():any {
-    return this.http.get(this.apiUrl + 'getQuestionsAnswers');
+  getAnalytics():any {
+    return this.http.get(this.apiUrl+'getAnalytics');
   }
 }
