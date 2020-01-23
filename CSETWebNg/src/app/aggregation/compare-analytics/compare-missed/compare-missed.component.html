@@ -1,0 +1,17 @@
+<div class="text-left">
+  <div class="mb-3">
+    The table below contains questions or requirements that were answered 'No' in all assessments.
+  </div>
+  <table class="assessment-summary td-p-1 td-text-left mb-5">
+    <tr>
+      <th class="pr-5">Category</th>
+      <th class="pr-5">Subcategory</th>
+      <th>Question</th>
+    </tr>
+    <tr *ngFor="let q of missedQuestions">
+      <td class="pr-5">{{ q.Category }}</td>
+      <td class="pr-5">{{ q.Subcategory }}</td>
+      <td>{{ q.QuestionText }}</td>
+    </tr>
+  </table>
+</div>
