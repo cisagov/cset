@@ -179,7 +179,7 @@ export class AggregationService {
   }
 
   getBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst?aggregationId=' + this.id(), '');
   }
 
 
