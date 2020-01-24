@@ -22,7 +22,7 @@
 -------------------------->
 <div class="text-left">
   <div class="mb-3">
-    The table below contains questions or requirements that were answered 'No' in all assessments.
+    This table lists questions or requirements that were answered 'No' in all assessments.
   </div>
   <table class="assessment-summary td-p-1 td-text-left mb-5">
     <tr>
@@ -36,4 +36,7 @@
       <td>{{ q.QuestionText }}</td>
     </tr>
   </table>
+  <div *ngIf="missedQuestions.length === 0" class="mb-5 alert-warning p-3 font-weight-bold text-center">
+    There are no questions that were answered 'No' on all assessments.
+  </div>
 </div>

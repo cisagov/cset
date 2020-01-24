@@ -333,6 +333,16 @@ namespace CSETWeb_Api.Controllers
                                 var result = handler.ReadToList<GetComparisonBestToWorst>();
                                 foreach (var r in result)
                                 {
+                                    r.AssessmentName = a.Alias;
+
+                                    // fudge - make sure that rounding didn't end up with more 100%
+                                    var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
+                                    if (realAnswerPct + r.UnansweredValue > 100f)
+                                    {
+                                        r.UnansweredValue = 100f - realAnswerPct;
+                                    }
+
+
                                     if (!dict.ContainsKey(r.Name))
                                     {
                                         dict[r.Name] = new List<GetComparisonBestToWorst>();

@@ -78,7 +78,7 @@
     </tr>
   </table>
   
-  <div *ngIf="aliasData?.Assessments.length === 0" class="mt-3 mb-3">
+  <div *ngIf="aliasData?.Assessments.length === 0" class="mt-3 mb-5 alert-warning p-3 font-weight-bold text-center">
     There are no assessments selected for this {{ this.aggregationSvc?.modeDisplay(false) }}
   </div>
 
