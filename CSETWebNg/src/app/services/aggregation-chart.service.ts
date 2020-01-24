@@ -102,6 +102,7 @@ export class AggregationChartService {
       },
       options: {
         maintainAspectRatio: true,
+        responsive: false,
         legend: { display: showLegend, position: 'top' },
         tooltips: {
           callbacks: {
