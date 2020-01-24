@@ -2174,6 +2174,13 @@ hr.ranked-questions {
   }
 }
 
+.cat-selected {
+  font-weight: bold;
+  color: $primary-900;
+  background-color: #eeeeee;
+  border-radius: .5rem;
+}
+
 .merge-source-answer {
   min-width: 2rem;
   text-align: center;

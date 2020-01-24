@@ -30,13 +30,13 @@ import { AggregationChartService } from '../../../services/aggregation-chart.ser
   selector: 'app-compare-bestworst',
   templateUrl: './compare-bestworst.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class CompareBestworstComponent implements OnInit {
 
   categories: any;
 
-  selectedCategory: any;
+  currentCategory: any;
   chartAnswerBreakdown: Chart;
 
   constructor(
@@ -53,18 +53,50 @@ export class CompareBestworstComponent implements OnInit {
     this.loadCategoryList();
   }
 
-
   loadCategoryList() {
-    this.aggregationSvc.getBestToWorst().subscribe((x: any) => {      
+    this.aggregationSvc.getBestToWorst().subscribe((x: any) => {
       this.categories = x;
-      this.selectCategory = this.categories[0];
+      this.selectCategory(this.categories[0]);
     });
   }
 
-  selectCategory(cat) {
-    this.selectCategory = cat;
+  public selectCategory(cat: any) {
+    this.currentCategory = cat;
 
-    // create graph
-    
+    // create graph data skeleton
+    const x = {
+      labels: [],
+      datasets: [
+        { label: 'Yes', data: [], backgroundColor: "#006000" },
+        { label: 'No', data: [], backgroundColor: "#990000" },
+        { label: 'Not Applicable', data: [], backgroundColor: "#0063B1" },
+        { label: 'Alternate', data: [], backgroundColor: "#B17300" },
+        { label: 'Unanswered', data: [], backgroundColor: "#CCCCCC" }
+      ],
+      options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+              min: 0,
+              max: 200
+            }
+          }]
+        }
+      }
+    };
+
+    // populate graph data object 
+    cat.Assessments.forEach(a => {
+      x.labels.push(a.AssessmentName);
+
+      const ds = x.datasets;
+      ds.find(x => x.label === 'Yes').data.push(a.YesValue);
+      ds.find(x => x.label === 'No').data.push(a.NoValue);
+      ds.find(x => x.label === 'Not Applicable').data.push(a.NaValue);
+      ds.find(x => x.label === 'Alternate').data.push(a.AlternateValue);
+      ds.find(x => x.label === 'Unanswered').data.push(a.UnansweredValue);
+    });
+
+    this.chartAnswerBreakdown = this.aggregChartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', x);
   }
 }

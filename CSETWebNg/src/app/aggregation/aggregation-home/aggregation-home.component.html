@@ -24,10 +24,16 @@
   <h3>Saved {{ this.aggregationSvc?.modeDisplay(true) }}</h3>
 
   <div>
-    <button class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
-      matTooltip="Start a new thing">
-      <span class="mr-2 fs-base cset-icons-results"></span>
-      <span>New {{ this.aggregationSvc?.modeDisplay(false) }}</span>
+    <button *ngIf="this.aggregationSvc?.mode === 'TREND'" class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
+      matTooltip="Create a new trend">
+      <span class="mr-2 fs-base cset2-icons-trend"></span>
+      <span>New Trend</span>
+    </button>
+
+    <button *ngIf="this.aggregationSvc?.mode === 'COMPARE'" class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
+      matTooltip="Create a new comparison">
+      <span class="mr-2 fs-base cset2-icons-compare"></span>
+      <span>New Comparison</span>
     </button>
 
     <div *ngIf="aggregations == null">
@@ -37,7 +43,7 @@
     </div>
 
     <div class="mt-3 mb-3">
-      <div *ngIf="aggregations?.length === 0">No {{ this.aggregationSvc?.modeDisplay(true) }} have been saved.
+      <div class="mt-3 mb-5 alert-warning p-3 font-weight-bold text-center" *ngIf="aggregations?.length === 0">No {{ this.aggregationSvc?.modeDisplay(true) }} have been saved.
         Click 'New {{ this.aggregationSvc?.modeDisplay(false) }}' to start a new
         {{ this.aggregationSvc?.modeDisplay(false) }}.
       </div>
