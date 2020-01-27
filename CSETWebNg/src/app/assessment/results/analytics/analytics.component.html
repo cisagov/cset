@@ -45,7 +45,7 @@
                                                     <th width="15%" mat-sort-header="Answer">Answer</th>
                                                 </tr>   
                                                 <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
-                                                    <td>{{qa.QuestionId}}</td>
+                                                    <td style="padding-left:15px;">{{qa.QuestionId}}</td>
                                                     <td>{{qa.QuestionText}}</td>
                                                     <td>{{qa.Answer}}</td>
                                                 </tr>
@@ -68,11 +68,11 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <button class="btn btn-primary" type="button">Submit</button>
+                <button class="btn btn-primary" type="button" (click)="postAnalytics()">Submit</button>
                 <button class="btn btn-primary" type="button">Submit With Login</button>
             </div>
-
         </div>
+
     </div>
 </div>
 
