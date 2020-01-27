@@ -1,0 +1,40 @@
+<div class="mb-5">
+  <h3>Assessment Answer Summary</h3>
+  <table class="assessment-summary mb-5">
+    <tr>
+      <th class="p-2">Assessment Alias</th>
+      <th class="text-right p-2 pl-3">Total</th>
+      <th class="text-right p-2 pl-3">Yes</th>
+      <th class="text-right p-2 pl-3">No</th>
+      <th class="text-right p-2 pl-3">NA</th>
+      <th class="text-right p-2 pl-3">Alt</th>
+      <th class="text-right p-2 pl-3">Unanswered</th>
+    </tr>
+    <tr *ngFor="let a of answerCounts">
+      <td class="p-2">{{ a.Alias }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Total }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.YesCount }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NoCount }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NaCount }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.AltCount }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.UnansweredCount }}</td>
+    </tr>
+    </table>
+</div>
+
+<div class="mb-5">
+  <h3>Overall Comparison</h3>
+  <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
+</div>
+
+<div class="mb-5">
+  <h3>Comparison of Security Assurance Levels</h3>
+  [how can we show this in a cool way?]
+</div>
+
+<div class="mb-5">
+  <h3>Category Percent Comparisons</h3>
+  <div class="chart-container" style="position: relative; height:80vh; width: 100%">
+    <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
+  </div>
+</div>

@@ -224,6 +224,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessManagers\Aggregation\AggregationManager.cs" />
     <Compile Include="AssessmentIO\export\ExportAssessmentManager.cs" />
     <Compile Include="AssessmentIO\import\BulkSqlUpload.cs" />
     <Compile Include="AssessmentIO\import\CSET901_to_92Upgrade.cs" />
@@ -251,8 +252,11 @@
     <Compile Include="BusinessManagers\Analysis\ColorsList.cs" />
     <Compile Include="BusinessManagers\Analysis\DataRowsPie.cs" />
     <Compile Include="BusinessManagers\Analysis\FirstPageMultiResult.cs" />
+    <Compile Include="BusinessManagers\Analysis\GetComparisonBestToWorst.cs" />
     <Compile Include="BusinessManagers\Analysis\MultiResultBase.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsRankedCategories.cs" />
+    <Compile Include="BusinessManagers\Analysis\GetPercentageOverall.cs" />
+    <Compile Include="BusinessManagers\Analysis\usp_getStandardSummaryOverall.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsSummmary.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentTypes.cs" />
@@ -407,6 +411,8 @@
     <Compile Include="Models\Analytics.cs" />
     <Compile Include="Models\AnalyticsDemographic.cs" />
     <Compile Include="Models\AnalyticsQuestionAnswer.cs" />
+    <Compile Include="Models\Aggregation.cs" />
+    <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />

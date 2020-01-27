@@ -16,6 +16,10 @@ namespace DataLayerCore.Model
         }
 
         public virtual DbSet<ADDRESS> ADDRESS { get; set; }
+        public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
+        public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
+        public virtual DbSet<AGGREGATION_TYPES> AGGREGATION_TYPES { get; set; }
+
         public virtual DbSet<ANSWER> ANSWER { get; set; }
         public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
         public virtual DbSet<APP_CODE> APP_CODE { get; set; }
@@ -32,6 +36,9 @@ namespace DataLayerCore.Model
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
+        public virtual DbSet<COMBINED_ANSWER> COMBINED_ANSWER { get; set; }
+        public virtual DbSet<COMBINED_CATEGORY> COMBINED_CATEGORY { get; set; }
+        public virtual DbSet<COMBINED_DOCUMENT_ANSWERS> COMBINED_DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
         public virtual DbSet<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
         public virtual DbSet<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
@@ -199,6 +206,44 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.ADDRESS)
                     .HasForeignKey(d => d.Id)
                     .HasConstraintName("FK_ADDRESS_USER_DETAIL_INFORMATION1");
+            });
+
+            modelBuilder.Entity<AGGREGATION_ASSESSMENT>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Aggregation_Id })
+                    .HasName("PK__AGGREGAT__985B1205C06FF728");
+
+                entity.HasOne(d => d.Aggregation_)
+                    .WithMany(p => p.AGGREGATION_ASSESSMENT)
+                    .HasForeignKey(d => d.Aggregation_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AGGREGATI__Aggre__6EAB62A3");
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.AGGREGATION_ASSESSMENT)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AGGREGATI__Asses__6CC31A31");
+            });
+
+            modelBuilder.Entity<AGGREGATION_INFORMATION>(entity =>
+            {
+                entity.HasKey(e => e.AggregationID)
+                    .HasName("PK__AggregationInformation");
+
+                entity.Property(e => e.Aggregation_Mode).IsUnicode(false);
+
+                entity.HasOne(d => d.Aggregation_ModeNavigation)
+                    .WithMany(p => p.AGGREGATION_INFORMATION)
+                    .HasForeignKey(d => d.Aggregation_Mode)
+                    .HasConstraintName("FK_AGGREGATION_INFORMATION_AGGREGATION_TYPES");
+            });
+
+            modelBuilder.Entity<AGGREGATION_TYPES>(entity =>
+            {
+                entity.Property(e => e.Aggregation_Mode)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<ANSWER>(entity =>
@@ -491,6 +536,45 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.CIA_Type)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<COMBINED_ANSWER>(entity =>
+            {
+                entity.Property(e => e.Answer_Text)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('U')");
+
+                entity.Property(e => e.Component_Guid).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<COMBINED_CATEGORY>(entity =>
+            {
+                entity.HasKey(e => e.CombinedCategoryId)
+                    .HasName("PK_COMBINED_CATEGORY_1");
+
+                entity.Property(e => e.CategoryName).IsUnicode(false);
+
+                entity.Property(e => e.Component_Guid).IsUnicode(false);
+
+                entity.Property(e => e.Component_Type).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<COMBINED_DOCUMENT_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Document_Id, e.AnswerID })
+                    .HasName("PK_COMBINED_DOCUMENT_ANSWERS_1");
+
+                entity.HasOne(d => d.Answer)
+                    .WithMany(p => p.COMBINED_DOCUMENT_ANSWERS)
+                    .HasForeignKey(d => d.AnswerID)
+                    .HasConstraintName("FK_COMBINED_DOCUMENT_ANSWERS_COMBINED_ANSWER");
+
+                entity.HasOne(d => d.Document_)
+                    .WithMany(p => p.COMBINED_DOCUMENT_ANSWERS)
+                    .HasForeignKey(d => d.Document_Id)
+                    .HasConstraintName("FK_COMBINED_DOCUMENT_ANSWERS_DOCUMENT_FILE");
             });
 
             modelBuilder.Entity<COMPONENT_FAMILY>(entity =>

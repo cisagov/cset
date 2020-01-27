@@ -147,6 +147,7 @@
     <Compile Include="Manual\Answer_Components.cs" />
     <Compile Include="Manual\Answer_Components_Overrides.cs" />
     <Compile Include="Manual\Answer_Questions.cs" />
+    <Compile Include="Manual\Answer_Requirements.cs" />
     <Compile Include="Manual\Answer_Questions_No_Components.cs" />
     <Compile Include="Manual\Assessments_For_User.cs" />
     <Compile Include="Manual\CSET_Context.cs" />
@@ -169,6 +170,9 @@
     <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
     <Compile Include="ModelDataAccess\FileResult.cs" />
     <Compile Include="Model\ADDRESS.cs" />
+    <Compile Include="Model\AGGREGATION_ASSESSMENT.cs" />
+    <Compile Include="Model\AGGREGATION_INFORMATION.cs" />
+    <Compile Include="Model\AGGREGATION_TYPES.cs" />
     <Compile Include="Model\ANSWER.cs" />
     <Compile Include="Manual\Answer_Components_Default.cs" />
     <Compile Include="Model\ANSWER_LOOKUP.cs" />
@@ -187,6 +191,9 @@
     <Compile Include="Model\CATALOG_RECOMMENDATIONS_HEADINGS.cs" />
     <Compile Include="Model\CNSS_CIA_JUSTIFICATIONS.cs" />
     <Compile Include="Model\CNSS_CIA_TYPES.cs" />
+    <Compile Include="Model\COMBINED_ANSWER.cs" />
+    <Compile Include="Model\COMBINED_CATEGORY.cs" />
+    <Compile Include="Model\COMBINED_DOCUMENT_ANSWERS.cs" />
     <Compile Include="Model\COMPONENT_FAMILY.cs" />
     <Compile Include="Model\COMPONENT_NAMES_LEGACY.cs" />
     <Compile Include="Model\COMPONENT_QUESTIONS.cs" />
