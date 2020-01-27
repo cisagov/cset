@@ -183,6 +183,7 @@ import { AggregationChartService } from './services/aggregation-chart.service';
 import { ChartColors } from './services/aggregation-chart.service';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsService } from './services/analytics.service';
+import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
 
 
 @NgModule({
@@ -334,7 +335,7 @@ import { AnalyticsService } from './services/analytics.service';
         CompareBestworstComponent,
         ComponentOverrideComponent, 
         ExcelExportComponent, 
-        AnalyticsComponent
+        AnalyticsComponent, DataloginComponent
     ],
     providers: [
         ConfigService,
@@ -401,7 +402,8 @@ import { AnalyticsService } from './services/analytics.service';
         ComponentOverrideComponent,
         ExcelExportComponent,
         MergeQuestionDetailComponent,
-        SelectAssessmentsComponent
+        SelectAssessmentsComponent,
+        DataloginComponent
     ]
 })
 
