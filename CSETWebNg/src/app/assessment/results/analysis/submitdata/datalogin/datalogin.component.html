@@ -1,0 +1,29 @@
+<div class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
+    <span>Login to Data Submission</span>
+  </div>
+  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>&nbsp;
+      <input type="text" placeholder="Enter Username" name="uname" required><br>
+  
+      <label for="psw"><b>Password</b></label>&nbsp;
+      <input type="password" placeholder="Enter Password" name="psw" required>
+  
+      
+    </div>
+    <div class="container">
+    <button type="submit">Login</button>&nbsp;
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>&nbsp;
+       <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>  
+  </mat-dialog-content>
+  <mat-dialog-actions class="p-3 pt-0 mb-0">
+    <button class="btn btn-secondary" (click)="close()">Close</button>
+  </mat-dialog-actions>
+</div>
+
