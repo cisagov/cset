@@ -535,7 +535,12 @@
         <member name="T:CSETWeb_Api.Controllers.AnswerCounts">
             <summary>
             Contains an answer breakdown for an assessment.  The Y, N 
-            fields can hold a question count or a percentage, depending on need.
+            fields can hold a question count or a rounded percentage, depending on need.
+            </summary>
+        </member>
+        <member name="T:CSETWeb_Api.Controllers.BestToWorstCategory">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:CSETWeb_Api.Controllers.AggregationController">

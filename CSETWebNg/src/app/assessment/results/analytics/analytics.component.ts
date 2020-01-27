@@ -28,6 +28,8 @@ import { AnalyticsService } from '../../../services/analytics.service';
 import { Navigation2Service } from '../../../services/navigation2.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { strict } from 'assert';
+import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-analytics',
@@ -49,8 +51,9 @@ export class AnalyticsComponent implements OnInit {
         public navSvc2: Navigation2Service,
         public navSvc: NavigationService,
         public analyticsSvc: AnalyticsService,
-        private route: ActivatedRoute, 
-        private snackBar: MatSnackBar
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -79,7 +82,10 @@ export class AnalyticsComponent implements OnInit {
                 message = data.message;
                 this.openSnackBar(message);
             });
-        
+    }
+
+    showLogin(){
+        this.dialog.open(DataloginComponent);
     }
 
     openSnackBar(message){

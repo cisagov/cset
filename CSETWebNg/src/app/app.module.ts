@@ -402,7 +402,8 @@ import { DataloginComponent } from './assessment/results/analysis/submitdata/dat
         ComponentOverrideComponent,
         ExcelExportComponent,
         MergeQuestionDetailComponent,
-        SelectAssessmentsComponent
+        SelectAssessmentsComponent,
+        DataloginComponent
     ]
 })
 
