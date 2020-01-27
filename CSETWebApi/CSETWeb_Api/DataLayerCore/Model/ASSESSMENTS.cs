@@ -9,6 +9,7 @@ namespace DataLayerCore.Model
     {
         public ASSESSMENTS()
         {
+            AGGREGATION_ASSESSMENT = new HashSet<AGGREGATION_ASSESSMENT>();
             ANSWER = new HashSet<ANSWER>();
             ASSESSMENTS_REQUIRED_DOCUMENTATION = new HashSet<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
@@ -65,6 +66,8 @@ namespace DataLayerCore.Model
         public virtual INFORMATION INFORMATION { get; set; }
         [InverseProperty("Assessment_")]
         public virtual STANDARD_SELECTION STANDARD_SELECTION { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
         [InverseProperty("Assessment_")]

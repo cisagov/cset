@@ -47,6 +47,7 @@ namespace DataLayerCore.Model
 
         // modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+        public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
 
         public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         public virtual DbQuery<Assessments_For_User> Assessments_For_User { get; set; }

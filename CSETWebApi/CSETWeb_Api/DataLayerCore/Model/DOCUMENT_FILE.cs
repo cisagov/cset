@@ -38,6 +38,8 @@ namespace DataLayerCore.Model
         [InverseProperty("DOCUMENT_FILE")]
         public virtual DEMOGRAPHICS Assessment_Navigation { get; set; }
         [InverseProperty("Document_")]
+        public virtual ICollection<COMBINED_DOCUMENT_ANSWERS> COMBINED_DOCUMENT_ANSWERS { get; set; }
+        [InverseProperty("Document_")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         [InverseProperty("eMass_Document_")]
         public virtual ICollection<INFORMATION> INFORMATION { get; set; }

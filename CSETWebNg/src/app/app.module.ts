@@ -99,6 +99,7 @@ import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.compone
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { AggregationGuard } from './guards/aggregation.guard';
 import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validator.directive';
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
@@ -165,8 +166,24 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { MergeComponent } from './aggregation/merge/merge.component';
+import { AggregationService } from './services/aggregation.service';
+import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
+import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
+import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias-assessments.component';
+import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
+import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
+import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
+import { CompareSummaryComponent } from './aggregation/compare-analytics/compare-summary/compare-summary.component';
+import { CompareMissedComponent } from './aggregation/compare-analytics/compare-missed/compare-missed.component';
+import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
+import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
+import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
+import { AggregationChartService } from './services/aggregation-chart.service';
+import { ChartColors } from './services/aggregation-chart.service';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsService } from './services/analytics.service';
+
 
 @NgModule({
     imports: [
@@ -301,6 +318,20 @@ import { AnalyticsService } from './services/analytics.service';
         ShapesComponent,
         TextComponent,
         ZonesComponent,
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        MergeComponent,
+        MergeQuestionDetailComponent,
+        AggregationHomeComponent,
+        AliasAssessmentsComponent,
+        AggregationDetailComponent,
+        TrendAnalyticsComponent,
+        CompareAnalyticsComponent,
+        SelectAssessmentsComponent,
+        CompareSummaryComponent,
+        CompareMissedComponent,
+        CompareIndividualComponent,
+        CompareBestworstComponent,
         ComponentOverrideComponent, 
         ExcelExportComponent, 
         AnalyticsComponent
@@ -321,6 +352,7 @@ import { AnalyticsService } from './services/analytics.service';
         },
         AuthGuard,
         AssessGuard,
+        AggregationGuard,
         DemographicService,
         AssessmentService,
         EmailService,
@@ -338,9 +370,11 @@ import { AnalyticsService } from './services/analytics.service';
         SetBuilderService,
         ACETService,
         ResourceLibraryService,
-        DiagramService, 
-        AnalyticsService, 
-        //MatSnackBar
+        DiagramService,
+        AnalyticsService,
+        AggregationService,
+        AggregationChartService,
+        ChartColors
     ],
     bootstrap: [AppComponent],
     entryComponents: [
@@ -364,8 +398,10 @@ import { AnalyticsService } from './services/analytics.service';
         KeyboardShortcutsComponent,
         LicenseComponent,
         AddRequirementComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        MergeQuestionDetailComponent,
+        SelectAssessmentsComponent
     ]
 })
 

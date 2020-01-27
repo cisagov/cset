@@ -1,9 +1,11 @@
 
+
 CREATE VIEW [dbo].[Assessments_For_User]
 AS
 select 	
     AssessmentId = a.Assessment_Id,
 	AssessmentName = Assessment_Name,
+	AssessmentDate = Assessment_Date,
 	AssessmentCreatedDate,
 	CreatorName = u.FirstName + ' ' + u.LastName,
 	LastModifiedDate = LastAccessedDate,

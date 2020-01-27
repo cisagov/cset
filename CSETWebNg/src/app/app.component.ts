@@ -41,6 +41,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { AggregationService } from './services/aggregation.service';
 
 
 declare var $: any;
@@ -63,6 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
+    public aggregationSvc: AggregationService,
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService
@@ -225,9 +227,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
   }
 
-  showExcelExportDialog(){
-    var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    var doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+  showExcelExportDialog() {
+    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
     if (this.dialog.openDialogs[0] || doNotShow) {
       this.exportToExcel();
       return;
@@ -241,6 +243,19 @@ export class AppComponent implements OnInit, AfterViewInit {
   exportToExcel() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
   }
+
+
+  navigateTrend() {
+    this.aggregationSvc.mode = 'TREND';
+    this.router.navigate(['/trend']);
+  }
+
+  navigateCompare() {
+    this.aggregationSvc.mode = 'COMPARE';
+    this.router.navigate(['/compare']);
+  }
+
+  // -----------------------------
 
   setupShortCutKeys() {
     // About
