@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnalyticsService } from '../../../services/analytics.service';
 import { Navigation2Service } from '../../../services/navigation2.service';
 import { NavigationService } from '../../../services/navigation.service';
@@ -43,11 +44,13 @@ export class AnalyticsComponent implements OnInit {
         },
         QuestionAnswers:[]
     };
+    
     constructor(private router: Router,
         public navSvc2: Navigation2Service,
         public navSvc: NavigationService,
         public analyticsSvc: AnalyticsService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute, 
+        private snackBar: MatSnackBar
     ) { }
 
     ngOnInit() {
@@ -69,6 +72,24 @@ export class AnalyticsComponent implements OnInit {
             });
     }
 
+    postAnalytics(){
+        var message;
+        this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
+            (data: any)=>{
+                message = data.message;
+                this.openSnackBar(message);
+            });
+        
+    }
+
+    openSnackBar(message){
+        this.snackBar.open(message, "", {
+            duration:4000,
+            verticalPosition:'top',
+            panelClass:['green-snackbar']
+        });
+    }
+
     getRawData(){
         return JSON.stringify(this.analytics);
     }
@@ -79,4 +100,7 @@ export class AnalyticsComponent implements OnInit {
         }
         return false;
     }
+
+
+
 }

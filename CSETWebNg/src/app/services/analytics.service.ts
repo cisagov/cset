@@ -22,8 +22,13 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+
+const headers = {
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  params: new HttpParams()
+};
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +42,11 @@ export class AnalyticsService {
 
   getAnalytics():any {
     return this.http.get(this.apiUrl+'getAnalytics');
+  }
+
+  postAnalyticsWithoutLogin(analytics):any{
+    return this.http.post(
+      'https://localhost:44397/api/Analytics/postAnalyticsAnonymously', analytics, headers
+    );
   }
 }
