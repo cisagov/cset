@@ -15,3 +15,6 @@ th{
     position:sticky;
     top:0px;
 }
+::ng-deep .green-snackbar{
+    background: green !important;
+}
