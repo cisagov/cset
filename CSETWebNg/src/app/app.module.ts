@@ -28,7 +28,7 @@ import {
     MatAutocompleteModule, MatDialogModule, MatDividerModule,
     MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
     MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-    MatTooltipModule, MatTreeModule, MatTabsModule,
+    MatTooltipModule, MatTreeModule, MatTabsModule, MatSnackBarModule,
 } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -202,6 +202,7 @@ import { AnalyticsService } from './services/analytics.service';
         ReactiveFormsModule,
         MatDialogModule,
         MatTooltipModule,
+        MatSnackBarModule,
         IonRangeSliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
