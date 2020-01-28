@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
+using CSETWeb_Api.BusinessManagers.Analysis;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -211,7 +212,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (string category in categories)
                 {
-                    response.categories.Add(category);
+                    response.labels.Add(category);
                 }
 
                 foreach (DataRow rowAssessment in dt.Rows)
@@ -254,6 +255,62 @@ namespace CSETWeb_Api.Controllers
                         });
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Returns average overall scores.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/overallaverages")]
+        public HorizBarChart GetOverallAverages([FromUri] int aggregationId)
+        {
+            var response = new HorizBarChart();
+            response.reportType = "Overall Average Summary";
+
+
+            Dictionary<string, List<double>> dict = new Dictionary<string, List<double>>();
+            dict["Questions"] = new List<double>();
+            dict["Overall"] = new List<double>();
+            dict["Components"] = new List<double>();
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                if (dict.ContainsKey(procResult.StatType))
+                                {
+                                    dict[procResult.StatType].Add(procResult.Value);
+                                }
+                            }
+                        });
+                }
+
+                response.datasets.Add(new ChartDataSet());
+                response.labels.Add("Questions");
+                response.datasets[0].data.Add((float)dict["Questions"].DefaultIfEmpty(0).Average());
+                response.labels.Add("Overall");
+                response.datasets[0].data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
+                response.labels.Add("Components");
+                response.datasets[0].data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
+
+                return response;
+            }
         }
 
 
@@ -368,33 +425,4 @@ namespace CSETWeb_Api.Controllers
             }
         }
     }
-
-
-    /// <summary>
-    /// Contains an answer breakdown for an assessment.  The Y, N 
-    /// fields can hold a question count or a rounded percentage, depending on need.
-    /// </summary>
-    public class AnswerCounts
-    {
-        public int AssessmentId { get; set; }
-        public string Alias { get; set; }
-        public int Total { get; set; }
-        public int Y { get; set; }
-        public int N { get; set; }
-        public int NA { get; set; }
-        public int A { get; set; }
-        public int U { get; set; }
-    }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class BestToWorstCategory
-    {
-        public string Category { get; set; }
-        public List<GetComparisonBestToWorst> Assessments { get; set; }
-    }
-
-
 }

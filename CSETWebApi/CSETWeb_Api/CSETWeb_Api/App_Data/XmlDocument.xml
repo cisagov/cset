@@ -518,6 +518,13 @@
             <param name="assessmentId"></param>
             <param name="db"></param>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetOverallAverages(System.Int32)">
+            <summary>
+            Returns average overall scores.
+            </summary>
+            <param name="aggregationId"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetAnswerTotals(System.Int32)">
             <summary>
             Returns answer breakdown for all associated assessments.
@@ -531,17 +538,6 @@
             </summary>
             <param name="aggregationId"></param>
             <returns></returns>
-        </member>
-        <member name="T:CSETWeb_Api.Controllers.AnswerCounts">
-            <summary>
-            Contains an answer breakdown for an assessment.  The Y, N 
-            fields can hold a question count or a rounded percentage, depending on need.
-            </summary>
-        </member>
-        <member name="T:CSETWeb_Api.Controllers.BestToWorstCategory">
-            <summary>
-            
-            </summary>
         </member>
         <member name="T:CSETWeb_Api.Controllers.AggregationController">
             <summary>

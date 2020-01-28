@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWeb_Api.Controllers;
 
 namespace CSETWeb_Api.BusinessLogic.Models
 {
@@ -97,12 +98,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
     public class HorizBarChart
     {
         public string reportType { get; set; }
-        public List<string> categories { get; set; }
+        public List<string> labels { get; set; }
+
         public List<ChartDataSet> datasets { get; set; }
 
         public HorizBarChart()
         {
-            this.categories = new List<string>();
+            this.labels = new List<string>();
             this.datasets = new List<ChartDataSet>();
         }
     }
@@ -135,6 +137,32 @@ namespace CSETWeb_Api.BusinessLogic.Models
             this.labels = new List<string>();
             this.datasets = new List<ChartDataSet>();
         }
+    }
+
+
+    /// <summary>
+    /// Contains an answer breakdown for an assessment.  
+    /// </summary>
+    public class AnswerCounts
+    {
+        public int AssessmentId { get; set; }
+        public string Alias { get; set; }
+        public int Total { get; set; }
+        public int Y { get; set; }
+        public int N { get; set; }
+        public int NA { get; set; }
+        public int A { get; set; }
+        public int U { get; set; }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class BestToWorstCategory
+    {
+        public string Category { get; set; }
+        public List<GetComparisonBestToWorst> Assessments { get; set; }
     }
 
 
