@@ -29,20 +29,7 @@ export class CompareSummaryComponent implements OnInit {
 
     // Overall Average
     // this.aggregationSvc.getOverallAverageSummary(aggregationId).subscribe((x: any) => {
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-
-
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Questions", "Overall", "Components"],
-        datasets: [{
-          label: "",
-          data: [25, 13, 10]
-        }
-        ]
-      };
-      // .....................................................
+    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach(ds => {
