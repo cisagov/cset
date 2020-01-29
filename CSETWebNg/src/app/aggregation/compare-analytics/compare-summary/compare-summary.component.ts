@@ -28,7 +28,6 @@ export class CompareSummaryComponent implements OnInit {
     const aggregationId = this.aggregationSvc.id();
 
     // Overall Average
-    // this.aggregationSvc.getOverallAverageSummary(aggregationId).subscribe((x: any) => {
     this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
       // apply visual attributes
@@ -43,19 +42,10 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Standards Answers
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Yes", "No", "Not Applicable", "Alternate", "Unanswered"],
-        data: [25, 13, 10, 2, 50]
-      };
-      // .....................................................
-
+    this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
+      
       // apply visual attributes
       x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
-      x.borderWidth = 0;
 
       this.chartStandardsPie = this.aggregChartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
@@ -63,15 +53,7 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Components Answers
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Yes", "No", "Not Applicable", "Alternate", "Unanswered"],
-        data: [3, 5, 0, 2, 90]
-      };
-      // .....................................................
+    this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
 
       // apply visual attributes
       x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
@@ -82,7 +64,7 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Category Averages
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
 
       // fake data ...........................................
       x = {

@@ -301,16 +301,152 @@ namespace CSETWeb_Api.Controllers
                         });
                 }
 
-                response.datasets.Add(new ChartDataSet());
+                var ds = new ChartDataSet();
+                response.datasets.Add(ds);
                 response.labels.Add("Questions");
-                response.datasets[0].data.Add((float)dict["Questions"].DefaultIfEmpty(0).Average());
+                ds.data.Add((float)dict["Questions"].DefaultIfEmpty(0).Average());
                 response.labels.Add("Overall");
-                response.datasets[0].data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
+                ds.data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
                 response.labels.Add("Components");
-                response.datasets[0].data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
+                ds.data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
 
                 return response;
             }
+        }
+
+
+        [HttpPost]
+        [Route("api/aggregation/analysis/standardsanswers")]
+        public PieChart GetStandardsAnswerDistribution([FromUri] int aggregationId)
+        {
+            // create place to accumulate percentages for each answer
+            var dict = new Dictionary<string, List<decimal>>();
+            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
+            foreach (string a in answerNames)
+            {
+                dict.Add(a, new List<decimal>());
+            }
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                dict[procResult.Answer_Full_Name].Add(procResult.Percent);
+                            }
+                        });
+                }
+
+
+                var response = new PieChart();
+                response.reportType = "Overall Summary - Standards Answers";
+                response.labels.AddRange(answerNames);
+                foreach(string a in answerNames)
+                {
+                    response.data.Add((float)dict[a].DefaultIfEmpty(0).Average());
+                }
+
+                return response;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/aggregation/analysis/componentsanswers")]
+        public PieChart GetComponentsAnswerDistribution([FromUri] int aggregationId)
+        {
+            // create place to accumulate percentages for each answer
+            var dict = new Dictionary<string, List<decimal>>();
+            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
+            foreach (string a in answerNames)
+            {
+                dict.Add(a, new List<decimal>());
+            }
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_GetComponentsSummary]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<usp_getComponentsSummmary>)handler.ReadToList<usp_getComponentsSummmary>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                dict[procResult.Answer_Full_Name].Add(procResult.value);
+                            }
+                        });
+                }
+
+                var response = new PieChart();
+                response.reportType = "Overall Summary - Standards Answers";
+                response.labels.AddRange(answerNames);
+                foreach (string a in answerNames)
+                {
+                    response.data.Add((float)dict[a].DefaultIfEmpty(0).Average());
+                }
+
+                return response;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/aggregation/analysis/categoryaverages")]
+        public HorizBarChart GetCategoryAverages([FromUri] int aggregationId)
+        {
+            var dict = new Dictionary<string, List<decimal>>();
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_getOverallRankedCategories]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<usp_getOverallRankedCategories>)handler.ReadToList<usp_getOverallRankedCategories>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                dict[procResult.Answer_Full_Name].Add(procResult.value);
+                            }
+                        });
+                }
+            }
+
+
+
+
+                var response = new HorizBarChart();
+            // response.labels   -- this will be a list of categories in alphabetical order
+            
+
+            return response;
         }
 
 
