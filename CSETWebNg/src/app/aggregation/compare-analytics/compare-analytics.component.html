@@ -23,31 +23,31 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="mb-4">Compare Assessments</h3>
 
-    <div class="btn-group-toggle mt-3" data-toggle="buttons">
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'SUMMARY'"
-        (click)="changeState('SUMMARY')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'SUMMARY'">Overall Summary
-      </label>
+  <div class="btn-group-toggle mt-3" data-toggle="buttons">
+    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'SUMMARY'"
+      (click)="changeState('SUMMARY')">
+      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        [checked]="tab === 'SUMMARY'">Overall Summary
+    </label>
 
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
-        (click)="changeState('MISSED')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'MISSED'">Commonly Missed Questions
-      </label>
+    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
+      (click)="changeState('MISSED')">
+      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        [checked]="tab === 'MISSED'">Commonly Missed Questions
+    </label>
 
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
-        (click)="changeState('INDIVIDUAL')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
-      </label>
+    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
+      (click)="changeState('INDIVIDUAL')">
+      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
+    </label>
 
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
+    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
       (click)="changeState('BESTWORST')">
       <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
         [checked]="tab === 'BESTWORST'">Best to Worst
     </label>
-    
+
     <hr class="w-100 hr-sal mt-1" />
 
     <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">

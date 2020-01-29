@@ -179,7 +179,7 @@ export class AggregationService {
   }
 
   getBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst?aggregationId=' + this.id(), '');
   }
 
 
@@ -206,13 +206,28 @@ export class AggregationService {
 
   ////////////////////////////////  Compare  //////////////////////////////////
 
-  getOverallAverageSummary(id: number) {
-    return this.http.post(this.apiUrl + 'overallaverage?aggregationId=' + id, {});
+  getOverallAverageSummary() {
+    return this.http.post(this.apiUrl + 'analysis/overallaverages?aggregationId=' + this.id(), {});
   }
 
-  getMissedQuestions(id: number) {
-    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + id, {});
+  getStandardsAnswers() {
+    return this.http.post(this.apiUrl + 'analysis/standardsanswers?aggregationId=' + this.id(), {});
   }
+
+  getComponentsAnswers() {
+    return this.http.post(this.apiUrl + 'analysis/componentsanswers?aggregationId=' + this.id(), {});
+  }
+
+  getCategoryAverages() {
+    return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationId=' + this.id(), {});
+  }
+  
+
+  getMissedQuestions() {
+    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + this.id(), {});
+  }
+
+
 
 
 

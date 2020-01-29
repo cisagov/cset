@@ -102,6 +102,7 @@ export class AggregationChartService {
       },
       options: {
         maintainAspectRatio: true,
+        responsive: false,
         legend: { display: showLegend, position: 'top' },
         tooltips: {
           callbacks: {
@@ -219,7 +220,39 @@ export class AggregationChartService {
         labels: x.categories,
         datasets: x.datasets
       },
+      options: {        
+        maintainAspectRatio: false,
+        tooltips: {
+          callbacks: {
+            label: ((tooltipItem, data) =>
+              data.datasets[tooltipItem.datasetIndex].label + ': '
+              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * 
+   */
+  buildStackedHorizBarChart(canvasId: string, x: any) {
+    return new Chart(canvasId, {
+      type: 'horizontalBar',
+      data: {
+        labels: x.labels,
+        datasets: x.datasets
+      },
       options: {
+        animation: { duration: 100}, // general animation time 
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        },
         maintainAspectRatio: false,
         tooltips: {
           callbacks: {
@@ -232,6 +265,9 @@ export class AggregationChartService {
     });
   }
 }
+
+
+
 
 /**
  * A service that supplies colors for charts.

@@ -32,6 +32,18 @@
 .cset2-icons-acet-shield:before {
   content: "\62";
 }
-.cset2-icons-q:before {
+.cset2-icons-compare:before {
   content: "\63";
+}
+.cset2-icons-q:before {
+  content: "\64";
+}
+.cset2-icons-merge1:before {
+  content: "\65";
+}
+.cset2-icons-trend:before {
+  content: "\66";
+}
+.cset2-icons-merge2:before {
+  content: "\67";
 }

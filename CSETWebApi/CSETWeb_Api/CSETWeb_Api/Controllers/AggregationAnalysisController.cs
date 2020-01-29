@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
+using CSETWeb_Api.BusinessManagers.Analysis;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -211,7 +212,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (string category in categories)
                 {
-                    response.categories.Add(category);
+                    response.labels.Add(category);
                 }
 
                 foreach (DataRow rowAssessment in dt.Rows)
@@ -252,6 +253,198 @@ namespace CSETWeb_Api.Controllers
 
                             response = (List<usp_getStandardsResultsByCategory>)result;
                         });
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Returns average overall scores.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/overallaverages")]
+        public HorizBarChart GetOverallAverages([FromUri] int aggregationId)
+        {
+            var response = new HorizBarChart();
+            response.reportType = "Overall Average Summary";
+
+
+            Dictionary<string, List<double>> dict = new Dictionary<string, List<double>>();
+            dict["Questions"] = new List<double>();
+            dict["Overall"] = new List<double>();
+            dict["Components"] = new List<double>();
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                if (dict.ContainsKey(procResult.StatType))
+                                {
+                                    dict[procResult.StatType].Add(procResult.Value);
+                                }
+                            }
+                        });
+                }
+
+                var ds = new ChartDataSet();
+                response.datasets.Add(ds);
+                response.labels.Add("Questions");
+                ds.data.Add((float)dict["Questions"].DefaultIfEmpty(0).Average());
+                response.labels.Add("Overall");
+                ds.data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
+                response.labels.Add("Components");
+                ds.data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
+
+                return response;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/aggregation/analysis/standardsanswers")]
+        public PieChart GetStandardsAnswerDistribution([FromUri] int aggregationId)
+        {
+            // create place to accumulate percentages for each answer
+            var dict = new Dictionary<string, List<decimal>>();
+            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
+            foreach (string a in answerNames)
+            {
+                dict.Add(a, new List<decimal>());
+            }
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                dict[procResult.Answer_Full_Name].Add(procResult.Percent);
+                            }
+                        });
+                }
+
+
+                var response = new PieChart();
+                response.reportType = "Overall Summary - Standards Answers";
+                response.labels.AddRange(answerNames);
+                foreach(string a in answerNames)
+                {
+                    response.data.Add((float)dict[a].DefaultIfEmpty(0).Average());
+                }
+
+                return response;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/aggregation/analysis/componentsanswers")]
+        public PieChart GetComponentsAnswerDistribution([FromUri] int aggregationId)
+        {
+            // create place to accumulate percentages for each answer
+            var dict = new Dictionary<string, List<decimal>>();
+            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
+            foreach (string a in answerNames)
+            {
+                dict.Add(a, new List<decimal>());
+            }
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_GetComponentsSummary]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<usp_getComponentsSummmary>)handler.ReadToList<usp_getComponentsSummmary>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                dict[procResult.Answer_Full_Name].Add(procResult.value);
+                            }
+                        });
+                }
+
+                var response = new PieChart();
+                response.reportType = "Overall Summary - Standards Answers";
+                response.labels.AddRange(answerNames);
+                foreach (string a in answerNames)
+                {
+                    response.data.Add((float)dict[a].DefaultIfEmpty(0).Average());
+                }
+
+                return response;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/aggregation/analysis/categoryaverages")]
+        public HorizBarChart GetCategoryAverages([FromUri] int aggregationId)
+        {
+            var dict = new Dictionary<string, List<decimal>>();
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[usp_getOverallRankedCategories]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            //var procResults = (List<usp_getOverallRankedCategories>)handler.ReadToList<usp_getOverallRankedCategories>();
+
+                            //foreach (var procResult in procResults)
+                            //{
+                            //    dict[procResult.Answer_Full_Name].Add(procResult.value);
+                            //}
+                        });
+                }
+            }
+
+
+
+
+                var response = new HorizBarChart();
+            // response.labels   -- this will be a list of categories in alphabetical order
+            
 
             return response;
         }
@@ -333,6 +526,16 @@ namespace CSETWeb_Api.Controllers
                                 var result = handler.ReadToList<GetComparisonBestToWorst>();
                                 foreach (var r in result)
                                 {
+                                    r.AssessmentName = a.Alias;
+
+                                    // fudge - make sure that rounding didn't end up with more 100%
+                                    var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
+                                    if (realAnswerPct + r.UnansweredValue > 100f)
+                                    {
+                                        r.UnansweredValue = 100f - realAnswerPct;
+                                    }
+
+
                                     if (!dict.ContainsKey(r.Name))
                                     {
                                         dict[r.Name] = new List<GetComparisonBestToWorst>();
@@ -358,33 +561,4 @@ namespace CSETWeb_Api.Controllers
             }
         }
     }
-
-
-    /// <summary>
-    /// Contains an answer breakdown for an assessment.  The Y, N 
-    /// fields can hold a question count or a rounded percentage, depending on need.
-    /// </summary>
-    public class AnswerCounts
-    {
-        public int AssessmentId { get; set; }
-        public string Alias { get; set; }
-        public int Total { get; set; }
-        public int Y { get; set; }
-        public int N { get; set; }
-        public int NA { get; set; }
-        public int A { get; set; }
-        public int U { get; set; }
-    }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class BestToWorstCategory
-    {
-        public string Category { get; set; }
-        public List<GetComparisonBestToWorst> Assessments { get; set; }
-    }
-
-
 }
