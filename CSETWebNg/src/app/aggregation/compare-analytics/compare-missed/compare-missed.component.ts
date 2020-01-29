@@ -18,7 +18,7 @@ export class CompareMissedComponent implements OnInit {
   ngOnInit() {
     const aggregationId = this.aggregationSvc.id();
 
-    this.aggregationSvc.getMissedQuestions(aggregationId).subscribe((resp: any) => {
+    this.aggregationSvc.getMissedQuestions().subscribe((resp: any) => {
       this.missedQuestions = resp;
     });
   }
