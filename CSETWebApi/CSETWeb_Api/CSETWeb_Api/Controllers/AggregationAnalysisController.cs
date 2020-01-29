@@ -429,12 +429,12 @@ namespace CSETWeb_Api.Controllers
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
-                            var procResults = (List<usp_getOverallRankedCategories>)handler.ReadToList<usp_getOverallRankedCategories>();
+                            //var procResults = (List<usp_getOverallRankedCategories>)handler.ReadToList<usp_getOverallRankedCategories>();
 
-                            foreach (var procResult in procResults)
-                            {
-                                dict[procResult.Answer_Full_Name].Add(procResult.value);
-                            }
+                            //foreach (var procResult in procResults)
+                            //{
+                            //    dict[procResult.Answer_Full_Name].Add(procResult.value);
+                            //}
                         });
                 }
             }
