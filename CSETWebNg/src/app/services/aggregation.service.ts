@@ -210,20 +210,21 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/overallaverages?aggregationId=' + this.id(), {});
   }
 
-  getStandardsAnswers(id: number) {
-
+  getStandardsAnswers() {
+    return this.http.post(this.apiUrl + 'analysis/standardsanswers?aggregationId=' + this.id(), {});
   }
 
-  getComponentsAnswers(id: number) {
-
+  getComponentsAnswers() {
+    return this.http.post(this.apiUrl + 'analysis/componentsanswers?aggregationId=' + this.id(), {});
   }
 
-  getCategoryAverages(id: number) {
-
+  getCategoryAverages() {
+    return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationId=' + this.id(), {});
   }
+  
 
-  getMissedQuestions(id: number) {
-    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + id, {});
+  getMissedQuestions() {
+    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + this.id(), {});
   }
 
 

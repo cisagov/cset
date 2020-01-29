@@ -139,6 +139,20 @@ namespace CSETWeb_Api.BusinessLogic.Models
         }
     }
 
+    public class PieChart
+    {
+        public string reportType { get; set; }
+        public List<string> labels { get; set; }
+        public List<float> data { get; set; }
+
+
+        public PieChart()
+        {
+            this.labels = new List<string>();
+            this.data = new List<float>();
+        }
+    }
+
 
     /// <summary>
     /// Contains an answer breakdown for an assessment.  
