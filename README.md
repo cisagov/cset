@@ -113,6 +113,11 @@ Figure 10: Local Install Landing Page
 [fig9]: img/fig9.png
 [fig10]: img/fig10.png
 
+<br/>
+<br/>
+<br/>
+
+
 ## CSET Enterprise Installation Instructions
 
 ### Introduction
@@ -130,164 +135,164 @@ This documentation is provided to assist users in navigating the basics of the C
 ### Installing IIS
 1.	On your Windows Server, open the “Server Manager” application.
 
-![](img/figE1.png) 
+![](img/figE1.PNG) 
+<br/>
 
 2.	Click “Add Roles and Features.” This should open the Roles and Features Wizard that will guide you through the installation process. 
 
-![](img/figE2.png)
+![](img/figE2.PNG)<br/>
 
-  a.	Installation Type – This should default to “Role-based or feature-based installation.” If it does not, please select this option.
-  b.	Server Selection – Choose the server you plan on running CSET® on.
-  c.	Server Roles – Select the “Web Server (IIS)” check box. Add any features the program prompts you for.
-  d.	Features – The defaults will work just fine for running CSET®, however you may add any additional features you wish.
-  e.	Web Server Role (IIS) – Click “Next.”
-  f.	Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for.
+  * Installation Type – This should default to “Role-based or feature-based installation.” If it does not, please select this option.
+  * Server Selection – Choose the server you plan on running CSET® on.
+  * Server Roles – Select the “Web Server (IIS)” check box. Add any features the program prompts you for.
+  * Features – The defaults will work just fine for running CSET®, however you may add any additional features you wish.
+  * Web Server Role (IIS) – Click “Next.”
+  * Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for.
+  * Confirmation – Click “Install”. Close out of the Wizard when installation is complete.
 
-  ![](img/figE3.png)
-
-  g.	Confirmation – Click “Install” (see above). Close out of the Wizard when installation is complete.
+![](img/figE3.PNG)<br/>
 
 ### SQL Server Installation
 1.	To begin the process of installing a new SQL Server on your machine (see below): 
-  a.	Open Microsoft’s “SQL Server Installation Center” 
-  b.	On the left, select “Installation” 
-  c.	Click “New SQL Server stand-alone installation” 
+  * Open Microsoft’s “SQL Server Installation Center” 
+  * On the left, select “Installation” 
+  * Click “New SQL Server stand-alone installation” 
 
-  ![](img/figE4.png)
+  ![](img/figE4.PNG)<br/>
 
-  d.	Input your product key (if needed) and accept the licensing terms to continue the installation.
-  e.	The defaults for most of the sections will be just fine. However, the two sections you will need to modify are “Feature Selection” and “Database Engine Configuration.”
-    i.	Feature Selection (see below) – When you are prompted to select specific server features, check the “Database Engine Services” box and then continue.
+  * Input your product key (if needed) and accept the licensing terms to continue the installation.
+  * The defaults for most of the sections will be just fine. However, the two sections you will need to modify are “Feature Selection” and “Database Engine Configuration.”
+  * Feature Selection (see below) – When you are prompted to select specific server features, check the “Database Engine Services” box and then continue.
 
-    ![](img/figE5.png)
+    ![](img/figE5.PNG)
 
-    ii.	Database Engine Configuration (see below) – At the Database Engine Configuration screen, select the “Mixed Mode (SQL Server authentication and Windows authentication)” option.
-    iii.	Under the same section, you will be asked to create and input a password for the system administrator account. Make sure to remember this information!
-    iv.	Finally, click the Add Current User button at the bottom. This will populate your current windows account as a user. Once that is complete, click “Next.”
+  * Database Engine Configuration (see below) – At the Database Engine Configuration screen, select the “Mixed Mode (SQL Server authentication and Windows authentication)” option.
+  * Under the same section, you will be asked to create and input a password for the system administrator account. Make sure to remember this information!
+  * Finally, click the Add Current User button at the bottom. This will populate your current windows account as a user. Once that is complete, click “Next.”
 
-    ![](img/figE6.png)
+    ![](img/figE6.PNG)
 
-  f.	The final step is to click the Install button to finish up this process. Once this is complete, you can close out of the Server Setup window.
+  * The final step is to click the Install button to finish up this process. Once this is complete, you can close out of the Server Setup window.
 
-2.	Once your server is up and running, you will need to install the URL Rewrite Module. Simply download the file from Microsoft (see Page 2 links or above hyperlink) and run the application to install the necessary patch.
+2. Once your server is up and running, you will need to install the URL Rewrite Module. Simply download the file from Microsoft (see Page 2 links or above hyperlink) and run the application to install the necessary patch.
 
 ### Firewall Configuration
 1. Open Windows Defender Firewall
 
-![](img/figE7.png)
+![](img/figE7.PNG)
 
 2.	On the left, select “Advanced Settings.”
-  a.	Inside the new window, double-click “Inbound Rules” and then select “New Rule” on the right (see below).
+  * Inside the new window, double-click “Inbound Rules” and then select “New Rule” on the right (see below).
 
-  ![](img/figE8.png)
+  ![](img/figE8.PNG)
 
-  b.	Rule Type – Select “Port” as the new rule type and click “Next.”
-  c.	Protocol and Ports (see below) – Change the rule to apply to “Specific local ports” and enter your desired port. Once that is finished, click “Next.”
+  * Rule Type – Select “Port” as the new rule type and click “Next.”
+  * Protocol and Ports (see below) – Change the rule to apply to “Specific local ports” and enter your desired port. Once that is finished, click “Next.”
 
-  ![](img/figE9.png)
+  ![](img/figE9.PNG)
 
-  d.	Action – Select the “Allow the connection” radio button. This should be selected by default. Click “Next.”
-  e.	Profile – Choose what type of networks you wish to allow connections from. If you are unsure, leave them all checked. Click “Next.”
-  f.	Name – The final step is to create a name and description for this new rule. Once you’ve done this, click “Finish.”
+  * Action – Select the “Allow the connection” radio button. This should be selected by default. Click “Next.”
+  * Profile – Choose what type of networks you wish to allow connections from. If you are unsure, leave them all checked. Click “Next.”
+  * Name – The final step is to create a name and description for this new rule. Once you’ve done this, click “Finish.”
 
 ### Database Setup
 1.	Open the CSET® 9.2.2 folder that you downloaded earlier and navigate to the “Website” subfolder. Inside this folder you will find another subfolder titled “Data.” Inside the Data subfolder will be two files called “CSETWeb” and “CSETWeb_log.” Copy these two files to your server.
 
 2.	Open Microsoft SQL Server Management Studio (see below) and connect to the SQL Server that we setup previously. 
-  a.	Open the “Connect to Server” dialog box.
+  * Open the “Connect to Server” dialog box.
 
-  ![](img/figE10.png)
+  ![](img/figE10.PNG)
 
-  b.	Change the server name to “localhost” or whatever name you have specified for your server already.
-  c.	Your Server can be run through either the “SQL Server Authentication,” which will require the login information you created earlier, or you can use the Windows Authentication, which will not require any login information as the server will verify your identity through your Windows account.
+  * Change the server name to “localhost” or whatever name you have specified for your server already.
+  * Your Server can be run through either the “SQL Server Authentication,” which will require the login information you created earlier, or you can use the Windows Authentication, which will not require any login information as the server will verify your identity through your Windows account.
 
-  ![](img/figE11.png)
+  ![](img/figE11.PNG)
 
 3.	Inside the Object Explorer on the left, right-click the Database folder (see below) and then click “Attach.”
 
-![](img/figE12.png)
+![](img/figE12.PNG)
 
-  a.	This will bring up the “Attach Databases” dialog box (see below). Click the Add button and navigate to the location where you previously saved/copied the CSETWeb.mdf file. Click on the file and then click “OK,” and then click “OK” again to attach the database.
+  * This will bring up the “Attach Databases” dialog box (see below). Click the Add button and navigate to the location where you previously saved/copied the CSETWeb.mdf file. Click on the file and then click “OK,” and then click “OK” again to attach the database.
 
-  ![](img/figE13.png)
+  ![](img/figE13.PNG)
 
-  b.	You’ll know you’ve completed this step successfully when you can see the “CSETWeb” object appear under the Databased section in the Object explorer.
+  * You’ll know you’ve completed this step successfully when you can see the “CSETWeb” object appear under the Databased section in the Object explorer.
 
-  ![](img/figE14.png)
+  ![](img/figE14.PNG)
 
 ### Create Database User
 1. Peviously we created our SQL Server account. We will now need to create an account that has access to the database. Continuing in the Object Explorer, right-click on the folder named Security, hover over New (see below) and then click “Login.”
 
-![](img/figE15.png)
+![](img/figE15.PNG)
 
-  a.	In the next window (see below), enter a login name, select the “SQL Server authentication” radio button, and then enter a password. If you choose to go through the Windows authentication, you will not need to enter a password.
-  b.	At the bottom of the box, change the Default database to CSETWeb.
+  * In the next window (see below), enter a login name, select the “SQL Server authentication” radio button, and then enter a password. If you choose to go through the Windows authentication, you will not need to enter a password.
+  * At the bottom of the box, change the Default database to CSETWeb.
 
-  ![](img/figE16.png)
+  ![](img/figE16.PNG)
 
-  c.	At top-left from the window shown below, click “User Mapping” and then select the CSETWeb checkbox. Then click “OK.”
+  * At top-left from the window shown below, click “User Mapping” and then select the CSETWeb checkbox. Then click “OK.”
 
-  ![](img/figE17.png)
+  ![](img/figE17.PNG)
 
 2.	Back in the Object Explorer of SSMS (see below), expand the CSETWeb list, followed by Security and then Users. You should see the new user you created listed here. For us, it’s simply “user”. Right-click on your user’s name and select properties.
 
-![](img/figE18.png)
+![](img/figE18.PNG)
 
-  a.	In the dialog box that pops up, select “Securables” from the menu on the left if it is not already selected.
-  b.	Click the Search button to generate another dialog box. Make sure the “Specific objects…” radio button is selected and then click “OK.”
+  * In the dialog box that pops up, select “Securables” from the menu on the left if it is not already selected.
+  * Click the Search button to generate another dialog box. Make sure the “Specific objects…” radio button is selected and then click “OK.”
 
-  ![](img/figE19.png)
+  ![](img/figE19.PNG)
 
-  c. Once you hit OK, you should see yet another box pop-up titled “Select Object.” Click the button that says Object Types… This will generate a list of object types. Scroll down until you see the “Schemas” object (see below). Check this box, and then click “OK.”
+  * Once you hit OK, you should see yet another box pop-up titled “Select Object.” Click the button that says Object Types… This will generate a list of object types. Scroll down until you see the “Schemas” object (see below). Check this box, and then click “OK.”
 
-  ![](img/figE20.png)
+  ![](img/figE20.PNG)
 
-  d. Next, click "Browse" and select the "dbo" checkbox. Then click "Ok".
+  * Next, click "Browse" and select the "dbo" checkbox. Then click "Ok".
 
-  ![](img/figE21.png)
+  ![](img/figE21.PNG)
 
-  e. Once we have our dbo inside our Securables, we need to grant it permissions. Scroll through the list of permissions and when you find the "Execute" permission, select the "Grant" checkbox.
+  * Once we have our dbo inside our Securables, we need to grant it permissions. Scroll through the list of permissions and when you find the "Execute" permission, select the "Grant" checkbox.
 
-  ![](img/figE22.png)
+  ![](img/figE22.PNG)
 
-  f.  Our final step is to go over to the Membership page (see below) and select the checkboxes for “db_datareader” and “db_datawriter.” Then select “OK.”
+  * Our final step is to go over to the Membership page (see below) and select the checkboxes for “db_datareader” and “db_datawriter.” Then select “OK.”
 
-  ![](img/figE23.png)
+  ![](img/figE23.PNG)
 
 ### CSET Installation
 1.	Re-open Windows Server Manager (see below). Double-click on “IIS” on the left. Then, right-click on the server name and click “Internet Information Services (IIS) Manager.”
 
-![](img/figE24.png)
+![](img/figE24.PNG)
 
-  a. As seen in the picture below, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.
-  b.	Delete everything inside this folder EXCEPT for the “aspnet_client subfolder”. 
-    i.	If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.
-  c.	From the CSET® 9.2.2 folder, copy all the contents and files of the Website subfolder into your wwwroot folder.
+  * As seen in the picture below, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.
+  * Delete everything inside this folder EXCEPT for the “aspnet_client subfolder”. 
+  * If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.
+  * From the CSET® 9.2.2 folder, copy all the contents and files of the Website subfolder into your wwwroot folder.
 
-  ![](img/figE25.png)
+  ![](img/figE25.PNG)
 
 
 ### CSET Configuration
 1.	Locate and open a file called “Web.config” inside the “wwwroot” folder. Open this file using a text editor such as notepad.
 
-![](img/figE26.png)
+![](img/figE26.PNG)
 
-  a.	Scroll to the bottom of the document and you will find the "connectionStrings" section. We will need to edit these to correctly connect to CSET®.
-  b.	On each of the lines inside the two connection string tags, there is a part that says “data source=…” You will need to change the part after the equals sign to the IP address or domain name of the machine on which the SQL Server is running.
+  * Scroll to the bottom of the document and you will find the "connectionStrings" section. We will need to edit these to correctly connect to CSET®.
+  * On each of the lines inside the two connection string tags, there is a part that says “data source=…” You will need to change the part after the equals sign to the IP address or domain name of the machine on which the SQL Server is running.
 
-  ![](img/figE27.png)
+  ![](img/figE27.PNG)
 
-    i.	If IIS and the SQL Server instance are running on the same machine, you can use “localhost” as the domain name. Otherwise, you will need the specific domain or IP address to connect properly.
+  * If IIS and the SQL Server instance are running on the same machine, you can use “localhost” as the domain name. Otherwise, you will need the specific domain or IP address to connect properly.
 
-  c.	On each of the same lines, you will need to update the “Integrated Security=SSPI” section to reflect your SQL Server specific login info.
+  * On each of the same lines, you will need to update the “Integrated Security=SSPI” section to reflect your SQL Server specific login info.
 
-  ![](img/figE28.png)
+  ![](img/figE28.PNG)
   
-    i.	If you are using the Windows domain authentication method, then you will use “Trusted_Connection=SSPI” instead of a user ID and password
+  * If you are using the Windows domain authentication method, then you will use “Trusted_Connection=SSPI” instead of a user ID and password
 
-  d.	Save and close the Web.config file.
-    i.	If you receive an error stating that you do not have permissions to save the Web.config file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
-  e.	Go back to the “Internet Information Services (IIS) Manager” and on the right, make sure the server is running. You may now browse to your Enterprise CSET® Installation!
+  * Save and close the Web.config file.
+  * If you receive an error stating that you do not have permissions to save the Web.config file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
+  * Go back to the “Internet Information Services (IIS) Manager” and on the right, make sure the server is running. You may now browse to your Enterprise CSET® Installation!
 
 ### Other Steps (Optional)
 ## Creating CSET User
@@ -302,28 +307,27 @@ There are two ways to add a new user to your freshly created CSET® Stand-Alone.
 The second way to add a new user to your CSET® Application is to use the included “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system.
 
   1.	Inside the “AddUser” folder, you will find a file called “AddCSETUser.exe”. It’s a config file. Open this file with a text editor such as notepad. 
-    a.	Inside the "connectionStrings" tags, you will need to change your “data source=” to the IP Address or domain of your server.
-    b.	You will then need to change the “user id=” and “password=” to the admin account you created previously.
-    c.	Save and close the file.
+  * Inside the "connectionStrings" tags, you will need to change your “data source=” to the IP Address or domain of your server.
+  * You will then need to change the “user id=” and “password=” to the admin account you created previously.
+  * Save and close the file.
   
   2.	Double-click on the “AddCSETUser” application and a small dialog box should pop-up with entry fields to add a new CSET® User.
 
-  ![](img/figE29.png)
+  ![](img/figE29.PNG)
 
-  a.	Enter the required information and click “Save.”
-  b.	If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
+  * Enter the required information and click “Save.”
+  * If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
 
 ## Mail Host Configuration
 1.	Inside your “wwwroot”, open the Web.config file.
-  a.	Inside the config file, you will need to locate the “SMTP Host”, and “Sender Email” portions.
+  * Inside the config file, you will need to locate the “SMTP Host”, and “Sender Email” portions.
 
-  ![](img/figE30.png)
+  ![](img/figE30.PNG)
 
-  b.	Edit the text after the equal sign of value to your domain name. (e.g. value=”mailhost.YOURDOMAIN.com”).
-  c.	Save and close the file when you are finished.
+  * Edit the text after the equal sign of value to your domain name. (e.g. value=”mailhost.YOURDOMAIN.com”).
+  * Save and close the file when you are finished.
 
 ## SSL Security Certificate for Extra Security
 An SSL certificate is a web technology that establishes a secure link between a web server and a browser. This link encrypts all data (such as passwords) so that your server is more secure.
 
   1.	You can follow [this tutorial](https://www.digicert.com/ssl-support/pfx-import-export-iis-7.htm) to add an SSL certificate to your CSET® stand-alone.
-
