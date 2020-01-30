@@ -73,7 +73,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -87,6 +87,15 @@ export class AggregationChartService {
    * @param showLegend 
    */
   buildBarChart(canvasId: string, x: any, showLegend: boolean) {
+    if (!x.labels) {
+      x.labels = []
+    }
+    x.datasets.forEach(ds => {
+      if (!ds.label) {
+        ds.label = '';
+      }      
+    });
+
     return new Chart(canvasId, {
       type: 'bar',
       data: {
@@ -114,6 +123,16 @@ export class AggregationChartService {
    * @param x 
    */
   buildHorizBarChart(canvasId: string, x: any, showLegend: boolean) {
+    console.log(x);
+    if (!x.labels) {
+      x.labels = []
+    }
+    x.datasets.forEach(ds => {
+      if (!ds.label) {
+        ds.label = '';
+      }      
+    });
+
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
@@ -128,7 +147,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -163,7 +182,7 @@ export class AggregationChartService {
         tooltips: {
           callbacks: {
             label: ((tooltipItem, data) =>
-              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              data.labels[tooltipItem.index] + ': ' + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         },
         title: {
@@ -196,7 +215,7 @@ export class AggregationChartService {
                     value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   }
                   return {
-                    text: label + ' : ' + value + '%',
+                    text: label + ' : ' + Number.parseFloat(value).toFixed(2) + '%',
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
@@ -246,7 +265,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -278,7 +297,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }

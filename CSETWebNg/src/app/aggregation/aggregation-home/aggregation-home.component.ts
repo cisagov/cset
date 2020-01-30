@@ -73,16 +73,14 @@ export class AggregationHomeComponent implements OnInit {
 
     // call API to create new aggregation, it will return the new ID
     this.aggregationSvc.createAggregation().subscribe((x: any) => {
-      console.log('just called createAggregation');
-      console.log(x);
-      sessionStorage.setItem('aggregationId', x.AggregationId);      
-      this.aggregationSvc.currentAggregation = {      
+      sessionStorage.setItem('aggregationId', x.AggregationId);
+      this.aggregationSvc.currentAggregation = {
         AggregationId: x.AggregationId,
         AggregationName: x.AggregationName,
         AggregationDate: x.AggregationDate,
-        Mode: x.Mode     
+        Mode: x.Mode
       };
-      this.router.navigate(['alias-assessments', x.AggregationId]);
+      this.aggregationSvc.loadAggregation(x.AggregationId);
     });
   }
 
