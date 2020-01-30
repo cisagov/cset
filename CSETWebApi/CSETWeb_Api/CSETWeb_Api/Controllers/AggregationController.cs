@@ -13,7 +13,7 @@ using System.Web.Http;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using BusinessLogic;
-using CSETWeb_Api.Helpers;
+
 
 namespace CSETWeb_Api.Controllers
 {
@@ -119,10 +119,17 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/getmissedquestions")]
-        public List<MissedQuestion> GetCommonlyMissedQuestions([FromUri] int aggregationId)
+        public List<MissedQuestion> GetCommonlyMissedQuestions()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return new List<MissedQuestion>();
+            }
+
             var manager = new BusinessLogic.AggregationManager();
-            return manager.GetCommonlyMissedQuestions(aggregationId);
+            return manager.GetCommonlyMissedQuestions(aggregationID);
         }
 
 
