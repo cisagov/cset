@@ -66,17 +66,17 @@ export class CompareSummaryComponent implements OnInit {
     // Category Averages
     this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
 
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Account Management", "Communication Protection", "Encryption", "Information Protection", "Physical Security"],
-        datasets: [{
-          label: "",
-          data: [25, 13, 10, 2, 81]
-        }
-        ]
-      };
-      // .....................................................
+      // // fake data ...........................................
+      // x = {
+      //   reportType: "",
+      //   labels: ["Account Management", "Communication Protection", "Encryption", "Information Protection", "Physical Security"],
+      //   datasets: [{
+      //     label: "",
+      //     data: [25, 13, 10, 2, 81]
+      //   }
+      //   ]
+      // };
+      // // .....................................................
 
       // apply visual attributes
       x.datasets.forEach(ds => {

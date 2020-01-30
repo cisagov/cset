@@ -187,19 +187,19 @@ export class AggregationService {
   ////////////////////////////////  Trend  //////////////////////////////////
 
   getOverallComplianceScores() {
-    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', {});
   }
 
   getTrendTop5() {
-    return this.http.post(this.apiUrl + 'analysis/top5?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/top5', {});
   }
 
   getTrendBottom5() {
-    return this.http.post(this.apiUrl + 'analysis/bottom5?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/bottom5', {});
   }
 
   getCategoryPercentageComparisons() {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare', {});
   }
 
 
@@ -207,26 +207,33 @@ export class AggregationService {
   ////////////////////////////////  Compare  //////////////////////////////////
 
   getOverallAverageSummary() {
-    return this.http.post(this.apiUrl + 'analysis/overallaverages?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/overallaverages', {});
+  }
+
+  getOverallComparison() {
+    return this.http.post(this.apiUrl + 'analysis/overallcomparison', {});
   }
 
   getStandardsAnswers() {
-    return this.http.post(this.apiUrl + 'analysis/standardsanswers?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/standardsanswers', {});
   }
 
   getComponentsAnswers() {
-    return this.http.post(this.apiUrl + 'analysis/componentsanswers?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/componentsanswers', {});
   }
 
   getCategoryAverages() {
-    return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/categoryaverages', {});
   }
-  
+
 
   getMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'getmissedquestions', {});
   }
 
+  getSalComparison() {
+    return this.http.post(this.apiUrl + 'analysis/salcomparison', {});
+  }
 
 
 

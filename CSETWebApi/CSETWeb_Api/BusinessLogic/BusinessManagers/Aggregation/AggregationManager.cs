@@ -102,18 +102,18 @@ namespace CSETWeb_Api.BusinessLogic
             using (var db = new CSET_Context())
             {
                 // Find all aggregations of the desired type that the current user has access to one or more of its assessments
-                var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
-                if (ai == null)
+                var agg = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+                if (agg == null)
                 {
                     return null;
                 }
 
                 return new Aggregation()
                 {
-                    AggregationDate = ai.Aggregation_Date,
-                    AggregationId = ai.AggregationID,
-                    AggregationName = ai.Aggregation_Name,
-                    Mode = ai.Aggregation_Mode
+                    AggregationDate = agg.Aggregation_Date,
+                    AggregationId = agg.AggregationID,
+                    AggregationName = agg.Aggregation_Name,
+                    Mode = agg.Aggregation_Mode
                 };
             }
         }
@@ -260,27 +260,27 @@ namespace CSETWeb_Api.BusinessLogic
         {
             using (var db = new CSET_Context())
             {
-                var g = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
+                var aa = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
 
                 if (selected)
                 {
-                    if (g == null)
+                    if (aa == null)
                     {
-                        g = new AGGREGATION_ASSESSMENT()
+                        aa = new AGGREGATION_ASSESSMENT()
                         {
                             Aggregation_Id = aggregationId,
                             Assessment_Id = assessmentId,
                             Alias = ""
                         };
-                        db.AGGREGATION_ASSESSMENT.Add(g);
+                        db.AGGREGATION_ASSESSMENT.Add(aa);
                         db.SaveChanges();
                     }
                 }
                 else
                 {
-                    if (g != null)
+                    if (aa != null)
                     {
-                        db.AGGREGATION_ASSESSMENT.Remove(g);
+                        db.AGGREGATION_ASSESSMENT.Remove(aa);
                         db.SaveChanges();
                     }
                 }
@@ -312,12 +312,12 @@ namespace CSETWeb_Api.BusinessLogic
         {
             using (var db = new CSET_Context())
             {
-                var g = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
-                if (g == null)
+                var aa = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (aa == null)
                 {
                     return;
                 }
-                g.Alias = alias;
+                aa.Alias = alias;
                 db.SaveChanges();
             }
         }
@@ -448,11 +448,12 @@ namespace CSETWeb_Api.BusinessLogic
             return ((float)intersection.Count / (float)m.Count);
         }
 
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="aggregationId"></param>
-        public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
+        public List<MissedQuestion> GetCommonlyMissedQuestions(int? aggregationId)
         {
             var resp = new List<MissedQuestion>();
 

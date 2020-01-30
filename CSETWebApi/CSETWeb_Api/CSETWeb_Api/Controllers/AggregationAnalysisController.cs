@@ -14,6 +14,7 @@ using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessManagers.Analysis;
+using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -25,8 +26,15 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/overallcompliancescore")]
-        public LineChart OverallComplianceScore([FromUri] int aggregationId)
+        public LineChart OverallComplianceScore()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             var response = new LineChart();
             response.reportType = "Trend Overall Compliance Score";
 
@@ -47,7 +55,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -71,8 +79,15 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/top5")]
-        public LineChart Top5([FromUri] int aggregationId)
+        public LineChart Top5()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
 
@@ -93,7 +108,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -117,8 +132,15 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/bottom5")]
-        public LineChart Bottom5([FromUri] int aggregationId)
+        public LineChart Bottom5()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern";
 
@@ -139,7 +161,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -161,14 +183,17 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Returns a data structure for the Category Percent Compare chart.
         /// </summary>
-        /// <param name="aggregationId"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public HorizBarChart CategoryPercentCompare([FromUri] int aggregationId)
+        public HorizBarChart CategoryPercentCompare()
         {
-            var response = new HorizBarChart();
-            response.reportType = "Trend Category Percent Comparisons";
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
 
             DataTable dt = new DataTable();
             dt.Columns.Add("AssessmentId", typeof(int));
@@ -176,7 +201,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -187,16 +212,16 @@ namespace CSETWeb_Api.Controllers
                     row["Alias"] = a.Alias;
                     dt.Rows.Add(row);
 
-                    var rrr = GetCategoryPercentages(a.Assessment_Id, db);
+                    var percentages = GetCategoryPercentages(a.Assessment_Id, db);
 
-                    foreach (usp_getStandardsResultsByCategory r in rrr)
+                    foreach (usp_getStandardsResultsByCategory pct in percentages)
                     {
-                        if (!dt.Columns.Contains(r.Question_Group_Heading))
+                        if (!dt.Columns.Contains(pct.Question_Group_Heading))
                         {
-                            dt.Columns.Add(r.Question_Group_Heading, typeof(float));
+                            dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
                         }
 
-                        row[r.Question_Group_Heading] = r.prc;
+                        row[pct.Question_Group_Heading] = pct.prc;
                     }
                 }
 
@@ -209,6 +234,9 @@ namespace CSETWeb_Api.Controllers
                 categories.Remove("AssessmentId");
                 categories.Remove("Alias");
 
+
+                var response = new HorizBarChart();
+                response.reportTitle = "Category Percent Comparisons";
 
                 foreach (string category in categories)
                 {
@@ -226,9 +254,9 @@ namespace CSETWeb_Api.Controllers
                         ds.data.Add(rowAssessment[category] != DBNull.Value ? (float)rowAssessment[category] : 0f);
                     }
                 }
-            }
 
-            return response;
+                return response;
+            }
         }
 
 
@@ -261,25 +289,33 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Returns average overall scores.
         /// </summary>
-        /// <param name="aggregationId"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/overallaverages")]
-        public HorizBarChart GetOverallAverages([FromUri] int aggregationId)
+        public HorizBarChart GetOverallAverages()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             var response = new HorizBarChart();
-            response.reportType = "Overall Average Summary";
+            response.reportTitle = "Overall Average Summary";
 
 
-            Dictionary<string, List<double>> dict = new Dictionary<string, List<double>>();
-            dict["Questions"] = new List<double>();
-            dict["Overall"] = new List<double>();
-            dict["Components"] = new List<double>();
+            Dictionary<string, List<double>> dict = new Dictionary<string, List<double>>
+            {
+                ["Questions"] = new List<double>(),
+                ["Overall"] = new List<double>(),
+                ["Components"] = new List<double>()
+            };
 
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -317,8 +353,15 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/standardsanswers")]
-        public PieChart GetStandardsAnswerDistribution([FromUri] int aggregationId)
+        public PieChart GetStandardsAnswerDistribution()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             // create place to accumulate percentages for each answer
             var dict = new Dictionary<string, List<decimal>>();
             var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
@@ -327,10 +370,9 @@ namespace CSETWeb_Api.Controllers
                 dict.Add(a, new List<decimal>());
             }
 
-
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -353,7 +395,7 @@ namespace CSETWeb_Api.Controllers
                 var response = new PieChart();
                 response.reportType = "Overall Summary - Standards Answers";
                 response.labels.AddRange(answerNames);
-                foreach(string a in answerNames)
+                foreach (string a in answerNames)
                 {
                     response.data.Add((float)dict[a].DefaultIfEmpty(0).Average());
                 }
@@ -365,8 +407,15 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/componentsanswers")]
-        public PieChart GetComponentsAnswerDistribution([FromUri] int aggregationId)
+        public PieChart GetComponentsAnswerDistribution()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             // create place to accumulate percentages for each answer
             var dict = new Dictionary<string, List<decimal>>();
             var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
@@ -378,7 +427,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -412,39 +461,59 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/categoryaverages")]
-        public HorizBarChart GetCategoryAverages([FromUri] int aggregationId)
+        public HorizBarChart GetCategoryAverages()
         {
-            var dict = new Dictionary<string, List<decimal>>();
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
 
+            var dict = new Dictionary<string, List<decimal>>();
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[usp_getOverallRankedCategories]")
+                    db.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
-                            //var procResults = (List<usp_getOverallRankedCategories>)handler.ReadToList<usp_getOverallRankedCategories>();
+                            // usp_getStandardsResultsByCategory 15
+                            var procResults = (List<usp_getStandardsResultsByCategory>)handler.ReadToList<usp_getStandardsResultsByCategory>();
 
-                            //foreach (var procResult in procResults)
-                            //{
-                            //    dict[procResult.Answer_Full_Name].Add(procResult.value);
-                            //}
+                            foreach (var procResult in procResults)
+                            {
+                                if (!dict.ContainsKey(procResult.Question_Group_Heading))
+                                {
+                                    dict.Add(procResult.Question_Group_Heading, new List<decimal>());
+                                }
+                                if (procResult.Actualcr > 0)
+                                {
+                                    dict[procResult.Question_Group_Heading].Add(procResult.prc);
+                                }
+                            }
                         });
                 }
             }
 
+            var catList = dict.Keys.ToList();
+            catList.Sort();
 
 
-
-                var response = new HorizBarChart();
-            // response.labels   -- this will be a list of categories in alphabetical order
-            
+            var response = new HorizBarChart();
+            var ds = new ChartDataSet();
+            response.datasets.Add(ds);
+            response.labels.AddRange(catList);
+            foreach (string cat in catList)
+            {
+                ds.data.Add((float)dict[cat].DefaultIfEmpty(0).Average());
+            }
 
             return response;
         }
@@ -453,15 +522,21 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Returns answer breakdown for all associated assessments.
         /// </summary>
-        /// <param name="aggregationId"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getanswertotals")]
-        public List<AnswerCounts> GetAnswerTotals([FromUri] int aggregationId)
+        public List<AnswerCounts> GetAnswerTotals()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -473,24 +548,129 @@ namespace CSETWeb_Api.Controllers
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
-                            var result = handler.ReadToList<usp_getStandardSummaryOverall>();
-                            var g = (List<usp_getStandardSummaryOverall>)result;
+                            var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
 
-
-                            var abc = new AnswerCounts()
+                            var ansCount = new AnswerCounts()
                             {
                                 AssessmentId = a.Assessment_Id,
                                 Alias = a.Alias,
-                                Total = g.Max(x => x.Total),
-                                Y = g.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
-                                N = g.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
-                                A = g.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
-                                NA = g.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
-                                U = g.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
+                                Total = results.Max(x => x.Total),
+                                Y = results.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
+                                N = results.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
+                                A = results.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
+                                NA = results.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
+                                U = results.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
                             };
 
-                            response.Add(abc);
+                            response.Add(ansCount);
                         });
+                }
+
+                return response;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/overallcomparison")]
+        public HorizBarChart GetOverallComparison()
+        {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
+            var response = new HorizBarChart();
+            response.reportTitle = "Overall Comparison";
+            var statTypes = new List<string>() { "Questions", "Overall", "Components" };
+            response.labels.AddRange(statTypes);
+
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+                foreach (var a in assessmentList)
+                {
+                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var result = handler.ReadToList<GetCombinedOveralls>();
+                            var g = (List<GetCombinedOveralls>)result;
+
+                            Dictionary<string, double> dict = new Dictionary<string, double>();
+
+                            foreach (GetCombinedOveralls row in g)
+                            {
+                                dict[row.StatType] = row.Value;
+                            }
+
+                            var ds = new ChartDataSet
+                            {
+                                label = a.Alias
+                            };
+                            response.datasets.Add(ds);
+                            foreach (var statType in statTypes)
+                            {
+                                ds.data.Add((float)dict[statType]);
+                            }
+                        });
+                }
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Returns a bar for each assessment's SAL level in the aggregation.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/salcomparison")]
+        public HorizBarChart GetSalComparison()
+        {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
+            var response = new HorizBarChart();
+            response.reportTitle = "SAL Comparison";
+            var ds = new ChartDataSet();
+            response.datasets.Add(ds);
+
+            using (CSET_Context db = new CSET_Context())
+            {
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .ToList();
+
+
+                foreach (var a in assessmentList)
+                {
+                    var q = from ss in db.STANDARD_SELECTION
+                            join usl in db.UNIVERSAL_SAL_LEVEL on ss.Selected_Sal_Level equals usl.Full_Name_Sal
+                            select new { ss.Assessment_Id, ss.Selected_Sal_Level, usl.Sal_Level_Order };
+
+                    var sal = q.FirstOrDefault();
+
+                    if (sal != null)
+                    {
+                        response.labels.Add(a.Alias);
+                        ds.data.Add(sal.Sal_Level_Order);
+                    }
                 }
 
                 return response;
@@ -501,17 +681,23 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Returns answer breakdown for all associated assessments.
         /// </summary>
-        /// <param name="aggregationId"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getbesttoworst")]
-        public List<BestToWorstCategory> GetBestToWorst([FromUri] int aggregationId)
+        public List<BestToWorstCategory> GetBestToWorst()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             Dictionary<string, List<GetComparisonBestToWorst>> dict = new Dictionary<string, List<GetComparisonBestToWorst>>();
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                     .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
@@ -528,7 +714,7 @@ namespace CSETWeb_Api.Controllers
                                 {
                                     r.AssessmentName = a.Alias;
 
-                                    // fudge - make sure that rounding didn't end up with more 100%
+                                    // tweak - make sure that rounding didn't end up with more than 100%
                                     var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
                                     if (realAnswerPct + r.UnansweredValue > 100f)
                                     {
