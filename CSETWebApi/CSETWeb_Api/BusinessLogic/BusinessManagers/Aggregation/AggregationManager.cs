@@ -453,7 +453,7 @@ namespace CSETWeb_Api.BusinessLogic
         /// 
         /// </summary>
         /// <param name="aggregationId"></param>
-        public List<MissedQuestion> GetCommonlyMissedQuestions(int? aggregationId)
+        public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
         {
             var resp = new List<MissedQuestion>();
 
