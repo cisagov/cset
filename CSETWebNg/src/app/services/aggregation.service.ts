@@ -167,10 +167,6 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getanswertotals', '');
   }
 
-  getBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
-  }
-
 
 
   ////////////////////////////////  Trend  //////////////////////////////////
@@ -222,6 +218,10 @@ export class AggregationService {
 
   getSalComparison() {
     return this.http.post(this.apiUrl + 'analysis/salcomparison', {});
+  }
+
+  getBestToWorst() {
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
   }
 
 

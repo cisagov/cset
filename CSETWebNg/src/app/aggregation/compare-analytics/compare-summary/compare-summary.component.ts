@@ -66,23 +66,16 @@ export class CompareSummaryComponent implements OnInit {
     // Category Averages
     this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
 
-      // // fake data ...........................................
-      // x = {
-      //   reportType: "",
-      //   labels: ["Account Management", "Communication Protection", "Encryption", "Information Protection", "Physical Security"],
-      //   datasets: [{
-      //     label: "",
-      //     data: [25, 13, 10, 2, 81]
-      //   }
-      //   ]
-      // };
-      // // .....................................................
-
       // apply visual attributes
       x.datasets.forEach(ds => {
         ds.backgroundColor = '#008a00';
         ds.borderColor = '#008a00';
       });
+
+      if (!x.options) {
+        x.options = {};
+      }
+      x.options.maintainAspectRatio = false;
 
       this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
     });
