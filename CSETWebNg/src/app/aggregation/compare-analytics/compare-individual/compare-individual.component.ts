@@ -11,7 +11,7 @@ import { AggregationChartService, ChartColors } from '../../../services/aggregat
 })
 export class CompareIndividualComponent implements OnInit {
 
-  answerCounts: any[];
+  answerCounts: any[] = null;
   chartOverallComparison: Chart;
   chartCategoryPercent: Chart;
   chartSAL: Chart;

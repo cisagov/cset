@@ -123,7 +123,6 @@ export class AggregationChartService {
    * @param x 
    */
   buildHorizBarChart(canvasId: string, x: any, showLegend: boolean) {
-    console.log(x);
     if (!x.labels) {
       x.labels = []
     }

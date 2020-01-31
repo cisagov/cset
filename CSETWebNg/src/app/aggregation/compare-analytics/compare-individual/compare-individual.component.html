@@ -41,21 +41,47 @@
       <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
       <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
     </tr>
-    </table>
+  </table>
+</div>
+<div *ngIf="answerCounts == null">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
 </div>
 
 <div class="chart d-flex flex-column flex-00a">
   <h3>Overall Comparison</h3>
+  <div *ngIf="chartOverallComparison == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
 </div>
 
 <div class=" chart d-flex flex-column flex-00a">
   <h3>Comparison of Security Assurance Levels</h3>
-    <canvas id="canvasSAL">{{ chartSAL }}</canvas>  
+  <div *ngIf="chartSAL == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  <canvas id="canvasSAL">{{ chartSAL }}</canvas>
+  <table>
+    <tr>
+      <td *ngFor="let a of assessments">{{ a.alias }}</td>
+    </tr>
+
+  </table>
 </div>
 
 <div class="chart d-flex flex-column flex-00a">
   <h3>Category Percent Comparisons</h3>
+  <div *ngIf="chartCategoryPercent == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <div class="chart-container" style="position: relative; height:80vh; width: 100%">
     <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
   </div>
