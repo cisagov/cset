@@ -97,7 +97,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
     public class HorizBarChart
     {
-        public string reportType { get; set; }
+        public string reportTitle { get; set; }
         public List<string> labels { get; set; }
 
         public List<ChartDataSet> datasets { get; set; }

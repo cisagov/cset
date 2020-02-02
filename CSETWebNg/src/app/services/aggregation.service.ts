@@ -58,6 +58,7 @@ export class AggregationService {
     return +sessionStorage.getItem('aggregationId');
   }
 
+  
   /**
    * Returns the singluar or plural name for the aggretation type.
    * @param plural
@@ -80,23 +81,6 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'getaggregations?mode=' + this.mode, '');
   }
 
-  /**
-   *
-   */
-  newAggregation() {
-    this.createAggregation()
-      .toPromise()
-      .then(
-        (response: any) => {
-          sessionStorage.setItem('aggregationId', response.AggregationId);
-          this.loadAggregation(response.AggregationId);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
-  }
 
   /**
    * Calls the API to create a new aggregation record
@@ -104,6 +88,7 @@ export class AggregationService {
   createAggregation() {
     return this.http.post(this.apiUrl + 'create?mode=' + this.mode, '');
   }
+
 
   /**
    *
@@ -117,6 +102,7 @@ export class AggregationService {
       });
     });
   }
+
 
   /**
    *
@@ -139,9 +125,11 @@ export class AggregationService {
       });
   }
 
+
   getAggregation() {
-    return this.http.post(this.apiUrl + 'get?aggregationId=' + this.id(), '');
+    return this.http.post(this.apiUrl + 'get', '');
   }
+
 
   updateAggregation() {
     const agg = this.currentAggregation;
@@ -153,13 +141,14 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'update', aggForSubmit);
   }
 
+
   deleteAggregation(id: any) {
     return this.http.post(this.apiUrl + 'delete?aggregationId=' + id, '');
   }
 
 
   getAssessments() {
-    return this.http.post(this.apiUrl + 'getassessments?aggregationId=' + this.id(), '');
+    return this.http.post(this.apiUrl + 'getassessments', '');
   }
 
 
@@ -175,11 +164,7 @@ export class AggregationService {
   }
 
   getAnswerTotals() {
-    return this.http.post(this.apiUrl + 'analysis/getanswertotals?aggregationId=' + this.id(), '');
-  }
-
-  getBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getbesttoworst?aggregationId=' + this.id(), '');
+    return this.http.post(this.apiUrl + 'analysis/getanswertotals', '');
   }
 
 
@@ -187,19 +172,19 @@ export class AggregationService {
   ////////////////////////////////  Trend  //////////////////////////////////
 
   getOverallComplianceScores() {
-    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', {});
   }
 
   getTrendTop5() {
-    return this.http.post(this.apiUrl + 'analysis/top5?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/top5', {});
   }
 
   getTrendBottom5() {
-    return this.http.post(this.apiUrl + 'analysis/bottom5?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/bottom5', {});
   }
 
   getCategoryPercentageComparisons() {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare', {});
   }
 
 
@@ -207,26 +192,37 @@ export class AggregationService {
   ////////////////////////////////  Compare  //////////////////////////////////
 
   getOverallAverageSummary() {
-    return this.http.post(this.apiUrl + 'analysis/overallaverages?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/overallaverages', {});
+  }
+
+  getOverallComparison() {
+    return this.http.post(this.apiUrl + 'analysis/overallcomparison', {});
   }
 
   getStandardsAnswers() {
-    return this.http.post(this.apiUrl + 'analysis/standardsanswers?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/standardsanswers', {});
   }
 
   getComponentsAnswers() {
-    return this.http.post(this.apiUrl + 'analysis/componentsanswers?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/componentsanswers', {});
   }
 
   getCategoryAverages() {
-    return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'analysis/categoryaverages', {});
   }
-  
+
 
   getMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmissedquestions?aggregationId=' + this.id(), {});
+    return this.http.post(this.apiUrl + 'getmissedquestions', {});
   }
 
+  getSalComparison() {
+    return this.http.post(this.apiUrl + 'analysis/salcomparison', {});
+  }
+
+  getBestToWorst() {
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+  }
 
 
 
