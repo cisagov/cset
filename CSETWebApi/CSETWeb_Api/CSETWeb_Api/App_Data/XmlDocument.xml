@@ -489,26 +489,25 @@
             Removes all maturity filters for the current assessment.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.OverallComplianceScore(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.OverallComplianceScore">
             <summary>
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Top5(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Top5">
             <summary>
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Bottom5(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Bottom5">
             <summary>
             
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.CategoryPercentCompare(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.CategoryPercentCompare">
             <summary>
             Returns a data structure for the Category Percent Compare chart.
             </summary>
-            <param name="aggregationId"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetCategoryPercentages(System.Int32,DataLayerCore.Model.CSET_Context)">
@@ -518,25 +517,34 @@
             <param name="assessmentId"></param>
             <param name="db"></param>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetOverallAverages(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetOverallAverages">
             <summary>
             Returns average overall scores.
             </summary>
-            <param name="aggregationId"></param>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetAnswerTotals(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetAnswerTotals">
             <summary>
             Returns answer breakdown for all associated assessments.
             </summary>
-            <param name="aggregationId"></param>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetBestToWorst(System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetOverallComparison">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetSalComparison">
+            <summary>
+            Returns a bar for each assessment's SAL level in the aggregation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetBestToWorst">
             <summary>
             Returns answer breakdown for all associated assessments.
             </summary>
-            <param name="aggregationId"></param>
             <returns></returns>
         </member>
         <member name="T:CSETWeb_Api.Controllers.AggregationController">

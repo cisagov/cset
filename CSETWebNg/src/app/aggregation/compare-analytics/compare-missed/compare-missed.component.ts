@@ -9,7 +9,7 @@ import { AggregationService } from '../../../services/aggregation.service';
 })
 export class CompareMissedComponent implements OnInit {
 
-  missedQuestions: [];
+  missedQuestions: [] = null;
 
   constructor(
     public aggregationSvc: AggregationService

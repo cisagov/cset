@@ -11,9 +11,10 @@ import { AggregationChartService, ChartColors } from '../../../services/aggregat
 })
 export class CompareIndividualComponent implements OnInit {
 
-  answerCounts: any[];
+  answerCounts: any[] = null;
   chartOverallComparison: Chart;
   chartCategoryPercent: Chart;
+  chartSAL: Chart;
 
   constructor(
     public navSvc: NavigationAggregService,
@@ -36,40 +37,11 @@ export class CompareIndividualComponent implements OnInit {
 
 
     // Overall Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Questions", "Overall", "Components"],
-        datasets: [{
-          label: "A",
-          data: [25, 13, 15]
-        },
-        {
-          label: "B",
-          data: [32, 20, 30]
-        }
-        ],
-        options: {
-          legend: {
-            display: 'top'
-          },
-          maintainAspectRatio: true,
-          scales: {
-            xAxes: [{
-              ticks: {
-                suggestedMin: 50,
-                suggestedMax: 100
-              }
-            }]
-          }
-        }
-      };
-      // .....................................................
+    this.aggregationSvc.getOverallComparison().subscribe((x: any) => {      
 
       // apply visual attributes
       const chartColors = new ChartColors();
-      x.datasets.forEach(ds => {
+      x.datasets.forEach((ds: any) => {
         ds.backgroundColor = chartColors.getNextBluesBarColor();
         ds.borderColor = ds.backgroundColor;
       });
@@ -78,7 +50,10 @@ export class CompareIndividualComponent implements OnInit {
     });
 
 
-    // Comparison of Security Assurance Levels
+    // Comparison of Security Assurance Levels (SAL)
+    this.aggregationSvc.getSalComparison().subscribe((x: any) => {
+      this.chartSAL = this.aggregChartSvc.buildBarChart('canvasSAL', x, false);
+    });
 
 
     // Category Percentage Comparison
