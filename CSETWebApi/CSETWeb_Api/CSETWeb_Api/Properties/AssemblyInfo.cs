@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 //////////////////////////////// 
 using System.Reflection;
@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Idaho National Laboratory")]
 [assembly: AssemblyProduct("CSETWeb_Api")]
-[assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2019")]
-[assembly: AssemblyTrademark("CSET and CSET Logo are Trademarks of the DHS NCATS Team 2019")]
+[assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2020")]
+[assembly: AssemblyTrademark("CSET and CSET Logo are Trademarks of the DHS NCATS Team 2020")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
