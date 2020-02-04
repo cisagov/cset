@@ -61,18 +61,32 @@
 
 <div class=" chart d-flex flex-column flex-00a">
   <h3>Comparison of Security Assurance Levels</h3>
-  <div *ngIf="chartSAL == null">
+  <div *ngIf="sals == null">
     <div class="spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasSAL">{{ chartSAL }}</canvas>
-  <!-- <table>
-    <tr>
-      <td *ngFor="let a of assessments">{{ a.alias }}</td>
-    </tr>
 
-  </table> -->
+  <div class="d-table">
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.Alias }}</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Very High'">Very High</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'High'">High</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Moderate'">Moderate</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Low'">Low</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'None'">None</div>
+    </div>
+  </div>
 </div>
 
 <div class="chart d-flex flex-column flex-00a">

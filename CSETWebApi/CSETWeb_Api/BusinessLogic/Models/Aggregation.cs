@@ -95,6 +95,17 @@ namespace CSETWeb_Api.BusinessLogic.Models
     }
 
 
+    /// <summary>
+    /// Shown on Individual Assessment Comparison
+    /// </summary>
+    public class SalComparison
+    {
+        public int AssessmentId { get; set; }
+        public string Alias { get; set; }
+        public string SalLevel { get; set; }
+    }
+
+
     public class HorizBarChart
     {
         public string reportTitle { get; set; }

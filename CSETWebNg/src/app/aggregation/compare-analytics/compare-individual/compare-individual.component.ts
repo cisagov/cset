@@ -14,7 +14,7 @@ export class CompareIndividualComponent implements OnInit {
   answerCounts: any[] = null;
   chartOverallComparison: Chart;
   chartCategoryPercent: Chart;
-  chartSAL: Chart;
+  sals: any;
 
   constructor(
     public navSvc: NavigationAggregService,
@@ -52,7 +52,7 @@ export class CompareIndividualComponent implements OnInit {
 
     // Comparison of Security Assurance Levels (SAL)
     this.aggregationSvc.getSalComparison().subscribe((x: any) => {
-      this.chartSAL = this.aggregChartSvc.buildBarChart('canvasSAL', x, false);
+      this.sals = x;
     });
 
 

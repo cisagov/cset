@@ -2181,6 +2181,17 @@ hr.ranked-questions {
   border-radius: .5rem;
 }
 
+.sal-inactive {
+  color: $gray-450;
+  width: 2%;
+}
+
+.sal-active {
+  color: $white;
+  font-weight: bold;
+  background-color: $primary-750;
+}
+
 .merge-source-answer {
   min-width: 2rem;
   text-align: center;
