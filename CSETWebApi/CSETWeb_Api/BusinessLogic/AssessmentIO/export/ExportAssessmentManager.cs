@@ -300,6 +300,8 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                     }
                 }
 
+                model.ExportDateTime = DateTime.UtcNow;
+
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 var modelEntry = archive.CreateEntry("model.json");
                 using (var writer = new StreamWriter(modelEntry.Open()))
