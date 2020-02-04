@@ -88,17 +88,6 @@
         </tr>
       </table>
     </div>
-    <div *ngIf="emailSent" class="mb-3">
-      <p>Your account was successfully created. An email was sent to {{model.PrimaryEmail}} containing your
-        temporary password.</p>
-      <p>Please <a href="index.html">login</a> using your temporary password to complete the registration
-        process.</p>
-    </div>
-    <div *ngIf="receivedError" class="mb-3">
-      <div class="alert alert-danger">
-        <p>{{errorMessage}}</p>
-      </div>
-    </div>
 
     <div class="mb-4 d-flex justify-content-between flex-11a">
       <div class="d-flex justify-content-start flex-11a">
@@ -119,6 +108,11 @@
           temporary password.</p>
         <p>Please <a href="index.html">login</a> using your temporary password to complete the registration
           process.</p>
+      </div>
+    </div>
+    <div *ngIf="receivedError" class="mb-3">
+      <div class="alert alert-danger">
+        <p>{{errorMessage}}</p>
       </div>
     </div>
   </form>
