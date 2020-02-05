@@ -15,6 +15,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Aggregation;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -104,23 +105,28 @@ namespace CSETWeb_Api.Controllers
             // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
             //                  modified for the 9.x database.
 
+            
             var rnd = new Random(DateTime.Now.Millisecond);
+
+
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
-                    .ToList();
+                TrendDataProcessor trendData = new TrendDataProcessor();
+                trendData.Process(db, aggregationID??0);
+                //var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+                //    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                //    .ToList();
 
-                foreach (var a in assessmentList)
-                {
-                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
+                //foreach (var a in assessmentList)
+                //{
+                //    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
 
-                    foreach (var ds1 in response.datasets)
-                    {
-                        ds1.data.Add(rnd.Next(0, 100));
-                    }
-                }
+                //    foreach (var ds1 in response.datasets)
+                //    {
+                //        ds1.data.Add(rnd.Next(0, 100));
+                //    }
+                //}
             }
 
             return response;
