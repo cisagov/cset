@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using System;
 using System.Collections.Generic;
 
 namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2
@@ -14,6 +15,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2
     /// </summary>
     public class UploadAssessmentModel
     {
+        public DateTime ExportDateTime { get; set; }
         public List<jCSET_VERSION> jCSET_VERSION { get; set; }
         public List<jASSESSMENT_SELECTED_LEVELS> jASSESSMENT_SELECTED_LEVELS { get; set; }
         public List<jAVAILABLE_STANDARDS> jAVAILABLE_STANDARDS { get; set; }
