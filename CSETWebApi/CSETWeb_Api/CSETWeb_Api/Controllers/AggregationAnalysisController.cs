@@ -643,7 +643,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/salcomparison")]
-        public HorizBarChart GetSalComparison()
+        public List<SalComparison> GetSalComparison()
         {
             TokenManager tm = new TokenManager();
             var aggregationID = tm.PayloadInt("aggreg");
@@ -652,11 +652,6 @@ namespace CSETWeb_Api.Controllers
                 return null;
             }
 
-            var response = new HorizBarChart();
-            response.reportTitle = "SAL Comparison";
-            var ds = new ChartDataSet();
-            response.datasets.Add(ds);
-
             using (CSET_Context db = new CSET_Context())
             {
                 var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
@@ -664,18 +659,20 @@ namespace CSETWeb_Api.Controllers
                     .ToList();
 
 
+                var response = new List<SalComparison>();
+
                 foreach (var a in assessmentList)
                 {
-                    var q = from ss in db.STANDARD_SELECTION
-                            join usl in db.UNIVERSAL_SAL_LEVEL on ss.Selected_Sal_Level equals usl.Full_Name_Sal
-                            select new { ss.Assessment_Id, ss.Selected_Sal_Level, usl.Sal_Level_Order };
-
-                    var sal = q.FirstOrDefault();
+                    var sal = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == a.Assessment_Id).FirstOrDefault();
 
                     if (sal != null)
                     {
-                        response.labels.Add(a.Alias);
-                        ds.data.Add(sal.Sal_Level_Order);
+                        response.Add(new SalComparison() 
+                        { 
+                            AssessmentId = a.Assessment_Id, 
+                            Alias = a.Alias,
+                            SalLevel = sal.Selected_Sal_Level 
+                        });
                     }
                 }
 
