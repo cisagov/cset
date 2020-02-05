@@ -267,5 +267,21 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+
+        public virtual IList<usp_GetTop5Areas_result> usp_GetTop5Areas(Nullable<int> aggregation_id)
+        {
+            if (!aggregation_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_GetTop5Areas_result> myrval = null;
+            this.LoadStoredProc("usp_GetTop5Areas")
+                     .WithSqlParam("aggregation_id", aggregation_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_GetTop5Areas_result>();
+                     });
+            return myrval;
+        }
     }
 }
