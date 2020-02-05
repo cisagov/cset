@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Idaho National Laboratory")]
 [assembly: AssemblyProduct("DataLayerCore")]
-[assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2019")]
+[assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -754,20 +754,9 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                List<int> includedQuestions = new List<int>();
-                if (searchParms.RequirementID > 0)
-                {
-                    // Build a list of all questionIDs that are currently on the Requirement
-                    includedQuestions = db.REQUIREMENT_QUESTIONS_SETS
-                        .Where(x => x.Set_Name == searchParms.SetName && x.Requirement_Id == searchParms.RequirementID)
-                        .Select(q => q.Question_Id).ToList();
-                }
-                else
-                {
-                    // Build a list of all questionIDs that are currently in the set
-                    includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
-                        .Select(q => q.Question_Id).ToList();
-                }
+                // Build a list of all questionIDs that are currently in the set
+                List<int> includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
+                    .Select(q => q.Question_Id).ToList();
 
 
                 // First, look for an exact string match within the question

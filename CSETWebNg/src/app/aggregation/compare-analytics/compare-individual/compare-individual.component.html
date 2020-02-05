@@ -41,21 +41,61 @@
       <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
       <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
     </tr>
-    </table>
+  </table>
+</div>
+<div *ngIf="answerCounts == null">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
 </div>
 
 <div class="chart d-flex flex-column flex-00a">
   <h3>Overall Comparison</h3>
+  <div *ngIf="chartOverallComparison == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
 </div>
 
 <div class=" chart d-flex flex-column flex-00a">
   <h3>Comparison of Security Assurance Levels</h3>
-  [how can we show this in a cool way?]
+  <div *ngIf="sals == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+
+  <div class="d-table">
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.Alias }}</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Very High'">Very High</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'High'">High</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Moderate'">Moderate</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Low'">Low</div>
+    </div>
+    <div class="d-table-row">
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'None'">None</div>
+    </div>
+  </div>
 </div>
 
 <div class="chart d-flex flex-column flex-00a">
   <h3>Category Percent Comparisons</h3>
+  <div *ngIf="chartCategoryPercent == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <div class="chart-container" style="position: relative; height:80vh; width: 100%">
     <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
   </div>

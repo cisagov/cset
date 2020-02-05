@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2019 Battelle Energy Alliance, LLC  
+   Copyright 2020 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -65,10 +65,10 @@
     <div class="chart d-flex flex-column flex-00a">
       <h3>Standards Summary</h3>
       <div *ngIf="stdsSummChart == null">
-          <div class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-          </div>
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
+      </div>
       <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
     </div>
 
@@ -79,7 +79,8 @@
           <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
       </div>
-      <canvas id="canvasComponentSummary" style="max-width: 800px; margin: 0 auto;" [class.d-none]="compSummInitialized && componentCount === 0">{{compSummChart}}</canvas>
+      <canvas id="canvasComponentSummary" style="max-width: 800px; margin: 0 auto;"
+        [class.d-none]="compSummInitialized && componentCount === 0">{{compSummChart}}</canvas>
       <div [class.d-none]="!compSummInitialized || componentCount > 0">
         <hr style="width: 30%"> There are no components on the diagram.
       </div>
