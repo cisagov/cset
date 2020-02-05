@@ -73,7 +73,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -81,18 +81,56 @@ export class AggregationChartService {
   }
 
   /**
-   * Builds a horizontal bar chart.
+   * 
+   * @param canvasId 
+   * @param x 
+   * @param showLegend 
+   */
+  buildBarChart(canvasId: string, x: any, showLegend: boolean) {
+    if (!x.labels) {
+      x.labels = []
+    }
+    x.datasets.forEach(ds => {
+      if (!ds.label) {
+        ds.label = '';
+      }      
+    });
+
+    return new Chart(canvasId, {
+      type: 'bar',
+      data: {
+        labels: x.labels,
+        datasets: x.datasets
+      },
+      options: {
+        maintainAspectRatio: true,
+        responsive: false,
+        legend: { display: showLegend, position: 'top' },
+        tooltips: {
+          // callbacks: {
+          //   label: ((tooltipItem, data) =>
+          //     data.datasets[tooltipItem.datasetIndex].label + ': '
+          //     + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          // }
+        }
+      }
+    });
+  }
+
+  /**
+   * Builds a horizontal bar chart.  The x-axis and tooltips are always formatted as %
    * @param canvasId 
    * @param x 
    */
   buildHorizBarChart(canvasId: string, x: any, showLegend: boolean) {
-
-    // add display characteristics
-    // for (let i = 0; i < x.datasets.length; i++) {
-    //   const ds = x.datasets[i];
-    //   ds.borderColor = '#004c75';
-    //   ds.backgroundColor = ds.borderColor;
-    // }
+    if (!x.labels) {
+      x.labels = []
+    }
+    x.datasets.forEach(ds => {
+      if (!ds.label) {
+        ds.label = '';
+      }      
+    });
 
     return new Chart(canvasId, {
       type: 'horizontalBar',
@@ -108,7 +146,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -143,7 +181,7 @@ export class AggregationChartService {
         tooltips: {
           callbacks: {
             label: ((tooltipItem, data) =>
-              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              data.labels[tooltipItem.index] + ': ' + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         },
         title: {
@@ -176,7 +214,7 @@ export class AggregationChartService {
                     value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   }
                   return {
-                    text: label + ' : ' + value + '%',
+                    text: label + ' : ' + Number.parseFloat(value).toFixed(2) + '%',
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
@@ -217,7 +255,7 @@ export class AggregationChartService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.categories,
+        labels: x.labels,
         datasets: x.datasets
       },
       options: {        
@@ -226,7 +264,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -258,7 +296,7 @@ export class AggregationChartService {
           callbacks: {
             label: ((tooltipItem, data) =>
               data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         }
       }
@@ -277,7 +315,7 @@ export class ChartColors {
   /**
    * These colors are used for bar charts with multiple assessments.
    */
-  colorSequence = [
+  barColorSequence = [
     '#0000FF',
     '#FFD700',
     '#008000',
@@ -299,37 +337,32 @@ export class ChartColors {
     '#4B0082',
     '#000080'
   ];
-  nextSequence: number = -1;
-
-
-  bluesColorSequence = [
-    '#7e97c2',
-    '#b0bfdb'
-  ];
-  nextBluesSequence: number = -1;
-
-  /**
-   * These colors are used for line charts.
-   */
-  lineColors = [
-    '#3e7bc4',
-    '#81633f',
-    '#9ac04a',
-    '#7c5aa6',
-    '#38adcc'
-  ];
+  nextBarSequence: number = -1;
 
   /**
    * Returns the next color in the sequence.
    * Wraps around when exhausted.
    */
   getNextBarColor() {
-    if (this.nextSequence > this.colorSequence.length - 1) {
-      this.nextSequence = -1;
+    if (this.nextBarSequence > this.barColorSequence.length - 1) {
+      this.nextBarSequence = -1;
     }
 
-    return this.colorSequence[++this.nextSequence];
+    return this.barColorSequence[++this.nextBarSequence];
   }
+
+
+  /**
+   * These colors are used for the Overall Comparison chart
+   */
+  bluesColorSequence = [
+    '#B0BFDB',
+    '#7E97C2',  
+    '#4180CB',  
+    '#386FB3',  
+    '#295588'
+   ];
+   nextBluesSequence: number = -1;
 
   /**
    * Returns the next color in the sequence.
@@ -342,6 +375,19 @@ export class ChartColors {
 
     return this.bluesColorSequence[++this.nextBluesSequence];
   }
+
+
+
+  /**
+   * These colors are used for line charts.
+   */
+  lineColors = [
+    '#3e7bc4',
+    '#81633f',
+    '#9ac04a',
+    '#7c5aa6',
+    '#38adcc'
+  ];
 
   /**
    * Returns the specified line color based on position.

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -299,6 +299,8 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                         model.CustomStandardDocs.Add(file.FileName);
                     }
                 }
+
+                model.ExportDateTime = DateTime.UtcNow;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 var modelEntry = archive.CreateEntry("model.json");

@@ -1,3 +1,26 @@
+////////////////////////////////
+//
+//   Copyright 2020 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AggregationChartService } from '../../../services/aggregation-chart.service';
@@ -28,7 +51,6 @@ export class CompareSummaryComponent implements OnInit {
     const aggregationId = this.aggregationSvc.id();
 
     // Overall Average
-    // this.aggregationSvc.getOverallAverageSummary(aggregationId).subscribe((x: any) => {
     this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
       // apply visual attributes
@@ -43,19 +65,10 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Standards Answers
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Yes", "No", "Not Applicable", "Alternate", "Unanswered"],
-        data: [25, 13, 10, 2, 50]
-      };
-      // .....................................................
-
+    this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
+      
       // apply visual attributes
       x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
-      x.borderWidth = 0;
 
       this.chartStandardsPie = this.aggregChartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
@@ -63,15 +76,7 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Components Answers
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Yes", "No", "Not Applicable", "Alternate", "Unanswered"],
-        data: [3, 5, 0, 2, 90]
-      };
-      // .....................................................
+    this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
 
       // apply visual attributes
       x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
@@ -82,25 +87,18 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Category Averages
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-
-      // fake data ...........................................
-      x = {
-        reportType: "",
-        labels: ["Account Management", "Communication Protection", "Encryption", "Information Protection", "Physical Security"],
-        datasets: [{
-          label: "",
-          data: [25, 13, 10, 2, 81]
-        }
-        ]
-      };
-      // .....................................................
+    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach(ds => {
         ds.backgroundColor = '#008a00';
         ds.borderColor = '#008a00';
       });
+
+      if (!x.options) {
+        x.options = {};
+      }
+      x.options.maintainAspectRatio = false;
 
       this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
     });

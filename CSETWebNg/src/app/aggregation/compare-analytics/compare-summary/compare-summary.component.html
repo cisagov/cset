@@ -25,6 +25,11 @@
   <h3>
     Overall Average Summary
   </h3>
+  <div *ngIf="chartOverallAverage == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <canvas id="canvasOverallAverage">{{ chartOverallAverage }}</canvas>
 </div>
 
@@ -32,6 +37,11 @@
   <h3>
     Standards Answers
   </h3>
+  <div *ngIf="chartStandardsPie == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <canvas id="canvasStandardsPie">{{ chartStandardsPie }}</canvas>
 </div>
 
@@ -39,6 +49,11 @@
   <h3>
     Components Answers
   </h3>
+  <div *ngIf="chartComponentsPie == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <canvas id="canvasComponentsPie">{{ chartComponentsPie }}</canvas>
 </div>
 
@@ -46,5 +61,10 @@
   <h3>
     Category Average for All Assessments
   </h3>
+  <div *ngIf="chartCategoryAverage == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
   <canvas id="canvasCategoryAverage">{{ chartCategoryAverage }}</canvas>
 </div>

@@ -95,9 +95,20 @@ namespace CSETWeb_Api.BusinessLogic.Models
     }
 
 
+    /// <summary>
+    /// Shown on Individual Assessment Comparison
+    /// </summary>
+    public class SalComparison
+    {
+        public int AssessmentId { get; set; }
+        public string Alias { get; set; }
+        public string SalLevel { get; set; }
+    }
+
+
     public class HorizBarChart
     {
-        public string reportType { get; set; }
+        public string reportTitle { get; set; }
         public List<string> labels { get; set; }
 
         public List<ChartDataSet> datasets { get; set; }
@@ -136,6 +147,20 @@ namespace CSETWeb_Api.BusinessLogic.Models
         {
             this.labels = new List<string>();
             this.datasets = new List<ChartDataSet>();
+        }
+    }
+
+    public class PieChart
+    {
+        public string reportType { get; set; }
+        public List<string> labels { get; set; }
+        public List<float> data { get; set; }
+
+
+        public PieChart()
+        {
+            this.labels = new List<string>();
+            this.data = new List<float>();
         }
     }
 

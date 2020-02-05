@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2019 Battelle Energy Alliance, LLC  
+  Copyright 2020 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -2179,6 +2179,17 @@ hr.ranked-questions {
   color: $primary-900;
   background-color: #eeeeee;
   border-radius: .5rem;
+}
+
+.sal-inactive {
+  color: $gray-450;
+  width: 2%;
+}
+
+.sal-active {
+  color: $white;
+  font-weight: bold;
+  background-color: $primary-750;
 }
 
 .merge-source-answer {

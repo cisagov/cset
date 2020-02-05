@@ -13,7 +13,7 @@ using System.Web.Http;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using BusinessLogic;
-using CSETWeb_Api.Helpers;
+
 
 namespace CSETWeb_Api.Controllers
 {
@@ -51,10 +51,17 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/get")]
-        public Aggregation GetAggregation([FromUri] int aggregationId)
+        public Aggregation GetAggregation()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             var manager = new BusinessLogic.AggregationManager();
-            return manager.GetAggregation(aggregationId);
+            return manager.GetAggregation((int)aggregationID);
         }
 
 
@@ -62,6 +69,13 @@ namespace CSETWeb_Api.Controllers
         [Route("api/aggregation/update")]
         public void UpdateAggregation([FromBody] Aggregation aggregation)
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return;
+            }
+
             var manager = new BusinessLogic.AggregationManager();
             manager.SaveAggregationInformation(aggregation.AggregationId, aggregation);
         }
@@ -78,10 +92,17 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/getassessments")]
-        public AssessmentListResponse GetAssessmentsForAggregation([FromUri] int aggregationId)
+        public AssessmentListResponse GetAssessmentsForAggregation()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return null;
+            }
+
             var manager = new BusinessLogic.AggregationManager();
-            return manager.GetAssessmentsForAggregation(aggregationId);
+            return manager.GetAssessmentsForAggregation((int)aggregationID);
         }
 
 
@@ -119,10 +140,17 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/getmissedquestions")]
-        public List<MissedQuestion> GetCommonlyMissedQuestions([FromUri] int aggregationId)
+        public List<MissedQuestion> GetCommonlyMissedQuestions()
         {
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return new List<MissedQuestion>();
+            }
+
             var manager = new BusinessLogic.AggregationManager();
-            return manager.GetCommonlyMissedQuestions(aggregationId);
+            return manager.GetCommonlyMissedQuestions((int)aggregationID);
         }
 
 
