@@ -81,19 +81,19 @@ export class AggregationChartService {
   }
 
   /**
-   * 
-   * @param canvasId 
-   * @param x 
-   * @param showLegend 
+   *
+   * @param canvasId
+   * @param x
+   * @param showLegend
    */
   buildBarChart(canvasId: string, x: any, showLegend: boolean) {
     if (!x.labels) {
-      x.labels = []
+      x.labels = [];
     }
     x.datasets.forEach(ds => {
       if (!ds.label) {
         ds.label = '';
-      }      
+      }
     });
 
     return new Chart(canvasId, {
@@ -119,17 +119,17 @@ export class AggregationChartService {
 
   /**
    * Builds a horizontal bar chart.  The x-axis and tooltips are always formatted as %
-   * @param canvasId 
-   * @param x 
+   * @param canvasId
+   * @param x
    */
   buildHorizBarChart(canvasId: string, x: any, showLegend: boolean) {
     if (!x.labels) {
-      x.labels = []
+      x.labels = [];
     }
     x.datasets.forEach(ds => {
       if (!ds.label) {
         ds.label = '';
-      }      
+      }
     });
 
     return new Chart(canvasId, {
@@ -154,9 +154,9 @@ export class AggregationChartService {
   }
 
   /**
-   * 
-   * @param canvasId 
-   * @param x 
+   *
+   * @param canvasId
+   * @param x
    */
   buildDoughnutChart(canvasId: string, x: any) {
     return new Chart(canvasId, {
@@ -181,7 +181,8 @@ export class AggregationChartService {
         tooltips: {
           callbacks: {
             label: ((tooltipItem, data) =>
-              data.labels[tooltipItem.index] + ': ' + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
+              data.labels[tooltipItem.index] + ': '
+              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
           }
         },
         title: {
@@ -258,7 +259,7 @@ export class AggregationChartService {
         labels: x.labels,
         datasets: x.datasets
       },
-      options: {        
+      options: {
         maintainAspectRatio: false,
         tooltips: {
           callbacks: {
@@ -272,7 +273,7 @@ export class AggregationChartService {
   }
 
   /**
-   * 
+   *
    */
   buildStackedHorizBarChart(canvasId: string, x: any) {
     return new Chart(canvasId, {
@@ -282,7 +283,7 @@ export class AggregationChartService {
         datasets: x.datasets
       },
       options: {
-        animation: { duration: 100}, // general animation time 
+        animation: { duration: 100 }, // general animation time
         scales: {
           xAxes: [{
             stacked: true
@@ -340,6 +341,30 @@ export class ChartColors {
   nextBarSequence: number = -1;
 
   /**
+   * These colors are used for the Overall Comparison chart
+   */
+  bluesColorSequence = [
+    '#B0BFDB',
+    '#7E97C2',
+    '#4180CB',
+    '#386FB3',
+    '#295588'
+  ];
+  nextBluesSequence: number = -1;
+
+  /**
+   * These colors are used for line charts.
+   */
+  lineColors = [
+    '#3e7bc4',
+    '#81633f',
+    '#9ac04a',
+    '#7c5aa6',
+    '#38adcc'
+  ];
+
+
+  /**
    * Returns the next color in the sequence.
    * Wraps around when exhausted.
    */
@@ -353,18 +378,6 @@ export class ChartColors {
 
 
   /**
-   * These colors are used for the Overall Comparison chart
-   */
-  bluesColorSequence = [
-    '#B0BFDB',
-    '#7E97C2',  
-    '#4180CB',  
-    '#386FB3',  
-    '#295588'
-   ];
-   nextBluesSequence: number = -1;
-
-  /**
    * Returns the next color in the sequence.
    * Wraps around when exhausted.
    */
@@ -376,18 +389,6 @@ export class ChartColors {
     return this.bluesColorSequence[++this.nextBluesSequence];
   }
 
-
-
-  /**
-   * These colors are used for line charts.
-   */
-  lineColors = [
-    '#3e7bc4',
-    '#81633f',
-    '#9ac04a',
-    '#7c5aa6',
-    '#38adcc'
-  ];
 
   /**
    * Returns the specified line color based on position.
