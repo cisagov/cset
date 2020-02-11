@@ -4524,7 +4524,6 @@
     <Compile Include="Controllers\ModuleBuilderController.cs" />
     <Compile Include="Controllers\SetsController.cs" />
     <Compile Include="Controllers\StandardsController.cs" />
-    <Compile Include="Controllers\TrendDataProcessor.cs" />
     <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
