@@ -36,42 +36,76 @@ namespace CSETWeb_Api.Controllers
                 return null;
             }
 
-            var response = new LineChart();
-            response.reportType = "Trend Overall Compliance Score";
-
-            // create the 4 compliance categories
-            List<string> lineNames = new List<string>() { "Overall", "Components", "Standards" };
-            foreach (string name in lineNames)
-            {
-                var ds = new ChartDataSet();
-                ds.label = name;
-                response.datasets.Add(ds);
-            }
-
-
-            // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
-            //                  modified for the 9.x database.
-
-            var rnd = new Random(DateTime.Now.Millisecond);
-
+            
             using (CSET_Context db = new CSET_Context())
             {
                 var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                    .Include(x => x.Assessment_)
+                    .Include(x => x.Assessment_.STANDARD_SELECTION)
+                    .OrderBy(x => x.Assessment_.Assessment_Date)
                     .ToList();
 
-                foreach (var a in assessmentList)
-                {
-                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
 
-                    foreach (var ds1 in response.datasets)
+                // build the empty response structure for the assessments we have
+                var response = new LineChart
+                {
+                    reportType = "Trend Overall Compliance Score"
+                };
+
+                List<string> lineNames = new List<string>() { "Overall", "Components", "Standards" };
+                foreach (string name in lineNames)
+                {
+                    var ds = new ChartDataSet
                     {
-                        ds1.data.Add(rnd.Next(0, 100));
+                        label = name
+                    };
+
+                    response.datasets.Add(ds);    
+                    
+                    foreach (var a in assessmentList)
+                    {
+                        ds.data.Add(0);
                     }
                 }
-            }
 
-            return response;
+
+                // populate percentages in the structure
+                for (int i = 0; i < assessmentList.Count; i++)
+                {
+                    var a = assessmentList[i];
+
+                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
+
+                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
+
+                            foreach (var procResult in procResults)
+                            {
+                                var mode = a.Assessment_.STANDARD_SELECTION.Application_Mode;
+
+                                string stat = procResult.StatType;
+
+                                // funnel questions and requirements into 'standards' if assessment mode matches
+                                if ((mode.StartsWith("Questions") && procResult.StatType == "Questions")
+                                || (mode.StartsWith("Requirement") && procResult.StatType == "Requirement"))
+                                {
+                                    stat = "Standards";
+                                }
+
+                                var ds = response.datasets.Find(x => x.label == stat);
+                                if (ds != null)
+                                {
+                                    ds.data[i] = (float)procResult.Value;
+                                }
+                            }
+                        });
+                }
+
+                return response;
+            }
         }
 
 
@@ -105,7 +139,7 @@ namespace CSETWeb_Api.Controllers
             // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
             //                  modified for the 9.x database.
 
-            
+
             var rnd = new Random(DateTime.Now.Millisecond);
 
 
@@ -113,7 +147,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context db = new CSET_Context())
             {
                 TrendDataProcessor trendData = new TrendDataProcessor();
-                trendData.Process(db, aggregationID??0);
+                trendData.Process(db, aggregationID ?? 0);
                 //var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 //    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
                 //    .ToList();
@@ -667,11 +701,11 @@ namespace CSETWeb_Api.Controllers
 
                     if (sal != null)
                     {
-                        response.Add(new SalComparison() 
-                        { 
-                            AssessmentId = a.Assessment_Id, 
+                        response.Add(new SalComparison()
+                        {
+                            AssessmentId = a.Assessment_Id,
                             Alias = a.Alias,
-                            SalLevel = sal.Selected_Sal_Level 
+                            SalLevel = sal.Selected_Sal_Level
                         });
                     }
                 }

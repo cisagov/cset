@@ -31,18 +31,22 @@ import { DiagramService } from '../../../../services/diagram.service';
 })
 export class LinksComponent implements OnInit {
   links = [];
-  displayedColumns = ['label', 'subnetName', 'security', 'layer', 'headLineDecorator', 'tailLineDecorator', 'lineType', 'thickness', 'color', 'color', 'linkType', 'visible']
+  displayedColumns = ['label', 'subnetName', 'security', 'layer', 'headLineDecorator',
+    'tailLineDecorator', 'lineType', 'thickness', 'color', 'color', 'linkType', 'visible'];
+
+  /**
+   *
+   * @param diagramSvc
+   */
   constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
     this.getLinks();
   }
 
-  getLinks(){
-    this.diagramSvc.getDiagramLinks().subscribe((x:any) =>{
+  getLinks() {
+    this.diagramSvc.getDiagramLinks().subscribe((x: any) => {
       this.links = x;
     });
   }
-
-  
 }
