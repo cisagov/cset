@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { DiagramService } from '../../../../services/diagram.service';
 
 @Component({
   selector: 'networkwarnings',
@@ -30,10 +31,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NetworkWarningsComponent implements OnInit {
   warnings = [];
-  displayedColumns = ['id', 'message']
-  constructor() { }
+  displayedColumns = ['Id', 'WarningText'];
+
+  /**
+   *
+   * @param diagramSvc
+   */
+  constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
+    this.getWarnings();
   }
 
+  getWarnings() {
+    this.diagramSvc.getDiagramWarnings().subscribe((x: any) => {
+      this.warnings = x;
+    });
+  }
 }
