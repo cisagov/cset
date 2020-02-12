@@ -125,42 +125,11 @@ namespace CSETWeb_Api.Controllers
 
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-
-            // create the 4 compliance categories
-            List<string> lineNames = new List<string>() { "System Protection", "Training", "Incident Response", "Physical Security", "Access Control" };
-            foreach (string name in lineNames)
-            {
-                var ds = new ChartDataSet();
-                ds.label = name;
-                response.datasets.Add(ds);
-            }
-
-
-            // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
-            //                  modified for the 9.x database.
-
-
-            var rnd = new Random(DateTime.Now.Millisecond);
-
-
-
+    
             using (CSET_Context db = new CSET_Context())
             {
                 TrendDataProcessor trendData = new TrendDataProcessor();
-                trendData.Process(db, aggregationID ?? 0);
-                //var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                //    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
-                //    .ToList();
-
-                //foreach (var a in assessmentList)
-                //{
-                //    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
-
-                //    foreach (var ds1 in response.datasets)
-                //    {
-                //        ds1.data.Add(rnd.Next(0, 100));
-                //    }
-                //}
+                trendData.Process(db,aggregationID??0, response, "TOP");
             }
 
             return response;
@@ -182,41 +151,17 @@ namespace CSETWeb_Api.Controllers
             }
 
             var response = new LineChart();
-            response.reportType = "Top 5 Areas of Concern";
-
-            // create the 4 compliance categories
-            List<string> lineNames = new List<string>() { "Information Protection", "Communication Protection", "Monitoring & Malware", "Continuity", "Configuration Management" };
-            foreach (string name in lineNames)
-            {
-                var ds = new ChartDataSet();
-                ds.label = name;
-                response.datasets.Add(ds);
-            }
-
-
-            // TEMP TEMP TEMP - just return a dummy response until we can get the stored proc 
-            //                  modified for the 9.x database.
-
-            var rnd = new Random(DateTime.Now.Millisecond);
+            response.reportType = "Top 5 Most Improved Areas";
 
             using (CSET_Context db = new CSET_Context())
             {
-                var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                    .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
-                    .ToList();
-
-                foreach (var a in assessmentList)
-                {
-                    response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
-
-                    foreach (var ds1 in response.datasets)
-                    {
-                        ds1.data.Add(rnd.Next(0, 100));
-                    }
-                }
+                TrendDataProcessor trendData = new TrendDataProcessor();
+                trendData.Process(db, aggregationID ?? 0, response, "BOTTOM");
             }
 
             return response;
+
+            
         }
 
 
