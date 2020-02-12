@@ -6,15 +6,17 @@
 	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="${jscompiler}" />
 
 	<target name="merge">
-	    	<concat destfile="${basedir}/../../build/shapes.js" fixlastline="yes" append="no">
-	    		<fileset dir="${war.dir}/shapes" includes="**/*.js"/>
-	    		<fileset dir="${war.dir}/stencils" includes="**/*.js"/>
-	    	</concat>
+		<concat destfile="${basedir}/../../build/shapes.js" fixlastline="yes" append="no">
+			<fileset dir="${war.dir}/shapes" includes="**/*.js"/>
+			<fileset dir="${war.dir}/stencils" includes="**/*.js"/>
+		</concat>
     	
+		<echo >${war.dir}</echo>
+		<echo >${basedir}</echo>		
 		<java fork="false" classname="Xml2Js" classpath=".">
-			<arg value="../../src/main/webapp/stencils"/>
-			<arg value="../../src/main/webapp/js/stencils.min.js"/>
-		</java>
+			<arg value="CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/stencils"/>
+			<arg value="CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js/stencils.min.js"/>
+		</java>		
 		
 		<jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${war.dir}/js/shapes.min.js">
 			<sources dir="${basedir}/../../build">
