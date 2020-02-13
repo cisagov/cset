@@ -56,6 +56,12 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
         private RequirementsPass GetControls(CSET_Context db)
         {
             var q = from rs in db.REQUIREMENT_SETS
@@ -71,9 +77,9 @@ namespace CSETWeb_Api.BusinessManagers
                 .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name, SetName = x.s.Set_Name });
 
             var domains = (from d in db.FINANCIAL_DOMAINS
-                join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
-                join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
-                select new DomainAssessmentFactor {DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor}).Distinct();
+                           join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
+                           join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
+                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct();
 
 
 
@@ -88,7 +94,7 @@ namespace CSETWeb_Api.BusinessManagers
             return new RequirementsPass()
             {
                 Requirements = results,
-                Answers = answers, 
+                Answers = answers,
                 DomainAssessmentFactors = domains
             };
         }
@@ -113,16 +119,13 @@ namespace CSETWeb_Api.BusinessManagers
 
             try
             {
-
                 foreach (var dbRPlus in requirements)
                 {
-
-                    
                     var dbR = dbRPlus.Requirement;
 
                     // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
-                    dbR.Standard_Category = dbR.Standard_Category==null?null: dbR.Standard_Category.Trim();
-                    dbR.Standard_Sub_Category = dbR.Standard_Sub_Category==null?null: dbR.Standard_Sub_Category.Trim();
+                    dbR.Standard_Category = dbR.Standard_Category == null ? null : dbR.Standard_Category.Trim();
+                    dbR.Standard_Sub_Category = dbR.Standard_Sub_Category == null ? null : dbR.Standard_Sub_Category.Trim();
 
                     // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
                     if (dbR.Standard_Sub_Category == null)
@@ -138,7 +141,6 @@ namespace CSETWeb_Api.BusinessManagers
                             GroupHeadingId = dbR.Question_Group_Heading_Id,
                             GroupHeadingText = dbR.Standard_Category,
                             StandardShortName = dbRPlus.SetShortName,
-
                         };
 
                         if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
@@ -166,36 +168,34 @@ namespace CSETWeb_Api.BusinessManagers
 
                         currentSubcategoryHeading = dbR.Standard_Sub_Category;
                     }
-                    
 
 
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
 
-                        qa = new QuestionAnswer()
-                        {
-                            DisplayNumber = dbR.Requirement_Title,
-                            QuestionId = dbR.Requirement_Id,
-                            QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
-                            Answer = answer?.a.Answer_Text,
-                            AltAnswerText = answer?.a.Alternate_Justification,
-                            Comment = answer?.a.Comment,
-                            Feedback = answer?.a.Feedback,
-                            MarkForReview = answer?.a.Mark_For_Review ?? false,
-                            Reviewed = answer?.a.Reviewed ?? false,
-                            MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
-                            SetName = dbRPlus.SetName,
-                            Is_Component = answer?.a.Is_Component ?? false,
-                            Is_Requirement = answer?.a.Is_Requirement ?? false
-                        };
-                        if (answer != null)
-                        {
-                            TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
-                        }
+                    qa = new QuestionAnswer()
+                    {
+                        DisplayNumber = dbR.Requirement_Title,
+                        QuestionId = dbR.Requirement_Id,
+                        QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        Answer = answer?.a.Answer_Text,
+                        AltAnswerText = answer?.a.Alternate_Justification,
+                        Comment = answer?.a.Comment,
+                        Feedback = answer?.a.Feedback,
+                        MarkForReview = answer?.a.Mark_For_Review ?? false,
+                        Reviewed = answer?.a.Reviewed ?? false,
+                        MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                        SetName = dbRPlus.SetName,
+                        Is_Component = answer?.a.Is_Component ?? false,
+                        Is_Requirement = answer?.a.Is_Requirement ?? true
+                    };
+                    if (answer != null)
+                    {
+                        TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                    }
 
-                        qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+                    qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
 
-                        sg.Questions.Add(qa);
-                   
+                    sg.Questions.Add(qa);
                 }
 
                 QuestionResponse resp = new QuestionResponse
@@ -216,11 +216,13 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 BuildComponentsResponse(resp);
+
                 return resp;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
-            }         
+            }
         }
 
 
@@ -268,25 +270,30 @@ namespace CSETWeb_Api.BusinessManagers
             return relevantAnswerIds;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
         private void LoadParametersList(CSET_Context db)
         {
             parametersDictionary = (from p in db.PARAMETERS
-                join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id                
-                select new { p , r })
-                .GroupBy(x=> x.r.Requirement_Id)
-                .ToDictionary(x=> x.Key, x=> x.Select(y=> y.p).ToList());
+                                    join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
+                                    select new { p, r })
+                .GroupBy(x => x.r.Requirement_Id)
+                .ToDictionary(x => x.Key, x => x.Select(y => y.p).ToList());
 
 
             parametersAssessmentList = (from pa in db.PARAMETER_ASSESSMENT
-            join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
-            where pa.Assessment_ID == _assessmentId
-            select new ParameterAssessment() { p = p, pa = pa }).ToList();
+                                        join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
+                                        where pa.Assessment_ID == _assessmentId
+                                        select new ParameterAssessment() { p = p, pa = pa }).ToList();
 
-            parametersAnswerDictionary =  (from p in db.PARAMETERS
-            join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id            
-            select new ParameterValues(){ p = p, pv=pv })
-            .GroupBy(x=> x.pv.Answer_Id)
-            .ToDictionary(x=> x.Key,x=> x.Select(y=> y).ToList());
+            parametersAnswerDictionary = (from p in db.PARAMETERS
+                                          join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
+                                          select new ParameterValues() { p = p, pv = pv })
+            .GroupBy(x => x.pv.Answer_Id)
+            .ToDictionary(x => x.Key, x => x.Select(y => y).ToList());
         }
 
         private Dictionary<int, List<PARAMETERS>> parametersDictionary = null;
@@ -309,10 +316,11 @@ namespace CSETWeb_Api.BusinessManagers
                 if (parametersDictionary == null)
                     LoadParametersList(db);
                 List<PARAMETERS> qBaseLevel;
-                if (parametersDictionary.TryGetValue(reqId, out qBaseLevel)) {
-
-                foreach (var b in qBaseLevel)
+                if (parametersDictionary.TryGetValue(reqId, out qBaseLevel))
                 {
+
+                    foreach (var b in qBaseLevel)
+                    {
                         ps.Set(b.Parameter_ID, b.Parameter_Name, b.Parameter_Name, reqId, 0);
                     }
                 }
@@ -329,16 +337,17 @@ namespace CSETWeb_Api.BusinessManagers
                 if (ansId != 0)
                 {
                     List<ParameterValues> qLocal;
-                    if (parametersAnswerDictionary.TryGetValue(ansId, out qLocal)){
-	                    foreach (var local in qLocal.ToList())
-	                    {
-	                        ps.Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, 0, local.pv.Answer_Id);
-	                    }
-                    }                
+                    if (parametersAnswerDictionary.TryGetValue(ansId, out qLocal))
+                    {
+                        foreach (var local in qLocal.ToList())
+                        {
+                            ps.Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, 0, local.pv.Answer_Id);
+                        }
+                    }
                 }
 
-                
-                ps.Tokens =  ps.Tokens.OrderByDescending(x => x.Token.Length).ToList();
+
+                ps.Tokens = ps.Tokens.OrderByDescending(x => x.Token.Length).ToList();
 
                 return ps.Tokens;
             }
@@ -359,6 +368,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             return string.Empty;
         }
+
 
         /// <summary>
         /// 
@@ -419,7 +429,7 @@ namespace CSETWeb_Api.BusinessManagers
                 // If an empty value is supplied, delete the PARAMETER_VALUES row.
                 if (string.IsNullOrEmpty(newText))
                 {
-                    var g = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId 
+                    var g = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
                             && p.Assessment_ID == this._assessmentId).FirstOrDefault();
                     if (g != null)
                     {
@@ -487,7 +497,7 @@ namespace CSETWeb_Api.BusinessManagers
                     Is_Requirement = true,
                     MarkForReview = false,
                     QuestionNumber = 0,
-                    AnswerText = "U"                    
+                    AnswerText = "U"
                 };
                 answerId = StoreAnswer(ans);
             }
@@ -562,7 +572,7 @@ namespace CSETWeb_Api.BusinessManagers
             return requirementText;
         }
 
-        public string RichTextParameters (int reqId, int ansId, string requirementText)
+        public string RichTextParameters(int reqId, int ansId, string requirementText)
         {
             List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
             foreach (ParameterToken t in tokens)
