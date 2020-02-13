@@ -33,19 +33,19 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Aggregation
             foreach (usp_GetTop5Areas_result r in results.Where(x => x.TopBottomType == Type))
             {
                 ChartDataSet ds1;
-                if (!datasets.TryGetValue(r.Universal_Sub_Category, out ds1))
+                if (!datasets.TryGetValue(r.Question_Group_Heading, out ds1))
                 {
-                    List<usp_GetTop5Areas_result> clist;
                     var ds = new ChartDataSet();
-                    ds.label = r.Universal_Sub_Category;
+                    ds.label = r.Question_Group_Heading;
                     response.datasets.Add(ds);
-                    datasets.Add(r.Universal_Sub_Category, ds);
+                    datasets.Add(r.Question_Group_Heading, ds);
                     ds.data.Add((float)r.percentage);
                 }
                 else
                 {
                     ds1.data.Add((float)r.percentage);
                 }
+
                 if (!labels.Contains(r.Assessment_Id))
                 {
                     response.labels.Add(r.Assessment_Date.ToString("d-MMM-yyyy"));
@@ -53,15 +53,5 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Aggregation
                 }
             }
         }
-
-        
-    }
-
-    public class TopResult
-    {
-        public String Category { get; set; }
-        public int Assessment_Id { get; set; }
-        public double PercentDiff { get; set; }
-        public int Total { get; internal set; }
     }
 }
