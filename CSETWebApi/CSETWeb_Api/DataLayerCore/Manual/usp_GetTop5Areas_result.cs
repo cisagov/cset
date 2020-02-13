@@ -11,7 +11,7 @@ namespace DataLayerCore.Model
     public class usp_GetTop5Areas_result
     {
         public int Assessment_Id { get; set; }
-        public string Universal_Sub_Category { get; set; }
+        public string Question_Group_Heading { get; set; }
         public int YesCount { get; set; }
         public int NoCount { get; set; }
         public int NaCount { get; set; }
