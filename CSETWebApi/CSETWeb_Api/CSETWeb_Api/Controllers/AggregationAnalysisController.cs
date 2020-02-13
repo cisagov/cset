@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Controllers
                 return null;
             }
 
-            
+
             using (CSET_Context db = new CSET_Context())
             {
                 var assessmentList = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
@@ -60,8 +60,8 @@ namespace CSETWeb_Api.Controllers
                         label = name
                     };
 
-                    response.datasets.Add(ds);    
-                    
+                    response.datasets.Add(ds);
+
                     foreach (var a in assessmentList)
                     {
                         ds.data.Add(0);
@@ -110,7 +110,8 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Calculates the 5 categories whose percentage scores have improved the most
+        /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/top5")]
@@ -125,11 +126,11 @@ namespace CSETWeb_Api.Controllers
 
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-    
+
             using (CSET_Context db = new CSET_Context())
             {
                 TrendDataProcessor trendData = new TrendDataProcessor();
-                trendData.Process(db,aggregationID??0, response, "TOP");
+                trendData.Process(db, aggregationID ?? 0, response, "TOP");
             }
 
             return response;
@@ -137,7 +138,8 @@ namespace CSETWeb_Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Calculates the 5 categories whose percentage scores have decreased the most
+        /// during the last segment of the trend analysis.
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/bottom5")]
@@ -151,7 +153,7 @@ namespace CSETWeb_Api.Controllers
             }
 
             var response = new LineChart();
-            response.reportType = "Top 5 Most Improved Areas";
+            response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
             using (CSET_Context db = new CSET_Context())
             {
@@ -160,8 +162,6 @@ namespace CSETWeb_Api.Controllers
             }
 
             return response;
-
-            
         }
 
 
