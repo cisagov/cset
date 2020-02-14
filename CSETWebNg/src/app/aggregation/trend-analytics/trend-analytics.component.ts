@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
 import { AggregationChartService } from '../../services/aggregation-chart.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-trend-analytics',
@@ -42,7 +44,9 @@ export class TrendAnalyticsComponent implements OnInit {
   constructor(
     public navSvc: NavigationAggregService,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public aggregChartSvc: AggregationChartService,
+    private authSvc: AuthenticationService,
+    public configSvc: ConfigService
   ) { }
 
   /**
@@ -50,13 +54,14 @@ export class TrendAnalyticsComponent implements OnInit {
    */
   ngOnInit() {
     this.populateCharts();
+    //const aggregationId = this.aggregationSvc.id();
   }
 
   /**
    * Get the data from the API and build the charts for the page.
    */
   populateCharts() {
-    const aggregationId = this.aggregationSvc.id();
+    //const aggregationId = this.aggregationSvc.id();
 
     // Overall Compliance
     this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
@@ -76,6 +81,14 @@ export class TrendAnalyticsComponent implements OnInit {
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+    });
+  }
+
+  generateReport(reportType: string) {
+    // Copied from reports.component to generate the trend report in a similar fashion to existing reports.
+    this.authSvc.getShortLivedToken().subscribe((response: any) => {
+        const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
+        window.open(url, "_blank");
     });
   }
 }

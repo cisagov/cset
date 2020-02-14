@@ -31,6 +31,7 @@ import { SecurityplanComponent } from './securityplan/securityplan.component';
 import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearouts.component';
 // import { FAAReportComponent} from './faareport/faareport.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import { TrendReportComponent } from './trendreport/trendreport.component';
 
 const routes: Routes = [
   { path: 'executive', component: ExecutiveComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'securityplan', component: SecurityplanComponent },
   { path: 'detail', component: DetailComponent },
   { path: 'discoveries', component: DiscoveryTearoutsComponent },
+  { path: 'trendreport', component: TrendReportComponent },
   // {path: 'faareport'. component: FAAReportComponent },
   { path: '**', component: RedirectComponent }
 ];

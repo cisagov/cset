@@ -49,7 +49,8 @@ export class AggregationService {
     private configSvc: ConfigService,
     private router: Router
   ) {
-    this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+    //this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+    this.apiUrl = "http://localhost:46000/api/aggregation/";
     this.currentAggregation = null;
   }
 

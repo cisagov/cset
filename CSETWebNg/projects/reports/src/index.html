@@ -42,6 +42,7 @@
 
         var configURL = "api/assets/config.json";
         if(/reports/i.test(window.location.href)){
+            console.log("found that I'm in reports");
           configURL = "../" + configURL;
         }
         xhttp.open("GET", configURL, false);
@@ -62,8 +63,10 @@
             var routePath = getParameterByName("routePath");
             if (token != null)
                 sessionStorage.setItem("token", token);
-            if (routePath != null)
+            if (routePath != null){
                 sessionStorage.setItem("routePath", routePath);
+               
+            }
         } else {
             // Sorry! No Web Storage support..
         }
