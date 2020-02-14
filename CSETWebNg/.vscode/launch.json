@@ -4,12 +4,31 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
+       {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:4200",
+            "url": "http://localhost:4201",
             "webRoot": "${workspaceFolder}"
         }
+      
+        /*{
+            "name": "Launch Chrome against localhost, with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:4201",
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}/projects/reports/src",
+            "trace": true,
+            "smartStep": true,
+            "runtimeArgs": [
+              "--disable-session-crashed-bubble",
+              "--disable-infobars"
+            ],
+            "userDataDir": "${workspaceRoot}/.vscode/chrome",
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${workspaceFolder}/projects/reports/src/*"
+            }
+        }*/
     ]
 }

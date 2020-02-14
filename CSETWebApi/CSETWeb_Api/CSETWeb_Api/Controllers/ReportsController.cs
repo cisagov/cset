@@ -116,7 +116,6 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
-
         protected string GetApplicationMode(int assessmentId)
         {
             using (var db = new CSET_Context())

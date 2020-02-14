@@ -44,7 +44,9 @@ import { ConfigService } from '../../../../src/app/services/config.service';
 import { ACETService } from '../../../../src/app/services/acet.service';
 import { MatDialogModule } from '@angular/material';
 import { FeedbackComponent } from '../../../../src/app/assessment/results/feedback/feedback.component';
-
+import { TrendReportComponent } from './trendreport/trendreport.component';
+import { AggregationService } from '../../../../src/app/services/aggregation.service';
+import { AggregationChartService } from '../../../../src/app/services/aggregation-chart.service';
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { FeedbackComponent } from '../../../../src/app/assessment/results/feedba
     FeedbackComponent,
     DiscoveryTearoutsComponent,
     EvalAgainstComponent,
-    RedirectComponent
+    RedirectComponent,
+    TrendReportComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,8 @@ import { FeedbackComponent } from '../../../../src/app/assessment/results/feedba
     ReportService,
     AnalysisService,
     ACETService,
+    AggregationService,
+    AggregationChartService,
     ConfigService
   ],
   entryComponents: [

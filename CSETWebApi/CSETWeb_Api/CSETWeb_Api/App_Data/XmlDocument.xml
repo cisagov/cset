@@ -497,13 +497,13 @@
         <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Top5">
             <summary>
             Calculates the 5 categories whose percentage scores have improved the most
-            from the first to last date of the trend analysis.
+            during the last segment of the trend analysis.
             </summary>
         </member>
         <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Bottom5">
             <summary>
             Calculates the 5 categories whose percentage scores have decreased the most
-            from the first to last date of the trend analysis.
+            during the last segment of the trend analysis.
             </summary>
         </member>
         <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.CategoryPercentCompare">

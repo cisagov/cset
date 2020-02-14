@@ -335,7 +335,8 @@ import { DataloginComponent } from './assessment/results/analysis/submitdata/dat
         CompareBestworstComponent,
         ComponentOverrideComponent, 
         ExcelExportComponent, 
-        AnalyticsComponent, DataloginComponent
+        AnalyticsComponent, 
+        DataloginComponent
     ],
     providers: [
         ConfigService,
