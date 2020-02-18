@@ -32,6 +32,7 @@ import { DiscoveryTearoutsComponent } from './discovery-tearouts/discovery-tearo
 // import { FAAReportComponent} from './faareport/faareport.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { TrendReportComponent } from './trendreport/trendreport.component';
+import { CompareReportComponent } from './comparereport/comparereport.component';
 
 const routes: Routes = [
   { path: 'executive', component: ExecutiveComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'detail', component: DetailComponent },
   { path: 'discoveries', component: DiscoveryTearoutsComponent },
   { path: 'trendreport', component: TrendReportComponent },
+  { path: 'comparereport', component: CompareReportComponent },
   // {path: 'faareport'. component: FAAReportComponent },
   { path: '**', component: RedirectComponent }
 ];

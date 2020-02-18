@@ -116,6 +116,29 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+        [HttpGet]
+        [Route("api/reports/trendreport")]
+        public BasicReportData getTrendReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.genSalTable = reportsDataManager.GetGenSals();
+            data.information = reportsDataManager.GetInformation();
+            data.salTable = reportsDataManager.GetSals();
+            data.nistTypes = reportsDataManager.GetNistInfoTypes();
+            data.nistSalTable = reportsDataManager.GetNistSals();
+            data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
+            data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
+            data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
+            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
+            data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
+            data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
+            return data;
+        }
+
         protected string GetApplicationMode(int assessmentId)
         {
             using (var db = new CSET_Context())

@@ -27,17 +27,16 @@ import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../../../src/app/services/aggregation.service';
 import { AggregationChartService } from '../../../../../src/app/services/aggregation-chart.service';
-import { ReportsConfigService } from '../services/config.service';
-import { ConfigService } from '../../../../../src/app/services/config.service';
 
 
 @Component({
-  selector: 'rapp-executive',
-  templateUrl: './trendreport.component.html'
+  selector: 'rapp-compare',
+  templateUrl: './comparereport.component.html'
 })
-export class TrendReportComponent implements OnInit, AfterViewChecked {
+export class CompareReportComponent implements OnInit, AfterViewChecked {
   response: any;
 
+  chartOverallAverage: Chart;
   chartOverallCompl: Chart;
   chartTop5: Chart;
   chartBottom5: Chart;
@@ -69,14 +68,13 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     private analysisSvc: AnalysisService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService,
-    public configSvc: ReportsConfigService,
+    public aggregChartSvc: AggregationChartService
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Trend Report - CSET");
+    this.titleService.setTitle("Compare Report - CSET");
 
-    this.reportSvc.getReport('trendreport').subscribe(
+    this.reportSvc.getReport('comparereport').subscribe(
       (r: any) => {
         this.response = r;
 
@@ -94,34 +92,28 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
         this.nistSalA = v.Justification;
       }  
     },
-    error => console.log('Trend report load Error: ' + (<Error>error).message)
+    error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
-
-    // Populate charts
-
-    // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-      this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
-    });
-
-    // Top 5
-    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
-      this.chartTop5 = this.aggregChartSvc.buildLineChart('canvasTop5', x);
-    });
-
-    // Bottom 5
-    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
-      this.chartBottom5 = this.aggregChartSvc.buildLineChart('canvasBottom5', x);
-    });
-
-    // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
-      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
-    });
-
+    this.populateCharts();
   }
 
+  populateCharts() {
+    const aggregationId = this.aggregationSvc.id();
+
+    // Overall Average
+    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
+
+      // apply visual attributes
+      x.datasets.forEach(ds => {
+        ds.backgroundColor = '#004c75';
+        ds.borderColor = '#004c75';
+      });
+
+      this.chartOverallAverage = this.aggregChartSvc.buildHorizBarChart('canvasOverallAverage', x, false);
+    });
+  }
+  
   ngAfterViewChecked() {
 
   }

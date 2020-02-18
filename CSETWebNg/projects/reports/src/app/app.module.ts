@@ -45,6 +45,7 @@ import { ACETService } from '../../../../src/app/services/acet.service';
 import { MatDialogModule } from '@angular/material';
 import { FeedbackComponent } from '../../../../src/app/assessment/results/feedback/feedback.component';
 import { TrendReportComponent } from './trendreport/trendreport.component';
+import { CompareReportComponent } from './comparereport/comparereport.component';
 import { AggregationService } from '../../../../src/app/services/aggregation.service';
 import { AggregationChartService } from '../../../../src/app/services/aggregation-chart.service';
 
@@ -61,7 +62,8 @@ import { AggregationChartService } from '../../../../src/app/services/aggregatio
     DiscoveryTearoutsComponent,
     EvalAgainstComponent,
     RedirectComponent,
-    TrendReportComponent
+    TrendReportComponent,
+    CompareReportComponent
   ],
   imports: [
     BrowserModule,

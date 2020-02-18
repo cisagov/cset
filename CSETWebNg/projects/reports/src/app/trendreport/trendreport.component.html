@@ -26,7 +26,7 @@
     <div class="column">
       <p
         style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-      MULTIPLE ASSESSMENT SECURITY TREND REPORT
+        SECURITY TREND REPORT
       </p>
     </div>
     <div class="column">
@@ -52,9 +52,8 @@
   </div>
 
   <div class="page-break">
-    <br/>
-    <div class="disclaimer-blurb mt-4">
-      The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Department of Homeland Security
+    <h1>Dislcaimer</h1>
+      <p>The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Department of Homeland Security
       (DHS) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States
       Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or
       consequential damages and including damages based on any negligence of the United States Government or its contractors or
@@ -71,11 +70,10 @@
       The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be
       subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it
       was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into other reports, but
-      may not be modified without the prior express written permission of the CSET Program Office.
-    </div>
+      may not be modified without the prior express written permission of the CSET Program Office.</p>
 
     <div class="page-break">
-      <div class="disclaimer-blurb mt-4">
+      <h1>Advisory</h1>
       CSET® is only one component of the overall cyber security picture and should be complemented with a robust cyber security program
       within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses, and should not be the sole
       means of determining an organization’s security posture.
@@ -100,16 +98,129 @@
       <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
         wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
 
-      
-    </div>
-
-    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-      <div>OVERALL PERCENT COMPLIANCE SCORE</div>
-      <div>
-        <canvas id="canvasOverallCompliance">{{ chartOverallCompl }}</canvas>
+      <div class="sal-display {{analysisSvc.salColor(response?.salTable.OSV)}}" style="margin: 0 1em 1em 1em;">
+        <div class="sal-label">CALCULATED LEVEL</div>
+        <div class="sal-value"> {{response?.salTable.OSV}} </div>
+      </div>
+  
+      <table class="cset-table" *ngIf="response?.salTable.LastSalDeterminationType !== 'GENERAL'">
+        <tr>
+          <th style="width: 25%"></th>
+          <th style="width: 25%">Confidentiality</th>
+          <th style="width: 25%">Integrity</th>
+          <th style="width: 25%">Availability</th>
+        </tr>
+        <tr>
+          <td>Overall Values</td>
+          <td>{{response?.salTable.Q_CV}}</td>
+          <td>{{response?.salTable.Q_IV}}</td>
+          <td>{{response?.salTable.Q_AV}}</td>
+        </tr>
+      </table>
+          
+      <div *ngIf="response?.salTable.LastSalDeterminationType === 'GENERAL'">
+        <p>
+          <b>Calculated General Security Assurance Levels (SAL)</b>
+        </p>
+        
+        <table class="cset-table" style="table-layout: fixed">
+          <tr>
+            <th style="width: 33%"></th>
+            <th style="width: 33%">Onsite</th>
+            <th style="width: 33%">Offsite</th>
+          </tr>
+          <tr>
+            <td>Physical Injury</td>
+            <td>{{response?.genSalTable.On_Site_Physical_Injury}}</td>
+            <td>{{response?.genSalTable.Off_Site_Physical_Injury}}</td>
+          </tr>
+          <tr>
+            <td>Hospital Injury</td>
+            <td>{{response?.genSalTable.On_Site_Hospital_Injury}}</td>
+            <td>{{response?.genSalTable.Off_Site_Hospital_Injury}}</td>
+          </tr>
+          <tr>
+            <td>Death</td>
+            <td>{{response?.genSalTable.On_Site_Death}}</td>
+            <td>{{response?.genSalTable.Off_Site_Death}}</td>
+          </tr>
+          <tr>
+            <td>Capital Assets</td>
+            <td>{{response?.genSalTable.On_Site_Capital_Assets}}</td>
+            <td>{{response?.genSalTable.Off_Site_Capital_Assets}}</td>
+          </tr>
+          <tr>
+            <td>Economic Impact</td>
+            <td>{{response?.genSalTable.On_Site_Economic_Impact}}</td>
+            <td>{{response?.genSalTable.Off_Site_Economic_Impact}}</td>
+          </tr>
+          <tr>
+            <td>Environmental Impact</td>
+            <td>{{response?.genSalTable.On_Site_Environmental_Cleanup}}</td>
+            <td>{{response?.genSalTable.Off_Site_Environmental_Cleanup}}</td>
+          </tr>
+        </table>
+      </div>
+  
+      <div *ngIf="response?.salTable.LastSalDeterminationType === 'NIST'">
+        <h2>
+          FIPS 199 Security Assurance Level Guidance
+        </h2>
+  
+        <p>
+          <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
+        </p>
+        
+        <table class="cset-table">
+          <tr>
+            <th></th>
+            <th>Confidentiality</th>
+            <th>Integrity</th>
+            <th>Availability</th>
+          </tr>
+          <tr>
+            <td>Adjusted For System Questions</td>
+            <td>{{response?.nistSalTable?.Q_CV}}</td>
+            <td>{{response?.nistSalTable?.Q_IV}}</td>
+            <td>{{response?.nistSalTable?.Q_AV}}</td>
+          </tr>
+          <tr>
+            <td>Information Type</td>
+            <td>{{response?.nistSalTable?.IT_CV}}</td>
+            <td>{{response?.nistSalTable?.IT_IV}}</td>
+            <td>{{response?.nistSalTable?.IT_AV}}</td>
+          </tr>
+        </table>
+  
+        <table class="cset-table">
+          <tr>
+            <th>Type</th>
+            <th>Special Factors</th>
+          </tr>
+          <tr>
+            <td>Confidentiality</td>
+            <td>{{nistSalC}}</td>
+          </tr>
+          <tr>
+            <td>Integrity</td>
+            <td>{{nistSalI}}</td>
+          </tr>
+          <tr>
+            <td>Availability</td>
+            <td>{{nistSalA}}</td>
+          </tr>
+        </table>
       </div>
     </div>
-    
+
+    <div class="page-break">
+      <h1>Overall Compliance Score</h1>
+      <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
+        <div>OVERALL PERCENT COMPLIANCE SCORE</div>
+        <div><canvas id="canvasOverallCompliance"> {{ chartOverallCompl }} </canvas></div>
+      </div>
+    </div>
+
     <div class="page-break">
       <h1>The Top Five Most Improved Areas</h1>
       <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
@@ -139,3 +250,23 @@
           </div>
         </div>
     </div>
+
+    <div class="page-break">
+      <h1>Document Library</h1>
+
+      <table class="cset-table-3">
+        <tr>
+          <th>Title</th>
+          <th>File Name</th>
+        </tr>
+        <tr *ngFor="let doc of response?.DocumentLibraryTable">
+          <td>{{doc.documenttitle}}</td>
+          <td>{{doc.FileName}}</td>
+        </tr>
+        <tr *ngIf="response?.DocumentLibraryTable.length === 0">
+          <td></td>
+          <td>There are no documents to display</td>
+        </tr>
+      </table>
+    </div>
+  </div>
