@@ -27,7 +27,8 @@ import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../../../src/app/services/aggregation.service';
 import { AggregationChartService } from '../../../../../src/app/services/aggregation-chart.service';
-
+import { ReportsConfigService } from '../services/config.service';
+import { ConfigService } from '../../../../../src/app/services/config.service';
 
 
 @Component({
@@ -54,14 +55,22 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
+  // FIPS SAL answers
+  nistSalC = '';
+  nistSalI = '';
+  nistSalA = '';
 
+
+  // ACET data
+  DocumentationTotal: number;
 
   constructor(
     public reportSvc: ReportService,
     private analysisSvc: AnalysisService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public aggregChartSvc: AggregationChartService,
+    public configSvc: ReportsConfigService,
   ) { }
 
   ngOnInit() {
@@ -70,8 +79,22 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     this.reportSvc.getReport('trendreport').subscribe(
       (r: any) => {
         this.response = r;
-      },
-      error => console.log('Trend report load Error: ' + (<Error>error).message)
+
+      // Break out any CIA special factors now - can't do a find in the template
+      let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
+      if (!!v) {
+        this.nistSalC = v.Justification;
+      }
+      v = this.response.nistTypes.find(x => x.CIA_Type === 'Integrity');
+      if (!!v) {
+        this.nistSalI = v.Justification;
+      } 
+      v = this.response.nistTypes.find(x => x.CIA_Type === 'Availability');
+      if (!!v) {
+        this.nistSalA = v.Justification;
+      }  
+    },
+    error => console.log('Trend report load Error: ' + (<Error>error).message)
     );
 
 
