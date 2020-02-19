@@ -521,6 +521,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// Returns SAL CIA values for the assessment.
+        /// </summary>
+        /// <returns></returns>
         public BasicReportData.OverallSALTable GetSals()
         {
             using (var db = new CSET_Context())

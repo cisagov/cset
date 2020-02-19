@@ -11,6 +11,7 @@ using BusinessLogic.Helpers;
 using BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+using CSETWeb_Api.BusinessLogic;
 
 using CSETWeb_Api.BusinessLogic.Models;
 
@@ -177,13 +178,14 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Returns a list of assessments for the specified aggregation.
+        /// The list is in ascending order of assessment date.
         /// </summary>
         /// <param name="aggregationId"></param>
         public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
         {
             // assign default aliases
-            // TODO:  If they are comparing more than 26 assessments, this will have to be done a different way.
+            // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
             var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var aliasPosition = 0;
 
@@ -638,6 +640,70 @@ namespace CSETWeb_Api.BusinessLogic
             mergeResponse.ComponentOverrideCategories.RemoveAll(x => x.Questions.Count() == 0);
 
             return mergeResponse;
+        }
+
+
+        /// <summary>
+        /// Returns SAL levels for all the assessments in an aggregation.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        /// <returns></returns>
+        public ReportEngine.MultiSalTable GetSalsForAggregation(int aggregationId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var t = new ReportEngine.MultiSalTable();
+
+                var assessmentList = GetAssessmentsForAggregation(aggregationId);
+
+                foreach (var ass in assessmentList.Assessments)
+                {
+                    var sals = (from a in db.STANDARD_SELECTION
+                                join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
+                                where a.Assessment_Id == ass.AssessmentId
+                                select new { a, b }).ToList();
+
+                    string OSV = "Low";
+                    string Q_CV = "Low";
+                    string Q_IV = "Low";
+                    string Q_AV = "Low";
+
+
+                    foreach (var s in sals)
+                    {
+                        OSV = s.a.Selected_Sal_Level;
+                        switch (s.b.Level_Name)
+                        {
+                            case "Confidence_Level":
+                                Q_CV = s.b.Standard_Specific_Sal_Level;
+                                break;
+                            case "Integrity_Level":
+                                Q_IV = s.b.Standard_Specific_Sal_Level;
+                                break;
+                            case "Availability_Level":
+                                Q_AV = s.b.Standard_Specific_Sal_Level;
+                                break;
+                        }
+                    }
+
+                    var salMethod = sals.Count > 0 ? sals[0].a.Last_Sal_Determination_Type : "";
+
+
+                    var salValues = new ReportEngine.BasicReportData.OverallSALTable()
+                    {
+                        Alias = ass.Alias,
+                        OSV = OSV,
+                        Q_CV = Q_CV,
+                        Q_AV = Q_AV,
+                        Q_IV = Q_IV,
+                        LastSalDeterminationType = salMethod
+                    };
+
+                    t.SalList.Add(salValues);
+                }
+
+                return t;
+            }
         }
 
 
