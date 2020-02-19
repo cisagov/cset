@@ -116,29 +116,32 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
+        /// <summary>
+        /// Returns data needed for the Trend report.  
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trendreport")]
-        public BasicReportData getTrendReport()
+        public MultiSalTable GetTrendReport()
         {
-            int assessmentId = Auth.AssessmentForUser();
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return new MultiSalTable();
+            }
 
-            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            BasicReportData data = new BasicReportData();
-            data.genSalTable = reportsDataManager.GetGenSals();
-            data.information = reportsDataManager.GetInformation();
-            data.salTable = reportsDataManager.GetSals();
-            data.nistTypes = reportsDataManager.GetNistInfoTypes();
-            data.nistSalTable = reportsDataManager.GetNistSals();
-            data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
-            data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
-            data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
-            data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
-            data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
+            var data = new BusinessLogic.AggregationManager().GetSalsForAggregation((int)aggregationID);
             return data;
         }
 
+
+        /// <summary>
+        /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         protected string GetApplicationMode(int assessmentId)
         {
             using (var db = new CSET_Context())

@@ -66,6 +66,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public class OverallSALTable
         {
+            public string Alias { get; set; }
             public string OSV { get; set; }
             public string Q_CV { get; set; }
             public string Q_IV { get; set; }
@@ -223,6 +224,22 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string Answer { get; set; }
         public string AlternateJustification { get; set; }
     }
+
+
+    /// <summary>
+    /// A list of SAL values for multiple assessments.  Used in aggregation reports.
+    /// </summary>
+    public class MultiSalTable
+    {
+        public List<BasicReportData.OverallSALTable> SalList;
+
+        public MultiSalTable()
+        {
+            this.SalList = new List<BasicReportData.OverallSALTable>();
+        }
+    }
+
+
     public class GenSALTable
     {
         public string On_Site_Physical_Injury { get; set; }

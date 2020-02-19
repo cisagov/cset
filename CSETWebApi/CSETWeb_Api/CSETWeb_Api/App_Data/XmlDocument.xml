@@ -1123,6 +1123,19 @@
             Persists an answer-level ("in-line", "local") Parameter change.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetTrendReport">
+            <summary>
+            Returns data needed for the Trend report.  
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetApplicationMode(System.Int32)">
+            <summary>
+            Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
+            </summary>
+            <param name="assessmentId"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.RequiredDocumentationController">
             <summary>
             Manages ASET Required Documentation for assessments.
