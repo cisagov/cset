@@ -459,7 +459,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     list.Add(new DocumentLibraryTable()
                     {
-                        documenttitle = doc.Title,
+                        DocumentTitle = doc.Title,
                         FileName = doc.Path
                     });
                 }
@@ -472,7 +472,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-
                 NistSalManager manager = new NistSalManager();
                 Models.Sals sals = manager.CalculatedNist(_assessmentId, db);
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
