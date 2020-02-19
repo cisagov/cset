@@ -123,17 +123,60 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trendreport")]
-        public MultiSalTable GetTrendReport()
+        public AggregationReportData GetTrendReport()
         {
+            AggregationReportData response = new AggregationReportData();
+            response.SalList = new List<BasicReportData.OverallSALTable>();            
+            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+
+
             TokenManager tm = new TokenManager();
             var aggregationID = tm.PayloadInt("aggreg");
             if (aggregationID == null)
             {
-                return new MultiSalTable();
+                return response;
             }
 
-            var data = new BusinessLogic.AggregationManager().GetSalsForAggregation((int)aggregationID);
-            return data;
+            var assessmentList = new BusinessLogic.AggregationManager()
+                .GetAssessmentsForAggregation((int)aggregationID);
+
+            response.AggregationName = assessmentList.Aggregation.AggregationName;
+
+            foreach (var a in assessmentList.Assessments)
+                {
+                ReportsDataManager reportsDataManager = new ReportsDataManager(a.AssessmentId);
+
+
+                // Incorporate SAL values into response
+                var salTable = reportsDataManager.GetSals();
+
+                var entry = new BasicReportData.OverallSALTable();
+                response.SalList.Add(entry);
+                entry.Alias = a.Alias;
+                entry.OSV = salTable.OSV;
+                entry.Q_CV = "";
+                entry.Q_IV = "";
+                entry.Q_AV = "";
+                entry.LastSalDeterminationType = salTable.LastSalDeterminationType;
+
+                if (salTable.LastSalDeterminationType != "GENERAL")
+                {
+                    entry.Q_CV = salTable.Q_CV;
+                    entry.Q_IV = salTable.Q_IV;
+                    entry.Q_AV = salTable.Q_AV;
+                }
+
+
+                // Document Library 
+                var documentLibraryTable = reportsDataManager.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryTable)
+                {
+                    docEntry.Alias = a.Alias;
+                    response.DocumentLibraryTable.Add(docEntry);
+                }
+            }
+
+            return response;
         }
 
 
