@@ -95,173 +95,113 @@
   
       <div class="page-break">
         <div class="chart d-flex flex-column flex-00a mb-5">
-          <h1>Overall Average Summary</h1>
+          <h1>Summary Percent Compliance</h1>
             <div *ngIf="chartOverallAverage == null">
               <div class="spinner-container" style="margin: 2em auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
               </div>
             </div>
-        <canvas id="canvasOverallAverage">{{ chartOverallAverage }}</canvas>
+          <canvas id="canvasOverallAverage">{{ chartOverallAverage }}</canvas>
+        </div>
       </div>
 
       <div class="page-break">
+        <h1>Security Assurance Level (SAL)</h1>
+        <p>Care should be taken when comparing sites with different overall Security Assurance Levels (SAL).  
+        As sites with a high SAL may have a lower overall security score from a percentage perspective but 
+        may be more secure overall because they are working to a higher level.  When comparing different 
+        sites it may be worthwhile to compare the total number of questions and total number of yes/no answers 
+        in addition to the overall percentage scores.</p>
 
-        <div class="sal-display {{analysisSvc.salColor(response?.salTable.OSV)}}" style="margin: 0 1em 1em 1em;">
-          <div class="sal-label">CALCULATED LEVEL</div>
-          <div class="sal-value"> {{response?.salTable.OSV}} </div>
+        <div class="chart d-flex flex-column flex-00a">
+          <h1>Comparison of Security Assurance Levels</h1>
+          <div *ngIf="sals == null">
+            <div class="spinner-container" style="margin: 2em auto">
+              <div style="max-width: 50px; max-height: 50px;"></div>
+            </div>
+          </div>
+        
+          <div class="d-table">
+            <div class="d-table-row">
+              <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.Alias }}</div>
+            </div>
+            <div class="d-table-row">
+              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Very High'">Very High</div>
+            </div>
+            <div class="d-table-row">
+              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'High'">High</div>
+            </div>
+            <div class="d-table-row">
+              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Moderate'">Moderate</div>
+            </div>
+            <div class="d-table-row">
+              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Low'">Low</div>
+            </div>
+            <div class="d-table-row">
+              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'None'">None</div>
+            </div>
+          </div>
         </div>
-        </div>
-    
-        <table class="cset-table" *ngIf="response?.salTable.LastSalDeterminationType !== 'GENERAL'">
+  
+      <div class="page-break">
+        <div class="chart d-flex flex-column flex-00a">
+          <h1>Assessment Answer Summary</h1>
+          <table class="assessment-summary">
           <tr>
-            <th style="width: 25%">Alias</th>
-            <th style="width: 18.75%">Overall</th>
-            <th style="width: 18.75%">Confidentiality</th>
-            <th style="width: 18.75%">Integrity</th>
-            <th style="width: 18.75%">Availability</th>
+            <th class="text-left p-2">Assessment Alias</th>
+            <th class="text-right p-2 pl-3">Total</th>
+            <th class="text-right p-2 pl-3">Yes</th>
+            <th class="text-right p-2 pl-3">No</th>
+            <th class="text-right p-2 pl-3">NA</th>
+            <th class="text-right p-2 pl-3">Alt</th>
+            <th class="text-right p-2 pl-3">Unanswered</th>
           </tr>
-            <tr>
-            <td>A</td>
-            <td>{{response?.salTable.Q_CV}}</td>
-            <td>{{response?.salTable.Q_IV}}</td>
-            <td>{{response?.salTable.Q_AV}}</td>
-          </tr>
-          <tr>
-            <td>B</td>
-            <td>{{response?.salTable.Q_CV}}</td>
-            <td>{{response?.salTable.Q_IV}}</td>
-            <td>{{response?.salTable.Q_AV}}</td>
+          <tr *ngFor="let a of answerCounts">
+            <td class="text-left p-2">{{ a.Alias }}</td>
+            <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Total }}</td>
+            <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Y }}</td>
+            <td class="text-right p-2 pl-3" style="width: 10%">{{ a.N }}</td>
+            <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NA }}</td>
+            <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
+            <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
           </tr>
         </table>
-            
-        <div *ngIf="response?.salTable.LastSalDeterminationType === 'GENERAL'">
-          <p>
-            <b>Calculated General Security Assurance Levels (SAL)</b>
-          </p>
-          
-          <table class="cset-table" style="table-layout: fixed">
-            <tr>
-              <th style="width: 33%"></th>
-              <th style="width: 33%">Onsite</th>
-              <th style="width: 33%">Offsite</th>
-            </tr>
-            <tr>
-              <td>Physical Injury</td>
-              <td>{{response?.genSalTable.On_Site_Physical_Injury}}</td>
-              <td>{{response?.genSalTable.Off_Site_Physical_Injury}}</td>
-            </tr>
-            <tr>
-              <td>Hospital Injury</td>
-              <td>{{response?.genSalTable.On_Site_Hospital_Injury}}</td>
-              <td>{{response?.genSalTable.Off_Site_Hospital_Injury}}</td>
-            </tr>
-            <tr>
-              <td>Death</td>
-              <td>{{response?.genSalTable.On_Site_Death}}</td>
-              <td>{{response?.genSalTable.Off_Site_Death}}</td>
-            </tr>
-            <tr>
-              <td>Capital Assets</td>
-              <td>{{response?.genSalTable.On_Site_Capital_Assets}}</td>
-              <td>{{response?.genSalTable.Off_Site_Capital_Assets}}</td>
-            </tr>
-            <tr>
-              <td>Economic Impact</td>
-              <td>{{response?.genSalTable.On_Site_Economic_Impact}}</td>
-              <td>{{response?.genSalTable.Off_Site_Economic_Impact}}</td>
-            </tr>
-            <tr>
-              <td>Environmental Impact</td>
-              <td>{{response?.genSalTable.On_Site_Environmental_Cleanup}}</td>
-              <td>{{response?.genSalTable.Off_Site_Environmental_Cleanup}}</td>
-            </tr>
-          </table>
-        </div>
-    
-        <div *ngIf="response?.salTable.LastSalDeterminationType === 'NIST'">
-          <h2>
-            FIPS 199 Security Assurance Level Guidance
-          </h2>
-    
-          <p>
-            <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
-          </p>
-          
-          <table class="cset-table">
-            <tr>
-              <th></th>
-              <th>Confidentiality</th>
-              <th>Integrity</th>
-              <th>Availability</th>
-            </tr>
-            <tr>
-              <td>Adjusted For System Questions</td>
-              <td>{{response?.nistSalTable?.Q_CV}}</td>
-              <td>{{response?.nistSalTable?.Q_IV}}</td>
-              <td>{{response?.nistSalTable?.Q_AV}}</td>
-            </tr>
-            <tr>
-              <td>Information Type</td>
-              <td>{{response?.nistSalTable?.IT_CV}}</td>
-              <td>{{response?.nistSalTable?.IT_IV}}</td>
-              <td>{{response?.nistSalTable?.IT_AV}}</td>
-            </tr>
-          </table>
-    
-          <table class="cset-table">
-            <tr>
-              <th>Type</th>
-              <th>Special Factors</th>
-            </tr>
-            <tr>
-              <td>Confidentiality</td>
-              <td>{{nistSalC}}</td>
-            </tr>
-            <tr>
-              <td>Integrity</td>
-              <td>{{nistSalI}}</td>
-            </tr>
-            <tr>
-              <td>Availability</td>
-              <td>{{nistSalA}}</td>
-            </tr>
-          </table>
+      </div>
+      <div *ngIf="answerCounts == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
       </div>
-  
-      <div class="page-break">
-        <h1>The Top Five Most Improved Areas</h1>
-        <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-          <div>TOP 5 MOST IMPROVED AREAS</div>
-            <div>
-              <canvas id="canvasTop5">{{ chartTop5 }}</canvas>
-            </div>
+    </div>
+
+    <div class="page-break">
+      <div class="chart d-flex flex-column flex-00a mb-5">
+      <h1>Category Average for All Assessments</h1>
+        <div *ngIf="chartCategoryAverage == null">
+          <div class="spinner-container" style="margin: 2em auto">
+           <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
+        </div>
+        <canvas id="canvasCategoryAverage">{{ chartCategoryAverage }}</canvas>
       </div>
-  
-      <div class="page-break">
-        <h1>The Bottom Five (Areas of Concern)</h1>
-        <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-          <div>TOP 5 AREAS OF CONCERN</div>
-            <div>
-              <canvas id="canvasBottom5">{{ chartBottom5 }}</canvas>
-            </div>
-          </div>
+    </div>
+
+    <div class="page-break">
+    <div class="chart d-flex flex-column flex-00a">
+      <h1>Category Percent Comparisons</h1>
+      <div *ngIf="chartCategoryPercent == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
       </div>
-  
-      <div class="page-break">
-        <h1>Individual Category Comparisons</h1>
-        <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-          <div>CATEGORY PERCENT COMPARISONS</div>
-            <div>
-              <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
-            </div>
-          </div>
+      <div class="chart-container" style="position: relative; height:80vh; width: 100%">
+        <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
       </div>
+    </div>
+  </div>
   
       <div class="page-break">
         <h1>Document Library</h1>
-  
         <table class="cset-table-3">
           <tr>
             <th>Title</th>
