@@ -32,7 +32,7 @@ import { ConfigService } from '../../../../../src/app/services/config.service';
 
 
 @Component({
-  selector: 'rapp-executive',
+  selector: 'rapp-trendreport',
   templateUrl: './trendreport.component.html'
 })
 export class TrendReportComponent implements OnInit, AfterViewChecked {

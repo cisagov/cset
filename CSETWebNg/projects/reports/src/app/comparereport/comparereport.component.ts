@@ -26,11 +26,11 @@ import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../../../src/app/services/aggregation.service';
-import { AggregationChartService } from '../../../../../src/app/services/aggregation-chart.service';
+import { AggregationChartService, ChartColors } from '../../../../../src/app/services/aggregation-chart.service';
 
 
 @Component({
-  selector: 'rapp-compare',
+  selector: 'rapp-comparereport',
   templateUrl: './comparereport.component.html'
 })
 export class CompareReportComponent implements OnInit, AfterViewChecked {
@@ -41,7 +41,9 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   chartTop5: Chart;
   chartBottom5: Chart;
   chartCategoryPercent: Chart;
-
+  sals: any;
+  answerCounts: any[] = null;
+  chartCategoryAverage: Chart;
 
   // Charts for Components
   componentCount = 0;
@@ -53,11 +55,6 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   numberOfStandards = -1;
 
   pageInitialized = false;
-
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
 
 
   // ACET data
@@ -74,23 +71,10 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.titleService.setTitle("Compare Report - CSET");
 
+
     this.reportSvc.getReport('comparereport').subscribe(
       (r: any) => {
         this.response = r;
-
-      // Break out any CIA special factors now - can't do a find in the template
-      let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
-      if (!!v) {
-        this.nistSalC = v.Justification;
-      }
-      v = this.response.nistTypes.find(x => x.CIA_Type === 'Integrity');
-      if (!!v) {
-        this.nistSalI = v.Justification;
-      } 
-      v = this.response.nistTypes.find(x => x.CIA_Type === 'Availability');
-      if (!!v) {
-        this.nistSalA = v.Justification;
-      }  
     },
     error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
@@ -104,14 +88,49 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
-      // apply visual attributes
-      x.datasets.forEach(ds => {
-        ds.backgroundColor = '#004c75';
-        ds.borderColor = '#004c75';
-      });
+     // apply visual attributes
+     const chartColors = new ChartColors();
+     x.datasets.forEach((ds: any) => {
+       ds.backgroundColor = chartColors.getNextBluesBarColor();
+       ds.borderColor = ds.backgroundColor;
+     });
 
       this.chartOverallAverage = this.aggregChartSvc.buildHorizBarChart('canvasOverallAverage', x, false);
     });
+
+        // Comparison of Security Assurance Levels (SAL)
+        this.aggregationSvc.getSalComparison().subscribe((x: any) => {
+          this.sals = x;
+        });
+
+    // Assessment Answer Summary - tabular data
+    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
+      // 
+      this.answerCounts = x;
+    });
+
+    // Category Averages
+    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
+
+      // apply visual attributes
+      x.datasets.forEach(ds => {
+        ds.backgroundColor = '#008a00';
+        ds.borderColor = '#008a00';
+      });
+
+      if (!x.options) {
+        x.options = {};
+      }
+      x.options.maintainAspectRatio = false;
+
+      this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
+    });
+
+    // Category Percentage Comparison
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+    });
+
   }
   
   ngAfterViewChecked() {
