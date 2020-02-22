@@ -115,7 +115,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
     }
     public class DocumentLibraryTable
     {
-        public string documenttitle { get; set; }
+        public string Alias { get; set; }
+        public string DocumentTitle { get; set; }
         public string FileName { get; set; }
     }
 
@@ -225,19 +226,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string AlternateJustification { get; set; }
     }
 
-
-    /// <summary>
-    /// A list of SAL values for multiple assessments.  Used in aggregation reports.
-    /// </summary>
-    public class MultiSalTable
-    {
-        public List<BasicReportData.OverallSALTable> SalList;
-
-        public MultiSalTable()
-        {
-            this.SalList = new List<BasicReportData.OverallSALTable>();
-        }
-    }
 
 
     public class GenSALTable
