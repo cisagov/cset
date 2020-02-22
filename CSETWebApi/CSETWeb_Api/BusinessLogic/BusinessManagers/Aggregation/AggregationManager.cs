@@ -505,6 +505,7 @@ namespace CSETWeb_Api.BusinessLogic
             }
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -644,70 +645,6 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// Returns SAL levels for all the assessments in an aggregation.
-        /// </summary>
-        /// <param name="aggregationId"></param>
-        /// <returns></returns>
-        public ReportEngine.MultiSalTable GetSalsForAggregation(int aggregationId)
-        {
-            using (var db = new CSET_Context())
-            {
-                var t = new ReportEngine.MultiSalTable();
-
-                var assessmentList = GetAssessmentsForAggregation(aggregationId);
-
-                foreach (var ass in assessmentList.Assessments)
-                {
-                    var sals = (from a in db.STANDARD_SELECTION
-                                join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
-                                where a.Assessment_Id == ass.AssessmentId
-                                select new { a, b }).ToList();
-
-                    string OSV = "Low";
-                    string Q_CV = "Low";
-                    string Q_IV = "Low";
-                    string Q_AV = "Low";
-
-
-                    foreach (var s in sals)
-                    {
-                        OSV = s.a.Selected_Sal_Level;
-                        switch (s.b.Level_Name)
-                        {
-                            case "Confidence_Level":
-                                Q_CV = s.b.Standard_Specific_Sal_Level;
-                                break;
-                            case "Integrity_Level":
-                                Q_IV = s.b.Standard_Specific_Sal_Level;
-                                break;
-                            case "Availability_Level":
-                                Q_AV = s.b.Standard_Specific_Sal_Level;
-                                break;
-                        }
-                    }
-
-                    var salMethod = sals.Count > 0 ? sals[0].a.Last_Sal_Determination_Type : "";
-
-
-                    var salValues = new ReportEngine.BasicReportData.OverallSALTable()
-                    {
-                        Alias = ass.Alias,
-                        OSV = OSV,
-                        Q_CV = Q_CV,
-                        Q_AV = Q_AV,
-                        Q_IV = Q_IV,
-                        LastSalDeterminationType = salMethod
-                    };
-
-                    t.SalList.Add(salValues);
-                }
-
-                return t;
-            }
-        }
-
-
-        /// <summary>
         /// Determines a default answer based on the source answers, the leftmost assessment with an actual answer.
         /// </summary>
         /// <param name="q"></param>
@@ -748,7 +685,6 @@ namespace CSETWeb_Api.BusinessLogic
             cat.Questions.Add(q);
             cat.Questions = cat.Questions.OrderBy(x => x.QuestionText).ToList();
         }
-
 
 
         /// <summary>

@@ -467,6 +467,7 @@
     <Compile Include="Questions\RequirementLevel.cs" />
     <Compile Include="Questions\Slice\RequirementsPocoBuilder.cs" />
     <Compile Include="Questions\Slice\Requirement_And_Set.cs" />
+    <Compile Include="ReportEngine\AggregationReportData.cs" />
     <Compile Include="ReportEngine\BasicReportData.cs" />
     <Compile Include="ReportEngine\Builder\AliasDescendingSorter.cs" />
     <Compile Include="ReportEngine\Builder\DataHandling.cs" />
