@@ -50,6 +50,8 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
   chartComponentsTypes: Chart;
   warningCount = 0;
 
+  answerCounts: any[] = null;
+
   numberOfStandards = -1;
 
   pageInitialized = false;
@@ -99,6 +101,11 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     // Overall Compliance
     this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
       this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
+    });
+
+    // Assessment Answer Summary - tabular data
+    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
+      this.answerCounts = x;
     });
 
     // Top 5

@@ -31,8 +31,9 @@ import { AggregationChartService, ChartColors } from '../../../../../src/app/ser
 
 @Component({
   selector: 'rapp-comparereport',
-  templateUrl: './comparereport.component.html'
+  templateUrl: './comparereport.component.html',
 })
+
 export class CompareReportComponent implements OnInit, AfterViewChecked {
   response: any;
 

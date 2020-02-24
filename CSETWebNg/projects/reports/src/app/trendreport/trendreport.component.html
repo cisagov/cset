@@ -123,6 +123,37 @@
       <div>OVERALL PERCENT COMPLIANCE SCORE</div>
       <div><canvas id="canvasOverallCompliance"> {{ chartOverallCompl }} </canvas></div>
     </div>
+
+    <div class="chart d-flex flex-column flex-00a">
+      <h1>Assessment Answer Summary</h1>
+          
+      <table class="table table-bordered assessment-summary">
+        <tr>
+          <th class="text-left p-2">Assessment Alias</th>
+          <th class="text-right p-2 pl-3">Total</th>
+          <th class="text-right p-2 pl-3">Yes</th>
+          <th class="text-right p-2 pl-3">No</th>
+          <th class="text-right p-2 pl-3">NA</th>
+          <th class="text-right p-2 pl-3">Alt</th>
+          <th class="text-right p-2 pl-3">Unanswered</th>
+        </tr>
+        <tr *ngFor="let a of answerCounts">
+          <td class="text-left p-2">{{ a.Alias }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Total }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Y }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.N }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NA }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div *ngIf="answerCounts == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
   </div>
 
   <div class="page-break">
