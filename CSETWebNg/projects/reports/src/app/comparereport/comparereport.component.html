@@ -94,12 +94,15 @@
   <div class="page-break">
     <div class="chart d-flex flex-column flex-00a mb-5">
       <h1>Summary Percent Compliance</h1>
+      <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
+        <div>SUMMARY PERCENT COMPLIANCE</div>
         <div *ngIf="chartOverallAverage == null">
           <div class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
         </div>
         <canvas id="canvasOverallAverage"> {{ chartOverallAverage }} </canvas>
+      </div>
     </div>
   </div>
 
@@ -112,42 +115,34 @@
         in addition to the overall percentage scores.
       </p>
 
-      <div class="chart d-flex flex-column flex-00a">
-        <h1>Comparison of Security Assurance Levels</h1>
-          <div *ngIf="sals == null">
-            <div class="spinner-container" style="margin: 2em auto">
-              <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-          </div>
-        
-          <div class="d-table">
-            <div class="d-table-row">
-              <div *ngFor="let a of sals" class="d-table-cell border-bottom"> {{ a.Alias }} </div>
-            </div>
-            <div class="d-table-row">
-              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Very High'">Very High</div>
-            </div>
-            <div class="d-table-row">
-              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'High'">High</div>
-            </div>
-            <div class="d-table-row">
-              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Moderate'">Moderate</div>
-            </div>
-            <div class="d-table-row">
-              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Low'">Low</div>
-            </div>
-            <div class="d-table-row">
-              <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'None'">None</div>
-            </div>
-          </div>
-      </div>
-  </div>
+    <div class="chart d-flex flex-column flex-00a">
+      <h2>Comparison of Security Assurance Levels</h2>
+        <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
+          wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
+      
+      <table class="cset-table">
+        <tr>
+          <th style="width: 20%">Alias</th>
+          <th style="width: 20%">Overall</th>
+          <th style="width: 20%">Confidentiality</th>
+          <th style="width: 20%">Integrity</th>
+          <th style="width: 20%">Availability</th>
+        </tr>
+        <tr *ngFor="let a of response?.SalList">
+          <td>{{a.Alias}}</td>
+          <td>{{a.OSV}}</td>
+          <td>{{a.Q_CV}}</td>
+          <td>{{a.Q_IV}}</td>
+          <td>{{a.Q_AV}}</td>
+        </tr>
+      </table>
+    </div>
   
   <div class="page-break">
     <div class="chart d-flex flex-column flex-00a">
       <h1>Assessment Answer Summary</h1>
           
-      <table class="assessment-summary">
+      <table class="table table-bordered assessment-summary">
         <tr>
           <th class="text-left p-2">Assessment Alias</th>
           <th class="text-right p-2 pl-3">Total</th>
@@ -179,31 +174,28 @@
   <div class="page-break">
     <div class="chart d-flex flex-column flex-00a mb-5">
       <h1>Category Average for All Assessments</h1>
-      <div *ngIf="chartCategoryAverage == null">
-        <div class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
+      <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
+        <div *ngIf="chartCategoryAverage == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
         </div>
+        <canvas id="canvasCategoryAverage"> {{ chartCategoryAverage }} </canvas>
       </div>
-      <canvas id="canvasCategoryAverage"> {{ chartCategoryAverage }} </canvas>
     </div>
   </div>
 
   <div class="page-break">
-    <div class="chart d-flex flex-column flex-00a">
-      <h1>Category Percent Comparisons</h1>
-      <div *ngIf="chartCategoryPercent == null">
-        <div class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-      </div>
-      <div class="chart-container" style="position: relative; height:80vh; width: 100%">
-        <canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas>
-      </div>
+    <h1>Individual Category Comparisons</h1>
+    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
+      <div>CATEGORY PERCENT COMPARISONS</div>
+      <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
     </div>
   </div>
-  
+
   <div class="page-break">
     <h1>Document Library</h1>
+
     <table class="cset-table-3">
       <tr>
         <th>Title</th>
@@ -219,3 +211,4 @@
       </tr>
     </table>
   </div>
+</div>

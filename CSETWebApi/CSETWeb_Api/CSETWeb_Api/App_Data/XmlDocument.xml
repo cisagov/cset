@@ -1129,6 +1129,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetCompareReport">
+            <summary>
+            Returns data needed for the Compare report.  
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.ReportsController.GetApplicationMode(System.Int32)">
             <summary>
             Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
