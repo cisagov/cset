@@ -56,7 +56,6 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
-
   // ACET data
   DocumentationTotal: number;
 
@@ -70,7 +69,6 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.titleService.setTitle("Compare Report - CSET");
-
 
     this.reportSvc.getReport('comparereport').subscribe(
       (r: any) => {
@@ -88,41 +86,40 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
-     // apply visual attributes
-     const chartColors = new ChartColors();
-     x.datasets.forEach((ds: any) => {
-       ds.backgroundColor = chartColors.getNextBluesBarColor();
-       ds.borderColor = ds.backgroundColor;
-     });
+    // apply visual attributes
+    const chartColors = new ChartColors();
+    x.datasets.forEach((ds: any) => {
+      ds.backgroundColor = chartColors.getNextBluesBarColor();
+      ds.borderColor = ds.backgroundColor;
+    });
 
       this.chartOverallAverage = this.aggregChartSvc.buildHorizBarChart('canvasOverallAverage', x, false);
     });
 
-        // Comparison of Security Assurance Levels (SAL)
-        this.aggregationSvc.getSalComparison().subscribe((x: any) => {
-          this.sals = x;
-        });
+    // Comparison of Security Assurance Levels (SAL)
+    this.aggregationSvc.getSalComparison().subscribe((x: any) => {
+      this.sals = x;
+    });
 
     // Assessment Answer Summary - tabular data
     this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
-      // 
       this.answerCounts = x;
     });
 
     // Category Averages
     this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
-
-      // apply visual attributes
-      x.datasets.forEach(ds => {
-        ds.backgroundColor = '#008a00';
-        ds.borderColor = '#008a00';
-      });
+    
+    // apply visual attributes
+        x.datasets.forEach(ds => {
+          ds.backgroundColor = '#008a00';
+          ds.borderColor = '#008a00';
+        });
 
       if (!x.options) {
         x.options = {};
       }
-      x.options.maintainAspectRatio = false;
 
+      x.options.maintainAspectRatio = false;
       this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
     });
 
@@ -130,10 +127,9 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
     });
-
   }
   
   ngAfterViewChecked() {
-
   }
+  
 }

@@ -35,21 +35,20 @@ import { ConfigService } from '../../../../../src/app/services/config.service';
   selector: 'rapp-trendreport',
   templateUrl: './trendreport.component.html'
 })
+
 export class TrendReportComponent implements OnInit, AfterViewChecked {
   response: any;
 
+  // Charts for Components
   chartOverallCompl: Chart;
   chartTop5: Chart;
   chartBottom5: Chart;
   chartCategoryPercent: Chart;
 
-
-  // Charts for Components
   componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   warningCount = 0;
-  chart1: Chart;
 
   numberOfStandards = -1;
 
@@ -60,10 +59,9 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
   nistSalI = '';
   nistSalA = '';
 
-
   // ACET data
   DocumentationTotal: number;
-
+  
   constructor(
     public reportSvc: ReportService,
     private analysisSvc: AnalysisService,
@@ -97,9 +95,7 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     error => console.log('Trend report load Error: ' + (<Error>error).message)
     );
 
-
     // Populate charts
-
     // Overall Compliance
     this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
       this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
@@ -119,7 +115,6 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
     });
-
   }
 
   ngAfterViewChecked() {
