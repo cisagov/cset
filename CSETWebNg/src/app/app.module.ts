@@ -184,7 +184,9 @@ import { ChartColors } from './services/aggregation-chart.service';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsService } from './services/analytics.service';
 import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
-
+import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { ReportTestComponent } from './reports/report-test/report-test.component';
 
 @NgModule({
     imports: [
@@ -335,7 +337,11 @@ import { DataloginComponent } from './assessment/results/analysis/submitdata/dat
         CompareBestworstComponent,
         ComponentOverrideComponent, 
         ExcelExportComponent, 
-        AnalyticsComponent, DataloginComponent
+        AnalyticsComponent, 
+        DataloginComponent,
+        LayoutBlankComponent,
+        LayoutMainComponent, 
+        ReportTestComponent
     ],
     providers: [
         ConfigService,
