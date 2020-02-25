@@ -79,6 +79,9 @@ import { AggregationDetailComponent } from './aggregation/aggregation-detail/agg
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
+import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 
 const appRoutes: Routes = [
   {
@@ -101,6 +104,11 @@ const appRoutes: Routes = [
   { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
   { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
+  // reports routing
+  { path: 'report-test', component: LayoutBlankComponent, children: [
+      {path: '', component: ReportTestComponent }
+  ]},
+
 
   { path: 'compare', component: AggregationHomeComponent },
   { path: 'merge', component: MergeComponent },
@@ -109,7 +117,7 @@ const appRoutes: Routes = [
   { path: 'set-list', component: SetListComponent },
   {
     path: 'home',
-    component: InitialComponent,
+    component: LayoutMainComponent,
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
