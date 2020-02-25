@@ -84,37 +84,16 @@ import { ReportTestComponent } from './reports/report-test/report-test.component
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 
 const appRoutes: Routes = [
+
+
+  // reports routing
   {
-    path: 'trend',
-    component: AggregationHomeComponent,
-    children: [
-      {
-        path: 'alias-assessments/:id',
-        component: AliasAssessmentsComponent,
-        canActivate: [AggregationGuard]
-      },
-      { path: '', redirectTo: 'trend', pathMatch: 'full' },
-      { path: '**', redirectTo: 'trend' }
+    path: 'report-test', component: LayoutBlankComponent, children: [
+      { path: '', component: ReportTestComponent }
     ]
   },
 
 
-  { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
-  { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
-  { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
-  { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
-
-  // reports routing
-  { path: 'report-test', component: LayoutBlankComponent, children: [
-      {path: '', component: ReportTestComponent }
-  ]},
-
-
-  { path: 'compare', component: AggregationHomeComponent },
-  { path: 'merge', component: MergeComponent },
-  { path: 'resource-library', component: ResourceLibraryComponent },
-  { path: 'importModule', component: ImportComponent },
-  { path: 'set-list', component: SetListComponent },
   {
     path: 'home',
     component: LayoutMainComponent,
@@ -134,108 +113,136 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: 'assessment/:id',
-    component: AssessmentComponent,
-    canActivate: [AssessGuard],
-    canActivateChild: [AssessGuard],
+    path: '',
+    component: LayoutMainComponent,
     children: [
+      { path: 'compare', component: AggregationHomeComponent },
+      { path: 'merge', component: MergeComponent },
       {
-        path: 'prepare',
-        component: PrepareComponent,
-        canActivate: [AssessGuard],
-        canActivateChild: [AssessGuard],
+        path: 'trend',
+        component: AggregationHomeComponent,
         children: [
-          { path: 'info', component: AssessmentInfoComponent },
-          { path: 'sal', component: SalsComponent },
-          { path: 'standards', component: StandardsComponent },
-          { path: 'framework', component: FrameworkComponent },
-          { path: 'required', component: RequiredDocsComponent },
-          { path: 'irp', component: IRPComponent },
-          { path: 'irp-summary', component: IrpSummaryComponent },
-          { path: '', redirectTo: 'info', pathMatch: 'full' },
-          { path: '**', redirectTo: 'info' }
+          {
+            path: 'alias-assessments/:id',
+            component: AliasAssessmentsComponent,
+            canActivate: [AggregationGuard]
+          },
+          { path: '', redirectTo: 'trend', pathMatch: 'full' },
+          { path: '**', redirectTo: 'trend' }
         ]
       },
+      { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
+      { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
+      { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
+      { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
+
+      { path: 'importModule', component: ImportComponent },
+
+      { path: 'set-list', component: SetListComponent },
       {
-        path: 'diagram',
-        component: DiagramComponent,
-        canActivate: [AssessGuard],
-        canActivateChild: [AssessGuard],
-        children: [
-          { path: 'info', component: DiagramInfoComponent },
-          { path: 'inventory', component: DiagramInventoryComponent },
-          { path: '', redirectTo: 'info', pathMatch: 'full' },
-          { path: '**', redirectTo: 'info' }
-        ]
+        path: 'set-detail/:id',
+        component: CustomSetComponent
+      },
+      {
+        path: 'standard-documents/:id',
+        component: StandardDocumentsComponent
+      },
+      {
+        path: 'ref-document/:id',
+        component: RefDocumentComponent
+      },
+      {
+        path: 'requirement-list/:id',
+        component: RequirementListComponent
+      },
+      {
+        path: 'requirement-detail/:id',
+        component: RequirementDetailComponent
+      },
+      {
+        path: 'question-list/:id',
+        component: QuestionListComponent
+      },
+      {
+        path: 'add-question/:id',
+        component: AddQuestionComponent
       },
 
-      { path: 'questions', component: QuestionsComponent },
+      { path: 'resource-library', component: ResourceLibraryComponent },
+
       {
-        path: 'results',
-        component: ResultsComponent,
+        path: 'assessment/:id',
+        component: AssessmentComponent,
         canActivate: [AssessGuard],
         canActivateChild: [AssessGuard],
         children: [
-          { path: 'analysis', component: AnalysisComponent },
-          { path: 'dashboard', component: DashboardComponent },
-          { path: 'ranked-questions', component: RankedQuestionsComponent },
-          { path: 'feedback', component: FeedbackComponent },
-          // { path: 'overall-ranked-categories', component: OverallRankedCategoriesComponent },
-          { path: 'standards-summary', component: StandardsSummaryComponent },
-          { path: 'standards-ranked', component: StandardsRankedComponent },
-          { path: 'standards-results', component: StandardsResultsComponent },
-          { path: 'components-summary', component: ComponentsSummaryComponent },
-          { path: 'components-ranked', component: ComponentsRankedComponent },
-          { path: 'components-results', component: ComponentsResultsComponent },
-          { path: 'components-types', component: ComponentsTypesComponent },
-          { path: 'components-warnings', component: ComponentsWarningsComponent },
+          {
+            path: 'prepare',
+            component: PrepareComponent,
+            canActivate: [AssessGuard],
+            canActivateChild: [AssessGuard],
+            children: [
+              { path: 'info', component: AssessmentInfoComponent },
+              { path: 'sal', component: SalsComponent },
+              { path: 'standards', component: StandardsComponent },
+              { path: 'framework', component: FrameworkComponent },
+              { path: 'required', component: RequiredDocsComponent },
+              { path: 'irp', component: IRPComponent },
+              { path: 'irp-summary', component: IrpSummaryComponent },
+              { path: '', redirectTo: 'info', pathMatch: 'full' },
+              { path: '**', redirectTo: 'info' }
+            ]
+          },
+          {
+            path: 'diagram',
+            component: DiagramComponent,
+            canActivate: [AssessGuard],
+            canActivateChild: [AssessGuard],
+            children: [
+              { path: 'info', component: DiagramInfoComponent },
+              { path: 'inventory', component: DiagramInventoryComponent },
+              { path: '', redirectTo: 'info', pathMatch: 'full' },
+              { path: '**', redirectTo: 'info' }
+            ]
+          },
 
-          { path: 'maturity', component: MatDetailComponent },
-          { path: 'admin', component: AdminComponent },
-          { path: 'acetDashboard', component: ACETDashboardComponent },
-          { path: 'overview', component: OverviewComponent },
-          { path: 'reports', component: ReportsComponent },
-          { path: 'feedback', component: FeedbackComponent },
-          { path: 'analytics', component: AnalyticsComponent },
-          { path: '', component: DashboardComponent },
+          { path: 'questions', component: QuestionsComponent },
+          {
+            path: 'results',
+            component: ResultsComponent,
+            canActivate: [AssessGuard],
+            canActivateChild: [AssessGuard],
+            children: [
+              { path: 'analysis', component: AnalysisComponent },
+              { path: 'dashboard', component: DashboardComponent },
+              { path: 'ranked-questions', component: RankedQuestionsComponent },
+              { path: 'feedback', component: FeedbackComponent },
+              // { path: 'overall-ranked-categories', component: OverallRankedCategoriesComponent },
+              { path: 'standards-summary', component: StandardsSummaryComponent },
+              { path: 'standards-ranked', component: StandardsRankedComponent },
+              { path: 'standards-results', component: StandardsResultsComponent },
+              { path: 'components-summary', component: ComponentsSummaryComponent },
+              { path: 'components-ranked', component: ComponentsRankedComponent },
+              { path: 'components-results', component: ComponentsResultsComponent },
+              { path: 'components-types', component: ComponentsTypesComponent },
+              { path: 'components-warnings', component: ComponentsWarningsComponent },
+
+              { path: 'maturity', component: MatDetailComponent },
+              { path: 'admin', component: AdminComponent },
+              { path: 'acetDashboard', component: ACETDashboardComponent },
+              { path: 'overview', component: OverviewComponent },
+              { path: 'reports', component: ReportsComponent },
+              { path: 'feedback', component: FeedbackComponent },
+              { path: 'analytics', component: AnalyticsComponent },
+              { path: '', component: DashboardComponent },
+            ]
+          },
+
+          { path: '', redirectTo: 'prepare', pathMatch: 'full' },
+          { path: '**', redirectTo: 'prepare' }
         ]
       },
-      { path: '', redirectTo: 'prepare', pathMatch: 'full' },
-      { path: '**', redirectTo: 'prepare' }
     ]
-  },
-  {
-    path: 'set-list',
-    component: SetListComponent,
-    children: []
-  },
-  {
-    path: 'set-detail/:id',
-    component: CustomSetComponent
-  },
-  {
-    path: 'standard-documents/:id',
-    component: StandardDocumentsComponent
-  },
-  {
-    path: 'ref-document/:id',
-    component: RefDocumentComponent
-  },
-  {
-    path: 'requirement-list/:id',
-    component: RequirementListComponent
-  },
-  {
-    path: 'requirement-detail/:id',
-    component: RequirementDetailComponent
-  },
-  {
-    path: 'question-list/:id',
-    component: QuestionListComponent
-  },
-  {
-    path: 'add-question/:id',
-    component: AddQuestionComponent
   },
   { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
