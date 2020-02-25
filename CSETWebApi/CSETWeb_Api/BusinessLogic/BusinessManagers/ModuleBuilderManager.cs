@@ -816,7 +816,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (term != "")
                     {
-                        sbWhereClause.AppendFormat("[Simple_Question] like '%{0}%' and ", term.Replace('*', '%'));
+                        sbWhereClause.AppendFormat("[Simple_Question] like '%{0}%' and ", term.Replace('*', '%').Replace("\'", "''"));
                     }
                 }
 
