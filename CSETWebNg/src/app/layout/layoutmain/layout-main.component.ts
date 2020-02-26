@@ -25,36 +25,35 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { AboutComponent } from './dialogs/about/about.component';
-import { AdvisoryComponent } from './dialogs/advisory/advisory.component';
-import { AssessmentDocumentsComponent } from './dialogs/assessment-documents/assessment-documents.component';
-import { ChangePasswordComponent } from './dialogs/change-password/change-password.component';
-import { ConfirmComponent } from './dialogs/confirm/confirm.component';
-import { EditUserComponent } from './dialogs/edit-user/edit-user.component';
-import { EnableProtectedComponent } from './dialogs/enable-protected/enable-protected.component';
-import { GlobalParametersComponent } from './dialogs/global-parameters/global-parameters.component';
-import { KeyboardShortcutsComponent } from './dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
-import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
-import { CreateUser } from './models/user.model';
-import { AssessmentService } from './services/assessment.service';
-import { AuthenticationService } from './services/authentication.service';
-import { ConfigService } from './services/config.service';
+import { AboutComponent } from '../../dialogs/about/about.component';
+import { AdvisoryComponent } from '../../dialogs/advisory/advisory.component';
+import { AssessmentDocumentsComponent } from '../../dialogs/assessment-documents/assessment-documents.component';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
+import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
+import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
+import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
+import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
+import { CreateUser } from '../../models/user.model';
+import { AssessmentService } from '../../services/assessment.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
-import { AggregationService } from './services/aggregation.service';
-import { LocalStoreManager } from './services/storage.service';
+import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
+import { AggregationService } from '../../services/aggregation.service';
 
 
 declare var $: any;
 
 @Component({
   moduleId: module.id,
-  selector: 'app-root',
-  templateUrl: './app.component.html',
+  selector: 'layout-main',
+  templateUrl: './layout-main.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class LayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -68,11 +67,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     public aggregationSvc: AggregationService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService, 
-    storageManager: LocalStoreManager
-  ) { 
-    storageManager.initialiseStorageSyncListener();
-  }
+    private _hotkeysService: HotkeysService
+  ) { }
 
 
   ngOnInit() {

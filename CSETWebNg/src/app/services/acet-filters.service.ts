@@ -49,8 +49,6 @@ export class ACETFilter {
 })
 export class AcetFiltersService {
 
-
-
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,

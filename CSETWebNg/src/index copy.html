@@ -88,7 +88,23 @@
 </head>
 
 <body class="d-flex flex-column flex-11a h-100 w-100">
-    <app-root >
+    <app-root class="bgc-page d-flex flex-column flex-11a w-100">
+        <style>
+            app-root {
+                position: fixed;
+                height: 100%;
+                width: 100%;
+            }
+
+            .centered {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -194px;
+                margin-left: -194px;
+            }
+        </style>
+        <img src="assets/images/logo_dhs_388px.png" class="centered" />
     </app-root>
 </body>
 <script>
