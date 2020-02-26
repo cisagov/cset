@@ -82,6 +82,10 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { DetailComponent } from './reports/detail/detail.component';
+import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { ExecutiveComponent } from './reports/executive/executive.component';
+import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 
 const appRoutes: Routes = [
   {
@@ -108,7 +112,13 @@ const appRoutes: Routes = [
   { path: 'report-test', component: LayoutBlankComponent, children: [
       {path: '', component: ReportTestComponent }
   ]},
-
+  { path: 'reports', component: LayoutBlankComponent, children: [
+      {path: 'detail', component: DetailComponent }, 
+      {path: 'discoveries', component: DiscoveryTearoutsComponent }, 
+      {path: 'executive', component: ExecutiveComponent }, 
+      {path: 'securityplan', component: SecurityplanComponent }, 
+      {path: 'sitesummary', component: SecurityplanComponent }, 
+  ]},
 
   { path: 'compare', component: AggregationHomeComponent },
   { path: 'merge', component: MergeComponent },
