@@ -138,7 +138,6 @@
       </table>
     </div>
   
-  <div class="page-break">
     <div class="chart d-flex flex-column flex-00a">
       <h1>Assessment Answer Summary</h1>
           
@@ -174,23 +173,18 @@
   <div class="page-break">
     <div class="chart d-flex flex-column flex-00a mb-5">
       <h1>Category Average for All Assessments</h1>
-      <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-        <div *ngIf="chartCategoryAverage == null">
-          <div class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-          </div>
+      <div *ngIf="chartCategoryAverage == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
-        <canvas id="canvasCategoryAverage"> {{ chartCategoryAverage }} </canvas>
       </div>
+      <canvas id="canvasCategoryAverage"> {{ chartCategoryAverage }} </canvas>
     </div>
   </div>
 
   <div class="page-break">
     <h1>Individual Category Comparisons</h1>
-    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-      <div>CATEGORY PERCENT COMPARISONS</div>
-      <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
-    </div>
+    <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
   </div>
 
   <div class="page-break">

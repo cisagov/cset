@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../../../src/app/services/aggregation.service';
@@ -38,35 +37,18 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   response: any;
 
   chartOverallAverage: Chart;
-  chartOverallCompl: Chart;
-  chartTop5: Chart;
-  chartBottom5: Chart;
-  chartCategoryPercent: Chart;
-  sals: any;
   answerCounts: any[] = null;
   chartCategoryAverage: Chart;
-
-  // Charts for Components
-  componentCount = 0;
-  chartComponentSummary: Chart;
-  chartComponentsTypes: Chart;
-  warningCount = 0;
-  chart1: Chart;
-
-  numberOfStandards = -1;
-
+  chartCategoryPercent: Chart;
   pageInitialized = false;
-
-  // ACET data
-  DocumentationTotal: number;
 
   constructor(
     public reportSvc: ReportService,
-    private analysisSvc: AnalysisService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService
   ) { }
+
 
   ngOnInit() {
     this.titleService.setTitle("Compare Report - CSET");
@@ -75,31 +57,25 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
       (r: any) => {
         this.response = r;
     },
+
     error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
     this.populateCharts();
   }
 
-  populateCharts() {
-    const aggregationId = this.aggregationSvc.id();
 
+  populateCharts() {
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
-    // apply visual attributes
+    // Makes the Compliance Summary chart a light blue color instead of grey
     const chartColors = new ChartColors();
     x.datasets.forEach((ds: any) => {
       ds.backgroundColor = chartColors.getNextBluesBarColor();
       ds.borderColor = ds.backgroundColor;
     });
-
       this.chartOverallAverage = this.aggregChartSvc.buildHorizBarChart('canvasOverallAverage', x, false);
-    });
-
-    // Comparison of Security Assurance Levels (SAL)
-    this.aggregationSvc.getSalComparison().subscribe((x: any) => {
-      this.sals = x;
     });
 
     // Assessment Answer Summary - tabular data
@@ -110,7 +86,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     // Category Averages
     this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
     
-    // apply visual attributes
+    // Makes the Category Average chart a nice green color instead of grey
         x.datasets.forEach(ds => {
           ds.backgroundColor = '#008a00';
           ds.borderColor = '#008a00';
@@ -130,6 +106,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     });
   }
   
+
   ngAfterViewChecked() {
   }
   

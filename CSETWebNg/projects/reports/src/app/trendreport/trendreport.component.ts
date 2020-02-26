@@ -22,13 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { AnalysisService } from '../services/analysis.service';
 import { ReportService } from '../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../../../src/app/services/aggregation.service';
 import { AggregationChartService } from '../../../../../src/app/services/aggregation-chart.service';
-import { ReportsConfigService } from '../services/config.service';
-import { ConfigService } from '../../../../../src/app/services/config.service';
 
 
 @Component({
@@ -66,12 +63,11 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
   
   constructor(
     public reportSvc: ReportService,
-    private analysisSvc: AnalysisService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService,
-    public configSvc: ReportsConfigService,
   ) { }
+
 
   ngOnInit() {
     this.titleService.setTitle("Trend Report - CSET");
