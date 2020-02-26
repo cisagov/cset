@@ -242,9 +242,9 @@ const appRoutes: Routes = [
           { path: '**', redirectTo: 'prepare' }
         ]
       },
+      { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' }
     ]
   },
-  { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
 
