@@ -22,10 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ReportService } from '../services/report.service';
+import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AggregationService } from  '../../../../../src/app/services/aggregation.service';
-import { AggregationChartService } from '../../../../../src/app/services/aggregation-chart.service';
+import { AggregationService } from  '../../../app/services/aggregation.service';
+import { AggregationChartService } from '../../../app/services/aggregation-chart.service';
 
 
 @Component({
