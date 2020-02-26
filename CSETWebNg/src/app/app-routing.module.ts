@@ -249,6 +249,16 @@ const appRoutes: Routes = [
       { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' }
     ]
   },
+  // reports routing
+  { 
+    path: 'reports', component: LayoutBlankComponent, children: [
+      {path: 'detail', component: DetailComponent }, 
+      {path: 'discoveries', component: DiscoveryTearoutsComponent }, 
+      {path: 'executive', component: ExecutiveComponent }, 
+      {path: 'securityplan', component: SecurityplanComponent }, 
+      {path: 'sitesummary', component: SecurityplanComponent }, 
+    ] 
+  },
   { path: '**', redirectTo: 'home' }
 ];
 
