@@ -60,10 +60,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     clickReportLink(reportType: string) {
-        // get short-term JWT from API
-        this.authSvc.getShortLivedToken().subscribe((response: any) => {
-            const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
-            window.open(url, "_blank");
-        });
+        // JWT from API
+        const url = this.router.createUrlTree(['/reports/'+reportType]);//, response.token]);
+        window.open(url.toString(), "_blank");
     }
 }
