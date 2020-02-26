@@ -347,7 +347,6 @@ import { LocalStoreManager } from './services/storage.service';
         ComponentOverrideComponent, 
         ExcelExportComponent, 
         AnalyticsComponent, 
-<<<<<<< HEAD
         DataloginComponent,
         LayoutBlankComponent,
         LayoutMainComponent, 
@@ -358,9 +357,6 @@ import { LocalStoreManager } from './services/storage.service';
         ExecutiveComponent, 
         SecurityplanComponent, 
         SitesummaryComponent
-=======
-        DataloginComponent
->>>>>>> feature/trendreport
     ],
     providers: [
         ConfigService,
