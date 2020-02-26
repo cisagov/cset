@@ -26,6 +26,8 @@ import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-compare-analytics',
@@ -39,7 +41,9 @@ export class CompareAnalyticsComponent implements OnInit {
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute,
     public dialog: MatDialog,
-    public navSvc: NavigationAggregService
+    public navSvc: NavigationAggregService,
+    private authSvc: AuthenticationService,
+    public configSvc: ConfigService
   ) { }
 
   ngOnInit() {
@@ -52,5 +56,13 @@ export class CompareAnalyticsComponent implements OnInit {
    */
   changeState(clickedTab: string) {
     this.tab = clickedTab;
+  }
+
+  generateReport(reportType: string) {
+    // Copied from reports.component to generate the trend report in a similar fashion to existing reports.
+    this.authSvc.getShortLivedToken().subscribe((response: any) => {
+        const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
+        window.open(url, "_blank");
+    });
   }
 }

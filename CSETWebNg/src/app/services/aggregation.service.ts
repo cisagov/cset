@@ -50,6 +50,8 @@ export class AggregationService {
     private router: Router
   ) {
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
+    
+    //this.apiUrl = "http://localhost:46000/api/aggregation/";
     this.currentAggregation = null;
   }
 
@@ -172,6 +174,7 @@ export class AggregationService {
   ////////////////////////////////  Trend  //////////////////////////////////
 
   getOverallComplianceScores() {
+    console.log("Compliance Score Function: " + this.apiUrl);
     return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', {});
   }
 
