@@ -46,6 +46,8 @@ export class ConfigService {
   // labels for graph legends and report answers
   answerLabels = {};
 
+  salLabels = {};
+
   private initialized = false;
   isAPI_together_With_Web = false;
 
@@ -119,6 +121,11 @@ export class ConfigService {
     this.answerLabels['NA'] = this.config.answerLabelNA;
     this.answerLabels['A'] = this.config.answerLabelA;
     this.answerLabels['U'] = this.config.answerLabelU;
+
+    this.salLabels['L'] = "Low";
+    this.salLabels['M'] = "Moderate";
+    this.salLabels['H'] = "High";
+    this.salLabels['VH'] = "Very High";
   }
 
   /**

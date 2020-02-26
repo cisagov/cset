@@ -42,6 +42,7 @@ import { ConfigService } from './services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
 import { AggregationService } from './services/aggregation.service';
+import { LocalStoreManager } from './services/storage.service';
 
 
 declare var $: any;
@@ -67,8 +68,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     public aggregationSvc: AggregationService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService
-  ) { }
+    private _hotkeysService: HotkeysService, 
+    storageManager: LocalStoreManager
+  ) { 
+    storageManager.initialiseStorageSyncListener();
+  }
 
 
   ngOnInit() {

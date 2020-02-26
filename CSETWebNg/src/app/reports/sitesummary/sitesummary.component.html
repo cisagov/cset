@@ -26,30 +26,31 @@
         <div class="column">
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                SITE DETAIL REPORT
+                SITE SUMMARY REPORT
             </p>
         </div>
         <div class="column">
-            <p style="text-align:center;">
-                <img width="471" height="529" src="./assets/img/DetailFiles/image002.jpg">
+            <p style="text-align: center">
+                <img width="471" height="529" src="../../../../assets/images/SiteSummaryFiles/image002.jpg">
             </p>
         </div>
 
-        <div class="cover-page-bottom">
+        <div class="cover-page-bottom mb-4">
             <div>
-                <img style="width: 283px; height: 133px" src="./assets/img/TearOutFiles/image003.jpg">
+                <img style="width: 283px; height: 133px" src="../../../../assets/images/SiteSummaryFiles/image003.jpg">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information?.Assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information?.Assessor_Name}}
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <div class="page-break">
@@ -71,63 +72,65 @@
             or arose out of the results of, or reliance upon the report.
         </p>
 
-        <p>DHS does not endorse any commercial product or service, including the subject of the assessment or evaluation
-            in
-            this report. Any reference to specific commercial products, processes, or services by trademark,
-            manufacturer,
-            or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by DHS.
+        <p>
+            DHS does not endorse any commercial product or service, including the subject of the assessment or
+            evaluation in this report.
+            Any reference to specific commercial products, processes, or services by trademark, manufacturer, or
+            otherwise,
+            does not constitute or imply its endorsement, recommendation, or favoring by DHS.
         </p>
 
-        <p>The display of the DHS official seal or other DHS visual identities on this report shall not be interpreted
-            to provide
-            the recipient organization authorization to use the official seal, insignia, or other visual identities of
-            DHS.
-            The DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of
-            any
-            commercial product or activity by DHS or the United States Government. Use of the DHS seal without proper
-            authorization
+        <p>
+            The display of the DHS official seal or other DHS visual identities on this report shall not be interpreted
+            to provide the
+            recipient organization authorization to use the official seal, insignia, or other visual identities of DHS.
+            The
+            DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any
+            commercial
+            product or activity by DHS or the United States Government. Use of the DHS seal without proper authorization
             violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against DHS policies governing usage of the
             seal.
         </p>
 
-        <p>The report is prepared and intended for internal use by the organization that made the request. The contents
-            of this
-            report may be subject to government or private intellectual property rights. To request distribution of this
-            report outside the organization for which it was prepared, contact the CSET Program Office. The contents of
-            this
-            report may be reproduced or incorporated into other reports, but may not be modified without the prior
-            express
-            written permission of the CSET Program Office.
+        <p>
+            The report is prepared and intended for internal use by the organization that made the request. The contents
+            of this report
+            may be subject to government or private intellectual property rights. To request distribution of this report
+            outside the organization for which it was prepared, contact the CSET Program Office. The contents of this
+            report
+            may be reproduced or incorporated into other reports, but may not be modified without the prior express
+            written
+            permission of the CSET Program Office.
         </p>
     </div>
 
 
+
     <div class="page-break">
         <h1>Advisory</h1>
-
-        <p>CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust
-            cybersecurity
-            program within the organization. A self-assessment with CSET cannot reveal all types of security weaknesses,
-            and should not be the sole means of determining an organization’s security posture.
-        </p>
-
-        <p>The tool will not provide a detailed architectural analysis of the network or a detailed network
-            hardware/software
-            configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. CSET
-            is not intended as a substitute for in depth analysis of control system vulnerabilities as performed by
-            trained
-            professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach
-            including
-            facility walk downs, interviews, and observation and examination of facility practices. Consideration should
-            also be given to additional steps including scanning, penetration testing, and exercises on surrogate,
-            training,
-            or non-production systems, or systems where failures, unexpected faults, or other unexpected results will
-            not
-            compromise production or safety.
+        <p>
+            CSET® is only one component of the overall cyber security picture and should be complemented with a robust
+            cyber security program within the organization. A self-assessment with CSET® cannot reveal all types of
+            security
+            weaknesses, and should not be the sole means of determining an organization’s security posture.
         </p>
 
         <p>
-            CSET assessments cannot be completed effectively by any one individual. A cross-functional team consisting
+            The tool will not provide a detailed architectural analysis of the network or a detailed network
+            hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex
+            risk assessment. CSET® is not
+            intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained
+            professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach
+            including facility walk downs, interviews, and observation and examination of facility practices.
+            Consideration should also be
+            given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or
+            non-production systems, or systems where failures, unexpected faults, or other unexpected results will not
+            compromise
+            production or safety.
+        </p>
+
+        <p>
+            CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting
             of representatives
             from operational, maintenance, information technology, business, and security areas is essential. The
             representatives
@@ -136,11 +139,13 @@
             span of responsibility or knowledge to effectively answer all the questions.
         </p>
 
-        <p>Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a
-            manner
-            appropriate to their sensitivity.
+        <p>
+            Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a
+            manner appropriate
+            to their sensitivity.
         </p>
     </div>
+
 
 
     <div class="page-break">
@@ -197,6 +202,7 @@
     </div>
 
 
+
     <div class="page-break">
         <div class="cset-container" style="width: 500px; margin: 3rem auto 2em auto; display: block;">
             <div>SUMMARY PERCENT COMPLIANCE</div>
@@ -205,19 +211,23 @@
             </div>
         </div>
 
-        <h1>High Level Assessment Description</h1>
+        <h1>
+            High Level Assessment Description
+        </h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
         </p>
 
-        <h1>Executive Summary</h1>
-        <p [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
+        <h1>
+            Executive Summary
+        </h1>
+        <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Executive_Summary)">
         </p>
     </div>
 
 
     <div class="page-break">
         <h1>
-            Evaluation Against Selected Standards and Question Sets
+            Evaluation Against Selected Standards And Question Sets
         </h1>
 
         <div style="max-width: calc(100% - 4em); margin: 0 auto">
@@ -229,7 +239,7 @@
                     </div>
                     <div
                         style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-                        <div *ngFor="let s of responseResultsByCategory?.dataSets"
+                        <div *ngFor="let s of responseResultsByCategory?.multipleDataSets"
                             style="display: flex; flex-direction: row; align-items: center;">
                             <div
                                 [ngStyle]="{ 'width': '1.2em', 'height': '1.2em', 'margin': '4px 10px 4px 0', 'box-shadow': 'inset 0 0 0 1000px ' + s.backgroundColor }">
@@ -253,7 +263,10 @@
                 <canvas id="canvasStandardResultsByCategory"></canvas>
             </div>
         </div>
+
+
     </div>
+
 
 
     <div class="page-break">
@@ -262,7 +275,7 @@
         </h1>
 
         <div *ngFor="let graph of complianceGraphs; index as i">
-            <h2 style="text-align: center">{{graph.label}}</h2>
+            <h2 style="text-align: center;">{{graph.label}}</h2>
             <canvas id="complianceGraph{{i}}">
             </canvas>
         </div>
@@ -289,7 +302,7 @@
         </h1>
 
         <div class="d-flex flex-row align-items-center">
-            <div style="padding: 1rem;">
+            <div style="padding: 1rem; display: table;">
                 <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
                     <div>COMBINED COMPONENT SUMMARY</div>
                     <div>
@@ -311,6 +324,7 @@
             <canvas id="canvasComponentTypes"></canvas>
         </div>
     </div>
+
 
 
     <!--Component Compliance by Subject Area-->
@@ -344,6 +358,7 @@
             There are no network warnings.
         </div>
     </div>
+
 
 
     <div class="page-break">
@@ -582,6 +597,7 @@
         </div>
     </div>
 
+
     <div class="page-break" *ngIf="reportSvc.hasACET">
         <h1>
             ACET Dashboard
@@ -639,10 +655,10 @@
                     <td class="border-table text-right">{{ acetDashboard?.SumRisk[2] }}</td>
                     <td class="border-table text-right">{{ acetDashboard?.SumRisk[3] }}</td>
                     <td class="border-table text-right">{{ acetDashboard?.SumRisk[4] }}</td>
-                    <td class="border-table"></td>
+                    <td class="border-table">
+                    </td>
                 </tr>
             </table>
-
             <div class="ml-3">
                 <div>Overall Risk Level is <span class="blue-text font-weight-bold">
                         {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
@@ -663,7 +679,6 @@
                 </div>
             </div>
         </div>
-
         <div class="mt-3 mb-3">
             <p>
                 <b>Cybersecurity Maturity</b>
@@ -710,8 +725,6 @@
     </div>
 
 
-
-
     <div class="page-break">
         <h1>
             Ranked Subject Areas
@@ -724,12 +737,11 @@
             the
             question and the subject area, as well as the percentage of missed questions in that subject area.
         </p>
+
         <canvas id="canvasRankedSubjectAreas">
         </canvas>
+
     </div>
-
-
-
 
 
     <div class="page-break">
@@ -752,11 +764,11 @@
             <tr>
                 <th style="width: 15%">Rank: {{rq.Rank}}</th>
                 <th>{{rq.CategoryAndNumber}}</th>
-                <th style="width: 15%">Level: {{configSvc.salLabels[rq.Level]}}</th>
+                <th style="width: 15%">Level: {{rq.Level}}</th>
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.Question"></td>
-                <td class="tint2">{{configSvc.answerLabels[rq.Answer]}}</td>
+                <td class="tint2">{{analysisSvc.answerWord(rq.Answer)}}</td>
             </tr>
         </table>
     </div>
@@ -806,7 +818,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2" [innerHTML]="t.Question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[t.Answer]}}</td>
+                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.Answer)}}</td>
             </tr>
             <tr>
                 <td class="tint2">Alternate Justification:</td>
@@ -818,7 +830,6 @@
             There are no questions with alternate justifications to display.
         </div>
     </div>
-
 
 
     <div class="page-break">
@@ -840,44 +851,4 @@
         </div>
     </div>
 
-
-
-    <div class="page-break" *ngFor="let standard of response?.StandardsQuestions">
-        <h1>
-            Question Details: {{standard.StandardShortName}}
-        </h1>
-
-        <table class="cset-table-3">
-            <tr *ngFor="let q of standard.Questions">
-                <td class="tint2" style="width: 20%">{{q.CategoryAndNumber}}</td>
-                <td [innerHTML]="q.Question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[q.Answer]}}</td>
-            </tr>
-        </table>
-    </div>
-
-
-
-    <div class="page-break" *ngIf="response?.ComponentQuestions?.length > 0">
-        <h1>
-            Component Question Details
-        </h1>
-
-        <table class="cset-table-3" *ngFor="let q of response?.ComponentQuestions">
-            <tr>
-                <th colspan="4">Component: {{q.ComponentName}} - {{q.ComponentType}}</th>
-            </tr>
-            <tr>
-                <td class="tint2">Question:</td>
-                <td colspan="2" class="tint2" style="width: 80% !important" [innerHTML]="q.Question"></td>
-                <td class="tint2" style="width: 20% !important">{{configSvc.answerLabels[q.Answer]}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Zone:</td>
-                <td class="w-50">{{q.Zone}}</td>
-                <td class="tint2">SAL:</td>
-                <td>{{configSvc.salLabels[q.SAL]}}</td>
-            </tr>
-        </table>
-    </div>
 </div>

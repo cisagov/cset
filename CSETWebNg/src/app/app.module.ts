@@ -187,6 +187,15 @@ import { DataloginComponent } from './assessment/results/analysis/submitdata/dat
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { DetailComponent } from './reports/detail/detail.component';
+import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { EvalAgainstComponent } from './reports/eval-against/eval-against.component';
+import { ExecutiveComponent } from './reports/executive/executive.component';
+import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
+import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { ReportService } from './services/report.service';
+import { ReportAnalysisService } from './services/report-analysis.service';
+import { LocalStoreManager } from './services/storage.service';
 
 @NgModule({
     imports: [
@@ -341,7 +350,13 @@ import { ReportTestComponent } from './reports/report-test/report-test.component
         DataloginComponent,
         LayoutBlankComponent,
         LayoutMainComponent, 
-        ReportTestComponent
+        ReportTestComponent, 
+        DetailComponent, 
+        DiscoveryTearoutsComponent, 
+        EvalAgainstComponent, 
+        ExecutiveComponent, 
+        SecurityplanComponent, 
+        SitesummaryComponent
     ],
     providers: [
         ConfigService,
@@ -381,7 +396,10 @@ import { ReportTestComponent } from './reports/report-test/report-test.component
         AnalyticsService,
         AggregationService,
         AggregationChartService,
-        ChartColors
+        ChartColors, 
+        ReportService,
+        ReportAnalysisService, 
+        LocalStoreManager
     ],
     bootstrap: [AppComponent],
     entryComponents: [
