@@ -171,12 +171,15 @@
                 </div>
                 <div *ngIf="tab?.QuestionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:
                 </div>
-                <ul *ngIf="tab?.QuestionsList?.length > 0" class="related-questions">
-                    <li *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ.QuestionText"></li>
-                </ul>
+
+                <div>
+                    <div *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ.QuestionText | linebreak" class="related-question-1"></div>
+                </div>
+
+
             </div>
             <div *ngIf="extras !== null && mode == 'DETAIL' && checkForApproach(tab?.RequirementsData?.ExaminationApproach)"
-                class="supplemental" [innerHTML]="formatLinebreaks(tab?.RequirementsData?.ExaminationApproach)">
+                class="supplemental" [innerHTML]="tab?.RequirementsData?.ExaminationApproach | linebreak">
             </div>
             <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
                 <div
