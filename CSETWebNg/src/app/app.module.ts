@@ -197,6 +197,8 @@ import { SitesummaryComponent } from './reports/sitesummary/sitesummary.componen
 import { ReportService } from './services/report.service';
 import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
+import { TrendReportComponent } from './reports/trendreport/trendreport.component';
+import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 
 @NgModule({
     imports: [
@@ -358,7 +360,9 @@ import { LocalStoreManager } from './services/storage.service';
         EvalAgainstComponent, 
         ExecutiveComponent, 
         SecurityplanComponent, 
-        SitesummaryComponent
+        SitesummaryComponent,
+        TrendReportComponent,
+        CompareReportComponent
     ],
     providers: [
         ConfigService,
