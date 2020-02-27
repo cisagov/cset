@@ -66,6 +66,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         public class OverallSALTable
         {
+            public string Alias { get; set; }
             public string OSV { get; set; }
             public string Q_CV { get; set; }
             public string Q_IV { get; set; }
@@ -114,7 +115,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
     }
     public class DocumentLibraryTable
     {
-        public string documenttitle { get; set; }
+        public string Alias { get; set; }
+        public string DocumentTitle { get; set; }
         public string FileName { get; set; }
     }
 
@@ -223,6 +225,9 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string Answer { get; set; }
         public string AlternateJustification { get; set; }
     }
+
+
+
     public class GenSALTable
     {
         public string On_Site_Physical_Injury { get; set; }

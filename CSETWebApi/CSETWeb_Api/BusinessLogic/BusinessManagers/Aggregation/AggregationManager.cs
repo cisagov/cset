@@ -11,6 +11,7 @@ using BusinessLogic.Helpers;
 using BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+using CSETWeb_Api.BusinessLogic;
 
 using CSETWeb_Api.BusinessLogic.Models;
 
@@ -177,13 +178,14 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Returns a list of assessments for the specified aggregation.
+        /// The list is in ascending order of assessment date.
         /// </summary>
         /// <param name="aggregationId"></param>
         public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
         {
             // assign default aliases
-            // TODO:  If they are comparing more than 26 assessments, this will have to be done a different way.
+            // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
             var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var aliasPosition = 0;
 
@@ -503,6 +505,7 @@ namespace CSETWeb_Api.BusinessLogic
             }
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -682,7 +685,6 @@ namespace CSETWeb_Api.BusinessLogic
             cat.Questions.Add(q);
             cat.Questions = cat.Questions.OrderBy(x => x.QuestionText).ToList();
         }
-
 
 
         /// <summary>
