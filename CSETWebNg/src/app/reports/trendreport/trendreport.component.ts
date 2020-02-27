@@ -29,8 +29,9 @@ import { AggregationChartService } from '../../../app/services/aggregation-chart
 
 
 @Component({
-  selector: 'rapp-trendreport',
-  templateUrl: './trendreport.component.html'
+  selector: 'trendreport',
+  templateUrl: './trendreport.component.html',
+  styleUrls: ['../reports.scss']
 })
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {

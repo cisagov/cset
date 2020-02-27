@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Router } from '../../../../node_modules/@angular/router';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
 import { AggregationChartService } from '../../services/aggregation-chart.service';
@@ -46,7 +47,8 @@ export class TrendAnalyticsComponent implements OnInit {
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService,
     private authSvc: AuthenticationService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    private router: Router,
   ) { }
 
   /**
@@ -85,10 +87,7 @@ export class TrendAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    // Copied from reports.component to generate the trend report in a similar fashion to existing reports.
-    this.authSvc.getShortLivedToken().subscribe((response: any) => {
-        const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
-        window.open(url, "_blank");
-    });
-  }
+    const url = this.router.createUrlTree(['/reports/'+ reportType]);   //, response.token]);
+    window.open(url.toString(), "_blank");
+  };
 }
