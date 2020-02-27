@@ -109,6 +109,7 @@ import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
+import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -283,6 +284,7 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         OkayComponent,
         FindingsComponent,
         SafePipe,
+        LinebreakPipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
