@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Router } from '../../../../node_modules/@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
@@ -43,7 +44,8 @@ export class CompareAnalyticsComponent implements OnInit {
     public dialog: MatDialog,
     public navSvc: NavigationAggregService,
     private authSvc: AuthenticationService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -59,10 +61,7 @@ export class CompareAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    // Copied from reports.component to generate the trend report in a similar fashion to existing reports.
-    this.authSvc.getShortLivedToken().subscribe((response: any) => {
-        const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
-        window.open(url, "_blank");
-    });
+    const url = this.router.createUrlTree(['/reports/'+reportType]);
+    window.open(url.toString(), "_blank");
   }
 }
