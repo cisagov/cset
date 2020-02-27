@@ -173,7 +173,6 @@ export class AggregationService {
   ////////////////////////////////  Trend  //////////////////////////////////
 
   getOverallComplianceScores() {
-    console.log("Compliance Score Function: " + this.apiUrl);
     return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', {});
   }
 
