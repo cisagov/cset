@@ -615,21 +615,30 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     // Requirement-related question
                     var rqs = db.REQUIREMENT_QUESTIONS_SETS
-                        .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
-                    if (rqs == null)
+                        .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID)
+                        .FirstOrDefault();
+                    if (rqs != null)
                     {
-                        return;
+                        db.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
                     }
-                    db.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
+
+                    var rq = db.REQUIREMENT_QUESTIONS
+                        .Where(x => x.Question_Id == request.QuestionID && x.Requirement_Id == request.RequirementID)
+                        .FirstOrDefault();
+                    if (rq != null)
+                    {
+                        db.REQUIREMENT_QUESTIONS.Remove(rq);
+                    }
                 }
 
                 // Set-level question
-                var nqs = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
-                if (nqs == null)
+                var nqs = db.NEW_QUESTION_SETS
+                    .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID)
+                    .FirstOrDefault();
+                if (nqs != null)
                 {
-                    return;
+                    db.NEW_QUESTION_SETS.Remove(nqs);
                 }
-                db.NEW_QUESTION_SETS.Remove(nqs);
 
                 db.SaveChanges();
             }
@@ -731,10 +740,10 @@ namespace CSETWeb_Api.BusinessManagers
                 var categories = db.QUESTION_GROUP_HEADING.Select(q => new CategoryEntry { Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id }).ToList();
                 response.Categories = categories;
 
-                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.Select(u=> new CategoryEntry{Text = u.Universal_Sub_Category, ID = u.Universal_Sub_Category_Id}).ToList();
+                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.Select(u => new CategoryEntry { Text = u.Universal_Sub_Category, ID = u.Universal_Sub_Category_Id }).ToList();
                 response.Subcategories = subcategories;
 
-                var groupHeadings = db.QUESTION_GROUP_HEADING.Where(x=>x.Universal_Weight != 0).Select(q => new CategoryEntry{ Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id}).ToList();
+                var groupHeadings = db.QUESTION_GROUP_HEADING.Where(x => x.Universal_Weight != 0).Select(q => new CategoryEntry { Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id }).ToList();
                 response.GroupHeadings = groupHeadings;
             }
 
