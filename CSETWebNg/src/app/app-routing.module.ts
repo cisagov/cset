@@ -251,7 +251,7 @@ const appRoutes: Routes = [
   },
   // reports routing
   { 
-    path: 'reports', component: LayoutBlankComponent, children: [
+    path: 'report', component: LayoutBlankComponent, children: [
       {path: 'detail', component: DetailComponent }, 
       {path: 'discoveries', component: DiscoveryTearoutsComponent }, 
       {path: 'executive', component: ExecutiveComponent }, 

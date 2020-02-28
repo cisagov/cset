@@ -24,29 +24,52 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { Http } from '@angular/http';
 
-const headers = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  params: new HttpParams()
-};
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
   private apiUrl: string;
+  private analyticsUrl: string; 
+
+  public headers = {
+    headers: new HttpHeaders().set('Content-Type', 'application/json'),
+    params: new HttpParams()
+  };
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + "analytics/";
+    this.analyticsUrl = this.configSvc.analyticsUrl;
   }
-
+  
   getAnalytics():any {
     return this.http.get(this.apiUrl+'getAnalytics');
   }
 
+  getAnalyticsToken(username, password): any {
+    return this.http.post(
+      this.analyticsUrl + 'login/authenticate', {username, password}, this.headers
+    );
+  }
+
   postAnalyticsWithoutLogin(analytics):any{
     return this.http.post(
-      'https://localhost:44397/api/Analytics/postAnalyticsAnonymously', analytics, headers
+      this.analyticsUrl + 'Analytics/postAnalyticsAnonymously', analytics, this.headers
+    );
+  }
+
+  postAnalyticsWithLogin(analytics, token):any{
+    let header: HttpHeaders = new HttpHeaders();
+    header = header.append('Content-Type', 'application/json');
+    header = header.append("Authorization", "Bearer " + token);
+
+    let params: HttpParams = new HttpParams();
+
+    return this.http.post(
+      this.analyticsUrl + 'Analytics/postAnalytics', analytics, {headers: header, params}
     );
   }
 }

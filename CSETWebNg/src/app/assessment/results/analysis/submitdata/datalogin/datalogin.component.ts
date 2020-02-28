@@ -21,8 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { LoginData } from '../../../../../models/anonymous.model';
+import { AnalyticsService } from '../../../../../services/analytics.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-datalogin',
@@ -32,7 +36,13 @@ import { MatDialogRef } from '@angular/material';
 })
 export class DataloginComponent implements OnInit {
 
-  constructor(private dialog: MatDialogRef<DataloginComponent>) { }
+  public username: string;
+  public password: string;
+  public error: string;
+
+  constructor(private dialog: MatDialogRef<DataloginComponent>, private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public analytics: any, private analyticsSvc: AnalyticsService){ }
+  
 
   ngOnInit() {
   }
@@ -40,4 +50,48 @@ export class DataloginComponent implements OnInit {
   close() {
     return this.dialog.close();
   }
+  
+  postAnalyticsWithLogin(){
+    var message; 
+    this.analyticsSvc.getAnalyticsToken(this.username, this.password).subscribe(
+        data => {
+            let token = data.token;
+            this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
+                (data: any)=>{
+                    message = data.message;
+                    this.openSnackBar(message);
+                    this.close();
+                });
+        },
+        err => {
+          if(err instanceof HttpErrorResponse){
+            let httpError: HttpErrorResponse = err;
+            if (httpError.status === 403) {  // Username or password Failed
+              this.error = 'We were unable to log you in. Verify that you have the correct credentials';
+            } else if (httpError.status === 423) { // Locked Out
+              this.error = 'We were unable to log you in. Locked out.';
+            } else if (httpError.status === 400) { // Generic Error
+              this.error = 'We were unable to log you in. Error with login. Try again.';
+            } else if (httpError.status === 400) {
+              this.error = 'We were unable to log you in.  Error with login. Try again.';
+            } else { // All other errors
+              this.error = 'We were unable to log you in.  Error with login. Try again.';
+            }
+          } else {
+            this.error = 'We were unable to log you in.  Error with login. Try again.';
+          }
+        });
+  }
+  
+  submit(){
+    this.postAnalyticsWithLogin()
+  }
+
+  openSnackBar(message){
+    this.snackBar.open(message, "", {
+        duration:4000,
+        verticalPosition:'top',
+        panelClass:['green-snackbar']
+    });
+}
 }
