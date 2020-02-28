@@ -37,6 +37,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
     styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
+
     analytics:any = {
         Demographics:{
             SectorName:'',
@@ -46,6 +47,9 @@ export class AnalyticsComponent implements OnInit {
         },
         QuestionAnswers:[]
     };
+
+    username:string='';
+    password:string='';
     
     constructor(private router: Router,
         public navSvc2: Navigation2Service,
@@ -75,7 +79,7 @@ export class AnalyticsComponent implements OnInit {
             });
     }
 
-    postAnalytics(){
+    postAnalyticsWithoutLogin(){
         var message;
         this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
             (data: any)=>{
@@ -84,8 +88,14 @@ export class AnalyticsComponent implements OnInit {
             });
     }
 
+   
+
     showLogin(){
-        this.dialog.open(DataloginComponent);
+        const dialogRef = this.dialog.open(DataloginComponent, {
+            width:'300px',
+            disableClose: true,
+            data: this.analytics
+        });
     }
 
     openSnackBar(message){

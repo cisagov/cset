@@ -28,24 +28,25 @@
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>&nbsp;
-      <input type="text" placeholder="Enter Username" name="uname" required><br>
-  
-      <label for="psw"><b>Password</b></label>&nbsp;
-      <input type="password" placeholder="Enter Password" name="psw" required>
-  
-      
+
+      <div class="input-group form-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="username" placeholder="username" required>
+        
+      </div>
+      <div class="input-group form-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-key"></i></span>
+        </div>
+        <input type="password" class="form-control" [(ngModel)]="password" placeholder="password" required>
+      </div>
     </div>
-    <div class="container">
-    <button type="submit">Login</button>&nbsp;
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>&nbsp;
-       <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>  
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
-    <button class="btn btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
+    <button class="btn btn-primary" (click)="submit()">Submit</button>
   </mat-dialog-actions>
 </div>
 
