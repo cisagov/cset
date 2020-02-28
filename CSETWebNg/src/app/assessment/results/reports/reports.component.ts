@@ -60,9 +60,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     clickReportLink(reportType: string) {
-        // JWT from API
-        //this.router.navigate(['/report/'+reportType]);
-        const url = this.router.createUrlTree(['/report/'+reportType]);//, response.token]);
+
+        const url = this.router.createUrlTree(['/reports/'+reportType]);
         window.open(url.toString(), "_blank");
     }
 }
