@@ -22,10 +22,13 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Router } from '../../../../node_modules/@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-compare-analytics',
@@ -39,7 +42,10 @@ export class CompareAnalyticsComponent implements OnInit {
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute,
     public dialog: MatDialog,
-    public navSvc: NavigationAggregService
+    public navSvc: NavigationAggregService,
+    private authSvc: AuthenticationService,
+    public configSvc: ConfigService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -52,5 +58,10 @@ export class CompareAnalyticsComponent implements OnInit {
    */
   changeState(clickedTab: string) {
     this.tab = clickedTab;
+  }
+
+  generateReport(reportType: string) {
+    const url = this.router.createUrlTree(['/reports/'+reportType]);
+    window.open(url.toString(), "_blank");
   }
 }

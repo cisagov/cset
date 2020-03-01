@@ -109,6 +109,7 @@ import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
+import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -196,6 +197,8 @@ import { SitesummaryComponent } from './reports/sitesummary/sitesummary.componen
 import { ReportService } from './services/report.service';
 import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
+import { TrendReportComponent } from './reports/trendreport/trendreport.component';
+import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 
 @NgModule({
     imports: [
@@ -281,6 +284,7 @@ import { LocalStoreManager } from './services/storage.service';
         OkayComponent,
         FindingsComponent,
         SafePipe,
+        LinebreakPipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
@@ -356,7 +360,9 @@ import { LocalStoreManager } from './services/storage.service';
         EvalAgainstComponent, 
         ExecutiveComponent, 
         SecurityplanComponent, 
-        SitesummaryComponent
+        SitesummaryComponent,
+        TrendReportComponent,
+        CompareReportComponent
     ],
     providers: [
         ConfigService,

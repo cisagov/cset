@@ -1658,6 +1658,23 @@ ul.related-questions li {
   margin-bottom: .5em;
 }
 
+.related-question-1 {
+  margin-left: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.related-question-1:first-child {
+  margin-top: 1rem;
+}
+
+.related-question-1:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 // .pencil {
 //   background-color: transparent;
 //   fill: $primary-color;
@@ -2459,6 +2476,10 @@ table.td-text-left th, table.td-text-left td {
 
 // Colors
 /////////////////////////////////////////////
+
+.bgc-white {
+  background-color: #ffffff;
+}
 
 .bgc-page {
   background-color: $primary-750;

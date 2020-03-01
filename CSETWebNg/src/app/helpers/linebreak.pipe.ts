@@ -21,21 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Pipe, PipeTransform } from '@angular/core';
 
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-
-export const environment = {
-  production: false,
-  appUrl: 'http://localhost:4200/',
-  apiUrl: 'http://localhost:46000/api/',
-  docUrl: 'http://localhost:46000/Documents/',
-  analyticsUrl: "https://localhost:44397/api/", 
-  reportsUrl: 'http://localhost:4200/',
-  appCode: 'CSET',
-  version: '9.2.3',
-  helpContactEmail: 'cset@dhs.gov',
-  helpContactPhone: ''
-};
+@Pipe({name: 'linebreak'})
+export class LinebreakPipe implements PipeTransform {
+transform(text: string): string {
+      return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+   }
+}

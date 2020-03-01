@@ -21,53 +21,88 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
-import { NavigationAggregService } from '../../services/navigationAggreg.service';
-import { AggregationService } from '../../services/aggregation.service';
-import { AggregationChartService } from '../../services/aggregation-chart.service';
-import { AuthenticationService } from '../../services/authentication.service';
-import { ConfigService } from '../../services/config.service';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { ReportService } from '../../../app/services/report.service';
+import { Title } from '@angular/platform-browser';
+import { AggregationService } from  '../../../app/services/aggregation.service';
+import { AggregationChartService } from '../../../app/services/aggregation-chart.service';
+
 
 @Component({
-  selector: 'app-trend-analytics',
-  templateUrl: './trend-analytics.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  selector: 'trendreport',
+  templateUrl: './trendreport.component.html',
+  styleUrls: ['../reports.scss']
 })
-export class TrendAnalyticsComponent implements OnInit {
 
+export class TrendReportComponent implements OnInit, AfterViewChecked {
+  response: any;
+
+  // Charts for Components
   chartOverallCompl: Chart;
   chartTop5: Chart;
   chartBottom5: Chart;
   chartCategoryPercent: Chart;
 
+  componentCount = 0;
+  chartComponentSummary: Chart;
+  chartComponentsTypes: Chart;
+  warningCount = 0;
+
+  answerCounts: any[] = null;
+
+  numberOfStandards = -1;
+
+  pageInitialized = false;
+
+  // FIPS SAL answers
+  nistSalC = '';
+  nistSalI = '';
+  nistSalA = '';
+
+  // ACET data
+  DocumentationTotal: number;
+  
   constructor(
-    public navSvc: NavigationAggregService,
+    public reportSvc: ReportService,
+    private titleService: Title,
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService,
-    private authSvc: AuthenticationService,
-    public configSvc: ConfigService,
-    private router: Router,
   ) { }
 
-  /**
-   *
-   */
+
   ngOnInit() {
-    this.populateCharts();
-    //const aggregationId = this.aggregationSvc.id();
-  }
+    this.titleService.setTitle("Trend Report - CSET");
 
-  /**
-   * Get the data from the API and build the charts for the page.
-   */
-  populateCharts() {
-    //const aggregationId = this.aggregationSvc.id();
+    this.reportSvc.getReport('trendreport').subscribe(
+      (r: any) => {
+        this.response = r;
 
+      // Break out any CIA special factors now - can't do a find in the template
+      let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
+      if (!!v) {
+        this.nistSalC = v.Justification;
+      }
+      v = this.response.nistTypes.find(x => x.CIA_Type === 'Integrity');
+      if (!!v) {
+        this.nistSalI = v.Justification;
+      } 
+      v = this.response.nistTypes.find(x => x.CIA_Type === 'Availability');
+      if (!!v) {
+        this.nistSalA = v.Justification;
+      }  
+    },
+    error => console.log('Trend report load Error: ' + (<Error>error).message)
+    );
+
+    // Populate charts
     // Overall Compliance
     this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
       this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
+    });
+
+    // Assessment Answer Summary - tabular data
+    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
+      this.answerCounts = x;
     });
 
     // Top 5
@@ -86,8 +121,7 @@ export class TrendAnalyticsComponent implements OnInit {
     });
   }
 
-  generateReport(reportType: string) {
-    const url = this.router.createUrlTree(['/reports/'+ reportType]);   //, response.token]);
-    window.open(url.toString(), "_blank");
-  };
+  ngAfterViewChecked() {
+
+  }
 }

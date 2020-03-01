@@ -117,6 +117,135 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        /// <summary>
+        /// Returns data needed for the Trend report.  
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/trendreport")]
+        public AggregationReportData GetTrendReport()
+        {
+            AggregationReportData response = new AggregationReportData();
+            response.SalList = new List<BasicReportData.OverallSALTable>();            
+            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+
+
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return response;
+            }
+
+            var assessmentList = new BusinessLogic.AggregationManager()
+                .GetAssessmentsForAggregation((int)aggregationID);
+
+            response.AggregationName = assessmentList.Aggregation.AggregationName;
+
+            foreach (var a in assessmentList.Assessments)
+                {
+                ReportsDataManager reportsDataManager = new ReportsDataManager(a.AssessmentId);
+
+
+                // Incorporate SAL values into response
+                var salTable = reportsDataManager.GetSals();
+
+                var entry = new BasicReportData.OverallSALTable();
+                response.SalList.Add(entry);
+                entry.Alias = a.Alias;
+                entry.OSV = salTable.OSV;
+                entry.Q_CV = "";
+                entry.Q_IV = "";
+                entry.Q_AV = "";
+                entry.LastSalDeterminationType = salTable.LastSalDeterminationType;
+
+                if (salTable.LastSalDeterminationType != "GENERAL")
+                {
+                    entry.Q_CV = salTable.Q_CV;
+                    entry.Q_IV = salTable.Q_IV;
+                    entry.Q_AV = salTable.Q_AV;
+                }
+
+
+                // Document Library 
+                var documentLibraryTable = reportsDataManager.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryTable)
+                {
+                    docEntry.Alias = a.Alias;
+                    response.DocumentLibraryTable.Add(docEntry);
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Returns data needed for the Compare report.  
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/comparereport")]
+        public AggregationReportData GetCompareReport()
+        {
+            AggregationReportData response = new AggregationReportData();
+            response.SalList = new List<BasicReportData.OverallSALTable>();
+            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+
+
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return response;
+            }
+
+            var assessmentList = new BusinessLogic.AggregationManager()
+                .GetAssessmentsForAggregation((int)aggregationID);
+
+            response.AggregationName = assessmentList.Aggregation.AggregationName;
+
+            foreach (var a in assessmentList.Assessments)
+            {
+                ReportsDataManager reportsDataManager = new ReportsDataManager(a.AssessmentId);
+
+
+                // Incorporate SAL values into response
+                var salTable = reportsDataManager.GetSals();
+
+                var entry = new BasicReportData.OverallSALTable();
+                response.SalList.Add(entry);
+                entry.Alias = a.Alias;
+                entry.OSV = salTable.OSV;
+                entry.Q_CV = "";
+                entry.Q_IV = "";
+                entry.Q_AV = "";
+                entry.LastSalDeterminationType = salTable.LastSalDeterminationType;
+
+                if (salTable.LastSalDeterminationType != "GENERAL")
+                {
+                    entry.Q_CV = salTable.Q_CV;
+                    entry.Q_IV = salTable.Q_IV;
+                    entry.Q_AV = salTable.Q_AV;
+                }
+
+
+                // Document Library 
+                var documentLibraryTable = reportsDataManager.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryTable)
+                {
+                    docEntry.Alias = a.Alias;
+                    response.DocumentLibraryTable.Add(docEntry);
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         protected string GetApplicationMode(int assessmentId)
         {
             using (var db = new CSET_Context())
