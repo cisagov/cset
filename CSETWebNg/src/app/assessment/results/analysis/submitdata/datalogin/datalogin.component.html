@@ -31,7 +31,7 @@
       <form>
         <p>
           <mat-form-field appearance="outline">
-            <input type="text" matInput placeholder="Username" [formControl]="username" placeholder="username"
+            <input type="text" matInput placeholder="Username" [formControl]="username" placeholder="Username"
               [errorStateMatcher]="matcherusername">
               <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
             <mat-error *ngIf="username.hasError('required')">
@@ -42,7 +42,7 @@
   
         <p>
           <mat-form-field appearance="outline">
-            <input type="password" matInput placeholder="Password" [formControl]="password" placeholder="password"
+            <input type="password" matInput placeholder="Password" [formControl]="password" placeholder="Password"
               [errorStateMatcher]="matcherpassword">
             <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
             <mat-error *ngIf="password.hasError('required')">
