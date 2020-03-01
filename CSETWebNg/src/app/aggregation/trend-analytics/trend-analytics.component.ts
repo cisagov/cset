@@ -22,9 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Router } from '../../../../node_modules/@angular/router';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
 import { AggregationChartService } from '../../services/aggregation-chart.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-trend-analytics',
@@ -42,7 +45,10 @@ export class TrendAnalyticsComponent implements OnInit {
   constructor(
     public navSvc: NavigationAggregService,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public aggregChartSvc: AggregationChartService,
+    private authSvc: AuthenticationService,
+    public configSvc: ConfigService,
+    private router: Router,
   ) { }
 
   /**
@@ -50,13 +56,14 @@ export class TrendAnalyticsComponent implements OnInit {
    */
   ngOnInit() {
     this.populateCharts();
+    //const aggregationId = this.aggregationSvc.id();
   }
 
   /**
    * Get the data from the API and build the charts for the page.
    */
   populateCharts() {
-    const aggregationId = this.aggregationSvc.id();
+    //const aggregationId = this.aggregationSvc.id();
 
     // Overall Compliance
     this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
@@ -78,4 +85,9 @@ export class TrendAnalyticsComponent implements OnInit {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
     });
   }
+
+  generateReport(reportType: string) {
+    const url = this.router.createUrlTree(['/reports/'+ reportType]);   //, response.token]);
+    window.open(url.toString(), "_blank");
+  };
 }

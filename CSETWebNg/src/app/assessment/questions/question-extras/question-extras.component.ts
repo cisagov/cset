@@ -498,18 +498,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Converts linebreak characters to HTML <br> tag.
-   */
-  formatLinebreaks(text: string) {
-    if (!text) {
-      return '';
-    }
-    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  }
-
-
-
-  /**
    * check if approach exists for acet questions
    * @param approach
    */
