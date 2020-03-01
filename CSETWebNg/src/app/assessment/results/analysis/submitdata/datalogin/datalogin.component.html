@@ -28,8 +28,41 @@
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
 
     <div class="container">
+      <form>
+        <p>
+          <mat-form-field appearance="outline">
+            <input type="text" matInput placeholder="Username" [formControl]="username" placeholder="username"
+              [errorStateMatcher]="matcherusername">
+              <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
+            <mat-error *ngIf="username.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+  
+        <p>
+          <mat-form-field appearance="outline">
+            <input type="password" matInput placeholder="Password" [formControl]="password" placeholder="password"
+              [errorStateMatcher]="matcherpassword">
+            <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
+            <mat-error *ngIf="password.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+  
+        <p *ngIf="error" class="error">
+          {{ error }}
+        </p>
+  
+        <!--<div class="button">
+          <button type="submit" [disabled]="password.hasError('required')" mat-button (click)="submit()">Login</button>
+        </div>
+      -->
+      </form>
 
-      <div class="input-group form-group">
+
+      <!-- <div class="input-group form-group">
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
         </div>
@@ -41,7 +74,7 @@
           <span class="input-group-text"><i class="fas fa-key"></i></span>
         </div>
         <input type="password" class="form-control" [(ngModel)]="password" placeholder="password" required>
-      </div>
+      </div>-->
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
