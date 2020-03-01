@@ -21,12 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, NgForm, FormGroupDirective, Validators} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { LoginData } from '../../../../../models/anonymous.model';
 import { AnalyticsService } from '../../../../../services/analytics.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-datalogin',
@@ -36,9 +46,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DataloginComponent implements OnInit {
 
-  public username: string;
-  public password: string;
-  public error: string;
+  matcherusername = new MyErrorStateMatcher();
+  matcherpassword = new MyErrorStateMatcher();
+
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
+
+  @Input() error: string | null;
+
+  @Output() submitEM = new EventEmitter();
+
+  
 
   constructor(private dialog: MatDialogRef<DataloginComponent>, private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public analytics: any, private analyticsSvc: AnalyticsService){ }
@@ -53,7 +71,7 @@ export class DataloginComponent implements OnInit {
   
   postAnalyticsWithLogin(){
     var message; 
-    this.analyticsSvc.getAnalyticsToken(this.username, this.password).subscribe(
+    this.analyticsSvc.getAnalyticsToken(this.username.value, this.password.value).subscribe(
         data => {
             let token = data.token;
             this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
