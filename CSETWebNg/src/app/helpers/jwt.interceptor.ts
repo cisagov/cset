@@ -26,10 +26,15 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '../../../node_modules/@angular/router';
+import { ConfigService } from '../services/config.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  public analyticsUrl: string;
+
+  constructor(private router: Router, private configSvc: ConfigService) {
+    this.analyticsUrl = this.configSvc.analyticsUrl;
+  }
 
   intercept(
     request: HttpRequest<any>,
@@ -41,11 +46,13 @@ export class JwtInterceptor implements HttpInterceptor {
       sessionStorage.getItem('userToken').length > 1
     ) {
       request.headers.append('Content-Type', 'application/json');
-      request = request.clone({
-        setHeaders: {
-          Authorization: sessionStorage.getItem('userToken')
-        }
-      });
+      if(!request.url.includes(this.analyticsUrl)){
+        request = request.clone({
+          setHeaders: {
+            Authorization: sessionStorage.getItem('userToken')
+          }
+        });
+      }
     }
 
     return next.handle(request)

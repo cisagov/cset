@@ -28,24 +28,38 @@
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>&nbsp;
-      <input type="text" placeholder="Enter Username" name="uname" required><br>
+      <form>
+        <p>
+          <mat-form-field appearance="outline">
+            <input type="text" matInput placeholder="Username" [formControl]="username" placeholder="Username"
+              [errorStateMatcher]="matcherusername">
+              <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
+            <mat-error *ngIf="username.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
   
-      <label for="psw"><b>Password</b></label>&nbsp;
-      <input type="password" placeholder="Enter Password" name="psw" required>
+        <p>
+          <mat-form-field appearance="outline">
+            <input type="password" matInput placeholder="Password" [formControl]="password" placeholder="Password"
+              [errorStateMatcher]="matcherpassword">
+            <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
+            <mat-error *ngIf="password.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
   
-      
+        <p *ngIf="error" class="error">
+          {{ error }}
+        </p>
+      </form>
     </div>
-    <div class="container">
-    <button type="submit">Login</button>&nbsp;
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>&nbsp;
-       <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>  
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
-    <button class="btn btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
+    <button class="btn btn-primary" (click)="submit()">Submit</button>
   </mat-dialog-actions>
 </div>
 

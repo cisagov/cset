@@ -21,8 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, NgForm, FormGroupDirective, Validators} from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { LoginData } from '../../../../../models/anonymous.model';
+import { AnalyticsService } from '../../../../../services/analytics.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-datalogin',
@@ -32,7 +46,21 @@ import { MatDialogRef } from '@angular/material';
 })
 export class DataloginComponent implements OnInit {
 
-  constructor(private dialog: MatDialogRef<DataloginComponent>) { }
+  matcherusername = new MyErrorStateMatcher();
+  matcherpassword = new MyErrorStateMatcher();
+
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
+
+  @Input() error: string | null;
+
+  @Output() submitEM = new EventEmitter();
+
+  
+
+  constructor(private dialog: MatDialogRef<DataloginComponent>, private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public analytics: any, private analyticsSvc: AnalyticsService){ }
+  
 
   ngOnInit() {
   }
@@ -40,4 +68,48 @@ export class DataloginComponent implements OnInit {
   close() {
     return this.dialog.close();
   }
+  
+  postAnalyticsWithLogin(){
+    var message; 
+    this.analyticsSvc.getAnalyticsToken(this.username.value, this.password.value).subscribe(
+        data => {
+            let token = data.token;
+            this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
+                (data: any)=>{
+                    message = data.message;
+                    this.openSnackBar(message);
+                    this.close();
+                });
+        },
+        err => {
+          if(err instanceof HttpErrorResponse){
+            let httpError: HttpErrorResponse = err;
+            if (httpError.status === 403) {  // Username or password Failed
+              this.error = 'We were unable to log you in. Verify that you have the correct credentials';
+            } else if (httpError.status === 423) { // Locked Out
+              this.error = 'We were unable to log you in. Locked out.';
+            } else if (httpError.status === 400) { // Generic Error
+              this.error = 'We were unable to log you in. Error with login. Try again.';
+            } else if (httpError.status === 400) {
+              this.error = 'We were unable to log you in.  Error with login. Try again.';
+            } else { // All other errors
+              this.error = 'We were unable to log you in.  Error with login. Try again.';
+            }
+          } else {
+            this.error = 'We were unable to log you in.  Error with login. Try again.';
+          }
+        });
+  }
+  
+  submit(){
+    this.postAnalyticsWithLogin()
+  }
+
+  openSnackBar(message){
+    this.snackBar.open(message, "", {
+        duration:4000,
+        verticalPosition:'top',
+        panelClass:['green-snackbar']
+    });
+}
 }
