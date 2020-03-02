@@ -87,7 +87,7 @@ export class TrendAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    const url = this.router.createUrlTree(['/reports/'+ reportType]);   //, response.token]);
-    window.open(url.toString(), "_blank");
+    const url = '/index.html?returnPath=report/'+reportType;
+    window.open(url, "_blank");
   };
 }
