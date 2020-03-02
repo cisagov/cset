@@ -33,16 +33,17 @@ import { Http } from '@angular/http';
 })
 export class AnalyticsService {
   private apiUrl: string;
-  private analyticsUrl: string; 
-
+  private analyticsUrl: string;
   public headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
     params: new HttpParams()
   };
 
+
+
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + "analytics/";
-    this.analyticsUrl = this.configSvc.analyticsUrl;
+    this.analyticsUrl = 'https://localhost:44397/api/';
   }
   
   getAnalytics():any {
