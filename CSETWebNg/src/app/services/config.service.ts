@@ -34,7 +34,6 @@ export class ConfigService {
   apiUrl: string;
   appUrl: string;
   docUrl: string;
-  analyticsUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
   configUrl = 'assets/config.json';
@@ -78,7 +77,6 @@ export class ConfigService {
         this.apiUrl = environment.apiUrl;
         this.appUrl = environment.appUrl;
         this.docUrl = environment.docUrl;
-        this.analyticsUrl = environment.analyticsUrl;
         //this.reportsUrl = environment.reportsUrl;
       } else {
         this.configUrl = "api/assets/config";
@@ -95,7 +93,6 @@ export class ConfigService {
             this.apiUrl = data.apiUrl;
             this.appUrl = data.appUrl;
             this.docUrl = data.docUrl;
-            this.analyticsUrl = data.analyticsUrl;
             //this.reportsUrl = data.reportsUrl;
             this.helpContactEmail = data.helpContactEmail;
             this.helpContactPhone = data.helpContactPhone;
