@@ -1367,5 +1367,16 @@
             [Authorize] attribute that authenticates the security token in the request header. 
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Helpers.HangfireExecutor.ProcessAssessmentImportLegacyAsync(System.String,System.String,System.String,System.String,Hangfire.Server.PerformContext)">
+            <summary>
+            
+            </summary>
+            <param name="csetFilePath"></param>
+            <param name="token"></param>
+            <param name="processPath"></param>
+            <param name="apiURL"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
