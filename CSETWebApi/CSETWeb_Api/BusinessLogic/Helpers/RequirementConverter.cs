@@ -34,16 +34,16 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             newRequirement.REQUIREMENT_LEVELS = new List<REQUIREMENT_LEVELS>();
             newRequirement.REQUIREMENT_REFERENCES = new List<REQUIREMENT_REFERENCES>();
             newRequirement.REQUIREMENT_SETS = new List<REQUIREMENT_SETS>() { new REQUIREMENT_SETS() { Set_Name = setName } };
-            //newRequirement.NEW_QUESTION = new List<NEW_QUESTION>();
 
             QUESTION_GROUP_HEADING questionGroupHeading = null;
             UNIVERSAL_SUB_CATEGORY_HEADINGS subcategory = null;
+
 
             using (var db = new CSET_Context())
             {
                 try
                 {
-                    questionGroupHeading = db.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.Heading.Trim().ToLower());
+                    questionGroupHeading = db.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.Heading.Trim().ToLower());                    
                     try
                     {
                         var subcatId = db.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.Subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
@@ -54,19 +54,24 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                             await db.SaveChangesAsync();
                             subcatId = subcat.Universal_Sub_Category_Id;
                         }
+
                         try
                         {
                             subcategory = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
                             if (subcategory == null)
                             {
-                                subcategory = new UNIVERSAL_SUB_CATEGORY_HEADINGS() { Universal_Sub_Category_Id = subcatId, Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id };
+                                subcategory = new UNIVERSAL_SUB_CATEGORY_HEADINGS() {
+                                    Set_Name = "Standards",
+                                    Universal_Sub_Category_Id = subcatId, 
+                                    Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id 
+                                };
                                 db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(subcategory);
                                 await db.SaveChangesAsync();
                             }
                         }
-                        catch
+                        catch (Exception exc)
                         {
-
+                            var myExc = exc;
                         }
                     }
                     catch
@@ -78,23 +83,24 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 {
 
                 }
-            }
-            if (questionGroupHeading == null)
-            {
-                result.LogError(String.Format("Heading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
-            }
-            else
-            {
-                newRequirement.Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id;
-            }
 
-            if (subcategory == null)
-            {
-                result.LogError(String.Format("Subheading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
-            }
-            externalRequirement.Category = string.IsNullOrWhiteSpace(externalRequirement.Category) ? externalRequirement.Heading : externalRequirement.Category;
-            using (var db = new CSET_Context())
-            {
+
+                if (questionGroupHeading == null)
+                {
+                    result.LogError(String.Format("Heading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
+                }
+                else
+                {
+                    newRequirement.Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id;
+                }
+
+
+                if (subcategory == null)
+                {
+                    result.LogError(String.Format("Subheading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
+                }
+
+                externalRequirement.Category = string.IsNullOrWhiteSpace(externalRequirement.Category) ? externalRequirement.Heading : externalRequirement.Category;
                 var category = db.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.Category);
                 if (category == null)
                 {
@@ -104,145 +110,149 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 {
                     newRequirement.Standard_Category = category.Standard_Category1;
                 }
-            }
-            foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
-            {
-                try
-                {
-                    if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
-                    {
-                        var rl = new REQUIREMENT_LEVELS()
-                        {
-                            Standard_Level = sal.ToString(),
-                            Level_Type = "NST"
-                        };
-                        newRequirement.REQUIREMENT_LEVELS.Add(rl);
-                    }
-                }
-                catch
-                {
-                    result.LogError(String.Format("An error occurred while adding SALs for requirement {0} {1}.", externalRequirement.Identifier, externalRequirement.Text));
 
-                }
-            }
-            var importer = new DocumentImporter();
-            if (externalRequirement.References != null)
-            {
-
-                foreach (var reference in externalRequirement.References)
-                {
-                    var reqReference = new REQUIREMENT_REFERENCES();
-                    try
-                    {
-                        reqReference.Destination_String = reference.Destination;
-                        reqReference.Page_Number = reference.PageNumber;
-                        reqReference.Section_Ref = String.IsNullOrEmpty(reference.SectionReference) ? "" : reference.SectionReference;
-                        reqReference.Gen_File_Id = importer.LookupGenFileId(reference.FileName);
-                    }
-                    catch
-                    {
-                        result.LogError(String.Format("Reference {0} could not be added for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
-                    }
-                    if (reqReference.Gen_File_Id == 0)
-                    {
-                        result.LogError(String.Format("Reference {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
-                    }
-                    else
-                    {
-                        newRequirement.REQUIREMENT_REFERENCES.Add(reqReference);
-                    }
-                }
-            }
-            var reqSource = new REQUIREMENT_SOURCE_FILES();
-            try
-            {
-                if (externalRequirement.Source != null)
-                {
-                    reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.Source.FileName);
-                    reqSource.Page_Number = externalRequirement.Source.PageNumber;
-                    reqSource.Destination_String = externalRequirement.Source.Destination;
-                    reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.Source.SectionReference) ? "" : externalRequirement.Source.SectionReference;
-                    if (reqSource.Gen_File_Id == 0)
-                    {
-                        result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
-                    }
-                    else
-                    {
-                        newRequirement.REQUIREMENT_SOURCE_FILES.Add(reqSource);
-                    }
-                }
-            }
-            catch
-            {
-                result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
-            }
-            if (externalRequirement.Questions == null || externalRequirement.Questions.Count() == 0)
-            {
-                externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
-            }
-            foreach (var question in externalRequirement.Questions)
-            {
-                NEW_QUESTION newQuestion = null;
-                var set = new NEW_QUESTION_SETS() { Set_Name = setName, NEW_QUESTION_LEVELS = new List<NEW_QUESTION_LEVELS>() };
-                using (var db = new CSET_Context())
-                {
-                    newQuestion = db.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
-                    if (newQuestion != null)
-                    {
-                        db.Entry(newQuestion).State = EntityState.Detached;
-                    }
-
-                }
-                if (newQuestion == null)
-                {
-                    newQuestion = new NEW_QUESTION();
-                    try
-                    {
-                        newQuestion.Original_Set_Name = setName;
-                        newQuestion.Simple_Question = question;
-                        newQuestion.Weight = externalRequirement.Weight;
-                        newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
-                        newQuestion.Universal_Sal_Level = ((SalValues)(externalRequirement.SecurityAssuranceLevel ?? (int)SalValues.L)).ToString();
-                        newQuestion.Std_Ref = setName.Replace("_", "");
-                        newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
-                        newQuestion.Heading_Pair_Id = subcategory.Heading_Pair_Id;
-                    }
-                    catch
-                    {
-                        result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.Identifier, externalRequirement.Text));
-                    }
-                }
                 foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
                 {
                     try
                     {
                         if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
                         {
-                            var rl = new NEW_QUESTION_LEVELS()
+                            var rl = new REQUIREMENT_LEVELS()
                             {
-                                Universal_Sal_Level = sal.ToString(),
+                                Standard_Level = sal.ToString(),
+                                Level_Type = "NST"
                             };
-                            set.NEW_QUESTION_LEVELS.Add(rl);
+                            newRequirement.REQUIREMENT_LEVELS.Add(rl);
                         }
                     }
                     catch
                     {
-                        result.LogError(String.Format("An error occurred while adding SALs for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        result.LogError(String.Format("An error occurred while adding SALs for requirement {0} {1}.", externalRequirement.Identifier, externalRequirement.Text));
 
                     }
                 }
-                newQuestion.NEW_QUESTION_SETS = new List<NEW_QUESTION_SETS>();
-                newQuestion.REQUIREMENT_QUESTIONS_SETS = new List<REQUIREMENT_QUESTIONS_SETS>();
-                newQuestion.NEW_QUESTION_SETS.Add(set);
-                newQuestion.REQUIREMENT_QUESTIONS_SETS.Add(new REQUIREMENT_QUESTIONS_SETS { Set_Name = setName, Requirement_ = newRequirement });
-                using (CSET_Context db = new CSET_Context())
+
+                var importer = new DocumentImporter();
+                if (externalRequirement.References != null)
                 {
+
+                    foreach (var reference in externalRequirement.References)
+                    {
+                        var reqReference = new REQUIREMENT_REFERENCES();
+                        try
+                        {
+                            reqReference.Destination_String = reference.Destination;
+                            reqReference.Page_Number = reference.PageNumber;
+                            reqReference.Section_Ref = String.IsNullOrEmpty(reference.SectionReference) ? "" : reference.SectionReference;
+                            reqReference.Gen_File_Id = importer.LookupGenFileId(reference.FileName);
+                        }
+                        catch
+                        {
+                            result.LogError(String.Format("Reference {0} could not be added for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        }
+                        if (reqReference.Gen_File_Id == 0)
+                        {
+                            result.LogError(String.Format("Reference {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        }
+                        else
+                        {
+                            newRequirement.REQUIREMENT_REFERENCES.Add(reqReference);
+                        }
+                    }
+                }
+
+                var reqSource = new REQUIREMENT_SOURCE_FILES();
+
+                try
+                {
+                    if (externalRequirement.Source != null)
+                    {
+                        reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.Source.FileName);
+                        reqSource.Page_Number = externalRequirement.Source.PageNumber;
+                        reqSource.Destination_String = externalRequirement.Source.Destination;
+                        reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.Source.SectionReference) ? "" : externalRequirement.Source.SectionReference;
+                        if (reqSource.Gen_File_Id == 0)
+                        {
+                            result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        }
+                        else
+                        {
+                            newRequirement.REQUIREMENT_SOURCE_FILES.Add(reqSource);
+                        }
+                    }
+                }
+                catch
+                {
+                    result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                }
+
+                if (externalRequirement.Questions == null || externalRequirement.Questions.Count() == 0)
+                {
+                    externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
+                }
+
+                foreach (var question in externalRequirement.Questions)
+                {
+                    NEW_QUESTION newQuestion = null;
+                    var set = new NEW_QUESTION_SETS() { Set_Name = setName, NEW_QUESTION_LEVELS = new List<NEW_QUESTION_LEVELS>() };
+                    newQuestion = db.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
+
+                    if (newQuestion == null)
+                    {
+                        newQuestion = new NEW_QUESTION();
+                        try
+                        {
+                            newQuestion.Original_Set_Name = setName;
+                            newQuestion.Simple_Question = question;
+                            newQuestion.Weight = externalRequirement.Weight;
+                            newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
+                            newQuestion.Universal_Sal_Level = ((SalValues)(externalRequirement.SecurityAssuranceLevel ?? (int)SalValues.L)).ToString();
+                            newQuestion.Std_Ref = setName.Replace("_", "");
+                            newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
+                            newQuestion.Heading_Pair_Id = subcategory.Heading_Pair_Id;
+                        }
+                        catch
+                        {
+                            result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.Identifier, externalRequirement.Text));
+                        }
+                    }
+
+                    foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
+                    {
+                        try
+                        {
+                            if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
+                            {
+                                var rl = new NEW_QUESTION_LEVELS()
+                                {
+                                    Universal_Sal_Level = sal.ToString(),
+                                };
+                                set.NEW_QUESTION_LEVELS.Add(rl);
+                            }
+                        }
+                        catch
+                        {
+                            result.LogError(String.Format("An error occurred while adding SALs for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        }
+                    }
+
+                    newQuestion.NEW_QUESTION_SETS = new List<NEW_QUESTION_SETS>();
+                    newQuestion.NEW_QUESTION_SETS.Add(set);
+
+                    newQuestion.REQUIREMENT_QUESTIONS_SETS = new List<REQUIREMENT_QUESTIONS_SETS>();
+                    newQuestion.REQUIREMENT_QUESTIONS_SETS.Add(new REQUIREMENT_QUESTIONS_SETS { Set_Name = setName, Requirement_ = newRequirement });
+
+
                     db.NEW_QUESTION.Add(newQuestion);
                 }
+
+
+                // null this out so that we don't try to insert it
+                questionGroupHeading = null;
             }
+
+
             return result;
         }
     }
 }
-
-
