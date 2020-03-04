@@ -220,7 +220,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                         Identifier = requirement.Requirement_Title,
                         Text = requirement.Requirement_Text,
                         Category = requirement.Standard_Category,
-                        Weight = requirement.Weight,
+                        Weight = requirement.Weight ?? 0,
                         Subcategory = requirement.Standard_Sub_Category,
                         Supplemental = requirement.Supplemental_Info
                     };

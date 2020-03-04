@@ -32,58 +32,7 @@ namespace CSETWeb_Api.Helpers
                 {
                     using (var db = new CSET_Context())
                     {
-
-
-                        var mySet = new SETS()
-                        {
-                            Set_Name = "RKW_TEST_1",
-                            Short_Name = result.Result.Short_Name,
-                            Full_Name = result.Result.Full_Name,
-                            Is_Displayed = true,
-                            Is_Pass_Fail = false,
-                            Set_Category_Id = 2,
-                            Standard_ToolTip = "Trying to insert a set",
-                            Is_Custom = true,
-                            IsEncryptedModule = false,
-                            IsEncryptedModuleOpen = true,
-                        };
-                        db.SETS.Add(mySet);
-
-
-                        //var myQuestion = new NEW_QUESTION()
-                        //{
-                        //    Simple_Question = "Randy's new question",
-                        //    Std_Ref = "RKW",
-                        //    Std_Ref_Number = 1,
-                        //    Original_Set_Name = "Randy Original"
-                        //};
-                        //db.NEW_QUESTION.Add(myQuestion);
-
-
-                        var myReq = new NEW_REQUIREMENT()
-                        {
-                            Original_Set_Name = mySet.Set_Name,
-                            Requirement_Text = "Randy new requirement",
-                            Requirement_Title = "1.1.1",
-                            Standard_Category = "Security Guidelines",
-                            Standard_Sub_Category = "Secure Disposal Guidelines"
-                        };
-                        db.NEW_REQUIREMENT.Add(myReq);
-
-
-                        //foreach (var r in result.Result.NEW_REQUIREMENT)
-                        //{
-                        //    db.NEW_REQUIREMENT.Add(r);
-                        //}
-
-
-
-                        // db.SETS.Add(result.Result);
-
-                        foreach (var question in result.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
-                        {
-                            db.Entry(question).State = EntityState.Unchanged;
-                        }
+                        db.SETS.Add(result.Result);
 
                         await db.SaveChangesAsync();
                     }
