@@ -52,6 +52,7 @@ namespace CSETWeb_Api.BusinessManagers
             return newAssessment;
         }
 
+       
 
         public AssessmentDetail CreateNewAssessmentForImport(int currentUserId)
         {
@@ -93,6 +94,57 @@ namespace CSETWeb_Api.BusinessManagers
             return list;
         }
 
+        public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
+        {
+            AnalyticsAssessment assessment = new AnalyticsAssessment();
+            TokenManager tm = new TokenManager();
+            string app_code = tm.Payload(Constants.Token_Scope);
+
+            using (var db = new CSET_Context())
+            {
+                var query = from aa in db.ASSESSMENTS 
+                             where aa.Assessment_Id == assessmentId
+                             select aa;
+
+                int tmpUID = 0;
+                Guid tmpGuid = Guid.NewGuid();
+                
+                if(int.TryParse(tm.Payload(Constants.Token_UserId),out tmpUID))
+                {
+                    USERS user = db.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if (user.Id != null)
+                        {
+                            user.Id = tmpGuid;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            tmpGuid = user.Id??Guid.NewGuid();
+                        }
+                    }
+                }
+                
+
+
+                var result = query.ToList().FirstOrDefault();
+                if (result != null)
+                {
+                    assessment = new AnalyticsAssessment()
+                    {
+                        Alias = result.Alias,
+                        AssessmentCreatedDate = Utilities.UtcToLocal(result.AssessmentCreatedDate),
+                        AssessmentCreatorId = tmpGuid.ToString(),
+                        Assessment_Date = Utilities.UtcToLocal(result.Assessment_Date),
+                        Assessment_GUID = result.Assessment_GUID.ToString(),
+                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate)
+                    };
+                }
+
+                return assessment;
+            }
+        }
 
         /// <summary>
         /// Returns the details for the specified Assessment.
@@ -324,6 +376,8 @@ namespace CSETWeb_Api.BusinessManagers
                 var hit = query.FirstOrDefault();
                 if (hit != null)
                 {
+                    demographics.SectorId = hit.s.SectorId;
+                    demographics.IndustryId = hit.i.IndustryId;
                     demographics.SectorName = hit.s.SectorName ?? string.Empty;
                     demographics.IndustryName = hit.i.IndustryName ?? string.Empty;
                     demographics.AssetValue = hit.ddd.AssetValue ?? string.Empty;
