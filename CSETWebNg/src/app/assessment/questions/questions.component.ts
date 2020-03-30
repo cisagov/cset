@@ -46,6 +46,8 @@ export class QuestionsComponent implements AfterViewInit {
 
   setHasRequirements = false;
 
+  setHasQuestions = false;
+
   autoLoadSupplementalInfo: boolean;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -165,7 +167,7 @@ export class QuestionsComponent implements AfterViewInit {
       (data: QuestionResponse) => {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
-
+        this.setHasQuestions = (data.QuestionCount > 0);
         this.questionsSvc.questions = data;
 
         // Reformat the response to create domain groupings ---------------------------------
@@ -176,6 +178,12 @@ export class QuestionsComponent implements AfterViewInit {
           QuestionCount: data.QuestionCount,
           RequirementCount: data.RequirementCount
         };
+
+        if(bigStructure.QuestionCount == 0 && this.assessSvc.applicationMode == 'Q'){
+          this.assessSvc.applicationMode = 'R';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+
         data.QuestionGroups.forEach(g => {
           if (!bigStructure.Domains.find(d => d.DomainName === g.DomainName)) {
             bigStructure.Domains.push({
