@@ -183,6 +183,10 @@ export class QuestionsComponent implements AfterViewInit {
           this.assessSvc.applicationMode = 'R';
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
         }
+        else if(!this.setHasRequirements && this.assessSvc.applicationMode == "R"){
+          this.assessSvc.applicationMode = 'Q';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
 
         data.QuestionGroups.forEach(g => {
           if (!bigStructure.Domains.find(d => d.DomainName === g.DomainName)) {
