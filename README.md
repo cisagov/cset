@@ -147,8 +147,12 @@ This documentation is provided to assist users in navigating the basics of the C
   * Server Roles – Select the “Web Server (IIS)” check box. Add any features the program prompts you for.
   * Features – The defaults will work just fine for running CSET®, however you may add any additional features you wish.
   * Web Server Role (IIS) – Click “Next.”
-  * Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for.
+  * Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for. (Please note: ASP.net 4.7.2 or higher is required for CSET to run properly. If you have anything less than that, you will need to download the latest version from Microsoft directly.)
   * Confirmation – Click “Install”. Close out of the Wizard when installation is complete.
+
+  3. It may be necessary to create a new IIS Application Pool for your CSET Installation to run properly. When setting up the application in IIS, create a new Application Pool for CSET and give it the identity of the account you want to access the SQL Server with. Provided below are links to the official Microsoft documentation for this process.
+  * To read more about IIS Application Pool creation click [here](https://docs.microsoft.com/en-us/iis/configuration/system.applicationhost/applicationpools/).
+  * To read more about Pool Identification click [here](https://docs.microsoft.com/en-us/iis/manage/configuring-security/application-pool-identities).
 
 ![](img/figE3.PNG)<br/>
 
