@@ -37,6 +37,7 @@ export class CompareSummaryComponent implements OnInit {
   chartStandardsPie: Chart;
   chartComponentsPie: Chart;
   chartCategoryAverage: Chart;
+  catAvgHeight: number;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -94,13 +95,15 @@ export class CompareSummaryComponent implements OnInit {
         ds.backgroundColor = '#008a00';
         ds.borderColor = '#008a00';
       });
-
+      
       if (!x.options) {
         x.options = {};
       }
-      x.options.maintainAspectRatio = false;
-
+      x.options.maintainAspectRatio = false;   
+      
       this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
+      
+      (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
     });
   }
 }
