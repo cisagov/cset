@@ -184,11 +184,6 @@ namespace CSETWeb_Api.BusinessLogic
         /// <param name="aggregationId"></param>
         public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
         {
-            // assign default aliases
-            // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
-            var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var aliasPosition = 0;
-
             using (var db = new CSET_Context())
             {
                 var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -226,12 +221,8 @@ namespace CSETWeb_Api.BusinessLogic
 
                     if (string.IsNullOrEmpty(aa.Alias))
                     {
-                        while (l.Exists(x => x.Alias == aliasLetters[aliasPosition].ToString()))
-                        {
-                            aliasPosition++;
-                        }
-                        aa.Alias = aliasLetters[aliasPosition].ToString();
-                        dbAA.Alias = aa.Alias;
+                        aa.Alias = GetNextAvailableAlias(dbAaList, l);
+                        dbAA.Alias = aa.Alias;                        
                     }
                 }
 
@@ -248,6 +239,30 @@ namespace CSETWeb_Api.BusinessLogic
 
                 return resp;
             }
+        }
+
+
+        /// <summary>
+        /// Looks for the lowest letter that has not yet been used as an alias in 
+        /// the database list and the list we are currently building.
+        /// </summary>
+        /// <returns></returns>
+        private string GetNextAvailableAlias(List<AGGREGATION_ASSESSMENT> a, List<AggregAssessment> b)
+        {
+            // assign default aliases
+            // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
+            var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            foreach (char letterChar in aliasLetters.ToCharArray())
+            {
+                if (!a.Exists(aa => aa.Alias == letterChar.ToString())
+                    && !b.Exists(bb => bb.Alias == letterChar.ToString()))
+                {
+                    return letterChar.ToString();
+                }
+            }
+
+            return string.Empty;
         }
 
 
