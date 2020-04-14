@@ -48,8 +48,6 @@ export class QuestionsComponent implements AfterViewInit {
 
   setHasQuestions = false;
 
-  setHasNone = false;
-
   autoLoadSupplementalInfo: boolean;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -87,15 +85,6 @@ export class QuestionsComponent implements AfterViewInit {
     }
     
     this.getQuestionCounts();
-    // force requirements/statements mode for ACET-only assessments
-    // if (!this.assessSvc.applicationMode) {
-    //   this.assessSvc.applicationMode = 'R';
-    //   this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-    // } else {
-    //   this.loadQuestions();
-    // }
-
-
   }
 
   updateComponentsOverride() {
@@ -203,7 +192,6 @@ export class QuestionsComponent implements AfterViewInit {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
         this.setHasQuestions = (data.QuestionCount > 0);
-        this.setHasNone = !this.setHasQuestions && !this.setHasRequirements;
         this.questionsSvc.questions = data;
 
         // Reformat the response to create domain groupings ---------------------------------
