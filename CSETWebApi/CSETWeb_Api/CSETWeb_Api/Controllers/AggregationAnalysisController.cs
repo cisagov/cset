@@ -718,11 +718,16 @@ namespace CSETWeb_Api.Controllers
                 keys.Sort();
                 foreach (string k in keys)
                 {
-                    response.Add(new BestToWorstCategory()
+                    var category = new BestToWorstCategory()
                     {
                         Category = k,
                         Assessments = dict[k]
-                    });
+                    };
+
+                    // sort best to worst
+                    category.Assessments.Sort((a, b) => (a.YesValue + a.AlternateValue).CompareTo(b.YesValue + b.AlternateValue));
+                    category.Assessments.Reverse();
+                    response.Add(category);
                 }
 
                 return response;

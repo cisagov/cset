@@ -136,7 +136,7 @@ export class AggregationService {
     const agg = this.currentAggregation;
     const aggForSubmit = {
       AggregationId: agg.AggregationId,
-      AggregationName: agg.AggregationName,
+      AggregationName: agg.AggregationName.substring(0,99),
       AggregationDate: agg.AggregationDate
     };
     return this.http.post(this.apiUrl + 'update', aggForSubmit);
