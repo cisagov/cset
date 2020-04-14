@@ -26,7 +26,7 @@
   <div class="w-100">
     <div class="form-group">
       <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name</label>
-      <input type="text" class="form-control" [(ngModel)]="aggregationSvc.currentAggregation.AggregationName" (change)="updateAggregation()" />
+      <input type="text" class="form-control" maxlength="100" [(ngModel)]="aggregationSvc.currentAggregation.AggregationName" (change)="updateAggregation()" />
     </div>
   </div>
 
