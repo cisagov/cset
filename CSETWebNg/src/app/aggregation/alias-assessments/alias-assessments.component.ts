@@ -40,6 +40,7 @@ export class AliasAssessmentsComponent implements OnInit {
   aliasData: any;
   dialogRefSelect: MatDialogRef<SelectAssessmentsComponent>;
   dialogRefConfirm: MatDialogRef<ConfirmComponent>;
+  trendNameError: boolean = true;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -59,7 +60,19 @@ export class AliasAssessmentsComponent implements OnInit {
   }
 
   updateAggregation() {
-    this.aggregationSvc.updateAggregation().subscribe();
+    this.checkTrendName();
+    if(!this.trendNameError){
+      this.aggregationSvc.updateAggregation().subscribe();
+    }
+  }
+
+  validateNext(){
+    if(this.aliasData != null)
+    {
+      var checkNext = this.aliasData.Assessments.length < 2 || !this.checkTrendName();
+      return checkNext;
+    }
+    return true;
   }
 
   /**
@@ -85,6 +98,14 @@ export class AliasAssessmentsComponent implements OnInit {
     this.dialogRefSelect.afterClosed().subscribe(() => {
       this.getRelatedAssessments();
     });
+  }
+
+  /**
+   * Check trend name empty 
+   */
+  checkTrendName(){
+    this.trendNameError =  this.aggregationSvc.currentAggregation.AggregationName.length > 0;
+    return this.trendNameError;
   }
 
   /**
