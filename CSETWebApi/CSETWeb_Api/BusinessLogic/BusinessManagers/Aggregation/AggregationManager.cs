@@ -221,7 +221,7 @@ namespace CSETWeb_Api.BusinessLogic
 
                     if (string.IsNullOrEmpty(aa.Alias))
                     {
-                        aa.Alias = GetNextAvailableAlias(dbAaList, l);
+                        aa.Alias = GetNextAvailableAlias(dbAaList.Select(x => x.Alias).ToList(), l.Select(x => x.Alias).ToList());
                         dbAA.Alias = aa.Alias;                        
                     }
                 }
@@ -247,7 +247,7 @@ namespace CSETWeb_Api.BusinessLogic
         /// the database list and the list we are currently building.
         /// </summary>
         /// <returns></returns>
-        private string GetNextAvailableAlias(List<AGGREGATION_ASSESSMENT> a, List<AggregAssessment> b)
+        private string GetNextAvailableAlias(List<string> a, List<string> b)
         {
             // assign default aliases
             // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
@@ -255,8 +255,8 @@ namespace CSETWeb_Api.BusinessLogic
 
             foreach (char letterChar in aliasLetters.ToCharArray())
             {
-                if (!a.Exists(aa => aa.Alias == letterChar.ToString())
-                    && !b.Exists(bb => bb.Alias == letterChar.ToString()))
+                if (!a.Exists(aa => aa == letterChar.ToString())
+                    && !b.Exists(bb => bb == letterChar.ToString()))
                 {
                     return letterChar.ToString();
                 }
@@ -323,19 +323,28 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Saves the specified alias.  If an empty string is submitted,
+        /// An alias is assigned to the record and the value is returned to the client.
         /// </summary>
-        public void SaveAssessmentAlias(int aggregationId, int assessmentId, string alias)
+        public string SaveAssessmentAlias(int aggregationId, int assessmentId, string alias, List<AssessmentSelection> assessList)
         {
             using (var db = new CSET_Context())
             {
                 var aa = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (aa == null)
                 {
-                    return;
+                    return "";
                 }
+                
+                if (alias == "")
+                {
+                    alias = GetNextAvailableAlias(assessList.Select(x => x.Alias).ToList(), new List<string>());
+                }
+
                 aa.Alias = alias;
                 db.SaveChanges();
+
+                return alias;
             }
         }
 
