@@ -20,79 +20,85 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Details</h3>
-  <div class="w-100">
-    <div class="form-group">
-      <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name*</label>
-      <input type="text" class="form-control" maxlength="100" [(ngModel)]="aggregationSvc.currentAggregation.AggregationName" (change)="updateAggregation()" 
-      (blur)="checkTrendName()" required/>
-      <div class="invalid-feedback d-block" *ngIf='!trendNameError'>
-        Trend name is required
+<div class="wp-0 d-flex flex-column justify-content-start flex-11a">
+  <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a ">
+    <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Details</h3>
+    <div class="w-100">
+      <div class="form-group">
+        <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name*</label>
+        <input type="text" class="form-control" maxlength="100" [(ngModel)]="aggregationSvc.currentAggregation.AggregationName" (change)="updateAggregation()" 
+        (blur)="checkTrendName()" required/>
+        <div class="invalid-feedback d-block" *ngIf='!trendNameError'>
+          Trend name is required
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="mt-3 mb-3">
-    <div>
-      Selected Assessments Questions Compatibility: <span
-        class="font-weight-bold">{{ aliasData?.Aggregation.QuestionsCompatibility | percent : '0.3' }}</span>
+    <div class="mt-3 mb-3">
+      <div>
+        Selected Assessments Questions Compatibility: <span
+          class="font-weight-bold">{{ aliasData?.Aggregation.QuestionsCompatibility | percent : '0.3' }}</span>
+      </div>
+      <div>
+        Selected Assessments Requirements Compatibility: <span
+          class="font-weight-bold">{{ aliasData?.Aggregation.RequirementsCompatibility | percent : '0.3' }}</span>
+      </div>
     </div>
-    <div>
-      Selected Assessments Requirements Compatibility: <span
-        class="font-weight-bold">{{ aliasData?.Aggregation.RequirementsCompatibility | percent : '0.3' }}</span>
+
+    <div class="mt-3 mb-3">
+      Assessments can be added and removed from the {{ this.aggregationSvc?.modeDisplay(false) | lowercase }}
+      by clicking Select Assessments. The alias of each assessment can be modified to be meaningful.
+    </div>
+
+    <div class="mt-3 mb-3">
+      <button class="btn btn-primary" (click)="openSelectionDialog()"><i class="far fa-check-square mr-2"></i>Select
+        Assessments</button>
     </div>
   </div>
+  <div class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0" style="max-width: 100%; width: 100vw;">
+    <div style="width:100vw; max-width:100%; overflow-y: auto;">
+      <table *ngIf="aliasData?.Assessments.length > 0" class="assessment-summary td-p-1">
+        <tr>
+          <th>
+            Alias
+          </th>
+          <th>
+            Assessment Name
+          </th>
+          <th>
+            Assessment Date
+          </th>
+          <th *ngFor="let s of aliasData.Assessments[0].SelectedStandards" class="text-center">
+            {{ s.StandardName }}
+          </th>
+        </tr>
+        <tr *ngFor="let assess of aliasData.Assessments">
+          <td class="pr-3">
+            <input type="text" [(ngModel)]="assess.Alias" class="form-control" maxlength="15"
+              (change)="changeAlias(assess)" />
+          </td>
+          <td>
+            {{ assess.AssessmentName }}
+          </td>
+          <td>
+            {{ assess.AssessmentDate | date:'dd-MMM-yyyy' }}
+          </td>
+          <td *ngFor="let s of assess.SelectedStandards" class="text-center" [innerHTML]="showDot(s.Selected)">
+          </td>
+        </tr>
+      </table>
+    
+    </div>
+    <div *ngIf="aliasData?.Assessments.length === 0" class="mt-3 mb-5 alert-warning p-3 font-weight-bold text-center">
+      There are no assessments selected for this {{ this.aggregationSvc?.modeDisplay(false) }}
+    </div>
 
-  <div class="mt-3 mb-3">
-    Assessments can be added and removed from the {{ this.aggregationSvc?.modeDisplay(false) | lowercase }}
-    by clicking Select Assessments. The alias of each assessment can be modified to be meaningful.
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="navBackIfValid()">Back</button>
+      <button class="btn btn-primary" [disabled]="validateNext()"
+        (click)="navSvc.navNext('alias-assessments')">Next</button>
+    </div>
   </div>
-
-  <div class="mt-3 mb-3">
-    <button class="btn btn-primary" (click)="openSelectionDialog()"><i class="far fa-check-square mr-2"></i>Select
-      Assessments</button>
-  </div>
-
-  <table *ngIf="aliasData?.Assessments.length > 0" class="assessment-summary td-p-1">
-    <tr>
-      <th>
-        Alias
-      </th>
-      <th>
-        Assessment Name
-      </th>
-      <th>
-        Assessment Date
-      </th>
-      <th *ngFor="let s of aliasData.Assessments[0].SelectedStandards" class="text-center">
-        {{ s.StandardName }}
-      </th>
-    </tr>
-    <tr *ngFor="let assess of aliasData.Assessments">
-      <td class="pr-3">
-        <input type="text" [(ngModel)]="assess.Alias" class="form-control" maxlength="15"
-          (change)="changeAlias(assess)" />
-      </td>
-      <td>
-        {{ assess.AssessmentName }}
-      </td>
-      <td>
-        {{ assess.AssessmentDate | date:'dd-MMM-yyyy' }}
-      </td>
-      <td *ngFor="let s of assess.SelectedStandards" class="text-center" [innerHTML]="showDot(s.Selected)">
-      </td>
-    </tr>
-  </table>
-
-  <div *ngIf="aliasData?.Assessments.length === 0" class="mt-3 mb-5 alert-warning p-3 font-weight-bold text-center">
-    There are no assessments selected for this {{ this.aggregationSvc?.modeDisplay(false) }}
-  </div>
-
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navBackIfValid()">Back</button>
-    <button class="btn btn-primary" [disabled]="validateNext()"
-      (click)="navSvc.navNext('alias-assessments')">Next</button>
-  </div>
+ 
 
 </div>
