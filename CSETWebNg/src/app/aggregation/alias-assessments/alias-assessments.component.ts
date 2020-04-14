@@ -92,7 +92,24 @@ export class AliasAssessmentsComponent implements OnInit {
    * @param assessment 
    */
   changeAlias(assessment) {
-    this.aggregationSvc.saveAssessmentAlias(assessment).subscribe();
+
+    let assessmentList = [];
+    this.aliasData.Assessments.forEach(a => {
+      assessmentList.push({
+        "AssessmentId": a.AssessmentId,
+        "Selected": a.Selected,
+        "Alias": a.Alias
+      });
+    });
+
+    this.aggregationSvc.saveAssessmentAlias(
+      {
+        "AssessmentId": assessment.AssessmentId,
+        "Selected": assessment.Selected,
+        "Alias": assessment.Alias
+      },
+      assessmentList
+    ).subscribe();
   }
 
   /**
@@ -129,10 +146,10 @@ export class AliasAssessmentsComponent implements OnInit {
 
     let aggregType = this.aggregationSvc.modeDisplay(false);
     dialogRef.componentInstance.confirmMessage =
-      "The " + aggregType + " has less than 2 assessments.  " 
+      "The " + aggregType + " has less than 2 assessments.  "
       + "Leaving this page will delete the " + aggregType + ".  "
       + "Are you sure you want to leave the page?";
-      
+
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
