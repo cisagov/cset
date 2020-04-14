@@ -61,7 +61,7 @@ export class AliasAssessmentsComponent implements OnInit {
 
   updateAggregation() {
     this.checkTrendName();
-    if(!this.trendNameError){
+    if(this.trendNameError){
       this.aggregationSvc.updateAggregation().subscribe();
     }
   }
