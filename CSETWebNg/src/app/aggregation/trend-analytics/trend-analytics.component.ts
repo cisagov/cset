@@ -83,6 +83,7 @@ export class TrendAnalyticsComponent implements OnInit {
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
     });
   }
 
