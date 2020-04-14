@@ -132,6 +132,11 @@ export class AggregationChartService {
       }
     });
 
+    let maintainAspectRatio = true;
+    if (x.hasOwnProperty('options') && x.options.hasOwnProperty('maintainAspectRatio')) {
+      maintainAspectRatio = x.options.maintainAspectRatio;
+    }
+
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
@@ -139,8 +144,8 @@ export class AggregationChartService {
         datasets: x.datasets
       },
       options: {
-        maintainAspectRatio: true,
-        responsive: false,
+        maintainAspectRatio: maintainAspectRatio,
+        responsive: true,
         legend: { display: showLegend, position: 'top' },
         tooltips: {
           callbacks: {
@@ -151,6 +156,20 @@ export class AggregationChartService {
         }
       }
     });
+  }
+
+  /**
+   * Calculates a good height for a horizontal bar chart
+   * based on the number of datasets and data items,
+   * i.e., the number of horizontal bars to accommodate.
+   * @param x 
+   */
+  calcHbcHeightPixels(x): string {
+    // calculate the number of bars in the graph
+    let maxDatasetLength = x.datasets[0].data.length;
+    // calculate a good height for the chart's container
+    let h = maxDatasetLength * x.datasets.length * 20;
+    return (h + 50) + "px";
   }
 
   /**
