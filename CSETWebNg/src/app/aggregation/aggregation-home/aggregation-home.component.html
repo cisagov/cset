@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="wp-0 d-flex flex-column justify-content-start flex-11a">
-  <div class="bgc-trans mt-4 ml-4 mb-4 pr-4 d-flex flex-column flex-00a ">
+<div class="wp-0 d-flex flex-column justify-content-start flex-11a trend-table-width">
+  <div class="bgc-trans mt-4 ml-4 mb-4 pr-4 d-flex flex-column flex-00a trend-table-width">
     <h3>Saved {{ this.aggregationSvc?.modeDisplay(true) }}</h3>
 
     <div class="mt-4">
@@ -49,8 +49,8 @@
     </div>
   </div>
       
-  <div class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0" style="max-width: 100%; width: 100vw;">
-      <div *ngIf="aggregations?.length > 0" style="max-width:100%; width:100vw;">
+  <div class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 trend-table-width" style="width: 100vw;">
+      <div *ngIf="aggregations?.length > 0" style="width:100vw;" class="trend-table-width">
         <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
           <th mat-sort-header="assessment">{{ this.aggregationSvc?.modeDisplay(false) }} Name</th>
           <th mat-sort-header="date">Date</th>

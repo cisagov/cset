@@ -33,7 +33,7 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
   selector: 'app-alias-assessments',
   templateUrl: './alias-assessments.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
 })
 export class AliasAssessmentsComponent implements OnInit {
 
