@@ -33,8 +33,9 @@ import { Aggregation } from '../../models/aggregation.model';
 @Component({
   selector: 'app-aggregation-home',
   templateUrl: './aggregation-home.component.html',
+  styleUrls: ['./aggregation-home.component.scss'],
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
 })
 export class AggregationHomeComponent implements OnInit {
 
