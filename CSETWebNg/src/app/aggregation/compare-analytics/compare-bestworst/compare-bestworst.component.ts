@@ -74,6 +74,7 @@ export class CompareBestworstComponent implements OnInit {
         { label: 'Unanswered', data: [], backgroundColor: "#CCCCCC" }
       ],
       options: {
+        maintainAspectRatio: true,
         scales: {
           xAxes: [{
             ticks: {
@@ -97,6 +98,9 @@ export class CompareBestworstComponent implements OnInit {
       ds.find(x => x.label === 'Unanswered').data.push(a.UnansweredValue);
     });
 
+    if (!!this.chartAnswerBreakdown) {
+      this.chartAnswerBreakdown.destroy();
+    }
     this.chartAnswerBreakdown = this.aggregChartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', x);
   }
 }
