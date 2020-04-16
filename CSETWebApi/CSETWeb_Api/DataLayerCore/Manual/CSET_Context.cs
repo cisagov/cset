@@ -80,6 +80,11 @@ namespace DataLayerCore.Model
 
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
+
+        public virtual DbSet<Question_Id_result> ID_Results { get; set; }
+
+
+
         public int changeEmail(string originalEmail, string newEmail)
         {
 
@@ -280,6 +285,52 @@ namespace DataLayerCore.Model
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetTop5Areas_result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<int> InScopeQuestions (Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<int> myrval = null;
+            this.LoadStoredProc("InScopeQuestions")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         var myrval2 = handler.ReadToList<Question_Id_result>();
+                         myrval = myrval2.Select(x => x.Question_Id).ToList();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<int> InScopeRequirements(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<int> myrval = null;
+            this.LoadStoredProc("InScopeRequirements")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         var myrval2 = handler.ReadToList<Requirement_Id_result>();
+                         myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
         }
