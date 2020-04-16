@@ -20,35 +20,37 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3>Saved {{ this.aggregationSvc?.modeDisplay(true) }}</h3>
+<div class="wp-0 d-flex flex-column justify-content-start flex-11a trend-table-width">
+  <div class="bgc-trans mt-4 ml-4 mb-4 pr-4 d-flex flex-column flex-00a trend-table-width">
+    <h3>Saved {{ this.aggregationSvc?.modeDisplay(true) }}</h3>
 
-  <div>
-    <button *ngIf="this.aggregationSvc?.mode === 'TREND'" class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
-      matTooltip="Create a new trend">
-      <span class="mr-2 fs-base cset2-icons-trend"></span>
-      <span>New Trend</span>
-    </button>
+    <div class="mt-4">
+      <button *ngIf="this.aggregationSvc?.mode === 'TREND'" class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
+        matTooltip="Create a new trend">
+        <span class="mr-2 fs-base cset2-icons-trend"></span>
+        <span>New Trend</span>
+      </button>
 
-    <button *ngIf="this.aggregationSvc?.mode === 'COMPARE'" class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
-      matTooltip="Create a new comparison">
-      <span class="mr-2 fs-base cset2-icons-compare"></span>
-      <span>New Comparison</span>
-    </button>
+      <button *ngIf="this.aggregationSvc?.mode === 'COMPARE'" class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
+        matTooltip="Create a new comparison">
+        <span class="mr-2 fs-base cset2-icons-compare"></span>
+        <span>New Comparison</span>
+      </button>
 
-    <div *ngIf="aggregations == null">
-      <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-        <div class="spinner-size-50"></div>
+      <div *ngIf="aggregations == null">
+        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+          <div class="spinner-size-50"></div>
+        </div>
       </div>
-    </div>
-
-    <div class="mt-3 mb-3">
       <div class="mt-3 mb-5 alert-warning p-3 font-weight-bold text-center" *ngIf="aggregations?.length === 0">No {{ this.aggregationSvc?.modeDisplay(true) }} have been saved.
         Click 'New {{ this.aggregationSvc?.modeDisplay(false) }}' to start a new
         {{ this.aggregationSvc?.modeDisplay(false) }}.
       </div>
-
-      <div *ngIf="aggregations?.length > 0">
+    </div>
+  </div>
+      
+  <div class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 trend-table-width" style="width: 100vw;">
+      <div *ngIf="aggregations?.length > 0" style="width:100vw;" class="trend-table-width">
         <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
           <th mat-sort-header="assessment">{{ this.aggregationSvc?.modeDisplay(false) }} Name</th>
           <th mat-sort-header="date">Date</th>
@@ -74,5 +76,4 @@
         </table>
       </div>
     </div>
-  </div>
 </div>

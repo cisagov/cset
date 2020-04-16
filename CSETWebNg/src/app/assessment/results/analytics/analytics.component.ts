@@ -40,9 +40,11 @@ export class AnalyticsComponent implements OnInit {
 
     analytics:any = {
         Demographics:{
+            SectorId: 0,
+            IndustryId: 0,
             SectorName:'',
             IndustryName:'',
-            AssetValue:'',
+            Assets:'',
             Size:''
         },
         QuestionAnswers:[]
@@ -61,11 +63,12 @@ export class AnalyticsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.getAnalytics();
-
         this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
           });
+        this.route.params.subscribe(params => {
+            this.getAnalytics();
+        });
     }
 
     getAnalytics(){
@@ -79,16 +82,14 @@ export class AnalyticsComponent implements OnInit {
             });
     }
 
-    postAnalyticsWithoutLogin(){
-        var message;
+    postAnalyticsWithoutLogin() {
         this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
-            (data: any)=>{
-                message = data.message;
+            (data: any) => {
+                console.log("in the final post");
+                const message = data.message;
                 this.openSnackBar(message);
             });
     }
-
-   
 
     showLogin(){
         const dialogRef = this.dialog.open(DataloginComponent, {

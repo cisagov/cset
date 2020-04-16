@@ -142,7 +142,7 @@ namespace CSETWeb_Api.BusinessManagers
                         {
                             QuestionId = question.QuestionId,
                             QuestionText = question.QuestionText,
-                            Answer = question.Answer
+                            Answer_Text = question.Answer
                         });
                     }
                 }
