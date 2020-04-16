@@ -74,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Creates a new Aggregation (Trend or Comparison).
         /// </summary>
         public Aggregation CreateAggregation(string mode)
         {
