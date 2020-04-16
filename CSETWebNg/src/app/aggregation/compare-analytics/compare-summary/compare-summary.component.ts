@@ -103,7 +103,9 @@ export class CompareSummaryComponent implements OnInit {
       
       this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
       
-      (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+      if (this.chartCategoryAverage.canvas) {
+        (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+      }
     });
   }
 }
