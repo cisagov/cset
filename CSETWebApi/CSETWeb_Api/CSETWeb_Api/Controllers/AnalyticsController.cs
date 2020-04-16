@@ -26,9 +26,17 @@ namespace CSETWeb_Api.Controllers
         {
             return Ok(new Analytics
             {
+                Assessment = GetAnalyticsAssessment(),
                 Demographics = GetDemographics(),
                 QuestionAnswers = GetQuestionsAnswers()
-            });
+            }); ;
+        }
+
+        private AnalyticsAssessment GetAnalyticsAssessment()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            AssessmentManager assessmentManager = new AssessmentManager();
+            return assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
         }
 
         /// <summary>

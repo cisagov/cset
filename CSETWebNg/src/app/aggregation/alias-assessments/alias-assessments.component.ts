@@ -27,17 +27,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 @Component({
   selector: 'app-alias-assessments',
   templateUrl: './alias-assessments.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
 })
 export class AliasAssessmentsComponent implements OnInit {
 
   aliasData: any;
-  dialogRef: MatDialogRef<SelectAssessmentsComponent>;
+  dialogRefSelect: MatDialogRef<SelectAssessmentsComponent>;
+  dialogRefConfirm: MatDialogRef<ConfirmComponent>;
+  trendNameError: boolean = true;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -57,7 +60,19 @@ export class AliasAssessmentsComponent implements OnInit {
   }
 
   updateAggregation() {
-    this.aggregationSvc.updateAggregation().subscribe();
+    this.checkTrendName();
+    if(this.trendNameError){
+      this.aggregationSvc.updateAggregation().subscribe();
+    }
+  }
+
+  validateNext(){
+    if(this.aliasData != null)
+    {
+      var checkNext = this.aliasData.Assessments.length < 2 || !this.checkTrendName();
+      return checkNext;
+    }
+    return true;
   }
 
   /**
@@ -72,17 +87,25 @@ export class AliasAssessmentsComponent implements OnInit {
   /**
    * Opens dialog for assessment selection.
    */
-  openDialog() {
+  openSelectionDialog() {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    this.dialogRef = this.dialog.open(SelectAssessmentsComponent, {
+    this.dialogRefSelect = this.dialog.open(SelectAssessmentsComponent, {
       width: '300px',
       data: {}
     });
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.dialogRefSelect.afterClosed().subscribe(() => {
       this.getRelatedAssessments();
     });
+  }
+
+  /**
+   * Check trend name empty 
+   */
+  checkTrendName(){
+    this.trendNameError =  this.aggregationSvc.currentAggregation.AggregationName.length > 0;
+    return this.trendNameError;
   }
 
   /**
@@ -90,7 +113,24 @@ export class AliasAssessmentsComponent implements OnInit {
    * @param assessment 
    */
   changeAlias(assessment) {
-    this.aggregationSvc.saveAssessmentAlias(assessment).subscribe();
+
+    let assessmentList = [];
+    this.aliasData.Assessments.forEach(a => {
+      assessmentList.push({
+        "AssessmentId": a.AssessmentId,
+        "Selected": a.Selected,
+        "Alias": a.Alias
+      });
+    });
+
+    this.aggregationSvc.saveAssessmentAlias(
+      {
+        "AssessmentId": assessment.AssessmentId,
+        "Selected": assessment.Selected,
+        "Alias": assessment.Alias
+      },
+      assessmentList
+    ).subscribe();
   }
 
   /**
@@ -99,5 +139,46 @@ export class AliasAssessmentsComponent implements OnInit {
    */
   showDot(b: boolean) {
     return b ? '<i class="fa fa-dot-circle primary-900"></i>' : '';
+  }
+
+  /**
+   * The user is backing from this page.  If the trend represented
+   * on this page is incomplete, get confirmation from the user
+   * that it's okay to delete the aggregation. 
+   */
+  navBackIfValid() {
+    if (this.aliasData.Assessments.length < 2) {
+      this.showConfirmationDialog();
+      return;
+    }
+
+    this.navSvc.navBack('alias-assessments');
+  }
+
+  /**
+   * Opens dialog to confirm data loss of data on BACK.
+   */
+  showConfirmationDialog() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ConfirmComponent);
+
+    let aggregType = this.aggregationSvc.modeDisplay(false);
+    dialogRef.componentInstance.confirmMessage =
+      "The " + aggregType + " has less than 2 assessments.  "
+      + "Leaving this page will delete the " + aggregType + ".  "
+      + "Are you sure you want to leave the page?";
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.AggregationId)
+          .subscribe(() => {
+            this.navSvc.navBack('alias-assessments');
+          });
+      }
+    });
   }
 }

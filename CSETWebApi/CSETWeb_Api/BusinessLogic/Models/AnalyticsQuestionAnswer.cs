@@ -10,6 +10,6 @@ namespace CSETWeb_Api.BusinessLogic.Models
     {
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
-        public string Answer { get; set; }
+        public string Answer_Text { get; set; }
     }
 }

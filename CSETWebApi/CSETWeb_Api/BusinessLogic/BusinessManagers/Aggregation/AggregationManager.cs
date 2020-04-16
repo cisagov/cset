@@ -74,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Creates a new Aggregation (Trend or Comparison).
         /// </summary>
         public Aggregation CreateAggregation(string mode)
         {
@@ -184,11 +184,6 @@ namespace CSETWeb_Api.BusinessLogic
         /// <param name="aggregationId"></param>
         public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
         {
-            // assign default aliases
-            // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
-            var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var aliasPosition = 0;
-
             using (var db = new CSET_Context())
             {
                 var ai = db.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -226,11 +221,7 @@ namespace CSETWeb_Api.BusinessLogic
 
                     if (string.IsNullOrEmpty(aa.Alias))
                     {
-                        while (l.Exists(x => x.Alias == aliasLetters[aliasPosition].ToString()))
-                        {
-                            aliasPosition++;
-                        }
-                        aa.Alias = aliasLetters[aliasPosition].ToString();
+                        aa.Alias = GetNextAvailableAlias(dbAaList.Select(x => x.Alias).ToList(), l.Select(x => x.Alias).ToList());
                         dbAA.Alias = aa.Alias;
                     }
                 }
@@ -248,6 +239,30 @@ namespace CSETWeb_Api.BusinessLogic
 
                 return resp;
             }
+        }
+
+
+        /// <summary>
+        /// Looks for the lowest letter that has not yet been used as an alias in 
+        /// the database list and the list we are currently building.
+        /// </summary>
+        /// <returns></returns>
+        private string GetNextAvailableAlias(List<string> a, List<string> b)
+        {
+            // assign default aliases
+            // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
+            var aliasLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            foreach (char letterChar in aliasLetters.ToCharArray())
+            {
+                if (!a.Exists(aa => aa == letterChar.ToString())
+                    && !b.Exists(bb => bb == letterChar.ToString()))
+                {
+                    return letterChar.ToString();
+                }
+            }
+
+            return string.Empty;
         }
 
 
@@ -308,19 +323,28 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Saves the specified alias.  If an empty string is submitted,
+        /// An alias is assigned to the record and the value is returned to the client.
         /// </summary>
-        public void SaveAssessmentAlias(int aggregationId, int assessmentId, string alias)
+        public string SaveAssessmentAlias(int aggregationId, int assessmentId, string alias, List<AssessmentSelection> assessList)
         {
             using (var db = new CSET_Context())
             {
                 var aa = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (aa == null)
                 {
-                    return;
+                    return "";
                 }
+
+                if (alias == "")
+                {
+                    alias = GetNextAvailableAlias(assessList.Select(x => x.Alias).ToList(), new List<string>());
+                }
+
                 aa.Alias = alias;
                 db.SaveChanges();
+
+                return alias;
             }
         }
 
@@ -395,15 +419,13 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Returns percent overlap.  
+        /// Gets lists of question or requirement IDs, then uses LINQ to do the intersection.
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
         private float CalcCompatibility(string mode, List<int> assessmentIds)
         {
-            // TODO: figure out how stored proc GetCompatibilityCounts can be adjusted for 9.x
-
-            // get lists of question IDs, then use LINQ to do the intersection
             var l = new List<List<int>>();
 
             // master hash set of all questions
@@ -415,18 +437,17 @@ namespace CSETWeb_Api.BusinessLogic
                 {
                     if (mode == "Q")
                     {
-                        var listQuestionID = db.Answer_Questions.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        var listQuestionID = (List<int>)db.InScopeQuestions(id);
                         l.Add(listQuestionID);
                         m.UnionWith(listQuestionID);
                     }
 
                     if (mode == "R")
                     {
-                        var listRequirementID = db.Answer_Requirements.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        var listRequirementID = (List<int>)db.InScopeRequirements(id);
                         l.Add(listRequirementID);
                         m.UnionWith(listRequirementID);
                     }
-
                 }
             }
 

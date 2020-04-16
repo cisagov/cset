@@ -25,7 +25,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12" style="padding-bottom:15px;">
-                <h4>Analytics</h4>
+                <h4>Analytics</h4>            
+                <p>Clicking “Submit Anonymous” will submit the data shown in the table below (question identifiers, questions, and answers) with no user identifying information.</p>
+                <p>Clicking “Submit with Login” will submit the same data, but will be associated with an anonymous user identifier accessible only to you.  Submitting with Login will allow you to compare your submission against your CSET Assessment sector and industry averages. </p>
             </div>
         </div>
         <div class="row" style="padding-bottom:5px;">
@@ -68,7 +70,7 @@
                                                 <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
                                                     <td style="padding-left:15px;">{{qa.QuestionId}}</td>
                                                     <td>{{qa.QuestionText}}</td>
-                                                    <td>{{qa.Answer}}</td>
+                                                    <td>{{qa.Answer_Text}}</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -89,7 +91,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <button class="btn btn-primary" type="button" (click)="postAnalyticsWithoutLogin()">Submit</button>
+                <button class="btn btn-primary" type="button" (click)="postAnalyticsWithoutLogin()">Submit Anonymous</button>
                 <button class="btn btn-primary" type="button" (click)="showLogin()">Submit With Login</button>
             </div>
         </div>
