@@ -74,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Creates a new Aggregation (Trend or Comparison).
         /// </summary>
         public Aggregation CreateAggregation(string mode)
         {
@@ -222,7 +222,7 @@ namespace CSETWeb_Api.BusinessLogic
                     if (string.IsNullOrEmpty(aa.Alias))
                     {
                         aa.Alias = GetNextAvailableAlias(dbAaList.Select(x => x.Alias).ToList(), l.Select(x => x.Alias).ToList());
-                        dbAA.Alias = aa.Alias;                        
+                        dbAA.Alias = aa.Alias;
                     }
                 }
 
@@ -335,7 +335,7 @@ namespace CSETWeb_Api.BusinessLogic
                 {
                     return "";
                 }
-                
+
                 if (alias == "")
                 {
                     alias = GetNextAvailableAlias(assessList.Select(x => x.Alias).ToList(), new List<string>());
@@ -419,15 +419,13 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Returns percent overlap.  
+        /// Gets lists of question or requirement IDs, then uses LINQ to do the intersection.
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
         private float CalcCompatibility(string mode, List<int> assessmentIds)
         {
-            // TODO: figure out how stored proc GetCompatibilityCounts can be adjusted for 9.x
-
-            // get lists of question IDs, then use LINQ to do the intersection
             var l = new List<List<int>>();
 
             // master hash set of all questions
@@ -439,18 +437,17 @@ namespace CSETWeb_Api.BusinessLogic
                 {
                     if (mode == "Q")
                     {
-                        var listQuestionID = db.Answer_Questions.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        var listQuestionID = (List<int>)db.InScopeQuestions(id);
                         l.Add(listQuestionID);
                         m.UnionWith(listQuestionID);
                     }
 
                     if (mode == "R")
                     {
-                        var listRequirementID = db.Answer_Requirements.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        var listRequirementID = (List<int>)db.InScopeRequirements(id);
                         l.Add(listRequirementID);
                         m.UnionWith(listRequirementID);
                     }
-
                 }
             }
 
