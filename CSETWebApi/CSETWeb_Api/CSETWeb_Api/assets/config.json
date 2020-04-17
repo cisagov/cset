@@ -1,0 +1,27 @@
+{
+    "appCode": "CSET",
+    "appUrl": "https://csetac.inl.gov/",
+    "apiUrl": "https://csetac.inl.gov/api/",
+    "docUrl": "https://csetac.inl.gov/Documents/",
+    "reportsUrl": "https://csetac.inl.gov/Reports/",
+    "helpContactEmail": "cset@dhs.gov",
+    "helpContactPhone": "",
+    "defaultPasswordSubject": "Your CSET password has been reset",
+    "defaultPasswordTemplate": "Your CSET password has been reset.\nIf you are unable to login, please use the \"Forgot Password\" option on the login page.\nIf you did not change this password, please contact.........",
+    "defaultInviteSubject": "You have been invited to participate in a CSET assessment",
+    "defaultInviteTemplate": "You have been invited to participate in a CSET assessment.\nPlease log into your CSET account to participate. If you have not used CSET before, an account has been created for you, and a second email will be sent to this email address with instructions on logging in for the first time.",
+    "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
+    "supplementalAutoloadInitialValue": false,
+    "showQuestionAndRequirementIDs": false,
+    
+    "buttonLabelY": "Yes",
+    "buttonLabelN": "No",
+    "buttonLabelNA": "NA",
+    "buttonLabelA": "Alt",
+  
+    "answerLabelY": "Yes",
+    "answerLabelN": "No",
+    "answerLabelNA": "N/A",
+    "answerLabelA": "Alternate",
+    "answerLabelU": "Unanswered"
+}

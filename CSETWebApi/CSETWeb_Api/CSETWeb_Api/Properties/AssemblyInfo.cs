@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Idaho National Laboratory")]
 [assembly: AssemblyProduct("CSETWeb_Api")]
 [assembly: AssemblyCopyright("Copyright © Idaho National Laboratory 2020")]
-[assembly: AssemblyTrademark("CSET and CSET Logo are Trademarks of the DHS NCATS Team 2020")]
+[assembly: AssemblyTrademark("CSET and CSET Logo are Trademarks of the INL CSET Team")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -36,7 +36,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("9.2.1.0")]
-[assembly: AssemblyFileVersion("9.2.1.0")]
+[assembly: AssemblyVersion("10.0.0.0")]
+[assembly: AssemblyFileVersion("10.0.0.0")]
 
 
