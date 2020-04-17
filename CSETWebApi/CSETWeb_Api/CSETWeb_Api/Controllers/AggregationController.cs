@@ -124,7 +124,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/saveassessmentalias")]
-        public void SaveAssessmentAlias([FromBody] AssessmentSelection request)
+        public void SaveAssessmentAlias([FromBody] AliasSaveRequest req)
         {
             TokenManager tm = new TokenManager();
             var aggregationID = tm.PayloadInt("aggreg");
@@ -134,7 +134,7 @@ namespace CSETWeb_Api.Controllers
             }
 
             var aggreg = new BusinessLogic.AggregationManager();
-            aggreg.SaveAssessmentAlias((int)aggregationID, request.AssessmentId, request.Alias);
+            aggreg.SaveAssessmentAlias((int)aggregationID, req.aliasAssessment.AssessmentId, req.aliasAssessment.Alias, req.assessmentList);
         }
 
 

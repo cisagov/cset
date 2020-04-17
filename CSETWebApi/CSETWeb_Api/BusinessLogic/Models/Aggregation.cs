@@ -83,6 +83,13 @@ namespace CSETWeb_Api.BusinessLogic.Models
     }
 
 
+    public class AliasSaveRequest
+    {
+        public AssessmentSelection aliasAssessment;
+        public List<AssessmentSelection> assessmentList;
+    }
+
+
     /// <summary>
     /// Shown in Compare Analytics
     /// </summary>
