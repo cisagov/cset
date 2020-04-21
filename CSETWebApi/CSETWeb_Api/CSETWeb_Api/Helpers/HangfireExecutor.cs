@@ -25,32 +25,42 @@ namespace CSETWeb_Api.Helpers
         public static async Task SaveImport(ExternalStandard externalStandard, PerformContext context)
         {
             var logger = new HangfireLogger(context);
-            var result = await externalStandard.ToSet(logger);
-            if (result.IsSuccess)
-            {
-                try
-                {
-                    using (var db = new CSET_Context())
-                    {
-                        db.SETS.Add(result.Result);
 
-                        await db.SaveChangesAsync();
-                    }
-                }
-                catch (SqlException e)
-                {
-                    result.LogError(e.Message);
-                }
-                catch (Exception e)
-                {
-                    logger.Log("An error was encountered when adding the module to the database.  Please try again");
-                    throw e;
-                }
-            }
-            else
+            if (externalStandard == null)
             {
-                throw new Exception(String.Join("\r\n", result.ErrorMessages));
+                var msg = "Module was not correctly transferred.  Please try again";
+                logger.Log(msg);
+                throw new Exception(msg);
             }
+
+            var result = await externalStandard.ToSet(logger);
+            // ModuleImporter.DoIt(externalStandard);
+
+            //if (result.IsSuccess)
+            //{
+            //    try
+            //    {
+            //        using (var db = new CSET_Context())
+            //        {
+            //            db.SETS.Add(result.Result);
+
+            //            await db.SaveChangesAsync();
+            //        }
+            //    }
+            //    catch (SqlException e)
+            //    {
+            //        result.LogError(e.Message);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        logger.Log("An error was encountered when adding the module to the database.  Please try again");
+            //        throw e;
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception(String.Join("\r\n", result.ErrorMessages));
+            //}
         }
 
 
