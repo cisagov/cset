@@ -1,11 +1,17 @@
-# CSET 9.2.1
+# CSET 10.0
  
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/alerts/)
 [![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:csharp)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
 
-Download Windows Installer
-[CSET 9.2.1 StandAlone Installer](https://github.com/cisagov/cset2/releases/download/v9.2.1/CSETStandAlone.exe)
+Download CSET For Windows:
+[CSET 10.0 Standalone Installer](https://github.com/cisagov/cset2/releases/download/v10.0/CSETStandAlone.exe)
+
+What is CSET?
+[CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
+
+How Do I Use CSET?
+[CSET User Guide](https://www.youtube.com/watch?v=ELbvQTl4xmU)
 
 
 						
@@ -42,7 +48,7 @@ The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
  
 Figure 1: User Account Control box
 
-A CSET 9.2.1 dialogue will open asking if you want to install CSET 9.2.1 Desktop (Fig.2). Select &quot;Yes&quot;.
+A CSET 10.0 dialogue will open asking if you want to install CSET 10.0 Desktop (Fig.2). Select &quot;Yes&quot;.
 
 ![][fig1]
  
@@ -50,7 +56,7 @@ Figure 2: Install dialogue
 
 The program will begin extracting.
 
-After extracting a CSET 9.2.1 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
+After extracting a CSET 10.0 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
 
 ![][fig3]
  
@@ -64,7 +70,7 @@ Figure 4. IIS Setup
 
 IIS will install. Select &quot;Finish&quot; when it completes.
 
-The CSET 9.2.1 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
+The CSET 10.0 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
 ![][fig5]
  
@@ -76,7 +82,7 @@ A disclaimer will open (Fig.6). Read through and then click the box &quot;I read
  
 Figure 6: Disclaimer
 
-CSET will choose a default folder to install CSET 9.2.1 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
+CSET will choose a default folder to install CSET 10.0 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
 
 ![][fig7]
  
@@ -88,7 +94,7 @@ The CSET Installer will show that it is ready to install (Fig. 8), select &quot;
  
 Figure 8: Ready to Install
 
-CSET 9.2.0 will be installed. Make sure that the &quot;Launch CSET 9.2.1 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+CSET 10.0 will be installed. Make sure that the &quot;Launch CSET 10.0 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
 The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
 
@@ -96,7 +102,7 @@ The user should see a setup successful dialogue (Fig.9), and then have an option
  
 Figure 9: Setup Successful
 
-The user has access to CSET 9.2.1 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
+The user has access to CSET 10.0 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
 
 ![][fig10]
  
@@ -147,8 +153,12 @@ This documentation is provided to assist users in navigating the basics of the C
   * Server Roles – Select the “Web Server (IIS)” check box. Add any features the program prompts you for.
   * Features – The defaults will work just fine for running CSET®, however you may add any additional features you wish.
   * Web Server Role (IIS) – Click “Next.”
-  * Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for.
+  * Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for. (Please note: ASP.net 4.7.2 or higher is required for CSET to run properly. If you have anything less than that, you will need to download the latest version from Microsoft directly.)
   * Confirmation – Click “Install”. Close out of the Wizard when installation is complete.
+
+  3. It may be necessary to create a new IIS Application Pool for your CSET Installation to run properly. When setting up the application in IIS, create a new Application Pool for CSET and give it the identity of the account you want to access the SQL Server with. Provided below are links to the official Microsoft documentation for this process.
+  * To read more about IIS Application Pool creation click [here](https://docs.microsoft.com/en-us/iis/configuration/system.applicationhost/applicationpools/).
+  * To read more about Pool Identification click [here](https://docs.microsoft.com/en-us/iis/manage/configuring-security/application-pool-identities).
 
 ![](img/figE3.PNG)<br/>
 
