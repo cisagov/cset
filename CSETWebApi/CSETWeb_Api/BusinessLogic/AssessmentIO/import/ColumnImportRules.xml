@@ -54,7 +54,11 @@
       <Rule action="useMap" sourcetable="ANSWER" />
     </Column>
   </Table>
-  <Table name="FINDING"></Table>
+  <Table name="FINDING">
+    <Column name="Answer_Id">
+      <Rule action="useMap" sourcetable="ANSWER" />
+    </Column>
+  </Table>
   <Table name="FINDING_CONTACT"></Table>
   <Table name="FRAMEWORK_TIER_TYPE_ANSWER" />
   <Table name="GENERAL_SAL" />
