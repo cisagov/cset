@@ -59,7 +59,14 @@
       <Rule action="useMap" sourcetable="ANSWER" />
     </Column>
   </Table>
-  <Table name="FINDING_CONTACT"></Table>
+  <Table name="FINDING_CONTACT">
+    <Column name="Finding_Id">
+      <Rule action="useMap" sourcetable="FINDING" />
+    </Column>
+    <Column name="Assessment_Contact_Id">
+      <Rule action="useMap" sourcetable="ASSESSMENT_CONTACTS" />
+    </Column>  
+  </Table>
   <Table name="FRAMEWORK_TIER_TYPE_ANSWER" />
   <Table name="GENERAL_SAL" />
   
