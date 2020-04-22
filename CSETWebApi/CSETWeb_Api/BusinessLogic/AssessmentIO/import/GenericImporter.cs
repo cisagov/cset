@@ -52,6 +52,20 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
         /// <summary>
+        /// Adds identity mapping that happened outside of this class.
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="map"></param>
+        public void SetManualIdentityMaps(Dictionary<string, Dictionary<int, int>> map)
+        {
+            foreach (string tableName in map.Keys)
+            {
+                mapIdentity.Add(tableName, map[tableName]);
+            }
+        }
+
+
+        /// <summary>
         /// Process each table in the ColumnImportRules.xml document, converting JSON to a database INSERT or UPDATE query
         /// based on the data found in the JSON.
         /// </summary>
