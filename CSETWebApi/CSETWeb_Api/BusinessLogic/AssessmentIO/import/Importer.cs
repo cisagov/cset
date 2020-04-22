@@ -25,6 +25,15 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 {
     public class Importer
     {
+        /// <summary>
+        /// Maps old keys to new keys.
+        /// </summary>
+        Dictionary<string, Dictionary<int, int>> mapIdentity = new Dictionary<string, Dictionary<int, int>>();
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Importer()
         {
             //ignore the emass document we are not using it anyway.
@@ -32,6 +41,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             {
                 config.Ignore(x => x.eMass_Document_Id);
                 config.Ignore(x => x.Id);
+            });
+            TinyMapper.Bind<jASSESSMENT_CONTACTS, ASSESSMENT_CONTACTS>(config =>
+            {
+                config.Ignore(x => x.Assessment_Contact_Id);
             });
             TinyMapper.Bind<jFINDING, FINDING>(config =>
              {
@@ -50,9 +63,17 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             //});
         }
 
+
+        /// <summary>
+        /// Populates a few principal assessment tables.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="currentUserId"></param>
+        /// <param name="primaryEmail"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
         public int RunImportManualPortion(UploadAssessmentModel model,
-            int currentUserId, string primaryEmail
-            , CSET_Context db)
+            int currentUserId, string primaryEmail, CSET_Context db)
         {
             //create the new assessment
             //copy each of the items to the table 
@@ -93,16 +114,25 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 }
             }
 
-            // go through the assessment contacts and 
-            // if the contact does exist create it then add the id
-            // if the contact does exist update the id
-            foreach (var a in model.jASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail != primaryEmail))
+            // go through the assessment contacts and: 
+            // - if the contact does exist create it then add the id
+            // - if the contact does exist update the id
+            var dictAC = new Dictionary<int, int>();
+            foreach (var a in model.jASSESSMENT_CONTACTS)
             {
+                // Don't create another primary contact, but map its ID
+                if (a.PrimaryEmail == primaryEmail)
+                {
+                    var newPrimaryContact = db.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == primaryEmail && x.Assessment_Id == _assessmentId).FirstOrDefault();
+                    dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
+                    continue;
+                }
+
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = _assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
-                int userid;
-                if (oldUserNewUser.TryGetValue(a.PrimaryEmail, out userid))
+               
+                if (oldUserNewUser.TryGetValue(a.PrimaryEmail, out int userid))
                 {
                     item.UserId = userid;
                 }
@@ -110,11 +140,18 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 {
                     item.UserId = null;
                 }
+
                 db.ASSESSMENT_CONTACTS.Add(item);
+                db.SaveChanges();
+
+                dictAC.Add(a.Assessment_Contact_Id, item.Assessment_Contact_Id);
             }
-            db.SaveChanges();
+
+            // map the primary keys so that they can be passed to the generic import logic
+            this.mapIdentity.Add("ASSESSMENT_CONTACTS", dictAC);
 
 
+            //
             foreach (var a in model.jUSER_DETAIL_INFORMATION)
             {
                 if (db.USER_DETAIL_INFORMATION.Where(x => x.Id == a.Id).FirstOrDefault() == null)
@@ -138,13 +175,14 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
         /// <summary>
-        /// Processes tables automatically. 
+        /// Processes the rest of the tables automatically. 
         /// </summary>
         /// <param name="jsonObject"></param>
         /// <param name="context"></param>
-        internal void RunImportAutomatic(int assessmentId, string jsonObject, CSET_Context context)
+        internal void RunImportAutomatic(int assessmentId, string jsonObject)
         {
             var genericImporter = new GenericImporter(assessmentId);
+            genericImporter.SetManualIdentityMaps(this.mapIdentity);
             genericImporter.SaveFromJson(jsonObject);
         }
     }
