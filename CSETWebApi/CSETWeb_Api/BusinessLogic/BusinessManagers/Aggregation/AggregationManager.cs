@@ -484,7 +484,7 @@ namespace CSETWeb_Api.BusinessLogic
         {
             var resp = new List<MissedQuestion>();
 
-            // get lists of question IDs, then use LINQ to do the intersection
+            // build lists of question IDs, then use LINQ to do the intersection
             var questionsAnsweredNo = new List<List<int>>();
             var requirementsAnsweredNo = new List<List<int>>();
 
@@ -508,10 +508,12 @@ namespace CSETWeb_Api.BusinessLogic
                     {
                         questionsAnsweredNo.Add(answeredNo.Where(x => x.mode == "Q")
                             .Select(x => x.question_or_requirement_id).ToList());
+                        requirementsAnsweredNo.Add(new List<int>());
                     }
 
                     if (assessmentMode.StartsWith("R"))
                     {
+                        questionsAnsweredNo.Add(new List<int>());
                         requirementsAnsweredNo.Add(answeredNo.Where(x => x.mode == "R")
                             .Select(x => x.question_or_requirement_id).ToList());
                     }
