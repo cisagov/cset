@@ -353,7 +353,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2
         public Int32 UserId { get; set; }
 
         [Required]
-        public Int32 Contact_Id { get; set; }
+        public Int32 Assessment_Contact_Id { get; set; }
 
     }
 
