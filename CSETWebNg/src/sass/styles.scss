@@ -2821,6 +2821,11 @@ table.td-text-left th, table.td-text-left td {
   flex-direction: row;
 }
 
+.trend-table-width {
+  max-width:100%;
+  width:100vw;
+}
+
 @media only screen and (max-width:767px){
   .trend-graph-layout {
     flex-direction: column;
@@ -2881,3 +2886,4 @@ table.td-text-left th, table.td-text-left td {
 .domain-pad{
   margin-left:20px;
 }
+

@@ -159,9 +159,9 @@ export class AggregationService {
   }
 
 
-  saveAssessmentAlias(assessment: any) {
+  saveAssessmentAlias(assessment: any, aliasData: any[]) {
     return this.http.post(this.apiUrl + 'saveassessmentalias',
-      { AssessmentId: assessment.AssessmentId, Alias: assessment.Alias });
+      { aliasAssessment: assessment, assessmentList: aliasData });
   }
 
   getAnswerTotals() {
