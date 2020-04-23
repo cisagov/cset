@@ -7,6 +7,7 @@
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.ModuleIO;
 using DataLayerCore.Model;
 using Hangfire;
 using Hangfire.Server;
@@ -33,8 +34,16 @@ namespace CSETWeb_Api.Helpers
                 throw new Exception(msg);
             }
 
-            var result = await externalStandard.ToSet(logger);
-            // ModuleImporter.DoIt(externalStandard);
+            // var result = await externalStandard.ToSet(logger);
+            try
+            {
+                ModuleImporter.DoIt(externalStandard);
+            }
+            catch (Exception exc)
+            {
+                var abc = 1;
+            }
+           
 
             //if (result.IsSuccess)
             //{
