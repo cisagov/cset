@@ -88,6 +88,10 @@ export class AnalyticsComponent implements OnInit {
                 console.log("in the final post");
                 const message = data.message;
                 this.openSnackBar(message);
+            },
+            (err: any) => {
+                const message = err.message;
+                this.openSnackBar(message);
             });
     }
 
