@@ -33,13 +33,14 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
   selector: 'app-alias-assessments',
   templateUrl: './alias-assessments.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
 })
 export class AliasAssessmentsComponent implements OnInit {
 
   aliasData: any;
   dialogRefSelect: MatDialogRef<SelectAssessmentsComponent>;
   dialogRefConfirm: MatDialogRef<ConfirmComponent>;
+  trendNameError: boolean = true;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -59,7 +60,19 @@ export class AliasAssessmentsComponent implements OnInit {
   }
 
   updateAggregation() {
-    this.aggregationSvc.updateAggregation().subscribe();
+    this.checkTrendName();
+    if(this.trendNameError){
+      this.aggregationSvc.updateAggregation().subscribe();
+    }
+  }
+
+  validateNext(){
+    if(this.aliasData != null)
+    {
+      var checkNext = this.aliasData.Assessments.length < 2 || !this.checkTrendName();
+      return checkNext;
+    }
+    return true;
   }
 
   /**
@@ -88,11 +101,36 @@ export class AliasAssessmentsComponent implements OnInit {
   }
 
   /**
+   * Check trend name empty 
+   */
+  checkTrendName(){
+    this.trendNameError =  this.aggregationSvc.currentAggregation.AggregationName.length > 0;
+    return this.trendNameError;
+  }
+
+  /**
    * 
    * @param assessment 
    */
   changeAlias(assessment) {
-    this.aggregationSvc.saveAssessmentAlias(assessment).subscribe();
+
+    let assessmentList = [];
+    this.aliasData.Assessments.forEach(a => {
+      assessmentList.push({
+        "AssessmentId": a.AssessmentId,
+        "Selected": a.Selected,
+        "Alias": a.Alias
+      });
+    });
+
+    this.aggregationSvc.saveAssessmentAlias(
+      {
+        "AssessmentId": assessment.AssessmentId,
+        "Selected": assessment.Selected,
+        "Alias": assessment.Alias
+      },
+      assessmentList
+    ).subscribe();
   }
 
   /**
@@ -129,10 +167,10 @@ export class AliasAssessmentsComponent implements OnInit {
 
     let aggregType = this.aggregationSvc.modeDisplay(false);
     dialogRef.componentInstance.confirmMessage =
-      "The " + aggregType + " has less than 2 assessments.  " 
+      "The " + aggregType + " has less than 2 assessments.  "
       + "Leaving this page will delete the " + aggregType + ".  "
       + "Are you sure you want to leave the page?";
-      
+
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

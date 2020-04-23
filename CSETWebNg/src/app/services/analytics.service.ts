@@ -73,4 +73,8 @@ export class AnalyticsService {
       this.analyticsUrl + 'Analytics/postAnalytics', analytics, {headers: header, params}
     );
   }
+
+  pingAnalyticsService():any{
+    return this.http.get(this.analyticsUrl+'ping/GetPing');
+  }
 }

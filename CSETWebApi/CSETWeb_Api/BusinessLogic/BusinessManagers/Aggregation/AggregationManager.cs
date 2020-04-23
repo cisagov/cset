@@ -74,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Creates a new Aggregation (Trend or Comparison).
         /// </summary>
         public Aggregation CreateAggregation(string mode)
         {
@@ -221,8 +221,8 @@ namespace CSETWeb_Api.BusinessLogic
 
                     if (string.IsNullOrEmpty(aa.Alias))
                     {
-                        aa.Alias = GetNextAvailableAlias(dbAaList, l);
-                        dbAA.Alias = aa.Alias;                        
+                        aa.Alias = GetNextAvailableAlias(dbAaList.Select(x => x.Alias).ToList(), l.Select(x => x.Alias).ToList());
+                        dbAA.Alias = aa.Alias;
                     }
                 }
 
@@ -247,7 +247,7 @@ namespace CSETWeb_Api.BusinessLogic
         /// the database list and the list we are currently building.
         /// </summary>
         /// <returns></returns>
-        private string GetNextAvailableAlias(List<AGGREGATION_ASSESSMENT> a, List<AggregAssessment> b)
+        private string GetNextAvailableAlias(List<string> a, List<string> b)
         {
             // assign default aliases
             // NOTE:  If they are comparing more than 26 assessments, this will have to be done a different way.
@@ -255,8 +255,8 @@ namespace CSETWeb_Api.BusinessLogic
 
             foreach (char letterChar in aliasLetters.ToCharArray())
             {
-                if (!a.Exists(aa => aa.Alias == letterChar.ToString())
-                    && !b.Exists(bb => bb.Alias == letterChar.ToString()))
+                if (!a.Exists(aa => aa == letterChar.ToString())
+                    && !b.Exists(bb => bb == letterChar.ToString()))
                 {
                     return letterChar.ToString();
                 }
@@ -323,19 +323,28 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Saves the specified alias.  If an empty string is submitted,
+        /// An alias is assigned to the record and the value is returned to the client.
         /// </summary>
-        public void SaveAssessmentAlias(int aggregationId, int assessmentId, string alias)
+        public string SaveAssessmentAlias(int aggregationId, int assessmentId, string alias, List<AssessmentSelection> assessList)
         {
             using (var db = new CSET_Context())
             {
                 var aa = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (aa == null)
                 {
-                    return;
+                    return "";
                 }
+
+                if (alias == "")
+                {
+                    alias = GetNextAvailableAlias(assessList.Select(x => x.Alias).ToList(), new List<string>());
+                }
+
                 aa.Alias = alias;
                 db.SaveChanges();
+
+                return alias;
             }
         }
 
@@ -410,15 +419,13 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
-        /// 
+        /// Returns percent overlap.  
+        /// Gets lists of question or requirement IDs, then uses LINQ to do the intersection.
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
         private float CalcCompatibility(string mode, List<int> assessmentIds)
         {
-            // TODO: figure out how stored proc GetCompatibilityCounts can be adjusted for 9.x
-
-            // get lists of question IDs, then use LINQ to do the intersection
             var l = new List<List<int>>();
 
             // master hash set of all questions
@@ -430,18 +437,17 @@ namespace CSETWeb_Api.BusinessLogic
                 {
                     if (mode == "Q")
                     {
-                        var listQuestionID = db.Answer_Questions.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        var listQuestionID = (List<int>)db.InScopeQuestions(id);
                         l.Add(listQuestionID);
                         m.UnionWith(listQuestionID);
                     }
 
                     if (mode == "R")
                     {
-                        var listRequirementID = db.Answer_Requirements.Where(x => x.Assessment_Id == id).Select(x => x.Question_Or_Requirement_Id).ToList();
+                        var listRequirementID = (List<int>)db.InScopeRequirements(id);
                         l.Add(listRequirementID);
                         m.UnionWith(listRequirementID);
                     }
-
                 }
             }
 
@@ -467,57 +473,145 @@ namespace CSETWeb_Api.BusinessLogic
 
 
         /// <summary>
+        /// Returns a list of questions or requirements that are answered "N"
+        /// in every assessment in the comparison.  
         /// 
+        /// Note that if the comparison has assessments in both
+        /// Questions and Requirements mode, there will be no common "N" answers.
         /// </summary>
         /// <param name="aggregationId"></param>
         public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
         {
             var resp = new List<MissedQuestion>();
 
-            // get lists of question IDs, then use LINQ to do the intersection
-            var l = new List<List<int>>();
+            // build lists of question IDs, then use LINQ to do the intersection
+            var questionsAnsweredNo = new List<List<int>>();
+            var requirementsAnsweredNo = new List<List<int>>();
 
             using (var db = new CSET_Context())
             {
-                var assessmentIds = db.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).ToList().Select(x => x.Assessment_Id);
+                var assessmentIds = db.AGGREGATION_ASSESSMENT
+                    .Where(x => x.Aggregation_Id == aggregationId).ToList().Select(x => x.Assessment_Id);
+
 
                 foreach (int assessmentId in assessmentIds)
                 {
-                    var answeredNo = db.Answer_Questions.Where(x => x.Assessment_Id == assessmentId && x.Answer_Text == "N").Select(x => x.Question_Or_Requirement_Id).ToList();
-                    l.Add(answeredNo);
-                }
+                    var answeredNo = db.Answer_Standards_InScope
+                        .Where(x => x.assessment_id == assessmentId && x.answer_text == "N").ToList();
 
-                if (l.Count > 0)
-                {
-                    var intersection = l
-                    .Skip(1)
-                    .Aggregate(
-                        new HashSet<int>(l.First()),
-                        (h, e) => { h.IntersectWith(e); return h; }
-                    );
+                    // get the assessments 'mode'
+                    var assessmentMode = db.STANDARD_SELECTION
+                        .Where(x => x.Assessment_Id == assessmentId)
+                        .Select(x => x.Application_Mode).FirstOrDefault();
 
-                    var query1 = from nq in db.NEW_QUESTION
-                                 join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on nq.Heading_Pair_Id equals usch.Heading_Pair_Id
-                                 join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                                 join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                                 where intersection.Contains(nq.Question_Id)
-                                 orderby qgh.Question_Group_Heading1, usc.Universal_Sub_Category, nq.Simple_Question
-                                 select new { nq, qgh, usc };
-
-                    foreach (var q in query1.ToList())
+                    if (assessmentMode.StartsWith("Q"))
                     {
-                        resp.Add(new MissedQuestion()
-                        {
-                            QuestionId = q.nq.Question_Id,
-                            QuestionText = q.nq.Simple_Question,
-                            Category = q.qgh.Question_Group_Heading1,
-                            Subcategory = q.usc.Universal_Sub_Category
-                        });
+                        questionsAnsweredNo.Add(answeredNo.Where(x => x.mode == "Q")
+                            .Select(x => x.question_or_requirement_id).ToList());
+                        requirementsAnsweredNo.Add(new List<int>());
+                    }
+
+                    if (assessmentMode.StartsWith("R"))
+                    {
+                        questionsAnsweredNo.Add(new List<int>());
+                        requirementsAnsweredNo.Add(answeredNo.Where(x => x.mode == "R")
+                            .Select(x => x.question_or_requirement_id).ToList());
                     }
                 }
 
+                // Now that the lists are built, analyze for common "N" answers
+                resp.AddRange(BuildQList(questionsAnsweredNo, db));
+                resp.AddRange(BuildRList(requirementsAnsweredNo, db));
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Build a list of Questions with common "N" answers.
+        /// </summary>
+        /// <param name="answeredNo"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        private List<MissedQuestion> BuildQList(List<List<int>> answeredNo, CSET_Context db)
+        {
+            var resp = new List<MissedQuestion>();
+
+            if (answeredNo.Count == 0)
+            {
                 return resp;
             }
+
+            var intersectionQ = answeredNo
+            .Skip(1)
+            .Aggregate(
+                new HashSet<int>(answeredNo.First()),
+                (h, e) => { h.IntersectWith(e); return h; }
+            );
+
+            var query1 = from nq in db.NEW_QUESTION
+                         join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on nq.Heading_Pair_Id equals usch.Heading_Pair_Id
+                         join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                         join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                         where intersectionQ.Contains(nq.Question_Id)
+                         orderby qgh.Question_Group_Heading1, usc.Universal_Sub_Category, nq.Simple_Question
+                         select new { nq, qgh, usc };
+
+            
+            foreach (var q in query1.ToList())
+            {
+                resp.Add(new MissedQuestion()
+                {
+                    QuestionId = q.nq.Question_Id,
+                    QuestionText = q.nq.Simple_Question,
+                    Category = q.qgh.Question_Group_Heading1,
+                    Subcategory = q.usc.Universal_Sub_Category
+                });
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Build a list of Requirements with common "N" answers.
+        /// </summary>
+        /// <param name="answeredNo"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        private List<MissedQuestion> BuildRList(List<List<int>> answeredNo, CSET_Context db)
+        {
+            var resp = new List<MissedQuestion>();
+
+            if (answeredNo.Count == 0)
+            {
+                return resp;
+            }
+            var intersectionR = answeredNo
+                .Skip(1)
+                .Aggregate(
+                    new HashSet<int>(answeredNo.First()),
+                    (h, e) => { h.IntersectWith(e); return h; }
+                );
+
+            var query1 = from nr in db.NEW_REQUIREMENT
+                         where intersectionR.Contains(nr.Requirement_Id)
+                         orderby nr.Standard_Category, nr.Standard_Sub_Category, nr.Requirement_Text
+                         select nr;
+
+            foreach (var q in query1.ToList())
+            {
+                resp.Add(new MissedQuestion()
+                {
+                    QuestionId = q.Requirement_Id,
+                    QuestionText = q.Requirement_Text,
+                    Category = q.Standard_Category,
+                    Subcategory = q.Standard_Sub_Category
+                });
+            }
+
+            return resp;
         }
 
 

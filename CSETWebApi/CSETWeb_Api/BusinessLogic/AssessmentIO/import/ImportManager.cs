@@ -148,9 +148,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                         string email = context.USERS.Where(x => x.UserId == currentUserId).First().PrimaryEmail;
 
+
+
                         Importer import = new Importer();
                         int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
-                        import.RunImportAutomatic(newAssessmentId, jsonObject, context);
+                        import.RunImportAutomatic(newAssessmentId, jsonObject);
+
 
 
                         // Clean up any imported standards that are unselected or deprecated
