@@ -19,6 +19,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         H=3,
         VH=4
     }
+
+
     public class Sals
     {
         public string Selected_Sal_Level { get; set; }
@@ -65,6 +67,28 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int Slider_Value { get; set; }
         public decimal Weight { get; set; }
         public string Display { get; set; }
+    }
+
+    public class SalCompare
+    {
+        /// <summary>
+        /// Returns the "lowest" SAL value from the specified list.
+        /// </summary>
+        /// <param name="salList"></param>
+        /// <returns></returns>
+        public static string FindLowestSal(List<string> salList)
+        {
+            var salNames = Enum.GetNames(typeof(SalValues));
+            foreach (string s in salNames)
+            {
+                if (salList.Contains(s))
+                {
+                    return s;
+                }
+            }
+
+            return SalValues.L.ToString();
+        }
     }
 }
 

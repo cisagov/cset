@@ -245,6 +245,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                     var set = context.SETS
                         .Include(s => s.NEW_QUESTION)
                         .Include(s => s.NEW_REQUIREMENT)
+                            .ThenInclude(s => s.REQUIREMENT_LEVELS)
                         .Include(s => s.Set_Category_)
                         .FirstOrDefault(s => s.Set_Name == standard.Set_Name && standard.Selected);
 
