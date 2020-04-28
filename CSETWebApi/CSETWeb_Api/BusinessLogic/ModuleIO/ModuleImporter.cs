@@ -1,4 +1,10 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2020 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BusinessLogic.Models;
@@ -20,19 +26,16 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
     public static class ModuleImporter
     {
         /// <summary>
-        /// 
+        /// Imports a Module/Standard.
         /// </summary>
         /// <param name="externalStandard"></param>
-        public static void DoIt(IExternalStandard externalStandard)
+        public static void ProcessStandard(IExternalStandard externalStandard)
         {
-
-            // var result = new ConverterResult<SETS>(logger);
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.ShortName, @"\W", "_");
 
             var documentImporter = new DocumentImporter();
-            // var set = result.Result;
             var set = new SETS();
 
             var db = new CSET_Context();
@@ -247,26 +250,20 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                 newRequirement.Standard_Category = category.Standard_Category1;
             }
 
-            foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
-            {
-                try
-                {
-                    if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
-                    {
-                        var rl = new REQUIREMENT_LEVELS()
-                        {
-                            Standard_Level = sal.ToString(),
-                            Level_Type = "NST"
-                        };
-                        newRequirement.REQUIREMENT_LEVELS.Add(rl);
-                    }
-                }
-                catch
-                {
-                    result.LogError(String.Format("An error occurred while adding SALs for requirement {0} {1}.", externalRequirement.Identifier, externalRequirement.Text));
+            newRequirement.Standard_Sub_Category = externalRequirement.Subheading;
 
-                }
+
+            // SAL
+            foreach (string sal in externalRequirement.SecurityAssuranceLevels)
+            {
+                var rl = new REQUIREMENT_LEVELS()
+                {
+                    Standard_Level = sal,
+                    Level_Type = "NST"
+                };
+                newRequirement.REQUIREMENT_LEVELS.Add(rl);
             }
+         
 
             var importer = new DocumentImporter();
             if (externalRequirement.References != null)
@@ -329,7 +326,7 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
             }
             catch (Exception exc)
             {
-                int abc = 1;
+                // throw exc;
             }
 
 
@@ -378,8 +375,7 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                         newQuestion.Simple_Question = question;
                         newQuestion.Weight = externalRequirement.Weight;
                         newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
-                        newQuestion.Universal_Sal_Level = ((SalValues)(externalRequirement.SecurityAssuranceLevel ?? (int)SalValues.L)).ToString();
-
+                        newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.SecurityAssuranceLevels);                       
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
                         newQuestion.Std_Ref_Number = stdRefNum++;
@@ -402,6 +398,7 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                     Question_Id = newQuestion.Question_Id,
                     Set_Name = setName
                 };
+
                 if (db.NEW_QUESTION_SETS.Count(x => x.Question_Id == nqs.Question_Id && x.Set_Name == nqs.Set_Name) == 0)
                 {
                     db.NEW_QUESTION_SETS.Add(nqs);
@@ -409,25 +406,14 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
 
 
                     // attach SAL levels
-                    foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
+                    foreach (string sal in externalRequirement.SecurityAssuranceLevels)
                     {
-                        try
+                        var rl = new NEW_QUESTION_LEVELS()
                         {
-                            if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
-                            {
-                                var rl = new NEW_QUESTION_LEVELS()
-                                {
-                                    Universal_Sal_Level = sal.ToString(),
-                                    New_Question_Set_Id = nqs.New_Question_Set_Id
-                                };
-                                db.NEW_QUESTION_LEVELS.Add(rl);
-                            }
-                        }
-                        catch (Exception exc)
-                        {
-                            var abc = 1;
-                            // result.LogError(String.Format("An error occurred while adding SALs for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
-                        }
+                            Universal_Sal_Level = sal.ToString(),
+                            New_Question_Set_Id = nqs.New_Question_Set_Id
+                        };
+                        db.NEW_QUESTION_LEVELS.Add(rl);
                     }
                 }
                          
@@ -463,11 +449,9 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                 }
                 catch (Exception exc)
                 {
-                    var a = 1;
                     throw new Exception("Error saving REQUIREMENT_QUESTIONS_SETS and REQUIREMENT_QUESTIONS");
                 }
             }
-
         }
     }
 }

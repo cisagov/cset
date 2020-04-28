@@ -67,7 +67,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 }
                                 catch (Exception e)
                                 {
-
+                                    throw e;
                                 }
                                 context.GEN_FILE.Add(genFile);
                                 context.SaveChanges();

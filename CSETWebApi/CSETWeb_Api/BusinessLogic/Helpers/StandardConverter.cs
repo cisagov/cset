@@ -5,18 +5,14 @@
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
-using CSET_Main.Common.EnumHelper;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static BusinessLogic.Models.ExternalRequirement;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessLogic.Helpers
 {
@@ -211,22 +207,12 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                                       }).FirstOrDefault()
                 }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
 
-                var reqLevels = new Dictionary<int, int?>();
+                var reqLevels = new Dictionary<int, List<string>>();
                 var tempLevels = reqs.Select(s => new { s.Requirement_Id, levels = s.REQUIREMENT_LEVELS.Select(t => t.Standard_Level) }).ToList();
+
                 if (tempLevels.Any())
                 {
-                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => ((s.levels != null && s.levels.Any()) ? s.levels?.Min(t =>
-                        {
-                            SalValues val;
-                            if (Enum.TryParse(t, out val))
-                            {
-                                return (int)val;
-                            }
-                            else
-                            {
-                                return 1;
-                            }
-                        }) : 1));
+                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => s.levels.ToList());
                 }
 
                 foreach (var requirement in reqs)
@@ -282,9 +268,11 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     externalRequirement.Source = source;
 
                     // SAL
-                    int? sal;
-                    reqLevels.TryGetValue(requirement.Requirement_Id, out sal);
-                    externalRequirement.SecurityAssuranceLevel = sal;
+                    externalRequirement.SecurityAssuranceLevels = new List<string>();
+                    foreach (var s in reqLevels[requirement.Requirement_Id])
+                    {
+                        externalRequirement.SecurityAssuranceLevels.Add(s);
+                    }
 
 
                     requirements.Add(externalRequirement);

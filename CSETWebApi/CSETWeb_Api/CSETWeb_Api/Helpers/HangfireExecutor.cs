@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Helpers
 
             try
             {
-                ModuleImporter.DoIt(externalStandard);
+                ModuleImporter.ProcessStandard(externalStandard);
             }
             catch (Exception exc)
             {
