@@ -21,6 +21,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
         {
             if (context.Type == typeof(ExternalRequirement))
             {
+                // Heading
                 var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().Heading)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
@@ -28,6 +29,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     categories.ForEach(s => schema.Enumeration.Add(s));
                 }
 
+                // Subheading
                 schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().Subheading)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
@@ -38,14 +40,13 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     schema.AnyOf.Add(new JsonSchema() { Type = JsonObjectType.String });
                 }
 
+                // SecurityAssuranceLevels
                 schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().SecurityAssuranceLevels)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
-                    var tempSchema = new JsonSchema();
                     var subCategories = db.UNIVERSAL_SAL_LEVEL.Distinct().Where(s => s.Universal_Sal_Level1 != "none").OrderBy(s => s.Sal_Level_Order).ToList();
-                    subCategories.ForEach(s => tempSchema.Enumeration.Add(s.Universal_Sal_Level1));
-                    schema.AnyOf.Add(tempSchema);
-                    schema.AnyOf.Add(new JsonSchema() { Type = JsonObjectType.Array });
+                    schema.Type = JsonObjectType.Array;                   
+                    subCategories.ForEach(s => schema.Item.Enumeration.Add(s.Universal_Sal_Level1));                   
                 }
             }
             else
