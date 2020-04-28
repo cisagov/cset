@@ -111,26 +111,17 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 newRequirement.Standard_Category = category.Standard_Category1;
             }
 
-            foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
-            {
-                try
-                {
-                    if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
-                    {
-                        var rl = new REQUIREMENT_LEVELS()
-                        {
-                            Standard_Level = sal.ToString(),
-                            Level_Type = "NST"
-                        };
-                        newRequirement.REQUIREMENT_LEVELS.Add(rl);
-                    }
-                }
-                catch
-                {
-                    result.LogError(String.Format("An error occurred while adding SALs for requirement {0} {1}.", externalRequirement.Identifier, externalRequirement.Text));
 
-                }
+            foreach (string sal in externalRequirement.SecurityAssuranceLevels)
+            {
+                var rl = new REQUIREMENT_LEVELS()
+                {
+                    Standard_Level = sal,
+                    Level_Type = "NST"
+                };
+                newRequirement.REQUIREMENT_LEVELS.Add(rl);
             }
+            
 
             var importer = new DocumentImporter();
             if (externalRequirement.References != null)
@@ -219,7 +210,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                         newQuestion.Simple_Question = question;
                         newQuestion.Weight = externalRequirement.Weight;
                         newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
-                        newQuestion.Universal_Sal_Level = ((SalValues)(externalRequirement.SecurityAssuranceLevel ?? (int)SalValues.L)).ToString();
+                        newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.SecurityAssuranceLevels);
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
                         newQuestion.Heading_Pair_Id = subcategory.Heading_Pair_Id;
@@ -230,23 +221,13 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     }
                 }
 
-                foreach (var sal in Enum.GetValues(typeof(SalValues)).Cast<SalValues>().ToList())
+                foreach (string sal in externalRequirement.SecurityAssuranceLevels)
                 {
-                    try
+                    var rl = new NEW_QUESTION_LEVELS()
                     {
-                        if ((int)sal >= (externalRequirement.SecurityAssuranceLevel ?? 0))
-                        {
-                            var rl = new NEW_QUESTION_LEVELS()
-                            {
-                                Universal_Sal_Level = sal.ToString(),
-                            };
-                            questionSet.NEW_QUESTION_LEVELS.Add(rl);
-                        }
-                    }
-                    catch
-                    {
-                        result.LogError(String.Format("An error occurred while adding SALs for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
-                    }
+                        Universal_Sal_Level = sal.ToString(),
+                    };
+                    questionSet.NEW_QUESTION_LEVELS.Add(rl);
                 }
 
 
