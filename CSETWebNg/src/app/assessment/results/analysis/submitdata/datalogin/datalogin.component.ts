@@ -97,6 +97,9 @@ export class DataloginComponent implements OnInit {
             }
           } else {
             this.error = 'We were unable to log you in.  Error with login. Try again.';
+            message = err.message;
+            if(message)
+              this.openSnackBar(message);
           }
         });
   }
