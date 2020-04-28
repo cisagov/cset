@@ -87,7 +87,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     language: 'xml',
     uri: 'main.json',
     // tslint:disable-next-line:max-line-length
-    value: '<?xml version="1.0" encoding="utf-8"?>\r\n<Standard>\r\n\t<Category></Category>\r\n\t<Name></Name>\r\n\t<Requirements>\r\n\t\t<Requirement>\r\n\t\t\t<Heading></Heading>\r\n\t\t\t<Identifier></Identifier>\r\n\t\t\t<SecurityAssuranceLevel></SecurityAssuranceLevel>\r\n\t\t\t<Subheading></Subheading>\r\n\t\t\t<Text></Text>\r\n\t\t\t<Weight></Weight>\r\n\t\t</Requirement>\r\n\t</Requirements>\r\n\t<ShortName></ShortName>\r\n\t<Summary></Summary>\r\n</Standard>',
+    value: '<?xml version="1.0" encoding="utf-8"?>\r\n<Standard>\r\n\t<Category></Category>\r\n\t<Name></Name>\r\n\t<Requirements>\r\n\t\t<Requirement>\r\n\t\t\t<Heading></Heading>\r\n\t\t\t<Identifier></Identifier>\r\n\t\t\t<SecurityAssuranceLevels></SecurityAssuranceLevels>\r\n\t\t\t<Subheading></Subheading>\r\n\t\t\t<Text></Text>\r\n\t\t\t<Weight></Weight>\r\n\t\t</Requirement>\r\n\t</Requirements>\r\n\t<ShortName></ShortName>\r\n\t<Summary></Summary>\r\n</Standard>',
     schemas: []
   };
 
@@ -139,18 +139,21 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   switchToJson() {
-    this.codeModel = {...this.jsonCodeModel};
+    this.codeModel = { ...this.jsonCodeModel };
     this.lang = 'json';
   }
+
   switchToXml() {
-    this.codeModel = {...this.xmlCodeModel};
+    this.codeModel = { ...this.xmlCodeModel };
     this.lang = 'xml';
   }
+
   clickXMLLink(setName: string) {
     this.fileClient.getXMLExportSet(setName).subscribe(s => {
       saveAs(new Blob([s], { type: 'application/xml' }), setName + '.xml');
     });
   }
+  
   clickJSONLink(setName: string) {
     this.fileClient.getJSONExportSet(setName).subscribe(s => {
       saveAs(new Blob([s], { type: 'application/json' }), setName + '.json');
@@ -158,6 +161,8 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   loadJSONLink(setName: string) {
+    this.state = 'Ready';
+
     if (this.lang === 'json') {
       this.fileClient.getJSONExportSet(setName).subscribe(s => {
         this.codeModel = {
@@ -184,9 +189,11 @@ export class ImportComponent implements OnInit, OnDestroy {
       saveAs(s, 'standard.xsd');
     });
   }
+
   getJsonSchema() {
     saveAs(new Blob([JSON.stringify(this.jsonCodeModel.schemas[0].schema)]), 'standard.schema.json');
   }
+
   public submitForm() {
     this.isDocError = false;
     if (this.uploader.getNotUploadedItems().length) {
@@ -203,9 +210,9 @@ export class ImportComponent implements OnInit, OnDestroy {
         this.state = 'Processing';
         const inter = interval(1000);
         const fileSubscription = inter.pipe(
-            startWith(0),
-            switchMap(() => this.fileClient.moduleStatus(t.id))
-          )
+          startWith(0),
+          switchMap(() => this.fileClient.moduleStatus(t.id))
+        )
           .subscribe(e => {
             this.errors = e.errors;
             if (e.state === 'Succeeded' || e.state === 'Failed') {
@@ -217,7 +224,7 @@ export class ImportComponent implements OnInit, OnDestroy {
               });
             }
           });
-          this.subscriptions.push(fileSubscription);
+        this.subscriptions.push(fileSubscription);
 
       },
       e => {
@@ -255,7 +262,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     private editorService: CodeEditorService
   ) {
     // hardcoding the polyfill here, as ugly as that is TODO:  Remove
-    Promise.all = function(values: any): Promise<any> {
+    Promise.all = function (values: any): Promise<any> {
       let resolve: (v: any) => void;
       let reject: (v: any) => void;
       const promise = new Promise((res, rej) => {
@@ -283,11 +290,11 @@ export class ImportComponent implements OnInit, OnDestroy {
             }
           }
         },
-        () => {
-          if (reject !== null) {
-            reject(null);
-          }
-        });
+          () => {
+            if (reject !== null) {
+              reject(null);
+            }
+          });
 
         unresolvedCount++;
         valueIndex++;
@@ -342,14 +349,14 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.fileClient.getExports().subscribe(t => {
       this.sets = t;
     });
-    this.codeModel = {...this.jsonCodeModel};
+    this.codeModel = { ...this.jsonCodeModel };
     this.editorService.loaded.subscribe(t => {
-    this.fileClient.getSchema().subscribe(s => {
+      this.fileClient.getSchema().subscribe(s => {
         this.jsonCodeModel.schemas.push({
-        uri: 'http://custom/schema.json',
-        schema: s
+          uri: 'http://custom/schema.json',
+          schema: s
         });
-        this.codeModel = {...this.jsonCodeModel};
+        this.codeModel = { ...this.jsonCodeModel };
       });
       this.fileClient.getText('assets/Standard.xsd').subscribe(s => {
         this.xmlCodeModel.schemas.push({
@@ -383,7 +390,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.codeModel = this.jsonCodeModel;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
