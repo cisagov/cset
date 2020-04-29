@@ -30,6 +30,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { strict } from 'assert';
 import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
 import { MatDialogRef, MatDialog } from '@angular/material';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
     selector: 'app-analytics',
@@ -59,7 +60,8 @@ export class AnalyticsComponent implements OnInit {
         public analyticsSvc: AnalyticsService,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private config: ConfigService
     ) { }
 
     ngOnInit() {
@@ -92,10 +94,7 @@ export class AnalyticsComponent implements OnInit {
             (err: any) => {
                 const message = err.message;
                 this.openSnackBar(message);
-
-
-
-                window.open("http://localhost:4201/login", "_blank");           
+                window.open(this.config.analyticsUrl +"index.html", "_blank");           
             });
     }
 
@@ -105,7 +104,7 @@ export class AnalyticsComponent implements OnInit {
             disableClose: true,
             data: this.analytics
         }).afterClosed().subscribe(info => {            
-                window.open("http://localhost:4201/login", "_blank");            
+            window.open(this.config.analyticsUrl +"index.html", "_blank");           
           });
     }
 
