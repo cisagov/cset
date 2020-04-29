@@ -29,6 +29,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { LoginData } from '../../../../../models/anonymous.model';
 import { AnalyticsService } from '../../../../../services/analytics.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfigService } from '../../../../../services/config.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -58,8 +59,13 @@ export class DataloginComponent implements OnInit {
 
 
 
-  constructor(private dialog: MatDialogRef<DataloginComponent>, private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public analytics: any, private analyticsSvc: AnalyticsService) { }
+  constructor(
+    private dialog: MatDialogRef<DataloginComponent>, 
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public analytics: any, 
+    private analyticsSvc: AnalyticsService,
+    private config: ConfigService
+    ) { }
 
 
   ngOnInit() {
@@ -109,6 +115,14 @@ export class DataloginComponent implements OnInit {
    */
   close() {
     return this.dialog.close({ cancel: true });
+  }
+
+
+  /**
+   * Take user to page where they can register as a new user.
+   */
+  register() {
+    window.open(this.config.analyticsUrl + "index.html", "_blank");
   }
 
   openSnackBar(message) {
