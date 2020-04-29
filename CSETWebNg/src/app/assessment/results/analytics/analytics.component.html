@@ -25,7 +25,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12" style="padding-bottom:15px;">
-                <h4>Analytics</h4>            
+                <h4>Share Assessment with DHS</h4>            
                 <p>Clicking “Submit Anonymous” will submit the data shown in the table below (question identifiers, questions, and answers) with no user identifying information.</p>
                 <p>Clicking “Submit with Login” will submit the same data, but will be associated with an anonymous user identifier accessible only to you.  Submitting with Login will allow you to compare your submission against your CSET Assessment sector and industry averages. </p>
             </div>
@@ -68,9 +68,9 @@
                                                     <th width="15%" mat-sort-header="Answer">Answer</th>
                                                 </tr>   
                                                 <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
-                                                    <td style="padding-left:15px;">{{qa.QuestionId}}</td>
-                                                    <td>{{qa.QuestionText}}</td>
-                                                    <td>{{qa.Answer_Text}}</td>
+                                                    <td style="padding-left:15px;" class="align-top">{{qa.QuestionId}}</td>
+                                                    <td [innerHTML]="qa.QuestionText" class="align-top"></td>
+                                                    <td class="align-top">{{qa.Answer_Text}}</td>
                                                 </tr>
                                             </table>
                                         </div>
