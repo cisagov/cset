@@ -112,9 +112,12 @@ namespace CSETWeb_Api.Controllers
                 var set = db.SETS
                     .Include(s => s.Set_Category_)
                     .Include(s => s.REQUIREMENT_SETS)
-                    .ThenInclude(r => r.Requirement_)
-                    .ThenInclude(rf => rf.REQUIREMENT_REFERENCES)
-                    .ThenInclude(gf => gf.Gen_File_)
+                        .ThenInclude(r => r.Requirement_)
+                            .ThenInclude(rf => rf.REQUIREMENT_REFERENCES)
+                                .ThenInclude(gf => gf.Gen_File_)
+                    .Include(s => s.REQUIREMENT_SETS)
+                        .ThenInclude(r => r.Requirement_)
+                            .ThenInclude(r => r.REQUIREMENT_LEVELS)              
                     .Where(s => (s.Is_Displayed ?? false) && s.Set_Name == setName).FirstOrDefault();
 
                 if (set == null)

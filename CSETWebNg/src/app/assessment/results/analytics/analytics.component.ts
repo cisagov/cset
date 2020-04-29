@@ -88,7 +88,14 @@ export class AnalyticsComponent implements OnInit {
                 console.log("in the final post");
                 const message = data.message;
                 this.openSnackBar(message);
-                window.open("http://localhost:4201/login", "_blank");
+            },
+            (err: any) => {
+                const message = err.message;
+                this.openSnackBar(message);
+
+
+
+                window.open("http://localhost:4201/login", "_blank");           
             });
     }
 

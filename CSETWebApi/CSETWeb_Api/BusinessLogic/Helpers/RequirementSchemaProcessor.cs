@@ -10,10 +10,8 @@ using DataLayerCore.Model;
 using NJsonSchema;
 using NJsonSchema.Generation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CSETWeb_Api.BusinessLogic.Helpers
 {
@@ -23,12 +21,15 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
         {
             if (context.Type == typeof(ExternalRequirement))
             {
+                // Heading
                 var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().Heading)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
                     var categories = db.QUESTION_GROUP_HEADING.Select(s => s.Question_Group_Heading1).Distinct().OrderBy(s => s).ToList();
                     categories.ForEach(s => schema.Enumeration.Add(s));
                 }
+
+                // Subheading
                 schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().Subheading)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
@@ -38,11 +39,14 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     schema.AnyOf.Add(tempSchema);
                     schema.AnyOf.Add(new JsonSchema() { Type = JsonObjectType.String });
                 }
-                schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().SecurityAssuranceLevel)).FirstOrDefault().Value;
+
+                // SecurityAssuranceLevels
+                schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalRequirement().SecurityAssuranceLevels)).FirstOrDefault().Value;
                 using (var db = new CSET_Context())
                 {
-                    var subCategories = db.UNIVERSAL_SAL_LEVEL.Select(s => s.Sal_Level_Order).Distinct().OrderBy(s => s).ToList();
-                    subCategories.ForEach(s => schema.Enumeration.Add(s));
+                    var subCategories = db.UNIVERSAL_SAL_LEVEL.Distinct().Where(s => s.Universal_Sal_Level1 != "none").OrderBy(s => s.Sal_Level_Order).ToList();
+                    schema.Type = JsonObjectType.Array;                   
+                    subCategories.ForEach(s => schema.Item.Enumeration.Add(s.Universal_Sal_Level1));                   
                 }
             }
             else

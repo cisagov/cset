@@ -675,17 +675,17 @@ namespace CSETWeb_Api.BusinessManagers
                     subcatID = sc.Universal_Sub_Category_Id;
                 }
 
-                // See if we have this pairing for our set
-                var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Question_Group_Heading_Id == categoryId
-                    && x.Universal_Sub_Category_Id == subcatID
-                    && x.Set_Name == setName).FirstOrDefault();
+                // See if this pairing exists (regardless of the set name)
+                var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                    .Where(x => x.Question_Group_Heading_Id == categoryId && x.Universal_Sub_Category_Id == subcatID)
+                    .FirstOrDefault();
 
                 if (usch != null)
                 {
                     return usch.Heading_Pair_Id;
                 }
 
-                // Create a new set-specific USCH record
+                // Create a new USCH record
                 usch = new UNIVERSAL_SUB_CATEGORY_HEADINGS
                 {
                     Question_Group_Heading_Id = categoryId,
