@@ -395,8 +395,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
                     {
                         throw new Exception("Unrecognized component: " + cell.OuterXml);
                     }
-
-                    nodesList.Add(cn.ComponentGuid, cn);
+                    NetworkComponent tmp;
+                    if(nodesList.TryGetValue(cn.ComponentGuid, out tmp))
+                    {
+                        if (cn.Equals(tmp))
+                        {
+                            Trace.WriteLine("cn == temp");
+                        }
+                    }
+                    else
+                        nodesList.Add(cn.ComponentGuid, cn);
                 }
             }
             return nodesList;

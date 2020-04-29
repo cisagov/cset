@@ -30,10 +30,10 @@
                     <ng-container *ngFor="let set of sets">
                         <li class="list-group-item bgc-white">
                             <div style="display: flex; flex-flow:column">
-                                <h5>{{set.Name}}</h5>
+                                <h6>{{set.Name}}</h6>
                                 <div class="d-flex mt-2">
                                     <span class="flex-11a">
-                                        <button (click)="clickXMLLink(set.SetName)" class="btn btn-secondary mr-1">XML</button>
+                                        <button (click)="clickXMLLink(set.SetName)" class="btn btn-secondary mr-1 mb-1">XML</button>
                                         <button (click)="clickJSONLink(set.SetName)" class="btn btn-secondary">JSON</button>
                                     </span>
                                     <span class="flex-01a">
@@ -191,17 +191,16 @@
                             <span class="spinner-container" style="display:inline-block" *ngIf="state=='Processing'">
                                 <div class="spinner" style="max-width: 20px; max-height: 20px;"></div>
                             </span>
-                            <span class="cset-icons-export mr-1" *ngIf="state!='Processing'"></span>
-                            <span *ngIf="state=='Failed'">Resubmit</span>
+                            <span class="cset-icons-import mr-1" *ngIf="state!='Processing'"></span>
+                            <span *ngIf="state=='Failed'">Retry Import</span>
                             <span *ngIf="state=='Processing'">Processing</span>
-                            <span *ngIf="state=='Ready'">Submit</span>
+                            <span *ngIf="state=='Ready'">Import</span>
                         </button>
                         <button *ngIf="state!='Processing'&&state!='Ready'" class="btn btn-primary" (click)="clearForm()">Import
                             another module</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

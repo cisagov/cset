@@ -88,6 +88,7 @@ import { ExecutiveComponent } from './reports/executive/executive.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
 
 const appRoutes: Routes = [
 
@@ -258,7 +259,7 @@ const appRoutes: Routes = [
       {path: 'discoveries', component: DiscoveryTearoutsComponent }, 
       {path: 'executive', component: ExecutiveComponent }, 
       {path: 'securityplan', component: SecurityplanComponent }, 
-      {path: 'sitesummary', component: SecurityplanComponent },
+      {path: 'sitesummary', component: SitesummaryComponent },
       {path: 'trendreport', component: TrendReportComponent },
       {path: 'comparereport', component: CompareReportComponent }
     ] 

@@ -452,6 +452,7 @@
     <Compile Include="Models\Standard.cs" />
     <Compile Include="Models\UserCreateResponse.cs" />
     <Compile Include="Models\UserDetail.cs" />
+    <Compile Include="ModuleIO\ModuleImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Questions\ComponentOverride\ComponentOverrideLinkInfo.cs" />
     <Compile Include="Questions\ComponentOverride\ComponentTemporaryDefault.cs" />

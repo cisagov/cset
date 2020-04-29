@@ -29,6 +29,7 @@ import {
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService, NavTree } from '../../services/navigation.service';
 import { StandardService } from '../../services/standard.service';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-results',
@@ -37,14 +38,16 @@ import { StandardService } from '../../services/standard.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {
+  analyticsIsUp: boolean = false;
+
   constructor(
     private assessSvc: AssessmentService,
     private navSvc: NavigationService,
     private stdSvc: StandardService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, 
+    private analyticsSvc: AnalyticsService
   ) {
-
     // Store the active results view based on the new navigation target
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
@@ -65,7 +68,19 @@ export class ResultsComponent implements OnInit {
     });
 
     // Build the nav tree
-    this.stdSvc.getACET().subscribe(x => this.populateTree(x));
+    this.stdSvc.getACET().subscribe(x => 
+      {
+        this.analyticsSvc.pingAnalyticsService().subscribe(
+          data => { 
+            this.analyticsIsUp = true;
+            this.populateTree(x);
+          },
+          err => { 
+            this.analyticsIsUp = false;
+            this.populateTree(x)
+          }
+        );
+      });
   }
 
   tree: NavTree[] = [];
@@ -92,6 +107,10 @@ export class ResultsComponent implements OnInit {
         this.navSvc.selectItem(this.navSvc.activeResultsView);
       });
     }
+  }
+
+  pingAnalytics(){
+    
   }
 
   populateTree(acet) {
@@ -130,8 +149,11 @@ export class ResultsComponent implements OnInit {
 
     this.tree.push({ label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] });
     this.tree.push({ label: 'Reports', value: 'reports', children: [] });
-    this.tree.push({ label: 'Submit Feedback', value: 'feedback', children: [] });
-    this.tree.push({ label: 'Submit Data', value: 'analytics', children: []});
+    this.tree.push({ label: 'Feedback', value: 'feedback', children: [] });
+    
+    if(this.analyticsIsUp){
+      this.tree.push({ label: 'Share Assessment with DHS', value: 'analytics', children: []});
+    }
     this.navSvc.setTree(this.tree, magic);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[0]);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[1]);
