@@ -43,7 +43,8 @@ export class AnalyticsService {
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + "analytics/";
-    this.analyticsUrl = 'https://localhost:44397/api/';
+    this.analyticsUrl = this.configSvc.analyticsUrl +"api/";
+    
   }
   
   getAnalytics():any {
