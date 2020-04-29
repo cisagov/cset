@@ -37,7 +37,7 @@ export class ConfigService {
   helpContactEmail: string;
   helpContactPhone: string;
   configUrl = 'assets/config.json';
-
+  analyticsUrl: string;
   config: any;
 
   // button labels
@@ -50,6 +50,7 @@ export class ConfigService {
 
   private initialized = false;
   isAPI_together_With_Web = false;
+  
 
   constructor(private http: HttpClient) {
     if (/reports/i.test(window.location.href)) {
@@ -59,9 +60,6 @@ export class ConfigService {
     if (this.isAPI_together_With_Web) {
       this.apiUrl = sessionStorage.getItem("appAPIURL");
     }
-
-
-
   }
 
   loadConfig() {
@@ -77,6 +75,7 @@ export class ConfigService {
         this.apiUrl = environment.apiUrl;
         this.appUrl = environment.appUrl;
         this.docUrl = environment.docUrl;
+        this.analyticsUrl = environment.analyticsUrl;
         //this.reportsUrl = environment.reportsUrl;
       } else {
         this.configUrl = "api/assets/config";
@@ -91,6 +90,7 @@ export class ConfigService {
         .then((data: any) => {
           if (this.isAPI_together_With_Web) {
             this.apiUrl = data.apiUrl;
+            this.analyticsUrl = data.analyticsUrl;
             this.appUrl = data.appUrl;
             this.docUrl = data.docUrl;
             //this.reportsUrl = data.reportsUrl;
