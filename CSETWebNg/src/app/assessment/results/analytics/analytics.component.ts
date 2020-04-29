@@ -74,7 +74,7 @@ export class AnalyticsComponent implements OnInit {
     getAnalytics(){
         this.analyticsSvc.getAnalytics().subscribe(
             (data: any) => {
-                this.analytics = data;
+                this.analytics = data;                
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -88,6 +88,7 @@ export class AnalyticsComponent implements OnInit {
                 console.log("in the final post");
                 const message = data.message;
                 this.openSnackBar(message);
+                window.open("http://localhost:4201/login", "_blank");
             });
     }
 
@@ -96,7 +97,9 @@ export class AnalyticsComponent implements OnInit {
             width:'300px',
             disableClose: true,
             data: this.analytics
-        });
+        }).afterClosed().subscribe(info => {            
+                window.open("http://localhost:4201/login", "_blank");            
+          });
     }
 
     openSnackBar(message){
