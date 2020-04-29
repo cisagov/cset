@@ -31,6 +31,7 @@ import { strict } from 'assert';
 import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { ConfigService } from '../../../services/config.service';
+import { AlertComponent } from '../../../dialogs/alert/alert.component';
 
 @Component({
     selector: 'app-analytics',
@@ -39,21 +40,21 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class AnalyticsComponent implements OnInit {
 
-    analytics:any = {
-        Demographics:{
+    analytics: any = {
+        Demographics: {
             SectorId: 0,
             IndustryId: 0,
-            SectorName:'',
-            IndustryName:'',
-            Assets:'',
-            Size:''
+            SectorName: '',
+            IndustryName: '',
+            Assets: '',
+            Size: ''
         },
-        QuestionAnswers:[]
+        QuestionAnswers: []
     };
 
-    username:string='';
-    password:string='';
-    
+    username: string = '';
+    password: string = '';
+
     constructor(private router: Router,
         public navSvc2: Navigation2Service,
         public navSvc: NavigationService,
@@ -67,16 +68,16 @@ export class AnalyticsComponent implements OnInit {
     ngOnInit() {
         this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
-          });
+        });
         this.route.params.subscribe(params => {
             this.getAnalytics();
         });
     }
 
-    getAnalytics(){
+    getAnalytics() {
         this.analyticsSvc.getAnalytics().subscribe(
             (data: any) => {
-                this.analytics = data;                
+                this.analytics = data;
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -93,40 +94,42 @@ export class AnalyticsComponent implements OnInit {
             },
             (err: any) => {
                 const message = err.message;
-                this.openSnackBar(message);
-                window.open(this.config.analyticsUrl +"index.html", "_blank");           
+                this.dialog.open(AlertComponent, {
+                    data: { messageText: message }
+                });
             });
     }
 
-    showLogin(){
+    showLogin() {
         const dialogRef = this.dialog.open(DataloginComponent, {
-            width:'300px',
+            width: '300px',
             disableClose: true,
             data: this.analytics
-        }).afterClosed().subscribe(info => {            
-            window.open(this.config.analyticsUrl +"index.html", "_blank");           
-          });
-    }
-
-    openSnackBar(message){
-        this.snackBar.open(message, "", {
-            duration:4000,
-            verticalPosition:'top',
-            panelClass:['green-snackbar']
+        }).afterClosed().subscribe(info => {
+            if (!!info && info.cancel) {
+                // user canceled, do nothing
+            } else {
+                window.open(this.config.analyticsUrl + "index.html", "_blank");
+            }
         });
     }
 
-    getRawData(){
+    openSnackBar(message) {
+        this.snackBar.open(message, "", {
+            duration: 4000,
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar']
+        });
+    }
+
+    getRawData() {
         return JSON.stringify(this.analytics);
     }
 
-    checkValue(val){
-        if(val){
+    checkValue(val) {
+        if (val) {
             return true;
         }
         return false;
     }
-
-
-
 }
