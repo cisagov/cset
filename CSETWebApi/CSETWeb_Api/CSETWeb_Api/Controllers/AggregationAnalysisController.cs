@@ -293,6 +293,7 @@ namespace CSETWeb_Api.Controllers
             Dictionary<string, List<double>> dict = new Dictionary<string, List<double>>
             {
                 ["Questions"] = new List<double>(),
+                ["Requirement"] = new List<double>(),
                 ["Overall"] = new List<double>(),
                 ["Components"] = new List<double>()
             };
@@ -324,10 +325,15 @@ namespace CSETWeb_Api.Controllers
 
                 var ds = new ChartDataSet();
                 response.datasets.Add(ds);
-                response.labels.Add("Questions");
-                ds.data.Add((float)dict["Questions"].DefaultIfEmpty(0).Average());
+
                 response.labels.Add("Overall");
                 ds.data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
+
+                response.labels.Add("Standards");
+                ds.data.Add(
+                    (float)dict["Questions"].DefaultIfEmpty(0).Average()
+                    + (float)dict["Requirement"].DefaultIfEmpty(0).Average());
+                
                 response.labels.Add("Components");
                 ds.data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
 
@@ -573,7 +579,7 @@ namespace CSETWeb_Api.Controllers
 
             var response = new HorizBarChart();
             response.reportTitle = "Overall Comparison";
-            var statTypes = new List<string>() { "Questions", "Overall", "Components" };
+            var statTypes = new List<string>() { "Overall", "Standards", "Components" };
             response.labels.AddRange(statTypes);
 
 
@@ -593,10 +599,18 @@ namespace CSETWeb_Api.Controllers
                             var g = (List<GetCombinedOveralls>)result;
 
                             Dictionary<string, double> dict = new Dictionary<string, double>();
+                            dict["Standards"] = 0;
 
                             foreach (GetCombinedOveralls row in g)
                             {
-                                dict[row.StatType] = row.Value;
+                                if (row.StatType == "Requirement" || row.StatType == "Questions")
+                                {
+                                    dict["Standards"] += row.Value;
+                                }
+                                else
+                                {
+                                    dict[row.StatType] = row.Value;
+                                }
                             }
 
                             var ds = new ChartDataSet
