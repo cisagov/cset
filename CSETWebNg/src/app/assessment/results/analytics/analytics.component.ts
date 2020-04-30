@@ -85,12 +85,21 @@ export class AnalyticsComponent implements OnInit {
             });
     }
 
+    /**
+     * Submit Anonymous
+     */
     postAnalyticsWithoutLogin() {
+        if (!this.validateDemographicsForSubmit())
+        {
+            return;
+        }
+
         this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
             (data: any) => {
-                console.log("in the final post");
                 const message = data.message;
-                this.openSnackBar(message);
+                this.dialog.open(AlertComponent, {
+                    data: { messageText: message }
+                });
             },
             (err: any) => {
                 const message = err.message;
@@ -100,7 +109,15 @@ export class AnalyticsComponent implements OnInit {
             });
     }
 
+    /**
+     * Submit With Login
+     */
     showLogin() {
+        if (!this.validateDemographicsForSubmit())
+        {
+            return;
+        }
+
         const dialogRef = this.dialog.open(DataloginComponent, {
             width: '300px',
             disableClose: true,
@@ -128,6 +145,36 @@ export class AnalyticsComponent implements OnInit {
 
     checkValue(val) {
         if (val) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Ensures that demographics are present.
+     */
+    validateDemographicsForSubmit() {
+        console.log(this.analytics.Demographics);
+        if (this.isNullOrEmpty(this.analytics.Demographics.IndustryName)
+            || this.isNullOrEmpty(this.analytics.Demographics.SectorName)
+            || this.isNullOrEmpty(this.analytics.Demographics.AssetValue)) {
+            var message = 'All demographics information must be filled out in order to submit. ' +
+            'Demographics are recorded on the Prepare tab.';
+            this.dialog.open(AlertComponent, {
+                data: { messageText: message }
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 
+     * @param val 
+     */
+    isNullOrEmpty(val) {
+        if (!val || val.length == 0) {
             return true;
         }
         return false;
