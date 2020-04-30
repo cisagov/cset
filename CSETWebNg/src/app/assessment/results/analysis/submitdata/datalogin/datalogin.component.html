@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
@@ -33,13 +33,13 @@
           <mat-form-field appearance="outline">
             <input type="text" matInput placeholder="Username" [formControl]="username" placeholder="Username"
               [errorStateMatcher]="matcherusername">
-              <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
+            <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
             <mat-error *ngIf="username.hasError('required')">
               Username is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </p>
-  
+
         <p>
           <mat-form-field appearance="outline">
             <input type="password" matInput placeholder="Password" [formControl]="password" placeholder="Password"
@@ -50,16 +50,22 @@
             </mat-error>
           </mat-form-field>
         </p>
-  
-        <p *ngIf="error" class="error">
+
+        <p *ngIf="error" class="alert alert-danger">
           {{ error }}
         </p>
       </form>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
-    <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
-    <button class="btn btn-primary" (click)="submit()">Submit</button>
+    <div class="d-flex flex-row w-100" style="justify-content: space-between">
+      <div>
+        <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
+        <button class="btn btn-primary" (click)="submit()">Submit</button>
+      </div>
+      <div>
+        <button class="btn btn-link align-right" (click)="register()">Register User</button>
+      </div>
+    </div>
   </mat-dialog-actions>
 </div>
-
