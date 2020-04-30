@@ -72,7 +72,7 @@
     "update": "^0.7.4",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26",
-    "snyk": "^1.278.2"
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.8",
