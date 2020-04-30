@@ -52,7 +52,7 @@ namespace CSETWeb_Api.BusinessManagers
             return newAssessment;
         }
 
-       
+
 
         public AssessmentDetail CreateNewAssessmentForImport(int currentUserId)
         {
@@ -102,14 +102,14 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                var query = from aa in db.ASSESSMENTS 
-                             where aa.Assessment_Id == assessmentId
-                             select aa;
+                var query = from aa in db.ASSESSMENTS
+                            where aa.Assessment_Id == assessmentId
+                            select aa;
 
                 int tmpUID = 0;
                 Guid tmpGuid = Guid.NewGuid();
-                
-                if(int.TryParse(tm.Payload(Constants.Token_UserId),out tmpUID))
+
+                if (int.TryParse(tm.Payload(Constants.Token_UserId), out tmpUID))
                 {
                     USERS user = db.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
                     if (user != null)
@@ -121,11 +121,11 @@ namespace CSETWeb_Api.BusinessManagers
                         }
                         else
                         {
-                            tmpGuid = user.Id??Guid.NewGuid();
+                            tmpGuid = user.Id ?? Guid.NewGuid();
                         }
                     }
                 }
-                
+
 
 
                 var result = query.ToList().FirstOrDefault();
@@ -237,7 +237,7 @@ namespace CSETWeb_Api.BusinessManagers
                 db.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
                 db.SaveChanges();
 
-                
+
                 var user = db.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
 
 
@@ -365,23 +365,34 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var query = from ddd in db.DEMOGRAPHICS
-                    join s in db.SECTOR on ddd.SectorId equals s.SectorId
-                    join i in db.SECTOR_INDUSTRY on ddd.IndustryId equals i.IndustryId
-                    from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
-                    from dav in db.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
-                    where ddd.Assessment_Id == assessmentId
-                    select new { ddd, ds, dav, s, i };
+                            from s in db.SECTOR.Where(x => x.SectorId == ddd.SectorId).DefaultIfEmpty()
+                            from i in db.SECTOR_INDUSTRY.Where(x => x.IndustryId == ddd.IndustryId).DefaultIfEmpty()
+                            from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
+                            from dav in db.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
+                            where ddd.Assessment_Id == assessmentId
+                            select new { ddd, ds, dav, s, i };
 
 
                 var hit = query.FirstOrDefault();
                 if (hit != null)
                 {
-                    demographics.SectorId = hit.s.SectorId;
-                    demographics.IndustryId = hit.i.IndustryId;
-                    demographics.SectorName = hit.s.SectorName ?? string.Empty;
-                    demographics.IndustryName = hit.i.IndustryName ?? string.Empty;
-                    demographics.AssetValue = hit.ddd.AssetValue ?? string.Empty;
-                    demographics.Size = hit.ddd.Size ?? string.Empty;
+                    if (hit.i != null)
+                    {
+                        demographics.IndustryId = hit.i != null ? hit.i.IndustryId : 0;
+                        demographics.IndustryName = hit.i.IndustryName ?? string.Empty;
+                    }
+                    if (hit.s != null)
+                    {
+                        demographics.SectorId = hit.s != null ? hit.s.SectorId : 0;
+                        demographics.SectorName = hit.s.SectorName ?? string.Empty;
+
+                    }
+                    if (hit.ddd != null)
+                    {
+
+                        demographics.AssetValue = hit.ddd.AssetValue ?? string.Empty;
+                        demographics.Size = hit.ddd.Size ?? string.Empty;
+                    }
                 }
 
                 return demographics;
