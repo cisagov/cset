@@ -98,13 +98,20 @@ export class AnalyticsComponent implements OnInit {
             (data: any) => {
                 const message = data.message;
                 this.dialog.open(AlertComponent, {
-                    data: { messageText: message }
+                    data: { 
+                        title: 'Success',
+                        iconClass: 'cset-icons-check-circle',
+                        messageText: message 
+                    }
                 });
             },
             (err: any) => {
                 const message = err.message;
                 this.dialog.open(AlertComponent, {
-                    data: { messageText: message }
+                    data: { 
+                        title: 'Error',
+                        messageText: message 
+                    }
                 });
             });
     }
@@ -131,37 +138,23 @@ export class AnalyticsComponent implements OnInit {
         });
     }
 
-    openSnackBar(message) {
-        this.snackBar.open(message, "", {
-            duration: 4000,
-            verticalPosition: 'top',
-            panelClass: ['green-snackbar']
-        });
-    }
-
     getRawData() {
         return JSON.stringify(this.analytics);
-    }
-
-    checkValue(val) {
-        if (val) {
-            return true;
-        }
-        return false;
     }
 
     /**
      * Ensures that demographics are present.
      */
     validateDemographicsForSubmit() {
-        console.log(this.analytics.Demographics);
         if (this.isNullOrEmpty(this.analytics.Demographics.IndustryName)
             || this.isNullOrEmpty(this.analytics.Demographics.SectorName)
             || this.isNullOrEmpty(this.analytics.Demographics.AssetValue)) {
-            var message = 'All demographics information must be filled out in order to submit. ' +
-            'Demographics are recorded on the Prepare tab.';
             this.dialog.open(AlertComponent, {
-                data: { messageText: message }
+                data: { 
+                    title: 'Warning',
+                    messageText: 'Sector, Indusry and Asset Value are required in order to submit. ' +
+                        'See the Demographics section on the Prepare tab.'
+                }
             });
             return false;
         }
@@ -178,5 +171,13 @@ export class AnalyticsComponent implements OnInit {
             return true;
         }
         return false;
+    }
+
+    openSnackBar(message) {
+        this.snackBar.open(message, "", {
+            duration: 4000,
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar']
+        });
     }
 }
