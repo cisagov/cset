@@ -52,6 +52,9 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Lucene.Net, Version=2.9.2.1, Culture=neutral, PublicKeyToken=402f1553d5c332e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
@@ -383,6 +386,7 @@
     <Compile Include="Framework\RankingManager.cs" />
     <Compile Include="Helpers\AssessmentUtil.cs" />
     <Compile Include="Helpers\Auth.cs" />
+    <Compile Include="Helpers\LogManager.cs" />
     <Compile Include="Helpers\RequirementSchemaProcessor.cs" />
     <Compile Include="Helpers\StandardSchemaProcessor.cs" />
     <Compile Include="Helpers\Constants.cs" />

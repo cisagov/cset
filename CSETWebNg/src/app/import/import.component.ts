@@ -29,7 +29,7 @@ import * as monaco from 'monaco-editor';
 import { interval, Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/internal/operators/debounce';
 import { startWith } from 'rxjs/internal/operators/startWith';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import * as screenfull from 'screenfull';
 import { FileItem, FileUploader } from '../../../node_modules/ng2-file-upload/ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
@@ -204,6 +204,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public submitCode() {
+    var subjUnsubscribe = new Subject();
     this.errors = [];
     this.fileClient.moduleUpload(this.moduleCode).subscribe(
       t => {
@@ -211,13 +212,16 @@ export class ImportComponent implements OnInit, OnDestroy {
         const inter = interval(1000);
         const fileSubscription = inter.pipe(
           startWith(0),
-          switchMap(() => this.fileClient.moduleStatus(t.id))
+          takeUntil(subjUnsubscribe),
+          switchMap(() => this.fileClient.moduleStatus(t.id)) 
         )
           .subscribe(e => {
             this.errors = e.errors;
             if (e.state === 'Succeeded' || e.state === 'Failed') {
               this.state = e.state;
               fileSubscription.unsubscribe();
+              subjUnsubscribe.next();
+              subjUnsubscribe.complete();
             } else {
               this.fileClient.getExports().subscribe(u => {
                 this.sets = u;
@@ -225,7 +229,6 @@ export class ImportComponent implements OnInit, OnDestroy {
             }
           });
         this.subscriptions.push(fileSubscription);
-
       },
       e => {
         for (const item of e.error.ModelState) {
@@ -236,6 +239,7 @@ export class ImportComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   public clearForm() {
     this.uploader.clearQueue();
     this.moduleCode = '';
@@ -243,9 +247,11 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.errors = [];
     this.subscriptions.forEach(s => s.unsubscribe());
   }
+
   public getFullScreen() {
     return screenfull && screenfull.isFullscreen;
   }
+
   public fullScreen() {
     if (screenfull) {
       if (!screenfull.isFullscreen) {
@@ -255,6 +261,7 @@ export class ImportComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   constructor(
     private configSvc: ConfigService,
     private fileClient: FileUploadClientService,
