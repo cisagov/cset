@@ -25,12 +25,20 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
     /// </summary>
     public static class ModuleImporter
     {
+        private static readonly log4net.ILog log
+       = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Imports a Module/Standard.
         /// </summary>
         /// <param name="externalStandard"></param>
         public static void ProcessStandard(IExternalStandard externalStandard)
         {
+            log.Info("ModuleImporter.ProcessStandard - basic");
+
+
+            LogManager.Instance.LogDebugMessage("ModuleImporter.ProcessStandard");
+
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.ShortName, @"\W", "_");
@@ -268,7 +276,6 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
             var importer = new DocumentImporter();
             if (externalRequirement.References != null)
             {
-
                 foreach (var reference in externalRequirement.References)
                 {
                     var reqReference = new REQUIREMENT_REFERENCES();
