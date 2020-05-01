@@ -51,7 +51,7 @@ interface AssessmentSize {
     selector: 'app-assessment-demographics',
     templateUrl: './assessment-demographics.component.html',
     // tslint:disable-next-line:use-host-property-decorator
-    host: {class: 'd-flex flex-column flex-11a'}
+    host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDemographicsComponent implements OnInit {
     sectorsList: Sector[];
@@ -83,6 +83,12 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getSizeValues().subscribe(
             (data: AssessmentSize[]) => {
                 this.sizeList = data;
+
+                // default the selected size, if not previously set
+                if (!this.demographicData.Size) {
+                    this.demographicData.Size = this.sizeList[0].DemographicId;
+                    this.updateDemographics();
+                }
             },
             error => {
                 console.log('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
