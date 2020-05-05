@@ -18,11 +18,23 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
 {
     public static class StandardConverter
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="externalStandard"></param>
+        /// <returns></returns>
         public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard)
         {
             return await externalStandard.ToSet(new ConsoleLogger());
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="externalStandard"></param>
+        /// <param name="logger"></param>
+        /// <returns></returns>
         public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard, ILogger logger)
         {
             var questionDictionary = new Dictionary<string, NEW_QUESTION>();
@@ -126,9 +138,10 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     question.Std_Ref_Id = question.Std_Ref + question.Std_Ref_Number;
                 }
             }
-            catch
+            catch (Exception exc)
             {
                 result.LogError("Module could not be added.");
+                CsetLogManager.Instance.LogErrorMessage("Exception thrown in StandardConverter.ToSet() ... {0}", exc.ToString());
             }
 
             db.SaveChanges();
@@ -207,13 +220,21 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                                       }).FirstOrDefault()
                 }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
 
-                var reqLevels = new Dictionary<int, List<string>>();
-                var tempLevels = reqs.Select(s => new { s.Requirement_Id, levels = s.REQUIREMENT_LEVELS.Select(t => t.Standard_Level) }).ToList();
 
-                if (tempLevels.Any())
+                var reqLevels = new Dictionary<int, List<REQUIREMENT_LEVELS>>();
+                foreach (var req in reqs)
                 {
-                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => s.levels.ToList());
+                    if (!reqLevels.ContainsKey(req.Requirement_Id))
+                    {
+                        reqLevels[req.Requirement_Id] = req.REQUIREMENT_LEVELS.ToList();
+                    }
                 }
+                //var tempLevels = reqs.Select(s => new { s.Requirement_Id, levels = s.REQUIREMENT_LEVELS.Select(t => t.Standard_Level) }).ToList();
+                //if (tempLevels.Any())
+                //{
+                //    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => s.levels.ToList());
+                //}
+
 
                 foreach (var requirement in reqs)
                 {
@@ -267,18 +288,23 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     reqSource.TryGetValue(requirement.Requirement_Id, out source);
                     externalRequirement.Source = source;
 
-                    // SAL
+                    // SAL - take any levels that are defined, regardless of level_type
                     externalRequirement.SecurityAssuranceLevels = new List<string>();
                     foreach (var s in reqLevels[requirement.Requirement_Id])
                     {
-                        externalRequirement.SecurityAssuranceLevels.Add(s);
+                        if (!externalRequirement.SecurityAssuranceLevels.Contains(s.Standard_Level)
+                            && s.Standard_Level.ToLower() != "none")
+                        {
+                            externalRequirement.SecurityAssuranceLevels.Add(s.Standard_Level);
+                        }
                     }
-
 
                     requirements.Add(externalRequirement);
                 }
+
                 externalStandard.Requirements = requirements;
             }
+
             return externalStandard;
         }
     }
