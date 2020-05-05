@@ -29,7 +29,9 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { LoginData } from '../../../../../models/anonymous.model';
 import { AnalyticsService } from '../../../../../services/analytics.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfigService } from '../../../../../services/config.service';
+import { AlertComponent } from '../../../../../dialogs/alert/alert.component';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -64,7 +66,8 @@ export class DataloginComponent implements OnInit {
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public analytics: any, 
     private analyticsSvc: AnalyticsService,
-    private config: ConfigService
+    private config: ConfigService,
+    private dialogMat: MatDialog,
     ) { }
 
 
@@ -82,8 +85,13 @@ export class DataloginComponent implements OnInit {
         let token = data.token;
         this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
           (data: any) => {
-            message = data.message;
-            this.error = message;
+              this.dialogMat.open(AlertComponent, {
+              data: { 
+                  title: 'Success',
+                  iconClass: 'cset-icons-check-circle',
+                  messageText: data.message 
+              }
+              });
             this.close();
           });
       },
