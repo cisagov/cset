@@ -27,7 +27,7 @@
             <label class="mb-1" for="sector">Sector</label>
             <select class="form-control" id="sector" name="sector" (change)="onSelectSector($event.target.value)"
                 [(ngModel)]="demographicData.SectorId">
-                <option value="0">--Select Sector--</option>
+                <option [ngValue]="null">-- Select Sector --</option>
                 <option *ngFor="let sector of sectorsList" [value]="sector.SectorId">{{sector.SectorName}}</option>
             </select>
         </div>
@@ -35,7 +35,7 @@
             <label class="mb-1" for="industry">Industry</label>
             <select class="form-control" id="industry" name="industry" [(ngModel)]="demographicData.IndustryId"
                 (change)="update($event)">
-                <option value="0">--Select Industry--</option>
+                <option [ngValue]="null">-- Select Industry --</option>
                 <option *ngFor="let industry of industryList" [value]="industry.IndustryId">{{industry.IndustryName}}</option>
             </select>
         </div>
@@ -50,8 +50,9 @@
 
     <div class="form-group">
         <label for="size">What is the relative expected effort for this assessment?</label>
-        <select class="form-control" id="size" name="size" (change)="changeSize($event)">
-            <option *ngFor="let s of sizeList" [value]="s.DemographicId" [selected]="s.DemographicId === demographicData.Size">{{s.Description}}</option>
+        <select class="form-control" id="size" name="size" (change)="changeSize($event)" [(ngModel)]="demographicData.Size">
+            <option [ngValue]="null">-- Select Effort --</option>
+            <option *ngFor="let s of sizeList" [value]="s.DemographicId">{{s.Description}}</option>
         </select>
     </div>
 </form>
