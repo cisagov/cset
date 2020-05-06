@@ -152,7 +152,7 @@ export class AnalyticsComponent implements OnInit {
             this.dialog.open(AlertComponent, {
                 data: { 
                     title: 'Warning',
-                    messageText: 'Sector, Indusry and Asset Value are required in order to submit. ' +
+                    messageText: 'Sector, Industry and Asset Value are required in order to submit. ' +
                         'See the Demographics section on the Prepare tab.'
                 }
             });
