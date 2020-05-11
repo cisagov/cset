@@ -73,13 +73,9 @@ namespace CSETWeb_Api.Controllers
                                                     a.mode == AssessmentMode && a.Feedback != null
                                                     select a;
 
-                    if (QuestionsWithFeedbackList.Count() == 0)
-                    {
-                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";
-                        return FeedbackResult;
-                    }
+                  
 
-                    string FeedbackSalutations = "Dear PED Module Administrator:";
+                    string FeedbackSalutations = "Dear CSET Standards Administrator:";
                     string FeedbackDescription = "The following comments were provided for each of the questions: ";
                     string FeedbackWarning = " *** Required *** Keep This Question ID ***";
 
@@ -121,6 +117,11 @@ namespace CSETWeb_Api.Controllers
                         FeedbackResult.FeedbackEmailBody += q.Question_Text + "%0D%0A%0D%0A";
                         FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
                         FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". %0D%0A%0D%0A%0D%0A";
+                    }
+
+                    if (QuestionsWithFeedbackList.Count() == 0)
+                    {
+                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";                     
                     }
 
                     return FeedbackResult;
