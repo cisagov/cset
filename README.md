@@ -5,7 +5,7 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
 
 Download CSET For Windows:
-[CSET 10.0 Standalone Installer](https://github.com/cisagov/cset2/releases/download/v10.0.0/CSETStandAlone.exe)
+[CSET 10.0 Standalone Installer](https://github.com/cisagov/cset2/releases/)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
