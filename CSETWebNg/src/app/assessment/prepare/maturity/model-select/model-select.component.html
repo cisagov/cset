@@ -20,16 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="assess-compenent d-flex flex-column justify-content-start flex-11a mb-4">
-  <div class="white-panel oy-auto h-0 d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">Assessment Information</h3>
-    <app-assessment-detail class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-detail>
-    <app-assessment-contacts class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
-    <app-assessment-demographics class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-demographics>
+<div class="white-panel d-flex justify-content-start flex-column flex-11a">
+  <h3 class="wrap-text">Maturity Model Selection</h3>
+  <p>
+    This is where we list the available maturity models
+  </p>
 
-    <div class="d-flex justify-content-between flex-00a mb-2r">
-      <button class="btn btn-primary" (click)="navSvc2.navBack('info')">Back</button>
-      <button class="btn btn-primary" (click)="navSvc2.navNext('info')">Next</button>
-    </div>
+  <div class="mt-3 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary" (click)="navSvc2.navBack('model-select')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc2.navNext('model-select')">Next</button>
   </div>
+
 </div>

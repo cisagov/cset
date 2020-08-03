@@ -94,9 +94,11 @@ export class StandardService {
     const magic = this.navSvc.getMagic();
 
     const tree = [
+      { children: [], label: 'Assessment Configuration', value: 'config' },
       { children: [], label: 'Assessment Information', value: 'info' },
       { children: [], label: 'Security Assurance Level (SAL)', value: 'sal' }, 
-      { children: [], label: 'Cybersecurity Standards Selection', value: 'standards' }
+      { children: [], label: 'Cybersecurity Standards Selection', value: 'standards' },
+      { children: [], label: 'Maturity Model Selection', value: 'model-select' }
     ];
 
     if (this.frameworkSelected) {
