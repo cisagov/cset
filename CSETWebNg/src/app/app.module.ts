@@ -199,6 +199,8 @@ import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { AssessmentConfigComponent } from './assessment/prepare/assessment-config/assessment-config.component';
+import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 
 @NgModule({
     imports: [
@@ -362,7 +364,9 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         SecurityplanComponent, 
         SitesummaryComponent,
         TrendReportComponent,
-        CompareReportComponent
+        CompareReportComponent,
+        AssessmentConfigComponent,
+        ModelSelectComponent
     ],
     providers: [
         ConfigService,
