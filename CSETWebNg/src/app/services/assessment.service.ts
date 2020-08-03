@@ -232,12 +232,20 @@ export class AssessmentService {
   }
 
   /**
+   * Returns a boolean indicating if the feature is active.
+   * @param feature 
+   */
+  hasFeature(feature: string) {
+    return this.assessmentFeatures.indexOf(feature.toLowerCase()) >= 0;
+  }
+
+  /**
    * Adds or removes an assessment feature from the list.
    */
   changeFeature(feature: string, state: boolean) {
     if (state) {
-      if (this.assessmentFeatures.indexOf(feature) < 0) {
-        this.assessmentFeatures.push(feature);
+      if (this.assessmentFeatures.indexOf(feature.toLowerCase()) < 0) {
+        this.assessmentFeatures.push(feature.toLowerCase());
       }
     } else {
       this.assessmentFeatures = this.assessmentFeatures.filter(x => x !== feature);

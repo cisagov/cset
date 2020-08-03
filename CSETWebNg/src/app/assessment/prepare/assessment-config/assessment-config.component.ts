@@ -13,13 +13,7 @@ export class AssessmentConfigComponent implements OnInit {
   expandedDesc: boolean[] = [];
 
   // the list of features that can be selected
-  features: any = [
-    {
-      code: 'diagram',
-      label: 'Diagram',
-      description: 'A network diagram can be built in the tool. This will give you other questions.',
-      expanded: false
-    },
+  features: any = [    
     {
       code: 'standards',
       label: 'Standards',
@@ -30,6 +24,12 @@ export class AssessmentConfigComponent implements OnInit {
       code: 'maturity',
       label: 'Maturity Model',
       description: 'You may want to use a maturity model.',
+      expanded: false
+    },
+    {
+      code: 'diagram',
+      label: 'Diagram',
+      description: 'A network diagram can be built in the tool. This will give you other questions.',
       expanded: false
     }
   ];
@@ -50,9 +50,7 @@ export class AssessmentConfigComponent implements OnInit {
    */
   ngOnInit() {
     this.features.forEach(f => {
-      if (this.assessSvc.assessmentFeatures.indexOf(f.code) >= 0) {
-        f.selected = true;
-      }
+      f.selected = this.assessSvc.hasFeature(f.code);
     });
   }
 
