@@ -11,8 +11,8 @@
     <div class="standard-item d-flex justify-content-between flex-11a">
       <div>
         <input type="checkbox" id="{{s.code}}" name="{{s.code}}" class="mt-1"
-            (change)="submit(s, $event)" [checked]="s.Selected">
-        <label for="{{s.code}}" [class.recommended-standard]="s.Recommended">
+            (change)="submit(s, $event)" [checked]="s.selected">
+        <label for="{{s.code}}">
           {{s.label}}
         </label>
       </div>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { Navigation2Service } from '../../../services/navigation2.service';
 import { MatDialog } from '@angular/material';
+import { StandardService } from '../../../services/standard.service';
 
 @Component({
   selector: 'app-assessment-config',
@@ -39,6 +40,7 @@ export class AssessmentConfigComponent implements OnInit {
   constructor(
     private router: Router,
     private assessSvc: AssessmentService,
+    private standardSvc: StandardService,
     public navSvc2: Navigation2Service,
     public dialog: MatDialog
   ) { }
@@ -47,18 +49,19 @@ export class AssessmentConfigComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.features.forEach(f => {
+      if (this.assessSvc.assessmentFeatures.indexOf(f.code) >= 0) {
+        f.selected = true;
+      }
+    });
   }
 
   /**
    * Builds a list of selected features and post it to the server.
    */
-  submit(standard, event: Event) {
-    // this.assessSvc
-    // .postSelections(selectedStandards)
-    // .subscribe((counts: QuestionRequirementCounts) => {
-    //   this.standards.QuestionCount = counts.QuestionCount;
-    //   this.standards.RequirementCount = counts.RequirementCount;
-    // });
+  submit(feature, event: Event) {
+    this.assessSvc.changeFeature(feature.code, event.srcElement.checked);
+    this.standardSvc.refresh();
   }
 
 

@@ -52,6 +52,13 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
 
+  /**
+   * Stores the active assessment 'features' that the user wishes to use,
+   * e.g., diagram, standards, maturity model.
+   */
+  public assessmentFeatures: any[] = [];
+
+
   constructor(
     private emailSvc: EmailService,
     private http: HttpClient,
@@ -222,6 +229,19 @@ export class AssessmentService {
         this.router.navigate(['/assessment', id]);
       }
     });
+  }
+
+  /**
+   * Adds or removes an assessment feature from the list.
+   */
+  changeFeature(feature: string, state: boolean) {
+    if (state) {
+      if (this.assessmentFeatures.indexOf(feature) < 0) {
+        this.assessmentFeatures.push(feature);
+      }
+    } else {
+      this.assessmentFeatures = this.assessmentFeatures.filter(x => x !== feature);
+    }
   }
 
   getAssessmentDocuments() {
