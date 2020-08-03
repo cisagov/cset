@@ -37,6 +37,7 @@ export class StandardService {
   frameworkSelected = false;
   acetSelected = false;
 
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -80,6 +81,10 @@ export class StandardService {
     return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
   }
 
+  refresh() {
+    this.makeNavTree();
+  }
+
   setFrameworkSelected(framework: boolean) {
     this.frameworkSelected = framework;
     this.makeNavTree();
@@ -93,22 +98,40 @@ export class StandardService {
   makeNavTree() {
     const magic = this.navSvc.getMagic();
 
+    // create the full tree ...
     const tree = [
       { children: [], label: 'Assessment Configuration', value: 'config' },
       { children: [], label: 'Assessment Information', value: 'info' },
       { children: [], label: 'Security Assurance Level (SAL)', value: 'sal' }, 
       { children: [], label: 'Cybersecurity Standards Selection', value: 'standards' },
-      { children: [], label: 'Maturity Model Selection', value: 'model-select' }
+      { children: [], label: 'Maturity Model Selection', value: 'model-select' },
+      { children: [], label: 'Cybersecurity Framework', value: 'framework' },
+      { children: [], label: 'Document Request List', value: 'required' },
+      { children: [], label: 'Inherent Risk Profiles', value: 'irp' },
+      { children: [], label: 'Inherent Risk Summary', value: 'irp-summary' }
     ];
 
-    if (this.frameworkSelected) {
-      tree.push({ children: [], label: 'Cybersecurity Framework', value: 'framework' });
+    // ... then remove items as appropriate
+    if (this.assessSvc.assessmentFeatures.indexOf('standards') < 0) {
+      tree.splice(tree.findIndex(x => x.value === 'standards'), 1);
+    }
+    
+    if (this.assessSvc.assessmentFeatures.indexOf('maturity') < 0) {
+      tree.splice(tree.findIndex(x => x.value === 'model-select'), 1);
+    }
+    
+    // if (this.assessSvc.assessmentFeatures.indexOf('diagram') < 0) {
+    //   tree.splice(tree.findIndex(x => x.value === 'diagram'), 1);
+    // }
+
+    if (!this.frameworkSelected) {
+      tree.splice(tree.findIndex(x => x.value === 'framework'), 1);
     }
 
-    if (this.acetSelected) {
-      tree.push({ children: [], label: 'Document Request List', value: 'required' });
-      tree.push({ children: [], label: 'Inherent Risk Profiles', value: 'irp' });
-      tree.push({ children: [], label: 'Inherent Risk Summary', value: 'irp-summary' });
+    if (!this.acetSelected) {
+      tree.splice(tree.findIndex(x => x.value === 'required'), 1);
+      tree.splice(tree.findIndex(x => x.value === 'irp'), 1);
+      tree.splice(tree.findIndex(x => x.value === 'irp-summary'), 1);
     }
     
     this.navSvc.setTree(tree, magic);
