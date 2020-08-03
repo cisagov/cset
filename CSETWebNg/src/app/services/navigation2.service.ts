@@ -42,15 +42,15 @@ export class Navigation2Service {
     { pageClass: 'config', path: 'assessment/{:id}/prepare/config' },
     { pageClass: 'info', path: 'assessment/{:id}/prepare/info' },
     { pageClass: 'sal', path: 'assessment/{:id}/prepare/sal' },
-    { pageClass: 'standards', path: 'assessment/{:id}/prepare/standards' },
-    { pageClass: 'model-select', path: 'assessment/{:id}/prepare/model-select' },
+    { pageClass: 'standards', path: 'assessment/{:id}/prepare/standards', condition: 'STANDARDS' },
+    { pageClass: 'model-select', path: 'assessment/{:id}/prepare/model-select', condition: 'MATURITY' },
     { pageClass: 'framework', path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
     { pageClass: 'required', path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
     { pageClass: 'irp', path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
     { pageClass: 'irp-summary', path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },
 
     //  Diagram
-    { pageClass: 'diagram', path: 'assessment/{:id}/diagram' },
+    { pageClass: 'diagram', path: 'assessment/{:id}/diagram', condition: 'DIAGRAM' },
 
     // Questions/Requirements/Statements
     { pageClass: 'questions', path: 'assessment/{:id}/questions' },
@@ -167,6 +167,18 @@ export class Navigation2Service {
 
     if (condition === 'FRAMEWORK') {
       return this.standardSvc.frameworkSelected;
+    }
+
+    if (condition === 'STANDARDS') {
+      return this.assessSvc.hasFeature('standards');
+    }
+
+    if (condition === 'MATURITY') {
+      return this.assessSvc.hasFeature('maturity');
+    }
+
+    if (condition === 'DIAGRAM') {
+      return this.assessSvc.hasFeature('diagram');
     }
 
     if (condition === 'FALSE') {
