@@ -201,6 +201,7 @@ import { TrendReportComponent } from './reports/trendreport/trendreport.componen
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-config/assessment-config.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 
 @NgModule({
     imports: [
@@ -366,7 +367,8 @@ import { ModelSelectComponent } from './assessment/prepare/maturity/model-select
         TrendReportComponent,
         CompareReportComponent,
         AssessmentConfigComponent,
-        ModelSelectComponent
+        ModelSelectComponent,
+        CmmcAComponent
     ],
     providers: [
         ConfigService,
