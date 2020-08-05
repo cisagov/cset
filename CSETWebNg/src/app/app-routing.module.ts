@@ -91,6 +91,7 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
 import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-config/assessment-config.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 
 const appRoutes: Routes = [
 
@@ -200,6 +201,7 @@ const appRoutes: Routes = [
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
               { path: 'irp-summary', component: IrpSummaryComponent },
+              { path: 'cmmc-a', component: CmmcAComponent },
               { path: '', redirectTo: 'info', pathMatch: 'full' },
               { path: '**', redirectTo: 'info' }
             ]
