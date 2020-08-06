@@ -40,7 +40,7 @@
             <span class="nav-tab-text">Prepare</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'diagram'" (click)="assessSvc.currentTab = 'diagram'">
+        <li *ngIf="assessSvc.assessment?.UseDiagram" class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'diagram'" (click)="assessSvc.currentTab = 'diagram'">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="diagram">
             <span class="tab-icon mr-2" id="diagramIcon">
               <i class="fas fa-project-diagram"></i>
