@@ -2887,3 +2887,20 @@ table.td-text-left th, table.td-text-left td {
   margin-left:20px;
 }
 
+
+////
+.maturity-model-select {
+  border: 2px solid #cccccc;
+  border-radius: .3rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.maturity-model-select:hover {
+  background-color: #eff3f6;
+}
+
+.model-selected {
+  border-color: green;
+}
