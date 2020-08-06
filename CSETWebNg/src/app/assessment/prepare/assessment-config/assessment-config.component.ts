@@ -4,6 +4,8 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { Navigation2Service } from '../../../services/navigation2.service';
 import { MatDialog } from '@angular/material';
 import { StandardService } from '../../../services/standard.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { NullishCoalescePipe } from '../../../helpers/nullish-coalesce.pipe';
 
 @Component({
   selector: 'app-assessment-config',
@@ -15,15 +17,15 @@ export class AssessmentConfigComponent implements OnInit {
   // the list of features that can be selected
   features: any = [    
     {
-      code: 'standards',
-      label: 'Standards',
-      description: 'If you want to use a standard, then use this.',
+      code: 'standard',
+      label: 'Standard',
+      description: 'This is where we will explain why using one or more standards might be the best option for this assessment.',
       expanded: false
     },
     {
       code: 'maturity',
       label: 'Maturity Model',
-      description: 'You may want to use a maturity model.',
+      description: 'This is where we will explain why a maturity model may be the best methodology for this assessment.',
       expanded: false
     },
     {
@@ -49,16 +51,36 @@ export class AssessmentConfigComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.features.forEach(f => {
-      f.selected = this.assessSvc.hasFeature(f.code);
-    });
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (data: AssessmentDetail) => {
+        this.assessSvc.assessment = data;
+
+        this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.UseStandard;
+        this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.UseMaturity;
+        this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.UseDiagram;
+      });
   }
 
   /**
-   * Builds a list of selected features and post it to the server.
+   * Sets the selection of a feature and posts the assesment detail to the server.
    */
   submit(feature, event: Event) {
-    this.assessSvc.changeFeature(feature.code, event.srcElement.checked);
+    const value = event.srcElement.checked;
+
+    switch (feature.code) {
+      case 'standard':
+        this.assessSvc.assessment.UseStandard = value;
+        break;
+      case 'maturity':
+        this.assessSvc.assessment.UseMaturity = value;
+        break;
+      case 'diagram':
+        this.assessSvc.assessment.UseDiagram = value;
+        break;
+    }
+    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
+
+    // tell the standard service to refresh the nav tree
     this.standardSvc.refresh();
   }
 

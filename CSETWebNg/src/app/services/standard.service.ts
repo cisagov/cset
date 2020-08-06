@@ -112,15 +112,15 @@ export class StandardService {
     ];
 
     // ... then remove items as appropriate
-    if (this.assessSvc.assessmentFeatures.indexOf('standards') < 0) {
+    if (!!this.assessSvc.assessment && !this.assessSvc.assessment.UseStandard) {
       tree.splice(tree.findIndex(x => x.value === 'standards'), 1);
     }
     
-    if (this.assessSvc.assessmentFeatures.indexOf('maturity') < 0) {
+    if (!!this.assessSvc.assessment && !this.assessSvc.assessment.UseMaturity) {
       tree.splice(tree.findIndex(x => x.value === 'model-select'), 1);
     }
     
-    // if (this.assessSvc.assessmentFeatures.indexOf('diagram') < 0) {
+    // if (!!this.assessSvc.assessment && !this.assessSvc.assessment.UseDiagram) {
     //   tree.splice(tree.findIndex(x => x.value === 'diagram'), 1);
     // }
 

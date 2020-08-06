@@ -202,8 +202,8 @@ const appRoutes: Routes = [
               { path: 'irp', component: IRPComponent },
               { path: 'irp-summary', component: IrpSummaryComponent },
               { path: 'cmmc-a', component: CmmcAComponent },
-              { path: '', redirectTo: 'info', pathMatch: 'full' },
-              { path: '**', redirectTo: 'info' }
+              { path: '', redirectTo: 'config', pathMatch: 'full' },
+              { path: '**', redirectTo: 'config' }
             ]
           },
           {

@@ -170,15 +170,15 @@ export class Navigation2Service {
     }
 
     if (condition === 'STANDARDS') {
-      return this.assessSvc.hasFeature('standards');
+      return this.assessSvc.assessment.UseStandard;
     }
 
     if (condition === 'MATURITY') {
-      return this.assessSvc.hasFeature('maturity');
+      return this.assessSvc.assessment.UseMaturity;
     }
 
     if (condition === 'DIAGRAM') {
-      return this.assessSvc.hasFeature('diagram');
+      return this.assessSvc.assessment.UseDiagram;
     }
 
     if (condition === 'FALSE') {
