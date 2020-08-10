@@ -17,9 +17,9 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionResponse
     {
-        public List<QuestionGroup> QuestionGroups;
+        public List<Domain> QuestionDomains;
         public string ApplicationMode;
-
+        public List<QuestionGroup> QuestionGroups;
         public int QuestionCount;
         public int RequirementCount;
 
@@ -31,6 +31,25 @@ namespace CSETWeb_Api.Models
         public int OverallIRP;
 
         public int DefaultComponentsCount { get; internal set; }
+    }
+
+    public class Domain
+    {
+        public string DomainName;
+        
+        /// <summary>
+        /// Display text that appears below the DomainName.  Not used for ACET but may be used for EDM.
+        /// </summary>
+        public string DomainText;
+        
+        /// <summary>
+        /// Corresponds to the StandardCategory of the questions/requirements it encapsulates.
+        /// </summary>
+        public string AssessmentFactorName;
+
+        public bool ShowMaturityLevels;
+        
+        public List<QuestionGroup> QuestionGroups;
     }
 
     /// <summary>
