@@ -492,11 +492,4 @@ export class QuestionsComponent implements AfterViewInit {
         this.refreshQuestionVisibility();
       });
   }
-
-  /**
-   * Builds category IDs in a consistent way.
-   */
-  formatID(s) {
-    return s.toLowerCase().replace(/ /g, '-');
-  }
 }

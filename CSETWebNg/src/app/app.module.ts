@@ -202,6 +202,8 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-config/assessment-config.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
+import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
+import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 
 @NgModule({
     imports: [
@@ -368,7 +370,9 @@ import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.comp
         CompareReportComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
-        CmmcAComponent
+        CmmcAComponent,
+        CategoryBlockComponent,
+        DomainBlockComponent
     ],
     providers: [
         ConfigService,
