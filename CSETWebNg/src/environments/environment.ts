@@ -35,7 +35,7 @@ export const environment = {
   analyticsUrl: "https://localhost:44397/", 
   reportsUrl: 'http://localhost:4200/',
   appCode: 'CSET',
-  version: '10.0.0',
+  version: '10.0.1',
   helpContactEmail: 'cset@dhs.gov',
   helpContactPhone: ''
 };
