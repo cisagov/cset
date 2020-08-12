@@ -10,5 +10,9 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Alias { get; set; }
         public string Assessment_GUID { get; set; }
         public DateTime Assessment_Date { get; set; }
+        public int SectorId { get; set; }
+        public int IndustryId { get; set; }
+        public string Assets { get; set; }
+        public string Size { get; set; }
     }
 }

@@ -32,7 +32,7 @@ export const environment = {
   appUrl: 'http://localhost:4200/',
   apiUrl: 'http://localhost:46000/api/',
   docUrl: 'http://localhost:46000/Documents/',
-  analyticsUrl: "https://134.20.214.54:44397/", 
+  analyticsUrl: "https://localhost:44397/", 
   reportsUrl: 'http://localhost:4200/',
   appCode: 'CSET',
   version: '10.0.0',
