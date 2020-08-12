@@ -94,6 +94,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public fileOverBase(e: any): void {
     this.fileOverStateObservable.next(e);
   }
+
   public fileOverModuleBase(e: any): void {
     this.fileOverModuleStateObservable.next(e);
   }
@@ -243,6 +244,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public clearForm() {
     this.uploader.clearQueue();
     this.moduleCode = '';
+    this.codeModel.value = '';
     this.state = 'Ready';
     this.errors = [];
     this.subscriptions.forEach(s => s.unsubscribe());

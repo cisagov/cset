@@ -5,7 +5,7 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
 
 Download CSET For Windows:
-[CSET 10.0 Standalone Installer](https://github.com/cisagov/cset2/releases/download/v10.0/CSETStandAlone.exe)
+[CSET 10.0 Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.0.0)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
@@ -26,7 +26,7 @@ MIT License, Apache License 2.0
 
 Copyright 2018 Battelle Energy Alliance, LLC
 
-See License.txt, NOTICE.txt
+See [License.txt](License.txt), and [NOTICE.txt](NOTICE.txt)
 
 Contact information of authors: cset@hq.dhs.gov
 
@@ -130,7 +130,7 @@ Figure 10: Local Install Landing Page
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
 
 ### Prerequisites & Necessary Files
-1.	Download the “Enterprise Distribution Files” from the [CSET® GitHub page](https://github.com/cisagov/cset/releases/tag/9.2.2enterprise). Click the “AddUser.zip” and “CSET9.2.2.zip” links to download the two files you need. Once the download is complete, you will need to extract the folders.
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.0.0). Click "CSET_10.0.0-Binary.zip" file to download it. Once the download is complete, you will need to unzip the folder.
 
 2.	We will be using Microsoft SQL Server 2016 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
   a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)
@@ -206,7 +206,7 @@ This documentation is provided to assist users in navigating the basics of the C
   * Name – The final step is to create a name and description for this new rule. Once you’ve done this, click “Finish.”
 
 ### Database Setup
-1.	Open the CSET® 9.2.2 folder that you downloaded earlier and navigate to the “Website” subfolder. Inside this folder you will find another subfolder titled “Data.” Inside the Data subfolder will be two files called “CSETWeb” and “CSETWeb_log.” Copy these two files to your server.
+1.	Open the CSET® Dist folder that you downloaded earlier and navigate to the “Data” subfolder. Inside this folder you will find two files called “CSETWeb” and “CSETWeb_log.” Copy these two files to your server.
 
 2.	Open Microsoft SQL Server Management Studio (see below) and connect to the SQL Server that we setup previously. 
   * Open the “Connect to Server” dialog box.
@@ -277,13 +277,13 @@ This documentation is provided to assist users in navigating the basics of the C
   * As seen in the picture below, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.
   * Delete everything inside this folder EXCEPT for the “aspnet_client subfolder”. 
   * If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.
-  * From the CSET® 9.2.2 folder, copy all the contents and files of the Website subfolder into your wwwroot folder.
+  * Copy all of contents from inside the CSET® Dist folder you downloaded and place them into your "wwwroot" folder.
 
   ![](img/figE25.PNG)
 
 
 ### CSET Configuration
-1.	Locate and open a file called “Web.config” inside the “wwwroot” folder. Open this file using a text editor such as notepad.
+1.	Locate the "Web.config" file that should now be inside the “wwwroot” folder. Open this file using a text editor such as notepad.
 
 ![](img/figE26.PNG)
 
@@ -314,7 +314,7 @@ There are two ways to add a new user to your freshly created CSET® Stand-Alone.
   4.	A confirmation email will be sent to the email you entered. This email will contain a temporary password that will allow you to login to the CSET® Application.
   5.	Once a user has logged in for the first time, they will be prompted to create their own password to replace the temporary one.
 
-The second way to add a new user to your CSET® Application is to use the included “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system.
+The second way to add a new user to your CSET® Application is to use the “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system. This tool can be downloaded from the CSET github page found [here](https://github.com/cisagov/cset/releases/tag/9.2.2enterprise). Simply click on the "AddUser.zip" link to download the file.
 
   1.	Inside the “AddUser” folder, you will find a file called “AddCSETUser.exe”. It’s a config file. Open this file with a text editor such as notepad. 
   * Inside the "connectionStrings" tags, you will need to change your “data source=” to the IP Address or domain of your server.
