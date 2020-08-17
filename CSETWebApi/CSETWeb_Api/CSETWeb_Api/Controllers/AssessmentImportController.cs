@@ -77,7 +77,7 @@ namespace CSETWeb_Api.Controllers
             }
 
             var appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var appPath =  Path.Combine("DHS","CSET ", VersionHandler.CSETVersionStringStatic);
+            var appPath = Path.Combine("DHS", "CSET ", VersionHandler.CSETVersionStringStatic);
             var root = Path.Combine(appdatas, appPath, "App_Data/uploads");
             if (!Directory.Exists(root))
                 Directory.CreateDirectory(root);
@@ -96,7 +96,7 @@ namespace CSETWeb_Api.Controllers
                 var apiURL = Request.RequestUri.GetLeftPart(UriPartial.Authority).ToString();//.Replace("api/ImportLegacyAssessment", null);
                 if (LegacyImportProcessExists())
                 {
-                    IEnumerable<string> stuff  = this.Request.Headers.GetValues("Authorization");
+                    IEnumerable<string> stuff = this.Request.Headers.GetValues("Authorization");
                     foreach (String auth in stuff)
                     {
                         var tm = new TokenManager(auth);
@@ -156,6 +156,48 @@ namespace CSETWeb_Api.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, "Assessment was successfully imported");
+        }
+
+
+        [HttpPost]
+        [Route("api/import/AWWA")]
+        public async Task<HttpResponseMessage> ImportAwwaSpreadsheet()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            var tm = new TokenManager();
+            var currentUserId = int.Parse(tm.Payload(Constants.Token_UserId));
+
+            try
+            {
+                var streamProvider = new InMemoryMultipartFormDataStreamProvider();
+                await Request.Content.ReadAsMultipartAsync(streamProvider);
+
+                using (var web = new CSET_Context())
+                {
+                    var formData = streamProvider.FormData;
+                    foreach (var ctnt in streamProvider.Files)
+                    {
+                        if (!ctnt.Headers.ContentDisposition.FileName.EndsWith(".xlsx")
+                            && ctnt.Headers.ContentDisposition.FileName.EndsWith(".xls"))
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK, "Only Microsoft Excel spreadsheets can be uploaded.");
+                        }
+
+                        var buffer = ctnt.ReadAsByteArrayAsync().Result;
+                        var manager = new ImportManagerAwwa();
+                        await manager.ProcessSpreadsheetImport(buffer, currentUserId);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Spreadsheet was successfully imported");
         }
     }
 }

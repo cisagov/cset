@@ -199,6 +199,7 @@ import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { AwwaStandardComponent } from './assessment/prepare/standards/awwa-standard/awwa-standard.component';
 
 @NgModule({
     imports: [
@@ -362,7 +363,8 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         SecurityplanComponent, 
         SitesummaryComponent,
         TrendReportComponent,
-        CompareReportComponent
+        CompareReportComponent,
+        AwwaStandardComponent
     ],
     providers: [
         ConfigService,
@@ -433,7 +435,8 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         ExcelExportComponent,
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
-        DataloginComponent
+        DataloginComponent,
+        AwwaStandardComponent
     ]
 })
 
