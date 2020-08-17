@@ -30,17 +30,19 @@ import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
 import { Navigation2Service } from "../../../services/navigation2.service";
+import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
 
 @Component({
   selector: "app-standards",
   templateUrl: "./standards.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsComponent implements OnInit {
   standards: StandardsBlock;
   expandedDesc: boolean[] = [];
   dialogRef: MatDialogRef<OkayComponent>;
+  dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
 
   constructor(
     private router: Router,
@@ -48,7 +50,7 @@ export class StandardsComponent implements OnInit {
     private standardSvc: StandardService,
     public navSvc2: Navigation2Service,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadStandards();
@@ -76,8 +78,8 @@ export class StandardsComponent implements OnInit {
       error => {
         console.log(
           "Error getting all standards: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log("Error getting all standards: " + (<Error>error).stack);
       }
@@ -106,6 +108,7 @@ export class StandardsComponent implements OnInit {
 
     let showIt = false;
 
+
     if (standard.Code === "INGAA") {
       // INGAA
       msg =
@@ -126,17 +129,19 @@ export class StandardsComponent implements OnInit {
     } else if (standard.Code === "NCSF_V1") {
       msg =
         "CSET Profiles (.csetp) are being deprecated in favor of a new questions editor in which you can create questions " +
-        "or utilize any existing questions contained with in CSET.  Previously profiles were limited to the NIST " +
+        "or utilize any existing questions contained with in CSET®.  Previously profiles were limited to the NIST " +
         "Framework for Improving Critical Infrastructure Cybersecurity.";
       showIt = framework.Selected;
+    } else if (standard.Code === "RKW_AWWA") {
     } else {
       return true;
     }
 
     let rval = true;
-    if (showIt) {
 
-      this.dialogRef = this.dialog.open(OkayComponent, {data: {messageText: msg}});
+    // show a legalese verbiage "OK" dialog 
+    if (showIt) {
+      this.dialogRef = this.dialog.open(OkayComponent, { data: { messageText: msg } });
       this.dialogRef.componentInstance.hasHeader = true;
 
       this.dialogRef.afterClosed().subscribe(result => {
@@ -148,63 +153,79 @@ export class StandardsComponent implements OnInit {
         this.dialogRef = null;
       });
     }
-    return rval;
-  }
-  /**
-   * Builds a list of selected standards and post it to the server.
-   */
-  submit(standard, event: Event) {
-    standard.Selected = (event.srcElement as HTMLInputElement).checked;
-    const selectedStandards: string[] = [];
-    if (!this.showLegalese(standard)) {
-      return;
-    }
 
-    if (standard.Code === "NCSF_V1") {
-      this.standardSvc.frameworkSelected = standard.Selected;
-      this.setFrameworkNavigation();
-    }
+    // show a more complex dialog (AWWA)
+    if (standard.Code === "RKW_AWWA" && standard.Selected) {
+      this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
 
-    if (standard.Code === "ACET_V1") {
-      this.standardSvc.setACETSelected(standard.Selected);
-    }
-
-    this.standards.Categories.forEach(cat => {
-      cat.Standards.forEach(std => {
-        if (std.Selected) {
-          selectedStandards.push(std.Code);
+      this.dialogRefAwwa.afterClosed().subscribe(result => {
+        if (result) {
+          rval = true;
+        } else {
+          rval = false;
         }
+        this.dialogRefAwwa = null;
       });
-    });
+    }
 
-    this.standardSvc
-      .postSelections(selectedStandards)
-      .subscribe((counts: QuestionRequirementCounts) => {
-        this.standards.QuestionCount = counts.QuestionCount;
-        this.standards.RequirementCount = counts.RequirementCount;
+    return rval;
+    }
+
+    /**
+     * Builds a list of selected standards and post it to the server.
+     */
+    submit(standard, event: Event) {
+      standard.Selected = (event.srcElement as HTMLInputElement).checked;
+      const selectedStandards: string[] = [];
+      if (!this.showLegalese(standard)) {
+        return;
+      }
+
+      if (standard.Code === "NCSF_V1") {
+        this.standardSvc.frameworkSelected = standard.Selected;
+        this.setFrameworkNavigation();
+      }
+
+      if (standard.Code === "ACET_V1") {
+        this.standardSvc.setACETSelected(standard.Selected);
+      }
+
+      this.standards.Categories.forEach(cat => {
+        cat.Standards.forEach(std => {
+          if (std.Selected) {
+            selectedStandards.push(std.Code);
+          }
+        });
       });
+
+      this.standardSvc
+        .postSelections(selectedStandards)
+        .subscribe((counts: QuestionRequirementCounts) => {
+          this.standards.QuestionCount = counts.QuestionCount;
+          this.standards.RequirementCount = counts.RequirementCount;
+        });
 
       this.setFrameworkNavigation();
-  }
+    }
 
-  setFrameworkNavigation()  {
-    this.standardSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
-  }
+    setFrameworkNavigation()  {
+      this.standardSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
+    }
 
-  /**
-   * Toggles the open/closed style of the description div.
-   */
-  toggleExpansion(std) {
-    this.expandedDesc[std] = !this.expandedDesc[std];
-  }
+    /**
+     * Toggles the open/closed style of the description div.
+     */
+    toggleExpansion(std) {
+      this.expandedDesc[std] = !this.expandedDesc[std];
+    }
 
-  /**
-   * Posts an empty list of selected standards.  The API will set the default
-   * standards for a basic assessment.
-   */
-  doBasicAssessment() {
-    this.standardSvc.postDefaultSelection().subscribe(() => {
-      this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
-    });
+    /**
+     * Posts an empty list of selected standards.  The API will set the default
+     * standards for a basic assessment.
+     */
+    doBasicAssessment() {
+      this.standardSvc.postDefaultSelection().subscribe(() => {
+        this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
+      });
+    }
   }
-}
