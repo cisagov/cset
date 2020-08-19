@@ -1,0 +1,87 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel d-flex justify-content-start flex-column flex-11a">
+  <h3 class="wrap-text">Maturity Model Selection</h3>
+  <p>
+    Select a model from the list below to define what questions you will
+    answer during the assessment.
+  </p>
+  <h3>CMMC</h3>
+  <div class="maturity-model-select d-flex flex-row flex-wrap" [class.model-selected]="selectedModels.indexOf('CMMC') >= 0" 
+    (click)="selectModel('CMMC')">
+    <div>
+      <p>
+        The Capability Maturity Model Certification (CMMC) measures 
+        cybersecurity maturity with five levels and aligns a set of processes and 
+        practices with the type and sensitivity of information to be protected 
+        and the associated range of threats.  The model consists of maturity 
+        processes and cybersecurity best practices from multiple
+        cybersecurity standards, frameworks and other references,
+        as well as inputs from the broader community.
+      </p>
+      <p>
+        CMMC is broken into 5 diferent levels of Processes and Capabilities
+        (which are further broken down into Practices).
+      </p>
+      <button class="btn btn-link">For more information see the CMMC document</button>
+    </div>
+    <div style="min-width: 50%" class="text-center">
+      <img src="/assets/images/CMMC/CMMC-practices-per-level.png" style="width: 100%;">
+    </div>
+  </div>
+
+  <h3>EDM</h3>
+  <div class="maturity-model-select d-flex flex-row">
+    <div>
+      <p>
+        This is an expanation of EDM.
+      </p>
+
+    </div>
+    <div style="min-width: 50%">
+        [[ EDM graphic ]]
+    </div>
+  </div>
+
+  <h3>ACET</h3>
+  <div class="maturity-model-select d-flex flex-row">
+    <div>
+      <p>
+        Called the Automated Cybersecurity Examination Toolbox (ACET), it
+        provides us with a repeatable, measurable and transparent
+        process that improves and standardizes our supervision related
+        to cybersecurity in all federally insured credit unions.
+      </p>
+
+    </div>
+    <div style="min-width: 50%">
+        [[ ACET graphic ]]
+    </div>
+  </div>
+
+  <div class="mt-3 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary" (click)="navSvc.navBack('model-select')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc.navNext('model-select')">Next</button>
+  </div>
+
+</div>

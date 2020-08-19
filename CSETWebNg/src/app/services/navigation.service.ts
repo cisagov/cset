@@ -134,7 +134,7 @@ export class NavigationService {
         const e = {
           label: p.displayText,
           value: p.pageClass,
-          boldMe: false,
+          isPhaseNode: false,
           children: []
         };
 
@@ -142,7 +142,7 @@ export class NavigationService {
           e.label = p.pageClass;
         }
         if (p.level === 0) {
-          e.boldMe = true;
+          e.isPhaseNode = true;
         }
         //e.indentLevel = p.level;
 
@@ -278,8 +278,21 @@ export class NavigationService {
       return this.frameworkSelected;
     }
 
-    if (condition === 'DIAGRAM-SELECTED') {
-      return this.diagramSelected;
+    if (condition === 'USE-STANDARD') {
+      return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard;
+    }
+
+    if (condition === 'USE-MATURITY-MODEL') {
+      return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity;
+    }
+
+    if (condition === 'SHOW-SAL') {
+      return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity) 
+        || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard));
+    }
+
+    if (condition === 'USE-DIAGRAM') {
+      return !!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram;
     }
 
     if (condition === 'FALSE') {
@@ -313,24 +326,24 @@ export class NavigationService {
 
   pages = [
     // Prepare
-    { displayText: 'Prepare/Pre-Assess', level: 0 },
+    { displayText: 'Prepare', level: 0 },
 
-    { displayText: 'Assessment Information 1', pageClass: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
-    { displayText: 'Assessment Information 2', pageClass: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
+    { displayText: 'Assessment Configuration', pageClass: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
+    { displayText: 'Assessment Information', pageClass: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
-    { displayText: 'Select Model', level: 1 },
-    { displayText: 'Model Target Levels', level: 1 },
+    { displayText: 'Select Model', pageClass: 'model-select', level: 1, path: 'assessment/{:id}/prepare/model-select', condition: 'USE-MATURITY-MODEL' },
+    { displayText: 'Model Target Levels', level: 1, condition: 'USE-MATURITY-MODEL' },
     { displayText: 'ACET Required Documents', pageClass: 'required', level: 1, path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
     { displayText: 'ACET IRP', pageClass: 'irp', level: 1, path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
     { displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1, path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },
     
-    { displayText: 'Security Assurance Level (SAL)', pageClass: 'sal', level: 1, path: 'assessment/{:id}/prepare/sal' },
+    { displayText: 'Security Assurance Level (SAL)', pageClass: 'sal', level: 1, path: 'assessment/{:id}/prepare/sal', condition: 'SHOW-SAL' },
 
-    { displayText: 'Cybsersecurity Standards Selection', pageClass: 'standards', level: 1, path: 'assessment/{:id}/prepare/standards' },
-    { displayText: 'Standard Specific Screen(s)', level: 1 },
+    { displayText: 'Cybsersecurity Standards Selection', pageClass: 'standards', level: 1, path: 'assessment/{:id}/prepare/standards', condition: 'USE-STANDARD' },
+    { displayText: 'Standard Specific Screen(s)', level: 1, condition: 'FALSE' },
 
     //  Diagram
-    { displayText: 'Network Diagram', pageClass: 'diagram', path: 'assessment/{:id}/diagram/info', condition: 'DIAGRAM-SELECTED' },
+    { displayText: 'Network Diagram', pageClass: 'diagram', path: 'assessment/{:id}/diagram/info', condition: 'USE-DIAGRAM' },
 
     { displayText: 'Framework', pageClass: 'framework', path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
     
@@ -340,7 +353,7 @@ export class NavigationService {
     { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
 
 
-    { displayText: 'Post-Assessment', level: 0 },
+    { displayText: 'Results', level: 0 },
 
     // Results - Standards
     { displayText: 'Analysis Dashboard', pageClass: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard' },
@@ -348,22 +361,22 @@ export class NavigationService {
 
     { displayText: 'Control Priorities', pageClass: 'ranked-questions', level: 1, path: 'assessment/{:id}/results/ranked-questions' },
     { displayText: 'Standards Summary', pageClass: 'standards-summary', level: 1, path: 'assessment/{:id}/results/standards-summary' },
-    { displayText: 'Ranked Standards', pageClass: 'standards-ranked', level: 1, path: 'assessment/{:id}/results/standards-ranked' },
-    { displayText: 'Standards Results', pageClass: 'standards-results', level: 1, path: 'assessment/{:id}/results/standards-results' },
+    { displayText: 'Ranked Categories', pageClass: 'standards-ranked', level: 1, path: 'assessment/{:id}/results/standards-ranked' },
+    { displayText: 'Results By Category', pageClass: 'standards-results', level: 1, path: 'assessment/{:id}/results/standards-results' },
 
     // Results - Components
-    { pageClass: 'components-summary', level: 1, path: 'assessment/{:id}/results/components-summary' },
-    { pageClass: 'components-ranked', level: 1, path: 'assessment/{:id}/results/components-ranked' },
-    { pageClass: 'components-results', level: 1, path: 'assessment/{:id}/results/components-results' },
-    { pageClass: 'components-types', level: 1, path: 'assessment/{:id}/results/components-types' },
-    { pageClass: 'components-warnings', level: 1, path: 'assessment/{:id}/results/components-warnings' },
+    { displayText: 'Components Summary', pageClass: 'components-summary', level: 1, path: 'assessment/{:id}/results/components-summary' },
+    { displayText: 'Ranked Components By Category', pageClass: 'components-ranked', level: 1, path: 'assessment/{:id}/results/components-ranked' },
+    { displayText: 'Component Results By Category', pageClass: 'components-results', level: 1, path: 'assessment/{:id}/results/components-results' },
+    { displayText: 'Components By Component Type', pageClass: 'components-types', level: 1, path: 'assessment/{:id}/results/components-types' },
+    { displayText: 'Network Warnings', pageClass: 'components-warnings', level: 1, path: 'assessment/{:id}/results/components-warnings' },
 
     // ACET results pages
-    { pageClass: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity', condition: 'ACET' },
-    { pageClass: 'admin', level: 1, path: 'assessment/{:id}/results/admin', condition: 'ACET' },
-    { pageClass: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard', condition: 'ACET' },
+    { displayText: 'ACET Maturity Results', pageClass: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity', condition: 'ACET' },
+    { displayText: 'ACET Admin Results', pageClass: 'admin', level: 1, path: 'assessment/{:id}/results/admin', condition: 'ACET' },
+    { displayText: 'ACET Dashboard', pageClass: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard', condition: 'ACET' },
 
-    { pageClass: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
+    { displayText: 'Executive Summary, Overview & Comments', pageClass: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
     { displayText: 'Reports', pageClass: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Feedback', pageClass: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
     { displayText: 'Analytics', pageClass: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics' }
