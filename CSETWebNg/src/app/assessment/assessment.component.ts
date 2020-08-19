@@ -92,6 +92,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   selectItem(target: string) {
+    console.log('assessment.component selectItem: ' + target);
     if (!this.lockNav) {
       this.expandNav = false;
     } else {
@@ -133,7 +134,7 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
-  checkText(s){
+  isTocLoading(s){
     return s === "Please wait" || s === "Loading questions";
   }
 }

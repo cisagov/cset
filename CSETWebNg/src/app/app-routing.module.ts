@@ -89,6 +89,7 @@ import { SecurityplanComponent } from './reports/securityplan/securityplan.compo
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 
 const appRoutes: Routes = [
 
@@ -189,7 +190,8 @@ const appRoutes: Routes = [
             canActivate: [AssessGuard],
             canActivateChild: [AssessGuard],
             children: [
-              { path: 'info', component: AssessmentInfoComponent },
+              { path: 'info1', component: AssessmentInfoComponent },
+              { path: 'info2', component: Assessment2InfoComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },

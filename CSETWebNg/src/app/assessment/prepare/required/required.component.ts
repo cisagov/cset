@@ -27,7 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { RequiredDocumentService } from '../../../services/required-document.service';
 import { RequiredDocumentsResponse, RequiredDocument } from '../../../models/required-document.model';
 import { StandardService } from '../../../services/standard.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
     selector: 'app-required',
@@ -44,7 +44,7 @@ export class RequiredDocsComponent implements OnInit {
     constructor(private router: Router,
         private assessSvc: AssessmentService,
         private requiredSvc: RequiredDocumentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         private standardSvc: StandardService
     ) { }
 

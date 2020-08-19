@@ -40,7 +40,6 @@ export class CompareBestworstComponent implements OnInit {
   chartAnswerBreakdown: Chart;
 
   constructor(
-    public navSvc: NavigationAggregService,
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService
   ) { }

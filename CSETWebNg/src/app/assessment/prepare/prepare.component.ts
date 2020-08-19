@@ -24,8 +24,8 @@
 import { StandardService } from "./../../services/standard.service";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NavigationService } from "../../services/navigation.service";
 import { AssessmentService } from "../../services/assessment.service";
+import { NavigationService } from "../../services/navigation.service";
 
 @Component({
   selector: "app-prepare",
@@ -36,6 +36,7 @@ import { AssessmentService } from "../../services/assessment.service";
 export class PrepareComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
+   
     private navSvc: NavigationService,
     private router: Router,
     private route: ActivatedRoute,
@@ -43,12 +44,12 @@ export class PrepareComponent implements OnInit {
   ) {
   
 
-    this.stdSvc.getACET().subscribe((x: boolean) => {
-      this.stdSvc.setACETSelected(x);
+    this.navSvc.getACET().subscribe((x: boolean) => {
+      this.navSvc.setACETSelected(x);
     });
 
-    this.stdSvc.getFramework().subscribe((x: boolean) => {
-      this.stdSvc.setFrameworkSelected(x);
+    this.navSvc.getFramework().subscribe((x: boolean) => {
+      this.navSvc.setFrameworkSelected(x);
     });
     
     this.navSvc.itemSelected.asObservable().subscribe((value: string) => {

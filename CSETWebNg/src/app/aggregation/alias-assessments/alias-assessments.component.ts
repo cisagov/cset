@@ -47,7 +47,7 @@ export class AliasAssessmentsComponent implements OnInit {
     public route: ActivatedRoute,
     public router: Router,
     public dialog: MatDialog,
-    public navSvc: NavigationAggregService
+    public navAggSvc: NavigationAggregService
   ) {
     this.aggregationSvc.getAggregationToken(+this.route.snapshot.params['id']);
   }
@@ -152,7 +152,7 @@ export class AliasAssessmentsComponent implements OnInit {
       return;
     }
 
-    this.navSvc.navBack('alias-assessments');
+    this.navAggSvc.navBack('alias-assessments');
   }
 
   /**
@@ -176,7 +176,7 @@ export class AliasAssessmentsComponent implements OnInit {
       if (result) {
         this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.AggregationId)
           .subscribe(() => {
-            this.navSvc.navBack('alias-assessments');
+            this.navAggSvc.navBack('alias-assessments');
           });
       }
     });

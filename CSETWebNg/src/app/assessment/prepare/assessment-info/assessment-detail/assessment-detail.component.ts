@@ -26,7 +26,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { StandardService } from '../../../../services/standard.service';
-
+import { NavigationService } from '../../../../services/navigation.service';
 
 
 @Component({
@@ -39,11 +39,15 @@ export class AssessmentDetailComponent implements OnInit {
   assessment: AssessmentDetail = {};
   hasACET: boolean = true;
 
+  /**
+   * 
+   */
   constructor(private route: ActivatedRoute,
     private assessSvc: AssessmentService,
-    private standardSvc: StandardService
+    private standardSvc: StandardService,
+    private navSvc: NavigationService
   ) {
-    this.standardSvc.getACET().subscribe((x: boolean) => {
+    this.navSvc.getACET().subscribe((x: boolean) => {
       this.hasACET = x;
       sessionStorage.setItem('ACET', x.toString());
     });
@@ -77,11 +81,12 @@ export class AssessmentDetailComponent implements OnInit {
       },
       error => console.log('Assessment Detail load Error: ' + (<Error>error).message)
     );
-    // this.hasACET = this.standardSvc.acetSelected;
   }
 
 
-
+  /**
+   * 
+   */
   update(e) {
     // default Assessment Name if it is left empty
     if (this.assessment.AssessmentName.trim().length === 0) {
@@ -89,6 +94,6 @@ export class AssessmentDetailComponent implements OnInit {
     }
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
-    this.standardSvc.makeNavTree();
+    // this.standardSvc.makeNavTree();
   }
 }

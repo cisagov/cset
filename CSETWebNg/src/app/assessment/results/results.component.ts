@@ -27,9 +27,9 @@ import {
   Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
 } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavigationService, NavTree } from '../../services/navigation.service';
-import { StandardService } from '../../services/standard.service';
+import { NavTreeNode } from '../../services/navigation.service';
 import { AnalyticsService } from '../../services/analytics.service';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-results',
@@ -43,7 +43,6 @@ export class ResultsComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
     private navSvc: NavigationService,
-    private stdSvc: StandardService,
     private router: Router,
     private route: ActivatedRoute, 
     private analyticsSvc: AnalyticsService
@@ -68,7 +67,7 @@ export class ResultsComponent implements OnInit {
     });
 
     // Build the nav tree
-    this.stdSvc.getACET().subscribe(x => 
+    this.navSvc.getACET().subscribe(x => 
       {
         this.analyticsSvc.pingAnalyticsService().subscribe(
           data => { 
@@ -83,7 +82,7 @@ export class ResultsComponent implements OnInit {
       });
   }
 
-  tree: NavTree[] = [];
+  tree: NavTreeNode[] = [];
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
@@ -96,7 +95,7 @@ export class ResultsComponent implements OnInit {
     if (!!this.navSvc.activeResultsView) {
 
       // make sure the tree is up to date before we query it
-      this.stdSvc.getACET().subscribe(x => {
+      this.navSvc.getACET().subscribe(x => {
         this.populateTree(x);
 
         // if the 'active' view is no longer in the tree, default to the dashboard view
@@ -154,7 +153,7 @@ export class ResultsComponent implements OnInit {
     if(this.analyticsIsUp){
       this.tree.push({ label: 'Share Assessment with DHS', value: 'analytics', children: []});
     }
-    this.navSvc.setTree(this.tree, magic);
+    this.navSvc.buildTree(magic);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[0]);
     this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[1]);
   }
