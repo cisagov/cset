@@ -72,26 +72,26 @@
             (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
         <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
           <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="ml-1">
-            <button (click)="selectItem(node?.value)" [disabled]="checkText(node?.label)" class="btn btn-link no-underline ta-left">
-              <span class="menu-link ws-normal">
+            <button (click)="selectItem(node?.value)" [disabled]="isTocLoading(node?.label)" class="btn btn-link no-underline ta-left">
+              <span class="menu-link ws-normal" [class.font-weight-bold]="node?.boldMe">
                 {{node?.label}}
               </span>
             </button>
           </mat-tree-node>
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navSvc?.hasNestedChild">
-            <button  class="btn btn-link no-underline" matIconButton matTreeNodeToggle="!navSvc?.disableCollapse" *ngIf="node.value === null || node.value?.length < 1">
+            <button class="btn btn-link no-underline" matIconButton matTreeNodeToggle="!navSvc?.disableCollapse" *ngIf="node.value === null || node.value?.length < 1">
               <div class="menu-link d-flex">
                   <mat-icon style="position: relative; top: -.1rem;">
                       {{navSvc?.treeControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon> 
-                    <div class="text-wrap text-left u-hover">
-                      {{node?.label}}
+                    <div class="text-wrap text-left u-hover" [class.font-weight-bold]="node?.boldMe">
+                      {{node?.boldMe}}{{node?.label}}
                     </div>
                   </div>
             </button>
             <button class="btn btn-link" matIconButton (click)="selectItem(node?.value)" *ngIf="node.value !== null && node.value?.length >= 1">
-              <span class="menu-link">
-                {{node?.label}}
+              <span class="menu-link" [class.font-weight-bold]="node?.boldMe">
+                {{node?.boldMe}}{{node?.label}}
               </span>
             </button>
             <ul class="mat-tree-node" *ngIf="navSvc?.treeControl?.isExpanded(node)">

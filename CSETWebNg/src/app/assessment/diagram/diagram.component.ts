@@ -24,8 +24,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { Navigation2Service } from '../../services/navigation2.service';
-import { NavigationService, NavTree } from '../../services/navigation.service';
+import { NavigationService } from '../../services/navigation.service';
+import { NavTreeNode } from '../../services/navigation.service';
 import { ConfigService } from '../../services/config.service';
 import { AuthenticationService } from '../../services/authentication.service';
 
@@ -40,13 +40,13 @@ export class DiagramComponent implements OnInit {
     buttonText: string = this.msgNoDiagramExists;
 
     constructor(private router: Router,
-        private navSvc: NavigationService,
+       
         public assessSvc: AssessmentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService
     ) { }
-    tree: NavTree[] = [];
+    tree: NavTreeNode[] = [];
     ngOnInit() {
         this.populateTree();
         this.assessSvc.currentTab = 'diagram';
@@ -54,6 +54,6 @@ export class DiagramComponent implements OnInit {
 
     populateTree() {
         const magic = this.navSvc.getMagic();
-        this.navSvc.setTree(this.tree, magic);
+        this.navSvc.buildTree(magic);
     }
 }

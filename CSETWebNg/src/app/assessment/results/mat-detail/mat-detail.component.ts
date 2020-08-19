@@ -27,7 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { MatDetailResponse, MaturityDomain, MaturityAssessment, MaturityComponent } from '../../../models/mat-detail.model';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ACETService } from '../../../services/acet.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
     selector: 'app-mat-detail',
@@ -48,7 +48,7 @@ export class MatDetailComponent implements OnInit {
 
     constructor(private router: Router,
         private assessSvc: AssessmentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         public acetSvc: ACETService
     ) { }
 

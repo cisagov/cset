@@ -43,7 +43,6 @@ export class CompareAnalyticsComponent implements OnInit {
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute,
     public dialog: MatDialog,
-    public navSvc: NavigationAggregService,
     private authSvc: AuthenticationService,
     public configSvc: ConfigService,
     private router: Router,

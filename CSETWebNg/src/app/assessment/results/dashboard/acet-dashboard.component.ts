@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
     selector: 'app-acet-dashboard',
@@ -41,7 +41,7 @@ export class ACETDashboardComponent implements OnInit {
 
     constructor(private router: Router,
         public assessSvc: AssessmentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         public acetSvc: ACETService
     ) { }
 

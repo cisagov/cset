@@ -25,11 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnalyticsService } from '../../../services/analytics.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { strict } from 'assert';
 import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ConfigService } from '../../../services/config.service';
 import { AlertComponent } from '../../../dialogs/alert/alert.component';
 
@@ -56,7 +55,6 @@ export class AnalyticsComponent implements OnInit {
     password: string = '';
 
     constructor(private router: Router,
-        public navSvc2: Navigation2Service,
         public navSvc: NavigationService,
         public analyticsSvc: AnalyticsService,
         private route: ActivatedRoute,

@@ -27,10 +27,10 @@ import { Router } from '@angular/router';
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
 import { Domain, QuestionGroup, QuestionResponse, QuestionResponseWithDomains } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavigationService, NavTree } from '../../services/navigation.service';
+import { NavTreeNode } from '../../services/navigation.service';
 import { QuestionsService } from '../../services/questions.service';
 import { StandardService } from '../../services/standard.service';
-import { Navigation2Service } from '../../services/navigation2.service';
+import { NavigationService } from '../../services/navigation.service';
 
 
 @Component({
@@ -57,25 +57,22 @@ export class QuestionsComponent implements AfterViewInit {
   PreviousComponentGroup = null;
 
   /**
-   * Constructor
-   * @param questionsSvc
-   * @param navSvc
-   * @param assessSvc
+   * 
    */
   constructor(
     public questionsSvc: QuestionsService,
-    private navSvc: NavigationService,
     public assessSvc: AssessmentService,
     private stdSvc: StandardService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     private router: Router,
     private dialog: MatDialog
   ) {
     const magic = this.navSvc.getMagic();
-    this.navSvc.setTree([
+    console.log('questions.component:  set questions tree with loading...');
+    this.navSvc.setQuestionsTree([
       { label: 'Please wait', value: '', children: [] },
       { label: 'Loading questions', value: '', children: [] }
-    ], magic);
+    ], magic, true);
 
     this.autoLoadSupplementalInfo = this.questionsSvc.autoLoadSupplementalSetting;
 
@@ -142,11 +139,14 @@ export class QuestionsComponent implements AfterViewInit {
    * Changes the application mode of the assessment
    */
   setMode(mode: string) {
-    this.navSvc.setTree([
+
+    console.log('questions.component setMode loading ...');
+
+    this.navSvc.setQuestionsTree([
       { label: 'Please wait', value: '', children: [] },
       { label: 'Loading questions', value: '', children: [] }
-    ], this.navSvc.getMagic());
-    // this.questionGroups = null;
+    ], this.navSvc.getMagic(), true);
+
     this.questionsSvc.setMode(mode).subscribe(() => this.loadQuestions());
   }
 
@@ -259,7 +259,7 @@ export class QuestionsComponent implements AfterViewInit {
     if (!magic) {
       magic = this.navSvc.getMagic();
     }
-    const tree: NavTree[] = [];
+    const tree: NavTreeNode[] = [];
     this.domains.forEach(d => {
       d.QuestionGroups
         .filter(g => g.Visible)
@@ -280,7 +280,9 @@ export class QuestionsComponent implements AfterViewInit {
           }
         });
     });
-    this.navSvc.setTree(tree, magic, true);
+
+    console.log('questions.component populateTree setQuestionsTree ....');
+    this.navSvc.setQuestionsTree(tree, magic, true);
     this.navSvc.itemSelected
       .asObservable()
       .subscribe(
@@ -315,7 +317,7 @@ export class QuestionsComponent implements AfterViewInit {
    * @param tree
    * @param q
    */
-  insertWithParents(tree: NavTree[], q: QuestionGroup) {
+  insertWithParents(tree: NavTreeNode[], q: QuestionGroup) {
 
     if (!!q.Symbol_Name) {
       this.insertComponentSpecificOverride(tree, q);
@@ -367,7 +369,7 @@ export class QuestionsComponent implements AfterViewInit {
     }
   }
 
-  insertComponentSpecificOverride(tree: NavTree[], q: QuestionGroup) {
+  insertComponentSpecificOverride(tree: NavTreeNode[], q: QuestionGroup) {
     let standard = tree.find(elem => elem.elementType === 'STANDARD' && elem.label === q.StandardShortName);
     if (!standard) {
       tree.push({
