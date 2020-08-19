@@ -52,6 +52,20 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
 
+  
+  public assessment: AssessmentDetail;
+
+
+  /**
+   * Stores the active assessment 'features' that the user wishes to use,
+   * e.g., diagram, standards, maturity model.
+   */
+  public assessmentFeatures: any[] = [];
+
+
+  /**
+   *
+   */
   constructor(
     private emailSvc: EmailService,
     private http: HttpClient,
@@ -107,6 +121,7 @@ export class AssessmentService {
   }
 
   updateAssessmentDetails(assessment: AssessmentDetail) {
+    this.assessment = assessment;
     return this.http
       .post(
         this.apiUrl + 'assessmentdetail',
@@ -230,6 +245,27 @@ export class AssessmentService {
 
   hasDiagram() {
     return this.http.get(this.apiUrl + 'diagram/has');
+  }
+
+    /**
+   * Returns a boolean indicating if the feature is active.
+   * @param feature 
+   */
+  hasFeature(feature: string) {
+    return this.assessmentFeatures.indexOf(feature.toLowerCase()) >= 0;
+  }
+  
+    /**
+   * Adds or removes an assessment feature from the list.
+   */
+  changeFeature(feature: string, state: boolean) {
+    if (state) {
+      if (this.assessmentFeatures.indexOf(feature) < 0) {
+        this.assessmentFeatures.push(feature);
+      }
+    } else {
+      this.assessmentFeatures = this.assessmentFeatures.filter(x => x !== feature);
+    }
   }
 
   /**

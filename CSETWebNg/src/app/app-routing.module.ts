@@ -90,6 +90,7 @@ import { TrendReportComponent } from './reports/trendreport/trendreport.componen
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 
 const appRoutes: Routes = [
 
@@ -192,6 +193,7 @@ const appRoutes: Routes = [
             children: [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
+              { path: 'model-select', component: ModelSelectComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },

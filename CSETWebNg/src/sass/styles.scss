@@ -741,6 +741,14 @@ ul.mat-tree-node {
   min-height: 0;
 }
 
+.side-nav-container .phase-toc-entry {
+  margin-top: 1rem;
+}
+
+.side-nav-container .phase-toc-entry span {
+  font-size: 1.5rem;
+}
+
 /* Allow autocomplete to be wider than its companion field */
 .cdk-overlay-pane {
   width: auto !important;
