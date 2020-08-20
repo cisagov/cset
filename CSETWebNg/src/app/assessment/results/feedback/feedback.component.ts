@@ -63,7 +63,7 @@ export class FeedbackComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
     this.analysisSvc.getFeedback().subscribe(x => this.setupTable(x));
 
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
   }

@@ -35,27 +35,19 @@
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'" (click)="assessSvc.currentTab = 'prepare'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="prepare">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" (click)="navSvc.navDirect('phase-prepare')">
             <span class="tab-icon cset-icons-clipboard-pencil mr-2" id="prepareIcon"></span>
             <span class="nav-tab-text">Prepare</span>
           </button>
         </li>
-        <!-- <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'diagram'" (click)="assessSvc.currentTab = 'diagram'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="diagram">
-            <span class="tab-icon mr-2" id="diagramIcon">
-              <i class="fas fa-project-diagram"></i>
-            </span>
-            <span class="nav-tab-text">Diagram</span>
-          </button>
-        </li> -->
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'" (click)="assessSvc.currentTab = 'questions'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="questions">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" (click)="navSvc.navDirect('phase-assessment')">
             <span class="tab-icon cset-icons-question-mark mr-2" id="questionsIcon" alt="assessment icon"></span>
             <span class="nav-tab-text">Assessment</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'" (click)="assessSvc.currentTab = 'results'">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="results">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" (click)="navSvc.navDirect('phase-results')">
               <span class="tab-icon cset-icons-results mr-2"></span>
               <span class="nav-tab-text">Results</span>
           </button>
@@ -69,9 +61,9 @@
     <mat-sidenav-container autosize id="sidenav-container" class="d-flex flex-column flex-11a">
       <mat-sidenav #sNav mode="{{innerWidth<960 ? 'over' : 'side'}}" [opened]="expandNav" id="sidenav" 
             (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
-        <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
+        <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl" class="mb-5">
           <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="ml-1" [class.phase-toc-entry]="node?.isPhaseNode">
-            <button (click)="selectItem(node?.value)" [disabled]="isTocLoading(node?.label)" class="btn btn-link no-underline ta-left">
+            <button (click)="selectNavItem(node?.value)" [disabled]="isTocLoading(node?.label)" class="btn btn-link no-underline ta-left">
               <span class="menu-link ws-normal" >
                 {{node?.label}}
               </span>
@@ -88,7 +80,7 @@
                     </div>
                   </div>
             </button>
-            <button class="btn btn-link" matIconButton (click)="selectItem(node?.value)" *ngIf="node.value !== null && node.value?.length >= 1">
+            <button class="btn btn-link" matIconButton (click)="selectNavItem(node?.value)" *ngIf="node.value !== null && node.value?.length >= 1">
               <span class="menu-link" [class.phase-toc-entry]="node?.isPhaseNode">
                 {{node?.label}}
               </span>

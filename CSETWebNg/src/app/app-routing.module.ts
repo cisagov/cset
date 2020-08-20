@@ -200,22 +200,22 @@ const appRoutes: Routes = [
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
               { path: 'irp-summary', component: IrpSummaryComponent },
+              {
+                path: 'diagram',
+                component: DiagramComponent,
+                canActivate: [AssessGuard],
+                canActivateChild: [AssessGuard],
+                children: [
+                  { path: 'info', component: DiagramInfoComponent },
+                  { path: 'inventory', component: DiagramInventoryComponent },
+                  { path: '', redirectTo: 'info', pathMatch: 'full' },
+                  { path: '**', redirectTo: 'info' }
+                ]
+              },
               { path: '', redirectTo: 'info', pathMatch: 'full' },
               { path: '**', redirectTo: 'info' }
             ]
-          },
-          {
-            path: 'diagram',
-            component: DiagramComponent,
-            canActivate: [AssessGuard],
-            canActivateChild: [AssessGuard],
-            children: [
-              { path: 'info', component: DiagramInfoComponent },
-              { path: 'inventory', component: DiagramInventoryComponent },
-              { path: '', redirectTo: 'info', pathMatch: 'full' },
-              { path: '**', redirectTo: 'info' }
-            ]
-          },
+          },          
 
           { path: 'questions', component: QuestionsComponent },
           {
@@ -257,16 +257,16 @@ const appRoutes: Routes = [
     ]
   },
   // reports routing
-  { 
+  {
     path: 'report', component: LayoutBlankComponent, children: [
-      {path: 'detail', component: DetailComponent }, 
-      {path: 'discoveries', component: DiscoveryTearoutsComponent }, 
-      {path: 'executive', component: ExecutiveComponent }, 
-      {path: 'securityplan', component: SecurityplanComponent }, 
-      {path: 'sitesummary', component: SitesummaryComponent },
-      {path: 'trendreport', component: TrendReportComponent },
-      {path: 'comparereport', component: CompareReportComponent }
-    ] 
+      { path: 'detail', component: DetailComponent },
+      { path: 'discoveries', component: DiscoveryTearoutsComponent },
+      { path: 'executive', component: ExecutiveComponent },
+      { path: 'securityplan', component: SecurityplanComponent },
+      { path: 'sitesummary', component: SitesummaryComponent },
+      { path: 'trendreport', component: TrendReportComponent },
+      { path: 'comparereport', component: CompareReportComponent }
+    ]
   },
   { path: '**', redirectTo: 'home' }
 ];
