@@ -741,12 +741,16 @@ ul.mat-tree-node {
   min-height: 0;
 }
 
-.side-nav-container .phase-toc-entry {
+.side-nav-container .phase-node {
   margin-top: 1rem;
 }
 
-.side-nav-container .phase-toc-entry span {
-  font-size: 1.5rem;
+.side-nav-container .phase-node > button > span {
+  font-size: 1.3rem;
+}
+
+.side-nav-container .current-node {
+  color: red;
 }
 
 /* Allow autocomplete to be wider than its companion field */
