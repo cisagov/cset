@@ -26,9 +26,10 @@ import { AssessmentService } from './assessment.service';
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { MatTreeNestedDataSource } from "@angular/material";
-import { of as observableOf } from "rxjs";
+import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
+import { AnalyticsService } from './analytics.service';
 
 
 export interface NavTreeNode {
@@ -40,6 +41,8 @@ export interface NavTreeNode {
   HeadingText?: string;
   DocId?: string;
   elementType?: string;
+  isPhaseNode?: boolean;
+  isCurrent?: boolean;
 }
 
 /**
@@ -54,16 +57,23 @@ export interface NavTreeNode {
 export class NavigationService {
 
   private magic: string;
+
   @Output()
   navItemSelected = new EventEmitter<any>();
+
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
-  treeControl: NestedTreeControl<NavTreeNode> = new NestedTreeControl<NavTreeNode>(x => observableOf(x.children));
+  dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
+  treeControl: NestedTreeControl<NavTreeNode> = new NestedTreeControl<NavTreeNode>(this._getChildren);
+
+  currentNode: string;
 
   frameworkSelected = false;
   acetSelected = false;
   diagramSelected = true;
 
   activeResultsView: string;
+
+  analyticsIsUp = false;
 
   /**
    * Constructor
@@ -72,9 +82,20 @@ export class NavigationService {
   constructor(
     private http: HttpClient,
     private assessSvc: AssessmentService,
+    private analyticsSvc: AnalyticsService,
     private router: Router,
     private configSvc: ConfigService
-  ) { }
+  ) {
+    this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
+    this.dataChange.subscribe(data => this.dataSource.data = data);
+
+    this.analyticsSvc.pingAnalyticsService().subscribe(data => {
+      this.analyticsIsUp = true;
+    }
+    );
+  }
+
+  private _getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
   /**
    * 
@@ -93,9 +114,10 @@ export class NavigationService {
       this.treeControl = new NestedTreeControl<NavTreeNode>((node: NavTreeNode) => {
         return observableOf(node.children);
       });
-      this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
+      
       this.dataSource.data = this.buildEntryList();
-      // this.disableCollapse = !collapsible;
+
+      console.log(JSON.stringify(this.dataSource.data));
     }
   }
 
@@ -109,7 +131,6 @@ export class NavigationService {
       });
       this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
       this.dataSource.data = tree;
-      // this.disableCollapse = !collapsible;
     }
   }
 
@@ -117,37 +138,61 @@ export class NavigationService {
     return node.children.length > 0;
   }
 
-
-
   /**
    * Returns a list of tree node elements
    */
   buildEntryList(): NavTreeNode[] {
     const list: NavTreeNode[] = [];
 
-    this.pages.forEach(p => {
+    for (let i = 0; i < this.pages.length; i++) {
+
+      let p = this.pages[i];
       let showPage = this.shouldIShow(p.condition);
       if (showPage) {
-        const e = {
+
+        const e: NavTreeNode = {
           label: p.displayText,
           value: p.pageClass,
           isPhaseNode: false,
           children: []
         };
 
-        if (!p.displayText) {
-          e.label = p.pageClass;
-        }
         if (p.level === 0) {
           e.isPhaseNode = true;
         }
-        //e.indentLevel = p.level;
 
-        list.push(e);
+        // console.log('buildEntryList, currentNode=' + this.currentNode);
+        e.isCurrent = (p.pageClass === this.currentNode);
+
+        const parentPage = this.findParentPage(i);
+        if (!!parentPage) {
+          const parentNode = list.find(ss => ss.value === parentPage.pageClass);
+          if (!!parentNode) {
+            parentNode.children.push(e);
+          }
+        } else {
+          list.push(e);
+        }
       }
-    });
+    }
 
     return list;
+  }
+
+  /**
+   * Backtrack thru the pages to find the previous page with a lower level number
+   * @param i 
+   */
+  findParentPage(i) {
+    let j = i;
+    while (j >= 0 && this.pages[j].level >= this.pages[i].level) {
+      j--;
+    }
+    if (j < 0) {
+      return null;
+    }
+
+    return this.pages[j];
   }
 
   /**
@@ -155,15 +200,13 @@ export class NavigationService {
    * the values supplied.
    */
   setQuestionsTree(tree: NavTreeNode[], magic: string, collapsible: boolean) {
-    console.log('navigation.service setQuestionsTree()');
-    console.log(tree);
-    console.log(this.dataSource.data);
     // find the questions node
-    //debugger;
     const questionsNode = this.dataSource.data.find(x => x.value === 'questions');
+    console.log('setQuestionsTree: ');
+    console.log(questionsNode);
 
     // purge its children
-    
+
 
     // insert the new questions
 
@@ -192,15 +235,17 @@ export class NavigationService {
    * @param value 
    */
   navDirect(pageClass: string) {
-    console.log('navDirect: ' + pageClass);
-
-
     const targetPage = this.pages.find(p => p.pageClass === pageClass);
 
     // if they clicked on a 'phase', nudge them to the first page in that phase
     if (!targetPage.path) {
       this.navNext(pageClass);
       return;
+    }
+
+    const currentNode = this.dataSource.data.find(n => n.value === targetPage.pageClass);
+    if (!!currentNode) {
+      currentNode.isCurrent = true;
     }
 
     const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
@@ -225,20 +270,22 @@ export class NavigationService {
 
     let newPageIndex = currentPageIndex;
     let showPage = false;
-    while (newPageIndex >= 0 && !showPage) {
+
+    // skip over any entries without a path or that fail the 'showpage' condition
+    while (!this.pages[newPageIndex].hasOwnProperty('path')
+    || (newPageIndex >= 0 && !showPage)) {
       newPageIndex = newPageIndex - 1;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
 
-    // if they backed into an entry without a path, skip to the previous entry
-    if (!this.pages[newPageIndex].hasOwnProperty('path')) {
-      newPageIndex = newPageIndex - 1;
+    const currentNode = this.dataSource.data.find(n => n.value === this.pages[newPageIndex].pageClass);
+    if (!!currentNode) {
+      currentNode.isCurrent = true;
     }
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
   }
-
 
   /**
    *
@@ -259,20 +306,22 @@ export class NavigationService {
 
     let newPageIndex = currentPageIndex;
     let showPage = false;
-    while (newPageIndex < this.pages.length && !showPage) {
+
+    // skip over any entries without a path or that fail the 'showpage' condition
+    while (!this.pages[newPageIndex].hasOwnProperty('path') 
+    || (newPageIndex < this.pages.length && !showPage)) {
       newPageIndex = newPageIndex + 1;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
 
-    // if they nexted to an entry without a path, skip to the next entry
-    if (!this.pages[newPageIndex].hasOwnProperty('path')) {
-      newPageIndex = newPageIndex + 1;
+    const currentNode = this.dataSource.data.find(n => n.value === this.pages[newPageIndex].pageClass);
+    if (!!currentNode) {
+      currentNode.isCurrent = true;
     }
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
   }
-
 
   /**
    * If there is no condition, show.  Otherwise evaluate the condition.
@@ -304,12 +353,16 @@ export class NavigationService {
     }
 
     if (condition === 'SHOW-SAL') {
-      return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity) 
+      return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity)
         || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard));
     }
 
     if (condition === 'USE-DIAGRAM') {
       return !!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram;
+    }
+
+    if (condition === 'ANALYTICS-IS-UP') {
+      return this.analyticsIsUp;
     }
 
     if (condition === 'FALSE') {
@@ -318,7 +371,6 @@ export class NavigationService {
 
     return true;
   }
-
 
   /**
    * Recurses the tree to find the specified value.
@@ -340,7 +392,11 @@ export class NavigationService {
     return false;
   }
 
-
+  /**
+   * The master list of all pages.  Question categories are not listed here,
+   * but are dynamically set elsewhere.
+   * It is used to build the tree of NavTreeNode instances that feeds the side nav.
+   */
   pages = [
     // Prepare
     { displayText: 'Prepare', pageClass: 'phase-prepare', level: 0 },
@@ -353,7 +409,7 @@ export class NavigationService {
     { displayText: 'ACET Required Documents', pageClass: 'required', level: 1, path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
     { displayText: 'ACET IRP', pageClass: 'irp', level: 1, path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
     { displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1, path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },
-    
+
     { displayText: 'Security Assurance Level (SAL)', pageClass: 'sal', level: 1, path: 'assessment/{:id}/prepare/sal', condition: 'SHOW-SAL' },
 
     { displayText: 'Cybsersecurity Standards Selection', pageClass: 'standards', level: 1, path: 'assessment/{:id}/prepare/standards', condition: 'USE-STANDARD' },
@@ -363,7 +419,7 @@ export class NavigationService {
     { displayText: 'Network Diagram', pageClass: 'diagram', level: 1, path: 'assessment/{:id}/prepare/diagram/info', condition: 'USE-DIAGRAM' },
 
     { displayText: 'Framework', pageClass: 'framework', level: 1, path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
-    
+
 
     // Questions/Requirements/Statements
     { displayText: 'Assessment', pageClass: 'phase-assessment', level: 0 },
@@ -396,7 +452,7 @@ export class NavigationService {
     { displayText: 'Executive Summary, Overview & Comments', pageClass: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
     { displayText: 'Reports', pageClass: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Feedback', pageClass: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
-    { displayText: 'Share Assessment With DHS', pageClass: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics' }
+    { displayText: 'Share Assessment With DHS', pageClass: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }
 
   ];
 }
