@@ -58,7 +58,7 @@ export class OverviewComponent implements OnInit {
       this.updateAssessmentDetails();
     });
 
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
   }

@@ -86,11 +86,6 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
-      this.router.navigate([value], { relativeTo: this.route });
-    });
-
-
     // Jump to the previously active view (if known)
     if (!!this.navSvc.activeResultsView) {
 
@@ -103,7 +98,7 @@ export class ResultsComponent implements OnInit {
           this.navSvc.activeResultsView = 'dashboard';
         }
 
-        this.navSvc.selectItem(this.navSvc.activeResultsView);
+        this.navSvc.navDirect(this.navSvc.activeResultsView);
       });
     }
   }

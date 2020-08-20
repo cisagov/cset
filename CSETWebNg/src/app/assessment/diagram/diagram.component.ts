@@ -49,7 +49,7 @@ export class DiagramComponent implements OnInit {
     tree: NavTreeNode[] = [];
     ngOnInit() {
         this.populateTree();
-        this.assessSvc.currentTab = 'diagram';
+        this.assessSvc.currentTab = 'prepare';
     }
 
     populateTree() {

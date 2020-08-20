@@ -68,7 +68,7 @@ export class QuestionsComponent implements AfterViewInit {
     private dialog: MatDialog
   ) {
     const magic = this.navSvc.getMagic();
-    console.log('questions.component:  set questions tree with loading...');
+
     this.navSvc.setQuestionsTree([
       { label: 'Please wait', value: '', children: [] },
       { label: 'Loading questions', value: '', children: [] }
@@ -139,9 +139,6 @@ export class QuestionsComponent implements AfterViewInit {
    * Changes the application mode of the assessment
    */
   setMode(mode: string) {
-
-    console.log('questions.component setMode loading ...');
-
     this.navSvc.setQuestionsTree([
       { label: 'Please wait', value: '', children: [] },
       { label: 'Loading questions', value: '', children: [] }
@@ -281,9 +278,8 @@ export class QuestionsComponent implements AfterViewInit {
         });
     });
 
-    console.log('questions.component populateTree setQuestionsTree ....');
     this.navSvc.setQuestionsTree(tree, magic, true);
-    this.navSvc.itemSelected
+    this.navSvc.navItemSelected
       .asObservable()
       .subscribe(
         (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {

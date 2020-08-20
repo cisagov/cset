@@ -55,7 +55,7 @@ export class NavigationService {
 
   private magic: string;
   @Output()
-  itemSelected = new EventEmitter<any>();
+  navItemSelected = new EventEmitter<any>();
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   treeControl: NestedTreeControl<NavTreeNode> = new NestedTreeControl<NavTreeNode>(x => observableOf(x.children));
 
@@ -117,10 +117,7 @@ export class NavigationService {
     return node.children.length > 0;
   }
 
-  selectItem(value: string) {
-    console.log('navigation.service selectItem: ' + value);
-    this.itemSelected.emit(value);
-  }
+
 
   /**
    * Returns a list of tree node elements
@@ -188,6 +185,26 @@ export class NavigationService {
   setFrameworkSelected(framework: boolean) {
     this.frameworkSelected = framework;
     this.buildTree(this.getMagic());
+  }
+
+  /**
+   * Routes to the path configured for the specified pageClass.
+   * @param value 
+   */
+  navDirect(pageClass: string) {
+    console.log('navDirect: ' + pageClass);
+
+
+    const targetPage = this.pages.find(p => p.pageClass === pageClass);
+
+    // if they clicked on a 'phase', nudge them to the first page in that phase
+    if (!targetPage.path) {
+      this.navNext(pageClass);
+      return;
+    }
+
+    const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
+    this.router.navigate([targetPath]);
   }
 
   /**
@@ -326,7 +343,7 @@ export class NavigationService {
 
   pages = [
     // Prepare
-    { displayText: 'Prepare', level: 0 },
+    { displayText: 'Prepare', pageClass: 'phase-prepare', level: 0 },
 
     { displayText: 'Assessment Configuration', pageClass: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
     { displayText: 'Assessment Information', pageClass: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
@@ -343,17 +360,17 @@ export class NavigationService {
     { displayText: 'Standard Specific Screen(s)', level: 1, condition: 'FALSE' },
 
     //  Diagram
-    { displayText: 'Network Diagram', pageClass: 'diagram', path: 'assessment/{:id}/diagram/info', condition: 'USE-DIAGRAM' },
+    { displayText: 'Network Diagram', pageClass: 'diagram', level: 1, path: 'assessment/{:id}/prepare/diagram/info', condition: 'USE-DIAGRAM' },
 
-    { displayText: 'Framework', pageClass: 'framework', path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
+    { displayText: 'Framework', pageClass: 'framework', level: 1, path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
     
 
     // Questions/Requirements/Statements
-    { displayText: 'Assessment', level: 0 },
+    { displayText: 'Assessment', pageClass: 'phase-assessment', level: 0 },
     { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
 
 
-    { displayText: 'Results', level: 0 },
+    { displayText: 'Results', pageClass: 'phase-results', level: 0 },
 
     // Results - Standards
     { displayText: 'Analysis Dashboard', pageClass: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard' },
@@ -379,7 +396,7 @@ export class NavigationService {
     { displayText: 'Executive Summary, Overview & Comments', pageClass: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
     { displayText: 'Reports', pageClass: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Feedback', pageClass: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
-    { displayText: 'Analytics', pageClass: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics' }
+    { displayText: 'Share Assessment With DHS', pageClass: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics' }
 
   ];
 }
