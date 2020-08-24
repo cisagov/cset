@@ -25,6 +25,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
+import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
@@ -89,8 +90,8 @@ import { SecurityplanComponent } from './reports/securityplan/securityplan.compo
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
-import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 
 const appRoutes: Routes = [
 
@@ -194,6 +195,7 @@ const appRoutes: Routes = [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'model-select', component: ModelSelectComponent },
+              { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
@@ -212,8 +214,8 @@ const appRoutes: Routes = [
                   { path: '**', redirectTo: 'info' }
                 ]
               },
-              { path: '', redirectTo: 'info', pathMatch: 'full' },
-              { path: '**', redirectTo: 'info' }
+              { path: '', redirectTo: 'info1', pathMatch: 'full' },
+              { path: '**', redirectTo: 'info1' }
             ]
           },          
 

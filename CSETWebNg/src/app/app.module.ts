@@ -202,6 +202,7 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
+import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 //import { TocComponent } from './layout/toc/toc.component';
 
 @NgModule({
@@ -370,6 +371,7 @@ import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/
         Assessment2InfoComponent,
         ModelSelectComponent,
         AssessmentConfigComponent,
+        CmmcLevelsComponent,
        // TocComponent
     ],
     providers: [
