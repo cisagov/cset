@@ -29,8 +29,8 @@ export class AssessmentConfigComponent implements OnInit {
     },
     {
       code: 'diagram',
-      label: 'Diagram',
-      description: 'A network diagram can be built in the tool. This will give you other questions.',
+      label: 'Network Diagram',
+      description: 'Building a diagram of your system\'s network allows CSET to include component-specific questions in your final question set.',
       expanded: false
     }
   ];

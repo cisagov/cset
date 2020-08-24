@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AssessmentService } from './assessment.service';
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { EventEmitter, Injectable, Output } from "@angular/core";
@@ -43,6 +43,8 @@ export interface NavTreeNode {
   elementType?: string;
   isPhaseNode?: boolean;
   isCurrent?: boolean;
+  expandable: boolean;
+  visible: boolean;
 }
 
 /**
@@ -63,7 +65,7 @@ export class NavigationService {
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
-  treeControl: NestedTreeControl<NavTreeNode> = new NestedTreeControl<NavTreeNode>(this._getChildren);
+  treeControl: NestedTreeControl<NavTreeNode>;
 
   currentNode: string;
 
@@ -84,18 +86,26 @@ export class NavigationService {
     private assessSvc: AssessmentService,
     private analyticsSvc: AnalyticsService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private configSvc: ConfigService
   ) {
+
+    // set up the mat tree control and its data source
+    this.treeControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
     this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
-    this.dataChange.subscribe(data => this.dataSource.data = data);
+    this.dataChange.subscribe(data => {
+      console.log('dataChange happened');
+      this.dataSource.data = data;
+      this.treeControl.dataNodes = data;
+      this.treeControl.expandAll();
+    });
 
     this.analyticsSvc.pingAnalyticsService().subscribe(data => {
       this.analyticsIsUp = true;
-    }
-    );
+    });
   }
 
-  private _getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
+  private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
   /**
    * 
@@ -111,13 +121,10 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
-      this.treeControl = new NestedTreeControl<NavTreeNode>((node: NavTreeNode) => {
-        return observableOf(node.children);
-      });
-      
-      this.dataSource.data = this.buildEntryList();
-
-      console.log(JSON.stringify(this.dataSource.data));
+      // this.saveExpandedNodes();
+      this.dataSource.data = this.buildTocData();
+      this.treeControl.dataNodes = this.dataSource.data;
+      this.treeControl.expandAll();
     }
   }
 
@@ -129,8 +136,32 @@ export class NavigationService {
       this.treeControl = new NestedTreeControl<NavTreeNode>((node: NavTreeNode) => {
         return observableOf(node.children);
       });
+      this.saveExpandedNodes();
       this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
       this.dataSource.data = tree;
+      this.treeControl.dataNodes = tree;
+      this.treeControl.expandAll();
+    }
+  }
+
+  expandedNodes: NavTreeNode[];
+
+  saveExpandedNodes() {
+    this.expandedNodes = new Array<NavTreeNode>();
+    console.log(this.treeControl.dataNodes);
+    this.treeControl.dataNodes.forEach(node => {
+      console.log(node);
+      if (node.expandable && this.treeControl.isExpanded(node)) {
+        this.expandedNodes.push(node);
+      }
+    });
+  }
+
+  restoreExpandedNodes() {
+    if (!!this.expandedNodes) {
+      this.expandedNodes.forEach(node => {
+        this.treeControl.expand(this.treeControl.dataNodes.find(n => n.value === node.value));
+      });
     }
   }
 
@@ -141,58 +172,97 @@ export class NavigationService {
   /**
    * Returns a list of tree node elements
    */
-  buildEntryList(): NavTreeNode[] {
-    const list: NavTreeNode[] = [];
+  buildTocData(): NavTreeNode[] {
+    console.log('buildTocData');
+    console.log(this.currentNode);
+    const toc: NavTreeNode[] = [];
 
     for (let i = 0; i < this.pages.length; i++) {
-
       let p = this.pages[i];
-      let showPage = this.shouldIShow(p.condition);
-      if (showPage) {
+      let visible = this.shouldIShow(p.condition);
 
-        const e: NavTreeNode = {
-          label: p.displayText,
-          value: p.pageClass,
-          isPhaseNode: false,
-          children: []
-        };
+      const node: NavTreeNode = {
+        label: p.displayText,
+        value: p.pageClass,
+        isPhaseNode: false,
+        children: [],
+        expandable: true,
+        visible: visible
+      };
 
-        if (p.level === 0) {
-          e.isPhaseNode = true;
+      if (p.level === 0) {
+        node.isPhaseNode = true;
+      }
+
+      node.isCurrent = (p.pageClass === this.currentNode);
+
+      const parentPage = this.findParentPage(i);
+      if (!!parentPage) {
+        const parentNode = this.findInTree(toc, parentPage.pageClass);
+        if (!!parentNode) {
+          parentNode.children.push(node);
         }
-
-        // console.log('buildEntryList, currentNode=' + this.currentNode);
-        e.isCurrent = (p.pageClass === this.currentNode);
-
-        const parentPage = this.findParentPage(i);
-        if (!!parentPage) {
-          const parentNode = list.find(ss => ss.value === parentPage.pageClass);
-          if (!!parentNode) {
-            parentNode.children.push(e);
-          }
-        } else {
-          list.push(e);
-        }
+      } else {
+        toc.push(node);
       }
     }
 
-    return list;
+    // console.log(JSON.stringify(toc));
+    return toc;
   }
 
   /**
-   * Backtrack thru the pages to find the previous page with a lower level number
-   * @param i 
+   * Back-tracks thru the pages to find the previous page with a lower level number
    */
-  findParentPage(i) {
+  findParentPage(i: number) {
     let j = i;
-    while (j >= 0 && this.pages[j].level >= this.pages[i].level) {
+    do {
       j--;
     }
+    while (j >= 0 && this.pages[j].level >= this.pages[i].level);
+
     if (j < 0) {
       return null;
     }
 
     return this.pages[j];
+  }
+
+  /**
+   * Recurses a list of NavTreeNode and their children for a
+   * className.
+   */
+  findInTree(tree: NavTreeNode[], className: string) {
+    let result = null;
+    for (let i = 0; i < tree.length; i++) {
+      let node = tree[i];
+      if (node.value === className) {
+        return node;
+      }
+
+      if (node.children.length > 0) {
+        result = this.findInTree(node.children, className);
+        if (!!result) {
+          return result;
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Sets all nodes in the tree to NOT be current
+   */
+  setNoCurrentPage(tree: NavTreeNode[]) {
+    for (let i = 0; i < tree.length; i++) {
+      let node = tree[i];
+      node.isCurrent = false;
+
+      if (node.children.length > 0) {
+        this.setNoCurrentPage(node.children);
+      }
+    }
   }
 
   /**
@@ -243,7 +313,8 @@ export class NavigationService {
       return;
     }
 
-    const currentNode = this.dataSource.data.find(n => n.value === targetPage.pageClass);
+    this.setNoCurrentPage(this.dataSource.data);
+    const currentNode = this.findInTree(this.dataSource.data, targetPage.pageClass);
     if (!!currentNode) {
       currentNode.isCurrent = true;
     }
@@ -272,13 +343,15 @@ export class NavigationService {
     let showPage = false;
 
     // skip over any entries without a path or that fail the 'showpage' condition
-    while (!this.pages[newPageIndex].hasOwnProperty('path')
-    || (newPageIndex >= 0 && !showPage)) {
-      newPageIndex = newPageIndex - 1;
+    do {
+      newPageIndex--;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
+    while (!this.pages[newPageIndex].hasOwnProperty('path')
+      || (newPageIndex >= 0 && !showPage));
 
-    const currentNode = this.dataSource.data.find(n => n.value === this.pages[newPageIndex].pageClass);
+    this.setNoCurrentPage(this.dataSource.data);
+    const currentNode = this.findInTree(this.dataSource.data, this.pages[newPageIndex].pageClass);
     if (!!currentNode) {
       currentNode.isCurrent = true;
     }
@@ -308,13 +381,15 @@ export class NavigationService {
     let showPage = false;
 
     // skip over any entries without a path or that fail the 'showpage' condition
-    while (!this.pages[newPageIndex].hasOwnProperty('path') 
-    || (newPageIndex < this.pages.length && !showPage)) {
-      newPageIndex = newPageIndex + 1;
+    do {
+      newPageIndex++;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
+    while (!this.pages[newPageIndex].hasOwnProperty('path')
+      || (newPageIndex < this.pages.length && !showPage));
 
-    const currentNode = this.dataSource.data.find(n => n.value === this.pages[newPageIndex].pageClass);
+    this.setNoCurrentPage(this.dataSource.data);
+    const currentNode = this.findInTree(this.dataSource.data, this.pages[newPageIndex].pageClass);
     if (!!currentNode) {
       currentNode.isCurrent = true;
     }
@@ -353,8 +428,8 @@ export class NavigationService {
     }
 
     if (condition === 'SHOW-SAL') {
-      return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity)
-        || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard));
+      return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard)
+        || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram));
     }
 
     if (condition === 'USE-DIAGRAM') {
@@ -377,25 +452,28 @@ export class NavigationService {
    * @param tree
    * @param value
    */
-  isPathInTree(tree: NavTreeNode[], path: string): boolean {
-    for (let index = 0; index < tree.length; index++) {
-      const t = tree[index];
+  // findNodeByClassName(tree: NavTreeNode[], className: string): NavTreeNode {
+  //   for (let index = 0; index < tree.length; index++) {
+  //     const t = tree[index];
 
-      if (t.value === path) {
-        return true;
-      }
+  //     if (t.value === className) {
+  //       return t;
+  //     }
 
-      if (this.isPathInTree(t.children, path)) {
-        return true;
-      }
-    }
-    return false;
-  }
+  //     if (this.findNodeByClassName(t.children, className)) {
+  //       return t;
+  //     }
+  //   }
+  //   return null;
+  // }
 
   /**
    * The master list of all pages.  Question categories are not listed here,
    * but are dynamically set elsewhere.
+   * 
    * It is used to build the tree of NavTreeNode instances that feeds the side nav.
+   * 
+   * Note that the pages collection is not nested.  This makes BACKing and NEXTing easier.
    */
   pages = [
     // Prepare
@@ -404,8 +482,8 @@ export class NavigationService {
     { displayText: 'Assessment Configuration', pageClass: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
     { displayText: 'Assessment Information', pageClass: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
-    { displayText: 'Select Model', pageClass: 'model-select', level: 1, path: 'assessment/{:id}/prepare/model-select', condition: 'USE-MATURITY-MODEL' },
-    { displayText: 'Model Target Levels', level: 1, condition: 'USE-MATURITY-MODEL' },
+    { displayText: 'Maturity Model Selection', pageClass: 'model-select', level: 1, path: 'assessment/{:id}/prepare/model-select', condition: 'USE-MATURITY-MODEL' },
+    { displayText: 'CMMC Target Level Selection', pageClass: 'cmmc-levels', level: 1, path: 'assessment/{:id}/prepare/cmmc-levels', condition: 'USE-MATURITY-MODEL' },
     { displayText: 'ACET Required Documents', pageClass: 'required', level: 1, path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
     { displayText: 'ACET IRP', pageClass: 'irp', level: 1, path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
     { displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1, path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },

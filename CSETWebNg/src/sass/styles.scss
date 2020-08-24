@@ -741,6 +741,11 @@ ul.mat-tree-node {
   min-height: 0;
 }
 
+.side-nav-container .mat-nested-tree-node > button > span, 
+.side-nav-container .mat-tree-node > button > span {
+  display: block;
+}
+
 .side-nav-container .phase-node {
   margin-top: 1rem;
 }
@@ -749,8 +754,8 @@ ul.mat-tree-node {
   font-size: 1.3rem;
 }
 
-.side-nav-container .current-node {
-  color: red;
+.side-nav-container .current-node > button {
+  border: 1px solid #ffffff;
 }
 
 /* Allow autocomplete to be wider than its companion field */
@@ -954,6 +959,11 @@ th.data-table {
   white-space: normal;
 
 }
+
+input[type=radio].maturity-model-select {
+  margin-right: 1rem;
+}
+
 
 // Header / Navbar
 /////////////////////////////////////////////
