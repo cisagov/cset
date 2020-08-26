@@ -65,6 +65,13 @@ export class QuestionsService {
    */
   public domainMatFilters: Map<string, Map<string, boolean>>;
 
+  /**
+   * The TOC might make the API trip to get the questions.  If so,
+   * it will store the response here so that the Question screen
+   * doesn't have to.
+   */
+  public questionList: QuestionResponse;
+
 
   /**
    * Persists the current selection of the 'auto load supplemental' preference.

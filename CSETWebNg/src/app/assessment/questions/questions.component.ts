@@ -56,6 +56,8 @@ export class QuestionsComponent implements AfterViewInit {
 
   PreviousComponentGroup = null;
 
+  scrollTo: string;
+
   /**
    * 
    */
@@ -69,19 +71,51 @@ export class QuestionsComponent implements AfterViewInit {
   ) {
     const magic = this.navSvc.getMagic();
 
-    this.navSvc.setQuestionsTree([
-      { label: 'Please wait', value: '', children: [] },
-      { label: 'Loading questions', value: '', children: [] }
-    ], magic, true);
-
     this.autoLoadSupplementalInfo = this.questionsSvc.autoLoadSupplementalSetting;
 
     // if running in IE, turn off the auto load feature
     if (this.browserIsIE()) {
       this.autoLoadSupplementalInfo = false;
     }
-    
+
     this.getQuestionCounts();
+
+    this.navSvc.navItemSelected
+      .asObservable()
+      .subscribe(
+        // (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {
+        (tgt: any) => {
+
+          console.log('questions component - navItemSelected handlers');
+          console.log(tgt);
+          this.scrollTo = tgt.target;
+          console.log('just set scrollto = ' + this.scrollTo);
+
+          debugger;
+
+          if (!!tgt.subcategory) {
+            this.domains.forEach(d => {
+              d.QuestionGroups
+                .find(val => val.GroupHeadingId === tgt.question)
+                .SubCategories.find(
+                  val => val.SubCategoryId === tgt.subcategory
+                ).Expanded = true;
+            });
+
+            const t = document.getElementById(tgt.parent);
+            if (!!t) {
+              t.scrollIntoView();
+            }
+          }
+
+          if (!!tgt.target) {
+            const t = document.getElementById(tgt.target);
+            if (!!t) {
+              t.scrollIntoView();
+            }
+          }
+        }
+      );
   }
 
   updateComponentsOverride() {
@@ -113,6 +147,16 @@ export class QuestionsComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (this.domains != null && this.domains.length <= 0) {
       this.loadQuestions();
+
+      // scroll to a selected category
+      console.log('about to try scrolling to ' + this.scrollTo);
+      if (this.scrollTo) {
+        const t = document.getElementById(this.scrollTo);
+        if (!!t) {
+          t.scrollIntoView();
+        }
+      }
+      this.scrollTo = null;
     }
 
     this.assessSvc.currentTab = 'questions';
@@ -131,7 +175,7 @@ export class QuestionsComponent implements AfterViewInit {
 
     this.questionsSvc.evaluateFilters(this.domains);
     if (!!this.domains) {
-      this.populateTree(magic);
+      // this.populateTree(magic);
     }
   }
 
@@ -139,34 +183,29 @@ export class QuestionsComponent implements AfterViewInit {
    * Changes the application mode of the assessment
    */
   setMode(mode: string) {
-    this.navSvc.setQuestionsTree([
-      { label: 'Please wait', value: '', children: [] },
-      { label: 'Loading questions', value: '', children: [] }
-    ], this.navSvc.getMagic(), true);
-
     this.questionsSvc.setMode(mode).subscribe(() => this.loadQuestions());
   }
 
-  getQuestionCounts(){
+  getQuestionCounts() {
     this.questionsSvc.getQuestionsList().subscribe(
       (data: QuestionResponse) => {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
         this.setHasQuestions = (data.QuestionCount > 0);
 
-        if(!this.setHasQuestions && !this.setHasRequirements){
+        if (!this.setHasQuestions && !this.setHasRequirements) {
           this.assessSvc.applicationMode = 'Q';
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
         }
-        else if(!this.setHasRequirements && this.assessSvc.applicationMode == "R"){
+        else if (!this.setHasRequirements && this.assessSvc.applicationMode == "R") {
           this.assessSvc.applicationMode = 'Q';
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
         }
-        else if(this.setHasRequirements && this.assessSvc.applicationMode == 'R'){
+        else if (this.setHasRequirements && this.assessSvc.applicationMode == 'R') {
           this.assessSvc.applicationMode = 'R';
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
         }
-        else if(!this.setHasQuestions && this.assessSvc.applicationMode == 'Q'){
+        else if (!this.setHasQuestions && this.assessSvc.applicationMode == 'Q') {
           this.assessSvc.applicationMode = 'R';
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
         }
@@ -200,8 +239,8 @@ export class QuestionsComponent implements AfterViewInit {
           RequirementCount: data.RequirementCount
         };
 
-       
-        
+
+
         data.QuestionGroups.forEach(g => {
           if (!bigStructure.Domains.find(d => d.DomainName === g.DomainName)) {
             bigStructure.Domains.push({
@@ -248,65 +287,65 @@ export class QuestionsComponent implements AfterViewInit {
   }
 
 
-  /**
-   * Builds the side nav tree structure.
-   * @param magic
-   */
-  populateTree(magic?: string) {
-    if (!magic) {
-      magic = this.navSvc.getMagic();
-    }
-    const tree: NavTreeNode[] = [];
-    this.domains.forEach(d => {
-      d.QuestionGroups
-        .filter(g => g.Visible)
-        .map(q => {
+  // /**
+  //  * Builds the side nav tree structure.
+  //  * @param magic
+  //  */
+  // populateTree(magic?: string) {
+  //   if (!magic) {
+  //     magic = this.navSvc.getMagic();
+  //   }
+  //   const tree: NavTreeNode[] = [];
+  //   this.domains.forEach(d => {
+  //     d.QuestionGroups
+  //       .filter(g => g.Visible)
+  //       .map(q => {
 
-          if (!!q.StandardShortName) {
-            this.insertWithParents(tree, q);
-          } else {
-            tree.push({
-              label: q.GroupHeadingText,
-              elementType: 'QUESTION-HEADING',
-              value: {
-                target: q.NavigationGUID,
-                question: q.GroupHeadingId
-              },
-              children: []
-            });
-          }
-        });
-    });
+  //         if (!!q.StandardShortName) {
+  //           this.insertWithParents(tree, q);
+  //         } else {
+  //           tree.push({
+  //             label: q.GroupHeadingText,
+  //             elementType: 'QUESTION-HEADING',
+  //             value: {
+  //               target: q.NavigationGUID,
+  //               question: q.GroupHeadingId
+  //             },
+  //             children: []
+  //           });
+  //         }
+  //       });
+  //   });
 
-    this.navSvc.setQuestionsTree(tree, magic, true);
-    this.navSvc.navItemSelected
-      .asObservable()
-      .subscribe(
-        (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {
-          if (!!tgt.subcategory) {
-            this.domains.forEach(d => {
-              d.QuestionGroups
-                .find(val => val.GroupHeadingId === tgt.question)
-                .SubCategories.find(
-                  val => val.SubCategoryId === tgt.subcategory
-                ).Expanded = true;
-            });
+  //   this.navSvc.setQuestionsTree(tree, magic, true);
+  //   this.navSvc.navItemSelected
+  //     .asObservable()
+  //     .subscribe(
+  //       (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {
+  //         if (!!tgt.subcategory) {
+  //           this.domains.forEach(d => {
+  //             d.QuestionGroups
+  //               .find(val => val.GroupHeadingId === tgt.question)
+  //               .SubCategories.find(
+  //                 val => val.SubCategoryId === tgt.subcategory
+  //               ).Expanded = true;
+  //           });
 
-            const t = document.getElementById(tgt.parent);
-            if (!!t) {
-              t.scrollIntoView();
-            }
-          }
+  //           const t = document.getElementById(tgt.parent);
+  //           if (!!t) {
+  //             t.scrollIntoView();
+  //           }
+  //         }
 
-          if (!!tgt.target) {
-            const t = document.getElementById(tgt.target);
-            if (!!t) {
-              t.scrollIntoView();
-            }
-          }
-        }
-      );
-  }
+  //         if (!!tgt.target) {
+  //           const t = document.getElementById(tgt.target);
+  //           if (!!t) {
+  //             t.scrollIntoView();
+  //           }
+  //         }
+  //       }
+  //     );
+  // }
 
   /**
    * Insert the Heading into the tree with optional Standard / Domain parents.

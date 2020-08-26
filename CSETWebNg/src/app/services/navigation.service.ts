@@ -30,6 +30,8 @@ import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
+import { QuestionsService } from './questions.service';
+import { QuestionResponse } from '../models/questions.model';
 
 
 export interface NavTreeNode {
@@ -67,7 +69,7 @@ export class NavigationService {
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
   treeControl: NestedTreeControl<NavTreeNode>;
 
-  currentNode: string;
+  currentPage = '';
 
   frameworkSelected = false;
   acetSelected = false;
@@ -87,6 +89,7 @@ export class NavigationService {
     private analyticsSvc: AnalyticsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private questionsSvc: QuestionsService,
     private configSvc: ConfigService
   ) {
 
@@ -94,7 +97,6 @@ export class NavigationService {
     this.treeControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
     this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
     this.dataChange.subscribe(data => {
-      console.log('dataChange happened');
       this.dataSource.data = data;
       this.treeControl.dataNodes = data;
       this.treeControl.expandAll();
@@ -108,7 +110,7 @@ export class NavigationService {
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
   /**
-   * 
+   * Generates a random 'magic number'.
    */
   getMagic() {
     this.magic = (Math.random() * 1e5).toFixed(0);
@@ -121,9 +123,11 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
-      // this.saveExpandedNodes();
       this.dataSource.data = this.buildTocData();
       this.treeControl.dataNodes = this.dataSource.data;
+
+      this.setQuestionsTree();
+
       this.treeControl.expandAll();
     }
   }
@@ -136,32 +140,10 @@ export class NavigationService {
       this.treeControl = new NestedTreeControl<NavTreeNode>((node: NavTreeNode) => {
         return observableOf(node.children);
       });
-      this.saveExpandedNodes();
       this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
       this.dataSource.data = tree;
       this.treeControl.dataNodes = tree;
       this.treeControl.expandAll();
-    }
-  }
-
-  expandedNodes: NavTreeNode[];
-
-  saveExpandedNodes() {
-    this.expandedNodes = new Array<NavTreeNode>();
-    console.log(this.treeControl.dataNodes);
-    this.treeControl.dataNodes.forEach(node => {
-      console.log(node);
-      if (node.expandable && this.treeControl.isExpanded(node)) {
-        this.expandedNodes.push(node);
-      }
-    });
-  }
-
-  restoreExpandedNodes() {
-    if (!!this.expandedNodes) {
-      this.expandedNodes.forEach(node => {
-        this.treeControl.expand(this.treeControl.dataNodes.find(n => n.value === node.value));
-      });
     }
   }
 
@@ -173,8 +155,6 @@ export class NavigationService {
    * Returns a list of tree node elements
    */
   buildTocData(): NavTreeNode[] {
-    console.log('buildTocData');
-    console.log(this.currentNode);
     const toc: NavTreeNode[] = [];
 
     for (let i = 0; i < this.pages.length; i++) {
@@ -194,7 +174,9 @@ export class NavigationService {
         node.isPhaseNode = true;
       }
 
-      node.isCurrent = (p.pageClass === this.currentNode);
+      if (this.currentPage === node.value) {
+        node.isCurrent = true;
+      }
 
       const parentPage = this.findParentPage(i);
       if (!!parentPage) {
@@ -207,7 +189,6 @@ export class NavigationService {
       }
     }
 
-    // console.log(JSON.stringify(toc));
     return toc;
   }
 
@@ -232,7 +213,7 @@ export class NavigationService {
    * Recurses a list of NavTreeNode and their children for a
    * className.
    */
-  findInTree(tree: NavTreeNode[], className: string) {
+  findInTree(tree: NavTreeNode[], className: string): NavTreeNode {
     let result = null;
     for (let i = 0; i < tree.length; i++) {
       let node = tree[i];
@@ -254,14 +235,28 @@ export class NavigationService {
   /**
    * Sets all nodes in the tree to NOT be current
    */
-  setNoCurrentPage(tree: NavTreeNode[]) {
+  clearCurrentPage(tree: NavTreeNode[]) {
+    this.currentPage = '';
     for (let i = 0; i < tree.length; i++) {
       let node = tree[i];
       node.isCurrent = false;
 
       if (node.children.length > 0) {
-        this.setNoCurrentPage(node.children);
+        this.clearCurrentPage(node.children);
       }
+    }
+  }
+
+  /**
+   * Clear any current page and mark the new one.
+   */
+  setCurrentPage(pageClass: string) {
+    this.clearCurrentPage(this.dataSource.data);
+
+    const currentNode = this.findInTree(this.dataSource.data, pageClass);
+    if (!!currentNode) {
+      currentNode.isCurrent = true;
+      this.currentPage = currentNode.value;
     }
   }
 
@@ -269,17 +264,51 @@ export class NavigationService {
    * Replaces the children of the Questions node with
    * the values supplied.
    */
-  setQuestionsTree(tree: NavTreeNode[], magic: string, collapsible: boolean) {
+  setQuestionsTree() {
+    console.log('setQuestionsTree END');
     // find the questions node
-    const questionsNode = this.dataSource.data.find(x => x.value === 'questions');
-    console.log('setQuestionsTree: ');
-    console.log(questionsNode);
-
-    // purge its children
+    const questionsNode = this.findInTree(this.dataSource.data, 'questions');
 
 
-    // insert the new questions
+    this.questionsSvc.getQuestionsList().subscribe((data: QuestionResponse) => {
+      this.questionsSvc.questionList = data;
 
+      questionsNode.children.length = 0;
+
+      data.QuestionGroups.forEach(g => {
+        const node: NavTreeNode = {
+          label: g.GroupHeadingText,
+          elementType: 'QUESTION-HEADING',
+          value: {
+            target: g.NavigationGUID,
+            question: g.GroupHeadingId
+          },
+          isPhaseNode: false,
+          children: [],
+          expandable: true,
+          visible: true
+        };
+        questionsNode.children.push(node);
+      });
+
+      // refresh
+      const d = this.dataSource.data;
+      this.dataSource.data = null;
+      this.dataSource.data = d;
+    });
+
+
+    // put in a 'loading' node while we grab the question list
+    questionsNode.children = [];
+    const node: NavTreeNode = {
+      label: '...',
+      value: '',
+      isPhaseNode: false,
+      children: [],
+      expandable: true,
+      visible: true
+    };
+    questionsNode.children.push(node);
   }
 
   getFramework() {
@@ -291,11 +320,13 @@ export class NavigationService {
   }
 
   setACETSelected(acet: boolean) {
+    console.log('setACETSelected');
     this.acetSelected = acet;
     this.buildTree(this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
+    console.log('setFrameworkSelected');
     this.frameworkSelected = framework;
     this.buildTree(this.getMagic());
   }
@@ -305,7 +336,15 @@ export class NavigationService {
    * @param value 
    */
   navDirect(pageClass: string) {
-    const targetPage = this.pages.find(p => p.pageClass === pageClass);
+    let targetPage = this.pages.find(p => p.pageClass === pageClass);
+
+    // if they clicked on a question category, send them to questions
+    if (!targetPage) {
+      targetPage = this.pages.find(p => p.pageClass === "questions");
+      this.navItemSelected.emit(pageClass);
+    }
+
+
 
     // if they clicked on a 'phase', nudge them to the first page in that phase
     if (!targetPage.path) {
@@ -313,11 +352,7 @@ export class NavigationService {
       return;
     }
 
-    this.setNoCurrentPage(this.dataSource.data);
-    const currentNode = this.findInTree(this.dataSource.data, targetPage.pageClass);
-    if (!!currentNode) {
-      currentNode.isCurrent = true;
-    }
+    this.setCurrentPage(targetPage.pageClass);
 
     const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([targetPath]);
@@ -350,11 +385,8 @@ export class NavigationService {
     while (!this.pages[newPageIndex].hasOwnProperty('path')
       || (newPageIndex >= 0 && !showPage));
 
-    this.setNoCurrentPage(this.dataSource.data);
-    const currentNode = this.findInTree(this.dataSource.data, this.pages[newPageIndex].pageClass);
-    if (!!currentNode) {
-      currentNode.isCurrent = true;
-    }
+
+    this.setCurrentPage(this.pages[newPageIndex].pageClass);
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
@@ -388,11 +420,8 @@ export class NavigationService {
     while (!this.pages[newPageIndex].hasOwnProperty('path')
       || (newPageIndex < this.pages.length && !showPage));
 
-    this.setNoCurrentPage(this.dataSource.data);
-    const currentNode = this.findInTree(this.dataSource.data, this.pages[newPageIndex].pageClass);
-    if (!!currentNode) {
-      currentNode.isCurrent = true;
-    }
+
+    this.setCurrentPage(this.pages[newPageIndex].pageClass);
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
