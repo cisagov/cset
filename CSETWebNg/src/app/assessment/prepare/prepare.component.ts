@@ -39,22 +39,26 @@ export class PrepareComponent implements OnInit {
    
     private navSvc: NavigationService,
     private router: Router,
-    private route: ActivatedRoute,
-    private stdSvc: StandardService
+    private route: ActivatedRoute
   ) {
   
 
-    this.navSvc.getACET().subscribe((x: boolean) => {
-      this.navSvc.setACETSelected(x);
-    });
+    // this.navSvc.getACET().subscribe((x: boolean) => {
+    //   this.navSvc.setACETSelected(x);
+    // });
 
-    this.navSvc.getFramework().subscribe((x: boolean) => {
-      this.navSvc.setFrameworkSelected(x);
-    });
-    
-    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
-      this.router.navigate([value], { relativeTo: this.route });
-    });
+    // this.navSvc.getFramework().subscribe((x: boolean) => {
+    //   this.navSvc.setFrameworkSelected(x);
+    // });
+
+    this.navSvc.buildTree(this.navSvc.getMagic());
+
+    console.log('prepare consructor');
+
+    // RKW - does this even do anything?  lets do our routing through our service
+    // this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
+    //   this.router.navigate([value], { relativeTo: this.route });
+    // });
   }
 
   ngOnInit() {

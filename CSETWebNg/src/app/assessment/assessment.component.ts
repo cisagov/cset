@@ -85,10 +85,6 @@ export class AssessmentComponent implements OnInit {
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
-
-    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
-      this.selectNavItem(value);
-    });
   }
 
   ngOnInit() {
@@ -102,6 +98,7 @@ export class AssessmentComponent implements OnInit {
     } else {
       this.expandNav = true;
     }
+
     this.navSvc.navDirect(target);
   }
 

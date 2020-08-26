@@ -188,7 +188,7 @@ export class StandardsComponent implements OnInit {
   }
 
   setFrameworkNavigation()  {
-    this.navSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
+    // RKW - this.navSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
   }
 
   /**
