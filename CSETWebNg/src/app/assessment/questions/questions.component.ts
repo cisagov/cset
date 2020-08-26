@@ -360,30 +360,30 @@ export class QuestionsComponent implements AfterViewInit {
     }
 
     let standard = tree.find(elem => elem.elementType === 'STANDARD' && elem.label === q.StandardShortName);
-    if (!standard) {
-      tree.push({
-        label: q.StandardShortName,
-        elementType: 'STANDARD',
-        value: '',
-        children: []
-      });
+    // if (!standard) {
+    //   tree.push({
+    //     label: q.StandardShortName,
+    //     elementType: 'STANDARD',
+    //     value: '',
+    //     children: []
+    //   });
       standard = tree[tree.length - 1];
     }
 
     // this element is only built if the question group belongs to a domain (ACET)
-    let domain = null;
-    if (!!q.DomainName) {
-      domain = standard.children.find(elem => elem.elementType === 'DOMAIN' && elem.label === q.DomainName);
-      if (!domain) {
-        standard.children.push({
-          label: q.DomainName,
-          elementType: 'DOMAIN',
-          value: '',
-          children: []
-        });
-        domain = standard.children[standard.children.length - 1];
-      }
-    }
+    // let domain = null;
+    // if (!!q.DomainName) {
+    //   domain = standard.children.find(elem => elem.elementType === 'DOMAIN' && elem.label === q.DomainName);
+    //   if (!domain) {
+    //     standard.children.push({
+    //       label: q.DomainName,
+    //       elementType: 'DOMAIN',
+    //       value: '',
+    //       children: []
+    //     });
+    //     domain = standard.children[standard.children.length - 1];
+    //   }
+    // }
 
     // build the question group heading element
     const heading = {

@@ -93,6 +93,7 @@ import { SitesummaryComponent } from './reports/sitesummary/sitesummary.componen
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 
+
 const appRoutes: Routes = [
 
 
@@ -198,6 +199,7 @@ const appRoutes: Routes = [
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
+              { path: 'model-select', component: ModelSelectComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
