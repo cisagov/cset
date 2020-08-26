@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { QuestionGroup } from '../../../models/questions.model';
 
 @Component({
   selector: 'app-category-block',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CategoryBlockComponent implements OnInit {
 
-  @Input('myCategory') myCategory;
+  @Input('myCategory') c: QuestionGroup;
 
   /**
    * 
@@ -19,6 +20,13 @@ export class CategoryBlockComponent implements OnInit {
   ngOnInit() {
   }
 
+  addDomainPad(domain) {
+    if (domain != null) {
+      return "domain-pad";
+    }
+    return "";
+  }
+  
     /**
    * Builds category IDs in a consistent way.
    */

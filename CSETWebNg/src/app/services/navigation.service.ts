@@ -267,28 +267,41 @@ export class NavigationService {
   setQuestionsTree() {
     console.log('setQuestionsTree END');
     // find the questions node
-    const questionsNode = this.findInTree(this.dataSource.data, 'questions');
+    const assessmentNode = this.findInTree(this.dataSource.data, 'phase-assessment');
 
 
-    this.questionsSvc.getQuestionsList().subscribe((data: QuestionResponse) => {
-      this.questionsSvc.questionList = data;
+    this.questionsSvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+      this.questionsSvc.questionList = response;
 
-      questionsNode.children.length = 0;
+      assessmentNode.children.length = 0;
 
-      data.QuestionGroups.forEach(g => {
-        const node: NavTreeNode = {
-          label: g.GroupHeadingText,
-          elementType: 'QUESTION-HEADING',
-          value: {
-            target: g.NavigationGUID,
-            question: g.GroupHeadingId
-          },
+      response.CategoryContainers.forEach(c => {
+        const node1: NavTreeNode = {
+          label: c.DisplayText,
+          elementType: 'CONTAINER',
+          value: null,
           isPhaseNode: false,
           children: [],
           expandable: true,
           visible: true
         };
-        questionsNode.children.push(node);
+        assessmentNode.children.push(node1);
+
+        c.QuestionGroups.forEach(g => {
+          const node2: NavTreeNode = {
+            label: g.GroupHeadingText,
+            elementType: 'QUESTION-HEADING',
+            value: {
+              target: g.NavigationGUID,
+              question: g.GroupHeadingId
+            },
+            isPhaseNode: false,
+            children: [],
+            expandable: true,
+            visible: true
+          };
+          node1.children.push(node2);
+        });
       });
 
       // refresh
@@ -299,7 +312,7 @@ export class NavigationService {
 
 
     // put in a 'loading' node while we grab the question list
-    questionsNode.children = [];
+    assessmentNode.children = [];
     const node: NavTreeNode = {
       label: '...',
       value: '',
@@ -308,7 +321,7 @@ export class NavigationService {
       expandable: true,
       visible: true
     };
-    questionsNode.children.push(node);
+    assessmentNode.children.push(node);
   }
 
   getFramework() {
@@ -529,8 +542,8 @@ export class NavigationService {
 
 
     // Questions/Requirements/Statements
-    { displayText: 'Assessment', pageClass: 'phase-assessment', level: 0 },
-    { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
+    { displayText: 'Assessment', pageClass: 'phase-assessment', level: 0, path: 'assessment/{:id}/questions' },
+ //   { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
 
 
     { displayText: 'Results', pageClass: 'phase-results', level: 0 },

@@ -52,15 +52,10 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/CSET-183
   public assessment: AssessmentDetail;
 
 
   /**
-<<<<<<< HEAD
    * Stores the active assessment 'features' that the user wishes to use,
    * e.g., diagram, standards, maturity model.
    */
@@ -69,9 +64,6 @@ export class AssessmentService {
 
   /**
    *
-=======
-   * 
->>>>>>> feature/CSET-183
    */
   constructor(
     private emailSvc: EmailService,
