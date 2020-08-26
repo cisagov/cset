@@ -486,10 +486,6 @@ namespace CSETWeb_Api.BusinessManagers
                 return db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             }
         }
-
-
-
-
     }
 }
 

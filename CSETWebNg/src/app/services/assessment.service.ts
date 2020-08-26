@@ -52,11 +52,15 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
 
-  
+<<<<<<< HEAD
+
+=======
+>>>>>>> feature/CSET-183
   public assessment: AssessmentDetail;
 
 
   /**
+<<<<<<< HEAD
    * Stores the active assessment 'features' that the user wishes to use,
    * e.g., diagram, standards, maturity model.
    */
@@ -65,6 +69,9 @@ export class AssessmentService {
 
   /**
    *
+=======
+   * 
+>>>>>>> feature/CSET-183
    */
   constructor(
     private emailSvc: EmailService,
@@ -247,15 +254,15 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'diagram/has');
   }
 
-    /**
+  /**
    * Returns a boolean indicating if the feature is active.
    * @param feature 
    */
   hasFeature(feature: string) {
     return this.assessmentFeatures.indexOf(feature.toLowerCase()) >= 0;
   }
-  
-    /**
+
+  /**
    * Adds or removes an assessment feature from the list.
    */
   changeFeature(feature: string, state: boolean) {
