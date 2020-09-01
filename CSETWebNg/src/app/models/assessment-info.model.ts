@@ -39,9 +39,9 @@ export interface AssessmentDetail {
     CreditUnion?: string;
     Assets?: string;
 
-    UseStandard: boolean;
-    UseMaturity: boolean;
-    UseDiagram: boolean;
+    UseStandard?: boolean;
+    UseMaturity?: boolean;
+    UseDiagram?: boolean;
 }
 
 export interface AssessmentContactsResponse {

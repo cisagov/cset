@@ -1713,6 +1713,14 @@ ul.related-questions li {
   color: $primary-color;
 }
 
+.domain-group-heading {
+  margin-bottom: 1rem;
+}
+
+.domain-group-heading > div {
+  font-size: 30px;
+}
+
 // Dashboard
 ///////////////////////////////////////////////////////////////////////
 .score-container {
@@ -2908,6 +2916,7 @@ table.td-text-left th, table.td-text-left td {
 .domain-pad{
   margin-left:20px;
 }
+
 
 
 ////

@@ -112,12 +112,30 @@ namespace CSETWeb_Api.BusinessManagers
         private QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
-            var response = new QuestionResponse();
+            var response = new QuestionResponse
+            {
+                CategoryContainers = new List<CategoryContainer>()
+            };
 
-            response.CategoryContainers = new List<CategoryContainer>();
+            // build a container for each domain
+            foreach (var d in domains.Select(d => d.DomainName).Distinct())
+            {
+                response.CategoryContainers.Add(new CategoryContainer()
+                {
+                    DisplayText = d,
+                    DomainText = d,
+                    IsDomain = true
+                });
+            }
+
+            // add the categories/assessment factor names to the domains
             foreach (var d in domains)
             {
-                response.CategoryContainers.Add(BuildDomainResponse(d));
+                response.CategoryContainers.Where(c => c.DomainText == d.DomainName).First()
+                    .QuestionGroups.Add(new QuestionGroup() 
+                    {
+                        GroupHeadingText = d.AssessmentFactorName
+                    });
             }
 
             var json = JsonConvert.SerializeObject(requirements);
@@ -137,24 +155,53 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // drop into the domain
-                var targetDomain = response.CategoryContainers.FirstOrDefault(x => x.AssessmentFactorName == dbR.Standard_Category);
-                if (targetDomain != null)
+                var targetDomainCategory = response.CategoryContainers.SelectMany(cc => cc.QuestionGroups).Where(qg => qg.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                if (targetDomainCategory != null)
                 {
-                    // create Category / Group in the Domain if not already created
-                    if (!targetDomain.QuestionGroups.Any(x => x.GroupHeadingText == dbR.Standard_Category))
+                    var targetSubcat = targetDomainCategory.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Standard_Sub_Category).FirstOrDefault();
+                    if (targetSubcat == null)
                     {
-                        var g = new QuestionGroup()
+                        targetSubcat = new QuestionSubCategory()
                         {
-                            GroupHeadingText = dbR.Standard_Category
+                            SubCategoryId = 0,
+                            SubCategoryHeadingText = dbR.Standard_Sub_Category,
+                            // GroupHeadingId = g.GroupHeadingId
                         };
-                        targetDomain.QuestionGroups.Add(g);
-                        targetDomain.DisplayText = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
-                            .DomainName;
+
+                        targetDomainCategory.SubCategories.Add(targetSubcat);
                     }
+
+
+
+
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                    {
+                        DisplayNumber = dbR.Requirement_Title,
+                        QuestionId = dbR.Requirement_Id,
+                        QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        Answer = answer?.a.Answer_Text,
+                        AltAnswerText = answer?.a.Alternate_Justification,
+                        Comment = answer?.a.Comment,
+                        Feedback = answer?.a.Feedback,
+                        MarkForReview = answer?.a.Mark_For_Review ?? false,
+                        Reviewed = answer?.a.Reviewed ?? false,
+                        MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                        SetName = req.SetName,
+                        Is_Component = answer?.a.Is_Component ?? false,
+                        Is_Requirement = answer?.a.Is_Requirement ?? true
+                    };
+                    if (answer != null)
+                    {
+                        TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                    }
+
+                    qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+
+                    targetSubcat.Questions.Add(qa);
                 }
             }
-
-
 
             return response;
         }
@@ -712,6 +759,11 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public string DomainName;
         public string AssessmentFactorName;
+
+        public override string ToString()
+        {
+            return string.Format("DomainName: {0}, AssessmentFactorName: {1}", this.DomainName, this.AssessmentFactorName);
+        }
     }
 
     internal class ParameterAssessment

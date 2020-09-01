@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, QuestionGroup, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, CategoryContainer, QuestionGroup, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { AcetFiltersService, ACETFilter } from './acet-filters.service';
@@ -40,7 +40,7 @@ const headers = {
 
 @Injectable()
 export class QuestionsService {
-  
+
 
   /**
    * Filter settings
@@ -72,6 +72,12 @@ export class QuestionsService {
    */
   public questionList: QuestionResponse;
 
+  /**
+   * If the user selects a question from the TOC, but the Questions screen
+   * is not loaded, stash the desired 'scroll to' here so that the
+   * Questions screen will know where to scroll once it loads.
+   */
+  public scrollToTarget: any;
 
   /**
    * Persists the current selection of the 'auto load supplemental' preference.
@@ -113,10 +119,10 @@ export class QuestionsService {
 
 
     // if we don't have domain names in this array of questions, there's no maturity filters to worry about
-    if (!this.domains){
+    if (!this.domains) {
       return;
-    } 
-    else if(!this.domains[0] || !this.domains[0].DomainName) {
+    }
+    else if (!this.domains[0] || !this.domains[0].DomainName) {
       return;
     }
 
@@ -155,23 +161,23 @@ export class QuestionsService {
     const bands = this.getStairstepOrig(irp);
     const dmf = this.domainMatFilters;
 
-    this.domains.forEach((d: Domain) => {
-      dmf.set(d.DomainName, new Map());
-      dmf.get(d.DomainName).set('B', bands.includes('B'));
-      dmf.get(d.DomainName).set('E', bands.includes('E'));
-      dmf.get(d.DomainName).set('Int', bands.includes('Int'));
-      dmf.get(d.DomainName).set('A', bands.includes('A'));
-      dmf.get(d.DomainName).set('Inn', bands.includes('Inn'));
+    this.domains.forEach((d: CategoryContainer) => {
+      dmf.set(d.DisplayText, new Map());
+      dmf.get(d.DisplayText).set('B', bands.includes('B'));
+      dmf.get(d.DisplayText).set('E', bands.includes('E'));
+      dmf.get(d.DisplayText).set('Int', bands.includes('Int'));
+      dmf.get(d.DisplayText).set('A', bands.includes('A'));
+      dmf.get(d.DisplayText).set('Inn', bands.includes('Inn'));
 
       // bottom fill
       let belowBand = true;
-      const i = this.domainMatFilters.get(d.DomainName).entries();
+      const i = this.domainMatFilters.get(d.DisplayText).entries();
       let e = i.next();
       while (!e.done && belowBand) {
         if (e.value[1]) {
           belowBand = false;
         } else {
-          dmf.get(d.DomainName).set(e.value[0], true);
+          dmf.get(d.DisplayText).set(e.value[0], true);
         }
         e = i.next();
       }
@@ -217,7 +223,7 @@ export class QuestionsService {
     return this.http.post(this.configSvc.apiUrl
       + 'details?questionid=' + questionId
       + '&&IsComponent=' + IsComponent
-    , headers);
+      , headers);
   }
 
   /**
@@ -254,7 +260,7 @@ export class QuestionsService {
    * based on the current filter settings.
    * @param cats
    */
-  public evaluateFilters(domains: Domain[]) {
+  public evaluateFilters(domains: CategoryContainer[]) {
     if (!domains) {
       return;
     }
@@ -315,9 +321,9 @@ export class QuestionsService {
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
-      
+
     });
-    
+
   }
 
 
@@ -519,16 +525,26 @@ export class QuestionsService {
    * a general need to update answers anywhre in the master structure.
    */
   setAnswerInQuestionList(questionId: number, answerId: number, answerText: string) {
-    this.questions.QuestionGroups.forEach((group: QuestionGroup) => {
-      if (group.StandardShortName === 'Component Overrides') {
-        group.SubCategories.forEach((sc: SubCategory) => {
-          sc.Questions.forEach((q: Question) => {
-            if (q.QuestionId === questionId && q.Answer_Id === answerId) {
-              q.Answer = answerText;
-            }
+    this.questions.CategoryContainers.forEach((container: CategoryContainer) => {
+      container.QuestionGroups.forEach((group: QuestionGroup) => {
+        if (group.StandardShortName === 'Component Overrides') {
+          group.SubCategories.forEach((sc: SubCategory) => {
+            sc.Questions.forEach((q: Question) => {
+              if (q.QuestionId === questionId && q.Answer_Id === answerId) {
+                q.Answer = answerText;
+              }
+            });
           });
-        });
-      }
+        }
+      });
     });
+  }
+
+
+  /**
+   * 
+   */
+  buildNavTargetID(target: any): string {
+    return target.parent.toLowerCase().replace(/ /g, '-') + '-' + target.categoryID;
   }
 }

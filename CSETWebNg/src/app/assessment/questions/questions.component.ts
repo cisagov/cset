@@ -56,7 +56,7 @@ export class QuestionsComponent implements AfterViewInit {
 
   PreviousComponentGroup = null;
 
-  scrollTo: string;
+  // scrollTo: string;
 
   /**
    * 
@@ -80,40 +80,41 @@ export class QuestionsComponent implements AfterViewInit {
 
     this.getQuestionCounts();
 
-    this.navSvc.navItemSelected
+    this.navSvc.scrollToQuestion
       .asObservable()
       .subscribe(
         // (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {
         (tgt: any) => {
 
-          console.log('questions component - navItemSelected handlers');
+          console.log('questions component - scrollToQuestion handler');
           console.log(tgt);
-          this.scrollTo = tgt.target;
-          console.log('just set scrollto = ' + this.scrollTo);
 
-          debugger;
+          // this.scrollTo = tgt.target;
+          // console.log('just set scrollto = ' + this.scrollTo);
 
-          if (!!tgt.subcategory) {
-            this.containers.forEach(d => {
-              d.QuestionGroups
-                .find(val => val.GroupHeadingId === tgt.question)
-                .SubCategories.find(
-                  val => val.SubCategoryId === tgt.subcategory
-                ).Expanded = true;
-            });
 
-            const t = document.getElementById(tgt.parent);
+          // if (!!tgt.subcategory) {
+          //   this.containers.forEach(d => {
+          //     d.QuestionGroups
+          //       .find(val => val.GroupHeadingId === tgt.question)
+          //       .SubCategories.find(
+          //         val => val.SubCategoryId === tgt.subcategory
+          //       ).Expanded = true;
+          //   });
+
+          //   const t = document.getElementById(tgt.parent);
+          //   console.log('looking for ' + tgt.parent + ' and found... ');
+          //   console.log(t);
+          //   if (!!t) {
+          //     t.scrollIntoView();
+          //   }
+          // }
+
+            const t = document.getElementById(tgt);
             if (!!t) {
               t.scrollIntoView();
             }
-          }
-
-          if (!!tgt.target) {
-            const t = document.getElementById(tgt.target);
-            if (!!t) {
-              t.scrollIntoView();
-            }
-          }
+          
         }
       );
   }
@@ -145,21 +146,30 @@ export class QuestionsComponent implements AfterViewInit {
    *
    */
   ngAfterViewInit() {
+    // scroll to a selected category
+    console.log('QuestionsComponent ngAfterViewInit about to try scrolling to ...');
+    console.log(this.questionsSvc.scrollToTarget);
+
+
     if (this.containers != null && this.containers.length <= 0) {
       this.loadQuestions();
 
-      // scroll to a selected category
-      console.log('about to try scrolling to ' + this.scrollTo);
-      if (this.scrollTo) {
-        const t = document.getElementById(this.scrollTo);
-        if (!!t) {
-          t.scrollIntoView();
-        }
-      }
-      this.scrollTo = null;
+      this.scroll(this.questionsSvc.scrollToTarget);
+      this.questionsSvc.scrollToTarget = null;
     }
 
     this.assessSvc.currentTab = 'questions';
+  }
+
+  /**
+   * 
+   * @param targetID 
+   */
+  scroll(targetID: string) {
+    const t = document.getElementById(targetID);
+    if (!!t) {
+      t.scrollIntoView();
+    }
   }
 
   /**
@@ -232,27 +242,6 @@ export class QuestionsComponent implements AfterViewInit {
 
         this.containers = response.CategoryContainers;
 
-        response.CategoryContainers.forEach(c => {
-          c.QuestionGroups.forEach(g => {
-
-            // console.log(g);
-
-            // if (!bigStructure.Domains.find(d => d.DomainName === g.DomainName)) {
-            //   bigStructure.Domains.push({
-            //     DomainName: g.DomainName,
-            //     QuestionGroups: []
-            //   });
-            // }
-            // bigStructure.Domains.find(d => d.DomainName === g.DomainName).QuestionGroups.push(g);
-          });
-        });
-
-
-
-        // this.domains = bigStructure.Domains;
-        // this.questionsSvc.domains = bigStructure.Domains;
-        // this.processComponentOverrides(response.QuestionGroups);
-
         // default the selected maturity filters
         this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
@@ -269,6 +258,9 @@ export class QuestionsComponent implements AfterViewInit {
     );
   }
 
+  /**
+   * 
+   */
   processComponentOverrides(QuestionGroups: QuestionGroup[]) {
     QuestionGroups.forEach(g => {
       let rval = true;
@@ -286,7 +278,9 @@ export class QuestionsComponent implements AfterViewInit {
   }
 
 
-
+  /**
+   * 
+   */
   insertComponentSpecificOverride(tree: NavTreeNode[], q: QuestionGroup) {
     // build the question group heading element
     q.SubCategories.forEach(sub => {
@@ -303,6 +297,9 @@ export class QuestionsComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * 
+   */
   visibleGroupCount() {
     if (!this.containers) {
       return 1;
@@ -316,18 +313,6 @@ export class QuestionsComponent implements AfterViewInit {
     return count;
   }
 
-  hasDomainChanged(domain) {
-    if (!domain) {
-      return false;
-    }
-    if (this.currentDomain !== domain) {
-      this.currentDomain = domain;
-      return false;
-    }
-    return true;
-  }
-
-
   /**
    * Returns a boolean indicating if the browser is IE or Edge.
    * The 'auto-load supplemental' logic is not performant in IE, so we won't offer it.
@@ -337,7 +322,6 @@ export class QuestionsComponent implements AfterViewInit {
     return isIEOrEdge;
   }
 
-
   /**
    * Stores the Supplemental auto-load setting in the service
    * for access by the child components.
@@ -345,7 +329,6 @@ export class QuestionsComponent implements AfterViewInit {
   persistAutoLoadSetting() {
     this.questionsSvc.autoLoadSupplementalSetting = this.autoLoadSupplementalInfo;
   }
-
 
   /**
    * Controls the mass expansion/collapse of all subcategories on the screen.
@@ -361,7 +344,9 @@ export class QuestionsComponent implements AfterViewInit {
     });
   }
 
-
+  /**
+   * 
+   */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
     this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
