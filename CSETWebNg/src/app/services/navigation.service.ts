@@ -359,11 +359,9 @@ export class NavigationService {
       let targetPage = this.pages.find(p => p.pageClass === navTarget);
 
       // if they clicked on a tab there won't be a path -- nudge them to the next page
-      if (targetPage.hasOwnProperty('path')) {
-        if (!targetPage.path) {
-          this.navNext(navTarget);
-          return;
-        }
+      if (!targetPage.hasOwnProperty('path')) {
+        this.navNext(navTarget);
+        return;
       }
 
       this.setCurrentPage(targetPage.pageClass);
@@ -371,10 +369,12 @@ export class NavigationService {
       // determine the route path
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
+      return;
     }
 
 
-    // if they clicked on a question category, send them to questions
+    // they clicked on a question category, send them to questions
+
     if (this.router.url.endsWith('/questions')) {
       // we are sitting on the questions screen, tell it to just scroll to the desired subcat
       this.scrollToQuestion.emit(this.questionsSvc.buildNavTargetID(navTarget));
@@ -384,6 +384,7 @@ export class NavigationService {
 
       // navigate to the questions screen
       let targetPage = this.pages.find(p => p.pageClass === 'phase-assessment');
+      this.setCurrentPage(targetPage.pageClass);
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
     }
@@ -501,22 +502,34 @@ export class NavigationService {
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
     },
     {
-      displayText: 'CMMC Target Level Selection', pageClass: 'cmmc-levels', level: 1, path: 'assessment/{:id}/prepare/cmmc-levels',
+      displayText: 'CMMC Target Level Selection', pageClass: 'cmmc-levels', level: 1,
+      path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
     },
 
-    { displayText: 'ACET Required Documents', pageClass: 'required', level: 1, path: 'assessment/{:id}/prepare/required', condition: () => { this.acetSelected } },
-    { displayText: 'ACET IRP', pageClass: 'irp', level: 1, path: 'assessment/{:id}/prepare/irp', condition: () => { this.acetSelected } },
-    { displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1, path: 'assessment/{:id}/prepare/irp-summary', condition: () => { this.acetSelected } },
+    {
+      displayText: 'ACET Required Documents', pageClass: 'required', level: 1,
+      path: 'assessment/{:id}/prepare/required',
+      condition: () => { return this.acetSelected }
+    },
+    {
+      displayText: 'ACET IRP', pageClass: 'irp', level: 1,
+      path: 'assessment/{:id}/prepare/irp',
+      condition: () => { return this.acetSelected }
+    },
+    {
+      displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1,
+      path: 'assessment/{:id}/prepare/irp-summary',
+      condition: () => { return this.acetSelected }
+    },
 
     {
       displayText: 'Security Assurance Level (SAL)',
       pageClass: 'sal', level: 1,
       path: 'assessment/{:id}/prepare/sal',
       condition: () => {
-        return
-        ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard)
-          || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram))
+        return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard)
+          || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram));
       }
     },
 
@@ -549,9 +562,9 @@ export class NavigationService {
 
 
     // Questions/Requirements/Statements
-    { 
-      displayText: 'Assessment', pageClass: 'phase-assessment', 
-      level: 0, path: 'assessment/{:id}/questions' 
+    {
+      displayText: 'Assessment', pageClass: 'phase-assessment',
+      level: 0, path: 'assessment/{:id}/questions'
     },
 
 
@@ -574,9 +587,18 @@ export class NavigationService {
     { displayText: 'Network Warnings', pageClass: 'components-warnings', level: 1, path: 'assessment/{:id}/results/components-warnings' },
 
     // ACET results pages
-    { displayText: 'ACET Maturity Results', pageClass: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity', condition: 'ACET' },
-    { displayText: 'ACET Admin Results', pageClass: 'admin', level: 1, path: 'assessment/{:id}/results/admin', condition: 'ACET' },
-    { displayText: 'ACET Dashboard', pageClass: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard', condition: 'ACET' },
+    {
+      displayText: 'ACET Maturity Results', pageClass: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity',
+      condition: () => { this.acetSelected }
+    },
+    {
+      displayText: 'ACET Admin Results', pageClass: 'admin', level: 1, path: 'assessment/{:id}/results/admin',
+      condition: () => { this.acetSelected }
+    },
+    {
+      displayText: 'ACET Dashboard', pageClass: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard',
+      condition: () => { this.acetSelected }
+    },
 
     { displayText: 'Executive Summary, Overview & Comments', pageClass: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
     { displayText: 'Reports', pageClass: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
