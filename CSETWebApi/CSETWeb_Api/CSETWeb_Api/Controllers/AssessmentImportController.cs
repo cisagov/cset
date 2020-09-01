@@ -170,6 +170,7 @@ namespace CSETWeb_Api.Controllers
 
             var tm = new TokenManager();
             var currentUserId = int.Parse(tm.Payload(Constants.Token_UserId));
+            var assessmentId = int.Parse(tm.Payload(Constants.Token_AssessmentId));
 
             try
             {
@@ -189,7 +190,7 @@ namespace CSETWeb_Api.Controllers
 
                         var buffer = ctnt.ReadAsByteArrayAsync().Result;
                         var manager = new ImportManagerAwwa();
-                        await manager.ProcessSpreadsheetImport(buffer, currentUserId);
+                        await manager.ProcessSpreadsheetImport(buffer, assessmentId);
                     }
                 }
             }
