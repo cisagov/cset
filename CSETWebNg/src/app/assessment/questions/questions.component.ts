@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { Router } from '@angular/router';
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
@@ -39,7 +39,7 @@ import { NavigationService } from '../../services/navigation.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewInit {
+export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
   @ViewChild('questionBlock') questionBlock;
 
   containers: CategoryContainer[] = null;
@@ -56,7 +56,10 @@ export class QuestionsComponent implements AfterViewInit {
 
   PreviousComponentGroup = null;
 
-  // scrollTo: string;
+  loaded = false;
+
+  scrollComplete = false;
+
 
   /**
    * 
@@ -80,41 +83,15 @@ export class QuestionsComponent implements AfterViewInit {
 
     this.getQuestionCounts();
 
+    // handle any scroll events originating from the nav servicd
     this.navSvc.scrollToQuestion
       .asObservable()
       .subscribe(
-        // (tgt: { target: string; parent?: string, question: number; subcategory?: number }) => {
-        (tgt: any) => {
-
-          console.log('questions component - scrollToQuestion handler');
-          console.log(tgt);
-
-          // this.scrollTo = tgt.target;
-          // console.log('just set scrollto = ' + this.scrollTo);
-
-
-          // if (!!tgt.subcategory) {
-          //   this.containers.forEach(d => {
-          //     d.QuestionGroups
-          //       .find(val => val.GroupHeadingId === tgt.question)
-          //       .SubCategories.find(
-          //         val => val.SubCategoryId === tgt.subcategory
-          //       ).Expanded = true;
-          //   });
-
-          //   const t = document.getElementById(tgt.parent);
-          //   console.log('looking for ' + tgt.parent + ' and found... ');
-          //   console.log(t);
-          //   if (!!t) {
-          //     t.scrollIntoView();
-          //   }
-          // }
-
-            const t = document.getElementById(tgt);
-            if (!!t) {
-              t.scrollIntoView();
-            }
-          
+        (tgt: string) => {
+          const t = document.getElementById(tgt);
+          if (!!t) {
+            t.scrollIntoView();
+          }
         }
       );
   }
@@ -129,16 +106,6 @@ export class QuestionsComponent implements AfterViewInit {
     //and refressh overrides navigation
     const magic = this.navSvc.getMagic();
     this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
-      // this.processComponentOverrides(data.QuestionGroups);
-      // for (let i = this.containers[0].QuestionGroups.length - 1; i > 0; i--) {
-      //   const q = this.containers[0].QuestionGroups[i];
-      //   if (q.IsOverride) {
-      //     this.containers[0].QuestionGroups.pop();
-      //   }
-      // }
-      // for (let newgroup of data.QuestionGroups) {
-      //   this.containers[0].QuestionGroups.push(newgroup);
-      // }
       this.refreshQuestionVisibility(magic);
     });
   }
@@ -146,19 +113,27 @@ export class QuestionsComponent implements AfterViewInit {
    *
    */
   ngAfterViewInit() {
-    // scroll to a selected category
-    console.log('QuestionsComponent ngAfterViewInit about to try scrolling to ...');
-    console.log(this.questionsSvc.scrollToTarget);
-
-
     if (this.containers != null && this.containers.length <= 0) {
       this.loadQuestions();
-
-      this.scroll(this.questionsSvc.scrollToTarget);
-      this.questionsSvc.scrollToTarget = null;
     }
 
     this.assessSvc.currentTab = 'questions';
+    this.loaded = true;
+  }
+
+  /**
+   * Wait until the DOM is loaded so that we can scroll, if needed.
+   */
+  ngAfterViewChecked() {
+    if (this.loaded && !this.scrollComplete) {
+      if (!!this.questionsSvc.scrollToTarget) {
+        setTimeout(() => {
+          this.scroll(this.questionsSvc.scrollToTarget);
+          this.questionsSvc.scrollToTarget = null;
+          this.scrollComplete = true;
+        }, 1000);
+      }
+    }
   }
 
   /**
@@ -357,12 +332,5 @@ export class QuestionsComponent implements AfterViewInit {
       .subscribe(() => {
         this.refreshQuestionVisibility();
       });
-  }
-
-  /**
-   * Builds category IDs in a consistent way.
-   */
-  formatID(s) {
-    return s.toLowerCase().replace(/ /g, '-');
   }
 }

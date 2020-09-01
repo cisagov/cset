@@ -66,7 +66,7 @@ export class NavigationService {
   navItemSelected = new EventEmitter<any>();
 
   @Output()
-  scrollToQuestion = new EventEmitter<any>();
+  scrollToQuestion = new EventEmitter<string>();
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
@@ -375,17 +375,12 @@ export class NavigationService {
 
 
     // if they clicked on a question category, send them to questions
-    console.log('are we already sitting on the  questions screen?');
     if (this.router.url.endsWith('/questions')) {
-      console.log('yes');
       // we are sitting on the questions screen, tell it to just scroll to the desired subcat
       this.scrollToQuestion.emit(this.questionsSvc.buildNavTargetID(navTarget));
     } else {
-      console.log('no');
       // stash the desired question group and category ID
       this.questionsSvc.scrollToTarget = this.questionsSvc.buildNavTargetID(navTarget);
-      console.log('I just set the scrollToTarget to ');
-      console.log(this.questionsSvc.scrollToTarget);
 
       // navigate to the questions screen
       let targetPage = this.pages.find(p => p.pageClass === 'phase-assessment');
@@ -472,65 +467,17 @@ export class NavigationService {
       return true;
     }
 
-    if (condition === '!ACET') {
-      return !this.acetSelected;
-    }
-
-    if (condition === 'ACET') {
-      return this.acetSelected;
-    }
-
-    if (condition === 'FRAMEWORK') {
-      return this.frameworkSelected;
-    }
-
-    if (condition === 'USE-STANDARD') {
-      return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard;
-    }
-
-    if (condition === 'USE-MATURITY-MODEL') {
-      return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity;
-    }
-
-    if (condition === 'SHOW-SAL') {
-      return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard)
-        || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram));
-    }
-
-    if (condition === 'USE-DIAGRAM') {
-      return !!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram;
+    if (typeof (condition) === 'function') {
+      return condition();
     }
 
     if (condition === 'ANALYTICS-IS-UP') {
       return this.analyticsIsUp;
     }
 
-    if (condition === 'FALSE') {
-      return false;
-    }
-
     return true;
   }
 
-  /**
-   * Recurses the tree to find the specified value.
-   * @param tree
-   * @param value
-   */
-  // findNodeByClassName(tree: NavTreeNode[], className: string): NavTreeNode {
-  //   for (let index = 0; index < tree.length; index++) {
-  //     const t = tree[index];
-
-  //     if (t.value === className) {
-  //       return t;
-  //     }
-
-  //     if (this.findNodeByClassName(t.children, className)) {
-  //       return t;
-  //     }
-  //   }
-  //   return null;
-  // }
 
   /**
    * The master list of all pages.  Question categories are not listed here,
@@ -547,26 +494,65 @@ export class NavigationService {
     { displayText: 'Assessment Configuration', pageClass: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
     { displayText: 'Assessment Information', pageClass: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
-    { displayText: 'Maturity Model Selection', pageClass: 'model-select', level: 1, path: 'assessment/{:id}/prepare/model-select', condition: 'USE-MATURITY-MODEL' },
-    { displayText: 'CMMC Target Level Selection', pageClass: 'cmmc-levels', level: 1, path: 'assessment/{:id}/prepare/cmmc-levels', condition: 'USE-MATURITY-MODEL' },
-    { displayText: 'ACET Required Documents', pageClass: 'required', level: 1, path: 'assessment/{:id}/prepare/required', condition: 'ACET' },
-    { displayText: 'ACET IRP', pageClass: 'irp', level: 1, path: 'assessment/{:id}/prepare/irp', condition: 'ACET' },
-    { displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1, path: 'assessment/{:id}/prepare/irp-summary', condition: 'ACET' },
+    {
+      displayText: 'Maturity Model Selection',
+      pageClass: 'model-select', level: 1,
+      path: 'assessment/{:id}/prepare/model-select',
+      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
+    },
+    {
+      displayText: 'CMMC Target Level Selection', pageClass: 'cmmc-levels', level: 1, path: 'assessment/{:id}/prepare/cmmc-levels',
+      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
+    },
 
-    { displayText: 'Security Assurance Level (SAL)', pageClass: 'sal', level: 1, path: 'assessment/{:id}/prepare/sal', condition: 'SHOW-SAL' },
+    { displayText: 'ACET Required Documents', pageClass: 'required', level: 1, path: 'assessment/{:id}/prepare/required', condition: () => { this.acetSelected } },
+    { displayText: 'ACET IRP', pageClass: 'irp', level: 1, path: 'assessment/{:id}/prepare/irp', condition: () => { this.acetSelected } },
+    { displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1, path: 'assessment/{:id}/prepare/irp-summary', condition: () => { this.acetSelected } },
 
-    { displayText: 'Cybsersecurity Standards Selection', pageClass: 'standards', level: 1, path: 'assessment/{:id}/prepare/standards', condition: 'USE-STANDARD' },
-    { displayText: 'Standard Specific Screen(s)', level: 1, condition: 'FALSE' },
+    {
+      displayText: 'Security Assurance Level (SAL)',
+      pageClass: 'sal', level: 1,
+      path: 'assessment/{:id}/prepare/sal',
+      condition: () => {
+        return
+        ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard)
+          || (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram))
+      }
+    },
+
+    {
+      displayText: 'Cybsersecurity Standards Selection',
+      pageClass: 'standards', level: 1,
+      path: 'assessment/{:id}/prepare/standards',
+      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard }
+    },
+    {
+      displayText: 'Standard Specific Screen(s)', level: 1,
+      condition: () => { return false; }
+    },
 
     //  Diagram
-    { displayText: 'Network Diagram', pageClass: 'diagram', level: 1, path: 'assessment/{:id}/prepare/diagram/info', condition: 'USE-DIAGRAM' },
+    {
+      displayText: 'Network Diagram',
+      pageClass: 'diagram', level: 1,
+      path: 'assessment/{:id}/prepare/diagram/info',
+      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram }
+    },
 
-    { displayText: 'Framework', pageClass: 'framework', level: 1, path: 'assessment/{:id}/prepare/framework', condition: 'FRAMEWORK' },
+    // Framework
+    {
+      displayText: 'Framework', pageClass: 'framework', level: 1, path: 'assessment/{:id}/prepare/framework',
+      condition: () => {
+        return this.frameworkSelected;
+      }
+    },
 
 
     // Questions/Requirements/Statements
-    { displayText: 'Assessment', pageClass: 'phase-assessment', level: 0, path: 'assessment/{:id}/questions' },
-    //   { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
+    { 
+      displayText: 'Assessment', pageClass: 'phase-assessment', 
+      level: 0, path: 'assessment/{:id}/questions' 
+    },
 
 
     { displayText: 'Results', pageClass: 'phase-results', level: 0 },
