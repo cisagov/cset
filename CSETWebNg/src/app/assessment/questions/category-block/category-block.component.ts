@@ -33,11 +33,4 @@ export class CategoryBlockComponent implements OnInit {
   buildNavTargetID(cat) {
     return cat.StandardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.GroupHeadingId;
   }
-
-    /**
-   * Builds category IDs in a consistent way.
-   */
-  formatID(s) {
-    return s.toLowerCase().replace(/ /g, '-');
-  }
 }

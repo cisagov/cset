@@ -545,6 +545,9 @@ export class QuestionsService {
    * 
    */
   buildNavTargetID(target: any): string {
-    return target.parent.toLowerCase().replace(/ /g, '-') + '-' + target.categoryID;
+    if (target.hasOwnProperty('parent')) {
+      return target.parent.toLowerCase().replace(/ /g, '-') + '-' + target.categoryID;
+    }
+    return '';
   }
 }
