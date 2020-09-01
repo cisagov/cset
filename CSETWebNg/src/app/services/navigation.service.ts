@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, Event } from '@angular/router';
 import { AssessmentService } from './assessment.service';
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { EventEmitter, Injectable, Output } from "@angular/core";
+import { EventEmitter, Injectable, Output, Pipe } from "@angular/core";
 import { MatTreeNestedDataSource } from "@angular/material";
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from './config.service';
@@ -64,6 +64,9 @@ export class NavigationService {
 
   @Output()
   navItemSelected = new EventEmitter<any>();
+
+  @Output()
+  scrollToQuestion = new EventEmitter<any>();
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
@@ -293,7 +296,8 @@ export class NavigationService {
             elementType: 'QUESTION-HEADING',
             value: {
               target: g.NavigationGUID,
-              question: g.GroupHeadingId
+              categoryID: g.GroupHeadingId,
+              parent: node1.label
             },
             isPhaseNode: false,
             children: [],
@@ -348,27 +352,46 @@ export class NavigationService {
    * Routes to the path configured for the specified pageClass.
    * @param value 
    */
-  navDirect(pageClass: string) {
-    let targetPage = this.pages.find(p => p.pageClass === pageClass);
+  navDirect(navTarget: any) {
+    // if the target is a simple string, find it in the pages structure 
+    // and navigate to its path
+    if (typeof navTarget == 'string') {
+      let targetPage = this.pages.find(p => p.pageClass === navTarget);
+
+      // if they clicked on a tab there won't be a path -- nudge them to the next page
+      if (targetPage.hasOwnProperty('path')) {
+        if (!targetPage.path) {
+          this.navNext(navTarget);
+          return;
+        }
+      }
+
+      this.setCurrentPage(targetPage.pageClass);
+
+      // determine the route path
+      const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
+      this.router.navigate([targetPath]);
+    }
+
 
     // if they clicked on a question category, send them to questions
-    if (!targetPage) {
-      targetPage = this.pages.find(p => p.pageClass === "questions");
-      this.navItemSelected.emit(pageClass);
+    console.log('are we already sitting on the  questions screen?');
+    if (this.router.url.endsWith('/questions')) {
+      console.log('yes');
+      // we are sitting on the questions screen, tell it to just scroll to the desired subcat
+      this.scrollToQuestion.emit(this.questionsSvc.buildNavTargetID(navTarget));
+    } else {
+      console.log('no');
+      // stash the desired question group and category ID
+      this.questionsSvc.scrollToTarget = this.questionsSvc.buildNavTargetID(navTarget);
+      console.log('I just set the scrollToTarget to ');
+      console.log(this.questionsSvc.scrollToTarget);
+
+      // navigate to the questions screen
+      let targetPage = this.pages.find(p => p.pageClass === 'phase-assessment');
+      const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
+      this.router.navigate([targetPath]);
     }
-
-
-
-    // if they clicked on a 'phase', nudge them to the first page in that phase
-    if (!targetPage.path) {
-      this.navNext(pageClass);
-      return;
-    }
-
-    this.setCurrentPage(targetPage.pageClass);
-
-    const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
-    this.router.navigate([targetPath]);
   }
 
   /**
@@ -543,7 +566,7 @@ export class NavigationService {
 
     // Questions/Requirements/Statements
     { displayText: 'Assessment', pageClass: 'phase-assessment', level: 0, path: 'assessment/{:id}/questions' },
- //   { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
+    //   { displayText: 'Questions', pageClass: 'questions', level: 1, path: 'assessment/{:id}/questions' },
 
 
     { displayText: 'Results', pageClass: 'phase-results', level: 0 },

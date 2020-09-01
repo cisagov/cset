@@ -79,6 +79,11 @@ namespace CSETWeb_Api.Models
         /// The list of question groups or categories for the assessment
         /// </summary>
         public List<QuestionGroup> QuestionGroups = new List<QuestionGroup>();
+
+        /// <summary>
+        /// An optional list of children, so we can stack groups in groups, like categories in domains in standards
+        /// </summary>
+        public List<CategoryContainer> CategoryContainers = new List<CategoryContainer>();
     }
 
 

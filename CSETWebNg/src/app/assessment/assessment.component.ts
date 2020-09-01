@@ -99,6 +99,8 @@ export class AssessmentComponent implements OnInit {
       this.expandNav = true;
     }
 
+    console.log('selectNavItem...');
+    console.log(target);
     this.navSvc.navDirect(target);
   }
 

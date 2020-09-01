@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AssessmentService } from '../../../services/assessment.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
 import { MatDialog } from '@angular/material';
-import { StandardService } from '../../../services/standard.service';
+import { AssessmentService } from '../../../services/assessment.service';
+import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
-import { NullishCoalescePipe } from '../../../helpers/nullish-coalesce.pipe';
+
 
 @Component({
   selector: 'app-assessment-config',
@@ -40,10 +38,8 @@ export class AssessmentConfigComponent implements OnInit {
    * Constructor.
    */
   constructor(
-    private router: Router,
     private assessSvc: AssessmentService,
-    private standardSvc: StandardService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     public dialog: MatDialog
   ) { }
 
@@ -79,9 +75,6 @@ export class AssessmentConfigComponent implements OnInit {
         break;
     }
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
-
-    // tell the standard service to refresh the nav tree
-    this.standardSvc.refresh();
   }
 
 

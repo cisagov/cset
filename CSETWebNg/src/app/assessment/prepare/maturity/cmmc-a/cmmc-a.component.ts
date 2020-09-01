@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Navigation2Service } from '../../../../services/navigation2.service';
+import { NavigationService } from '../../../../services/navigation.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class CmmcAComponent implements OnInit {
 
   constructor(
     private assessSvc: AssessmentService,
-    public navSvc2: Navigation2Service,
+    public navSvc2: NavigationService,
   ) { }
 
   ngOnInit() {
