@@ -1,4 +1,10 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2020 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,6 +15,8 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO;
 using System.Web.UI.WebControls;
+using CSETWeb_Api.Models;
+using CSETWeb_Api.BusinessManagers;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
@@ -25,46 +33,31 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessSpreadsheetImport(byte[] spreadsheet, int currentUserId)
+        public async Task ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
         {
             var stream = new MemoryStream(spreadsheet);
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(stream, false))
             {
-                // Public API Definition
-                // tabIndex                 5
-                // begRow                  14
-                // cidColRef               B
-                // statusColRef            F
-
-                // get API page
+                // get API page content as a DataTable and pull reference values from it
                 var sheetAPI = GetWorksheetPartByName(doc, "API");
                 var dtAPI = WorksheetToDatatable(doc, sheetAPI);
-
-
-                // Not sure how to use this number to find the right worksheet using OpenXML...
-                // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;
-
-                // ... so for now, using name
-                string targetSheetName = "2. RRA-Control Output";
-                var targetSheetPart = GetWorksheetPartByName(doc, targetSheetName);
-
-
-                var targetSheetStartRow = int.Parse(dtAPI.Rows[1]["B"].ToString());
+                var targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
                 var cidColRef = dtAPI.Rows[3]["B"];
                 var statusColRef = dtAPI.Rows[4]["B"];
 
 
+                // Not sure how to use this number to find the right worksheet using OpenXML...
+                // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;
+                // ... so for now, using sheet name ...
+                string targetSheetName = "2. RRA-Control Output";
+                var targetSheetPart = GetWorksheetPartByName(doc, targetSheetName);
+
                 var answerMap = BuildAnswerMap(dtAPI);
 
 
-
-                int maxRow = 0;
-
-
-                //find sheet data
+                //find target sheet number of rows
                 IEnumerable<SheetData> sheetData = targetSheetPart.Worksheet.Elements<SheetData>();
-                var xyz = targetSheetPart.Worksheet.Elements<Row>().Count();
-                // Iterate through every sheet inside Excel sheet
+                int maxRow = 0;
                 foreach (SheetData sd in sheetData)
                 {
                     IEnumerable<Row> row = sd.Elements<Row>(); // Get the row IEnumerator
@@ -76,44 +69,74 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 for (var i = targetSheetStartRow; i < maxRow; i++)
                 {
-                    var cid = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", cidColRef, i));
+                    var controlID = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", cidColRef, i));
 
-                    if (!string.IsNullOrEmpty(cid))
+                    if (!string.IsNullOrEmpty(controlID))
                     {
-                        var answer = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", statusColRef, i));
+                        var awwaAnswer = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", statusColRef, i));
+                        var mappedAnswer = answerMap.Where(x => x.AwwaAnswer == awwaAnswer).FirstOrDefault();
 
                         var a = new AwwaControlAnswer()
                         {
-                            ControlID = cid,
-                            Answer = answer,
-                            CsetAnswer = answerMap.Where(x => x.AwwaAnswer == answer).FirstOrDefault().CsetAnswer                            
+                            ControlID = controlID,
+                            Answer = awwaAnswer,
+                            CsetAnswer = mappedAnswer.CsetAnswer,
+                            CsetComment = mappedAnswer.CsetComment
                         };
                         answers.Add(a);
                     }
                 }
 
-
-
                 var abc = 1;
+
+                // at this point, CSET assessment answers can be built from the 'answers' collection ...
+
+                //QuestionsManager qm = new QuestionsManager(assessmentId);
+                //foreach (var a in answers)
+                //{
+                //    // figure out the question ID that corresponds to the AWWA Control ID ...
+
+                //    var storedAnswer = new Answer() 
+                //    {
+                //        AnswerText = a.CsetAnswer,
+                //        Comment = a.CsetComment
+                //    };
+                //    qm.StoreAnswer(storedAnswer);
+                //}
             }
         }
 
 
+
+        /// <summary>
+        /// Builds a collection of AWWA answers mapped to CSET answers and comments.
+        /// </summary>
+        /// <param name="dtAPI"></param>
+        /// <returns></returns>
         private List<AnswerMap> BuildAnswerMap(DataTable dtAPI)
         {
             List<AnswerMap> map = new List<AnswerMap>();
 
             for (int i = 1; i < dtAPI.Rows.Count; i++)
-            {                
-                if (string.IsNullOrEmpty(dtAPI.Rows[i]["D"].ToString()))
+            {
+                if (!string.IsNullOrEmpty(dtAPI.Rows[i]["D"].ToString()))
                 {
-                    map.Add(new AnswerMap() { 
+                    map.Add(new AnswerMap()
+                    {
                         AwwaAnswer = dtAPI.Rows[i]["C"].ToString(),
                         CsetAnswer = dtAPI.Rows[i]["D"].ToString(),
                         CsetComment = dtAPI.Rows[i]["E"].ToString()
                     });
                 }
             }
+
+            // map null values from spreadsheet to Unanswered
+            map.Add(new AnswerMap()
+            {
+                AwwaAnswer = null,
+                CsetAnswer = "U",
+                CsetComment = ""
+            });
 
             return map;
         }
@@ -229,9 +252,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         }
 
 
-
-
-
+        /// <summary>
+        /// Converts a worksheet to a simple DataTable.  
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="wsp"></param>
+        /// <returns></returns>
         protected DataTable WorksheetToDatatable(SpreadsheetDocument doc, WorksheetPart wsp)
         {
             //Read the first Sheet from Excel file.
@@ -253,33 +279,48 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             //Loop through the Worksheet rows.
             foreach (Row row in rows)
             {
-                var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 var newRow = dt.Rows.Add();
                 int colIndex = 0;
                 for (int j = 0; j < row.Descendants<Cell>().Count(); j++)
                 {
-                    try
+                    var cell = row.Descendants<Cell>().ElementAt(j);
+
+                    // lazily add column on the fly, if necessary
+                    if (dt.Columns.Count < j + 1)
                     {
-                        var cell = row.Descendants<Cell>().ElementAt(j);
-
-                        // add column on the fly, if necessary
-                        if (dt.Columns.Count < j + 1)
-                        {
-                            dt.Columns.Add(letters.Substring(j, 1));
-                        }
-
-                        newRow[colIndex] = GetValue(doc, cell);
-                        colIndex++;
+                        dt.Columns.Add(ColumnIndexToColumnLetter(j + 1));
                     }
-                    catch (Exception exc)
-                        {
-                        var abc = 1;
-                    }
+
+                    newRow[colIndex] = GetValue(doc, cell);
+                    colIndex++;
                 }
             }
 
             return dt;
         }
+
+
+        /// <summary>
+        /// Returns the Excel column letter(s) for the column index.
+        /// Note that the column index is 1-based, e.g., 1 = "A".
+        /// </summary>
+        /// <param name="colIndex"></param>
+        /// <returns></returns>
+        static string ColumnIndexToColumnLetter(int colIndex)
+        {
+            int div = colIndex;
+            string colLetter = String.Empty;
+            int mod = 0;
+
+            while (div > 0)
+            {
+                mod = (div - 1) % 26;
+                colLetter = (char)(65 + mod) + colLetter;
+                div = (int)((div - mod) / 26);
+            }
+            return colLetter;
+        }
+
 
         private string GetValue(SpreadsheetDocument doc, Cell cell)
         {
@@ -300,6 +341,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public string Answer { get; set; }
 
         public string CsetAnswer { get; set; }
+
+        public string CsetComment { get; set; }
     }
 
 
