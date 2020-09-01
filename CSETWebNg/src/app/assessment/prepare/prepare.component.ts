@@ -31,21 +31,23 @@ import { NavigationService } from "../../services/navigation.service";
   selector: "app-prepare",
   templateUrl: "./prepare.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class PrepareComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
-   
+
     private navSvc: NavigationService,
     private router: Router,
     private route: ActivatedRoute
   ) {
 
-    this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.navSvc.buildTree(this.navSvc.getMagic());
+    }, 1000);
     this.assessSvc.currentTab = "prepare";
   }
 }
