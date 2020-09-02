@@ -18,6 +18,8 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -101,14 +103,149 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirements"></param>
+        /// <param name="answers"></param>
+        /// <param name="domains"></param>
+        /// <returns></returns>
+        private QuestionResponse BuildResponse(List<RequirementPlus> requirements,
+            List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
+        {
+            var response = new QuestionResponse
+            {
+                CategoryContainers = new List<CategoryContainer>()
+            };
+
+            // build a container for each domain
+            foreach (var d in domains.Select(d => d.DomainName).Distinct())
+            {
+                response.CategoryContainers.Add(new CategoryContainer()
+                {
+                    DisplayText = d,
+                    DomainText = d,
+                    IsDomain = true
+                });
+            }
+
+            // add the categories/assessment factor names to the domains
+            foreach (var d in domains)
+            {
+                response.CategoryContainers.Where(c => c.DomainText == d.DomainName).First()
+                    .QuestionGroups.Add(new QuestionGroup() 
+                    {
+                        GroupHeadingText = d.AssessmentFactorName
+                    });
+            }
+
+            var json = JsonConvert.SerializeObject(requirements);
+
+            foreach (var req in requirements)
+            {
+                var dbR = req.Requirement;
+
+                // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
+                dbR.Standard_Category = dbR.Standard_Category ?? dbR.Standard_Category.Trim();
+                dbR.Standard_Sub_Category = dbR.Standard_Sub_Category ?? dbR.Standard_Sub_Category.Trim();
+
+                // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
+                if (dbR.Standard_Sub_Category == null)
+                {
+                    dbR.Standard_Sub_Category = dbR.Standard_Category;
+                }
+
+                // drop into the domain
+                var targetDomainCategory = response.CategoryContainers.SelectMany(cc => cc.QuestionGroups).Where(qg => qg.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                if (targetDomainCategory != null)
+                {
+                    var targetSubcat = targetDomainCategory.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Standard_Sub_Category).FirstOrDefault();
+                    if (targetSubcat == null)
+                    {
+                        targetSubcat = new QuestionSubCategory()
+                        {
+                            SubCategoryId = 0,
+                            SubCategoryHeadingText = dbR.Standard_Sub_Category,
+                            // GroupHeadingId = g.GroupHeadingId
+                        };
+
+                        targetDomainCategory.SubCategories.Add(targetSubcat);
+                    }
+
+
+
+
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                    {
+                        DisplayNumber = dbR.Requirement_Title,
+                        QuestionId = dbR.Requirement_Id,
+                        QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        Answer = answer?.a.Answer_Text,
+                        AltAnswerText = answer?.a.Alternate_Justification,
+                        Comment = answer?.a.Comment,
+                        Feedback = answer?.a.Feedback,
+                        MarkForReview = answer?.a.Mark_For_Review ?? false,
+                        Reviewed = answer?.a.Reviewed ?? false,
+                        MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                        SetName = req.SetName,
+                        Is_Component = answer?.a.Is_Component ?? false,
+                        Is_Requirement = answer?.a.Is_Requirement ?? true
+                    };
+                    if (answer != null)
+                    {
+                        TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                    }
+
+                    qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+
+                    targetSubcat.Questions.Add(qa);
+                }
+            }
+
+            return response;
+        }
+
+
+        private CategoryContainer BuildDomainResponse(DomainAssessmentFactor domain)
+        {
+            var d = new CategoryContainer()
+            {
+                DisplayText = domain.DomainName,
+                IsDomain = true,
+                AssessmentFactorName = domain.AssessmentFactorName,
+                DomainText = "dummy domain text"
+            };
+
+            return d;
+        }
+
+
+        private QuestionGroup BuildCategoryResponse()
+        {
+            return new QuestionGroup();
+        }
+
+
+        private QuestionSubCategory BuildSubcategoryResponse()
+        {
+            return new QuestionSubCategory();
+        }
+
+
+        /// <summary>
         /// Construct a response containing the applicable requirement questions with their answers.
         /// </summary>
         /// <param name="requirements"></param>
         /// <param name="answers"></param>
         /// <returns></returns>
-        private QuestionResponse BuildResponse(List<RequirementPlus> requirements,
-            List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
+        private QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
+        List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
+
+
+            var xxyz = domains;
+
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup g = new QuestionGroup();
             QuestionSubCategory sg = new QuestionSubCategory();
@@ -143,11 +280,11 @@ namespace CSETWeb_Api.BusinessManagers
                             StandardShortName = dbRPlus.SetShortName,
                         };
 
-                        if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
-                        {
-                            g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
-                                .DomainName;
-                        }
+                        //if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
+                        //{
+                        //    g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
+                        //        .DomainName;
+                        //}
 
                         groupList.Add(g);
 
@@ -200,9 +337,19 @@ namespace CSETWeb_Api.BusinessManagers
 
                 QuestionResponse resp = new QuestionResponse
                 {
-                    QuestionGroups = groupList,
+                    CategoryContainers = new List<CategoryContainer>(),
                     ApplicationMode = this.applicationMode
                 };
+
+                // we have one 'dummy' domain
+                var domain = new CategoryContainer()
+                {
+                    DisplayText = "dummy"
+                };
+                domain.QuestionGroups = groupList;
+                resp.CategoryContainers.Add(domain);
+
+
 
                 resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
                 resp.RequirementCount = this.NumberOfRequirements();
@@ -612,6 +759,11 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public string DomainName;
         public string AssessmentFactorName;
+
+        public override string ToString()
+        {
+            return string.Format("DomainName: {0}, AssessmentFactorName: {1}", this.DomainName, this.AssessmentFactorName);
+        }
     }
 
     internal class ParameterAssessment

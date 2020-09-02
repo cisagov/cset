@@ -25,6 +25,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
+import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
@@ -89,6 +90,9 @@ import { SecurityplanComponent } from './reports/securityplan/securityplan.compo
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+
 
 const appRoutes: Routes = [
 
@@ -189,29 +193,33 @@ const appRoutes: Routes = [
             canActivate: [AssessGuard],
             canActivateChild: [AssessGuard],
             children: [
-              { path: 'info', component: AssessmentInfoComponent },
+              { path: 'info1', component: AssessmentInfoComponent },
+              { path: 'info2', component: Assessment2InfoComponent },
+              { path: 'model-select', component: ModelSelectComponent },
+              { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
+              { path: 'model-select', component: ModelSelectComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
               { path: 'irp-summary', component: IrpSummaryComponent },
-              { path: '', redirectTo: 'info', pathMatch: 'full' },
-              { path: '**', redirectTo: 'info' }
+              {
+                path: 'diagram',
+                component: DiagramComponent,
+                canActivate: [AssessGuard],
+                canActivateChild: [AssessGuard],
+                children: [
+                  { path: 'info', component: DiagramInfoComponent },
+                  { path: 'inventory', component: DiagramInventoryComponent },
+                  { path: '', redirectTo: 'info', pathMatch: 'full' },
+                  { path: '**', redirectTo: 'info' }
+                ]
+              },
+              { path: '', redirectTo: 'info1', pathMatch: 'full' },
+              { path: '**', redirectTo: 'info1' }
             ]
-          },
-          {
-            path: 'diagram',
-            component: DiagramComponent,
-            canActivate: [AssessGuard],
-            canActivateChild: [AssessGuard],
-            children: [
-              { path: 'info', component: DiagramInfoComponent },
-              { path: 'inventory', component: DiagramInventoryComponent },
-              { path: '', redirectTo: 'info', pathMatch: 'full' },
-              { path: '**', redirectTo: 'info' }
-            ]
-          },
+          },          
 
           { path: 'questions', component: QuestionsComponent },
           {
@@ -253,16 +261,16 @@ const appRoutes: Routes = [
     ]
   },
   // reports routing
-  { 
+  {
     path: 'report', component: LayoutBlankComponent, children: [
-      {path: 'detail', component: DetailComponent }, 
-      {path: 'discoveries', component: DiscoveryTearoutsComponent }, 
-      {path: 'executive', component: ExecutiveComponent }, 
-      {path: 'securityplan', component: SecurityplanComponent }, 
-      {path: 'sitesummary', component: SitesummaryComponent },
-      {path: 'trendreport', component: TrendReportComponent },
-      {path: 'comparereport', component: CompareReportComponent }
-    ] 
+      { path: 'detail', component: DetailComponent },
+      { path: 'discoveries', component: DiscoveryTearoutsComponent },
+      { path: 'executive', component: ExecutiveComponent },
+      { path: 'securityplan', component: SecurityplanComponent },
+      { path: 'sitesummary', component: SitesummaryComponent },
+      { path: 'trendreport', component: TrendReportComponent },
+      { path: 'comparereport', component: CompareReportComponent }
+    ]
   },
   { path: '**', redirectTo: 'home' }
 ];

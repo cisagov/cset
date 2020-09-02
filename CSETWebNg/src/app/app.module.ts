@@ -50,6 +50,8 @@ import { ContactItemComponent } from './assessment/prepare/assessment-info/asses
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
+import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
@@ -199,6 +201,10 @@ import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
+import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 
 @NgModule({
     imports: [
@@ -362,7 +368,15 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         SecurityplanComponent, 
         SitesummaryComponent,
         TrendReportComponent,
-        CompareReportComponent
+        CompareReportComponent,
+        Assessment2InfoComponent,
+        ModelSelectComponent,
+        AssessmentConfigComponent,
+        CmmcLevelsComponent,
+        AssessmentConfigComponent,
+        ModelSelectComponent,
+        CategoryBlockComponent,
+        DomainBlockComponent
     ],
     providers: [
         ConfigService,
