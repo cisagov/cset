@@ -1,0 +1,22 @@
+<h4>Features</h4>
+
+<p>
+  Select the features that will be used to perform this assessment.  Each feature can be expanded for 
+  additional information.
+</p>
+
+<div *ngFor="let s of features" class="d-flex flex-column justify-content-between flex-00a">
+  <div class="standard-item d-flex justify-content-between flex-11a">
+    <div>
+      <input type="checkbox" id="{{s.code}}" name="{{s.code}}" class="mt-1"
+          (change)="submit(s, $event)" [checked]="s.selected">
+      <label for="{{s.code}}">
+        {{s.label}}
+      </label>
+    </div>
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.code]" (click)="toggleExpansion(s.code)"></i>
+  </div>
+  <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.code]" [class.closed-desc]="!expandedDesc[s.code]">
+    {{s.description}}
+  </div>
+</div>

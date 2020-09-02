@@ -132,7 +132,7 @@ namespace CSETWeb_Api.BusinessManagers
         public List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse)
         {
             List<AnalyticsQuestionAnswer> analyticQuestionAnswers = new List<AnalyticsQuestionAnswer>();
-            foreach (var questionGroup in questionResponse.QuestionGroups)
+            foreach (var questionGroup in questionResponse.CategoryContainers[0].QuestionGroups)
             {
                 foreach (var subCategory in questionGroup.SubCategories)
                 {
@@ -281,13 +281,24 @@ namespace CSETWeb_Api.BusinessManagers
 
             QuestionResponse resp = new QuestionResponse
             {
-                QuestionGroups = groupList,
+                CategoryContainers = new List<CategoryContainer>(),
                 ApplicationMode = this.applicationMode
             };
+
+            // create the container for Standard Questions
+            var standardQuestionsNode = new CategoryContainer
+            {
+                DisplayText = "Standard Questions",
+                QuestionGroups = groupList
+            };
+            resp.CategoryContainers.Add(standardQuestionsNode);
+
 
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
 
+
+            // Include any component defaults or overrides into the response
             BuildComponentsResponse(resp);
             return resp;
         }
@@ -296,9 +307,18 @@ namespace CSETWeb_Api.BusinessManagers
         {
             QuestionResponse resp = new QuestionResponse
             {
-                QuestionGroups = new List<QuestionGroup>(),
+                CategoryContainers = new List<CategoryContainer>(),
                 ApplicationMode = this.applicationMode
             };
+
+            // Create the Component Overrides node
+            var componentOverridesContainer = new CategoryContainer()
+            {
+                DisplayText = "Component Overrides"
+            };
+            componentOverridesContainer.QuestionGroups = new List<QuestionGroup>();
+            resp.CategoryContainers.Add(componentOverridesContainer);
+
 
             resp.QuestionCount = 0;
             resp.RequirementCount = 0;

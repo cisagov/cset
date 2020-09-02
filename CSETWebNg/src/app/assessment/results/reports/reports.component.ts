@@ -24,10 +24,9 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
     selector: 'app-reports',
@@ -39,8 +38,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     constructor(
         private assessSvc: AssessmentService,
-        private navSvc: NavigationService,
-        public navSvc2: Navigation2Service,
+       
+        public navSvc: NavigationService,
         private router: Router,
         private route: ActivatedRoute,
         private authSvc: AuthenticationService,
@@ -50,7 +49,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.assessSvc.currentTab = 'results';
-        this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+        this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
         });
     }

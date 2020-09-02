@@ -29,13 +29,13 @@ import { QuestionRequirementCounts, StandardsBlock } from "../../../models/stand
 import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
-import { Navigation2Service } from "../../../services/navigation2.service";
+import { NavigationService } from "../../../services/navigation.service";
 
 @Component({
   selector: "app-standards",
   templateUrl: "./standards.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsComponent implements OnInit {
   standards: StandardsBlock;
@@ -46,9 +46,9 @@ export class StandardsComponent implements OnInit {
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadStandards();
@@ -76,8 +76,8 @@ export class StandardsComponent implements OnInit {
       error => {
         console.log(
           "Error getting all standards: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log("Error getting all standards: " + (<Error>error).stack);
       }
@@ -136,7 +136,7 @@ export class StandardsComponent implements OnInit {
     let rval = true;
     if (showIt) {
 
-      this.dialogRef = this.dialog.open(OkayComponent, {data: {messageText: msg}});
+      this.dialogRef = this.dialog.open(OkayComponent, { data: { messageText: msg } });
       this.dialogRef.componentInstance.hasHeader = true;
 
       this.dialogRef.afterClosed().subscribe(result => {
@@ -166,7 +166,7 @@ export class StandardsComponent implements OnInit {
     }
 
     if (standard.Code === "ACET_V1") {
-      this.standardSvc.setACETSelected(standard.Selected);
+      this.navSvc.setACETSelected(standard.Selected);
     }
 
     this.standards.Categories.forEach(cat => {
@@ -184,11 +184,11 @@ export class StandardsComponent implements OnInit {
         this.standards.RequirementCount = counts.RequirementCount;
       });
 
-      this.setFrameworkNavigation();
+    this.setFrameworkNavigation();
   }
 
   setFrameworkNavigation()  {
-    this.standardSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
+    // RKW - this.navSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
   }
 
   /**
