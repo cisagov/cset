@@ -166,7 +166,7 @@ export class NavigationService {
 
       const node: NavTreeNode = {
         label: p.displayText,
-        value: p.pageClass,
+        value: p.pageId,
         isPhaseNode: false,
         children: [],
         expandable: true,
@@ -183,7 +183,7 @@ export class NavigationService {
 
       const parentPage = this.findParentPage(i);
       if (!!parentPage) {
-        const parentNode = this.findInTree(toc, parentPage.pageClass);
+        const parentNode = this.findInTree(toc, parentPage.pageId);
         if (!!parentNode) {
           parentNode.children.push(node);
         }
@@ -253,10 +253,10 @@ export class NavigationService {
   /**
    * Clear any current page and mark the new one.
    */
-  setCurrentPage(pageClass: string) {
+  setCurrentPage(pageId: string) {
     this.clearCurrentPage(this.dataSource.data);
 
-    const currentNode = this.findInTree(this.dataSource.data, pageClass);
+    const currentNode = this.findInTree(this.dataSource.data, pageId);
     if (!!currentNode) {
       currentNode.isCurrent = true;
       this.currentPage = currentNode.value;
@@ -349,14 +349,14 @@ export class NavigationService {
   }
 
   /**
-   * Routes to the path configured for the specified pageClass.
+   * Routes to the path configured for the specified pageId.
    * @param value 
    */
   navDirect(navTarget: any) {
     // if the target is a simple string, find it in the pages structure 
     // and navigate to its path
     if (typeof navTarget == 'string') {
-      let targetPage = this.pages.find(p => p.pageClass === navTarget);
+      let targetPage = this.pages.find(p => p.pageId === navTarget);
 
       // if they clicked on a tab there won't be a path -- nudge them to the next page
       if (!targetPage.hasOwnProperty('path')) {
@@ -364,7 +364,7 @@ export class NavigationService {
         return;
       }
 
-      this.setCurrentPage(targetPage.pageClass);
+      this.setCurrentPage(targetPage.pageId);
 
       // determine the route path
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
@@ -383,8 +383,8 @@ export class NavigationService {
       this.questionsSvc.scrollToTarget = this.questionsSvc.buildNavTargetID(navTarget);
 
       // navigate to the questions screen
-      let targetPage = this.pages.find(p => p.pageClass === 'phase-assessment');
-      this.setCurrentPage(targetPage.pageClass);
+      let targetPage = this.pages.find(p => p.pageId === 'phase-assessment');
+      this.setCurrentPage(targetPage.pageId);
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
     }
@@ -396,7 +396,7 @@ export class NavigationService {
    */
   navBack(cur: string) {
     // find current page
-    const currentPageIndex = this.pages.findIndex(p => p.pageClass === cur);
+    const currentPageIndex = this.pages.findIndex(p => p.pageId === cur);
     if (currentPageIndex < 0) {
       return;
     }
@@ -418,7 +418,7 @@ export class NavigationService {
       || (newPageIndex >= 0 && !showPage));
 
 
-    this.setCurrentPage(this.pages[newPageIndex].pageClass);
+    this.setCurrentPage(this.pages[newPageIndex].pageId);
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
@@ -430,7 +430,7 @@ export class NavigationService {
    */
   navNext(cur: string) {
     // find current page
-    const currentPageIndex = this.pages.findIndex(p => p.pageClass === cur);
+    const currentPageIndex = this.pages.findIndex(p => p.pageId === cur);
 
     if (currentPageIndex < 0) {
       return;
@@ -453,7 +453,7 @@ export class NavigationService {
       || (newPageIndex < this.pages.length && !showPage));
 
 
-    this.setCurrentPage(this.pages[newPageIndex].pageClass);
+    this.setCurrentPage(this.pages[newPageIndex].pageId);
 
     const newPath = this.pages[newPageIndex].path.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
@@ -490,42 +490,42 @@ export class NavigationService {
    */
   pages = [
     // Prepare
-    { displayText: 'Prepare', pageClass: 'phase-prepare', level: 0 },
+    { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
 
-    { displayText: 'Assessment Configuration', pageClass: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
-    { displayText: 'Assessment Information', pageClass: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
+    { displayText: 'Assessment Configuration', pageId: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
+    { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
     {
       displayText: 'Maturity Model Selection',
-      pageClass: 'model-select', level: 1,
+      pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
     },
     {
-      displayText: 'CMMC Target Level Selection', pageClass: 'cmmc-levels', level: 1,
+      displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
     },
 
     {
-      displayText: 'ACET Required Documents', pageClass: 'required', level: 1,
+      displayText: 'ACET Required Documents', pageId: 'required', level: 1,
       path: 'assessment/{:id}/prepare/required',
       condition: () => { return this.acetSelected }
     },
     {
-      displayText: 'ACET IRP', pageClass: 'irp', level: 1,
+      displayText: 'ACET IRP', pageId: 'irp', level: 1,
       path: 'assessment/{:id}/prepare/irp',
       condition: () => { return this.acetSelected }
     },
     {
-      displayText: 'ACET IRP Summary', pageClass: 'irp-summary', level: 1,
+      displayText: 'ACET IRP Summary', pageId: 'irp-summary', level: 1,
       path: 'assessment/{:id}/prepare/irp-summary',
       condition: () => { return this.acetSelected }
     },
 
     {
       displayText: 'Security Assurance Level (SAL)',
-      pageClass: 'sal', level: 1,
+      pageId: 'sal', level: 1,
       path: 'assessment/{:id}/prepare/sal',
       condition: () => {
         return ((!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard)
@@ -535,7 +535,7 @@ export class NavigationService {
 
     {
       displayText: 'Cybsersecurity Standards Selection',
-      pageClass: 'standards', level: 1,
+      pageId: 'standards', level: 1,
       path: 'assessment/{:id}/prepare/standards',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard }
     },
@@ -547,14 +547,14 @@ export class NavigationService {
     //  Diagram
     {
       displayText: 'Network Diagram',
-      pageClass: 'diagram', level: 1,
+      pageId: 'diagram', level: 1,
       path: 'assessment/{:id}/prepare/diagram/info',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram }
     },
 
     // Framework
     {
-      displayText: 'Framework', pageClass: 'framework', level: 1, path: 'assessment/{:id}/prepare/framework',
+      displayText: 'Framework', pageId: 'framework', level: 1, path: 'assessment/{:id}/prepare/framework',
       condition: () => {
         return this.frameworkSelected;
       }
@@ -563,47 +563,47 @@ export class NavigationService {
 
     // Questions/Requirements/Statements
     {
-      displayText: 'Assessment', pageClass: 'phase-assessment',
+      displayText: 'Assessment', pageId: 'phase-assessment',
       level: 0, path: 'assessment/{:id}/questions'
     },
 
 
-    { displayText: 'Results', pageClass: 'phase-results', level: 0 },
+    { displayText: 'Results', pageId: 'phase-results', level: 0 },
 
     // Results - Standards
-    { displayText: 'Analysis Dashboard', pageClass: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard' },
+    { displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard' },
 
 
-    { displayText: 'Control Priorities', pageClass: 'ranked-questions', level: 1, path: 'assessment/{:id}/results/ranked-questions' },
-    { displayText: 'Standards Summary', pageClass: 'standards-summary', level: 1, path: 'assessment/{:id}/results/standards-summary' },
-    { displayText: 'Ranked Categories', pageClass: 'standards-ranked', level: 1, path: 'assessment/{:id}/results/standards-ranked' },
-    { displayText: 'Results By Category', pageClass: 'standards-results', level: 1, path: 'assessment/{:id}/results/standards-results' },
+    { displayText: 'Control Priorities', pageId: 'ranked-questions', level: 1, path: 'assessment/{:id}/results/ranked-questions' },
+    { displayText: 'Standards Summary', pageId: 'standards-summary', level: 1, path: 'assessment/{:id}/results/standards-summary' },
+    { displayText: 'Ranked Categories', pageId: 'standards-ranked', level: 1, path: 'assessment/{:id}/results/standards-ranked' },
+    { displayText: 'Results By Category', pageId: 'standards-results', level: 1, path: 'assessment/{:id}/results/standards-results' },
 
     // Results - Components
-    { displayText: 'Components Summary', pageClass: 'components-summary', level: 1, path: 'assessment/{:id}/results/components-summary' },
-    { displayText: 'Ranked Components By Category', pageClass: 'components-ranked', level: 1, path: 'assessment/{:id}/results/components-ranked' },
-    { displayText: 'Component Results By Category', pageClass: 'components-results', level: 1, path: 'assessment/{:id}/results/components-results' },
-    { displayText: 'Components By Component Type', pageClass: 'components-types', level: 1, path: 'assessment/{:id}/results/components-types' },
-    { displayText: 'Network Warnings', pageClass: 'components-warnings', level: 1, path: 'assessment/{:id}/results/components-warnings' },
+    { displayText: 'Components Summary', pageId: 'components-summary', level: 1, path: 'assessment/{:id}/results/components-summary' },
+    { displayText: 'Ranked Components By Category', pageId: 'components-ranked', level: 1, path: 'assessment/{:id}/results/components-ranked' },
+    { displayText: 'Component Results By Category', pageId: 'components-results', level: 1, path: 'assessment/{:id}/results/components-results' },
+    { displayText: 'Components By Component Type', pageId: 'components-types', level: 1, path: 'assessment/{:id}/results/components-types' },
+    { displayText: 'Network Warnings', pageId: 'components-warnings', level: 1, path: 'assessment/{:id}/results/components-warnings' },
 
     // ACET results pages
     {
-      displayText: 'ACET Maturity Results', pageClass: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity',
+      displayText: 'ACET Maturity Results', pageId: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity',
       condition: () => { this.acetSelected }
     },
     {
-      displayText: 'ACET Admin Results', pageClass: 'admin', level: 1, path: 'assessment/{:id}/results/admin',
+      displayText: 'ACET Admin Results', pageId: 'admin', level: 1, path: 'assessment/{:id}/results/admin',
       condition: () => { this.acetSelected }
     },
     {
-      displayText: 'ACET Dashboard', pageClass: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard',
+      displayText: 'ACET Dashboard', pageId: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard',
       condition: () => { this.acetSelected }
     },
 
-    { displayText: 'Executive Summary, Overview & Comments', pageClass: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
-    { displayText: 'Reports', pageClass: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
-    { displayText: 'Feedback', pageClass: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
-    { displayText: 'Share Assessment With DHS', pageClass: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }
+    { displayText: 'Executive Summary, Overview & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
+    { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
+    { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
+    { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }
 
   ];
 }

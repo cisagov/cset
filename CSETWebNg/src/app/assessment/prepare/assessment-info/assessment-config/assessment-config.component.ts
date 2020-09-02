@@ -61,7 +61,7 @@ export class AssessmentConfigComponent implements OnInit {
   /**
    * Sets the selection of a feature and posts the assesment detail to the server.
    */
-  submit(feature, event: Event) {
+  submit(feature, event: any) {
     const value = event.srcElement.checked;
 
     switch (feature.code) {
