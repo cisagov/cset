@@ -46,6 +46,7 @@ export class TrendAnalyticsComponent implements OnInit {
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService,
     private authSvc: AuthenticationService,
+    public navAggSvc: NavigationAggregService,
     public configSvc: ConfigService,
     private router: Router,
   ) { }
