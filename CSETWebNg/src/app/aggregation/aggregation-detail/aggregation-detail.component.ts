@@ -39,7 +39,8 @@ export class AggregationDetailComponent implements OnInit {
    * Constructor
    */
   constructor(
-    public aggregationSvc: AggregationService
+    public aggregationSvc: AggregationService,
+    public navAggSvc: NavigationAggregService
   ) { }
 
   /**

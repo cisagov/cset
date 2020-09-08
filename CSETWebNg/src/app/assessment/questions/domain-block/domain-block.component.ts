@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-domain-block',
@@ -8,10 +9,14 @@ export class DomainBlockComponent implements OnInit {
 
   @Input('myContainer') myContainer;
 
+  domains: any;
+
   /** 
    * 
    */
-  constructor() { }
+  constructor(
+    public questionsSvc: QuestionsService
+  ) { }
 
   /**
    * 

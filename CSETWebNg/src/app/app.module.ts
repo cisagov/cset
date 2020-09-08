@@ -112,6 +112,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
+import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -203,6 +204,7 @@ import { TrendReportComponent } from './reports/trendreport/trendreport.componen
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 
@@ -291,6 +293,7 @@ import { DomainBlockComponent } from './assessment/questions/domain-block/domain
         FindingsComponent,
         SafePipe,
         LinebreakPipe,
+        NullishCoalescePipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
@@ -372,6 +375,7 @@ import { DomainBlockComponent } from './assessment/questions/domain-block/domain
         Assessment2InfoComponent,
         ModelSelectComponent,
         AssessmentConfigComponent,
+        CmmcAComponent,
         CmmcLevelsComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
