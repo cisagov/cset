@@ -180,6 +180,10 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
+                    assessment.UseStandard = result.aa.UseStandard;
+                    assessment.UseMaturity = result.aa.UseMaturity;
+                    assessment.UseDiagram = result.aa.UseDiagram;
+
                     bool defaultAcet = (app_code == "ACET");
                     assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
@@ -228,6 +232,11 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAssessment.AssessmentCreatorId = assessment.CreatorId;
                 dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
                 dbAssessment.LastAccessedDate = assessment.LastModifiedDate;
+
+                dbAssessment.UseDiagram = assessment.UseDiagram;
+                dbAssessment.UseMaturity = assessment.UseMaturity;
+                dbAssessment.UseStandard = assessment.UseStandard;
+
                 dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5, '0');
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
                 dbAssessment.Assets = assessment.Assets;
@@ -477,10 +486,6 @@ namespace CSETWeb_Api.BusinessManagers
                 return db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             }
         }
-
-
-
-
     }
 }
 

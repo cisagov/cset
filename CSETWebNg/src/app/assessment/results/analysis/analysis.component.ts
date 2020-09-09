@@ -42,7 +42,7 @@ export class AnalysisComponent implements OnInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
     this.router.navigate(['dashboard'], { relativeTo: this.route.parent });

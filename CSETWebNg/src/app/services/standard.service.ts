@@ -24,7 +24,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { ConfigService } from "./config.service";
-import { NavigationService } from "./navigation.service";
 import { AssessmentService } from "./assessment.service";
 
 const headers = {
@@ -37,10 +36,10 @@ export class StandardService {
   frameworkSelected = false;
   acetSelected = false;
 
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private navSvc: NavigationService,
     public assessSvc: AssessmentService
   ) { }
 
@@ -70,45 +69,5 @@ export class StandardService {
       this.configSvc.apiUrl +"basicStandard", 
       headers
     );
-  }
-
-  getFramework() {
-    return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
-  }
-
-  getACET() {
-    return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
-  }
-
-  setFrameworkSelected(framework: boolean) {
-    this.frameworkSelected = framework;
-    this.makeNavTree();
-  }
-
-  setACETSelected(acet: boolean) {
-    this.acetSelected = acet;
-    this.makeNavTree();
-  }
-
-  makeNavTree() {
-    const magic = this.navSvc.getMagic();
-
-    const tree = [
-      { children: [], label: 'Assessment Information', value: 'info' },
-      { children: [], label: 'Security Assurance Level (SAL)', value: 'sal' }, 
-      { children: [], label: 'Cybersecurity Standards Selection', value: 'standards' }
-    ];
-
-    if (this.frameworkSelected) {
-      tree.push({ children: [], label: 'Cybersecurity Framework', value: 'framework' });
-    }
-
-    if (this.acetSelected) {
-      tree.push({ children: [], label: 'Document Request List', value: 'required' });
-      tree.push({ children: [], label: 'Inherent Risk Profiles', value: 'irp' });
-      tree.push({ children: [], label: 'Inherent Risk Summary', value: 'irp-summary' });
-    }
-    
-    this.navSvc.setTree(tree, magic);
   }
 }

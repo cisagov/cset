@@ -29,8 +29,8 @@ import { QuestionRequirementCounts, StandardsBlock } from "../../../models/stand
 import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
-import { Navigation2Service } from "../../../services/navigation2.service";
 import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
+import { NavigationService } from "../../../services/navigation.service";
 
 @Component({
   selector: "app-standards",
@@ -48,7 +48,7 @@ export class StandardsComponent implements OnInit {
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     public dialog: MatDialog
   ) { }
 
@@ -139,8 +139,10 @@ export class StandardsComponent implements OnInit {
 
     let rval = true;
 
+
     // show a legalese verbiage "OK" dialog 
     if (showIt) {
+
       this.dialogRef = this.dialog.open(OkayComponent, { data: { messageText: msg } });
       this.dialogRef.componentInstance.hasHeader = true;
 
@@ -169,63 +171,63 @@ export class StandardsComponent implements OnInit {
     }
 
     return rval;
+  }
+
+  /**
+   * Builds a list of selected standards and post it to the server.
+   */
+  submit(standard, event: Event) {
+    standard.Selected = (event.srcElement as HTMLInputElement).checked;
+    const selectedStandards: string[] = [];
+    if (!this.showLegalese(standard)) {
+      return;
     }
 
-    /**
-     * Builds a list of selected standards and post it to the server.
-     */
-    submit(standard, event: Event) {
-      standard.Selected = (event.srcElement as HTMLInputElement).checked;
-      const selectedStandards: string[] = [];
-      if (!this.showLegalese(standard)) {
-        return;
-      }
-
-      if (standard.Code === "NCSF_V1") {
-        this.standardSvc.frameworkSelected = standard.Selected;
-        this.setFrameworkNavigation();
-      }
-
-      if (standard.Code === "ACET_V1") {
-        this.standardSvc.setACETSelected(standard.Selected);
-      }
-
-      this.standards.Categories.forEach(cat => {
-        cat.Standards.forEach(std => {
-          if (std.Selected) {
-            selectedStandards.push(std.Code);
-          }
-        });
-      });
-
-      this.standardSvc
-        .postSelections(selectedStandards)
-        .subscribe((counts: QuestionRequirementCounts) => {
-          this.standards.QuestionCount = counts.QuestionCount;
-          this.standards.RequirementCount = counts.RequirementCount;
-        });
-
+    if (standard.Code === "NCSF_V1") {
+      this.standardSvc.frameworkSelected = standard.Selected;
       this.setFrameworkNavigation();
     }
 
-    setFrameworkNavigation()  {
-      this.standardSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
+    if (standard.Code === "ACET_V1") {
+      this.navSvc.setACETSelected(standard.Selected);
     }
 
-    /**
-     * Toggles the open/closed style of the description div.
-     */
-    toggleExpansion(std) {
-      this.expandedDesc[std] = !this.expandedDesc[std];
-    }
-
-    /**
-     * Posts an empty list of selected standards.  The API will set the default
-     * standards for a basic assessment.
-     */
-    doBasicAssessment() {
-      this.standardSvc.postDefaultSelection().subscribe(() => {
-        this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
+    this.standards.Categories.forEach(cat => {
+      cat.Standards.forEach(std => {
+        if (std.Selected) {
+          selectedStandards.push(std.Code);
+        }
       });
-    }
+    });
+
+    this.standardSvc
+      .postSelections(selectedStandards)
+      .subscribe((counts: QuestionRequirementCounts) => {
+        this.standards.QuestionCount = counts.QuestionCount;
+        this.standards.RequirementCount = counts.RequirementCount;
+      });
+
+    this.setFrameworkNavigation();
   }
+
+  setFrameworkNavigation() {
+    // RKW - this.navSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
+  }
+
+  /**
+   * Toggles the open/closed style of the description div.
+   */
+  toggleExpansion(std) {
+    this.expandedDesc[std] = !this.expandedDesc[std];
+  }
+
+  /**
+   * Posts an empty list of selected standards.  The API will set the default
+   * standards for a basic assessment.
+   */
+  doBasicAssessment() {
+    this.standardSvc.postDefaultSelection().subscribe(() => {
+      this.router.navigate(["/assessment", this.assessSvc.id(), "questions"]);
+    });
+  }
+}
