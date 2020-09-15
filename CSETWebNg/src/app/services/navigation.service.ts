@@ -504,7 +504,9 @@ export class NavigationService {
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
-      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
+      condition: () => { return !!this.assessSvc.assessment 
+        && this.assessSvc.assessment.UseMaturity
+        && this.assessSvc.maturityModels.indexOf('CMMC') >= 0 }
     },
 
     {

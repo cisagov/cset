@@ -998,6 +998,36 @@
             Persists the selected required docs value to the database.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityModels">
+            <summary>
+            Get all maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityModels(System.Collections.Generic.List{System.String})">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityLevel">
+            <summary>
+            Return the current maturity level for an assessment.
+            Currently returns an int, but could be expanded
+            if more data needed.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityLevel(System.Int32)">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
             <summary>
             Get maturity calculations
