@@ -83,7 +83,7 @@
           </mat-tree-node>
 
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navSvc?.hasNestedChild" [hidden]="!node.visible"
-            matTreeNodePadding>
+            [class.current-node]="node?.isCurrent">
             <button class="btn btn-link no-underline" matTreeNodeToggle mat-icon-button>
               <div class="menu-link d-flex">
                 <mat-icon style="position: relative; top: -.1rem;">

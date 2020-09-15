@@ -4,7 +4,9 @@ using System.Linq;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
 using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
@@ -13,6 +15,136 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
     {
         public MaturityManager()
         { }
+
+
+        /// <summary>
+        /// Returns a list of all maturity models selected for the assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public List<string> GetMaturityModels(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Model_Name).ToList();
+                return myModels;
+            }
+        }
+
+
+        /// <summary>
+        /// Saves the list of selected maturity models.
+        /// </summary>
+        /// <param name="selectedMaturityModels"></param>
+        /// <returns></returns>
+        public void PersistSelectedMaturityModels(int assessmentId, List<string> selectedMaturityModels)
+        {
+            using (var db = new CSET_Context())
+            {
+                var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
+                db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+
+                if (selectedMaturityModels != null)
+                {
+                    foreach (string modelName in selectedMaturityModels)
+                    {
+                        db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Model_Name = modelName.ToUpper(),
+                            Selected = true
+                        });
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+
+            AssessmentUtil.TouchAssessment(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetMaturityLevel(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (result != null)
+                {
+                    if (int.TryParse(result.Standard_Specific_Sal_Level, out int level))
+                    {
+                        return level;
+                    }                    
+                }
+
+                return 0;
+            }
+        }
+
+
+        /// <summary>
+        /// Connects the assessment to a Maturity_Level.
+        /// </summary>
+        public void PersistMaturityLevel(int assessmentId, int level)
+        {
+            using (var db = new CSET_Context())
+            {
+                // SAL selections live in ASSESSMENT_SELECTED_LEVELS, which
+                // is more complex to allow for the different types of SALs
+                // as well as the user's selection(s).
+
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId);
+                db.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+
+                db.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Level_Name = "Maturity_Level",
+                    Standard_Specific_Sal_Level = level.ToString()
+                });
+
+                db.SaveChanges();
+            }
+
+            AssessmentUtil.TouchAssessment(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public object GetMaturityQuestions(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+                var myLevel = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
+
+                var a = 1;
+
+
+
+                
+            }
+
+            return new object();
+        }
+        
+
+
+
+
+        // The methods that follow were originally built for NCUA/ACET.
+        // It is hoped that they will eventually be refactored to fit a more
+        // 'generic' approach to maturity models.
+
+
+
 
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
         {
@@ -29,7 +161,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (var db = new CSET_Context())
             {
                 bool? defaultTarget = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault().MatDetail_targetBandOnly;
-                return defaultTarget??false;
+                return defaultTarget ?? false;
             }
         }
 
@@ -72,12 +204,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     foreach (var d in domains)
                     {
-                        var tGroupOrder =maturity.FirstOrDefault(x => x.Domain == d.Domain);
+                        var tGroupOrder = maturity.FirstOrDefault(x => x.Domain == d.Domain);
                         var maturityDomain = new MaturityDomain
                         {
                             DomainName = d.Domain,
                             Assessments = new List<MaturityAssessment>(),
-                            Sequence = tGroupOrder == null? 0: tGroupOrder.grouporder
+                            Sequence = tGroupOrder == null ? 0 : tGroupOrder.grouporder
                         };
                         var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Domain).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
                         foreach (var s in partial_sub_categoy)
