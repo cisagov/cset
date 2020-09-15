@@ -96,10 +96,15 @@ namespace DataLayerCore.Model
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
+        public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
+
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
-        public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
+        public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
+        public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
+        public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
+        public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }

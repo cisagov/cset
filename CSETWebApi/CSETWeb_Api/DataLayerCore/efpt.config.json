@@ -2,13 +2,13 @@
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
-   "DoNotCombineNamespace": false,
-   "IdReplace": false,
+   "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Model2",
    "ProjectRootNamespace": "DataLayerCore",
+   "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
    "Tables": [
@@ -74,6 +74,10 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[AVAILABLE_MATURITY_MODELS]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[AVAILABLE_STANDARDS]"
       },
       {
@@ -91,18 +95,6 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[CNSS_CIA_TYPES]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[COMBINED_ANSWER]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[COMBINED_CATEGORY]"
-      },
-      {
-         "HasPrimaryKey": true,
-         "Name": "[dbo].[COMBINED_DOCUMENT_ANSWERS]"
       },
       {
          "HasPrimaryKey": true,
@@ -330,6 +322,10 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[INSTALLATION]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[IRP]"
       },
       {
@@ -343,6 +339,22 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[LEVEL_NAMES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_LEVELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_MODELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_REFERENCES]"
       },
       {
          "HasPrimaryKey": true,
@@ -626,9 +638,12 @@
       }
    ],
    "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
    "UseInflector": false,
    "UseLegacyPluralizer": false,
-   "UseSpatial": false
+   "UseNodaTime": false,
+   "UseSpatial": false,
+   "UseStoredProcedures": false
 }
