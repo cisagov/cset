@@ -24,10 +24,17 @@ namespace CSETWeb_Api.Controllers
         [Route("api/analytics/getAnalytics")]
         public IHttpActionResult GetAnalytics()
         {
+            var demographics = GetDemographics();
+            var assessment = GetAnalyticsAssessment();
+            assessment.Assets = demographics.AssetValue;
+            assessment.Size = demographics.Size;
+            assessment.IndustryId = demographics.IndustryId;
+            assessment.SectorId = demographics.SectorId;
+
             return Ok(new Analytics
             {
-                Assessment = GetAnalyticsAssessment(),
-                Demographics = GetDemographics(),
+                Assessment = assessment,
+                Demographics = demographics,
                 QuestionAnswers = GetQuestionsAnswers()
             }); ;
         }
