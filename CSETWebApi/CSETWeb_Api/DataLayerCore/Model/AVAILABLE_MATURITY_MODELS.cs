@@ -8,9 +8,7 @@ namespace DataLayerCore.Model
 {
     public partial class AVAILABLE_MATURITY_MODELS
     {
-        [Key]
         public int Assessment_Id { get; set; }
-        [Key]
         [StringLength(50)]
         public string Model_Name { get; set; }
         public bool Selected { get; set; }

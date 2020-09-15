@@ -8,11 +8,9 @@ namespace DataLayerCore.Model
 {
     public partial class MATURITY_REFERENCES
     {
-        [Key]
+
         public int Mat_Question_Id { get; set; }
-        [Key]
         public int Gen_File_Id { get; set; }
-        [Key]
         [StringLength(850)]
         public string Section_Ref { get; set; }
         public int? Page_Number { get; set; }
