@@ -122,7 +122,7 @@ export class QuestionExtrasComponent implements OnInit {
 
     // Call the API for content
     this.questionsSvc.getDetails(this.myQuestion.QuestionId,
-      this.myQuestion.Is_Component).subscribe(
+      this.myQuestion.Is_Component, this.myQuestion.Is_Maturity).subscribe(
         (details) => {
           this.extras = details;
           // populate my details with the first "non-null" tab
@@ -191,6 +191,7 @@ export class QuestionExtrasComponent implements OnInit {
         Reviewed: false,
         Is_Component: this.myQuestion.Is_Component,
         Is_Requirement: this.myQuestion.Is_Requirement,
+        Is_Maturity: this.myQuestion.Is_Maturity,
         ComponentGuid: ''
       };
 
@@ -432,7 +433,7 @@ export class QuestionExtrasComponent implements OnInit {
         // Traverse the local model to get the "display" question numbers
         if (this.questionsSvc.domains) {
           this.questionsSvc.domains.forEach(d => {
-            d.QuestionGroups.forEach(qg => {
+            d.Categories.forEach(qg => {
               qg.SubCategories.forEach(sc => {
                 sc.Questions.forEach(q => {
                   if (qlist.includes(q.QuestionId)) {

@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { Answer, DefaultParameter, ParameterForAnswer, CategoryContainer, QuestionGroup, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { AcetFiltersService, ACETFilter } from './acet-filters.service';
@@ -54,7 +54,7 @@ export class QuestionsService {
   public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
   // The allowable filter values.  Used for "select all"
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
 
   public searchString = '';
 
@@ -161,7 +161,7 @@ export class QuestionsService {
     const bands = this.getStairstepOrig(irp);
     const dmf = this.domainMatFilters;
 
-    this.domains.forEach((d: CategoryContainer) => {
+    this.domains.forEach((d: Domain) => {
       dmf.set(d.DisplayText, new Map());
       dmf.get(d.DisplayText).set('B', bands.includes('B'));
       dmf.get(d.DisplayText).set('E', bands.includes('E'));
@@ -219,10 +219,11 @@ export class QuestionsService {
    * Retrieves the extra detail content for the question.
    * @param questionId
    */
-  getDetails(questionId: number, IsComponent: boolean): any {
+  getDetails(questionId: number, IsComponent: boolean, IsMaturity: boolean): any {
     return this.http.post(this.configSvc.apiUrl
       + 'details?questionid=' + questionId
       + '&&IsComponent=' + IsComponent
+      + '&&IsMaturity=' + IsMaturity
       , headers);
   }
 
@@ -256,17 +257,17 @@ export class QuestionsService {
 
 
   /**
-   * Sets the Visible property on all Questions, Subcategories and QuestionGroups
+   * Sets the Visible property on all Questions, Subcategories and Categories
    * based on the current filter settings.
    * @param cats
    */
-  public evaluateFilters(domains: CategoryContainer[]) {
+  public evaluateFilters(domains: Domain[]) {
     if (!domains) {
       return;
     }
 
     domains.forEach(d => {
-      d.QuestionGroups.forEach(c => {
+      d.Categories.forEach(c => {
         c.SubCategories.forEach(s => {
           s.Questions.forEach(q => {
             // start with false, then set true if possible
@@ -306,9 +307,17 @@ export class QuestionsService {
               q.Visible = true;
             }
 
+            if (this.showFilters.includes('MT') && q.MaturityLevel <= 3) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('MT+') && q.MaturityLevel > 3) {
+              q.Visible = true;
+            }
+
             // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
             if (!!c.DomainName && !!this.domainMatFilters.get(c.DomainName)) {
-              if (this.domainMatFilters.get(c.DomainName).get(q.MaturityLevel) === false) {
+              if (this.domainMatFilters.get(c.DomainName).get(q.MaturityLevel.toString()) === false) {
                 q.Visible = false;
               }
             }
@@ -415,7 +424,11 @@ export class QuestionsService {
    *
    */
   isDefaultMatLevel(mat: string) {
-    return this.getStairstepOrig(this.overallIRP).includes(mat);
+    const stairstepOrig = this.getStairstepOrig(this.overallIRP);
+    if (!!stairstepOrig) {
+      return stairstepOrig.includes(mat);
+    }
+    return false;
   }
 
 
@@ -525,8 +538,8 @@ export class QuestionsService {
    * a general need to update answers anywhre in the master structure.
    */
   setAnswerInQuestionList(questionId: number, answerId: number, answerText: string) {
-    this.questions.CategoryContainers.forEach((container: CategoryContainer) => {
-      container.QuestionGroups.forEach((group: QuestionGroup) => {
+    this.questions.Domains.forEach((container: Domain) => {
+      container.Categories.forEach((group: Category) => {
         if (group.StandardShortName === 'Component Overrides') {
           group.SubCategories.forEach((sc: SubCategory) => {
             sc.Questions.forEach((q: Question) => {
