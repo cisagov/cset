@@ -54,7 +54,10 @@ export class QuestionsService {
   public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
   // The allowable filter values.  Used for "select all"
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
+
+  // The allowable maturity filter values.  Only applicable on maturity questions page.
+  readonly maturityFilters = ['MT', 'MT+'];
 
   public searchString = '';
 
