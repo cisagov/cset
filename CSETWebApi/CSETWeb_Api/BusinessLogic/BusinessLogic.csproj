@@ -315,6 +315,7 @@
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\FrameworkInfoData.cs" />
+    <Compile Include="BusinessManagers\InformationTabData\MaturityQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\IRPManager.cs" />
     <Compile Include="BusinessManagers\MaturityManager.cs" />
     <Compile Include="BusinessManagers\ModuleCloner.cs" />

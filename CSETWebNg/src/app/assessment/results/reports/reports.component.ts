@@ -38,7 +38,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     constructor(
         private assessSvc: AssessmentService,
-       
         public navSvc: NavigationService,
         private router: Router,
         private route: ActivatedRoute,
@@ -59,7 +58,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     clickReportLink(reportType: string) {
-
         const url = '/index.html?returnPath=report/'+reportType;
         window.open(url, "_blank");
     }

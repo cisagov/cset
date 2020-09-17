@@ -93,6 +93,18 @@
           Show questions with observations
         </label>
       </div>
+      <div>
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('MT')" id="cbShowMatTarget" name="cbShowMatTarget" (click)="updateFilters($event, 'MT')">
+        <label for="cbShowMatTarget">
+          Show questions in maturity target level
+        </label>
+      </div>
+      <div>
+        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('MT+')" id="cbShowAboveMatTarget" name="cbShowAboveMatTarget" (click)="updateFilters($event, 'MT+')">
+        <label for="cbShowAboveMatTarget">
+          Show questions above maturity target level
+        </label>
+      </div>
     </div>
   </mat-dialog-content>
 
