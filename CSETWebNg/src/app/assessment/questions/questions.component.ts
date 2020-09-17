@@ -284,8 +284,6 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     }
     let count = 0;
     this.domains.forEach(d => {
-      console.log('visibleGroupCount');
-      console.log(d.Categories);
       count = count + d.Categories.filter(g => g.Visible).length;
     });
     return count;
