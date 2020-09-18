@@ -11,9 +11,88 @@ using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.Controllers
 {
-    [CSETAuthorize]
+    //[CSETAuthorize]
     public class MaturityController : ApiController
     {
+        /// <summary>
+        /// Get all maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityModels")]
+        public List<string> GetMaturityModels()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            return new MaturityManager().GetMaturityModels(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Set selected maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/MaturityModels")]
+        public IHttpActionResult SetMaturityModels(List<string> modelNames)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            new MaturityManager().PersistSelectedMaturityModels(assessmentId, modelNames);
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Return the current maturity level for an assessment.
+        /// Currently returns an int, but could be expanded
+        /// if more data needed.
+        /// </summary>
+        [HttpGet]
+        [Route("api/MaturityLevel")]
+        public int GetMaturityLevel()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            return new MaturityManager().GetMaturityLevel(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Set selected maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/MaturityLevel")]
+        public IHttpActionResult SetMaturityLevel([FromBody] int level)
+        {
+            int assessmentId = Auth.AssessmentForUser();            
+            new MaturityManager().PersistMaturityLevel(assessmentId, level);
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/MaturityQuestions")]
+        public object GetQuestions()
+        {
+            // int assessmentId = Auth.AssessmentForUser();
+            int assessmentId = 1025;
+            return new MaturityManager().GetMaturityQuestions(assessmentId);
+        }
+
+
+
+
+
+        // --------------------------------------
+        // The controller methods that follow were originally built for NCUA/ACET.
+        // It is hoped that they will eventually be refactored to fit a more
+        // 'generic' approach to maturity models.
+        // --------------------------------------
+
+
         /// <summary>
         /// Get maturity calculations
         /// </summary>

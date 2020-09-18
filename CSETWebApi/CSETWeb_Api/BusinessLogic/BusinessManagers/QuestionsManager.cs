@@ -132,7 +132,7 @@ namespace CSETWeb_Api.BusinessManagers
         public List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse)
         {
             List<AnalyticsQuestionAnswer> analyticQuestionAnswers = new List<AnalyticsQuestionAnswer>();
-            foreach (var questionGroup in questionResponse.CategoryContainers[0].QuestionGroups)
+            foreach (var questionGroup in questionResponse.Domains[0].Categories)
             {
                 foreach (var subCategory in questionGroup.SubCategories)
                 {
@@ -178,7 +178,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid, bool IsComponent)
+        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid, bool IsComponent, bool IsMaturity)
         {
             using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
@@ -186,7 +186,7 @@ namespace CSETWeb_Api.BusinessManagers
                     new InformationTabBuilder(datacontext),
                     datacontext
                 );
-                qvm.getQuestionDetails(questionId, assessmentid, IsComponent);
+                qvm.GetQuestionDetails(questionId, assessmentid, IsComponent, IsMaturity);
                 return qvm;
             }
         }
@@ -281,17 +281,24 @@ namespace CSETWeb_Api.BusinessManagers
 
             QuestionResponse resp = new QuestionResponse
             {
-                CategoryContainers = new List<CategoryContainer>(),
+                Domains = new List<Domain>(),
                 ApplicationMode = this.applicationMode
             };
 
-            // create the container for Standard Questions
-            var standardQuestionsNode = new CategoryContainer
-            {
+            // create a dummy Domain to house all Categories
+            var dummyDomain = new Domain() { 
                 DisplayText = "Standard Questions",
-                QuestionGroups = groupList
+                Categories = groupList
             };
-            resp.CategoryContainers.Add(standardQuestionsNode);
+            resp.Domains.Add(dummyDomain);
+
+            //// create the container for Standard Questions
+            //var standardQuestionsNode = new CategoryContainer
+            //{
+            //    DisplayText = "Standard Questions",
+            //    QuestionGroups = groupList
+            //};
+            //dummyDomain.Categories.Add(standardQuestionsNode);
 
 
             resp.QuestionCount = this.NumberOfQuestions();
@@ -307,17 +314,17 @@ namespace CSETWeb_Api.BusinessManagers
         {
             QuestionResponse resp = new QuestionResponse
             {
-                CategoryContainers = new List<CategoryContainer>(),
+                Domains = new List<Domain>(),
                 ApplicationMode = this.applicationMode
             };
 
             // Create the Component Overrides node
-            var componentOverridesContainer = new CategoryContainer()
+            var componentOverridesContainer = new Domain()
             {
                 DisplayText = "Component Overrides"
             };
-            componentOverridesContainer.QuestionGroups = new List<QuestionGroup>();
-            resp.CategoryContainers.Add(componentOverridesContainer);
+            componentOverridesContainer.Categories = new List<QuestionGroup>();
+            resp.Domains.Add(componentOverridesContainer);
 
 
             resp.QuestionCount = 0;
