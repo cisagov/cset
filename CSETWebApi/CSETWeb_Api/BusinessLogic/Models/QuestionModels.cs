@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,18 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionResponse
     {
-        public List<QuestionGroup> QuestionGroups;
+        public List<CategoryContainer> CategoryContainers;
+
+        // The current mode of the assessment
         public string ApplicationMode;
 
+        // The count of all questions in the response.
         public int QuestionCount;
+
+        // The count of all requirements in the response.
         public int RequirementCount;
 
-        public List<QuestionGroup> DefaultComponents;
+
 
         /// <summary>
         /// The calculated IRP.  If overridden, the override is returned.
@@ -34,7 +40,55 @@ namespace CSETWeb_Api.Models
     }
 
     /// <summary>
-    /// A grouping of subgroups.
+    /// A container class that holds a collection of Categories / QuestionGroups.
+    /// It is used for:
+    ///  - a maturity Domain
+    ///  - the Standard Questions node when in Questions mode
+    ///  - the Component Defaults node
+    ///  - the Component Overrides node
+    /// </summary>
+    public class CategoryContainer
+    {
+        /// <summary>
+        /// The text displayed in the TOC.  If this container represents a maturity domain,
+        /// it contains the name of the domain.
+        /// </summary>
+        public string DisplayText;
+
+        /// <summary>
+        /// Indicates if the container is a maturity Domain.
+        /// </summary>
+        public bool IsDomain = false;
+
+        /// <summary>
+        /// Display text that appears below the domain name.  Not used for ACET but may be used for EDM.
+        /// </summary>
+        public string DomainText;
+        
+        /// <summary>
+        /// Corresponds to the StandardCategory of the questions/requirements it encapsulates.
+        /// </summary>
+        public string AssessmentFactorName;
+
+        /// <summary>
+        /// If this is a domain, this indicates if maturity levels should be shown on the requirements page.
+        /// </summary>
+        public bool ShowMaturityLevels;
+        
+        /// <summary>
+        /// The list of question groups or categories for the assessment
+        /// </summary>
+        public List<QuestionGroup> QuestionGroups = new List<QuestionGroup>();
+
+        /// <summary>
+        /// An optional list of children, so we can stack groups in groups, like categories in domains in standards
+        /// </summary>
+        public List<CategoryContainer> CategoryContainers = new List<CategoryContainer>();
+    }
+
+
+    /// <summary>
+    /// A grouping of subgroups/subcategoriess.
     /// </summary>
     public class QuestionGroup
     {
@@ -42,8 +96,7 @@ namespace CSETWeb_Api.Models
         public Guid NavigationGUID;
         public int GroupHeadingId;
         public string GroupHeadingText;
-        public string StandardShortName;
-        public string DomainName;        
+        public string StandardShortName;       
         public string ComponentName;        
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
 

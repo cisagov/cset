@@ -24,9 +24,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
-import { NavigationService, NavTree } from '../services/navigation.service';
+import { NavTreeNode } from '../services/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material";
+import { NavigationService } from '../services/navigation.service';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -73,7 +74,7 @@ export class ResourceLibraryComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
     const magic = this.navSvc.getMagic();
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
-      (response: NavTree[]) => {
+      (response: NavTreeNode[]) => {
         this.navSvc.setTree(response, magic, true);
       }
     );
@@ -92,7 +93,6 @@ export class ResourceLibraryComponent implements OnInit {
       .subscribe(
         (response: LibrarySearchResponse[]) => {
           this.results = response;
-          // this.navSvc.setTree([]);
 
           // Cull out any entries whose HeadingTitle is null
           while (this.results.findIndex(r => r.HeadingText === null) >= 0) {

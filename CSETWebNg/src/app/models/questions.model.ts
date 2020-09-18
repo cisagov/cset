@@ -21,21 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-export interface QuestionResponse {
-    QuestionGroups: QuestionGroup[];
-    ApplicationMode: string;
-    QuestionCount: number;
-    RequirementCount: number;
-    OverallIRP: number;
-}
 
-export interface QuestionResponseWithDomains {
-    Domains: Domain[];
+/**
+ * The response returned from the API 'questionlist' request.
+ */
+export interface QuestionResponse {
+    CategoryContainers: CategoryContainer[];
     ApplicationMode: string;
     QuestionCount: number;
     RequirementCount: number;
     OverallIRP: number;
-}
+}    
 
 export interface ACETDomain {
     DomainName: string;
@@ -43,8 +39,14 @@ export interface ACETDomain {
     Acronym: string;
 }
 
-export interface Domain {
-    DomainName: string;
+/**
+ * Multi-purpose container for domain, standard (requirements mode),  
+ * Standard Questions, Component Defaults or Component Overrides.
+ */
+export interface CategoryContainer {
+    DisplayText: string;
+    IsDomain: boolean;
+    DomainText: string;
     QuestionGroups: QuestionGroup[];
 }
 

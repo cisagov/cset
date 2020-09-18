@@ -30,7 +30,7 @@ import {
   HostListener
 } from '@angular/core';
 import { MatSidenav } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { NavigationService } from '../services/navigation.service';
 
@@ -78,6 +78,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService
@@ -91,20 +92,18 @@ export class AssessmentComponent implements OnInit {
     this.navSvc.activeResultsView = null;
   }
 
-  selectItem(target: string) {
+  selectNavItem(target: string) {
     if (!this.lockNav) {
       this.expandNav = false;
     } else {
       this.expandNav = true;
     }
-    this.navSvc.selectItem(target);
+
+    this.navSvc.navDirect(target);
   }
 
   toggleNav() {
     this.expandNav = !this.expandNav;
-    // if (this.lockNav) {
-    //   this.lockNav = false;
-    // }
   }
 
   handleScroll(component: string) {
@@ -133,7 +132,7 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
-  checkText(s){
+  isTocLoading(s){
     return s === "Please wait" || s === "Loading questions";
   }
 }
