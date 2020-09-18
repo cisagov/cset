@@ -24,8 +24,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
-import { NavigationService, NavTree } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation.service';
+import { NavTreeNode } from '../../../services/navigation.service';
 import { ConfigService } from '../../../services/config.service';
 import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -43,14 +43,14 @@ export class DiagramInfoComponent implements OnInit {
     hasDiagram: boolean = false;
 
     constructor(private router: Router,
-        private navSvc: NavigationService,
+       
         public assessSvc: AssessmentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
         private location: Location
     ) { }
-    tree: NavTree[] = [];
+    tree: NavTreeNode[] = [];
     ngOnInit() {
         this.populateTree();
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
@@ -68,8 +68,7 @@ export class DiagramInfoComponent implements OnInit {
     }
 
     populateTree() {
-        const magic = this.navSvc.getMagic();
-        this.navSvc.setTree(this.tree, magic);
+        this.navSvc.buildTree(this.navSvc.getMagic());
     }
 
     sendToDiagram() {

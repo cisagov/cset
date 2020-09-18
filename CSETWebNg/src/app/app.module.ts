@@ -50,6 +50,8 @@ import { ContactItemComponent } from './assessment/prepare/assessment-info/asses
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
+import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
@@ -110,6 +112,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
+import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -199,6 +202,11 @@ import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
+import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
+import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 
 @NgModule({
     imports: [
@@ -285,6 +293,7 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         FindingsComponent,
         SafePipe,
         LinebreakPipe,
+        NullishCoalescePipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
@@ -362,7 +371,16 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         SecurityplanComponent, 
         SitesummaryComponent,
         TrendReportComponent,
-        CompareReportComponent
+        CompareReportComponent,
+        Assessment2InfoComponent,
+        ModelSelectComponent,
+        AssessmentConfigComponent,
+        CmmcAComponent,
+        CmmcLevelsComponent,
+        AssessmentConfigComponent,
+        ModelSelectComponent,
+        CategoryBlockComponent,
+        DomainBlockComponent
     ],
     providers: [
         ConfigService,

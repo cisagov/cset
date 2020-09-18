@@ -25,7 +25,6 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
-import { Domain } from '../models/questions.model';
 
 
 const headers = {

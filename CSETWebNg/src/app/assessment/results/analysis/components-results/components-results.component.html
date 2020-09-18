@@ -23,7 +23,7 @@
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div id="chart" class="mb-3">
-      <h3>Component Results by Category</h3>
+      <h3>Component Results By Category</h3>
       <canvas id="canvasComponentCompliance">{{canvasComponentCompliance}}</canvas>
     </div>
     <div *ngIf="!initialized">
@@ -46,8 +46,8 @@
       </table>
     </div>
     <div class="mt-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navSvc2.navBack('components-results')">Back</button>
-      <button class="btn btn-primary" (click)="navSvc2.navNext('components-results')">Next</button>
+      <button class="btn btn-primary" (click)="navSvc.navBack('components-results')">Back</button>
+      <button class="btn btn-primary" (click)="navSvc.navNext('components-results')">Next</button>
     </div>
   </div>
 </div>

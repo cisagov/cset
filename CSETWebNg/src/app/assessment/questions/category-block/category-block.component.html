@@ -1,0 +1,24 @@
+  <!-- Question Group Heading / Category-->
+  <div *ngIf="c.ShowOverrideHeader" class="group-heading" [class.display-none]="!c.Visible">
+    {{ c.Symbol_Name + ' - ' + c.ComponentName }}
+  </div>
+
+
+<!-- Question Group Heading / Category-->
+<div *ngIf="!c.Symbol_Name" class="group-heading" 
+[id]="buildNavTargetID(c)" 
+[ngClass]="addDomainPad(c.DomainName)" [class.display-none]="!c.Visible">
+  {{ c.GroupHeadingText }}
+  {{ (!c.DomainName && !!c.StandardShortName) ? ' - ' + c.StandardShortName : '' }}
+</div>
+
+<!-- Subcategory -->
+<div *ngFor="let sg of c.SubCategories" [ngClass]="addDomainPad(c.DisplayText)" style="margin-bottom: 1em;"
+  [class.display-none]="!sg.Visible">
+
+  <!-- Questions within subcategory -->
+  <app-question-block #questionBlock [mySubCategory]="sg"
+    (changeComponents)="updateComponentsOverride()"
+  ></app-question-block>
+
+</div>

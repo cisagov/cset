@@ -395,7 +395,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            resp.QuestionGroups.AddRange(groupList);
+            resp.CategoryContainers[0].QuestionGroups.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
@@ -472,11 +472,22 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            resp.QuestionGroups.AddRange(groupList);
+            var container = new CategoryContainer() 
+            {
+                DisplayText = listname
+            };
+            container.QuestionGroups.AddRange(groupList);
+            resp.CategoryContainers.Add(container);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string FormatLineBreaks(string s)
         {
             return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
