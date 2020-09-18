@@ -282,7 +282,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             {
                 List<usp_getExplodedComponent> exploded = null;
 
-                this.DataContext.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                this.DataContext.LoadStoredProc("[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", assessment_id)
                   .ExecuteStoredProc((handler) =>
                   {

@@ -1,5 +1,6 @@
 
 
+
 CREATE VIEW [dbo].[Assessments_For_User]
 AS
 select 	
