@@ -132,7 +132,7 @@ export class StandardsComponent implements OnInit {
         "or utilize any existing questions contained with in CSET®.  Previously profiles were limited to the NIST " +
         "Framework for Improving Critical Infrastructure Cybersecurity.";
       showIt = framework.Selected;
-    } else if (standard.Code === "RKW_AWWA") {
+    } else if (standard.Code === "AWWA") {
     } else {
       return true;
     }
@@ -157,7 +157,7 @@ export class StandardsComponent implements OnInit {
     }
 
     // show a more complex dialog (AWWA)
-    if (standard.Code === "RKW_AWWA" && standard.Selected) {
+    if (standard.Code === "AWWA" && standard.Selected) {
       this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
 
       this.dialogRefAwwa.afterClosed().subscribe(result => {

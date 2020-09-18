@@ -17,6 +17,7 @@ using System.IO;
 using System.Web.UI.WebControls;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.BusinessLogic.ImportAssessment;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
@@ -65,7 +66,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
 
 
-                List<AwwaControlAnswer> answers = new List<AwwaControlAnswer>();
+                List<AwwaControlAnswer> mappedAnswers = new List<AwwaControlAnswer>();
 
                 for (var i = targetSheetStartRow; i < maxRow; i++)
                 {
@@ -83,26 +84,68 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             CsetAnswer = mappedAnswer.CsetAnswer,
                             CsetComment = mappedAnswer.CsetComment
                         };
-                        answers.Add(a);
+                        mappedAnswers.Add(a);
                     }
                 }
 
-                var abc = 1;
 
                 // at this point, CSET assessment answers can be built from the 'answers' collection ...
 
-                //QuestionsManager qm = new QuestionsManager(assessmentId);
-                //foreach (var a in answers)
-                //{
-                //    // figure out the question ID that corresponds to the AWWA Control ID ...
+                string sql = "select r.Requirement_Title, r.Requirement_Id, q.Question_Id " +
+                    "from new_requirement r " +
+                    "left join requirement_questions rq on r.Requirement_Id = rq.Requirement_Id " +
+                    "left join new_question q on rq.Question_Id = q.Question_Id " +
+                    "where r.Original_Set_Name = 'AWWA' " +
+                    "order by r.Requirement_Title";
 
-                //    var storedAnswer = new Answer() 
-                //    {
-                //        AnswerText = a.CsetAnswer,
-                //        Comment = a.CsetComment
-                //    };
-                //    qm.StoreAnswer(storedAnswer);
-                //}
+                DBIO dbio = new DBIO();
+                DataTable dt = dbio.Select(sql, null);
+
+
+
+                var sqlInsert = "insert into ANSWER (Assessment_Id, Is_Requirement, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Is_Component, Custom_Question_Guid, Is_Framework, Old_Answer_Id, Reviewed, FeedBack) " +
+                    "values (@assessid, @isreq, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', 0, null, 0, null, 0, null)";
+
+                QuestionsManager qm = new QuestionsManager(assessmentId);
+                foreach (var a in mappedAnswers)
+                {
+                    // figure out the question ID that corresponds to the AWWA Control ID ...
+                    var g = dt.Select(string.Format("requirement_title = '{0}'", a.ControlID));
+
+                    if (g.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    DataRow mappedQuestionAndRequirement = g[0];
+
+                    // Insert a Requirement answer
+                    var parmsReq = new Dictionary<string, object>()
+                    {
+                        { "@assessid", assessmentId },
+                        { "@isreq", 1 },
+                        { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
+                        { "@comment", a.CsetComment },
+                        { "@questionnum", 0 },
+                        { "@ans", a.CsetAnswer }
+                    };
+
+                    dbio.Execute(sqlInsert, parmsReq);
+
+
+                    // Insert a Question answer
+                    var parmsQ = new Dictionary<string, object>()
+                    {
+                        { "@assessid", assessmentId },
+                        { "@isreq", 0 },
+                        { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
+                        { "@comment", a.CsetComment },
+                        { "@questionnum", 0 },
+                        { "@ans", a.CsetAnswer }
+                    };
+
+                    dbio.Execute(sqlInsert, parmsQ);
+                }
             }
         }
 
