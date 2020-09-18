@@ -93,7 +93,7 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   baselineLevel(q: Question) {
-    return this.matLevelMap.get(q.MaturityLevel);
+    return this.matLevelMap.get(q.MaturityLevel.toString());
   }
 
   refreshComponentOverrides() {
@@ -220,6 +220,7 @@ export class QuestionBlockComponent implements OnInit {
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
+        Is_Maturity: q.Is_Maturity,
         ComponentGuid: q.ComponentGuid
       };
 
@@ -258,6 +259,7 @@ export class QuestionBlockComponent implements OnInit {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
+      Is_Maturity: q.Is_Maturity,
       ComponentGuid: q.ComponentGuid
     };
 
@@ -289,6 +291,7 @@ export class QuestionBlockComponent implements OnInit {
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
+        Is_Maturity: q.Is_Maturity,
         ComponentGuid: q.ComponentGuid
       };
 
@@ -337,6 +340,7 @@ export class QuestionBlockComponent implements OnInit {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
+      Is_Maturity: q.Is_Maturity,
       ComponentGuid: q.ComponentGuid
     };
 

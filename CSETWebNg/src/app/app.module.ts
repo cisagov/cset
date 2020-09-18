@@ -208,6 +208,8 @@ import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/c
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
+import { MaturityQuestionsComponent } from './assessment/prepare/maturity/maturity-questions/maturity-questions.component';
+import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 
 @NgModule({
     imports: [
@@ -381,6 +383,8 @@ import { DomainBlockComponent } from './assessment/questions/domain-block/domain
         AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
+        AskQuestionsComponent
+        MaturityQuestionsComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
     ],

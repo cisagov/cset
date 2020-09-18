@@ -16,6 +16,7 @@ namespace DataLayerCore.Model
             ASSESSMENT_DIAGRAM_COMPONENTS = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
             ASSESSMENT_IRP = new HashSet<ASSESSMENT_IRP>();
             ASSESSMENT_IRP_HEADER = new HashSet<ASSESSMENT_IRP_HEADER>();
+            AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>(); 
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
@@ -83,6 +84,8 @@ namespace DataLayerCore.Model
         public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         [InverseProperty("ASSESSMENT_")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
+        [InverseProperty("Assessment_")]
+        public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         [InverseProperty("Assessment_")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Assessment_")]

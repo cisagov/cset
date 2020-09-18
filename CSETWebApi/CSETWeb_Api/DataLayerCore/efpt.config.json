@@ -2,19 +2,587 @@
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
-   "DoNotCombineNamespace": false,
-   "IdReplace": false,
+   "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Model2",
    "ProjectRootNamespace": "DataLayerCore",
+   "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[ASSESSMENTS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[ASSESSMENTS_REQUIRED_DOCUMENTATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[AVAILABLE_MATURITY_MODELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[AVAILABLE_STANDARDS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CATALOG_RECOMMENDATIONS_DATA]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CATALOG_RECOMMENDATIONS_HEADINGS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CNSS_CIA_JUSTIFICATIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CNSS_CIA_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMPONENT_FAMILY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMPONENT_NAMES_LEGACY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMPONENT_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMPONENT_SYMBOLS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COMPONENT_SYMBOLS_GM_TO_CSET]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[COUNTRIES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CSET_VERSION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CUSTOM_BASE_STANDARDS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CUSTOM_QUESTIONAIRE_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CUSTOM_QUESTIONAIRES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CUSTOM_STANDARD_BASE_STANDARD]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DEMOGRAPHICS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DEMOGRAPHICS_ASSET_VALUES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DEMOGRAPHICS_SIZE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DIAGRAM_CONTAINER]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DIAGRAM_CONTAINER_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DIAGRAM_OBJECT_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DIAGRAM_TEMPLATES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DIAGRAM_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DOCUMENT_ANSWERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DOCUMENT_FILE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[EXTRA_ACET_MAPPING]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FILE_KEYWORDS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FILE_REF_KEYS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FILE_TYPE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_ASSESSMENT_FACTORS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_ASSESSMENT_VALUES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_ATTRIBUTES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_COMPONENTS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_DETAILS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_DOMAIN_FILTERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_DOMAINS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_FFIEC_MAPPINGS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_GROUPS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_HOURS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_HOURS_COMPONENT]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_MATURITY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_REQUIREMENTS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_REVIEWTYPE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINANCIAL_TIERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINDING]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FINDING_CONTACT]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FRAMEWORK_TIER_DEFINITIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FRAMEWORK_TIER_TYPE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FRAMEWORK_TIER_TYPE_ANSWER]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[FRAMEWORK_TIERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GEN_FILE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GEN_FILE_LIB_PATH_CORL]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GEN_SAL_NAMES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GEN_SAL_WEIGHTS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GENERAL_SAL]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GENERAL_SAL_DESCRIPTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[GLOBAL_PROPERTIES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[IMPORTANCE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[INFORMATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[INSTALLATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[IRP]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[IRP_HEADER]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[JWT]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[LEVEL_NAMES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_LEVELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_MODELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_REFERENCES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NAVIGATION_STATE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NCSF_CATEGORY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NCSF_FUNCTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NERC_RISK_RANKING]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NETWORK_WARNINGS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NEW_QUESTION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NEW_QUESTION_LEVELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NEW_QUESTION_SETS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NEW_REQUIREMENT]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NIST_SAL_INFO_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NIST_SAL_INFO_TYPES_DEFAULTS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NIST_SAL_QUESTION_ANSWERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NIST_SAL_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PARAMETER_ASSESSMENT]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PARAMETER_REQUIREMENTS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PARAMETER_VALUES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PARAMETERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PROCUREMENT_DEPENDENCY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PROCUREMENT_LANGUAGE_DATA]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PROCUREMENT_LANGUAGE_HEADINGS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PROCUREMENT_REFERENCES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[QUESTION_GROUP_HEADING]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[QUESTION_GROUP_TYPE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[RECENT_FILES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[RECOMMENDATIONS_REFERENCES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REF_LIBRARY_PATH]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REFERENCE_DOCS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REFERENCES_DATA]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REPORT_DETAIL_SECTION_SELECTION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REPORT_DETAIL_SECTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REPORT_OPTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REPORT_OPTIONS_SELECTION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REPORT_STANDARDS_SELECTION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIRED_DOCUMENTATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIRED_DOCUMENTATION_HEADERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_LEVEL_TYPE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_LEVELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_QUESTIONS_SETS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_REFERENCES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_SETS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[REQUIREMENT_SOURCE_FILES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SAL_DETERMINATION_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SECTOR]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SECTOR_INDUSTRY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SECTOR_STANDARD_RECOMMENDATIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SECURITY_QUESTION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SET_FILES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SETS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SETS_CATEGORY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SHAPE_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SP80053_FAMILY_ABBREVIATIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STANDARD_CATEGORY]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STANDARD_CATEGORY_SEQUENCE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STANDARD_SELECTION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STANDARD_SOURCE_FILE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STANDARD_SPECIFIC_LEVEL]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STANDARD_TO_UNIVERSAL_MAP]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[STATES_AND_PROVINCES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SUB_CATEGORY_ANSWERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SYMBOL_GROUPS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UNIVERSAL_AREA]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UNIVERSAL_SAL_LEVEL]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UNIVERSAL_SUB_CATEGORIES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[USER_DETAIL_INFORMATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[USER_SECURITY_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[USERS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VISIO_MAPPING]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[WEIGHT]"
       }
    ],
    "UseDatabaseNames": true,
@@ -23,5 +591,7 @@
    "UseHandleBars": false,
    "UseInflector": false,
    "UseLegacyPluralizer": false,
-   "UseSpatial": false
+   "UseNodaTime": false,
+   "UseSpatial": false,
+   "UseStoredProcedures": false
 }
