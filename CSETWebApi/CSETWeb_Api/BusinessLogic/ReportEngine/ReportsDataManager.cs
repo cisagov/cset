@@ -211,7 +211,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 List<usp_getExplodedComponent> results = null;
 
-                db.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                db.LoadStoredProc("s[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", _assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {

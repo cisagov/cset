@@ -335,7 +335,7 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 List<usp_getExplodedComponent> questionlist = null;
 
-                context.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                context.LoadStoredProc("s[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", _assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {

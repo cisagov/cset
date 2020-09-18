@@ -303,7 +303,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             List<Answer_Components_Base> dlist = null;
-            context.LoadStoredProc("[dbo].[usp_getAnswerComponentOverrides]")
+            context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
               .WithSqlParam("assessment_id", this._assessmentId)
               .ExecuteStoredProc((handler) =>
               {

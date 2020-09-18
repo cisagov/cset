@@ -146,7 +146,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new FirstPageMultiResult();
-                context.LoadStoredProc("[dbo].[usp_GetFirstPage]")
+                context.LoadStoredProc("[usp_GetFirstPage]")
                   .WithSqlParam("assessment_id", assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {
@@ -255,7 +255,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new RankedCategoriesMultiResult();
-                context.LoadStoredProc("[dbo].[usp_GetRankedCategoriesPage]")
+                context.LoadStoredProc("[usp_GetRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
@@ -370,7 +370,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new RankedCategoriesMultiResult();
-                context.LoadStoredProc("[dbo].[usp_GetOverallRankedCategoriesPage]")
+                context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
@@ -449,7 +449,7 @@ namespace CSETWeb_Api.Controllers
             ChartData myChartData = null;
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
+            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
           .WithSqlParam("assessment_id", assessmentId)
           .ExecuteStoredProc((handler) =>
           {
@@ -526,7 +526,7 @@ namespace CSETWeb_Api.Controllers
 
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
+            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
             .WithSqlParam("assessment_id", assessmentId)
             .ExecuteStoredProc((handler) =>
             {
@@ -601,7 +601,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentsSummary]")
+                context.LoadStoredProc("[usp_getComponentsSummary]")
                          .WithSqlParam("assessment_Id", assessmentId)
                          .ExecuteStoredProc((handler) =>
                          {
@@ -641,7 +641,7 @@ namespace CSETWeb_Api.Controllers
 
 
                 // include component count so front end can know whether components are present
-                context.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                context.LoadStoredProc("[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {
@@ -696,7 +696,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
+                context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                         .WithSqlParam("assessment_Id", assessmentId)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -765,7 +765,7 @@ namespace CSETWeb_Api.Controllers
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getStandardsRankedCategories]")
+                context.LoadStoredProc("[usp_getStandardsRankedCategories]")
                       .WithSqlParam("assessment_Id", assessmentId)
                       .ExecuteStoredProc((handler) =>
                       {
@@ -805,7 +805,7 @@ namespace CSETWeb_Api.Controllers
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentsResultsByCategory]")
+                context.LoadStoredProc("[usp_getComponentsResultsByCategory]")
                       .WithSqlParam("assessment_Id", assessmentId)
                       .ExecuteStoredProc((handler) =>
                       {
@@ -840,7 +840,7 @@ namespace CSETWeb_Api.Controllers
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentsRankedCategories]")
+                context.LoadStoredProc("[usp_getComponentsRankedCategories]")
                     .WithSqlParam("assessment_Id", assessmentId)
                     .ExecuteStoredProc((handler) =>
                     {
@@ -884,7 +884,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentTypes]")
+                context.LoadStoredProc("[usp_getComponentTypes]")
                          .WithSqlParam("assessment_Id", assessmentId)
                          .ExecuteStoredProc((handler) =>
                          {
