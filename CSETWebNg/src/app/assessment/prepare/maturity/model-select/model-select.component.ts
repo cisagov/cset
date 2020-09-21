@@ -13,7 +13,7 @@ export class ModelSelectComponent implements OnInit {
   selectedModels = [];
 
   constructor(
-    private assessSvc: AssessmentService,
+    public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public navSvc: NavigationService
   ) { }

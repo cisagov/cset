@@ -383,7 +383,7 @@ import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-
         AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
-        AskQuestionsComponent
+        AskQuestionsComponent,
         MaturityQuestionsComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
