@@ -79,6 +79,7 @@ export class ComponentOverrideComponent {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
+      Is_Maturity: q.Is_Maturity,
       ComponentGuid: q.Component_GUID
     };
 

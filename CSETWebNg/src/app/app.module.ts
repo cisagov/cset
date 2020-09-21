@@ -202,11 +202,14 @@ import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { AwwaStandardComponent } from './assessment/prepare/standards/awwa-standard/awwa-standard.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
+import { MaturityQuestionsComponent } from './assessment/prepare/maturity/maturity-questions/maturity-questions.component';
+import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 
 @NgModule({
     imports: [
@@ -380,7 +383,10 @@ import { DomainBlockComponent } from './assessment/questions/domain-block/domain
         AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
-        DomainBlockComponent
+        AskQuestionsComponent,
+        MaturityQuestionsComponent,
+        DomainBlockComponent,
+        AwwaStandardComponent,
     ],
     providers: [
         ConfigService,
@@ -451,7 +457,8 @@ import { DomainBlockComponent } from './assessment/questions/domain-block/domain
         ExcelExportComponent,
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
-        DataloginComponent
+        DataloginComponent,
+        AwwaStandardComponent
     ]
 })
 

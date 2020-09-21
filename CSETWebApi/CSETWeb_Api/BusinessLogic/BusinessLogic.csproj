@@ -52,6 +52,9 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.11.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.11.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -192,6 +195,14 @@
       <HintPath>..\packages\System.Interactive.Async.3.2.0\lib\net46\System.Interactive.Async.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.7.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -227,6 +238,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentIO\import\ImportManagerAwwa.cs" />
     <Compile Include="BusinessManagers\Aggregation\AggregationManager.cs" />
     <Compile Include="AssessmentIO\export\ExportAssessmentManager.cs" />
     <Compile Include="AssessmentIO\import\BulkSqlUpload.cs" />
@@ -315,6 +327,7 @@
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\FrameworkInfoData.cs" />
+    <Compile Include="BusinessManagers\InformationTabData\MaturityQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\IRPManager.cs" />
     <Compile Include="BusinessManagers\MaturityManager.cs" />
     <Compile Include="BusinessManagers\ModuleCloner.cs" />

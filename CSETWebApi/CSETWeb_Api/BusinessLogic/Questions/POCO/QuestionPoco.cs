@@ -629,6 +629,7 @@ namespace CSET_Main.Questions.POCO
         public bool IsRequirement { get { return Answer.Is_Requirement; } }
         public bool IsQuestion { get { return !Answer.Is_Requirement; } }
         public bool IsFramework { get { return Answer.Is_Framework; } }
+        public bool IsMaturity { get { return Answer.Is_Maturity; } }
 
         public bool FrameworkExpanderVisibility 
         {

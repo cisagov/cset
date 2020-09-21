@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <div *ngIf="containers == null">
+  <div *ngIf="!domains">
     <div class="spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
@@ -66,8 +66,8 @@
 
 
   <!-- top level -->
-  <div *ngFor="let c of containers">
-    <app-domain-block [myContainer]="c"></app-domain-block>
+  <div *ngFor="let d of domains">
+    <app-domain-block [domain]="d"></app-domain-block>
   </div>
 
   <div *ngIf="questionsSvc.isFilterEngaged() && visibleGroupCount() === 0"
@@ -79,7 +79,7 @@
     </span>
   </div>
 
-  <div *ngIf="containers !== null && containers.length === 0"
+  <div *ngIf="domains !== null && domains.length === 0"
     class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
     <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
@@ -90,8 +90,8 @@
 
 
   <div style="display: flex; justify-content: space-between;">
-    <button class="btn btn-primary" (click)="navSvc.navBack('phase-assessment')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('phase-assessment')">Next</button>
+    <button class="btn btn-primary" (click)="navSvc.navBack('questions')">Back</button>
+    <button class="btn btn-primary" (click)="navSvc.navNext('questions')">Next</button>
   </div>
 
 </div>
