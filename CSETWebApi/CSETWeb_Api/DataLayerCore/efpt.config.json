@@ -2,27 +2,27 @@
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
-   "DoNotCombineNamespace": false,
-   "IdReplace": false,
+   "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Model2",
    "ProjectRootNamespace": "DataLayerCore",
+   "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
          "HasPrimaryKey": true,
-         "Name": "[ADDRESS]"
+         "Name": "[dbo].[ASSESSMENTS]"
       },
       {
          "HasPrimaryKey": true,
-         "Name": "[AGGREGATION_ASSESSMENT]"
+         "Name": "[dbo].[ASSESSMENTS_REQUIRED_DOCUMENTATION]"
       },
       {
          "HasPrimaryKey": true,
-         "Name": "[AGGREGATION_INFORMATION]"
+         "Name": "[dbo].[AVAILABLE_MATURITY_MODELS]"
       },
       {
          "HasPrimaryKey": true,
@@ -330,7 +330,11 @@
       },
       {
          "HasPrimaryKey": true,
-         "Name": "[IRP]"
+         "Name": "[dbo].[INSTALLATION]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[IRP]"
       },
       {
          "HasPrimaryKey": true,
@@ -346,7 +350,23 @@
       },
       {
          "HasPrimaryKey": true,
-         "Name": "[NAVIGATION_STATE]"
+         "Name": "[dbo].[MATURITY_LEVELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_MODELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_REFERENCES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[NAVIGATION_STATE]"
       },
       {
          "HasPrimaryKey": true,
@@ -626,9 +646,12 @@
       }
    ],
    "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
    "UseInflector": false,
    "UseLegacyPluralizer": false,
-   "UseSpatial": false
+   "UseNodaTime": false,
+   "UseSpatial": false,
+   "UseStoredProcedures": false
 }

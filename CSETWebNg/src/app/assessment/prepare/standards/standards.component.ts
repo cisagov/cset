@@ -29,6 +29,7 @@ import { QuestionRequirementCounts, StandardsBlock } from "../../../models/stand
 import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
+import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
 import { NavigationService } from "../../../services/navigation.service";
 
 @Component({
@@ -41,6 +42,7 @@ export class StandardsComponent implements OnInit {
   standards: StandardsBlock;
   expandedDesc: boolean[] = [];
   dialogRef: MatDialogRef<OkayComponent>;
+  dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
 
   constructor(
     private router: Router,
@@ -106,6 +108,7 @@ export class StandardsComponent implements OnInit {
 
     let showIt = false;
 
+
     if (standard.Code === "INGAA") {
       // INGAA
       msg =
@@ -126,14 +129,18 @@ export class StandardsComponent implements OnInit {
     } else if (standard.Code === "NCSF_V1") {
       msg =
         "CSET Profiles (.csetp) are being deprecated in favor of a new questions editor in which you can create questions " +
-        "or utilize any existing questions contained with in CSET.  Previously profiles were limited to the NIST " +
+        "or utilize any existing questions contained with in CSET®.  Previously profiles were limited to the NIST " +
         "Framework for Improving Critical Infrastructure Cybersecurity.";
       showIt = framework.Selected;
+    } else if (standard.Code === "AWWA") {
     } else {
       return true;
     }
 
     let rval = true;
+
+
+    // show a legalese verbiage "OK" dialog 
     if (showIt) {
 
       this.dialogRef = this.dialog.open(OkayComponent, { data: { messageText: msg } });
@@ -148,8 +155,24 @@ export class StandardsComponent implements OnInit {
         this.dialogRef = null;
       });
     }
+
+    // show a more complex dialog (AWWA)
+    if (standard.Code === "AWWA" && standard.Selected) {
+      this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
+
+      this.dialogRefAwwa.afterClosed().subscribe(result => {
+        if (result) {
+          rval = true;
+        } else {
+          rval = false;
+        }
+        this.dialogRefAwwa = null;
+      });
+    }
+
     return rval;
   }
+
   /**
    * Builds a list of selected standards and post it to the server.
    */
@@ -187,7 +210,7 @@ export class StandardsComponent implements OnInit {
     this.setFrameworkNavigation();
   }
 
-  setFrameworkNavigation()  {
+  setFrameworkNavigation() {
     // RKW - this.navSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
   }
 

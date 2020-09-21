@@ -22,6 +22,7 @@ using CSETWeb_Api.BusinessManagers;
 using DataLayerCore.Model;
 using DataLayerCore.Manual;
 using Snickler.EFCore;
+using Newtonsoft.Json;
 
 namespace CSET_Main.Views.Questions.QuestionDetails
 {
@@ -35,7 +36,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         public int SelectedStandardTabIndex
         {
             get { return selectedStandardTabIndex; }
-            set { selectedStandardTabIndex = value;  }
+            set { selectedStandardTabIndex = value; }
         }
 
 
@@ -43,35 +44,35 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         public string NoQuestionInformationText
         {
             get { return noQuestionInformationText; }
-            set { noQuestionInformationText = value;  }
+            set { noQuestionInformationText = value; }
         }
 
         private bool showQuestionDetailTab;
         public bool ShowQuestionDetailTab
         {
             get { return showQuestionDetailTab; }
-            set { showQuestionDetailTab = value;  }
+            set { showQuestionDetailTab = value; }
         }
 
         private bool isDetailAndInfo;
         public bool IsDetailAndInfo
         {
             get { return isDetailAndInfo; }
-            set { isDetailAndInfo = value;  }
+            set { isDetailAndInfo = value; }
         }
 
         private bool isNoQuestion;
         public bool IsNoQuestion
         {
             get { return isNoQuestion; }
-            set { isNoQuestion = value;  }
+            set { isNoQuestion = value; }
         }
 
         private int selectedTabIndex;
         public int SelectedTabIndex
         {
             get { return selectedTabIndex; }
-            set { selectedTabIndex = value;  }
+            set { selectedTabIndex = value; }
         }
 
 
@@ -133,15 +134,26 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             ListTabs = new List<QuestionInformationTabData>();
         }
 
-        
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetQuestionInfoTabToEmpty()
         {
-            this.IsDetailAndInfo = false;        
-            this.IsNoQuestion = true;       
+            this.IsDetailAndInfo = false;
+            this.IsNoQuestion = true;
         }
-        
-        internal List<QuestionInformationTabData> getQuestionDetails(int? questionId, int assessmentId, bool IsComponent)
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="assessmentId"></param>
+        /// <param name="IsComponent"></param>
+        /// <param name="IsMaturity"></param>
+        /// <returns></returns>
+        internal List<QuestionInformationTabData> GetQuestionDetails(int? questionId, int assessmentId, bool IsComponent, bool IsMaturity)
         {
             if (questionId == null)
             {
@@ -149,7 +161,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 return ListTabs;
             }
 
-            this.IsNoQuestion = false;   
+            this.IsNoQuestion = false;
             this.IsDetailAndInfo = true;
             this.ShowQuestionDetailTab = false;
 
@@ -159,11 +171,11 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
                 bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId 
-                    && a.Is_Requirement == IsRequirement  && a.Assessment_Id == assessmentId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId
+                    && a.Is_Requirement == IsRequirement && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
-                if (newAnswer == null)                    
+                if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()
                     {
@@ -171,10 +183,10 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
-                        Reviewed = false,                        
+                        Reviewed = false,
                         Is_Component = false
                     };
-                    DataContext.ANSWER.Add(newAnswer);                    
+                    DataContext.ANSWER.Add(newAnswer);
                 }
                 var qp = new QuestionPoco(newAnswer, newqp);
                 qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
@@ -182,11 +194,11 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                                           where a.Selected == true
                                           && a.Assessment_Id == assessmentId
                                           select b
-                                         ).ToDictionary(x => x.Set_Name, x=> x);
+                                         ).ToDictionary(x => x.Set_Name, x => x);
 
                 qp.DefaultSetName = qp.DictionaryStandards.Keys.FirstOrDefault();
                 qp.SetName = qp.DictionaryStandards.Keys.FirstOrDefault();
-                LoadData(qp,assessmentId);
+                LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
                 FindingsViewModel fm = new FindingsViewModel(this.DataContext, assessmentId, newAnswer.Answer_Id);
@@ -200,60 +212,26 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
             }
 
-            return ListTabs;            
+            var json = JsonConvert.SerializeObject(ListTabs);
+            return ListTabs;
         }
 
-        private QuestionPoco buildQuestionPocoForNonExistentAnswer(int? questionId, int assessmentId)
-        {
-            QuestionPoco req = null;
-            /***
-             * TODO:  this is where we will build each question as it comes in. 
-             * The cases are all defined here we just need to pull the mode from 
-             * the database (determine the question mode type. Calculate the questions type based on the following
-             * rules 
-             * 1. I'm a simple question, (questions mode not in framework or components)
-             * 2. I have a question_sets record of type framework 
-             * 3. I have a component sets record and I either have a guid or not
-             * 4. I'm a requirement. (requirements mode not in framework or components)
-             */
-
-            //if (question.IsFramework)
-            //{
-
-
-
-
-
-            //}
-            //else if (question.IsQuestion && !question.IsComponent)
-            //{
-
-            //}
-            //else if (question.IsComponent)
-            //{
-
-            //}
-            //else if (question.IsRequirement)
-            //{
-            //    var rlist = DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == questionId).ToList();
-            //    var tmpreq = (from r in DataContext.NEW_REQUIREMENT
-            //                  join a in DataContext.ANSWER on r.Requirement_Id equals a.Question_Or_Requirement_Id
-            //                  where r.Requirement_Id == questionId && a.Assessment_Id == assessmentId && a.Is_Requirement == true
-            //                  select new QuestionPoco(a, r, levelManager.GetRequirementLevel(rlist)));
-            //}
-            return req;
-        }
 
         private Dictionary<int, COMPONENT_SYMBOLS> symbolInfo;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="question"></param>
+        /// <param name="assessment_id"></param>
         private void LoadData(QuestionPoco question, int assessment_id)
         {
             List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
 
-            bool isRequirement = question.IsRequirement;
+            // bool isRequirement = question.IsRequirement;
             if (question.IsFramework)
             {
-                
                 FrameworkInfoData frameworkData = new FrameworkInfoData()
                 {
                     SupplementalInfo = question.ProfileQuestionData.SupplementalInfo,
@@ -266,16 +244,21 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 };
                 list = informationTabBuilder.CreateFrameworkInformationTab(frameworkData);
             }
+            else if (question.IsMaturity)
+            {
+                MaturityQuestionInfoData xxx = new MaturityQuestionInfoData();
+                list = informationTabBuilder.CreateMaturityInformationTab(xxx);
+            }
             else if (question.IsQuestion && !question.IsComponent)
             {
                 QuestionInfoData questionInfoData = new QuestionInfoData()
                 {
                     QuestionID = question.Question_or_Requirement_ID,
-                    Set = question.SetName==null?null:question.DictionaryStandards[question.SetName],
+                    Set = question.SetName == null ? null : question.DictionaryStandards[question.SetName],
                     Sets = question.DictionaryStandards,
-                    Question=question.Question,
-                    Requirement=question.NEW_REQUIREMENT??question.Question.NEW_REQUIREMENTs().FirstOrDefault(t=>t.REQUIREMENT_SETS.Select(s=>s.Set_Name).Contains(question.SetName??question.DictionaryStandards.Keys.FirstOrDefault()))
-                };                
+                    Question = question.Question,
+                    Requirement = question.NEW_REQUIREMENT ?? question.Question.NEW_REQUIREMENTs().FirstOrDefault(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(question.SetName ?? question.DictionaryStandards.Keys.FirstOrDefault()))
+                };
                 list = informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
             }
             else if (question.IsComponent)
@@ -295,10 +278,11 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                             select new { a.Component_Symbol_Id, a.SAL, l.Sal_Level_Order };
 
                 Dictionary<int, ComponentTypeSalData> dictionaryComponentTypes = new Dictionary<int, ComponentTypeSalData>();
-                foreach(var item in stuff.ToList())
+                foreach (var item in stuff.ToList())
                 {
                     ComponentTypeSalData salData;
-                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id,out salData)){
+                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
+                    {
                         salData.SALLevels.Add(item.Sal_Level_Order);
                     }
                     else
@@ -310,7 +294,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                             Component_Symbol_Id = item.Component_Symbol_Id,
                             SALLevels = SALLevels
                         };
-                        
+
                         dictionaryComponentTypes.Add(item.Component_Symbol_Id, salData);
                     }
                 }
@@ -326,18 +310,18 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                 {
                     QuestionID = question.Question_or_Requirement_ID,
                     Question = question.Question,
-                    Set = this.DataContext.SETS.Where(x => x.Set_Name == "Components").First(),                    
+                    Set = this.DataContext.SETS.Where(x => x.Set_Name == "Components").First(),
                     DictionaryComponentTypes = dictionaryComponentTypes,
                     DictionaryComponentInfo = symbolInfo
-                };                
+                };
                 list = informationTabBuilder.CreateComponentInformationTab(componentQuestionInfoData);
             }
             else if (question.IsRequirement)
             {
-                var sets = question.GetRequirementSets().Distinct().ToDictionary(s=>s.Set_Name);
+                var sets = question.GetRequirementSets().Distinct().ToDictionary(s => s.Set_Name);
 
                 var set = question.GetRequirementSet().Set_Name;
-                
+
                 if (question.NEW_REQUIREMENT == null)
                 {
                     //var rs = this.DataContext.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == question.Question_or_Requirement_ID && x.Set_Name == set).First();
@@ -349,19 +333,25 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     SetName = set,
                     Category = question.Category,
                     Sets = sets,
-                    Requirement=question.NEW_REQUIREMENT
+                    Requirement = question.NEW_REQUIREMENT
                 };
 
                 reqInfoData.Requirement.REQUIREMENT_LEVELS = this.DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
 
                 list = informationTabBuilder.CreateRequirementInformationTab(reqInfoData, levelManager);
             }
-          
+
+
 
             SetTabDataList(list);
             this.Is_Component = question.IsComponent;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionViewItem"></param>
         internal async void SetFrameworkQuestionInfoTab(CSET_Main.Questions.QuestionList.FrameworkQuestionItem questionViewItem)
         {
             List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
@@ -370,21 +360,27 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             {
                 Category = questionViewItem.QuestionGroupHeading.Question_Group_Heading1,
                 QuestionID = questionViewItem.RequirementID,
-                Question=questionViewItem.Question,
+                Question = questionViewItem.Question,
                 Set = questionViewItem.SetName,
                 Sets = questionViewItem.GetSetAsDictionary()
             };
             Task<List<QuestionInformationTabData>> task = Task.Run<List<QuestionInformationTabData>>(() => informationTabBuilder.CreateRelatedQuestionInformationTab(questionInfoData));
             list = await task;
 
-            SetTabDataList(list,true);
+            SetTabDataList(list, true);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="isFrameworkInfo"></param>
         private void SetTabDataList(List<QuestionInformationTabData> list, bool isFrameworkInfo = false)
         {
             this.ListTabs = list;
             int previousSelectIndexIndex = SelectedTabIndex;
-            
+
             if (previousSelectIndexIndex > 0)
             {
                 if (previousSelectIndexIndex > (ListTabs.Count - 1))
@@ -393,7 +389,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         SelectedTabIndex = 1;
                     else
                         SelectedTabIndex = 0;
-                }                  
+                }
                 else
                     SelectedTabIndex = previousSelectIndexIndex;
             }
@@ -401,15 +397,20 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             {
                 SelectedTabIndex = 0;
             }
-           
-        }        
 
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionViewItem"></param>
         internal void ShowFrameworkQuestionInfo(FrameworkQuestionItem questionViewItem)
         {
-            this.IsNoQuestion = false;   
+            this.IsNoQuestion = false;
             this.IsDetailAndInfo = true;
             this.ShowQuestionDetailTab = false;
-            SetFrameworkQuestionInfoTab(questionViewItem);      
+            SetFrameworkQuestionInfoTab(questionViewItem);
         }
 
     }

@@ -21,12 +21,13 @@
   SOFTWARE.
 -------------------------->
 <div class="bgc-page d-flex flex-column flex-11a w-100">
-<div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
-    <div class="row no-gutters local-install fs-base mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+  <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
+    <div
+      class="row no-gutters local-install fs-base mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
       *ngIf="auth.isLocal">
       <span class="col-sm-12">Local Installation</span>
     </div>
-  
+
     <!-- Navbar -->
     <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
       *ngIf="auth.userToken() && auth.userToken() !== 'null'">
@@ -63,12 +64,12 @@
           </svg>
         </div>
       </span>
-  
+
       <!-- Navbar Toggler Button -->
       <button class="navbar-toggler c-gray-150" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
         <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
       </button>
-  
+
       <!-- Collapse Content -->
       <div class="collapse navbar-collapse" id="csetNavbarCollapse">
         <div class="navbar-nav dropdown"
@@ -125,10 +126,10 @@
               (click)="navigateCompare()">
               <span class="cset2-icons-compare fs-base mr-2"></span>
               <span>Compare</span>
-            </button>
+            </button>          
           </div>
         </div>
-  
+
         <div class="navbar-nav">
           <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"
             href="index.html?returnPath=resource-library" target="csetResourceLibrary"
@@ -137,7 +138,7 @@
             <span>Resource Library</span>
           </a>
         </div>
-  
+
         <!-- HELP -->
         <div class="navbar-nav ml-auto dropdown">
           <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
@@ -181,7 +182,7 @@
             </button>
           </div>
         </div>
-  
+
         <!-- USER PROFILE -->
         <div class="navbar-nav dropdown"
           *ngIf="this.router.url !== '/resource-library' && this.router.url !== '/importModule' && !isModuleBuilder(this.router.url)">
@@ -193,8 +194,8 @@
             </span>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
-              (click)="editUser()">
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              *ngIf="showNavBarRight()" (click)="editUser()">
               <span class="cset-icons-profile fs-base mr-2"></span>
               <span>User Profile</span>
             </button>
@@ -202,13 +203,13 @@
               <span class="cset-icons-clipboard-check fs-base mr-2"></span>
               <span>My Assessments</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
-              (click)="resetPassword()">
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              *ngIf="showNavBarRight()" (click)="resetPassword()">
               <span class="cset-icons-key fs-base mr-2"></span>
               <span>Change Password</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
-              (click)="auth.logout()">
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              *ngIf="showNavBarRight()" (click)="auth.logout()">
               <span class="cset-icons-logout fs-base mr-2"></span>
               <span>Logout</span>
             </button>
@@ -216,7 +217,7 @@
         </div>
       </div>
     </nav>
-  
+
     <!-- Body -->
     <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
       <!-- gradient-background -->
@@ -231,7 +232,7 @@
         [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'">
       </div>
     </div>
-  
+
     <!-- Footer -->
     <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"
       *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
@@ -252,7 +253,8 @@
               <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                 href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
               <span class="mr-2 ml-2">|</span>
-              <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/accessibility/">Accessibility</a>
+              <a target="_blank" rel="noopener noreferrer"
+                href="http://www.us-cert.gov/accessibility/">Accessibility</a>
               <span class="mr-2 ml-2">|</span>
               <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/pdf/">Get a PDF Reader</a>
             </div>
@@ -266,7 +268,7 @@
       </ngb-panel>
     </ngb-accordion>
   </div>
-  
+
   <div class="bgc-white dhs-seal-background"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
 </div>

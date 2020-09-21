@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { QuestionGroup } from '../../../models/questions.model';
+import { Category } from '../../../models/questions.model';
 
 @Component({
   selector: 'app-category-block',
@@ -7,7 +7,7 @@ import { QuestionGroup } from '../../../models/questions.model';
 })
 export class CategoryBlockComponent implements OnInit {
 
-  @Input('myCategory') c: QuestionGroup;
+  @Input('myCategory') c: Category;
 
   /**
    * 
@@ -31,6 +31,10 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   buildNavTargetID(cat) {
-    return cat.StandardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.GroupHeadingId;
+    if (!!cat.StandardShortName) {
+      return cat.StandardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.GroupHeadingId;
+    }
+
+    return '';
   }
 }

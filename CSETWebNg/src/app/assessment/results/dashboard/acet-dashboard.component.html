@@ -62,7 +62,7 @@
                 <td class="text-right">{{ irp.RiskCount[2] }}</td>
                 <td class="text-right">{{ irp.RiskCount[3] }}</td>
                 <td class="text-right">{{ irp.RiskCount[4] }}</td>
-                <td class="text-nowrap">{{ irp.Comment }}</td>
+                <td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.Comment)"></td>
             </tr>
             <tr class="total-row">
                 <td class="border-table">Totals</td>

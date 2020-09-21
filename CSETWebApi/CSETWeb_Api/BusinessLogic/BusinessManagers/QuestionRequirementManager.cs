@@ -395,7 +395,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            resp.CategoryContainers[0].QuestionGroups.AddRange(groupList);
+            resp.Domains[0].Categories.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
@@ -472,12 +472,12 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            var container = new CategoryContainer() 
+            var container = new Domain() 
             {
                 DisplayText = listname
             };
-            container.QuestionGroups.AddRange(groupList);
-            resp.CategoryContainers.Add(container);
+            container.Categories.AddRange(groupList);
+            resp.Domains.Add(container);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
