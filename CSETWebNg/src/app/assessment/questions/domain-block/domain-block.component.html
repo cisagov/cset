@@ -11,7 +11,7 @@
 
 
 <!-- indicates when all maturity filters turned off for this domain -->
-<div *ngIf="domains != null && questionsSvc.maturityFiltersAllOff(domain.DisplayText)"
+<div *ngIf="!!domain && questionsSvc.maturityFiltersAllOff(domain.DisplayText)"
   class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
   <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
   <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">

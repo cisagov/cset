@@ -37,7 +37,7 @@ import { NavigationService } from '../../../services/navigation.service';
 export class ReportsComponent implements OnInit, AfterViewInit {
 
     constructor(
-        private assessSvc: AssessmentService,
+        public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         private router: Router,
         private route: ActivatedRoute,
