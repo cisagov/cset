@@ -72,13 +72,11 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        [AllowAnonymous]
         [HttpGet]
         [Route("api/MaturityQuestions")]
         public object GetQuestions()
         {
-            // int assessmentId = Auth.AssessmentForUser();
-            int assessmentId = 1025;
+            int assessmentId = Auth.AssessmentForUser();
             return new MaturityManager().GetMaturityQuestions(assessmentId);
         }
 

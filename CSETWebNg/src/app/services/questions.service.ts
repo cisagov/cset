@@ -388,7 +388,8 @@ export class QuestionsService {
    */
   maturityFiltersAllOff(domainName: string) {
     // If not ACET (no domain name), return false
-    if (!domainName || domainName.length === 0 || !this.domainMatFilters.get(domainName)) {
+    if (!domainName || domainName.length === 0
+      || !this.domainMatFilters || !this.domainMatFilters.get(domainName)) {
       return false;
     }
 
