@@ -19,7 +19,6 @@ namespace DataLayerCore.Model
         public bool Is_Requirement { get; set; }
         public int Question_Or_Requirement_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
-        [StringLength(2048)]
         public string Comment { get; set; }
         [StringLength(2048)]
         public string Alternate_Justification { get; set; }
