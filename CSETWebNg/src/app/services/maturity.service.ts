@@ -62,7 +62,12 @@ export class MaturityService {
    * Returns the name of the current target level.
    */
   targetLevelName() {
-    return this.levels[this.targetLevel].name;
+    if (!!this.targetLevel) {
+      return this.levels[this.targetLevel].name;
+    }
+    else {
+      return '???';
+    }
   }
 
   /**

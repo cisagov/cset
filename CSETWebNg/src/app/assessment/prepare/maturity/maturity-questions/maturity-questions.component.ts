@@ -80,7 +80,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         // default the selected maturity filters
         // this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
-        // this.refreshQuestionVisibility(magic);
+        this.refreshQuestionVisibility(magic);
       },
       error => {
         console.log(
