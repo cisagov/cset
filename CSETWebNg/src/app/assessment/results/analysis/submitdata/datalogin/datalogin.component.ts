@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, NgForm, FormGroupDirective, Validators } from '@angular/forms';
+import { FormControl, NgForm, FormGroupDirective, Validators, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -51,9 +51,15 @@ export class DataloginComponent implements OnInit {
 
   matcherusername = new MyErrorStateMatcher();
   matcherpassword = new MyErrorStateMatcher();
+  matchalias = new MyErrorStateMatcher();
+  
+  dataloginForm = new FormGroup ({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    alias: new FormControl('', [Validators.required])
+  });
 
-  username = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
+  
 
   @Input() error: string | null;
 
@@ -80,42 +86,47 @@ export class DataloginComponent implements OnInit {
 
   postAnalyticsWithLogin() {
     var message;
-    this.analyticsSvc.getAnalyticsToken(this.username.value, this.password.value).subscribe(
-      data => {
-        let token = data.token;
-        this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
-          (data: any) => {
-              this.dialogMat.open(AlertComponent, {
-              data: { 
-                  title: 'Success',
-                  iconClass: 'cset-icons-check-circle',
-                  messageText: data.message 
-              }
-              });
-            this.close();
-          });
-      },
-      err => {
-        if (err instanceof HttpErrorResponse) {
-          let httpError: HttpErrorResponse = err;
-          if (httpError.status === 403) {  // Username or password Failed
-            this.error = 'We were unable to log you in. Verify that you have the correct credentials';
-          } else if (httpError.status === 423) { // Locked Out
-            this.error = 'We were unable to log you in. Locked out.';
-          } else if (httpError.status === 400) { // Generic Error
-            this.error = 'We were unable to log you in. Error with login. Try again.';
-          } else if (httpError.status === 400) {
+    if(this.dataloginForm.valid){
+      this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
+        data => {
+          let token = data.id_token;
+          this.analytics.Assessment.Alias = this.dataloginForm.controls.alias.value;
+          this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
+            (data: any) => {
+                this.dialogMat.open(AlertComponent, {
+                data: { 
+                    title: 'Success',
+                    iconClass: 'cset-icons-check-circle',
+                    messageText: data.message 
+                }
+                });
+              this.close();
+            });
+        },
+        err => {
+          if (err instanceof HttpErrorResponse) {
+            let httpError: HttpErrorResponse = err;
+            if (httpError.status === 403) {  // Username or password Failed
+              this.error = 'We were unable to log you in. Verify that you have the correct credentials';
+            } else if (httpError.status === 423) { // Locked Out
+              this.error = 'We were unable to log you in. Locked out.';
+            } else if (httpError.status === 400) { // Generic Error
+              this.error = 'We were unable to log you in. Error with login. Try again.';
+            } else if (httpError.status === 400) {
+              this.error = 'We were unable to log you in.  Error with login. Try again.';
+            } else { // All other errors
+              this.error = 'We were unable to log you in.  Error with login. Try again.';
+            }
+          } else {
             this.error = 'We were unable to log you in.  Error with login. Try again.';
-          } else { // All other errors
-            this.error = 'We were unable to log you in.  Error with login. Try again.';
+            message = err.message;
+            if (message)
+              this.error = message;
           }
-        } else {
-          this.error = 'We were unable to log you in.  Error with login. Try again.';
-          message = err.message;
-          if (message)
-            this.error = message;
-        }
-      });
+        });
+    } else {
+      this.error = "Fill out required fields";
+    }
   }
 
   /**

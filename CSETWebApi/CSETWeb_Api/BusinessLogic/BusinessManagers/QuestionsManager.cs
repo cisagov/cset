@@ -78,7 +78,9 @@ namespace CSETWeb_Api.BusinessManagers
                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
                                 UniversalSubCategory = usc.Universal_Sub_Category,
                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                PairingId = usch.Heading_Pair_Id
+                                PairingId = usch.Heading_Pair_Id, 
+                                SetName = s.Set_Name, 
+                                ShortSetName = s.Short_Name
                             };
 
                     // Get the questions for the specified group (or all groups)  
@@ -106,7 +108,9 @@ namespace CSETWeb_Api.BusinessManagers
                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
                                 UniversalSubCategory = usc.Universal_Sub_Category,
                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                PairingId = usch.Heading_Pair_Id
+                                PairingId = usch.Heading_Pair_Id,
+                                SetName = stand.Set_Name,
+                                ShortSetName = stand.Set_Name
                             };
                 }
 
@@ -138,11 +142,19 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     foreach (var question in subCategory.Questions)
                     {
+                        
                         analyticQuestionAnswers.Add(new AnalyticsQuestionAnswer
                         {
                             QuestionId = question.QuestionId,
                             QuestionText = question.QuestionText,
-                            Answer_Text = question.Answer
+                            AnswerText = question.Answer,
+                            CategoryId = questionGroup.GroupHeadingId, 
+                            CategoryText = questionGroup.GroupHeadingText, 
+                            SubCategoryId = subCategory.SubCategoryId, 
+                            SubCategoryText = subCategory.SubCategoryHeadingText, 
+                            SetName = questionGroup.SetName, 
+                            IsRequirement = question.Is_Requirement,
+                            IsComponent = question.Is_Component
                         });
                     }
                 }
@@ -219,9 +231,11 @@ namespace CSETWeb_Api.BusinessManagers
                     {
                         GroupHeadingId = dbQ.QuestionGroupHeadingId,
                         GroupHeadingText = dbQ.QuestionGroupHeading,
-                        StandardShortName = "Standard Questions"
+                        StandardShortName = "Standard Questions",
+                        SetName = dbQ.SetName
+                        
                     };
-
+                    
                     groupList.Add(qg);
 
                     curGroupId = qg.GroupHeadingId;
@@ -538,6 +552,8 @@ namespace CSETWeb_Api.BusinessManagers
         public string UniversalSubCategory;
         public string SubHeadingQuestionText;
         public int PairingId;
+        public string SetName;
+        public string ShortSetName;
     }
 
 
