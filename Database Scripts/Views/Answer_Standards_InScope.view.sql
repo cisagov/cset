@@ -1,4 +1,5 @@
 
+
 CREATE VIEW [dbo].[Answer_Standards_InScope]
 AS
 		select distinct mode='Q', a.assessment_id, a.answer_id, is_requirement=0, a.question_or_requirement_id, a.mark_for_review, 

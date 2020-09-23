@@ -61,6 +61,8 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
+  public maturityModels: string[] = [];
+
 
   /**
    *

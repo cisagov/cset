@@ -35,6 +35,7 @@ namespace DataLayerCore.Model
         public bool Reviewed { get; set; }
         [StringLength(2048)]
         public string Feedback { get; set; }
+        public bool Is_Maturity { get; set; }
 
         [ForeignKey("Answer_Text")]
         [InverseProperty("ANSWER")]
