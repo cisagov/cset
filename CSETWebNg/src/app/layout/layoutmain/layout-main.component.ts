@@ -42,7 +42,7 @@ import { ConfigService } from '../../services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
 import { AggregationService } from '../../services/aggregation.service';
-
+import { FileUploadClientService } from '../../services/file-client.service';
 
 declare var $: any;
 
@@ -65,6 +65,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
+    public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService

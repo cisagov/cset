@@ -1,10 +1,22 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2020 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
 using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using Microsoft.EntityFrameworkCore;
+using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.Models;
+using Nelibur.ObjectMapper;
+using Newtonsoft.Json;
 
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
@@ -13,6 +25,322 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
     {
         public MaturityManager()
         { }
+
+
+        /// <summary>
+        /// Returns a list of all maturity models selected for the assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public List<string> GetMaturityModels(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Model_Name).ToList();
+                return myModels;
+            }
+        }
+
+
+        /// <summary>
+        /// Saves the list of selected maturity models.
+        /// </summary>
+        /// <param name="selectedMaturityModels"></param>
+        /// <returns></returns>
+        public void PersistSelectedMaturityModels(int assessmentId, List<string> selectedMaturityModels)
+        {
+            using (var db = new CSET_Context())
+            {
+                var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
+                db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+
+                if (selectedMaturityModels != null)
+                {
+                    foreach (string modelName in selectedMaturityModels)
+                    {
+                        db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Model_Name = modelName.ToUpper(),
+                            Selected = true
+                        });
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+
+            AssessmentUtil.TouchAssessment(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetMaturityLevel(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (result != null)
+                {
+                    if (int.TryParse(result.Standard_Specific_Sal_Level, out int level))
+                    {
+                        return level;
+                    }
+                }
+
+                return 0;
+            }
+        }
+
+
+        /// <summary>
+        /// Connects the assessment to a Maturity_Level.
+        /// </summary>
+        public void PersistMaturityLevel(int assessmentId, int level)
+        {
+            using (var db = new CSET_Context())
+            {
+                // SAL selections live in ASSESSMENT_SELECTED_LEVELS, which
+                // is more complex to allow for the different types of SALs
+                // as well as the user's selection(s).
+
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId);
+                db.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+
+                db.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Level_Name = "Maturity_Level",
+                    Standard_Specific_Sal_Level = level.ToString()
+                });
+
+                db.SaveChanges();
+            }
+
+            AssessmentUtil.TouchAssessment(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public object GetMaturityQuestions(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+
+
+                // The maturity target level is stored similar to a SAL level
+                int targetLevel = 0;
+                var myLevel = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
+                if (myLevel != null)
+                {
+                    targetLevel = int.Parse(myLevel.Standard_Specific_Sal_Level);
+                }
+
+                // get the level display names
+                // (for now assume that the assessment uses a single model)
+                var m = myModels.First();
+                var levelNames = new List<MaturityLevel>();
+                foreach (var l in db.MATURITY_LEVELS.Where(x => x.Set_Name == m.Model_Name)
+                    .OrderBy(y => y.Level).ToList())
+                {
+                    levelNames.Add(new MaturityLevel()
+                    {
+                        Level = l.Level,
+                        Label = l.Level_Name,
+                        Applicable = l.Level <= targetLevel
+                    });
+                }
+
+
+
+                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                    myModels.Select(mm => mm.Model_Name).Contains(q.Set_Name)
+                    && q.Maturity_Level <= targetLevel).ToList();
+
+
+                // Get all MATURITY answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Maturity)
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b };
+
+
+
+                // Populate response
+                var response = new QuestionResponse
+                {
+                    Domains = new List<Domain>()
+                };
+
+
+                // CMMC has 17 domains, which correspond to Categories in the 
+                // MATURITY_QUESTIONS table.
+                // TODO:  Eventually they should probably be defined in a new generic
+                // MATURITY_DOMAINS table.
+                var domains = questions.Select(x => x.Category).Distinct().ToList();
+
+                // build a container for each domain
+                foreach (var d in domains)
+                {
+                    response.Domains.Add(new Domain()
+                    {
+                        DisplayText = d,
+                        DomainText = d,
+                        Levels = levelNames
+                    });
+                }
+
+                foreach (var dbR in questions)
+                {
+                    // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
+                    dbR.Category = dbR.Category ?? dbR.Category.Trim();
+                    dbR.Sub_Category = dbR.Sub_Category ?? dbR.Sub_Category.Trim();
+
+                    // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
+                    if (dbR.Sub_Category == null)
+                    {
+                        dbR.Sub_Category = dbR.Category;
+                    }
+
+
+                    var json = JsonConvert.SerializeObject(response);
+
+                    // drop into the domain
+                    var targetDomain = response.Domains.Where(cc => cc.DomainText == dbR.Category).FirstOrDefault();
+                    if (targetDomain != null)
+                    {
+                        // find or create a Category
+                        var targetCat = targetDomain.Categories.Where(c => c.GroupHeadingText == dbR.Category).FirstOrDefault();
+                        if (targetCat == null)
+                        {
+                            targetCat = new QuestionGroup()
+                            {
+                                GroupHeadingText = dbR.Category
+                            };
+                            targetDomain.Categories.Add(targetCat);
+                        }
+
+
+                        // find or create a Subcategory
+                        var targetSubcat = targetCat.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Sub_Category).FirstOrDefault();
+                        if (targetSubcat == null)
+                        {
+                            targetSubcat = new QuestionSubCategory()
+                            {
+                                SubCategoryId = 0,
+                                SubCategoryHeadingText = dbR.Sub_Category,
+                                // GroupHeadingId = g.GroupHeadingId
+                            };
+
+                            targetCat.SubCategories.Add(targetSubcat);
+                        }
+
+
+
+
+                        FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Mat_Question_Id).FirstOrDefault();
+
+                        var qa = new QuestionAnswer()
+                        {
+                            DisplayNumber = dbR.Question_Title,
+                            QuestionId = dbR.Mat_Question_Id,
+                            QuestionText = dbR.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                            Answer = answer?.a.Answer_Text,
+                            AltAnswerText = answer?.a.Alternate_Justification,
+                            Comment = answer?.a.Comment,
+                            Feedback = answer?.a.Feedback,
+                            MarkForReview = answer?.a.Mark_For_Review ?? false,
+                            Reviewed = answer?.a.Reviewed ?? false,
+                            MaturityLevel = dbR.Maturity_Level,
+                            SetName = dbR.Set_Name,
+                            Is_Maturity = answer?.a.Is_Maturity ?? true,
+                            Is_Component = answer?.a.Is_Component ?? false,
+                            Is_Requirement = answer?.a.Is_Requirement ?? false
+                        };
+                        if (answer != null)
+                        {
+                            TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                        }
+
+                        qa.ParmSubs = null;
+
+                        targetSubcat.Questions.Add(qa);
+                    }
+                }
+
+                return response;
+            }
+        }
+
+
+        /// <summary>
+        /// Stores an answer.
+        /// </summary>
+        /// <param name="answer"></param>
+        public int StoreAnswer(int assessmentId, Answer answer)
+        {
+            var db = new CSET_Context();
+
+            // Find the Maturity Question
+            var question = db.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+
+            if (question == null)
+            {
+                throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
+            }
+
+
+            // in case a null is passed, store 'unanswered'
+            if (string.IsNullOrEmpty(answer.AnswerText))
+            {
+                answer.AnswerText = "U";
+            }
+
+            ANSWER dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Is_Requirement == answer.Is_Requirement).FirstOrDefault();
+
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+            dbAnswer.Assessment_Id = assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Answer_Text = answer.AnswerText;
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Comment = answer.Comment;
+            dbAnswer.Feedback = answer.Feedback;
+            dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Is_Maturity = answer.Is_Maturity;
+            dbAnswer.Is_Component = answer.Is_Component;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+            dbAnswer.Is_Requirement = answer.Is_Requirement;
+
+            db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
+            db.SaveChanges();
+
+            AssessmentUtil.TouchAssessment(assessmentId);
+
+            return dbAnswer.Answer_Id;
+        }
+
+
+        // The methods that follow were originally built for NCUA/ACET.
+        // It is hoped that they will eventually be refactored to fit a more
+        // 'generic' approach to maturity models.
+
+
+
 
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
         {
@@ -29,7 +357,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (var db = new CSET_Context())
             {
                 bool? defaultTarget = db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault().MatDetail_targetBandOnly;
-                return defaultTarget??false;
+                return defaultTarget ?? false;
             }
         }
 
@@ -72,12 +400,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     foreach (var d in domains)
                     {
-                        var tGroupOrder =maturity.FirstOrDefault(x => x.Domain == d.Domain);
+                        var tGroupOrder = maturity.FirstOrDefault(x => x.Domain == d.Domain);
                         var maturityDomain = new MaturityDomain
                         {
                             DomainName = d.Domain,
                             Assessments = new List<MaturityAssessment>(),
-                            Sequence = tGroupOrder == null? 0: tGroupOrder.grouporder
+                            Sequence = tGroupOrder == null ? 0 : tGroupOrder.grouporder
                         };
                         var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Domain).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
                         foreach (var s in partial_sub_categoy)

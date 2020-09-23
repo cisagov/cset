@@ -26,7 +26,7 @@
  * The response returned from the API 'questionlist' request.
  */
 export interface QuestionResponse {
-    CategoryContainers: CategoryContainer[];
+    Domains: Domain[];
     ApplicationMode: string;
     QuestionCount: number;
     RequirementCount: number;
@@ -43,14 +43,14 @@ export interface ACETDomain {
  * Multi-purpose container for domain, standard (requirements mode),  
  * Standard Questions, Component Defaults or Component Overrides.
  */
-export interface CategoryContainer {
+export interface Domain {
     DisplayText: string;
     IsDomain: boolean;
     DomainText: string;
-    QuestionGroups: QuestionGroup[];
+    Categories: Category[];
 }
 
-export interface QuestionGroup {
+export interface Category {
     ShowOverrideHeader: boolean;
     IsOverride: boolean;
     GroupHeadingId: number;
@@ -92,10 +92,11 @@ export interface Question {
     HasDocument: boolean;
     MarkForReview: boolean;
     Reviewed: boolean;
-    MaturityLevel: string;
+    MaturityLevel: number;
     Is_Component: boolean;
     ComponentGuid: string;
     Is_Requirement: boolean;
+    Is_Maturity: boolean;
     ExtrasExpanded: boolean;
     Visible: boolean;
 }
@@ -111,6 +112,7 @@ export class Answer {
     Reviewed: boolean;
     Is_Component: boolean;
     Is_Requirement: boolean;
+    Is_Maturity: boolean;
     ComponentGuid: string;
 }
 
