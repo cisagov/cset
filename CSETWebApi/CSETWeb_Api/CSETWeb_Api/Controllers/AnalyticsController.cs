@@ -43,7 +43,10 @@ namespace CSETWeb_Api.Controllers
         {
             int assessmentId = Auth.AssessmentForUser();
             AssessmentManager assessmentManager = new AssessmentManager();
-            return assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
+            StandardsManager standardsManager = new StandardsManager();
+            var assessment = assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
+            var standards = standardsManager.GetStandards(assessmentId);
+            return assessment;
         }
 
         /// <summary>

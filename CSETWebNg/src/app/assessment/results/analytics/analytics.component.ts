@@ -46,7 +46,8 @@ export class AnalyticsComponent implements OnInit {
             SectorName: '',
             IndustryName: '',
             Assets: '',
-            Size: ''
+            Size: '', 
+            Alias: ''
         },
         QuestionAnswers: []
     };
@@ -91,7 +92,8 @@ export class AnalyticsComponent implements OnInit {
         {
             return;
         }
-
+        this.analytics.Assessment.SectorName = this.analytics.Demographics.SectorName;
+        this.analytics.Assessment.IndustryName = this.analytics.Demographics.IndustryName;
         this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
             (data: any) => {
                 const message = data.message;
@@ -122,7 +124,8 @@ export class AnalyticsComponent implements OnInit {
         {
             return;
         }
-
+        this.analytics.Assessment.SectorName = this.analytics.Demographics.SectorName;
+        this.analytics.Assessment.IndustryName = this.analytics.Demographics.IndustryName;
         const dialogRef = this.dialog.open(DataloginComponent, {
             width: '300px',
             disableClose: true,

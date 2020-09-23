@@ -1,0 +1,58 @@
+<div>
+  <div class="white-panel d-flex flex-column flex-11a" style="overflow-x:hidden">
+    <div class="container">
+        <div class="row" style="padding-bottom:5px;">
+            <div class="col-8" style="padding-left:0;"><h2>CMMC Results</h2></div>
+            <div class="col-4"><button class="btn btn-primary float-right" (click)="checkExpand()">Expand</button></div>
+        </div>
+        <div class="row" style="white-space:nowrap;">
+            <div class="col-lg" style="padding-bottom:20px;">
+                <div class="row" ><h5>Domain</h5></div>
+                <div class="container">
+                  <div >
+                    <div class="row" style="margin-bottom:10px;display:block" *ngFor="let m of maturity; let i = index">
+                        <div class="col-3 noFlex">
+                            <h6>{{m.domain}}</h6>
+                        </div>
+                        <div class="col-9" [ngStyle]="{'max-width.px':maxWidth, 'width.px':maxWidth, 'padding-bottom':'5px'}">
+                          <div class="row">
+                            <div class="col-1 no-flex" *ngFor="let n of m.numberPractices; let j = index" [ngClass]="getPracticeStyle(n.name)"
+                            [ngStyle]="{'width.px': calcWidth(n.answered, m.maxTotal), 'max-width.px': maxWidth, 'min-width.px': 40, 'margin-bottom':'5px'}"
+                            data-toggle="collapse" [attr.data-target]="'#id'+i+j">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="row">
+                                    <div class="col-12 no-padding text-center">{{n.name}}</div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12 no-padding text-center" style="margin-bottom:5px"><span class="badge" [ngClass]="checkTotal(n.answered, n.total)">{{n.answered}}/{{n.total}}</span></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row"  *ngFor="let n of m.numberPractices; let j = index">
+                            <div class="col-9">
+                              <div class="collapse" id="{{'id'+i+j}}">
+                                <div class="card card-body" style="max-width: 100%; margin-bottom:5px;" >
+                                    <h6 class="card-title">{{n.name}}</h6>
+                                    <p class="card-text" style="word-wrap: break-word" *ngFor="let q of n.missedQuestions; let k = index">
+                                      <a href="#">{{q.questionId}}</a>: {{q.question}}
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+        <button class="btn btn-primary" (click)="navSvc2.navBack('maturity')">Back</button>
+        <button class="btn btn-primary" (click)="navSvc2.navNext('maturity')">Next</button>
+    </div>
+</div>
+</div>
