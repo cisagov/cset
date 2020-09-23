@@ -180,6 +180,25 @@ export class FileUploadClientService {
     });
     return this.http.request(req);
   }
+
+  /**
+   * 
+   */
+  uploadSpreadsheet(fileItem: File, options?: object): any {
+    const apiEndpoint = this.configSvc.apiUrl + 'import/AWWA';
+
+    const formData: FormData = new FormData();
+    formData.append('fileItem', fileItem, fileItem.name);
+    // if we ever need to support options, add them here
+    Object.keys(options).forEach(key => {
+      formData.append(key, options["key"]);
+    });
+
+    const req = new HttpRequest('POST', apiEndpoint, formData, {
+      reportProgress: true // for progress data
+    });
+    return this.http.request(req);
+  }
 }
 
 export class LinkedSet {

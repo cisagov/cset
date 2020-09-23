@@ -1,5 +1,6 @@
 
 
+
 CREATE VIEW [dbo].[Answer_Components_InScope]
 AS
 SELECT DISTINCT 

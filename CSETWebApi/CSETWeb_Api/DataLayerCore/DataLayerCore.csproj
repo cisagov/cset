@@ -203,6 +203,7 @@
     <Compile Include="Model\ASSESSMENT_IRP_HEADER.cs" />
     <Compile Include="Model\ASSESSMENT_ROLES.cs" />
     <Compile Include="Model\ASSESSMENT_SELECTED_LEVELS.cs" />
+    <Compile Include="Model\AVAILABLE_MATURITY_MODELS.cs" />
     <Compile Include="Model\AVAILABLE_STANDARDS.cs" />
     <Compile Include="Model\CATALOG_RECOMMENDATIONS_DATA.cs" />
     <Compile Include="Model\CATALOG_RECOMMENDATIONS_HEADINGS.cs" />
@@ -276,6 +277,10 @@
     <Compile Include="Model\LEVEL_BACKUP_ACET.cs" />
     <Compile Include="Model\LEVEL_BACKUP_ACET_QUESTIONS.cs" />
     <Compile Include="Model\LEVEL_NAMES.cs" />
+    <Compile Include="Model\MATURITY_LEVELS.cs" />
+    <Compile Include="Model\MATURITY_MODELS.cs" />
+    <Compile Include="Model\MATURITY_QUESTIONS.cs" />
+    <Compile Include="Model\MATURITY_REFERENCES.cs" />
     <Compile Include="Model\NAVIGATION_STATE.cs" />
     <Compile Include="Model\NCSF_CATEGORY.cs" />
     <Compile Include="Model\NCSF_FUNCTIONS.cs" />

@@ -998,6 +998,36 @@
             Persists the selected required docs value to the database.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityModels">
+            <summary>
+            Get all maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityModels(System.Collections.Generic.List{System.String})">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityLevel">
+            <summary>
+            Return the current maturity level for an assessment.
+            Currently returns an int, but could be expanded
+            if more data needed.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityLevel(System.Int32)">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
             <summary>
             Get maturity calculations
@@ -1059,7 +1089,7 @@
             Persists an answer.  This includes Y/N/NA/A as well as comments and alt text.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.Boolean)">
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.Boolean,System.Boolean)">
             <summary>
             Returns the details under a given questions details
             </summary>

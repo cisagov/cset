@@ -114,31 +114,30 @@ namespace CSETWeb_Api.BusinessManagers
         {
             var response = new QuestionResponse
             {
-                CategoryContainers = new List<CategoryContainer>()
+                Domains = new List<Domain>()          
             };
 
             // build a container for each domain
             foreach (var d in domains.Select(d => d.DomainName).Distinct())
             {
-                response.CategoryContainers.Add(new CategoryContainer()
+                response.Domains.Add(new Domain()
                 {
                     DisplayText = d,
-                    DomainText = d,
-                    IsDomain = true
+                    DomainText = d
                 });
             }
 
             // add the categories/assessment factor names to the domains
             foreach (var d in domains)
             {
-                response.CategoryContainers.Where(c => c.DomainText == d.DomainName).First()
-                    .QuestionGroups.Add(new QuestionGroup() 
+                response.Domains.Where(c => c.DomainText == d.DomainName).First()
+                    .Categories.Add(new QuestionGroup() 
                     {
                         GroupHeadingText = d.AssessmentFactorName
                     });
             }
 
-            var json = JsonConvert.SerializeObject(requirements);
+            // var json = JsonConvert.SerializeObject(requirements);
 
             foreach (var req in requirements)
             {
@@ -155,7 +154,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // drop into the domain
-                var targetDomainCategory = response.CategoryContainers.SelectMany(cc => cc.QuestionGroups).Where(qg => qg.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                var targetDomainCategory = response.Domains.SelectMany(cc => cc.Categories).Where(qg => qg.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
                 if (targetDomainCategory != null)
                 {
                     var targetSubcat = targetDomainCategory.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Standard_Sub_Category).FirstOrDefault();
@@ -211,10 +210,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             var d = new CategoryContainer()
             {
-                DisplayText = domain.DomainName,
-                IsDomain = true,
-                AssessmentFactorName = domain.AssessmentFactorName,
-                DomainText = "dummy domain text"
+                DisplayText = domain.DomainName,              
+                AssessmentFactorName = domain.AssessmentFactorName
             };
 
             return d;
@@ -337,17 +334,17 @@ namespace CSETWeb_Api.BusinessManagers
 
                 QuestionResponse resp = new QuestionResponse
                 {
-                    CategoryContainers = new List<CategoryContainer>(),
+                    Domains = new List<Domain>(),
                     ApplicationMode = this.applicationMode
                 };
 
                 // we have one 'dummy' domain
-                var domain = new CategoryContainer()
+                var domain = new Domain()
                 {
                     DisplayText = "dummy"
                 };
-                domain.QuestionGroups = groupList;
-                resp.CategoryContainers.Add(domain);
+                domain.Categories = groupList;
+                resp.Domains.Add(domain);
 
 
 
@@ -506,14 +503,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="requirementID"></param>
         /// <returns></returns>
-        private string ReqMaturityLevel(int requirementID)
+        private int ReqMaturityLevel(int requirementID)
         {
             if (matLevels.ContainsKey(requirementID))
             {
-                return matLevels[requirementID].Acronym;
+                return matLevels[requirementID].MaturityID;
             }
 
-            return string.Empty;
+            return 0;
         }
 
 

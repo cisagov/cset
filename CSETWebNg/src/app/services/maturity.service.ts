@@ -12,15 +12,18 @@ const headers = {
 })
 export class MaturityService {
 
+  targetLevel: number;
+
   /**
-   * 
+   * These are specific to CMMC and will need to be configured somewhere,
+   * and not hard coded.
    */
   levels = [
-    { name: "One", value: 1 },
-    { name: "Two", value: 2 },
-    { name: "Three", value: 3 },
-    { name: "Four", value: 4 },
-    { name: "Five", value: 5 }
+    { name: "Level 1", value: 1 },
+    { name: "Level 2", value: 2 },
+    { name: "Level 3", value: 3 },
+    { name: "Level 4", value: 4 },
+    { name: "Level 5", value: 5 }
   ];
 
   /**
@@ -54,14 +57,39 @@ export class MaturityService {
       headers
     )
   }
+
+  /**
+   * Returns the name of the current target level.
+   */
+  targetLevelName() {
+    if (!!this.targetLevel) {
+      return this.levels[this.targetLevel].name;
+    }
+    else {
+      return '???';
+    }
+  }
+
   /**
    * Posts the selected maturity level to the API. 
    * @param level 
    */
   saveLevel(level: number) {
+    this.targetLevel = level;
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",
       level,
+      headers
+    )
+  }
+
+
+  /**
+   * 
+   */
+  getQuestionsList() {
+    return this.http.get(
+      this.configSvc.apiUrl + "MaturityQuestions",
       headers
     )
   }

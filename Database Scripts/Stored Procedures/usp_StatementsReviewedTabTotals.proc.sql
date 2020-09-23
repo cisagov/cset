@@ -10,14 +10,14 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	INSERT INTO [dbo].[FINANCIAL_HOURS]
+	INSERT INTO [FINANCIAL_HOURS]
 				([Assessment_Id]
 				,[Component]
 				,[ReviewType]
 				,[Hours])     
 	select a.* from (
 	SELECT @assessment_id Assessment_id, Component, ReviewType, [Hours] = 0
-		FROM [dbo].[FINANCIAL_HOURS_COMPONENT], FINANCIAL_REVIEWTYPE) a left join [dbo].[FINANCIAL_HOURS] f on 
+		FROM [FINANCIAL_HOURS_COMPONENT], FINANCIAL_REVIEWTYPE) a left join [FINANCIAL_HOURS] f on 
 		a.Assessment_id = f.Assessment_Id and a.Component = f.Component and a.ReviewType = f.ReviewType
 		where f.Assessment_Id is null
   

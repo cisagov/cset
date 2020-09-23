@@ -19,6 +19,7 @@ using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
+using CSETWeb_Api.BusinessLogic.BusinessManagers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -126,7 +127,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/AnswerQuestion")]
-        public int StoreAnswer([FromBody]Answer answer)
+        public int StoreAnswer([FromBody] Answer answer)
         {
             if (answer == null)
                 return 0;
@@ -145,11 +146,15 @@ namespace CSETWeb_Api.Controllers
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 return rm.StoreAnswer(answer);
             }
-            else
+
+            if (answer.Is_Maturity)
             {
-                QuestionsManager qm = new QuestionsManager(assessmentId);
-                return qm.StoreAnswer(answer);
+                MaturityManager mm = new MaturityManager();
+                return mm.StoreAnswer(assessmentId, answer);
             }
+
+            QuestionsManager qm2 = new QuestionsManager(assessmentId);
+            return qm2.StoreAnswer(answer);
         }
 
 
@@ -159,13 +164,13 @@ namespace CSETWeb_Api.Controllers
         /// <param name="QuestionId"></param>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent)
+        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent, bool IsMaturity)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId,IsComponent);
+            return qm.GetDetails(QuestionId, assessmentId, IsComponent, IsMaturity);
 
         }
 
