@@ -18,7 +18,8 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionResponse
     {
-        public List<CategoryContainer> CategoryContainers;
+        public List<Domain> Domains;
+        // public List<Category> Categories;
 
         // The current mode of the assessment
         public string ApplicationMode;
@@ -39,6 +40,49 @@ namespace CSETWeb_Api.Models
         public int DefaultComponentsCount { get; internal set; }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Domain
+    {
+        /// <summary>
+        /// The text displayed in the TOC.  If this container represents a maturity domain,
+        /// it contains the name of the domain.
+        /// </summary>
+        public string DisplayText;
+
+        /// <summary>
+        /// Display text that appears below the domain name.  Not used for ACET but may be used for EDM.
+        /// </summary>
+        public string DomainText;
+
+        /// <summary>
+        /// Lists the display names of the maturity levels.
+        /// </summary>
+        public List<MaturityLevel> Levels;
+
+        /// <summary>
+        /// A list of categories within the domain.  CMMC domains correspond with
+        /// categories, so there will be a single category in each CMMC domain.
+        /// </summary>
+        public List<QuestionGroup> Categories = new List<QuestionGroup>();
+
+
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MaturityLevel
+    {
+        public int Level;
+        public string Label;
+        public bool Applicable;
+    }
+
+
     /// <summary>
     /// A container class that holds a collection of Categories / QuestionGroups.
     /// It is used for:
@@ -56,16 +100,6 @@ namespace CSETWeb_Api.Models
         public string DisplayText;
 
         /// <summary>
-        /// Indicates if the container is a maturity Domain.
-        /// </summary>
-        public bool IsDomain = false;
-
-        /// <summary>
-        /// Display text that appears below the domain name.  Not used for ACET but may be used for EDM.
-        /// </summary>
-        public string DomainText;
-        
-        /// <summary>
         /// Corresponds to the StandardCategory of the questions/requirements it encapsulates.
         /// </summary>
         public string AssessmentFactorName;
@@ -74,16 +108,11 @@ namespace CSETWeb_Api.Models
         /// If this is a domain, this indicates if maturity levels should be shown on the requirements page.
         /// </summary>
         public bool ShowMaturityLevels;
-        
+
         /// <summary>
         /// The list of question groups or categories for the assessment
         /// </summary>
         public List<QuestionGroup> QuestionGroups = new List<QuestionGroup>();
-
-        /// <summary>
-        /// An optional list of children, so we can stack groups in groups, like categories in domains in standards
-        /// </summary>
-        public List<CategoryContainer> CategoryContainers = new List<CategoryContainer>();
     }
 
 
@@ -165,7 +194,8 @@ namespace CSETWeb_Api.Models
         /// <summary>
         /// Indicates the maturity level of the question/requirement/statement
         /// </summary>
-        public string MaturityLevel { get; set; }
+        public int MaturityLevel { get; set; }
+        public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }
         public bool Is_Requirement { get; set; }
@@ -201,6 +231,8 @@ namespace CSETWeb_Api.Models
         public bool Is_Requirement;
 
         public bool Is_Component;
+
+        public bool Is_Maturity;
     }
 
 

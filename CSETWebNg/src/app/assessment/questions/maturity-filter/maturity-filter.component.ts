@@ -25,6 +25,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
 import { stringify } from '@angular/compiler/src/util';
 import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { Domain } from 'domain';
+import { MaturityDomain } from '../../../models/mat-detail.model';
 
 
 @Component({
@@ -37,6 +39,9 @@ export class MaturityFilterComponent implements OnInit {
 
   @Input()
   domainName: string;
+
+  @Input()
+  domain: any;
 
   @Output()
   filtersChanged = new EventEmitter<Map<string, boolean>>();

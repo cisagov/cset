@@ -7,9 +7,9 @@ import { QuestionsService } from '../../../services/questions.service';
 })
 export class DomainBlockComponent implements OnInit {
 
-  @Input('myContainer') myContainer;
+  @Input('domain') domain;
 
-  domains: any;
+
 
   /** 
    * 

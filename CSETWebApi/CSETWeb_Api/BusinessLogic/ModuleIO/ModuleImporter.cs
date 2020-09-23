@@ -371,7 +371,10 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
         {
             if (externalRequirement.Questions == null || externalRequirement.Questions.Count() == 0)
             {
-                externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
+                return;
+
+                // trying to manufacture a question where none was defined could get us into trouble
+                // externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
             }
 
             var stdRefNum = 1;
