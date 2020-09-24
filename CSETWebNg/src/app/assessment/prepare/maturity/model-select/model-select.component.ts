@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-model-select',
@@ -12,7 +13,8 @@ export class ModelSelectComponent implements OnInit {
   selectedModels = [];
 
   constructor(
-    private assessSvc: AssessmentService,
+    public assessSvc: AssessmentService,
+    public maturitySvc: MaturityService,
     public navSvc: NavigationService
   ) { }
 
@@ -25,12 +27,11 @@ export class ModelSelectComponent implements OnInit {
   /**
    * 
    */
-  selectModel(model: string) {
-    // record it in the API - where?
-    if (this.selectedModels.indexOf(model) < 0) {
-      this.selectedModels.push(model);
-    } else {
-      this.selectedModels.splice(this.selectedModels.indexOf(model), 1);
-    }
+  changeSelection(event: any, model: string) {
+    // the models are currently single-select, so whichever
+    // radio button was clicked, that's the only model we will use
+    this.assessSvc.maturityModels = [ model ];
+
+    this.maturitySvc.postSelections(this.assessSvc.maturityModels).subscribe();
   }
 }
