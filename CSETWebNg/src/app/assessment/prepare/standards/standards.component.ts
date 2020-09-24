@@ -208,6 +208,8 @@ export class StandardsComponent implements OnInit {
       });
 
     this.setFrameworkNavigation();
+
+    this.navSvc.setQuestionsTree();
   }
 
   setFrameworkNavigation() {

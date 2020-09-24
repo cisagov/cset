@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Domain } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
@@ -22,6 +23,15 @@ export class DomainBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
+  }
+
+  setOrDomainLabel(d: Domain) {
+    if (!!d.DisplayText) {
+      return d.DisplayText;
+    } else if (!!d.SetShortName) {
+      return d.SetShortName;
+    }
+    return '';
   }
 
 }

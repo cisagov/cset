@@ -172,10 +172,10 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
 
-                // find or create the set (using the Domain container)
+                // find or create the set (using the Domain class as the set container)
                 if (set == null)
                 {
-                    set = response.Domains.Where(s => s.SetShortName == req.SetShortName).FirstOrDefault();
+                    set = response.Domains.Where(s => s.SetName == req.SetName).FirstOrDefault();
                     if (set == null)
                     {
                         set = new Domain()
