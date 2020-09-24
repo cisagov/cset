@@ -36,7 +36,7 @@ namespace CSETWeb_Api.Controllers
                 Assessment = assessment,
                 Demographics = demographics,
                 QuestionAnswers = GetQuestionsAnswers()
-            }); ;
+            });
         }
 
         private AnalyticsAssessment GetAnalyticsAssessment()
