@@ -177,9 +177,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
       (data: QuestionResponse) => {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
-        this.setHasRequirements = true; // RKW TEMP
         this.setHasQuestions = (data.QuestionCount > 0);
-        // this.setHasQuestions = true; // RKW TEMP
 
         if (!this.setHasQuestions && !this.setHasRequirements) {
           this.assessSvc.applicationMode = 'Q';

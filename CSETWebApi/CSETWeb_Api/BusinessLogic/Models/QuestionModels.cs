@@ -42,10 +42,15 @@ namespace CSETWeb_Api.Models
 
 
     /// <summary>
-    /// 
+    /// A container for housing the categories in a maturity domain.
+    /// Also serves as a container for housing the categories in a Set.
     /// </summary>
     public class Domain
     {
+        public string SetName;
+
+        public string SetShortName;
+
         /// <summary>
         /// The text displayed in the TOC.  If this container represents a maturity domain,
         /// it contains the name of the domain.
