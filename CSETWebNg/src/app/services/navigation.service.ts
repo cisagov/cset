@@ -280,7 +280,7 @@ export class NavigationService {
 
       response.Domains.forEach(c => {
         const node1: NavTreeNode = {
-          label: c.DisplayText,
+          label: '',
           elementType: 'CONTAINER',
           value: null,
           isPhaseNode: false,
@@ -288,6 +288,13 @@ export class NavigationService {
           expandable: true,
           visible: true
         };
+
+        if (!!c.DisplayText) {
+          node1.label = c.DisplayText;
+        } else if (!!c.SetShortName) {
+          node1.label = c.SetShortName;
+        }
+
         assessmentNode.children.push(node1);
 
         c.Categories.forEach(g => {
