@@ -53,8 +53,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                RequirementsPass req = GetControls(db);
-                return BuildResponse(req.Requirements.ToList(), req.Answers.ToList(), req.DomainAssessmentFactors.ToList());
+                RequirementsPass controls = GetControls(db);
+                return BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
             }
         }
 
@@ -78,11 +78,14 @@ namespace CSETWeb_Api.BusinessManagers
                 .ThenBy(x => x.rs.Requirement_Sequence)
                 .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name, SetName = x.s.Set_Name });
 
-            var domains = (from d in db.FINANCIAL_DOMAINS
-                           join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
-                           join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
-                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct();
-
+            var domains = new List<DomainAssessmentFactor>();
+            if (results.Any(r => r.SetName == "ACET_V1"))
+            {
+                domains = (from d in db.FINANCIAL_DOMAINS
+                               join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
+                               join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
+                               select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
+            }
 
 
             // Get all REQUIREMENT answers for the assessment
@@ -114,38 +117,34 @@ namespace CSETWeb_Api.BusinessManagers
         {
             var response = new QuestionResponse
             {
-                Domains = new List<Domain>()          
+                Domains = new List<Domain>()
             };
 
-            // build a container for each domain
+            // ACET will pass a collection of domains.  
+            // Build a container for each domain.  Empty domains are removed at the end of the method.
             foreach (var d in domains.Select(d => d.DomainName).Distinct())
             {
                 response.Domains.Add(new Domain()
                 {
                     DisplayText = d,
-                    DomainText = d
+                    DomainText = d                 
                 });
             }
 
-            // add the categories/assessment factor names to the domains
-            foreach (var d in domains)
-            {
-                response.Domains.Where(c => c.DomainText == d.DomainName).First()
-                    .Categories.Add(new QuestionGroup() 
-                    {
-                        GroupHeadingText = d.AssessmentFactorName
-                    });
-            }
-
-            // var json = JsonConvert.SerializeObject(requirements);
 
             foreach (var req in requirements)
             {
                 var dbR = req.Requirement;
 
                 // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
-                dbR.Standard_Category = dbR.Standard_Category ?? dbR.Standard_Category.Trim();
-                dbR.Standard_Sub_Category = dbR.Standard_Sub_Category ?? dbR.Standard_Sub_Category.Trim();
+                if (dbR.Standard_Category != null)
+                {
+                    dbR.Standard_Category = dbR.Standard_Category.Trim();
+                }
+                if (dbR.Standard_Sub_Category != null)
+                {
+                    dbR.Standard_Sub_Category = dbR.Standard_Sub_Category.Trim();
+                }
 
                 // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
                 if (dbR.Standard_Sub_Category == null)
@@ -153,55 +152,104 @@ namespace CSETWeb_Api.BusinessManagers
                     dbR.Standard_Sub_Category = dbR.Standard_Category;
                 }
 
-                // drop into the domain
-                var targetDomainCategory = response.Domains.SelectMany(cc => cc.Categories).Where(qg => qg.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
-                if (targetDomainCategory != null)
+                Domain set = null;
+
+
+                // see if there's a domain whose 'assessment factor' (category) matches the requirement's category
+                var targetDomain = domains.Where(d => d.AssessmentFactorName == dbR.Standard_Category).FirstOrDefault();
+                if (targetDomain != null)
                 {
-                    var targetSubcat = targetDomainCategory.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Standard_Sub_Category).FirstOrDefault();
-                    if (targetSubcat == null)
+                    set = response.Domains.Where(s => s.DomainText == targetDomain.DomainName).FirstOrDefault();
+                    if (set == null)
                     {
-                        targetSubcat = new QuestionSubCategory()
+                        set = new Domain()
                         {
-                            SubCategoryId = 0,
-                            SubCategoryHeadingText = dbR.Standard_Sub_Category,
-                            // GroupHeadingId = g.GroupHeadingId
+                            DomainText = targetDomain.DomainName,
+                            DisplayText = targetDomain.DomainName
                         };
-
-                        targetDomainCategory.SubCategories.Add(targetSubcat);
+                        response.Domains.Add(set);
                     }
-
-
-
-
-                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
-
-                    var qa = new QuestionAnswer()
-                    {
-                        DisplayNumber = dbR.Requirement_Title,
-                        QuestionId = dbR.Requirement_Id,
-                        QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
-                        Answer = answer?.a.Answer_Text,
-                        AltAnswerText = answer?.a.Alternate_Justification,
-                        Comment = answer?.a.Comment,
-                        Feedback = answer?.a.Feedback,
-                        MarkForReview = answer?.a.Mark_For_Review ?? false,
-                        Reviewed = answer?.a.Reviewed ?? false,
-                        MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
-                        SetName = req.SetName,
-                        Is_Component = answer?.a.Is_Component ?? false,
-                        Is_Requirement = answer?.a.Is_Requirement ?? true
-                    };
-                    if (answer != null)
-                    {
-                        TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
-                    }
-
-                    qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
-
-                    targetSubcat.Questions.Add(qa);
                 }
-            }
 
+
+                // find or create the set (using the Domain container)
+                if (set == null)
+                {
+                    set = response.Domains.Where(s => s.SetShortName == req.SetShortName).FirstOrDefault();
+                    if (set == null)
+                    {
+                        set = new Domain()
+                        {
+                            SetShortName = req.SetShortName,
+                            SetName = req.SetName
+                        };
+                        response.Domains.Add(set);
+                    }
+                }
+
+
+                // find or create the category
+                var category = set.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                if (category == null)
+                {
+                    category = new QuestionGroup()
+                    {
+                        GroupHeadingText = dbR.Standard_Category
+                    };
+                    set.Categories.Add(category);
+                }
+
+
+                // find or create subcategory
+                var subcat = category.SubCategories.Where(sub => sub.SubCategoryHeadingText == dbR.Standard_Sub_Category).FirstOrDefault();
+                if (subcat == null)
+                {
+                    subcat = new QuestionSubCategory()
+                    {
+                        SubCategoryId = 0,
+                        SubCategoryHeadingText = dbR.Standard_Sub_Category
+                    };
+                    category.SubCategories.Add(subcat);
+                }
+
+
+                // add the question+answer into the subcategory
+                FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
+
+                var qa = new QuestionAnswer()
+                {
+                    DisplayNumber = dbR.Requirement_Title,
+                    QuestionId = dbR.Requirement_Id,
+                    QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                    Answer = answer?.a.Answer_Text,
+                    AltAnswerText = answer?.a.Alternate_Justification,
+                    Comment = answer?.a.Comment,
+                    Feedback = answer?.a.Feedback,
+                    MarkForReview = answer?.a.Mark_For_Review ?? false,
+                    Reviewed = answer?.a.Reviewed ?? false,
+                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                    SetName = req.SetName,
+                    Is_Component = answer?.a.Is_Component ?? false,
+                    Is_Requirement = answer?.a.Is_Requirement ?? true
+                };
+                if (answer != null)
+                {
+                    TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                }
+
+                qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+
+                subcat.Questions.Add(qa);
+            }   
+
+            // remove any empty 'domains'
+            response.Domains = response.Domains.Where(d => d.Categories.Count > 0).ToList();
+
+            response.ApplicationMode = this.ApplicationMode;
+            response.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+            response.RequirementCount = this.NumberOfRequirements();
+
+            var j = JsonConvert.SerializeObject(response);
             return response;
         }
 
@@ -210,7 +258,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             var d = new CategoryContainer()
             {
-                DisplayText = domain.DomainName,              
+                DisplayText = domain.DomainName,
                 AssessmentFactorName = domain.AssessmentFactorName
             };
 
@@ -736,7 +784,7 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public IQueryable<RequirementPlus> Requirements { get; set; }
         public IQueryable<FullAnswer> Answers { get; set; }
-        public IQueryable<DomainAssessmentFactor> DomainAssessmentFactors { get; set; }
+        public List<DomainAssessmentFactor> DomainAssessmentFactors { get; set; }
     }
 
 
