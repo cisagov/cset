@@ -210,6 +210,7 @@ import { CategoryBlockComponent } from './assessment/questions/category-block/ca
 import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 import { MaturityQuestionsComponent } from './assessment/prepare/maturity/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
+import { MatCmmcComponent } from './assessment/results/mat-cmmc/mat-cmmc.component';
 
 @NgModule({
     imports: [
@@ -387,6 +388,7 @@ import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-
         MaturityQuestionsComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
+        MatCmmcComponent,
     ],
     providers: [
         ConfigService,

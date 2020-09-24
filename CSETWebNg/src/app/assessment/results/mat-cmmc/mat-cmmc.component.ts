@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
   selector: 'app-mat-cmmc',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatCmmcComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public navSvc: NavigationService
+  ) { }
+
   maturity = [
     {
       domain: "Access Control (AC)", 
@@ -183,6 +187,10 @@ export class MatCmmcComponent implements OnInit {
     
   }
 
+  checkExpand() {
+
+  }
+  
   checkTotal(a, t){
     return a < t ? 'badge-danger' : 'badge-success';
   }
