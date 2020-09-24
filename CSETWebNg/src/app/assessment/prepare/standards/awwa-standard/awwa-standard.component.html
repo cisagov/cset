@@ -1,0 +1,85 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="ok-dialog d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span>AWWA Cybersecurity Tool</span>
+  </div>
+  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+
+    <div *ngIf="importStatus === 1">
+      <div class="mb-3">
+        Have you completed the AWWA Cybersecurity Tool?
+      </div>
+      <table>
+        <tr style="border-bottom: 1px solid #cccccc">
+          <td>
+            <button class="btn btn-primary w-100" (click)="openFileBrowser($event)">
+              <span>Yes</span>
+            </button>
+            <input id="awwaUpload" type="file" accept=".csv,.xls,.xlsx" (change)="fileSelectAwwa($event)"
+              class="d-none" />
+          </td>
+          <td class="pl-3 py-2">
+            I'm ready to upload an AWWA Cyber Tool sheet.
+          </td>
+        </tr>
+        <tr style="border-bottom: 1px solid #cccccc">
+          <td>
+            <button class="btn btn-primary w-100" (click)="openAwwaSite();">
+              No
+            </button>
+          </td>
+          <td class="pl-3 py-2">
+            Clicking 'No' will take you to the AWWA site to complete the AWWA Cyber Tool sheet.
+            <a href='http://www.awwa.org/cyber' target='_bank'>http://www.awwa.org/cyber</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn btn-primary w-100" (click)="close();">
+              Continue Anyway
+            </button>
+          </td>
+          <td class="pl-3 py-2">
+            This option will ask all questions related to the AWWA tool.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div *ngIf="importStatus === 2">
+      Importing AWWA data...
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+    <div *ngIf="importStatus === 3">
+      <div class="mb-3 mt-2">
+        Import complete.
+      </div>
+      <div><button class="btn btn-primary" (click)="close()">Close</button></div>
+    </div>
+
+  </mat-dialog-content>
+</div>

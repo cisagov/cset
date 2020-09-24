@@ -388,7 +388,7 @@
             </tr>
         </table>
 
-        
+
         <div *ngIf="response?.salTable.LastSalDeterminationType === 'GENERAL'">
             <p>
                 <b>Calculated General Security Assurance Levels (SAL)</b>
@@ -646,7 +646,7 @@
                     <td class="text-right">{{ irp.RiskCount[2] }}</td>
                     <td class="text-right">{{ irp.RiskCount[3] }}</td>
                     <td class="text-right">{{ irp.RiskCount[4] }}</td>
-                    <td class="text-nowrap">{{ irp.Comment }}</td>
+                    <td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.Comment)"></td>
                 </tr>
                 <tr>
                     <td class="border-table">Totals</td>
@@ -795,7 +795,7 @@
             </tr>
             <tr>
                 <td class="tint2">Comment:</td>
-                <td colspan="2">{{c.Comment}}</td>
+                <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.Comment)"></td>
             </tr>
         </table>
 
