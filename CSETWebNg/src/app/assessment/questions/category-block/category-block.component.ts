@@ -18,8 +18,6 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    console.log('category-block ngOnInit ... myCategory = ');
-    console.log(this.c);
   }
 
   addDomainPad(domain) {
