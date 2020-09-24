@@ -49,6 +49,8 @@ namespace CSETWeb_Api.Models
     {
         public string SetName;
 
+        // public string SetFullName;
+
         public string SetShortName;
 
         /// <summary>
