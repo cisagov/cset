@@ -136,6 +136,7 @@ namespace CSETWeb_Api.BusinessManagers
         public List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse)
         {
             List<AnalyticsQuestionAnswer> analyticQuestionAnswers = new List<AnalyticsQuestionAnswer>();
+            var questionGroups = new List<List<AnalyticsQuestionAnswer>>();
             foreach (var questionGroup in questionResponse.CategoryContainers[0].QuestionGroups)
             {
                 foreach (var subCategory in questionGroup.SubCategories)
