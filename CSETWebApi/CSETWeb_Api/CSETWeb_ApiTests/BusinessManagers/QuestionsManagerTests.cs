@@ -74,7 +74,8 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                     Assert.Fail("no data to test");
                 try
                 {
-                    QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
+                    // QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
+                    ComponentQuestionManager manager = new ComponentQuestionManager(test.Assessment_Id);
 
 
                     List<Answer_Components_Exploded_ForJSON> list =  manager.GetOverrideQuestions(16, 1586, Constants.FIREWALL);
