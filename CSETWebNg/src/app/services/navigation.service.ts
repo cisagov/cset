@@ -567,7 +567,7 @@ export class NavigationService {
     },
 
     {
-      displayText: 'Cybsersecurity Standards Selection',
+      displayText: 'Cybersecurity Standards Selection',
       pageId: 'standards', level: 1,
       path: 'assessment/{:id}/prepare/standards',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard }
