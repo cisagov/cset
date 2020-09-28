@@ -1066,6 +1066,17 @@
             by sending in the 'group' argument.  I'm not sure we need this yet. 
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetComponentQuestionsList(System.String)">
+            <summary>
+            Returns a list of all Component questions, both default and overrides.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetComponentOverridesList">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.SetMode(System.String)">
             <summary>
             Sets the application mode to be question or requirements based.
@@ -1108,6 +1119,41 @@
             the rest is populated in a seperate call. 
             </summary>
             <param name="Answer_Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetFinding(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Answer_Id"></param>
+            <param name="Finding_id"></param>
+            <param name="Question_Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetImportance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.DeleteFinding(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Finding_Id"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.SaveDiscovery(CSETWeb_Api.Data.ControlData.Finding)">
+            <summary>
+            
+            </summary>
+            <param name="finding"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetOverrideQuestions(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="question_id"></param>
+            <param name="Component_Symbol_Id"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.SaveComponentOverride(System.String,System.Boolean)">

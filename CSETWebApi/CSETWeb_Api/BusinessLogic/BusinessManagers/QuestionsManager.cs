@@ -52,7 +52,7 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 IQueryable<QuestionPlusHeaders> query = null;
 
-                string assessSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+                string assessSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentID).Select(c => c.Selected_Sal_Level).FirstOrDefault();
                 string assessSalLevelUniversal = db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
 
                 if (_setNames.Count == 1)
@@ -98,7 +98,7 @@ namespace CSETWeb_Api.BusinessManagers
                             join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
                             join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
                             join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                            where stand.Selected == true && stand.Assessment_Id == _assessmentId
+                            where stand.Selected == true && stand.Assessment_Id == assessmentID
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
@@ -115,7 +115,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
@@ -316,126 +316,10 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             resp.QuestionCount = this.NumberOfQuestions();
-            resp.RequirementCount = new RequirementsManager(this._assessmentId).NumberOfRequirements();
+            resp.RequirementCount = new RequirementsManager(this.assessmentID).NumberOfRequirements();
 
-
-            // Include any component defaults or overrides into the response
-            BuildComponentsResponse(resp);
             return resp;
         }
-
-        public QuestionResponse GetOverrideListOnly()
-        {
-            QuestionResponse resp = new QuestionResponse
-            {
-                Domains = new List<Domain>(),
-                ApplicationMode = this.applicationMode
-            };
-
-            // Create the Component Overrides node
-            var componentOverridesContainer = new Domain()
-            {
-                DisplayText = "Component Overrides"
-            };
-            componentOverridesContainer.Categories = new List<QuestionGroup>();
-            resp.Domains.Add(componentOverridesContainer);
-
-
-            resp.QuestionCount = 0;
-            resp.RequirementCount = 0;
-
-            BuildOverridesOnly(resp, new CSET_Context());
-            return resp;
-        }
-
-
-        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions(int assessmentId, int question_id, int Component_Symbol_Id)
-        {
-            List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
-            using (CSET_Context context = new CSET_Context())
-            {
-                List<usp_getExplodedComponent> questionlist = null;
-
-                context.LoadStoredProc("s[usp_getExplodedComponent]")
-                  .WithSqlParam("assessment_id", _assessmentId)
-                  .ExecuteStoredProc((handler) =>
-                  {
-                      questionlist = handler.ReadToList<usp_getExplodedComponent>().Where(c => c.Question_Id == question_id
-                                    && c.Component_Symbol_Id == Component_Symbol_Id).ToList();
-                  });
-
-                IQueryable<Answer_Components> answeredQuestionList = context.Answer_Components.Where(a =>
-                    a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
-                    
-
-                foreach(var question in questionlist.ToList())
-                {
-                    Answer_Components_Exploded_ForJSON tmp = null;
-                    tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                    tmp.Component_GUID = question.Component_GUID.ToString();
-                    rlist.Add(tmp);
-                }
-                return rlist;
-            }
-        }
-
-        /// <summary>
-        /// get the exploded view where assessment
-        /// </summary>
-        /// <param name="guid"></param>
-        /// <param name="shouldSave"></param>
-        public void HandleGuid(Guid guid, bool shouldSave)
-        {
-            using (CSET_Context context = new CSET_Context())
-            {
-                if (shouldSave)
-                {   
-                    var componentName = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == guid).FirstOrDefault();
-                    if (componentName != null)
-                    {
-                        var creates = from a in context.COMPONENT_QUESTIONS
-                                      where a.Component_Symbol_Id == componentName.Component_Symbol_Id
-                                      select a;
-                        var alreadyThere = (from a in context.ANSWER
-                                            where a.Assessment_Id == _assessmentId
-                                            && a.Component_Guid == guid
-                                            select a).ToDictionary(x => x.Question_Or_Requirement_Id, x=> x);
-                        foreach (var c in creates.ToList())
-                        {
-                            if (!alreadyThere.ContainsKey(c.Question_Id))
-                            {
-                                context.ANSWER.Add(new ANSWER()
-                                {
-                                    Answer_Text = Constants.UNANSWERED,
-                                    Assessment_Id = this._assessmentId,
-                                    Component_Guid = guid,
-                                    Is_Component = true,
-                                    Is_Requirement = false,
-                                    Question_Or_Requirement_Id = c.Question_Id
-                                });
-                            }
-                        }
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        throw new ApplicationException("could not find component for guid:" + guid);
-                    }
-                }
-                else
-                {
-                    foreach (var a in context.ANSWER.Where(x => x.Component_Guid == guid).ToList())
-                    {
-                        context.ANSWER.Remove(a);
-                    }
-                    context.SaveChanges();
-                }
-            }
-        }
-
-
-
-      
 
      
 
@@ -454,7 +338,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                string selectedSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+                string selectedSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentID).Select(c => c.Selected_Sal_Level).FirstOrDefault();
 
                 if (_setNames.Count == 1)
                 {
@@ -481,7 +365,7 @@ namespace CSETWeb_Api.BusinessManagers
                                  join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
                                  join usl in db.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
                                  where stand.Selected == true 
-                                    && stand.Assessment_Id == _assessmentId 
+                                    && stand.Assessment_Id == assessmentID 
                                     && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
                                  select q.Question_Id;
 
@@ -511,7 +395,7 @@ namespace CSETWeb_Api.BusinessManagers
             && u.Universal_Sub_Category_Id == subCatAnswerBlock.SubCategoryId).FirstOrDefault();
 
 
-            var subCatAnswer = db.SUB_CATEGORY_ANSWERS.Where(sca => sca.Assessement_Id == _assessmentId
+            var subCatAnswer = db.SUB_CATEGORY_ANSWERS.Where(sca => sca.Assessement_Id == assessmentID
                             && sca.Heading_Pair_Id == usch.Heading_Pair_Id).FirstOrDefault();
 
 
@@ -519,14 +403,14 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 subCatAnswer = new SUB_CATEGORY_ANSWERS(); 
             }
-            subCatAnswer.Assessement_Id = _assessmentId;
+            subCatAnswer.Assessement_Id = assessmentID;
             subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
             subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
             db.SUB_CATEGORY_ANSWERS.AddOrUpdate(subCatAnswer, x=>x.Assessement_Id, x=>x.Heading_Pair_Id);
 
             db.SaveChanges();
 
-            AssessmentUtil.TouchAssessment(_assessmentId);
+            AssessmentUtil.TouchAssessment(assessmentID);
 
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)

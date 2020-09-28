@@ -21,26 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { NavigationService } from '../../../../services/navigation.service';
-import { AssessmentService } from '../../../../services/assessment.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { Domain } from '../../../../models/questions.model';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { QuestionFiltersComponent } from '../../../../dialogs/question-filters/question-filters.component';
-import { QuestionsService } from '../../../../services/questions.service';
-
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Domain } from '../../../models/questions.model';
+import { QuestionResponse } from '../../../models/questions.model';
+import { AssessmentService } from '../../../services/assessment.service';
+import { MaturityService } from '../../../services/maturity.service';
+import { NavigationService } from '../../../services/navigation.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-maturity-questions',
-  templateUrl: './maturity-questions.component.html'
+  selector: 'app-diagram-questions',
+  templateUrl: './diagram-questions.component.html'
 })
-export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
+export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
 
   domains: Domain[] = null;
+  
   loaded = false;
-
-  filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
 
   constructor(
     public assessSvc: AssessmentService,
@@ -52,13 +50,19 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadQuestions();
-    this.loaded = true;
+    this.assessSvc.currentTab = 'questions';
   }
 
   /**
    *
    */
   ngAfterViewInit() {
+    // if (this.domains != null && this.domains.length <= 0) {
+    //   this.loadQuestions();
+    // }
+
+    // this.assessSvc.currentTab = 'questions';
+    // this.loaded = true;
   }
 
 
@@ -68,17 +72,17 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.domains = null;
-    this.maturitySvc.getQuestionsList().subscribe(
-      (response: any) => {
-        // this.assessSvc.applicationMode = response.ApplicationMode;
-        // this.setHasRequirements = (response.RequirementCount > 0);
-        // this.setHasQuestions = (response.QuestionCount > 0);
-        // this.questionsSvc.questions = response;
+    this.questionsSvc.getComponentQuestionsList().subscribe(
+      (response: QuestionResponse) => {
+
+        console.log('component questions response:');
+        console.log(response);
+
+        this.loaded = true;
+
+        this.questionsSvc.componentQuestions = response;
 
         this.domains = response.Domains;
-
-        // default the selected maturity filters
-        // this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
         this.refreshQuestionVisibility(magic);
       },
@@ -93,36 +97,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     );
   }
 
-/**
-   * Controls the mass expansion/collapse of all subcategories on the screen.
-   * @param mode
-   */
-  expandAll(mode: boolean) {
-    this.domains.forEach((d: Domain) => {
-      d.Categories.forEach(group => {
-        group.SubCategories.forEach(subcategory => {
-          subcategory.Expanded = mode;
-        });
-      });
-    });
-  }
 
-    /**
-   * 
-   */
-  showFilterDialog() {
-    this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
-    this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
-      this.refreshQuestionVisibility();
-    });
-    this.filterDialogRef
-      .afterClosed()
-      .subscribe(() => {
-        this.refreshQuestionVisibility();
-      });
-  }
-
-    /**
+   /**
    * Re-evaluates the visibility of all questions/subcategories/categories
    * based on the current filter settings.
    * Also re-draws the sidenav category tree, skipping categories

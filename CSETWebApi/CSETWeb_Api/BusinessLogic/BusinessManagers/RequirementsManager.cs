@@ -89,7 +89,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // Get all REQUIREMENT answers for the assessment
-            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Is_Requirement)
+            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Is_Requirement)
                           from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
@@ -246,7 +246,7 @@ namespace CSETWeb_Api.BusinessManagers
             response.Domains = response.Domains.Where(d => d.Categories.Count > 0).ToList();
 
             response.ApplicationMode = this.ApplicationMode;
-            response.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+            response.QuestionCount = new QuestionsManager(this.assessmentID).NumberOfQuestions();
             response.RequirementCount = this.NumberOfRequirements();
 
             var j = JsonConvert.SerializeObject(response);
@@ -396,11 +396,11 @@ namespace CSETWeb_Api.BusinessManagers
 
 
 
-                resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+                resp.QuestionCount = new QuestionsManager(this.assessmentID).NumberOfQuestions();
                 resp.RequirementCount = this.NumberOfRequirements();
 
                 // Get the overall risk level
-                var acetDash = new ACETDashboardManager().LoadDashboard(this._assessmentId);
+                var acetDash = new ACETDashboardManager().LoadDashboard(this.assessmentID);
                 resp.OverallIRP = acetDash.SumRiskLevel;
                 if (acetDash.Override > 0)
                 {
@@ -478,7 +478,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             parametersAssessmentList = (from pa in db.PARAMETER_ASSESSMENT
                                         join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
-                                        where pa.Assessment_ID == _assessmentId
+                                        where pa.Assessment_ID == assessmentID
                                         select new ParameterAssessment() { p = p, pa = pa }).ToList();
 
             parametersAnswerDictionary = (from p in db.PARAMETERS
@@ -592,7 +592,7 @@ namespace CSETWeb_Api.BusinessManagers
                 var qAssessLevel = from pa in db.PARAMETER_ASSESSMENT
                                    join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
                                    join pr in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals pr.Parameter_Id
-                                   where pa.Assessment_ID == _assessmentId
+                                   where pa.Assessment_ID == assessmentID
                                     && requirementIds.Contains(pr.Requirement_Id)
                                    select new { p, pa, pr };
 
@@ -622,14 +622,14 @@ namespace CSETWeb_Api.BusinessManagers
                 if (string.IsNullOrEmpty(newText))
                 {
                     var g = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                            && p.Assessment_ID == this._assessmentId).FirstOrDefault();
+                            && p.Assessment_ID == this.assessmentID).FirstOrDefault();
                     if (g != null)
                     {
                         db.PARAMETER_ASSESSMENT.Remove(g);
                         db.SaveChanges();
                     }
 
-                    AssessmentUtil.TouchAssessment(_assessmentId);
+                    AssessmentUtil.TouchAssessment(assessmentID);
 
                     // build a partial return object just to inform the UI what the new value is
                     var baseParameter = db.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
@@ -639,14 +639,14 @@ namespace CSETWeb_Api.BusinessManagers
 
                 // Otherwise, insert or update the PARAMETER_ASSESSMENT record
                 var pa = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                        && p.Assessment_ID == this._assessmentId).FirstOrDefault();
+                        && p.Assessment_ID == this.assessmentID).FirstOrDefault();
 
                 if (pa == null)
                 {
                     pa = new PARAMETER_ASSESSMENT();
                 }
 
-                pa.Assessment_ID = this._assessmentId;
+                pa.Assessment_ID = this.assessmentID;
                 pa.Parameter_ID = parameterId;
                 pa.Parameter_Value_Assessment = newText;
 
@@ -660,7 +660,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
                 db.SaveChanges();
 
-                AssessmentUtil.TouchAssessment(_assessmentId);
+                AssessmentUtil.TouchAssessment(assessmentID);
 
                 // build a partial return object just to inform the UI what the new value is
                 return new ParameterToken(pa.Parameter_ID, "", pa.Parameter_Value_Assessment, 0, 0);
@@ -706,7 +706,7 @@ namespace CSETWeb_Api.BusinessManagers
                         db.SaveChanges();
                     }
 
-                    AssessmentUtil.TouchAssessment(_assessmentId);
+                    AssessmentUtil.TouchAssessment(assessmentID);
 
                     return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
                 }
@@ -737,7 +737,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
                 db.SaveChanges();
 
-                AssessmentUtil.TouchAssessment(_assessmentId);
+                AssessmentUtil.TouchAssessment(assessmentID);
 
                 // Return the token that was just updated
                 return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
