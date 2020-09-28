@@ -32,6 +32,7 @@ import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
 import { QuestionResponse } from '../models/questions.model';
+import { MaturityService } from './maturity.service';
 
 
 export interface NavTreeNode {
@@ -93,6 +94,7 @@ export class NavigationService {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private questionsSvc: QuestionsService,
+    private maturitySvc: MaturityService,
     private configSvc: ConfigService
   ) {
 
@@ -266,73 +268,84 @@ export class NavigationService {
   /**
    * Replaces the children of the Questions node with
    * the values supplied.
+   * There can be up to 3 souces for questions -- 
+   *   - Maturity
+   *   - Questions/Requirements
+   *   - Diagram
    */
   setQuestionsTree() {
-    console.log('setQuestionsTree END');
+
     // find the questions node
-    const assessmentNode = this.findInTree(this.dataSource.data, 'phase-assessment');
+    const questionsNode = this.findInTree(this.dataSource.data, 'phase-assessment');
 
 
-    this.questionsSvc.getQuestionsList().subscribe((response: QuestionResponse) => {
-      this.questionsSvc.questionList = response;
+    // build Maturity Questions
+    if (this.assessSvc.assessment.UseMaturity) {
+      this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+        const maturityNode = this.findInTree(questionsNode.children, '');
+      });
+    }
 
-      assessmentNode.children.length = 0;
 
-      response.Domains.forEach(c => {
-        const node1: NavTreeNode = {
-          label: '',
-          elementType: 'CONTAINER',
-          value: null,
-          isPhaseNode: false,
-          children: [],
-          expandable: true,
-          visible: true
-        };
+    // build Standard Questions
+    if (this.assessSvc.assessment.UseStandard) {
+      this.questionsSvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+        this.questionsSvc.questionList = response;
 
-        if (!!c.DisplayText) {
-          node1.label = c.DisplayText;
-        } else if (!!c.SetShortName) {
-          node1.label = c.SetShortName;
-        }
+        questionsNode.children.length = 0;
 
-        assessmentNode.children.push(node1);
-
-        c.Categories.forEach(g => {
-          const node2: NavTreeNode = {
-            label: g.GroupHeadingText,
-            elementType: 'QUESTION-HEADING',
-            value: {
-              target: g.NavigationGUID,
-              categoryID: g.GroupHeadingId,
-              parent: node1.label
-            },
+        response.Domains.forEach(c => {
+          const node1: NavTreeNode = {
+            label: '',
+            elementType: 'CONTAINER',
+            value: null,
             isPhaseNode: false,
             children: [],
             expandable: true,
             visible: true
           };
-          node1.children.push(node2);
+
+          if (!!c.DisplayText) {
+            node1.label = c.DisplayText;
+          } else if (!!c.SetShortName) {
+            node1.label = c.SetShortName;
+          }
+
+          questionsNode.children.push(node1);
+
+          c.Categories.forEach(g => {
+            const node2: NavTreeNode = {
+              label: g.GroupHeadingText,
+              elementType: 'QUESTION-HEADING',
+              value: {
+                target: g.NavigationGUID,
+                categoryID: g.GroupHeadingId,
+                parent: node1.label
+              },
+              isPhaseNode: false,
+              children: [],
+              expandable: true,
+              visible: true
+            };
+            node1.children.push(node2);
+          });
         });
+
+        // refresh
+        const d = this.dataSource.data;
+        this.dataSource.data = null;
+        this.dataSource.data = d;
       });
-
-      // refresh
-      const d = this.dataSource.data;
-      this.dataSource.data = null;
-      this.dataSource.data = d;
-    });
+    }
 
 
-    // put in a 'loading' node while we grab the question list
-    assessmentNode.children = [];
-    const node: NavTreeNode = {
-      label: '...',
-      value: '',
-      isPhaseNode: false,
-      children: [],
-      expandable: true,
-      visible: true
-    };
-    assessmentNode.children.push(node);
+    // build Diagram Questions
+    if (this.assessSvc.assessment.UseDiagram) {
+      console.log('ready to load component/diagram questions...');
+      // this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+      //   const maturityNode = this.findInTree(questionsNode.children, '');
+      // });
+    }
   }
 
   getFramework() {
@@ -601,6 +614,16 @@ export class NavigationService {
       level: 1,
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard;
+      }
+    },
+
+    {
+      displayText: 'Diagram Questions',
+      pageId: 'diagram-questions',
+      path: 'assessment/{:id}/diagram-questions',
+      level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram;
       }
     },
 

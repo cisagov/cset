@@ -92,7 +92,8 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
 import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
-import { MaturityQuestionsComponent } from './assessment/prepare/maturity/maturity-questions/maturity-questions.component';
+import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
+import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 
 
 const appRoutes: Routes = [
@@ -224,6 +225,7 @@ const appRoutes: Routes = [
 
           { path: 'questions', component: QuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
+          { path: 'diagram-questions', component: DiagramQuestionsComponent },
           {
             path: 'results',
             component: ResultsComponent,
