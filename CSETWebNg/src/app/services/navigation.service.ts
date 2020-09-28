@@ -275,24 +275,32 @@ export class NavigationService {
    */
   setQuestionsTree() {
 
-    // find the questions node
+    // find the questions node in the big tree
     const questionsNode = this.findInTree(this.dataSource.data, 'phase-assessment');
 
 
-    // build Maturity Questions
+    // build Maturity Questions node
     if (this.assessSvc.assessment.UseMaturity) {
       this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+        this.questionsSvc.maturityQuestions = response;
+
+        // find or create the node
         const maturityNode = this.findInTree(questionsNode.children, '');
+
+        // populate it
+
       });
     }
 
 
-    // build Standard Questions
+    // build Standard Questions node
     if (this.assessSvc.assessment.UseStandard) {
       this.questionsSvc.getQuestionsList().subscribe((response: QuestionResponse) => {
         this.questionsSvc.questionList = response;
 
-        questionsNode.children.length = 0;
+        const standardsNode = { children: [] }; // (find the node properly)
+        standardsNode.children.length = 0;
+
 
         response.Domains.forEach(c => {
           const node1: NavTreeNode = {
@@ -311,7 +319,7 @@ export class NavigationService {
             node1.label = c.SetShortName;
           }
 
-          questionsNode.children.push(node1);
+          standardsNode.children.push(node1);
 
           c.Categories.forEach(g => {
             const node2: NavTreeNode = {
@@ -339,12 +347,18 @@ export class NavigationService {
     }
 
 
-    // build Diagram Questions
+    // build Diagram Questions node
     if (this.assessSvc.assessment.UseDiagram) {
       console.log('ready to load component/diagram questions...');
-      // this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
-      //   const maturityNode = this.findInTree(questionsNode.children, '');
-      // });
+      this.questionsSvc.getComponentQuestionsList().subscribe((response: QuestionResponse) => {
+        this.questionsSvc.componentQuestions = response;
+
+        const componentsNode = { children: [] }; // find or create the node
+        componentsNode.children.length = 0;
+
+
+
+      });
     }
   }
 
@@ -573,7 +587,7 @@ export class NavigationService {
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard }
     },
     {
-      displayText: 'Standard Specific Screen(s)', level: 1,
+      displayText: 'Standards Specific Screen(s)', level: 1,
       condition: () => { return false; }
     },
 
@@ -618,7 +632,7 @@ export class NavigationService {
     },
 
     {
-      displayText: 'Diagram Questions',
+      displayText: 'Diagram Component Questions',
       pageId: 'diagram-questions',
       path: 'assessment/{:id}/diagram-questions',
       level: 1,

@@ -34,7 +34,6 @@ namespace CSETWeb_Api.BusinessManagers
 {
     public class ComponentQuestionManager : QuestionRequirementManager
     {
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -43,8 +42,6 @@ namespace CSETWeb_Api.BusinessManagers
         {
             this.assessmentID = assessmentId;
         }
-
-
 
 
         /// <summary>
