@@ -40,10 +40,10 @@ export class MaturityService {
   /**
    * Posts the current selections to the server.
    */
-  postSelection(selection: string) {
+  postSelection(modelName: string) {
     return this.http.post(
-      this.configSvc.apiUrl + "MaturityModels",
-      selection,
+      this.configSvc.apiUrl + "MaturityModel?modelName=" + modelName,
+      null,
       headers
     );
   }
