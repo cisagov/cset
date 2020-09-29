@@ -1004,7 +1004,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityModels(System.Collections.Generic.List{System.String})">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityModel(System.String)">
             <summary>
             Set selected maturity models for the assessment.
             </summary>
