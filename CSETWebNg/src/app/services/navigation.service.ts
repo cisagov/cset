@@ -632,7 +632,7 @@ export class NavigationService {
     },
 
     {
-      displayText: 'Standards Questions',
+      displayText: 'Standard Questions',
       pageId: 'questions',
       path: 'assessment/{:id}/questions',
       level: 1,
