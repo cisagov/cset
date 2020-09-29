@@ -361,6 +361,17 @@ export class NavigationService {
     }
   }
 
+  /**
+   * Inserts/replaces a specific 'top node' in the Assessment phase, e.g.,
+   * Maturity Questions, Standards Questions or Diagram Questions.
+   */
+  setQuestionsTopNode() {
+    
+  }
+
+  /**
+   * 
+   */
   getFramework() {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
   }
