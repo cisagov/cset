@@ -26,7 +26,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { Domain } from '../../../models/questions.model';
+import { Domain, QuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 
@@ -38,6 +38,7 @@ import { QuestionFiltersComponent } from '../../../dialogs/question-filters/ques
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   domains: Domain[] = null;
+
   loaded = false;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -69,13 +70,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     const magic = this.navSvc.getMagic();
     this.domains = null;
     this.maturitySvc.getQuestionsList().subscribe(
-      (response: any) => {
-        // this.assessSvc.applicationMode = response.ApplicationMode;
-        // this.setHasRequirements = (response.RequirementCount > 0);
-        // this.setHasQuestions = (response.QuestionCount > 0);
-        // this.questionsSvc.questions = response;
-
+      (response: QuestionResponse) => {
+        this.questionsSvc.maturityQuestions = response;
         this.domains = response.Domains;
+        this.loaded = true;
 
         // default the selected maturity filters
         // this.questionsSvc.initializeMatFilters(response.OverallIRP);
@@ -107,11 +105,15 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     });
   }
 
-    /**
+  /**
    * 
    */
   showFilterDialog() {
-    this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
+    this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {
+      data: {
+        isMaturity: true
+      }
+    });
     this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
       this.refreshQuestionVisibility();
     });
