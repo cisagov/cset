@@ -349,7 +349,6 @@ export class NavigationService {
 
     // build Diagram Questions node
     if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram) {
-      console.log('ready to load component/diagram questions...');
       this.questionsSvc.getComponentQuestionsList().subscribe((response: QuestionResponse) => {
         this.questionsSvc.componentQuestions = response;
 

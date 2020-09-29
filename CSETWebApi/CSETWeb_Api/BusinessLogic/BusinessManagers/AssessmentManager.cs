@@ -181,12 +181,18 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
                     assessment.UseStandard = result.aa.UseStandard;
-                    assessment.UseMaturity = result.aa.UseMaturity;
                     assessment.UseDiagram = result.aa.UseDiagram;
 
+                    assessment.UseMaturity = result.aa.UseMaturity;
                     if (assessment.UseMaturity)
                     {
                         GetMaturityModelDetails(ref assessment, db);
+                    }
+
+                    // for older assessments, if no features are set, look for actual data and set them
+                    if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
+                    {
+                        DetermineFeaturesFromData(ref assessment, db);
                     }
 
                     bool defaultAcet = (app_code == "ACET");
@@ -224,6 +230,30 @@ namespace CSETWeb_Api.BusinessManagers
             if (ml != null)
             {
                 assessment.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
+            }
+        }
+
+
+        /// <summary>
+        /// Set features based on existence of data.
+        /// </summary>
+        /// <param name="assessment"></param>
+        private void DetermineFeaturesFromData(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            var a = assessment;
+            if (db.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == a.Id))
+            {
+                assessment.UseStandard = true;
+            }
+
+            if (db.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
+            {
+                assessment.UseDiagram = true;
+            }
+
+            if (db.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
+            {
+                assessment.UseMaturity = true;
             }
         }
 

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
@@ -29,15 +29,23 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   selector: 'app-question-filters',
   templateUrl: './question-filters.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionFiltersComponent {
+
+  isMaturity = false;
 
   @Output() filterChanged = new EventEmitter<any>();
 
   constructor(public questionsSvc: QuestionsService,
     private dialog: MatDialogRef<QuestionFiltersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    if (!!data && !!data.isMaturity) {
+      this.isMaturity = data.isMaturity
+    }
+
+    console.log(this.isMaturity);
 
     // close the dialog if enter is pressed when focus is on background
     dialog.keydownEvents().subscribe(e => {
@@ -47,6 +55,10 @@ export class QuestionFiltersComponent {
     });
   }
 
+  /**
+   * 
+   * @param e 
+   */
   updateSearchString(e: Event) {
     if ((<KeyboardEvent>e).keyCode === 13) {
       this.close();
@@ -58,12 +70,20 @@ export class QuestionFiltersComponent {
     this.filterChanged.emit(true);
   }
 
+  /**
+   * 
+   * @param e 
+   * @param ans 
+   */
   updateFilters(e: Event, ans: string) {
     this.questionsSvc.setFilter(ans, (<HTMLInputElement>e.srcElement).checked);
 
     this.filterChanged.emit(true);
   }
 
+  /**
+   * 
+   */
   close() {
     return this.dialog.close();
   }
