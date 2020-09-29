@@ -200,7 +200,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
-                db.LoadStoredProc("s[RelevantAnswers]")
+                db.LoadStoredProc("[RelevantAnswers]")
                   .WithSqlParam("assessment_id", assessmentID)
                   .ExecuteStoredProc((handler) =>
                   {
