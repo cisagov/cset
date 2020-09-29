@@ -280,7 +280,7 @@ export class NavigationService {
 
 
     // build Maturity Questions node
-    if (this.assessSvc.assessment.UseMaturity) {
+    if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity) {
       this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
         this.questionsSvc.maturityQuestions = response;
 
@@ -294,7 +294,7 @@ export class NavigationService {
 
 
     // build Standard Questions node
-    if (this.assessSvc.assessment.UseStandard) {
+    if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard) {
       this.questionsSvc.getQuestionsList().subscribe((response: QuestionResponse) => {
         this.questionsSvc.questionList = response;
 
@@ -348,7 +348,7 @@ export class NavigationService {
 
 
     // build Diagram Questions node
-    if (this.assessSvc.assessment.UseDiagram) {
+    if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram) {
       console.log('ready to load component/diagram questions...');
       this.questionsSvc.getComponentQuestionsList().subscribe((response: QuestionResponse) => {
         this.questionsSvc.componentQuestions = response;
@@ -550,7 +550,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment.UseMaturity
-          && this.assessSvc.maturityModels.indexOf('CMMC') >= 0
+          && this.assessSvc.assessment.MaturityModel === 'CMMC'
       }
     },
 

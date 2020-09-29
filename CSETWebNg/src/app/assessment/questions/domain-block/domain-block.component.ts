@@ -26,6 +26,16 @@ export class DomainBlockComponent implements OnInit {
   }
 
   setOrDomainLabel(d: Domain) {
+    // Don't show Component Defaults
+    if (d.DisplayText == 'Component Defaults') {
+      return '';
+    }
+
+    // don't show a domain label if it contains a single category with the same name
+    if (d.Categories.length === 1 && d.DisplayText === d.Categories[0].GroupHeadingText) {
+      return '';
+    }
+
     if (!!d.DisplayText) {
       return d.DisplayText;
     } else if (!!d.SetShortName) {

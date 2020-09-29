@@ -42,6 +42,9 @@ export interface AssessmentDetail {
     UseStandard?: boolean;
     UseMaturity?: boolean;
     UseDiagram?: boolean;
+
+    MaturityModel?: string;
+    MaturityTargetLevel?: number;
 }
 
 export interface AssessmentContactsResponse {

@@ -22,9 +22,11 @@ export class CmmcLevelsComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.maturitySvc.getLevel().subscribe((l) => {
-      this.saveLevel(l);
-    });
+    console.log(this.maturitySvc.levels);
+    //this.saveLevel(this.assessSvc.assessment.MaturityTargetLevel);
+
+
+    this.selectedLevel.value = this.assessSvc.assessment.MaturityTargetLevel;
   }
 
   /**

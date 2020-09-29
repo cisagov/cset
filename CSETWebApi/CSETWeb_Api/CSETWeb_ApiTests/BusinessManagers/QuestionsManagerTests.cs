@@ -47,9 +47,8 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                     Assert.Fail("no data to test");
                 try
                 {
-                    QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
-
-                      
+                    ComponentQuestionManager manager = new ComponentQuestionManager(test.Assessment_Id);
+  
                     manager.HandleGuid(test.Component_Guid, true);
                     var list = db.ANSWER.Where(x => x.Component_Guid == test.Component_Guid).ToList();
                     Assert.IsTrue(list.Count > 0);
