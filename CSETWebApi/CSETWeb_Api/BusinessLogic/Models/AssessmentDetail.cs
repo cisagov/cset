@@ -35,6 +35,10 @@ namespace CSETWeb_Api.Models
         public bool UseMaturity;
         public bool UseDiagram;
 
+        // Selected maturity model
+        public string MaturityModel;
+        public int MaturityTargetLevel;
+
         /// <summary>
         /// The last time the Assessment was altered.
         /// </summary>

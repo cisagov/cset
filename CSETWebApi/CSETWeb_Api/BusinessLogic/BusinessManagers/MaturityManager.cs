@@ -46,24 +46,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// </summary>
         /// <param name="selectedMaturityModels"></param>
         /// <returns></returns>
-        public void PersistSelectedMaturityModels(int assessmentId, List<string> selectedMaturityModels)
+        public void PersistSelectedMaturityModel(int assessmentId, string selectedMaturityModel)
         {
             using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
 
-                if (selectedMaturityModels != null)
+                if (selectedMaturityModel != null)
                 {
-                    foreach (string modelName in selectedMaturityModels)
+                    db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
                     {
-                        db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
-                        {
-                            Assessment_Id = assessmentId,
-                            Model_Name = modelName.ToUpper(),
-                            Selected = true
-                        });
-                    }
+                        Assessment_Id = assessmentId,
+                        Model_Name = selectedMaturityModel.ToUpper(),
+                        Selected = true
+                    });
 
                     db.SaveChanges();
                 }
@@ -130,9 +127,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <param name="assessmentId"></param>
         public object GetMaturityQuestions(int assessmentId)
         {
+            // Populate response
+            var response = new QuestionResponse
+            {
+                Domains = new List<Domain>()
+            };
+
+
             using (var db = new CSET_Context())
             {
                 var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+
+                if (myModels.Count == 0)
+                {
+                    return response;
+                }
 
 
                 // The maturity target level is stored similar to a SAL level
@@ -171,12 +180,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                               select new FullAnswer() { a = a, b = b };
 
 
-
-                // Populate response
-                var response = new QuestionResponse
-                {
-                    Domains = new List<Domain>()
-                };
 
 
                 // CMMC has 17 domains, which correspond to Categories in the 

@@ -184,6 +184,11 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.UseMaturity = result.aa.UseMaturity;
                     assessment.UseDiagram = result.aa.UseDiagram;
 
+                    if (assessment.UseMaturity)
+                    {
+                        GetMaturityModelDetails(ref assessment, db);
+                    }
+
                     bool defaultAcet = (app_code == "ACET");
                     assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
@@ -198,6 +203,27 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 return assessment;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private void GetMaturityModelDetails(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            int assessmentId = assessment.Id;
+            var mm = db.AVAILABLE_MATURITY_MODELS.Where(m => m.Assessment_Id == assessmentId).FirstOrDefault();
+            if (mm != null)
+            {
+                assessment.MaturityModel = mm.Model_Name;
+            }
+
+            var ml = db.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+            if (ml != null)
+            {
+                assessment.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
             }
         }
 

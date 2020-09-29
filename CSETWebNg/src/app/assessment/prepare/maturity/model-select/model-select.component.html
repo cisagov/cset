@@ -28,7 +28,7 @@
   </p>
   <div class="mb-5">
     <h4><input type="radio" class="maturity-model-select" name="model-select" id="model-select-cmmc"
-      [checked]="assessSvc.maturityModels.indexOf('CMMC') >= 0"  
+      [checked]="assessSvc.assessment.MaturityModel === 'CMMC'"  
       (change)="changeSelection($event, 'CMMC')">
         <label for="model-select-cmmc" class="cursor-pointer">CMMC</label></h4>
     <div>
