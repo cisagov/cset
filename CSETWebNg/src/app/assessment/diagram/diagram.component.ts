@@ -28,6 +28,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { NavTreeNode } from '../../services/navigation.service';
 import { ConfigService } from '../../services/config.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
     selector: 'app-diagram',
@@ -40,7 +41,7 @@ export class DiagramComponent implements OnInit {
     buttonText: string = this.msgNoDiagramExists;
 
     constructor(private router: Router,
-       
+
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public configSvc: ConfigService,
@@ -48,12 +49,32 @@ export class DiagramComponent implements OnInit {
     ) { }
     tree: NavTreeNode[] = [];
     ngOnInit() {
-        this.populateTree();
+
+
+        // if we are hitting this page without knowing anything
+        // about the assessment, we probably just got back from
+        // the diagram.
+        if (!this.assessSvc.assessment) {
+
+            this.assessSvc.getAssessmentDetail().subscribe(
+                (data: AssessmentDetail) => {
+                    this.assessSvc.assessment = data;
+
+                    this.navSvc.setCurrentPage('diagram');
+                });
+
+            this.populateNavTree();
+            this.assessSvc.currentTab = 'prepare';
+        }
+
+        this.populateNavTree();
         this.assessSvc.currentTab = 'prepare';
     }
 
-    populateTree() {
-        const magic = this.navSvc.getMagic();
-        this.navSvc.buildTree(magic);
+    /**
+     * 
+     */
+    populateNavTree() {
+        this.navSvc.buildTree(this.navSvc.getMagic());
     }
 }
