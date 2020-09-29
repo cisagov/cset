@@ -355,6 +355,8 @@ export class QuestionsService {
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
 
+      // evaluate domain heading visibility
+      d.Visible = (!!d.Categories.find(c => c.Visible));
     });
 
   }

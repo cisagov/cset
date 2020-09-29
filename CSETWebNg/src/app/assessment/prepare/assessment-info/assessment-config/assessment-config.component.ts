@@ -52,6 +52,8 @@ export class AssessmentConfigComponent implements OnInit {
       (data: AssessmentDetail) => {
         this.assessSvc.assessment = data;
 
+        this.navSvc.setCurrentPage('info1');
+
         this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.UseStandard;
         this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.UseMaturity;
         this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.UseDiagram;

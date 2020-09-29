@@ -22,13 +22,33 @@
 -------------------------->
 <div class="white-panel">
 
-  <h2>
-    Diagram Component Questions
-  </h2>
+  <div id="top"></div>
+  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-  <div *ngIf="!domains">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
+      <div class="d-flex align-items-start flex-11a">
+        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse
+          All</button>
+        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
+        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
+          <i class="cset-icons-filter"></i>
+        </button>
+      </div>
+    </div>
+
+    <h2>
+      Diagram Component Questions
+    </h2>
+
+    <div *ngIf="!domains">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+    <!-- top level -->
+    <div *ngFor="let d of domains" class="w-100">
+      <app-domain-block [domain]="d"></app-domain-block>
     </div>
   </div>
 

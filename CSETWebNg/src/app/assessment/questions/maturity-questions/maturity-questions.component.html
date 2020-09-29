@@ -35,9 +35,12 @@
       </div>
     </div>
 
-    <h2>Maturity Questions</h2>
     <div class="d-block">
-      The target level is {{ maturitySvc.targetLevelName() }}
+      <h2>Maturity Questions</h2>
+      <div>
+        The target maturity level for this assessment is set to 
+        <strong [innerText]="maturitySvc.targetLevelName()"></strong>
+      </div>
     </div>
 
     <div *ngIf="!domains" class="w-100">
