@@ -30,8 +30,8 @@ export class ModelSelectComponent implements OnInit {
   changeSelection(event: any, model: string) {
     // the models are currently single-select, so whichever
     // radio button was clicked, that's the only model we will use
-    this.assessSvc.maturityModels = [ model ];
+    this.assessSvc.assessment.MaturityModel = model;
 
-    this.maturitySvc.postSelections(this.assessSvc.maturityModels).subscribe();
+    this.maturitySvc.postSelection(model).subscribe();
   }
 }

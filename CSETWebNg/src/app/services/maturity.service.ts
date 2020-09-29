@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -11,8 +12,6 @@ const headers = {
   providedIn: 'root'
 })
 export class MaturityService {
-
-  targetLevel: number;
 
   /**
    * These are specific to CMMC and will need to be configured somewhere,
@@ -32,6 +31,7 @@ export class MaturityService {
    * @param configSvc 
    */
   constructor(
+    private assessSvc: AssessmentService,
     private http: HttpClient,
     private configSvc: ConfigService
   ) { }
@@ -40,16 +40,18 @@ export class MaturityService {
   /**
    * Posts the current selections to the server.
    */
-  postSelections(selections: string[]) {
+  postSelection(selection: string) {
     return this.http.post(
       this.configSvc.apiUrl + "MaturityModels",
-      selections,
+      selection,
       headers
     );
   }
 
   /**
-   * Gets the saved maturity level from the API
+   * Gets the saved maturity level from the API.
+   * If we store this in the assessment service 'assessment' object,
+   * there is no need to go to the API for this.
    */
   getLevel() {
     return this.http.get(
@@ -62,8 +64,12 @@ export class MaturityService {
    * Returns the name of the current target level.
    */
   targetLevelName() {
-    if (!!this.targetLevel) {
-      return this.levels[this.targetLevel].name;
+    if (!!this.assessSvc.assessment && !!this.assessSvc.assessment.MaturityTargetLevel) {
+      const l = this.levels.find(x => x.value == this.assessSvc.assessment.MaturityTargetLevel);
+      if (!!l) {
+        return l.name;
+      }
+      return '???';
     }
     else {
       return '???';
@@ -75,7 +81,7 @@ export class MaturityService {
    * @param level 
    */
   saveLevel(level: number) {
-    this.targetLevel = level;
+    this.assessSvc.assessment.MaturityTargetLevel = level;
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",
       level,

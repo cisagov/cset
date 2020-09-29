@@ -50,6 +50,7 @@ export interface Domain {
     IsDomain: boolean;
     DomainText: string;
     Categories: Category[];
+    Visible: boolean;
 }
 
 export interface Category {
