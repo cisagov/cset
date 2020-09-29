@@ -66,11 +66,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
 
 
+                System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
+                w.Start();
+
+
                 List<AwwaControlAnswer> mappedAnswers = new List<AwwaControlAnswer>();
+
+                List<long> laps = new List<long>();
 
                 for (var i = targetSheetStartRow; i < maxRow; i++)
                 {
                     var controlID = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", cidColRef, i));
+
+                    if (string.IsNullOrEmpty(controlID))
+                    {
+                        break;
+                    }
 
                     if (!string.IsNullOrEmpty(controlID))
                     {
@@ -86,7 +97,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         };
                         mappedAnswers.Add(a);
                     }
+
+                    laps.Add(w.ElapsedMilliseconds);
                 }
+
+
+                var e1 = w.ElapsedMilliseconds;
 
 
                 // at this point, CSET assessment answers can be built from the 'answers' collection ...
@@ -146,6 +162,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     dbio.Execute(sqlInsert, parmsQ);
                 }
+
+                var e2 = w.ElapsedMilliseconds;
+
+                var abc = 1;
             }
         }
 
