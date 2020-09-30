@@ -240,45 +240,6 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
   /**
    * 
    */
-  processComponentOverrides(Categories: Category[]) {
-    Categories.forEach(g => {
-      let rval = true;
-      if (g.Symbol_Name) {
-        if (this.PreviousComponentGroup) {
-          rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
-            && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
-        }
-        this.PreviousComponentGroup = g;
-      } else {
-        rval = false;
-      }
-      g.ShowOverrideHeader = rval;
-    });
-  }
-
-
-  /**
-   * 
-   */
-  insertComponentSpecificOverride(tree: NavTreeNode[], q: Category) {
-    // build the question group heading element
-    q.SubCategories.forEach(sub => {
-      const heading = {
-        label: sub.SubCategoryHeadingText,
-        value: {
-          target: sub.NavigationGUID,
-          question: q.GroupHeadingId
-        },
-        elementType: 'QUESTION-HEADING',
-        children: []
-      };
-      // componentname.children.push(heading);
-    });
-  }
-
-  /**
-   * 
-   */
   visibleGroupCount() {
     if (!this.domains) {
       return 1;
