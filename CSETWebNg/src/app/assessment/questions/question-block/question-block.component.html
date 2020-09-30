@@ -48,7 +48,7 @@
       <div class="mb-2">
         {{ mySubCategory.HeaderQuestionText }}
       </div>
-      <div [class.display-none]="questionsSvc.isFilterEngaged()">
+      <div [class.display-none]="filterSvc.isFilterEngaged()">
         <!-- this is the header answer block -->
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
           <label class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'"

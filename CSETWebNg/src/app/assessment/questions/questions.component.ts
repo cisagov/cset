@@ -25,12 +25,12 @@ import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { Router } from '@angular/router';
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
-import { QuestionResponse, Domain, Category } from '../../models/questions.model';
+import { QuestionResponse, Domain } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavTreeNode } from '../../services/navigation.service';
 import { QuestionsService } from '../../services/questions.service';
 import { StandardService } from '../../services/standard.service';
 import { NavigationService } from '../../services/navigation.service';
+import { QuestionFilterService } from '../../services/question-filter.service';
 
 
 @Component({
@@ -68,6 +68,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
     private stdSvc: StandardService,
+    public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private router: Router,
     private dialog: MatDialog
@@ -109,7 +110,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
       this.refreshQuestionVisibility(magic);
     });
   }
-  
+
   /**
    *
    */

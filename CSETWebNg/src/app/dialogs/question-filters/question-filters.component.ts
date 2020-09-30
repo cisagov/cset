@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
-import { QuestionsService } from '../../services/questions.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { QuestionFilterService } from '../../services/question-filter.service';
 
 @Component({
   selector: 'app-question-filters',
@@ -37,15 +37,15 @@ export class QuestionFiltersComponent {
 
   @Output() filterChanged = new EventEmitter<any>();
 
-  constructor(public questionsSvc: QuestionsService,
+  constructor(
+    public filterSvc: QuestionFilterService,
     private dialog: MatDialogRef<QuestionFiltersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
 
     if (!!data && !!data.isMaturity) {
       this.isMaturity = data.isMaturity
     }
-
-    console.log(this.isMaturity);
 
     // close the dialog if enter is pressed when focus is on background
     dialog.keydownEvents().subscribe(e => {
@@ -59,24 +59,24 @@ export class QuestionFiltersComponent {
    * 
    * @param e 
    */
-  updateSearchString(e: Event) {
+  updateFilterString(e: Event) {
     if ((<KeyboardEvent>e).keyCode === 13) {
       this.close();
     }
 
     const s = (<HTMLInputElement>e.srcElement).value.trim();
-    this.questionsSvc.searchString = s;
+    this.filterSvc.filterString = s;
 
     this.filterChanged.emit(true);
   }
 
   /**
-   * 
+   * Turns a filter on or off, depending on the state of the checkbox.
    * @param e 
    * @param ans 
    */
   updateFilters(e: Event, ans: string) {
-    this.questionsSvc.setFilter(ans, (<HTMLInputElement>e.srcElement).checked);
+    this.filterSvc.setFilter(ans, (<HTMLInputElement>e.srcElement).checked);
 
     this.filterChanged.emit(true);
   }
