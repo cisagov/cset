@@ -103,7 +103,7 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var query = from aa in db.ASSESSMENTS
-                            where aa.Assessment_Id == assessmentId
+                    where aa.Assessment_Id == assessmentId
                             select aa;
 
                 int tmpUID = 0;
@@ -129,8 +129,12 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                 var result = query.ToList().FirstOrDefault();
+                var modeResult = query.Join(db.STANDARD_SELECTION, x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
+                    .FirstOrDefault();
+
                 if (result != null)
                 {
+                   
                     assessment = new AnalyticsAssessment()
                     {
                         Alias = result.Alias,
@@ -138,7 +142,8 @@ namespace CSETWeb_Api.BusinessManagers
                         AssessmentCreatorId = tmpGuid.ToString(),
                         Assessment_Date = Utilities.UtcToLocal(result.Assessment_Date),
                         Assessment_GUID = result.Assessment_GUID.ToString(),
-                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate)
+                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate), 
+                        Mode = modeResult?.Application_Mode
                     };
                 }
 
