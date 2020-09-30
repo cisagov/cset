@@ -30,6 +30,7 @@ namespace CSETWeb_Api.Controllers
             assessment.Size = demographics.Size;
             assessment.IndustryId = demographics.IndustryId;
             assessment.SectorId = demographics.SectorId;
+            
 
             return Ok(new Analytics
             {
@@ -45,7 +46,9 @@ namespace CSETWeb_Api.Controllers
             AssessmentManager assessmentManager = new AssessmentManager();
             StandardsManager standardsManager = new StandardsManager();
             var assessment = assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
+            
             var standards = standardsManager.GetStandards(assessmentId);
+            
             return assessment;
         }
 
