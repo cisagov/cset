@@ -49,8 +49,9 @@ export class QuestionFilterService {
    *   Comments - C
    *   Marked For Review - M
    *   Discoveries (Observations) - D
+   * The settings are initialized to be all on to start.
    */
-  public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
+  public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
