@@ -42,7 +42,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
-                db.FillEmptyQuestionsForAnalysis(_assessmentId);
+                db.FillEmptyQuestionsForAnalysis(assessmentID);
 
                 var q = (from rs in db.REQUIREMENT_SETS
                          join r in db.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
@@ -53,7 +53,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                          join qu in db.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
                          join a in db.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
                          where rl.Standard_Level == _standardLevel && av.Selected == true && rl.Level_Type == "NST"
-                             && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
+                             && av.Assessment_Id == assessmentID && a.Assessment_Id == assessmentID
                          orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
                          select new { r, rs, rl, s, qu, a }).ToList();
 
@@ -113,12 +113,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                var level = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                var level = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
 
                 var rval1 = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
                              join s in db.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
-                             where c.Assessment_Id == _assessmentId && c.Zone_Id == null
+                             where c.Assessment_Id == assessmentID && c.Zone_Id == null
                              orderby s.Symbol_Name, c.label
                              select new DiagramZones
                              {
@@ -131,7 +131,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var rval = (from c in db.ASSESSMENT_DIAGRAM_COMPONENTS
                             join z in db.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
                             join s in db.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
-                            where c.Assessment_Id == _assessmentId
+                            where c.Assessment_Id == assessmentID
                             orderby s.Symbol_Name, c.label
                             select new DiagramZones
                             {
@@ -150,7 +150,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                return db.usp_getFinancialQuestions(_assessmentId).ToList();
+                return db.usp_getFinancialQuestions(assessmentID).ToList();
             }
         }
 
@@ -165,8 +165,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                              join q in db.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
                              join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
                              join s in db.SETS on b.Set_Name equals s.Set_Name
-                             where a.Selected == true && a.Assessment_Id == _assessmentId
-                             && c.Assessment_Id == _assessmentId
+                             where a.Selected == true && a.Assessment_Id == assessmentID
+                             && c.Assessment_Id == assessmentID
                              orderby s.Short_Name, h.Question_Group_Heading, c.Question_Number
                              select new SimpleStandardQuestions()
                              {
@@ -212,7 +212,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 List<usp_getExplodedComponent> results = null;
 
                 db.LoadStoredProc("s[usp_getExplodedComponent]")
-                  .WithSqlParam("assessment_id", _assessmentId)
+                  .WithSqlParam("assessment_id", assessmentID)
                   .ExecuteStoredProc((handler) =>
                   {
                       results = handler.ReadToList<usp_getExplodedComponent>().OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText).ToList();
@@ -241,7 +241,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                return db.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
+                return db.usp_GetOverallRankedCategoriesPage(assessmentID).Take(5).ToList();
             }
 
         }
@@ -264,7 +264,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var results = new List<QuestionsWithAlternateJustifi>();
 
                 // get any "A" answers that currently apply
-                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(assessmentID)
                     .Where(ans => ans.Answer_Text == "A").ToList();
 
                 if (relevantAnswers.Count == 0)
@@ -320,7 +320,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var results = new List<QuestionsWithComments>();
 
                 // get any "marked for review" or commented answers that currently apply
-                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(assessmentID)
                     .Where(ans => !string.IsNullOrEmpty(ans.Comment))
                     .ToList();
 
@@ -377,7 +377,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var results = new List<QuestionsMarkedForReview>();
 
                 // get any "marked for review" or commented answers that currently apply
-                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(assessmentID)
                     .Where(ans => ans.Mark_For_Review)
                     .ToList();
 
@@ -425,10 +425,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                RequirementsManager rm = new RequirementsManager(_assessmentId);
+                RequirementsManager rm = new RequirementsManager(assessmentID);
 
                 List<RankedQuestions> list = new List<RankedQuestions>();
-                List<usp_GetRankedQuestions_Result> rankedQuestionList = db.usp_GetRankedQuestions(_assessmentId).ToList();
+                List<usp_GetRankedQuestions_Result> rankedQuestionList = db.usp_GetRankedQuestions(assessmentID).ToList();
                 foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
                 {
                     q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
@@ -453,7 +453,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
                 var docs = from a in db.DOCUMENT_FILE
-                           where a.Assessment_Id == _assessmentId
+                           where a.Assessment_Id == assessmentID
                            select a;
                 foreach (var doc in docs)
                 {
@@ -473,10 +473,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             using (var db = new CSET_Context())
             {
                 NistSalManager manager = new NistSalManager();
-                Models.Sals sals = manager.CalculatedNist(_assessmentId, db);
+                Models.Sals sals = manager.CalculatedNist(assessmentID, db);
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
-                var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
-                Dictionary<string, string> typeToLevel = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.CIA_Type, x => x.DropDownValueLevel);
+                var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == assessmentID).ToList();
+                Dictionary<string, string> typeToLevel = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == assessmentID).ToDictionary(x => x.CIA_Type, x => x.DropDownValueLevel);
 
                 BasicReportData.OverallSALTable overallSALTable = new BasicReportData.OverallSALTable()
                 {
@@ -505,7 +505,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             using (var db = new CSET_Context())
             {
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
-                var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
+                var infos = db.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == assessmentID).ToList();
                 foreach (CNSS_CIA_JUSTIFICATIONS info in infos)
                 {
                     list.Add(new BasicReportData.CNSSSALJustificationsTable()
@@ -530,7 +530,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 var sals = (from a in db.STANDARD_SELECTION
                             join b in db.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
-                            where a.Assessment_Id == _assessmentId
+                            where a.Assessment_Id == assessmentID
                             select new { a, b }).ToList();
 
                 string OSV = "Low";
@@ -555,7 +555,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 }
 
                 // get active SAL type
-                var standardSelection = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                var standardSelection = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
                 return new BasicReportData.OverallSALTable()
                 {
@@ -577,7 +577,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+                INFORMATION infodb = db.INFORMATION.Where(x => x.Id == assessmentID).FirstOrDefault();
 
                 TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
                 {
@@ -586,7 +586,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
 
 
-                var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+                var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentID);
                 info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
 
                 // Primary Assessor
@@ -597,7 +597,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 // Other Contacts
                 info.Additional_Contacts = new List<string>();
                 var contacts = db.ASSESSMENT_CONTACTS
-                    .Where(ac => ac.Assessment_Id == _assessmentId
+                    .Where(ac => ac.Assessment_Id == assessmentID
                             && ac.UserId != assessment.AssessmentCreatorId)
                     .Include(u => u.User)
                     .ToList();
@@ -642,7 +642,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 join c in db.ANSWER on b.Answer_Id equals c.Answer_Id
                                 join d in db.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
                                 join i in db.IMPORTANCE on b.Importance_Id equals i.Importance_Id
-                                where c.Assessment_Id == _assessmentId
+                                where c.Assessment_Id == assessmentID
                                 orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
                                 select new { a, b, d, i.Value }).ToList();
 
@@ -686,7 +686,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             using (var db = new CSET_Context())
             {
                 var gensalnames = db.GEN_SAL_NAMES.ToList();
-                var actualvalues = (from a in db.GENERAL_SAL.Where(x => x.Assessment_Id == this._assessmentId)
+                var actualvalues = (from a in db.GENERAL_SAL.Where(x => x.Assessment_Id == this.assessmentID)
                                     join b in db.GEN_SAL_WEIGHTS on new { a.Sal_Name, a.Slider_Value } equals new { b.Sal_Name, b.Slider_Value }
                                     select b).ToList();
                 GenSALTable genSALTable = new GenSALTable();

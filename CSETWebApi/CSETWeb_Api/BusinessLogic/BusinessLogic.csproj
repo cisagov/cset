@@ -283,6 +283,7 @@
     <Compile Include="BusinessManagers\Answer_Components_Exploded_ForJSON.cs" />
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
+    <Compile Include="BusinessManagers\ComponentQuestionManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />

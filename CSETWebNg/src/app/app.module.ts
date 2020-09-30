@@ -208,8 +208,10 @@ import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/c
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
-import { MaturityQuestionsComponent } from './assessment/prepare/maturity/maturity-questions/maturity-questions.component';
+import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
+import { MatCmmcComponent } from './assessment/results/mat-cmmc/mat-cmmc.component';
+import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 
 @NgModule({
     imports: [
@@ -387,6 +389,8 @@ import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-
         MaturityQuestionsComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
+        MatCmmcComponent,
+        DiagramQuestionsComponent,
     ],
     providers: [
         ConfigService,

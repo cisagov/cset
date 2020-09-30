@@ -24,10 +24,6 @@
   <div id="top"></div>
   <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-    <div>
-      The target level is {{ maturitySvc.targetLevelName() }}
-    </div>
-
     <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
       <div class="d-flex align-items-start flex-11a">
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse
@@ -36,6 +32,14 @@
         <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
           <i class="cset-icons-filter"></i>
         </button>
+      </div>
+    </div>
+
+    <div class="d-block">
+      <h2>Maturity Questions</h2>
+      <div>
+        The target maturity level for this assessment is set to 
+        <strong [innerText]="maturitySvc.targetLevelName()"></strong>
       </div>
     </div>
 

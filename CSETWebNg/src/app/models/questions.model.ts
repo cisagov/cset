@@ -44,10 +44,13 @@ export interface ACETDomain {
  * Standard Questions, Component Defaults or Component Overrides.
  */
 export interface Domain {
+    SetName: string;
+    SetShortName: string;
     DisplayText: string;
     IsDomain: boolean;
     DomainText: string;
     Categories: Category[];
+    Visible: boolean;
 }
 
 export interface Category {
