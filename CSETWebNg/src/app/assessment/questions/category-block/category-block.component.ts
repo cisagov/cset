@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../../../models/questions.model';
+import { NavTreeNode } from '../../../services/navigation.service';
 
 @Component({
   selector: 'app-category-block',
@@ -18,15 +19,19 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.c.Visible = true;    // maybe this needs to be smarter
   }
 
+  /**
+   * 
+   */
   addDomainPad(domain) {
     if (domain != null) {
       return "domain-pad";
     }
     return "";
   }
-  
+
   /**
    * 
    */
@@ -36,5 +41,24 @@ export class CategoryBlockComponent implements OnInit {
     }
 
     return '';
+  }
+
+  /**
+   * 
+   */
+  insertComponentSpecificOverride(tree: NavTreeNode[], q: Category) {
+    // build the question group heading element
+    q.SubCategories.forEach(sub => {
+      const heading = {
+        label: sub.SubCategoryHeadingText,
+        value: {
+          target: sub.NavigationGUID,
+          question: q.GroupHeadingId
+        },
+        elementType: 'QUESTION-HEADING',
+        children: []
+      };
+      // componentname.children.push(heading);
+    });
   }
 }
