@@ -103,9 +103,19 @@ export class QuestionsService {
   domains = null;
 
   /**
-   * A reference to the current question list.
+   * A reference to the current maturity question list.
+   */
+  maturityQuestions: QuestionResponse = null;
+
+  /**
+   * A reference to the current standards question list.
    */
   questions: QuestionResponse = null;
+
+  /**
+   * A reference to the current component/diagram question list.
+   */
+  componentQuestions: QuestionResponse = null;
 
   /**
    * Sets the starting value of the maturity filters, based on the 'stairstep.'
@@ -200,9 +210,20 @@ export class QuestionsService {
     return this.http.post(this.configSvc.apiUrl + 'questionlist', '*', headers);
   }
 
+  /**
+   * 
+   */
+  getComponentQuestionsList() {
+    return this.http.post(this.configSvc.apiUrl + 'componentquestionlist', '*', headers);
+  }
+
+  /**
+   * 
+   */
   getQuestionListOverridesOnly() {
     return this.http.post(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', '*', headers);
   }
+
   /**
    * Posts an Answer to the API.
    * @param answer
@@ -334,6 +355,8 @@ export class QuestionsService {
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
 
+      // evaluate domain heading visibility
+      d.Visible = (!!d.Categories.find(c => c.Visible));
     });
 
   }

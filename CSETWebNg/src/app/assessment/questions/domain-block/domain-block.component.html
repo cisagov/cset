@@ -1,13 +1,15 @@
 <!-- (spacer) -->
-<div class="mt-4"></div>
+<div class="mt-4" [class.display-none]="!domain.Visible"></div>
 
 <!-- Domain Header Level -->
-<div class="domain-group-heading" *ngIf="!!domain">
-  {{ domain.DisplayText }}
+<div class="domain-group-heading" *ngIf="!!domain" [class.display-none]="!domain.Visible">
+  {{ setOrDomainLabel(domain) }}
 </div>
 
 <!-- Loop Groups within Domain -->
-<app-category-block *ngFor="let c of domain.Categories" [myCategory]="c"></app-category-block>
+<div *ngFor="let c of domain.Categories" [class.display-none]="!domain.Visible">
+  <app-category-block [myCategory]="c"></app-category-block>
+</div>
 
 <!-- indicates when all maturity filters turned off for this domain -->
 <div *ngIf="!!domain && questionsSvc.maturityFiltersAllOff(domain.DisplayText)"

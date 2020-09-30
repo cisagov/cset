@@ -169,7 +169,10 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
    * Changes the application mode of the assessment
    */
   setMode(mode: string) {
-    this.questionsSvc.setMode(mode).subscribe(() => this.loadQuestions());
+    this.questionsSvc.setMode(mode).subscribe(() => {
+      this.loadQuestions();
+      this.navSvc.setQuestionsTree();
+    });
   }
 
   getQuestionCounts() {
@@ -177,9 +180,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
       (data: QuestionResponse) => {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
-        this.setHasRequirements = true; // RKW TEMP
         this.setHasQuestions = (data.QuestionCount > 0);
-        // this.setHasQuestions = true; // RKW TEMP
 
         if (!this.setHasQuestions && !this.setHasRequirements) {
           this.assessSvc.applicationMode = 'Q';
