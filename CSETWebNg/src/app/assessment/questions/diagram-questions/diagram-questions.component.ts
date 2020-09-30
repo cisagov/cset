@@ -30,6 +30,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
+import { QuestionFilterService } from '../../../services/question-filter.service';
 
 @Component({
   selector: 'app-diagram-questions',
@@ -47,6 +48,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) { }

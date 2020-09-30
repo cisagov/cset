@@ -28,6 +28,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { QuestionFilterService } from '../../../services/question-filter.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -55,6 +56,7 @@ export class QuestionBlockComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
+    public filterSvc: QuestionFilterService,
     private dialog: MatDialog,
     public configSvc: ConfigService,
     public assessSvc: AssessmentService) {

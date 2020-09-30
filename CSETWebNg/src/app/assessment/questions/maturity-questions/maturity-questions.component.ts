@@ -29,6 +29,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { Domain, QuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
+import { QuestionFilterService } from '../../../services/question-filter.service';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) { }
@@ -114,9 +116,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         isMaturity: true
       }
     });
+
     this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
       this.refreshQuestionVisibility();
     });
+
     this.filterDialogRef
       .afterClosed()
       .subscribe(() => {
