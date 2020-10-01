@@ -40,11 +40,14 @@
       Diagram Component Questions
     </h2>
 
-    <div *ngIf="!domains">
+    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
+    
+    <div *ngIf="!domains" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
+
 
     <!-- top level -->
     <div *ngFor="let d of domains" class="w-100">
