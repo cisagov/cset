@@ -49,9 +49,13 @@ export class QuestionFilterService {
    *   Comments - C
    *   Marked For Review - M
    *   Discoveries (Observations) - D
-   * The settings are initialized to be all on to start.
    */
-  public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
+  public showFilters: string[];
+
+  /**
+   * Filters that are turned on at the start.
+   */
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -71,14 +75,38 @@ export class QuestionFilterService {
    */
   constructor(
     private assessSvc: AssessmentService
-  ) { }
+  ) { 
+    this.refresh();
+  }
+
+  /**
+   * Reset the filters back to default settings.
+   */
+  refresh() {
+    this.showFilters = this.defaultFilterSettings;
+  }
 
   /**
    * Returns true if we have any inclusion filters turned off.
+   * We don't count MT+ for this, since it is normally turned off.
    */
   isFilterEngaged() {
-    return (this.allowableFilters.length !== this.showFilters.length)
-      || this.filterString.length > 0;
+    if (this.filterString.length > 0) {
+      return true;
+    }
+
+    // see if any filters (not counting MT+) are turned off
+    const e = (this.remove(this.allowableFilters, 'MT+').length !== this.remove(this.showFilters, 'MT+').length);
+
+    return e;
+  }
+
+  /**
+   * Returns true if the filter is turned on to show
+   * questions above the maturity target level.
+   */
+  showingAboveMaturityTargetLevel() {
+    return (this.showFilters.indexOf('MT+') >= 0);
   }
 
   /**
@@ -87,7 +115,7 @@ export class QuestionFilterService {
    */
   filterOn(ans: string) {
     if (ans === 'ALL') {
-      if (this.arraysAreEqual(this.showFilters, this.allowableFilters)) {
+      if (this.arraysAreEqual(this.remove(this.showFilters, 'MT+'), this.remove(this.allowableFilters, 'MT+'))) {
         return true;
       } else {
         return false;
@@ -105,6 +133,7 @@ export class QuestionFilterService {
     if (ans === 'ALL') {
       if (show) {
         this.showFilters = this.allowableFilters.slice();
+        this.showFilters = this.remove(this.showFilters, 'MT+');
       } else {
         this.showFilters = [];
       }
@@ -144,5 +173,19 @@ export class QuestionFilterService {
       }
     }
     return true;
+  }
+
+  /**
+   * Returns an array with the target removed.
+   * @param a 
+   * @param target 
+   */
+  remove(a: any[], target: any) {
+    const a1 = a.slice();
+    const idx = a1.indexOf(target);
+    if (idx >= 0) {
+      a1.splice(idx, 1);
+    }
+    return a1;
   }
 }

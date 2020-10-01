@@ -316,6 +316,8 @@ export class QuestionsService {
 
             if (filter.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
               q.Visible = true;
+            } else {
+              q.Visible = false;
             }
 
             if (filter.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
