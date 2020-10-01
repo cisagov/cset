@@ -349,7 +349,6 @@ export class NavigationService {
 
     // build Diagram Questions node
     if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram) {
-      console.log('ready to load component/diagram questions...');
       this.questionsSvc.getComponentQuestionsList().subscribe((response: QuestionResponse) => {
         this.questionsSvc.componentQuestions = response;
 
@@ -362,6 +361,17 @@ export class NavigationService {
     }
   }
 
+  /**
+   * Inserts/replaces a specific 'top node' in the Assessment phase, e.g.,
+   * Maturity Questions, Standards Questions or Diagram Questions.
+   */
+  setQuestionsTopNode() {
+    
+  }
+
+  /**
+   * 
+   */
   getFramework() {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
   }
@@ -622,7 +632,7 @@ export class NavigationService {
     },
 
     {
-      displayText: 'Standards Questions',
+      displayText: 'Standard Questions',
       pageId: 'questions',
       path: 'assessment/{:id}/questions',
       level: 1,

@@ -71,7 +71,7 @@ export class DiagramInfoComponent implements OnInit {
         this.navSvc.buildTree(this.navSvc.getMagic());
     }
 
-    sendToDiagram() {
+    navToDiagram() {
         const jwt = sessionStorage.getItem('userToken');
         const apiUrl = this.configSvc.apiUrl;
         let host = this.configSvc.apiUrl;
@@ -86,7 +86,11 @@ export class DiagramInfoComponent implements OnInit {
             '&l=' + this.authSvc.isLocal,
             sessionStorage.getItem('assessmentId');
     }
-    sendToInventory() {
-        this.router.navigateByUrl('/assessment/' + sessionStorage.getItem('assessmentId') + '/diagram/inventory');
+
+    /**
+     * Navigate to diagram inventory screen.
+     */
+    navToInventory() {
+        this.router.navigateByUrl('/assessment/' + sessionStorage.getItem('assessmentId') + '/prepare/diagram/inventory');
     }
 }

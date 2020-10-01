@@ -25,12 +25,12 @@ import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { Router } from '@angular/router';
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
-import { QuestionResponse, Domain, Category } from '../../models/questions.model';
+import { QuestionResponse, Domain } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavTreeNode } from '../../services/navigation.service';
 import { QuestionsService } from '../../services/questions.service';
 import { StandardService } from '../../services/standard.service';
 import { NavigationService } from '../../services/navigation.service';
+import { QuestionFilterService } from '../../services/question-filter.service';
 
 
 @Component({
@@ -68,6 +68,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
     private stdSvc: StandardService,
+    public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private router: Router,
     private dialog: MatDialog
@@ -109,7 +110,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
       this.refreshQuestionVisibility(magic);
     });
   }
-  
+
   /**
    *
    */
@@ -235,45 +236,6 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
-  }
-
-  /**
-   * 
-   */
-  processComponentOverrides(Categories: Category[]) {
-    Categories.forEach(g => {
-      let rval = true;
-      if (g.Symbol_Name) {
-        if (this.PreviousComponentGroup) {
-          rval = !((g.Symbol_Name === this.PreviousComponentGroup.ComponentType)
-            && (g.ComponentName === this.PreviousComponentGroup.ComponentName));
-        }
-        this.PreviousComponentGroup = g;
-      } else {
-        rval = false;
-      }
-      g.ShowOverrideHeader = rval;
-    });
-  }
-
-
-  /**
-   * 
-   */
-  insertComponentSpecificOverride(tree: NavTreeNode[], q: Category) {
-    // build the question group heading element
-    q.SubCategories.forEach(sub => {
-      const heading = {
-        label: sub.SubCategoryHeadingText,
-        value: {
-          target: sub.NavigationGUID,
-          question: q.GroupHeadingId
-        },
-        elementType: 'QUESTION-HEADING',
-        children: []
-      };
-      // componentname.children.push(heading);
-    });
   }
 
   /**

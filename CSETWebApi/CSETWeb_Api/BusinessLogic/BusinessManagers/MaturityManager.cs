@@ -168,10 +168,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
 
 
-
+                // Get all maturity questions for the model regardless of level
+                // The user can choose to see questions above the target level via filtering. 
                 var questions = db.MATURITY_QUESTIONS.Where(q =>
-                    myModels.Select(mm => mm.Model_Name).Contains(q.Set_Name)
-                    && q.Maturity_Level <= targetLevel).ToList();
+                    myModels.Select(mm => mm.Model_Name).Contains(q.Set_Name)).ToList();
 
 
                 // Get all MATURITY answers for the assessment

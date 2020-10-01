@@ -66,11 +66,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
 
 
+
                 List<AwwaControlAnswer> mappedAnswers = new List<AwwaControlAnswer>();
+
 
                 for (var i = targetSheetStartRow; i < maxRow; i++)
                 {
                     var controlID = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", cidColRef, i));
+
+                    if (string.IsNullOrEmpty(controlID))
+                    {
+                        break;
+                    }
 
                     if (!string.IsNullOrEmpty(controlID))
                     {
@@ -87,6 +94,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         mappedAnswers.Add(a);
                     }
                 }
+
 
 
                 // at this point, CSET assessment answers can be built from the 'answers' collection ...
@@ -106,6 +114,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var sqlInsert = "insert into ANSWER (Assessment_Id, Is_Requirement, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Is_Component, Custom_Question_Guid, Is_Framework, Is_Maturity, Old_Answer_Id, Reviewed, FeedBack) " +
                     "values (@assessid, @isreq, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', 0, null, 0, 0, null, 0, null)";
 
+                var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Is_Requirement = @isreq";
+
                 QuestionsManager qm = new QuestionsManager(assessmentId);
                 foreach (var a in mappedAnswers)
                 {
@@ -119,32 +129,65 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     DataRow mappedQuestionAndRequirement = g[0];
 
-                    // Insert a Requirement answer
-                    var parmsReq = new Dictionary<string, object>()
+
+                    // Insert or update a Requirement answer
+                    try
                     {
-                        { "@assessid", assessmentId },
-                        { "@isreq", 1 },
-                        { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
-                        { "@comment", a.CsetComment },
-                        { "@questionnum", 0 },
-                        { "@ans", a.CsetAnswer }
-                    };
+                        var parmsReq = new Dictionary<string, object>()
+                        {
+                            { "@assessid", assessmentId },
+                            { "@isreq", 1 },
+                            { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
+                            { "@comment", a.CsetComment },
+                            { "@questionnum", 0 },
+                            { "@ans", a.CsetAnswer }
+                        };
 
-                    dbio.Execute(sqlInsert, parmsReq);
-
-
-                    // Insert a Question answer
-                    var parmsQ = new Dictionary<string, object>()
+                        dbio.Execute(sqlInsert, parmsReq);
+                    }
+                    catch (Exception exc)
                     {
-                        { "@assessid", assessmentId },
-                        { "@isreq", 0 },
-                        { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
-                        { "@comment", a.CsetComment },
-                        { "@questionnum", 0 },
-                        { "@ans", a.CsetAnswer }
-                    };
+                        var parmsReq = new Dictionary<string, object>()
+                        {
+                            { "@ans", a.CsetAnswer },
+                            { "@comment", a.CsetComment },
+                            { "@assessid", assessmentId },
+                            { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
+                            { "@isreq", 1 }
+                        };
 
-                    dbio.Execute(sqlInsert, parmsQ);
+                        dbio.Execute(sqlUpdate, parmsReq);
+                    }
+
+
+                    // Insert or update a Question answer
+                    try
+                    {
+                        var parmsQ = new Dictionary<string, object>()
+                        {
+                            { "@assessid", assessmentId },
+                            { "@isreq", 0 },
+                            { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
+                            { "@comment", a.CsetComment },
+                            { "@questionnum", 0 },
+                            { "@ans", a.CsetAnswer }
+                        };
+
+                        dbio.Execute(sqlInsert, parmsQ);
+                    }
+                    catch (Exception exc)
+                    {
+                        var parmsQ = new Dictionary<string, object>()
+                        {
+                            { "@ans", a.CsetAnswer },
+                            { "@comment", a.CsetComment },
+                            { "@assessid", assessmentId },
+                            { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
+                            { "@isreq", 0 }
+                        };
+
+                        dbio.Execute(sqlUpdate, parmsQ);
+                    }
                 }
             }
         }

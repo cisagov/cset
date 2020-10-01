@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="d-block">
+    <div class="d-block mb-2">
       <h2>Maturity Questions</h2>
       <div>
         The target maturity level for this assessment is set to 
@@ -43,13 +43,15 @@
       </div>
     </div>
 
+    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
+
+    <div *ngIf="filterSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
+    
     <div *ngIf="!domains" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
-
-    <div *ngIf="questionsSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
 
     <!-- top level -->

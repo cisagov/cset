@@ -28,6 +28,7 @@ import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCate
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { AcetFiltersService, ACETFilter } from './acet-filters.service';
+import { QuestionFilterService } from './question-filter.service';
 
 
 
@@ -40,26 +41,6 @@ const headers = {
 
 @Injectable()
 export class QuestionsService {
-
-
-  /**
-   * Filter settings
-   *   Comments - C
-   *   Marked For Review - M
-   *   Discoveries (Observations) - D
-   */
-  public showFilters: string[] = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
-
-  // Valid 'answer'-type filter values
-  public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
-
-  // The allowable filter values.  Used for "select all"
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
-
-  // The allowable maturity filter values.  Only applicable on maturity questions page.
-  readonly maturityFilters = ['MT', 'MT+'];
-
-  public searchString = '';
 
   public overallIRP: number;
 
@@ -91,7 +72,8 @@ export class QuestionsService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessmentSvc: AssessmentService,
-    private filterSvc: AcetFiltersService
+    private acetFilterSvc: AcetFiltersService,
+    private questionFilterSvc: QuestionFilterService
 
   ) {
     this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
@@ -139,12 +121,12 @@ export class QuestionsService {
       return;
     }
 
-    this.filterSvc.getFilters().subscribe((x: ACETFilter[]) => {
+    this.acetFilterSvc.getFilters().subscribe((x: ACETFilter[]) => {
       // set the filters based on the bands
       if ((x === undefined) || (x.length === 0)) {
         this.getDefaultBand(irp);
         if ((x === undefined) || (x.length === 0)) {
-          this.filterSvc.saveFilters(this.domainMatFilters).subscribe();
+          this.acetFilterSvc.saveFilters(this.domainMatFilters).subscribe();
         }
       } else {
         for (const entry of x) {
@@ -162,11 +144,11 @@ export class QuestionsService {
   }
 
   resetBandS(irp: number) {
-    this.filterSvc.getACETDomains().subscribe((domains: ACETDomain) => {
+    this.acetFilterSvc.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
       this.domainMatFilters = new Map();
       this.getDefaultBand(irp);
-      this.filterSvc.saveFilters(this.domainMatFilters).subscribe();
+      this.acetFilterSvc.saveFilters(this.domainMatFilters).subscribe();
     });
   }
 
@@ -271,13 +253,7 @@ export class QuestionsService {
   }
 
 
-  /**
-   * Returns true if we have any inclusion filters turned off.
-   */
-  isFilterEngaged() {
-    return (this.allowableFilters.length !== this.showFilters.length)
-      || this.searchString.length > 0;
-  }
+
 
 
   /**
@@ -290,6 +266,8 @@ export class QuestionsService {
       return;
     }
 
+    const filter = this.questionFilterSvc;
+
     domains.forEach(d => {
       d.Categories.forEach(c => {
         c.SubCategories.forEach(s => {
@@ -299,43 +277,50 @@ export class QuestionsService {
 
             // If search string is specified, any questions that don't contain the string
             // are not shown.  No need to check anything else.
-            if (this.searchString.length > 0
-              && q.QuestionText.indexOf(this.searchString) < 0) {
+            if (filter.filterString.length > 0
+              && q.QuestionText.indexOf(filter.filterString) < 0) {
               return;
             }
 
             // evaluate answers
-            if (this.answerValues.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
+            if (filter.answerValues.includes(q.Answer) && filter.showFilters.includes(q.Answer)) {
               q.Visible = true;
             }
 
             // consider null answers as 'U'
-            if (q.Answer == null && this.showFilters.includes('U')) {
+            if (q.Answer == null && filter.showFilters.includes('U')) {
               q.Visible = true;
             }
 
             // evaluate other features
-            if (this.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
+            if (filter.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
               q.Visible = true;
             }
 
-            if (this.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
+            if (filter.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
               q.Visible = true;
             }
 
-            if (this.showFilters.includes('M') && q.MarkForReview) {
+            if (filter.showFilters.includes('M') && q.MarkForReview) {
               q.Visible = true;
             }
 
-            if (this.showFilters.includes('D') && q.HasDiscovery) {
+            if (filter.showFilters.includes('D') && q.HasDiscovery) {
               q.Visible = true;
             }
 
-            if (this.showFilters.includes('MT') && q.MaturityLevel <= 3) {
+            // maturity level filtering
+            const targetLevel = this.assessmentSvc.assessment ?
+              this.assessmentSvc.assessment.MaturityTargetLevel :
+              10;
+
+            if (filter.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
               q.Visible = true;
+            } else {
+              q.Visible = false;
             }
 
-            if (this.showFilters.includes('MT+') && q.MaturityLevel > 3) {
+            if (filter.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
               q.Visible = true;
             }
 
@@ -361,74 +346,9 @@ export class QuestionsService {
 
   }
 
-
   /**
-   * Indicates if the specified answer filter is currently 'on'
-   * @param ans
+   * 
    */
-  filterOn(ans: string) {
-    if (ans === 'ALL') {
-      if (this.arraysAreEqual(this.showFilters, this.allowableFilters)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return (this.showFilters.indexOf(ans) >= 0);
-  }
-
-
-  /**
-   * Adds or removes the specified answer.
-   * @param ans
-   * @param show
-   */
-  setFilter(ans: string, show: boolean) {
-    if (ans === 'ALL') {
-      if (show) {
-        this.showFilters = this.allowableFilters.slice();
-      } else {
-        this.showFilters = [];
-      }
-      return;
-    }
-
-    if (show) {
-      if (this.showFilters.indexOf(ans) < 0) {
-        this.showFilters.push(ans);
-      }
-    } else {
-      const i = this.showFilters.indexOf(ans);
-      if (i >= 0) {
-        this.showFilters.splice(i, 1);
-      }
-    }
-  }
-
-  /**
-   * Returns true if no maturity filters are enabled.
-   * This is used primarily to ngif the 'all filters are off' message.
-   */
-  maturityFiltersAllOff(domainName: string) {
-    // If not ACET (no domain name), return false
-    if (!domainName || domainName.length === 0
-      || !this.domainMatFilters || !this.domainMatFilters.get(domainName)) {
-      return false;
-    }
-
-    const i = this.domainMatFilters.get(domainName).entries();
-    let e = i.next();
-    while (!e.done) {
-      if (e.value[1]) {
-        return false;
-      }
-      e = i.next();
-    }
-
-    return true;
-  }
-
-
   getDefaultParametersForAssessment() {
     return this.http.get(this.configSvc.apiUrl + 'ParametersForAssessment', headers);
   }
@@ -529,22 +449,25 @@ export class QuestionsService {
 
 
   /**
-   * Utility method.  Should be moved somewhere common.
+   * Returns true if no maturity filters are enabled.
+   * This is used primarily to ngif the 'all filters are off' message.
    */
-  arraysAreEqual(a1: any[], a2: any[]) {
-    if (a1.length !== a2.length) {
+  maturityFiltersAllOff(domainName: string) {
+    // If not ACET (no domain name), return false
+    if (!domainName || domainName.length === 0
+      || !this.domainMatFilters || !this.domainMatFilters.get(domainName)) {
       return false;
     }
 
-    for (let i = 0, l = a1.length; i < l; i++) {
-      if (a1[i] instanceof Array && a2[i] instanceof Array) {
-        if (!a1[i].equals(a2[i])) {
-          return false;
-        }
-      } else if (a1[i] !== a2[i]) {
+    const i = this.domainMatFilters.get(domainName).entries();
+    let e = i.next();
+    while (!e.done) {
+      if (e.value[1]) {
         return false;
       }
+      e = i.next();
     }
+
     return true;
   }
 

@@ -22,13 +22,15 @@
 //
 ////////////////////////////////
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { Domain } from '../../../models/questions.model';
 import { QuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
+import { QuestionFilterService } from '../../../services/question-filter.service';
 
 @Component({
   selector: 'app-diagram-questions',
@@ -40,10 +42,13 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
   
   loaded = false;
 
+  filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
+
   constructor(
     public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) { }
@@ -74,15 +79,9 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     this.domains = null;
     this.questionsSvc.getComponentQuestionsList().subscribe(
       (response: QuestionResponse) => {
-
-        console.log('component questions response:');
-        console.log(response);
-
-        this.loaded = true;
-
         this.questionsSvc.componentQuestions = response;
-
         this.domains = response.Domains;
+        this.loaded = true;
 
         this.refreshQuestionVisibility(magic);
       },
@@ -97,6 +96,35 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     );
   }
 
+
+  /**
+   * Controls the mass expansion/collapse of all subcategories on the screen.
+   * @param mode
+   */
+  expandAll(mode: boolean) {
+    this.domains.forEach((d: Domain) => {
+      d.Categories.forEach(group => {
+        group.SubCategories.forEach(subcategory => {
+          subcategory.Expanded = mode;
+        });
+      });
+    });
+  }
+
+    /**
+   * 
+   */
+  showFilterDialog() {
+    this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
+    this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
+      this.refreshQuestionVisibility();
+    });
+    this.filterDialogRef
+      .afterClosed()
+      .subscribe(() => {
+        this.refreshQuestionVisibility();
+      });
+  }
 
    /**
    * Re-evaluates the visibility of all questions/subcategories/categories

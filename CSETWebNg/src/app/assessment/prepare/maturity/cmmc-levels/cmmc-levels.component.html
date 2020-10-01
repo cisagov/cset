@@ -28,7 +28,7 @@
     all levels below it.
   </p>
 
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="maturitySvc.levels">
       <label class="btn btn-level btn-rounded form-check-label"
         [class.active]="level?.value <= this.assessSvc.assessment.MaturityTargetLevel" 
@@ -39,8 +39,8 @@
     </ng-template>
   </div>
 
-  <p class="my-3">
-    See below for level description:
+  <p class="mb-3" *ngIf="selectedLevel.value === 0">
+    Click a level to see its description.
   </p>
 
   <div *ngIf="selectedLevel.value === 1">
