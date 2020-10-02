@@ -162,11 +162,11 @@
                 class="detail">
                 <div><span class="reqlabel">Title: </span>{{tab?.RequirementFrameworkTitle}}</div>
                 <div><span class="reqlabel">Category: </span>{{tab?.RelatedFrameworkCategory}}</div>
-                <div *ngIf="!tab.Is_Maturity">
+                <div *ngIf="!tab.IsMaturity">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.LevelName}}
                 </div>
-                <div *ngIf="tab.Is_Maturity">
-                    <span class="reqlabel">Maturity Level: </span>{{tab?.MaturityLevelName}}
+                <div *ngIf="tab.IsMaturity">
+                    <span class="reqlabel">Maturity Level: </span>{{tab?.LevelName}}
                 </div>
                 <div *ngIf="!tab?.ShowRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
                 <div *ngIf="!tab?.ShowRequirementStandards">

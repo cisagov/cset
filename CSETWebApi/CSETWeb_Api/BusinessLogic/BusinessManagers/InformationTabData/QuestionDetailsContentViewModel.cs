@@ -265,7 +265,8 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             {
                 MaturityQuestionInfoData maturityData = new MaturityQuestionInfoData()
                 {
-                    QuestionID = question.MaturityQuestion.Mat_Question_Id
+                    QuestionID = question.MaturityQuestion.Mat_Question_Id,
+                    MaturityQuestion = question.MaturityQuestion
                 };
                 list = informationTabBuilder.CreateMaturityInformationTab(maturityData);
             }
