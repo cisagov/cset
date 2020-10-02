@@ -475,11 +475,24 @@ namespace CSET_Main.Questions.InformationTabData
         {
             try
             {
+                ShowRequirementFrameworkTitle = false;
+                RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
+                RelatedFrameworkCategory = info.MaturityQuestion.Category;
+                ShowRequirementStandards = true;
+
+                var l = controlContext.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
+                if (l != null)
+                {
+                    levelName = l.Level_Name;
+                }
+
                 IsMaturity = true;
 
-                ShowRequirementFrameworkTitle = false;
-                this.RequirementFrameworkTitle = "Maturity";
 
+                RequirementTabData tabData = new RequirementTabData();
+                tabData.SupplementalInfo = info.MaturityQuestion.Supplemental_Info;
+                tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
+                RequirementsData = tabData;
 
                 BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);
             }
