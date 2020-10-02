@@ -105,6 +105,8 @@ namespace CSET_Main.Questions.InformationTabData
 
         public bool IsComponent { get; set; }
 
+        public bool IsMaturity { get; set; }
+
         public List<String> SetsList { get; set; }
         public List<RelatedQuestion> QuestionsList { get; set; }
 
@@ -473,15 +475,13 @@ namespace CSET_Main.Questions.InformationTabData
         {
             try
             {
-                var abc = 1;
+                IsMaturity = true;
 
-                //RequirementTabData tabData = new RequirementTabData();
-                //tabData.RequirementID = requirement.Requirement_Id;
-                //tabData.Text = FormatRequirementText(requirement.Requirement_Text);
-                //tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
-                //tabData.Set_Name = requirementData.SetName;
+                ShowRequirementFrameworkTitle = false;
+                this.RequirementFrameworkTitle = "Maturity";
 
-               
+
+                BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);
             }
             catch (Exception ex)
             {
@@ -503,23 +503,62 @@ namespace CSET_Main.Questions.InformationTabData
             return availableRefDocs;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirement_ID"></param>
+        /// <param name="controlContext"></param>
         private void BuildDocuments(int requirement_ID, CSET_Context controlContext)
         {
             // Build a list of available documents
 
             List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded }).Concat(
-                controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
+                .Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+                .Concat(
+                    controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
 
             // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            var sourceDocuments = documents.Where(t => t.IsSource)
+                .Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
             SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
 
 
             // Help (Resource) Documents
-            var helpDocuments = documents.Where(t => !t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            var helpDocuments = documents.Where(t => !t.IsSource)
+                .Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="maturityQuestion_ID"></param>
+        /// <param name="controlContext"></param>
+        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID, CSET_Context controlContext)
+        {
+            List<string> availableRefDocs = GetBuildDocuments();
+
+            var documents = controlContext.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+                .Concat(
+              controlContext.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+              ).ToList();
+
+            // Source Documents  
+            var sourceDocuments = documents.Where(t => t.IsSource)
+                .Select(s => new CustomDocument(){ Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
+                .ToList();
+            SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
+
+
+            // Help (Resource) Documents
+            var helpDocuments = documents.Where(t => !t.IsSource)
+               .Select(s => new CustomDocument() { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
+               .ToList();
             ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
         }
 

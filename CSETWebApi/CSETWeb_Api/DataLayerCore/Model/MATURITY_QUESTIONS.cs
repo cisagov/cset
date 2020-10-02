@@ -35,7 +35,11 @@ namespace DataLayerCore.Model
         [ForeignKey(nameof(Set_Name))]
         //[InverseProperty(nameof(SETS.MATURITY_QUESTIONS))]
         public virtual SETS Set_NameNavigation { get; set; }
+
         [InverseProperty("Mat_Question_")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
+
+        [InverseProperty("Mat_Question_")]
+        public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
     }
 }
