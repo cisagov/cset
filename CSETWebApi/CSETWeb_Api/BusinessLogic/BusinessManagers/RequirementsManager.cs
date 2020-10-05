@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Documents;
-using System.Windows.Navigation;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
@@ -82,9 +80,9 @@ namespace CSETWeb_Api.BusinessManagers
             if (results.Any(r => r.SetName == "ACET_V1"))
             {
                 domains = (from d in db.FINANCIAL_DOMAINS
-                               join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
-                               join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
-                               select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
+                           join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
+                           join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
+                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
             }
 
 
@@ -127,7 +125,7 @@ namespace CSETWeb_Api.BusinessManagers
                 response.Domains.Add(new Domain()
                 {
                     DisplayText = d,
-                    DomainText = d                 
+                    DomainText = d
                 });
             }
 
@@ -240,7 +238,7 @@ namespace CSETWeb_Api.BusinessManagers
                 qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
 
                 subcat.Questions.Add(qa);
-            }   
+            }
 
             // remove any empty 'domains'
             response.Domains = response.Domains.Where(d => d.Categories.Count > 0).ToList();
