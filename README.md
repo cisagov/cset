@@ -1,9 +1,5 @@
 # CSET 10.0
  
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/alerts/)
-[![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:csharp)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
-
 Download CSET For Windows:
 [CSET 10.0 Standalone Installer](https://github.com/cisagov/cset2/releases/)
 
