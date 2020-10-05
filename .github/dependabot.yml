@@ -31,11 +31,6 @@ updates:
       interval: "daily"
            
   - package-ecosystem: "nuget" 
-    directory: "/CSETWebApi/CSETWeb_Api/CSETWeb_Api/" 
-    schedule:
-      interval: "daily"
-           
-  - package-ecosystem: "nuget" 
     directory: "/CSETWebApi/CSETWeb_Api/DataLayerCore/" 
     schedule:
       interval: "daily"
