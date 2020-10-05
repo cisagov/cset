@@ -1,5 +1,0 @@
-paths:
-  - CSETWebApi
-  - CSEETWebNg
-paths-ignore:
-  - CSETWebApi/lucene/**
