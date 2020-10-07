@@ -23,8 +23,8 @@
 ////////////////////////////////
 import { ImportAssessmentService } from './../../services/import-assessment.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../services/assessment.service';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';

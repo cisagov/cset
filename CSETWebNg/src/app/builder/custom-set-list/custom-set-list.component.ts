@@ -26,7 +26,7 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
 import { AlertComponent } from "../../dialogs/alert/alert.component";
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AuthenticationService } from '../../services/authentication.service';
 

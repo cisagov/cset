@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
