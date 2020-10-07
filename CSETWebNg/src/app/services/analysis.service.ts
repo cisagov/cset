@@ -284,7 +284,7 @@ export class AnalysisService {
                     getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                   let value = '';
                   if (!!arc) {
-                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index].toString();
                   }
                   return {
                     text: label + ' : ' + value + '%',
@@ -363,7 +363,7 @@ export class AnalysisService {
                     getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                   let value = '';
                   if (!!arc) {
-                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index].toString();
                   }
                   return {
                     text: label + ' : ' + value + '%',

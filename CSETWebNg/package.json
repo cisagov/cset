@@ -40,7 +40,7 @@
     "angular2-hotkeys": "^2.2.0",
     "array.prototype.fill": "^1.0.2",
     "bootstrap": "^4.5.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.8.0",
     "core-js": "^2.6.11",
     "datalist-polyfill": "^1.24.4",
     "document-register-element": "^1.14.10",
