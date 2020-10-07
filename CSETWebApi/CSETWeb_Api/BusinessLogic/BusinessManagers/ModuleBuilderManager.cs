@@ -615,21 +615,30 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     // Requirement-related question
                     var rqs = db.REQUIREMENT_QUESTIONS_SETS
-                        .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
-                    if (rqs == null)
+                        .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID)
+                        .FirstOrDefault();
+                    if (rqs != null)
                     {
-                        return;
+                        db.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
                     }
-                    db.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
+
+                    var rq = db.REQUIREMENT_QUESTIONS
+                        .Where(x => x.Question_Id == request.QuestionID && x.Requirement_Id == request.RequirementID)
+                        .FirstOrDefault();
+                    if (rq != null)
+                    {
+                        db.REQUIREMENT_QUESTIONS.Remove(rq);
+                    }
                 }
 
                 // Set-level question
-                var nqs = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID).FirstOrDefault();
-                if (nqs == null)
+                var nqs = db.NEW_QUESTION_SETS
+                    .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID)
+                    .FirstOrDefault();
+                if (nqs != null)
                 {
-                    return;
+                    db.NEW_QUESTION_SETS.Remove(nqs);
                 }
-                db.NEW_QUESTION_SETS.Remove(nqs);
 
                 db.SaveChanges();
             }
@@ -666,17 +675,17 @@ namespace CSETWeb_Api.BusinessManagers
                     subcatID = sc.Universal_Sub_Category_Id;
                 }
 
-                // See if we have this pairing for our set
-                var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Question_Group_Heading_Id == categoryId
-                    && x.Universal_Sub_Category_Id == subcatID
-                    && x.Set_Name == setName).FirstOrDefault();
+                // See if this pairing exists (regardless of the set name)
+                var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                    .Where(x => x.Question_Group_Heading_Id == categoryId && x.Universal_Sub_Category_Id == subcatID)
+                    .FirstOrDefault();
 
                 if (usch != null)
                 {
                     return usch.Heading_Pair_Id;
                 }
 
-                // Create a new set-specific USCH record
+                // Create a new USCH record
                 usch = new UNIVERSAL_SUB_CATEGORY_HEADINGS
                 {
                     Question_Group_Heading_Id = categoryId,
@@ -731,10 +740,10 @@ namespace CSETWeb_Api.BusinessManagers
                 var categories = db.QUESTION_GROUP_HEADING.Select(q => new CategoryEntry { Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id }).ToList();
                 response.Categories = categories;
 
-                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.Select(u=> new CategoryEntry{Text = u.Universal_Sub_Category, ID = u.Universal_Sub_Category_Id}).ToList();
+                var subcategories = db.UNIVERSAL_SUB_CATEGORIES.Select(u => new CategoryEntry { Text = u.Universal_Sub_Category, ID = u.Universal_Sub_Category_Id }).ToList();
                 response.Subcategories = subcategories;
 
-                var groupHeadings = db.QUESTION_GROUP_HEADING.Where(x=>x.Universal_Weight != 0).Select(q => new CategoryEntry{ Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id}).ToList();
+                var groupHeadings = db.QUESTION_GROUP_HEADING.Where(x => x.Universal_Weight != 0).Select(q => new CategoryEntry { Text = q.Question_Group_Heading1, ID = q.Question_Group_Heading_Id }).ToList();
                 response.GroupHeadings = groupHeadings;
             }
 
@@ -754,20 +763,9 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                List<int> includedQuestions = new List<int>();
-                if (searchParms.RequirementID > 0)
-                {
-                    // Build a list of all questionIDs that are currently on the Requirement
-                    includedQuestions = db.REQUIREMENT_QUESTIONS_SETS
-                        .Where(x => x.Set_Name == searchParms.SetName && x.Requirement_Id == searchParms.RequirementID)
-                        .Select(q => q.Question_Id).ToList();
-                }
-                else
-                {
-                    // Build a list of all questionIDs that are currently in the set
-                    includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
-                        .Select(q => q.Question_Id).ToList();
-                }
+                // Build a list of all questionIDs that are currently in the set
+                List<int> includedQuestions = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == searchParms.SetName)
+                    .Select(q => q.Question_Id).ToList();
 
 
                 // First, look for an exact string match within the question
@@ -827,7 +825,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     if (term != "")
                     {
-                        sbWhereClause.AppendFormat("[Simple_Question] like '%{0}%' and ", term.Replace('*', '%'));
+                        sbWhereClause.AppendFormat("[Simple_Question] like '%{0}%' and ", term.Replace('*', '%').Replace("\'", "''"));
                     }
                 }
 

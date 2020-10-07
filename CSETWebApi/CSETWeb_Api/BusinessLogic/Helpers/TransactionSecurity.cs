@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -37,7 +37,7 @@ namespace CSETWeb_Api.Helpers
         /// </param>
         /// <param name="assesmentId">Optionally brands the new token with an assessment ID in the payload</param>
         /// <returns></returns>
-        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, string scope)
+        public static string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
@@ -76,12 +76,18 @@ namespace CSETWeb_Api.Helpers
                 { "scope", scope}
             };
 
-            
+
 
             // Include the current AssessmentId if one was provided
             if (assessmentId != null)
             {
                 payload.Add(Constants.Token_AssessmentId, assessmentId);
+            }
+
+            // Include the current AggregationId if one was provided
+            if (aggregationId != null)
+            {
+                payload.Add(Constants.Token_AggregationId, aggregationId);
             }
 
             // Build the token
@@ -217,7 +223,7 @@ namespace CSETWeb_Api.Helpers
             get
             {
                 TokenManager tm = new TokenManager();
-                return tm.PayloadInt(Constants.Token_AssessmentId)??0; 
+                return tm.PayloadInt(Constants.Token_AssessmentId) ?? 0;
             }
         }
 
@@ -226,43 +232,60 @@ namespace CSETWeb_Api.Helpers
             GetSecret();
         }
 
-        private static string tmpNewSecret = null; 
+        /// <summary>
+        /// The secret that is used to encrypt all JWT tokens.
+        /// </summary>
+        private static string secret = null;
+
+
         /// <summary>
         /// Retrieves the JWT secret from the database.  
         /// If the secret is not in the database a new one is generated and persisted.
+        /// A unique 'installation ID' is also created and stored.
         /// </summary>
         /// <returns></returns>
         private static string GetSecret()
         {
-            if (tmpNewSecret != null)
-                return tmpNewSecret;
+            if (secret != null)
+            {
+                return secret;
+            }
+
             using (CSET_Context db = new CSET_Context())
             {
-                var jwtKey = db.JWT.OrderBy(x => x.Generated).FirstOrDefault();
-                if (jwtKey != null)
+                var inst = db.INSTALLATION.FirstOrDefault();
+                if (inst != null)
                 {
-                    tmpNewSecret = jwtKey.Secret;
-                    return jwtKey.Secret;
+                    secret = inst.JWT_Secret;
+                    return inst.JWT_Secret;
                 }
 
-                // This is the first run of CSET -- generate a new secret for this installation
+
+                // This is the first run of CSET -- generate a new secret and installation identifier
+                string newSecret = null;
+                string newInstallID = null;
+
                 var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
                 using (var rng = new RNGCryptoServiceProvider())
                 {
                     rng.GetBytes(byteArray);
+                    newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
                 }
-                string newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
+
+                newInstallID = Guid.NewGuid().ToString();
 
 
-                // Store the new secret
-                var j = new JWT
+                // Store the new secret and installation ID
+                var installRec = new INSTALLATION
                 {
-                    Secret = newSecret,
-                    Generated = DateTime.UtcNow
+                    JWT_Secret = newSecret,
+                    Generated_UTC = DateTime.UtcNow,
+                    Installation_ID = newInstallID
                 };
-                db.JWT.Add(j);
+                db.INSTALLATION.Add(installRec);
+
                 db.SaveChanges();
-                tmpNewSecret = newSecret;
+                secret = newSecret;
                 return newSecret;
             }
         }

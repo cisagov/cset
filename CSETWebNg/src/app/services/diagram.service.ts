@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import { RequestOptions, ResponseContentType } from '@angular/http';
 
 const headers = {
   headers: new HttpHeaders()
-  .set('Content-Type', 'application/json'),
+    .set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
@@ -48,35 +48,36 @@ export class DiagramService {
     return this.http.get(this.apiUrl + 'symbols/get');
   }
 
-  getAllSymbols(){
-    return this.http.get(this.apiUrl + 'symbols/getAll')
+  getAllSymbols() {
+    return this.http.get(this.apiUrl + 'symbols/getAll');
   }
 
-  //get diagram components
-  getDiagramComponents(){
-    return this.http.get(this.apiUrl+'getComponents');
+  // get diagram components
+  getDiagramComponents() {
+    return this.http.get(this.apiUrl + 'getComponents');
   }
 
-  getDiagramZones(){
-    return this.http.get(this.apiUrl+'getZones');
+  getDiagramZones() {
+    return this.http.get(this.apiUrl + 'getZones');
   }
 
-  getDiagramShapes(){
-    return this.http.get(this.apiUrl+'getShapes');
+  getDiagramShapes() {
+    return this.http.get(this.apiUrl + 'getShapes');
   }
 
-  getDiagramText(){
-    return this.http.get(this.apiUrl+'getTexts');
+  getDiagramText() {
+    return this.http.get(this.apiUrl + 'getTexts');
   }
 
-  getDiagramLinks(){
-    return this.http.get(this.apiUrl+'getLinks');
+  getDiagramLinks() {
+    return this.http.get(this.apiUrl + 'getLinks');
   }
 
-  getExport(): any{
-    return this.http.get(this.apiUrl+'export', {responseType:'blob'});
+  getDiagramWarnings() {
+    return this.http.get(this.configSvc.apiUrl + 'analysis/NetworkWarnings');
   }
 
-  
-
+  getExport(): any {
+    return this.http.get(this.apiUrl + 'export', { responseType: 'blob' });
+  }
 }

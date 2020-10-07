@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -18,8 +18,8 @@ using System.Web.Http;
 
 namespace CSETWeb_Api.Controllers
 {
-    
-   // [CSETWeb_Api.Helpers.CSETAuthorize]
+
+    // [CSETWeb_Api.Helpers.CSETAuthorize]
     public class ReportsController : ApiController
     {
         [HttpGet]
@@ -36,10 +36,10 @@ namespace CSETWeb_Api.Controllers
             data.salTable = reportsDataManager.GetSals();
             data.nistTypes = reportsDataManager.GetNistInfoTypes();
             data.nistSalTable = reportsDataManager.GetNistSals();
-            data.Zones = reportsDataManager.getDiagramZones();            
+            data.Zones = reportsDataManager.GetDiagramZones();
             return data;
-            
         }
+
 
         [HttpGet]
         [Route("api/reports/executive")]
@@ -55,7 +55,8 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
-    [HttpGet]
+
+        [HttpGet]
         [Route("api/reports/discoveries")]
         public BasicReportData getDiscoveries()
         {
@@ -67,6 +68,7 @@ namespace CSETWeb_Api.Controllers
             data.Individuals = reportsDataManager.GetFindingIndividuals();
             return data;
         }
+
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
@@ -83,9 +85,10 @@ namespace CSETWeb_Api.Controllers
             data.nistSalTable = reportsDataManager.GetNistSals();
             data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.FinancialQuestionsTable = reportsDataManager.getFinancialQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();            
+            data.FinancialQuestionsTable = reportsDataManager.GetFinancialQuestions();
+            data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
+            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             return data;
         }
 
@@ -105,13 +108,144 @@ namespace CSETWeb_Api.Controllers
             data.nistSalTable = reportsDataManager.GetNistSals();
             data.DocumentLibraryTable = reportsDataManager.GetDocumentLibrary();
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
-            data.QuestionsWithCommentsTable = reportsDataManager.getQuestionsWithCommentsOrMarkedForReview();
+            data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
             data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
             data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
             return data;
         }
 
+
+        /// <summary>
+        /// Returns data needed for the Trend report.  
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/trendreport")]
+        public AggregationReportData GetTrendReport()
+        {
+            AggregationReportData response = new AggregationReportData();
+            response.SalList = new List<BasicReportData.OverallSALTable>();            
+            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+
+
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return response;
+            }
+
+            var assessmentList = new BusinessLogic.AggregationManager()
+                .GetAssessmentsForAggregation((int)aggregationID);
+
+            response.AggregationName = assessmentList.Aggregation.AggregationName;
+
+            foreach (var a in assessmentList.Assessments)
+                {
+                ReportsDataManager reportsDataManager = new ReportsDataManager(a.AssessmentId);
+
+
+                // Incorporate SAL values into response
+                var salTable = reportsDataManager.GetSals();
+
+                var entry = new BasicReportData.OverallSALTable();
+                response.SalList.Add(entry);
+                entry.Alias = a.Alias;
+                entry.OSV = salTable.OSV;
+                entry.Q_CV = "";
+                entry.Q_IV = "";
+                entry.Q_AV = "";
+                entry.LastSalDeterminationType = salTable.LastSalDeterminationType;
+
+                if (salTable.LastSalDeterminationType != "GENERAL")
+                {
+                    entry.Q_CV = salTable.Q_CV;
+                    entry.Q_IV = salTable.Q_IV;
+                    entry.Q_AV = salTable.Q_AV;
+                }
+
+
+                // Document Library 
+                var documentLibraryTable = reportsDataManager.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryTable)
+                {
+                    docEntry.Alias = a.Alias;
+                    response.DocumentLibraryTable.Add(docEntry);
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Returns data needed for the Compare report.  
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/comparereport")]
+        public AggregationReportData GetCompareReport()
+        {
+            AggregationReportData response = new AggregationReportData();
+            response.SalList = new List<BasicReportData.OverallSALTable>();
+            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+
+
+            TokenManager tm = new TokenManager();
+            var aggregationID = tm.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return response;
+            }
+
+            var assessmentList = new BusinessLogic.AggregationManager()
+                .GetAssessmentsForAggregation((int)aggregationID);
+
+            response.AggregationName = assessmentList.Aggregation.AggregationName;
+
+            foreach (var a in assessmentList.Assessments)
+            {
+                ReportsDataManager reportsDataManager = new ReportsDataManager(a.AssessmentId);
+
+
+                // Incorporate SAL values into response
+                var salTable = reportsDataManager.GetSals();
+
+                var entry = new BasicReportData.OverallSALTable();
+                response.SalList.Add(entry);
+                entry.Alias = a.Alias;
+                entry.OSV = salTable.OSV;
+                entry.Q_CV = "";
+                entry.Q_IV = "";
+                entry.Q_AV = "";
+                entry.LastSalDeterminationType = salTable.LastSalDeterminationType;
+
+                if (salTable.LastSalDeterminationType != "GENERAL")
+                {
+                    entry.Q_CV = salTable.Q_CV;
+                    entry.Q_IV = salTable.Q_IV;
+                    entry.Q_AV = salTable.Q_AV;
+                }
+
+
+                // Document Library 
+                var documentLibraryTable = reportsDataManager.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryTable)
+                {
+                    docEntry.Alias = a.Alias;
+                    response.DocumentLibraryTable.Add(docEntry);
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         protected string GetApplicationMode(int assessmentId)
         {
             using (var db = new CSET_Context())
@@ -131,7 +265,7 @@ namespace CSETWeb_Api.Controllers
 
 
         private void SetMode(string mode)
-        { 
+        {
             int assessmentId = Auth.AssessmentForUser();
             QuestionsManager qm = new QuestionsManager(assessmentId);
             qm.SetApplicationMode(mode);

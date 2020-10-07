@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -78,14 +78,14 @@ export class AssessmentContactsComponent implements OnInit {
     }
   }
 
-  changeOccurred(){
+  changeOccurred() {
     this.triggerChange.next();
   }
 
   moveUser() {
     // move the user's contact to the top of the list
     const myIndex = this.contacts.findIndex(
-      contact => contact.PrimaryEmail === this.auth.email()
+      contact => contact.PrimaryEmail.toUpperCase() === this.auth.email().toUpperCase()
     );
     this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
     this.contacts[0].IsFirst = true;
@@ -212,7 +212,7 @@ export class AssessmentContactsComponent implements OnInit {
     );
     // zero on the assessement_id implies the current assessment
     this.assessSvc.removeContact(contact.UserId, 0).subscribe(
-      (response: { ContactList: User[] }) => { this.changeOccurred();},
+      (response: { ContactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog
           .open(AlertComponent, { data: "Error removing assessment contact" })

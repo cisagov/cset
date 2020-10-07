@@ -1,0 +1,107 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+--------------------------> 
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12" style="padding-bottom:15px;">
+                <h4>Share Assessment with DHS</h4> 
+                <p>Interested to know your score compared to your peers?  Would you like to be part of your industry cybersecurity efforts?   If you submit your assessment information to DHS you can see your score compared to your industry and sector, but also help DHS to make informed decisions with regard to how they support your sector and industry.  Contributing your data helps your whole industry to improve. 
+                    DHS uses this information to inform their decisions with regard to how they assist your industry, and allocate their own internal resources and determine priorities. </p>
+                    <p>
+                    There is a difference between anonymous and anonymous with login.  In both cases we anonymize your data.  DHS will not link your submission back to you.   In the login case we provide the ability for you to see your results score compared to your industry and sector average.  
+                    </p>           
+                <p>Clicking “Submit Anonymous” will submit the data shown in the table below (question identifiers, questions, and answers) with no user identifying information.</p>
+                <p>Clicking “Submit with Login” will submit the same data, but will be associated with an anonymous user identifier accessible only to you.</p>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 5px;">
+            <div class="col-12">
+                <mat-tab-group style="overflow: auto; max-height:800px; margin-bottom: 2rem;">
+                    <mat-tab label="Pretty Data">
+                        <div class="container" style="margin-top:10px;">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h5>Demographics</h5>
+                                    <div class='col-12'>
+                                        <div class="row">
+                                            <div class="col-3"><b>Sector Name:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.SectorName}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Industry Name:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.IndustryName}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Asset Value:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.AssetValue}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Size:</b></div>
+                                            <div class="col-9">{{analytics.Demographics.Size}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h5 style="margin-top:10px;">Questions/Anwers</h5>
+                                    <div class="w-100">
+                                        <div class="table-container">
+                                            <table mat-table matSort class="assessment-summary" style='overflow-x:auto'>
+                                                <tr class="sticky">
+                                                    <th width="15%" mat-sort-header="QuestionId">Question Id</th>
+                                                    <th mat-sort-header="QuestionText">Question Text</th>
+                                                    <th width="15%" mat-sort-header="Answer">Answer</th>
+                                                </tr>   
+                                                <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
+                                                    <td style="padding-left:15px;" class="align-top">{{qa.QuestionId}}</td>
+                                                    <td [innerHTML]="qa.QuestionText" class="align-top"></td>
+                                                    <td class="align-top">{{qa.Answer_Text}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Raw Data">
+                        <div class="container">
+                            <div class="col-12">
+                                <div class="row"><pre>{{analytics | json}}</pre></div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" type="button" (click)="postAnalyticsWithoutLogin()">Submit Anonymous</button>
+                <button class="btn btn-primary" type="button" (click)="showLogin()">Submit With Login</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

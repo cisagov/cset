@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -60,10 +60,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     clickReportLink(reportType: string) {
-        // get short-term JWT from API
-        this.authSvc.getShortLivedToken().subscribe((response: any) => {
-            const url = this.configSvc.reportsUrl + 'index.html?token=' + response.Token + '&routePath=' + reportType;
-            window.open(url, "_blank");
-        });
+
+        const url = '/index.html?returnPath=report/'+reportType;
+        window.open(url, "_blank");
     }
 }

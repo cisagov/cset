@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2019 Battelle Energy Alliance, LLC  
+  Copyright 2020 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -1658,6 +1658,23 @@ ul.related-questions li {
   margin-bottom: .5em;
 }
 
+.related-question-1 {
+  margin-left: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.related-question-1:first-child {
+  margin-top: 1rem;
+}
+
+.related-question-1:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 // .pencil {
 //   background-color: transparent;
 //   fill: $primary-color;
@@ -2159,6 +2176,73 @@ hr.ranked-questions {
 }
 
 
+// Aggregation
+///////////////////////////////////////////////////////////////////////
+.analytics-wrapper {
+  // width: 100%;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+@media (max-width: 500px) {
+  .analytics-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.cat-selected {
+  font-weight: bold;
+  color: $primary-900;
+  background-color: #eeeeee;
+  border-radius: .5rem;
+}
+
+.sal-inactive {
+  color: $gray-450;
+  width: 2%;
+}
+
+.sal-active {
+  color: $white;
+  font-weight: bold;
+  background-color: $primary-750;
+}
+
+.merge-source-answer {
+  min-width: 2rem;
+  text-align: center;
+  margin: 3px 1px;
+  border-radius: 3px;
+  color: #a0a0a0;
+  border: 1px solid #c0c0c0;
+  background-color: #f0f0f0;
+}
+
+.merge-source-answer.Y {
+  color: #006000;
+  color: #457845;
+  border-color: #006000;
+}
+
+.merge-source-answer.N {
+  color: #990000;
+  color: #905555;
+  border-color: #990000;
+  border-color: #905555;
+}
+
+.merge-source-answer.NA {
+  color: #367190;
+  border-color: #367190;
+}
+
+.merge-source-answer.A {
+  color: #b17300;
+  border-color: #b17300;
+}
+
+
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -2285,6 +2369,18 @@ hr.ranked-questions {
   margin-bottom: 2rem;
 }
 
+table.td-p-1 td {
+  padding: .25rem !important;
+}
+
+table.td-p-2 td {
+  padding: .5rem !important;
+}
+
+table.td-text-left th, table.td-text-left td {
+  text-align: left !important;
+}
+
 
 // Material Icons
 //////////////////////////////////////////////////////
@@ -2381,6 +2477,10 @@ hr.ranked-questions {
 // Colors
 /////////////////////////////////////////////
 
+.bgc-white {
+  background-color: #ffffff;
+}
+
 .bgc-page {
   background-color: $primary-750;
 }
@@ -2424,11 +2524,17 @@ hr.ranked-questions {
 .bgc-primary {
   background-color: $primary-color;
 }
+.bgc-primary-50 {
+  background-color: $primary-50;
+}
 .bgc-primary-100 {
   background-color: $primary-100;
 }
-.bgc-primary-50 {
-  background-color: $primary-50;
+.bgc-primary-200 {
+  background-color: $primary-200;
+}
+.bgc-primary-300 {
+  background-color: $primary-300;
 }
 
 .c-warning {
@@ -2709,6 +2815,23 @@ hr.ranked-questions {
   border-radius: 6px 0 6px 6px;
 }
 
+//////////////////  AGGREGATION CLASSES  //////////////////////
+.trend-graph-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.trend-table-width {
+  max-width:100%;
+  width:100vw;
+}
+
+@media only screen and (max-width:767px){
+  .trend-graph-layout {
+    flex-direction: column;
+  }
+}
+
 
 /////////////////// ACET DASHBOARD CLASSES ///////////////////
 .alert-incomplete{
@@ -2763,5 +2886,4 @@ hr.ranked-questions {
 .domain-pad{
   margin-left:20px;
 }
-
 

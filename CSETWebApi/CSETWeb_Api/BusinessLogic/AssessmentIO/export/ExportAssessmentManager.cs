@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -73,7 +73,10 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                 model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<jASSESSMENT_CONTACTS>(item));
             }
 
-            foreach (var item in context.ANSWER.Include("FINDING").Where(x => x.Assessment_Id == assessmentId))
+            foreach (var item in context.ANSWER
+                .Include(x => x.FINDING)
+                .ThenInclude(x => x.FINDING_CONTACT)
+                .Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jANSWER.Add(TinyMapper.Map<jANSWER>(item));
                 foreach (var f in item.FINDING)
@@ -81,7 +84,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                     model.jFINDING.Add(TinyMapper.Map<jFINDING>(f));
                     foreach (var fc in f.FINDING_CONTACT)
                     {
-                        model.jFINDING_CONTACT.Add(TinyMapper.Map<jFINDING_CONTACT>(item));
+                        model.jFINDING_CONTACT.Add(TinyMapper.Map<jFINDING_CONTACT>(fc));
                     }
                 }
             }
@@ -242,6 +245,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                     var set = context.SETS
                         .Include(s => s.NEW_QUESTION)
                         .Include(s => s.NEW_REQUIREMENT)
+                            .ThenInclude(s => s.REQUIREMENT_LEVELS)
                         .Include(s => s.Set_Category_)
                         .FirstOrDefault(s => s.Set_Name == standard.Set_Name && standard.Selected);
 
@@ -299,6 +303,8 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                         model.CustomStandardDocs.Add(file.FileName);
                     }
                 }
+
+                model.ExportDateTime = DateTime.UtcNow;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 var modelEntry = archive.CreateEntry("model.json");

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,8 @@ export class QuestionsComponent implements AfterViewInit {
 
   setHasRequirements = false;
 
+  setHasQuestions = false;
+
   autoLoadSupplementalInfo: boolean;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -81,14 +83,8 @@ export class QuestionsComponent implements AfterViewInit {
     if (this.browserIsIE()) {
       this.autoLoadSupplementalInfo = false;
     }
-
-    // force requirements/statements mode for ACET-only assessments
-    if (!this.assessSvc.applicationMode) {
-      this.assessSvc.applicationMode = 'Q';
-      this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-    } else {
-      this.loadQuestions();
-    }
+    
+    this.getQuestionCounts();
   }
 
   updateComponentsOverride() {
@@ -154,6 +150,36 @@ export class QuestionsComponent implements AfterViewInit {
     this.questionsSvc.setMode(mode).subscribe(() => this.loadQuestions());
   }
 
+  getQuestionCounts(){
+    this.questionsSvc.getQuestionsList().subscribe(
+      (data: QuestionResponse) => {
+        this.assessSvc.applicationMode = data.ApplicationMode;
+        this.setHasRequirements = (data.RequirementCount > 0);
+        this.setHasQuestions = (data.QuestionCount > 0);
+
+        if(!this.setHasQuestions && !this.setHasRequirements){
+          this.assessSvc.applicationMode = 'Q';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+        else if(!this.setHasRequirements && this.assessSvc.applicationMode == "R"){
+          this.assessSvc.applicationMode = 'Q';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+        else if(this.setHasRequirements && this.assessSvc.applicationMode == 'R'){
+          this.assessSvc.applicationMode = 'R';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+        else if(!this.setHasQuestions && this.assessSvc.applicationMode == 'Q'){
+          this.assessSvc.applicationMode = 'R';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+        else {
+          this.assessSvc.applicationMode = 'Q';
+          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+      });
+  }
+
 
   /**
    * Retrieves the complete list of questions
@@ -165,7 +191,7 @@ export class QuestionsComponent implements AfterViewInit {
       (data: QuestionResponse) => {
         this.assessSvc.applicationMode = data.ApplicationMode;
         this.setHasRequirements = (data.RequirementCount > 0);
-
+        this.setHasQuestions = (data.QuestionCount > 0);
         this.questionsSvc.questions = data;
 
         // Reformat the response to create domain groupings ---------------------------------
@@ -176,6 +202,9 @@ export class QuestionsComponent implements AfterViewInit {
           QuestionCount: data.QuestionCount,
           RequirementCount: data.RequirementCount
         };
+
+       
+        
         data.QuestionGroups.forEach(g => {
           if (!bigStructure.Domains.find(d => d.DomainName === g.DomainName)) {
             bigStructure.Domains.push({

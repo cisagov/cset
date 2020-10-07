@@ -1,0 +1,71 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
+    <span>Login to Data Submission</span>
+  </div>
+  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+
+    <div class="container">
+      <form>
+        <p>
+          <mat-form-field appearance="outline">
+            <input type="text" matInput placeholder="Username" [formControl]="username" placeholder="Username"
+              [errorStateMatcher]="matcherusername">
+            <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
+            <mat-error *ngIf="username.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline">
+            <input type="password" matInput placeholder="Password" [formControl]="password" placeholder="Password"
+              [errorStateMatcher]="matcherpassword">
+            <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
+            <mat-error *ngIf="password.hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+
+        <p *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </p>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="p-3 pt-0 mb-0">
+    <div class="d-flex flex-row w-100" style="justify-content: space-between">
+      <div>
+        <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
+        <button class="btn btn-primary" (click)="submit()">Submit</button>
+      </div>
+      <div>
+        <button class="btn btn-link align-right" (click)="register()">Register User</button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

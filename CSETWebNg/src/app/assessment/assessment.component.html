@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2019 Battelle Energy Alliance, LLC  
+   Copyright 2020 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -52,7 +52,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" routerLink="questions">
             <span class="tab-icon cset-icons-question-mark mr-2" *ngIf="assessSvc.applicationMode === 'Q'" id="questionsIcon" alt="Questions mode icon"></span>
             <span class="tab-icon cset-icons-books-stack-2 mr-2" *ngIf="assessSvc.applicationMode === 'R'" id="requirementsIcon" alt="Requirements mode icon"></span>
-            <span class="nav-tab-text">{{ this.assessSvc.applicationMode === 'Q' ? 'Questions' : requirementsLabel() }}</span>
+            <span class="nav-tab-text">{{ this.assessSvc.applicationMode === 'R' ? requirementsLabel() : 'Questions' }}</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'" (click)="assessSvc.currentTab = 'results'">

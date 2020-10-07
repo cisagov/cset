@@ -37,7 +37,9 @@
                                                                   </xs:sequence>
                                                             </xs:complexType>
                                                       </xs:element>
-                                                      <xs:element name="SecurityAssuranceLevel" type="xs:int" minOccurs="1" maxOccurs="1" nillable="false"></xs:element>
+                                                      <xs:element name="SecurityAssuranceLevels" minOccurs="1" maxOccurs="1" nillable="false">
+                                                            <xs:element name="Level" type="xs:string"></xs:element>
+                                                      </xs:element>
                                                       <xs:element name="Source" minOccurs="0" maxOccurs="1" nillable="true">     
                                                                   <xs:complexType>
                                                                   <xs:sequence>

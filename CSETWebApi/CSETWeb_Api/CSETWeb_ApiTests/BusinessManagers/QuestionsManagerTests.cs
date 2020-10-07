@@ -1,7 +1,7 @@
 using CSETWeb_Api.BusinessManagers;
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 

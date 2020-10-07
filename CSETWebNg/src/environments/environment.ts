@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ export const environment = {
   appUrl: 'http://localhost:4200/',
   apiUrl: 'http://localhost:46000/api/',
   docUrl: 'http://localhost:46000/Documents/',
-  reportsUrl: 'http://localhost:4201/',
+  analyticsUrl: "https://134.20.214.54:44397/", 
+  reportsUrl: 'http://localhost:4200/',
   appCode: 'CSET',
-  version: '9.2.3',
+  version: '10.0.0',
   helpContactEmail: 'cset@dhs.gov',
   helpContactPhone: ''
 };

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -53,6 +53,7 @@ namespace CSETWeb_Api.BusinessManagers
         }
 
 
+
         public AssessmentDetail CreateNewAssessmentForImport(int currentUserId)
         {
             DateTime nowUTC = DateTime.Now;
@@ -93,6 +94,57 @@ namespace CSETWeb_Api.BusinessManagers
             return list;
         }
 
+        public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
+        {
+            AnalyticsAssessment assessment = new AnalyticsAssessment();
+            TokenManager tm = new TokenManager();
+            string app_code = tm.Payload(Constants.Token_Scope);
+
+            using (var db = new CSET_Context())
+            {
+                var query = from aa in db.ASSESSMENTS
+                            where aa.Assessment_Id == assessmentId
+                            select aa;
+
+                int tmpUID = 0;
+                Guid tmpGuid = Guid.NewGuid();
+
+                if (int.TryParse(tm.Payload(Constants.Token_UserId), out tmpUID))
+                {
+                    USERS user = db.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if (user.Id != null)
+                        {
+                            user.Id = tmpGuid;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            tmpGuid = user.Id ?? Guid.NewGuid();
+                        }
+                    }
+                }
+
+
+
+                var result = query.ToList().FirstOrDefault();
+                if (result != null)
+                {
+                    assessment = new AnalyticsAssessment()
+                    {
+                        Alias = result.Alias,
+                        AssessmentCreatedDate = Utilities.UtcToLocal(result.AssessmentCreatedDate),
+                        AssessmentCreatorId = tmpGuid.ToString(),
+                        Assessment_Date = Utilities.UtcToLocal(result.Assessment_Date),
+                        Assessment_GUID = result.Assessment_GUID.ToString(),
+                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate)
+                    };
+                }
+
+                return assessment;
+            }
+        }
 
         /// <summary>
         /// Returns the details for the specified Assessment.
@@ -185,7 +237,7 @@ namespace CSETWeb_Api.BusinessManagers
                 db.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
                 db.SaveChanges();
 
-                
+
                 var user = db.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
 
 
@@ -300,6 +352,54 @@ namespace CSETWeb_Api.BusinessManagers
                 return demographics;
             }
         }
+
+        /// <summary>
+        /// Returns the Demographics instance for the assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public AnalyticsDemographic GetAnonymousDemographics(int assessmentId)
+        {
+            AnalyticsDemographic demographics = new AnalyticsDemographic();
+
+            using (var db = new CSET_Context())
+            {
+                var query = from ddd in db.DEMOGRAPHICS
+                            from s in db.SECTOR.Where(x => x.SectorId == ddd.SectorId).DefaultIfEmpty()
+                            from i in db.SECTOR_INDUSTRY.Where(x => x.IndustryId == ddd.IndustryId).DefaultIfEmpty()
+                            from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
+                            from dav in db.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
+                            where ddd.Assessment_Id == assessmentId
+                            select new { ddd, ds, dav, s, i };
+
+
+                var hit = query.FirstOrDefault();
+                if (hit != null)
+                {
+                    if (hit.i != null)
+                    {
+                        demographics.IndustryId = hit.i != null ? hit.i.IndustryId : 0;
+                        demographics.IndustryName = hit.i.IndustryName ?? string.Empty;
+                    }
+                    if (hit.s != null)
+                    {
+                        demographics.SectorId = hit.s != null ? hit.s.SectorId : 0;
+                        demographics.SectorName = hit.s.SectorName ?? string.Empty;
+
+                    }
+                    if (hit.ddd != null)
+                    {
+
+                        demographics.AssetValue = hit.ddd.AssetValue ?? string.Empty;
+                        demographics.Size = hit.ddd.Size ?? string.Empty;
+                    }
+                }
+
+                return demographics;
+            }
+        }
+
+
 
 
         /// <summary>
