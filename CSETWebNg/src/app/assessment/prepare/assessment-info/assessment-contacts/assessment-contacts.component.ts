@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChildren, Output, EventEmitter } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
 import { ConfirmComponent } from "../../../../dialogs/confirm/confirm.component";
 import { EmailComponent } from "../../../../dialogs/email/email.component";

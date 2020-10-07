@@ -24,7 +24,7 @@
 import { NistSalModel, NistQuestionsAnswers, NistModel } from './nist-sal.models';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SalService } from '../../../../services/sal.service';
 import { ConfigService } from '../../../../services/config.service';
 import { Sal } from '../../../../models/sal.model';

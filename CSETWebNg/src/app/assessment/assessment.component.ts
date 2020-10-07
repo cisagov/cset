@@ -29,7 +29,7 @@ import {
   ViewChild,
   HostListener
 } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { NavigationService } from '../services/navigation.service';

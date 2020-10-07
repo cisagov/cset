@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';

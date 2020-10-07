@@ -26,7 +26,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import { NavTreeNode } from '../services/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { NavigationService } from '../services/navigation.service';
 
 const headers = {
