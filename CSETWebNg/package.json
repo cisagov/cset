@@ -61,7 +61,7 @@
     "ngx-textarea-autosize": "^2.0.0",
     "node-sass": "^4.13.1",
     "nodejs": "0.0.0",
-    "npm": "^6.13.4",
+    "npm": "^6.14.6",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "sass": "^1.15.1",
