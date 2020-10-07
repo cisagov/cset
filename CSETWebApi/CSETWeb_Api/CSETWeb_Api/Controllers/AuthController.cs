@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -85,12 +85,13 @@ namespace CSETWeb_Api.Controllers
         [CSETAuthorize]
         [Route("api/auth/token")]
         [HttpGet]
-        public TokenResponse IssueToken(int assessmentId = -1, string refresh = "*default*", int expSeconds = -1)
+        public TokenResponse IssueToken(int assessmentId = -1, int aggregationId = -1, string refresh = "*default*", int expSeconds = -1)
         {
             // Get a few claims from the current token
             TokenManager tm = new TokenManager();
             int currentUserId = (int)tm.PayloadInt(Constants.Token_UserId);
             int? currentAssessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            int? currentAggregationId = tm.PayloadInt(Constants.Token_AggregationId);
             string scope = tm.Payload(Constants.Token_Scope);
 
             // If the 'refresh' parm was sent, this is a pure refresh
@@ -110,6 +111,11 @@ namespace CSETWeb_Api.Controllers
                     Auth.AssessmentForUser(currentUserId, assessmentId);
                     currentAssessmentId = assessmentId;
                 }
+
+                if (aggregationId > 0)
+                {
+                    currentAggregationId = aggregationId;
+                }
             }
 
             // If we make it this far, we can issue the new token with what we know to be current and valid
@@ -118,6 +124,7 @@ namespace CSETWeb_Api.Controllers
                 tm.Payload(Constants.Token_TimezoneOffsetKey),
                 expSeconds,
                 currentAssessmentId,
+                currentAggregationId,
                 scope);
 
             TokenResponse resp = new TokenResponse

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -52,7 +52,7 @@ namespace CSETWeb_Api.Helpers
             }
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, login.Scope);
+            string token = TransactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -127,7 +127,7 @@ namespace CSETWeb_Api.Helpers
 
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, login.Scope);
+            string token = TransactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -184,4 +184,3 @@ namespace CSETWeb_Api.Helpers
         }
     }
 }
-

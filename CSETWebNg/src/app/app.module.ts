@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import {
     MatAutocompleteModule, MatDialogModule, MatDividerModule,
     MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
     MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-    MatTooltipModule, MatTreeModule, MatTabsModule,
+    MatTooltipModule, MatTreeModule, MatTabsModule, MatSnackBarModule,
 } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -99,6 +99,7 @@ import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.compone
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { AggregationGuard } from './guards/aggregation.guard';
 import { ConfirmEqualValidatorDirective } from './helpers/confirm-equal-validator.directive';
 import { EmailValidatorDirective } from './helpers/email-validator.directive';
 import { FocusDirective } from './helpers/focus.directive';
@@ -108,6 +109,7 @@ import { InViewComponent } from './helpers/in-view/in-view.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
+import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -165,6 +167,38 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { MergeComponent } from './aggregation/merge/merge.component';
+import { AggregationService } from './services/aggregation.service';
+import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
+import { AggregationHomeComponent } from './aggregation/aggregation-home/aggregation-home.component';
+import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias-assessments.component';
+import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
+import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
+import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
+import { CompareSummaryComponent } from './aggregation/compare-analytics/compare-summary/compare-summary.component';
+import { CompareMissedComponent } from './aggregation/compare-analytics/compare-missed/compare-missed.component';
+import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
+import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
+import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
+import { AggregationChartService } from './services/aggregation-chart.service';
+import { ChartColors } from './services/aggregation-chart.service';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsService } from './services/analytics.service';
+import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
+import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { DetailComponent } from './reports/detail/detail.component';
+import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { EvalAgainstComponent } from './reports/eval-against/eval-against.component';
+import { ExecutiveComponent } from './reports/executive/executive.component';
+import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
+import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { ReportService } from './services/report.service';
+import { ReportAnalysisService } from './services/report-analysis.service';
+import { LocalStoreManager } from './services/storage.service';
+import { TrendReportComponent } from './reports/trendreport/trendreport.component';
+import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 
 @NgModule({
     imports: [
@@ -183,6 +217,7 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         ReactiveFormsModule,
         MatDialogModule,
         MatTooltipModule,
+        MatSnackBarModule,
         IonRangeSliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
@@ -249,6 +284,7 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         OkayComponent,
         FindingsComponent,
         SafePipe,
+        LinebreakPipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
@@ -298,8 +334,35 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         ShapesComponent,
         TextComponent,
         ZonesComponent,
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        MergeComponent,
+        MergeQuestionDetailComponent,
+        AggregationHomeComponent,
+        AliasAssessmentsComponent,
+        AggregationDetailComponent,
+        TrendAnalyticsComponent,
+        CompareAnalyticsComponent,
+        SelectAssessmentsComponent,
+        CompareSummaryComponent,
+        CompareMissedComponent,
+        CompareIndividualComponent,
+        CompareBestworstComponent,
         ComponentOverrideComponent, 
-        ExcelExportComponent
+        ExcelExportComponent, 
+        AnalyticsComponent, 
+        DataloginComponent,
+        LayoutBlankComponent,
+        LayoutMainComponent, 
+        ReportTestComponent, 
+        DetailComponent, 
+        DiscoveryTearoutsComponent, 
+        EvalAgainstComponent, 
+        ExecutiveComponent, 
+        SecurityplanComponent, 
+        SitesummaryComponent,
+        TrendReportComponent,
+        CompareReportComponent
     ],
     providers: [
         ConfigService,
@@ -317,6 +380,7 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         },
         AuthGuard,
         AssessGuard,
+        AggregationGuard,
         DemographicService,
         AssessmentService,
         EmailService,
@@ -334,7 +398,14 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         SetBuilderService,
         ACETService,
         ResourceLibraryService,
-        DiagramService
+        DiagramService,
+        AnalyticsService,
+        AggregationService,
+        AggregationChartService,
+        ChartColors, 
+        ReportService,
+        ReportAnalysisService, 
+        LocalStoreManager
     ],
     bootstrap: [AppComponent],
     entryComponents: [
@@ -358,8 +429,11 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
         KeyboardShortcutsComponent,
         LicenseComponent,
         AddRequirementComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        MergeQuestionDetailComponent,
+        SelectAssessmentsComponent,
+        DataloginComponent
     ]
 })
 

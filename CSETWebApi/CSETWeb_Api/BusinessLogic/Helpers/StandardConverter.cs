@@ -1,22 +1,18 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using BusinessLogic.Models;
-using CSET_Main.Common.EnumHelper;
 using CSETWeb_Api.BusinessLogic.Models;
 using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static BusinessLogic.Models.ExternalRequirement;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessLogic.Helpers
 {
@@ -37,28 +33,28 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.ShortName, @"\W", "_");
+            var db = new CSET_Context();
             try
             {
                 var documentImporter = new DocumentImporter();
                 var set = result.Result;
-                using (var db = new CSET_Context())
-                {
-                    var existingSet = db.SETS.FirstOrDefault(s => s.Set_Name == setname);
-                    if (existingSet != null)
-                    {
-                        result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
-                    }
-                    category = db.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.Category.Trim().ToLower());
 
-                    if (category == null)
-                    {
-                        result.LogError("Module Category is invalid.  Please check the spelling and try again.");
-                    }
-                    else
-                    {
-                        categoryOrder = category.SETS.Max(s => s.Order_In_Category);
-                    }
+                var existingSet = db.SETS.FirstOrDefault(s => s.Set_Name == setname);
+                if (existingSet != null)
+                {
+                    result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
                 }
+                category = db.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.Category.Trim().ToLower());
+
+                if (category == null)
+                {
+                    result.LogError("Module Category is invalid.  Please check the spelling and try again.");
+                }
+                else
+                {
+                    categoryOrder = category.SETS.Max(s => s.Order_In_Category);
+                }
+
                 set.Set_Category_Id = category?.Set_Category_Id;
                 set.Order_In_Category = categoryOrder;
                 set.Short_Name = externalStandard.ShortName;
@@ -73,6 +69,8 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 set.Is_Deprecated = false;
 
                 set.Standard_ToolTip = externalStandard.Summary;
+
+
                 set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>();
                 var requirements = set.NEW_REQUIREMENT;
                 int counter = 0;
@@ -97,8 +95,8 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                                 {
                                     categoryDictionary.Add(requirementResult.Result.Standard_CategoryNavigation.Standard_Category1, requirementResult.Result.Standard_CategoryNavigation);
                                 }
-
                             }
+
                             foreach (var question in requirementResult.Result.NEW_QUESTIONs().ToList())
                             {
                                 NEW_QUESTION existingQuestion;
@@ -132,8 +130,18 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
             {
                 result.LogError("Module could not be added.");
             }
+
+            db.SaveChanges();
+
             return result;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="standard"></param>
+        /// <returns></returns>
         public static ExternalStandard ToExternalStandard(this SETS standard)
         {
             var externalStandard = new ExternalStandard();
@@ -151,8 +159,12 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                 //db.Configuration.LazyLoadingEnabled = false;
 
                 var reqs = standard.NEW_REQUIREMENT.ToList();
-                Dictionary<int,List<QuestionAndHeading>> reqQuestions = reqs.Select(s => new { s.Requirement_Id, Questions = s.NEW_QUESTIONs().Select(t => 
-                    new QuestionAndHeading(){Simple_Question= t.Simple_Question, Heading_Pair_Id=t.Heading_Pair_Id }) })                    
+                Dictionary<int, List<QuestionAndHeading>> reqQuestions = reqs.Select(s => new
+                {
+                    s.Requirement_Id,
+                    Questions = s.NEW_QUESTIONs().Select(t =>
+new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id = t.Heading_Pair_Id })
+                })
                     .ToDictionary(s => s.Requirement_Id, s => s.Questions.ToList());
 
                 var reqHeadingIds = reqs.Select(s => s.Question_Group_Heading_Id).ToList();
@@ -195,22 +207,12 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                                       }).FirstOrDefault()
                 }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
 
-                var reqLevels = new Dictionary<int, int?>();
+                var reqLevels = new Dictionary<int, List<string>>();
                 var tempLevels = reqs.Select(s => new { s.Requirement_Id, levels = s.REQUIREMENT_LEVELS.Select(t => t.Standard_Level) }).ToList();
+
                 if (tempLevels.Any())
                 {
-                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => ((s.levels != null && s.levels.Any()) ? s.levels?.Min(t =>
-                        {
-                            SalValues val;
-                            if (Enum.TryParse(t, out val))
-                            {
-                                return (int)val;
-                            }
-                            else
-                            {
-                                return 1;
-                            }
-                        }) : 1));
+                    reqLevels = tempLevels.ToDictionary(s => s.Requirement_Id, s => s.levels.ToList());
                 }
 
                 foreach (var requirement in reqs)
@@ -220,7 +222,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                         Identifier = requirement.Requirement_Title,
                         Text = requirement.Requirement_Text,
                         Category = requirement.Standard_Category,
-                        Weight = requirement.Weight,
+                        Weight = requirement.Weight ?? 0,
                         Subcategory = requirement.Standard_Sub_Category,
                         Supplemental = requirement.Supplemental_Info
                     };
@@ -248,7 +250,7 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     List<QuestionAndHeading> questions = new List<QuestionAndHeading>();
                     reqQuestions.TryGetValue(requirement.Requirement_Id, out questions);
                     externalRequirement.Questions = new QuestionList();
-                    foreach(QuestionAndHeading h in questions)
+                    foreach (QuestionAndHeading h in questions)
                         externalRequirement.Questions.Add(h.Simple_Question);
 
                     // Subheading
@@ -266,9 +268,11 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
                     externalRequirement.Source = source;
 
                     // SAL
-                    int? sal;
-                    reqLevels.TryGetValue(requirement.Requirement_Id, out sal);
-                    externalRequirement.SecurityAssuranceLevel = sal;
+                    externalRequirement.SecurityAssuranceLevels = new List<string>();
+                    foreach (var s in reqLevels[requirement.Requirement_Id])
+                    {
+                        externalRequirement.SecurityAssuranceLevels.Add(s);
+                    }
 
 
                     requirements.Add(externalRequirement);
@@ -279,6 +283,10 @@ namespace CSETWeb_Api.BusinessLogic.Helpers
         }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
     class QuestionAndHeading
     {
         public string Simple_Question { get; set; }

@@ -25,7 +25,7 @@ BEGIN
 	if(@ApplicationMode = 'Questions Based')	
 	begin
 		
-		select a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id, a.mark_for_review, 
+		select distinct a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id, a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
 			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed
 
@@ -47,7 +47,7 @@ BEGIN
 	else
 	begin		
 
-		select a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id,a.mark_for_review, 
+		select distinct a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id,a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
 			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed
 

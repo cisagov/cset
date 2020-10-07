@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -123,7 +124,31 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
-      
+        /// <summary>
+        /// Map Questions and answers to view
+        /// </summary>
+        /// <param name="questionResponse"></param>
+        /// <returns></returns>
+        public List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse)
+        {
+            List<AnalyticsQuestionAnswer> analyticQuestionAnswers = new List<AnalyticsQuestionAnswer>();
+            foreach (var questionGroup in questionResponse.QuestionGroups)
+            {
+                foreach (var subCategory in questionGroup.SubCategories)
+                {
+                    foreach (var question in subCategory.Questions)
+                    {
+                        analyticQuestionAnswers.Add(new AnalyticsQuestionAnswer
+                        {
+                            QuestionId = question.QuestionId,
+                            QuestionText = question.QuestionText,
+                            Answer_Text = question.Answer
+                        });
+                    }
+                }
+            }
+            return analyticQuestionAnswers;
+        }
 
 
         /// <summary>
@@ -388,11 +413,11 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
+                string selectedSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+
                 if (_setNames.Count == 1)
                 {
                     // If a single standard is selected, do it this way
-                    string selectedSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
-
                     var query1 = from q in db.NEW_QUESTION
                                  from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
                                  from l in db.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
@@ -413,7 +438,10 @@ namespace CSETWeb_Api.BusinessManagers
                                  join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
                                  join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                                 where stand.Selected == true && stand.Assessment_Id == _assessmentId
+                                 join usl in db.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
+                                 where stand.Selected == true 
+                                    && stand.Assessment_Id == _assessmentId 
+                                    && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
                                  select q.Question_Id;
 
                     return query2.Distinct().Count();

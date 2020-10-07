@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -47,6 +47,7 @@ namespace DataLayerCore.Model
 
         // modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+        public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
 
         public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         public virtual DbQuery<Assessments_For_User> Assessments_For_User { get; set; }
@@ -79,7 +80,20 @@ namespace DataLayerCore.Model
 
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
-        public int changeEmail(string originalEmail, string newEmail)
+
+        /// <summary>
+        /// Entity type used for returning a list of question or requirement IDs.  
+        /// </summary>
+        public virtual DbSet<Question_Id_result> ID_Results { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="originalEmail"></param>
+        /// <param name="newEmail"></param>
+        /// <returns></returns>
+        public int ChangeEmail(string originalEmail, string newEmail)
         {
 
             if ((originalEmail == null) || (newEmail != null))
@@ -96,6 +110,13 @@ namespace DataLayerCore.Model
             return myrval;
         }
 
+
+        /// <summary>
+        /// Inserts missing skeleton ANSWER records for an assessment based on 
+        /// its standard selection and SAL.  
+        /// </summary>
+        /// <param name="assessment_Id"></param>
+        /// <returns></returns>
         public virtual int FillEmptyQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
@@ -111,6 +132,13 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessment_Id"></param>
+        /// <returns></returns>
         public virtual int FillNetworkDiagramQuestions(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
@@ -129,7 +157,7 @@ namespace DataLayerCore.Model
 
 
         /// <summary>
-        /// 
+        /// Executes stored procedure usp_GetOverallRankedCategoriesPage.
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
@@ -146,10 +174,14 @@ namespace DataLayerCore.Model
                          myrval = handler.ReadToList<usp_GetOverallRankedCategoriesPage_Result>();
                      });
             return myrval;
-
-
         }
 
+
+        /// <summary>
+        /// Executes stored procedure usp_getFinancialQuestions.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_getFinancialQuestions_Result> usp_getFinancialQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -164,12 +196,14 @@ namespace DataLayerCore.Model
                          myrval = handler.ReadToList<usp_getFinancialQuestions_Result>();
                      });
             return myrval;
-
-
         }
-        
 
 
+        /// <summary>
+        /// Executes stored procedure usp_GetRankedQuestions.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -185,7 +219,13 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
-      
+
+
+        /// <summary>
+        /// Executes stored procedure usp_GetQuestionsWithFeedbacks.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_GetQuestionsWithFeedback> usp_GetQuestionsWithFeedbacks(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -201,6 +241,12 @@ namespace DataLayerCore.Model
             return rval;
         }
 
+
+        /// <summary>
+        /// Executes stored procedure usp_MaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_MaturityDetailsCalculations_Result> usp_MaturityDetailsCalculations(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -218,6 +264,11 @@ namespace DataLayerCore.Model
         }
 
 
+        /// <summary>
+        /// Executes stored procedure usp_StatementsReviewed.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_StatementsReviewed_Result> usp_StatementsReviewed(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -235,6 +286,11 @@ namespace DataLayerCore.Model
         }
 
 
+        /// <summary>
+        /// Executes stored procedure usp_StatementsReviewedTabTotals.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_StatementsReviewedTabTotals_Result> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -251,6 +307,12 @@ namespace DataLayerCore.Model
             return myrval;
         }
 
+
+        /// <summary>
+        /// Executes stored procedure usp_financial_attributes.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
         public virtual IList<usp_financial_attributes_result> usp_financial_attributes(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
@@ -263,6 +325,76 @@ namespace DataLayerCore.Model
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_financial_attributes_result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// Executes stored procedure usp_GetTop5Areas.
+        /// </summary>
+        /// <param name="aggregation_id"></param>
+        /// <returns></returns>
+        public virtual IList<usp_GetTop5Areas_result> usp_GetTop5Areas(Nullable<int> aggregation_id)
+        {
+            if (!aggregation_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_GetTop5Areas_result> myrval = null;
+            this.LoadStoredProc("usp_GetTop5Areas")
+                     .WithSqlParam("aggregation_id", aggregation_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_GetTop5Areas_result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// Returns a list of Question IDs that are 'in scope' or applicable
+        /// to the specified assessment.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<int> InScopeQuestions (Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<int> myrval = null;
+            this.LoadStoredProc("InScopeQuestions")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         var myrval2 = handler.ReadToList<Question_Id_result>();
+                         myrval = myrval2.Select(x => x.Question_Id).ToList();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// Returns a list of Requirement IDs that are 'in scope' or applicable
+        /// to the specified assessment.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<int> InScopeRequirements(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<int> myrval = null;
+            this.LoadStoredProc("InScopeRequirements")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         var myrval2 = handler.ReadToList<Requirement_Id_result>();
+                         myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
         }

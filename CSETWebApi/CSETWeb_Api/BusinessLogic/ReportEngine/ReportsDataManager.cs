@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -108,7 +108,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return controls;
         }
 
-        public List<List<DiagramZones>> getDiagramZones()
+
+        public List<List<DiagramZones>> GetDiagramZones()
         {
             using (var db = new CSET_Context())
             {
@@ -144,13 +145,15 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
-        public List<usp_getFinancialQuestions_Result> getFinancialQuestions()
+
+        public List<usp_getFinancialQuestions_Result> GetFinancialQuestions()
         {
             using (var db = new CSET_Context())
             {
                 return db.usp_getFinancialQuestions(_assessmentId).ToList();
             }
         }
+
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
@@ -243,6 +246,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         }
 
+
         public List<RankedQuestions> GetTop5Questions()
         {
             return GetRankedQuestions().Take(5).ToList();
@@ -306,10 +310,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
 
         /// <summary>
-        /// Returns a list of questions that have been marked for review or have comments.
+        /// Returns a list of questions that have comments.
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsWithComments> getQuestionsWithCommentsOrMarkedForReview()
+        public List<QuestionsWithComments> GetQuestionsWithComments()
         {
             using (var db = new CSET_Context())
             {
@@ -317,7 +321,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 // get any "marked for review" or commented answers that currently apply
                 var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
-                    .Where(ans => ans.Mark_For_Review == true || ans.Comment != null)
+                    .Where(ans => !string.IsNullOrEmpty(ans.Comment))
                     .ToList();
 
                 if (relevantAnswers.Count == 0)
@@ -336,7 +340,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 {
                                     Answer = ans.Answer_Text,
                                     CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                    MarkedForReview = ans.Mark_For_Review.ToString(),
                                     Question = req.Requirement_Text,
                                     Comment = ans.Comment
                                 };
@@ -353,46 +356,70 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 {
                                     Answer = ans.Answer_Text,
                                     CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
-                                    MarkedForReview = ans.Mark_For_Review.ToString(),
                                     Question = q.Simple_Question,
                                     Comment = ans.Comment
                                 };
 
                     return query.ToList();
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-                var dblist = from a in db.AVAILABLE_STANDARDS
-                             join b in db.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
-                             join c in db.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
-                             join q in db.NEW_QUESTION on c.Question_Or_Requirement_Id equals q.Question_Id
-                             join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
-                             where a.Selected == true && a.Assessment_Id == _assessmentId
-                                && c.Assessment_Id == _assessmentId
-                                && (c.Mark_For_Review == true || c.Comment != null)
-                             orderby h.Question_Group_Heading
-                             select new QuestionsWithComments()
-                             {
-                                 Answer = c.Answer_Text,
-                                 CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
-                                 MarkedForReview = c.Mark_For_Review.ToString(),
-                                 Question = q.Simple_Question,
-                                 Comment = c.Comment
-                             };
-
-                return dblist.ToList<QuestionsWithComments>();
             }
         }
+
+
+        /// <summary>
+        /// Returns a list of questions that have been marked for review.
+        /// </summary>
+        /// <returns></returns>
+        public List<QuestionsMarkedForReview> GetQuestionsMarkedForReview()
+        {
+            using (var db = new CSET_Context())
+            {
+                var results = new List<QuestionsMarkedForReview>();
+
+                // get any "marked for review" or commented answers that currently apply
+                var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+                    .Where(ans => ans.Mark_For_Review)
+                    .ToList();
+
+                if (relevantAnswers.Count == 0)
+                {
+                    return results;
+                }
+
+                bool requirementMode = relevantAnswers[0].Is_Requirement;
+
+                // include Question or Requirement contextual information
+                if (requirementMode)
+                {
+                    var query = from ans in relevantAnswers
+                                join req in db.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                                select new QuestionsMarkedForReview()
+                                {
+                                    Answer = ans.Answer_Text,
+                                    CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                    Question = req.Requirement_Text
+                                };
+
+                    return query.ToList();
+                }
+                else
+                {
+                    var query = from ans in relevantAnswers
+                                join q in db.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
+                                join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                                orderby h.Question_Group_Heading
+                                select new QuestionsMarkedForReview()
+                                {
+                                    Answer = ans.Answer_Text,
+                                    CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
+                                    Question = q.Simple_Question
+                                };
+
+                    return query.ToList();
+                }
+            }
+        }
+
 
         public List<RankedQuestions> GetRankedQuestions()
         {
@@ -419,6 +446,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
         public List<DocumentLibraryTable> GetDocumentLibrary()
         {
             using (var db = new CSET_Context())
@@ -431,7 +459,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     list.Add(new DocumentLibraryTable()
                     {
-                        documenttitle = doc.Title,
+                        DocumentTitle = doc.Title,
                         FileName = doc.Path
                     });
                 }
@@ -439,11 +467,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
         public BasicReportData.OverallSALTable GetNistSals()
         {
             using (var db = new CSET_Context())
             {
-
                 NistSalManager manager = new NistSalManager();
                 Models.Sals sals = manager.CalculatedNist(_assessmentId, db);
                 List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
@@ -471,6 +499,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
+
         public List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes()
         {
             using (var db = new CSET_Context())
@@ -490,6 +519,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         }
 
+
+        /// <summary>
+        /// Returns SAL CIA values for the assessment.
+        /// </summary>
+        /// <returns></returns>
         public BasicReportData.OverallSALTable GetSals()
         {
             using (var db = new CSET_Context())
@@ -508,13 +542,13 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     OSV = s.a.Selected_Sal_Level;
                     switch (s.b.Level_Name)
                     {
-                        case "Q_CV":
+                        case "Confidence_Level":
                             Q_CV = s.b.Standard_Specific_Sal_Level;
                             break;
-                        case "Q_IV":
+                        case "Integrity_Level":
                             Q_IV = s.b.Standard_Specific_Sal_Level;
                             break;
-                        case "Q_AV":
+                        case "Availability_Level":
                             Q_AV = s.b.Standard_Specific_Sal_Level;
                             break;
                     }
@@ -545,7 +579,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 INFORMATION infodb = db.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
 
+                TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
+                {
+                    config.Ignore(x => x.Additional_Contacts);
+                });
                 var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
+
 
                 var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
                 info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
@@ -565,6 +604,16 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 foreach (var c in contacts)
                 {
                     info.Additional_Contacts.Add(Utilities.FormatName(c.FirstName, c.LastName));
+                }
+
+                // Include anything that was in the INFORMATION record's Additional_Contacts column
+                if (infodb.Additional_Contacts != null)
+                {
+                    string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string c in acLines)
+                    {
+                        info.Additional_Contacts.Add(c);
+                    }
                 }
 
 
@@ -631,6 +680,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         }
 
+
         public GenSALTable GetGenSals()
         {
             using (var db = new CSET_Context())
@@ -652,6 +702,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
     }
+
 
     public class DiagramZones
     {

@@ -489,6 +489,86 @@
             Removes all maturity filters for the current assessment.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.OverallComplianceScore">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Top5">
+            <summary>
+            Calculates the 5 categories whose percentage scores have improved the most
+            during the last segment of the trend analysis.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.Bottom5">
+            <summary>
+            Calculates the 5 categories whose percentage scores have decreased the most
+            during the last segment of the trend analysis.
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.CategoryPercentCompare">
+            <summary>
+            Returns a data structure for the Category Percent Compare chart.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetCategoryPercentages(System.Int32,DataLayerCore.Model.CSET_Context)">
+            <summary>
+            Returns the category percentages for an assessment.
+            </summary>
+            <param name="assessmentId"></param>
+            <param name="db"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetOverallAverages">
+            <summary>
+            Returns average overall scores.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetAnswerTotals">
+            <summary>
+            Returns answer breakdown for all associated assessments.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetOverallComparison">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetSalComparison">
+            <summary>
+            Returns a bar for each assessment's SAL level in the aggregation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationAnalysisController.GetBestToWorst">
+            <summary>
+            Returns answer breakdown for all associated assessments.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CSETWeb_Api.Controllers.AggregationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.GetAggregations(System.String)">
+            <summary>
+            Returns a list of aggregations that the current user is allowed to see.
+            The user must be authorized to view all assessments involved in the aggregation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.GetAnswers">
+            Merge
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AggregationController.SetMergeAnswer(System.Int32,System.String)">
+            <summary>
+            Sets a single answer text into the COMBINED_ANSWER table.
+            </summary>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.AnalysisController.SortIntoAnswerOrder(CSETWeb_Api.BusinessManagers.Analysis.StandardSummaryOverallMultiResult)">
             <summary>
             Re-orders the pieces into Y|N|NA|A|U order.
@@ -518,6 +598,24 @@
             but modifies the port to be the current port 
             the application is running on.
             (IE the file may be different from what is returned)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalyticsController.GetAnalytics">
+            <summary>
+            Get analytic information
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalyticsController.GetDemographics">
+            <summary>
+            Returns an instance of Demographics for Anonymous export 
+            </summary>        
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.AnalyticsController.GetQuestionsAnswers">
+            <summary>
+            Returns questions/answers for current selected assessment
             </summary>
             <returns></returns>
         </member>
@@ -696,7 +794,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AuthController.IssueToken(System.Int32,System.String,System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.AuthController.IssueToken(System.Int32,System.Int32,System.String,System.Int32)">
             <summary>
             Returns a token cloned from the requesting token.  The new refresh clone
             will have a new expiration timestamp and will optionally contain an
@@ -1025,6 +1123,25 @@
             Persists an answer-level ("in-line", "local") Parameter change.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetTrendReport">
+            <summary>
+            Returns data needed for the Trend report.  
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetCompareReport">
+            <summary>
+            Returns data needed for the Compare report.  
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetApplicationMode(System.Int32)">
+            <summary>
+            Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
+            </summary>
+            <param name="assessmentId"></param>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.RequiredDocumentationController">
             <summary>
             Manages ASET Required Documentation for assessments.
@@ -1249,6 +1366,17 @@
             <summary>
             [Authorize] attribute that authenticates the security token in the request header. 
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Helpers.HangfireExecutor.ProcessAssessmentImportLegacyAsync(System.String,System.String,System.String,System.String,Hangfire.Server.PerformContext)">
+            <summary>
+            
+            </summary>
+            <param name="csetFilePath"></param>
+            <param name="token"></param>
+            <param name="processPath"></param>
+            <param name="apiURL"></param>
+            <param name="context"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

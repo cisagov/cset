@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2019 Battelle Energy Alliance, LLC  
+//   Copyright 2020 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -13,21 +13,31 @@ namespace BusinessLogic.Models
     public interface IExternalRequirement
     {
         string Category { get; set; }
+
         [Required]
         string Identifier { get; set; }
+
         IEnumerable<ExternalResource> References { get; set; }
+
         [Required]
-        int? SecurityAssuranceLevel { get; set; }
+        List<string> SecurityAssuranceLevels { get; set; }
+
         ExternalResource Source { get; set; }
+
         [Required]
         string Heading { get; set; }
+
         [Required]
         string Subheading { get; set; }
+
         string Supplemental { get; set; }
+
         [Required]
         string Text { get; set; }
+
         [Required]
         int? Weight { get; set; }
+
         QuestionList Questions { get; set; }
     }
 }

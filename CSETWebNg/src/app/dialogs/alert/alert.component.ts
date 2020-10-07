@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,42 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AlertComponent {
 
-  constructor(private dialog: MatDialogRef<AlertComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+  public iconClass: string;
 
+  /**
+   * 
+   * @param dialog 
+   * @param data 
+   */
+  constructor(
+    private dialog: MatDialogRef<AlertComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.iconClass = "cset-icons-exclamation-triangle";
+
+    // default title
+    if (!data.title) {
+      data.title = 'Alert';
+    }
+
+    // override icon class if provided
+    if (!!data.iconClass) {
+      this.iconClass = data.iconClass;
+    }
+  }
+
+  /**
+   * Closes the dialog.
+   */
   public close() {
     return this.dialog.close();
   }

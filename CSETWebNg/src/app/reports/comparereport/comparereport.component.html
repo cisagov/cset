@@ -1,0 +1,207 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body">
+  
+  <div class="flex-container">
+    <div class="column">
+      <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+        MULTIPLE ASSESSMENT COMPARISON REPORT
+      </p>
+    </div>
+
+    <div class="column">
+      <p style="text-align: center">
+        <img width="471" height="529" src="../../../assets/images/ExecutiveFiles/image002.jpg">
+      </p>
+    </div>
+  
+    <div class="cover-page-bottom">
+      <div>
+        <img style="width: 283px; height: 133px" src="../../../assets/images/ExecutiveFiles/image003.jpg">
+      </div>
+        
+      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+        <div> {{response?.information.Assessment_Name}} </div>
+        <div> {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}} </div>
+        <div> {{response?.information.Assessor_Name}} </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-break">
+    <h1>Disclaimer</h1>
+    <p>The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Department of
+      Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. 
+      In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including 
+      but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of 
+      the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way 
+      connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, 
+      or arose out of the results of, or reliance upon the report. DHS does not endorse any commercial product or service, 
+      including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, 
+      processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, 
+      or favoring by DHS. The display of the DHS official seal or other DHS visual identities on this report shall not be 
+      interpreted to provide the recipient organization authorization to use the official seal, insignia, or other visual 
+      identities of DHS. The DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement 
+      of any commercial product or activity by DHS or the United States Government. Use of the DHS seal without proper authorization 
+      violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against DHS policies governing usage of the seal. The report 
+      is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject 
+      to government or private intellectual property rights. To request distribution of this report outside the organization for 
+      which it was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into 
+      other reports, but may not be modified without the prior express written permission of the CSET Program Office.
+    </p>
+  </div>
+
+  <div class="page-break">
+    <h1>Advisory</h1>
+    <p>CSET® is only one component of the overall cyber security picture and should be complemented with a robust cyber
+      security program within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses, 
+      and should not be the sole means of determining an organization’s security posture. The tool will not provide a detailed 
+      architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk 
+      analysis tool so it will not generate a complex risk assessment. CSET® is not intended as a substitute for in depth analysis 
+      of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must 
+      still be conducted using a holistic approach including facility walk downs, interviews, and observation and examination 
+      of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and 
+      exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other 
+      unexpected results will not compromise production or safety. CSET® assessments cannot be completed effectively by any 
+      one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, 
+      business, and security areas is essential. The representatives must be subject matter experts with significant expertise 
+      in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions. 
+      Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate 
+      to their sensitivity.
+    </p>
+  </div>
+  
+  <div class="page-break">
+    <h1>Summary Percent Compliance</h1>
+    <div class="chart d-flex flex-column flex-00a mb-5">
+      <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
+        <div>SUMMARY PERCENT COMPLIANCE</div>
+        <div *ngIf="chartOverallAverage == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
+        <canvas id="canvasOverallAverage"> {{ chartOverallAverage }} </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <h1>Security Assurance Level (SAL)</h1>
+      <p>Care should be taken when comparing sites with different overall Security Assurance Levels (SAL).  
+        As sites with a high SAL may have a lower overall security score from a percentage perspective but 
+        may be more secure overall because they are working to a higher level.  When comparing different 
+        sites it may be worthwhile to compare the total number of questions and total number of yes/no answers 
+        in addition to the overall percentage scores.
+      </p>
+
+    <div class="chart d-flex flex-column flex-00a">
+      <h2>Comparison of Security Assurance Levels</h2>
+        <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
+          wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
+      
+      <table class="cset-table">
+        <tr>
+          <th style="width: 20%">Alias</th>
+          <th style="width: 20%">Overall</th>
+          <th style="width: 20%">Confidentiality</th>
+          <th style="width: 20%">Integrity</th>
+          <th style="width: 20%">Availability</th>
+        </tr>
+        <tr *ngFor="let a of response?.SalList">
+          <td>{{a.Alias}}</td>
+          <td>{{a.OSV}}</td>
+          <td>{{a.Q_CV}}</td>
+          <td>{{a.Q_IV}}</td>
+          <td>{{a.Q_AV}}</td>
+        </tr>
+      </table>
+    </div>
+  
+    <h1>Assessment Answer Summary</h1>
+    <div class="chart d-flex flex-column flex-00a">     
+      <table class="table table-bordered assessment-summary">
+        <tr>
+          <th class="text-left p-2">Assessment Alias</th>
+          <th class="text-right p-2 pl-3">Total</th>
+          <th class="text-right p-2 pl-3">Yes</th>
+          <th class="text-right p-2 pl-3">No</th>
+          <th class="text-right p-2 pl-3">NA</th>
+          <th class="text-right p-2 pl-3">Alt</th>
+          <th class="text-right p-2 pl-3">Unanswered</th>
+        </tr>
+        <tr *ngFor="let a of answerCounts">
+          <td class="text-left p-2">{{ a.Alias }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Total }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Y }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.N }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NA }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div *ngIf="answerCounts == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <h1>Category Average for All Assessments</h1>
+    <div class="chart d-flex flex-column flex-00a mb-5">
+      <div *ngIf="chartCategoryAverage == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+      <canvas id="canvasCategoryAverage"> {{ chartCategoryAverage }} </canvas>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <h1>Individual Category Comparisons</h1>
+    <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
+  </div>
+
+  <div class="page-break">
+    <h1>Document Library</h1>
+
+    <table class="cset-table-3">
+      <tr>
+        <th>Title</th>
+        <th>File Name</th>
+      </tr>
+      <tr *ngFor="let doc of response?.DocumentLibraryTable">
+        <td>{{doc.documenttitle}}</td>
+        <td>{{doc.FileName}}</td>
+      </tr>
+      <tr *ngIf="response?.DocumentLibraryTable.length === 0">
+        <td></td>
+        <td>There are no documents to display</td>
+      </tr>
+    </table>
+  </div>
+</div>

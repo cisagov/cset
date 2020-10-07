@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSETWeb_Api.BusinessLogic</RootNamespace>
     <AssemblyName>BusinessLogic</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -114,14 +114,14 @@
     <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.4\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
@@ -138,8 +138,8 @@
     <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.5.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
@@ -150,14 +150,14 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Namotion.Reflection, Version=1.0.5.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\Namotion.Reflection.1.0.5\lib\net45\Namotion.Reflection.dll</HintPath>
+    <Reference Include="Namotion.Reflection, Version=1.0.6.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\Namotion.Reflection.1.0.6\lib\net45\Namotion.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NJsonSchema, Version=10.0.21.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.10.0.21\lib\net45\NJsonSchema.dll</HintPath>
+    <Reference Include="NJsonSchema, Version=10.0.23.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\NJsonSchema.10.0.23\lib\net45\NJsonSchema.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -177,8 +177,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
@@ -200,8 +200,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
@@ -224,16 +224,40 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessManagers\Aggregation\AggregationManager.cs" />
+    <Compile Include="AssessmentIO\export\ExportAssessmentManager.cs" />
+    <Compile Include="AssessmentIO\import\BulkSqlUpload.cs" />
+    <Compile Include="AssessmentIO\import\CSET901_to_92Upgrade.cs" />
+    <Compile Include="AssessmentIO\import\CSET90_to_901Upgrade.cs" />
+    <Compile Include="AssessmentIO\import\customRules\SubCategoryLookupRule.cs" />
+    <Compile Include="AssessmentIO\import\DBIO.cs" />
+    <Compile Include="AssessmentIO\import\GenericImporter.cs" />
+    <Compile Include="AssessmentIO\import\ICSETJSONFileUpgrade.cs" />
+    <Compile Include="AssessmentIO\import\customRules\IImportAssessmentRule.cs" />
+    <Compile Include="AssessmentIO\import\Importer.cs" />
+    <Compile Include="AssessmentIO\import\ImportManager.cs" />
+    <Compile Include="AssessmentIO\import\ImportUpgradeManager.cs" />
+    <Compile Include="AssessmentIO\IOHelper.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0.1\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0.1\UploadAssessmentModel.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.0\UploadAssessmentModel.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\AllGeneralJsonModels.cs" />
+    <Compile Include="AssessmentIO\models\Version_9.2\UploadAssessmentModel.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminSaveData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabData.cs" />
     <Compile Include="BusinessManagers\AdminTab\AdminTabManager.cs" />
+    <Compile Include="BusinessManagers\Aggregation\TrendDataProcessor.cs" />
     <Compile Include="BusinessManagers\Analysis\ACETDashboardManager.cs" />
     <Compile Include="BusinessManagers\Analysis\ChartData.cs" />
     <Compile Include="BusinessManagers\Analysis\ColorsList.cs" />
     <Compile Include="BusinessManagers\Analysis\DataRowsPie.cs" />
     <Compile Include="BusinessManagers\Analysis\FirstPageMultiResult.cs" />
+    <Compile Include="BusinessManagers\Analysis\GetComparisonBestToWorst.cs" />
     <Compile Include="BusinessManagers\Analysis\MultiResultBase.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsRankedCategories.cs" />
+    <Compile Include="BusinessManagers\Analysis\GetPercentageOverall.cs" />
+    <Compile Include="BusinessManagers\Analysis\usp_getStandardSummaryOverall.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentsSummmary.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getComponentTypes.cs" />
@@ -241,6 +265,7 @@
     <Compile Include="BusinessManagers\Analysis\usp_getStandardsRankedCategories.cs" />
     <Compile Include="BusinessManagers\Analysis\usp_getStandardsResultsByCategory.cs" />
     <Compile Include="BusinessManagers\AnswerManager.cs" />
+    <Compile Include="BusinessManagers\Answer_Components_Exploded_ForJSON.cs" />
     <Compile Include="BusinessManagers\AssessmentManager.cs" />
     <Compile Include="BusinessManagers\AssessmentModeManager.cs" />
     <Compile Include="BusinessManagers\ContactsManager.cs" />
@@ -248,12 +273,15 @@
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisBaseMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisLineMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\DiagramAnalysisNodeMessage.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\FullNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\helpers\DrawIOParsingHelps.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\ExtractLeafSpanningTree.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\PermutationsGenerator.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\PostProcessConnectors.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\helpers\NetworkWalk.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysis.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\IDiagramAnalysisNodeMessage.cs" />
-    <Compile Include="BusinessManagers\Diagram\analysis\INetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkNode.cs" />
-    <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisMessage.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkAnalysisNode.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkGeometry.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkLayer.cs" />
@@ -261,16 +289,25 @@
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkComponent.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeNotFound.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NodeViewModelBase.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\AbstractRule.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\ComponentPairing.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\IRuleEvaluate.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule7.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule6.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule5.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule3.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule2.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\rules\Rule1.cs" />
+    <Compile Include="BusinessManagers\Diagram\analysis\SimplifiedNetwork.cs" />
     <Compile Include="BusinessManagers\Diagram\Diagram.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferenceManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramManager.cs" />
     <Compile Include="BusinessManagers\Diagram\DiagramDifferences.cs" />
     <Compile Include="BusinessManagers\Diagram\analysis\NetworkZone.cs" />
+    <Compile Include="BusinessManagers\Diagram\layers\LayerManager.cs" />
     <Compile Include="BusinessManagers\DocumentManager.cs" />
     <Compile Include="BusinessManagers\FrameworkManager.cs" />
     <Compile Include="BusinessManagers\FullAnswer.cs" />
-    <Compile Include="BusinessManagers\ImportManager.cs" />
-    <Compile Include="BusinessManagers\ImportUpgradeManager.cs" />
     <Compile Include="BusinessManagers\InformationTabData\BaseQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\ComponentTypeSalData.cs" />
@@ -289,7 +326,6 @@
     <Compile Include="BusinessManagers\InformationTabData\QuestionInformationTabData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\RelatedQuestionInfoData.cs" />
     <Compile Include="BusinessManagers\InformationTabData\RequirementInfoData.cs" />
-    <Compile Include="BusinessManagers\InformationTabData\TabObject.cs" />
     <Compile Include="BusinessManagers\NistSalManager.cs" />
     <Compile Include="BusinessManagers\NotificationManager.cs" />
     <Compile Include="BusinessManagers\QuestionRequirementManager.cs" />
@@ -372,18 +408,18 @@
     <Compile Include="Helpers\upload\UploadFormException.cs" />
     <Compile Include="Helpers\UserAuthentication.cs" />
     <Compile Include="Helpers\Utilities.cs" />
-    <Compile Include="ImportAssessment\BulkSqlUpload.cs" />
-    <Compile Include="ImportAssessment\export\ExportAssessment.cs" />
-    <Compile Include="ImportAssessment\Importer.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0.1\AllGeneralJsonModels.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0.1\UploadAssessmentModel.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0\AllGeneralJsonModels.cs" />
-    <Compile Include="ImportAssessment\Models\Version_9.0\UploadAssessmentModel.cs" />
     <Compile Include="Models\ACETDashboard.cs" />
-    <Compile Include="Models\Assessment.cs" />
+    <Compile Include="Models\Analytics.cs" />
+    <Compile Include="Models\AnalyticsAssessment.cs" />
+    <Compile Include="Models\AnalyticsDemographic.cs" />
+    <Compile Include="Models\AnalyticsQuestionAnswer.cs" />
+    <Compile Include="Models\Aggregation.cs" />
+    <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\AssessmentDetail.cs" />
     <Compile Include="Models\CommentData.cs" />
     <Compile Include="Models\Diagram.cs" />
+    <Compile Include="Models\diagramXml.cs" />
+    <Compile Include="Models\diagramXsd.cs" />
     <Compile Include="Models\IRP.cs" />
     <Compile Include="Models\MaturityAnswers.cs" />
     <Compile Include="Models\MaturityAssessment.cs" />
@@ -416,6 +452,7 @@
     <Compile Include="Models\Standard.cs" />
     <Compile Include="Models\UserCreateResponse.cs" />
     <Compile Include="Models\UserDetail.cs" />
+    <Compile Include="ModuleIO\ModuleImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Questions\ComponentOverride\ComponentOverrideLinkInfo.cs" />
     <Compile Include="Questions\ComponentOverride\ComponentTemporaryDefault.cs" />
@@ -432,6 +469,7 @@
     <Compile Include="Questions\RequirementLevel.cs" />
     <Compile Include="Questions\Slice\RequirementsPocoBuilder.cs" />
     <Compile Include="Questions\Slice\Requirement_And_Set.cs" />
+    <Compile Include="ReportEngine\AggregationReportData.cs" />
     <Compile Include="ReportEngine\BasicReportData.cs" />
     <Compile Include="ReportEngine\Builder\AliasDescendingSorter.cs" />
     <Compile Include="ReportEngine\Builder\DataHandling.cs" />
@@ -480,6 +518,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Models\diagramXsd\create_classes_xsd.bat" />
+    <None Include="Models\diagramXsd\diagramXsd.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\diagramXsd\diagram_1_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\diagramXsd\diagram_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\diagramXsd\diagramXsdDifferent.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -518,6 +569,9 @@
     <EmbeddedResource Include="App_Data\passwordResetTemplate_CSET.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AssessmentIO\import\ColumnImportRules.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2019 Battelle Energy Alliance, LLC
+//   Copyright 2020 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -496,18 +496,6 @@ export class QuestionExtrasComponent implements OnInit {
     const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.QuestionId) as HTMLElement;
     btn.click();
   }
-
-  /**
-   * Converts linebreak characters to HTML <br> tag.
-   */
-  formatLinebreaks(text: string) {
-    if (!text) {
-      return '';
-    }
-    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  }
-
-
 
   /**
    * check if approach exists for acet questions
