@@ -49,7 +49,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
 // import { IonRangeSliderModule } from 'ng2-ion-range-slider';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AssessmentComponent } from './assessment/assessment.component';
@@ -252,7 +252,7 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatListModule,
-        // FileUploadModule,
+        FileUploadModule,
         AngularEditorModule,
         RouterModule,
         CurrencyMaskModule,
