@@ -162,7 +162,7 @@ import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.c
 import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
 import { ResourceLibraryService } from './services/resource-library.service';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
