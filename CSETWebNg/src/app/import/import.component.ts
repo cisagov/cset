@@ -31,7 +31,7 @@ import { debounce } from 'rxjs/operators/debounce';
 import { startWith } from 'rxjs/operators/startWith';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import * as screenfull from 'screenfull';
-// import { FileItem, FileUploader } from '../../../node_modules/ng2-file-upload/ng2-file-upload';
+import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
@@ -50,10 +50,10 @@ export class ImportFormData {
   host: { class: 'd-flex flex-11a w-100' }
 })
 export class ImportComponent implements OnInit, OnDestroy {
-  // public uploader: FileUploader;
+  public uploader: FileUploader;
   public hasBaseDropZoneOver: boolean = false;
   public hasModuleBaseDropZoneOver: boolean = false;
-  // public fakeUploader: FileUploader;
+  public fakeUploader: FileUploader;
   public hasAnotherDropZoneOver: boolean = false;
   public referenceUrl: string;
   public moduleCode: string;
@@ -196,12 +196,12 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public submitForm() {
-    // this.isDocError = false;
-    // if (this.uploader.getNotUploadedItems().length) {
-    //   this.uploader.uploadAll();
-    // } else {
-    //   this.submitCode();
-    // }
+    this.isDocError = false;
+    if (this.uploader.getNotUploadedItems().length) {
+      this.uploader.uploadAll();
+    } else {
+      this.submitCode();
+    }
   }
 
   public submitCode() {
@@ -242,7 +242,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public clearForm() {
-    // this.uploader.clearQueue();
+    this.uploader.clearQueue();
     this.moduleCode = '';
     this.codeModel.value = '';
     this.state = 'Ready';
@@ -321,40 +321,40 @@ export class ImportComponent implements OnInit, OnDestroy {
       return promise;
     };
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocuments';
-    // this.uploader = new FileUploader({
-    //   url: this.referenceUrl,
-    //   authToken: sessionStorage.getItem('userToken')
-    // });
-    // this.fakeUploader = new FileUploader({});
-    // this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
-    //   Object.keys(fileItem.formData).forEach(prop => form.append(prop, fileItem.formData[prop]));
-    // };
-    // this.uploader.onAfterAddingAll = (fileItems: FileItem[]) => {
-    //   fileItems.forEach((fileItem: FileItem) => {
-    //     const data = new ImportFormData();
-    //     fileItem.formData = data;
-    //     this.items[fileItem.file.name] = data;
-    //   });
-    // };
-    // this.uploader.onBeforeUploadItem = item => {
-    //   item.withCredentials = false;
-    // };
-    // this.uploader.onErrorItem = (item) => {
-    //   this.isDocError = true;
-    // };
-    // this.uploader.onCompleteAll = () => {
-    //   this.uploader.queue.forEach((item, index, arr) => {
-    //     if (item.isError) {
-    //       item.isUploading = false;
-    //       item.isUploaded = false;
-    //     }
-    //   });
-    //   if (this.isDocError) {
-    //     this.state = 'Failed';
-    //   } else {
-    //     this.submitCode();
-    //   }
-    // };
+    this.uploader = new FileUploader({
+      url: this.referenceUrl,
+      authToken: sessionStorage.getItem('userToken')
+    });
+    this.fakeUploader = new FileUploader({});
+    this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
+      Object.keys(fileItem.formData).forEach(prop => form.append(prop, fileItem.formData[prop]));
+    };
+    this.uploader.onAfterAddingAll = (fileItems: FileItem[]) => {
+      fileItems.forEach((fileItem: FileItem) => {
+        const data = new ImportFormData();
+        fileItem.formData = data;
+        this.items[fileItem.file.name] = data;
+      });
+    };
+    this.uploader.onBeforeUploadItem = item => {
+      item.withCredentials = false;
+    };
+    this.uploader.onErrorItem = (item) => {
+      this.isDocError = true;
+    };
+    this.uploader.onCompleteAll = () => {
+      this.uploader.queue.forEach((item, index, arr) => {
+        if (item.isError) {
+          item.isUploading = false;
+          item.isUploaded = false;
+        }
+      });
+      if (this.isDocError) {
+        this.state = 'Failed';
+      } else {
+        this.submitCode();
+      }
+    };
     this.fileClient.getExports().subscribe(t => {
       this.sets = t;
     });
