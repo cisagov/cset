@@ -45,7 +45,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { IonRangeSliderModule } from 'ng2-ion-range-slider';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
@@ -239,7 +238,6 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         MatDialogModule,
         MatTooltipModule,
         MatSnackBarModule,
-        IonRangeSliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
         MatTreeModule,
@@ -248,7 +246,7 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatListModule,
-        FileUploadModule,
+        // FileUploadModule,
         AngularEditorModule,
         RouterModule,
         CurrencyMaskModule,

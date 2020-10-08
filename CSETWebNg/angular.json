@@ -39,8 +39,6 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ion-rangeslider/css/ion.rangeSlider.css",
-              "node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
@@ -50,7 +48,6 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/ion-rangeslider/js/ion.rangeSlider.min.js",
               "src/assets/cset.js",
               "src/assets/shim.min.js",
               "src/assets/zone.js",
@@ -135,13 +132,10 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/ion-rangeslider/js/ion.rangeSlider.min.js",
               "src/assets/cset.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ion-rangeslider/css/ion.rangeSlider.css",
-              "node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "src/sass/styles.scss",
               "src/styles.css"
