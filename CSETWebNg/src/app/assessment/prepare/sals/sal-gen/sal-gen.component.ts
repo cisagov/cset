@@ -90,8 +90,8 @@ export class SalGenComponent implements OnInit {
   /**
    * 
    */
-  myOnFinish(event, slidername) {
-    const Slider_Value = event.from;
+  valueChange(event, slidername) {
+    const Slider_Value = event;
     this.salsSvc.getSaveGenSal((this.assessSvc.id()), Slider_Value, slidername).subscribe(
       (data: string) => {
         this.salsSvc.SelectedSAL.Selected_Sal_Level = data;

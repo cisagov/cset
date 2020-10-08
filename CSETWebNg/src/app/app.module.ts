@@ -47,7 +47,6 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-// import { IonRangeSliderModule } from 'ng2-ion-range-slider';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
@@ -242,7 +241,6 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         MatDialogModule,
         MatTooltipModule,
         MatSnackBarModule,
-        // IonRangeSliderModule,
         Ng5SliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
