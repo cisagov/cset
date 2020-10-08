@@ -56,6 +56,8 @@
     "ng-sidebar": "^7.1.0",
     "ng2-currency-mask": "^9.0.2",
     "ng2-file-upload": "^1.4.0",
+    "ng2-ion-range-slider": "^2.0.0",
+    "ng5-slider": "^1.2.4",
     "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.3",
     "node-sass": "^4.14.1",

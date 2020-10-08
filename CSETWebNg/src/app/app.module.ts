@@ -42,9 +42,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSliderModule } from '@angular/material/slider';
+import { Ng5SliderModule } from 'ng5-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
+// import { IonRangeSliderModule } from 'ng2-ion-range-slider';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
@@ -228,6 +231,7 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         HttpClientModule,
         AppRoutingModule,
         MatInputModule,
+        MatSliderModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatFormFieldModule,
@@ -238,6 +242,8 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         MatDialogModule,
         MatTooltipModule,
         MatSnackBarModule,
+        // IonRangeSliderModule,
+        Ng5SliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
         MatTreeModule,

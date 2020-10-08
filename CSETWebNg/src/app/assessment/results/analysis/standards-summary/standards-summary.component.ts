@@ -152,7 +152,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
                               fillStyle: fill,
                               strokeStyle: stroke,
                               lineWidth: bw,
-                              hidden: isNaN(ds.data[i][0]) || meta.data[i].hidden,
+                              hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                               index: i
                           };
                       });
