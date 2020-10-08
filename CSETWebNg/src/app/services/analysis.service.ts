@@ -289,7 +289,7 @@ export class AnalysisService {
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
-                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                     index: i
                   };
                 });
@@ -366,7 +366,7 @@ export class AnalysisService {
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
-                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                     index: i
                   };
                 });

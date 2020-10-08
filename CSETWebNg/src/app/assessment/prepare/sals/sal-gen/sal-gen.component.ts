@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
 
+
 @Component({
   selector: 'app-sal-gen',
   templateUrl: './sal-gen.component.html',
@@ -44,6 +45,31 @@ export class SalGenComponent implements OnInit {
     this.salsSvc.getGenSalDescriptions().subscribe(
       (data: GenSalPairs[]) => {
         this.sliders = data;
+
+        this.sliders.forEach(s => {
+          s.OnSite.options = {
+            floor: s.OnSite.min,
+            ceil: s.OnSite.max,
+            showTicks: true,
+            showTicksValues: false,
+            showSelectionBar: true,
+            getLegend: (v: number) => {
+              return s.OnSite.values[v];
+            }
+          };
+
+          s.OffSite.options = {
+            floor: s.OffSite.min,
+            ceil: s.OffSite.max,
+            showTicks: true,
+            showTicksValues: false,
+            showSelectionBar: true,
+            getLegend: (v: number) => {
+              return s.OffSite.values[v];
+            }
+          };
+        });
+
       },
       error => {
         console.log('Error Getting gensal descriptions: ' + (<Error>error).name + (<Error>error).message);
@@ -61,6 +87,9 @@ export class SalGenComponent implements OnInit {
       });
   }
 
+  /**
+   * 
+   */
   myOnFinish(event, slidername) {
     const Slider_Value = event.from;
     this.salsSvc.getSaveGenSal((this.assessSvc.id()), Slider_Value, slidername).subscribe(
@@ -72,10 +101,10 @@ export class SalGenComponent implements OnInit {
         console.log('Error saving gensal: ' + (<Error>error).stack);
       });
   }
-  myOnChange(event, slidername) {
-    const k = 0;//lgtm [js/unused-local-variable]
-  }
 
+  /**
+   * 
+   */
   saveLevel(level: string) {
     this.salsSvc.SelectedSAL.SelectedSALOverride = true;
     this.salsSvc.SelectedSAL.Selected_Sal_Level = level;
