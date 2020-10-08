@@ -708,18 +708,18 @@ table.td-align-top td {
 }
 
 .ng5-slider {
-  margin-bottom: 3rem !important;
+  margin-bottom: 4rem !important;
 }
 
 .ng5-slider .ng5-slider-pointer, .ng5-slider .ng5-slider-selection {
-  background-color: #367190 !important;
+  background-color: $primary-450 !important;
 }
 
 .ng5-slider .ng5-slider-tick.ng5-slider-selected {
-  background: #367190 !important;
+  background: $primary-450 !important;
 }
 .ng5-slider .ng5-slider-active::after {
-  background: #97b6c5 !important;
+  background: $primary-250 !important;
 }
 
 .ng5-slider .ng5-slider-tick-legend {
@@ -728,6 +728,11 @@ table.td-align-top td {
 
 .ng5-slider .ng5-slider-bubble {
   visibility: hidden !important;
+}
+
+.gen-sal-slider-group {
+  border: 1px solid $primary-200;
+  border-radius: .5rem;
 }
 
 
