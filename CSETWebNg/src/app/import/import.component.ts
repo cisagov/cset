@@ -320,12 +320,24 @@ export class ImportComponent implements OnInit, OnDestroy {
 
       return promise;
     };
+    this.initalizeUploader();
+    this.codeModel = this.jsonCodeModel;
+  }
+
+  ngOnInit() { 
+    this.initalizeUploader();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  private initalizeUploader(){
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocuments';
     this.uploader = new FileUploader({
       url: this.referenceUrl,
-      authToken: sessionStorage.getItem('userToken')
-    });
-    this.fakeUploader = new FileUploader({});
+      authToken: sessionStorage.getItem('userToken')      
+    });    
     this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
       Object.keys(fileItem.formData).forEach(prop => form.append(prop, fileItem.formData[prop]));
     };
@@ -395,13 +407,10 @@ export class ImportComponent implements OnInit, OnDestroy {
 
     this.fileOverStateObservable.pipe(debounceTime(10)).subscribe(t => {
       this.hasBaseDropZoneOver = t;
-    });
-    this.codeModel = this.jsonCodeModel;
+    }); 
   }
 
-  ngOnInit() { }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+  public showError(){
+    return this.state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length|| this.errors.length;
   }
 }
