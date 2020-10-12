@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { OkayComponent } from "../../../dialogs/okay/okay.component";
 import { QuestionRequirementCounts, StandardsBlock } from "../../../models/standards.model";

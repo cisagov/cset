@@ -24,8 +24,8 @@
 import { Router, ActivatedRoute, NavigationEnd, Event } from '@angular/router';
 import { AssessmentService } from './assessment.service';
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { EventEmitter, Injectable, Output, Pipe } from "@angular/core";
-import { MatTreeNestedDataSource } from "@angular/material";
+import { EventEmitter, Injectable, Output, Pipe, Directive } from "@angular/core";
+import { MatTreeNestedDataSource } from "@angular/material/tree";
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
@@ -56,6 +56,7 @@ export interface NavTreeNode {
  * 
  * It also renders the structure for the side nav / table of contents / TOC.
  */
+@Directive()
 @Injectable({
   providedIn: 'root'
 })

@@ -27,11 +27,11 @@ import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code
 import { saveAs } from 'file-saver';
 import * as monaco from 'monaco-editor';
 import { interval, Subject, Subscription, timer } from 'rxjs';
-import { debounce } from 'rxjs/internal/operators/debounce';
-import { startWith } from 'rxjs/internal/operators/startWith';
+import { debounce } from 'rxjs/operators/debounce';
+import { startWith } from 'rxjs/operators/startWith';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import * as screenfull from 'screenfull';
-import { FileItem, FileUploader } from '../../../node_modules/ng2-file-upload/ng2-file-upload';
+import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';

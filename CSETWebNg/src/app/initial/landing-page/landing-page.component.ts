@@ -23,7 +23,8 @@
 ////////////////////////////////
 import { FileUploadClientService } from "./../../services/file-client.service";
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, Sort } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { PasswordStatusResponse } from "../../models/reset-pass.model";
