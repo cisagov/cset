@@ -268,6 +268,8 @@ export class QuestionsService {
 
     const filter = this.questionFilterSvc;
 
+    const filterStringLowerCase = filter.filterString.toLowerCase();
+
     domains.forEach(d => {
       d.Categories.forEach(c => {
         c.SubCategories.forEach(s => {
@@ -278,7 +280,7 @@ export class QuestionsService {
             // If search string is specified, any questions that don't contain the string
             // are not shown.  No need to check anything else.
             if (filter.filterString.length > 0
-              && q.QuestionText.indexOf(filter.filterString) < 0) {
+              && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
               return;
             }
 
@@ -316,8 +318,6 @@ export class QuestionsService {
 
             if (filter.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
               q.Visible = true;
-            } else {
-              q.Visible = false;
             }
 
             if (filter.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {

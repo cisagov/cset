@@ -11,6 +11,7 @@ namespace DataLayerCore.Model
         {
             FILE_KEYWORDS = new HashSet<FILE_KEYWORDS>();
             GEN_FILE_LIB_PATH_CORL = new HashSet<GEN_FILE_LIB_PATH_CORL>();
+            MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
@@ -63,6 +64,8 @@ namespace DataLayerCore.Model
         public virtual ICollection<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
         [InverseProperty("Gen_File_")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
+        [InverseProperty("Gen_File_")]
+        public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
         [InverseProperty("Gen_File_")]
         public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
         [InverseProperty("Gen_File_")]

@@ -186,7 +186,6 @@ namespace CSETWeb_Api.Controllers
         public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent, bool IsMaturity)
         {
             int assessmentId = Auth.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
             return qm.GetDetails(QuestionId, assessmentId, IsComponent, IsMaturity);
