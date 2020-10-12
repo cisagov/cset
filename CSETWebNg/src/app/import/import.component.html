@@ -74,7 +74,7 @@
 
 
                     <div class="d-flex flex-11a flex-column w-100" ng2FileDrop style="position:relative;min-height:100px;position:relative; "
-                        (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)" [uploader]="fakeUploader"
+                        (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)" 
                         #codeContainer [ngClass]="{'fullscreen':getFullScreen()}">
                         <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:none;z-index:10000;background:rgba(0,0,0,0.25); align-items:center;justify-content:center"
                             [ngClass]="{'d-flex': hasModuleBaseDropZoneOver }">
@@ -135,12 +135,12 @@
                     <div *ngIf="isDocError" class="text-danger">An error occurred while processing documents. Please
                         review the files below and try again</div>
                     <div ng2FileDrop class="pb-2" style=" position:relative;min-height:100px;" (fileOver)="fileOverBase($event)"
-                        [uploader]="uploader">
-                        <div *ngIf="!uploader?.queue?.length||hasBaseDropZoneOver" [ngClass]="{'nv-file-over': hasBaseDropZoneOver }"
+                        >
+                        <!-- <div *ngIf="!uploader?.queue?.length||hasBaseDropZoneOver" [ngClass]="{'nv-file-over': hasBaseDropZoneOver }"
                             class="well my-drop-zone">
                             Drop reference files here
-                        </div>
-                        <div *ngIf="uploader?.queue?.length">
+                        </div> -->
+                        <!-- <div *ngIf="uploader?.queue?.length">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -182,7 +182,7 @@
                                     </ng-container>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                     </div>
                     <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"

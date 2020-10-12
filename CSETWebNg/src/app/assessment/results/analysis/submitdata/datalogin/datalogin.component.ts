@@ -24,7 +24,7 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, NgForm, FormGroupDirective, Validators, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { LoginData } from '../../../../../models/anonymous.model';
 import { AnalyticsService } from '../../../../../services/analytics.service';

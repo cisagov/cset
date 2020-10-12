@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+
 namespace DataLayerCore.Model
 {
     public partial class CsetwebContext : DbContext
