@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Inject, AfterViewInit, ViewChildren } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionsService } from '../../services/questions.service';
 import { DefaultParameter } from '../../models/questions.model';
 

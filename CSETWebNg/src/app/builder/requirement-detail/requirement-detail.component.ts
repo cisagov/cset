@@ -26,7 +26,7 @@ import { Requirement, Question, ReferenceDoc, RefDocLists, BasicResponse } from 
 import { SetBuilderService } from '../../services/set-builder.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 

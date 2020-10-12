@@ -24,7 +24,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FindingsService } from '../../../services/findings.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Finding, Importance, FindingContact } from './findings.model';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';

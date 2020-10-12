@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AggregationService } from '../../services/aggregation.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 interface UserAssessment {
   AssessmentId: number;

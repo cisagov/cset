@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { StandardService } from '../../../../services/standard.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';

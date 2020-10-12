@@ -24,7 +24,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';

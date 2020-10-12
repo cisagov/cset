@@ -163,14 +163,15 @@ export class ReportAnalysisService {
                   const meta = chart.getDatasetMeta(0);
                   const ds = data.datasets[0];
                   const arc = meta.data[i];
-                  const custom = arc && arc.custom || {};
+                  debugger;
+                  //const custom = arc && arc.custom || {};
                   const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                   const arcOpts = chart.options.elements.arc;
-                  const fill = custom.backgroundColor ? custom.backgroundColor :
+                  const fill = arc._model.backgroundColor ? arc._model.backgroundColor :
                     getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = custom.borderColor ? custom.borderColor :
+                  const stroke = arc._model.borderColor ? arc._model.borderColor :
                     getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = custom.borderWidth ? custom.borderWidth :
+                  const bw = arc._model.borderWidth ? arc._model.borderWidth :
                     getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                   const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   return {
@@ -178,7 +179,7 @@ export class ReportAnalysisService {
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
-                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                     index: i
                   };
                 });
@@ -475,14 +476,14 @@ export class ReportAnalysisService {
                   const meta = chart.getDatasetMeta(0);
                   const ds = data.datasets[0];
                   const arc = meta.data[i];
-                  const custom = arc && arc.custom || {};
+                  //const custom = arc && arc.custom || {};
                   const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                   const arcOpts = chart.options.elements.arc;
-                  const fill = custom.backgroundColor ? custom.backgroundColor :
+                  const fill = arc._model.backgroundColor ? arc._model.backgroundColor :
                     getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = custom.borderColor ? custom.borderColor :
+                  const stroke = arc._model.borderColor ? arc._model.borderColor :
                     getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = custom.borderWidth ? custom.borderWidth :
+                  const bw = arc._model.borderWidth ? arc._model.borderWidth :
                     getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                   const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   return {
@@ -490,7 +491,7 @@ export class ReportAnalysisService {
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
-                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                     index: i
                   };
                 });
