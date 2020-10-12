@@ -23,6 +23,7 @@
 ////////////////////////////////
 import * as Monaco from 'monaco-editor';
 
+
 export class XmlCompletionItemProvider implements Monaco.languages.CompletionItemProvider  {
     constructor(monaco, schemaNodeString: string) {
         this.monaco = monaco;
@@ -250,7 +251,9 @@ export class XmlCompletionItemProvider implements Monaco.languages.CompletionIte
           xmlDoc = parser.parseFromString(text, 'text/xml');
           return xmlDoc;
         }
-        public provideCompletionItems(model, position) {
+        public provideCompletionItems(model: Monaco.editor.ITextModel, position, context: Monaco.languages.CompletionContext, token: Monaco.CancellationToken)
+            : any{
+        //public provideCompletionItems(model, position) {
             // get editor content before the pointer
             const textUntilPosition = model.getValueInRange({
                 startLineNumber: 1,
@@ -262,7 +265,7 @@ export class XmlCompletionItemProvider implements Monaco.languages.CompletionIte
             const areaUntilPositionInfo = this.getAreaInfo(textUntilPosition); // isCompletionAvailable, clearedText
             // if we don't want any suggestions, return empty array
             if (!areaUntilPositionInfo.isCompletionAvailable) {
-                return [];
+                return null;
             }
             // if we want suggestions, inside of which tag are we?
             const lastOpenedTag =  this.getLastOpenedTag(areaUntilPositionInfo.clearedText);
