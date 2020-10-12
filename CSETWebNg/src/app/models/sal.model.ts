@@ -53,4 +53,6 @@ export interface GeneralSalDescriptionsWeights {
     postfix: string;
     values: string[];
     Slider_Value: number;
+
+    options: any;
 }

@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { MergeQuestionDetailComponent } from '../../dialogs/merge-question-detail/merge-question-detail.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-merge',

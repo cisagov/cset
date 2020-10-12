@@ -28,7 +28,7 @@ import { AnalyticsService } from '../../../services/analytics.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { strict } from 'assert';
 import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfigService } from '../../../services/config.service';
 import { AlertComponent } from '../../../dialogs/alert/alert.component';
 

@@ -24,8 +24,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Http } from '@angular/http';
-
 
 
 @Injectable({
