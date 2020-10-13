@@ -166,9 +166,11 @@ export class ImportComponent implements OnInit, OnDestroy {
         this.codeModel = {
           language: 'json',
           uri: 'main.json',
-          value: s,
+          value: JSON.stringify(JSON.parse(s), null, '\t'),
           schemas: this.jsonCodeModel.schemas
         };
+        
+        
       });
     } else {
       this.fileClient.getXMLExportSet(setName).subscribe(s => {
@@ -319,6 +321,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     };
     this.initalizeUploader();
     this.codeModel = this.jsonCodeModel;
+    
   }
 
   ngOnInit() { 
