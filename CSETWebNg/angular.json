@@ -17,6 +17,18 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "rxjs/Subscription",
+              "rxjs/observable/forkJoin",
+              "rxjs/operators/startWith",
+              "rxjs/operators/debounce",  
+              "rxjs/operators",
+              "rxjs/Subject",
+              "file-saver",
+              "chart.js",
+              "mousetrap"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/sass"
@@ -194,7 +206,7 @@
           }
         }
       }
-    }   
+    }
   },
   "defaultProject": "csetweb-ng",
   "schematics": {
