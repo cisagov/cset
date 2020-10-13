@@ -4486,6 +4486,10 @@
     <Content Include="Documents\htmlhelp\de_search\prefixes.json" />
     <Content Include="Documents\ISA 62443-2013.pdf" />
     <Content Include="Documents\CJIS Security Policy_v5-8.pdf" />
+    <Content Include="Documents\CMMCModelExcel_V1.02_20200318.xlsx" />
+    <Content Include="Documents\CMMC_Appendices_V1.02_20200318.pdf" />
+    <Content Include="Documents\CMMC_Errata_20200318.pdf" />
+    <Content Include="Documents\CMMC_ModelMain 1.02.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>

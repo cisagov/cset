@@ -281,6 +281,7 @@
     <Compile Include="Model\MATURITY_MODELS.cs" />
     <Compile Include="Model\MATURITY_QUESTIONS.cs" />
     <Compile Include="Model\MATURITY_REFERENCES.cs" />
+    <Compile Include="Model\MATURITY_SOURCE_FILES.cs" />
     <Compile Include="Model\NAVIGATION_STATE.cs" />
     <Compile Include="Model\NCSF_CATEGORY.cs" />
     <Compile Include="Model\NCSF_FUNCTIONS.cs" />
