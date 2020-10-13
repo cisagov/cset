@@ -11,6 +11,7 @@ namespace DataLayerCore.Model
         public MATURITY_QUESTIONS()
         {
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
+            MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
         }
 
         [Key]
@@ -25,20 +26,19 @@ namespace DataLayerCore.Model
         [StringLength(250)]
         public string Sub_Category { get; set; }
         public int Maturity_Level { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Set_Name { get; set; }
         public int Sequence { get; set; }
         [MaxLength(20)]
         public byte[] Text_Hash { get; set; }
+        public int Maturity_Model_Id { get; set; }
 
-        [ForeignKey(nameof(Set_Name))]
-        //[InverseProperty(nameof(SETS.MATURITY_QUESTIONS))]
-        public virtual SETS Set_NameNavigation { get; set; }
-
+        [ForeignKey(nameof(Maturity_Level))]
+        [InverseProperty(nameof(MATURITY_LEVELS.MATURITY_QUESTIONS))]
+        public virtual MATURITY_LEVELS Maturity_LevelNavigation { get; set; }
+        [ForeignKey(nameof(Maturity_Model_Id))]
+        [InverseProperty(nameof(MATURITY_MODELS.MATURITY_QUESTIONS))]
+        public virtual MATURITY_MODELS Maturity_Model_ { get; set; }
         [InverseProperty("Mat_Question_")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
-
         [InverseProperty("Mat_Question_")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
     }

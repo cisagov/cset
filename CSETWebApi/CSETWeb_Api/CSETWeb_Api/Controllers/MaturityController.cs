@@ -7,6 +7,7 @@ using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
+using CSETWeb_Api.BusinessLogic.Models;
 
 
 namespace CSETWeb_Api.Controllers
@@ -20,7 +21,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/MaturityModels")]
-        public List<string> GetMaturityModels()
+        public List<MaturityModel> GetMaturityModels()
         {
             int assessmentId = Auth.AssessmentForUser();
             return new MaturityManager().GetMaturityModels(assessmentId);
@@ -33,10 +34,10 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public IHttpActionResult SetMaturityModel(string modelName)
+        public IHttpActionResult SetMaturityModel(int modelId)
         {
             int assessmentId = Auth.AssessmentForUser();
-            new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelName);
+            new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelId);
             return Ok();
         }
 

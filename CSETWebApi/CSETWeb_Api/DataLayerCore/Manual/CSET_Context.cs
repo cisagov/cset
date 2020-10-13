@@ -30,16 +30,30 @@ namespace DataLayerCore.Model
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>()
-                .HasKey(avm => new { avm.Assessment_Id, avm.Model_Name });
+            modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
+
+                entity.HasOne(d => d.model_)
+                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                    .HasForeignKey(d => d.model_id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AVAILABLE__model__6F6A7CB2");
+            });
 
             modelBuilder.Entity<MATURITY_LEVELS>(entity =>
             {
-                entity.HasKey(e => new { e.Set_Name, e.Level });
-
-                entity.Property(e => e.Set_Name).IsUnicode(false);
-
                 entity.Property(e => e.Level_Name).IsUnicode(false);
+
+                entity.HasOne(d => d.Maturity_Model_)
+                    .WithMany(p => p.MATURITY_LEVELS)
+                    .HasForeignKey(d => d.Maturity_Model_Id)
+                    .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
             });
 
             modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
@@ -52,8 +66,6 @@ namespace DataLayerCore.Model
                 entity.Property(e => e.Question_Text).IsUnicode(false);
 
                 entity.Property(e => e.Question_Title).IsUnicode(false);
-
-                entity.Property(e => e.Set_Name).IsUnicode(false);
 
                 entity.Property(e => e.Sub_Category).IsUnicode(false);
 
