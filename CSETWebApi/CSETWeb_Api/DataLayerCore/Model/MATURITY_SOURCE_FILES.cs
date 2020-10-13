@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayerCore.Model
 {
-    public partial class MATURITY_REFERENCES
+    public partial class MATURITY_SOURCE_FILES
     {
         [Key]
         public int Mat_Question_Id { get; set; }
@@ -20,10 +20,10 @@ namespace DataLayerCore.Model
         public string Destination_String { get; set; }
 
         [ForeignKey(nameof(Gen_File_Id))]
-        [InverseProperty(nameof(GEN_FILE.MATURITY_REFERENCES))]
+        [InverseProperty(nameof(GEN_FILE.MATURITY_SOURCE_FILES))]
         public virtual GEN_FILE Gen_File_ { get; set; }
         [ForeignKey(nameof(Mat_Question_Id))]
-        [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_REFERENCES))]
+        [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_SOURCE_FILES))]
         public virtual MATURITY_QUESTIONS Mat_Question_ { get; set; }
     }
 }

@@ -23,6 +23,7 @@ using DataLayerCore.Model;
 using DataLayerCore.Manual;
 using Snickler.EFCore;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
 
 namespace CSET_Main.Views.Questions.QuestionDetails
 {
@@ -175,11 +176,14 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     && a.Is_Requirement == IsRequirement && a.Assessment_Id == assessmentId).FirstOrDefault();
                 var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
+                
+
                 if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()
                     {
                         Is_Requirement = IsRequirement,
+                        Is_Maturity = IsMaturity,
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
@@ -188,7 +192,19 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                     };
                     DataContext.ANSWER.Add(newAnswer);
                 }
-                var qp = new QuestionPoco(newAnswer, newqp);
+
+                QuestionPoco qp = null;
+
+                if (IsMaturity)
+                {
+                    var matQuestion = this.DataContext.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
+                    qp = new QuestionPoco(newAnswer, matQuestion);
+                }
+                else
+                {
+                    qp = new QuestionPoco(newAnswer, newqp);
+                }
+
                 qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
                                           join b in this.DataContext.SETS on a.Set_Name equals b.Set_Name
                                           where a.Selected == true
@@ -198,6 +214,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
                 qp.DefaultSetName = qp.DictionaryStandards.Keys.FirstOrDefault();
                 qp.SetName = qp.DictionaryStandards.Keys.FirstOrDefault();
+
                 LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
@@ -246,8 +263,12 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             }
             else if (question.IsMaturity)
             {
-                MaturityQuestionInfoData xxx = new MaturityQuestionInfoData();
-                list = informationTabBuilder.CreateMaturityInformationTab(xxx);
+                MaturityQuestionInfoData maturityData = new MaturityQuestionInfoData()
+                {
+                    QuestionID = question.MaturityQuestion.Mat_Question_Id,
+                    MaturityQuestion = question.MaturityQuestion
+                };
+                list = informationTabBuilder.CreateMaturityInformationTab(maturityData);
             }
             else if (question.IsQuestion && !question.IsComponent)
             {

@@ -851,6 +851,8 @@ namespace CSET_Main.Questions.POCO
         public NEW_REQUIREMENT NEW_REQUIREMENT { get; set; }
         public NEW_QUESTION Question { get; private set; }
 
+        public MATURITY_QUESTIONS MaturityQuestion { get; set; }
+
         public void SetRequirementForSet(REQUIREMENT_SETS set)
         {
             if(!IsRequirement)
@@ -911,6 +913,11 @@ namespace CSET_Main.Questions.POCO
         {
             this.ProfileQuestionData = profileQuestion;
             this.DictionaryStandards[set.Set_Name] = set;
+        }
+
+        public QuestionPoco(ANSWER answer, MATURITY_QUESTIONS question) : this(answer)
+        {
+            this.MaturityQuestion = question;
         }
 
         private QuestionPoco(ANSWER answer, bool setParams=true)

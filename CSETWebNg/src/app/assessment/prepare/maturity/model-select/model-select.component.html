@@ -28,7 +28,7 @@
   </p>
   <div class="mb-5">
     <h4><input type="radio" class="maturity-model-select" name="model-select" id="model-select-cmmc"
-      [checked]="assessSvc.assessment.MaturityModel === 'CMMC'"  
+      [checked]="assessSvc.assessment?.MaturityModelName === 'CMMC'"  
       (change)="changeSelection($event, 'CMMC')">
         <label for="model-select-cmmc" class="cursor-pointer">CMMC</label></h4>
     <div>
@@ -45,14 +45,17 @@
         CMMC is broken into 5 diferent levels of Processes and Capabilities
         (which are further broken down into Practices).
       </p>
-      <button class="btn btn-link">For more information see the CMMC document</button>
+      <button class="btn btn-link"></button>
+      <a href="{{url('CMMC')}}" rel="noopener noreferrer" target="_blank">
+        For more information see the CMMC documentation
+      </a>
     </div>
     <div style="min-width: 50%" class="text-center">
       <img src="/assets/images/CMMC/CMMC-practices-per-level.png" style="width: 100%;">
     </div>
   </div>
 
-  <div class="mb-5">
+  <div class="d-none mb-5">
     <h4><input type="radio" class="maturity-model-select" name="model-select" id="model-select-edm"
       [checked]="assessSvc.maturityModels.indexOf('EDM') >= 0"
       (change)="changeSelection($event, 'EDM')">

@@ -30,14 +30,78 @@ namespace DataLayerCore.Model
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>()
-                .HasKey(avm => new { avm.Assessment_Id, avm.Model_Name });
+            modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
 
-            modelBuilder.Entity<MATURITY_LEVELS>()
-                .HasKey(ml => new { ml.Set_Name, ml.Level });
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
 
-            modelBuilder.Entity<MATURITY_REFERENCES>()
-                .HasKey(mr => new { mr.Mat_Question_Id, mr.Gen_File_Id });
+                entity.HasOne(d => d.model_)
+                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                    .HasForeignKey(d => d.model_id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AVAILABLE__model__6F6A7CB2");
+            });
+
+            modelBuilder.Entity<MATURITY_LEVELS>(entity =>
+            {
+                entity.Property(e => e.Level_Name).IsUnicode(false);
+
+                entity.HasOne(d => d.Maturity_Model_)
+                    .WithMany(p => p.MATURITY_LEVELS)
+                    .HasForeignKey(d => d.Maturity_Model_Id)
+                    .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
+            });
+
+            modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Mat_Question_Id)
+                    .HasName("PK__MATURITY__EBDCEAE635AFA091");
+
+                entity.Property(e => e.Category).IsUnicode(false);
+
+                entity.Property(e => e.Question_Text).IsUnicode(false);
+
+                entity.Property(e => e.Question_Title).IsUnicode(false);
+
+                entity.Property(e => e.Sub_Category).IsUnicode(false);
+
+                entity.Property(e => e.Supplemental_Info).IsUnicode(false);
+
+                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))");
+            });
+
+
+            modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
+
+                entity.Property(e => e.Section_Ref).IsUnicode(false);
+
+                entity.Property(e => e.Destination_String).IsUnicode(false);
+
+                entity.HasOne(d => d.Mat_Question_)
+                    .WithMany(p => p.MATURITY_SOURCE_FILES)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
+            });
+
+            modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
+
+                entity.Property(e => e.Section_Ref).IsUnicode(false);
+
+                entity.Property(e => e.Destination_String).IsUnicode(false);
+
+                entity.HasOne(d => d.Mat_Question_)
+                    .WithMany(p => p.MATURITY_REFERENCES)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+            });
 
             //modelBuilder.Query<VIEW_QUESTIONS_STATUS>().ToView("VIEW_QUESTIONS_STATUS").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
             //modelBuilder.Query<vQUESTION_HEADINGS>().ToView("vQUESTION_HEADINGS").Property(v => v.Heading_Pair_Id).HasColumnName("Heading_Pair_Id");

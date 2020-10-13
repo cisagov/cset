@@ -31,34 +31,38 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// Returns a list of all maturity models selected for the assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public List<string> GetMaturityModels(int assessmentId)
+        public List<MaturityModel> GetMaturityModels(int assessmentId)
         {
             using (var db = new CSET_Context())
             {
-                var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Model_Name).ToList();
-                return myModels;
+                var myModels = from amm in db.AVAILABLE_MATURITY_MODELS
+                               from mm in db.MATURITY_MODELS
+                               where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
+                               select new MaturityModel() { ModelId = mm.Maturity_Model_Id, ModelName = mm.Model_Name };
+                return myModels.ToList();
             }
         }
 
 
         /// <summary>
-        /// Saves the list of selected maturity models.
+        /// Saves the selected maturity model.
         /// </summary>
         /// <param name="selectedMaturityModels"></param>
         /// <returns></returns>
-        public void PersistSelectedMaturityModel(int assessmentId, string selectedMaturityModel)
+        public void PersistSelectedMaturityModel(int assessmentId, string selectedModelName)
         {
             using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
 
-                if (selectedMaturityModel != null)
+                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == selectedModelName).FirstOrDefault();
+                if (mm != null)
                 {
                     db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
                     {
                         Assessment_Id = assessmentId,
-                        Model_Name = selectedMaturityModel.ToUpper(),
+                        model_id = mm.Maturity_Model_Id,
                         Selected = true
                     });
 
@@ -156,7 +160,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // (for now assume that the assessment uses a single model)
                 var m = myModels.First();
                 var levelNames = new List<MaturityLevel>();
-                foreach (var l in db.MATURITY_LEVELS.Where(x => x.Set_Name == m.Model_Name)
+                foreach (var l in db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == m.model_id)
                     .OrderBy(y => y.Level).ToList())
                 {
                     levelNames.Add(new MaturityLevel()
@@ -171,7 +175,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // Get all maturity questions for the model regardless of level
                 // The user can choose to see questions above the target level via filtering. 
                 var questions = db.MATURITY_QUESTIONS.Where(q =>
-                    myModels.Select(mm => mm.Model_Name).Contains(q.Set_Name)).ToList();
+                    myModels.Select(mm => mm.model_id).Contains(q.Maturity_Model_Id)).ToList();
 
 
                 // Get all MATURITY answers for the assessment
@@ -261,7 +265,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             MarkForReview = answer?.a.Mark_For_Review ?? false,
                             Reviewed = answer?.a.Reviewed ?? false,
                             MaturityLevel = dbR.Maturity_Level,
-                            SetName = dbR.Set_Name,
+                            SetName = string.Empty,
                             Is_Maturity = answer?.a.Is_Maturity ?? true,
                             Is_Component = answer?.a.Is_Component ?? false,
                             Is_Requirement = answer?.a.Is_Requirement ?? false

@@ -8,16 +8,17 @@ namespace DataLayerCore.Model
 {
     public partial class AVAILABLE_MATURITY_MODELS
     {
+        [Key]
         public int Assessment_Id { get; set; }
-        [StringLength(50)]
-        public string Model_Name { get; set; }
         public bool Selected { get; set; }
+        [Key]
+        public int model_id { get; set; }
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.AVAILABLE_MATURITY_MODELS))]
         public virtual ASSESSMENTS Assessment_ { get; set; }
-        [ForeignKey(nameof(Model_Name))]
+        [ForeignKey(nameof(model_id))]
         [InverseProperty(nameof(MATURITY_MODELS.AVAILABLE_MATURITY_MODELS))]
-        public virtual MATURITY_MODELS Model_NameNavigation { get; set; }
+        public virtual MATURITY_MODELS model_ { get; set; }
     }
 }
