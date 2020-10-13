@@ -225,10 +225,16 @@ namespace CSETWeb_Api.BusinessManagers
         private void GetMaturityModelDetails(ref AssessmentDetail assessment, CSET_Context db)
         {
             int assessmentId = assessment.Id;
-            var mm = db.AVAILABLE_MATURITY_MODELS.Where(m => m.Assessment_Id == assessmentId).FirstOrDefault();
-            if (mm != null)
+            var query = from avm in db.AVAILABLE_MATURITY_MODELS
+                     join mm in db.MATURITY_MODELS on avm.model_id equals mm.Maturity_Model_Id
+                     where avm.Assessment_Id == assessmentId
+                     select new { mm.Maturity_Model_Id, mm.Model_Name };
+
+            var q1 = query.FirstOrDefault();
+            if (q1 != null)
             {
-                assessment.MaturityModel = mm.Model_Name;
+                assessment.MaturityModelId = q1.Maturity_Model_Id;
+                assessment.MaturityModelName = q1.Model_Name;
             }
 
             var ml = db.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();

@@ -33,7 +33,7 @@ export class ModelSelectComponent implements OnInit {
     // the models are currently single-select, so whichever
     // radio button was clicked, that's the only model we will use
     if (!!this.assessSvc.assessment) {
-      this.assessSvc.assessment.MaturityModel = model;
+      this.assessSvc.assessment.MaturityModelName = model;
     }
 
     // refresh Prepare section of the sidenav
