@@ -561,7 +561,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment.UseMaturity
-          && this.assessSvc.assessment.MaturityModel === 'CMMC'
+          && this.assessSvc.assessment.MaturityModelName === 'CMMC'
       }
     },
 

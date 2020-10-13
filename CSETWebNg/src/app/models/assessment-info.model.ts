@@ -43,7 +43,8 @@ export interface AssessmentDetail {
     UseMaturity?: boolean;
     UseDiagram?: boolean;
 
-    MaturityModel?: string;
+    MaturityModelId?: number;
+    MaturityModelName?: string;
     MaturityTargetLevel?: number;
 }
 
