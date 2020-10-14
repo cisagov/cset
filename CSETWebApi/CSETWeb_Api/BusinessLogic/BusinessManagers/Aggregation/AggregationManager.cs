@@ -78,10 +78,21 @@ namespace CSETWeb_Api.BusinessLogic
         /// </summary>
         public Aggregation CreateAggregation(string mode)
         {
+            string name = "";
+            switch (mode)
+            {
+                case "COMPARE":
+                    name = "New Comparison";
+                    break;
+                case "TREND":
+                    name = "New Trend";
+                    break;
+            }
+
             Aggregation newAgg = new Aggregation()
             {
                 AggregationDate = DateTime.Today,
-                AggregationName = "New " + mode,
+                AggregationName = name,
                 Mode = mode
             };
 
