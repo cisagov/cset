@@ -62,25 +62,21 @@
               <td style="padding-left:10px; vertical-align: top;">{{q.ComponentName}}</td>
               <td>
                 <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
-                  <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer_Text === 'Y'"
-                    (click)="storeAnswer(q, 'Y')">
+                  <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer_Text === 'Y'">
                     <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      [checked]="q.Answer_Text === 'Y'">Yes
+                    (click)="storeAnswer(q, 'Y')" [checked]="q.Answer_Text === 'Y'">Yes
                   </label>
-                  <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer_Text === 'N'"
-                    (click)="storeAnswer(q, 'N')">
+                  <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer_Text === 'N'">
                     <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      [checked]="q.Answer_Text === 'N'">No
+                      (click)="storeAnswer(q, 'N')" [checked]="q.Answer_Text === 'N'">No
                   </label>
-                  <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer_Text === 'NA'"
-                    (click)="storeAnswer(q, 'NA')">
+                  <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer_Text === 'NA'">
                     <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      [checked]="q.Answer_Text === 'NA'">NA
+                    (click)="storeAnswer(q, 'NA')" [checked]="q.Answer_Text === 'NA'">NA
                   </label>
-                  <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer_Text === 'A'"
-                    (click)="storeAnswer(q, 'A')">
+                  <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer_Text === 'A'">
                     <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      [checked]="q.Answer_Text === 'A'">Alt
+                    (click)="storeAnswer(q, 'A')" [checked]="q.Answer_Text === 'A'">Alt
                   </label>
                 </div>
                 <div *ngIf="q.Answer_Text === 'A'">
