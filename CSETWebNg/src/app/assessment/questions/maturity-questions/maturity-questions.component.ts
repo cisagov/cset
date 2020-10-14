@@ -55,7 +55,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadQuestions();
-    this.loaded = true;
+    this.assessSvc.currentTab = 'questions';
   }
 
   /**
