@@ -51,20 +51,17 @@
       <div [class.display-none]="filterSvc.isFilterEngaged()">
         <!-- this is the header answer block -->
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-          <label class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'"
-            (click)="setBlockAnswer('Y')">
+          <label class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off" [checked]="mySubCategory.SubCategoryAnswer === 'Y'">{{ configSvc.buttonLabels['Y'] }}
+              autocomplete="off" (click)="setBlockAnswer('Y')" [checked]="mySubCategory.SubCategoryAnswer === 'Y'">{{ configSvc.buttonLabels['Y'] }}
           </label>
-          <label class="btn btn-no form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'N'"
-            (click)="setBlockAnswer('N')">
+          <label class="btn btn-no form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'N'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off" [checked]="mySubCategory.SubCategoryAnswer === 'N'">{{ configSvc.buttonLabels['N'] }}
+              autocomplete="off" (click)="setBlockAnswer('N')" [checked]="mySubCategory.SubCategoryAnswer === 'N'">{{ configSvc.buttonLabels['N'] }}
           </label>
-          <label class="btn btn-na form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'NA'"
-            (click)="setBlockAnswer('NA')">
+          <label class="btn btn-na form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'NA'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off" [checked]="mySubCategory.SubCategoryAnswer === 'NA'">{{ configSvc.buttonLabels['NA'] }}
+              autocomplete="off" (click)="setBlockAnswer('NA')" [checked]="mySubCategory.SubCategoryAnswer === 'NA'">{{ configSvc.buttonLabels['NA'] }}
           </label>
           <label class="btn btn-na form-check-label" style="visibility: hidden;">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
@@ -97,31 +94,27 @@
 
       <div>
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-          <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'"
-            (click)="storeAnswer(q, 'Y')">
+          <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="q.Answer === 'Y'">Yes
+            (click)="storeAnswer(q, 'Y')" [checked]="q.Answer === 'Y'">Yes
           </label>
-          <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer === 'N'"
-            (click)="storeAnswer(q, 'N')">
+          <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer === 'N'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="q.Answer === 'N'">No
+            (click)="storeAnswer(q, 'N')" [checked]="q.Answer === 'N'">No
           </label>
-          <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer === 'NA'"
-            (click)="storeAnswer(q, 'NA')">
+          <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer === 'NA'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="q.Answer === 'NA'">NA
+            (click)="storeAnswer(q, 'NA')" [checked]="q.Answer === 'NA'">NA
           </label>
-          <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'"
-            (click)="storeAnswer(q, 'A')">
+          <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
-              [checked]="q.Answer === 'A'">Alt
+            (click)="storeAnswer(q, 'A')" [checked]="q.Answer === 'A'">Alt
           </label>
 
           <!-- Mark For Review Flag  -->
           <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.MarkForReview === true"
-            (click)="saveMFR(q);" matTooltip="This control requires further review.">
-            <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" checked="{{q.MarkForReview === true}}">
+             matTooltip="This control requires further review.">
+            <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" (click)="saveMFR(q);" checked="{{q.MarkForReview === true}}">
             <span class="cset-icons-flag-dark fs-base"></span>
           </label>
         </div>
