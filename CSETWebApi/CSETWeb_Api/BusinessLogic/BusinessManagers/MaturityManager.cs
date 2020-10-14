@@ -49,19 +49,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// </summary>
         /// <param name="selectedMaturityModels"></param>
         /// <returns></returns>
-        public void PersistSelectedMaturityModel(int assessmentId, int selectedMaturityModel)
+        public void PersistSelectedMaturityModel(int assessmentId, string selectedModelName)
         {
             using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
 
-                if (selectedMaturityModel != 0)
+                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == selectedModelName).FirstOrDefault();
+                if (mm != null)
                 {
                     db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
                     {
                         Assessment_Id = assessmentId,
-                        model_id = selectedMaturityModel,
+                        model_id = mm.Maturity_Model_Id,
                         Selected = true
                     });
 

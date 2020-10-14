@@ -52,8 +52,7 @@ export class ImportFormData {
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
   public hasBaseDropZoneOver: boolean = false;
-  public hasModuleBaseDropZoneOver: boolean = false;
-  public fakeUploader: FileUploader;
+  public hasModuleBaseDropZoneOver: boolean = false;  
   public hasAnotherDropZoneOver: boolean = false;
   public referenceUrl: string;
   public moduleCode: string;
@@ -127,11 +126,9 @@ export class ImportComponent implements OnInit, OnDestroy {
 
   get configOptions(): monaco.editor.IEditorConstructionOptions {
     return {
-      autoIndent: true,
       formatOnPaste: true,
       formatOnType: true,
-      automaticLayout: true,
-      language: 'json',
+      automaticLayout: true,      
       quickSuggestions: true
     };
   }
@@ -169,9 +166,11 @@ export class ImportComponent implements OnInit, OnDestroy {
         this.codeModel = {
           language: 'json',
           uri: 'main.json',
-          value: s,
+          value: JSON.stringify(JSON.parse(s), null, '\t'),
           schemas: this.jsonCodeModel.schemas
         };
+        
+        
       });
     } else {
       this.fileClient.getXMLExportSet(setName).subscribe(s => {
@@ -322,10 +321,12 @@ export class ImportComponent implements OnInit, OnDestroy {
     };
     this.initalizeUploader();
     this.codeModel = this.jsonCodeModel;
+    
   }
 
   ngOnInit() { 
-    this.initalizeUploader();
+    if(this.uploader===undefined)
+      this.initalizeUploader();
   }
 
   ngOnDestroy() {
@@ -334,6 +335,7 @@ export class ImportComponent implements OnInit, OnDestroy {
 
   private initalizeUploader(){
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocuments';
+    
     this.uploader = new FileUploader({
       url: this.referenceUrl,
       authToken: sessionStorage.getItem('userToken')      
