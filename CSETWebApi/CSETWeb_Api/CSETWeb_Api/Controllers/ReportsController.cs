@@ -241,6 +241,26 @@ namespace CSETWeb_Api.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("api/reports/executivecmmc")]
+        public BasicReportData getCMMCReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            CMMCReportData data = new CMMCReportData(assessmentId);
+            return data;
+
+            //ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            //BasicReportData data = new BasicReportData();
+            //data.ControlList = reportsDataManager.GetControls();
+            //data.genSalTable = reportsDataManager.GetGenSals();
+            //data.information = reportsDataManager.GetInformation();
+            //data.salTable = reportsDataManager.GetSals();
+            //data.nistTypes = reportsDataManager.GetNistInfoTypes();
+            //data.nistSalTable = reportsDataManager.GetNistSals();
+            //data.Zones = reportsDataManager.GetDiagramZones();
+            //return data;
+        }
+
         /// <summary>
         /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
         /// </summary>
