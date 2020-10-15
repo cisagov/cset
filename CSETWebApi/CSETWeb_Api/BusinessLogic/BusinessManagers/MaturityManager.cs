@@ -140,11 +140,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                var myModels = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
-                if (myModels.Count == 0)
+                if (myModel == null)
                 {
                     return response;
+                }
+
+                // see if any answer options should not be in the list
+                var suppressedAnswerOptions =  myModel.model_.Answer_Options_Suppressed;
+                if (!string.IsNullOrEmpty(suppressedAnswerOptions))
+                {
+                    var a = suppressedAnswerOptions.Split(',');
+                    foreach (string suppress in a)
+                    {
+                        response.AnswerOptions.Remove(suppress);
+                    }
                 }
 
 
@@ -158,9 +171,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 // get the level display names
                 // (for now assume that the assessment uses a single model)
-                var m = myModels.First();
                 var levelNames = new List<MaturityLevel>();
-                foreach (var l in db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == m.model_id)
+                foreach (var l in db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id)
                     .OrderBy(y => y.Level).ToList())
                 {
                     levelNames.Add(new MaturityLevel()
@@ -175,7 +187,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // Get all maturity questions for the model regardless of level
                 // The user can choose to see questions above the target level via filtering. 
                 var questions = db.MATURITY_QUESTIONS.Where(q =>
-                    myModels.Select(mm => mm.model_id).Contains(q.Maturity_Model_Id)).ToList();
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
 
 
                 // Get all MATURITY answers for the assessment

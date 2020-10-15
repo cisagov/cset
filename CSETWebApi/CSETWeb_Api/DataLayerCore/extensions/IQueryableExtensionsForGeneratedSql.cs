@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.EntityFrameworkCore.Storage;
+using Remotion.Linq.Parsing.Structure;
 
 namespace DataLayerCore.Model
 {
@@ -48,6 +54,11 @@ namespace DataLayerCore.Model
 
         public static string ToSql<TEntity>(this IQueryable<TEntity> query) where TEntity : class
         {
+            if (!(query is EntityQueryable<TEntity>) && !(query is InternalDbSet<TEntity>))
+            {
+                throw new ArgumentException("Invalid query");
+            }
+
             var enumerator = query.Provider.Execute<IEnumerable<TEntity>>(query.Expression).GetEnumerator();
             var relationalCommandCache = enumerator.Private("_relationalCommandCache");
             var selectExpression = relationalCommandCache.Private<SelectExpression>("_selectExpression");
@@ -59,7 +70,6 @@ namespace DataLayerCore.Model
             string sql = command.CommandText;
             return sql;
         }
-
         private static object Private(this object obj, string privateField) => obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
         private static T Private<T>(this object obj, string privateField) => (T)obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
     }
