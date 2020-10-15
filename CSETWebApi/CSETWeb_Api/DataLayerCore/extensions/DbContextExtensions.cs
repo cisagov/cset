@@ -6,10 +6,9 @@ namespace DataLayerCore.Model
     {
         public static string GetSqlServerTableName<TEntity>(this DbContext context) where TEntity : class, new()
         {
-            var metaData = context.Model
-                .FindEntityType(typeof(TEntity).FullName)
-                .SqlServer();
-            return $"{metaData.Schema}.{metaData.TableName}";
+            //var metaData = context.Model
+            //    .FindEntityType(typeof(TEntity).FullName).;
+            return string.Empty; //$"{metaData.Schema}.{metaData.TableName}";
         }
 
     }
