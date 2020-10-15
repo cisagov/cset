@@ -382,13 +382,11 @@ export class NavigationService {
   }
 
   setACETSelected(acet: boolean) {
-    console.log('setACETSelected');
     this.acetSelected = acet;
     this.buildTree(this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
-    console.log('setFrameworkSelected');
     this.frameworkSelected = framework;
     this.buildTree(this.getMagic());
   }
