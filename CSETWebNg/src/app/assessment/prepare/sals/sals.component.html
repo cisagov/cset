@@ -59,10 +59,10 @@
       </div>
     </div>
 
-    <div class="mt-2 d-flex flex-column flex-00a">
+    <div class="mt-5 mb-2 d-flex flex-column flex-00a">
       Choose one of the three SAL methodologies below to determine the correct level for your assessment.
     </div>
-    <div class="btn-group-toggle mt-3" data-toggle="buttons">
+    <div class="btn-group-toggle" data-toggle="buttons">
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="SelectedSal === 'Simple'" (click)="changeState('Simple')">
         <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector" [checked]="SelectedSal === 'Simple'">Simple
       </label>
@@ -77,7 +77,7 @@
         / FIPS-199
       </label>
     </div>
-    <hr class="w-100 hr-sal mt-1" />
+    <hr class="w-100 hr-sal mt-1 mb-5" />
 
     <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
       <div [ngSwitch]="SelectedSal" class="d-flex flex-column justify-content-start flex-00a">
