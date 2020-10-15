@@ -20,6 +20,8 @@ namespace DataLayerCore.Model
         public string Model_Name { get; set; }
         [Key]
         public int Maturity_Model_Id { get; set; }
+        [StringLength(20)]
+        public string Answer_Options_Suppressed { get; set; }
 
         [InverseProperty("model_")]
         public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
