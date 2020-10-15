@@ -54,6 +54,7 @@ export class QuestionBlockComponent implements OnInit {
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
 
+
   constructor(
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
@@ -94,12 +95,30 @@ export class QuestionBlockComponent implements OnInit {
     return text;
   }
 
+  /**
+   * 
+   * @param q 
+   */
   baselineLevel(q: Question) {
     return this.matLevelMap.get(q.MaturityLevel.toString());
   }
 
+  /**
+   * 
+   */
   refreshComponentOverrides() {
     this.changeComponents.emit();
+  }
+
+  /**
+   * 
+   * @param ans 
+   */
+  showThisOption(ans: string) {
+    if (!this.questionsSvc.questions) {
+      return true;
+    }
+    return this.questionsSvc.questions?.AnswerOptions.indexOf(ans) >= 0;
   }
 
   /**
