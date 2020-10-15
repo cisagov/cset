@@ -99,6 +99,7 @@ export class QuestionsService {
    */
   componentQuestions: QuestionResponse = null;
 
+  
   /**
    * Sets the starting value of the maturity filters, based on the 'stairstep.'
    * Any 'empty' values below the bottom of the band are set as well.
@@ -320,8 +321,10 @@ export class QuestionsService {
               q.Visible = true;
             }
 
-            if (filter.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
-              q.Visible = true;
+            // if the 'show above target' filter is turned off, hide the question
+            // if it is above the target level
+            if (!filter.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
+              q.Visible = false;
             }
 
             // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
