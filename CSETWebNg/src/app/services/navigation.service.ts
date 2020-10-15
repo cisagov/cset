@@ -283,7 +283,10 @@ export class NavigationService {
     // build Maturity Questions node
     if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity) {
       this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+        this.questionsSvc.questions = response;
         this.questionsSvc.maturityQuestions = response;
+
+        // console.log(this.questionsSvc.maturityQuestions);
 
         // find or create the node
         const maturityNode = this.findInTree(questionsNode.children, '');

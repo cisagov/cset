@@ -60,6 +60,17 @@ export class ComponentOverrideComponent {
       });
   }
 
+    /**
+   * 
+   * @param ans 
+   */
+  showThisOption(ans: string) {
+    if (!this.questionsSvc.questions) {
+      return true;
+    }
+    return this.questionsSvc.questions?.AnswerOptions.indexOf(ans) >= 0;
+  }
+
   storeAnswer(q: any, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.Answer === newAnswerValue) {
