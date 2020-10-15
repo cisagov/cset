@@ -30,7 +30,7 @@ namespace Snickler.EFCore
 
             if (prependDefaultSchema)
             {
-                var schemaName = context.Model.Relational().DefaultSchema;
+                var schemaName = context.Model.GetDefaultSchema();
                 if (schemaName != null)
                 {
                     storedProcName = $"{schemaName}.{storedProcName}";
@@ -221,6 +221,10 @@ namespace Snickler.EFCore
                         // return new SprocResults();
                         handleResults(sprocResults);
                     }
+                }
+                catch(Exception e)
+                {
+                    
                 }
                 finally
                 {
