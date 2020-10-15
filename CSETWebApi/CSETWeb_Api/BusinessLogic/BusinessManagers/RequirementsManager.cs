@@ -469,7 +469,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             parametersDictionary = (from p in db.PARAMETERS
                                     join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
-                                    select new { p, r })
+                                    select new { p, r }).AsEnumerable()
                 .GroupBy(x => x.r.Requirement_Id)
                 .ToDictionary(x => x.Key, x => x.Select(y => y.p).ToList());
 
@@ -481,7 +481,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             parametersAnswerDictionary = (from p in db.PARAMETERS
                                           join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
-                                          select new ParameterValues() { p = p, pv = pv })
+                                          select new ParameterValues() { p = p, pv = pv }).AsEnumerable()
             .GroupBy(x => x.pv.Answer_Id)
             .ToDictionary(x => x.Key, x => x.Select(y => y).ToList());
         }
