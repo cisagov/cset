@@ -32,10 +32,10 @@ import { ACETService } from '../../services/acet.service';
 
 @Component({
   selector: 'sitesummary',
-  templateUrl: './sitesummary.component.html',
+  templateUrl: './sitesummary-cmmc.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SitesummaryComponent implements OnInit, AfterViewChecked {
+export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked {
   chartStandardsSummary: Chart;
   chartRankedSubjectAreas: Chart;
   chartPercentCompliance: Chart;
@@ -88,8 +88,9 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.titleService.setTitle("Site Summary Report - CSET");
 
-    this.reportSvc.getReport('sitesummary').subscribe(
+    this.reportSvc.getReport('sitesummarycmmc').subscribe(
       (r: any) => {
+        console.log(r)
         this.response = r;
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');

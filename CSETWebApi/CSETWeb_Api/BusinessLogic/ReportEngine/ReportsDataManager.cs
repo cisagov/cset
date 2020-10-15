@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Manual;
 using DataLayerCore;
 using Snickler.EFCore;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -705,76 +706,64 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<BasicReportData.RequirementControl> GetCMMC()
+        public List<MaturityReportData.MaturityModel> getMaturityModelData()
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-
+            List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();
+            List<MaturityReportData.MaturityModel> mat_models = new List<MaturityReportData.MaturityModel>(); 
             using (var db = new CSET_Context())
             {
-                db.FillEmptyQuestionsForAnalysis(assessmentID);
+                db.FillEmptyMaturityQuestionsForAnalysis(assessmentID);
 
-                var q = (from rs in db.REQUIREMENT_SETS
-                         join r in db.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
-                         join rl in db.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
-                         join s in db.SETS on rs.Set_Name equals s.Set_Name
-                         join av in db.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name
-                         join rqs in db.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
-                         join qu in db.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
-                         join a in db.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
-                         where rl.Standard_Level == _standardLevel && av.Selected == true && rl.Level_Type == "NST"
-                             && av.Assessment_Id == assessmentID && a.Assessment_Id == assessmentID
-                         orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
-                         select new { r, rs, rl, s, qu, a }).ToList();
-
-                //get all the questions for this control 
-                //determine the percent implemented.                 
-                int prev_requirement_id = 0;
-                int questionCount = 0;
-                int questionsAnswered = 0;
-                BasicReportData.RequirementControl control = null;
-                List<BasicReportData.Control_Questions> questions = null;
-                foreach (var a in q.ToList())
+                var query = (
+                    from amm in db.AVAILABLE_MATURITY_MODELS
+                    join mm in db.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
+                    join mq in db.MATURITY_QUESTIONS on mm.Maturity_Model_Id equals mq.Maturity_Model_Id
+                    join ans in db.ANSWER on mq.Mat_Question_Id equals ans.Question_Or_Requirement_Id
+                    join asl in db.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id
+                    where amm.Assessment_Id == assessmentID 
+                    && ans.Assessment_Id == assessmentID
+                    && ans.Is_Maturity == true
+                    select new { amm, mm, mq, ans, asl }
+                    ).ToList();
+                var models = query.Select(x => new { x.mm, x.asl }).Distinct();
+                foreach(var model in models)
                 {
-                    double implementationstatus = 0;
-                    if (prev_requirement_id != a.r.Requirement_Id)
-                    {
-                        questionCount = 0;
-                        questionsAnswered = 0;
-                        questions = new List<BasicReportData.Control_Questions>();
-                        control = new BasicReportData.RequirementControl()
-                        {
-                            ControlDescription = a.r.Requirement_Text,
-                            RequirementTitle = a.r.Requirement_Title,
-                            Level = a.rl.Standard_Level,
-                            StandardShortName = a.s.Short_Name,
-                            Standard_Category = a.r.Standard_Category,
-                            SubCategory = a.r.Standard_Sub_Category,
-                            Control_Questions = questions
-                        };
-                        controls.Add(control);
+                    MaturityReportData.MaturityModel newModel = new MaturityReportData.MaturityModel();
+                    newModel.MaturityModelName = model.mm.Model_Name;
+                    newModel.MaturityModelID = model.mm.Maturity_Model_Id;
+                    if(Int32.TryParse(model.asl.Standard_Specific_Sal_Level, out int lvl)) {
+                        newModel.TargetLevel = lvl;
+                    } else {
+                        newModel.TargetLevel = null;
                     }
-                    questionCount++;
-
-                    switch (a.a.Answer_Text)
-                    {
-                        case Constants.ALTERNATE:
-                        case Constants.YES:
-                            questionsAnswered++;
-                            break;
-                    }
-
-                    questions.Add(new BasicReportData.Control_Questions()
-                    {
-                        Answer = a.a.Answer_Text,
-                        Comment = a.a.Comment,
-                        Simple_Question = a.qu.Simple_Question
-                    });
-
-                    control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered, questionCount, 2).ToString("##.##");
-                    prev_requirement_id = a.r.Requirement_Id;
+                    mat_models.Add(newModel);
                 }
+
+                foreach(var queryItem in query)
+                {
+                    MaturityReportData.MaturityQuestion newQuestion = new MaturityReportData.MaturityQuestion();
+                    newQuestion.Mat_Question_Id = queryItem.mq.Mat_Question_Id;
+                    newQuestion.Question_Title = queryItem.mq.Question_Title;
+                    newQuestion.Question_Text = queryItem.mq.Question_Text;
+                    newQuestion.Supplemental_Info = queryItem.mq.Supplemental_Info;
+                    newQuestion.Category = queryItem.mq.Category;
+                    newQuestion.Sub_Category = queryItem.mq.Sub_Category;
+                    newQuestion.Maturity_Level = queryItem.mq.Maturity_Level;
+                    newQuestion.Set_Name = queryItem.mm.Model_Name;
+                    newQuestion.Sequence = queryItem.mq.Sequence;
+                    //newQuestion.Text_Hash = queryItem.mq.Text_Hash;
+                    newQuestion.Maturity_Model_Id = queryItem.mm.Maturity_Model_Id;
+                    newQuestion.Answer = queryItem.ans;
+
+                    mat_models.Where(x => x.MaturityModelID == newQuestion.Maturity_Model_Id)
+                        .FirstOrDefault()
+                        .MaturityQuestions.Add(newQuestion);
+
+                    mat_questions.Add(newQuestion);
+                }
+                return mat_models;
+
             }
-            return controls;
         }
 
     }
