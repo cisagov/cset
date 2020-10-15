@@ -31,10 +31,10 @@
   <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="maturitySvc.levels">
       <label class="btn btn-level btn-rounded form-check-label"
-        [class.active]="level?.value <= this.assessSvc.assessment.MaturityTargetLevel" 
+        [class.active]="level?.value <= this.assessSvc.assessment?.MaturityTargetLevel" 
         (click)="saveLevel(level.value)">
         <input class="form-check-input" type="radio" autocomplete="off" name="mat_cmmc_level"
-          [checked]="level.value === this.assessSvc.assessment.MaturityTargetLevel"> {{level.name}}
+          [checked]="level.value === this.assessSvc.assessment?.MaturityTargetLevel"> {{level.name}}
       </label>
     </ng-template>
   </div>
