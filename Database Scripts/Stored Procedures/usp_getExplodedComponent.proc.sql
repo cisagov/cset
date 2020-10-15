@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [usp_getExplodedComponent]
+CREATE PROCEDURE [dbo].[usp_getExplodedComponent]
 	-- Add the parameters for the stored procedure here
 	@assessment_id int	
 AS

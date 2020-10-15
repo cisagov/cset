@@ -164,15 +164,11 @@ export class ReportAnalysisService {
                   const ds = data.datasets[0];
                   const arc = meta.data[i];
                   debugger;
-                  //const custom = arc && arc.custom || {};
                   const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                   const arcOpts = chart.options.elements.arc;
-                  const fill = arc._model.backgroundColor ? arc._model.backgroundColor :
-                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = arc._model.borderColor ? arc._model.borderColor :
-                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = arc._model.borderWidth ? arc._model.borderWidth :
-                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                  const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                  const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                  const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                   const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   return {
                     text: label + ' : ' + value + '%',
@@ -476,15 +472,11 @@ export class ReportAnalysisService {
                   const meta = chart.getDatasetMeta(0);
                   const ds = data.datasets[0];
                   const arc = meta.data[i];
-                  //const custom = arc && arc.custom || {};
                   const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                   const arcOpts = chart.options.elements.arc;
-                  const fill = arc._model.backgroundColor ? arc._model.backgroundColor :
-                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = arc._model.borderColor ? arc._model.borderColor :
-                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = arc._model.borderWidth ? arc._model.borderWidth :
-                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                  const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                  const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                  const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                   const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   return {
                     text: label + ' : ' + value + '%',

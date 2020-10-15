@@ -43,20 +43,20 @@ begin '+
 '--first get a unique name for the set'+ CHAR(13)+CHAR(10) + 
 '	if @addNew = 1'+ CHAR(13)+CHAR(10) + 
 '	begin'+ CHAR(13)+CHAR(10) + 
-'		while exists (select * from dbo.sets where set_name = @tempEntityName)'+ CHAR(13)+CHAR(10) + 
+'		while exists (select * from sets where set_name = @tempEntityName)'+ CHAR(13)+CHAR(10) + 
 '		begin'+ CHAR(13)+CHAR(10) + 
 '			set @i = @i+1'+ CHAR(13)+CHAR(10) + 
 '			set @tempEntityName = @entity_name +convert(varchar,@i)'+CHAR(13)+CHAR(10) + 
 '		end'+CHAR(13)+CHAR(10) + 
 '	end'+CHAR(13)+CHAR(10) + 
-'	INSERT INTO [dbo].[SETS]'+CHAR(13)+CHAR(10) + 
+'	INSERT INTO [SETS]'+CHAR(13)+CHAR(10) + 
 '			   ([Set_Name],[Full_Name],[Short_Name],[Is_Displayed],[Is_Pass_Fail],[Old_Std_Name],[Set_Category_Id],[Order_In_Category],[Report_Order_Section_Number],[Aggregation_Standard_Number],[Is_Question],[Is_Requirement],[Order_Framework_Standards],[Standard
 _ToolTip],[Is_Deprecated],[Upgrade_Set_Name],[Is_Custom],[Date],[IsEncryptedModule],[IsEncryptedModuleOpen])'+CHAR(13)+CHAR(10) + 
 '		 VALUES(@tempEntityName,@entity_name,@entity_name,1,1,null,1,1,35,35,1,0,35,null,0,null,1,getdate(),0,0)'+CHAR(13)+CHAR(10) + 
-'	INSERT INTO [dbo].[NEW_QUESTION_SETS] ([Set_Name],[Question_Id])     '+CHAR(13)+CHAR(10) + 
+'	INSERT INTO [NEW_QUESTION_SETS] ([Set_Name],[Question_Id])     '+CHAR(13)+CHAR(10) + 
 '		SELECT [Custom_Questionaire_Name]=@tempEntityName'+CHAR(13)+CHAR(10) + 
 '			  ,[Question_Id]'+CHAR(13)+CHAR(10) + 
-'		FROM ['+@AssessmentDBName+'].[dbo].[CUSTOM_QUESTIONAIRE_QUESTIONS]'+CHAR(13)+CHAR(10) + 
+'		FROM ['+@AssessmentDBName+'].[CUSTOM_QUESTIONAIRE_QUESTIONS]'+CHAR(13)+CHAR(10) + 
 'end';
 
 print @sql
