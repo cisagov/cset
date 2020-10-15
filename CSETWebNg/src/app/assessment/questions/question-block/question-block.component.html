@@ -51,19 +51,19 @@
       <div [class.display-none]="filterSvc.isFilterEngaged()">
         <!-- this is the header answer block -->
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-          <label class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'">
+          <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off" (click)="setBlockAnswer('Y')" [checked]="mySubCategory.SubCategoryAnswer === 'Y'">{{ configSvc.buttonLabels['Y'] }}
           </label>
-          <label class="btn btn-no form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'N'">
+          <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'N'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off" (click)="setBlockAnswer('N')" [checked]="mySubCategory.SubCategoryAnswer === 'N'">{{ configSvc.buttonLabels['N'] }}
           </label>
-          <label class="btn btn-na form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'NA'">
+          <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label" [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'NA'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off" (click)="setBlockAnswer('NA')" [checked]="mySubCategory.SubCategoryAnswer === 'NA'">{{ configSvc.buttonLabels['NA'] }}
           </label>
-          <label class="btn btn-na form-check-label" style="visibility: hidden;">
+          <label *ngIf="showThisOption('A')" class="btn btn-na form-check-label" style="visibility: hidden;">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off">XX
           </label>
@@ -94,19 +94,19 @@
 
       <div>
         <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-          <label class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'">
+          <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer === 'Y'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
             (click)="storeAnswer(q, 'Y')" [checked]="q.Answer === 'Y'">Yes
           </label>
-          <label class="btn btn-no form-check-label" [class.answer-selected]="q.Answer === 'N'">
+          <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label" [class.answer-selected]="q.Answer === 'N'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
             (click)="storeAnswer(q, 'N')" [checked]="q.Answer === 'N'">No
           </label>
-          <label class="btn btn-na form-check-label" [class.answer-selected]="q.Answer === 'NA'">
+          <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label" [class.answer-selected]="q.Answer === 'NA'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
             (click)="storeAnswer(q, 'NA')" [checked]="q.Answer === 'NA'">NA
           </label>
-          <label class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'">
+          <label *ngIf="showThisOption('A')" class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer === 'A'">
             <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
             (click)="storeAnswer(q, 'A')" [checked]="q.Answer === 'A'">Alt
           </label>
