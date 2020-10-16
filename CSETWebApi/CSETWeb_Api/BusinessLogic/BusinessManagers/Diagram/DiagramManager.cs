@@ -20,7 +20,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers;
 using CSETWeb_Api.BusinessLogic.Diagram;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 
 namespace CSETWeb_Api.BusinessManagers

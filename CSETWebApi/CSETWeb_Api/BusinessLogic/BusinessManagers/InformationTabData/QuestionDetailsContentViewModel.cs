@@ -23,7 +23,7 @@ using DataLayerCore.Model;
 using DataLayerCore.Manual;
 using Snickler.EFCore;
 using Newtonsoft.Json;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace CSET_Main.Views.Questions.QuestionDetails
 {
