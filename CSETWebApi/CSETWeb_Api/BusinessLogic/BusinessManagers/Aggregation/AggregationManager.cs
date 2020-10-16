@@ -10,7 +10,7 @@ using Snickler.EFCore;
 using BusinessLogic.Helpers;
 using BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using CSETWeb_Api.BusinessLogic;
 
 using CSETWeb_Api.BusinessLogic.Models;
