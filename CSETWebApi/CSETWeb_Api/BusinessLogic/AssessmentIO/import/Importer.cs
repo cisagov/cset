@@ -15,7 +15,7 @@ using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
 using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
 using BusinessLogic.Helpers;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
