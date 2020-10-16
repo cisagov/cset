@@ -221,6 +221,8 @@ import { MaturityQuestionsComponent } from './assessment/questions/maturity-ques
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { MatCmmcComponent } from './assessment/results/mat-cmmc/mat-cmmc.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
+import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
+import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
 
 @NgModule({
     imports: [
@@ -401,6 +403,8 @@ import { DiagramQuestionsComponent } from './assessment/questions/diagram-questi
         AwwaStandardComponent,
         MatCmmcComponent,
         DiagramQuestionsComponent,
+        SitesummaryCMMCComponent,
+        ExecutiveCMMCComponent,
     ],
     providers: [
         ConfigService,

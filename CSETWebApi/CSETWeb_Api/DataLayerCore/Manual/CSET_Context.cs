@@ -206,6 +206,28 @@ namespace DataLayerCore.Model
             return myrval;
         }
 
+        /// <summary>
+        /// Insert empty questions for Maturity model questions based on the maturity models
+        /// selected on the assessment
+        /// </summary>
+        /// <param name="assessment_Id"></param>
+        /// <returns></returns>
+        public virtual int FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
+        {
+            if (!assessment_Id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            int myrval = 0;
+            this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
+                     .WithSqlParam("Assessment_Id", assessment_Id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToValue<int>() ?? 0;
+                     });
+            return myrval;
+        }
+
 
         /// <summary>
         /// 

@@ -55,6 +55,34 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+        [HttpGet]
+        [Route("api/reports/executivecmmc")]
+        public MaturityReportData getCMMCReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityReportData data = new MaturityReportData();
+            data.analyzeMaturityData();
+            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.information = reportsDataManager.GetInformation();
+            data.analyzeMaturityData();
+
+            return data;
+        }
+        [HttpGet]
+        [Route("api/reports/sitesummarycmmc")]
+        public MaturityReportData getSiteSummaryCMMCReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityReportData data = new MaturityReportData();
+            data.analyzeMaturityData();
+            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.information = reportsDataManager.GetInformation();
+            data.analyzeMaturityData();
+
+            return data;
+        }
 
         [HttpGet]
         [Route("api/reports/discoveries")]
@@ -240,6 +268,7 @@ namespace CSETWeb_Api.Controllers
 
             return response;
         }
+
 
         /// <summary>
         /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
