@@ -21,59 +21,43 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
-import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
-import { ACETService } from '../../services/acet.service';
-
 @Component({
   selector: 'sitesummary',
   templateUrl: './sitesummary-cmmc.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked {
-  chartStandardsSummary: Chart;
-  chartRankedSubjectAreas: Chart;
-  chartPercentCompliance: Chart;
-  canvasStandardResultsByCategory: Chart;
+export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
+  
+  pieChartVals = "";
+  pieColorYes = "#ffc107"
+  pieColorNo = "#f2b844"
+
+  cmmcModel;
+  statsByLevel;
+ 
+  levelDescriptions = {
+    1: "Safeguard Federal Contract Information (FCI)",
+    2: "Serves as transition step in cybersecurity maturity progression to protect CUI",
+    3: "Protect Controlled Unclassified Information (CUI)",
+    4: "Protect CUI and reduce risk of Advanced Persistent Threats (APTs)",
+    5: "Protect CUI and reduce risk of Advanced Persistent Threats (APTs)",
+  }
+
+  blueGradient = "linear-gradient(5deg, rgba(31,82,132,1) 0%, rgba(58,128,194,1) 100%)"
+  greenGradient = "linear-gradient(5deg, rgba(98,154,109,1) 0%, rgba(31,77,67,1) 100%)"
+  grayGradient = "linear-gradient(5deg, rgba(98,98,98,1) 0%, rgba(120,120,120,1) 100%)"
+
+  ngstyleCalls = 0;
+
+  divElement: HTMLElement;
+
   response: any;
-  responseResultsByCategory: any;
-
-
-  chart1: Chart;
-  numberOfStandards = -1;
-  complianceGraphs: any[] = [];
-  networkDiagramImage: SafeHtml;
-
   pageInitialized = false;
-
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
-
-  // Charts for Components
-  componentCount = 0;
-  chartComponentSummary: Chart;
-  chartComponentsTypes: Chart;
-  networkRecommendations = [];
-  canvasComponentCompliance: Chart;
-  warnings: any;
-
-  // ACET data
-  matDetails: any;
-  acetDashboard: AcetDashboard;
-  Components: AdminTableData[];
-  adminPageData: AdminPageData;
-  GrandTotal: number;
-  DocumentationTotal: number;
-  InterviewTotal: number;
-  ReviewedStatementTotal: number;
-
 
 
   constructor(
@@ -81,228 +65,93 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public acetSvc: ACETService,
     private sanitizer: DomSanitizer
   ) { }
+
+  getRadi(i){
+    let degreeOfNo = Math.round(i.questionUnAnswered / i.questionCount * 360)
+
+    let val = {
+      backgroundImage: `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
+    }
+    this.ngstyleCalls += 1;
+    console.log(this.ngstyleCalls)
+    return val
+  }
+  getBorder(input){
+    return `solid ${input} black`
+  }
+
+  getBarSettings(input){
+    let width = Math.round(input.questionAnswered / input.questionCount * 100)
+    let color = "linear-gradient(5deg, rgba(100,100,100,1) 0%, rgba(200,200,200,1) 100%)"
+    if(input.ModelLevel < this.cmmcModel.TargetLevel){
+      color = this.blueGradient;
+    }else if(input.ModelLevel == this.cmmcModel.TargetLevel){
+      color = this.greenGradient;
+    } else {
+      color = this.grayGradient;
+    }
+    let val = {
+      width: `${width}%`,
+      background: color
+    }
+    console.log(val)
+    return val
+  }
+
+  isWithinModelLevel(level){
+    if(level.ModelLevel == "CMMC"){ return false;}
+    let val = Number(level.ModelLevel)
+    if(!isNaN(val)){
+      if(val <= this.cmmcModel.TargetLevel){
+        return true;
+      }
+    }
+    return false;
+  }
 
   ngOnInit() {
     this.titleService.setTitle("Site Summary Report - CSET");
 
     this.reportSvc.getReport('sitesummarycmmc').subscribe(
       (r: any) => {
-        console.log(r)
         this.response = r;
-        // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
-        if (!!v) {
-          this.nistSalC = v.Justification;
+        if(r.MaturityModels){
+          r.MaturityModels.forEach(model => {
+            if(model.MaturityModelName == "CMMC"){
+              this.cmmcModel = model
+              this.statsByLevel = this.cmmcModel.StatsByLevel.filter(obj => obj.ModelLevel != "Aggregate")
+            }
+          });    
+          console.log(this.cmmcModel)
+          console.log(this.statsByLevel)
         }
-        v = this.response.nistTypes.find(x => x.CIA_Type === 'Integrity');
-        if (!!v) {
-          this.nistSalI = v.Justification;
-        }
-        v = this.response.nistTypes.find(x => x.CIA_Type === 'Availability');
-        if (!!v) {
-          this.nistSalA = v.Justification;
-        }
+        // console.log(this.statsByLevel)
+        // this.statsByLevel
+        // console.log(r)
+
+        // let testYes = 75
+        // let testNo = 25
+        // let totalQues = testYes + testNo 
+        // let degreeOfNo = Math.round(testNo / totalQues * 360)
+
+        // this.divElement = this.PieChartByLevel3.nativeElement;
+        // let pieVal = `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
+        // this.divElement.style.backgroundImage= pieVal
       },
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );
-
-    // Populate charts
-
-    // Summary Percent Compliance
-    this.analysisSvc.getDashboard().subscribe(x => {
-      this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
-    });
-
-
-    // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
-
-
-    // Standards By Category
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-
-      // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
-      if (!!x.dataSets) {
-        x.dataSets.forEach(element => {
-          this.complianceGraphs.push(element);
-        });
-      }
-    });
-
-
-    // Ranked Subject Areas
-    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
-    });
-
-
-    // Component Summary
-    this.analysisSvc.getComponentSummary().subscribe(x => {
-      setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 100);
-    });
-
-
-    // Component Types (stacked bar chart)
-    this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.componentCount = x.Labels.length;
-      setTimeout(() => {
-        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      }, 100);
-    });
-
-
-    // Component Compliance by Subject Area
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
-    });
-
-
-    // Network Warnings
-    this.analysisSvc.getNetworkWarnings().subscribe(x => {
-      this.warnings = x;
-    });
-
-    this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x);
-    });
-
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
-    });
-
-    this.acetSvc.getMatDetailList().subscribe(
-      (data) => {
-        this.matDetails = data;
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
-
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        this.acetDashboard = data;
-
-        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
-        }
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
-
-    this.acetSvc.getAdminData().subscribe(
-      (data: AdminPageData) => {
-        this.adminPageData = data;
-        this.ProcessAcetAdminData();
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
   }
 
-  /**
-   *
-   */
+  ngAfterViewInit(){
+    // console.log(this.pieChartDiv)    
+  }
+
   ngAfterViewChecked() {
-    if (this.pageInitialized) {
-      return;
-    }
-
-    // There's probably a better way to do this ... we have to wait until the
-    // complianceGraphs array has been built so that the template can bind to it.
-    if (this.complianceGraphs.length === this.numberOfStandards && this.numberOfStandards >= 0) {
-      this.pageInitialized = true;
-    }
-
-    // at this point the template should know how big the complianceGraphs array is
-    let cg = 0;
-    this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
-    });
+    // if (this.pageInitialized) {
+    //   return;
+    // }
   }
 
-
-  ProcessAcetAdminData() {
-    /// the data type Barry used to load data for this screen would be really, really hard
-    /// to work with in angular, with a single row described in multiple entries.
-    /// so here i turn barry's model into something more workable.
-    this.Components = [];
-
-    // the totals at the bottom of the table
-    this.GrandTotal = this.adminPageData.GrandTotal;
-    for (let i = 0; i < this.adminPageData.ReviewTotals.length; i++) {
-      if (this.adminPageData.ReviewTotals[i].ReviewType === "Documentation") {
-        this.DocumentationTotal = this.adminPageData.ReviewTotals[i].Total;
-      } else if (this.adminPageData.ReviewTotals[i].ReviewType === "Interview Process") {
-        this.InterviewTotal = this.adminPageData.ReviewTotals[i].Total;
-      } else if (this.adminPageData.ReviewTotals[i].ReviewType === "Statements Reviewed") {
-        this.ReviewedStatementTotal = this.adminPageData.ReviewTotals[i].Total;
-      }
-    }
-
-    // Create a framework for the page's values
-    this.BuildComponent(this.Components, "Pre-exam prep", false);
-    this.BuildComponent(this.Components, "IRP", false);
-    this.BuildComponent(this.Components, "Domain 1", false);
-    this.BuildComponent(this.Components, "Domain 2", false);
-    this.BuildComponent(this.Components, "Domain 3", false);
-    this.BuildComponent(this.Components, "Domain 4", false);
-    this.BuildComponent(this.Components, "Domain 5", false);
-    this.BuildComponent(this.Components, "Discussing end results with CU", false);
-    this.BuildComponent(this.Components, "Other (specify)", true);
-    this.BuildComponent(this.Components, "Additional Other (specify)", true);
-
-    // the "meat" of the page, the components list and hours on each
-    for (let i = 0; i < this.adminPageData.DetailData.length; i++) {
-      const detail: HoursOverride = this.adminPageData.DetailData[i];
-
-      // find the corresponding Component/Row in the framework
-      const c = this.Components.find(function (element) {
-        return element.Component === detail.Data.Component;
-      });
-
-      if (!!c) {
-        // drop in the hours
-        if (detail.Data.ReviewType === "Documentation") {
-          c.DocumentationHours = detail.Data.Hours;
-        } else if (detail.Data.ReviewType === "Interview Process") {
-          c.InterviewHours = detail.Data.Hours;
-        }
-
-        c.StatementsReviewed = detail.StatementsReviewed;
-
-        c.OtherSpecifyValue = detail.Data.OtherSpecifyValue;
-      }
-    }
-  }
-
-  /**
-   * Builds one 'row/component'.
-   */
-  BuildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
-    const comp = new AdminTableData();
-    comp.Component = componentName;
-    comp.DocumentationHours = 0;
-    comp.InterviewHours = 0;
-    comp.StatementsReviewed = 0;
-    comp.HasSpecifyField = hasSpecifyField;
-    components.push(comp);
-  }
 }
