@@ -474,5 +474,137 @@
     color: rgb(156,0,6);
   }
   
+  /**
+  *Maturity Model graph Styleing
+  */
   
+  .piechart { 
+    background-image: conic-gradient( 
+        gray 360deg)
+} 
+.piechartBackground { 
+  border-radius: 50%; 
+  background-image: linear-gradient(193deg, rgb(31, 82, 183), rgb(82, 122, 175) 100%)
+} 
+.piechartitem {
+  border-radius: 50%; 
+  width: 150px; 
+  height: 150px; 
+  position: absolute;
+}
+.pieChartcontainer{
+  padding:1em;
+  width: 200px; //Cant figure out how to get the auto width to apply to an absolutley position contents
+}
+
+  body, 
+  .piechart { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+  }
+  .pieChartRow {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3em;
+  }
+  .flex-row-item{
+    display: flex;
+  }
+  .flex {
+    display: flex;
+  }
+  .levelIndicatorContainer {
+    background: linear-gradient(5deg, rgba(31,82,132,1) 0%, rgba(58,128,194,1) 100%);
+    color: white;
+    border-radius: 5%;
+    width: 8em;
+    height: 12em;
+    // flex-basis: 15%;
+    margin-right:5em;
+  }
+
+  .levelIndicatorContainer .rbTitle{
+    margin-top: 0.4em;
+    line-height: 1.2em;
+    font-size: 2em;
+    text-align: center;
+  }
+  .levelIndicatorContainer .rbLevel{
+    font-size: 4em;
+    font-weight: 900;
+    text-align: center;
+    text-shadow: 1px 1px black;
+  }
+  .pieChartLabelContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0em;
+  }
+  .pieChartLabel {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: system-ui;
+  }
   
+  .pieChartRowTitle{
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: .06em;
+    margin-bottom: 1em;
+  }
+  .barChartRowContainer{
+    // background:red;
+    flex-direction: row;
+    display: flex;
+    flex-grow: 1;
+  }
+  .barChartContainer {
+    flex-direction: column;
+    flex:1;
+  }
+  .barChartRow {    
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    // border: solid 1px black;
+  }
+  .barChartBar {
+    display: flex;
+    height: 3em;
+    // background: green;
+    width: 100%;
+    padding: .3em;
+  }
+  .barChartLabel{
+    display: flex;
+    // background: blue;
+    width: 4em;
+    justify-content: center;
+    align-items: center;
+  }
+  .barContainer{
+    // background:green;
+    flex-direction: column;
+  }
+  .barAnswered{    
+    border-radius: 0 6px 6px 0%;
+    box-shadow: 2px 2px rgba(0,0,0,.2)
+    // background: linear-gradient(193deg, rgba(2,0,36,1), rgba(0,212,255,1) 100%)
+  }
+
+  .barChartLabels{
+    display: flex;
+    flex-direction: row;
+    margin-left: 4em;
+
+  }
+  .barChartHorizontalLabel{
+    display: flex;
+    margin-right: 20%;
+    text-align: center;
+    align-content: end;
+  }

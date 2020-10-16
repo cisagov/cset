@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using DataLayerCore.Manual;
 using DataLayerCore;
 using Snickler.EFCore;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -701,6 +702,70 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return genSALTable;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<MaturityReportData.MaturityModel> getMaturityModelData()
+        {
+            List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();
+            List<MaturityReportData.MaturityModel> mat_models = new List<MaturityReportData.MaturityModel>(); 
+            using (var db = new CSET_Context())
+            {
+                db.FillEmptyMaturityQuestionsForAnalysis(assessmentID);
+
+                var query = (
+                    from amm in db.AVAILABLE_MATURITY_MODELS
+                    join mm in db.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
+                    join mq in db.MATURITY_QUESTIONS on mm.Maturity_Model_Id equals mq.Maturity_Model_Id
+                    join ans in db.ANSWER on mq.Mat_Question_Id equals ans.Question_Or_Requirement_Id
+                    join asl in db.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id
+                    where amm.Assessment_Id == assessmentID 
+                    && ans.Assessment_Id == assessmentID
+                    && ans.Is_Maturity == true
+                    select new { amm, mm, mq, ans, asl }
+                    ).ToList();
+                var models = query.Select(x => new { x.mm, x.asl }).Distinct();
+                foreach(var model in models)
+                {
+                    MaturityReportData.MaturityModel newModel = new MaturityReportData.MaturityModel();
+                    newModel.MaturityModelName = model.mm.Model_Name;
+                    newModel.MaturityModelID = model.mm.Maturity_Model_Id;
+                    if(Int32.TryParse(model.asl.Standard_Specific_Sal_Level, out int lvl)) {
+                        newModel.TargetLevel = lvl;
+                    } else {
+                        newModel.TargetLevel = null;
+                    }
+                    mat_models.Add(newModel);
+                }
+
+                foreach(var queryItem in query)
+                {
+                    MaturityReportData.MaturityQuestion newQuestion = new MaturityReportData.MaturityQuestion();
+                    newQuestion.Mat_Question_Id = queryItem.mq.Mat_Question_Id;
+                    newQuestion.Question_Title = queryItem.mq.Question_Title;
+                    newQuestion.Question_Text = queryItem.mq.Question_Text;
+                    newQuestion.Supplemental_Info = queryItem.mq.Supplemental_Info;
+                    newQuestion.Category = queryItem.mq.Category;
+                    newQuestion.Sub_Category = queryItem.mq.Sub_Category;
+                    newQuestion.Maturity_Level = queryItem.mq.Maturity_Level;
+                    newQuestion.Set_Name = queryItem.mm.Model_Name;
+                    newQuestion.Sequence = queryItem.mq.Sequence;
+                    //newQuestion.Text_Hash = queryItem.mq.Text_Hash;
+                    newQuestion.Maturity_Model_Id = queryItem.mm.Maturity_Model_Id;
+                    newQuestion.Answer = queryItem.ans;
+
+                    mat_models.Where(x => x.MaturityModelID == newQuestion.Maturity_Model_Id)
+                        .FirstOrDefault()
+                        .MaturityQuestions.Add(newQuestion);
+
+                    mat_questions.Add(newQuestion);
+                }
+                return mat_models;
+
+            }
+        }
+
     }
 
 

@@ -58,6 +58,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     clickReportLink(reportType: string) {
+        console.log('/index.html?returnPath=report/'+reportType)
         const url = '/index.html?returnPath=report/'+reportType;
         window.open(url, "_blank");
     }

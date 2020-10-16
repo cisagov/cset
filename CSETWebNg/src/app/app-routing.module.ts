@@ -86,6 +86,8 @@ import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
+import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
+import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
@@ -273,7 +275,9 @@ const appRoutes: Routes = [
       { path: 'securityplan', component: SecurityplanComponent },
       { path: 'sitesummary', component: SitesummaryComponent },
       { path: 'trendreport', component: TrendReportComponent },
-      { path: 'comparereport', component: CompareReportComponent }
+      { path: 'comparereport', component: CompareReportComponent },
+      { path: 'executivecmmc', component: ExecutiveCMMCComponent },
+      { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
