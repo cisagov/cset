@@ -30,6 +30,10 @@ namespace CSETWeb_Api.Models
         // The count of all requirements in the response.
         public int RequirementCount;
 
+        // Answer options supported for this question list.  Normally everything 
+        // is supported, but maturity models may not offer all options.
+        public List<string> AnswerOptions = new List<string>() { "Y", "N", "NA", "A" };
+
 
 
         /// <summary>

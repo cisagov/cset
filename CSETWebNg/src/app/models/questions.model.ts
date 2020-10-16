@@ -31,6 +31,9 @@ export interface QuestionResponse {
     QuestionCount: number;
     RequirementCount: number;
     OverallIRP: number;
+    
+    // the answer options to be displayed
+    AnswerOptions: string[];
 }    
 
 export interface ACETDomain {

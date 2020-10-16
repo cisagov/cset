@@ -282,8 +282,6 @@ export class AnalysisService {
                   if (!!arc) {
                     value = chart.config.data.datasets[arc._datasetIndex].data[arc._index].toString();
                   }
-                  console.log('labels callback Standards Summary');
-                  console.log(ds.data);
                   return {
                     text: label + ' : ' + value + '%',
                     fillStyle: fill,
@@ -359,8 +357,6 @@ export class AnalysisService {
                   if (!!arc) {
                     value = chart.config.data.datasets[arc._datasetIndex].data[arc._index].toString();
                   }
-                  console.log('labels callback Components Summary');
-                  console.log(ds.data);
                   return {
                     text: label + ' : ' + value + '%',
                     fillStyle: fill,

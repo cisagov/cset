@@ -283,7 +283,10 @@ export class NavigationService {
     // build Maturity Questions node
     if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity) {
       this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
+        this.questionsSvc.questions = response;
         this.questionsSvc.maturityQuestions = response;
+
+        // console.log(this.questionsSvc.maturityQuestions);
 
         // find or create the node
         const maturityNode = this.findInTree(questionsNode.children, '');
@@ -382,13 +385,11 @@ export class NavigationService {
   }
 
   setACETSelected(acet: boolean) {
-    console.log('setACETSelected');
     this.acetSelected = acet;
     this.buildTree(this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
-    console.log('setFrameworkSelected');
     this.frameworkSelected = framework;
     this.buildTree(this.getMagic());
   }
