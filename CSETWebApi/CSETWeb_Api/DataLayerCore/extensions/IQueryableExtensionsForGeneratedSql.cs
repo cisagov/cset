@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
-using Remotion.Linq.Parsing.Structure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace DataLayerCore.Model
 {
@@ -28,6 +26,27 @@ namespace DataLayerCore.Model
 
         private static readonly PropertyInfo DatabaseDependenciesField
             = typeof(Database).GetTypeInfo().DeclaredProperties.Single(x => x.Name == "Dependencies");
+
+        //public static string ToSql<TEntity>(this IQueryable<TEntity> query) where TEntity : class
+        //{
+        //    if (!(query is EntityQueryable<TEntity>) && !(query is InternalDbSet<TEntity>))
+        //    {
+        //        throw new ArgumentException("Invalid query");
+        //    }
+
+        //    var queryCompiler = (IQueryCompiler)QueryCompilerField.GetValue(query.Provider);
+        //    var nodeTypeProvider = (INodeTypeProvider)NodeTypeProviderField.GetValue(queryCompiler);
+        //    var parser = (IQueryParser)CreateQueryParserMethod.Invoke(queryCompiler, new object[] { nodeTypeProvider });
+        //    var queryModel = parser.GetParsedQuery(query.Expression);
+        //    var database = DataBaseField.GetValue(queryCompiler);
+        //    var queryCompilationContextFactory = ((DatabaseDependencies)DatabaseDependenciesField.GetValue(database)).QueryCompilationContextFactory;
+        //    var queryCompilationContext = queryCompilationContextFactory.Create(false);
+        //    var modelVisitor = (Microsoft.EntityFrameworkCore.Query.)queryCompilationContext.CreateQueryModelVisitor();
+        //    modelVisitor.CreateQueryExecutor<TEntity>(queryModel);
+        //    var sql = modelVisitor.Queries.First().ToString();
+
+        //    return sql;
+        //}
 
         public static string ToSql<TEntity>(this IQueryable<TEntity> query) where TEntity : class
         {
