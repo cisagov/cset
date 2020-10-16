@@ -68,17 +68,20 @@ namespace CSETWeb_Api.Controllers
             data.analyzeMaturityData();
 
             return data;
+        }
+        [HttpGet]
+        [Route("api/reports/sitesummarycmmc")]
+        public MaturityReportData getSiteSummaryCMMCReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityReportData data = new MaturityReportData();
+            data.analyzeMaturityData();
+            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.information = reportsDataManager.GetInformation();
+            data.analyzeMaturityData();
 
-            //ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            //BasicReportData data = new BasicReportData();
-            //data.ControlList = reportsDataManager.GetControls();
-            //data.genSalTable = reportsDataManager.GetGenSals();
-            //data.information = reportsDataManager.GetInformation();
-            //data.salTable = reportsDataManager.GetSals();
-            //data.nistTypes = reportsDataManager.GetNistInfoTypes();
-            //data.nistSalTable = reportsDataManager.GetNistSals();
-            //data.Zones = reportsDataManager.GetDiagramZones();
-            //return data;
+            return data;
         }
 
         [HttpGet]
