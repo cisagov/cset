@@ -224,6 +224,10 @@ namespace Snickler.EFCore
                         handleResults(sprocResults);
                     }
                 }
+                catch(Exception e)
+                {
+                    
+                }
                 finally
                 {
                     if (manageConnection)
