@@ -27,7 +27,7 @@
     also specify comments and descriptive text.
   </p>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.assessment.UseStandard" class="d-flex flex-column justify-content-start align-items-start flex-11a mb-4">
+  <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.UseStandard || assessSvc.assessment.UseDiagram)" class="d-flex flex-column justify-content-start align-items-start flex-11a mb-4">
     <h4>Standards and Diagram</h4>
     <button (click)="clickReportLink('executive')" class="btn btn-link btn-link-dark">Executive Summary</button>
 

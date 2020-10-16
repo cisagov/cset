@@ -46,9 +46,6 @@ namespace CSETWeb_Api.Controllers
             AssessmentManager assessmentManager = new AssessmentManager();
             StandardsManager standardsManager = new StandardsManager();
             var assessment = assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
-            
-            var standards = standardsManager.GetStandards(assessmentId);
-            
             return assessment;
         }
 
