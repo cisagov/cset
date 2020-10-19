@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -30,10 +30,12 @@ namespace Snickler.EFCore
 
             if (prependDefaultSchema)
             {
-                var schemaName = context.Model.Relational().DefaultSchema;
+                var schema = context.Model.GetEntityTypes().ToList();
+                var schemaName = context.Model.GetEntityTypes().ToList()
+                    .Select(e=>e.GetDefaultSchema());
                 if (schemaName != null)
                 {
-                    storedProcName = $"{schemaName}.{storedProcName}";
+                    storedProcName = $"{schemaName.FirstOrDefault()}.{storedProcName}";
                 }
             }
 
@@ -151,7 +153,7 @@ namespace Snickler.EFCore
                 var objList = new List<T>();
                 var props = typeof(T).GetRuntimeProperties().ToList();
 
-                var colMapping = GetCustomColumnSchema((SqlDataReader)dr)
+                var colMapping = GetCustomColumnSchema(dr as Microsoft.Data.SqlClient.SqlDataReader)
                     .Where(x => props.Any(y => y.Name.ToLower() == x.ColumnName.ToLower()))
                     .ToDictionary(key => key.ColumnName.ToLower());
 
@@ -221,6 +223,10 @@ namespace Snickler.EFCore
                         // return new SprocResults();
                         handleResults(sprocResults);
                     }
+                }
+                catch(Exception e)
+                {
+                    
                 }
                 finally
                 {
@@ -339,7 +345,7 @@ namespace Snickler.EFCore
         /// <summary>
         /// Custom column schema to support lack of native method.
         /// </summary>
-        private static ReadOnlyCollection<DbColumn> GetCustomColumnSchema(this SqlDataReader reader)
+        private static ReadOnlyCollection<DbColumn> GetCustomColumnSchema(Microsoft.Data.SqlClient.SqlDataReader reader)
         {
             IList<DbColumn> columnSchema = new List<DbColumn>();
             DataTable schemaTable = reader.GetSchemaTable();

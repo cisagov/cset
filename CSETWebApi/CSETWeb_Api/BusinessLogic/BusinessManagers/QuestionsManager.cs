@@ -79,7 +79,7 @@ namespace CSETWeb_Api.BusinessManagers
                                 UniversalSubCategory = usc.Universal_Sub_Category,
                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
                                 PairingId = usch.Heading_Pair_Id, 
-                                SetName = s.Set_Name, 
+                                SetName = s.Short_Name, 
                                 ShortSetName = s.Short_Name
                             };
 
@@ -96,6 +96,7 @@ namespace CSETWeb_Api.BusinessManagers
                             join nql in db.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
                             join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                            join s in db.SETS on stand.Set_Name equals s.Set_Name
                             join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
                             join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
                             where stand.Selected == true && stand.Assessment_Id == assessmentID
@@ -109,7 +110,7 @@ namespace CSETWeb_Api.BusinessManagers
                                 UniversalSubCategory = usc.Universal_Sub_Category,
                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
                                 PairingId = usch.Heading_Pair_Id,
-                                SetName = stand.Set_Name,
+                                SetName = s.Short_Name,
                                 ShortSetName = stand.Set_Name
                             };
                 }
@@ -301,19 +302,10 @@ namespace CSETWeb_Api.BusinessManagers
 
             // create a dummy Domain to house all Categories
             var dummyDomain = new Domain() { 
-                DisplayText = "Standard Questions",
+                DisplayText = "",
                 Categories = groupList
             };
             resp.Domains.Add(dummyDomain);
-
-            //// create the container for Standard Questions
-            //var standardQuestionsNode = new CategoryContainer
-            //{
-            //    DisplayText = "Standard Questions",
-            //    QuestionGroups = groupList
-            //};
-            //dummyDomain.Categories.Add(standardQuestionsNode);
-
 
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this.assessmentID).NumberOfRequirements();

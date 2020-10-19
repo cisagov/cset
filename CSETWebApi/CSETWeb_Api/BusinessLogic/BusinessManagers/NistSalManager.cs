@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 
 namespace CSETWeb_Api.Controllers
@@ -55,6 +55,7 @@ namespace CSETWeb_Api.Controllers
                 "      ,[NIST_Number] " +
                 "	   from NIST_SAL_INFO_TYPES_DEFAULTS " +
                 "end  ";
+
                 db.Database.ExecuteSqlCommand(sql,
                     new SqlParameter("@Id", assessmentId));
             }

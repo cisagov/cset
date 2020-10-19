@@ -188,7 +188,7 @@ namespace DataLayerCore.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
-
+            modelBuilder.HasDefaultSchema("dbo");
             modelBuilder.Entity<ADDRESS>(entity =>
             {
                 entity.HasKey(e => new { e.AddressType, e.Id })
