@@ -31,6 +31,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-diagram-questions',
@@ -46,6 +47,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
 
   constructor(
     public assessSvc: AssessmentService,
+    public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
@@ -70,6 +72,13 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     // this.loaded = true;
   }
 
+
+    /**
+   * Returns the URL of the Questions page in the user guide.
+   */
+  helpDocUrl() {
+    return this.configSvc.docUrl + 'htmlhelp/question_details__resources__and_comments.htm';
+  }
 
   /**
    * Retrieves the complete list of questions

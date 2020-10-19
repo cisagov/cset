@@ -47,8 +47,6 @@ export class ResultsComponent implements OnInit {
     private navSvc: NavigationService,
     private router: Router
   ) {
-    console.log('results constructor');
-
     // Store the active results view based on the new navigation target
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {

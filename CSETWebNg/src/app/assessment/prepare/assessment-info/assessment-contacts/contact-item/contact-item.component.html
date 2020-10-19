@@ -83,9 +83,10 @@
           <!-- Role Buttons -->
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="role">Role</label>
-            <div class="btn-group btn-group-toggle" id="role" data-toggle="buttons" ngbRadioGroup name="contactRoles"
+            <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup name="contactRoles"
               [(ngModel)]="contact.AssessmentRoleId">
-              <label ngbButtonLabel class="btn btn-secondary active" *ngFor="let role of roles" (click)="contactRoleSelected(role.AssessmentRoleId)">
+              <label ngbButtonLabel class="btn btn-secondary" 
+                [class.active]="role.AssessmentRoleId === this.contact.AssessmentRoleId" *ngFor="let role of roles" (click)="contactRoleSelected(role.AssessmentRoleId)">
                 <input ngbButton type="radio" autocomplete="off" name="contact-role" [value]="role.AssessmentRoleId">
                 {{role.AssessmentRole}}
               </label>

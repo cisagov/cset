@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
+import { ConfigService } from '../../../../services/config.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { MaturityService } from '../../../../services/maturity.service';
-import { ConfigService } from '../../../../services/config.service';
 
 @Component({
   selector: 'app-model-select',
   templateUrl: './model-select.component.html'
 })
 export class ModelSelectComponent implements OnInit {
+  
+  docUrl: string;
+  cmmcURL: string;
 
   // this should be stored in a service
   selectedModels = [];
@@ -24,6 +27,9 @@ export class ModelSelectComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.docUrl = this.configSvc.docUrl;
+    this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf'
+    console.log(this.cmmcURL)
   }
 
   /**
@@ -53,5 +59,9 @@ export class ModelSelectComponent implements OnInit {
     }
     
     return '';
+  }
+
+  openCMMCDoc(){
+
   }
 }

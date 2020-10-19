@@ -27,7 +27,7 @@
     also specify comments and descriptive text.
   </p>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.assessment.UseStandard" class="d-flex flex-column justify-content-start align-items-start flex-11a mb-4">
+  <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.UseStandard || assessSvc.assessment.UseDiagram)" class="d-flex flex-column justify-content-start align-items-start flex-11a mb-4">
     <h4>Standards and Diagram</h4>
     <button (click)="clickReportLink('executive')" class="btn btn-link btn-link-dark">Executive Summary</button>
 
@@ -42,9 +42,9 @@
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.assessment.UseMaturity" class="d-flex flex-column justify-content-start align-items-start flex-11a mb-4">
     <h4>Capability Maturity Model</h4>
-    <button (click)="clickReportLink('executive')" class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
+    <button (click)="clickReportLink('executivecmmc')" class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
 
-    <button (click)="clickReportLink('sitesummary')" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
+    <button (click)="clickReportLink('sitesummarycmmc')" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
   </div>
 
   <div class="mt-3 d-flex justify-content-between flex-00a">
