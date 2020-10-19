@@ -23,14 +23,13 @@
 ////////////////////////////////
 import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { Router } from '@angular/router';
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
 import { QuestionResponse, Domain } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
-import { StandardService } from '../../services/standard.service';
 import { NavigationService } from '../../services/navigation.service';
 import { QuestionFilterService } from '../../services/question-filter.service';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -67,10 +66,9 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
   constructor(
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    private stdSvc: StandardService,
+    private configSvc: ConfigService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
-    private router: Router,
     private dialog: MatDialog
   ) {
     const magic = this.navSvc.getMagic();
@@ -206,6 +204,13 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
       });
   }
 
+
+    /**
+   * Returns the URL of the Questions page in the user guide.
+   */
+  helpDocUrl() {
+    return this.configSvc.docUrl + 'htmlhelp/question_details__resources__and_comments.htm';
+  }
 
   /**
    * Retrieves the complete list of questions
