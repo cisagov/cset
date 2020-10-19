@@ -302,19 +302,10 @@ namespace CSETWeb_Api.BusinessManagers
 
             // create a dummy Domain to house all Categories
             var dummyDomain = new Domain() { 
-                DisplayText = "Standard Questions",
+                DisplayText = "",
                 Categories = groupList
             };
             resp.Domains.Add(dummyDomain);
-
-            //// create the container for Standard Questions
-            //var standardQuestionsNode = new CategoryContainer
-            //{
-            //    DisplayText = "Standard Questions",
-            //    QuestionGroups = groupList
-            //};
-            //dummyDomain.Categories.Add(standardQuestionsNode);
-
 
             resp.QuestionCount = this.NumberOfQuestions();
             resp.RequirementCount = new RequirementsManager(this.assessmentID).NumberOfRequirements();
