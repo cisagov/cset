@@ -223,9 +223,10 @@ import { MatCmmcComponent } from './assessment/results/mat-cmmc/mat-cmmc.compone
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
-import { Maturity1Component } from './assessment/results/mat-cmmc/maturity1/maturity1.component';
-import { Maturity2Component } from './assessment/results/mat-cmmc/maturity2/maturity2.component';
-import { Maturity3Component } from './assessment/results/mat-cmmc/maturity3/maturity3.component';
+import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
+import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
+import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
+import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 
 @NgModule({
     imports: [
@@ -397,6 +398,11 @@ import { Maturity3Component } from './assessment/results/mat-cmmc/maturity3/matu
         AssessmentConfigComponent,
         CmmcAComponent,
         CmmcLevelsComponent,
+        CmmcLevelResultsComponent,
+        CmmcLevelDrilldownComponent,
+        CmmcComplianceComponent,
+        CmmcGapsComponent,
+        MatCmmcComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
@@ -404,13 +410,9 @@ import { Maturity3Component } from './assessment/results/mat-cmmc/maturity3/matu
         MaturityQuestionsComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
-        MatCmmcComponent,
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
-        Maturity1Component,
-        Maturity2Component,
-        Maturity3Component,
     ],
     providers: [
         ConfigService,
