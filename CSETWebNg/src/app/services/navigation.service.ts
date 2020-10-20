@@ -657,6 +657,14 @@ export class NavigationService {
 
     { displayText: 'Results', pageId: 'phase-results', level: 0 },
 
+    // Results - CMMC
+    { displayText: 'CMMC Results', pageId: 'cmmc-results-node', level: 1 },   
+
+    { displayText: 'Target and Achieved Levels', pageId: 'cmmc-level-results', level: 2, path: 'assessment/{:id}/results/cmmc-level-results' }, 
+    { displayText: 'Level Drill Down', pageId: 'cmmc-level-drilldown', level: 2, path: 'assessment/{:id}/results/cmmc-level-drilldown' }, 
+    { displayText: 'Compliance Score', pageId: 'cmmc-compliance', level: 2, path: 'assessment/{:id}/results/cmmc-compliance' }, 
+    { displayText: 'Detailed Gaps List', pageId: 'cmmc-gaps', level: 2, path: 'assessment/{:id}/results/cmmc-gaps' }, 
+
     // Results - Standards
     {
       displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard',
