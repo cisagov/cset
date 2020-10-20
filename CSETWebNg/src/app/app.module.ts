@@ -223,6 +223,9 @@ import { MatCmmcComponent } from './assessment/results/mat-cmmc/mat-cmmc.compone
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
+import { Maturity1Component } from './assessment/results/maturity1/maturity1.component';
+import { Maturity2Component } from './assessment/results/mat-cmmc/maturity2/maturity2.component';
+import { Maturity3Component } from './assessment/results/mat-cmmc/maturity3/maturity3.component';
 
 @NgModule({
     imports: [
@@ -405,6 +408,9 @@ import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
+        Maturity1Component,
+        Maturity2Component,
+        Maturity3Component,
     ],
     providers: [
         ConfigService,
