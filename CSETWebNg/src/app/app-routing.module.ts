@@ -96,6 +96,10 @@ import { ModelSelectComponent } from './assessment/prepare/maturity/model-select
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
+import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
+import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
+import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 
 
 const appRoutes: Routes = [
@@ -234,6 +238,10 @@ const appRoutes: Routes = [
             canActivate: [AssessGuard],
             canActivateChild: [AssessGuard],
             children: [
+              { path: 'cmmc-level-results', component: CmmcLevelResultsComponent },
+              { path: 'cmmc-level-drilldown', component: CmmcLevelDrilldownComponent },
+              { path: 'cmmc-compliance', component: CmmcComplianceComponent },
+              { path: 'cmmc-gaps', component: CmmcGapsComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },

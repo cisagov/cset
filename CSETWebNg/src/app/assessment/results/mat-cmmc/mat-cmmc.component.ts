@@ -3,8 +3,7 @@ import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
   selector: 'app-mat-cmmc',
-  templateUrl: './mat-cmmc.component.html',
-  styleUrls: ['./mat-cmmc.component.scss']
+  templateUrl: './mat-cmmc.component.html'
 })
 export class MatCmmcComponent implements OnInit {
 
