@@ -1,11 +1,11 @@
-# CSET 10.0
+# CSET 10.1
  
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/alerts/)
 [![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:csharp)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/cisagov/cset.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/cset/context:javascript)
 
 Download CSET For Windows:
-[CSET 10.0 Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.0.0)
+[CSET 10.1 Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.1)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
@@ -48,7 +48,7 @@ The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
  
 Figure 1: User Account Control box
 
-A CSET 10.0 dialogue will open asking if you want to install CSET 10.0 Desktop (Fig.2). Select &quot;Yes&quot;.
+A CSET dialogue will open asking if you want to install the CSET Desktop (Fig.2). Select &quot;Yes&quot;.
 
 ![][fig1]
  
@@ -56,7 +56,7 @@ Figure 2: Install dialogue
 
 The program will begin extracting.
 
-After extracting a CSET 10.0 Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
+After extracting a CSET Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
 
 ![][fig3]
  
@@ -70,7 +70,7 @@ Figure 4. IIS Setup
 
 IIS will install. Select &quot;Finish&quot; when it completes.
 
-The CSET 10.0 Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
+The CSET Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
 ![][fig5]
  
@@ -82,7 +82,7 @@ A disclaimer will open (Fig.6). Read through and then click the box &quot;I read
  
 Figure 6: Disclaimer
 
-CSET will choose a default folder to install CSET 10.0 to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
+CSET will choose a default folder to install CSET to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
 
 ![][fig7]
  
@@ -94,15 +94,15 @@ The CSET Installer will show that it is ready to install (Fig. 8), select &quot;
  
 Figure 8: Ready to Install
 
-CSET 10.0 will be installed. Make sure that the &quot;Launch CSET 10.0 when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+CSETis installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
 The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
 
-![][fig9]
+![][fig9.png]
  
 Figure 9: Setup Successful
 
-The user has access to CSET 10.0 as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
+The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
 
 ![][fig10]
  
@@ -130,7 +130,7 @@ Figure 10: Local Install Landing Page
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
 
 ### Prerequisites & Necessary Files
-1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.0.0). Click "CSET_10.0.0-Binary.zip" file to download it. Once the download is complete, you will need to unzip the folder.
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_10.1-Binary.zip" file to download it. Once the download is complete, you will need to unzip the folder.
 
 2.	We will be using Microsoft SQL Server 2016 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
   a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)
