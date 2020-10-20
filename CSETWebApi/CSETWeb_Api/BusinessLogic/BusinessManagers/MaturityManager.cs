@@ -284,7 +284,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         };
                         if (answer != null)
                         {
-                            TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                            TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                            TinyMapper.Map(answer.b, qa);
                         }
 
                         qa.ParmSubs = null;
