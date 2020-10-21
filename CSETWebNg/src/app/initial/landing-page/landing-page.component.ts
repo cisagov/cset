@@ -36,6 +36,7 @@ import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { ImportAssessmentService } from "../../services/import-assessment.service";
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
 import { Title } from "@angular/platform-browser";
+import { NavigationService } from "../../services/navigation.service";
 
 interface UserAssessment {
   AssessmentId: number;
@@ -69,7 +70,8 @@ export class LandingPageComponent implements OnInit {
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
     public fileSvc: FileUploadClientService,
-    public titleSvc: Title
+    public titleSvc: Title,
+    public navSvc: NavigationService
   ) { }
 
   ngOnInit() {
@@ -77,6 +79,8 @@ export class LandingPageComponent implements OnInit {
     this.exportExtension = sessionStorage.getItem('exportExtension');
 
     this.titleSvc.setTitle('CSET');
+
+    this.navSvc.clearTree(this.navSvc.getMagic());
 
     this.checkPasswordReset();
   }

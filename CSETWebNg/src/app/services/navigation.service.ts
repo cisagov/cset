@@ -73,6 +73,7 @@ export class NavigationService {
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
   treeControl: NestedTreeControl<NavTreeNode>;
+  isNavLoading = false;
 
   currentPage = '';
 
@@ -127,6 +128,18 @@ export class NavigationService {
    * 
    * @param magic 
    */
+  clearTree(magic: string) {
+    if (this.magic === magic) {
+      this.isNavLoading = true;
+      this.dataSource.data = null;
+      this.treeControl.dataNodes = this.dataSource.data;
+    }
+  }
+
+  /**
+   * 
+   * @param magic 
+   */
   buildTree(magic: string) {
     if (this.magic === magic) {
       this.dataSource.data = this.buildTocData();
@@ -135,6 +148,8 @@ export class NavigationService {
       this.setQuestionsTree();
 
       this.treeControl.expandAll();
+
+      this.isNavLoading = false;
     }
   }
 
@@ -150,6 +165,8 @@ export class NavigationService {
       this.dataSource.data = tree;
       this.treeControl.dataNodes = tree;
       this.treeControl.expandAll();
+
+      this.isNavLoading = false;
     }
   }
 
@@ -221,16 +238,19 @@ export class NavigationService {
    */
   findInTree(tree: NavTreeNode[], className: string): NavTreeNode {
     let result = null;
-    for (let i = 0; i < tree.length; i++) {
-      let node = tree[i];
-      if (node.value === className) {
-        return node;
-      }
 
-      if (node.children.length > 0) {
-        result = this.findInTree(node.children, className);
-        if (!!result) {
-          return result;
+    if (!!tree) {
+      for (let i = 0; i < tree.length; i++) {
+        let node = tree[i];
+        if (node.value === className) {
+          return node;
+        }
+
+        if (node.children.length > 0) {
+          result = this.findInTree(node.children, className);
+          if (!!result) {
+            return result;
+          }
         }
       }
     }
@@ -243,6 +263,11 @@ export class NavigationService {
    */
   clearCurrentPage(tree: NavTreeNode[]) {
     this.currentPage = '';
+
+    if (!tree) {
+      return;
+    }
+
     for (let i = 0; i < tree.length; i++) {
       let node = tree[i];
       node.isCurrent = false;
@@ -257,7 +282,7 @@ export class NavigationService {
    * Clear any current page and mark the new one.
    */
   setCurrentPage(pageId: string) {
-    this.clearCurrentPage(this.dataSource.data);
+    this.clearCurrentPage(this.dataSource?.data);
 
     const currentNode = this.findInTree(this.dataSource.data, pageId);
     if (!!currentNode) {
@@ -269,108 +294,19 @@ export class NavigationService {
   /**
    * Replaces the children of the Questions node with
    * the values supplied.
-   * There can be up to 3 souces for questions -- 
+   * There can be up to 3 sources for questions -- 
    *   - Maturity
    *   - Questions/Requirements
    *   - Diagram
+   * 
+   * This functionality has been put on hold.  It needs to be reevaluated
+   * to see if it is useful to the user or is just clutter in the nav tree.
+   * For now, there's no need to make API calls whose response will not be used.
    */
   setQuestionsTree() {
-
-    // find the questions node in the big tree
-    const questionsNode = this.findInTree(this.dataSource.data, 'phase-assessment');
-
-
-    // build Maturity Questions node
-    if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity) {
-      this.maturitySvc.getQuestionsList().subscribe((response: QuestionResponse) => {
-        this.questionsSvc.questions = response;
-        this.questionsSvc.maturityQuestions = response;
-
-        // console.log(this.questionsSvc.maturityQuestions);
-
-        // find or create the node
-        const maturityNode = this.findInTree(questionsNode.children, '');
-
-        // populate it
-
-      });
-    }
-
-
-    // build Standard Questions node
-    if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseStandard) {
-      this.questionsSvc.getQuestionsList().subscribe((response: QuestionResponse) => {
-        this.questionsSvc.questionList = response;
-
-        const standardsNode = { children: [] }; // (find the node properly)
-        standardsNode.children.length = 0;
-
-
-        response.Domains.forEach(c => {
-          const node1: NavTreeNode = {
-            label: '',
-            elementType: 'CONTAINER',
-            value: null,
-            isPhaseNode: false,
-            children: [],
-            expandable: true,
-            visible: true
-          };
-
-          if (!!c.DisplayText) {
-            node1.label = c.DisplayText;
-          } else if (!!c.SetShortName) {
-            node1.label = c.SetShortName;
-          }
-
-          standardsNode.children.push(node1);
-
-          c.Categories.forEach(g => {
-            const node2: NavTreeNode = {
-              label: g.GroupHeadingText,
-              elementType: 'QUESTION-HEADING',
-              value: {
-                target: g.NavigationGUID,
-                categoryID: g.GroupHeadingId,
-                parent: node1.label
-              },
-              isPhaseNode: false,
-              children: [],
-              expandable: true,
-              visible: true
-            };
-            node1.children.push(node2);
-          });
-        });
-
-        // refresh
-        const d = this.dataSource.data;
-        this.dataSource.data = null;
-        this.dataSource.data = d;
-      });
-    }
-
-
-    // build Diagram Questions node
-    if (!!this.assessSvc.assessment && this.assessSvc.assessment.UseDiagram) {
-      this.questionsSvc.getComponentQuestionsList().subscribe((response: QuestionResponse) => {
-        this.questionsSvc.componentQuestions = response;
-
-        const componentsNode = { children: [] }; // find or create the node
-        componentsNode.children.length = 0;
-
-
-
-      });
-    }
-  }
-
-  /**
-   * Inserts/replaces a specific 'top node' in the Assessment phase, e.g.,
-   * Maturity Questions, Standards Questions or Diagram Questions.
-   */
-  setQuestionsTopNode() {
-
+    const d = this.dataSource.data;
+    this.dataSource.data = null;
+    this.dataSource.data = d;
   }
 
   /**
