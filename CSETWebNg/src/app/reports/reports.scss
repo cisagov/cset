@@ -705,7 +705,16 @@
   --blue-gradient-light: linear-gradient(5deg, rgba(31,82,132,.1) 0%, rgba(58,128,194,.1) 100%);
   --green-gradient: linear-gradient(5deg, rgba(98,154,109,1) 0%, rgba(31,77,67,1) 100%);
   --blue-text: rgba(41,100,162,1);
-  --green-text: rgba(60,110,85,1)
+  --green-text: rgba(60,110,85,1);
+  --corner-size: 10px;
+  --bar-height: 40em;
+  --bar-spacing: 1em;
+  --bottom-seperator-extra-width: 1em;
+  --header-label-height: 100px;
+  --header-spacing-from-bar: .9;  /* 1 = on the bar, .5 = high off the bar*/
+  --blue-text: rgba(0,0,250,1);
+  --white-text: rgba(255,255,255,1);
+
 }
 
 .pyramidGraphLevelIndicator {
@@ -864,4 +873,95 @@
   color: var(--blue-text);
   margin-left: 1em;
   font-size:1em;
+}
+
+.stackedBarChart{
+  width:800px;
+  padding-top: 10em;
+  margin-left: var(--bar-spacing);
+}
+.stackedBarChartBody {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  margin: 0 var(--bottom-seperator-extra-width);
+}
+.stackedBarChartColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-basis: 20%;
+  height: var(--bar-height);
+  margin: 0 var(--bar-spacing);
+}
+.barSection {
+  background: rgb(51, 54, 216);
+  color: var(--white-text);
+  border-radius: var(--corner-size) var(--corner-size) 0 0;
+  margin-bottom: calc(-1 *var(--corner-size));
+  z-index: -1;
+}
+.barSectionInnerLabel {
+  display: flex;
+  justify-content: center;
+}
+.notAnswered {
+  background: rgb(255, 222, 33);
+  color: var(--blue-text);
+}
+.barHeader{
+  position: relative;
+  bottom: var(--header-label-height);
+  margin-bottom: calc((calc(var(--header-label-height) * var(--header-spacing-from-bar))) * -1);
+  display: flex;
+  flex-direction: column;
+}
+.barHeader div, .stackedBarChartBottomLabel div{
+  align-self: center;
+  text-align: center;
+}
+.mainHeader, .bottomLabel {
+  font-size: 1em;
+}
+.secondaryHeader {
+  font-size: .75em;
+}
+
+.stackedBarChartBase{
+  background-color: blue;
+  height: var(--corner-size);
+  border-radius: var(--corner-size)
+}
+.stackedBarChartBottomLabels {
+  display:flex;
+  flex-direction: row;
+  margin: 0 var(--bottom-seperator-extra-width)
+}
+.stackedBarChartBottomLabel {
+  display: flex;
+  flex-basis: 20%;
+  width: 1em;
+  height: 1em;
+  flex-direction: column;
+}
+.fb5{
+  flex-basis: calc(5% + var(--corner-size));
+}
+.fb10{
+  flex-basis: calc(10% + var(--corner-size));
+}
+.fb15{
+  flex-basis: calc(15% + var(--corner-size));
+}
+.fb20{
+  flex-basis: calc(20% + var(--corner-size));
+}
+.fb45{
+  flex-basis: calc(45% + var(--corner-size));
+}
+.fb50{
+  flex-basis: calc(50% + var(--corner-size));
+}
+.fb75{
+  flex-basis: calc(75% + var(--corner-size));
 }
