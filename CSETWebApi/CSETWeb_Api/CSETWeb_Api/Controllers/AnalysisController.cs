@@ -121,7 +121,7 @@ namespace CSETWeb_Api.Controllers
 
                     if (QuestionsWithFeedbackList.Count() == 0)
                     {
-                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";                     
+                        FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";                     
                     }
 
                     return FeedbackResult;
