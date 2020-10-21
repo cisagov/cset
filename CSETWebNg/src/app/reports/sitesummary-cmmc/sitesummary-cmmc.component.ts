@@ -71,7 +71,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   ngstyleCalls = 0;
 
 
-
+  stackBarChartData;
   divElement: HTMLElement;
 
   response: any;
@@ -90,8 +90,10 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   }
 
   getGradient(color,alpha=1){
+    console.log(color)
     switch(color){
       case "blue":{
+        console.log("BLEUFJ")
         return `linear-gradient(5deg, rgba(31,82,132,${alpha}) 0%, rgba(58,128,194,${alpha}) 100%)`
       }
       case "green":{
@@ -99,6 +101,9 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
       }
       case "grey":{
         return `linear-gradient(5deg, rgba(98,98,98,${alpha}) 0%, rgba(120,120,120,${alpha}) 100%)`
+      }
+      case "orange":{
+        return `linear-gradient(5deg, rgba(200,98,98,${alpha}) 0%, rgba(220,120,120,${alpha}) 100%)`
       }
       default: {
         return "rgba(255,0,0,1)"
@@ -157,6 +162,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
               this.cmmcModel = model
               this.statsByLevel = this.cmmcModel.StatsByLevel.filter(obj => obj.ModelLevel != "Aggregate").reverse()
               this.statsByDomain = this.cmmcModel.StatsByDomain
+              this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel)
             }            
           });    
           console.log(this.cmmcModel)
@@ -171,6 +177,80 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     this.columnWidthEmitter.subscribe(item => {
       $(".gridCell").css("width",`${item}px`)
     })
+  }
+
+  generateStackedBarChartData(data){
+    let sortedData = data.sort((a,b) => (a.ModelLevel > b.ModelLevel) ? 1: -1)
+    let outputData = []
+    let stackedChartData = []
+    console.log(sortedData)
+    console.log(outputData)
+    for(let i = 0; i <sortedData.length; i++){
+      
+      let dataEle = []
+      if(i == 0){
+        // dataEle.push(data[i])
+      } else {
+        console.log(outputData)
+        outputData[i-1].forEach(outputEle => {
+          dataEle.push(outputEle)
+        });
+      }      
+      //dataEle.push(data[i])
+      this.getStackBarChartData(sortedData[i]).forEach(element => {
+        dataEle.unshift(element)
+      });
+      outputData.push(dataEle)      
+    console.log(outputData  )
+    }
+    console.log(stackedChartData)
+    console.log(outputData)
+    return outputData
+  }
+
+
+  getStackBarChartData(data){
+    return [
+      {
+        count: data.questionAnswered,
+        totalForLevel: data.questionCount,
+        type: "Yes",
+        modelLevel: data.ModelLevel,
+      },{
+        count: data.questionUnAnswered,
+        totalForLevel: data.questionCount,
+        type: "No",
+        modelLevel: data.ModelLevel,
+
+      }
+    ]
+  }
+
+  
+  getStackedChartSectionStyle(data){
+    let retVal = []
+
+    if(data.type == "Yes"){ 
+      let alpha = 1.2 - (.2 * data.modelLevel)  
+      retVal["backgroundColor"] = this.getGradient("blue",alpha)
+    }
+    else {
+      retVal["backgroundColor"] = this.getGradient("orange")
+    }
+    if(data.count > (data.totalForLevel / 2)) {
+      retVal["innerHtml"] = `${data.count} / ${data.totalForLevel}`
+    }
+    if(data.count == 0){
+      retVal["display"] = "none";
+    } else {
+      let percent = (data.count / data.totalForLevel) * 100
+      retVal["flex-basis"] = `calc(${percent}% + var(--corner-size))`
+    }
+    console.log(data)
+    console.log(retVal)
+
+    return retVal
+
   }
 
   ngAfterViewInit(){

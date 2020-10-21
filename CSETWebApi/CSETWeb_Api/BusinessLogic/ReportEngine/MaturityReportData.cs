@@ -42,6 +42,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public class LevelStats
         {
             public int questionCount { get; set; }
+            public int questionCountAggregateForLevelAndBelow { get; set; } //Possibly the longest variable name ive created
             public int questionAnswered { get; set; }
             public int questionUnAnswered { get; set; }
             public string ModelLevel { get; set; }
@@ -119,12 +120,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             var domains = model.MaturityQuestions.
                 Select(mq => mq.Category).
                 Distinct();
+            int questionCountAggregateForLevelAndBelow = 0;
             foreach (int level in maturity_levels)
             {
                 //Get the stats for each level of question
                 var questions_at_level = model.MaturityQuestions
                     .Where(mq => mq.Maturity_Level == level).ToList();
-                model.StatsByLevel.Add(toLevelStats(questions_at_level, level.ToString()));
+                model.StatsByLevel.Add(toLevelStats(questions_at_level, level.ToString(), questionCountAggregateForLevelAndBelow));
+                questionCountAggregateForLevelAndBelow += questions_at_level.Count();
 
                 //Get the questions by domain for each level                
                 foreach (string domain in domains)
@@ -171,13 +174,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             newDomainStats.questionUnAnswered = questions.Where(qa => qa.Answer.Answer_Text != "Y").Count();
             return newDomainStats;
         }
-        public LevelStats toLevelStats(List<MaturityQuestion> questions, string level = null)
+        public LevelStats toLevelStats(List<MaturityQuestion> questions, string level = null, int previousLevelQuestionCount = 0)
         {
             LevelStats newLevelStats = new LevelStats();
             if (level != null) newLevelStats.ModelLevel = level;
             newLevelStats.questionCount = questions.Count();
             newLevelStats.questionAnswered = questions.Where(qa => qa.Answer.Answer_Text == "Y").Count();
             newLevelStats.questionUnAnswered = questions.Where(qa => qa.Answer.Answer_Text != "Y").Count();
+            newLevelStats.questionCountAggregateForLevelAndBelow = newLevelStats.questionCount + previousLevelQuestionCount;
             return newLevelStats;
         }
     }
