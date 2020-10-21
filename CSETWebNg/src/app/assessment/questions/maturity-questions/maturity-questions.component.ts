@@ -30,6 +30,7 @@ import { Domain, QuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
+import { ConfigService } from '../../../services/config.service';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   constructor(
     public assessSvc: AssessmentService,
+    public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
@@ -64,6 +66,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
+
+  /**
+   * Returns the URL of the Questions page in the user guide.
+   */
+  helpDocUrl() {
+    return this.configSvc.docUrl + 'htmlhelp/question_details__resources__and_comments.htm';
+  }
 
   /**
    * Retrieves the complete list of questions

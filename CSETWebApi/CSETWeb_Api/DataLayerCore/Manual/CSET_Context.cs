@@ -154,6 +154,7 @@ namespace DataLayerCore.Model
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
 
+        public virtual DbQuery<Answer_Maturity> Answer_Maturity { get; set; }
         /// <summary>
         /// Entity type used for returning a list of question or requirement IDs.  
         /// </summary>

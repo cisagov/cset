@@ -232,6 +232,7 @@ namespace CSETWeb_Api.BusinessManagers
                 };
                 if (answer != null)
                 {
+                    TinyMapper.Bind<VIEW_QUESTIONS_STATUS,QuestionAnswer>();
                     TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
                 }
 

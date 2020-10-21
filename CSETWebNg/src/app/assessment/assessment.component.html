@@ -36,24 +36,24 @@
         </li>
       </ul>
       <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'prepare'"
-          (click)="assessSvc.currentTab = 'prepare'">
+        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
+          (click)="setTab('prepare')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-prepare')">
             <span class="tab-icon cset-icons-clipboard-pencil mr-2" id="prepareIcon"></span>
             <span class="nav-tab-text">Prepare</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'questions'"
-          (click)="assessSvc.currentTab = 'questions'">
+        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
+          (click)="setTab('questions')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')">
             <span class="tab-icon cset-icons-question-mark mr-2" id="questionsIcon" alt="assessment icon"></span>
             <span class="nav-tab-text">Assessment</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="assessSvc.currentTab === 'results'"
-          (click)="assessSvc.currentTab = 'results'">
+        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
+          (click)="setTab('results')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')">
             <span class="tab-icon cset-icons-results mr-2"></span>
@@ -100,6 +100,13 @@
           </mat-nested-tree-node>
 
         </mat-tree>
+
+        <div *ngIf="navSvc.isNavLoading">
+          <div class="spinner-container toc m-0 d-flex justify-content-center align-items-center flex-11a">
+            <div class="spinner-size-50"></div>
+          </div>
+        </div>
+
       </mat-sidenav>
 
       <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a">

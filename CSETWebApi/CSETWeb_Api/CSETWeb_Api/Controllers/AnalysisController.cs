@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
@@ -14,7 +15,7 @@ using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Web.Http;
 
@@ -68,12 +69,38 @@ namespace CSETWeb_Api.Controllers
             {
                 using (CSET_Context context = new CSET_Context())
                 {
-                    var QuestionsWithFeedbackList = from a in context.Answer_Standards_InScope
-                                                    where a.assessment_id == assessmentId &&
-                                                    a.mode == AssessmentMode && a.Feedback != null
-                                                    select a;
+                    List<FeedbackQuestion> feedbackQuestions = new List<FeedbackQuestion>();
 
-                  
+                    // standard questions
+                    var q1 = from a in context.Answer_Standards_InScope
+                            where a.assessment_id == assessmentId &&
+                            a.mode == AssessmentMode && a.Feedback != null
+                            select new FeedbackQuestion()
+                            {
+                                AnswerID = a.answer_id,
+                                Feedback = a.Feedback,
+                                Mode = a.mode,
+                                QuestionID = a.question_or_requirement_id,
+                                QuestionText = a.Question_Text
+                            };
+
+                    feedbackQuestions.AddRange(q1);
+
+                    // maturity questions
+                    var q2 = from a in context.Answer_Maturity
+                            where a.Assessment_Id == assessmentId
+                            && a.FeedBack != null
+                            select new FeedbackQuestion()
+                            {
+                                AnswerID = a.Answer_Id,
+                                Feedback = a.FeedBack,
+                                Mode = null,
+                                QuestionID = a.Question_Or_Requirement_Id,
+                                QuestionText = a.Question_Text
+                            };
+
+                    feedbackQuestions.AddRange(q2);
+
 
                     string FeedbackSalutations = "Dear CSET Standards Administrator:";
                     string FeedbackDescription = "The following comments were provided for each of the questions: ";
@@ -95,33 +122,33 @@ namespace CSETWeb_Api.Controllers
                     FeedbackResult.FeedbackBody += FeedbackSalutations + "<br/><br/>";
                     FeedbackResult.FeedbackBody += FeedbackDescription + "<br/><br/>";
 
-                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    foreach (FeedbackQuestion q in feedbackQuestions)
                     {
-                        q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                        q.Feedback = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Feedback);
+                        q.QuestionText = rm.ResolveParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                        q.Feedback = rm.ResolveParameters(q.QuestionID, q.AnswerID, q.Feedback);
                         FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.Feedback + "<br/><br/>";
-                        FeedbackResult.FeedbackBody += q.Question_Text + "<br/><br/>";
+                        FeedbackResult.FeedbackBody += q.QuestionText + "<br/><br/>";
                         FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
-                        FeedbackResult.FeedbackBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". <br/><br/><br/>";
+                        FeedbackResult.FeedbackBody += "Question #" + " " + q.Mode  + ":" + q.QuestionID + ". <br/><br/><br/>";
                     }
 
                     FeedbackResult.FeedbackEmailSubject = "CSET Questions Feedback";
                     FeedbackResult.FeedbackEmailBody += FeedbackSalutations + "%0D%0A%0D%0A";
                     FeedbackResult.FeedbackEmailBody += FeedbackDescription + "%0D%0A%0D%0A";
 
-                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    foreach (FeedbackQuestion q in feedbackQuestions)
                     {
-                        q.Question_Text = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                        q.Feedback = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Feedback);
+                        q.QuestionText = rm.RichTextParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                        q.Feedback = rm.RichTextParameters(q.QuestionID, q.AnswerID, q.Feedback);
                         FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.Feedback + "%0D%0A";
-                        FeedbackResult.FeedbackEmailBody += q.Question_Text + "%0D%0A%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += q.QuestionText + "%0D%0A%0D%0A";
                         FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
-                        FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". %0D%0A%0D%0A%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.Mode + ":" + q.QuestionID + ". %0D%0A%0D%0A%0D%0A";
                     }
 
-                    if (QuestionsWithFeedbackList.Count() == 0)
+                    if (feedbackQuestions.Count() == 0)
                     {
-                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";                     
+                        FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";                     
                     }
 
                     return FeedbackResult;
