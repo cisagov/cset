@@ -276,10 +276,10 @@
     <div class="TESTINGspacer" style="margin-top:8em"></div>
     <div class="gridGraphContainer">
         <div  class="gridGraphLabels">
-            <div *ngFor="let dataRow of statsByDomain" class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
+            <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
         </div>
         <div class="gridGraphDataContainer" #gridChartDataDiv>
-            <div *ngFor="let dataRow of statsByDomain" class="gridGraphData graphDataRow">
+            <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
                 <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
                 </div>
                 <div class="gridGraphBackground  graphDataRow">
@@ -402,82 +402,92 @@
     <div class="TESTINGspacer" style="margin-top:8em"></div>
     
     <div class="stackedBarChart">
+        <div class="stackBarChartUpperLeftLabels">
+            <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
+            <div> Compliance for Target Level {{complianceLevelAcheivedData?.targetLevel}}</div>
+            <div> Acheived Level {{complianceLevelAcheivedData?.acheivedLevel}}</div>
+        </div>
         <div class="stackedBarChartBody">
             <div *ngFor="let dataColumn of stackBarChartData; let i = index" class="stackedBarChartColumn">
                 <div class="barHeader">
-                    <div class="mainHeader">Big Text</div>
-                    <div class="secondaryHeader">Small text {{i + 1}}</div>
+                    <div class="mainHeader"> LEVEL {{i + 1}}</div>
+                    <div class="secondaryHeader"> {{stackedChartHeaderLabels[i + 1]}}</div>
                 </div>       
                 <div *ngFor="let barSection of dataColumn" [ngStyle]="getStackedChartSectionStyle(barSection)" class="barSection">
-                    <div  class="barSectionInnerLabel"></div>
+                    <div *ngIf="
+                        (barSection.totalForLevel / 2 ) < barSection.count
+                        &&
+                        (cmmcModel?.TargetLevel > barSection.modelLevel 
+                        || cmmcModel?.TargetLevel == barSection.modelLevel)" 
+                        class="barSectionInnerLabel"> {{barSection.count}} / {{barSection.totalForLevel}}
+                    </div>
+                    <div *ngIf="
+                    barSection.type == 'Yes' && 
+                    barSection.modelLevel > cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00</div>                    
                 </div>
-                <!-- <div class="barSection fb5">
-                    <div class="barSectionInnerLabel">5/17</div>
-                </div> -->
             </div>
-            <!-- <div class="stackedBarChartColumn">
-                <div class="barHeader">
-                    <div class="mainHeader">Big Text</div>
-                    <div class="secondaryHeader">Small Text</div>
-                </div>       
-                <div class="barSection fb20">
-                    <div class="barSectionInnerLabel">5/17</div></div>
-                <div class="barSection fb5 notAnswered">
-                    <div class="barSectionInnerLabel">5/17</div></div>
-                <div class="barSection fb5"></div>     
-            </div>
-            <div class="stackedBarChartColumn">
-                <div class="barHeader">
-                    <div class="mainHeader">Big Text</div>
-                    <div class="secondaryHeader">Small Text and some more small text</div>
-                </div>       
-                <div class="barSection fb20"></div>
-                <div class="barSection fb20"></div>
-                <div class="barSection fb5 notAnswered"></div>
-                <div class="barSection fb5"></div>
-                
-            </div>
-            <div class="stackedBarChartColumn">
-                <div class="barHeader">
-                    <div class="mainHeader">Big Text</div>
-                    <div class="secondaryHeader">Small Text and some more small text</div>
-                </div>       
-                <div class="barSection fb20"></div>    
-                <div class="barSection fb45 notAnswered"></div>            
-                <div class="barSection fb5"></div>
-                <div class="barSection fb5 notAnswered"></div>
-                <div class="barSection fb15"></div>
-                <div class="barSection fb5 notAnswered"></div>
-                <div class="barSection fb5"></div>
-                
-            </div>
-            <div class="stackedBarChartColumn">
-                <div class="barHeader">
-                    <div class="mainHeader">Big Text</div>
-                    <div class="secondaryHeader">Small Text small text</div>
-                </div>       
-                <div class="barSection fb50"></div>
-                <div class="barSection fb20"></div>
-                <div class="barSection fb20"></div>
-                <div class="barSection fb5 notAnswered"></div>
-                <div class="barSection fb5"></div>            
-            </div> -->
         </div>
         <div class="stackedBarChartBase">
         </div>
         <div class="stackedBarChartBottomLabels">
-            <div *ngFor="let dataColumn of stackBarChartData; let i = index" class="stackedBarChartBottomLabel">
-                <div class="bottomLabel">Total</div>
-                <div class="bottomLabel">17</div>
+            <div *ngFor="let dataColumn of statsByLevel; let i = index"  class="stackedBarChartBottomLabel">
+                <div *ngIf="cmmcModel?.TargetLevel > dataColumn.ModelLevel || cmmcModel?.TargetLevel == dataColumn.ModelLevel"
+                 class="bottomLabel"> 
+                    <div>Total</div>
+                    <div class="bottomLabelNumbers">
+                        <div>{{dataColumn.totalAnsweredCount}}</div>  
+                        <div *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">/{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>  
+                    </div>
+                </div>
             </div>
-            <div class="stackedBarChartBottomLabel">
-                <div class="bottomLabel">Total</div>
-                <div class="bottomLabel">72</div></div>
-            <div class="stackedBarChartBottomLabel">
-                <div class="bottomLabel">Total</div>
-                <div class="bottomLabel">112/130</div></div>
-            <div class="stackedBarChartBottomLabel"></div>
-            <div class="stackedBarChartBottomLabel"></div>
+        </div>
+        <div class="stackedBarChartBottomTitle">
+            The Number of Practices Satisfied for Each Level:
+        </div>
+    </div>
+    
+    <div class="TESTINGspacer" style="margin-top:8em"></div>
+    <div class="questionsByDomainTable">
+        <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
+            <div></div>
+            <div>Compliant</div>
+            <div>Not Compliant</div>
+            <div>Total Controls</div>
+            <div>Percent Complete</div>
+        </div>
+        <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection DomainTableDomin">
+            <div class="questionsByDomainTableRow DomainTableRow domain">
+                <div>
+                    {{domainRow?.domainName}}
+                </div>
+                <div>
+                    {{domainRow?.questionAnswered}} 
+                </div>
+                <div>
+                    {{domainRow?.questionUnAnswered}}
+                </div>
+                <div>{{domainRow.questionCount}}</div>
+                <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
+            </div>
+            <div *ngFor="let questionRow of domainRow.domainQuestions" class="questionsByDomainTableRow DomainTableRow question" >
+                <div>
+                    {{questionRow?.Question_Text}}
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
+                    1
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    0
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    1
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
+                    0
+                </div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
 

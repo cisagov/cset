@@ -32,6 +32,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public List<LevelStats> StatsByLevel { get; set; }
             public List<DomainStats> StatsByDomainAndLevel { get; set; }
             public List<DomainStats> StatsByDomain { get; set; }
+            public List<DomainStats> DomainAndQuestions { get; set; }
             public List<DomainStats> StatsByDomainAtUnderTarget { get; set; }
             public List<MaturityQuestion> MaturityQuestions { get; set; }
             public MaturityModel()
@@ -51,7 +52,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             public DomainStats()
             {
-
+                domainQuestions = new List<MaturityQuestion>();
             }
             public DomainStats(string domainName)
             {
@@ -59,12 +60,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 questionCount = 0;
                 questionAnswered = 0;
                 questionUnAnswered = 0;
+                domainQuestions = new List<MaturityQuestion>();
             }
             public string domainName { get; set; }
             public int questionCount { get; set; }
             public int questionAnswered { get; set; }
             public int questionUnAnswered { get; set; }
             public string ModelLevel { get; set; }
+            public List<MaturityQuestion> domainQuestions {get; set;}
         }
 
         public class MaturityQuestion
@@ -141,15 +144,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 var questions_of_domain = model.MaturityQuestions
                     .Where(mq => mq.Category == domain).ToList();
-                model.StatsByDomain.Add(toDomainStats(questions_of_domain,domainName:domain));
+                model.StatsByDomain.Add(toDomainStats(questions_of_domain, domainName: domain));
 
                 //flatten stats by domain and level
                 DomainStats domainStats = new DomainStats();
                 var domainSpecificAtTargetLevel = model.StatsByDomainAndLevel
                     .Where(sbdal => Int32.Parse(sbdal.ModelLevel) <= model.TargetLevel 
-                    && sbdal.domainName == domain)
-                    
-                    .ToList();
+                    && sbdal.domainName == domain).ToList();
+
                 DomainStats consolidatedDomainStat = new DomainStats(domain);
                 foreach(var item in domainSpecificAtTargetLevel)
                 {
@@ -169,6 +171,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             DomainStats newDomainStats = new DomainStats();
             if (level != null) newDomainStats.ModelLevel = level;
             if (domainName != null) newDomainStats.domainName = domainName;
+            newDomainStats.domainQuestions = questions;
             newDomainStats.questionCount = questions.Count();
             newDomainStats.questionAnswered = questions.Where(qa => qa.Answer.Answer_Text == "Y").Count();
             newDomainStats.questionUnAnswered = questions.Where(qa => qa.Answer.Answer_Text != "Y").Count();
