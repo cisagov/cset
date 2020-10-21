@@ -21,11 +21,14 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import * as $ from 'jquery';
+import {BehaviorSubject} from 'rxjs';
+import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 @Component({
   selector: 'sitesummary',
   templateUrl: './sitesummary-cmmc.component.html',
@@ -52,7 +55,22 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   greenGradient = "linear-gradient(5deg, rgba(98,154,109,1) 0%, rgba(31,77,67,1) 100%)"
   grayGradient = "linear-gradient(5deg, rgba(98,98,98,1) 0%, rgba(120,120,120,1) 100%)"
 
+  blueText= "rgba(41,100,162,1)"
+  greenText= "rgba(60,110,85,1)"
+  whiteText= "rgba(255,255,255,1)"
+
+  statsByDomain;
+  gridColumnCount = 10
+  gridColumns = new Array(this.gridColumnCount);
+  @ViewChild("gridChartDataDiv") gridChartData: ElementRef;
+  @ViewChild("gridTiles") gridChartTiles: Array<any>;
+  
+  columnWidthEmitter: BehaviorSubject<number>;
+  columnWidthPx = 25;
+
   ngstyleCalls = 0;
+
+
 
   divElement: HTMLElement;
 
@@ -66,16 +84,33 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     public configSvc: ConfigService,
     private titleService: Title,
     private sanitizer: DomSanitizer
-  ) { }
+  ) { 
+    this.columnWidthEmitter = new BehaviorSubject<number>(25)
+
+  }
+
+  getGradient(color,alpha=1){
+    switch(color){
+      case "blue":{
+        return `linear-gradient(5deg, rgba(31,82,132,${alpha}) 0%, rgba(58,128,194,${alpha}) 100%)`
+      }
+      case "green":{
+        return `linear-gradient(5deg, rgba(98,154,109,${alpha}) 0%, rgba(31,77,67,${alpha}) 100%)`
+      }
+      case "grey":{
+        return `linear-gradient(5deg, rgba(98,98,98,${alpha}) 0%, rgba(120,120,120,${alpha}) 100%)`
+      }
+      default: {
+        return "rgba(255,0,0,1)"
+      }
+    }
+  }
 
   getRadi(i){
     let degreeOfNo = Math.round(i.questionUnAnswered / i.questionCount * 360)
-
     let val = {
       backgroundImage: `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
     }
-    this.ngstyleCalls += 1;
-    console.log(this.ngstyleCalls)
     return val
   }
   getBorder(input){
@@ -86,17 +121,16 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     let width = Math.round(input.questionAnswered / input.questionCount * 100)
     let color = "linear-gradient(5deg, rgba(100,100,100,1) 0%, rgba(200,200,200,1) 100%)"
     if(input.ModelLevel < this.cmmcModel.TargetLevel){
-      color = this.blueGradient;
+      color = this.getGradient("blue");
     }else if(input.ModelLevel == this.cmmcModel.TargetLevel){
-      color = this.greenGradient;
+      color = this.getGradient("green");
     } else {
-      color = this.grayGradient;
+      color = this.getGradient("grey");
     }
     let val = {
       width: `${width}%`,
       background: color
     }
-    console.log(val)
     return val
   }
 
@@ -121,37 +155,76 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
           r.MaturityModels.forEach(model => {
             if(model.MaturityModelName == "CMMC"){
               this.cmmcModel = model
-              this.statsByLevel = this.cmmcModel.StatsByLevel.filter(obj => obj.ModelLevel != "Aggregate")
-            }
+              this.statsByLevel = this.cmmcModel.StatsByLevel.filter(obj => obj.ModelLevel != "Aggregate").reverse()
+              this.statsByDomain = this.cmmcModel.StatsByDomain
+            }            
           });    
           console.log(this.cmmcModel)
           console.log(this.statsByLevel)
+          window.dispatchEvent(new Event('resize'));
         }
-        // console.log(this.statsByLevel)
-        // this.statsByLevel
-        // console.log(r)
-
-        // let testYes = 75
-        // let testNo = 25
-        // let totalQues = testYes + testNo 
-        // let degreeOfNo = Math.round(testNo / totalQues * 360)
-
-        // this.divElement = this.PieChartByLevel3.nativeElement;
-        // let pieVal = `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
-        // this.divElement.style.backgroundImage= pieVal
       },
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
-    );
+    ),(finish) => {
+
+    };
+    this.columnWidthEmitter.subscribe(item => {
+      $(".gridCell").css("width",`${item}px`)
+    })
   }
 
   ngAfterViewInit(){
-    // console.log(this.pieChartDiv)    
+    this.getcolumnWidth();
   }
 
   ngAfterViewChecked() {
+    this.getcolumnWidth();
     // if (this.pageInitialized) {
     //   return;
     // }
   }
+
+  getBlueGradientWithAlpha(alpha){
+    
+  }
+
+  //horizontalDomainBarChat
+  getcolumnWidth(){    
+    this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
+    this.columnWidthEmitter.next(this.columnWidthPx)
+  }
+  getBarWidth(data){
+    return { 
+      'flex-grow': data.questionAnswered / data.questionCount,
+      'background': this.getGradient("blue")
+    }
+  }
+
+  @HostListener ('window:resize',['$event'])
+  onResize(event) {
+    this.getcolumnWidth();
+  }
+
+
+  //Pyramid Chart
+  getPyramidRowColor(level){
+    let backgroundColor = this.getGradient("blue",.1);
+    let textColor = this.blueText
+    if(this.cmmcModel?.TargetLevel){
+      if(level == this.cmmcModel?.TargetLevel){
+        backgroundColor = this.getGradient("green")
+        textColor = this.whiteText
+      }
+      else if(level < this.cmmcModel?.TargetLevel){
+        backgroundColor = this.getGradient("blue")
+        textColor = this.whiteText
+      }
+    }
+    return {
+      background: backgroundColor,
+      color: textColor
+    }
+  }
+  
 
 }
