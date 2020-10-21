@@ -100,6 +100,13 @@
           </mat-nested-tree-node>
 
         </mat-tree>
+
+        <div *ngIf="navSvc.isNavLoading">
+          <div class="spinner-container toc m-0 d-flex justify-content-center align-items-center flex-11a">
+            <div class="spinner-size-50"></div>
+          </div>
+        </div>
+
       </mat-sidenav>
 
       <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a">
