@@ -219,7 +219,6 @@ import { CategoryBlockComponent } from './assessment/questions/category-block/ca
 import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
-import { MatCmmcComponent } from './assessment/results/mat-cmmc/mat-cmmc.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -402,7 +401,6 @@ import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
-        MatCmmcComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
