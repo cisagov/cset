@@ -27,7 +27,11 @@ import {
   OnInit,
   Output,
   ViewChild,
-  HostListener
+  HostListener,
+  AfterContentInit, 
+  OnChanges,
+  ChangeDetectorRef,
+  AfterContentChecked
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,7 +44,7 @@ import { NavigationService } from '../services/navigation.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AssessmentComponent implements OnInit {
+export class AssessmentComponent implements AfterContentChecked {
   innerWidth: number;
   innerHeight: number;
 
@@ -81,15 +85,26 @@ export class AssessmentComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
-    public navSvc: NavigationService
+    public navSvc: NavigationService, 
+    private cd: ChangeDetectorRef
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
-  }
-
-  ngOnInit() {
     this.assessSvc.currentTab = 'prepare';
     this.navSvc.activeResultsView = null;
+   
+  }
+
+  ngAfterContentChecked() {
+    this.cd.detectChanges();
+  }
+
+  setTab(tab){
+    this.assessSvc.currentTab = tab;
+  }
+  
+  checkActive(tab){
+    return this.assessSvc.currentTab === tab;
   }
 
   selectNavItem(target: string) {
