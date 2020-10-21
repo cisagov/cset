@@ -351,4 +351,23 @@
         </div> -->
     
 
+    <div class="page-break">
+        <h1>
+            CMMC Statements Gap List with Corresponding References.
+        </h1>
+        <h3>
+            Utilize this section to identify the your gaps in the CMMC maturity model combined with the provided references to determine the next course of action. 
+        </h3>
+
+        <table *ngIf="response?.questionReferenceTable.length > 0" class="cset-table-3">
+            <tr *ngFor="let reference of response?.questionsReferenceTable">
+                <td class="tint2" style="width: 20%">{{reference.CategoryAndNumber}}</td>
+                <td [innerHTML]="mfr.Question"></td>
+                <td class="tint2" style="width: 20%">{{reference.SupplimentaryInfo}}</td>
+            </tr>
+        </table>
+        <div *ngIf="response?.QuestionsMarkedForReview.length === 0" class="cset-table-3">
+            There are no questions marked for review.
+        </div>
+    </div>
 </div>
