@@ -608,3 +608,260 @@
     text-align: center;
     align-content: end;
   }
+
+  .parentContainer {
+    margin: 5em;
+}
+.gridGraphContainer {
+    /* background: rgba(150,0,0,.5); */
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+.graphDataRow {
+    height: 2em;
+    /* margin: .5em 0; */
+}
+.gridGraphLabels {
+    /* background: rgba(0,150,0,.5); */
+    display: flex;
+    flex-shrink: 1;
+    flex-direction: column;
+}
+.gridGraphLabel {
+    display: flex;
+    align-self: flex-end;
+    margin-right: 1em;
+}
+.gridGraphDataContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.gridGraphData {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+}
+.gridGraphBackground {
+    /* display: flex;
+    flex-grow: 1 */
+    display: flex;
+    position: absolute;
+    z-index: -4;
+    flex-direction: row;
+}
+.gridGraphBackground div{
+    // display: flex;
+    // flex-grow: 1;
+    border-style: solid;
+    border-color: rgba(0,0,0,.2);
+    border-width: 1px 0px 0px 1px;
+    /* height: 1em; */
+}
+.gridGraphBackground div:last-child{
+    border-width: 1px 1px 0px 1px;
+}
+.gridGraphData:nth-last-child(2)  div{
+    border-bottom-width: 1px;
+}
+.gridGraphBar {
+    margin: .2em 0;
+    height: 60%;
+    display: flex;
+    background:rgba(0,0,150,.2);
+}
+.gridGraphBackgroundLabels {
+    display:flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+.gridGraphBackgroundLabels div{
+    display:flex;
+    flex-grow: 1;
+}
+
+.gridColumn {
+  width:10%;
+}
+
+
+/*  -------------------PYRAMID CHART        --------------*/
+
+:host {
+  --arrow-width: 30em;
+  --half-arrow-width: calc(var(--arrow-width) / 2);
+  --arrow-top-height: 4em;
+  --arrow-bottom-height: 3em;
+  --pyramid-row-height: 3em;
+  --arrow-base-width-ratio: .9;
+  --row-growth-rate: .15;
+  --background-color-mask: white;
+  --arrow-font-size: 1.5em;
+  --center-seperator-width: 3px;
+  --row-spacing: .75em;
+  --blue-gradient: linear-gradient(5deg, rgba(31,82,132,1) 0%, rgba(58,128,194,1) 100%);
+  --blue-gradient-light: linear-gradient(5deg, rgba(31,82,132,.1) 0%, rgba(58,128,194,.1) 100%);
+  --green-gradient: linear-gradient(5deg, rgba(98,154,109,1) 0%, rgba(31,77,67,1) 100%);
+  --blue-text: rgba(41,100,162,1);
+  --green-text: rgba(60,110,85,1)
+}
+
+.pyramidGraphLevelIndicator {
+  position: absolute;
+  color: var(--green-text);
+  background: white;
+
+}
+
+.pyramidGraph {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.arrowContainer {
+  background: var(--blue-gradient);
+  width: var(--arrow-width);
+  height:calc(var(--arrow-top-height) + var(--arrow-bottom-height));
+  display:flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.arrowMask {
+  display:flex;
+  flex-direction: column;
+}
+.topHalfArrowMask{
+  display: flex;
+  flex-direction: row;
+  height: var(--arrow-top-height)
+}
+.bottomHalfArrowMask{
+  height: var(--arrow-bottom-height)
+}
+
+.triangle-topright {
+  height: 0;
+  border-top: var(--arrow-top-height) solid var(--background-color-mask);
+  border-right: var(--half-arrow-width) solid transparent;
+}
+
+.triangle-topleft {
+  height: 0;
+  border-top: var(--arrow-top-height) solid var(--background-color-mask);
+  border-left: var(--half-arrow-width) solid transparent;
+}
+
+.bottomHalfArrowMask{
+  display: flex;
+  flex-direction: row;
+}
+
+.bottomHalfArrowMask .div {
+  display:flex;
+}
+
+.arrowBaseMask {
+  background: var(--background-color-mask);
+  flex-grow: 1;
+  display:flex;
+}
+.arrowBaseCenter {
+  display: flex;
+  flex-basis: calc(var(--arrow-base-width-ratio) * var(--arrow-width));
+  flex-direction: row;
+}
+
+.pyramidRowItem {
+  justify-content: center;
+  flex-basis: 50%;
+}
+
+.arrowBaseCenter div, .pyramidLevel div{
+  display: flex;
+  flex-basis: 50%;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+
+.arrowBaseCenter div {
+  color: white;
+  font-family:sans-serif;
+  font-weight: bolder;
+  justify-content: center;
+  font-size: var(--arrow-font-size);
+}
+
+.pyramidLevel div{
+  font-family:sans-serif;
+  font-weight: bold;
+  font-size: calc(var(--arrow-font-size) * .8);
+}
+
+.arrowBaseCenter div:first-child, .pyramidLevel div:first-child{
+  border-style: solid; 
+  border-width: 0 var(--center-seperator-width) 0 0 ;
+  border-color: var(--background-color-mask);
+}
+
+.corners {
+  display:flex;
+  flex-grow:1;
+}
+
+.pyramidLevel{
+  display: flex;
+  justify-content: center;
+  background: var(--blue-gradient-light);
+  height: var(--pyramid-row-height);
+  margin: var(--row-spacing) 0 0 0 ;
+  align-self: center;
+}
+
+.pyramidLevelInTarget {
+  background: var(--blue-gradient);
+  color:white;
+}
+
+.pyramidLevelTarget{
+  background: var(--green-gradient);
+  color:white;
+}
+
+.levelOne {
+  /* width: calc(var(--arrow-width) * calc( 1 + calc(var(--row-growth-rate) * 
+  0))); */
+  width: calc(var(--arrow-width) * var(--arrow-base-width-ratio))
+}
+.levelTwo {
+  width: calc(calc(var(--arrow-width) * var(--arrow-base-width-ratio)) * calc( 1 + calc(var(--row-growth-rate) * 
+  1)));
+}
+.levelThree {
+  width: calc(calc(var(--arrow-width) * var(--arrow-base-width-ratio)) * calc( 1 + calc(var(--row-growth-rate)* 
+  2)));
+}
+.levelFour {
+  width: calc(calc(var(--arrow-width) * var(--arrow-base-width-ratio)) * calc( 1 + calc(var(--row-growth-rate)* 
+  3)));
+}
+.levelFive {
+  width: calc(calc(var(--arrow-width) * var(--arrow-base-width-ratio)) * calc( 1 + calc(var(--row-growth-rate)* 
+  4)));
+}
+
+.pyramidLevel span{
+  background: red;
+}
+.pyramidRowLabel{
+  flex-basis: 0;
+  display: inline-block;
+  position: absolute;
+  color: var(--blue-text);
+  margin-left: 1em;
+  font-size:1em;
+}
