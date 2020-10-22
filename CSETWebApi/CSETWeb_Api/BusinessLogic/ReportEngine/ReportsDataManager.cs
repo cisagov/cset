@@ -702,10 +702,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return genSALTable;
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        /// 
         public List<MaturityReportData.MaturityModel> getMaturityModelData()
         {
             List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();

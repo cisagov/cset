@@ -18,6 +18,10 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[Answer_Maturity]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[ASSESSMENTS]"
       },
       {
