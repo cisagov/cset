@@ -28,6 +28,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public string MaturityModelName { get; set; }
             public int MaturityModelID { get; set; }
             public int? TargetLevel { get; set; } = 0;
+            public int? AcheivedLevel { get; set; } = 0;
             public int? TotalQuestions { get; set; } = 0;
             public List<LevelStats> StatsByLevel { get; set; }
             public List<DomainStats> StatsByDomainAndLevel { get; set; }
@@ -131,6 +132,9 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     .Where(mq => mq.Maturity_Level == level).ToList();
                 model.StatsByLevel.Add(toLevelStats(questions_at_level, level.ToString(), questionCountAggregateForLevelAndBelow));
                 questionCountAggregateForLevelAndBelow += questions_at_level.Count();
+                if((questions_at_level.Where(q => q.Answer.Answer_Text == "N" || q.Answer.Answer_Text == "U").Count() == 0)){
+                    model.AcheivedLevel = level;
+                }
 
                 //Get the questions by domain for each level                
                 foreach (string domain in domains)
