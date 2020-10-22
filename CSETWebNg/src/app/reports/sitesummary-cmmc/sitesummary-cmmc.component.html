@@ -400,7 +400,9 @@
         </div>
     </div>
     <div class="TESTINGspacer" style="margin-top:8em"></div>
-    
+    <div class="stackedBarChartBottomTitle">
+        The Number of Practices Satisfied for Each Level:
+    </div>
     <div class="stackedBarChart">
         <div class="stackBarChartUpperLeftLabels">
             <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
@@ -440,20 +442,21 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="stackedBarChartBottomTitle">
-            The Number of Practices Satisfied for Each Level:
-        </div>
+        </div>        
     </div>
     
     <div class="TESTINGspacer" style="margin-top:8em"></div>
+    <div class="stackedBarChartBottomTitle">
+        Detail Listing of Practices by Level up to Target Level        
+    </div>
+    <div><p>*Note that domains with zero practices may not have any requirements at the desired target level</p></div>
     <div class="questionsByDomainTable">
         <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
             <div></div>
-            <div>Compliant</div>
-            <div>Not Compliant</div>
-            <div>Total Controls</div>
-            <div>Percent Complete</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Compliant</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Not Compliant</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
         </div>
         <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection DomainTableDomin">
             <div class="questionsByDomainTableRow DomainTableRow domain">
@@ -473,7 +476,7 @@
                 <div>
                     {{questionRow?.Question_Text}}
                 </div>
-                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
                     1
                 </div>
                 <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
@@ -482,7 +485,7 @@
                 <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
                     1
                 </div>
-                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
                     0
                 </div>
                 <div></div>
@@ -496,18 +499,20 @@
             CMMC Statements Gap List with Corresponding References.
         </h1>
         <h3>
-            Utilize this section to identify the your gaps ign the CMMC maturity model combined with the provided references to determine the next course of action. 
+            This section identifies deficiencies with the provided references. 
+            Shaded rows are out of compliance deficiencies.
         </h3>
 
-        <table *ngIf="response?.MaturityQuestions.length > 0" class="cset-table-3">
-            <tr *ngFor="let reference of response?.MaturityQuestions">
-                <td class="tint2" style="width: 20%">{{reference.Question_Title}}</td>
-                <td [innerHTML]="reference.Supplemental_Info"></td>                
-                <td class="tint2" style="width: 20%">{{reference.Supplemental_Info}}</td>
+        <table *ngIf="referenceTable?.length > 0" class="cset-table-4">
+            <tr class="questionsByDomainTableHeader"><th class="tdHeader">Practice Identifier</th><th class="tdHeader">Practice Statement</th><th class="tdHeader">References</th></tr>
+            <tr *ngFor="let reference of referenceTable">
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}" style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}" style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}" [innerHTML]="reference.Supplemental_Info"></td>
             </tr>
         </table>
-        <div *ngIf="response?.MaturityQuestions.length === 0" class="cset-table-3">
-            Congratulations there are no identified GAPS.  
+        <div *ngIf="referenceTable?.length === 0" class="cset-table-4">
+            Congratulations there are no identified deficiencies.  
         </div>
     </div>
 </div>

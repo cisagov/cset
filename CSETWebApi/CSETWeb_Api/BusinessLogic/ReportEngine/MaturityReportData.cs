@@ -115,8 +115,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             //Get the aggregate level stats
             aggregateLvlStats.ModelLevel = "Aggregate";
             aggregateLvlStats.questionCount = model.MaturityQuestions.Count();
-            aggregateLvlStats.questionAnswered = model.MaturityQuestions.Where(qa => qa.Answer.Answer_Text == "Y").Count();
-            aggregateLvlStats.questionUnAnswered = model.MaturityQuestions.Where(qa => qa.Answer.Answer_Text != "Y").Count();
+            aggregateLvlStats.questionAnswered = model.MaturityQuestions.Where(qa => (qa.Answer.Answer_Text == "Y" || qa.Answer.Answer_Text == "A")).Count();
+            aggregateLvlStats.questionUnAnswered = model.MaturityQuestions.Where(qa => qa.Answer.Answer_Text != "Y" || qa.Answer.Answer_Text != "A").Count();
             model.StatsByLevel.Add(aggregateLvlStats);
 
 
@@ -149,7 +149,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             foreach (string domain in domains)
             {
                 var questions_of_domain = model.MaturityQuestions
-                    .Where(mq => mq.Category == domain).ToList();
+                    .Where(mq => mq.Category == domain && mq.Maturity_Level<= model.TargetLevel).ToList();
                 model.StatsByDomain.Add(toDomainStats(questions_of_domain, domainName: domain));
 
                 //flatten stats by domain and level
@@ -179,8 +179,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             if (domainName != null) newDomainStats.domainName = domainName;
             newDomainStats.domainQuestions = questions;
             newDomainStats.questionCount = questions.Count();
-            newDomainStats.questionAnswered = questions.Where(qa => qa.Answer.Answer_Text == "Y").Count();
-            newDomainStats.questionUnAnswered = questions.Where(qa => qa.Answer.Answer_Text != "Y").Count();
+            newDomainStats.questionAnswered = questions.Where(qa => (qa.Answer.Answer_Text == "Y" || qa.Answer.Answer_Text == "A")).Count();
+            newDomainStats.questionUnAnswered = questions.Where(qa => (qa.Answer.Answer_Text != "Y" && qa.Answer.Answer_Text != "A")).Count();
             return newDomainStats;
         }
         public LevelStats toLevelStats(List<MaturityQuestion> questions, string level = null, int previousLevelQuestionCount = 0)
@@ -188,8 +188,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             LevelStats newLevelStats = new LevelStats();
             if (level != null) newLevelStats.ModelLevel = level;
             newLevelStats.questionCount = questions.Count();
-            newLevelStats.questionAnswered = questions.Where(qa => qa.Answer.Answer_Text == "Y").Count();
-            newLevelStats.questionUnAnswered = questions.Where(qa => qa.Answer.Answer_Text != "Y").Count();
+            newLevelStats.questionAnswered = questions.Where(qa => (qa.Answer.Answer_Text == "Y" || qa.Answer.Answer_Text == "A")).Count();
+            newLevelStats.questionUnAnswered = questions.Where(qa => (qa.Answer.Answer_Text != "Y" && qa.Answer.Answer_Text != "A")).Count();
             newLevelStats.questionCountAggregateForLevelAndBelow = newLevelStats.questionCount + previousLevelQuestionCount;
             return newLevelStats;
         }
