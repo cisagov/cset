@@ -214,13 +214,13 @@
                             Target Level
                         </div>
                         <div class="rbLevel">
-                            {{cmmcModel.TargetLevel}}
+                            {{cmmcModel?.TargetLevel}}
                         </div>
                     </div>                    
                 </div>
                 <div class="flex barChartContainer">
                     <div *ngFor="let i of statsByLevel" class="barChartRow"> 
-                        <div class="barChartLabel">Level {{i.ModelLevel}}</div> 
+                        <div class="barChartLabel">Level {{i?.ModelLevel}}</div> 
                         <div class="barChartBar">
                             <div class="barAnswered" [ngStyle]="getBarSettings(i)">
 
@@ -251,7 +251,7 @@
                             Target Level
                         </div>
                         <div class="rbLevel">
-                            {{i.ModelLevel}}
+                            {{i?.ModelLevel}}
                         </div>
                     </div>                    
                 </div>
@@ -273,82 +273,222 @@
             </div>
         </div>            
     </div>
-
-
-    <!-- <div class="page-break">
-        <h1>
-            Question Comments
-        </h1>
-
-        <table *ngFor="let c of response?.QuestionsWithComments" class="cset-table-3">
-            <tr>
-                <th colspan="3">
-                    {{c.CategoryAndNumber}}
-                    <i *ngIf="c.MarkedForReview === 'True'" class="cset-icons-browse"
-                        style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;" title="Marked for Review"></i>
-                </th>
-            </tr>
-            <tr>
-                <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2" [innerHTML]="c.Question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[c.Answer]}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Comment:</td>
-                <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.Comment)"></td>
-            </tr>
-        </table>
-
-        <div *ngIf="response?.QuestionsWithComments.length === 0" class="cset-table-3">
-            There are no questions with comments to display.
+    <div class="TESTINGspacer" style="margin-top:8em"></div>
+    <div class="gridGraphContainer">
+        <div  class="gridGraphLabels">
+            <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
+        </div>
+        <div class="gridGraphDataContainer" #gridChartDataDiv>
+            <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
+                </div>
+                <div class="gridGraphBackground  graphDataRow">
+                    <div *ngFor="let grid of gridColumns" 
+                    class="gridCell"></div>
+                </div>
+            </div>
+            <div class="gridGraphData graphDataRow">
+                <div class="gridGraphBackgroundLabels graphDataRow">
+                    <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i / this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                    <span style="width:0">100</span>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
-    <div class="page-break">
-        <h1>
-            Alternate Justification Comments
-        </h1>
-
-        <table *ngFor="let t of response?.QuestionsWithAlternateJustifi" class="cset-table-3">
-            <tr>
-                <th colspan="3">{{t.CategoryAndNumber}}</th>
-            </tr>
-            <tr>
-                <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2" [innerHTML]="t.Question"></td>
-                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.Answer)}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Alternate Justification:</td>
-                <td colspan="2">{{t.AlternateJustification}}</td>
-            </tr>
-        </table>
-
-        <div *ngIf="response?.QuestionsWithAlternateJustifi.length === 0" class="cset-table-3">
-            There are no questions with alternate justifications to display.
+    <div class="TESTINGspacer" style="margin-top:8em"></div>
+    <div class="pyramidGraphContainer">
+        <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
+            <div class="roundedBox">
+                <div class="rbTitle">
+                    Target Level
+                </div>
+                <div class="rbLevel">
+                    {{cmmcModel?.TargetLevel}}
+                </div>
+            </div>                    
+        </div>
+        <div class="pyramidGraph">
+            <div class="arrowContainer">
+                <div class="topHalfArrowMask">
+                    <div class="corners triangle-topright"></div>
+                    <div class="corners triangle-topleft"></div>
+                </div>
+                <div class="bottomHalfArrowMask">
+                    <div class="arrowBaseMask arrowBaseLeft"></div>
+                    <div class="arrowBaseCenter">
+                        <div>
+                            PRACTICES
+                        </div>
+                        <div>
+                            PROCESSSES
+                        </div>
+                    </div>
+                    <div class="arrowBaseMask arrowBaseRight"></div>
+                </div>
+            </div>
+            <div class="pyramidLevel levelOne"
+            [ngStyle]="getPyramidRowColor(5)" >            
+                <div class="pyramidRowItem">
+                    Advanced/Progressive
+                </div>
+                <div class="pyramidRowItem">
+                    Optomizing
+                </div>
+                <div style="flex-basis:0"> 
+                    <div class="pyramidRowLabel">
+                        Level Five
+                    </div>
+                </div>
+            </div>
+            <div class="pyramidLevel levelTwo"
+            [ngStyle]="getPyramidRowColor(4)" >            
+                <div class="pyramidRowItem">
+                    Proactive
+                </div>
+                <div class="pyramidRowItem">
+                    Reviewed
+                </div>
+                <div style="flex-basis:0"> 
+                    <div class="pyramidRowLabel">
+                        Level Four
+                    </div>
+                </div>
+            </div>
+            <div class="pyramidLevel levelThree "
+            [ngStyle]="getPyramidRowColor(3)" >           
+                <div class="pyramidRowItem">
+                    Good Cyber Hygiene
+                </div>
+                <div class="pyramidRowItem">
+                    Managed
+                </div><div style="flex-basis:0"> 
+                    <div class="pyramidRowLabel">
+                        Level Three
+                    </div>
+                </div>
+            </div>
+            <div class="pyramidLevel levelFour"
+            [ngStyle]="getPyramidRowColor(2)" >       
+                <div class="pyramidRowItem">
+                    Intermediate Cyber Hygiene
+                </div>
+                <div class="pyramidRowItem">
+                    Documented
+                </div>
+                <div style="flex-basis:0"> 
+                    <div class="pyramidRowLabel">
+                        Level Two
+                    </div>
+                </div>
+                
+            </div>
+            <div class="pyramidLevel levelFive"
+                [ngStyle]="getPyramidRowColor(1)"    
+            >            
+                <div class="pyramidRowItem">
+                    Basic Cyber Hygiene
+                </div>
+                <div class="pyramidRowItem">
+                    Performed
+                </div>
+                <div style="flex-basis:0"> 
+                    <div class="pyramidRowLabel">
+                        Level One
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
-    <div class="page-break">
-        <h1>
-            Questions Marked For Review
-        </h1>
-
-        <table *ngIf="response?.QuestionsMarkedForReview.length > 0" class="cset-table-3">
-            <tr *ngFor="let mfr of response?.QuestionsMarkedForReview">
-                <td class="tint2" style="width: 20%">{{mfr.CategoryAndNumber}}</td>
-                <td [innerHTML]="mfr.Question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[mfr.Answer]}}</td>
-            </tr>
-        </table>
-
-
-        <!-- <div *ngIf="response?.QuestionsMarkedForReview.length === 0" class="cset-table-3">
-            There are no questions marked for review.
-        </div> -->
+    <div class="TESTINGspacer" style="margin-top:8em"></div>
     
+    <div class="stackedBarChart">
+        <div class="stackBarChartUpperLeftLabels">
+            <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
+            <div> Compliance for Target Level {{complianceLevelAcheivedData?.targetLevel}}</div>
+            <div> Achieved Level {{complianceLevelAcheivedData?.acheivedLevel}}</div>
+        </div>
+        <div class="stackedBarChartBody">
+            <div *ngFor="let dataColumn of stackBarChartData; let i = index" class="stackedBarChartColumn">
+                <div class="barHeader">
+                    <div class="mainHeader"> LEVEL {{i + 1}}</div>
+                    <div class="secondaryHeader"> {{stackedChartHeaderLabels[i + 1]}}</div>
+                </div>       
+                <div *ngFor="let barSection of dataColumn" [ngStyle]="getStackedChartSectionStyle(barSection)" class="barSection">
+                    <div *ngIf="
+                        (barSection.totalForLevel / 2 ) < barSection.count
+                        &&
+                        (cmmcModel?.TargetLevel > barSection.modelLevel 
+                        || cmmcModel?.TargetLevel == barSection.modelLevel)" 
+                        class="barSectionInnerLabel"> {{barSection.count}} / {{barSection.totalForLevel}}
+                    </div>
+                    <div *ngIf="
+                    barSection.type == 'Yes' && 
+                    barSection.modelLevel > cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00</div>                    
+                </div>
+            </div>
+        </div>
+        <div class="stackedBarChartBase">
+        </div>
+        <div class="stackedBarChartBottomLabels">
+            <div *ngFor="let dataColumn of statsByLevel; let i = index"  class="stackedBarChartBottomLabel">
+                <div *ngIf="cmmcModel?.TargetLevel > dataColumn.ModelLevel || cmmcModel?.TargetLevel == dataColumn.ModelLevel"
+                 class="bottomLabel"> 
+                    <div>Total</div>
+                    <div class="bottomLabelNumbers">
+                        <div>{{dataColumn.totalAnsweredCount}}</div>  
+                        <div *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">/{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stackedBarChartBottomTitle">
+            The Number of Practices Satisfied for Each Level:
+        </div>
+    </div>
+    
+    <div class="TESTINGspacer" style="margin-top:8em"></div>
+    <div class="questionsByDomainTable">
+        <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
+            <div></div>
+            <div>Compliant</div>
+            <div>Not Compliant</div>
+            <div>Total Controls</div>
+            <div>Percent Complete</div>
+        </div>
+        <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection DomainTableDomin">
+            <div class="questionsByDomainTableRow DomainTableRow domain">
+                <div>
+                    {{domainRow?.domainName}}
+                </div>
+                <div>
+                    {{domainRow?.questionAnswered}} 
+                </div>
+                <div>
+                    {{domainRow?.questionUnAnswered}}
+                </div>
+                <div>{{domainRow.questionCount}}</div>
+                <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
+            </div>
+            <div *ngFor="let questionRow of domainRow.domainQuestions" class="questionsByDomainTableRow DomainTableRow question" >
+                <div>
+                    {{questionRow?.Question_Text}}
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
+                    1
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    0
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    1
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
+                    0
+                </div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
 
 </div>
