@@ -39,7 +39,7 @@ namespace WebAPIFileUploadExample.Controllers
             this._fileRepository = new FileRepository();
         }
 
-       
+
 
 
         [HttpPost]
@@ -50,48 +50,53 @@ namespace WebAPIFileUploadExample.Controllers
             string squestion_id = "questionId";
             string sanswerId = "answerId";
             string stitle = "title";
+            string bmaturity = "maturity";
 
 
             int assessmentId = Auth.AssessmentForUser();
             string fileHash;
             try
             {
-                
+
                 FileUploadStream fileUploader = new FileUploadStream();
                 Dictionary<string, string> formValues = new Dictionary<string, string>();
                 formValues.Add(squestion_id, null);
                 formValues.Add(sanswerId, null);
                 formValues.Add(stitle, null);
+                formValues.Add(bmaturity, null);
 
 
                 FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(this.Request, formValues);
-             
-                            
-                            // Find or create the Answer for the document to be associated with.  
-                            // If they are attaching a document to a question that has not yet been answered,
-                            // the answerId will not be sent in the request.
+
+
+                // Find or create the Answer for the document to be associated with.  
+                // If they are attaching a document to a question that has not yet been answered,
+                // the answerId will not be sent in the request.
                 int questionId = int.Parse(streamResult.FormNameValues[squestion_id]);
-                            int answerId;
+                int answerId;
                 bool isAnswerIdProvided = int.TryParse(streamResult.FormNameValues[sanswerId], out answerId);
                 string title = streamResult.FormNameValues[stitle];
+                bool isMaturity = false;
+                bool.TryParse(streamResult.FormNameValues[bmaturity], out isMaturity);
 
-                            if (!isAnswerIdProvided)
-                            {
-                                QuestionsManager qm = new QuestionsManager(assessmentId);
-                                Answer answer = new Answer();
-                                answer.QuestionId = questionId;
-                                answer.AnswerText = "U";
-                                answerId = qm.StoreAnswer(answer);
-                            }
-                            var dm = new DocumentManager(assessmentId);
-                            using (CSET_Context db = new CSET_Context())
-                            {   
-                    dm.AddDocument(title,answerId, streamResult);
-                            }
+                if (!isAnswerIdProvided)
+                {
+                    QuestionsManager qm = new QuestionsManager(assessmentId);
+                    Answer answer = new Answer();
+                    answer.QuestionId = questionId;
+                    answer.AnswerText = "U";
+                    answer.Is_Maturity = isMaturity;
+                    answerId = qm.StoreAnswer(answer);
+                }
+                var dm = new DocumentManager(assessmentId);
+                using (CSET_Context db = new CSET_Context())
+                {
+                    dm.AddDocument(title, answerId, streamResult);
+                }
 
-                            // Return a current picture of this answer's documents
-                            return Request.CreateResponse(dm.GetDocumentsForAnswer(answerId));
-               
+                // Return a current picture of this answer's documents
+                return Request.CreateResponse(dm.GetDocumentsForAnswer(answerId));
+
             }
             catch (System.Exception e)
             {
@@ -103,14 +108,14 @@ namespace WebAPIFileUploadExample.Controllers
         [HttpGet]
         public IEnumerable<FileDescriptionShort> GetAllFiles()
         {
-            int assessmentId = Auth.AssessmentForUser();            
+            int assessmentId = Auth.AssessmentForUser();
             return _fileRepository.GetAllFiles(assessmentId);
         }
 
-     
+
     }
 
-    
+
 
     public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
     {

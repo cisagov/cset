@@ -85,19 +85,9 @@ export class QuestionsService {
   domains = null;
 
   /**
-   * A reference to the current maturity question list.
-   */
-  maturityQuestions: QuestionResponse = null;
-
-  /**
-   * A reference to the current standards question list.
+   * A reference to the current question list.
    */
   questions: QuestionResponse = null;
-
-  /**
-   * A reference to the current component/diagram question list.
-   */
-  componentQuestions: QuestionResponse = null;
 
   
   /**
