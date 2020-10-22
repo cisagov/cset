@@ -87,7 +87,8 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   divElement: HTMLElement;
 
   response: any;
-  pageInitialized = false;
+  pageInitialized = false;  
+  referenceTable: any;
 
 
   constructor(
@@ -207,18 +208,20 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
           r.MaturityModels.forEach(model => {
             if(model.MaturityModelName == "CMMC"){
               this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
-              this.statsByDomain = this.cmmcModel.StatsByDomain
+              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel);
+              this.statsByDomain = this.cmmcModel.StatsByDomain;
               this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
-              this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel)
-              this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
+              this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel);
+              this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel);
+              this.referenceTable = this.generateReferenceList(this.cmmcModel.MaturityQuestions, this.cmmcModel.TargetLevel);
             }            
-          });    
-          console.log(this.cmmcModel)
-          console.log(this.statsByDomain)
-          console.log(this.statsByLevel)
-          console.log(this.stackBarChartData)
-          console.log(this.complianceLevelAcheivedData)
+          });
+          console.log(this.response);
+          // console.log(this.cmmcModel)
+          // console.log(this.statsByDomain)
+          // console.log(this.statsByLevel)
+          // console.log(this.stackBarChartData)
+          // console.log(this.complianceLevelAcheivedData)
           window.dispatchEvent(new Event('resize'));
         }
       },
@@ -229,6 +232,14 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     this.columnWidthEmitter.subscribe(item => {
       $(".gridCell").css("width",`${item}px`)
     })
+  }
+  generateReferenceList(MaturityQuestions: any, targetLevel: number): any {
+    let outputdata =[];
+    for(let item of MaturityQuestions){
+      if(item.Maturity_Level <= targetLevel )
+        outputdata.push(item);
+    }
+    return outputdata;
   }
   generateStatsByLevel(data){
     let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
