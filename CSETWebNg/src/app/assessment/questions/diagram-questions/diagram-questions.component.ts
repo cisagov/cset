@@ -88,7 +88,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     this.domains = null;
     this.questionsSvc.getComponentQuestionsList().subscribe(
       (response: QuestionResponse) => {
-        this.questionsSvc.componentQuestions = response;
+        this.questionsSvc.questions = response;
         this.domains = response.Domains;
         this.loaded = true;
 
