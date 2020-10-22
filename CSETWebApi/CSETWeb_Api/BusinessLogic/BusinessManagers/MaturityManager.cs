@@ -15,6 +15,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
+using Microsoft.EntityFrameworkCore.Update;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 
@@ -109,7 +110,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // as well as the user's selection(s).
 
                 var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId);
-                db.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+                if (result.Any())
+                {
+                    db.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+                }
 
                 db.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                 {

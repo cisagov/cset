@@ -30,9 +30,75 @@
   </div>
   
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+    <div>
+      <h1>CMMC Bar Chart</h1>
+    </div>
+    <div>
+        <div class="flex flex-container barChartRowContainer">                
+            <div class="flex levelIndicatorContainer">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Target Level
+                    </div>
+                    <div class="rbLevel">
+                        {{cmmcModel?.TargetLevel}}
+                    </div>
+                </div>                    
+            </div>
+            <div class="flex barChartContainer">
+                <div *ngFor="let i of statsByLevel" class="barChartRow"> 
+                    <div class="barChartLabel">Level {{i?.ModelLevel}}</div> 
+                    <div class="barChartBar">
+                        <div class="barAnswered" [ngStyle]="getBarSettings(i)">
 
-    [put content here]
-    
+                        </div>
+                    </div> 
+                </div>
+                <div class="barChartLabels">
+                    <div class="barChartHorizontalLabel"> 0 </div>
+                    <div class="barChartHorizontalLabel"> 25 </div>
+                    <div class="barChartHorizontalLabel"> 50 </div>
+                    <div class="barChartHorizontalLabel"> 75 </div>
+                    <div class="barChartHorizontalLabel"> 100 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h1>CMMC Pie Charts</h1>
+    </div>
+    <div *ngFor="let i of statsByLevel">
+        <div *ngIf="isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="levelDescriptions[i.ModelLevel]">
+            Test
+        </div>
+        <div *ngIf="isWithinModelLevel(i)" class="flex-container pieChartRow">                
+            <div class="levelIndicatorContainer">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Target Level
+                    </div>
+                    <div class="rbLevel">
+                        {{i?.ModelLevel}}
+                    </div>
+                </div>                    
+            </div>
+
+            <div class="flex flex-row-item pieChartcontainer">                    
+                <div class="piechartBackground piechartitem testChart" ></div>
+                <div class="piechart piechartitem" 
+                [ngStyle]="getRadi(i)"
+                [style.border]="getBorder(3)"></div>
+            </div>
+            <div class="pieChartLabelContainer">
+                    <div *ngIf="i.questionUnAnswered"class="pieChartLabel">
+                    Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.1'}} 
+                </div>
+                <div  class="pieChartLabel" >
+                    Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.1'}} 
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="mt-3 mb-2r d-flex justify-content-between flex-00a">
       <button class="btn btn-primary" (click)="navSvc.navBack('cmmc-level-drilldown')">Back</button>
       <button class="btn btn-primary" (click)="navSvc.navNext('cmmc-level-drilldown')">Next</button>

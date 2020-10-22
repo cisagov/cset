@@ -2,7 +2,7 @@
     "appCode": "CSET",
     "appUrl": "https://csetac.inl.gov/",
     "apiUrl": "https://csetac.inl.gov/api/",
-    "analyticsUrl": "https://localhost:44397/",
+    "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "docUrl": "https://csetac.inl.gov/Documents/",
     "reportsUrl": "https://csetac.inl.gov/Reports/",
     "helpContactEmail": "cset@dhs.gov",
