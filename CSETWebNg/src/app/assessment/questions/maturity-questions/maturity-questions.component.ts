@@ -82,7 +82,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.domains = null;
     this.maturitySvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
-        this.questionsSvc.maturityQuestions = response;
+        this.questionsSvc.questions = response;
         this.domains = response.Domains;
         this.loaded = true;
 
