@@ -156,7 +156,7 @@
     }
     .barChartHorizontalLabel{
       display: flex;
-      margin-right: 20%;
+      margin-right: calc(calc(100% - 4em) * .25);
       text-align: center;
       align-content: end;
     }
