@@ -109,7 +109,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return controls;
         }
 
-
+       
         public List<List<DiagramZones>> GetDiagramZones()
         {
             using (var db = new CSET_Context())
