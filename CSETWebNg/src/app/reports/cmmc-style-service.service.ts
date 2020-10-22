@@ -1,42 +1,12 @@
-////////////////////////////////
-//
-//   Copyright 2020 Battelle Energy Alliance, LLC
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in all
-//  copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//  SOFTWARE.
-//
-////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { ReportAnalysisService } from '../../services/report-analysis.service';
-import { ReportService } from '../../services/report.service';
-import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import * as $ from 'jquery';
-import {BehaviorSubject} from 'rxjs';
-import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
-import { first } from 'rxjs/operators';
-@Component({
-  selector: 'sitesummary',
-  templateUrl: './sitesummary-cmmc.component.html',
-  styleUrls: ['../reports.scss']
-})
-export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
-  
+import { Injectable } from '@angular/core';
+import { DomSanitizer, Title } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
+import { ConfigService } from '../services/config.service';
+import { ReportAnalysisService } from '../services/report-analysis.service';
+import { ReportService } from '../services/report.service';
+
+@Injectable()
+export class CmmcStyleServiceService {
   pieChartVals = "";
   pieColorYes = "#ffc107"
   pieColorNo = "#f2b844"
@@ -66,8 +36,6 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   statsByDomainAtUnderTarget;
   gridColumnCount = 10
   gridColumns = new Array(this.gridColumnCount);
-  @ViewChild("gridChartDataDiv") gridChartData: ElementRef;
-  @ViewChild("gridTiles") gridChartTiles: Array<any>;
   
   columnWidthEmitter: BehaviorSubject<number>;
   columnWidthPx = 25;
@@ -198,9 +166,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     return false;
   }
 
-  ngOnInit() {
-    this.titleService.setTitle("Site Summary Report - CSET");
-
+  getData() {
     this.reportSvc.getReport('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
@@ -228,10 +194,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     ),(finish) => {
 
-    };
-    this.columnWidthEmitter.subscribe(item => {
-      $(".gridCell").css("width",`${item}px`)
-    })
+    };    
   }
   generateReferenceList(MaturityQuestions: any, targetLevel: number): any {
     let outputdata =[];
@@ -372,36 +335,6 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     });
   }
 
-  ngAfterViewInit(){
-    this.getcolumnWidth();
-  }
-
-  ngAfterViewChecked() {
-    this.getcolumnWidth();
-    // if (this.pageInitialized) {
-    //   return;
-    // }
-  }
-
-
-  //horizontalDomainBarChat
-  getcolumnWidth(){    
-    this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
-    this.columnWidthEmitter.next(this.columnWidthPx)
-  }
-  getBarWidth(data){
-    return { 
-      'flex-grow': data.questionAnswered / data.questionCount,
-      'background': this.getGradient("blue")
-    }
-  }
-
-  @HostListener ('window:resize',['$event'])
-  onResize(event) {
-    this.getcolumnWidth();
-  }
-
-
   //Pyramid Chart
   getPyramidRowColor(level){
     let backgroundColor = this.getGradient("blue",.1);
@@ -424,6 +357,5 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
       color: textColor
     }
   }
-  
 
 }

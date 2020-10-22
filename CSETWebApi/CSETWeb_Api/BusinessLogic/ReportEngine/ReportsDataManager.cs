@@ -109,7 +109,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             return controls;
         }
 
-
+       
         public List<List<DiagramZones>> GetDiagramZones()
         {
             using (var db = new CSET_Context())
@@ -702,10 +702,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return genSALTable;
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        /// 
         public List<MaturityReportData.MaturityModel> getMaturityModelData()
         {
             List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();
