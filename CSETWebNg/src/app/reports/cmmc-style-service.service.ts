@@ -182,12 +182,7 @@ export class CmmcStyleServiceService {
               this.referenceTable = this.generateReferenceList(this.cmmcModel.MaturityQuestions, this.cmmcModel.TargetLevel);
             }            
           });
-          console.log(this.response);
-          // console.log(this.cmmcModel)
-          // console.log(this.statsByDomain)
-          // console.log(this.statsByLevel)
-          // console.log(this.stackBarChartData)
-          // console.log(this.complianceLevelAcheivedData)
+          console.log(this.stackBarChartData)
           window.dispatchEvent(new Event('resize'));
         }
       },
