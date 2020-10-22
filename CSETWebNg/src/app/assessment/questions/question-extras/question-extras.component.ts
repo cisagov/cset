@@ -348,6 +348,7 @@ export class QuestionExtrasComponent implements OnInit {
     const options = {};
     options['questionId'] = this.myQuestion.QuestionId;
     options['answerId'] = this.myQuestion.Answer_Id;
+    options['maturity'] = this.myQuestion.Is_Maturity;
 
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
@@ -413,12 +414,16 @@ export class QuestionExtrasComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   documentUrl(document: CustomDocument) {
     return (document.Is_Uploaded ?
       this.configSvc.apiUrl + '/ReferenceDocuments/'
       : this.configSvc.docUrl)
       + document.File_Name + '#' + document.Section_Ref;
   }
+
   /**
    * Displays a dialog with questions that have this document attached.
    * @param document
@@ -429,15 +434,17 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe((qlist: number[]) => {
         const array = [];
 
-
         // Traverse the local model to get the "display" question numbers
-        if (this.questionsSvc.domains) {
-          this.questionsSvc.domains.forEach(d => {
+        if (this.questionsSvc.questions) {
+          this.questionsSvc.questions.Domains.forEach(d => {
             d.Categories.forEach(qg => {
               qg.SubCategories.forEach(sc => {
                 sc.Questions.forEach(q => {
                   if (qlist.includes(q.QuestionId)) {
-                    array.push(qg.GroupHeadingText + " #" + q.DisplayNumber);
+                    const display = qg.GroupHeadingText 
+                      + (q.Is_Maturity ? " " : " #")
+                      + q.DisplayNumber;
+                    array.push(display);
                   }
                 });
               });
@@ -463,6 +470,9 @@ export class QuestionExtrasComponent implements OnInit {
       });
   }
 
+  /**
+   * 
+   */
   downloadFile(document) {
     this.fileSvc.downloadFile(document.Document_Id).subscribe((data: Response) => {
       // this.downloadFileData(data),
@@ -471,6 +481,9 @@ export class QuestionExtrasComponent implements OnInit {
     );
   }
 
+  /**
+   * 
+   */
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {

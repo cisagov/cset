@@ -270,6 +270,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
             dbAnswer.Is_Component = answer.Is_Component;
+            dbAnswer.Is_Maturity = answer.Is_Maturity;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();
