@@ -826,6 +826,11 @@ ul.mat-tree-node {
   margin-right: auto;
 }
 
+.spinner-container.toc > .spinner,
+.spinner-container.toc > div {
+  border-top: 4px solid $primary-350;
+}
+
 div.spinner-size-50 {
   max-width: 50px;
   max-height: 50px;
