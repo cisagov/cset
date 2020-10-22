@@ -5,6 +5,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { StandardService } from '../../../../services/standard.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
+import { ConfigService } from '../../../../services/config.service';
 
 @Component({
   selector: 'app-assessment-config',
@@ -18,19 +19,19 @@ export class AssessmentConfigComponent implements OnInit {
     {
       code: 'maturity',
       label: 'Maturity Model',
-      description: 'This is where we will explain why a maturity model may be the best methodology for this assessment.',
+      description: 'A maturity model is a formal measurement used by an organization to gauge and improve its programs and processes. Maturity models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
       expanded: false
     },
     {
       code: 'standard',
       label: 'Standard',
-      description: 'This is where we will explain why using one or more standards might be the best option for this assessment.',
+      description: 'A CSET cybersecurity assessment examines your cybersecurity posture against a specific standard. The assessment tests your security controls and measures how they stack up against known vulnerabilities.',
       expanded: false
     },
     {
       code: 'diagram',
       label: 'Network Diagram',
-      description: 'Building a diagram of your system\'s network allows CSET to include component-specific questions in your final question set.',
+      description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help you define the scope of your network for your assessment.',
       expanded: false
     }
   ];
@@ -41,6 +42,7 @@ export class AssessmentConfigComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
+    public configSvc: ConfigService,
     public dialog: MatDialog
   ) { }
 
@@ -89,6 +91,13 @@ export class AssessmentConfigComponent implements OnInit {
    */
   toggleExpansion(std) {
     this.expandedDesc[std] = !this.expandedDesc[std];
+  }
+
+  /**
+ * Returns the URL of the Questions page in the user guide.
+ */
+  helpDocUrl() {
+    return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
   }
 }
 
