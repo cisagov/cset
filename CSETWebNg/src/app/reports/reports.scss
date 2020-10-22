@@ -247,7 +247,14 @@
     background-color: #ecf6f9;
   }
   
-  
+  table.cset-table-4 {
+    width: 100%;
+    margin: 0 auto 1em auto;    
+    border: 1px solid #999;
+  }
+  table.cset-table-4 td{
+    border: 1px solid black;
+  }
   
   table.cset-table-3 {
     width: calc(100% - 2em);
@@ -326,6 +333,12 @@
   
   td.tint2 {
     background-color: #f2f7f9;
+  }
+
+  td.tint3{
+    background-color: #f2f7f9;
+    padding-left: 1em;
+    vertical-align: top;    
   }
   
   
@@ -878,7 +891,7 @@
 
 .stackedBarChart{
   width:800px;
-  padding-top: 10em;
+  padding-top: 2em;
   margin-left: var(--bar-spacing);
 }
 .stackBarChartUpperLeftLabels{
@@ -1053,4 +1066,8 @@
   background-color: var(--grid-background-highlight);
 }
 .DomainTableDomin{
+}
+.tdHeader{
+  padding: 1em;
+  text-align: center;
 }

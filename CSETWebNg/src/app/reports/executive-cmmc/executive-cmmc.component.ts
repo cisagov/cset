@@ -21,18 +21,18 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
-import { ACETService } from '../../services/acet.service';
-
+import { CmmcStyleServiceService } from '../cmmc-style-service.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'executive',
   templateUrl: './executive-cmmc.component.html', 
-  styleUrls: ['../reports.scss']
+  styleUrls: ['../reports.scss'],
+  providers:  [ CmmcStyleServiceService ]
 })
 export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
   response: any;
@@ -54,17 +54,25 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
-  acetDashboard: AcetDashboard;
-
+  
+  columnWidthPx: number;  
+  gridColumnCount = 10
+  gridColumns = new Array(this.gridColumnCount);
+  columnWidthEmitter: BehaviorSubject<number>;
+  @ViewChild("gridChartDataDiv") gridChartData: ElementRef;
+  @ViewChild("gridTiles") gridChartTiles: Array<any>;
 
   constructor(
     public reportSvc: ReportService,
     private analysisSvc: ReportAnalysisService,
-    private titleService: Title,
-    public acetSvc: ACETService
-  ) { }
+    private titleService: Title,    
+    public cmmcStyleSvc: CmmcStyleServiceService
+  ) {
+    this.columnWidthEmitter = new BehaviorSubject<number>(25)
+   }
 
   ngOnInit() {
+    this.cmmcStyleSvc.getData();
     this.titleService.setTitle("Executive Summary - CSET");
 
     this.reportSvc.getReport('executivecmmc').subscribe(
@@ -74,68 +82,33 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
-
-
-    // Populate charts
-
-    // Summary Percent Compliance
-    this.analysisSvc.getDashboard().subscribe(x => {
-      this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
+    this.columnWidthEmitter.subscribe(item => {
+      $(".gridCell").css("width",`${item}px`)
     });
+  }
 
-
-    // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
-
-
-    // Standards By Category
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-    });
-
-
-    // Component Summary
-    this.analysisSvc.getComponentSummary().subscribe(x => {
-      setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 0);
-    });
-
-
-    // Component Types (stacked bar chart)
-    this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.componentCount = x.Labels.length;
-      setTimeout(() => {
-        this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      }, 0);
-    });
-
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
-    });
-
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        this.acetDashboard = data;
-
-        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
-        }
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+  ngAfterViewInit(){
+    this.getcolumnWidth();
   }
 
   ngAfterViewChecked() {
-
+    this.getcolumnWidth();    
   }
+  //horizontalDomainBarChat
+  getcolumnWidth(){    
+    this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
+    this.columnWidthEmitter.next(this.columnWidthPx)
+  }
+  getBarWidth(data){
+    return { 
+      'flex-grow': data.questionAnswered / data.questionCount,
+      'background': this.cmmcStyleSvc.getGradient("blue")
+    }
+  }
+
+  @HostListener ('window:resize',['$event'])
+  onResize(event) {
+    this.getcolumnWidth();
+  }
+
 }
