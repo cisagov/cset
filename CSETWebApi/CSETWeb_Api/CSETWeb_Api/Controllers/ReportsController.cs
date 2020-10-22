@@ -76,9 +76,10 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityReportData data = new MaturityReportData();
-            data.analyzeMaturityData();
+            
             data.MaturityModels = reportsDataManager.getMaturityModelData();
             data.information = reportsDataManager.GetInformation();
+            //data.StatementsAndReferences = reportsDataManager.GetStatementsAndReferences();
             data.analyzeMaturityData();
 
             return data;

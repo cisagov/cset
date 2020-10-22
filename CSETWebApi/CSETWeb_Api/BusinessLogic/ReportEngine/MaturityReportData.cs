@@ -22,6 +22,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
         //public List<MaturityQuestion> MaturityQuestions { get; set; }
         public List<MaturityModel> MaturityModels { get; set; }
+        
+
         public class MaturityModel
         {
 

@@ -124,8 +124,8 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
               this.statsByLevel = this.cmmcModel.StatsByLevel.filter(obj => obj.ModelLevel != "Aggregate")
             }
           });    
-          console.log(this.cmmcModel)
-          console.log(this.statsByLevel)
+          console.log(this.cmmcModel);
+          console.log(this.statsByLevel);
         }
         // console.log(this.statsByLevel)
         // this.statsByLevel
