@@ -506,6 +506,7 @@
   position: absolute;
 }
 .pieChartcontainer{
+  position:relative;
   padding:1em;
   width: 200px; //Cant figure out how to get the auto width to apply to an absolutley position contents
 }
@@ -520,6 +521,7 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 3em;
+    page-break-inside: avoid;
   }
   .flex-row-item{
     display: flex;
@@ -617,7 +619,7 @@
   }
   .barChartHorizontalLabel{
     display: flex;
-    margin-right: 20%;
+    margin-right: calc(calc(100% - 4em) * .25);
     text-align: center;
     align-content: flex-end;
   }
@@ -1070,4 +1072,22 @@
 .tdHeader{
   padding: 1em;
   text-align: center;
+}
+
+h1.pageHeader {
+  font-size: 1.5em;
+  text-align: center;
+}
+.stackedBarChartTitle {
+  text-align:center;
+  font-weight: bold;
+  font-size: 1.6em;
+}
+
+.levelTitle {  
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.levelDescriptions h1{
+  font-weight: bold;
 }
