@@ -196,6 +196,7 @@
     <Compile Include="Manual\ANSWER.cs" />
     <Compile Include="Manual\Answer_Components.cs" />
     <Compile Include="Manual\Answer_Components_Overrides.cs" />
+    <Compile Include="Manual\Answer_Maturity.cs" />
     <Compile Include="Manual\Answer_Questions.cs" />
     <Compile Include="Manual\Answer_Requirements.cs" />
     <Compile Include="Manual\Answer_Questions_No_Components.cs" />

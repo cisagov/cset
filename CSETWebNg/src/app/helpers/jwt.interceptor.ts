@@ -32,8 +32,8 @@ import { ConfigService } from '../services/config.service';
 export class JwtInterceptor implements HttpInterceptor {
   public analyticsUrl: string;
 
-  constructor(private router: Router) {
-    this.analyticsUrl = "https://localhost:44397/api/";
+  constructor(private router: Router, private configSvc:ConfigService) {
+    this.analyticsUrl = configSvc.analyticsUrl;
   }
 
   intercept(
