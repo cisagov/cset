@@ -465,6 +465,7 @@
     <Compile Include="Models\Diagram.cs" />
     <Compile Include="Models\diagramXml.cs" />
     <Compile Include="Models\diagramXsd.cs" />
+    <Compile Include="Models\FeedbackQuestion.cs" />
     <Compile Include="Models\IRP.cs" />
     <Compile Include="Models\MaturityAnswers.cs" />
     <Compile Include="Models\MaturityAssessment.cs" />
