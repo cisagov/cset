@@ -25,6 +25,8 @@ export class MaturityService {
     { name: "Level 5", value: 5 }
   ];
 
+  cmmcData = null;
+
   /**
    * 
    * @param http 
@@ -74,6 +76,15 @@ export class MaturityService {
     else {
       return '???';
     }
+  }
+
+  
+  public getResultsData(reportId: string) {      
+    if(!this.cmmcData) {
+      console.log("RERUNNING GET")
+      this.cmmcData =  this.http.get(this.configSvc.apiUrl+ 'reports/' + reportId);
+    }
+    return this.cmmcData
   }
 
   /**

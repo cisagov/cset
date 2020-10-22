@@ -405,7 +405,7 @@
         <div class="stackBarChartUpperLeftLabels">
             <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
             <div> Compliance for Target Level {{complianceLevelAcheivedData?.targetLevel}}</div>
-            <div> Acheived Level {{complianceLevelAcheivedData?.acheivedLevel}}</div>
+            <div> Achieved Level {{complianceLevelAcheivedData?.acheivedLevel}}</div>
         </div>
         <div class="stackedBarChartBody">
             <div *ngFor="let dataColumn of stackBarChartData; let i = index" class="stackedBarChartColumn">
