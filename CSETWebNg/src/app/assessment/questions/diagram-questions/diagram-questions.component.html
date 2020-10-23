@@ -68,8 +68,6 @@
     </span>
   </div>
 
-  <div style="display: flex; justify-content: space-between;">
-    <button class="btn btn-primary" (click)="navSvc.navBack('diagram-questions')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('diagram-questions')">Next</button>
-  </div>
+  <app-nav-back-next [page]="'diagram-questions'"></app-nav-back-next>
+  
 </div>
