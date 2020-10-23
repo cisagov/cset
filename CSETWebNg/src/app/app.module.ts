@@ -226,6 +226,9 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { CommonModule } from '@angular/common';
+import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
+import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 
 @NgModule({
     imports: [
@@ -233,6 +236,7 @@ import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-
         BrowserAnimationsModule,
         FormsModule,
         HttpClientModule,
+        CommonModule,
         AppRoutingModule,
         MatInputModule,
         MatSliderModule,
@@ -411,6 +415,8 @@ import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
+        NavBackNextComponent,
+        CsetOriginComponent,
     ],
     providers: [
         ConfigService,
