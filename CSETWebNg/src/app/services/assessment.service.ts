@@ -85,6 +85,7 @@ export class AssessmentService {
     this.userRoleId = undefined;
     this.currentTab = undefined;
     this.applicationMode = undefined;
+    this.assessment = undefined;
     sessionStorage.removeItem('assessmentId');
   }
 

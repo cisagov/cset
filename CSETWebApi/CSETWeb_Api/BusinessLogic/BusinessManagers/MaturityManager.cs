@@ -84,7 +84,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name=="Maturity_Level").FirstOrDefault();
                 if (result != null)
                 {
                     if (int.TryParse(result.Standard_Specific_Sal_Level, out int level))
@@ -109,10 +109,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // is more complex to allow for the different types of SALs
                 // as well as the user's selection(s).
 
-                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId);
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level");
                 if (result.Any())
                 {
                     db.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+                    db.SaveChanges();
                 }
 
                 db.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
