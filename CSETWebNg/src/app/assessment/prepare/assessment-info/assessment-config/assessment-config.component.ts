@@ -93,7 +93,7 @@ export class AssessmentConfigComponent implements OnInit {
 
     switch (feature.code) {
       case 'maturity':
-        this.assessSvc.assessment.UseMaturity = value;
+        this.assessSvc.assessment.UseMaturity = value;        
         break;
       case 'standard':
         this.assessSvc.assessment.UseStandard = value;
@@ -103,6 +103,13 @@ export class AssessmentConfigComponent implements OnInit {
         break;
     }
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
+    
+    if(this.assessSvc.assessment.UseMaturity){
+      this.assessSvc.assessment.MaturityModelName = "CMMC";
+      if(!this.assessSvc.assessment.MaturityTargetLevel
+        ||this.assessSvc.assessment.MaturityTargetLevel==0)
+        this.assessSvc.assessment.MaturityTargetLevel = 1;  
+    }
 
     // tell the standard service to refresh the nav tree
     this.navSvc.buildTree(this.navSvc.getMagic());
