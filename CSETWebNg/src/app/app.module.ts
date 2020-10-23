@@ -228,6 +228,7 @@ import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-comp
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
+import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 
 @NgModule({
     imports: [
@@ -415,6 +416,7 @@ import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
         NavBackNextComponent,
+        CsetOriginComponent,
     ],
     providers: [
         ConfigService,
