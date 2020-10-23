@@ -43,17 +43,21 @@ export class CmmcLevelsComponent implements OnInit {
     public navSvc: NavigationService, 
     private activatedRoute: ActivatedRoute
   ) { 
-    this.activatedRoute.data.subscribe(()=>{
-      this.selectedLevel.value = this.assessSvc.assessment.MaturityTargetLevel;
-    })
+    this.selectedLevel.value = 1;
   }
 
   /**
    * 
    */
   ngOnInit() {
-    
-    
+    this.activatedRoute.data.subscribe(()=>{
+      if(this.selectedLevel.value === this.assessSvc.assessment.MaturityTargetLevel){
+        console.log("level not changed");
+      } 
+      else {
+        this.saveLevel(this.selectedLevel.value);
+      }      
+    });
   }
 
   /**
