@@ -42,8 +42,7 @@
         <button class="btn btn-primary" (click)="navToDiagram()"><i class="fas fa-project-diagram"></i>&nbsp;&nbsp;{{buttonText}}</button>
         <button class="btn btn-primary" (click)="navToInventory()" [disabled]="!hasDiagram"><i class="fas fa-th"></i>&nbsp;&nbsp;{{buttonDiagramInventory}}</button>
     </div>
-    <div class="mt-3 d-flex justify-content-between flex-00a">
-        <button class="btn btn-primary" (click)="navSvc.navBack('diagram')">Back</button>
-        <button class="btn btn-primary" (click)="navSvc.navNext('diagram')">Next</button>
-    </div>
+
+    <app-nav-back-next [page]="'diagram'"></app-nav-back-next>
+
 </div>

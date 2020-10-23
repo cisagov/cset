@@ -40,10 +40,11 @@
   <h3 class="d-flex flex-column flex-00a">{{feedbackHeader}}</h3>
   <div class="flex-container">
     <p>
-      Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET.  
+      Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET.
       Feedback is entered by clicking the
-      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px" viewBox="44.5 44.5 33 35" enable-background="new 44.5 44.5 31 31">
-      <title>feedback icon</title>
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px" viewBox="44.5 44.5 33 35"
+        enable-background="new 44.5 44.5 31 31">
+        <title>feedback icon</title>
         <path id="Bubble" fill="#004444" d="M69.051,51.771h-0.027l-2.75,4.554h0.834c0.369,0,0.668,0.298,0.668,0.666
         s-0.299,0.667-0.668,0.667h-1.64l-1.072,1.775h2.712c0.369,0,0.668,0.299,0.668,0.667s-0.299,0.667-0.668,0.667H63.59l-1.074,1.778
         h4.592c0.369,0,0.668,0.298,0.668,0.665c0,0.368-0.299,0.667-0.668,0.667h-5.481l-3.513,2.792l-2.095,1.664l0.49-2.63l0.34-1.826
@@ -53,8 +54,14 @@
         v12.326c0,1.338,1.089,2.428,2.426,2.428h2.757v5.701c0,0.281,0.178,0.534,0.444,0.627c0.074,0.025,0.148,0.037,0.222,0.037
         c0.198,0,0.39-0.087,0.519-0.246l4.955-6.119h9.205c1.338,0,2.426-1.09,2.426-2.428V54.196
         C71.477,52.858,70.389,51.771,69.051,51.771z"></path>
-        <g id="Edit_Pencil"><rect id="Eraser" x="68.775" y="44.493" transform="matrix(-0.5161 0.8565 -0.8565 -0.5161 144.7513 10.3737)" fill="#004444" width="1.34" height="3.166"></rect><polygon id="Pencil" fill="#004444" points="58.318,61.438 57.491,65.886 61.027,63.075 69.906,48.374 67.197,46.737 	"></polygon></g></svg>
-        icon below the question.
+        <g id="Edit_Pencil">
+          <rect id="Eraser" x="68.775" y="44.493" transform="matrix(-0.5161 0.8565 -0.8565 -0.5161 144.7513 10.3737)"
+            fill="#004444" width="1.34" height="3.166"></rect>
+          <polygon id="Pencil" fill="#004444"
+            points="58.318,61.438 57.491,65.886 61.027,63.075 69.906,48.374 67.197,46.737 	"></polygon>
+        </g>
+      </svg>
+      icon below the question.
     </p>
     <p>
       Please ensure that the feedback you provide does not include any proprietary or assessment related
@@ -75,7 +82,7 @@
   <div class="mb-4 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized">
     <div #divtoView class="copytxt" [innerHTML]="feedbackBody"></div>
   </div>
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc.navBack('feedback')">Back</button>
-  </div>
+
+  <app-nav-back-next [page]="'feedback'" [hide]="'next'"></app-nav-back-next>
+  
 </div>
