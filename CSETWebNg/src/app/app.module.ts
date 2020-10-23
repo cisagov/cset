@@ -226,6 +226,7 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 
 @NgModule({
     imports: [
@@ -411,6 +412,7 @@ import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
+        NavBackNextComponent,
     ],
     providers: [
         ConfigService,
