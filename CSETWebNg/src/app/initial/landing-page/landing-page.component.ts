@@ -77,11 +77,9 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
-
     this.titleSvc.setTitle('CSET');
     sessionStorage.removeItem('tree');
     this.navSvc.clearTree(this.navSvc.getMagic());
-
     this.checkPasswordReset();
   }
 
