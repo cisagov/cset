@@ -31,10 +31,10 @@
   <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
     <ng-template ngFor let-level [ngForOf]="maturitySvc.levels">
       <label class="btn btn-level btn-rounded form-check-label"
-        [class.active]="level?.value <= this.assessSvc.assessment?.MaturityTargetLevel" 
-        (click)="saveLevel(level.value)">
+        [class.active]="level?.value <= this.assessSvc.assessment?.MaturityTargetLevel">
         <input class="form-check-input" type="radio" autocomplete="off" name="mat_cmmc_level"
-          [checked]="level.value === this.assessSvc.assessment?.MaturityTargetLevel"> {{level.name}}
+          [checked]="level.value === this.assessSvc.assessment?.MaturityTargetLevel"
+          (click)="saveLevel(level.value)"> {{level.name}}
       </label>
     </ng-template>
   </div>
@@ -151,11 +151,6 @@
     </ul>
   </div>
 
-
-
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc.navBack('cmmc-levels')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('cmmc-levels')">Next</button>
-  </div>
+  <app-nav-back-next [page]="'cmmc-levels'"></app-nav-back-next>
 
 </div>

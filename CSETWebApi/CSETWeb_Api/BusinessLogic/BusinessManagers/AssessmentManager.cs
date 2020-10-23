@@ -259,13 +259,10 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (db.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
             {
-                assessment.UseDiagram = true;
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);                 
+                assessment.UseDiagram = dm.HasDiagram(a.Id); 
             }
-
-            if (db.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
-            {
-                assessment.UseMaturity = true;
-            }
+            
         }
 
 
@@ -302,7 +299,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 dbAssessment.UseDiagram = assessment.UseDiagram;
                 dbAssessment.UseMaturity = assessment.UseMaturity;
-                dbAssessment.UseStandard = assessment.UseStandard;
+                dbAssessment.UseStandard = assessment.UseStandard;                
 
                 dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5, '0');
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
@@ -339,6 +336,17 @@ namespace CSETWeb_Api.BusinessManagers
                 db.INFORMATION.AddOrUpdate(dbInformation, x => x.Id);
                 db.SaveChanges();
 
+                if (assessment.UseMaturity)
+                {
+                    SalManager salManager = new SalManager();
+                    salManager.SetDefaultSAL_IfNotSet(assessmentId);
+                    //this is at the bottom deliberatly because 
+                    //we want everything else to succeed first
+                    MaturityManager mm = new MaturityManager();
+                    mm.PersistSelectedMaturityModel(assessmentId, "CMMC");
+                    if (mm.GetMaturityLevel(assessmentId) == 0)
+                        mm.PersistMaturityLevel(assessmentId, 1);
+                }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
 

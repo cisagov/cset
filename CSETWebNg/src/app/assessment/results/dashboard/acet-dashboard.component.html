@@ -112,8 +112,6 @@
         </table>
     </div>
 
-    <div class="mt-3 d-flex justify-content-between flex-00a">
-        <button class="btn btn-primary" (click)="navSvc.navBack('acetDashboard')">Back</button>
-        <button class="btn btn-primary" (click)="navSvc.navNext('acetDashboard')">Next</button>
-    </div>
+    <app-nav-back-next [page]="'acetDashboard'"></app-nav-back-next>
+    
 </div>
