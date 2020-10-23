@@ -34,12 +34,12 @@
             }
 
             switch (this.status) {
-                case 200:
+                case 200:                    
                     const resp = JSON.parse(this.responseText);
                     sessionStorage.setItem('appAPIURL', resp.apiUrl);
                     sessionStorage.setItem('isAPI_together_With_Web', true);
                     break;
-                default:
+                default:                    
                     sessionStorage.setItem('isAPI_together_With_Web', false);
                     break;
             }

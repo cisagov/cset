@@ -60,11 +60,12 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log("made it to the login component");
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
 
     this.authenticationService.checkLocal().then(() => {
       if (this.authenticationService.isLocal) {
-        this.mode = 'LOCAL';
+        this.mode = 'LOCAL';        
         this.continueStandAlone();
       } else {
         // reset login status
@@ -142,6 +143,7 @@ export class LoginComponent implements OnInit {
   }
 
   continueStandAlone() {
+    console.log("called continue standalone");
     this.router.navigate(['/home']);
   }
 }

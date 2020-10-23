@@ -75,6 +75,7 @@ export class LandingPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("made it to landing page");
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
 
