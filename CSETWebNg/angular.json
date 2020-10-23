@@ -18,6 +18,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "allowedCommonJsDependencies": [
+              "jquery",
               "lodash",
               "rxjs/Subscription",
               "rxjs/observable/forkJoin",
