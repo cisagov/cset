@@ -103,6 +103,9 @@ export class AssessmentConfigComponent implements OnInit {
         break;
     }
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
+
+    sessionStorage.removeItem('tree');
+
     
     if(this.assessSvc.assessment.UseMaturity){
       this.assessSvc.assessment.MaturityModelName = "CMMC";
