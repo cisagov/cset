@@ -59,8 +59,6 @@ export class CmmcLevelDrilldownComponent implements OnInit {
 
   
   ngOnInit(): void {
-    this.titleService.setTitle("Site Summary Report - CSET");
-
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
@@ -80,7 +78,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
         }        
         this.initialized = true;
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => console.log('CMMC Level Drilldown load Error: ' + (<Error>error).message)
     ),(finish) => {
     };
   }
