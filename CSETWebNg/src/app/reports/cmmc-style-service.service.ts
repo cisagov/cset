@@ -186,7 +186,7 @@ export class CmmcStyleServiceService {
           window.dispatchEvent(new Event('resize'));
         }
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => console.log('CMMC Style Service load Error: ' + (<Error>error).message)
     ),(finish) => {
 
     };    
