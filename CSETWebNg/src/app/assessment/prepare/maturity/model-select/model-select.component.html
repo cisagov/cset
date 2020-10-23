@@ -27,10 +27,15 @@
     answer during the assessment.
   </p>
   <div class="mb-5">
-    <h4><input type="radio" class="maturity-model-select" name="model-select" id="model-select-cmmc"
-      [checked]="assessSvc.assessment?.MaturityModelName === 'CMMC'"  
+    <div style="display: none;">
+    
+    <h4>
+      <!--attach this to [checked] when there is more than one Model assessSvc.assessment?.MaturityModelName === 'CMMC'-->
+      <input style="display: none;" type="radio" class="maturity-model-select" name="model-select" id="model-select-cmmc"
+      [checked]="true"  
       (change)="changeSelection($event, 'CMMC')">
         <label for="model-select-cmmc" class="cursor-pointer">CMMC</label></h4>
+    </div>
     <div>
       <p>
         The Capability Maturity Model Certification (CMMC) measures

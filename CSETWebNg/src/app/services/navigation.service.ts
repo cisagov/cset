@@ -142,9 +142,14 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
-      this.dataSource.data = this.buildTocData();
+      if(sessionStorage.getItem('tree')){
+        let tree: any = this.parseTocData(JSON.parse(sessionStorage.getItem('tree')));
+        this.dataSource.data = <NavTreeNode[]>tree;
+      }else{
+        this.dataSource.data = this.buildTocData();
+      }
       this.treeControl.dataNodes = this.dataSource.data;
-
+      sessionStorage.setItem('tree', JSON.stringify(this.dataSource.data));
       this.setQuestionsTree();
 
       this.treeControl.expandAll();
@@ -164,6 +169,7 @@ export class NavigationService {
       this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
       this.dataSource.data = tree;
       this.treeControl.dataNodes = tree;
+      
       this.treeControl.expandAll();
 
       this.isNavLoading = false;
@@ -174,6 +180,23 @@ export class NavigationService {
     return node.children.length > 0;
   }
 
+  parseTocData(tree):NavTreeNode[]{
+    let navTree: NavTreeNode[] = [];
+    for (let i = 0; i < tree.length; i++) {
+      let p = tree[i];
+     
+      const node: NavTreeNode = {
+        label: p.label,
+        value: p.value,
+        isPhaseNode: p.isPhaseNode,
+        children: p.children,
+        expandable: p.expandable,
+        visible: p.visible
+      };
+      navTree.push(node);
+    }
+    return navTree;
+  }
   /**
    * Returns a list of tree node elements
    */
@@ -322,11 +345,13 @@ export class NavigationService {
 
   setACETSelected(acet: boolean) {
     this.acetSelected = acet;
+    sessionStorage.removeItem('tree');
     this.buildTree(this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
     this.frameworkSelected = framework;
+    sessionStorage.removeItem('tree');
     this.buildTree(this.getMagic());
   }
 
@@ -498,7 +523,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment.UseMaturity
-          && this.assessSvc.assessment.MaturityModelName === 'CMMC'
+          // && this.assessSvc.assessment.MaturityModelName === 'CMMC'
       }
     },
 

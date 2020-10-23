@@ -53,6 +53,8 @@ export class ModelSelectComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf'
     console.log(this.cmmcURL)
+    //remove this when we have multiple models
+    this.changeSelection(null,"CMMC");
   }
 
   /**
@@ -64,7 +66,7 @@ export class ModelSelectComponent implements OnInit {
     if (!!this.assessSvc.assessment) {
       this.assessSvc.assessment.MaturityModelName = model;
     }
-
+    sessionStorage.removeItem('tree');
     // refresh Prepare section of the sidenav
     this.navSvc.buildTree(this.navSvc.getMagic());
 
