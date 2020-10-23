@@ -68,6 +68,7 @@ export class DiagramInfoComponent implements OnInit {
     }
 
     populateTree() {
+        localStorage.removeItem('tree');
         this.navSvc.buildTree(this.navSvc.getMagic());
     }
 

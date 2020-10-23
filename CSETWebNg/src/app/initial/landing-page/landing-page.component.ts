@@ -79,7 +79,7 @@ export class LandingPageComponent implements OnInit {
     this.exportExtension = sessionStorage.getItem('exportExtension');
 
     this.titleSvc.setTitle('CSET');
-
+    localStorage.removeItem('tree');
     this.navSvc.clearTree(this.navSvc.getMagic());
 
     this.checkPasswordReset();
