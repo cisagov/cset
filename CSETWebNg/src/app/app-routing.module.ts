@@ -227,8 +227,7 @@ const appRoutes: Routes = [
               { path: '', redirectTo: 'info1', pathMatch: 'full' },
               { path: '**', redirectTo: 'info1' }
             ]
-          },          
-
+          },
           { path: 'questions', component: QuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
