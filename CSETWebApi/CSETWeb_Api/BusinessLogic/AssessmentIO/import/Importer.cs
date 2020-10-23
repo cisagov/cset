@@ -127,7 +127,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
-
+                
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = _assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
@@ -143,8 +143,19 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
                 db.ASSESSMENT_CONTACTS.Add(item);
                 db.SaveChanges();
-
-                dictAC.Add(a.Assessment_Contact_Id, item.Assessment_Contact_Id);
+                int newId;
+                if (a.Assessment_Contact_Id != 0)
+                {
+                    if (dictAC.TryGetValue(a.Assessment_Contact_Id, out newId))
+                    {
+                        dictAC.Add(newId, newId);
+                        a.Assessment_Contact_Id = newId;
+                    }
+                    else
+                    {
+                        dictAC.Add(a.Assessment_Contact_Id, item.Assessment_Contact_Id);
+                    }
+                }
             }
 
             // map the primary keys so that they can be passed to the generic import logic
