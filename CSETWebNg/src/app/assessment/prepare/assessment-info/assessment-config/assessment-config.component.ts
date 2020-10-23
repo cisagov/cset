@@ -80,7 +80,7 @@ export class AssessmentConfigComponent implements OnInit {
         break;
     }
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
-
+    localStorage.removeItem('tree');
     // tell the standard service to refresh the nav tree
     this.navSvc.buildTree(this.navSvc.getMagic());
   }

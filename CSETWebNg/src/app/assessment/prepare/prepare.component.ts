@@ -45,6 +45,7 @@ export class PrepareComponent implements OnInit {
   }
 
   ngOnInit() {
+    //localStorage.removeItem('tree');
     setTimeout(() => {
       this.navSvc.buildTree(this.navSvc.getMagic());
     }, 1000);
