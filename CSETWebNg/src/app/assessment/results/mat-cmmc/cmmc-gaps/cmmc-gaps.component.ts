@@ -65,8 +65,6 @@ export class CmmcGapsComponent implements OnInit {
   
   
   ngOnInit(): void {
-    this.titleService.setTitle("Site Summary Report - CSET");
-
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
@@ -86,7 +84,7 @@ export class CmmcGapsComponent implements OnInit {
         this.initialized = true;
         window.dispatchEvent(new Event('resize'));
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => console.log('CMMC Gaps load Error: ' + (<Error>error).message)
     ),(finish) => {
     };
     
