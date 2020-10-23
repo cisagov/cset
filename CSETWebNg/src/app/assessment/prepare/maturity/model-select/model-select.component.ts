@@ -66,7 +66,7 @@ export class ModelSelectComponent implements OnInit {
     if (!!this.assessSvc.assessment) {
       this.assessSvc.assessment.MaturityModelName = model;
     }
-
+    sessionStorage.removeItem('tree');
     // refresh Prepare section of the sidenav
     this.navSvc.buildTree(this.navSvc.getMagic());
 
