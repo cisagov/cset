@@ -27,7 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.9</TypeScriptToolsVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -3311,17 +3311,21 @@
     <Content Include="Documents\htmlhelp\add_requirements.htm" />
     <Content Include="Documents\htmlhelp\advisory.htm" />
     <Content Include="Documents\htmlhelp\analysis_screen.htm" />
+    <Content Include="Documents\htmlhelp\assessments_menu.htm" />
     <Content Include="Documents\htmlhelp\assessment_categories.htm" />
+    <Content Include="Documents\htmlhelp\assessment_information.htm" />
     <Content Include="Documents\htmlhelp\assessment_modes_1.htm" />
     <Content Include="Documents\htmlhelp\assessment_modes_2.htm" />
     <Content Include="Documents\htmlhelp\assessment_screen_questions_mode.htm" />
     <Content Include="Documents\htmlhelp\assessment_screen_requirements_mode.htm" />
     <Content Include="Documents\htmlhelp\assessment_section.htm" />
+    <Content Include="Documents\htmlhelp\awwa.htm" />
     <Content Include="Documents\htmlhelp\browse_screen.htm" />
     <Content Include="Documents\htmlhelp\c2m2_maturity_indicator_levels.htm" />
     <Content Include="Documents\htmlhelp\category_rankings.htm" />
     <Content Include="Documents\htmlhelp\cfats_tiers.htm" />
     <Content Include="Documents\htmlhelp\change_password.htm" />
+    <Content Include="Documents\htmlhelp\cmmc.htm" />
     <Content Include="Documents\htmlhelp\comments_section.htm" />
     <Content Include="Documents\htmlhelp\compare.htm" />
     <Content Include="Documents\htmlhelp\components_summary.htm" />
@@ -3331,6 +3335,7 @@
     <Content Include="Documents\htmlhelp\component_type_override.htm" />
     <Content Include="Documents\htmlhelp\contacts_management.htm" />
     <Content Include="Documents\htmlhelp\create_a_new_module.htm" />
+    <Content Include="Documents\htmlhelp\cset_navigation.htm" />
     <Content Include="Documents\htmlhelp\cset_revision_history.htm" />
     <Content Include="Documents\htmlhelp\cset_standards_and_groupings.htm" />
     <Content Include="Documents\htmlhelp\css\all.css" />
@@ -3411,6 +3416,10 @@
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_4.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_5.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_assessments_menu_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_assessments_menu_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessments_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_assessments_menu_screen.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_control_3.png" />
@@ -3420,6 +3429,7 @@
     <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_custom.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_screen.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_3.png" />
@@ -3607,6 +3617,14 @@
     <Content Include="Documents\htmlhelp\drex_keyboard_shortcuts_custom.png" />
     <Content Include="Documents\htmlhelp\drex_manage_documents_custom.png" />
     <Content Include="Documents\htmlhelp\drex_manage_documents_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_screen.png" />
     <Content Include="Documents\htmlhelp\drex_merge_custom.png" />
     <Content Include="Documents\htmlhelp\drex_merge_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_merge_custom_3.png" />
@@ -3681,6 +3699,7 @@
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_screen.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_question_filter_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_ranked_categories_custom.png" />
     <Content Include="Documents\htmlhelp\drex_references_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_references_section_custom_2.png" />
@@ -3761,6 +3780,7 @@
     <Content Include="Documents\htmlhelp\drex_submit_data_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_submit_feedback_custom.png" />
     <Content Include="Documents\htmlhelp\drex_supplemental_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_target_level_selection_custom.png" />
     <Content Include="Documents\htmlhelp\drex_terms_of_use_custom.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_control_2.png" />
@@ -3844,6 +3864,9 @@
     <Content Include="Documents\htmlhelp\keyboard_shortcuts.htm" />
     <Content Include="Documents\htmlhelp\main_cset_window_sections.htm" />
     <Content Include="Documents\htmlhelp\manage_documents.htm" />
+    <Content Include="Documents\htmlhelp\maturity_assessment_screen.htm" />
+    <Content Include="Documents\htmlhelp\maturity_model_list.htm" />
+    <Content Include="Documents\htmlhelp\maturity_model_selection.htm" />
     <Content Include="Documents\htmlhelp\merge.htm" />
     <Content Include="Documents\htmlhelp\merge_question_detail_info.htm" />
     <Content Include="Documents\htmlhelp\module_builder.htm" />
@@ -3902,6 +3925,7 @@
     <Content Include="Documents\htmlhelp\system_basics.htm" />
     <Content Include="Documents\htmlhelp\system_requirements.htm" />
     <Content Include="Documents\htmlhelp\table_of_contents.htm" />
+    <Content Include="Documents\htmlhelp\target_level_selection.htm" />
     <Content Include="Documents\htmlhelp\terms_of_use.htm" />
     <Content Include="Documents\htmlhelp\title_bar.htm" />
     <Content Include="Documents\htmlhelp\tools_menu.htm" />
@@ -4514,6 +4538,8 @@
     <Content Include="Documents\CMMC_Appendices_V1.02_20200318.pdf" />
     <Content Include="Documents\CMMC_Errata_20200318.pdf" />
     <Content Include="Documents\CMMC_ModelMain 1.02.pdf" />
+    <Content Include="Documents\2020-21123.pdf" />
+    <Content Include="Documents\NIST SP 800-171 Assessment Methodology Version 1.2.1  6.24.2020.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
