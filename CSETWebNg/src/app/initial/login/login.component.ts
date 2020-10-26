@@ -142,7 +142,7 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  continueStandAlone() {
-    this.router.navigate(['/home']);
+  continueStandAlone() {      
+    this.router.navigate(['/home']);    
   }
 }
