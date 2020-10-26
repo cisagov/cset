@@ -31,7 +31,7 @@
   
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
 
-    <div class="stackedBarChart">
+    <div *ngIf="initialized && !dataError" class="stackedBarChart">
       <div class="stackBarChartUpperLeftLabels">
           <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
           <div> Compliance for Target Level {{complianceLevelAcheivedData?.targetLevel}}</div>
@@ -74,7 +74,11 @@
       <div class="stackedBarChartBottomTitle">
           The Number of Practices Satisfied for Each Level:
       </div>
-  </div>
+    </div>
+    <div *ngIf="initialized && dataError">
+        <h1>Error Loading Data</h1>
+        <p>There was an error retreiving the data for this page. Please reload the page.</p>
+    </div>
     
     <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
     
