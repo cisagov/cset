@@ -9,6 +9,7 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
 using CSETWeb_Api.BusinessManagers;
+using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -24,6 +25,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
@@ -84,7 +86,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             foreach (var testSet in sets)
                             {
                                 setModel.ShortName = testSet.Short_Name;
-                                var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(), Formatting.Indented);
+                                var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(), Newtonsoft.Json.Formatting.Indented);
                                 if (testSetJson == setJson)
                                 {
                                     set = testSet;
@@ -153,6 +155,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         Importer import = new Importer();
                         int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
                         import.RunImportAutomatic(newAssessmentId, jsonObject);
+
+
+
+                        // Save the diagram
+                        var assessment = context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefault();
+                        if (!string.IsNullOrEmpty(assessment.Diagram_Markup))
+                        {
+                            var diagramManager = new DiagramManager(context);
+                            var diagReq = new DiagramRequest()
+                            {
+                                DiagramXml = assessment.Diagram_Markup,
+                                AnalyzeDiagram = false,
+                                revision = false
+                            };
+                            var xDocDiagram = new XmlDocument();
+                            xDocDiagram.LoadXml(assessment.Diagram_Markup);
+                            diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq);
+                        }
 
 
 

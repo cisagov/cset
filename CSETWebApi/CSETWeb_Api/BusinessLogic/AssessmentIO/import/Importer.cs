@@ -94,12 +94,16 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = db.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
                 if (item != null)
                 {
+                    item.Diagram_Markup = a.Diagram_Markup;
+                    item.Diagram_Image = a.Diagram_Image;
+
                     item.Assets = a.Assets;
                     item.Charter = a.Charter;
                     item.CreditUnionName = a.CreditUnionName;
                     item.IRPTotalOverride = a.IRPTotalOverride;
                     item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
                     item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly != null ? a.MatDetail_targetBandOnly : false;
+
                     db.SaveChanges();
                 }
             }
