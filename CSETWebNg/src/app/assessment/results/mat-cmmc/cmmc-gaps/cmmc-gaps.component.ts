@@ -38,6 +38,7 @@ import {BehaviorSubject} from 'rxjs';
 export class CmmcGapsComponent implements OnInit {
   
   initialized = false;
+  dataError = false;
 
   response;
   cmmcModel;
@@ -86,7 +87,10 @@ export class CmmcGapsComponent implements OnInit {
         this.initialized = true;
         window.dispatchEvent(new Event('resize'));
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => {
+        this.dataError = true;
+        console.log('Site Summary report load Error: ' + (<Error>error).message)
+      }
     ),(finish) => {
     };
     
@@ -118,8 +122,10 @@ export class CmmcGapsComponent implements OnInit {
   }
   //horizontalDomainBarChat
   getcolumnWidth(){    
-    this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
-    this.columnWidthEmitter.next(this.columnWidthPx)
+    if(this.gridChartData?.nativeElement != null){
+      this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
+      this.columnWidthEmitter.next(this.columnWidthPx)
+    }
   }
   
   getBarWidth(data){

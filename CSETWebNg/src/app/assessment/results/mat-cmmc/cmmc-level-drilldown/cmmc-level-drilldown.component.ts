@@ -36,6 +36,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 export class CmmcLevelDrilldownComponent implements OnInit {
 
   initialized = false;
+  dataError = false;
 
   response;
   cmmcModel;
@@ -75,21 +76,23 @@ export class CmmcLevelDrilldownComponent implements OnInit {
               // this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
             }            
           });    
-          console.log(this.cmmcModel)
           window.dispatchEvent(new Event('resize'));
         }        
         this.initialized = true;
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => {
+        this.dataError = true;
+        console.log('Site Summary report load Error: ' + (<Error>error).message)
+      }
     ),(finish) => {
     };
   }
   generateStatsByLevel(data){
-    let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData.sort((a,b) => (a.ModelLevel < b.ModelLevel) ? 1: -1)
+    let outputData = data?.filter(obj => obj.ModelLevel != "Aggregate")
+    outputData?.sort((a,b) => (a.ModelLevel < b.ModelLevel) ? 1: -1)
     let totalAnsweredCount = 0
     let totalUnansweredCount = 0
-    outputData.forEach(element => {
+    outputData?.forEach(element => {
       totalUnansweredCount += element.questionUnAnswered;
       totalAnsweredCount += element.questionAnswered;
       element["totalUnansweredCount"] = totalUnansweredCount;
