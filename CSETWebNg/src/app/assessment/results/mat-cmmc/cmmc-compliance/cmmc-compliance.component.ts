@@ -36,6 +36,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 export class CmmcComplianceComponent implements OnInit {
 
   initialized = false;
+  dataError = false;
   response;
   cmmcModel;
   totalCMMCQuestions;
@@ -45,7 +46,7 @@ export class CmmcComplianceComponent implements OnInit {
   
   whiteText= "rgba(255,255,255,1)"
   blueText= "rgba(31,82,132,1)"
-  
+
   stackedChartHeaderLabels = {
      1: "Basic Cyber Hygiene", 
      2: "Intermediate Cyber Hygiene", 
@@ -77,12 +78,14 @@ export class CmmcComplianceComponent implements OnInit {
               this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
             }            
           });    
-          console.log(this.cmmcModel)
           window.dispatchEvent(new Event('resize'));
         }        
         this.initialized = true;
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => {
+        this.dataError = true;
+        console.log('Site Summary report load Error: ' + (<Error>error).message)
+      }
     ),(finish) => {
     };
   }
