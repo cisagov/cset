@@ -83,7 +83,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.hasPath(localStorage.getItem("returnPath"));
       }
     }
-
+    console.log("load");
     this.setupShortCutKeys();
   }
 

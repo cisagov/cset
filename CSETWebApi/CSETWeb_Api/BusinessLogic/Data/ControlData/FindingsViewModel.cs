@@ -32,6 +32,13 @@ namespace CSETWeb_Api.Data.ControlData
             this.assessment_id = assessment_id; 
             this.answer_id = answer_id;
             this.assessmentContext = assessmentContext;
+            TinyMapper.Bind<FINDING, Finding>();
+            TinyMapper.Bind<FINDING_CONTACT, FindingContact>();
+            TinyMapper.Bind<IMPORTANCE, Importance>();
+            TinyMapper.Bind<ASSESSMENT_CONTACTS, FindingContact>();
+            TinyMapper.Bind<Finding, FindingContact>();
+            TinyMapper.Bind<Finding, Finding>();
+            TinyMapper.Bind<FindingContact, FindingContact>();
         }
 
         public void DeleteFinding(Finding finding)
@@ -72,11 +79,11 @@ namespace CSETWeb_Api.Data.ControlData
                         Value = Constants.SAL_LOW
                     };
                 else
-                    webF.Importance = TinyMapper.Map<Importance>(f.Importance_);
+                    webF.Importance = TinyMapper.Map<IMPORTANCE,Importance>(f.Importance_);
 
                 foreach(FINDING_CONTACT fc in f.FINDING_CONTACT)
                 {
-                    FindingContact webFc = TinyMapper.Map<FindingContact>(fc);
+                    FindingContact webFc = TinyMapper.Map<FINDING_CONTACT, FindingContact>(fc);
                     
                     webFc.Selected = (fc != null);
                     webF.Finding_Contacts.Add(webFc);

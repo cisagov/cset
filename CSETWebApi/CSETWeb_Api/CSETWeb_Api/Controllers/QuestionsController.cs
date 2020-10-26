@@ -266,12 +266,13 @@ namespace CSETWeb_Api.Controllers
         public List<Importance> GetImportance()
         {
             int assessmentId = Auth.AssessmentForUser();
+            TinyMapper.Bind<IMPORTANCE, Importance>();
             List<Importance> rlist = new List<Importance>();
             using (CSET_Context context = new CSET_Context())
             {
                 foreach (IMPORTANCE import in context.IMPORTANCE)
                 {
-                    rlist.Add(TinyMapper.Map<Importance>(import));
+                    rlist.Add(TinyMapper.Map<IMPORTANCE,Importance>(import));
                 }
             }
             return rlist;

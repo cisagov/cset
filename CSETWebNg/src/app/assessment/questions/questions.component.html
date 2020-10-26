@@ -94,10 +94,6 @@
     </span>
   </div>
 
-
-  <div style="display: flex; justify-content: space-between;">
-    <button class="btn btn-primary" (click)="navSvc.navBack('questions')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext('questions')">Next</button>
-  </div>
+  <app-nav-back-next [page]="'questions'"></app-nav-back-next>
 
 </div>

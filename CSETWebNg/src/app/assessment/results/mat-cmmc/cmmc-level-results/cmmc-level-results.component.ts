@@ -28,8 +28,6 @@ export class CmmcLevelResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Site Summary Report - CSET");
-
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;

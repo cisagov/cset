@@ -33,7 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
   public analyticsUrl: string;
 
   constructor(private router: Router, private configSvc:ConfigService) {
-    this.analyticsUrl = configSvc.analyticsUrl;
+    this.analyticsUrl = 'http://localhost:2000';
   }
 
   intercept(
