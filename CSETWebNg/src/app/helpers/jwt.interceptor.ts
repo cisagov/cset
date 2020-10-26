@@ -26,13 +26,12 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '../../../node_modules/@angular/router';
-import { ConfigService } from '../services/config.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   public analyticsUrl: string;
 
-  constructor(private router: Router, private configSvc:ConfigService) {
+  constructor(private router: Router) {
     this.analyticsUrl = 'http://localhost:2000';
   }
 
