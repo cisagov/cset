@@ -81,7 +81,6 @@ export class MaturityService {
   
   public getResultsData(reportId: string) {      
     if(!this.cmmcData) {
-      console.log("RERUNNING GET")
       this.cmmcData =  this.http.get(this.configSvc.apiUrl+ 'reports/' + reportId);
     }
     return this.cmmcData
