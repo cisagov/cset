@@ -108,6 +108,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1
         [Required]
         public Guid Assessment_GUID { get; set; }
 
+        public String Diagram_Markup { get; set; }
+
+        public String Diagram_Image { get; set; }
+
         [StringLength(100)]
         public string CreditUnionName { get; set; }
 
