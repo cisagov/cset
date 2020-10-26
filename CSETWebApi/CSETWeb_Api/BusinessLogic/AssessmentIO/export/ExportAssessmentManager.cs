@@ -45,42 +45,46 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
         {
             TinyMapper.Bind<ADDRESS, jADDRESS>();
             TinyMapper.Bind<ANSWER, jANSWER>();
-            TinyMapper.Bind<ASSESSMENT_CONTACTS, jASSESSMENT_CONTACTS>();
-            TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
-            TinyMapper.Bind<ASSESSMENT_IRP, jASSESSMENT_IRP>();
-            TinyMapper.Bind<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>();
-            TinyMapper.Bind<ASSESSMENT_SELECTED_LEVELS, jASSESSMENT_SELECTED_LEVELS>();
-            TinyMapper.Bind<ASSESSMENT_SELECTED_LEVELS, jASSESSMENT_SELECTED_LEVELS>();
             TinyMapper.Bind<ASSESSMENTS, jASSESSMENTS>();
             TinyMapper.Bind<ASSESSMENTS_REQUIRED_DOCUMENTATION, jASSESSMENTS_REQUIRED_DOCUMENTATION>();
+            TinyMapper.Bind<ASSESSMENTS_REQUIRED_DOCUMENTATION, jASSESSMENTS_REQUIRED_DOCUMENTATION>();
+            TinyMapper.Bind<ASSESSMENT_CONTACTS, jASSESSMENT_CONTACTS>();
+            TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
+            TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
+            TinyMapper.Bind<ASSESSMENT_IRP, jASSESSMENT_IRP>();
+            TinyMapper.Bind<ASSESSMENT_IRP, jASSESSMENT_IRP>();
+            TinyMapper.Bind<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>();
+            TinyMapper.Bind<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>();
+            TinyMapper.Bind<ASSESSMENT_SELECTED_LEVELS, jASSESSMENT_SELECTED_LEVELS>();
             TinyMapper.Bind<AVAILABLE_STANDARDS, jAVAILABLE_STANDARDS>();
-            TinyMapper.Bind<AVAILABLE_STANDARDS, jAVAILABLE_STANDARDS>();
-            TinyMapper.Bind<CNSS_CIA_JUSTIFICATIONS, jCNSS_CIA_JUSTIFICATIONS>();
             TinyMapper.Bind<CNSS_CIA_JUSTIFICATIONS, jCNSS_CIA_JUSTIFICATIONS>();
             TinyMapper.Bind<CSET_VERSION, jCSET_VERSION>();
             TinyMapper.Bind<CUSTOM_BASE_STANDARDS, jCUSTOM_BASE_STANDARDS>();
-            TinyMapper.Bind<CUSTOM_QUESTIONAIRE_QUESTIONS, jCUSTOM_QUESTIONAIRE_QUESTIONS>();
             TinyMapper.Bind<CUSTOM_QUESTIONAIRES, jCUSTOM_QUESTIONAIRES>();
-            TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
+            TinyMapper.Bind<CUSTOM_QUESTIONAIRE_QUESTIONS, jCUSTOM_QUESTIONAIRE_QUESTIONS>();
             TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
             TinyMapper.Bind<DIAGRAM_CONTAINER, jDIAGRAM_CONTAINER>();
+            TinyMapper.Bind<DIAGRAM_CONTAINER, jDIAGRAM_CONTAINER>();
+            TinyMapper.Bind<DOCUMENT_ANSWERS, jDOCUMENT_ANSWERS>();
             TinyMapper.Bind<DOCUMENT_FILE, jDOCUMENT_FILE>();
             TinyMapper.Bind<FINANCIAL_ASSESSMENT_VALUES, jFINANCIAL_ASSESSMENT_VALUES>();
+            TinyMapper.Bind<FINANCIAL_ASSESSMENT_VALUES, jFINANCIAL_ASSESSMENT_VALUES>();
             TinyMapper.Bind<FINANCIAL_HOURS, jFINANCIAL_HOURS>();
-            TinyMapper.Bind<FINDING_CONTACT, jFINDING_CONTACT>();
+            TinyMapper.Bind<FINANCIAL_HOURS, jFINANCIAL_HOURS>();
+            TinyMapper.Bind<FINDING, jFINDING>();
             TinyMapper.Bind<FINDING_CONTACT, jFINDING_CONTACT>();
             TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
             TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
+            TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
             TinyMapper.Bind<INFORMATION, jINFORMATION>();
-            TinyMapper.Bind<jUSER_DETAIL_INFORMATION, jUSER_DETAIL_INFORMATION>();
-            TinyMapper.Bind<NIST_SAL_INFO_TYPES, jNIST_SAL_INFO_TYPES>();
             TinyMapper.Bind<NIST_SAL_INFO_TYPES, jNIST_SAL_INFO_TYPES>();
             TinyMapper.Bind<NIST_SAL_QUESTION_ANSWERS, jNIST_SAL_QUESTION_ANSWERS>();
             TinyMapper.Bind<PARAMETER_ASSESSMENT, jPARAMETER_ASSESSMENT>();
             TinyMapper.Bind<PARAMETER_VALUES, jPARAMETER_VALUES>();
             TinyMapper.Bind<STANDARD_SELECTION, jSTANDARD_SELECTION>();
             TinyMapper.Bind<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>();
-            TinyMapper.Bind<FINDING, jFINDING>();
+            TinyMapper.Bind<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>();
+            TinyMapper.Bind<USER_DETAIL_INFORMATION, jUSER_DETAIL_INFORMATION>();
             TinyMapper.Bind<NIST_SAL_QUESTIONS, jNIST_SAL_QUESTION_ANSWERS>(config =>
             {
                 config.Ignore(x => x.Question_Text);
@@ -98,10 +102,12 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                 assessmentDate = item.Assessment_Date;
             }
 
+
             foreach (var item in context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<ASSESSMENT_CONTACTS,jASSESSMENT_CONTACTS>(item));
             }
+
 
             foreach (var item in context.ANSWER
                 .Include(x => x.FINDING)
@@ -118,6 +124,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                     }
                 }
             }
+
 
             foreach (var item in context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId))
             {
