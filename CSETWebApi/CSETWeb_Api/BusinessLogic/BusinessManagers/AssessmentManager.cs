@@ -185,6 +185,9 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
+                    assessment.DiagramMarkup = result.aa.Diagram_Markup;
+                    assessment.DiagramImage = result.aa.Diagram_Image;
+
                     assessment.UseStandard = result.aa.UseStandard;
                     assessment.UseDiagram = result.aa.UseDiagram;
 
@@ -206,6 +209,7 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                     assessment.CreditUnion = result.aa.CreditUnionName;
                     assessment.Assets = result.aa.Assets;
+
 
                     // Fields located on the Overview page
                     assessment.ExecutiveSummary = result.ii.Executive_Summary;
@@ -305,6 +309,9 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
                 dbAssessment.Assets = assessment.Assets;
                 dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
+
+                dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
+                dbAssessment.Diagram_Image = assessment.DiagramImage;
                 dbAssessment.AnalyzeDiagram = false;
 
                 db.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
