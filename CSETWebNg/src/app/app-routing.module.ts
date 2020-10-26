@@ -111,8 +111,6 @@ const appRoutes: Routes = [
       { path: '', component: ReportTestComponent }
     ]
   },
-
-
   {
     path: 'home',
     component: LayoutMainComponent,
@@ -292,7 +290,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes,{enableTracing: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
