@@ -186,19 +186,24 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * Calculates the percentage of answered questions for this subcategory
+   * Calculates the percentage of answered questions for this subcategory.
+   * The percentage for maturity questions is calculated using questions
+   * that are within the assessment's target level.  
    */
   refreshPercentAnswered() {
     let answeredCount = 0;
     let totalCount = 0;
 
     this.mySubCategory.Questions.forEach(q => {
-      totalCount++;
-      if (q.Answer && q.Answer !== "U") {
-        answeredCount++;
+      if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityTargetLevel) {
+        totalCount++;
+        if (q.Answer && q.Answer !== "U") {
+          answeredCount++;
+        }
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
+    console.log(this.percentAnswered);
   }
 
   /**

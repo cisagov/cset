@@ -4550,6 +4550,7 @@
     <Content Include="Documents\CMMC_ModelMain 1.02.pdf" />
     <Content Include="Documents\2020-21123.pdf" />
     <Content Include="Documents\NIST SP 800-171 Assessment Methodology Version 1.2.1  6.24.2020.pdf" />
+    <Content Include="Documents\Federal Register 2020-21123.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
