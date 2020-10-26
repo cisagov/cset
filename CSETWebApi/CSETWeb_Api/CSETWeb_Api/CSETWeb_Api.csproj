@@ -27,7 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.9</TypeScriptToolsVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -3430,6 +3430,7 @@
     <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_screen.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_custom.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom.png" />
+<<<<<<< HEAD
     <Content Include="Documents\htmlhelp\drex_awwa_custom_10.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom_11.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom_2.png" />
@@ -3440,6 +3441,8 @@
     <Content Include="Documents\htmlhelp\drex_awwa_custom_7.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom_8.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom_9.png" />
+=======
+>>>>>>> 1bddfdc789fca582a4e9a8a4a00d5e8c0718b47d
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_3.png" />
