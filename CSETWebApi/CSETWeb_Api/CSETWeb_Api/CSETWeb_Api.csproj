@@ -3430,6 +3430,16 @@
     <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_screen.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_custom.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_10.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_11.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_7.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_8.png" />
+    <Content Include="Documents\htmlhelp\drex_awwa_custom_9.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_3.png" />
