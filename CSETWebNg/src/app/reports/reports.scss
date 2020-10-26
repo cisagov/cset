@@ -490,7 +490,12 @@
   /**
   *Maturity Model graph Styleing
   */
-  
+  .step-graph-chart {    
+    transform: translate(-38px, -216px);
+    width: 100%;
+    margin-bottom: -10em;
+  }
+
   .piechart { 
     background-image: conic-gradient( 
         gray 360deg)
