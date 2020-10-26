@@ -185,6 +185,9 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
+                    assessment.DiagramMarkup = result.aa.Diagram_Markup;
+                    assessment.DiagramImage = result.aa.Diagram_Image;
+
                     assessment.UseStandard = result.aa.UseStandard;
                     assessment.UseDiagram = result.aa.UseDiagram;
 
@@ -206,6 +209,7 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                     assessment.CreditUnion = result.aa.CreditUnionName;
                     assessment.Assets = result.aa.Assets;
+
 
                     // Fields located on the Overview page
                     assessment.ExecutiveSummary = result.ii.Executive_Summary;
@@ -259,13 +263,10 @@ namespace CSETWeb_Api.BusinessManagers
 
             if (db.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
             {
-                assessment.UseDiagram = true;
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);                 
+                assessment.UseDiagram = dm.HasDiagram(a.Id); 
             }
-
-            if (db.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
-            {
-                assessment.UseMaturity = true;
-            }
+            
         }
 
 
@@ -302,12 +303,15 @@ namespace CSETWeb_Api.BusinessManagers
 
                 dbAssessment.UseDiagram = assessment.UseDiagram;
                 dbAssessment.UseMaturity = assessment.UseMaturity;
-                dbAssessment.UseStandard = assessment.UseStandard;
+                dbAssessment.UseStandard = assessment.UseStandard;                
 
                 dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5, '0');
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
                 dbAssessment.Assets = assessment.Assets;
                 dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
+
+                dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
+                dbAssessment.Diagram_Image = assessment.DiagramImage;
                 dbAssessment.AnalyzeDiagram = false;
 
                 db.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
@@ -339,6 +343,17 @@ namespace CSETWeb_Api.BusinessManagers
                 db.INFORMATION.AddOrUpdate(dbInformation, x => x.Id);
                 db.SaveChanges();
 
+                if (assessment.UseMaturity)
+                {
+                    SalManager salManager = new SalManager();
+                    salManager.SetDefaultSAL_IfNotSet(assessmentId);
+                    //this is at the bottom deliberatly because 
+                    //we want everything else to succeed first
+                    MaturityManager mm = new MaturityManager();
+                    mm.PersistSelectedMaturityModel(assessmentId, "CMMC");
+                    if (mm.GetMaturityLevel(assessmentId) == 0)
+                        mm.PersistMaturityLevel(assessmentId, 1);
+                }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
 

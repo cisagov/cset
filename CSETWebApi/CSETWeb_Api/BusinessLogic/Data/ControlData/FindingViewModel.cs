@@ -66,7 +66,8 @@ namespace CSETWeb_Api.Data.ControlData
                 this.dbFinding = finding;
                 context.FINDING.Add(finding);
             }
-
+            
+            TinyMapper.Bind<Finding, FINDING>();
             TinyMapper.Map(f, this.dbFinding);
 
             int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
