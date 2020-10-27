@@ -18,11 +18,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         public string ExecuteUpgrade(string json)
         {
-
-            //  Do the good stuff here
-
-
-
             return json;
         }
 
