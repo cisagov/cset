@@ -43,10 +43,6 @@
                     sessionStorage.setItem('isAPI_together_With_Web', false);
                     break;
             }
-            console.log('cset api/assets/config:', {
-                appAPIURL: sessionStorage.getItem('appAPIURL'),
-                isAPI_together_With_Web: sessionStorage.getItem('isAPI_together_With_Web')
-            });
         };
         xhttp.onerror = function () {
             alert('returned error');
@@ -67,8 +63,6 @@
         if (typeof (Storage) !== "undefined") {
             var redirectid = getParameterByName("assessment_id");
             var returnPath = getParameterByName("returnPath");
-            // console.log("redirectid=" + redirectid);
-            // console.log("returnPath=" + returnPath);
             if (redirectid != null)
                 localStorage.setItem("redirectid", redirectid);
             if (returnPath != null)
