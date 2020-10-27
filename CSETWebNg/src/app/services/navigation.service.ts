@@ -512,7 +512,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
     {
-      displayText: 'Maturity Model Selection',
+      displayText: 'Maturity Model',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment.UseMaturity }
