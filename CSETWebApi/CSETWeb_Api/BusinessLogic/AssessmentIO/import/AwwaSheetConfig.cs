@@ -121,9 +121,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             List<AnswerMap> map = new List<AnswerMap>();
             map.Add(new AnswerMap() { AwwaAnswer = "Fully Implemented and Maintained", CsetAnswer = "Y", CsetComment = "" });
-            map.Add(new AnswerMap() { AwwaAnswer = "Partially Implemented", CsetAnswer = "Y", CsetComment = "" });
-            map.Add(new AnswerMap() { AwwaAnswer = "Planned and Not Implemented", CsetAnswer = "N", CsetComment = "" });
-            map.Add(new AnswerMap() { AwwaAnswer = "Not Planned and/or Not Implemented - Risk Accepted", CsetAnswer = "N", CsetComment = "" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Partially Implemented", CsetAnswer = "N", CsetComment = "" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Planned and Not Implemented", CsetAnswer = "N", CsetComment = "Planned Only" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Not Planned and/or Not Implemented - Risk Accepted", CsetAnswer = "NA", CsetComment = "Risk Accepted" });
 
             // map null values from spreadsheet to Unanswered
             map.Add(new AnswerMap()
