@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
-    internal class CSET901_to_92Upgrade : ICSETJSONFileUpgrade
+    internal class CSET_09_0_1_to_09_2_Upgrade : ICSETJSONFileUpgrade
     {
         /// <summary>
         /// this is the string we will be upgrading to
