@@ -844,6 +844,7 @@
 }
 
 .pyramidLevel{
+  position: relative;
   display: flex;
   justify-content: center;
   background: var(--blue-gradient-light);
