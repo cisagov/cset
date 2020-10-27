@@ -19,6 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1
         public List<jCSET_VERSION> jCSET_VERSION { get; set; }
         public List<jASSESSMENT_SELECTED_LEVELS> jASSESSMENT_SELECTED_LEVELS { get; set; }
         public List<jAVAILABLE_STANDARDS> jAVAILABLE_STANDARDS { get; set; }
+        
         public List<jCNSS_CIA_JUSTIFICATIONS> jCNSS_CIA_JUSTIFICATIONS { get; set; }
         public List<jASSESSMENTS> jASSESSMENTS { get; set; }
         public List<jCUSTOM_QUESTIONAIRES> jCUSTOM_QUESTIONAIRES { get; set; }
@@ -70,6 +71,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1
             this.jASSESSMENT_SELECTED_LEVELS = new List<jASSESSMENT_SELECTED_LEVELS>();
             this.jASSESSMENT_DIAGRAM_COMPONENTS = new List<jASSESSMENT_DIAGRAM_COMPONENTS>();
             this.jAVAILABLE_STANDARDS = new List<jAVAILABLE_STANDARDS>();
+            this.jAVAILABLE_MATURITY_MODELS = new List<jAVAILABLE_MATURITY_MODELS>();
             this.jCNSS_CIA_JUSTIFICATIONS = new List<jCNSS_CIA_JUSTIFICATIONS>();
             this.jCSET_VERSION = new List<jCSET_VERSION>();
             this.jCUSTOM_BASE_STANDARDS = new List<jCUSTOM_BASE_STANDARDS>();
