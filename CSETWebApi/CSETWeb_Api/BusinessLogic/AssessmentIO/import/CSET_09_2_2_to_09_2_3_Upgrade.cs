@@ -1,23 +1,24 @@
-﻿using CSETWeb_Api.BusinessLogic.ImportAssessment;
+﻿using System;
+using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
-    internal class CSET90_to_901Upgrade : ICSETJSONFileUpgrade
+    internal class CSET_09_2_2_to_09_2_3_Upgrade : ICSETJSONFileUpgrade
     {
-
         /// <summary>
         /// this is the string we will be upgrading to
         /// </summary>
-        static string versionString = "9.0.1";
+        static string versionString = "9.2.3";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public string ExecuteUpgrade(string json)
         {
-            JObject oAssessment = JObject.Parse(json);
-
-            // do the manipulations here
-
-            return oAssessment.ToString();
+            return json;
         }
 
         /// <summary>
