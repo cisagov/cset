@@ -45,10 +45,7 @@ export class ReportService {
     /**
      * Calls the GetReport API method and returns an Observable.
      */
-    public getReport(reportId: string) {
-        console.log(this.apiUrl)
-        console.log(reportId)
-        
+    public getReport(reportId: string) {        
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
