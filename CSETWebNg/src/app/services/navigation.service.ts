@@ -530,17 +530,17 @@ export class NavigationService {
     {
       displayText: 'ACET Required Documents', pageId: 'required', level: 1,
       path: 'assessment/{:id}/prepare/required',
-      condition: () => { return this.acetSelected }
+      condition: () => { return this.assessSvc.assessment.UseStandard && this.acetSelected }
     },
     {
       displayText: 'ACET IRP', pageId: 'irp', level: 1,
       path: 'assessment/{:id}/prepare/irp',
-      condition: () => { return this.acetSelected }
+      condition: () => { return this.assessSvc.assessment.UseStandard && this.acetSelected }
     },
     {
       displayText: 'ACET IRP Summary', pageId: 'irp-summary', level: 1,
       path: 'assessment/{:id}/prepare/irp-summary',
-      condition: () => { return this.acetSelected }
+      condition: () => { return this.assessSvc.assessment.UseStandard && this.acetSelected }
     },
 
     {
@@ -731,15 +731,15 @@ export class NavigationService {
     // ACET results pages
     {
       displayText: 'ACET Maturity Results', pageId: 'maturity', level: 1, path: 'assessment/{:id}/results/maturity',
-      condition: () => { this.acetSelected }
+      condition: () => { this.assessSvc.assessment.UseStandard && this.acetSelected }
     },
     {
       displayText: 'ACET Admin Results', pageId: 'admin', level: 1, path: 'assessment/{:id}/results/admin',
-      condition: () => { this.acetSelected }
+      condition: () => { this.assessSvc.assessment.UseStandard && this.acetSelected }
     },
     {
       displayText: 'ACET Dashboard', pageId: 'acetDashboard', level: 1, path: 'assessment/{:id}/results/acetDashboard',
-      condition: () => { this.acetSelected }
+      condition: () => { this.assessSvc.assessment.UseStandard && this.acetSelected }
     },
 
     { displayText: 'Executive Summary, Overview & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
