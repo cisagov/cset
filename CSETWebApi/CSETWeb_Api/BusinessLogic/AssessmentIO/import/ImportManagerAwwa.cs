@@ -7,17 +7,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using System.IO;
-using System.Web.UI.WebControls;
-using CSETWeb_Api.Models;
-using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
+using CSETWeb_Api.BusinessManagers;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
@@ -71,16 +67,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     if (!string.IsNullOrEmpty(controlID))
                     {
                         var awwaAnswer = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.statusColRef, i));
-                        var mappedAnswer = answerMap.Where(x => x.AwwaAnswer == awwaAnswer).FirstOrDefault();
-
-                        var a = new AwwaControlAnswer()
+                        if (awwaAnswer != null)
                         {
-                            ControlID = controlID,
-                            Answer = awwaAnswer,
-                            CsetAnswer = mappedAnswer.CsetAnswer,
-                            CsetComment = mappedAnswer.CsetComment
-                        };
-                        mappedAnswers.Add(a);
+                            awwaAnswer = awwaAnswer.Trim().ToLower();
+
+                            var mappedAnswer = answerMap.Where(x => x.AwwaAnswer.ToLower() == awwaAnswer).FirstOrDefault();
+
+                            if (mappedAnswer != null)
+                            {
+                                var a = new AwwaControlAnswer()
+                                {
+                                    ControlID = controlID,
+                                    Answer = awwaAnswer,
+                                    CsetAnswer = mappedAnswer.CsetAnswer,
+                                    CsetComment = mappedAnswer.CsetComment
+                                };
+                                mappedAnswers.Add(a);
+                            }
+                        }
                     }
                 }
 
@@ -181,13 +185,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
-      
-
-      
-
-
-     
-
 
         /// <summary>
         /// Gets a cell's value given the worksheet name and a cell reference
@@ -271,9 +268,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             return value;
         }
-
-
-     
 
 
         /// <summary>
