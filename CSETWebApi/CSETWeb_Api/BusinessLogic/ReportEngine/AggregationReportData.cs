@@ -21,5 +21,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string AggregationName { get; set; }
         public List<BasicReportData.OverallSALTable> SalList { get; set; }
         public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
+        public AggInformation Information { get; set; }
     }
 }
