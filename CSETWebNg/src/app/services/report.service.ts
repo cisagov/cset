@@ -45,8 +45,7 @@ export class ReportService {
     /**
      * Calls the GetReport API method and returns an Observable.
      */
-    public getReport(reportId: string) {
-        
+    public getReport(reportId: string) {        
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
