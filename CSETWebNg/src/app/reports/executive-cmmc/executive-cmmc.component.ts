@@ -77,7 +77,6 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
 
     this.reportSvc.getReport('executivecmmc').subscribe(
       (r: any) => {
-        console.log(r)
         this.response = r;
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
