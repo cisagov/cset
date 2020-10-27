@@ -434,8 +434,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1
     }
 
     public class jAVAILABLE_MATURITY_MODELS
-    {
-
+    {   
+        public int Assessment_Id { get; set; }
+        public bool Selected { get; set; }        
+        public int model_id { get; set; }
     }
 
     public class jNIST_SAL_INFO_TYPES
