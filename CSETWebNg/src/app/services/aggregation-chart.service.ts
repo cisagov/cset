@@ -225,12 +225,12 @@ export class AggregationChartService {
                   const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
                   const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
                   const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                  let value = '';
+                  let value = 0.00;
                   if (!!arc) {
-                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index][0];
+                    value = <number>chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   }
                   return {
-                    text: label + ' : ' + Number.parseFloat(value).toFixed(2) + '%',
+                    text: label + ' : ' + value.toFixed(2) + '%',
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
