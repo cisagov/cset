@@ -239,6 +239,13 @@ namespace CSETWeb_Api.BusinessManagers
 
             answerIds.AddRange(componentAnswers.Select(x => x.Answer_Id).ToList());
 
+            var maturityAnswers = from ans in db.Answer_Maturity
+                                  join a in db.ASSESSMENTS on ans.Assessment_Id equals a.Assessment_Id 
+                                  where ans.Assessment_Id == assessmentId && a.UseMaturity
+                                  select ans;
+
+            answerIds.AddRange(maturityAnswers.Select(x => x.Answer_Id).ToList());
+
 
             List<int> docIDs = db.DOCUMENT_ANSWERS
                 .Where(x => answerIds.Contains(x.Answer_Id))
