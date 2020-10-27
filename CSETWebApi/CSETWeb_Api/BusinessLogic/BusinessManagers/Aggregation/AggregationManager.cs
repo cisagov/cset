@@ -125,7 +125,8 @@ namespace CSETWeb_Api.BusinessLogic
                     AggregationDate = agg.Aggregation_Date,
                     AggregationId = agg.AggregationID,
                     AggregationName = agg.Aggregation_Name,
-                    Mode = agg.Aggregation_Mode
+                    Mode = agg.Aggregation_Mode,
+                    AssessorName = agg.Assessor_Name
                 };
             }
         }
