@@ -40,22 +40,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(stream, false))
             {
                 // get API page content as a DataTable and pull reference values from it
-                var sheetAPI = GetWorksheetPartByName(doc, "API");
-                var dtAPI = WorksheetToDatatable(doc, sheetAPI);
-                var targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
-                var cidColRef = dtAPI.Rows[3]["B"];
-                var statusColRef = dtAPI.Rows[4]["B"];
-
 
                 // Not sure how to use this number to find the right worksheet using OpenXML...
                 // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;
                 // ... so for now, using sheet name ...
-                string targetSheetName = "2. RRA-Control Output";
-                var targetSheetPart = GetWorksheetPartByName(doc, targetSheetName);
-
-                var answerMap = BuildAnswerMap(dtAPI);
-
-
+                AwwaSheetConfig config = new AwwaSheetConfig(doc);
+                var targetSheetPart = config.GetWorksheetPartByName(doc, config.targetSheetName);
+                var answerMap = config.getAnswerMap();
                 //find target sheet number of rows
                 IEnumerable<SheetData> sheetData = targetSheetPart.Worksheet.Elements<SheetData>();
                 int maxRow = 0;
@@ -64,15 +55,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     IEnumerable<Row> row = sd.Elements<Row>(); // Get the row IEnumerator
                     maxRow = row.Count();
                 }
-
-
-
                 List<AwwaControlAnswer> mappedAnswers = new List<AwwaControlAnswer>();
 
 
-                for (var i = targetSheetStartRow; i < maxRow; i++)
+                for (var i = config.targetSheetStartRow; i < maxRow; i++)
                 {
-                    var controlID = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", cidColRef, i));
+                    var controltmpId = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.cidColRef, i));
+                    var controlID = config.getControlId(controltmpId);
 
                     if (string.IsNullOrEmpty(controlID))
                     {
@@ -81,7 +70,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     if (!string.IsNullOrEmpty(controlID))
                     {
-                        var awwaAnswer = GetCellValue(doc, targetSheetName, string.Format("{0}{1}", statusColRef, i));
+                        var awwaAnswer = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.statusColRef, i));
                         var mappedAnswer = answerMap.Where(x => x.AwwaAnswer == awwaAnswer).FirstOrDefault();
 
                         var a = new AwwaControlAnswer()
@@ -192,66 +181,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
+      
+
+      
 
 
-        /// <summary>
-        /// Builds a collection of AWWA answers mapped to CSET answers and comments.
-        /// </summary>
-        /// <param name="dtAPI"></param>
-        /// <returns></returns>
-        private List<AnswerMap> BuildAnswerMap(DataTable dtAPI)
-        {
-            List<AnswerMap> map = new List<AnswerMap>();
-
-            for (int i = 1; i < dtAPI.Rows.Count; i++)
-            {
-                if (!string.IsNullOrEmpty(dtAPI.Rows[i]["D"].ToString()))
-                {
-                    map.Add(new AnswerMap()
-                    {
-                        AwwaAnswer = dtAPI.Rows[i]["C"].ToString(),
-                        CsetAnswer = dtAPI.Rows[i]["D"].ToString(),
-                        CsetComment = dtAPI.Rows[i]["E"].ToString()
-                    });
-                }
-            }
-
-            // map null values from spreadsheet to Unanswered
-            map.Add(new AnswerMap()
-            {
-                AwwaAnswer = null,
-                CsetAnswer = "U",
-                CsetComment = ""
-            });
-
-            return map;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="document"></param>
-        /// <param name="sheetName"></param>
-        /// <returns></returns>
-        private WorksheetPart GetWorksheetPartByName(SpreadsheetDocument document, string sheetName)
-        {
-            IEnumerable<Sheet> sheets =
-               document.WorkbookPart.Workbook.GetFirstChild<Sheets>().
-               Elements<Sheet>().Where(s => s.Name == sheetName);
-
-            if (sheets?.Count() == 0)
-            {
-                // The specified worksheet does not exist.
-                return null;
-            }
-
-            string relationshipId = sheets?.First().Id.Value;
-
-            WorksheetPart worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(relationshipId);
-
-            return worksheetPart;
-        }
+     
 
 
         /// <summary>
@@ -260,7 +195,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         private string GetCellValue(SpreadsheetDocument doc, string wsName, string cellRef)
         {
             Sheet sheet = doc.WorkbookPart.Workbook.Descendants<Sheet>().
-      Where(s => s.Name == wsName).FirstOrDefault();
+                Where(s => s.Name == wsName).FirstOrDefault();
 
             if (sheet == null)
             {
@@ -338,52 +273,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         }
 
 
-        /// <summary>
-        /// Converts a worksheet to a simple DataTable.  
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="wsp"></param>
-        /// <returns></returns>
-        protected DataTable WorksheetToDatatable(SpreadsheetDocument doc, WorksheetPart wsp)
-        {
-            //Read the first Sheet from Excel file.
-            // Sheet sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
-
-            //Get the Worksheet instance.
-            //Worksheet worksheet = (doc.WorkbookPart.GetPartById(sheet.Id.Value) as WorksheetPart).Worksheet;
-
-            Worksheet worksheet = wsp.Worksheet;
-
-            //Fetch all the rows present in the Worksheet.
-            IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
-
-            //Create a new DataTable.
-            DataTable dt = new DataTable();
-
-
-
-            //Loop through the Worksheet rows.
-            foreach (Row row in rows)
-            {
-                var newRow = dt.Rows.Add();
-                int colIndex = 0;
-                for (int j = 0; j < row.Descendants<Cell>().Count(); j++)
-                {
-                    var cell = row.Descendants<Cell>().ElementAt(j);
-
-                    // lazily add column on the fly, if necessary
-                    if (dt.Columns.Count < j + 1)
-                    {
-                        dt.Columns.Add(ColumnIndexToColumnLetter(j + 1));
-                    }
-
-                    newRow[colIndex] = GetValue(doc, cell);
-                    colIndex++;
-                }
-            }
-
-            return dt;
-        }
+     
 
 
         /// <summary>
@@ -392,7 +282,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// </summary>
         /// <param name="colIndex"></param>
         /// <returns></returns>
-        static string ColumnIndexToColumnLetter(int colIndex)
+        public static string ColumnIndexToColumnLetter(int colIndex)
         {
             int div = colIndex;
             string colLetter = String.Empty;
@@ -408,7 +298,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         }
 
 
-        private string GetValue(SpreadsheetDocument doc, Cell cell)
+        public static string GetValue(SpreadsheetDocument doc, Cell cell)
         {
             string value = cell.CellValue?.InnerText;
             if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
@@ -423,11 +313,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
     public class AwwaControlAnswer
     {
         public string ControlID { get; set; }
-
         public string Answer { get; set; }
-
         public string CsetAnswer { get; set; }
-
         public string CsetComment { get; set; }
     }
 
