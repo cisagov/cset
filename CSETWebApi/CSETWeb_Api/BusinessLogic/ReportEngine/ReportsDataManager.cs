@@ -725,6 +725,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     where amm.Assessment_Id == assessmentID 
                     && ans.Assessment_Id == assessmentID
                     && ans.Is_Maturity == true
+                    && asl.Level_Name == "Maturity_Level"
                     select new { amm, mm, mq, ans, asl }
                     ).ToList();
                 var models = query.Select(x => new { x.mm, x.asl }).Distinct();

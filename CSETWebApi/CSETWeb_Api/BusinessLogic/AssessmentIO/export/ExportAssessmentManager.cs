@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -89,6 +89,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
             {
                 config.Ignore(x => x.Question_Text);
             });
+            TinyMapper.Bind<AVAILABLE_MATURITY_MODELS, jAVAILABLE_MATURITY_MODELS>();
         }
 
         private UploadAssessmentModel CopyForExport(int assessmentId)
@@ -266,7 +267,10 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
             {
                 model.jDIAGRAM_CONTAINER.Add(TinyMapper.Map<DIAGRAM_CONTAINER,jDIAGRAM_CONTAINER>(item));
             }
-
+            foreach (var item in context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jAVAILABLE_MATURITY_MODELS.Add(TinyMapper.Map<AVAILABLE_MATURITY_MODELS,jAVAILABLE_MATURITY_MODELS>(item));
+            }
             return model;
         }
 
