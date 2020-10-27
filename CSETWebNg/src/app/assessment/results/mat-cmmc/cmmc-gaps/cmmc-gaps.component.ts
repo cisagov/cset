@@ -87,6 +87,7 @@ export class CmmcGapsComponent implements OnInit {
       },
       error => {
         this.dataError = true;
+        this.initialized = true;
         console.log('Site Summary report load Error: ' + (<Error>error).message)
       }
     ),(finish) => {
