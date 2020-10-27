@@ -203,7 +203,6 @@ export class QuestionBlockComponent implements OnInit {
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
-    console.log(this.percentAnswered);
   }
 
   /**
