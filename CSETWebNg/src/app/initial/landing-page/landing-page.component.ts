@@ -78,8 +78,13 @@ export class LandingPageComponent implements OnInit {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
     this.titleSvc.setTitle('CSET');
-    sessionStorage.removeItem('tree');
-    this.navSvc.clearTree(this.navSvc.getMagic());
+    if (localStorage.getItem("returnPath")) {      
+    }
+    else{
+      sessionStorage.removeItem('tree');
+      this.navSvc.clearTree(this.navSvc.getMagic());
+    }
+    
     this.checkPasswordReset();
   }
 
