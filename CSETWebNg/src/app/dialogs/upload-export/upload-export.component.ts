@@ -118,6 +118,7 @@ export class UploadExportComponent implements OnInit {
     // Hide the cancel-button
     this.showCancelButton = false;
     // When all progress-observables are completed...
+    
     forkJoin(allProgressObservables).subscribe(end => {
       // ... the dialog can be closed again...
       this.canBeClosed = true;
