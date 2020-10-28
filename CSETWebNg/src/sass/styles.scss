@@ -686,8 +686,8 @@ table.td-align-top td {
   color: $primary-color;
 }
 
-.btn-level:not(.disabled).active,
-.btn-level:not(.disabled):active,
+.btn-level:not(.disabled).active, 
+.btn-level:not(.disabled).activeLevel,
 .show > .btn-level.dropdown-toggle {
   background-color: $secondary-color;
   color: $white;

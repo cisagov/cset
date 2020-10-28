@@ -91,7 +91,9 @@ export class MaturityService {
    * @param level 
    */
   saveLevel(level: number) {
-    this.assessSvc.assessment.MaturityTargetLevel = level;
+    if (this.assessSvc.assessment) {
+      this.assessSvc.assessment.MaturityTargetLevel = level;
+    }
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",
       level,
