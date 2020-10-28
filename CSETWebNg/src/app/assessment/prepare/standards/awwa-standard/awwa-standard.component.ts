@@ -12,6 +12,7 @@ export class AwwaStandardComponent implements OnInit {
   // 2 - uploading/importing data
   // 3 - import complete
   importStatus = 1;
+  errorMessage: string = "";
 
   constructor(
     public dialogRef: MatDialogRef<AwwaStandardComponent>,
@@ -46,10 +47,10 @@ export class AwwaStandardComponent implements OnInit {
       if (result.hasOwnProperty('ok')) {
         this.importStatus = 3;
       }
-    },
-    (failure) => {
-      console.log("Failure")
-      console.log(failure)
+    }, 
+    err=>{
+      this.errorMessage = "Error importing excel.  Check that AWWA file is valid."; 
+      this.importStatus = 1; 
     });
   }
 

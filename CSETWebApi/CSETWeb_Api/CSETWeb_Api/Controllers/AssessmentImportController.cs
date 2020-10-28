@@ -201,7 +201,7 @@ namespace CSETWeb_Api.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Spreadsheet was successfully imported");
         }
