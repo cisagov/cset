@@ -46,6 +46,10 @@ export class AwwaStandardComponent implements OnInit {
       if (result.hasOwnProperty('ok')) {
         this.importStatus = 3;
       }
+    },
+    (failure) => {
+      console.log("Failure")
+      console.log(failure)
     });
   }
 
