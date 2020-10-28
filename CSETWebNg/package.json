@@ -17,7 +17,7 @@
     "@angular-devkit/build-webpack": "^0.13.8",
     "@angular/animations": "^7.2.3",
     "@angular/cdk": "^6.4.7",
-    "@angular/cli": "^7.3.8",
+    "@angular/cli": "^8.2.0",
     "@angular/common": "^7.1.0",
     "@angular/compiler": "^7.1.0",
     "@angular/core": "^7.1.0",
@@ -61,7 +61,7 @@
     "ngx-textarea-autosize": "^2.0.0",
     "node-sass": "^4.13.1",
     "nodejs": "0.0.0",
-    "npm": "^6.13.4",
+    "npm": "^6.14.6",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "sass": "^1.15.1",
@@ -73,7 +73,7 @@
     "update": "^0.7.4",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26",
-    "snyk": "^1.278.2"
+    "snyk": "^1.420.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.8",
