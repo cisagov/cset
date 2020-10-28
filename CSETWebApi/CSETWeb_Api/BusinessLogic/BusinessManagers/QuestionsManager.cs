@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using CSETWeb_Api.BusinessLogic.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -46,6 +47,93 @@ namespace CSETWeb_Api.BusinessManagers
         /// Returns a list of Questions.
         /// We can find questions for a single group or for all groups (*).
         /// </summary>        
+        public QuestionResponse GetQuestionListWithSet(string questionGroupName)
+        {
+            using (var db = new CSET_Context())
+            {
+                IQueryable<QuestionPlusHeaders> query = null;
+
+                string assessSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentID).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+                string assessSalLevelUniversal = db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+
+                if (_setNames.Count == 1)
+                {
+                    // If a single standard is selected, do it this way
+                    query = (from q in db.NEW_QUESTION
+                             from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                             from l in db.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                             from s in db.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
+                             from usl in db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel)
+                             from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == q.Heading_Pair_Id)
+                             from qgh in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == usch.Question_Group_Heading_Id)
+                             from usc in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
+                             where _setNames.Contains(s.Set_Name)
+                                && l.Universal_Sal_Level == usl.Universal_Sal_Level1
+
+                             select new QuestionPlusHeaders()
+                             {
+                                 QuestionId = q.Question_Id,
+                                 SimpleQuestion = q.Simple_Question,
+                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
+                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
+                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
+                                 UniversalSubCategory = usc.Universal_Sub_Category,
+                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
+                                 PairingId = usch.Heading_Pair_Id,
+                                 SetName = s.Short_Name,
+                                 ShortSetName = s.Short_Name
+                             });
+
+                    // Get the questions for the specified group (or all groups)  
+                    if (!string.IsNullOrEmpty(questionGroupName) && questionGroupName != "*")
+                    {
+                        query = query.Where(x => x.QuestionGroupHeading == questionGroupName);
+                    }
+                }
+                else
+                {
+                    query = (from q in db.NEW_QUESTION
+                             join qs in db.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                             join nql in db.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                             join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                             join s in db.SETS on stand.Set_Name equals s.Set_Name
+                             join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                             join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                             where stand.Selected == true && stand.Assessment_Id == assessmentID
+                             select new QuestionPlusHeaders()
+                             {
+                                 QuestionId = q.Question_Id,
+                                 SimpleQuestion = q.Simple_Question,
+                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
+                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
+                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
+                                 UniversalSubCategory = usc.Universal_Sub_Category,
+                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
+                                 PairingId = usch.Heading_Pair_Id,
+                                 SetName = s.Short_Name,
+                                 ShortSetName = stand.Set_Name
+                             });
+                }
+
+                // Get all answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+
+                this.questions = query.Distinct().ToList();
+                this.Answers = answers.ToList();
+
+                // Merge the questions and answers into a hierarchy
+                return BuildResponse();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of Questions.
+        /// We can find questions for a single group or for all groups (*).
+        /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
             using (var db = new CSET_Context())
@@ -58,7 +146,7 @@ namespace CSETWeb_Api.BusinessManagers
                 if (_setNames.Count == 1)
                 {
                     // If a single standard is selected, do it this way
-                    query = from q in db.NEW_QUESTION
+                    query = (from q in db.NEW_QUESTION
                             from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
                             from l in db.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
                             from s in db.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
@@ -78,10 +166,8 @@ namespace CSETWeb_Api.BusinessManagers
                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
                                 UniversalSubCategory = usc.Universal_Sub_Category,
                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                PairingId = usch.Heading_Pair_Id, 
-                                SetName = s.Short_Name, 
-                                ShortSetName = s.Short_Name
-                            };
+                                PairingId = usch.Heading_Pair_Id
+                            });
 
                     // Get the questions for the specified group (or all groups)  
                     if (!string.IsNullOrEmpty(questionGroupName) && questionGroupName != "*")
@@ -91,7 +177,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
                 else
                 {
-                    query = from q in db.NEW_QUESTION
+                    query = (from q in db.NEW_QUESTION
                             join qs in db.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
                             join nql in db.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
@@ -109,10 +195,8 @@ namespace CSETWeb_Api.BusinessManagers
                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
                                 UniversalSubCategory = usc.Universal_Sub_Category,
                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                PairingId = usch.Heading_Pair_Id,
-                                SetName = s.Short_Name,
-                                ShortSetName = stand.Set_Name
-                            };
+                                PairingId = usch.Heading_Pair_Id
+                            });
                 }
 
                 // Get all answers for the assessment
