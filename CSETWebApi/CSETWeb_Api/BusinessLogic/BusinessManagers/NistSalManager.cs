@@ -142,6 +142,7 @@ namespace CSETWeb_Api.Controllers
                 {
                     throw new ApplicationException(String.Format("Question {0} could not be found for assessment {1}!", answer.Question_Number, assessmentid));
                 }
+                TinyMapper.Bind<NistQuestionsAnswers, NIST_SAL_QUESTION_ANSWERS>();
                 TinyMapper.Map<NistQuestionsAnswers, NIST_SAL_QUESTION_ANSWERS>(answer, dbAnswer);
                 db.SaveChanges();
                 return CalculateOveralls(assessmentid, db);
