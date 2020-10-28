@@ -53,10 +53,7 @@ export class DiagramInfoComponent implements OnInit {
     tree: NavTreeNode[] = [];
     ngOnInit() {
         this.populateTree();
-        this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
-            this.hasDiagram = resp;
-            this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
-        });
+        this.checkForDiagram();
 
         // When returning from Diagram, we get a brand new authSvc.
         // This refreshes the isLocal flag.
@@ -65,12 +62,29 @@ export class DiagramInfoComponent implements OnInit {
                 this.authSvc.isLocal = resp;
             });
         }
+        this.delayCheckForDiagram(1000)
     }
+
 
     populateTree() {
         sessionStorage.removeItem('tree');
         this.navSvc.buildTree(this.navSvc.getMagic());
     }
+
+    private checkForDiagram(){
+        this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
+            this.hasDiagram = resp;
+            this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
+        }); 
+    }
+    private async delayCheckForDiagram(ms){    
+        await this.delay(ms)    
+        this.checkForDiagram();
+    }
+    private delay(ms: number){
+        return new Promise(resolve => setTimeout(resolve,ms));
+    }
+
 
     navToDiagram() {
         const jwt = sessionStorage.getItem('userToken');
