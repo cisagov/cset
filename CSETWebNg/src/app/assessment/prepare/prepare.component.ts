@@ -24,39 +24,30 @@
 import { StandardService } from "./../../services/standard.service";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NavigationService } from "../../services/navigation.service";
 import { AssessmentService } from "../../services/assessment.service";
+import { NavigationService } from "../../services/navigation.service";
 
 @Component({
   selector: "app-prepare",
   templateUrl: "./prepare.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class PrepareComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
+
     private navSvc: NavigationService,
     private router: Router,
-    private route: ActivatedRoute,
-    private stdSvc: StandardService
+    private route: ActivatedRoute
   ) {
-  
 
-    this.stdSvc.getACET().subscribe((x: boolean) => {
-      this.stdSvc.setACETSelected(x);
-    });
-
-    this.stdSvc.getFramework().subscribe((x: boolean) => {
-      this.stdSvc.setFrameworkSelected(x);
-    });
-    
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
-      this.router.navigate([value], { relativeTo: this.route });
-    });
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.navSvc.buildTree(this.navSvc.getMagic());
+    }, 1000);
     this.assessSvc.currentTab = "prepare";
   }
 }

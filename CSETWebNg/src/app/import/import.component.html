@@ -74,7 +74,7 @@
 
 
                     <div class="d-flex flex-11a flex-column w-100" ng2FileDrop style="position:relative;min-height:100px;position:relative; "
-                        (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)" [uploader]="fakeUploader"
+                        (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)"  [uploader]="uploader"
                         #codeContainer [ngClass]="{'fullscreen':getFullScreen()}">
                         <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:none;z-index:10000;background:rgba(0,0,0,0.25); align-items:center;justify-content:center"
                             [ngClass]="{'d-flex': hasModuleBaseDropZoneOver }">
@@ -96,7 +96,7 @@
                         </h4>
                         <div class="mb-2">Please specify the code for your new module below. You can either begin
                             typing, drop a file onto the editor, load an existing module, or copy and paste text. To get suggestions, type CTRL-Spacebar. Use alt-shift-f to format the code.</div>
-                        <div [ngClass]="{'has-error': state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers().length||errors.length}"
+                        <div [ngClass]="{'has-error': showError()}"
                             class="d-flex flex-11a p-0 mb-2">
                             <ngs-code-editor #code class="d-flex flex-11a form-control" [codeModel]="codeModel"
                                 [options]="configOptions" (valueChanged)="onModelChange($event)" style="height:auto!important;"></ngs-code-editor>
@@ -116,14 +116,14 @@
 
                     <input style="display:none" #codeGoodInput="ngModel" [(ngModel)]="codeGood" name="codeGood" type="checkbox"
                         value="true" required *ngIf="!codeChecked">
-                    <div class="panel panel-default mt-0 mb-3" *ngIf="state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers().length">
+                    <div class="panel panel-default mt-0 mb-3" *ngIf="state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length">
                         <div class="panel-heading">
                             <h4 class="panel-title px-2 py-1" style="color:white">
                                 Validation messages
                             </h4>
                         </div>
                         <ul class="panel-body m-0" style="max-height:150px;overflow:auto;">
-                            <li style="list-style-type:none; margin:2px 5px; " *ngFor="let item of monaco.editor.getModelMarkers()">
+                            <li style="list-style-type:none; margin:2px 5px; " *ngFor="let item of monaco.editor.getModelMarkers({})">
                                 <span style="font-family:'Courier New', Courier, monospace; font-size:10pt;" [ngClass]="{'text-warning':!item.code, 'text-danger':item.code}">{{
                                     "Line "+ item.startLineNumber+', Column '+ item.startColumn+' - '+item.message }}</span>
                             </li>
@@ -135,7 +135,7 @@
                     <div *ngIf="isDocError" class="text-danger">An error occurred while processing documents. Please
                         review the files below and try again</div>
                     <div ng2FileDrop class="pb-2" style=" position:relative;min-height:100px;" (fileOver)="fileOverBase($event)"
-                        [uploader]="uploader">
+                        >
                         <div *ngIf="!uploader?.queue?.length||hasBaseDropZoneOver" [ngClass]="{'nv-file-over': hasBaseDropZoneOver }"
                             class="well my-drop-zone">
                             Drop reference files here

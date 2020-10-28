@@ -214,8 +214,6 @@
     </table>
     -->
 
-    <div class="mt-3 d-flex justify-content-between flex-00a">
-        <button class="btn btn-primary" (click)="navSvc2.navBack('maturity')">Back</button>
-        <button class="btn btn-primary" (click)="navSvc2.navNext('maturity')">Next</button>
-    </div>
+    <app-nav-back-next [page]="'maturity'"></app-nav-back-next>
+    
 </div>

@@ -21,13 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { Navigation2Service } from '../../services/navigation2.service';
-import { NavigationService, NavTree } from '../../services/navigation.service';
+import { NavigationService } from '../../services/navigation.service';
 import { ConfigService } from '../../services/config.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
     selector: 'app-diagram',
@@ -39,21 +39,33 @@ export class DiagramComponent implements OnInit {
     msgNoDiagramExists = 'Create a Network Diagram';
     buttonText: string = this.msgNoDiagramExists;
 
+    /**
+     * Constructor.
+     */
     constructor(private router: Router,
-        private navSvc: NavigationService,
         public assessSvc: AssessmentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService
     ) { }
-    tree: NavTree[] = [];
-    ngOnInit() {
-        this.populateTree();
-        this.assessSvc.currentTab = 'diagram';
-    }
 
-    populateTree() {
-        const magic = this.navSvc.getMagic();
-        this.navSvc.setTree(this.tree, magic);
+    /**
+     * 
+     */
+    ngOnInit() {
+        // if we are hitting this page without knowing anything
+        // about the assessment, we probably just got back from
+        // the diagram app.
+        if (!this.assessSvc.assessment) {           
+            this.assessSvc.getAssessmentDetail().subscribe(
+                (data: AssessmentDetail) => {
+                    this.assessSvc.assessment = data;
+
+                    this.assessSvc.currentTab = 'prepare';
+                    this.navSvc.setCurrentPage('diagram');
+                    sessionStorage.removeItem('tree');
+                    this.navSvc.buildTree(this.navSvc.getMagic());
+                });
+        }
     }
 }

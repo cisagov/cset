@@ -1,0 +1,86 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+  <h3>Compliance Score</h3>
+
+  <div *ngIf="!initialized">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  
+  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+
+    <div *ngIf="initialized && !dataError" class="stackedBarChart">
+      <div class="stackBarChartUpperLeftLabels">
+          <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
+          <div> Compliance for Target Level {{complianceLevelAcheivedData?.targetLevel}}</div>
+          <div> Achieved Level {{complianceLevelAcheivedData?.acheivedLevel}}</div>
+      </div>
+      <div class="stackedBarChartBody">
+          <div *ngFor="let dataColumn of stackBarChartData; let i = index" class="stackedBarChartColumn">
+              <div class="barHeader">
+                  <div class="mainHeader"> LEVEL {{i + 1}}</div>
+                  <div class="secondaryHeader"> {{stackedChartHeaderLabels[i + 1]}}</div>
+              </div>       
+              <div *ngFor="let barSection of dataColumn" [ngStyle]="getStackedChartSectionStyle(barSection)" class="barSection">
+                  <div *ngIf="
+                      (barSection.totalForLevel / 2 ) < barSection.count
+                      &&
+                      (cmmcModel?.TargetLevel > barSection.modelLevel 
+                      || cmmcModel?.TargetLevel == barSection.modelLevel)" 
+                      class="barSectionInnerLabel"> {{barSection.count}} / {{barSection.totalForLevel}}
+                  </div>
+                  <div *ngIf="
+                  barSection.type == 'Yes' && 
+                  barSection.modelLevel > cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00</div>                    
+              </div>
+          </div>
+      </div>
+      <div class="stackedBarChartBase">
+      </div>
+      <div class="stackedBarChartBottomLabels">
+          <div *ngFor="let dataColumn of statsByLevel; let i = index"  class="stackedBarChartBottomLabel">
+              <div *ngIf="cmmcModel?.TargetLevel > dataColumn.ModelLevel || cmmcModel?.TargetLevel == dataColumn.ModelLevel"
+               class="bottomLabel"> 
+                  <div>Total</div>
+                  <div class="bottomLabelNumbers">
+                      <div>{{dataColumn.totalAnsweredCount}}</div>  
+                      <div *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">/{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>  
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="stackedBarChartBottomTitle">
+          The Number of Practices Satisfied for Each Level:
+      </div>
+    </div>
+    <div *ngIf="initialized && dataError">
+        <h1>Error Loading Data</h1>
+        <p>There was an error retreiving the data for this page. Please reload the page.</p>
+    </div>
+    
+    <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
+    
+  </div>
+</div>

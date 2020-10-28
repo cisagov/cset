@@ -832,7 +832,7 @@ namespace CSETWeb_Api.BusinessManagers
                 string whereClause = sbWhereClause.ToString();
                 whereClause = whereClause.Substring(0, whereClause.Length - 5);
 
-                var hits2 = db.NEW_QUESTION.FromSql("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
+                var hits2 = db.NEW_QUESTION.FromSqlRaw("SELECT * FROM [NEW_QUESTION] where " + whereClause).ToList();
 
                 var hits3 = from q in hits2
                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id

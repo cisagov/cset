@@ -18,6 +18,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -81,6 +83,8 @@ namespace CSETWeb_Api.Controllers
         [Route("api/sets/import")]
         public Task<HttpResponseMessage> Import([FromBody] ExternalStandard externalStandard)
         {
+            CsetLogManager.Instance.LogInfoMessage("SetsController.Import() - \n{0}", JsonConvert.SerializeObject(externalStandard));
+
             var response = default(HttpResponseMessage);
             try
             {

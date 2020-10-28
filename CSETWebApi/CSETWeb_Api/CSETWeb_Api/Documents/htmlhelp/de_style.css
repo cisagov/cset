@@ -111,6 +111,13 @@ span.de_01FCC507AB
 	font-size: 13pt;
 	color:#004364;
 }
+span.de_04C23F39A4
+{
+	font-family: "Calibri";
+	font-size: 14pt;
+	color:#000000;
+	text-decoration:underline;
+}
 span.de_065E82921A
 {
 	font-family: "Arial";
@@ -218,9 +225,21 @@ span.de_5EC8135B83
 	font-size: 11pt;
 	color:#222222;
 }
+span.de_67BC475A8E
+{
+	font-family: "Calibri";
+	font-size: 10pt;
+	color:#000000;
+}
 span.de_68B99ACC5C
 {
 	font-family: "Arial";
+}
+span.de_6B7F0857AE
+{
+	font-family: "Calibri";
+	font-size: 14pt;
+	color:#000000;
 }
 span.de_6C2B69BD23
 {
@@ -288,6 +307,12 @@ span.de_CC7DAF531E
 	font-family: "Arial";
 	font-size: 10pt;
 	color:#000000;
+}
+span.de_D050B360A5
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#201f1e;
 }
 span.de_E0D79DE1AC
 {
@@ -1230,7 +1255,7 @@ span.de_FFB638AC42
 	text-align: left;
 	padding: 0;
 	margin: 0;
-	content: '' counter(list-counter-50, decimal) '.\00a0';
+	content: '' counter(list-counter-50, disc) '\00a0';
 	counter-increment: list-counter-50;
 }
 .list-counter-50 > div > div[class='list-marker-chm'] {
@@ -1248,7 +1273,7 @@ span.de_FFB638AC42
 	text-align: left;
 	padding: 0;
 	margin: 0;
-	content: '' counter(list-counter-51, disc) '\00a0';
+	content: '' counter(list-counter-51, decimal) '.\00a0';
 	counter-increment: list-counter-51;
 }
 .list-counter-51 > div > div[class='list-marker-chm'] {
@@ -1432,6 +1457,24 @@ span.de_FFB638AC42
 	counter-increment: list-counter-61;
 }
 .list-counter-61 > div > div[class='list-marker-chm'] {
+	display: inline-block;
+	text-align: left;
+	zoom: 1;
+	padding: 0;
+	margin: 0;
+	*display: inline;
+}
+.list-counter-62 > div > * {
+	text-indent: 0px;}
+.list-counter-62 > div > div[class='list-marker']:before {
+	display: inline-block;
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	content: '' counter(list-counter-62, disc) '\00a0';
+	counter-increment: list-counter-62;
+}
+.list-counter-62 > div > div[class='list-marker-chm'] {
 	display: inline-block;
 	text-align: left;
 	zoom: 1;

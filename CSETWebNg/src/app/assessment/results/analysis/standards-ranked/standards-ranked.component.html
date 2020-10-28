@@ -46,8 +46,7 @@
       </tr>
     </table>
   </div>
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc2.navBack('standards-ranked')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc2.navNext('standards-ranked')">Next</button>
-  </div>
+  
+  <app-nav-back-next [page]="'standards-ranked'"></app-nav-back-next>
+  
 </div>

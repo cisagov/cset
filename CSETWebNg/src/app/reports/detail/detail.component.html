@@ -630,7 +630,7 @@
                     <td class="text-right">{{ irp.RiskCount[2] }}</td>
                     <td class="text-right">{{ irp.RiskCount[3] }}</td>
                     <td class="text-right">{{ irp.RiskCount[4] }}</td>
-                    <td class="text-nowrap">{{ irp.Comment }}</td>
+                    <td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.Comment)"></td>
                 </tr>
                 <tr>
                     <td class="border-table">Totals</td>
@@ -858,12 +858,12 @@
 
 
 
-    <div class="page-break" *ngIf="response?.ComponentQuestions?.length > 0">
+    <div class="page-break" *ngIf="response?.questions?.length > 0">
         <h1>
             Component Question Details
         </h1>
 
-        <table class="cset-table-3" *ngFor="let q of response?.ComponentQuestions">
+        <table class="cset-table-3" *ngFor="let q of response?.questions">
             <tr>
                 <th colspan="4">Component: {{q.ComponentName}} - {{q.ComponentType}}</th>
             </tr>

@@ -23,7 +23,8 @@
 ////////////////////////////////
 import { FileUploadClientService } from "./../../services/file-client.service";
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, Sort } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { PasswordStatusResponse } from "../../models/reset-pass.model";
@@ -35,6 +36,7 @@ import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { ImportAssessmentService } from "../../services/import-assessment.service";
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
 import { Title } from "@angular/platform-browser";
+import { NavigationService } from "../../services/navigation.service";
 
 interface UserAssessment {
   AssessmentId: number;
@@ -68,15 +70,21 @@ export class LandingPageComponent implements OnInit {
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
     public fileSvc: FileUploadClientService,
-    public titleSvc: Title
+    public titleSvc: Title,
+    public navSvc: NavigationService
   ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
-
     this.titleSvc.setTitle('CSET');
-
+    if (localStorage.getItem("returnPath")) {      
+    }
+    else{
+      sessionStorage.removeItem('tree');
+      this.navSvc.clearTree(this.navSvc.getMagic());
+    }
+    
     this.checkPasswordReset();
   }
 

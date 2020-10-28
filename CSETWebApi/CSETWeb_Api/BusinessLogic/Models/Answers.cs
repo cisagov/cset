@@ -46,7 +46,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
             using (var db = new CSET_Context())
             {
-                db.LoadStoredProc("[dbo].[RelevantAnswers]")
+                db.LoadStoredProc("[RelevantAnswers]")
                   .WithSqlParam("assessment_id", assessmentID)
                   .ExecuteStoredProc((handler) =>
                   {

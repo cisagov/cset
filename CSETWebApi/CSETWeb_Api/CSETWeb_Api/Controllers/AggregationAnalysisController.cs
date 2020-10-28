@@ -76,7 +76,7 @@ namespace CSETWeb_Api.Controllers
 
                     response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
 
-                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                    db.LoadStoredProc("[GetCombinedOveralls]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -254,7 +254,7 @@ namespace CSETWeb_Api.Controllers
         {
             List<usp_getStandardsResultsByCategory> response = null;
 
-            db.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
+            db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                         .WithSqlParam("assessment_Id", assessmentId)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -307,7 +307,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                    db.LoadStoredProc("[GetCombinedOveralls]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -369,7 +369,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+                    db.LoadStoredProc("[usp_getStandardSummaryOverall]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -424,7 +424,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[usp_GetComponentsSummary]")
+                    db.LoadStoredProc("[usp_GetComponentsSummary]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -471,7 +471,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
+                    db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -535,7 +535,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[usp_getStandardSummaryOverall]")
+                    db.LoadStoredProc("[usp_getStandardSummaryOverall]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -591,7 +591,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[GetCombinedOveralls]")
+                    db.LoadStoredProc("[GetCombinedOveralls]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -701,7 +701,7 @@ namespace CSETWeb_Api.Controllers
 
                 foreach (var a in assessmentList)
                 {
-                    db.LoadStoredProc("[dbo].[GetComparisonBestToWorst]")
+                    db.LoadStoredProc("[GetComparisonBestToWorst]")
                             .WithSqlParam("assessment_id", a.Assessment_Id)
                             .ExecuteStoredProc((handler) =>
                             {

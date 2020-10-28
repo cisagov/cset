@@ -105,6 +105,8 @@ namespace CSET_Main.Questions.InformationTabData
 
         public bool IsComponent { get; set; }
 
+        public bool IsMaturity { get; set; }
+
         public List<String> SetsList { get; set; }
         public List<RelatedQuestion> QuestionsList { get; set; }
 
@@ -143,7 +145,7 @@ namespace CSET_Main.Questions.InformationTabData
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
             RequirementTabData tabData = new RequirementTabData();
-            
+
             Question_or_Requirement_Id = infoData.QuestionID;
             this.LevelName = (from a in controlContext.NEW_QUESTION_SETS.Where(t => t.Question_Id == infoData.QuestionID && t.Set_Name == infoData.Set.Set_Name)
                               join l in controlContext.NEW_QUESTION_LEVELS on a.New_Question_Set_Id equals l.New_Question_Set_Id
@@ -207,7 +209,12 @@ namespace CSET_Main.Questions.InformationTabData
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirementData"></param>
+        /// <param name="levelManager"></param>
+        /// <param name="controlContext"></param>
         public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CSET_Context controlContext)
         {
             ShowRequirementFrameworkTitle = true;
@@ -244,7 +251,7 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 set = controlContext.SETS.Where(x => x.Set_Name == requirementData.SetName).FirstOrDefault();
             }
-            
+
             if (!IsComponent)
                 RequirementFrameworkTitle = requirement.Requirement_Title;
 
@@ -333,6 +340,12 @@ namespace CSET_Main.Questions.InformationTabData
             BuildDocuments(requirementData.RequirementID, controlContext);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="frameworkData"></param>
+        /// <param name="controlContext"></param>
         public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSET_Context controlContext)
         {
             QuestionsList = new List<RelatedQuestion>();
@@ -342,8 +355,8 @@ namespace CSET_Main.Questions.InformationTabData
                 RequirementFrameworkTitle = frameworkData.Title;
             RelatedFrameworkCategory = frameworkData.Category;
             ShowRequirementFrameworkTitle = true;
-            
-            
+
+
             if (String.IsNullOrWhiteSpace(References))
                 References = "None";
             Question_or_Requirement_Id = frameworkData.RequirementID;
@@ -391,6 +404,12 @@ namespace CSET_Main.Questions.InformationTabData
             RequirementsData = tabData;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="controlContext"></param>
         public void BuildComponentInfoTab(ComponentQuestionInfoData info, CSET_Context controlContext)
         {
             try
@@ -407,7 +426,7 @@ namespace CSET_Main.Questions.InformationTabData
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
 
-                foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x=> x.Question_Id == info.QuestionID))
+                foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID))
                 {
                     bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Symbol_Id, salLevel);
                     COMPONENT_SYMBOLS componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
@@ -425,7 +444,7 @@ namespace CSET_Main.Questions.InformationTabData
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
                     Text = FormatRequirementText(t.Requirement_Text),
-                    SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info)                    
+                    SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info)
                 }).FirstOrDefault();
                 if (requirement != null)
                 {
@@ -436,7 +455,7 @@ namespace CSET_Main.Questions.InformationTabData
                         SupplementalInfo = FormatSupplementalInfo(requirement.SupplementalInfo),
                     };
                     QuestionsVisible = false;
-                    ShowSALLevel = true;                    
+                    ShowSALLevel = true;
                 }
             }
             catch (Exception ex)
@@ -444,6 +463,45 @@ namespace CSET_Main.Questions.InformationTabData
                 //CSETLogger.Fatal("Failed to get component information tab data.", ex);
             }
         }
+
+
+        /// <summary>s
+        /// Builds info tab information for a maturity question.
+        /// References are hooked up differently than to questions and requirements.
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="controlContext"></param>
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, CSET_Context controlContext)
+        {
+            try
+            {
+                ShowRequirementFrameworkTitle = false;
+                RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
+                RelatedFrameworkCategory = info.MaturityQuestion.Category;
+                ShowRequirementStandards = true;
+
+                var l = controlContext.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
+                if (l != null)
+                {
+                    levelName = l.Level_Name;
+                }
+
+                IsMaturity = true;
+
+
+                RequirementTabData tabData = new RequirementTabData();
+                tabData.SupplementalInfo = info.MaturityQuestion.Supplemental_Info;
+                tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
+                RequirementsData = tabData;
+
+                BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);
+            }
+            catch (Exception ex)
+            {
+                //CSETLogger.Fatal("Failed to get maturity information tab data.", ex);
+            }
+        }
+
 
         /// <summary>
         /// Returns a list of physical files in the Documents folder.
@@ -458,23 +516,62 @@ namespace CSET_Main.Questions.InformationTabData
             return availableRefDocs;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirement_ID"></param>
+        /// <param name="controlContext"></param>
         private void BuildDocuments(int requirement_ID, CSET_Context controlContext)
         {
             // Build a list of available documents
 
             List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded }).Concat(
-                controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
+                .Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+                .Concat(
+                    controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
 
             // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            var sourceDocuments = documents.Where(t => t.IsSource)
+                .Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
             SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
 
 
             // Help (Resource) Documents
-            var helpDocuments = documents.Where(t => !t.IsSource).Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            var helpDocuments = documents.Where(t => !t.IsSource)
+                .Select(s => new CustomDocument { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
+            ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="maturityQuestion_ID"></param>
+        /// <param name="controlContext"></param>
+        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID, CSET_Context controlContext)
+        {
+            List<string> availableRefDocs = GetBuildDocuments();
+
+            var documents = controlContext.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+                .Concat(
+              controlContext.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+              ).ToList();
+
+            // Source Documents  
+            var sourceDocuments = documents.Where(t => t.IsSource)
+                .Select(s => new CustomDocument(){ Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
+                .ToList();
+            SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
+
+
+            // Help (Resource) Documents
+            var helpDocuments = documents.Where(t => !t.IsSource)
+               .Select(s => new CustomDocument() { Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
+               .ToList();
             ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name)).ToList();
         }
 

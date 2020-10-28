@@ -32,8 +32,8 @@ BEGIN
 	the major dimensions are 
 	*/
 	--generate defaults 
-	INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id],[Answer_Text],[Is_Component],[Is_Framework],[Assessment_Id])   	  		
-		select Is_Requirement = 0,Question_id, Answer_Text = 'U', Is_Component = '1', Is_Framework = 0, Assessment_Id = @Assessment_Id 
+	INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id],[Answer_Text],[Is_Component],[Is_Framework],[Is_Maturity],[Assessment_Id])   	  		
+		select Is_Requirement = 0,Question_id, Answer_Text = 'U', Is_Component = '1', Is_Framework = 0, Is_Maturity = 0, Assessment_Id = @Assessment_Id 
 		from (select * from [ANSWER] where [Assessment_Id] = @assessment_id and [IS_COMPONENT] = 1) a 		
 		right join 
 		(SELECT distinct q.question_id 

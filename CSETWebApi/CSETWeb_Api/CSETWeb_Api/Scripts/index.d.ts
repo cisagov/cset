@@ -1,26 +1,3 @@
-//////////////////////////////// 
-// 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
-// 
-//  Permission is hereby granted, free of charge, to any person obtaining a copy 
-//  of this software and associated documentation files (the "Software"), to deal 
-//  in the Software without restriction, including without limitation the rights 
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-//  copies of the Software, and to permit persons to whom the Software is 
-//  furnished to do so, subject to the following conditions: 
-// 
-//  The above copyright notice and this permission notice shall be included in all 
-//  copies or substantial portions of the Software. 
-// 
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-//  SOFTWARE. 
-// 
-//////////////////////////////// 
 /**
  * @fileoverview This file only declares the public portions of the API.
  * It should not define internal pieces such as utils or modifier details.
@@ -58,6 +35,18 @@ declare namespace Popper {
 
   export type ModifierFn = (data: Data, options: Object) => Data;
 
+  export interface Attributes {
+    'x-out-of-boundaries': '' | false;
+    'x-placement': Placement;
+  }
+
+  export interface Padding {
+    top?: number,
+    bottom?: number,
+    left?: number,
+    right?: number,
+  }
+
   export interface BaseModifier {
     order?: number;
     enabled?: boolean;
@@ -71,7 +60,7 @@ declare namespace Popper {
     };
     preventOverflow?: BaseModifier & {
       priority?: Position[],
-      padding?: number,
+      padding?: number | Padding,
       boundariesElement?: Boundary | Element,
       escapeWithReference?: boolean
     };
@@ -81,8 +70,10 @@ declare namespace Popper {
     };
     flip?: BaseModifier & {
       behavior?: Behavior | Position[],
-      padding?: number,
+      padding?: number | Padding,
       boundariesElement?: Boundary | Element,
+      flipVariations?: boolean,
+      flipVariationsByContent?: boolean,
     };
     inner?: BaseModifier;
     hide?: BaseModifier;
@@ -114,6 +105,8 @@ declare namespace Popper {
     hide: boolean;
     arrowElement: Element;
     styles: CSSStyleDeclaration;
+    arrowStyles: CSSStyleDeclaration;
+    attributes: Attributes;
     boundaries: Object;
     offsets: {
       popper: Offset,
@@ -140,6 +133,7 @@ declare namespace Popper {
   export interface ReferenceObject {
     clientHeight: number;
     clientWidth: number;
+    referenceNode?: Node;
 
     getBoundingClientRect(): ClientRect;
   }
@@ -147,6 +141,7 @@ declare namespace Popper {
 
 // Re-export types in the Popper namespace so that they can be accessed as top-level named exports.
 // These re-exports should be removed in 2.x when the "declare namespace Popper" syntax is removed.
+export type Padding = Popper.Padding;
 export type Position = Popper.Position;
 export type Placement = Popper.Placement;
 export type Boundary = Popper.Boundary;
@@ -165,6 +160,8 @@ declare class Popper {
   static Defaults: PopperOptions;
 
   options: PopperOptions;
+  popper: Element;
+  reference: Element | ReferenceObject;
 
   constructor(reference: Element | ReferenceObject, popper: Element, options?: PopperOptions);
 

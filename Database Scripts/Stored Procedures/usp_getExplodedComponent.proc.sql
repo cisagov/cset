@@ -36,29 +36,29 @@ SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as Uniq
 	adc.Component_Guid, adc.Layer_Id, l.Name AS LayerName, z.Container_Id, 
 	z.Name AS ZoneName,  dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level)) AS SAL,
 	h.Sub_Heading_Question_Description,h.Heading_Pair_Id, cs.Symbol_Name
-from	 dbo.ASSESSMENT_DIAGRAM_COMPONENTS AS adc
+from	 ASSESSMENT_DIAGRAM_COMPONENTS AS adc
 			join STANDARD_SELECTION ss on adc.Assessment_Id = ss.Assessment_Id
-			join dbo.COMPONENT_QUESTIONS AS cq ON adc.Component_Symbol_Id = cq.Component_Symbol_Id			
-			join dbo.COMPONENT_SYMBOLS as cs on adc.Component_Symbol_Id = cs.Component_Symbol_Id
-            join dbo.NEW_QUESTION AS q ON cq.Question_Id = q.Question_Id 			
-            join dbo.DIAGRAM_CONTAINER AS l ON adc.Layer_Id = l.Container_Id  
-            left join dbo.DIAGRAM_CONTAINER AS z ON adc.Zone_Id =z.Container_Id and adc.Assessment_Id=adc.Assessment_Id
+			join COMPONENT_QUESTIONS AS cq ON adc.Component_Symbol_Id = cq.Component_Symbol_Id			
+			join COMPONENT_SYMBOLS as cs on adc.Component_Symbol_Id = cs.Component_Symbol_Id
+            join NEW_QUESTION AS q ON cq.Question_Id = q.Question_Id 			
+            join DIAGRAM_CONTAINER AS l ON adc.Layer_Id = l.Container_Id  
+            left join DIAGRAM_CONTAINER AS z ON adc.Zone_Id =z.Container_Id and adc.Assessment_Id=adc.Assessment_Id
 			join (select s.*,nql.Universal_Sal_Level from NEW_QUESTION_SETS s
 			join NEW_QUESTION_LEVELS nql on s.New_Question_Set_Id = nql.New_Question_Set_Id
 			where set_name = 'Components' ) s on q.Question_Id = s.Question_Id and s.Universal_Sal_Level = dbo.convert_sal_short(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))		
-			left join dbo.vQUESTION_HEADINGS h on q.Heading_Pair_Id = h.Heading_Pair_Id
-			left join dbo.UNIVERSAL_SUB_CATEGORY_HEADINGS usch on usch.Heading_Pair_Id = h.Heading_Pair_Id		 
+			left join vQUESTION_HEADINGS h on q.Heading_Pair_Id = h.Heading_Pair_Id
+			left join UNIVERSAL_SUB_CATEGORY_HEADINGS usch on usch.Heading_Pair_Id = h.Heading_Pair_Id		 
 WHERE l.Visible = 1 and adc.Assessment_Id = @assessment_id) a left join Answer_Components AS b on a.Question_Id = b.Question_Or_Requirement_Id and a.Assessment_Id = b.Assessment_Id and a.component_guid = b.component_guid
 left join (SELECT a.Assessment_Id, q.Question_Id, a.Answer_Text		
 from   (SELECT distinct q.question_id,adc.assessment_id
-				FROM [dbo].[ASSESSMENT_DIAGRAM_COMPONENTS] adc 			
+				FROM [ASSESSMENT_DIAGRAM_COMPONENTS] adc 			
 				join component_questions q on adc.Component_Symbol_Id = q.Component_Symbol_Id
 				join STANDARD_SELECTION ss on adc.Assessment_Id = ss.Assessment_Id
 				join new_question nq on q.question_id=nq.question_id		
 				join new_question_sets qs on nq.question_id=qs.question_id	and qs.Set_Name = 'Components'						
 				join NEW_QUESTION_LEVELS nql on qs.New_Question_Set_Id = nql.New_Question_Set_Id 
 					and nql.Universal_Sal_Level = dbo.convert_sal(ss.Selected_Sal_Level)) as f  
-            join dbo.NEW_QUESTION AS q ON f.Question_Id = q.Question_Id 			
+            join NEW_QUESTION AS q ON f.Question_Id = q.Question_Id 			
 			join Answer_Components AS a on f.Question_Id = a.Question_Or_Requirement_Id and f.assessment_id = a.assessment_id	  
 where component_guid = '00000000-0000-0000-0000-000000000000') c on a.Assessment_Id=c.Assessment_Id and a.Question_Id = c.Question_Id
 end 
