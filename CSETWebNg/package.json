@@ -89,7 +89,7 @@
     "@types/screenfull": "^3.3.2",
     "codelyzer": "^4.5.0",
     "jasmine-core": "^3.3.0",
-    "jasmine-spec-reporter": "^4.2.1",
+    "jasmine-spec-reporter": "^6.0.0",
     "karma": "^4.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^1.0.1",
