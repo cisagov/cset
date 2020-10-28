@@ -27,6 +27,7 @@
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
 
     <div *ngIf="importStatus === 1">
+      <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
       <div class="mb-3">
         Have you completed the AWWA Cybersecurity Tool?
       </div>
