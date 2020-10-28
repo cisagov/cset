@@ -190,13 +190,18 @@ namespace CSETWeb_Api.Controllers
 
                         var buffer = ctnt.ReadAsByteArrayAsync().Result;
                         var manager = new ImportManagerAwwa();
-                        await manager.ProcessSpreadsheetImport(buffer, assessmentId);
+                        var importState = await manager.ProcessSpreadsheetImport(buffer, assessmentId);
+                        if(importState != null)
+                        {
+                            throw new Exception(importState);
+                        }
+
                     }
                 }
             }
             catch (Exception e)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Spreadsheet was successfully imported");
         }
