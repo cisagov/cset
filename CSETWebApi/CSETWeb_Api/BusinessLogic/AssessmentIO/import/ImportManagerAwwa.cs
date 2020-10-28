@@ -42,7 +42,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // ... so for now, using sheet name ...
                 AwwaSheetConfig config = new AwwaSheetConfig(doc);
                 var targetSheetPart = config.GetWorksheetPartByName(doc, config.targetSheetName);
-                if(targetSheetPart == null || config.sheetIsValid)
+                if(targetSheetPart == null || !config.sheetIsValid)
                 {
                     return "Failed to find the correct sheet within the document" ; //return false, signifying the import process failed
                 }
