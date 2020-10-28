@@ -157,7 +157,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     map.Add(new AnswerMap()
                     {
-                        AwwaAnswer = dtAPI.Rows[i]["C"].ToString(),
+                        AwwaAnswer = dtAPI.Rows[i]["C"].ToString().Trim().ToLower(),
                         CsetAnswer = dtAPI.Rows[i]["D"].ToString(),
                         CsetComment = dtAPI.Rows[i]["E"].ToString()
                     });
