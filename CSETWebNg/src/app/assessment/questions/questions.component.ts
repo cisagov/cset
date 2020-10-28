@@ -32,6 +32,7 @@ import { QuestionFilterService } from '../../services/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 
 
+
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
@@ -79,7 +80,13 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     if (this.browserIsIE()) {
       this.autoLoadSupplementalInfo = false;
     }
-
+    if(this.assessSvc.assessment == null)
+    {
+      this.assessSvc.getAssessmentDetail().subscribe(
+        (data: any) => {
+          this.assessSvc.assessment = data;
+        });
+    }
     this.getQuestionCounts();
 
     // handle any scroll events originating from the nav servicd
