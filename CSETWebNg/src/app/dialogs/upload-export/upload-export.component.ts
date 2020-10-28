@@ -118,16 +118,42 @@ export class UploadExportComponent implements OnInit {
     // Hide the cancel-button
     this.showCancelButton = false;
     // When all progress-observables are completed...
-    
-    forkJoin(allProgressObservables).subscribe(end => {
-      // ... the dialog can be closed again...
-      this.canBeClosed = true;
-      this.dialog.disableClose = false;
-      // ... the upload was successful...
-      this.uploadSuccessful = true;
-      // ... and the component is no longer uploading
-      this.uploading = false;
-      this.dialog.close();
+    console.log("Prior to for loop")
+    let count = 0
+    allProgressObservables.forEach(element => {
+      console.log(element)
+      element.subscribe(
+        succ => {
+          console.log("succ")
+          console.log(succ)
+        },
+        fail => {
+          console.log("failure")
+          console.log(fail)
+        },
+        comp => {
+          console.log("complete")
+          console.log(comp)
+          count += 1
+          console.log(count)
+          if(count >= allProgressObservables.length){
+            console.log("ALL COUNTED UP")
+            this.dialog.close()
+          }
+        }
+      )
     });
+    console.log("After loop")
+    
+    // forkJoin(allProgressObservables).subscribe(end => {
+    //   // ... the dialog can be closed again...
+    //   this.canBeClosed = true;
+    //   this.dialog.disableClose = false;
+    //   // ... the upload was successful...
+    //   this.uploadSuccessful = true;
+    //   // ... and the component is no longer uploading
+    //   this.uploading = false;
+    //   this.dialog.close();
+    // });
   }
 }
