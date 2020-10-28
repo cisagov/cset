@@ -22,12 +22,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public string cidColRef;
         public string statusColRef;
         private bool MustParse = false;
+        public bool sheetIsValid = false;
 
         public string targetSheetName { get; private set; }
 
         public AwwaSheetConfig(SpreadsheetDocument doc)
         {
-            getSheetConfig(doc);
+            if (GetWorksheetPartByName(doc, "2. RRA-Control Output") != null)
+            {
+                this.sheetIsValid = true;
+                getSheetConfig(doc);
+            }
         }
 
         /// <summary>
@@ -58,22 +63,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         private void getSheetConfig(SpreadsheetDocument doc)
         {
             var sheetAPI = GetWorksheetPartByName(doc, "API");
-            if (sheetAPI == null)
-            {
+            //if (sheetAPI == null)
+            //{
                 this.dtAPI = WorksheetToDatatable(doc, GetWorksheetPartByName(doc,"2. RRA-Control Output"));
                 this.targetSheetStartRow = 14;
                 this.cidColRef = "B";
                 this.statusColRef = "E";
                 this.MustParse = true;
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 
-                this.dtAPI = WorksheetToDatatable(doc, sheetAPI);
-                this.targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
-                this.cidColRef = (string)dtAPI.Rows[3]["B"];
-                this.statusColRef = (string)dtAPI.Rows[4]["B"];
-            }
+            //    this.dtAPI = WorksheetToDatatable(doc, sheetAPI);
+            //    this.targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
+            //    this.cidColRef = (string)dtAPI.Rows[3]["B"];
+            //    this.statusColRef = (string)dtAPI.Rows[4]["B"];
+            //}
             
             // Not sure how to use this number to find the right worksheet using OpenXML...
             // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;

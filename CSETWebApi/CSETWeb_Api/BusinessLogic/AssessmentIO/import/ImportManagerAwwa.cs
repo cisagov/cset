@@ -30,7 +30,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
+        public async Task<String> ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
         {
             var stream = new MemoryStream(spreadsheet);
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(stream, false))
@@ -42,6 +42,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // ... so for now, using sheet name ...
                 AwwaSheetConfig config = new AwwaSheetConfig(doc);
                 var targetSheetPart = config.GetWorksheetPartByName(doc, config.targetSheetName);
+                if(targetSheetPart == null || !config.sheetIsValid)
+                {
+                    return "Failed to find the correct sheet within the document" ; //return false, signifying the import process failed
+                }
                 var answerMap = config.getAnswerMap();
                 //find target sheet number of rows
                 IEnumerable<SheetData> sheetData = targetSheetPart.Worksheet.Elements<SheetData>();
@@ -183,6 +187,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                 }
             }
+            return null; //return empty, signiying the import process completed
         }
 
 
