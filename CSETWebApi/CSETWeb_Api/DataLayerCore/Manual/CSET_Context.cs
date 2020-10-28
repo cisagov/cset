@@ -30,6 +30,79 @@ namespace DataLayerCore.Model
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
+
+                entity.HasOne(d => d.Assessment_)
+                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
+
+                entity.HasOne(d => d.model_)
+                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                    .HasForeignKey(d => d.model_id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AVAILABLE__model__6F6A7CB2");
+            });
+
+            modelBuilder.Entity<MATURITY_LEVELS>(entity =>
+            {
+                entity.Property(e => e.Level_Name).IsUnicode(false);
+
+                entity.HasOne(d => d.Maturity_Model_)
+                    .WithMany(p => p.MATURITY_LEVELS)
+                    .HasForeignKey(d => d.Maturity_Model_Id)
+                    .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
+            });
+
+            modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Mat_Question_Id)
+                    .HasName("PK__MATURITY__EBDCEAE635AFA091");
+
+                entity.Property(e => e.Category).IsUnicode(false);
+
+                entity.Property(e => e.Question_Text).IsUnicode(false);
+
+                entity.Property(e => e.Question_Title).IsUnicode(false);
+
+                entity.Property(e => e.Sub_Category).IsUnicode(false);
+
+                entity.Property(e => e.Supplemental_Info).IsUnicode(false);
+
+                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))");
+            });
+
+
+            modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
+
+                entity.Property(e => e.Section_Ref).IsUnicode(false);
+
+                entity.Property(e => e.Destination_String).IsUnicode(false);
+
+                entity.HasOne(d => d.Mat_Question_)
+                    .WithMany(p => p.MATURITY_SOURCE_FILES)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
+            });
+
+            modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
+
+                entity.Property(e => e.Section_Ref).IsUnicode(false);
+
+                entity.Property(e => e.Destination_String).IsUnicode(false);
+
+                entity.HasOne(d => d.Mat_Question_)
+                    .WithMany(p => p.MATURITY_REFERENCES)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+            });
+
             //modelBuilder.Query<VIEW_QUESTIONS_STATUS>().ToView("VIEW_QUESTIONS_STATUS").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
             //modelBuilder.Query<vQUESTION_HEADINGS>().ToView("vQUESTION_HEADINGS").Property(v => v.Heading_Pair_Id).HasColumnName("Heading_Pair_Id");
             //modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
@@ -81,6 +154,7 @@ namespace DataLayerCore.Model
         // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
 
+        public virtual DbQuery<Answer_Maturity> Answer_Maturity { get; set; }
         /// <summary>
         /// Entity type used for returning a list of question or requirement IDs.  
         /// </summary>
@@ -124,6 +198,28 @@ namespace DataLayerCore.Model
 
             int myrval = 0;
             this.LoadStoredProc("FillEmptyQuestionsForAnalysis")
+                     .WithSqlParam("Assessment_Id", assessment_Id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToValue<int>() ?? 0;
+                     });
+            return myrval;
+        }
+
+        /// <summary>
+        /// Insert empty questions for Maturity model questions based on the maturity models
+        /// selected on the assessment
+        /// </summary>
+        /// <param name="assessment_Id"></param>
+        /// <returns></returns>
+        public virtual int FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
+        {
+            if (!assessment_Id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            int myrval = 0;
+            this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
                      .WithSqlParam("Assessment_Id", assessment_Id)
 
                      .ExecuteStoredProc((handler) =>

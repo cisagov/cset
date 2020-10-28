@@ -22,7 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { CommonModule } from '@angular/common'; 
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
@@ -141,7 +142,7 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  continueStandAlone() {
-    this.router.navigate(['/home']);
+  continueStandAlone() {      
+    this.router.navigate(['/home']);    
   }
 }

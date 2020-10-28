@@ -1,0 +1,156 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel d-flex justify-content-start flex-column flex-11a">
+  <h3 class="wrap-text">CMMC Target Level Selection</h3>
+
+  <p>
+    Select the desired maturity level.  Selecting a level will include
+    all levels below it.
+  </p>
+
+  <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+    <ng-template ngFor let-level [ngForOf]="maturitySvc.levels">
+      <label class="btn btn-level btn-rounded form-check-label"
+        [class.activeLevel]="level.value <= this.assessSvc.assessment?.MaturityTargetLevel">
+        <input class="form-check-input" type="radio" autocomplete="off" name="mat_cmmc_level"
+          [checked]="level.value === this.assessSvc.assessment?.MaturityTargetLevel"
+          (click)="saveLevel(level.value)"> {{level.name}}
+      </label>
+    </ng-template>
+  </div>
+
+  <p class="mb-3" *ngIf="selectedLevel.value === 0">
+    Click a level to see its description.
+  </p>
+
+  <div *ngIf="selectedLevel.value === 1">
+    <h4>CMMC Level 1</h4>
+    <ul>
+      <li>
+        <h5>Processes: Performed</h5>
+        <div class="mb-3">
+          Level 1 requires that an organization performs the specified practices. Because the organization may be able
+          to perform these practices only in an ad-hoc manner and may or may not rely on documentation, process maturity
+          is not assessed for Level 1.
+        </div>
+      </li>
+      <li>
+        <h5>Practices: Basic Cyber Hygiene</h5>
+        <div class="mb-3">
+          Level 1 focuses on the protection of FCI and consists only of practices that correspond to the basic
+          safeguarding requirements specified in 48 CFR 52.204-21.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedLevel.value === 2">
+    <h4>CMMC Level 2</h4>
+    <ul>
+      <li>
+        <h5>Processes: Documented</h5>
+        <div class="mb-3">
+          Level 2 requires that an organization establish and document practices and policies to guide the
+          implementation of their CMMC efforts. The documentation of practices enables individuals to perform them in a
+          repeatable manner. Organizations develop mature capabilities by documenting their processes and practicing
+          them as documented.
+        </div>
+      </li>
+      <li>
+        <h5>Practices: Intermediate Cyber Hygiene</h5>
+        <div class="mb-3">
+          Level 2 serves as a progression from Level 1 to Level 3 and consists of a subset of the security requirements
+          specified in NIST SP 800-171 as well as practices from other standards and references. Because this level is a
+          transitional stage, a subset of the practices reference the protection of CUI.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedLevel.value === 3">
+    <h4>CMMC Level 3</h4>
+    <ul>
+      <li>
+        <h5>Processes: Managed</h5>
+        <div class="mb-3">
+          Level 3 requires that an organization establish, maintain and resource a plan demonstrating the management of
+          activities for practice implementation. The plan may include information on missions, goals, project plans,
+          resourcing, required training, and involvement of relevant stakeholders.
+        </div>
+      </li>
+      <li>
+        <h5>Practices: Good Cyber Hygiene</h5>
+        <div class="mb-3">
+          Level 3 focuses on the protection of CUI and encompasses all of the security requirements specified in NIST SP
+          800-171 as well as additional practices to mitigate threats. Note that DFARS clause 252.204-7012 applies, and
+          specifies additional requirements beyond NIST SP 800-171 security requirements such as incident reporting.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedLevel.value === 4">
+    <h4>CMMC Level 4</h4>
+    <ul>
+      <li>
+        <h5>Processes: Reviewed</h5>
+        <div class="mb-3">
+          Level 4 requires that an organization review and measure practices for effectiveness. In addition,
+          organizations at this level are able to take corrective action when necessary and inform higher level
+          management of status or issues on a recurring basis.
+        </div>
+      </li>
+      <li>
+        <h5>Practices: Proactive</h5>
+        <div class="mb-3">
+          Level 4 focuses on the protection of CUI from APTs and encompasses a subset of the enhanced security
+          requirements from Draft NIST SP 800-171B as well as other cybersecurity best practices. These practices
+          enhance the detection and response capabilities of an organization to address and adapt to the changing
+          tactics, techniques and procedures (TTPs) used by APTs.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedLevel.value === 5">
+    <h4>CMMC Level 5</h4>
+    <ul>
+      <li>
+        <h5>Processes: Optimizing</h5>
+        <div class="mb-3">
+          Level 5 requires an organization to standardize and optimize process implementation across the organization.
+        </div>
+      </li>
+      <li>
+        <h5>Practices: Advanced/Proactive</h5>
+        <div class="mb-3">
+          Level 5 focuses on the protection of CUI from APTs. The additional practices increase the depth and
+          sophistication of cybersecurity capabilities.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <app-nav-back-next [page]="'cmmc-levels'"></app-nav-back-next>
+
+</div>

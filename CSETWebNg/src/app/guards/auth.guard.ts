@@ -30,7 +30,7 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
     private parser = new JwtParser();
-
+    private holdItForAMoment = sessionStorage.getItem('isAPI_together_With_Web');
     constructor(private router: Router, private authSvc: AuthenticationService) { }
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
@@ -38,8 +38,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      if (this.authSvc.userToken() && this.parser.decodeToken(this.authSvc.userToken()).userid) { return true; }
-
+      //console.log("here is my userid:"+  this.parser.decodeToken(this.authSvc.userToken()).userid);
+      if (this.authSvc.userToken() 
+        && this.parser.decodeToken(this.authSvc.userToken()).userid) 
+      {        
+        return true;
+      }      
       this.router.navigate(['/home/login'], {queryParamsHandling: "preserve"});
       return false;
     }

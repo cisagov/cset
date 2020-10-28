@@ -25,7 +25,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <summary>
         /// 
         /// </summary>
-        protected int _assessmentId;
+        protected int assessmentID;
 
         /// <summary>
         /// 
@@ -62,7 +62,7 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                _assessmentId = assessmentId;
+                assessmentID = assessmentId;
                 InitializeApplicationMode(db);
                 InitializeSalLevel(db);
                 InitializeStandardsForAssessment(db);
@@ -76,7 +76,7 @@ namespace CSETWeb_Api.BusinessManagers
             // Get any subcategory answers for the assessment
             this.subCatAnswers = (from sca in db.SUB_CATEGORY_ANSWERS
                                   join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on sca.Heading_Pair_Id equals usch.Heading_Pair_Id
-                                  where sca.Assessement_Id == _assessmentId
+                                  where sca.Assessement_Id == assessmentID
                                   select new SubCategoryAnswersPlus()
                                   {
                                       AssessmentId = sca.Assessement_Id,
@@ -95,7 +95,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         protected void InitializeApplicationMode(CSET_Context db)
         {
-            applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId)
+            applicationMode = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentID)
                 .Select(x => x.Application_Mode).FirstOrDefault();
 
             // Default to 'questions mode' if not already set
@@ -124,7 +124,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             var querySalLevel = from usl in db.UNIVERSAL_SAL_LEVEL
                                 from ss in db.STANDARD_SELECTION
-                                    .Where(s => s.Assessment_Id == _assessmentId && s.Selected_Sal_Level == usl.Full_Name_Sal)
+                                    .Where(s => s.Assessment_Id == assessmentID && s.Selected_Sal_Level == usl.Full_Name_Sal)
                                 select usl.Universal_Sal_Level1;
             _standardLevel = querySalLevel.ToList().FirstOrDefault();
 
@@ -138,7 +138,7 @@ namespace CSETWeb_Api.BusinessManagers
         protected void InitializeStandardsForAssessment(CSET_Context db)
         {
             List<string> result = new List<string>();
-            var sets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == _assessmentId && x.Selected)
+            var sets = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentID && x.Selected)
                 .Select(x => x.Set_Name);
             _setNames = sets.ToList();
         }
@@ -151,7 +151,7 @@ namespace CSETWeb_Api.BusinessManagers
         public void SetApplicationMode(string mode)
         {
             var db = new CSET_Context();
-            var standardSelection = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var standardSelection = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
             if (standardSelection != null)
             {
                 standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
@@ -159,7 +159,7 @@ namespace CSETWeb_Api.BusinessManagers
                 db.SaveChanges();
             }
 
-            AssessmentUtil.TouchAssessment(_assessmentId);
+            AssessmentUtil.TouchAssessment(assessmentID);
         }
 
         public int StoreComponentAnswer(Answer answer)
@@ -183,7 +183,7 @@ namespace CSETWeb_Api.BusinessManagers
             ANSWER dbAnswer = null;
             if (answer != null)
             {
-                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentID
                             && x.Question_Or_Requirement_Id == answer.QuestionId
                             && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
@@ -194,7 +194,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAnswer = new ANSWER();
             }
 
-            dbAnswer.Assessment_Id = _assessmentId;
+            dbAnswer.Assessment_Id = assessmentID;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Is_Requirement = false;
@@ -210,7 +210,7 @@ namespace CSETWeb_Api.BusinessManagers
             db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();
 
-            AssessmentUtil.TouchAssessment(_assessmentId);
+            AssessmentUtil.TouchAssessment(assessmentID);
 
             return dbAnswer.Answer_Id;
         }
@@ -242,13 +242,13 @@ namespace CSETWeb_Api.BusinessManagers
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
-                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentID
                             && x.Question_Or_Requirement_Id == answer.QuestionId
                             && x.Is_Requirement == answer.Is_Requirement && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
             else if (answer != null)
             {
-                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentID
                 && x.Question_Or_Requirement_Id == answer.QuestionId
                 && x.Is_Requirement == answer.Is_Requirement).FirstOrDefault();
             }
@@ -258,7 +258,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAnswer = new ANSWER();
             }
 
-            dbAnswer.Assessment_Id = _assessmentId;
+            dbAnswer.Assessment_Id = assessmentID;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Is_Requirement = answer.Is_Requirement;
@@ -270,11 +270,12 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
             dbAnswer.Is_Component = answer.Is_Component;
+            dbAnswer.Is_Maturity = answer.Is_Maturity;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();
 
-            AssessmentUtil.TouchAssessment(_assessmentId);
+            AssessmentUtil.TouchAssessment(assessmentID);
 
             return dbAnswer.Answer_Id;
         }
@@ -290,8 +291,8 @@ namespace CSETWeb_Api.BusinessManagers
             using (CSET_Context context = new CSET_Context())
             {
 
-                var list = context.usp_Answer_Components_Default(this._assessmentId).Cast<Answer_Components_Base>().ToList();
-                    //.Where(x => x.Assessment_Id == this._assessmentId).Cast<Answer_Components_Base>()
+                var list = context.usp_Answer_Components_Default(this.assessmentID).Cast<Answer_Components_Base>().ToList();
+                    //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
                     //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
                 AddResponse(resp, context, list, "Component Defaults");
@@ -303,8 +304,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             List<Answer_Components_Base> dlist = null;
-            context.LoadStoredProc("[dbo].[usp_getAnswerComponentOverrides]")
-              .WithSqlParam("assessment_id", this._assessmentId)
+            context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
+              .WithSqlParam("assessment_id", this.assessmentID)
               .ExecuteStoredProc((handler) =>
               {
                   dlist = handler.ReadToList<Answer_Components_Base>()
@@ -395,7 +396,7 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            resp.QuestionGroups.AddRange(groupList);
+            resp.Domains[0].Categories.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
@@ -472,11 +473,22 @@ namespace CSETWeb_Api.BusinessManagers
             }
 
 
-            resp.QuestionGroups.AddRange(groupList);
+            var container = new Domain() 
+            {
+                DisplayText = listname
+            };
+            container.Categories.AddRange(groupList);
+            resp.Domains.Add(container);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string FormatLineBreaks(string s)
         {
             return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");

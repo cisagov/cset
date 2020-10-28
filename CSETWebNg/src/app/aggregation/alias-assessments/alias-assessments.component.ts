@@ -24,7 +24,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
@@ -47,7 +47,7 @@ export class AliasAssessmentsComponent implements OnInit {
     public route: ActivatedRoute,
     public router: Router,
     public dialog: MatDialog,
-    public navSvc: NavigationAggregService
+    public navAggSvc: NavigationAggregService
   ) {
     this.aggregationSvc.getAggregationToken(+this.route.snapshot.params['id']);
   }
@@ -152,7 +152,7 @@ export class AliasAssessmentsComponent implements OnInit {
       return;
     }
 
-    this.navSvc.navBack('alias-assessments');
+    this.navAggSvc.navBack('alias-assessments');
   }
 
   /**
@@ -176,7 +176,7 @@ export class AliasAssessmentsComponent implements OnInit {
       if (result) {
         this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.AggregationId)
           .subscribe(() => {
-            this.navSvc.navBack('alias-assessments');
+            this.navAggSvc.navBack('alias-assessments');
           });
       }
     });

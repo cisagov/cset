@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { AboutComponent } from '../../dialogs/about/about.component';
@@ -42,7 +42,7 @@ import { ConfigService } from '../../services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
 import { AggregationService } from '../../services/aggregation.service';
-
+import { FileUploadClientService } from '../../services/file-client.service';
 
 declare var $: any;
 
@@ -65,6 +65,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
+    public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService

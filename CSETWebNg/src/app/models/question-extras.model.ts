@@ -80,6 +80,7 @@ export interface QuestionInformationTabData {
   ShowNoQuestionInformation: boolean;
   ExaminationApproach: String;
   Is_Component: boolean;
+  Is_Maturity: boolean;
 }
 
 export interface RequirementTabData {

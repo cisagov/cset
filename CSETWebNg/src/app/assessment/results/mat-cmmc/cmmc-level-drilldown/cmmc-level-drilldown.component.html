@@ -1,0 +1,110 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+  <h3>Level Drill Down</h3>
+
+  <div *ngIf="!initialized">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  
+  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+    <div *ngIf="initialized && !dataError">
+      <h1>CMMC Bar Chart</h1>
+    </div>
+    <div *ngIf="initialized && !dataError">
+        <div class="flex flex-container barChartRowContainer">                
+            <div class="flex levelIndicatorContainer">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Target Level
+                    </div>
+                    <div class="rbLevel">
+                        {{cmmcModel?.TargetLevel}}
+                    </div>
+                </div>                    
+            </div>
+            <div class="flex barChartContainer">
+                <div *ngFor="let i of statsByLevel" class="barChartRow"> 
+                    <div class="barChartLabel">Level {{i?.ModelLevel}}</div> 
+                    <div class="barChartBar">
+                        <div class="barAnswered" [ngStyle]="getBarSettings(i)">
+
+                        </div>
+                    </div> 
+                </div>
+                <div class="barChartLabels">
+                    <div class="barChartHorizontalLabel"> 0 </div>
+                    <div class="barChartHorizontalLabel"> 25 </div>
+                    <div class="barChartHorizontalLabel"> 50 </div>
+                    <div class="barChartHorizontalLabel"> 75 </div>
+                    <div class="barChartHorizontalLabel"> 100 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="initialized && !dataError">
+        <h1>CMMC Pie Charts</h1>
+    </div>
+    <div *ngFor="let i of statsByLevel">
+        <div *ngIf="isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="levelDescriptions[i.ModelLevel]">
+            Test
+        </div>
+        <div *ngIf="isWithinModelLevel(i)" class="flex-container pieChartRow">                
+            <div class="levelIndicatorContainer">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Target Level
+                    </div>
+                    <div class="rbLevel">
+                        {{i?.ModelLevel}}
+                    </div>
+                </div>                    
+            </div>
+
+            <div class="flex flex-row-item pieChartcontainer">                    
+                <div class="piechartBackground piechartitem testChart" ></div>
+                <div class="piechart piechartitem" 
+                [ngStyle]="getRadi(i)"
+                [style.border]="getBorder(3)"></div>
+            </div>
+            <div class="pieChartLabelContainer">
+                    <div *ngIf="i.questionUnAnswered"class="pieChartLabel">
+                    Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.1'}} 
+                </div>
+                <div  class="pieChartLabel" >
+                    Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.1'}} 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="initialized && dataError">
+      <h1>Error Loading Data</h1>
+      <p>There was an error retreiving the data for this page. Please reload the page.</p>
+    </div>
+    
+    <app-nav-back-next [page]="'cmmc-level-drilldown'"></app-nav-back-next>
+    
+  </div>
+</div>

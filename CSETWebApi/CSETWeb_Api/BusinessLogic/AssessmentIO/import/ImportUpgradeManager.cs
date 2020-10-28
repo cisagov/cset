@@ -22,10 +22,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         static ImportUpgradeManager()
         {
-            upgraders.Add("9.0", new CSET90_to_901Upgrade());
-            upgraders.Add("9.0.1", new CSET901_to_92Upgrade());
-            upgraders.Add("9.0.4", new CSET901_to_92Upgrade());
-            upgraders.Add("9.2", null);
+            upgraders.Add("9.0", new CSET_09_0_0_to_09_0_1_Upgrade());
+            upgraders.Add("9.0.1", new CSET_09_0_1_to_09_2_Upgrade());
+            upgraders.Add("9.0.4", new CSET_09_0_1_to_09_2_Upgrade());
+            upgraders.Add("9.2", new CSET_09_2_0_to_09_2_1_Upgrade());
+            upgraders.Add("9.2.1", new CSET_09_2_1_to_09_2_2_Upgrade());
+            upgraders.Add("9.2.2", new CSET_09_2_2_to_09_2_3_Upgrade());
+            upgraders.Add("9.2.3", new CSET_09_2_3_to_10_0_0_Upgrade());
+            upgraders.Add("10.0.0", new CSET_10_0_0_to_10_0_1_Upgrade());
+            upgraders.Add("10.0.1", new CSET_10_0_1_to_10_1_0_Upgrade());
+            upgraders.Add("10.1", null);
         }
 
 
@@ -54,6 +60,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
             System.Version version = ConvertFromStringToVersion(versionToken.Value<string>());
 
+            // correct version notation if necessary
+            if (version == new System.Version("9.21"))
+            {
+                version = new System.Version("9.2.1");
+            }
+
 
             while (version < latestVersion)
             {
@@ -64,6 +76,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     version = fileUpgrade.GetVersion();
                 }
             }
+
             return json;
         }
 

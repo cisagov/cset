@@ -22,10 +22,11 @@
 //
 ////////////////////////////////
 
+//update for 10.0.1
+
 import { Component, OnInit } from '@angular/core';
 import { AnalysisService } from '../../../services/analysis.service';
 import { ConfigService } from '../../../services/config.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
@@ -50,11 +51,10 @@ export class FeedbackComponent implements OnInit {
 
   constructor(
     private assessSvc: AssessmentService,
-    private navSvc: NavigationService,
     private router: Router,
     private route: ActivatedRoute,
     private analysisSvc: AnalysisService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     private configSvc: ConfigService
   ) { }
 
@@ -63,7 +63,7 @@ export class FeedbackComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
     this.analysisSvc.getFeedback().subscribe(x => this.setupTable(x));
 
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
   }
