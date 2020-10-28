@@ -737,6 +737,20 @@ table.td-align-top td {
   border-radius: .5rem;
 }
 
+.sal-slider-label {  
+  display: inline-block;
+  font-size: .6em;
+  background: $primary-400;
+  color:white;
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+.sal-slider-label + .sal-slider-label {  
+  float:right;
+  color:black;
+  background: $primary-100;
+}
+
 
 .align-left {
   text-align: left;
