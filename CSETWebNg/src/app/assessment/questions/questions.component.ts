@@ -119,6 +119,8 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
 
     this.assessSvc.currentTab = 'questions';
     this.loaded = true;
+
+    this.questionsSvc.evaluateFilters(this.domains);
   }
 
   /**
