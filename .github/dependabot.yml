@@ -1,0 +1,81 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions" 
+    directory: "/" 
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "npm" 
+    directory: "/CSETWebNg/" 
+    schedule:
+      interval: "daily"
+      
+  - package-ecosystem: "npm" 
+    directory: "/CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/" 
+    schedule:
+      interval: "daily"
+ 
+  - package-ecosystem: "npm" 
+    directory: "/CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/math/" 
+    schedule:
+      interval: "daily"
+           
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/CSETWeb_Api/" 
+    schedule:
+      interval: "daily"
+           
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/DataLayerCore/" 
+    schedule:
+      interval: "daily"
+           
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/CSETWeb_ApiTests/" 
+    schedule:
+      interval: "daily"
+           
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/DataAccess/" 
+    schedule:
+      interval: "daily"
+           
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/DataLayer/" 
+    schedule:
+      interval: "daily"
+           
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/DatabaseMaintenance/" 
+    schedule:
+      interval: "daily"
+      
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/LocalWebSetup/" 
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/MigrationBackup/6ec253ad/ExportCSV/" 
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget" 
+    directory: "CSETWebApi/CSETWeb_Api/WebAPIFileUploadExample/" 
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/lucene/SearchIndex2/" 
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget" 
+    directory: "/CSETWebApi/CSETWeb_Api/BusinessLogic/" 
+    schedule:
+      interval: "daily"
