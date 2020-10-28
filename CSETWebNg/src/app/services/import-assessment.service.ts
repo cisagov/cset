@@ -71,6 +71,10 @@ export class ImportAssessmentService {
 
       // create a new progress-subject for every file
       const progress = new Subject<number>();
+      // Save every progress-observable in a map of all observables
+      status[file.name] = {
+        progress: progress.asObservable()
+      };
 
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
@@ -89,10 +93,6 @@ export class ImportAssessmentService {
         }
       });
 
-      // Save every progress-observable in a map of all observables
-      status[file.name] = {
-        progress: progress.asObservable()
-      };
     });
 
     // return the map of progress.observables
