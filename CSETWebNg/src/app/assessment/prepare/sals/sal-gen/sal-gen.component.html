@@ -46,13 +46,19 @@
         <label class="mb-1" style="border-radius: .5rem">{{slider.OnSite.Sal_Description}}</label>
 
         <div class="p-2">
+            <div class="sal-slider-label">On Site {{slider?.OffSite?.values[0]}}</div>
+            <div class="sal-slider-label">On Site {{slider?.OffSite?.values[slider?.OffSite?.values?.length - 1]}}</div>
             <ng5-slider [(value)]="slider.OnSite.Slider_Value"
-                (valueChange)="valueChange($event, slider.OnSite.Sal_Name)" [options]="slider.OnSite.options"
+                (valueChange)="valueChange($event, slider.OnSite.Sal_Name)"
+                [options]="slider.OnSite.options"
                 [pointer-type]=""
                 class="mx-1 mb-4"></ng5-slider>
-
+            
+                <div class="sal-slider-label">Off Site {{slider?.OnSite?.values[0]}}</div>
+                <div class="sal-slider-label">Off Site {{slider?.OnSite?.values[slider?.OffSite?.values?.length - 1]}}</div>
             <ng5-slider [(value)]="slider.OffSite.Slider_Value"
-                (valueChange)="valueChange($event, slider.OffSite.Sal_Name)" [options]="slider.OffSite.options"
+                (valueChange)="valueChange($event, slider.OffSite.Sal_Name)" 
+                [options]="slider.OffSite.options"
                 class="mx-1 mb-4"></ng5-slider>
         </div>
         <!-- fw-500 fs-base-2 bgc-gray-100 -->
