@@ -73,7 +73,7 @@ namespace CSETWeb_Api.Controllers
 
             if (applicationMode.ToLower().StartsWith("questions"))
             {
-                QuestionResponse resp = qm.GetQuestionList("*");
+                QuestionResponse resp = qm.GetQuestionListWithSet("*");
                 return qm.GetAnalyticQuestionAnswers(resp).OrderBy(x=>x.QuestionId).ToList();
             }
             else
