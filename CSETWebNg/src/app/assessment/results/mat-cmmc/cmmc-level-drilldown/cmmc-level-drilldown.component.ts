@@ -46,7 +46,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   //Level descriptions for pie charts
   levelDescriptions = {
     1: "Safeguard Federal Contract Information (FCI)",
-    2: "Serves as transition step in cybersecurity maturity progression to protect CUI",
+    2: "Serves as a transition step in cybersecurity maturity progression to protect CUI",
     3: "Protect Controlled Unclassified Information (CUI)",
     4: "Protect CUI and reduce risk of Advanced Persistent Threats (APTs)",
     5: "Protect CUI and reduce risk of Advanced Persistent Threats (APTs)",
