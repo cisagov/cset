@@ -63,23 +63,23 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         private void getSheetConfig(SpreadsheetDocument doc)
         {
             var sheetAPI = GetWorksheetPartByName(doc, "API");
-            //if (sheetAPI == null)
-            //{
-                this.dtAPI = WorksheetToDatatable(doc, GetWorksheetPartByName(doc,"2. RRA-Control Output"));
+            if (sheetAPI == null)
+            {
+                this.dtAPI = WorksheetToDatatable(doc, GetWorksheetPartByName(doc, "2. RRA-Control Output"));
                 this.targetSheetStartRow = 14;
                 this.cidColRef = "B";
                 this.statusColRef = "E";
                 this.MustParse = true;
-            //}
-            //else
-            //{
-                
-            //    this.dtAPI = WorksheetToDatatable(doc, sheetAPI);
-            //    this.targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
-            //    this.cidColRef = (string)dtAPI.Rows[3]["B"];
-            //    this.statusColRef = (string)dtAPI.Rows[4]["B"];
-            //}
-            
+            }
+            else
+            {
+
+                this.dtAPI = WorksheetToDatatable(doc, sheetAPI);
+                this.targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
+                this.cidColRef = (string)dtAPI.Rows[3]["B"];
+                this.statusColRef = (string)dtAPI.Rows[4]["B"];
+            }
+
             // Not sure how to use this number to find the right worksheet using OpenXML...
             // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;
             // ... so for now, using sheet name ...
@@ -125,10 +125,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         private List<AnswerMap> BuildDefaultAnswerMap()
         {
             List<AnswerMap> map = new List<AnswerMap>();
-            map.Add(new AnswerMap() { AwwaAnswer = "Fully Implemented and Maintained", CsetAnswer = "Y", CsetComment = "" });
-            map.Add(new AnswerMap() { AwwaAnswer = "Partially Implemented", CsetAnswer = "N", CsetComment = "" });
-            map.Add(new AnswerMap() { AwwaAnswer = "Planned and Not Implemented", CsetAnswer = "N", CsetComment = "Planned Only" });
-            map.Add(new AnswerMap() { AwwaAnswer = "Not Planned and/or Not Implemented - Risk Accepted", CsetAnswer = "NA", CsetComment = "Risk Accepted" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Fully Implemented and Maintained".ToLower(), CsetAnswer = "Y", CsetComment = "" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Partially Implemented".ToLower(), CsetAnswer = "N", CsetComment = "" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Planned and Not Implemented".ToLower(), CsetAnswer = "N", CsetComment = "Planned Only" });
+            map.Add(new AnswerMap() { AwwaAnswer = "Not Planned and/or Not Implemented - Risk Accepted".ToLower(), CsetAnswer = "NA", CsetComment = "Risk Accepted" });
 
             // map null values from spreadsheet to Unanswered
             map.Add(new AnswerMap()
