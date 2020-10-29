@@ -63,31 +63,28 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     var controltmpId = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.cidColRef, i));
                     var controlID = config.getControlId(controltmpId);
 
-                    if (string.IsNullOrEmpty(controlID))
+                    if (string.IsNullOrWhiteSpace(controlID))
                     {
                         break;
                     }
 
-                    if (!string.IsNullOrEmpty(controlID))
+                    var awwaAnswer = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.statusColRef, i));
+                    if (awwaAnswer != null)
                     {
-                        var awwaAnswer = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.statusColRef, i));
-                        if (awwaAnswer != null)
+                        awwaAnswer = awwaAnswer.Trim().ToLower();
+
+                        var mappedAnswer = answerMap.Where(x => x.AwwaAnswer?.ToLower() == awwaAnswer).FirstOrDefault();
+
+                        if (mappedAnswer != null)
                         {
-                            awwaAnswer = awwaAnswer.Trim().ToLower();
-
-                            var mappedAnswer = answerMap.Where(x => x.AwwaAnswer == awwaAnswer).FirstOrDefault();
-
-                            if (mappedAnswer != null)
+                            var a = new AwwaControlAnswer()
                             {
-                                var a = new AwwaControlAnswer()
-                                {
-                                    ControlID = controlID,
-                                    Answer = awwaAnswer,
-                                    CsetAnswer = mappedAnswer.CsetAnswer,
-                                    CsetComment = mappedAnswer.CsetComment
-                                };
-                                mappedAnswers.Add(a);
-                            }
+                                ControlID = controlID,
+                                Answer = awwaAnswer,
+                                CsetAnswer = mappedAnswer.CsetAnswer,
+                                CsetComment = mappedAnswer.CsetComment
+                            };
+                            mappedAnswers.Add(a);
                         }
                     }
                 }
