@@ -75,7 +75,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         {
                             awwaAnswer = awwaAnswer.Trim().ToLower();
 
-                            var mappedAnswer = answerMap.Where(x => x.AwwaAnswer == awwaAnswer).FirstOrDefault();
+                            var mappedAnswer = answerMap.Where(x => x.AwwaAnswer.ToLower() == awwaAnswer).FirstOrDefault();
 
                             if (mappedAnswer != null)
                             {
