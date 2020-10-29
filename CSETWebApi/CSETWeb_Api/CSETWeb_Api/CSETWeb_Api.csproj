@@ -4325,8 +4325,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <None Include="Data\sql16dev1.csetweb v %28localdb%29_v11.0.CSETWeb 2.scp" />
-    <None Include="Data\sql16dev1.CSETWeb v %28localdb%29_v11.0.CSETWeb.sdc" />
     <Content Include="LuceneIndex\segments.gen">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -4788,6 +4786,7 @@
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
     <Folder Include="assets\" />
+    <Folder Include="Data\" />
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
     <Folder Include="Views\Dashboard\" />
