@@ -3415,6 +3415,8 @@
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_4.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_analysis_screen_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_analysis_screen_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_analysis_screen_screen.png" />
     <Content Include="Documents\htmlhelp\drex_assessments_menu_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_assessments_menu_control_2.png" />
@@ -3461,6 +3463,15 @@
     <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom.png" />
     <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_change_password_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_7.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_8.png" />
+    <Content Include="Documents\htmlhelp\drex_cmmc_custom_9.png" />
     <Content Include="Documents\htmlhelp\drex_comments_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_comments_section_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_compare_custom.png" />
@@ -3634,6 +3645,7 @@
     <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_custom.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_model_selection_screen.png" />
     <Content Include="Documents\htmlhelp\drex_merge_custom.png" />
     <Content Include="Documents\htmlhelp\drex_merge_custom_2.png" />
@@ -3655,6 +3667,8 @@
     <Content Include="Documents\htmlhelp\drex_preparation_menu_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_preparation_menu_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_preparation_menu_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_preparation_menu_screen.png" />
     <Content Include="Documents\htmlhelp\drex_prepare_assessment_info_custom.png" />
     <Content Include="Documents\htmlhelp\drex_prepare_demographics_selection_custom.png" />
@@ -3706,6 +3720,8 @@
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_4.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_5.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_7.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_8.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_screen.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom_2.png" />
@@ -3726,6 +3742,8 @@
     <Content Include="Documents\htmlhelp\drex_results_menu_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_results_menu_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_results_menu_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_results_menu_screen.png" />
     <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_control_1.png" />
     <Content Include="Documents\htmlhelp\drex_results_ranked_questions_screen_screen.png" />
