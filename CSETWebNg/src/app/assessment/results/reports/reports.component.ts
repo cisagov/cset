@@ -44,7 +44,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private authSvc: AuthenticationService,
         public configSvc: ConfigService,
         private cdr: ChangeDetectorRef
-    ) { }
+    ) { 
+        if(this.assessSvc.assessment == null)
+        {
+        this.assessSvc.getAssessmentDetail().subscribe(
+            (data: any) => {
+            this.assessSvc.assessment = data;
+            });
+        }
+    }
 
     ngOnInit() {
         this.assessSvc.currentTab = 'results';

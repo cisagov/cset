@@ -124,7 +124,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   goHome() {
-    this.assessSvc.dropAssessment();
+    //this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
   }
 

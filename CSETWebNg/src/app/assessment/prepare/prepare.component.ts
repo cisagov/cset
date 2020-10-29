@@ -41,7 +41,13 @@ export class PrepareComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-
+    if(this.assessSvc.assessment == null)
+    {
+      this.assessSvc.getAssessmentDetail().subscribe(
+        (data: any) => {
+          this.assessSvc.assessment = data;
+        });
+    }
   }
 
   ngOnInit() {
