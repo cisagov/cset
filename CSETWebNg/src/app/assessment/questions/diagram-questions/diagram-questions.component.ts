@@ -53,7 +53,15 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
-  ) { }
+  ) { 
+    if(this.assessSvc.assessment == null)
+    {
+      this.assessSvc.getAssessmentDetail().subscribe(
+        (data: any) => {
+          this.assessSvc.assessment = data;
+        });
+    }
+  }
 
   ngOnInit() {
     this.loadQuestions();
