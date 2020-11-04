@@ -99,7 +99,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         // default the selected maturity filters
         // this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
-        this.refreshQuestionVisibility(magic);
+        this.refreshQuestionVisibility();
       },
       error => {
         console.log(
@@ -150,17 +150,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     /**
    * Re-evaluates the visibility of all questions/subcategories/categories
    * based on the current filter settings.
-   * Also re-draws the sidenav category tree, skipping categories
-   * that are not currently visible.
    */
-  refreshQuestionVisibility(magic?: string) {
-    if (!magic) {
-      magic = this.navSvc.getMagic();
-    }
-
+  refreshQuestionVisibility() {
     this.questionsSvc.evaluateFilters(this.domains);
-    if (!!this.domains) {
-      // this.populateTree(magic);
-    }
   }
 }
