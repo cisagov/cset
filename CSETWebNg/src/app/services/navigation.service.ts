@@ -374,9 +374,6 @@ export class NavigationService {
       this.setCurrentPage(targetPage.pageId);
 
       // determine the route path
-      if (!targetPage.path) {
-        debugger;
-      }
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
       return;
@@ -395,11 +392,6 @@ export class NavigationService {
       // navigate to the questions screen
       let targetPage = this.pages.find(p => p.pageId === 'phase-assessment');
       this.setCurrentPage(targetPage.pageId);
-
-      if (!targetPage.path) {
-        debugger;
-      }
-
 
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);

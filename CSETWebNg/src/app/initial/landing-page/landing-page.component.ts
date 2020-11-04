@@ -37,6 +37,7 @@ import { ImportAssessmentService } from "../../services/import-assessment.servic
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
 import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
+import { QuestionFilterService } from '../../services/question-filter.service';
 
 interface UserAssessment {
   AssessmentId: number;
@@ -71,7 +72,8 @@ export class LandingPageComponent implements OnInit {
     public importSvc: ImportAssessmentService,
     public fileSvc: FileUploadClientService,
     public titleSvc: Title,
-    public navSvc: NavigationService
+    public navSvc: NavigationService,
+    private filterSvc: QuestionFilterService
   ) { }
 
   ngOnInit() {
@@ -127,6 +129,7 @@ export class LandingPageComponent implements OnInit {
 
   getAssessments() {
     this.sortedAssessments = null;
+    this.filterSvc.refresh();
 
     const rid = localStorage.getItem("redirectid");
     if (rid != null) {
