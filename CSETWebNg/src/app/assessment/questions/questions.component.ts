@@ -39,7 +39,7 @@ import { ConfigService } from '../../services/config.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
+export class QuestionsComponent implements AfterViewChecked {
   @ViewChild('questionBlock') questionBlock;
 
   domains: Domain[] = null;
@@ -80,8 +80,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     if (this.browserIsIE()) {
       this.autoLoadSupplementalInfo = false;
     }
-    if(this.assessSvc.assessment == null)
-    {
+    if(this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -113,18 +112,6 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
       this.refreshQuestionVisibility();
     });
-  }
-
-  /**
-   *
-   */
-  ngAfterViewInit() {
-    if (this.domains != null && this.domains.length <= 0) {
-      this.loadQuestions();
-    }
-
-    this.assessSvc.currentTab = 'questions';
-    this.loaded = true;
   }
 
   /**
@@ -215,7 +202,6 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
-    this.domains = null;
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.assessSvc.applicationMode = response.ApplicationMode;
@@ -228,6 +214,8 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
         // default the selected maturity filters
         this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
+        this.assessSvc.currentTab = 'questions';
+        this.loaded = true;
         this.refreshQuestionVisibility();
       },
       error => {
