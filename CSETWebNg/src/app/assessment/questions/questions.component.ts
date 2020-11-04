@@ -39,7 +39,7 @@ import { ConfigService } from '../../services/config.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
+export class QuestionsComponent implements AfterViewChecked {
   @ViewChild('questionBlock') questionBlock;
 
   domains: Domain[] = null;
@@ -80,8 +80,7 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     if (this.browserIsIE()) {
       this.autoLoadSupplementalInfo = false;
     }
-    if(this.assessSvc.assessment == null)
-    {
+    if(this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -110,24 +109,9 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
     //clear out the navigation overrides
     //then call the get overrides questions api
     //and refressh overrides navigation
-    const magic = this.navSvc.getMagic();
     this.questionsSvc.getQuestionListOverridesOnly().subscribe((data: QuestionResponse) => {
-      this.refreshQuestionVisibility(magic);
+      this.refreshQuestionVisibility();
     });
-  }
-
-  /**
-   *
-   */
-  ngAfterViewInit() {
-    if (this.domains != null && this.domains.length <= 0) {
-      this.loadQuestions();
-    }
-
-    this.assessSvc.currentTab = 'questions';
-    this.loaded = true;
-
-    this.questionsSvc.evaluateFilters(this.domains);
   }
 
   /**
@@ -162,15 +146,8 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
    * Also re-draws the sidenav category tree, skipping categories
    * that are not currently visible.
    */
-  refreshQuestionVisibility(magic?: string) {
-    if (!magic) {
-      magic = this.navSvc.getMagic();
-    }
-
+  refreshQuestionVisibility() {
     this.questionsSvc.evaluateFilters(this.domains);
-    if (!!this.domains) {
-      // this.populateTree(magic);
-    }
   }
 
   /**
@@ -225,8 +202,6 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
-    const magic = this.navSvc.getMagic();
-    this.domains = null;
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.assessSvc.applicationMode = response.ApplicationMode;
@@ -239,7 +214,9 @@ export class QuestionsComponent implements AfterViewInit, AfterViewChecked {
         // default the selected maturity filters
         this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
-        this.refreshQuestionVisibility(magic);
+        this.assessSvc.currentTab = 'questions';
+        this.loaded = true;
+        this.refreshQuestionVisibility();
       },
       error => {
         console.log(
