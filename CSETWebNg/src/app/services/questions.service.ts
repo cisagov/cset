@@ -332,7 +332,8 @@ export class QuestionsService {
         });
 
         // evaluate category heading visibility
-        c.Visible = (!!c.SubCategories.find(s => s.Visible));
+        d.Categories[i].Visible = (!!c.SubCategories.find(s => s.Visible));
+        // c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
       
       // evaluate domain heading visibility
@@ -340,7 +341,6 @@ export class QuestionsService {
 
       console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
     });
-
   }
 
   /**
