@@ -296,6 +296,7 @@ namespace CSETWeb_Api.BusinessManagers
                 foreach (var question in questionlist.ToList())
                 {
                     Answer_Components_Exploded_ForJSON tmp = null;
+                    TinyMapper.Bind<usp_getExplodedComponent, Answer_Components_Exploded_ForJSON>();
                     tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
                     tmp.Component_GUID = question.Component_GUID.ToString();
                     rlist.Add(tmp);
