@@ -264,13 +264,7 @@ export class QuestionsService {
     let categoryAccessControl = null;
 
     domains.forEach(d => {
-      d.Categories.forEach(c => {
-
-
-        if (c.GroupHeadingText == 'Access Control') {
-          categoryAccessControl = c;
-        }
-
+      d.Categories.forEach((c, i) => {
         c.SubCategories.forEach(s => {
           s.Questions.forEach(q => {
             // start with false, then set true if possible
@@ -339,9 +333,6 @@ export class QuestionsService {
 
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
-        console.log('category ' + c.GroupHeadingText + ' is marked visible = ' + c.Visible);
-
-        console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
       });
       
       // evaluate domain heading visibility
@@ -349,11 +340,7 @@ export class QuestionsService {
 
       console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
     });
-    
-    console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
 
-    console.log('domains just before returning from evaluateFilters(): ');
-    console.log(domains);
   }
 
   /**
