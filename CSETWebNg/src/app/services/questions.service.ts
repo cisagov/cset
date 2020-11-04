@@ -261,8 +261,16 @@ export class QuestionsService {
 
     const filterStringLowerCase = filter.filterString.toLowerCase();
 
+    let categoryAccessControl = null;
+
     domains.forEach(d => {
       d.Categories.forEach(c => {
+
+
+        if (c.GroupHeadingText == 'Access Control') {
+          categoryAccessControl = c;
+        }
+
         c.SubCategories.forEach(s => {
           s.Questions.forEach(q => {
             // start with false, then set true if possible
@@ -325,18 +333,27 @@ export class QuestionsService {
             }
           });
 
-          /// now evaluate subcat visiblity
+          // now evaluate subcat visiblity
           s.Visible = (!!s.Questions.find(q => q.Visible));
         });
 
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
-      });
+        console.log('category ' + c.GroupHeadingText + ' is marked visible = ' + c.Visible);
 
+        console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
+      });
+      
       // evaluate domain heading visibility
       d.Visible = (!!d.Categories.find(c => c.Visible));
-    });
 
+      console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
+    });
+    
+    console.log('Access Control visibility is: ' + categoryAccessControl.Visible);
+
+    console.log('domains just before returning from evaluateFilters(): ');
+    console.log(domains);
   }
 
   /**
