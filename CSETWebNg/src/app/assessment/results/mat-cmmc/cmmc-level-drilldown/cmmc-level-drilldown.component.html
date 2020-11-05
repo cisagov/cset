@@ -29,11 +29,11 @@
     </div>
   </div>
   
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+  <div class="d-flex flex-column flex-11a mt-3" [class.d-none]="!initialized">
     <div *ngIf="initialized && !dataError">
-      <h1>CMMC Bar Chart</h1>
+      <h4>CMMC Bar Chart</h4>
     </div>
-    <div *ngIf="initialized && !dataError">
+    <div *ngIf="initialized && !dataError" class="mb-3">
         <div class="flex flex-container barChartRowContainer">                
             <div class="flex levelIndicatorContainer">
                 <div class="roundedBox">
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div *ngIf="initialized && !dataError">
-        <h1>CMMC Pie Charts</h1>
+        <h4>CMMC Pie Charts</h4>
     </div>
     <div *ngFor="let i of statsByLevel">
         <div *ngIf="isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="levelDescriptions[i.ModelLevel]">
@@ -75,7 +75,7 @@
             <div class="levelIndicatorContainer">
                 <div class="roundedBox">
                     <div class="rbTitle">
-                        Target Level
+                        <span *ngIf="cmmcModel.TargetLevel == i?.ModelLevel">Target</span> Level
                     </div>
                     <div class="rbLevel">
                         {{i?.ModelLevel}}

@@ -1,3 +1,27 @@
+/* 
+
+  Copyright 2020 Battelle Energy Alliance, LLC  
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), to deal 
+in the Software without restriction, including without limitation the rights 
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions: 
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software. 
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+SOFTWARE. 
+
+*/
+@import './variables';
 
 :host {
     --arrow-width: 21em;
@@ -74,6 +98,10 @@
       height: 12em;
       // flex-basis: 15%;
       margin-right:5em;
+      
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
   
     .levelIndicatorContainer .rbTitle{
@@ -105,7 +133,7 @@
     .pieChartRowTitle{
       font-size: 1.2em;
       font-weight: bold;
-      letter-spacing: .06em;
+      // letter-spacing: .06em;
       margin-bottom: 1em;
     }
     .barChartRowContainer{
@@ -152,7 +180,7 @@
       display: flex;
       flex-direction: row;
       margin-left: 4em;
-  
+      margin-right: 2rem;
     }
     .barChartHorizontalLabel{
       display: flex;
@@ -472,7 +500,8 @@
     justify-content: center;
   }
   .notAnswered {
-    background: rgb(255, 222, 33);
+    // background: rgb(255, 222, 33);
+    background: $no-color;
     color: var(--blue-text);
   }
   .barHeader{
