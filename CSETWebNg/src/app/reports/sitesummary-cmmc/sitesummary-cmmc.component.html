@@ -57,7 +57,7 @@
         <h1>Disclaimer</h1>
 
         <p>The analysis, data, and reports in CSET
-            <sup>®</sup> are provided “as is” for informational purposes only. The Department of Homeland Security (DHS)
+            <sup>®</sup> are provided "as is" for informational purposes only. The Department of Homeland Security (DHS)
             does
             not provide any warranties of any kind regarding any information contained within. In no event shall the
             United
@@ -203,14 +203,14 @@
 
 
     <!-- Pyramid Graph Page -->
-    <div class="page-break">   
-        <h1 class="pageHeader">Your Target Level Within The CMMC Practices and Processes</h1>
-        <p>The CMMC model measures cybersecurity maturity with five levels. 
-            Each of these levels, in turn, consists of a set of processes and 
-            practices which are characterized in Figure 2. The processes range 
-            from ‘Performed’ at Level 1 to ‘Optimizing’ at Level 5 and the 
-            practices range from ‘Basic Cyber Hygiene’ at Level 1 to 
-            Advanced/Progressive’ at Level 5.</p>
+    <div class="page-break">
+        <h1 class="pageHeader">Assessment Target Level Within the CMMC Practices and Processes</h1>
+        <p>The CMMC model measures cybersecurity maturity with five levels.
+            Each of these levels, in turn, consists of a set of processes and
+            practices which are characterized in Figure 2. The processes range
+            from "Performed" at Level 1 to "Optimizing" at Level 5 and the
+            practices range from "Basic Cyber Hygiene" at Level 1 to
+            "Advanced/Progressive" at Level 5.</p>
         <div class="pyramidGraphContainer">
             <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
                 <div class="roundedBox">
@@ -220,7 +220,7 @@
                     <div class="rbLevel">
                         {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}
                     </div>
-                </div>                    
+                </div>
             </div>
             <div class="pyramidGraph">
                 <div class="arrowContainer">
@@ -241,116 +241,110 @@
                         <div class="arrowBaseMask arrowBaseRight"></div>
                     </div>
                 </div>
-                <div class="pyramidLevel levelOne"
-                [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(5)" >            
+                <div class="pyramidLevel levelOne" [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(5)">
                     <div class="pyramidRowItem">
                         Advanced/Progressive
                     </div>
                     <div class="pyramidRowItem">
                         Optimizing
                     </div>
-                    <div style="flex-basis:0"> 
-                        <div class="pyramidRowLabel">
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
                             Level Five
                         </div>
                     </div>
                 </div>
-                <div class="pyramidLevel levelTwo"
-                [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(4)" >            
+                <div class="pyramidLevel levelTwo" [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(4)">
                     <div class="pyramidRowItem">
                         Proactive
                     </div>
                     <div class="pyramidRowItem">
                         Reviewed
                     </div>
-                    <div style="flex-basis:0"> 
-                        <div class="pyramidRowLabel">
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
                             Level Four
                         </div>
                     </div>
                 </div>
-                <div class="pyramidLevel levelThree "
-                [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(3)" >           
+                <div class="pyramidLevel levelThree " [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(3)">
                     <div class="pyramidRowItem">
                         Good Cyber Hygiene
                     </div>
                     <div class="pyramidRowItem">
                         Managed
-                    </div><div style="flex-basis:0"> 
-                        <div class="pyramidRowLabel">
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
                             Level Three
                         </div>
                     </div>
                 </div>
-                <div class="pyramidLevel levelFour"
-                [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(2)" >       
+                <div class="pyramidLevel levelFour" [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(2)">
                     <div class="pyramidRowItem">
                         Intermediate Cyber Hygiene
                     </div>
                     <div class="pyramidRowItem">
                         Documented
                     </div>
-                    <div style="flex-basis:0"> 
-                        <div class="pyramidRowLabel">
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
                             Level Two
                         </div>
                     </div>
-                    
+
                 </div>
-                <div class="pyramidLevel levelFive"
-                    [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(1)"    
-                >            
+                <div class="pyramidLevel levelFive" [ngStyle]="cmmcStyleSvc?.getPyramidRowColor(1)">
                     <div class="pyramidRowItem">
                         Basic Cyber Hygiene
                     </div>
                     <div class="pyramidRowItem">
                         Performed
                     </div>
-                    <div style="flex-basis:0"> 
-                        <div class="pyramidRowLabel">
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
                             Level One
                         </div>
                     </div>
                 </div>
             </div>
-        </div>      
-        <p>
-            The CMMC levels and the associated sets of processes and practices 
-            across domains are cumulative. More specifically, in order for an 
-            organization to achieve a specific CMMC level it must also demonstrate 
+        </div>
+        <p class="my-4">
+            The CMMC levels and the associated sets of processes and practices
+            across domains are cumulative. More specifically, in order for an
+            organization to achieve a specific CMMC level it must also demonstrate
             achievement of the preceding lower levels.
-        </p> 
+        </p>
     </div>
 
     <!-- Level Step Graph Page -->
-    <div class="page-break">   
-        <h1 class="pageHeader">CMMC Processes and Practices Explained</h1>        
+    <div class="page-break">
+        <h1 class="pageHeader">CMMC Processes and Practices Explained</h1>
         <div class="column">
             <p style="text-align: center">
                 <img class="step-graph-chart" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg">
                 <!-- <svg width="471" height="529" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg"></svg> -->
             </p>
         </div>
-        
+
         <p>
-            Your target level shows where your organization should focus 
+            The target level shows where the organization should focus
             on processes and practices and along the CMMC maturity spectrum.
-        </p> 
+        </p>
     </div>
 
     <div class="levelDescriptions">
-        <h1 *ngIf="cmmcStyleSvc?.cmmcModel?.TargetLevel == 1" class="selectedTargetLevelTitle"> LEVEL 1: YOUR TARGET LEVEL</h1>
-        <h1> CMMC Level 1</h1>
+        <h1>CMMC Level 1 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 1 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Performed</p>
         <p>Level 1 requires that an organization performs the specified practices. Because the
             organization may only be able to perform these practices in an ad-hoc manner and may
             or may not rely on documentation, process maturity is not assessed for Level 1.</p>
         <p class="levelTitle">PRACTICES: Basic Cyber Hygiene</p>
-        <p>Level 1 focuses on the protection of FCI and consists only of practices that correspond to the 
-            basic safeguarding requirements specified in 48 CFR 52.204-21 ("Basic Safeguarding of Covered 
-            Contractor Information Systems")[3]</p>
-        <h1 *ngIf="cmmcStyleSvc?.cmmcModel?.TargetLevel == 2" class="selectedTargetLevelTitle"> LEVEL 2: YOUR TARGET LEVEL</h1>
-        <h1> CMMC Level 2</h1>
+        <p>Level 1 focuses on the protection of FCI and consists only of practices that correspond to the
+            basic safeguarding requirements specified in 48 CFR 52.204-21 ("Basic Safeguarding of Covered
+            Contractor Information Systems")[3].</p>
+
+        <h1>CMMC Level 2 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 2 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Documented</p>
         <p>Level 2 requires that an organization establish and document practices and
             policies to guide the implementation of their CMMC efforts. The documentation of
@@ -362,56 +356,62 @@
             security requirements specified in NIST SP 800-171 [4] as well as practices from other
             standards and references. Because this level represents a transitional stage, a subset of the
             practices reference the protection of CUI.</p>
-        <h1 *ngIf="cmmcStyleSvc?.cmmcModel?.TargetLevel == 3" class="selectedTargetLevelTitle"> LEVEL 3: YOUR TARGET LEVEL</h1>
-        <h1> CMMC Level 3</h1>
+
+        <h1>CMMC Level 3 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 3 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Managed</p>
-        <p>Level 3 requires that an organization establish, maintain. and resource a plan demonstrating the 
+        <p>Level 3 requires that an organization establish, maintain. and resource a plan demonstrating the
             management of activities for practice implementation.
-            The plan may include information on mission goals, 
+            The plan may include information on mission goals,
             project plans, resourcing, required training, and involvement of relevant stakeholders.
         </p>
         <p class="levelTitle">PRACTICES: Good Cyber Hygiene</p>
-        <p>Level 3 focuses on the protection of CUI and encompasses all of the security requirements 
+        <p>Level 3 focuses on the protection of CUI and encompasses all of the security requirements
             specified in NIST SP 800-171 [4] as well as additional practices from other standards
             and references to mitigate threats.
         </p>
         <p>
-            It is noted that DFARS clause 252.204-7012 ("Safeguarding of Covered Defense Information and Cyber Incident Reporting")
+            It is noted that DFARS clause 252.204-7012 ("Safeguarding of Covered Defense Information and Cyber Incident
+            Reporting")
             [5] specifies additional requirements beyond the NIST SP 800-171 security such as incident reporting.
         </p>
-        <h1 *ngIf="cmmcStyleSvc?.cmmcModel?.TargetLevel == 4" class="selectedTargetLevelTitle"> LEVEL 4: YOUR TARGET LEVEL</h1>
-        <h1> CMMC Level 4</h1>
+
+        <h1> CMMC Level 4 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 4 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Reviewed</p>
-        <p>Level 4 requires that an organization review and measure practices for effectiveness. 
-            In addition to measuring practices for effectiveness, organizations at the level are 
-            able to take corrective action when necessary and inform higher level management of 
-            status or issues on a recurring basis</p>
+        <p>Level 4 requires that an organization review and measure practices for effectiveness.
+            In addition to measuring practices for effectiveness, organizations at the level are
+            able to take corrective action when necessary and inform higher level management of
+            status or issues on a recurring basis.</p>
         <p class="levelTitle">PRACTICES: Proactive</p>
-        <p>Level 4 focuses on the protection of CUI from APTs and encompasses a subset of the enhanced security requirements from 
-            Draft NIST SP 800-171B [6] as well as other cybersecurity best practices. These practices enhance the detection and 
-            response capabilities of an organization to address and adapt to the changing tactics, techniques, and procedures 
-            (TTPs) used by APTs</p>
-        <h1 *ngIf="cmmcStyleSvc?.cmmcModel?.TargetLevel == 5" class="selectedTargetLevelTitle"> LEVEL 5: YOUR TARGET LEVEL</h1>
-        <h1> CMMC Level 5</h1>
+        <p>Level 4 focuses on the protection of CUI from APTs and encompasses a subset of the enhanced security
+            requirements from
+            Draft NIST SP 800-171B [6] as well as other cybersecurity best practices. These practices enhance the
+            detection and
+            response capabilities of an organization to address and adapt to the changing tactics, techniques, and
+            procedures
+            (TTPs) used by APTs.</p>
+
+        <h1> CMMC Level 5 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 5 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Optimizing</p>
-        <p>Level 5 requires an organization to standardize and optimize process implementation across the organization.</p>
+        <p>Level 5 requires an organization to standardize and optimize process implementation across the organization.
+        </p>
         <p class="levelTitle">PRACTICES: Advanced/Proactive</p>
-        <p>Level 5 focuses on the protection of CUI from APTs. The additional practices increase the depth and sophistication  
-            of cybersecurity capabilities</p>
+        <p>Level 5 focuses on the protection of CUI from APTs. The additional practices increase the depth and
+            sophistication 
+            of cybersecurity capabilities.</p>
     </div>
 
     <!-- Excutive Summary, Basic Level Progress Bar Chart, Pie Charts Page -->
-    <div class="page-break">       
-        <h1 class="pageHeader">High-Level Assessment Description</h1>   
-        <h1 class="midBlackTitle">Executive Summary</h1>   
-        
+    <div class="page-break">
+        <h1 class="pageHeader">High-Level Assessment Description</h1>
+        <h1 class="midBlackTitle">Executive Summary</h1>
+
 
         <p>
             The theft of intellectual property and sensitive information from all industrial sectors due to
             malicious cyber activity threatens economic security and national security. The Council of
             Economic Advisors estimates that malicious cyber activity cost the U.S. economy between
             $57 billion and $109 billion in 2016. The Center for Strategic and International Studies
-            estimates that the total global cost of cybercrime was as high as $600 billion in 2017. 
+            estimates that the total global cost of cybercrime was as high as $600 billion in 2017.
         </p>
         <p>
             Malicious cyber actors have targeted, and continue to target the Defense Industrial Base
@@ -432,20 +432,20 @@
             of concern, and generated security and maturity model recommendations.
         </p>
         <p>
-            This report illustrates the cybersecurity maturity posture across your organization.
-            Conclusions and graphical representations drawn from your assessment encompass multiple
-            maturity levels ranging from “Basic Cybersecurity Hygiene” to “Advanced/Progressive,” also
-            expressed as “Performed” to “Optimized” in Figure 3.
+            This report illustrates the cybersecurity maturity posture across the organization.
+            Conclusions and graphical representations drawn from the assessment encompass multiple
+            maturity levels ranging from "Basic Cybersecurity Hygiene" to "Advanced/Progressive," also
+            expressed as "Performed" to "Optimized" in Figure 3.
         </p>
         <p>
-            The figure shows your organization’s progress throughout the CMMC based on your
+            The figure shows the organization’s progress throughout the CMMC based on the
             individual target level and overall cybersecurity assessment.
         </p>
 
 
 
-        <div class="levelBarChart">
-            <div class="flex flex-container barChartRowContainer">                
+        <div class="levelBarChart mb-5">
+            <div class="flex flex-container barChartRowContainer">
                 <div class="flex levelIndicatorContainer">
                     <div class="roundedBox">
                         <div class="rbTitle">
@@ -454,16 +454,16 @@
                         <div class="rbLevel">
                             {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}
                         </div>
-                    </div>                    
+                    </div>
                 </div>
-                <div *ngIf="cmmcStyleSvc?.statsByLevel"  class="flex barChartContainer">
-                    <div *ngFor="let i of cmmcStyleSvc?.statsByLevel" class="barChartRow"> 
-                        <div class="barChartLabel">Level {{i?.ModelLevel}}</div> 
+                <div *ngIf="cmmcStyleSvc?.statsByLevel" class="flex barChartContainer">
+                    <div *ngFor="let i of cmmcStyleSvc?.statsByLevel" class="barChartRow">
+                        <div class="barChartLabel">Level {{i?.ModelLevel}}</div>
                         <div class="barChartBar">
                             <div class="barAnswered" [ngStyle]="cmmcStyleSvc?.getBarSettings(i)">
 
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="barChartLabels">
                         <div class="barChartHorizontalLabel"> 0 </div>
@@ -475,34 +475,34 @@
                 </div>
             </div>
         </div>
-        <div class="levelPieCharts" *ngFor="let i of cmmcStyleSvc?.statsByLevel?.reverse()">
-            <div *ngIf="cmmcStyleSvc?.isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="cmmcStyleSvc?.levelDescriptions[i.ModelLevel]">
+        <div class="levelPieCharts my-4" *ngFor="let i of cmmcStyleSvc?.statsByLevel?.reverse()">
+            <div *ngIf="cmmcStyleSvc?.isWithinModelLevel(i)" class="pieChartRowTitle"
+                [innerHTML]="cmmcStyleSvc?.levelDescriptions[i.ModelLevel]">
                 Test
             </div>
-            <div *ngIf="cmmcStyleSvc?.isWithinModelLevel(i)" class="flex-container pieChartRow">                
+            <div *ngIf="cmmcStyleSvc?.isWithinModelLevel(i)" class="flex-container pieChartRow">
                 <div class="levelIndicatorContainer">
                     <div class="roundedBox">
                         <div class="rbTitle">
-                            Target Level
+                            <span *ngIf="cmmcStyleSvc.cmmcModel?.TargetLevel == i?.ModelLevel">Target</span> Level
                         </div>
                         <div class="rbLevel">
                             {{i?.ModelLevel}}
                         </div>
-                    </div>                    
+                    </div>
                 </div>
 
-                <div class="flex flex-row-item pieChartcontainer">                    
-                    <div class="piechartBackground piechartitem testChart" ></div>
-                    <div class="piechart piechartitem" 
-                    [ngStyle]="cmmcStyleSvc?.getRadi(i)"
-                    [style.border]="cmmcStyleSvc?.getBorder(3)"></div>
+                <div class="flex flex-row-item pieChartcontainer">
+                    <div class="piechartBackground piechartitem testChart"></div>
+                    <div class="piechart piechartitem" [ngStyle]="cmmcStyleSvc?.getRadi(i)"
+                        [style.border]="cmmcStyleSvc?.getBorder(3)"></div>
                 </div>
                 <div class="pieChartLabelContainer">
-                        <div *ngIf="i.questionUnAnswered"class="pieChartLabel">
-                        Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.1'}} 
+                    <div *ngIf="i.questionUnAnswered" class="pieChartLabel">
+                        Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.1'}}
                     </div>
-                    <div  class="pieChartLabel" >
-                        Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.1'}} 
+                    <div class="pieChartLabel">
+                        Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.1'}}
                     </div>
                 </div>
             </div>
@@ -511,83 +511,102 @@
 
     <!-- Stacked Bar Chart -->
     <div class="page-break">
-        <h1 class="pageHeader">The Number of Practices Satisfied for Each Level:</h1>
-        <h1 class="stackedBarChartTitle">Compliance Score Breakdown</h1>
+
+        <h1 class="pageHeader">Compliance Score Breakdown</h1>
+        <p>
+            The following chart shows the number of practices satisfied for each level.
+        </p>
         <div class="stackedBarChart">
             <div class="stackBarChartUpperLeftLabels">
-                <div> {{cmmcStyleSvc?.complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{cmmcStyleSvc?.complianceLevelAcheivedData?.questionsTotalWithinLevel}} 
-                    Total Practices Satisfied for {{cmmcStyleSvc?.complianceLevelAcheivedData?.questionsAnsweredWithinLevel / cmmcStyleSvc?.complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
+                <div>
+                    {{cmmcStyleSvc?.complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{cmmcStyleSvc?.complianceLevelAcheivedData?.questionsTotalWithinLevel}}
+                    Total Practices Satisfied for
+                    {{cmmcStyleSvc?.complianceLevelAcheivedData?.questionsAnsweredWithinLevel / cmmcStyleSvc?.complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}
+                </div>
                 <div> Compliance for Target Level {{cmmcStyleSvc?.complianceLevelAcheivedData?.targetLevel}}</div>
                 <div> Achieved Level {{cmmcStyleSvc?.complianceLevelAcheivedData?.acheivedLevel}}</div>
             </div>
             <div class="stackedBarChartBody">
-                <div *ngFor="let dataColumn of cmmcStyleSvc?.stackBarChartData; let i = index" class="stackedBarChartColumn">
+                <div *ngFor="let dataColumn of cmmcStyleSvc?.stackBarChartData; let i = index"
+                    class="stackedBarChartColumn">
                     <div class="barHeader">
                         <div class="mainHeader"> LEVEL {{i + 1}}</div>
                         <div class="secondaryHeader"> {{cmmcStyleSvc?.stackedChartHeaderLabels[i + 1]}}</div>
-                    </div>       
-                    <div *ngFor="let barSection of dataColumn" [ngStyle]="cmmcStyleSvc?.getStackedChartSectionStyle(barSection)" class="barSection">
+                    </div>
+                    <div *ngFor="let barSection of dataColumn"
+                        [ngStyle]="cmmcStyleSvc?.getStackedChartSectionStyle(barSection)" class="barSection">
                         <div *ngIf="
                             (barSection.totalForLevel / 2 ) < barSection.count
                             &&
                             (cmmcStyleSvc?.cmmcModel?.TargetLevel > barSection.modelLevel 
-                            || cmmcStyleSvc?.cmmcModel?.TargetLevel == barSection.modelLevel)" 
+                            || cmmcStyleSvc?.cmmcModel?.TargetLevel == barSection.modelLevel)"
                             class="barSectionInnerLabel"> {{barSection.count}} / {{barSection.totalForLevel}}
                         </div>
                         <div *ngIf="
                         barSection.type == 'Yes' && 
-                        barSection.modelLevel > cmmcStyleSvc?.cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00</div>                    
+                        barSection.modelLevel > cmmcStyleSvc?.cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00
+                            / 00</div>
                     </div>
                 </div>
             </div>
             <div class="stackedBarChartBase">
             </div>
             <div class="stackedBarChartBottomLabels">
-                <div *ngFor="let dataColumn of cmmcStyleSvc?.statsByLevel; let i = index"  class="stackedBarChartBottomLabel">
+                <div *ngFor="let dataColumn of cmmcStyleSvc?.statsByLevel; let i = index"
+                    class="stackedBarChartBottomLabel">
                     <div *ngIf="cmmcStyleSvc?.cmmcModel?.TargetLevel > dataColumn.ModelLevel ||cmmcStyleSvc?.cmmcModel?.TargetLevel == dataColumn.ModelLevel"
-                    class="bottomLabel"> 
+                        class="bottomLabel">
                         <div>Total</div>
                         <div class="bottomLabelNumbers">
-                            <div>{{dataColumn.totalAnsweredCount}}</div>  
-                            <div *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">/{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>  
+                            <div>{{dataColumn.totalAnsweredCount}}</div>
+                            <div
+                                *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">
+                                /{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>
                         </div>
                     </div>
                 </div>
-            </div>        
-        </div>  
-        <div class="stackedBarChartBottomTitle">
-            The Number of Practices Satisfied for Each Level:
-        </div>     
+            </div>
+        </div>
     </div>
 
     <!-- BarGrid Chart & Question By Domain Table -->
-    <div class="page-break"> 
+    <div class="page-break">
         <h1 class="pageHeader">CMMC Compliance by Domain</h1>
-        <h1 class="midBlackTitle">For Target Level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}, your organization's progress for each domain is</h1>
+
+        <p>The following chart shows the compliance percentage for each
+            domain at target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
         <div class="gridGraphContainer">
-            <div  class="gridGraphLabels">
-                <div *ngFor="let dataRow of cmmcStyleSvc?.statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
+            <div class="gridGraphLabels">
+                <div *ngFor="let dataRow of cmmcStyleSvc?.statsByDomainAtUnderTarget"
+                    class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
             </div>
             <div class="gridGraphDataContainer" #gridChartDataDiv>
-                <div *ngFor="let dataRow of cmmcStyleSvc?.statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                <div *ngFor="let dataRow of cmmcStyleSvc?.statsByDomainAtUnderTarget"
+                    class="gridGraphData graphDataRow">
                     <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
                     </div>
                     <div class="gridGraphBackground  graphDataRow">
-                        <div *ngFor="let grid of gridColumns" 
-                        class="gridCell"></div>
+                        <div *ngFor="let grid of gridColumns" class="gridCell"></div>
                     </div>
                 </div>
                 <div class="gridGraphData graphDataRow">
                     <div class="gridGraphBackgroundLabels graphDataRow">
-                        <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i / this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                        <div *ngFor="let label of gridColumns; let i = index; let last = last">
+                            {{(i / this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
                         <span style="width:0">100</span>
                     </div>
                 </div>
             </div>
-        </div>  
-        <h1 class="midBlackTitle">CMMC Requirements Scoring</h1>
-        <h1>The following table is an accounting of your answers to the requirements for target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}:</h1>
-        <div><p>*Note that domains with zero practices may not have any requirements at the desired target level</p></div>
+        </div>
+
+
+        <h1 class="pageHeader">CMMC Requirements Scoring</h1>
+
+        <p>The following table is an accounting of answers to the requirements for target level
+            {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
+        <div>
+            <p>*Note that domains with zero practices may not have any requirements at the desired target level</p>
+        </div>
         <div class="questionsByDomainTable">
             <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
                 <div></div>
@@ -596,13 +615,13 @@
                 <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
                 <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
             </div>
-            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection DomainTableDomin">
+            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection mb-5">
                 <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
                     <div>
                         {{domainRow?.domainName}}
                     </div>
                     <div>
-                        {{domainRow?.questionAnswered}} 
+                        {{domainRow?.questionAnswered}}
                     </div>
                     <div>
                         {{domainRow?.questionUnAnswered}}
@@ -610,7 +629,8 @@
                     <div>{{domainRow.questionCount}}</div>
                     <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
                 </div>
-                <div *ngFor="let questionRow of domainRow.domainQuestions" class="questionsByDomainTableRow DomainTableRow question" >
+                <div *ngFor="let questionRow of domainRow.domainQuestions"
+                    class="questionsByDomainTableRow DomainTableRow question">
                     <div>
                         {{questionRow?.Question_Text}}
                     </div>
@@ -626,35 +646,40 @@
                     <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
                         0
                     </div>
-                    <div></div>
-                    <div></div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
-     
+
 
 
     <!-- Reference Table -->
     <div class="page-break">
-        <h1>
-            CMMC Statements Gap List with Corresponding References.
+        <h1 class="pageHeader">
+            CMMC Statements Gap List with Corresponding References
         </h1>
-        <h3>
-            This section identifies deficiencies with the provided references. 
-            Shaded rows are out of compliance deficiencies.
-        </h3>
+        <p>
+            This section identifies deficiencies with the provided references.
+            Shaded rows are out-of-compliance deficiencies.
+        </p>
 
         <table *ngIf="cmmcStyleSvc?.referenceTable?.length > 0" class="cset-table-4">
-            <tr class="questionsByDomainTableHeader"><th class="tdHeader">Practice Identifier</th><th class="tdHeader">Practice Statement</th><th class="tdHeader">References</th></tr>
+            <tr class="questionsByDomainTableHeader">
+                <th class="tdHeader">Practice Identifier</th>
+                <th class="tdHeader">Practice Statement</th>
+                <th class="tdHeader">References</th>
+            </tr>
             <tr *ngFor="let reference of cmmcStyleSvc?.referenceTable">
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}" style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}" style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}" [innerHTML]="reference.Supplemental_Info"></td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                    style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                    style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                    [innerHTML]="reference.Supplemental_Info"></td>
             </tr>
         </table>
         <div *ngIf="cmmcStyleSvc?.referenceTable?.length === 0" class="cset-table-4">
-            Congratulations there are no identified deficiencies.  
+            Congratulations there are no identified deficiencies.
         </div>
     </div>
 </div>
