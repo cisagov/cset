@@ -244,9 +244,6 @@ export class QuestionsService {
   }
 
 
-
-
-
   /**
    * Sets the Visible property on all Questions, Subcategories and Categories
    * based on the current filter settings.
@@ -257,9 +254,11 @@ export class QuestionsService {
       return;
     }
 
-    const filter = this.questionFilterSvc;
+    const filterSvc = this.questionFilterSvc;
 
-    const filterStringLowerCase = filter.filterString.toLowerCase();
+    const filterStringLowerCase = filterSvc.filterString.toLowerCase();
+
+    let categoryAccessControl = null;
 
     domains.forEach(d => {
       d.Categories.forEach(c => {
@@ -270,35 +269,35 @@ export class QuestionsService {
 
             // If search string is specified, any questions that don't contain the string
             // are not shown.  No need to check anything else.
-            if (filter.filterString.length > 0
+            if (filterSvc.filterString.length > 0
               && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
               return;
             }
 
             // evaluate answers
-            if (filter.answerValues.includes(q.Answer) && filter.showFilters.includes(q.Answer)) {
+            if (filterSvc.answerValues.includes(q.Answer) && filterSvc.showFilters.includes(q.Answer)) {
               q.Visible = true;
             }
 
             // consider null answers as 'U'
-            if (q.Answer == null && filter.showFilters.includes('U')) {
+            if (q.Answer == null && filterSvc.showFilters.includes('U')) {
               q.Visible = true;
             }
 
             // evaluate other features
-            if (filter.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
+            if (filterSvc.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
               q.Visible = true;
             }
 
-            if (filter.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
+            if (filterSvc.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
               q.Visible = true;
             }
 
-            if (filter.showFilters.includes('M') && q.MarkForReview) {
+            if (filterSvc.showFilters.includes('M') && q.MarkForReview) {
               q.Visible = true;
             }
 
-            if (filter.showFilters.includes('D') && q.HasDiscovery) {
+            if (filterSvc.showFilters.includes('D') && q.HasDiscovery) {
               q.Visible = true;
             }
 
@@ -307,13 +306,13 @@ export class QuestionsService {
               this.assessmentSvc.assessment.MaturityTargetLevel :
               10;
 
-            if (filter.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
+            if (filterSvc.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
               q.Visible = true;
             }
 
             // if the 'show above target' filter is turned off, hide the question
             // if it is above the target level
-            if (!filter.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
+            if (!filterSvc.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
               q.Visible = false;
             }
 
@@ -325,18 +324,17 @@ export class QuestionsService {
             }
           });
 
-          /// now evaluate subcat visiblity
+          // evaluate subcat visiblity
           s.Visible = (!!s.Questions.find(q => q.Visible));
         });
 
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
-
+      
       // evaluate domain heading visibility
       d.Visible = (!!d.Categories.find(c => c.Visible));
     });
-
   }
 
   /**

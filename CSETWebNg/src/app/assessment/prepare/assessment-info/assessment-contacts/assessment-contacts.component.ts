@@ -202,7 +202,9 @@ export class AssessmentContactsComponent implements OnInit {
    * Fires when a contact's edit is complete.
    */
   editContact(contact: User) {
-    this.assessSvc.updateContact(contact).subscribe();
+    this.assessSvc.updateContact(contact).subscribe(() => {
+      this.contactItems.forEach(x => x.enableMyControls = true);
+    });
   }
 
   dropContact(contact: User) {

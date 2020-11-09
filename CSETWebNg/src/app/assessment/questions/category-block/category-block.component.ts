@@ -19,7 +19,6 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.c.Visible = true;    // maybe this needs to be smarter
   }
 
   /**

@@ -374,9 +374,6 @@ export class NavigationService {
       this.setCurrentPage(targetPage.pageId);
 
       // determine the route path
-      if (!targetPage.path) {
-        debugger;
-      }
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
       return;
@@ -395,11 +392,6 @@ export class NavigationService {
       // navigate to the questions screen
       let targetPage = this.pages.find(p => p.pageId === 'phase-assessment');
       this.setCurrentPage(targetPage.pageId);
-
-      if (!targetPage.path) {
-        debugger;
-      }
-
 
       const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
@@ -742,7 +734,7 @@ export class NavigationService {
       condition: () => { this.assessSvc.assessment?.UseStandard && this.acetSelected }
     },
 
-    { displayText: 'Executive Summary, Overview & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
+    { displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
     { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }
