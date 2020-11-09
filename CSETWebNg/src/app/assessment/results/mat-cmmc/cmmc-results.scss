@@ -561,10 +561,7 @@ SOFTWARE.
     margin-top: 4em;
     font-size: 1.2em;
   }
-  
-.DomainTableDomin{
-  
-}
+
 .questionsByDomainTableRow{
   display: flex;
   flex-basis: 100%;
@@ -632,6 +629,4 @@ SOFTWARE.
 
 .questionsByDomainTableDomainSection .questionsByDomainTableRow:nth-child(even) {
   background-color: var(--grid-background-highlight);
-}
-.DomainTableDomin{
 }

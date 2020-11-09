@@ -134,6 +134,10 @@
   .ws-normal {
     white-space: normal !important;
   }
+
+  .ws-no-wrap {
+    white-space: nowrap!important;
+  }
   
   
   /* ---- common display container widget ---- */
@@ -210,21 +214,22 @@
   
   /* ---- Table styles ---- */
   
-  table.cset-table {
+  table.cset-table, table.cset-table-4 {
     width: calc(100% - 2em);
     margin: 0 auto 2em auto;
     border-collapse: collapse;
   }
   
-  table.cset-table th {
+  table.cset-table th, table.cset-table-4 th {
     background-color: #336699;
     color: #fff;
     font-weight: bold;
   }
   
-  table.cset-table th, table.cset-table td {
+  table.cset-table th, table.cset-table td, table.cset-table-4 th, table.cset-table-4 td {
     padding: 10px;
     border: 1px solid #999;
+    vertical-align: top;
   }
   
   
@@ -246,15 +251,8 @@
     background-color: #EAF1DD;
     background-color: #ecf6f9;
   }
-  
-  table.cset-table-4 {
-    width: 100%;
-    margin: 0 auto 1em auto;    
-    border: 1px solid #999;
-  }
-  table.cset-table-4 td{
-    border: 1px solid black;
-  }
+
+
   
   table.cset-table-3 {
     width: calc(100% - 2em);
@@ -542,6 +540,10 @@
     height: 12em;
     // flex-basis: 15%;
     margin-right:5em;
+
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 
   .levelIndicatorContainer .rbTitle{
@@ -573,7 +575,7 @@
   .pieChartRowTitle{
     font-size: 1.2em;
     font-weight: bold;
-    letter-spacing: .06em;
+    // letter-spacing: .06em;
     margin-bottom: 1em;
   }
   .barChartRowContainer{
@@ -1011,9 +1013,6 @@
   display:flex;
 }
 
-.DomainTableDomin{
-  
-}
 .questionsByDomainTableRow{
   display: flex;
   flex-basis: 100%;
@@ -1073,8 +1072,7 @@
 .questionsByDomainTableDomainSection .questionsByDomainTableRow:nth-child(even) {
   background-color: var(--grid-background-highlight);
 }
-.DomainTableDomin{
-}
+
 .tdHeader{
   padding: 1em;
   text-align: center;
