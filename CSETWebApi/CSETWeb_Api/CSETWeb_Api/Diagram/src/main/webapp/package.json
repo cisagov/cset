@@ -26,7 +26,7 @@
     "commander": "^6.1.0",
     "compression": "^1.7.4",
     "crc": "^3.8.0",
-    "electron-log": "^4.2.4",
+    "electron-log": "^4.3.0",
     "electron-progressbar": "^1.2.0",
     "electron-store": "^6.0.1",
     "compression": "^1.7.4",
