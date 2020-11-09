@@ -163,7 +163,6 @@ export class ReportAnalysisService {
                   const meta = chart.getDatasetMeta(0);
                   const ds = data.datasets[0];
                   const arc = meta.data[i];
-                  debugger;
                   const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                   const arcOpts = chart.options.elements.arc;
                   const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);

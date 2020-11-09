@@ -100,7 +100,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
         this.domains = response.Domains;
         this.loaded = true;
 
-        this.refreshQuestionVisibility(magic);
+        this.refreshQuestionVisibility();
       },
       error => {
         console.log(
@@ -149,14 +149,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
    * Also re-draws the sidenav category tree, skipping categories
    * that are not currently visible.
    */
-  refreshQuestionVisibility(magic?: string) {
-    if (!magic) {
-      magic = this.navSvc.getMagic();
-    }
-
+  refreshQuestionVisibility() {
     this.questionsSvc.evaluateFilters(this.domains);
-    if (!!this.domains) {
-      // this.populateTree(magic);
-    }
   }
 }
