@@ -734,7 +734,7 @@ export class NavigationService {
       condition: () => { this.assessSvc.assessment?.UseStandard && this.acetSelected }
     },
 
-    { displayText: 'Executive Summary, Overview & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
+    { displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
     { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }
