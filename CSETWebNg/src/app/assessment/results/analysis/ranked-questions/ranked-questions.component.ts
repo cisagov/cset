@@ -39,7 +39,7 @@ export class RankedQuestionsComponent implements OnInit {
     rank: number;
     standard: string;
     category: string;
-    Question_Ref: string;
+    QuestionRef: string;
     question: string;
     AnswerText: string;
     displayAnswer: string
