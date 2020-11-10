@@ -34,7 +34,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "@ng-select/ng-select": "^2.20.5",
     "@ngstack/code-editor": "^2.1.0",
-    "@types/lodash": "^4.14.161",
+    "@types/lodash": "^4.14.165",
     "@webcomponents/webcomponentsjs": "^2.4.4",
     "angular2-hotkeys": "^2.2.0",
     "array.prototype.fill": "^1.0.2",
