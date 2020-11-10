@@ -22,14 +22,16 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 import { NavigationService } from '../../../../services/navigation.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../../../../app/services/maturity.service';
+import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 
 @Component({
   selector: 'app-cmmc-compliance',
   templateUrl: './cmmc-compliance.component.html',
-  styleUrls: ['../cmmc-results.scss'],
+  styleUrls: ['../../../../../sass/cmmc-results.scss'],
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
@@ -59,6 +61,7 @@ export class CmmcComplianceComponent implements OnInit {
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
     private titleService: Title,
+    public cmmcStyleSvc: CmmcStyleService
   ) { }
 
   ngOnInit(): void {
