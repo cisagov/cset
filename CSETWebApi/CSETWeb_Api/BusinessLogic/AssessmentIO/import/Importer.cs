@@ -15,7 +15,7 @@ using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;
 using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
 using BusinessLogic.Helpers;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
@@ -94,12 +94,16 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var item = db.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
                 if (item != null)
                 {
+                    item.Diagram_Markup = a.Diagram_Markup;
+                    item.Diagram_Image = a.Diagram_Image;
+
                     item.Assets = a.Assets;
                     item.Charter = a.Charter;
                     item.CreditUnionName = a.CreditUnionName;
                     item.IRPTotalOverride = a.IRPTotalOverride;
                     item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
                     item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly != null ? a.MatDetail_targetBandOnly : false;
+
                     db.SaveChanges();
                 }
             }
@@ -127,7 +131,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
-
+                
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = _assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
@@ -143,8 +147,19 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
                 db.ASSESSMENT_CONTACTS.Add(item);
                 db.SaveChanges();
-
-                dictAC.Add(a.Assessment_Contact_Id, item.Assessment_Contact_Id);
+                int newId;
+                if (a.Assessment_Contact_Id != 0)
+                {
+                    if (dictAC.TryGetValue(a.Assessment_Contact_Id, out newId))
+                    {
+                        dictAC.Add(newId, newId);
+                        a.Assessment_Contact_Id = newId;
+                    }
+                    else
+                    {
+                        dictAC.Add(a.Assessment_Contact_Id, item.Assessment_Contact_Id);
+                    }
+                }
             }
 
             // map the primary keys so that they can be passed to the generic import logic

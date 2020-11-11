@@ -127,7 +127,7 @@ label[required]::after {
 }
 
 .dhs-seal-background {
-  background-image: url("/assets/images/DHSLogo.svg");
+  background-image: url("/assets/images/CISA_Logo_1831px.png");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;
@@ -229,6 +229,7 @@ label[required]::after {
   background-color: transparent;
   border: none;
 }
+
 .cset-footer-expand-button:hover,
 .cset-footer-expand-button:focus,
 .footer .btn-link:hover,
@@ -242,6 +243,7 @@ label[required]::after {
 }
 .footer .card-header:first-child {
   border-radius: 0rem;
+  text-align: center;
 }
 
 
@@ -684,8 +686,8 @@ table.td-align-top td {
   color: $primary-color;
 }
 
-.btn-level:not(.disabled).active,
-.btn-level:not(.disabled):active,
+.btn-level:not(.disabled).active, 
+.btn-level:not(.disabled).activeLevel,
 .show > .btn-level.dropdown-toggle {
   background-color: $secondary-color;
   color: $white;
@@ -706,6 +708,49 @@ table.td-align-top td {
 .irs-single {
   background: $primary-400;
 }
+
+.ng5-slider {
+  margin-bottom: 4rem !important;
+}
+
+.ng5-slider .ng5-slider-pointer, .ng5-slider .ng5-slider-selection {
+  background-color: $primary-450 !important;
+}
+
+.ng5-slider .ng5-slider-tick.ng5-slider-selected {
+  background: $primary-450 !important;
+}
+.ng5-slider .ng5-slider-active::after {
+  background: $primary-250 !important;
+}
+
+.ng5-slider .ng5-slider-tick-legend {
+  font-size: .7rem;
+}
+
+.ng5-slider .ng5-slider-bubble {
+  visibility: hidden !important;
+}
+
+.gen-sal-slider-group {
+  border: 1px solid $primary-200;
+  border-radius: .5rem;
+}
+
+.sal-slider-label {  
+  display: inline-block;
+  font-size: .6em;
+  background: $primary-400;
+  color:white;
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+.sal-slider-label + .sal-slider-label {  
+  float:right;
+  color:black;
+  background: $primary-100;
+}
+
 
 .align-left {
   text-align: left;
@@ -739,6 +784,23 @@ ul.mat-tree-node {
 
 .side-nav-container .mat-tree-node {
   min-height: 0;
+}
+
+.side-nav-container .mat-nested-tree-node > button > span, 
+.side-nav-container .mat-tree-node > button > span {
+  display: block;
+}
+
+.side-nav-container .phase-node {
+  margin-top: 1rem;
+}
+
+.side-nav-container .phase-node > button > span {
+  font-size: 1.3rem;
+}
+
+.side-nav-container .current-node > button {
+  border: 1px solid #ffffff;
 }
 
 /* Allow autocomplete to be wider than its companion field */
@@ -778,6 +840,11 @@ ul.mat-tree-node {
   animation: spin-wait 1.3s linear infinite;
   margin-left: auto;
   margin-right: auto;
+}
+
+.spinner-container.toc > .spinner,
+.spinner-container.toc > div {
+  border-top: 4px solid $primary-350;
 }
 
 div.spinner-size-50 {
@@ -852,6 +919,8 @@ ul.mat-tree-node mat-tree-node {
 
 .filters-engaged {
   background-color: $bc-filters-engaged;
+  margin-top: .2rem;
+  margin-bottom: .2rem;
   padding: .6em;
   width: 100%;
   border-radius: .5em;
@@ -942,6 +1011,11 @@ th.data-table {
   white-space: normal;
 
 }
+
+input[type=radio].maturity-model-select {
+  margin-right: 1rem;
+}
+
 
 // Header / Navbar
 /////////////////////////////////////////////
@@ -1690,6 +1764,12 @@ ul.related-questions li {
   margin: .4em 0;
   color: $primary-color;
 }
+
+.domain-group-heading {
+  margin-bottom: 1rem;
+  font-size: 30px;
+}
+
 
 // Dashboard
 ///////////////////////////////////////////////////////////////////////
@@ -2887,3 +2967,21 @@ table.td-text-left th, table.td-text-left td {
   margin-left:20px;
 }
 
+
+
+////
+.maturity-model-select {
+  border: 2px solid #cccccc;
+  border-radius: .3rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.maturity-model-select:hover {
+  background-color: #eff3f6;
+}
+
+.model-selected {
+  border-color: green;
+}

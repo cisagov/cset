@@ -24,8 +24,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Http } from '@angular/http';
-
 
 
 @Injectable({
@@ -53,7 +51,7 @@ export class AnalyticsService {
 
   getAnalyticsToken(username, password): any {
     return this.http.post(
-      this.analyticsUrl + 'login/authenticate', {username, password}, this.headers
+      this.analyticsUrl + 'auth/signin', {username, password}, this.headers
     );
   }
 

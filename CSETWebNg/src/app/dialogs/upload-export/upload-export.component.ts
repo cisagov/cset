@@ -23,8 +23,8 @@
 ////////////////////////////////
 import { ImportAssessmentService } from './../../services/import-assessment.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../services/assessment.service';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -118,15 +118,33 @@ export class UploadExportComponent implements OnInit {
     // Hide the cancel-button
     this.showCancelButton = false;
     // When all progress-observables are completed...
-    forkJoin(allProgressObservables).subscribe(end => {
-      // ... the dialog can be closed again...
-      this.canBeClosed = true;
-      this.dialog.disableClose = false;
-      // ... the upload was successful...
-      this.uploadSuccessful = true;
-      // ... and the component is no longer uploading
-      this.uploading = false;
-      this.dialog.close();
+    let count = 0
+    allProgressObservables.forEach(element => {
+      element.subscribe(
+        succ => {
+          // console.log(succ)
+        },
+        fail => {
+          // console.log(fail)
+        },
+        comp => {
+          count += 1
+          if(count >= allProgressObservables.length){
+            this.dialog.close()
+          }
+        }
+      )
     });
+    
+    // forkJoin(allProgressObservables).subscribe(end => {
+    //   // ... the dialog can be closed again...
+    //   this.canBeClosed = true;
+    //   this.dialog.disableClose = false;
+    //   // ... the upload was successful...
+    //   this.uploadSuccessful = true;
+    //   // ... and the component is no longer uploading
+    //   this.uploading = false;
+    //   this.dialog.close();
+    // });
   }
 }

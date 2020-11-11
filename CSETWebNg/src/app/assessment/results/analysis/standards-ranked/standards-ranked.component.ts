@@ -26,7 +26,7 @@ import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { Navigation2Service } from '../../../../services/navigation2.service';
+import { NavigationService } from '../../../../services/navigation.service';
 
 @Component({
   selector: 'app-standards-ranked',
@@ -42,7 +42,7 @@ export class StandardsRankedComponent implements OnInit {
   constructor(
     private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     private router: Router
   ) { }
 

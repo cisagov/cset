@@ -3,13 +3,15 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "es2015",
     "types": ["node"],
     "experimentalDecorators": true,
     "allowJs": true
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
   ]
 }

@@ -27,11 +27,11 @@ import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code
 import { saveAs } from 'file-saver';
 import * as monaco from 'monaco-editor';
 import { interval, Subject, Subscription, timer } from 'rxjs';
-import { debounce } from 'rxjs/internal/operators/debounce';
-import { startWith } from 'rxjs/internal/operators/startWith';
+import { debounce } from 'rxjs/operators/debounce';
+import { startWith } from 'rxjs/operators/startWith';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import * as screenfull from 'screenfull';
-import { FileItem, FileUploader } from '../../../node_modules/ng2-file-upload/ng2-file-upload';
+import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
@@ -52,8 +52,7 @@ export class ImportFormData {
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
   public hasBaseDropZoneOver: boolean = false;
-  public hasModuleBaseDropZoneOver: boolean = false;
-  public fakeUploader: FileUploader;
+  public hasModuleBaseDropZoneOver: boolean = false;  
   public hasAnotherDropZoneOver: boolean = false;
   public referenceUrl: string;
   public moduleCode: string;
@@ -94,6 +93,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public fileOverBase(e: any): void {
     this.fileOverStateObservable.next(e);
   }
+
   public fileOverModuleBase(e: any): void {
     this.fileOverModuleStateObservable.next(e);
   }
@@ -126,11 +126,9 @@ export class ImportComponent implements OnInit, OnDestroy {
 
   get configOptions(): monaco.editor.IEditorConstructionOptions {
     return {
-      autoIndent: true,
       formatOnPaste: true,
       formatOnType: true,
-      automaticLayout: true,
-      language: 'json',
+      automaticLayout: true,      
       quickSuggestions: true
     };
   }
@@ -168,9 +166,11 @@ export class ImportComponent implements OnInit, OnDestroy {
         this.codeModel = {
           language: 'json',
           uri: 'main.json',
-          value: s,
+          value: JSON.stringify(JSON.parse(s), null, '\t'),
           schemas: this.jsonCodeModel.schemas
         };
+        
+        
       });
     } else {
       this.fileClient.getXMLExportSet(setName).subscribe(s => {
@@ -243,6 +243,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public clearForm() {
     this.uploader.clearQueue();
     this.moduleCode = '';
+    this.codeModel.value = '';
     this.state = 'Ready';
     this.errors = [];
     this.subscriptions.forEach(s => s.unsubscribe());
@@ -318,12 +319,27 @@ export class ImportComponent implements OnInit, OnDestroy {
 
       return promise;
     };
+    this.initalizeUploader();
+    this.codeModel = this.jsonCodeModel;
+    
+  }
+
+  ngOnInit() { 
+    if(this.uploader===undefined)
+      this.initalizeUploader();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  private initalizeUploader(){
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocuments';
+    
     this.uploader = new FileUploader({
       url: this.referenceUrl,
-      authToken: sessionStorage.getItem('userToken')
-    });
-    this.fakeUploader = new FileUploader({});
+      authToken: sessionStorage.getItem('userToken')      
+    });    
     this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
       Object.keys(fileItem.formData).forEach(prop => form.append(prop, fileItem.formData[prop]));
     };
@@ -393,13 +409,10 @@ export class ImportComponent implements OnInit, OnDestroy {
 
     this.fileOverStateObservable.pipe(debounceTime(10)).subscribe(t => {
       this.hasBaseDropZoneOver = t;
-    });
-    this.codeModel = this.jsonCodeModel;
+    }); 
   }
 
-  ngOnInit() { }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+  public showError(){
+    return this.state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length|| this.errors.length;
   }
 }

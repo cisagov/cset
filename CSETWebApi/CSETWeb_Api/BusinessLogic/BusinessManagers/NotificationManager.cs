@@ -7,7 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IdentityModel.Tokens;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using CSETWeb_Api.BusinessLogic.Helpers;
@@ -241,12 +243,34 @@ namespace CSETWeb_Api.BusinessLogic
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
 
-            SmtpClient client = new SmtpClient();
-            client.Port = int.Parse(System.Configuration.ConfigurationManager.AppSettings["SMTP Port"]);
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Host = ConfigurationManager.GetAppSetting("SMTP Host");
-            client.Send(mail);
+            SmtpClient client = new SmtpClient
+            {
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Host = ConfigurationManager.GetAppSetting("SMTP Host"),
+                Port = int.Parse(System.Configuration.ConfigurationManager.AppSettings["SMTP Port"]),
+                UseDefaultCredentials = false             
+            };
+
+            bool.TryParse(ConfigurationManager.GetAppSetting("SMTP SSL"), out bool ssl);
+            client.EnableSsl = ssl;
+
+            var smtpUsername = ConfigurationManager.GetAppSetting("SMTP Username");
+            var smtpPassword = ConfigurationManager.GetAppSetting("SMTP Password");
+            if (smtpUsername != null)
+            {
+                client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+            }
+
+
+            try
+            {
+                client.Send(mail);
+            }
+            catch (Exception exc)
+            {
+                CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
+                throw exc;
+            }
         }
 
 

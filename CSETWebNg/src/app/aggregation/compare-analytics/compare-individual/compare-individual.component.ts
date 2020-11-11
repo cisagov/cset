@@ -40,7 +40,6 @@ export class CompareIndividualComponent implements OnInit {
   sals: any;
 
   constructor(
-    public navSvc: NavigationAggregService,
     public aggregationSvc: AggregationService,
     public aggregChartSvc: AggregationChartService
   ) { }

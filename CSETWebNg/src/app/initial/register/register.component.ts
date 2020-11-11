@@ -26,7 +26,7 @@ import { CreateUser, PotentialQuestions } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
 import { environment } from '../../../environments/environment';
 

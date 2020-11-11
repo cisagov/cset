@@ -22,6 +22,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string AggregationName { get; set; }
         public DateTime? AggregationDate { get; set; }
         public string Mode { get; set; }
+        public string AssessorName { get; internal set; }
+
         public float QuestionsCompatibility;
         public float RequirementsCompatibility;
     }
