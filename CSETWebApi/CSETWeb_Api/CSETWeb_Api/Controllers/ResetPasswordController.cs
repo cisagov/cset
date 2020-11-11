@@ -230,17 +230,21 @@ namespace CSETWeb_Api.Controllers
                 if (db.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefault() == null)
                     return Conflict();
 
-                List<SecurityQuestions> questions = await (from b in db.USER_SECURITY_QUESTIONS
-                                                           join c in db.USERS on b.UserId equals c.UserId
-                                                           where c.PrimaryEmail.Equals(email, StringComparison.CurrentCultureIgnoreCase)
-                                                           select new SecurityQuestions()
-                                                           {
-                                                               SecurityQuestion1 = b.SecurityQuestion1,
-                                                               SecurityQuestion2 = b.SecurityQuestion2
-                                                           }).ToListAsync<SecurityQuestions>();
+
+                var q = from b in db.USER_SECURITY_QUESTIONS
+                        join c in db.USERS on b.UserId equals c.UserId
+                        where c.PrimaryEmail == email
+                        select new SecurityQuestions()
+                        {
+                            SecurityQuestion1 = b.SecurityQuestion1,
+                            SecurityQuestion2 = b.SecurityQuestion2
+                        };
+
+                List<SecurityQuestions> questions = q.ToList();
+
                 //note that you don't have to provide a security question
                 //it will just reset if you don't 
-                if (questions.Count == 0 
+                if (questions.Count == 0
                     || (questions[0].SecurityQuestion1 == null && questions[0].SecurityQuestion2 == null))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager();
@@ -268,12 +272,12 @@ namespace CSETWeb_Api.Controllers
         {
             var questions = from b in db.USER_SECURITY_QUESTIONS
                             join c in db.USERS on b.UserId equals c.UserId
-                            where c.PrimaryEmail.Equals(answer.PrimaryEmail, StringComparison.CurrentCultureIgnoreCase)
+                            where c.PrimaryEmail == answer.PrimaryEmail
                             && (
                                 (b.SecurityQuestion1 == answer.QuestionText
-                                    && b.SecurityAnswer1.Equals(answer.AnswerText, StringComparison.InvariantCultureIgnoreCase))
+                                    && b.SecurityAnswer1 == answer.AnswerText)
                                 || (b.SecurityQuestion2 == answer.QuestionText
-                                    && b.SecurityAnswer2.Equals(answer.AnswerText, StringComparison.InvariantCultureIgnoreCase))
+                                    && b.SecurityAnswer2 == answer.AnswerText)
                                 )
                             select b;
 

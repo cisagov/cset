@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 {
@@ -130,6 +130,65 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 }
                 catch (Exception exc1)
                 {   
+                    throw exc1;
+                }
+                finally
+                {
+                    conn.Dispose();
+                }
+            }
+
+            return modified;
+        }
+
+
+        /// <summary>
+        /// Executes a sql query.  Returns the identity, if any.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="parms"></param>
+        /// <returns></returns>
+        public int Execute(string sql, Dictionary<string, object> parms)
+        {
+            int modified = -1;
+
+            var connStr = ConfigurationManager.ConnectionStrings["CSET_DB"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = sql;
+                cmd.CommandText += "; select SCOPE_IDENTITY();";
+
+                cmd.Transaction = conn.BeginTransaction();
+
+                try
+                {
+                    foreach (var key in parms.Keys)
+                    {
+                        SqlParameter parm = new SqlParameter(key, parms[key]);
+
+                        if (parm.Value == null)
+                        {
+                            parm.Value = DBNull.Value;
+                        }
+
+                        cmd.Parameters.Add(parm);
+                    }
+
+                    object identityResponse = cmd.ExecuteScalar();
+                    if (identityResponse != DBNull.Value)
+                    {
+                        modified = Convert.ToInt32(identityResponse);
+                    }
+
+                    cmd.Transaction.Commit();
+
+                }
+                catch (Exception exc1)
+                {
                     throw exc1;
                 }
                 finally

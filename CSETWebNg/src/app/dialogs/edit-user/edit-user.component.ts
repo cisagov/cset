@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CreateUser } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SecurityQuestion } from '../../models/reset-pass.model';

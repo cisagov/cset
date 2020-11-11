@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,23 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionResponse
     {
-        public List<QuestionGroup> QuestionGroups;
+        public List<Domain> Domains;
+        // public List<Category> Categories;
+
+        // The current mode of the assessment
         public string ApplicationMode;
 
+        // The count of all questions in the response.
         public int QuestionCount;
+
+        // The count of all requirements in the response.
         public int RequirementCount;
 
-        public List<QuestionGroup> DefaultComponents;
+        // Answer options supported for this question list.  Normally everything 
+        // is supported, but maturity models may not offer all options.
+        public List<string> AnswerOptions = new List<string>() { "Y", "N", "NA", "A" };
+
+
 
         /// <summary>
         /// The calculated IRP.  If overridden, the override is returned.
@@ -33,8 +44,91 @@ namespace CSETWeb_Api.Models
         public int DefaultComponentsCount { get; internal set; }
     }
 
+
     /// <summary>
-    /// A grouping of subgroups.
+    /// A container for housing the categories in a maturity domain.
+    /// Also serves as a container for housing the categories in a Set.
+    /// </summary>
+    public class Domain
+    {
+        public string SetName;
+
+        // public string SetFullName;
+
+        public string SetShortName;
+
+        /// <summary>
+        /// The text displayed in the TOC.  If this container represents a maturity domain,
+        /// it contains the name of the domain.
+        /// </summary>
+        public string DisplayText;
+
+        /// <summary>
+        /// Display text that appears below the domain name.  Not used for ACET but may be used for EDM.
+        /// </summary>
+        public string DomainText;
+
+        /// <summary>
+        /// Lists the display names of the maturity levels.
+        /// </summary>
+        public List<MaturityLevel> Levels;
+
+        /// <summary>
+        /// A list of categories within the domain.  CMMC domains correspond with
+        /// categories, so there will be a single category in each CMMC domain.
+        /// </summary>
+        public List<QuestionGroup> Categories = new List<QuestionGroup>();
+
+
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MaturityLevel
+    {
+        public int Level;
+        public string Label;
+        public bool Applicable;
+    }
+
+
+    /// <summary>
+    /// A container class that holds a collection of Categories / QuestionGroups.
+    /// It is used for:
+    ///  - a maturity Domain
+    ///  - the Standard Questions node when in Questions mode
+    ///  - the Component Defaults node
+    ///  - the Component Overrides node
+    /// </summary>
+    public class CategoryContainer
+    {
+        /// <summary>
+        /// The text displayed in the TOC.  If this container represents a maturity domain,
+        /// it contains the name of the domain.
+        /// </summary>
+        public string DisplayText;
+
+        /// <summary>
+        /// Corresponds to the StandardCategory of the questions/requirements it encapsulates.
+        /// </summary>
+        public string AssessmentFactorName;
+
+        /// <summary>
+        /// If this is a domain, this indicates if maturity levels should be shown on the requirements page.
+        /// </summary>
+        public bool ShowMaturityLevels;
+
+        /// <summary>
+        /// The list of question groups or categories for the assessment
+        /// </summary>
+        public List<QuestionGroup> QuestionGroups = new List<QuestionGroup>();
+    }
+
+
+    /// <summary>
+    /// A grouping of subgroups/subcategoriess.
     /// </summary>
     public class QuestionGroup
     {
@@ -42,9 +136,9 @@ namespace CSETWeb_Api.Models
         public Guid NavigationGUID;
         public int GroupHeadingId;
         public string GroupHeadingText;
-        public string StandardShortName;
-        public string DomainName;        
-        public string ComponentName;        
+        public string StandardShortName;       
+        public string ComponentName;
+        public string SetName;
         public List<QuestionSubCategory> SubCategories = new List<QuestionSubCategory>();
 
         public string Symbol_Name { get; internal set; }
@@ -111,7 +205,8 @@ namespace CSETWeb_Api.Models
         /// <summary>
         /// Indicates the maturity level of the question/requirement/statement
         /// </summary>
-        public string MaturityLevel { get; set; }
+        public int MaturityLevel { get; set; }
+        public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }
         public bool Is_Requirement { get; set; }
@@ -147,6 +242,8 @@ namespace CSETWeb_Api.Models
         public bool Is_Requirement;
 
         public bool Is_Component;
+
+        public bool Is_Maturity;
     }
 
 

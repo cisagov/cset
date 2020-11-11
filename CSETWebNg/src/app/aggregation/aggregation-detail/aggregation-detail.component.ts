@@ -37,11 +37,10 @@ export class AggregationDetailComponent implements OnInit {
 
   /**
    * Constructor
-   * @param navSvc
    */
   constructor(
-    public navSvc: NavigationAggregService,
-    public aggregationSvc: AggregationService
+    public aggregationSvc: AggregationService,
+    public navAggSvc: NavigationAggregService
   ) { }
 
   /**

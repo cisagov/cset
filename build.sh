@@ -90,8 +90,8 @@ build_ng() {
     echo 'building CSET app'
     ng build --configuration=$ng_config --source-map=false | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
 
-    echo 'building Reports app'
-    ng build reports --configuration=$reports_config --source-map=false --base-href="./" | sed "s/^/REPORTS: /" > ../reports-build.log 2> ../reports-errors.log
+    # echo 'building Reports app'
+    # ng build reports --configuration=$reports_config --source-map=false --base-href="./" | sed "s/^/REPORTS: /" > ../reports-build.log 2> ../reports-errors.log
 
     echo 'done building Angular project'
     echo 'PLEASE WAIT'

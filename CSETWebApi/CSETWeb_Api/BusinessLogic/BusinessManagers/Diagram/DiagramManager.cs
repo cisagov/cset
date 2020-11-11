@@ -20,7 +20,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.layers;
 using CSETWeb_Api.BusinessLogic.Diagram;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 
 namespace CSETWeb_Api.BusinessManagers
@@ -271,8 +271,8 @@ namespace CSETWeb_Api.BusinessManagers
             string newDiagramXml = t.Translate(diagramXml).OuterXml;
             db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First().Diagram_Markup = null;
             string sql =
-            "delete [dbo].ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
-            "delete [dbo].[DIAGRAM_CONTAINER] where assessment_id = @id;";
+            "delete ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
+            "delete [DIAGRAM_CONTAINER] where assessment_id = @id;";
             db.Database.ExecuteSqlCommand(sql,
                 new SqlParameter("@Id", assessmentId));
             db.SaveChanges();

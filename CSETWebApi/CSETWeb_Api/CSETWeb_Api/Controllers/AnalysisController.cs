@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
@@ -14,7 +15,7 @@ using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Web.Http;
 
@@ -68,18 +69,40 @@ namespace CSETWeb_Api.Controllers
             {
                 using (CSET_Context context = new CSET_Context())
                 {
-                    var QuestionsWithFeedbackList = from a in context.Answer_Standards_InScope
-                                                    where a.assessment_id == assessmentId &&
-                                                    a.mode == AssessmentMode && a.Feedback != null
-                                                    select a;
+                    List<FeedbackQuestion> feedbackQuestions = new List<FeedbackQuestion>();
 
-                    if (QuestionsWithFeedbackList.Count() == 0)
-                    {
-                        FeedbackResult.FeedbackBody = "No feedback given for this assessment";
-                        return FeedbackResult;
-                    }
+                    // standard questions
+                    var q1 = from a in context.Answer_Standards_InScope
+                            where a.assessment_id == assessmentId &&
+                            a.mode == AssessmentMode && a.Feedback != null
+                            select new FeedbackQuestion()
+                            {
+                                AnswerID = a.answer_id,
+                                Feedback = a.Feedback,
+                                Mode = a.mode,
+                                QuestionID = a.question_or_requirement_id,
+                                QuestionText = a.Question_Text
+                            };
 
-                    string FeedbackSalutations = "Dear PED Module Administrator:";
+                    feedbackQuestions.AddRange(q1);
+
+                    // maturity questions
+                    var q2 = from a in context.Answer_Maturity
+                            where a.Assessment_Id == assessmentId
+                            && a.FeedBack != null
+                            select new FeedbackQuestion()
+                            {
+                                AnswerID = a.Answer_Id,
+                                Feedback = a.FeedBack,
+                                Mode = null,
+                                QuestionID = a.Question_Or_Requirement_Id,
+                                QuestionText = a.Question_Text
+                            };
+
+                    feedbackQuestions.AddRange(q2);
+
+
+                    string FeedbackSalutations = "Dear CSET Standards Administrator:";
                     string FeedbackDescription = "The following comments were provided for each of the questions: ";
                     string FeedbackWarning = " *** Required *** Keep This Question ID ***";
 
@@ -99,28 +122,33 @@ namespace CSETWeb_Api.Controllers
                     FeedbackResult.FeedbackBody += FeedbackSalutations + "<br/><br/>";
                     FeedbackResult.FeedbackBody += FeedbackDescription + "<br/><br/>";
 
-                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    foreach (FeedbackQuestion q in feedbackQuestions)
                     {
-                        q.Question_Text = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                        q.Feedback = rm.ResolveParameters(q.question_or_requirement_id, q.answer_id, q.Feedback);
+                        q.QuestionText = rm.ResolveParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                        q.Feedback = rm.ResolveParameters(q.QuestionID, q.AnswerID, q.Feedback);
                         FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.Feedback + "<br/><br/>";
-                        FeedbackResult.FeedbackBody += q.Question_Text + "<br/><br/>";
+                        FeedbackResult.FeedbackBody += q.QuestionText + "<br/><br/>";
                         FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
-                        FeedbackResult.FeedbackBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". <br/><br/><br/>";
+                        FeedbackResult.FeedbackBody += "Question #" + " " + q.Mode  + ":" + q.QuestionID + ". <br/><br/><br/>";
                     }
 
                     FeedbackResult.FeedbackEmailSubject = "CSET Questions Feedback";
                     FeedbackResult.FeedbackEmailBody += FeedbackSalutations + "%0D%0A%0D%0A";
                     FeedbackResult.FeedbackEmailBody += FeedbackDescription + "%0D%0A%0D%0A";
 
-                    foreach (Answer_Standards_InScope q in QuestionsWithFeedbackList)
+                    foreach (FeedbackQuestion q in feedbackQuestions)
                     {
-                        q.Question_Text = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Question_Text);
-                        q.Feedback = rm.RichTextParameters(q.question_or_requirement_id, q.answer_id, q.Feedback);
+                        q.QuestionText = rm.RichTextParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                        q.Feedback = rm.RichTextParameters(q.QuestionID, q.AnswerID, q.Feedback);
                         FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.Feedback + "%0D%0A";
-                        FeedbackResult.FeedbackEmailBody += q.Question_Text + "%0D%0A%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += q.QuestionText + "%0D%0A%0D%0A";
                         FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
-                        FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.mode + ":" + q.question_or_requirement_id + ". %0D%0A%0D%0A%0D%0A";
+                        FeedbackResult.FeedbackEmailBody += "Question #" + " " + q.Mode + ":" + q.QuestionID + ". %0D%0A%0D%0A%0D%0A";
+                    }
+
+                    if (feedbackQuestions.Count() == 0)
+                    {
+                        FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";                     
                     }
 
                     return FeedbackResult;
@@ -145,7 +173,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new FirstPageMultiResult();
-                context.LoadStoredProc("[dbo].[usp_GetFirstPage]")
+                context.LoadStoredProc("[usp_GetFirstPage]")
                   .WithSqlParam("assessment_id", assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {
@@ -254,7 +282,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new RankedCategoriesMultiResult();
-                context.LoadStoredProc("[dbo].[usp_GetRankedCategoriesPage]")
+                context.LoadStoredProc("[usp_GetRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
@@ -369,7 +397,7 @@ namespace CSETWeb_Api.Controllers
             using (CSET_Context context = new CSET_Context())
             {
                 var results = new RankedCategoriesMultiResult();
-                context.LoadStoredProc("[dbo].[usp_GetOverallRankedCategoriesPage]")
+                context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
@@ -448,7 +476,7 @@ namespace CSETWeb_Api.Controllers
             ChartData myChartData = null;
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
+            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
           .WithSqlParam("assessment_id", assessmentId)
           .ExecuteStoredProc((handler) =>
           {
@@ -525,7 +553,7 @@ namespace CSETWeb_Api.Controllers
 
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[dbo].[usp_getStandardsSummaryPage]")
+            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
             .WithSqlParam("assessment_id", assessmentId)
             .ExecuteStoredProc((handler) =>
             {
@@ -600,7 +628,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentsSummary]")
+                context.LoadStoredProc("[usp_getComponentsSummary]")
                          .WithSqlParam("assessment_Id", assessmentId)
                          .ExecuteStoredProc((handler) =>
                          {
@@ -640,7 +668,7 @@ namespace CSETWeb_Api.Controllers
 
 
                 // include component count so front end can know whether components are present
-                context.LoadStoredProc("[dbo].[usp_getExplodedComponent]")
+                context.LoadStoredProc("[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", assessmentId)
                   .ExecuteStoredProc((handler) =>
                   {
@@ -695,7 +723,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getStandardsResultsByCategory]")
+                context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                         .WithSqlParam("assessment_Id", assessmentId)
                         .ExecuteStoredProc((handler) =>
                         {
@@ -764,7 +792,7 @@ namespace CSETWeb_Api.Controllers
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getStandardsRankedCategories]")
+                context.LoadStoredProc("[usp_getStandardsRankedCategories]")
                       .WithSqlParam("assessment_Id", assessmentId)
                       .ExecuteStoredProc((handler) =>
                       {
@@ -804,7 +832,7 @@ namespace CSETWeb_Api.Controllers
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentsResultsByCategory]")
+                context.LoadStoredProc("[usp_getComponentsResultsByCategory]")
                       .WithSqlParam("assessment_Id", assessmentId)
                       .ExecuteStoredProc((handler) =>
                       {
@@ -839,7 +867,7 @@ namespace CSETWeb_Api.Controllers
             ChartData chartData = null;
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentsRankedCategories]")
+                context.LoadStoredProc("[usp_getComponentsRankedCategories]")
                     .WithSqlParam("assessment_Id", assessmentId)
                     .ExecuteStoredProc((handler) =>
                     {
@@ -883,7 +911,7 @@ namespace CSETWeb_Api.Controllers
 
             using (CSET_Context context = new CSET_Context())
             {
-                context.LoadStoredProc("[dbo].[usp_getComponentTypes]")
+                context.LoadStoredProc("[usp_getComponentTypes]")
                          .WithSqlParam("assessment_Id", assessmentId)
                          .ExecuteStoredProc((handler) =>
                          {

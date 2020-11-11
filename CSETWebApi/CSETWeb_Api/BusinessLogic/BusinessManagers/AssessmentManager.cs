@@ -103,7 +103,7 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var query = from aa in db.ASSESSMENTS
-                            where aa.Assessment_Id == assessmentId
+                    where aa.Assessment_Id == assessmentId
                             select aa;
 
                 int tmpUID = 0;
@@ -129,8 +129,12 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                 var result = query.ToList().FirstOrDefault();
+                var modeResult = query.Join(db.STANDARD_SELECTION, x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
+                    .FirstOrDefault();
+
                 if (result != null)
                 {
+                   
                     assessment = new AnalyticsAssessment()
                     {
                         Alias = result.Alias,
@@ -138,7 +142,8 @@ namespace CSETWeb_Api.BusinessManagers
                         AssessmentCreatorId = tmpGuid.ToString(),
                         Assessment_Date = Utilities.UtcToLocal(result.Assessment_Date),
                         Assessment_GUID = result.Assessment_GUID.ToString(),
-                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate)
+                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate), 
+                        Mode = modeResult?.Application_Mode
                     };
                 }
 
@@ -180,12 +185,31 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
 
+                    assessment.DiagramMarkup = result.aa.Diagram_Markup;
+                    assessment.DiagramImage = result.aa.Diagram_Image;
+
+                    assessment.UseStandard = result.aa.UseStandard;
+                    assessment.UseDiagram = result.aa.UseDiagram;
+
+                    assessment.UseMaturity = result.aa.UseMaturity;
+                    if (assessment.UseMaturity)
+                    {
+                        GetMaturityModelDetails(ref assessment, db);
+                    }
+
+                    // for older assessments, if no features are set, look for actual data and set them
+                    if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
+                    {
+                        DetermineFeaturesFromData(ref assessment, db);
+                    }
+
                     bool defaultAcet = (app_code == "ACET");
                     assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
                     assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                     assessment.CreditUnion = result.aa.CreditUnionName;
                     assessment.Assets = result.aa.Assets;
+
 
                     // Fields located on the Overview page
                     assessment.ExecutiveSummary = result.ii.Executive_Summary;
@@ -195,6 +219,54 @@ namespace CSETWeb_Api.BusinessManagers
 
                 return assessment;
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private void GetMaturityModelDetails(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            int assessmentId = assessment.Id;
+            var query = from avm in db.AVAILABLE_MATURITY_MODELS
+                     join mm in db.MATURITY_MODELS on avm.model_id equals mm.Maturity_Model_Id
+                     where avm.Assessment_Id == assessmentId
+                     select new { mm.Maturity_Model_Id, mm.Model_Name };
+
+            var q1 = query.FirstOrDefault();
+            if (q1 != null)
+            {
+                assessment.MaturityModelId = q1.Maturity_Model_Id;
+                assessment.MaturityModelName = q1.Model_Name;
+            }
+
+            var ml = db.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+            if (ml != null)
+            {
+                assessment.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
+            }
+        }
+
+
+        /// <summary>
+        /// Set features based on existence of data.
+        /// </summary>
+        /// <param name="assessment"></param>
+        private void DetermineFeaturesFromData(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            var a = assessment;
+            if (db.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == a.Id))
+            {
+                assessment.UseStandard = true;
+            }
+
+            if (db.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
+            {
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);                 
+                assessment.UseDiagram = dm.HasDiagram(a.Id); 
+            }
+            
         }
 
 
@@ -228,10 +300,18 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAssessment.AssessmentCreatorId = assessment.CreatorId;
                 dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
                 dbAssessment.LastAccessedDate = assessment.LastModifiedDate;
+
+                dbAssessment.UseDiagram = assessment.UseDiagram;
+                dbAssessment.UseMaturity = assessment.UseMaturity;
+                dbAssessment.UseStandard = assessment.UseStandard;                
+
                 dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5, '0');
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
                 dbAssessment.Assets = assessment.Assets;
                 dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
+
+                dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
+                dbAssessment.Diagram_Image = assessment.DiagramImage;
                 dbAssessment.AnalyzeDiagram = false;
 
                 db.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
@@ -263,6 +343,17 @@ namespace CSETWeb_Api.BusinessManagers
                 db.INFORMATION.AddOrUpdate(dbInformation, x => x.Id);
                 db.SaveChanges();
 
+                if (assessment.UseMaturity)
+                {
+                    SalManager salManager = new SalManager();
+                    salManager.SetDefaultSAL_IfNotSet(assessmentId);
+                    //this is at the bottom deliberatly because 
+                    //we want everything else to succeed first
+                    MaturityManager mm = new MaturityManager();
+                    mm.PersistSelectedMaturityModel(assessmentId, "CMMC");
+                    if (mm.GetMaturityLevel(assessmentId) == 0)
+                        mm.PersistMaturityLevel(assessmentId, 1);
+                }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
 
@@ -477,10 +568,6 @@ namespace CSETWeb_Api.BusinessManagers
                 return db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             }
         }
-
-
-
-
     }
 }
 

@@ -19,6 +19,7 @@ using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
+using CSETWeb_Api.BusinessLogic.BusinessManagers;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -52,13 +53,32 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Returns a list of all Component questions, both default and overrides.
+        /// </summary>
+        [HttpPost]
+        [Route("api/ComponentQuestionList")]
+        public QuestionResponse GetComponentQuestionsList([FromBody] string group)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            var manager = new ComponentQuestionManager(assessmentId);
+            QuestionResponse resp = manager.GetResponse();
+            return resp;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/QuestionListComponentOverridesOnly")]
         public QuestionResponse GetComponentOverridesList()
         {
             int assessmentId = Auth.AssessmentForUser();
-            QuestionsManager qm = new QuestionsManager(assessmentId);
-            QuestionResponse resp = qm.GetOverrideListOnly();
+            ComponentQuestionManager manager = new ComponentQuestionManager(assessmentId);
+            QuestionResponse resp = manager.GetOverrideListOnly();
             return resp;
             
         }
@@ -126,7 +146,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/AnswerQuestion")]
-        public int StoreAnswer([FromBody]Answer answer)
+        public int StoreAnswer([FromBody] Answer answer)
         {
             if (answer == null)
                 return 0;
@@ -145,11 +165,15 @@ namespace CSETWeb_Api.Controllers
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 return rm.StoreAnswer(answer);
             }
-            else
+
+            if (answer.Is_Maturity)
             {
-                QuestionsManager qm = new QuestionsManager(assessmentId);
-                return qm.StoreAnswer(answer);
+                MaturityManager mm = new MaturityManager();
+                return mm.StoreAnswer(assessmentId, answer);
             }
+
+            QuestionsManager qm2 = new QuestionsManager(assessmentId);
+            return qm2.StoreAnswer(answer);
         }
 
 
@@ -159,13 +183,12 @@ namespace CSETWeb_Api.Controllers
         /// <param name="QuestionId"></param>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent)
+        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent, bool IsMaturity)
         {
             int assessmentId = Auth.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId,IsComponent);
+            return qm.GetDetails(QuestionId, assessmentId, IsComponent, IsMaturity);
 
         }
 
@@ -204,6 +227,14 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Answer_Id"></param>
+        /// <param name="Finding_id"></param>
+        /// <param name="Question_Id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/GetFinding")]
         public Finding GetFinding([FromUri] int Answer_Id, int Finding_id, int Question_Id)
@@ -225,22 +256,33 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/GetImportance")]
         public List<Importance> GetImportance()
         {
             int assessmentId = Auth.AssessmentForUser();
+            TinyMapper.Bind<IMPORTANCE, Importance>();
             List<Importance> rlist = new List<Importance>();
             using (CSET_Context context = new CSET_Context())
             {
                 foreach (IMPORTANCE import in context.IMPORTANCE)
                 {
-                    rlist.Add(TinyMapper.Map<Importance>(import));
+                    rlist.Add(TinyMapper.Map<IMPORTANCE,Importance>(import));
                 }
             }
             return rlist;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Finding_Id"></param>
         [HttpPost]
         [Route("api/DeleteFinding")]
         public void DeleteFinding([FromBody] int Finding_Id)
@@ -253,6 +295,11 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="finding"></param>
         [HttpPost]
         [Route("api/AnswerSaveDiscovery")]
         public void SaveDiscovery([FromBody] Finding finding)
@@ -266,10 +313,27 @@ namespace CSETWeb_Api.Controllers
                     return;
                 }
 
-
                 FindingViewModel fm = new FindingViewModel(finding, context);
                 fm.Save();
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="question_id"></param>
+        /// <param name="Component_Symbol_Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetOverrideQuestions")]
+        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromUri] int question_id, int Component_Symbol_Id)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            ComponentQuestionManager manager = new ComponentQuestionManager(assessmentId);
+
+            return manager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id);
         }
 
 
@@ -285,9 +349,9 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
-            QuestionsManager qm = new QuestionsManager(assessmentId);
+            ComponentQuestionManager manager = new ComponentQuestionManager(assessmentId);
             Guid g = new Guid(guid);
-            qm.HandleGuid(g, ShouldSave);
+            manager.HandleGuid(g, ShouldSave);
         }
 
 
@@ -373,19 +437,7 @@ namespace CSETWeb_Api.Controllers
 
             return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
-
-        [HttpGet]
-        [Route("api/GetOverrideQuestions")]
-        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromUri] int question_id, int Component_Symbol_Id)
-        {
-            int assessmentId = Auth.AssessmentForUser();
-
-            QuestionsManager questionsManager = new QuestionsManager(assessmentId);
-
-            return questionsManager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id);
-        }
     }
-
 }
 
 

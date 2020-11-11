@@ -229,10 +229,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram
             //tossing the whole approach and doing something different
             //save all containers, layers, and nodes
             //then go find and assign zone and layer
-            var updateList = from a in context.ASSESSMENT_DIAGRAM_COMPONENTS
-                             join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key
-                             select new { a, b };
-            foreach (var pair in updateList.ToList())
+            var updateList = from a in context.ASSESSMENT_DIAGRAM_COMPONENTS select a;
+                             //join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key
+                             //select new { a, b };
+            var updateListPair = from a in updateList.ToList()
+                join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key select new { a, b };
+            foreach (var pair in updateListPair.ToList())
             {
                 pair.a.Component_Symbol_Id = pair.b.Value.Component_Symbol_Id;
                 pair.a.label = pair.b.Value.ComponentName;

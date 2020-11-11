@@ -34,10 +34,10 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
         /// <param name="externalStandard"></param>
         public static void ProcessStandard(IExternalStandard externalStandard)
         {
-            log.Info("ModuleImporter.ProcessStandard - basic");
+            CsetLogManager.Instance.LogInfoMessage("ModuleImporter.ProcessStandard - basic");
 
 
-            LogManager.Instance.LogDebugMessage("ModuleImporter.ProcessStandard");
+            CsetLogManager.Instance.LogDebugMessage("ModuleImporter.ProcessStandard");
 
             SETS_CATEGORY category;
             int? categoryOrder = 0;
@@ -83,7 +83,14 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
             db.SaveChanges();
 
 
-            ProcessRequirements(externalStandard, set);
+            try
+            {
+                ProcessRequirements(externalStandard, set);
+            }
+            catch (Exception exc)
+            {
+                CsetLogManager.Instance.LogErrorMessage("Exception thrown in ModuleImporter.ProcessStandard() ... {0}", exc.ToString());
+            }
         }
 
 
@@ -269,9 +276,13 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                     Standard_Level = sal,
                     Level_Type = "NST"
                 };
-                newRequirement.REQUIREMENT_LEVELS.Add(rl);
+
+                if (newRequirement.REQUIREMENT_LEVELS.Count(x => x.Standard_Level == rl.Standard_Level) == 0)
+                {
+                    newRequirement.REQUIREMENT_LEVELS.Add(rl);
+                }
             }
-         
+
 
             var importer = new DocumentImporter();
             if (externalRequirement.References != null)
@@ -360,7 +371,10 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
         {
             if (externalRequirement.Questions == null || externalRequirement.Questions.Count() == 0)
             {
-                externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
+                return;
+
+                // trying to manufacture a question where none was defined could get us into trouble
+                // externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
             }
 
             var stdRefNum = 1;
@@ -382,7 +396,7 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                         newQuestion.Simple_Question = question;
                         newQuestion.Weight = externalRequirement.Weight;
                         newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
-                        newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.SecurityAssuranceLevels);                       
+                        newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.SecurityAssuranceLevels);
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
                         newQuestion.Std_Ref_Number = stdRefNum++;
@@ -412,18 +426,26 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                     db.SaveChanges();
 
 
-                    // attach SAL levels
+                    // attach question SAL levels
+                    var nqlList = new List<NEW_QUESTION_LEVELS>();
                     foreach (string sal in externalRequirement.SecurityAssuranceLevels)
                     {
-                        var rl = new NEW_QUESTION_LEVELS()
+                        var nql = new NEW_QUESTION_LEVELS()
                         {
                             Universal_Sal_Level = sal.ToString(),
                             New_Question_Set_Id = nqs.New_Question_Set_Id
                         };
-                        db.NEW_QUESTION_LEVELS.Add(rl);
+
+                        if (!nqlList.Exists(x => 
+                            x.Universal_Sal_Level == nql.Universal_Sal_Level 
+                            && x.New_Question_Set_Id == nqs.New_Question_Set_Id))
+                        {
+                            db.NEW_QUESTION_LEVELS.Add(nql);
+                            nqlList.Add(nql);
+                        }
                     }
                 }
-                         
+
 
                 try
                 {
@@ -433,7 +455,7 @@ namespace CSETWeb_Api.BusinessLogic.ModuleIO
                         Set_Name = setName,
                         Requirement_Id = newRequirement.Requirement_Id
                     };
-                    if (db.REQUIREMENT_QUESTIONS_SETS.Count(x => 
+                    if (db.REQUIREMENT_QUESTIONS_SETS.Count(x =>
                         x.Question_Id == rqs.Question_Id
                         && x.Set_Name == rqs.Set_Name) == 0)
                     {

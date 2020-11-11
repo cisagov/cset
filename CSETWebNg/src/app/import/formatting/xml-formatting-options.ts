@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import * as Monaco from "monaco-editor";
-import { MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "@angular/material";
+import { MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "@angular/material/checkbox";
 
 export interface XmlFormattingOptions {
     editorOptions: Monaco.languages.FormattingOptions;
