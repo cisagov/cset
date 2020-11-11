@@ -111,5 +111,7 @@
   <Table name="FINANCIAL_DOMAIN_FILTERS" />
   <Table name="ASSESSMENT_IRP_HEADER" />
   <Table name="ASSESSMENT_IRP" />
+	
+  <Table name="AVAILABLE_MATURITY_MODELS" />
     
 </Tables>

@@ -27,7 +27,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
-import { Navigation2Service } from '../../../../services/navigation2.service';
+import { NavigationService } from '../../../../services/navigation.service';
 
 @Component({
   selector: 'app-standards-summary',
@@ -44,7 +44,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
   constructor(
     private analysisSvc: AnalysisService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     public configSvc: ConfigService,
     ) { }
 
@@ -137,22 +137,18 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
                           const meta = chart.getDatasetMeta(0);
                           const ds = data.datasets[0];
                           const arc = meta.data[i];
-                          const custom = arc && arc.custom || {};
                           const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                           const arcOpts = chart.options.elements.arc;
-                          const fill = custom.backgroundColor ? custom.backgroundColor :
-                            getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                          const stroke = custom.borderColor ? custom.borderColor :
-                          getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                          const bw = custom.borderWidth ? custom.borderWidth :
-                            getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                          const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                          const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                          const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                           const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                           return {
                               text: label + ' : ' + value + '%',
                               fillStyle: fill,
                               strokeStyle: stroke,
                               lineWidth: bw,
-                              hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                              hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                               index: i
                           };
                       });

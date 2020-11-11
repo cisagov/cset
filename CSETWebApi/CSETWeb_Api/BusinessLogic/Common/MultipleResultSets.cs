@@ -10,7 +10,7 @@
 //using System.Data.Common;
 //using System.Data.Entity;
 //using System.Data.Entity.Infrastructure;
-//using System.Data.SqlClient;
+//using Microsoft.Data.SqlClient;
 //using System.Linq;
 
 //namespace CSETWeb_Api.Common

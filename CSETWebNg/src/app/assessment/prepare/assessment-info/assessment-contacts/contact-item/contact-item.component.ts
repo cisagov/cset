@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertComponent } from "../../../../../dialogs/alert/alert.component";
 import { EmailComponent } from "../../../../../dialogs/email/email.component";
 import { EditableUser } from "../../../../../models/editable-user.model";

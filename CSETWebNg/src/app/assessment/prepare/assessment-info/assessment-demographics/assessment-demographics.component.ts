@@ -83,12 +83,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getSizeValues().subscribe(
             (data: AssessmentSize[]) => {
                 this.sizeList = data;
-
-                // default the selected size, if not previously set
-                if (!this.demographicData.Size) {
-                    this.demographicData.Size = this.sizeList[0].DemographicId;
-                    this.updateDemographics();
-                }
             },
             error => {
                 console.log('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
@@ -103,7 +97,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     onSelectSector(sectorId: number) {
         this.populateIndustryOptions(sectorId);
         // invalidate the current Industry, as the Sector list has just changed
-        this.demographicData.IndustryId = 0;
+        this.demographicData.IndustryId = null;
         this.updateDemographics();
     }
 

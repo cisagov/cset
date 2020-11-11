@@ -1,0 +1,21 @@
+<!-- (spacer) -->
+<div class="mt-4" [class.display-none]="!domain.Visible"></div>
+
+<!-- Domain Header Level -->
+<div class="domain-group-heading" *ngIf="!!domain" [class.display-none]="!domain.Visible">
+  {{ setOrDomainLabel(domain) }}
+</div>
+
+<!-- Loop Groups within Domain -->
+<div *ngFor="let c of domain.Categories" [class.display-none]="!domain.Visible">
+  <app-category-block [myCategory]="c"></app-category-block>
+</div>
+
+<!-- indicates when all maturity filters turned off for this domain -->
+<div *ngIf="!!domain && questionsSvc.maturityFiltersAllOff(domain.DisplayText)"
+  class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+  <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+  <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+    All maturity filters are deselected for this domain. Select one or more maturity levels to view questions.
+  </span>
+</div>

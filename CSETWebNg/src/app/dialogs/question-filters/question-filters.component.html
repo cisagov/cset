@@ -29,68 +29,81 @@
   <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <div class="question-filters pr-3 form-check">
       <div>
-        <input placeholder="Search" class="form-control" [value]="questionsSvc.searchString" (keyup)="updateSearchString($event)" />
+        <input placeholder="Search" class="form-control" [value]="filterSvc.filterString" (keyup)="updateFilterString($event)" />
       </div>
       <hr class="mt-3 mb-1" />
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
         <label class="m-0" for="cbSelectAll">
           Select/Deselect All
         </label>
       </div>
       <hr class="m-1" />
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('Y')" id="cbShowY" name="cbShowY" (click)="updateFilters($event, 'Y')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('Y')" id="cbShowY" name="cbShowY" (click)="updateFilters($event, 'Y')">
         <label for="cbShowY">
           Show YES answered questions
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('N')" id="cbShowN" name="cbShowN" (click)="updateFilters($event, 'N')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('N')" id="cbShowN" name="cbShowN" (click)="updateFilters($event, 'N')">
         <label for="cbShowN">
           Show NO answered questions
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('NA')" id="cbShowNA" name="cbShowNA" (click)="updateFilters($event, 'NA')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('NA')" id="cbShowNA" name="cbShowNA" (click)="updateFilters($event, 'NA')">
         <label for="cbShowNA">
           Show NA answered questions
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('A')" id="cbShowA" name="cbShowA" (click)="updateFilters($event, 'A')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('A')" id="cbShowA" name="cbShowA" (click)="updateFilters($event, 'A')">
         <label for="cbShowA">
           Show ALT answered questions
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
         <label for="cbShowU">
           Show unanswered questions
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments">
           Show questions with comments
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('FB')" id="cbShowFeedback" name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback" name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
         <label for="cbShowFeedback">
           Show questions with feedback
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked">
           Show questions marked for review
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="questionsSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
         <label for="cbShowDisc">
           Show questions with observations
+        </label>
+      </div>
+      <hr class="mt-2 mb-2" *ngIf="isMaturity">
+      <div *ngIf="false">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('MT')" id="cbShowMatTarget" name="cbShowMatTarget" (click)="updateFilters($event, 'MT')">
+        <label for="cbShowMatTarget">
+          Show questions in maturity target level
+        </label>
+      </div>
+      <div *ngIf="isMaturity">
+        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('MT+')" id="cbShowAboveMatTarget" name="cbShowAboveMatTarget" (click)="updateFilters($event, 'MT+')">
+        <label for="cbShowAboveMatTarget">
+          Include questions above maturity target level
         </label>
       </div>
     </div>

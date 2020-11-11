@@ -68,7 +68,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import.customRules
             "      ,[Question_Group_Heading]" +
             "      ,[Universal_Sub_Category]" +
             "      ,[Sub_Heading_Question_Description]" +
-            "  FROM [dbo].[vQUESTION_HEADINGS]" +
+            "  FROM [vQUESTION_HEADINGS]" +
             " where Question_Group_Heading = '{0}' and Universal_Sub_Category = '{1}'";
             DataTable dt = dBIO.Select(string.Format(query, qgh, ucat), null);
             return dt;

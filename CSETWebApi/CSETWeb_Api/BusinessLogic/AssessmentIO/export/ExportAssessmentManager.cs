@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_2;
+using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -44,17 +44,52 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
         private void SetupBindings()
         {
             TinyMapper.Bind<ADDRESS, jADDRESS>();
-            TinyMapper.Bind<jUSER_DETAIL_INFORMATION, jUSER_DETAIL_INFORMATION>();
+            TinyMapper.Bind<ANSWER, jANSWER>();
+            TinyMapper.Bind<ASSESSMENTS, jASSESSMENTS>();
+            TinyMapper.Bind<ASSESSMENTS_REQUIRED_DOCUMENTATION, jASSESSMENTS_REQUIRED_DOCUMENTATION>();
+            TinyMapper.Bind<ASSESSMENTS_REQUIRED_DOCUMENTATION, jASSESSMENTS_REQUIRED_DOCUMENTATION>();
+            TinyMapper.Bind<ASSESSMENT_CONTACTS, jASSESSMENT_CONTACTS>();
+            TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
+            TinyMapper.Bind<ASSESSMENT_DIAGRAM_COMPONENTS, jASSESSMENT_DIAGRAM_COMPONENTS>();
+            TinyMapper.Bind<ASSESSMENT_IRP, jASSESSMENT_IRP>();
+            TinyMapper.Bind<ASSESSMENT_IRP, jASSESSMENT_IRP>();
+            TinyMapper.Bind<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>();
+            TinyMapper.Bind<ASSESSMENT_IRP_HEADER, jASSESSMENT_IRP_HEADER>();
             TinyMapper.Bind<ASSESSMENT_SELECTED_LEVELS, jASSESSMENT_SELECTED_LEVELS>();
             TinyMapper.Bind<AVAILABLE_STANDARDS, jAVAILABLE_STANDARDS>();
             TinyMapper.Bind<CNSS_CIA_JUSTIFICATIONS, jCNSS_CIA_JUSTIFICATIONS>();
+            TinyMapper.Bind<CSET_VERSION, jCSET_VERSION>();
+            TinyMapper.Bind<CUSTOM_BASE_STANDARDS, jCUSTOM_BASE_STANDARDS>();
+            TinyMapper.Bind<CUSTOM_QUESTIONAIRES, jCUSTOM_QUESTIONAIRES>();
+            TinyMapper.Bind<CUSTOM_QUESTIONAIRE_QUESTIONS, jCUSTOM_QUESTIONAIRE_QUESTIONS>();
             TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
+            TinyMapper.Bind<DIAGRAM_CONTAINER, jDIAGRAM_CONTAINER>();
+            TinyMapper.Bind<DIAGRAM_CONTAINER, jDIAGRAM_CONTAINER>();
+            TinyMapper.Bind<DOCUMENT_ANSWERS, jDOCUMENT_ANSWERS>();
+            TinyMapper.Bind<DOCUMENT_FILE, jDOCUMENT_FILE>();
+            TinyMapper.Bind<FINANCIAL_ASSESSMENT_VALUES, jFINANCIAL_ASSESSMENT_VALUES>();
+            TinyMapper.Bind<FINANCIAL_ASSESSMENT_VALUES, jFINANCIAL_ASSESSMENT_VALUES>();
+            TinyMapper.Bind<FINANCIAL_HOURS, jFINANCIAL_HOURS>();
+            TinyMapper.Bind<FINANCIAL_HOURS, jFINANCIAL_HOURS>();
+            TinyMapper.Bind<FINDING, jFINDING>();
             TinyMapper.Bind<FINDING_CONTACT, jFINDING_CONTACT>();
+            TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
+            TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
+            TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
+            TinyMapper.Bind<INFORMATION, jINFORMATION>();
             TinyMapper.Bind<NIST_SAL_INFO_TYPES, jNIST_SAL_INFO_TYPES>();
+            TinyMapper.Bind<NIST_SAL_QUESTION_ANSWERS, jNIST_SAL_QUESTION_ANSWERS>();
+            TinyMapper.Bind<PARAMETER_ASSESSMENT, jPARAMETER_ASSESSMENT>();
+            TinyMapper.Bind<PARAMETER_VALUES, jPARAMETER_VALUES>();
+            TinyMapper.Bind<STANDARD_SELECTION, jSTANDARD_SELECTION>();
+            TinyMapper.Bind<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>();
+            TinyMapper.Bind<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>();
+            TinyMapper.Bind<USER_DETAIL_INFORMATION, jUSER_DETAIL_INFORMATION>();
             TinyMapper.Bind<NIST_SAL_QUESTIONS, jNIST_SAL_QUESTION_ANSWERS>(config =>
             {
                 config.Ignore(x => x.Question_Text);
             });
+            TinyMapper.Bind<AVAILABLE_MATURITY_MODELS, jAVAILABLE_MATURITY_MODELS>();
         }
 
         private UploadAssessmentModel CopyForExport(int assessmentId)
@@ -64,74 +99,77 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
 
             foreach (var item in context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jASSESSMENTS.Add(TinyMapper.Map<jASSESSMENTS>(item));
+                model.jASSESSMENTS.Add(TinyMapper.Map<ASSESSMENTS, jASSESSMENTS>(item));
                 assessmentDate = item.Assessment_Date;
             }
 
+
             foreach (var item in context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<jASSESSMENT_CONTACTS>(item));
+                model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<ASSESSMENT_CONTACTS,jASSESSMENT_CONTACTS>(item));
             }
+
 
             foreach (var item in context.ANSWER
                 .Include(x => x.FINDING)
                 .ThenInclude(x => x.FINDING_CONTACT)
                 .Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jANSWER.Add(TinyMapper.Map<jANSWER>(item));
+                model.jANSWER.Add(TinyMapper.Map<ANSWER,jANSWER>(item));
                 foreach (var f in item.FINDING)
                 {
-                    model.jFINDING.Add(TinyMapper.Map<jFINDING>(f));
+                    model.jFINDING.Add(TinyMapper.Map<FINDING,jFINDING>(f));
                     foreach (var fc in f.FINDING_CONTACT)
                     {
-                        model.jFINDING_CONTACT.Add(TinyMapper.Map<jFINDING_CONTACT>(fc));
+                        model.jFINDING_CONTACT.Add(TinyMapper.Map<FINDING_CONTACT,jFINDING_CONTACT>(fc));
                     }
                 }
             }
 
+
             foreach (var item in context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jASSESSMENT_SELECTED_LEVELS.Add(TinyMapper.Map<jASSESSMENT_SELECTED_LEVELS>(item));
+                model.jASSESSMENT_SELECTED_LEVELS.Add(TinyMapper.Map<ASSESSMENT_SELECTED_LEVELS,jASSESSMENT_SELECTED_LEVELS>(item));
             }
 
             foreach (var item in context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jAVAILABLE_STANDARDS.Add(TinyMapper.Map<jAVAILABLE_STANDARDS>(item));
+                model.jAVAILABLE_STANDARDS.Add(TinyMapper.Map<AVAILABLE_STANDARDS,jAVAILABLE_STANDARDS>(item));
             }
 
             foreach (var item in context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jCNSS_CIA_JUSTIFICATIONS.Add(TinyMapper.Map<jCNSS_CIA_JUSTIFICATIONS>(item));
+                model.jCNSS_CIA_JUSTIFICATIONS.Add(TinyMapper.Map<CNSS_CIA_JUSTIFICATIONS,jCNSS_CIA_JUSTIFICATIONS>(item));
             }
 
             foreach (var item in context.CSET_VERSION)
             {
-                model.jCSET_VERSION.Add(TinyMapper.Map<jCSET_VERSION>(item));
+                model.jCSET_VERSION.Add(TinyMapper.Map<CSET_VERSION,jCSET_VERSION>(item));
             }
 
             foreach (var item in context.CUSTOM_BASE_STANDARDS)
             {
-                model.jCUSTOM_BASE_STANDARDS.Add(TinyMapper.Map<jCUSTOM_BASE_STANDARDS>(item));
+                model.jCUSTOM_BASE_STANDARDS.Add(TinyMapper.Map<CUSTOM_BASE_STANDARDS,jCUSTOM_BASE_STANDARDS>(item));
             }
 
             foreach (var item in context.CUSTOM_QUESTIONAIRES)
             {
-                model.jCUSTOM_QUESTIONAIRES.Add(TinyMapper.Map<jCUSTOM_QUESTIONAIRES>(item));
+                model.jCUSTOM_QUESTIONAIRES.Add(TinyMapper.Map<CUSTOM_QUESTIONAIRES,jCUSTOM_QUESTIONAIRES>(item));
             }
 
             foreach (var item in context.CUSTOM_QUESTIONAIRE_QUESTIONS)
             {
-                model.jCUSTOM_QUESTIONAIRE_QUESTIONS.Add(TinyMapper.Map<jCUSTOM_QUESTIONAIRE_QUESTIONS>(item));
+                model.jCUSTOM_QUESTIONAIRE_QUESTIONS.Add(TinyMapper.Map<CUSTOM_QUESTIONAIRE_QUESTIONS,jCUSTOM_QUESTIONAIRE_QUESTIONS>(item));
             }
 
             foreach (var item in context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jDEMOGRAPHICS.Add(TinyMapper.Map<jDEMOGRAPHICS>(item));
+                model.jDEMOGRAPHICS.Add(TinyMapper.Map<DEMOGRAPHICS,jDEMOGRAPHICS>(item));
             }
 
             foreach (var item in context.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS).ThenInclude(x => x.Answer_).Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jDOCUMENT_FILE.Add(TinyMapper.Map<jDOCUMENT_FILE>(item));
+                model.jDOCUMENT_FILE.Add(TinyMapper.Map<DOCUMENT_FILE,jDOCUMENT_FILE>(item));
                 foreach (var a in item.ANSWERs())
                 {
                     model.jDOCUMENT_ANSWERS.Add(new jDOCUMENT_ANSWERS()
@@ -144,24 +182,24 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
 
             foreach (var item in context.FRAMEWORK_TIER_TYPE_ANSWER.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jFRAMEWORK_TIER_TYPE_ANSWER.Add(TinyMapper.Map<jFRAMEWORK_TIER_TYPE_ANSWER>(item));
+                model.jFRAMEWORK_TIER_TYPE_ANSWER.Add(TinyMapper.Map<FRAMEWORK_TIER_TYPE_ANSWER,jFRAMEWORK_TIER_TYPE_ANSWER>(item));
             }
 
             foreach (var item in context.INFORMATION.Where(x => x.Id == assessmentId))
             {
-                var oInfo = TinyMapper.Map<jINFORMATION>(item);
+                var oInfo = TinyMapper.Map<INFORMATION,jINFORMATION>(item);
                 oInfo.Assessment_Date = assessmentDate;
                 model.jINFORMATION.Add(oInfo);
             }
 
             foreach (var item in context.NIST_SAL_INFO_TYPES.Where(x => x.Selected == true && x.Assessment_Id == assessmentId))
             {
-                model.jNIST_SAL_INFO_TYPES.Add(TinyMapper.Map<jNIST_SAL_INFO_TYPES>(item));
+                model.jNIST_SAL_INFO_TYPES.Add(TinyMapper.Map<NIST_SAL_INFO_TYPES,jNIST_SAL_INFO_TYPES>(item));
             }
 
-            foreach (var item in context.NIST_SAL_QUESTIONS)
+            foreach (var item in context.NIST_SAL_QUESTION_ANSWERS)
             {
-                model.jNIST_SAL_QUESTION_ANSWERS.Add(TinyMapper.Map<jNIST_SAL_QUESTION_ANSWERS>(item));
+                model.jNIST_SAL_QUESTION_ANSWERS.Add(TinyMapper.Map<NIST_SAL_QUESTION_ANSWERS,jNIST_SAL_QUESTION_ANSWERS>(item));
             }
 
             var parameterslist = from a in context.ASSESSMENTS
@@ -171,65 +209,68 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                                  select p;
             foreach (var item in parameterslist.Where(x => x.Parameter_Is_Default == false))
             {
-                model.jPARAMETER_VALUES.Add(TinyMapper.Map<jPARAMETER_VALUES>(item));
+                model.jPARAMETER_VALUES.Add(TinyMapper.Map<PARAMETER_VALUES,jPARAMETER_VALUES>(item));
             }
 
             foreach (var item in context.PARAMETER_ASSESSMENT.Where(x => x.Assessment_ID == assessmentId))
             {
-                model.jPARAMETER_ASSESSMENTs.Add(TinyMapper.Map<jPARAMETER_ASSESSMENT>(item));
+                model.jPARAMETER_ASSESSMENTs.Add(TinyMapper.Map<PARAMETER_ASSESSMENT,jPARAMETER_ASSESSMENT>(item));
             }
 
             foreach (var item in context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jSTANDARD_SELECTION.Add(TinyMapper.Map<jSTANDARD_SELECTION>(item));
+                model.jSTANDARD_SELECTION.Add(TinyMapper.Map<STANDARD_SELECTION,jSTANDARD_SELECTION>(item));
             }
 
             foreach (var item in context.GENERAL_SAL.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jGENERAL_SAL.Add(TinyMapper.Map<jGENERAL_SAL>(item));
+                model.jGENERAL_SAL.Add(TinyMapper.Map<GENERAL_SAL,jGENERAL_SAL>(item));
             }
 
             foreach (var item in context.SUB_CATEGORY_ANSWERS.Where(x => x.Assessement_Id == assessmentId))
             {
-                model.jSUB_CATEGORY_ANSWERS.Add(TinyMapper.Map<jSUB_CATEGORY_ANSWERS>(item));
+                model.jSUB_CATEGORY_ANSWERS.Add(TinyMapper.Map<SUB_CATEGORY_ANSWERS,jSUB_CATEGORY_ANSWERS>(item));
             }
 
             // NCUA data
             foreach (var item in context.FINANCIAL_HOURS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jFINANCIAL_HOURS.Add(TinyMapper.Map<jFINANCIAL_HOURS>(item));
+                model.jFINANCIAL_HOURS.Add(TinyMapper.Map<FINANCIAL_HOURS,jFINANCIAL_HOURS>(item));
             }
 
             foreach (var item in context.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jFINANCIAL_ASSESSMENT_VALUES.Add(TinyMapper.Map<jFINANCIAL_ASSESSMENT_VALUES>(item));
+                model.jFINANCIAL_ASSESSMENT_VALUES.Add(TinyMapper.Map<FINANCIAL_ASSESSMENT_VALUES,jFINANCIAL_ASSESSMENT_VALUES>(item));
             }
 
             foreach (var item in context.ASSESSMENTS_REQUIRED_DOCUMENTATION.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jASSESSMENTS_REQUIRED_DOCUMENTATION.Add(TinyMapper.Map<jASSESSMENTS_REQUIRED_DOCUMENTATION>(item));
+                model.jASSESSMENTS_REQUIRED_DOCUMENTATION.Add(TinyMapper.Map<ASSESSMENTS_REQUIRED_DOCUMENTATION,jASSESSMENTS_REQUIRED_DOCUMENTATION>(item));
             }
 
             foreach (var item in context.ASSESSMENT_IRP_HEADER.Where(x => x.ASSESSMENT_ID == assessmentId))
             {
-                model.jASSESSMENT_IRP_HEADER.Add(TinyMapper.Map<jASSESSMENT_IRP_HEADER>(item));
+                model.jASSESSMENT_IRP_HEADER.Add(TinyMapper.Map<ASSESSMENT_IRP_HEADER,jASSESSMENT_IRP_HEADER>(item));
             }
 
             foreach (var item in context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jASSESSMENT_IRP.Add(TinyMapper.Map<jASSESSMENT_IRP>(item));
+                model.jASSESSMENT_IRP.Add(TinyMapper.Map<ASSESSMENT_IRP,jASSESSMENT_IRP>(item));
             }
 
             foreach (var item in context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jASSESSMENT_DIAGRAM_COMPONENTS.Add(TinyMapper.Map<jASSESSMENT_DIAGRAM_COMPONENTS>(item));
+                model.jASSESSMENT_DIAGRAM_COMPONENTS.Add(TinyMapper.Map<ASSESSMENT_DIAGRAM_COMPONENTS,jASSESSMENT_DIAGRAM_COMPONENTS>(item));
             }
 
             foreach (var item in context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId))
             {
-                model.jDIAGRAM_CONTAINER.Add(TinyMapper.Map<jDIAGRAM_CONTAINER>(item));
+                model.jDIAGRAM_CONTAINER.Add(TinyMapper.Map<DIAGRAM_CONTAINER,jDIAGRAM_CONTAINER>(item));
             }
-
+            foreach (var item in context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jAVAILABLE_MATURITY_MODELS.Add(TinyMapper.Map<AVAILABLE_MATURITY_MODELS,jAVAILABLE_MATURITY_MODELS>(item));
+            }
             return model;
         }
 

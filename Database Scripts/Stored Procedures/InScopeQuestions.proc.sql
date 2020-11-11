@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		Randy Woods
 -- Create date: 15-May-2020
@@ -18,5 +19,4 @@ select distinct s.Question_Id
 		where Assessment_Id = @assessment_id 
 	)
 END
-
 
