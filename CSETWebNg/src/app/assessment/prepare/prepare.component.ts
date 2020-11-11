@@ -49,7 +49,15 @@ export class PrepareComponent implements OnInit {
     }
   }
 
+  /**
+   * If the nav tree is not yet populated, build it.
+   */
   ngOnInit() {
+    if (this.navSvc.treeControl.dataNodes == null) {
+      setInterval(() => {
+        this.navSvc.buildTree(this.navSvc.getMagic());
+      }, 1000);
+    }
     this.assessSvc.currentTab = 'prepare';
   }
 }
