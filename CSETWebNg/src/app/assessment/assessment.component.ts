@@ -90,7 +90,6 @@ export class AssessmentComponent implements AfterContentChecked {
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
-    console.log('prepare 123');
     this.assessSvc.currentTab = 'prepare';
     this.navSvc.activeResultsView = null;
     if (sessionStorage.getItem('tree')) {
