@@ -54,7 +54,7 @@ export class PrepareComponent implements OnInit {
    */
   ngOnInit() {
     if (this.navSvc.treeControl.dataNodes == null) {
-      setInterval(() => {
+      setTimeout(() => {
         this.navSvc.buildTree(this.navSvc.getMagic());
       }, 1000);
     }
