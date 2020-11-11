@@ -1,0 +1,70 @@
+<!----------------------
+
+   Copyright 2020 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="white-panel">
+  <div id="top"></div>
+  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+
+    <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
+      <div class="d-flex align-items-start flex-11a">
+        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse
+          All</button>
+        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
+        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
+          <i class="cset-icons-filter"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="d-block mb-2">
+      <h2>Maturity Questions</h2>
+      <div class="mb-2">
+        Additional information on how to answer questions can be found in the
+        <a rel="noopener noreferrer" target="_blank" [href]="helpDocUrl()">User Guide</a>.
+      </div>
+      <div class="mb-2">
+        The target maturity level for this assessment is set to 
+        <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
+      </div>
+    </div>
+
+    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
+
+    <div *ngIf="filterSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
+    
+    <div *ngIf="!domains" class="w-100">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+
+    <!-- top level -->
+    <div *ngFor="let d of domains" class="w-100">
+      <app-domain-block [domain]="d"></app-domain-block>
+    </div>
+
+  </div>
+
+  <app-nav-back-next [page]="'maturity-questions'"></app-nav-back-next>
+
+</div>

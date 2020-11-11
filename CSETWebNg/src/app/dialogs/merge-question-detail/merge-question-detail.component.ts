@@ -24,7 +24,7 @@
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
 import { EditUserComponent } from '../edit-user/edit-user.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-merge-question-detail',

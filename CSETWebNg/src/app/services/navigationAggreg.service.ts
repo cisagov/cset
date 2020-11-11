@@ -37,21 +37,21 @@ import { AggregationService } from './aggregation.service';
 export class NavigationAggregService {
 
   pages = [
-    { pageClass: 'trend', path: 'trend',
+    { pageId: 'trend', path: 'trend',
       condition:  () => this.aggregationSvc.mode === 'TREND'
     },
-    { pageClass: 'compare', path: 'compare',
+    { pageId: 'compare', path: 'compare',
       condition:  () => this.aggregationSvc.mode === 'COMPARE'
     },
     {
-      pageClass: 'alias-assessments', path: 'alias-assessments/{:id}'
+      pageId: 'alias-assessments', path: 'alias-assessments/{:id}'
     },
     {
-      pageClass: 'compare-analytics', path: 'compare-analytics/{:id}',
+      pageId: 'compare-analytics', path: 'compare-analytics/{:id}',
       condition: () => this.aggregationSvc.mode === 'COMPARE'
     },
     {
-      pageClass: 'trend-analytics', path: 'trend-analytics/{:id}',
+      pageId: 'trend-analytics', path: 'trend-analytics/{:id}',
       condition: () => this.aggregationSvc.mode === 'TREND'
     }
   ];
@@ -72,7 +72,7 @@ export class NavigationAggregService {
    */
   navBack(cur: string) {
     // find current page
-    const currentPageIndex = this.pages.findIndex(p => p.pageClass === cur);
+    const currentPageIndex = this.pages.findIndex(p => p.pageId === cur);
     if (currentPageIndex < 0) {
       return;
     }
@@ -100,7 +100,7 @@ export class NavigationAggregService {
    */
   navNext(cur: string) {
     // find current page
-    const currentPageIndex = this.pages.findIndex(p => p.pageClass === cur);
+    const currentPageIndex = this.pages.findIndex(p => p.pageId === cur);
 
     if (currentPageIndex < 0) {
       return;

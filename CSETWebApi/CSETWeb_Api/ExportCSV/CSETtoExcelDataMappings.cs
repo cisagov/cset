@@ -89,6 +89,7 @@ namespace ExportCSV
                            Question_Id = q.Requirement_Id,
                            Question_Group_Heading = h.Question_Group_Heading1,
                            Simple_Question = q.Requirement_Text,
+                           Requirement_Title = q.Requirement_Title,
                            Answer_Text = a.Answer_Text,
                            Mark_For_Review = a.Mark_For_Review,
                            Reviewed = a.Reviewed,
@@ -295,6 +296,7 @@ namespace ExportCSV
         private static string[] headings = new String[] { "Question_Id",
             "Question_Group_Heading",
             "Simple_Question",
+            "Requirement_Title",
             "Answer_Text",
             "Mark_For_Review",
             "Is_Question",
@@ -316,6 +318,7 @@ namespace ExportCSV
         public int Question_Id { get; set; }
         public String Question_Group_Heading { get; set; }
         public String Simple_Question { get; set; }
+        public String Requirement_Title { get; set; }
         public String Answer_Text { get; set; }
         public Boolean? Mark_For_Review { get; set; }
         public Boolean? Reviewed { get; set; }

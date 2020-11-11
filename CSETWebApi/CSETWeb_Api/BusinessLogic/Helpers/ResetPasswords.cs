@@ -6,10 +6,12 @@
 //////////////////////////////// 
 using BusinessLogic;
 using CSETWeb_Api.BusinessLogic;
+using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
+using log4net;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -52,7 +54,7 @@ namespace CSETWeb_Api.Helpers
                 });
 
                 db.SaveChanges();
-                
+
                 // Send the new temp password to the user
                 NotificationManager nm = new NotificationManager(info.AppCode);
                 nm.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword);
@@ -85,7 +87,7 @@ namespace CSETWeb_Api.Helpers
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == changePass.PrimaryEmail).FirstOrDefault();
                 var info = db.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == user.PrimaryEmail).FirstOrDefault();
-                
+
                 //if(!PasswordHash.ValidatePassword(changePass.CurrentPassword, user.Password, user.Salt))
                 //{
                 //    return false;
@@ -113,7 +115,8 @@ namespace CSETWeb_Api.Helpers
         /// <param name="subject"></param>
         /// <param name="appCode"></param>
         /// <returns></returns>
-        public async Task<bool> ResetPassword(string email, string subject, string appCode) {
+        public async Task<bool> ResetPassword(string email, string subject, string appCode)
+        {
             /**
              * get the user and make sure they exist
              * set the reset password flag
@@ -124,7 +127,7 @@ namespace CSETWeb_Api.Helpers
             try
             {
                 var user = db.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefault();
-//                var info = db.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == email).FirstOrDefault();
+                //                var info = db.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == email).FirstOrDefault();
 
                 user.PasswordResetRequired = true;
                 String password = System.Web.Security.Membership.GeneratePassword(10, 1);
@@ -135,19 +138,21 @@ namespace CSETWeb_Api.Helpers
 #endif
                 string hash;
                 string salt;
-                PasswordHash.HashPassword(password, out hash,out salt);
+                PasswordHash.HashPassword(password, out hash, out salt);
                 user.Password = hash;
                 user.Salt = salt;
 
 
                 NotificationManager nm = new NotificationManager(appCode);
                 nm.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject);
-                
+
 
                 await db.SaveChangesAsync();
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
+                CsetLogManager.Instance.LogErrorMessage(e.ToString());
                 return false;
             }
         }
@@ -161,13 +166,12 @@ namespace CSETWeb_Api.Helpers
         {
             List<PotentialQuestions> questions =
                 (from a in db.SECURITY_QUESTION
-                select new PotentialQuestions()
-                {
-                    SecurityQuestion = a.SecurityQuestion,
-                    SecurityQuestionId = a.SecurityQuestionId
-                }).ToList<PotentialQuestions>();
+                 select new PotentialQuestions()
+                 {
+                     SecurityQuestion = a.SecurityQuestion,
+                     SecurityQuestionId = a.SecurityQuestionId
+                 }).ToList<PotentialQuestions>();
             return questions;
         }
     }
 }
-

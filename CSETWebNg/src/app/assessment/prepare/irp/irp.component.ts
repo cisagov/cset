@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
     selector: 'app-irp',
@@ -39,7 +39,7 @@ export class IRPComponent implements OnInit {
 
     constructor(private router: Router,
         public assessSvc: AssessmentService,
-        public navSvc2: Navigation2Service,
+        public navSvc: NavigationService,
         private irpSvc: IRPService
     ) { }
 

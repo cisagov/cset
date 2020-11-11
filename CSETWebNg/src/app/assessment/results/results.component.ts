@@ -27,9 +27,9 @@ import {
   Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
 } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavigationService, NavTree } from '../../services/navigation.service';
-import { StandardService } from '../../services/standard.service';
+import { NavTreeNode } from '../../services/navigation.service';
 import { AnalyticsService } from '../../services/analytics.service';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-results',
@@ -38,15 +38,14 @@ import { AnalyticsService } from '../../services/analytics.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {
-  analyticsIsUp: boolean = false;
 
+  /**
+   * 
+   */
   constructor(
     private assessSvc: AssessmentService,
     private navSvc: NavigationService,
-    private stdSvc: StandardService,
-    private router: Router,
-    private route: ActivatedRoute, 
-    private analyticsSvc: AnalyticsService
+    private router: Router
   ) {
     // Store the active results view based on the new navigation target
     this.router.events.subscribe((event: RouterEvent) => {
@@ -66,96 +65,10 @@ export class ResultsComponent implements OnInit {
         }
       }
     });
-
-    // Build the nav tree
-    this.stdSvc.getACET().subscribe(x => 
-      {
-        this.analyticsSvc.pingAnalyticsService().subscribe(
-          data => { 
-            this.analyticsIsUp = true;
-            this.populateTree(x);
-          },
-          err => { 
-            this.analyticsIsUp = false;
-            this.populateTree(x)
-          }
-        );
-      });
   }
 
-  tree: NavTree[] = [];
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
-    this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
-      this.router.navigate([value], { relativeTo: this.route });
-    });
-
-
-    // Jump to the previously active view (if known)
-    if (!!this.navSvc.activeResultsView) {
-
-      // make sure the tree is up to date before we query it
-      this.stdSvc.getACET().subscribe(x => {
-        this.populateTree(x);
-
-        // if the 'active' view is no longer in the tree, default to the dashboard view
-        if (!this.navSvc.isPathInTree(this.tree, this.navSvc.activeResultsView)) {
-          this.navSvc.activeResultsView = 'dashboard';
-        }
-
-        this.navSvc.selectItem(this.navSvc.activeResultsView);
-      });
-    }
-  }
-
-  pingAnalytics(){
-    
-  }
-
-  populateTree(acet) {
-    const magic = this.navSvc.getMagic();
-    this.tree = [
-      {
-        label: 'Analysis Dashboard', value: 'dashboard', children: [
-          { label: 'Control Priorities', value: 'ranked-questions', children: [] },
-          {
-            label: 'Standards Summary', value: 'standards-summary', children: [
-              { label: 'Ranked Categories', value: 'standards-ranked', children: [] },
-              { label: 'Results by Category', value: 'standards-results', children: [] }
-            ]
-          },
-          { label: 'Components Summary', value: 'components-summary', children: [
-            { label: 'Ranked Categories', value: 'components-ranked', children: [] },
-            { label: 'Results by Category', value: 'components-results', children: [] },
-            { label: 'Component Types', value: 'components-types', children: [] },
-            { label: 'Network Warnings', value: 'components-warnings', children: [] }
-          ] },
-        ]
-      },
-      // { label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] },
-      // { label: 'Reports', value: 'reports', children: [] }
-    ];
-
-    if (acet) {
-      this.tree.push({
-        label: 'ACET Information', value: '', children: [
-          { children: [], label: 'Cybersecurity Maturity', value: 'maturity' },
-          { children: [], label: 'Administration - Review Hours', value: 'admin' },
-          { children: [], label: 'ACET Dashboard', value: 'acetDashboard' }
-        ]
-      });
-    }
-
-    this.tree.push({ label: 'Executive Summary, Overview, & Comments', value: 'overview', children: [] });
-    this.tree.push({ label: 'Reports', value: 'reports', children: [] });
-    this.tree.push({ label: 'Feedback', value: 'feedback', children: [] });
-    
-    if(this.analyticsIsUp){
-      this.tree.push({ label: 'Share Assessment with DHS', value: 'analytics', children: []});
-    }
-    this.navSvc.setTree(this.tree, magic);
-    this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[0]);
-    this.navSvc.treeControl.expandDescendants(this.navSvc.dataSource.data[1]);
   }
 }

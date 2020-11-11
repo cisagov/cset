@@ -24,10 +24,11 @@
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { QuestionFilterService } from '../../../services/question-filter.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -53,8 +54,10 @@ export class QuestionBlockComponent implements OnInit {
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
 
+
   constructor(
     public questionsSvc: QuestionsService,
+    public filterSvc: QuestionFilterService,
     private dialog: MatDialog,
     public configSvc: ConfigService,
     public assessSvc: AssessmentService) {
@@ -92,12 +95,30 @@ export class QuestionBlockComponent implements OnInit {
     return text;
   }
 
+  /**
+   * 
+   * @param q 
+   */
   baselineLevel(q: Question) {
-    return this.matLevelMap.get(q.MaturityLevel);
+    return this.matLevelMap.get(q.MaturityLevel.toString());
   }
 
+  /**
+   * 
+   */
   refreshComponentOverrides() {
     this.changeComponents.emit();
+  }
+
+  /**
+   * 
+   * @param ans 
+   */
+  showThisOption(ans: string) {
+    if (!this.questionsSvc.questions) {
+      return true;
+    }
+    return this.questionsSvc.questions?.AnswerOptions.indexOf(ans) >= 0;
   }
 
   /**
@@ -165,16 +186,20 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * Calculates the percentage of answered questions for this subcategory
+   * Calculates the percentage of answered questions for this subcategory.
+   * The percentage for maturity questions is calculated using questions
+   * that are within the assessment's target level.  
    */
   refreshPercentAnswered() {
     let answeredCount = 0;
     let totalCount = 0;
 
     this.mySubCategory.Questions.forEach(q => {
-      totalCount++;
-      if (q.Answer && q.Answer !== "U") {
-        answeredCount++;
+      if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityTargetLevel) {
+        totalCount++;
+        if (q.Answer && q.Answer !== "U") {
+          answeredCount++;
+        }
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
@@ -220,6 +245,7 @@ export class QuestionBlockComponent implements OnInit {
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
+        Is_Maturity: q.Is_Maturity,
         ComponentGuid: q.ComponentGuid
       };
 
@@ -258,6 +284,7 @@ export class QuestionBlockComponent implements OnInit {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
+      Is_Maturity: q.Is_Maturity,
       ComponentGuid: q.ComponentGuid
     };
 
@@ -289,6 +316,7 @@ export class QuestionBlockComponent implements OnInit {
         Reviewed: q.Reviewed,
         Is_Component: q.Is_Component,
         Is_Requirement: q.Is_Requirement,
+        Is_Maturity: q.Is_Maturity,
         ComponentGuid: q.ComponentGuid
       };
 
@@ -337,6 +365,7 @@ export class QuestionBlockComponent implements OnInit {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
+      Is_Maturity: q.Is_Maturity,
       ComponentGuid: q.ComponentGuid
     };
 

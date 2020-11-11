@@ -28,8 +28,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-diagram-inventory',
-  templateUrl: './diagram-inventory.component.html',
-  styleUrls: ['./diagram-inventory.component.scss']
+  templateUrl: './diagram-inventory.component.html'
 })
 export class DiagramInventoryComponent implements OnInit {
 
@@ -47,7 +46,7 @@ export class DiagramInventoryComponent implements OnInit {
       });
   }
 
-  sendToDiagram() {
-    this.router.navigateByUrl("/assessment/" + sessionStorage.getItem('assessmentId') + "/diagram/info");
+  navToDiagram() {
+    this.router.navigateByUrl("/assessment/" + sessionStorage.getItem('assessmentId') + "/prepare/diagram/info");
   }
 }

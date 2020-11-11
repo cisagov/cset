@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class ExcelExportComponent {
   constructor(private dialog: MatDialogRef<ExcelExportComponent>,
     public configSvc: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-        dialog.beforeClose().subscribe(() => dialog.close());
+        dialog.beforeClosed().subscribe(() => dialog.close());
         var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
         this.doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
   }

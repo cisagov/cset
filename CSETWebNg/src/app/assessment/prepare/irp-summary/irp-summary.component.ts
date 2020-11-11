@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 import { ACETService } from '../../../services/acet.service';
 import { QuestionsService } from '../../../services/questions.service';
 
@@ -41,7 +41,7 @@ export class IrpSummaryComponent implements OnInit {
 
   constructor(private router: Router,
       public assessSvc: AssessmentService,
-      public navSvc2: Navigation2Service,
+      public navSvc: NavigationService,
       public acetSvc: ACETService,
       private questionsSvc: QuestionsService
   ) { }

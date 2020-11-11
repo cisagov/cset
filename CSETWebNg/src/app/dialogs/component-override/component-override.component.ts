@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { Answer, Question } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
@@ -47,7 +47,7 @@ export class ComponentOverrideComponent {
   constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
     public configSvc: ConfigService, public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    dialog.beforeClose().subscribe(() => dialog.close(this.questionChanged));
+    dialog.beforeClosed().subscribe(() => dialog.close(this.questionChanged));
     this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId,
       data.Component_Symbol_Id).subscribe((x: any) => {
         this.questions = x;
@@ -58,6 +58,17 @@ export class ComponentOverrideComponent {
           q.AltAnswerText = q.Alternate_Justification;
         });
       });
+  }
+
+    /**
+   * 
+   * @param ans 
+   */
+  showThisOption(ans: string) {
+    if (!this.questionsSvc.questions) {
+      return true;
+    }
+    return this.questionsSvc.questions?.AnswerOptions.indexOf(ans) >= 0;
   }
 
   storeAnswer(q: any, newAnswerValue: string) {
@@ -79,6 +90,7 @@ export class ComponentOverrideComponent {
       Reviewed: q.Reviewed,
       Is_Component: q.Is_Component,
       Is_Requirement: q.Is_Requirement,
+      Is_Maturity: q.Is_Maturity,
       ComponentGuid: q.Component_GUID
     };
 

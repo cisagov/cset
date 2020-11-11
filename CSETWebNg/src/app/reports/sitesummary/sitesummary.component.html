@@ -109,8 +109,8 @@
     <div class="page-break">
         <h1>Advisory</h1>
         <p>
-            CSET® is only one component of the overall cyber security picture and should be complemented with a robust
-            cyber security program within the organization. A self-assessment with CSET® cannot reveal all types of
+            CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust
+            cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of
             security
             weaknesses, and should not be the sole means of determining an organization’s security posture.
         </p>
@@ -212,7 +212,7 @@
         </div>
 
         <h1>
-            High Level Assessment Description
+            High-Level Assessment Description
         </h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
         </p>
@@ -388,7 +388,7 @@
             </tr>
         </table>
 
-        
+
         <div *ngIf="response?.salTable.LastSalDeterminationType === 'GENERAL'">
             <p>
                 <b>Calculated General Security Assurance Levels (SAL)</b>
@@ -646,7 +646,7 @@
                     <td class="text-right">{{ irp.RiskCount[2] }}</td>
                     <td class="text-right">{{ irp.RiskCount[3] }}</td>
                     <td class="text-right">{{ irp.RiskCount[4] }}</td>
-                    <td class="text-nowrap">{{ irp.Comment }}</td>
+                    <td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.Comment)"></td>
                 </tr>
                 <tr>
                     <td class="border-table">Totals</td>
@@ -795,7 +795,7 @@
             </tr>
             <tr>
                 <td class="tint2">Comment:</td>
-                <td colspan="2">{{c.Comment}}</td>
+                <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.Comment)"></td>
             </tr>
         </table>
 

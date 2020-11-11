@@ -10,7 +10,7 @@ using Snickler.EFCore;
 using BusinessLogic.Helpers;
 using BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using CSETWeb_Api.BusinessLogic;
 
 using CSETWeb_Api.BusinessLogic.Models;
@@ -78,10 +78,21 @@ namespace CSETWeb_Api.BusinessLogic
         /// </summary>
         public Aggregation CreateAggregation(string mode)
         {
+            string name = "";
+            switch (mode)
+            {
+                case "COMPARE":
+                    name = "New Comparison";
+                    break;
+                case "TREND":
+                    name = "New Trend";
+                    break;
+            }
+
             Aggregation newAgg = new Aggregation()
             {
                 AggregationDate = DateTime.Today,
-                AggregationName = "New " + mode,
+                AggregationName = name,
                 Mode = mode
             };
 
@@ -114,7 +125,8 @@ namespace CSETWeb_Api.BusinessLogic
                     AggregationDate = agg.Aggregation_Date,
                     AggregationId = agg.AggregationID,
                     AggregationName = agg.Aggregation_Name,
-                    Mode = agg.Aggregation_Mode
+                    Mode = agg.Aggregation_Mode,
+                    AssessorName = agg.Assessor_Name
                 };
             }
         }

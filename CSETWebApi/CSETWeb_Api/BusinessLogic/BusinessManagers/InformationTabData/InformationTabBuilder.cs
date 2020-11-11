@@ -19,6 +19,12 @@ namespace CSET_Main.Questions.InformationTabData
             this.DataContext = context;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="frameworkData"></param>
+        /// <returns></returns>
         internal List<QuestionInformationTabData> CreateFrameworkInformationTab( FrameworkInfoData frameworkData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
@@ -28,6 +34,12 @@ namespace CSET_Main.Questions.InformationTabData
             return tempTabDataList;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionInfoData"></param>
+        /// <returns></returns>
         internal List<QuestionInformationTabData> CreateQuestionInformationTab(QuestionInfoData questionInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
@@ -39,6 +51,13 @@ namespace CSET_Main.Questions.InformationTabData
             }
             return tempTabDataList;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionInfoData"></param>
+        /// <returns></returns>
         internal List<QuestionInformationTabData> CreateRelatedQuestionInformationTab(RelatedQuestionInfoData questionInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
@@ -51,6 +70,13 @@ namespace CSET_Main.Questions.InformationTabData
             return tempTabDataList;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reqInfoData"></param>
+        /// <param name="levelManager"></param>
+        /// <returns></returns>
         internal List<QuestionInformationTabData> CreateRequirementInformationTab(RequirementInfoData reqInfoData,IStandardSpecficLevelRepository levelManager)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
@@ -60,6 +86,12 @@ namespace CSET_Main.Questions.InformationTabData
             return tempTabDataList;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionInfoData"></param>
+        /// <returns></returns>
         internal List<QuestionInformationTabData> CreateComponentInformationTab(ComponentQuestionInfoData questionInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
@@ -68,6 +100,21 @@ namespace CSET_Main.Questions.InformationTabData
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }       
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="maturityInfoData"></param>
+        /// <returns></returns>
+        internal List<QuestionInformationTabData> CreateMaturityInformationTab(MaturityQuestionInfoData maturityInfoData)
+        {
+            List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
+            QuestionInformationTabData tab = new QuestionInformationTabData();
+            tab.BuildMaturityInfoTab(maturityInfoData, DataContext);
+            tempTabDataList.Add(tab);
+            return tempTabDataList;
+        }
     }
 }
 
