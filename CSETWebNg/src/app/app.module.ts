@@ -220,8 +220,8 @@ import { DomainBlockComponent } from './assessment/questions/domain-block/domain
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
-import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
-import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
+import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
+import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
@@ -229,6 +229,8 @@ import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-
 import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
+import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
+import { CmmcStyleService } from './services/cmmc-style.service';
 
 @NgModule({
     imports: [
@@ -405,6 +407,7 @@ import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
+        ComplianceScoreComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
@@ -459,7 +462,8 @@ import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component
         ChartColors, 
         ReportService,
         ReportAnalysisService, 
-        LocalStoreManager
+        LocalStoreManager,
+        CmmcStyleService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
