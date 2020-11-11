@@ -12,13 +12,13 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	INSERT INTO [dbo].[FINANCIAL_ASSESSMENT_VALUES]
+	INSERT INTO [FINANCIAL_ASSESSMENT_VALUES]
 			   ([Assessment_Id]
 			   ,[AttributeName]
 			   ,[AttributeValue])
 	SELECT Assessment_Id = @Assessment_Id,a.AttributeName, isnull(AttributeValue, '') AttributeValue
-	  FROM [dbo].[FINANCIAL_ATTRIBUTES] a
-		left join  [dbo].[FINANCIAL_ASSESSMENT_VALUES] v on a.AttributeName = v.AttributeName and v.Assessment_Id = @Assessment_Id
+	  FROM [FINANCIAL_ATTRIBUTES] a
+		left join [FINANCIAL_ASSESSMENT_VALUES] v on a.AttributeName = v.AttributeName and v.Assessment_Id = @Assessment_Id
 		where v.AttributeName is null
 
 	select * from FINANCIAL_ASSESSMENT_VALUES where Assessment_Id = @Assessment_Id

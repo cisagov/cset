@@ -100,3 +100,7 @@ SOFTWARE.
 .supplemental .highlight {
     background-color: yellow;
 }
+
+.supplemental ul {
+    padding-inline-start: 1rem;
+}

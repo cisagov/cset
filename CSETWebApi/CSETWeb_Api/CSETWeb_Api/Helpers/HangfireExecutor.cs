@@ -14,7 +14,7 @@ using Hangfire.Server;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +29,7 @@ namespace CSETWeb_Api.Helpers
 
             if (externalStandard == null)
             {
-                var msg = "Module was not correctly transferred.  Please try again";
+                var msg = "Module was not correctly transferred.  Please try again.";
                 logger.Log(msg);
                 throw new Exception(msg);
             }
@@ -40,6 +40,7 @@ namespace CSETWeb_Api.Helpers
             }
             catch (Exception exc)
             {
+                CsetLogManager.Instance.LogErrorMessage("Exception thrown in HangfireExecutor.SaveImport(): \n{0}", exc.ToString());
                 logger.Log("An error was encountered when adding the module to the database.  Please try again");
                 throw exc;
             }

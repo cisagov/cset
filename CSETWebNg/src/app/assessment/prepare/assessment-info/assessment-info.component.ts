@@ -25,7 +25,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { DemographicService } from '../../../services/demographic.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
   selector: 'app-assessment-info',
@@ -36,13 +36,12 @@ import { Navigation2Service } from '../../../services/navigation2.service';
 export class AssessmentInfoComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
-    public navSvc2: Navigation2Service,
-    private demoSvc: DemographicService) { }
+    public navSvc: NavigationService,
+  ) { }
 
   @ViewChild('assessmentDetail') assessmentDetail;
-  @ViewChild('demographics') demographics;
+
 
   ngOnInit() {
-    this.demoSvc.id = (this.assessSvc.id());
   }
 }

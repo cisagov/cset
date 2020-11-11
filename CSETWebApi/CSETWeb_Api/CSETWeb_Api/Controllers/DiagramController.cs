@@ -19,7 +19,7 @@ using CSETWeb_Api.BusinessLogic.Diagram;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 using DataLayerCore.Model;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Net.Http.Headers;

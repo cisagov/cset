@@ -22,33 +22,35 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { OkayComponent } from "../../../dialogs/okay/okay.component";
 import { QuestionRequirementCounts, StandardsBlock } from "../../../models/standards.model";
 import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
-import { Navigation2Service } from "../../../services/navigation2.service";
+import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
+import { NavigationService } from "../../../services/navigation.service";
 
 @Component({
   selector: "app-standards",
   templateUrl: "./standards.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsComponent implements OnInit {
   standards: StandardsBlock;
   expandedDesc: boolean[] = [];
   dialogRef: MatDialogRef<OkayComponent>;
+  dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
 
   constructor(
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadStandards();
@@ -76,8 +78,8 @@ export class StandardsComponent implements OnInit {
       error => {
         console.log(
           "Error getting all standards: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log("Error getting all standards: " + (<Error>error).stack);
       }
@@ -106,6 +108,7 @@ export class StandardsComponent implements OnInit {
 
     let showIt = false;
 
+
     if (standard.Code === "INGAA") {
       // INGAA
       msg =
@@ -126,17 +129,21 @@ export class StandardsComponent implements OnInit {
     } else if (standard.Code === "NCSF_V1") {
       msg =
         "CSET Profiles (.csetp) are being deprecated in favor of a new questions editor in which you can create questions " +
-        "or utilize any existing questions contained with in CSET.  Previously profiles were limited to the NIST " +
+        "or utilize any existing questions contained with in CSET®.  Previously profiles were limited to the NIST " +
         "Framework for Improving Critical Infrastructure Cybersecurity.";
       showIt = framework.Selected;
+    } else if (standard.Code === "AWWA") {
     } else {
       return true;
     }
 
     let rval = true;
+
+
+    // show a legalese verbiage "OK" dialog 
     if (showIt) {
 
-      this.dialogRef = this.dialog.open(OkayComponent, {data: {messageText: msg}});
+      this.dialogRef = this.dialog.open(OkayComponent, { data: { messageText: msg } });
       this.dialogRef.componentInstance.hasHeader = true;
 
       this.dialogRef.afterClosed().subscribe(result => {
@@ -148,8 +155,24 @@ export class StandardsComponent implements OnInit {
         this.dialogRef = null;
       });
     }
+
+    // show a more complex dialog (AWWA)
+    if (standard.Code === "AWWA" && standard.Selected) {
+      this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
+
+      this.dialogRefAwwa.afterClosed().subscribe(result => {
+        if (result) {
+          rval = true;
+        } else {
+          rval = false;
+        }
+        this.dialogRefAwwa = null;
+      });
+    }
+
     return rval;
   }
+
   /**
    * Builds a list of selected standards and post it to the server.
    */
@@ -166,7 +189,7 @@ export class StandardsComponent implements OnInit {
     }
 
     if (standard.Code === "ACET_V1") {
-      this.standardSvc.setACETSelected(standard.Selected);
+      this.navSvc.setACETSelected(standard.Selected);
     }
 
     this.standards.Categories.forEach(cat => {
@@ -184,11 +207,13 @@ export class StandardsComponent implements OnInit {
         this.standards.RequirementCount = counts.RequirementCount;
       });
 
-      this.setFrameworkNavigation();
+    this.setFrameworkNavigation();
+
+    this.navSvc.setQuestionsTree();
   }
 
-  setFrameworkNavigation()  {
-    this.standardSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
+  setFrameworkNavigation() {
+    // RKW - this.navSvc.setFrameworkSelected(this.standardSvc.frameworkSelected);
   }
 
   /**

@@ -19,6 +19,7 @@ namespace CSET_Main.Questions.InformationTabData
         public int QuestionID { get; set; }
         public NEW_QUESTION Question { get; set; }
         public NEW_REQUIREMENT Requirement { get; set; }
+        public MATURITY_QUESTIONS MaturityQuestion { get; set; }
     }
 }
 

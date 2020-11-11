@@ -30,6 +30,19 @@ namespace CSETWeb_Api.Models
         public string Assets;
         public bool? IsAcetOnly;
 
+        public string DiagramMarkup;
+        public string DiagramImage;
+
+        // Selected features of the assessment
+        public bool UseStandard;
+        public bool UseMaturity;
+        public bool UseDiagram;
+
+        // Selected maturity model
+        public int MaturityModelId;
+        public string MaturityModelName;
+        public int MaturityTargetLevel;
+
         /// <summary>
         /// The last time the Assessment was altered.
         /// </summary>

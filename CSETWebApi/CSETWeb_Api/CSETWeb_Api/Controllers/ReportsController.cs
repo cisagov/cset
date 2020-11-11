@@ -4,6 +4,8 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWeb_Api.BusinessLogic;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.ReportEngine;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
@@ -55,6 +57,35 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+        [HttpGet]
+        [Route("api/reports/executivecmmc")]
+        public MaturityReportData getCMMCReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityReportData data = new MaturityReportData();
+            data.analyzeMaturityData();
+            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.information = reportsDataManager.GetInformation();
+            data.analyzeMaturityData();
+
+            return data;
+        }
+        [HttpGet]
+        [Route("api/reports/sitesummarycmmc")]
+        public MaturityReportData getSiteSummaryCMMCReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityReportData data = new MaturityReportData();
+            
+            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.information = reportsDataManager.GetInformation();
+            //data.StatementsAndReferences = reportsDataManager.GetStatementsAndReferences();
+            data.analyzeMaturityData();
+
+            return data;
+        }
 
         [HttpGet]
         [Route("api/reports/discoveries")]
@@ -128,7 +159,7 @@ namespace CSETWeb_Api.Controllers
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();            
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
-
+            
 
             TokenManager tm = new TokenManager();
             var aggregationID = tm.PayloadInt("aggreg");
@@ -137,10 +168,19 @@ namespace CSETWeb_Api.Controllers
                 return response;
             }
 
-            var assessmentList = new BusinessLogic.AggregationManager()
-                .GetAssessmentsForAggregation((int)aggregationID);
+            var aggManager = new BusinessLogic.AggregationManager();
+            var assessmentList = aggManager.GetAssessmentsForAggregation((int)aggregationID);
+
+            var aggregation = aggManager.GetAggregation((int)aggregationID);
+            
 
             response.AggregationName = assessmentList.Aggregation.AggregationName;
+            response.Information = new AggInformation()
+            {
+                Assessment_Date = aggregation.AggregationDate,
+                Assessment_Name = aggregation.AggregationName,
+                Assessor_Name = aggregation.AssessorName
+            };
 
             foreach (var a in assessmentList.Assessments)
                 {
@@ -190,7 +230,7 @@ namespace CSETWeb_Api.Controllers
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
-
+            
 
             TokenManager tm = new TokenManager();
             var aggregationID = tm.PayloadInt("aggreg");
@@ -199,10 +239,18 @@ namespace CSETWeb_Api.Controllers
                 return response;
             }
 
-            var assessmentList = new BusinessLogic.AggregationManager()
-                .GetAssessmentsForAggregation((int)aggregationID);
+            AggregationManager agManager = new BusinessLogic.AggregationManager();
 
+            var assessmentList = agManager.GetAssessmentsForAggregation((int)aggregationID);
+            Aggregation ag =  agManager.GetAggregation((int)aggregationID);
             response.AggregationName = assessmentList.Aggregation.AggregationName;
+            
+            response.Information = new AggInformation()
+            {
+                Assessment_Name = ag.AggregationName,
+                Assessment_Date = ag.AggregationDate,
+                Assessor_Name = ag.AssessorName
+            };
 
             foreach (var a in assessmentList.Assessments)
             {
@@ -240,6 +288,7 @@ namespace CSETWeb_Api.Controllers
 
             return response;
         }
+
 
         /// <summary>
         /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.

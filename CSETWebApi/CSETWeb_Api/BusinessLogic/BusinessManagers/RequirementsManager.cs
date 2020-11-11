@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Documents;
-using System.Windows.Navigation;
 using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
@@ -18,6 +16,8 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -51,8 +51,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                RequirementsPass req = GetControls(db);
-                return BuildResponse(req.Requirements.ToList(), req.Answers.ToList(), req.DomainAssessmentFactors.ToList());
+                RequirementsPass controls = GetControls(db);
+                return BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
             }
         }
 
@@ -76,15 +76,18 @@ namespace CSETWeb_Api.BusinessManagers
                 .ThenBy(x => x.rs.Requirement_Sequence)
                 .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name, SetName = x.s.Set_Name });
 
-            var domains = (from d in db.FINANCIAL_DOMAINS
+            var domains = new List<DomainAssessmentFactor>();
+            if (results.Any(r => r.SetName == "ACET_V1"))
+            {
+                domains = (from d in db.FINANCIAL_DOMAINS
                            join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
                            join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
-                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct();
-
+                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
+            }
 
 
             // Get all REQUIREMENT answers for the assessment
-            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Is_Requirement)
+            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Is_Requirement)
                           from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
@@ -101,14 +104,192 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirements"></param>
+        /// <param name="answers"></param>
+        /// <param name="domains"></param>
+        /// <returns></returns>
+        private QuestionResponse BuildResponse(List<RequirementPlus> requirements,
+            List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
+        {
+            var response = new QuestionResponse
+            {
+                Domains = new List<Domain>()
+            };
+
+            // ACET will pass a collection of domains.  
+            // Build a container for each domain.  Empty domains are removed at the end of the method.
+            foreach (var d in domains.Select(d => d.DomainName).Distinct())
+            {
+                response.Domains.Add(new Domain()
+                {
+                    DisplayText = d,
+                    DomainText = d
+                });
+            }
+
+
+            foreach (var req in requirements)
+            {
+                var dbR = req.Requirement;
+
+                // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
+                if (dbR.Standard_Category != null)
+                {
+                    dbR.Standard_Category = dbR.Standard_Category.Trim();
+                }
+                if (dbR.Standard_Sub_Category != null)
+                {
+                    dbR.Standard_Sub_Category = dbR.Standard_Sub_Category.Trim();
+                }
+
+                // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
+                if (dbR.Standard_Sub_Category == null)
+                {
+                    dbR.Standard_Sub_Category = dbR.Standard_Category;
+                }
+
+                Domain set = null;
+
+
+                // see if there's a domain whose 'assessment factor' (category) matches the requirement's category
+                var targetDomain = domains.Where(d => d.AssessmentFactorName == dbR.Standard_Category).FirstOrDefault();
+                if (targetDomain != null)
+                {
+                    set = response.Domains.Where(s => s.DomainText == targetDomain.DomainName).FirstOrDefault();
+                    if (set == null)
+                    {
+                        set = new Domain()
+                        {
+                            DomainText = targetDomain.DomainName,
+                            DisplayText = targetDomain.DomainName
+                        };
+                        response.Domains.Add(set);
+                    }
+                }
+
+
+                // find or create the set (using the Domain class as the set container)
+                if (set == null)
+                {
+                    set = response.Domains.Where(s => s.SetName == req.SetName).FirstOrDefault();
+                    if (set == null)
+                    {
+                        set = new Domain()
+                        {
+                            SetShortName = req.SetShortName,
+                            SetName = req.SetName
+                        };
+                        response.Domains.Add(set);
+                    }
+                }
+
+
+                // find or create the category
+                var category = set.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                if (category == null)
+                {
+                    category = new QuestionGroup()
+                    {
+                        GroupHeadingText = dbR.Standard_Category
+                    };
+                    set.Categories.Add(category);
+                }
+
+
+                // find or create subcategory
+                var subcat = category.SubCategories.Where(sub => sub.SubCategoryHeadingText == dbR.Standard_Sub_Category).FirstOrDefault();
+                if (subcat == null)
+                {
+                    subcat = new QuestionSubCategory()
+                    {
+                        SubCategoryId = 0,
+                        SubCategoryHeadingText = dbR.Standard_Sub_Category
+                    };
+                    category.SubCategories.Add(subcat);
+                }
+
+
+                // add the question+answer into the subcategory
+                FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
+
+                var qa = new QuestionAnswer()
+                {
+                    DisplayNumber = dbR.Requirement_Title,
+                    QuestionId = dbR.Requirement_Id,
+                    QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                    Answer = answer?.a.Answer_Text,
+                    AltAnswerText = answer?.a.Alternate_Justification,
+                    Comment = answer?.a.Comment,
+                    Feedback = answer?.a.Feedback,
+                    MarkForReview = answer?.a.Mark_For_Review ?? false,
+                    Reviewed = answer?.a.Reviewed ?? false,
+                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
+                    SetName = req.SetName,
+                    Is_Component = answer?.a.Is_Component ?? false,
+                    Is_Requirement = answer?.a.Is_Requirement ?? true
+                };
+                if (answer != null)
+                {
+                    TinyMapper.Bind<VIEW_QUESTIONS_STATUS,QuestionAnswer>();
+                    TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                }
+
+                qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+
+                subcat.Questions.Add(qa);
+            }
+
+            // remove any empty 'domains'
+            response.Domains = response.Domains.Where(d => d.Categories.Count > 0).ToList();
+
+            response.ApplicationMode = this.ApplicationMode;
+            response.QuestionCount = new QuestionsManager(this.assessmentID).NumberOfQuestions();
+            response.RequirementCount = this.NumberOfRequirements();
+
+            var j = JsonConvert.SerializeObject(response);
+            return response;
+        }
+
+
+        private CategoryContainer BuildDomainResponse(DomainAssessmentFactor domain)
+        {
+            var d = new CategoryContainer()
+            {
+                DisplayText = domain.DomainName,
+                AssessmentFactorName = domain.AssessmentFactorName
+            };
+
+            return d;
+        }
+
+
+        private QuestionGroup BuildCategoryResponse()
+        {
+            return new QuestionGroup();
+        }
+
+
+        private QuestionSubCategory BuildSubcategoryResponse()
+        {
+            return new QuestionSubCategory();
+        }
+
+
+        /// <summary>
         /// Construct a response containing the applicable requirement questions with their answers.
         /// </summary>
         /// <param name="requirements"></param>
         /// <param name="answers"></param>
         /// <returns></returns>
-        private QuestionResponse BuildResponse(List<RequirementPlus> requirements,
-            List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
+        private QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
+        List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
+
+
+            var xxyz = domains;
+
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup g = new QuestionGroup();
             QuestionSubCategory sg = new QuestionSubCategory();
@@ -143,11 +324,11 @@ namespace CSETWeb_Api.BusinessManagers
                             StandardShortName = dbRPlus.SetShortName,
                         };
 
-                        if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
-                        {
-                            g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
-                                .DomainName;
-                        }
+                        //if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
+                        //{
+                        //    g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
+                        //        .DomainName;
+                        //}
 
                         groupList.Add(g);
 
@@ -200,15 +381,25 @@ namespace CSETWeb_Api.BusinessManagers
 
                 QuestionResponse resp = new QuestionResponse
                 {
-                    QuestionGroups = groupList,
+                    Domains = new List<Domain>(),
                     ApplicationMode = this.applicationMode
                 };
 
-                resp.QuestionCount = new QuestionsManager(this._assessmentId).NumberOfQuestions();
+                // we have one 'dummy' domain
+                var domain = new Domain()
+                {
+                    DisplayText = "dummy"
+                };
+                domain.Categories = groupList;
+                resp.Domains.Add(domain);
+
+
+
+                resp.QuestionCount = new QuestionsManager(this.assessmentID).NumberOfQuestions();
                 resp.RequirementCount = this.NumberOfRequirements();
 
                 // Get the overall risk level
-                var acetDash = new ACETDashboardManager().LoadDashboard(this._assessmentId);
+                var acetDash = new ACETDashboardManager().LoadDashboard(this.assessmentID);
                 resp.OverallIRP = acetDash.SumRiskLevel;
                 if (acetDash.Override > 0)
                 {
@@ -279,19 +470,19 @@ namespace CSETWeb_Api.BusinessManagers
         {
             parametersDictionary = (from p in db.PARAMETERS
                                     join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
-                                    select new { p, r })
+                                    select new { p, r }).AsEnumerable()
                 .GroupBy(x => x.r.Requirement_Id)
                 .ToDictionary(x => x.Key, x => x.Select(y => y.p).ToList());
 
 
             parametersAssessmentList = (from pa in db.PARAMETER_ASSESSMENT
                                         join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
-                                        where pa.Assessment_ID == _assessmentId
+                                        where pa.Assessment_ID == assessmentID
                                         select new ParameterAssessment() { p = p, pa = pa }).ToList();
 
             parametersAnswerDictionary = (from p in db.PARAMETERS
                                           join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
-                                          select new ParameterValues() { p = p, pv = pv })
+                                          select new ParameterValues() { p = p, pv = pv }).AsEnumerable()
             .GroupBy(x => x.pv.Answer_Id)
             .ToDictionary(x => x.Key, x => x.Select(y => y).ToList());
         }
@@ -359,14 +550,14 @@ namespace CSETWeb_Api.BusinessManagers
         /// </summary>
         /// <param name="requirementID"></param>
         /// <returns></returns>
-        private string ReqMaturityLevel(int requirementID)
+        private int ReqMaturityLevel(int requirementID)
         {
             if (matLevels.ContainsKey(requirementID))
             {
-                return matLevels[requirementID].Acronym;
+                return matLevels[requirementID].MaturityID;
             }
 
-            return string.Empty;
+            return 0;
         }
 
 
@@ -400,7 +591,7 @@ namespace CSETWeb_Api.BusinessManagers
                 var qAssessLevel = from pa in db.PARAMETER_ASSESSMENT
                                    join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
                                    join pr in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals pr.Parameter_Id
-                                   where pa.Assessment_ID == _assessmentId
+                                   where pa.Assessment_ID == assessmentID
                                     && requirementIds.Contains(pr.Requirement_Id)
                                    select new { p, pa, pr };
 
@@ -430,14 +621,14 @@ namespace CSETWeb_Api.BusinessManagers
                 if (string.IsNullOrEmpty(newText))
                 {
                     var g = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                            && p.Assessment_ID == this._assessmentId).FirstOrDefault();
+                            && p.Assessment_ID == this.assessmentID).FirstOrDefault();
                     if (g != null)
                     {
                         db.PARAMETER_ASSESSMENT.Remove(g);
                         db.SaveChanges();
                     }
 
-                    AssessmentUtil.TouchAssessment(_assessmentId);
+                    AssessmentUtil.TouchAssessment(assessmentID);
 
                     // build a partial return object just to inform the UI what the new value is
                     var baseParameter = db.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
@@ -447,14 +638,14 @@ namespace CSETWeb_Api.BusinessManagers
 
                 // Otherwise, insert or update the PARAMETER_ASSESSMENT record
                 var pa = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                        && p.Assessment_ID == this._assessmentId).FirstOrDefault();
+                        && p.Assessment_ID == this.assessmentID).FirstOrDefault();
 
                 if (pa == null)
                 {
                     pa = new PARAMETER_ASSESSMENT();
                 }
 
-                pa.Assessment_ID = this._assessmentId;
+                pa.Assessment_ID = this.assessmentID;
                 pa.Parameter_ID = parameterId;
                 pa.Parameter_Value_Assessment = newText;
 
@@ -468,7 +659,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
                 db.SaveChanges();
 
-                AssessmentUtil.TouchAssessment(_assessmentId);
+                AssessmentUtil.TouchAssessment(assessmentID);
 
                 // build a partial return object just to inform the UI what the new value is
                 return new ParameterToken(pa.Parameter_ID, "", pa.Parameter_Value_Assessment, 0, 0);
@@ -514,7 +705,7 @@ namespace CSETWeb_Api.BusinessManagers
                         db.SaveChanges();
                     }
 
-                    AssessmentUtil.TouchAssessment(_assessmentId);
+                    AssessmentUtil.TouchAssessment(assessmentID);
 
                     return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
                 }
@@ -545,7 +736,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
                 db.SaveChanges();
 
-                AssessmentUtil.TouchAssessment(_assessmentId);
+                AssessmentUtil.TouchAssessment(assessmentID);
 
                 // Return the token that was just updated
                 return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
@@ -592,7 +783,7 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public IQueryable<RequirementPlus> Requirements { get; set; }
         public IQueryable<FullAnswer> Answers { get; set; }
-        public IQueryable<DomainAssessmentFactor> DomainAssessmentFactors { get; set; }
+        public List<DomainAssessmentFactor> DomainAssessmentFactors { get; set; }
     }
 
 
@@ -612,6 +803,11 @@ namespace CSETWeb_Api.BusinessManagers
     {
         public string DomainName;
         public string AssessmentFactorName;
+
+        public override string ToString()
+        {
+            return string.Format("DomainName: {0}, AssessmentFactorName: {1}", this.DomainName, this.AssessmentFactorName);
+        }
     }
 
     internal class ParameterAssessment

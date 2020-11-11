@@ -24,22 +24,31 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-    MatAutocompleteModule, MatDialogModule, MatDividerModule,
-    MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
-    MatProgressBarModule, MatProgressSpinnerModule, MatSidenavModule,
-    MatTooltipModule, MatTreeModule, MatTabsModule, MatSnackBarModule,
-} from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSliderModule } from '@angular/material/slider';
+import { Ng5SliderModule } from 'ng5-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { IonRangeSliderModule } from 'ng2-ion-range-slider';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-import { FileUploadModule } from '../../node_modules/ng2-file-upload/ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AssessmentComponent } from './assessment/assessment.component';
@@ -50,6 +59,8 @@ import { ContactItemComponent } from './assessment/prepare/assessment-info/asses
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
+import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
@@ -110,6 +121,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
+import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { LandingPageComponent } from './initial/landing-page/landing-page.component';
@@ -152,7 +164,7 @@ import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.c
 import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
 import { ResourceLibraryService } from './services/resource-library.service';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
@@ -199,6 +211,24 @@ import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { AwwaStandardComponent } from './assessment/prepare/standards/awwa-standard/awwa-standard.component';
+import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
+import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
+import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
+import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
+import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
+import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
+import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
+import { ExecutiveCMMCComponent } from './reports/executive-cmmc/executive-cmmc.component';
+import { SitesummaryCMMCComponent } from './reports/sitesummary-cmmc/sitesummary-cmmc.component';
+import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
+import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
+import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
+import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { CommonModule } from '@angular/common';
+import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
+import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 
 @NgModule({
     imports: [
@@ -206,8 +236,10 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         BrowserAnimationsModule,
         FormsModule,
         HttpClientModule,
+        CommonModule,
         AppRoutingModule,
         MatInputModule,
+        MatSliderModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatFormFieldModule,
@@ -218,7 +250,7 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         MatDialogModule,
         MatTooltipModule,
         MatSnackBarModule,
-        IonRangeSliderModule,
+        Ng5SliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
         MatTreeModule,
@@ -285,6 +317,7 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         FindingsComponent,
         SafePipe,
         LinebreakPipe,
+        NullishCoalescePipe,
         StatusCreateComponent,
         ProgressComponent,
         InViewComponent,
@@ -362,7 +395,28 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         SecurityplanComponent, 
         SitesummaryComponent,
         TrendReportComponent,
-        CompareReportComponent
+        CompareReportComponent,
+        Assessment2InfoComponent,
+        ModelSelectComponent,
+        AssessmentConfigComponent,
+        CmmcAComponent,
+        CmmcLevelsComponent,
+        CmmcLevelResultsComponent,
+        CmmcLevelDrilldownComponent,
+        CmmcComplianceComponent,
+        CmmcGapsComponent,
+        AssessmentConfigComponent,
+        ModelSelectComponent,
+        CategoryBlockComponent,
+        AskQuestionsComponent,
+        MaturityQuestionsComponent,
+        DomainBlockComponent,
+        AwwaStandardComponent,
+        DiagramQuestionsComponent,
+        SitesummaryCMMCComponent,
+        ExecutiveCMMCComponent,
+        NavBackNextComponent,
+        CsetOriginComponent,
     ],
     providers: [
         ConfigService,
@@ -433,7 +487,8 @@ import { CompareReportComponent } from './reports/comparereport/comparereport.co
         ExcelExportComponent,
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
-        DataloginComponent
+        DataloginComponent,
+        AwwaStandardComponent
     ]
 })
 

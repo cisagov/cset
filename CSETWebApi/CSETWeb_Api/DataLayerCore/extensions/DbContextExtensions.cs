@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace DataLayerCore.Model
 {
@@ -7,10 +8,9 @@ namespace DataLayerCore.Model
         public static string GetSqlServerTableName<TEntity>(this DbContext context) where TEntity : class, new()
         {
             var metaData = context.Model
-                .FindEntityType(typeof(TEntity).FullName)
-                .SqlServer();
-            return $"{metaData.Schema}.{metaData.TableName}";
+                .FindEntityType(typeof(TEntity).FullName);
+            
+            return $"{metaData.GetSchema()}.{metaData.GetTableName()}";
         }
-
     }
 }

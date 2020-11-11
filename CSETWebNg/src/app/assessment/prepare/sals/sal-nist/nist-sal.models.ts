@@ -21,7 +21,6 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { SALLevelNIST } from './nist-sal.models';
 export interface NistSalModel {
   Assessment_Id: number;
   Type_Value: string;

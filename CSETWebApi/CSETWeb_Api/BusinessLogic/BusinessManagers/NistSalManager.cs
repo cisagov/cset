@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 
 namespace CSETWeb_Api.Controllers
@@ -30,7 +30,7 @@ namespace CSETWeb_Api.Controllers
                 string sql =
                 "if exists(select * from STANDARD_SELECTION where Assessment_Id = @id) and not exists(select * from NIST_SAL_INFO_TYPES where assessment_id = @id)  " +
                 "begin " +
-                "INSERT INTO [dbo].[NIST_SAL_INFO_TYPES] " +
+                "INSERT INTO [NIST_SAL_INFO_TYPES] " +
                 "           ([Assessment_Id] " +
                 "           ,[Type_Value] " +
                 "           ,[Selected] " +
@@ -55,6 +55,7 @@ namespace CSETWeb_Api.Controllers
                 "      ,[NIST_Number] " +
                 "	   from NIST_SAL_INFO_TYPES_DEFAULTS " +
                 "end  ";
+
                 db.Database.ExecuteSqlCommand(sql,
                     new SqlParameter("@Id", assessmentId));
             }
@@ -141,6 +142,7 @@ namespace CSETWeb_Api.Controllers
                 {
                     throw new ApplicationException(String.Format("Question {0} could not be found for assessment {1}!", answer.Question_Number, assessmentid));
                 }
+                TinyMapper.Bind<NistQuestionsAnswers, NIST_SAL_QUESTION_ANSWERS>();
                 TinyMapper.Map<NistQuestionsAnswers, NIST_SAL_QUESTION_ANSWERS>(answer, dbAnswer);
                 db.SaveChanges();
                 return CalculateOveralls(assessmentid, db);

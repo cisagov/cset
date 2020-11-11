@@ -202,7 +202,9 @@ namespace CSETWeb_Api.BusinessManagers
                     return null;
                 }
 
-                CreateUser cu = TinyMapper.Map<CreateUser>(user);
+                CreateUser cu = new CreateUser();
+                TinyMapper.Bind<USERS, CreateUser>();
+                TinyMapper.Map(user, cu);
                 cu.ConfirmEmail = cu.PrimaryEmail;
 
                 //we have a user do we have question?

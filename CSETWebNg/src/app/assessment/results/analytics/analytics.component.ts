@@ -25,11 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnalyticsService } from '../../../services/analytics.service';
-import { Navigation2Service } from '../../../services/navigation2.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { strict } from 'assert';
 import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfigService } from '../../../services/config.service';
 import { AlertComponent } from '../../../dialogs/alert/alert.component';
 
@@ -47,7 +46,8 @@ export class AnalyticsComponent implements OnInit {
             SectorName: '',
             IndustryName: '',
             Assets: '',
-            Size: ''
+            Size: '', 
+            Alias: ''
         },
         QuestionAnswers: []
     };
@@ -56,7 +56,6 @@ export class AnalyticsComponent implements OnInit {
     password: string = '';
 
     constructor(private router: Router,
-        public navSvc2: Navigation2Service,
         public navSvc: NavigationService,
         public analyticsSvc: AnalyticsService,
         private route: ActivatedRoute,
@@ -66,7 +65,7 @@ export class AnalyticsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.navSvc.itemSelected.asObservable().subscribe((value: string) => {
+        this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
         });
         this.route.params.subscribe(params => {
@@ -93,7 +92,8 @@ export class AnalyticsComponent implements OnInit {
         {
             return;
         }
-
+        this.analytics.Assessment.SectorName = this.analytics.Demographics.SectorName;
+        this.analytics.Assessment.IndustryName = this.analytics.Demographics.IndustryName;
         this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
             (data: any) => {
                 const message = data.message;
@@ -124,7 +124,8 @@ export class AnalyticsComponent implements OnInit {
         {
             return;
         }
-
+        this.analytics.Assessment.SectorName = this.analytics.Demographics.SectorName;
+        this.analytics.Assessment.IndustryName = this.analytics.Demographics.IndustryName;
         const dialogRef = this.dialog.open(DataloginComponent, {
             width: '300px',
             disableClose: true,
@@ -152,7 +153,7 @@ export class AnalyticsComponent implements OnInit {
             this.dialog.open(AlertComponent, {
                 data: { 
                     title: 'Warning',
-                    messageText: 'Sector, Indusry and Asset Value are required in order to submit. ' +
+                    messageText: 'Sector, Industry and Asset Value are required in order to submit. ' +
                         'See the Demographics section on the Prepare tab.'
                 }
             });

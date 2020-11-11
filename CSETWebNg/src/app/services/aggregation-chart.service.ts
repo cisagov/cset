@@ -220,25 +220,21 @@ export class AggregationChartService {
                   const meta = chart.getDatasetMeta(0);
                   const ds = data.datasets[0];
                   const arc = meta.data[i];
-                  const custom = arc && arc.custom || {};
                   const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
                   const arcOpts = chart.options.elements.arc;
-                  const fill = custom.backgroundColor ? custom.backgroundColor :
-                    getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = custom.borderColor ? custom.borderColor :
-                    getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = custom.borderWidth ? custom.borderWidth :
-                    getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                  let value = '';
+                  const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                  const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                  const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                  let value = 0.00;
                   if (!!arc) {
-                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                    value = <number>chart.config.data.datasets[arc._datasetIndex].data[arc._index];
                   }
                   return {
-                    text: label + ' : ' + Number.parseFloat(value).toFixed(2) + '%',
+                    text: label + ' : ' + value.toFixed(2) + '%',
                     fillStyle: fill,
                     strokeStyle: stroke,
                     lineWidth: bw,
-                    hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
                     index: i
                   };
                 });

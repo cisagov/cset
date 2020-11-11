@@ -27,7 +27,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
-import { Navigation2Service } from '../../../../services/navigation2.service';
+import { NavigationService } from '../../../../services/navigation.service';
 
 @Component({
   selector: 'app-components-types',
@@ -41,7 +41,7 @@ export class ComponentsTypesComponent implements OnInit {
   constructor(
     private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
-    public navSvc2: Navigation2Service,
+    public navSvc: NavigationService,
     public configSvc: ConfigService,
     private router: Router) { }
 
