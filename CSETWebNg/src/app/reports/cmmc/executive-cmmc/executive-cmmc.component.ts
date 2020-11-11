@@ -21,26 +21,39 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { ReportAnalysisService } from '../../services/report-analysis.service';
-import { ReportService } from '../../services/report.service';
-import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CmmcStyleServiceService } from '../cmmc-style-service.service';
-import * as $ from 'jquery';
-import {BehaviorSubject} from 'rxjs';
-import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
-import { first } from 'rxjs/operators';
+import { Component, OnInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { ReportAnalysisService } from '../../../services/report-analysis.service';
+import { ReportService } from '../../../services/report.service';
+import { Title } from '@angular/platform-browser';
+import { CmmcStyleService } from '../../../services/cmmc-style.service';
+import { BehaviorSubject } from 'rxjs';
+
 @Component({
-  selector: 'sitesummary',
-  templateUrl: './sitesummary-cmmc.component.html',
-  styleUrls: ['../reports.scss'],
-  providers:  [ CmmcStyleServiceService ]
+  selector: 'executive',
+  templateUrl: './executive-cmmc.component.html', 
+  styleUrls: ['../../reports.scss'],
+  // providers:  [ CmmcStyleService ]
 })
-export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
-  
+export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
   response: any;
+
+  chartPercentCompliance: Chart;
+  chartStandardsSummary: Chart;
+  canvasStandardResultsByCategory: Chart;
+  responseResultsByCategory: any;
+
+
+  // Charts for Components
+  componentCount = 0;
+  chartComponentSummary: Chart;
+  chartComponentsTypes: Chart;
+  warningCount = 0;
+  chart1: Chart;
+
+  numberOfStandards = -1;
+
   pageInitialized = false;
+
   
   columnWidthPx: number;  
   gridColumnCount = 10
@@ -49,21 +62,18 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   @ViewChild("gridChartDataDiv") gridChartData: ElementRef;
   @ViewChild("gridTiles") gridChartTiles: Array<any>;
 
-
   constructor(
-    public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
-    public configSvc: ConfigService,
-    private titleService: Title,
-    public cmmcStyleSvc: CmmcStyleServiceService,
-    private sanitizer: DomSanitizer
-  ) { 
+    private analysisSvc: ReportAnalysisService,
+    private titleService: Title,    
+    public cmmcStyleSvc: CmmcStyleService
+  ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
+   }
 
-  }
   ngOnInit() {
     this.cmmcStyleSvc.getData();
-    this.titleService.setTitle("Site Summary - CSET");
+    this.titleService.setTitle("Executive Summary - CSET");
 
     this.reportSvc.getReport('executivecmmc').subscribe(
       (r: any) => {
@@ -99,4 +109,5 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   onResize(event) {
     this.getcolumnWidth();
   }
+
 }

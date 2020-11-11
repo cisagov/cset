@@ -401,66 +401,8 @@
         <p>
             The following chart shows the number of practices satisfied for each level.
         </p>
-        <div class="stackedBarChart">
-            <div class="stackBarChartUpperLeftLabels">
-                <div>
-                    {{cmmcStyleSvc.complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{cmmcStyleSvc.complianceLevelAcheivedData?.questionsTotalWithinLevel}}
-                    Total Practices Satisfied for
-                    {{cmmcStyleSvc.complianceLevelAcheivedData?.questionsAnsweredWithinLevel / cmmcStyleSvc.complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}
-                </div>
-                <div> Compliance for Target Level {{cmmcStyleSvc.complianceLevelAcheivedData?.targetLevel}}</div>
-                <div> Achieved Level {{cmmcStyleSvc.complianceLevelAcheivedData?.acheivedLevel}}</div>
-            </div>
-            <div class="stackedBarChartBody">
-                <div *ngFor="let dataColumn of cmmcStyleSvc.stackBarChartData; let i = index"
-                    class="stackedBarChartColumn">
-                    <div class="barHeader">
-                        <div class="mainHeader"> LEVEL {{i + 1}}</div>
-                        <div class="secondaryHeader"> {{cmmcStyleSvc.stackedChartHeaderLabels[i + 1]}}</div>
-                    </div>
-                    <div *ngFor="let barSection of dataColumn"
-                        [ngStyle]="cmmcStyleSvc.getStackedChartSectionStyle(barSection)" class="barSection">
-                        <div *ngIf="
-                        (barSection.totalForLevel / 2 ) < barSection.count
-                        &&
-                        (cmmcStyleSvc.cmmcModel?.TargetLevel > barSection.modelLevel 
-                        || cmmcStyleSvc.cmmcModel?.TargetLevel == barSection.modelLevel)" class="barSectionInnerLabel">
-                            {{barSection.count}} / {{barSection.totalForLevel}}
-                        </div>
-                        <div *ngIf="
-                    barSection.type == 'Yes' && 
-                    barSection.modelLevel > cmmcStyleSvc.cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="stackedBarChartBase">
-            </div>
-            <div class="stackedBarChartBottomLabels">
-                <div *ngFor="let dataColumn of cmmcStyleSvc.statsByLevel; let i = index"
-                    class="stackedBarChartBottomLabel">
-                    <div *ngIf="cmmcStyleSvc.cmmcModel?.TargetLevel > dataColumn.ModelLevel || cmmcStyleSvc.cmmcModel?.TargetLevel == dataColumn.ModelLevel"
-                        class="bottomLabel">
-                        <div>Total</div>
-                        <div class="bottomLabelNumbers">
-                            <div>{{dataColumn.totalAnsweredCount}}</div>
-                            <div
-                                *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">
-                                /{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="d-block mb-5">
+            <app-compliance-score></app-compliance-score>
         </div>
     </div>
-    <!-- <h1>
-      High-Level Assessment Description
-    </h1>
-    <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
-    </p>
-    <h1>
-      Executive Summary
-    </h1>
-    <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Executive_Summary)">
-    </p> -->
 </div>

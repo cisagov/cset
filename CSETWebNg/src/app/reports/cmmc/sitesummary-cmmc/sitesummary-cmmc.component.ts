@@ -21,59 +21,48 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { ReportAnalysisService } from '../../services/report-analysis.service';
-import { ReportService } from '../../services/report.service';
-import { Title } from '@angular/platform-browser';
-import { CmmcStyleServiceService } from '../cmmc-style-service.service';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { ReportAnalysisService } from '../../../services/report-analysis.service';
+import { ReportService } from '../../../services/report.service';
+import { ConfigService } from '../../../services/config.service';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CmmcStyleService } from '../../../services/cmmc-style.service';
+import * as $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
-
+import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
+import { first } from 'rxjs/operators';
 @Component({
-  selector: 'executive',
-  templateUrl: './executive-cmmc.component.html', 
-  styleUrls: ['../reports.scss'],
-  providers:  [ CmmcStyleServiceService ]
+  selector: 'sitesummary',
+  templateUrl: './sitesummary-cmmc.component.html',
+  styleUrls: ['../../reports.scss'],
+  // providers: [CmmcStyleService]
 })
-export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
+export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
+
   response: any;
-
-  chartPercentCompliance: Chart;
-  chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: Chart;
-  responseResultsByCategory: any;
-
-
-  // Charts for Components
-  componentCount = 0;
-  chartComponentSummary: Chart;
-  chartComponentsTypes: Chart;
-  warningCount = 0;
-  chart1: Chart;
-
-  numberOfStandards = -1;
-
   pageInitialized = false;
 
-  
-  columnWidthPx: number;  
+  columnWidthPx: number;
   gridColumnCount = 10
   gridColumns = new Array(this.gridColumnCount);
   columnWidthEmitter: BehaviorSubject<number>;
   @ViewChild("gridChartDataDiv") gridChartData: ElementRef;
   @ViewChild("gridTiles") gridChartTiles: Array<any>;
 
+
   constructor(
+    public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
-    private analysisSvc: ReportAnalysisService,
-    private titleService: Title,    
-    public cmmcStyleSvc: CmmcStyleServiceService
+    public configSvc: ConfigService,
+    private titleService: Title,
+    public cmmcStyleSvc: CmmcStyleService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
-   }
+  }
 
   ngOnInit() {
     this.cmmcStyleSvc.getData();
-    this.titleService.setTitle("Executive Summary - CSET");
+    this.titleService.setTitle("Site Summary - CSET");
 
     this.reportSvc.getReport('executivecmmc').subscribe(
       (r: any) => {
@@ -82,32 +71,31 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
     this.columnWidthEmitter.subscribe(item => {
-      $(".gridCell").css("width",`${item}px`)
+      $(".gridCell").css("width", `${item}px`)
     });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.getcolumnWidth();
   }
 
   ngAfterViewChecked() {
-    this.getcolumnWidth();    
+    this.getcolumnWidth();
   }
   //horizontalDomainBarChat
-  getcolumnWidth(){    
+  getcolumnWidth() {
     this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
     this.columnWidthEmitter.next(this.columnWidthPx)
   }
-  getBarWidth(data){
-    return { 
+  getBarWidth(data) {
+    return {
       'flex-grow': data.questionAnswered / data.questionCount,
       'background': this.cmmcStyleSvc.getGradient("blue")
     }
   }
 
-  @HostListener ('window:resize',['$event'])
+  @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.getcolumnWidth();
   }
-
 }

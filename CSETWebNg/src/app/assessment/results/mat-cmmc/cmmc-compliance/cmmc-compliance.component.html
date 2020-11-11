@@ -28,59 +28,24 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  
+
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
 
-    <div *ngIf="initialized && !dataError" class="stackedBarChart">
-      <div class="stackBarChartUpperLeftLabels">
-          <div> {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{complianceLevelAcheivedData?.questionsTotalWithinLevel}} Total Practices Satisfied for {{complianceLevelAcheivedData?.questionsAnsweredWithinLevel / complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}</div>
-          <div> Compliance for Target Level {{complianceLevelAcheivedData?.targetLevel}}</div>
-          <div> Achieved Level {{complianceLevelAcheivedData?.acheivedLevel}}</div>
-      </div>
-      <div class="stackedBarChartBody">
-          <div *ngFor="let dataColumn of stackBarChartData; let i = index" class="stackedBarChartColumn">
-              <div class="barHeader">
-                  <div class="mainHeader"> LEVEL {{i + 1}}</div>
-                  <div class="secondaryHeader"> {{stackedChartHeaderLabels[i + 1]}}</div>
-              </div>       
-              <div *ngFor="let barSection of dataColumn" [ngStyle]="getStackedChartSectionStyle(barSection)" class="barSection">
-                  <div *ngIf="
-                      (barSection.totalForLevel / 2 ) < barSection.count
-                      &&
-                      (cmmcModel?.TargetLevel > barSection.modelLevel 
-                      || cmmcModel?.TargetLevel == barSection.modelLevel)" 
-                      class="barSectionInnerLabel"> {{barSection.count}} / {{barSection.totalForLevel}}
-                  </div>
-                  <div *ngIf="
-                  barSection.type == 'Yes' && 
-                  barSection.modelLevel > cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00</div>                    
-              </div>
-          </div>
-      </div>
-      <div class="stackedBarChartBase">
-      </div>
-      <div class="stackedBarChartBottomLabels">
-          <div *ngFor="let dataColumn of statsByLevel; let i = index"  class="stackedBarChartBottomLabel">
-              <div *ngIf="cmmcModel?.TargetLevel > dataColumn.ModelLevel || cmmcModel?.TargetLevel == dataColumn.ModelLevel"
-               class="bottomLabel"> 
-                  <div>Total</div>
-                  <div class="bottomLabelNumbers">
-                      <div>{{dataColumn.totalAnsweredCount}}</div>  
-                      <div *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">/{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>  
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="stackedBarChartBottomTitle">
-          The Number of Practices Satisfied for Each Level
+    <div *ngIf="initialized && !dataError">
+      <p>
+        The following chart shows the number of practices satisfied for each level.
+      </p>
+      <div class="d-block mb-5">
+        <app-compliance-score></app-compliance-score>
       </div>
     </div>
+
     <div *ngIf="initialized && dataError">
-        <h1>Error Loading Data</h1>
-        <p>There was an error retreiving the data for this page. Please reload the page.</p>
+      <h1>Error Loading Data</h1>
+      <p>There was an error retreiving the data for this page. Please reload the page.</p>
     </div>
-    
+
     <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
-    
+
   </div>
 </div>
