@@ -475,7 +475,7 @@
                 </div>
             </div>
         </div>
-        <div class="levelPieCharts my-4" *ngFor="let i of cmmcStyleSvc?.statsByLevel.slice().reverse()">
+        <div class="levelPieCharts my-4" *ngFor="let i of cmmcStyleSvc?.statsByLevel?.slice().reverse()">
             <div *ngIf="cmmcStyleSvc?.isWithinModelLevel(i)" class="pieChartRowTitle"
                 [innerHTML]="cmmcStyleSvc?.levelDescriptions[i.ModelLevel]">
                 Test
@@ -567,7 +567,7 @@
                 <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
                 <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
             </div>
-            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection mb-5">
+            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection" [class.mb-5]="domainRow.questionCount > 0">
                 <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
                     <div>
                         {{domainRow?.domainName}}
