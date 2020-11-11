@@ -21,7 +21,7 @@
   SOFTWARE. 
 --------------------------> 
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Results by Category</h3>
+  <h3>Results By Category</h3>
   <div id="chart" class="mb-3">
     <canvas id="canvasStandardResult">{{chart}}</canvas>
   </div>
@@ -49,8 +49,7 @@
       </tr>
     </table>
   </div>
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc2.navBack('standards-results')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc2.navNext('standards-results')">Next</button>
-  </div>
+  
+  <app-nav-back-next [page]="'standards-results'"></app-nav-back-next>
+  
 </div>

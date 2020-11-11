@@ -10,7 +10,7 @@ using CSETWeb_Api.Models;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;

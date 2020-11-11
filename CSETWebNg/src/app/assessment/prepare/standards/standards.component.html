@@ -73,8 +73,6 @@
     </div>
   </form>
 
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navSvc2.navBack('standards')">Back</button>
-    <button class="btn btn-primary" (click)="navSvc2.navNext('standards')">Next</button>
-  </div>
+  <app-nav-back-next [page]="'standards'"></app-nav-back-next>
+
 </div>

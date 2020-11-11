@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { AssessmentService } from './../../services/assessment.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';

@@ -39,10 +39,10 @@ begin
 	IF OBJECT_ID('tempdb..#Temp') IS NOT NULL DROP TABLE #Temp
 	IF OBJECT_ID('tempdb..#TempAnswered') IS NOT NULL DROP TABLE #TempAnswered
 
-	SELECT h.Question_Group_Heading,isnull(count(c.question_id),0) qc,  isnull(SUM(@maxRank-c.Ranking),0) cr, sum(sum(@maxrank - c.Ranking)) OVER() AS Total into #temp
-		FROM Answer_Questions a 
-		join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
-		join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id		
+	SELECT h.Question_Group_Heading, isnull(count(c.question_id), 0) qc, isnull(SUM(@maxRank-c.Ranking),0) cr, sum(sum(@maxrank - c.Ranking)) OVER() AS Total into #temp
+		FROM Answer_Components a 
+		join NEW_QUESTION c on a.Question_Or_Requirement_Id = c.Question_Id
+		join vQuestion_Headings h on c.Heading_Pair_Id = h.heading_pair_Id		
 		join (
 			select distinct s.question_id from NEW_QUESTION_SETS s 
 				join NEW_QUESTION_LEVELS l on s.New_Question_Set_Id = l.New_Question_Set_Id				
@@ -53,10 +53,10 @@ begin
 		where a.Assessment_Id = @assessment_id and a.Answer_Text != 'NA'
 		group by Question_Group_Heading
      
-	 SELECT h.Question_Group_Heading, isnull(count(c.question_id),0) nuCount, isnull(SUM(@maxRank-c.Ranking),0) cr into #tempAnswered
-		FROM Answer_Questions a 
-		join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
-		join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id
+	 SELECT h.Question_Group_Heading, isnull(count(c.question_id), 0) nuCount, isnull(SUM(@maxRank-c.Ranking),0) cr into #tempAnswered
+		FROM Answer_Components a 
+		join NEW_QUESTION c on a.Question_Or_Requirement_Id = c.Question_Id
+		join vQuestion_Headings h on c.Heading_Pair_Id = h.heading_pair_Id
 		join (
 			select distinct s.question_id from NEW_QUESTION_SETS s 
 				join NEW_QUESTION_LEVELS l on s.New_Question_Set_Id = l.New_Question_Set_Id				

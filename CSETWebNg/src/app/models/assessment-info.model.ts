@@ -38,6 +38,14 @@ export interface AssessmentDetail {
     Charter?: string;
     CreditUnion?: string;
     Assets?: string;
+
+    UseStandard?: boolean;
+    UseMaturity?: boolean;
+    UseDiagram?: boolean;
+
+    MaturityModelId?: number;
+    MaturityModelName?: string;
+    MaturityTargetLevel?: number;
 }
 
 export interface AssessmentContactsResponse {

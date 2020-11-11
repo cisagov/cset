@@ -34,7 +34,7 @@ namespace CSETWeb_Api.BusinessManagers.Tests
             };
             //TODO a setup and teardown that creates the assessment and then destroys it
             QuestionsManager manager = new QuestionsManager(26);
-            QuestionDetailsContentViewModel viewModel = manager.GetDetails(14, 26, false);
+            QuestionDetailsContentViewModel viewModel = manager.GetDetails(14, 26, false, false);
         }
 
         [TestMethod()]
@@ -47,9 +47,8 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                     Assert.Fail("no data to test");
                 try
                 {
-                    QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
-
-                      
+                    ComponentQuestionManager manager = new ComponentQuestionManager(test.Assessment_Id);
+  
                     manager.HandleGuid(test.Component_Guid, true);
                     var list = db.ANSWER.Where(x => x.Component_Guid == test.Component_Guid).ToList();
                     Assert.IsTrue(list.Count > 0);
@@ -74,7 +73,8 @@ namespace CSETWeb_Api.BusinessManagers.Tests
                     Assert.Fail("no data to test");
                 try
                 {
-                    QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
+                    // QuestionsManager manager = new QuestionsManager(test.Assessment_Id);
+                    ComponentQuestionManager manager = new ComponentQuestionManager(test.Assessment_Id);
 
 
                     List<Answer_Components_Exploded_ForJSON> list =  manager.GetOverrideQuestions(16, 1586, Constants.FIREWALL);

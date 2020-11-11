@@ -24,19 +24,29 @@ namespace CSETWeb_Api.Controllers
         [Route("api/analytics/getAnalytics")]
         public IHttpActionResult GetAnalytics()
         {
+            var demographics = GetDemographics();
+            var assessment = GetAnalyticsAssessment();
+            assessment.Assets = demographics.AssetValue;
+            assessment.Size = demographics.Size;
+            assessment.IndustryId = demographics.IndustryId;
+            assessment.SectorId = demographics.SectorId;
+            
+
             return Ok(new Analytics
             {
-                Assessment = GetAnalyticsAssessment(),
-                Demographics = GetDemographics(),
+                Assessment = assessment,
+                Demographics = demographics,
                 QuestionAnswers = GetQuestionsAnswers()
-            }); ;
+            });
         }
 
         private AnalyticsAssessment GetAnalyticsAssessment()
         {
             int assessmentId = Auth.AssessmentForUser();
             AssessmentManager assessmentManager = new AssessmentManager();
-            return assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
+            StandardsManager standardsManager = new StandardsManager();
+            var assessment = assessmentManager.GetAnalyticsAssessmentDetail(assessmentId);
+            return assessment;
         }
 
         /// <summary>
@@ -63,7 +73,7 @@ namespace CSETWeb_Api.Controllers
 
             if (applicationMode.ToLower().StartsWith("questions"))
             {
-                QuestionResponse resp = qm.GetQuestionList("*");
+                QuestionResponse resp = qm.GetQuestionListWithSet("*");
                 return qm.GetAnalyticQuestionAnswers(resp).OrderBy(x=>x.QuestionId).ToList();
             }
             else

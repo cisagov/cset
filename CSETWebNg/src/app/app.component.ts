@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { AboutComponent } from './dialogs/about/about.component';
@@ -83,7 +83,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.hasPath(localStorage.getItem("returnPath"));
       }
     }
-
     this.setupShortCutKeys();
   }
 
