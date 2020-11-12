@@ -28,7 +28,7 @@ import {
   Output,
   ViewChild,
   HostListener,
-  AfterContentInit, 
+  AfterContentInit,
   OnChanges,
   ChangeDetectorRef,
   AfterContentChecked
@@ -85,29 +85,27 @@ export class AssessmentComponent implements AfterContentChecked {
     private router: Router,
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
-    public navSvc: NavigationService, 
+    public navSvc: NavigationService,
     private cd: ChangeDetectorRef
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.assessSvc.currentTab = 'prepare';
     this.navSvc.activeResultsView = null;
-    if(sessionStorage.getItem('tree')){
+    if (sessionStorage.getItem('tree')) {
       this.navSvc.buildTree(this.navSvc.getMagic());
     }
-    
-   
   }
 
   ngAfterContentChecked() {
     this.cd.detectChanges();
   }
 
-  setTab(tab){
+  setTab(tab) {
     this.assessSvc.currentTab = tab;
   }
-  
-  checkActive(tab){
+
+  checkActive(tab) {
     return this.assessSvc.currentTab === tab;
   }
 
@@ -151,7 +149,7 @@ export class AssessmentComponent implements AfterContentChecked {
     this.expandNav = e;
   }
 
-  isTocLoading(s){
+  isTocLoading(s) {
     return s === "Please wait" || s === "Loading questions";
   }
 }

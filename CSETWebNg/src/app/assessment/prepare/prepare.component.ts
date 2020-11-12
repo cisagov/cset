@@ -41,8 +41,7 @@ export class PrepareComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    if(this.assessSvc.assessment == null)
-    {
+    if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -51,9 +50,6 @@ export class PrepareComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.navSvc.buildTree(this.navSvc.getMagic());
-    }, 1000);
-    this.assessSvc.currentTab = "prepare";
+    this.assessSvc.currentTab = 'prepare';
   }
 }

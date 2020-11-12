@@ -142,10 +142,10 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
-      if(sessionStorage.getItem('tree')){
+      if (sessionStorage.getItem('tree')) {
         let tree: any = this.parseTocData(JSON.parse(sessionStorage.getItem('tree')));
         this.dataSource.data = <NavTreeNode[]>tree;
-      }else{
+      } else {
         this.dataSource.data = this.buildTocData();
       }
       this.treeControl.dataNodes = this.dataSource.data;
@@ -169,7 +169,7 @@ export class NavigationService {
       this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
       this.dataSource.data = tree;
       this.treeControl.dataNodes = tree;
-      
+
       this.treeControl.expandAll();
 
       this.isNavLoading = false;
@@ -180,11 +180,11 @@ export class NavigationService {
     return node.children.length > 0;
   }
 
-  parseTocData(tree):NavTreeNode[]{
+  parseTocData(tree): NavTreeNode[] {
     let navTree: NavTreeNode[] = [];
     for (let i = 0; i < tree.length; i++) {
       let p = tree[i];
-     
+
       const node: NavTreeNode = {
         label: p.label,
         value: p.value,
@@ -308,6 +308,7 @@ export class NavigationService {
     this.clearCurrentPage(this.dataSource?.data);
 
     const currentNode = this.findInTree(this.dataSource.data, pageId);
+
     if (!!currentNode) {
       currentNode.isCurrent = true;
       this.currentPage = currentNode.value;
@@ -515,7 +516,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          // && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+        // && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
       }
     },
 
