@@ -32,7 +32,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@kolkov/angular-editor": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
-    "@ng-select/ng-select": "^2.20.5",
+    "@ng-select/ng-select": "^5.0.8",
     "@ngstack/code-editor": "^2.1.0",
     "@types/lodash": "^4.14.165",
     "@webcomponents/webcomponentsjs": "^2.4.4",
