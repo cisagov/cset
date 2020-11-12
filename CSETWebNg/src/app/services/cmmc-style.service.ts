@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
-import { ConfigService } from '../services/config.service';
-import { ReportAnalysisService } from '../services/report-analysis.service';
-import { ReportService } from '../services/report.service';
+import { ConfigService } from './config.service';
+import { ReportAnalysisService } from './report-analysis.service';
+import { ReportService } from './report.service';
 
 @Injectable()
-export class CmmcStyleServiceService {
+export class CmmcStyleService {
   pieChartVals = "";
   pieColorYes = "#ffc107"
   pieColorNo = "#f2b844"
