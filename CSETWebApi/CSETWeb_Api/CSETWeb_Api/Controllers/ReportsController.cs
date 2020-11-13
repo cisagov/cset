@@ -26,7 +26,7 @@ namespace CSETWeb_Api.Controllers
     {
         [HttpGet]
         [Route("api/reports/securityplan")]
-        public BasicReportData getSecurityPlan()
+        public BasicReportData GetSecurityPlan()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -45,7 +45,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executive")]
-        public BasicReportData getExecutive()
+        public BasicReportData GetExecutive()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -59,7 +59,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executivecmmc")]
-        public MaturityReportData getCMMCReport()
+        public MaturityReportData GetCMMCReport()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
@@ -73,7 +73,7 @@ namespace CSETWeb_Api.Controllers
         }
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
-        public MaturityReportData getSiteSummaryCMMCReport()
+        public MaturityReportData GetSiteSummaryCMMCReport()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
@@ -89,7 +89,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/discoveries")]
-        public BasicReportData getDiscoveries()
+        public BasicReportData GetDiscoveries()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -103,7 +103,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
-        public BasicReportData getSiteSummary()
+        public BasicReportData GetSiteSummary()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -126,7 +126,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/detail")]
-        public BasicReportData getDetail()
+        public BasicReportData GetDetail()
         {
             int assessmentId = Auth.AssessmentForUser();
 
