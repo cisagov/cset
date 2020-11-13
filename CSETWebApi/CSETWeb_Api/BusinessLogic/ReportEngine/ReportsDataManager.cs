@@ -634,6 +634,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// Returns a list of individuals assigned to findings/observations.
+        /// </summary>
+        /// <returns></returns>
         public List<Individual> GetFindingIndividuals()
         {
             using (var db = new CSET_Context())
@@ -664,6 +668,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                         list.Add(individual);
                     }
                     contactid = f.a.Assessment_Contact_Id;
+                    TinyMapper.Bind<FINDING, Findings>();
                     Findings rfind = TinyMapper.Map<Findings>(f.b);
                     rfind.Finding = f.b.Summary;
                     rfind.ResolutionDate = f.b.Resolution_Date.ToString();
