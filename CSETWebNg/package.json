@@ -68,7 +68,7 @@
     "sass": "^1.26.12",
     "screenfull": "^3.3.3",
     "snyk": "^1.425.1",
-    "tar": "^4.4.13",
+    "tar": "^6.0.5",
     "to": "^0.2.9",
     "tslib": "^2.0.3",
     "typescript-string-operations": "^1.3.3",
