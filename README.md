@@ -94,7 +94,7 @@ CSETis installed. Make sure that the &quot;Launch CSET when setup exists&quot; b
 
 The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
 
-![][fig9.png]
+![][fig9]
  
 Figure 9: Setup Successful
 
