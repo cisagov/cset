@@ -103,12 +103,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 DBIO dbio = new DBIO();
                 DataTable dt = dbio.Select(sql, null);
 
-
-
                 var sqlInsert = "insert into ANSWER (Assessment_Id, Is_Requirement, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Is_Component, Custom_Question_Guid, Is_Framework, Is_Maturity, Old_Answer_Id, Reviewed, FeedBack) " +
                     "values (@assessid, @isreq, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', 0, null, 0, 0, null, 0, null)";
 
-                var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Is_Requirement = @isreq";
+                var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = ISNULL(Comment, '') + @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Is_Requirement = @isreq";
 
                 QuestionsManager qm = new QuestionsManager(assessmentId);
                 foreach (var a in mappedAnswers)
@@ -141,10 +139,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                     catch (Exception exc)
                     {
+                        // get any existing comment and append to it; don't overlay it
+                        var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["requirement_id"]);
+                        if (a.CsetComment.Trim() != comment.Trim())
+                        {
+                            comment = comment + " - " + a.CsetComment;
+                        }
+                        else
+                        {
+                            comment = a.CsetComment;
+                        }
+
+
                         var parmsReq = new Dictionary<string, object>()
                         {
                             { "@ans", a.CsetAnswer },
-                            { "@comment", a.CsetComment },
+                            { "@comment", comment },
                             { "@assessid", assessmentId },
                             { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
                             { "@isreq", 1 }
@@ -171,10 +181,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                     catch (Exception exc)
                     {
+                        // get any existing comment and append to it; don't overlay it
+                        var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["requirement_id"]);
+                        if (a.CsetComment.Trim() != comment.Trim())
+                        {
+                            comment = comment + " - " + a.CsetComment;
+                        }
+                        else
+                        {
+                            comment = a.CsetComment;
+                        }
+
+
                         var parmsQ = new Dictionary<string, object>()
                         {
                             { "@ans", a.CsetAnswer },
-                            { "@comment", a.CsetComment },
+                            { "@comment", comment },
                             { "@assessid", assessmentId },
                             { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
                             { "@isreq", 0 }
@@ -185,6 +207,31 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
             }
             return null; //return empty, signiying the import process completed
+        }
+
+
+        /// <summary>
+        /// Query the ANSWER record and return its comment or null.
+        /// </summary>
+        /// <param name="questionRequirementId"></param>
+        /// <returns></returns>
+        private string GetExistingComment(int assessmentId, int questionRequirementId)
+        {
+            var sqlSelect = "select [Comment] from ANSWER where assessment_id = @assessId and Question_or_Requirement_Id = @qrid";
+            var parms = new Dictionary<string, object>()
+            {
+                { "@assessId", assessmentId },
+                { "@qrid", questionRequirementId }
+            };
+            DBIO dbio = new DBIO();
+            var answer = dbio.Select(sqlSelect, parms);
+
+            if (answer.Rows.Count > 0)
+            {
+                return answer.Rows[0]["Comment"].ToString();
+            }
+
+            return null;
         }
 
 
