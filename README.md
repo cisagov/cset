@@ -14,8 +14,8 @@ How Do I Use CSET?
 -------------------------------------------------------------------------
 File Checksum Integrity Verifier version 2.05.
 csetstandalone.exe  
-MD5     e486deb49f16c29bdd04bb7273985f66
-SHA-1   ac1515ccd6b9d19ee8ef84d6090346dbadd548bb
+MD5     FCF6554B1B7C8666FDB506D34A0AB40E
+SHA-1 SHA-256 1C61ADE1230D9CC12CFDB767A95D194414A378036176BBBAFF2F5AF3D6CC6325
 ## License
 
 MIT License, Apache License 2.0
