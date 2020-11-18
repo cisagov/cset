@@ -12,10 +12,7 @@ How Do I Use CSET?
 
 						
 -------------------------------------------------------------------------
-File Checksum Integrity Verifier version 2.05.
-csetstandalone.exe  
-MD5     e486deb49f16c29bdd04bb7273985f66
-SHA-1   ac1515ccd6b9d19ee8ef84d6090346dbadd548bb
+
 ## License
 
 MIT License, Apache License 2.0
