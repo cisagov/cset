@@ -14,8 +14,9 @@ How Do I Use CSET?
 -------------------------------------------------------------------------
 File Checksum Integrity Verifier version 2.05.
 csetstandalone.exe  
-MD5     e486deb49f16c29bdd04bb7273985f66
-SHA-1   ac1515ccd6b9d19ee8ef84d6090346dbadd548bb
+MD5     FCF6554B1B7C8666FDB506D34A0AB40E
+SHA-256 1C61ADE1230D9CC12CFDB767A95D194414A378036176BBBAFF2F5AF3D6CC6325
+SHA512 C323996117EC27ED59B70907663DAFBD456845C66270AC96753347E1FCD5A6246780AF1536E92B2DCE86FAD48548355CD217C74031DF4D527290AC8B91BAA1CE
 ## License
 
 MIT License, Apache License 2.0
@@ -94,7 +95,7 @@ CSETis installed. Make sure that the &quot;Launch CSET when setup exists&quot; b
 
 The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
 
-![][fig9.png]
+![][fig9]
  
 Figure 9: Setup Successful
 
