@@ -378,7 +378,11 @@ Here you can open VSCode and run these commands from the terminal within VSCode.
 2. Open CSET with Visual Studio.
 3. Select `CSETWeb_Api.sin` for project file.
 4. Open `Web.config` and change the settings in `connectionStrings` according to [CSET Configuration](https://github.com/cisagov/cset#cset-configuration)
-5. Build solution and run within Visual Studio
+5. Build solution and run within Visual Studio by selecting  the play button on the top with "IIS Express"
+
+![](img/figApiRun.png) 
+
+<br>
 
 This will open a window in the default web browser to confirm that the db is connected.
 
@@ -450,7 +454,14 @@ mousetrap: Mousetrap.MousetrapInstance;
 
 CSETWebApi not building.
 
-On right side of Visual Studio, check under resorces for missing and un updated packages. reimport and updarte packages as needed.
+On right side of Visual Studio, check under resorces for missing and un updated packages. 
+
+![](img/figTr1.png) 
+![](img/figTr2.png) 
+![](img/figTr3.png) 
+![](img/figTr4.png) 
+
+reimport and updarte packages as needed.
 recompile as needed. 
 
 ### CSETWebApi runs but cannot connect to DB
