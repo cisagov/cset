@@ -53,7 +53,7 @@
     "moment": "^2.29.1",
     "monaco-editor": "^0.21.2",
     "mousetrap": "^1.6.5",
-    "ng-sidebar": "^7.1.0",
+    "ng-sidebar": "^9.4.2",
     "ng2-currency-mask": "^9.0.2",
     "ng2-file-upload": "^1.4.0",
     "ng2-ion-range-slider": "^2.0.0",
