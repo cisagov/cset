@@ -85,7 +85,7 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/chart.js": "^2.9.25",
     "@types/file-saver": "^2.0.1",
-    "@types/jasmine": "^2.8.12",
+    "@types/jasmine": "^3.6.2",
     "@types/jasminewd2": "^2.0.6",
     "@types/jquery": "^3.5.4",
     "@types/node": "^14.14.7",
