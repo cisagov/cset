@@ -24,34 +24,32 @@ BEGIN
 	DECLARE @result int;  
 	exec GetApplicationModeDefault @assessment_id,@applicationmode output
 	if(@ApplicationMode = 'Questions Based')
-		begin
-		BEGIN TRANSACTION;  
+		BEGIN
+			BEGIN TRANSACTION;  
 		
-		EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';  
-			INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id],[Answer_Text],[Is_Component],[Is_Framework],[Is_Maturity],[Assessment_Id])     
-		select Is_Requirement=0,s.Question_id,Answer_Text = 'U', Is_Component='0',Is_Framework=0, Is_Maturity=0, Assessment_Id =@Assessment_Id
-			from (select distinct s.Question_Id from NEW_QUESTION_SETS s 
-				join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name 								
-				join NEW_QUESTION_LEVELS l on s.New_Question_Set_Id = l.new_question_set_id
-				where v.Selected = 1 and v.Assessment_Id = @assessment_id and l.Universal_Sal_Level = @SALevel) s
-			left join (select * from ANSWER where Assessment_Id = @Assessment_Id and Is_Requirement = 0) a on s.Question_Id = a.Question_Or_Requirement_Id
-		where a.Question_Or_Requirement_Id is null
-		IF @result = -3  
-		BEGIN  
-			ROLLBACK TRANSACTION;  
-		END  
-		ELSE  
-		BEGIN  
-			EXEC sp_releaseapplock @DbPrincipal = 'dbo', @Resource = '[Answer]'; 	
-			COMMIT TRANSACTION;  
-		END;  
-		if(@@ROWCOUNT>0) 
-			begin 			
-			exec usp_BuildCatNumbers @assessment_id
-			end
-		end
+			EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';  
+				INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id],[Answer_Text],[Is_Component],[Is_Framework],[Is_Maturity],[Assessment_Id])     
+			select Is_Requirement=0,s.Question_id,Answer_Text = 'U', Is_Component='0',Is_Framework=0, Is_Maturity=0, Assessment_Id =@Assessment_Id
+				from (select distinct s.Question_Id from NEW_QUESTION_SETS s 
+					join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name 								
+					join NEW_QUESTION_LEVELS l on s.New_Question_Set_Id = l.new_question_set_id
+					where v.Selected = 1 and v.Assessment_Id = @assessment_id and l.Universal_Sal_Level = @SALevel) s
+				left join (select * from ANSWER where Assessment_Id = @Assessment_Id and Is_Requirement = 0) a on s.Question_Id = a.Question_Or_Requirement_Id
+			where a.Question_Or_Requirement_Id is null
+			IF @result = -3  
+			BEGIN  
+				ROLLBACK TRANSACTION;  
+			END  
+			ELSE  
+			BEGIN  
+				EXEC sp_releaseapplock @DbPrincipal = 'dbo', @Resource = '[Answer]'; 	
+				COMMIT TRANSACTION;  
+			END;  
+
+			EXEC usp_BuildCatNumbers @assessment_id
+		END
 	else
-	begin
+	BEGIN
 		BEGIN TRANSACTION;  		
 		EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';  
 		INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id]
@@ -70,8 +68,9 @@ BEGIN
 		BEGIN  
 			EXEC sp_releaseapplock @DbPrincipal = 'dbo', @Resource = '[Answer]'; 	
 			COMMIT TRANSACTION;  
-		END;  
-		if(@@ROWCOUNT>0) exec usp_BuildCatNumbers @assessment_id
-	end   
+		END;
+		
+		EXEC usp_BuildCatNumbers @assessment_id
+	END   
 	
 END
