@@ -52,7 +52,7 @@
                 (change)="update($event)">
         </div>
     </div>
-    <div class="form-row" [hidden]="!hasACET">
+    <div class="form-row" [hidden]="!navSvc.acetSelected">
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
                     <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" (change)="update($event)">

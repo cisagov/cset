@@ -546,17 +546,17 @@ export class NavigationService {
 
     // ACET-specific screens
     {
-      displayText: 'ACET Required Documents', pageId: 'required', level: 1,
+      displayText: 'Document Request List', pageId: 'acet-drl', level: 1,
       path: 'assessment/{:id}/prepare/required',
       condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
     },
     {
-      displayText: 'ACET Inherent Risk Profiles', pageId: 'irp', level: 1,
+      displayText: 'Inherent Risk Profiles', pageId: 'irp', level: 1,
       path: 'assessment/{:id}/prepare/irp',
       condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
     },
     {
-      displayText: 'ACET IRP Summary', pageId: 'irp-summary', level: 1,
+      displayText: 'Inherent Risk Profile Summary', pageId: 'irp-summary', level: 1,
       path: 'assessment/{:id}/prepare/irp-summary',
       condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
     },
@@ -728,11 +728,15 @@ export class NavigationService {
     // ACET results pages
     {
       displayText: 'ACET Maturity Results', pageId: 'acet-maturity', level: 1, path: 'assessment/{:id}/results/acet-maturity',
-      condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
+      condition: () => { 
+        return this.assessSvc.assessment?.UseStandard && this.acetSelected 
+      }
     },
     {
       displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 1, path: 'assessment/{:id}/results/acet-dashboard',
-      condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
+      condition: () => { 
+        return this.assessSvc.assessment?.UseStandard && this.acetSelected 
+      }
     },
 
 

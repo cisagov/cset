@@ -2949,7 +2949,6 @@ table.td-text-left th, table.td-text-left td {
   border-color: #154360;
   color: #fff !important;
   padding: .50rem .75rem !important;
-  
 }
 
 .alert-domain{
@@ -2965,6 +2964,12 @@ table.td-text-left th, table.td-text-left td {
 
 .domain-pad{
   margin-left:20px;
+}
+
+.label-cell {
+  color: #0A5278;
+  font-weight: bold;
+  max-width: 50%;
 }
 
 
