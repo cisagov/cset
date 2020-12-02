@@ -33,14 +33,18 @@
             <label for="targetBandOnlyCheckbox">&nbsp;Show Target Band Only</label>
             
         </div>
-        <div>
-            <div class="row">
-                <div class="col-8" style="padding-left:0;"><h5 class="h5-black">IRP: {{overallIrp}}</h5></div>
+
+        <div class="d-table mb-4" style="min-width: 50%;">
+            <div class="d-table-row">
+                <div class="d-table-cell pr-3 label-cell">IRP:</div>
+                <div class="d-table-cell">{{overallIrp}}</div>
             </div>
-            <div class="row">
-                <div class="col-8" style="padding-left:0; padding-bottom:15px;"><h5 class="h5-black">Expected Maturity Range: {{matRange}}</h5></div>
+            <div class="d-table-row">
+                <div class="d-table-cell pr-3 label-cell">Expected Maturity Range:</div>
+                <div class="d-table-cell">{{matRange}}</div>
             </div>
-       </div>
+        </div>
+
         <div class="row" *ngFor="let domain of matDetails">
             <div class="col-lg" style="padding-bottom:20px;">
                 <div class="row"><h5>Domain</h5></div>
