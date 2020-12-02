@@ -749,39 +749,8 @@
 
         <div class="mt-3 mb-4" *ngIf="reportSvc.hasACET">
             <h2>Inherent Risk Profile</h2>
-            <table class="cset-table mb-1">
-                <tr>
-                    <th rowspan="2">Category</th>
-                    <th colspan="5" class="text-center">Inherent Risk</th>
-                    <th rowspan="2">Risk Level</th>
-                </tr>
-                <tr>
-                    <th class="table-head text-right">1</th>
-                    <th class="table-head text-right">2</th>
-                    <th class="table-head text-right">3</th>
-                    <th class="table-head text-right">4</th>
-                    <th class="table-head text-right">5</th>
-                </tr>
-                <tr *ngFor="let irp of acetDashboard?.IRPs">
-                    <td>{{ irp.HeaderText }}</td>
-                    <td class="text-right">{{ irp.RiskCount[0] }}</td>
-                    <td class="text-right">{{ irp.RiskCount[1] }}</td>
-                    <td class="text-right">{{ irp.RiskCount[2] }}</td>
-                    <td class="text-right">{{ irp.RiskCount[3] }}</td>
-                    <td class="text-right">{{ irp.RiskCount[4] }}</td>
-                    <td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.Comment)"></td>
-                </tr>
-                <tr>
-                    <td class="border-table">Totals</td>
-                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[0] }}</td>
-                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[1] }}</td>
-                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[2] }}</td>
-                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[3] }}</td>
-                    <td class="border-table text-right">{{ acetDashboard?.SumRisk[4] }}</td>
-                    <td class="border-table"></td>
-                </tr>
+            <app-inherent-risk-profile [acetDashboard]="acetDashboard"></app-inherent-risk-profile>
 
-            </table>
             <div class="ml-3">
                 <div>Overall Risk Level is <span class="blue-text font-weight-bold">
                         {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}

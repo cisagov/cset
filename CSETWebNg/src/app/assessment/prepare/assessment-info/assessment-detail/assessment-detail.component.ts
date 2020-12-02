@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
-import { StandardService } from '../../../../services/standard.service';
 import { NavigationService } from '../../../../services/navigation.service';
 
 
@@ -37,18 +36,16 @@ import { NavigationService } from '../../../../services/navigation.service';
 })
 export class AssessmentDetailComponent implements OnInit {
   assessment: AssessmentDetail = {};
-  hasACET: boolean = true;
 
   /**
    * 
    */
   constructor(private route: ActivatedRoute,
     private assessSvc: AssessmentService,
-    private standardSvc: StandardService,
-    private navSvc: NavigationService
+    public navSvc: NavigationService
   ) {
     this.navSvc.getACET().subscribe((x: boolean) => {
-      this.hasACET = x;
+      this.navSvc.acetSelected = x;
       sessionStorage.setItem('ACET', x.toString());
     });
   }
