@@ -231,6 +231,7 @@ import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
+import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 
 @NgModule({
     imports: [
@@ -420,6 +421,7 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         ExecutiveCMMCComponent,
         NavBackNextComponent,
         CsetOriginComponent,
+        InherentRiskProfileComponent,
     ],
     providers: [
         ConfigService,

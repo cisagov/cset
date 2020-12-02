@@ -254,9 +254,9 @@ const appRoutes: Routes = [
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
 
-              { path: 'maturity', component: MatDetailComponent },
-              { path: 'admin', component: AdminComponent },
-              { path: 'acetDashboard', component: ACETDashboardComponent },
+              { path: 'acet-maturity', component: MatDetailComponent },
+              { path: 'acet-dashboard', component: ACETDashboardComponent },
+            
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'feedback', component: FeedbackComponent },
