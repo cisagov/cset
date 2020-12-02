@@ -421,6 +421,24 @@ To fix this simplie run `npm install --save lodash`
 
 After installing, rerun server `ng serve`
 
+To run production locally:
+
+Copy values from:
+
+```bash
+../cset/CSETWebNg/src/environments/environment.ts
+```
+
+into
+
+```bash
+../cset/CSETWebNg/src/environments/environment.prod.ts
+```
+
+with `production: true`
+
+then run `ng serve --prod`
+
 ### Error within compailing server
 
 Moustrap Error:
