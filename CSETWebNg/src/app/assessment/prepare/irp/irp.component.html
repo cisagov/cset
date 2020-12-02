@@ -22,7 +22,7 @@
 -------------------------->
 <div class="white-panel">
     <div>
-        <h4>Inherent Risk Profiles</h4>
+        <h4>ACET Inherent Risk Profiles</h4>
         <p>The IRP has <a mattooltip="Click to see more information about risk levels." data-toggle="collapse"
                 href="#risk-desc" role="button" aria-expanded="false" aria-controls="risk-desc">five risk areas</a>
             across five categories. It is
@@ -37,7 +37,7 @@
         <hr>
     </div>
     <div *ngFor="let iHeader of irps?.headerList">
-        <h3 class="irp-header">{{ iHeader.header }}</h3>
+        <h4 class="irp-header">{{ iHeader.header }}</h4>
         <hr>
         <div *ngFor="let irp of iHeader.irpList" class="mb-4">
             <div class="lead">{{ irp.Item_Number }}. {{ irp.Description }}</div>
