@@ -37,7 +37,7 @@
         <hr>
     </div>
     <div *ngFor="let iHeader of irps?.headerList">
-        <h3 class="irp-header">{{ iHeader.header }}</h3>
+        <h4 class="irp-header">{{ iHeader.header }}</h4>
         <hr>
         <div *ngFor="let irp of iHeader.irpList" class="mb-4">
             <div class="lead">{{ irp.Item_Number }}. {{ irp.Description }}</div>
