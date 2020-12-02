@@ -23,7 +23,7 @@
               "rxjs/Subscription",
               "rxjs/observable/forkJoin",
               "rxjs/operators/startWith",
-              "rxjs/operators/debounce",  
+              "rxjs/operators/debounce",
               "rxjs/operators",
               "rxjs/Subject",
               "file-saver",
