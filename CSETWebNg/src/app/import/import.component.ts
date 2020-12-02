@@ -52,7 +52,7 @@ export class ImportFormData {
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
   public hasBaseDropZoneOver: boolean = false;
-  public hasModuleBaseDropZoneOver: boolean = false;  
+  public hasModuleBaseDropZoneOver: boolean = false;
   public hasAnotherDropZoneOver: boolean = false;
   public referenceUrl: string;
   public moduleCode: string;
@@ -128,7 +128,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     return {
       formatOnPaste: true,
       formatOnType: true,
-      automaticLayout: true,      
+      automaticLayout: true,
       quickSuggestions: true
     };
   }
@@ -151,7 +151,7 @@ export class ImportComponent implements OnInit, OnDestroy {
       saveAs(new Blob([s], { type: 'application/xml' }), setName + '.xml');
     });
   }
-  
+
   clickJSONLink(setName: string) {
     this.fileClient.getJSONExportSet(setName).subscribe(s => {
       saveAs(new Blob([s], { type: 'application/json' }), setName + '.json');
@@ -169,8 +169,8 @@ export class ImportComponent implements OnInit, OnDestroy {
           value: JSON.stringify(JSON.parse(s), null, '\t'),
           schemas: this.jsonCodeModel.schemas
         };
-        
-        
+
+
       });
     } else {
       this.fileClient.getXMLExportSet(setName).subscribe(s => {
@@ -213,7 +213,7 @@ export class ImportComponent implements OnInit, OnDestroy {
         const fileSubscription = inter.pipe(
           startWith(0),
           takeUntil(subjUnsubscribe),
-          switchMap(() => this.fileClient.moduleStatus(t.id)) 
+          switchMap(() => this.fileClient.moduleStatus(t.id))
         )
           .subscribe(e => {
             this.errors = e.errors;
@@ -321,12 +321,13 @@ export class ImportComponent implements OnInit, OnDestroy {
     };
     this.initalizeUploader();
     this.codeModel = this.jsonCodeModel;
-    
+
   }
 
-  ngOnInit() { 
-    if(this.uploader===undefined)
+  ngOnInit() {
+    if(this.uploader===undefined) {
       this.initalizeUploader();
+    };
   }
 
   ngOnDestroy() {
@@ -335,11 +336,11 @@ export class ImportComponent implements OnInit, OnDestroy {
 
   private initalizeUploader(){
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocuments';
-    
+
     this.uploader = new FileUploader({
       url: this.referenceUrl,
-      authToken: sessionStorage.getItem('userToken')      
-    });    
+      authToken: sessionStorage.getItem('userToken')
+    });
     this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
       Object.keys(fileItem.formData).forEach(prop => form.append(prop, fileItem.formData[prop]));
     };
@@ -401,15 +402,14 @@ export class ImportComponent implements OnInit, OnDestroy {
         );
       });
     });
-    this.fileOverModuleStateObservable
-      .pipe(debounce(s => timer(s ? 10 : 200)))
-      .subscribe(t => {
-        this.hasModuleBaseDropZoneOver = t;
-      });
+
+    this.fileOverModuleStateObservable.pipe(debounceTime(10)).subscribe(t => {
+      this.hasModuleBaseDropZoneOver = t;
+    });
 
     this.fileOverStateObservable.pipe(debounceTime(10)).subscribe(t => {
       this.hasBaseDropZoneOver = t;
-    }); 
+    });
   }
 
   public showError(){
