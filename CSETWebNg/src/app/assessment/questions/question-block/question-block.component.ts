@@ -54,6 +54,8 @@ export class QuestionBlockComponent implements OnInit {
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
 
+  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
+  altTextPlaceholder_ACET = "Description, explanation and/or justification for a compensating control";
 
   constructor(
     public questionsSvc: QuestionsService,
@@ -71,6 +73,10 @@ export class QuestionBlockComponent implements OnInit {
   ngOnInit() {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
+
+    if (this.configSvc.acetInstallation) {
+      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+    }
   }
 
   /**

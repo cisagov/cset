@@ -50,8 +50,14 @@ export class ConfigService {
 
   private initialized = false;
   isAPI_together_With_Web = false;
+
+  acetInstallation = false;
   
 
+  /**
+   * Constructor.
+   * @param http 
+   */
   constructor(private http: HttpClient) {
     if (/reports/i.test(window.location.href)) {
       this.configUrl = "../" + this.configUrl;
@@ -62,8 +68,10 @@ export class ConfigService {
     }
   }
 
+  /**
+   * 
+   */
   loadConfig() {
-
     if (!this.initialized) {
       // NOTE that if the api is local (not on a seperate port)
       // then it is safe to assume that everything api, main app, and reports
@@ -99,6 +107,8 @@ export class ConfigService {
           }
           this.config = data;
 
+          this.acetInstallation = this.config.acetInstallation;
+
           this.populateLabelValues();
 
           this.initialized = true;
@@ -115,11 +125,17 @@ export class ConfigService {
     this.buttonLabels['N'] = this.config.buttonLabelN;
     this.buttonLabels['NA'] = this.config.buttonLabelNA;
     this.buttonLabels['A'] = this.config.buttonLabelA;
+    if (this.acetInstallation) {
+      this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
+    }
 
     this.answerLabels['Y'] = this.config.answerLabelY;
     this.answerLabels['N'] = this.config.answerLabelN;
     this.answerLabels['NA'] = this.config.answerLabelNA;
     this.answerLabels['A'] = this.config.answerLabelA;
+    if (this.acetInstallation) {
+      this.answerLabels['A'] = this.config.answerLabelA_ACET;
+    }
     this.answerLabels['U'] = this.config.answerLabelU;
 
     this.salLabels['L'] = "Low";
