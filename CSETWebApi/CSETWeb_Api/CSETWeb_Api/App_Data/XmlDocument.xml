@@ -830,6 +830,12 @@
             <param name="demographics"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DemographicsController.GetOrganizationTypes">
+            <summary>
+            Get organization types
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.DiagnosticController">
             <summary>
             Diagnostic functionality.

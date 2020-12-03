@@ -59,7 +59,10 @@ namespace CSETWeb_Api.BusinessManagers
                         AssessmentId = q.cc.Assessment_Id,
                         AssessmentRoleId = q.cc.AssessmentRoleId,
                         Invited = q.cc.Invited,
-                        UserId = q.cc.UserId ?? null
+                        UserId = q.cc.UserId ?? null, 
+                        AssessmentContactId = q.cc.Assessment_Contact_Id,
+                        Title = q.cc.Title, 
+                        Phone = q.cc.Phone
                     };
 
                     list.Add(c);
@@ -173,7 +176,8 @@ namespace CSETWeb_Api.BusinessManagers
                         UserId = user.UserId,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
-                        PrimaryEmail = user.PrimaryEmail
+                        PrimaryEmail = user.PrimaryEmail, 
+                        
                     };
                 }
 
@@ -229,7 +233,9 @@ namespace CSETWeb_Api.BusinessManagers
                         LastName = newContact.LastName,
                         PrimaryEmail = newContact.PrimaryEmail,
                         Assessment_Id = assessmentId,
-                        AssessmentRoleId = newContact.AssessmentRoleId
+                        AssessmentRoleId = newContact.AssessmentRoleId,
+                        Title = newContact.Title, 
+                        Phone = newContact.Phone
                     };
 
                     // Include the userid if such a user exists
@@ -303,7 +309,9 @@ namespace CSETWeb_Api.BusinessManagers
                 AssessmentId = existingContact.Assessment_Id,
                 AssessmentRoleId = existingContact.AssessmentRoleId,
                 Invited = existingContact.Invited,
-                UserId = existingContact.UserId ?? null
+                UserId = existingContact.UserId ?? null, 
+                Title = existingContact.Title,
+                Phone = existingContact.Phone
             };
         }
 
@@ -326,6 +334,8 @@ namespace CSETWeb_Api.BusinessManagers
                 ac.LastName = contact.LastName;
                 ac.PrimaryEmail = contact.PrimaryEmail;
                 ac.AssessmentRoleId = contact.AssessmentRoleId;
+                ac.Title = contact.Title;
+                ac.Phone = contact.Phone;
 
                 //// If the email was changed, reflect it into the USERS record as well.
                 //// Leave the name alone, as the USERS record contains the user's preferred name.

@@ -306,7 +306,9 @@ namespace CSETWeb_Api.Controllers
                         FirstName = userBeingUpdated.FirstName,
                         LastName = userBeingUpdated.LastName,
                         PrimaryEmail = userBeingUpdated.PrimaryEmail,
-                        UserId = userBeingUpdated.UserId
+                        UserId = userBeingUpdated.UserId, 
+                        Title = userBeingUpdated.Title, 
+                        Phone = userBeingUpdated.Phone
                     });
                     BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
                 }
