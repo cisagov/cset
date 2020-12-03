@@ -62,5 +62,13 @@ export interface Demographic {
     NeedsPrivacy?: boolean;
     NeedsSupplyChain?: boolean;
     NeedsICS?: boolean;
+    OrganizationName?: string;
+    Agency?: string; 
+    OrganizationType?: string;
+    Facilitator?: number;
+    PointOfContact?: number;
+    IsScoped?: boolean;
+
+
 }
 

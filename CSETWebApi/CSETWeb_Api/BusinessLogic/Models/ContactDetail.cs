@@ -17,10 +17,13 @@ namespace CSETWeb_Api.Models
         public string LastName;
         public string PrimaryEmail;
         public int? UserId;
+        public string Title;
+        public string Phone;
 
         public int AssessmentId;
         public int AssessmentRoleId;
         public bool Invited;
+        public int AssessmentContactId;
     }
 
 
@@ -48,6 +51,8 @@ namespace CSETWeb_Api.Models
         public string PrimaryEmail;
         public int AssessmentRoleId;
         public int AssessmentId;
+        public string Title;
+        public string Phone;
 
         /// <summary>
         /// The subject of the invitation email.
