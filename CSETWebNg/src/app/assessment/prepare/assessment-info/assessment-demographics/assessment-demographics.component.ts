@@ -24,6 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { DemographicService } from '../../../../services/demographic.service';
+import { AssessmentService } from '../../../../services/assessment.service'; 
+import { AssessmentContactsResponse } from "../../../../models/assessment-info.model";
+import { User } from '../../../../models/user.model';
+
 
 interface DemographicsAssetValue {
     DemographicsAssetId: number;
@@ -58,10 +62,12 @@ export class AssessmentDemographicsComponent implements OnInit {
     sizeList: AssessmentSize[];
     assetValues: DemographicsAssetValue[];
     industryList: Industry[];
+    contacts: User[];
 
     demographicData: Demographic = {};
+    orgTypes: any[];
 
-    constructor(private demoSvc: DemographicService) { }
+    constructor(private demoSvc: DemographicService, public assessSvc: AssessmentService) { }
 
     ngOnInit() {
         this.demoSvc.getAllSectors().subscribe(
@@ -92,6 +98,8 @@ export class AssessmentDemographicsComponent implements OnInit {
         if (this.demoSvc.id) {
             this.getDemographics();
         }
+        this.getContacts();
+        this.getOrganizationTypes();
     }
 
     onSelectSector(sectorId: number) {
@@ -113,6 +121,24 @@ export class AssessmentDemographicsComponent implements OnInit {
         );
     }
 
+    getOrganizationTypes(){
+        this.assessSvc.getOrganizationTypes().subscribe(
+            (data: any) => {
+                this.orgTypes = data;
+            }
+        )
+    }
+
+    getContacts(){
+        if (this.assessSvc.id()) {
+            this.assessSvc
+              .getAssessmentContacts()
+              .then((data: AssessmentContactsResponse) => {
+                this.contacts = data.ContactList;
+              });
+          }
+    }
+
     populateIndustryOptions(sectorId: number) {
         if (!sectorId) {
             return;
@@ -129,6 +155,36 @@ export class AssessmentDemographicsComponent implements OnInit {
 
     changeAssetValue(event: any) {
         this.demographicData.AssetValue = event.target.value;
+        this.updateDemographics();
+    }
+
+    changeOrgType(event: any){
+        this.demographicData.OrganizationType = event.target.value;
+        this.updateDemographics();
+    }
+
+    changeFacilitator(event: any){
+        this.demographicData.Facilitator = event.target.value;
+        this.updateDemographics();
+    }
+
+    changeOrgName(event: any){
+        this.demographicData.OrganizationName = event.taget.value;
+        this.updateDemographics();
+    }
+
+    changeAgency(event: any){
+        this.demographicData.Agency = event.target.value;
+        this.updateDemographics();
+    }
+
+    changePointOfContact(event: any){
+        this.demographicData.PointOfContact = event.target.value;
+        this.updateDemographics();
+    }
+
+    changeIsScoped(event: any){
+        //this.demographicData.IsScoped = event.target.value;
         this.updateDemographics();
     }
 

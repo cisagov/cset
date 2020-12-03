@@ -263,6 +263,7 @@
     <Compile Include="Model\CUSTOM_STANDARD_BASE_STANDARD.cs" />
     <Compile Include="Model\DEMOGRAPHICS.cs" />
     <Compile Include="Model\DEMOGRAPHICS_ASSET_VALUES.cs" />
+    <Compile Include="Model\DEMOGRAPHICS_ORGANIZATION_TYPE.cs" />
     <Compile Include="Model\DEMOGRAPHICS_SIZE.cs" />
     <Compile Include="Model\DIAGRAM_CONTAINER.cs" />
     <Compile Include="Model\DIAGRAM_CONTAINER_TYPES.cs" />

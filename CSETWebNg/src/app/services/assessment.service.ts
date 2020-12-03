@@ -143,6 +143,10 @@ export class AssessmentService {
       });
   }
 
+  getOrganizationTypes() {
+    return this.http.get(this.apiUrl + 'getOrganizationTypes');
+  }
+
   searchContacts(term: User) {
     return this.http.post(
       this.apiUrl + 'contacts/search',

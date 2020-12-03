@@ -61,6 +61,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string LastName { get; set; }
         public string PrimaryEmail { get; set; }
         public string saveEmail { get; set; }
+        public string Title { get; set; }
+        public string Phone { get; set; }
 
         public string ConfirmEmail { get; set; }
         public int AssessmentRoleId { get; set; }
