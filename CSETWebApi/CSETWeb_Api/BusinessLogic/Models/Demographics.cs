@@ -18,6 +18,12 @@ namespace CSETWeb_Api.Models
         public int? IndustryId;
         public int? Size;
         public int? AssetValue;
+        public string OrganizationName;
+        public string Agency;
+        public int? OrganizationType;
+        public int? Facilitator;
+        public int? PointOfContact;
+        public bool IsScoped;
     }
 }
 

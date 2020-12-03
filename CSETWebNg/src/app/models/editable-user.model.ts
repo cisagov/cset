@@ -43,6 +43,8 @@ export class EditableUser implements User {
   IsNew: boolean;
   IsFirst = false;
   roles: Role[];
+  Title?: string;
+  Phone?: string;
 
   constructor(user: User) {
     this.UserId = user.UserId;
@@ -61,6 +63,8 @@ export class EditableUser implements User {
     this.AssessmentRoleId = user.AssessmentRoleId;
     this.saveEmail = user.saveEmail;
     this.editOverride = false;
+    this.Title = user.Title;
+    this.Phone = user.Phone;
 
     if (this.AssessmentId > 0) {
       this.IsNew = false;

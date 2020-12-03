@@ -49,6 +49,7 @@
     "handlebars": "^4.7.6",
     "intersection-observer": "^0.11.0",
     "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
     "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
     "monaco-editor": "^0.21.2",
