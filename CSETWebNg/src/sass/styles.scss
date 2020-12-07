@@ -600,6 +600,13 @@ table.td-align-top td {
   color: $gray-900;
 }
 
+.alt-text-required {
+  border: 2px solid $validation-color;
+}
+
+.alt-text-required-msg {
+  color: $validation-color;
+}
 
 
 .btn-sal-select {
