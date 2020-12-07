@@ -25,6 +25,8 @@
   <ng-template #contact_display [ngIf]="editMode">
     <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
       <span class="m-0 fs-base-1 fw-600">{{contact.FirstName}} {{contact.LastName}}</span>
+      <span class="fs-small fw-400" *ngIf="contact.Title !== null && contact.Title !== ''">{{contact.Title}}</span>
+      <span class="fs-small fw-400" *ngIf="contact.Phone !== null && contact.Phonoe !== ''">{{contact.Phone}}</span>
       <span class="fs-small fw-400">{{contact.PrimaryEmail}}</span>
       <span class="fs-small fw-400"> {{contact.AssessmentRole}} </span>
     </div>
@@ -71,7 +73,19 @@
               <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">Last name is required</div>
             </div>
           </div>
-
+          <div class="d-flex flex-wrap flex-11a">
+              <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+                <label class="mb-1" for="title">Title</label>
+                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title" [(ngModel)]="contact.Title" #title="ngModel"
+                  placeholder="Title" (keydown.esc)="abandonEdit()" matInput>
+              </div>
+  
+              <div class="form-group d-flex flex-column flex-11a">
+                <label class="mb-1" for="phone">Phone</label>
+                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="phone" id="phone" [(ngModel)]="contact.Phone" #phone="ngModel"
+                  placeholder="Phone" (keydown.esc)="abandonEdit()" matInput >
+              </div>
+          </div>
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">Email</label>
             <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel"
@@ -79,7 +93,6 @@
            
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email addresss.</div>
           </div>
-
           <!-- Role Buttons -->
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="role">Role</label>

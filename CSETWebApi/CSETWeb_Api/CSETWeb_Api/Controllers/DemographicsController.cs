@@ -58,7 +58,17 @@ namespace CSETWeb_Api.Controllers
             return assessmentManager.SaveDemographics(demographics);
         }
 
-        
+        /// <summary>
+        /// Get organization types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getOrganizationTypes")]
+        public IHttpActionResult GetOrganizationTypes()
+        {
+            AssessmentManager assessmentManager = new AssessmentManager();
+            return Ok(assessmentManager.GetOrganizationTypes());
+        }
 
         #region Getters for the demographics
         // GET: api/SECTORs

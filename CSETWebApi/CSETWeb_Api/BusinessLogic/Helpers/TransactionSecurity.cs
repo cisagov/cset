@@ -253,7 +253,7 @@ namespace CSETWeb_Api.Helpers
 
             using (CSET_Context db = new CSET_Context())
             {
-                var inst = db.INSTALLATION.FirstOrDefault();
+                  var inst = db.INSTALLATION.FirstOrDefault();
                 if (inst != null)
                 {
                     secret = inst.JWT_Secret;

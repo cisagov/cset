@@ -35,6 +35,9 @@ export interface User {
   LastName?: string;
   PrimaryEmail?: string;
   saveEmail?: string;
+  AssessmentContactId?: number;
+  Title?: string; 
+  Phone?: string;
 }
 
 export interface CreateUser {
@@ -48,6 +51,8 @@ export interface CreateUser {
   SecurityQuestion2?: string;
   SecurityAnswer2?: string;
   AppCode?: string;
+  Title?: string;
+  Phone?: string;
 }
 
 export interface PotentialQuestions {
