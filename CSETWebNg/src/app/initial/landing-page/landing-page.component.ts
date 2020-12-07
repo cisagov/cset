@@ -46,6 +46,7 @@ interface UserAssessment {
   CreatorName: string;
   LastModifiedDate: string;
   MarkedForReview: boolean;
+  AltTextMissing: boolean;
 }
 
 @Component({

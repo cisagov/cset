@@ -88,7 +88,8 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
+                // list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
+                list = db.usp_AssessmentsForUser(userId).ToList();
             }
 
             return list;

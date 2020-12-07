@@ -55,8 +55,16 @@ export class QuestionBlockComponent implements OnInit {
   private _timeoutId: NodeJS.Timeout;
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  altTextPlaceholder_ACET = "Description, explanation and/or justification for a compensating control";
+  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
 
+  /**
+   * 
+   * @param questionsSvc 
+   * @param filterSvc 
+   * @param dialog 
+   * @param configSvc 
+   * @param assessSvc 
+   */
   constructor(
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
@@ -70,6 +78,9 @@ export class QuestionBlockComponent implements OnInit {
     this.matLevelMap.set("Inn", "Innovative");
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
@@ -180,11 +191,16 @@ export class QuestionBlockComponent implements OnInit {
   /**
    * Looks at all questions in the subcategory to see if any
    * are marked for review.
+   * Also returns true if alt text is required but not supplied.
    */
   refreshReviewIndicator() {
     this.mySubCategory.HasReviewItems = false;
     this.mySubCategory.Questions.forEach(q => {
       if (q.MarkForReview) {
+        this.mySubCategory.HasReviewItems = true;
+        return;
+      }
+      if (q.Answer == 'A' && this.isAltTextRequired(q)) {
         this.mySubCategory.HasReviewItems = true;
         return;
       }
@@ -300,6 +316,18 @@ export class QuestionBlockComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer)
       .subscribe();
+  }
+
+  /**
+   * For ACET installations, alt answers require 3 or more characters of 
+   * justification.
+   */
+  isAltTextRequired(q: Question) {
+    if (this.configSvc.acetInstallation 
+      && (!q.AltAnswerText || q.AltAnswerText.trim().length < 3)) {
+      return true;
+    }
+    return false;
   }
 
   /**

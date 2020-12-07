@@ -151,7 +151,7 @@
                 </td>
                 <td>{{assessment.LastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{assessment.CreatorName}}</td>
-                <td><span *ngIf="assessment.MarkedForReview" class=""
+                <td><span *ngIf="assessment.MarkedForReview || assessment.AltTextMissing" class=""
                         matTooltip="This assessment contains answers that require further review.">Needs
                         Review</span></td>
                 <td>
