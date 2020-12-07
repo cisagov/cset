@@ -439,10 +439,33 @@ namespace CSETWeb_Api.BusinessManagers
                     demographics.IndustryId = hit.ddd.IndustryId;
                     demographics.AssetValue = hit.dav?.DemographicsAssetId;
                     demographics.Size = hit.ds?.DemographicId;
+                    demographics.PointOfContact = hit.ddd?.PointOfContact;
+                    demographics.Agency = hit.ddd?.Agency;
+                    demographics.Facilitator = hit.ddd?.Facilitator;
+                    demographics.IsScoped = hit.ddd?.IsScoped != false;
+                    demographics.OrganizationName = hit.ddd?.OrganizationName;
+                    demographics.OrganizationType = hit.ddd?.OrganizationType;
+
                 }
 
                 return demographics;
             }
+        }
+
+        /// <summary>
+        /// Get all organization types
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
+        {
+            var orgType = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
+            using (var db = new CSET_Context())
+            {
+                orgType = db.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            }
+
+            return orgType;
         }
 
         /// <summary>
@@ -525,7 +548,13 @@ namespace CSETWeb_Api.BusinessManagers
                 IndustryId = demographics.IndustryId,
                 SectorId = demographics.SectorId,
                 Size = assetSize,
-                AssetValue = assetValue
+                AssetValue = assetValue, 
+                Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator, 
+                PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact, 
+                IsScoped = demographics.IsScoped, 
+                Agency = demographics.Agency, 
+                OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType, 
+                OrganizationName = demographics.OrganizationName
             };
 
             db.DEMOGRAPHICS.AddOrUpdate(dbDemographics, x => x.Assessment_Id);

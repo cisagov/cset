@@ -54,6 +54,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
+        public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
@@ -774,6 +775,21 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.DEMOGRAPHICS)
                     .HasForeignKey(d => d.Size)
                     .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_SIZE");
+
+                entity.HasOne(d => d.FacilitatorNavigation)
+                    .WithMany(p => p.DEMOGRAPHICSFacilitatorNavigation)
+                    .HasForeignKey(d => d.Facilitator)
+                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_FACILITATOR");
+
+                entity.HasOne(d => d.OrganizationTypeNavigation)
+                    .WithMany(p => p.DEMOGRAPHICS)
+                    .HasForeignKey(d => d.OrganizationType)
+                    .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ORGANIZATION_TYPE");
+
+                entity.HasOne(d => d.PointOfContactNavigation)
+                    .WithMany(p => p.DEMOGRAPHICSPointOfContactNavigation)
+                    .HasForeignKey(d => d.PointOfContact)
+                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_POINTOFCONTACT");
             });
 
             modelBuilder.Entity<DEMOGRAPHICS_ASSET_VALUES>(entity =>
