@@ -68,6 +68,7 @@ export class AssessmentDetailComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe(
       (data: AssessmentDetail) => {
         this.assessment = data;
+
         this.setCharterPad();
 
         // Null out a 'low date' so that we display a blank

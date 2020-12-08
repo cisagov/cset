@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CSETWeb_Api.Models
+namespace CSETWeb_Api.BusinessLogic.Models
 {
     /// <summary>
     /// A cyber-security assessment.
@@ -38,10 +38,9 @@ namespace CSETWeb_Api.Models
         public bool UseMaturity;
         public bool UseDiagram;
 
-        // Selected maturity model
-        public int MaturityModelId;
-        public string MaturityModelName;
-        public int MaturityTargetLevel;
+        // Selected maturity models
+        public List<MaturityModel> MaturityModels = new List<MaturityModel>();
+
 
         /// <summary>
         /// The last time the Assessment was altered.

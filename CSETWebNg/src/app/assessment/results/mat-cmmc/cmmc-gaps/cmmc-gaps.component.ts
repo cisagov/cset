@@ -72,7 +72,7 @@ export class CmmcGapsComponent implements OnInit {
 
         if (r.MaturityModels) {
           r.MaturityModels.forEach(model => {
-            if (model.MaturityModelName == "CMMC") {
+            if (model.usesMaturityModel('CMMC')) {
               this.cmmcModel = model
               this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
               this.statsByDomain = this.cmmcModel.StatsByDomain

@@ -643,7 +643,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AssessmentController.Post(CSETWeb_Api.Models.AssessmentDetail)">
+        <member name="M:CSETWeb_Api.Controllers.AssessmentController.Post(CSETWeb_Api.BusinessLogic.Models.AssessmentDetail)">
             <summary>
             Persists the posted AssessmentDetail.
             </summary>
