@@ -57,20 +57,30 @@ export class ModelSelectComponent implements OnInit {
   }
 
   /**
-   * 
+   * Models are multi-select, so we keep track
+   * of all that are selected.
    */
   changeSelection(event: any, model: string) {
-    // the models are currently single-select, so whichever
-    // radio button was clicked, that's the only model we will use
-    if (!!this.assessSvc.assessment) {
-      this.assessSvc.assessment.MaturityModelName = model;
+    if (!!event && !!this.assessSvc.assessment) {
+      const checked = event?.srcElement.checked;
+      if (checked) {
+        this.assessSvc.addModel(model);
+      } else {
+        this.assessSvc.removeModel(model);
+      }
     }
+
     sessionStorage.removeItem('tree');
+
     // refresh Prepare section of the sidenav
     this.navSvc.buildTree(this.navSvc.getMagic());
 
-
-    this.maturitySvc.postSelection(model).subscribe();
+    // tell the API which models are selected
+    var modelNames = '';
+    this.assessSvc.assessment.MaturityModels.forEach(m => {
+      modelNames += (m.ModelName + ',');
+    });
+    this.maturitySvc.postSelection(modelNames).subscribe();
   }
 
   /**
