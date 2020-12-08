@@ -2978,13 +2978,22 @@ table.td-text-left th, table.td-text-left td {
 
 
 
-////
+//// Maturity Models ////
+
+.maturity-model-card {
+  border: 2px solid $primary-900; 
+  background-color: $white;
+  border-radius: .5rem;
+  padding: 1rem;
+  padding-top: .4rem;
+}
+
 input[type=checkbox].maturity-model-select {
   margin-right: 1rem;
 }
 
 .maturity-model-select {
-  border: 2px solid #cccccc;
+  border: 2px solid $gray-250;
   border-radius: .3rem;
   margin-bottom: 1rem;
   padding: 1rem;
