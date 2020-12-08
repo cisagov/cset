@@ -52,6 +52,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         public void PersistSelectedMaturityModels(int assessmentId, string selectedModelNameList)
         {
+            if (selectedModelNameList == null)
+            {
+                selectedModelNameList = "";
+            }
             List<string> modelList = new List<string>(selectedModelNameList.Split(','));
             modelList.ForEach(x => x = x.Trim().ToUpper());
             modelList.RemoveAll(x => x == "");
