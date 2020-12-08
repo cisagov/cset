@@ -70,7 +70,7 @@ export class CmmcComplianceComponent implements OnInit {
         this.response = r;
         if (r.MaturityModels) {
           r.MaturityModels.forEach(model => {
-            if (model.usesMaturityModel('CMMC')) {
+            if (model.MaturityModelName === 'CMMC') {
               this.cmmcModel = model
               this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
               // this.statsByDomain = this.cmmcModel.StatsByDomain

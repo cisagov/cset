@@ -40,11 +40,15 @@
     <button (click)="clickReportLink('discoveries')" class="btn btn-link btn-link-dark">Observations Tear-Out Sheets</button>
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.assessment.UseMaturity" class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div *ngIf="!!assessSvc.assessment && assessSvc.assessment.UseMaturity" 
+    class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model</h4>
-    <button (click)="clickReportLink('executivecmmc')" class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
+    
+    <button *ngIf="assessSvc.usesMaturityModel('CMMC')" 
+      (click)="clickReportLink('executivecmmc')" class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
 
-    <button (click)="clickReportLink('sitesummarycmmc')" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
+    <button *ngIf="assessSvc.usesMaturityModel('CMMC')" 
+      (click)="clickReportLink('sitesummarycmmc')" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
   </div>
 
   <app-nav-back-next [page]="'reports'"></app-nav-back-next>
