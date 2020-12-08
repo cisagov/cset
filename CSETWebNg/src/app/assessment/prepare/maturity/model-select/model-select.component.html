@@ -22,73 +22,47 @@
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
-  <div class="mb-5">
+  <div class="maturity-model-card mb-5">
     <div>
-
       <h4>
-        <input type="checkbox" class="maturity-model-select" name="model-select-cmmc"
-          id="model-select-cmmc" [checked]="assessSvc.usesMaturityModel('CMMC')" 
-          (change)="changeSelection($event, 'CMMC')">
-        <label for="model-select-cmmc" class="cursor-pointer">CMMC</label></h4>
+        <input type="checkbox" class="maturity-model-select" name="model-select-cmmc" id="model-select-cmmc"
+          [checked]="assessSvc.usesMaturityModel('CMMC')" (change)="changeSelection($event, 'CMMC')">
+        <label for="model-select-cmmc" class="cursor-pointer">CMMC</label>
+      </h4>
     </div>
-    <div>
-      <p>
-        The Capability Maturity Model Certification (CMMC) measures
-        cybersecurity maturity with five levels and aligns a set of processes and
-        practices with the type and sensitivity of information to be protected
-        and the associated range of threats. The model consists of maturity
-        processes and cybersecurity best practices from multiple
-        cybersecurity standards, frameworks and other references,
-        as well as inputs from the broader community.
-      </p>
-      <p><strong>DFARS&nbsp;252.204-7012&nbsp;Interim Rule: Effective Date November 30, 2020</strong>
-        <br /> On September 29, 2020, the DoD is issued an interim rule to amend the Defense Federal
-        Acquisition Regulation Supplement (DFARS) to implement a DoD Assessment Methodology and Cybersecurity Maturity
-        Model Certification
-        (CMMC) framework in order to assess contractor implementation of cybersecurity requirements and enhance the
-        protection of
-        unclassified information within the DoD supply chain.</p>
-      <p><strong>CMMC Rollout phased over five years</strong><br /> DoD is implementing a phased rollout of CMMC. Until
-        September 30, 2025 a
-        clause affecting the CMMC Requirements is prescribed for use in solicitations and contracts, including
-        solicitations and contracts using FAR part 12
-        procedures for the acquisition of commercial items, excluding acquisitions exclusively for COTS items, if the
-        requirement document or statement of work
-        requires a contractor to have a specific CMMC level.</p>
-      <ul>
-        <li>To read the interim rule via the <a href="{{configSvc.docUrl}}/2020-21123.pdf">Federal Register / Vol. 85,
-            No. 189 / Tuesday, September 29, 2020 / Rules and Regulations</a></li>
-        <li>For the NIST SP 800-171 DoD Assessment Scoring Template and the full text of the
-          <a
-            href="{{configSvc.docUrl}}/NIST%20SP%20800-171%20Assessment%20Methodology%20Version%201.2.1%20%206.24.2020.pdf">NIST
-            SP 800-171 DoD Assessment Methodology</a>, Version 1.2.1, June 24, 2020</li>
-      </ul>
+    <div class="d-flex flex-row">
+      <div style="max-width: 50%">
+        <p>
+          The Capability Maturity Model Certification (CMMC) measures
+          cybersecurity maturity with five levels and aligns a set of processes and
+          practices with the type and sensitivity of information to be protected
+          and the associated range of threats. The model consists of maturity
+          processes and cybersecurity best practices from multiple
+          cybersecurity standards, frameworks and other references,
+          as well as inputs from the broader community.
+        </p>
 
-      <p>CMMC is broken into five different levels of Processes and Capabilities (which are further broken down into
-        Practices).</p>
-      <button class="btn btn-link"></button>
-      <a href="{{url('CMMC')}}" rel="noopener noreferrer" target="_blank">
-        Cybersecurity Maturity Model Certification (CMMC) Version 1.02
-      </a>
+        <p>CMMC is broken into five different levels of Processes and Capabilities (which are further broken down into
+          Practices).</p>
+        <a rel="noopener noreferrer" target="_blank" [href]="tutorialCMMC()">For more information see the CMMC document</a>.
+      </div>
+      <div style="max-width: 50%" class="text-center">
+        <img src="/assets/images/CMMC/CMMC-practices-per-level.png" style="width: 100%;">
+      </div>
     </div>
-    <div style="min-width: 50%" class="text-center">
-      <img src="/assets/images/CMMC/CMMC-practices-per-level.png" style="width: 100%;">
-    </div>
+
   </div>
 
-  <div class="mb-5">
+  <div class="maturity-model-card mb-5">
     <h4><input type="checkbox" class="maturity-model-select" name="model-select-edm" id="model-select-edm"
         [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM')">
       <label for="model-select-edm" class="cursor-pointer">EDM</label></h4>
-    <div class="maturity-model-select d-flex flex-row mb-5">
+    <div class="d-flex flex-row">
       <div>
-        <p>
-          This is an expanation of EDM.
-        </p>
-
+        The External Dependency Management Assessment
       </div>
-      <div style="min-width: 50%">
-        [[ EDM graphic ]]
+      <div style="max-width: 50%" class="text-center">
+        <img src="/assets/images/EDM/EDM_logo.png" style="width: 100%;">
       </div>
     </div>
   </div>
