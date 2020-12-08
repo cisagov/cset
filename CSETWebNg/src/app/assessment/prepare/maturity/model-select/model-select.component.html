@@ -21,14 +21,14 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3 class="wrap-text">Maturity Model</h3>
+  <h3 class="wrap-text">Maturity Models</h3>
   <div class="mb-5">
-    <div style="display: none;">
+    <div>
 
       <h4>
-        <!--attach this to [checked] when there is more than one Model assessSvc.assessment?.MaturityModelName === 'CMMC'-->
-        <input style="display: none;" type="radio" class="maturity-model-select" name="model-select"
-          id="model-select-cmmc" [checked]="true" (change)="changeSelection($event, 'CMMC')">
+        <input type="checkbox" class="maturity-model-select" name="model-select-cmmc"
+          id="model-select-cmmc" [checked]="assessSvc.usesMaturityModel('CMMC')" 
+          (change)="changeSelection($event, 'CMMC')">
         <label for="model-select-cmmc" class="cursor-pointer">CMMC</label></h4>
     </div>
     <div>
@@ -76,9 +76,9 @@
     </div>
   </div>
 
-  <div class="d-none mb-5">
-    <h4><input type="radio" class="maturity-model-select" name="model-select" id="model-select-edm"
-        [checked]="assessSvc.maturityModels.indexOf('EDM') >= 0" (change)="changeSelection($event, 'EDM')">
+  <div class="mb-5">
+    <h4><input type="checkbox" class="maturity-model-select" name="model-select-edm" id="model-select-edm"
+        [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM')">
       <label for="model-select-edm" class="cursor-pointer">EDM</label></h4>
     <div class="maturity-model-select d-flex flex-row mb-5">
       <div>

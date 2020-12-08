@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CSETWeb_Api.Helpers;
-using CSETWeb_Api.Models;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using BusinessLogic.Helpers;
 using DataLayerCore.Model;

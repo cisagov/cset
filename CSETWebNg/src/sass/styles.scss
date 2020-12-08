@@ -1019,9 +1019,6 @@ th.data-table {
 
 }
 
-input[type=radio].maturity-model-select {
-  margin-right: 1rem;
-}
 
 
 // Header / Navbar
@@ -2982,6 +2979,10 @@ table.td-text-left th, table.td-text-left td {
 
 
 ////
+input[type=checkbox].maturity-model-select {
+  margin-right: 1rem;
+}
+
 .maturity-model-select {
   border: 2px solid #cccccc;
   border-radius: .3rem;
