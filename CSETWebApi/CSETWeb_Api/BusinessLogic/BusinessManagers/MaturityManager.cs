@@ -46,29 +46,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
-        /// Saves the selected maturity model.
+        /// Saves the selected maturity models.
         /// </summary>
         /// <param name="selectedMaturityModels"></param>
         /// <returns></returns>
-        public void PersistSelectedMaturityModel(int assessmentId, string selectedModelName)
+        public void PersistSelectedMaturityModels(int assessmentId, string selectedModelNameList)
         {
+            if (selectedModelNameList == null)
+            {
+                selectedModelNameList = "";
+            }
+            List<string> modelList = new List<string>(selectedModelNameList.Split(','));
+            modelList.ForEach(x => x = x.Trim().ToUpper());
+            modelList.RemoveAll(x => x == "");
+
             using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+                db.SaveChanges();
 
-                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == selectedModelName).FirstOrDefault();
-                if (mm != null)
+                foreach (string m in modelList)
                 {
-                    db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
+                    var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == m).FirstOrDefault();
+                    if (mm != null)
                     {
-                        Assessment_Id = assessmentId,
-                        model_id = mm.Maturity_Model_Id,
-                        Selected = true
-                    });
+                        db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            model_id = mm.Maturity_Model_Id,
+                            Selected = true
+                        });
 
-                    db.SaveChanges();
+                    }
                 }
+                db.SaveChanges();
             }
 
             AssessmentUtil.TouchAssessment(assessmentId);
@@ -84,7 +96,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name=="Maturity_Level").FirstOrDefault();
+                var result = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
                 if (result != null)
                 {
                     if (int.TryParse(result.Standard_Specific_Sal_Level, out int level))
@@ -155,7 +167,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
 
                 // see if any answer options should not be in the list
-                var suppressedAnswerOptions =  myModel.model_.Answer_Options_Suppressed;
+                var suppressedAnswerOptions = myModel.model_.Answer_Options_Suppressed;
                 if (!string.IsNullOrEmpty(suppressedAnswerOptions))
                 {
                     var a = suppressedAnswerOptions.Split(',');

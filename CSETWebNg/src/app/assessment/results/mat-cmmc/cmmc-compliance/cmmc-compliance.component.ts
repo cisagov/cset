@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { NavigationService } from '../../../../services/navigation.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../../../../app/services/maturity.service';
@@ -45,16 +45,16 @@ export class CmmcComplianceComponent implements OnInit {
   stackBarChartData;
   complianceLevelAcheivedData;
   statsByLevel;
-  
-  whiteText= "rgba(255,255,255,1)"
-  blueText= "rgba(31,82,132,1)"
+
+  whiteText = "rgba(255,255,255,1)"
+  blueText = "rgba(31,82,132,1)"
 
   stackedChartHeaderLabels = {
-     1: "Basic Cyber Hygiene", 
-     2: "Intermediate Cyber Hygiene", 
-     3: "Good Cyber Hygiene", 
-     4: "Proactive", 
-     5: "Advanced / Progressive" 
+    1: "Basic Cyber Hygiene",
+    2: "Intermediate Cyber Hygiene",
+    3: "Good Cyber Hygiene",
+    4: "Proactive",
+    5: "Advanced / Progressive"
   }
 
   constructor(
@@ -68,19 +68,19 @@ export class CmmcComplianceComponent implements OnInit {
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
-        if(r.MaturityModels){
+        if (r.MaturityModels) {
           r.MaturityModels.forEach(model => {
-            if(model.MaturityModelName == "CMMC"){
+            if (model.MaturityModelName === 'CMMC') {
               this.cmmcModel = model
               this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
               // this.statsByDomain = this.cmmcModel.StatsByDomain
               // this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
               this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel)
               this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
-            }            
-          });    
+            }
+          });
           window.dispatchEvent(new Event('resize'));
-        }        
+        }
         this.initialized = true;
       },
       error => {
@@ -88,13 +88,13 @@ export class CmmcComplianceComponent implements OnInit {
         this.initialized = true;
         console.log('Site Summary report load Error: ' + (<Error>error).message)
       }
-    ),(finish) => {
+    ), (finish) => {
     };
   }
-  
-  generateStatsByLevel(data){
+
+  generateStatsByLevel(data) {
     let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData.sort((a,b) => (a.ModelLevel > b.ModelLevel) ? 1: -1)
+    outputData.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
     let totalAnsweredCount = 0
     let totalUnansweredCount = 0
     outputData.forEach(element => {
@@ -106,41 +106,41 @@ export class CmmcComplianceComponent implements OnInit {
     return outputData
   }
 
-  generateStackedBarChartData(data){
+  generateStackedBarChartData(data) {
     let clonedArray = JSON.parse(JSON.stringify(data)) //Easy way to deep copy array
-    let sortedData = clonedArray.sort((a,b) => (a.ModelLevel > b.ModelLevel) ? 1: -1)
+    let sortedData = clonedArray.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
     let outputData = []
-    
-    if(!this.totalCMMCQuestions){
+
+    if (!this.totalCMMCQuestions) {
       this.getTotalCMMCQuestion(data);
     }
-    for(let i = 0; i <sortedData.length; i++){      
+    for (let i = 0; i < sortedData.length; i++) {
       let dataEle = []
-      if(i == 0){
+      if (i == 0) {
         // dataEle.push(data[i])
       } else {
-        outputData[i-1].forEach(outputEle => {
+        outputData[i - 1].forEach(outputEle => {
           dataEle.push(outputEle)
         });
-      }             
-      this.getStackBarChartData(sortedData[i],this.totalCMMCQuestions).forEach(element => {
+      }
+      this.getStackBarChartData(sortedData[i], this.totalCMMCQuestions).forEach(element => {
         dataEle.unshift(element)
       });
-      outputData.push(dataEle)  
+      outputData.push(dataEle)
     }
     return outputData
   }
 
-  getComplianceLevelAcheivedData(data){
+  getComplianceLevelAcheivedData(data) {
     let acheivedLevel = 0;
     let questionAnsweredWithinTarget = 0;
     let totalQuestionsInTargetRange = 0;
 
     data.forEach(element => {
-      if(!element.questionUnAnswered){
+      if (!element.questionUnAnswered) {
         acheivedLevel = element.ModelLevel
       }
-      if(element.ModelLevel <= this.cmmcModel.TargetLevel){
+      if (element.ModelLevel <= this.cmmcModel.TargetLevel) {
         questionAnsweredWithinTarget += element.questionAnswered
         totalQuestionsInTargetRange += element.questionCount
       }
@@ -154,36 +154,36 @@ export class CmmcComplianceComponent implements OnInit {
     };
   }
 
-  getStackBarChartData(data,totalQuestionCount){   
+  getStackBarChartData(data, totalQuestionCount) {
     return [
       {
         count: data.questionAnswered,
         totalForLevel: data.questionCount,
         type: "Yes",
         modelLevel: data.ModelLevel,
-        totalQuestions:totalQuestionCount
-      },{
+        totalQuestions: totalQuestionCount
+      }, {
         count: data.questionUnAnswered,
         totalForLevel: data.questionCount,
         type: "No",
         modelLevel: data.ModelLevel,
-        totalQuestions:totalQuestionCount
+        totalQuestions: totalQuestionCount
       }
     ]
   }
 
-  
-  getStackedChartSectionStyle(data){
+
+  getStackedChartSectionStyle(data) {
     let retVal = []
     //background color
-    if(data.type == "Yes" || data.modelLevel > this.cmmcModel.TargetLevel){       
-      retVal["background"] = this.getGradient(`blue-${data.modelLevel}`,1,true)
+    if (data.type == "Yes" || data.modelLevel > this.cmmcModel.TargetLevel) {
+      retVal["background"] = this.getGradient(`blue-${data.modelLevel}`, 1, true)
     }
     else {
       retVal["background"] = this.getGradient("orange")
     }
     //textcolor
-    if(data.modelLevel >= 4){
+    if (data.modelLevel >= 4) {
       retVal["color"] = this.blueText
     }
 
@@ -192,8 +192,8 @@ export class CmmcComplianceComponent implements OnInit {
     // }
 
     //Determine if section should be displayed and size if so
-    if(data.modelLevel <= this.cmmcModel.TargetLevel){
-      if(data.count == 0 ){
+    if (data.modelLevel <= this.cmmcModel.TargetLevel) {
+      if (data.count == 0) {
         retVal["display"] = "none";
       } else {
         let levelToTotalRatio = data.totalForLevel / data.totalQuestions
@@ -202,7 +202,7 @@ export class CmmcComplianceComponent implements OnInit {
         retVal["flex-basis"] = `calc(${sectionPercent}% + var(--corner-size))`
       }
     } else {
-      if(data.type == "No"){        
+      if (data.type == "No") {
         retVal["display"] = "none";
       } else {
         let levelToTotalRatio = data.totalForLevel / data.totalQuestions
@@ -213,67 +213,67 @@ export class CmmcComplianceComponent implements OnInit {
 
     return retVal
   }
-  
-  getTotalCMMCQuestion(data){
+
+  getTotalCMMCQuestion(data) {
     this.totalCMMCQuestions = 0
-    
+
     data.forEach(element => {
-      if(element.questionCountAggregateForLevelAndBelow > this.totalCMMCQuestions){
+      if (element.questionCountAggregateForLevelAndBelow > this.totalCMMCQuestions) {
         this.totalCMMCQuestions = element.questionCountAggregateForLevelAndBelow
       }
     });
   }
-    
-  getGradient(color,alpha=1,reverse=false){
+
+  getGradient(color, alpha = 1, reverse = false) {
     let vals = {
       color_one: "",
       color_two: ""
     }
     alpha = 1
-    switch(color){      
+    switch (color) {
       case "blue":
-      case "blue-1":{        
+      case "blue-1": {
         vals["color_one"] = `rgba(31,82,132,${alpha})`
         vals["color_two"] = `rgba(58,128,194,${alpha})`
         break;
-      }    
-      case "blue-2":{        
+      }
+      case "blue-2": {
         vals["color_one"] = `rgba(75,116,156,${alpha})`
         vals["color_two"] = `rgba(97,153,206,${alpha})`
         break;
-      }    
-      case "blue-3":{        
+      }
+      case "blue-3": {
         vals["color_one"] = `rgba(120,151,156,${alpha})`
         vals["color_two"] = `rgba(137,179,218,${alpha})`
         break;
-      }    
-      case "blue-4":{        
+      }
+      case "blue-4": {
         vals["color_one"] = `rgba(165,185,205,${alpha})`
         vals["color_two"] = `rgba(176,204,230,${alpha})`
         break;
-      }    
-      case "blue-5":{        
+      }
+      case "blue-5": {
         vals["color_one"] = `rgba(210,220,230,${alpha})`
         vals["color_two"] = `rgba(216,229,243,${alpha})`
         break;
       }
-      case "green":{
+      case "green": {
         vals["color_one"] = `rgba(98,154,109,${alpha})`
         vals["color_two"] = `rgba(31,77,67,${alpha})`
         break;
       }
-      case "grey":{
+      case "grey": {
         vals["color_one"] = `rgba(98,98,98,${alpha})`
         vals["color_two"] = `rgba(120,120,120,${alpha})`
         break;
       }
-      case "orange":{
+      case "orange": {
         vals["color_one"] = `rgba(255,190,41,${alpha})`
         vals["color_two"] = `rgba(224,217,98,${alpha})`
         break;
       }
     }
-    if(reverse){
+    if (reverse) {
       let tempcolor = vals["color_one"]
       vals["color_one"] = vals["color_two"]
       vals["color_two"] = tempcolor

@@ -135,8 +135,9 @@
         </div>
 
         <div *ngIf="q.Answer === 'A'">
-          <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;"
+          <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)" style="width: 100%; min-height: 80px;"
             [placeholder]="altTextPlaceholder" [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
+            <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
         </div>
       </div>
     </div>

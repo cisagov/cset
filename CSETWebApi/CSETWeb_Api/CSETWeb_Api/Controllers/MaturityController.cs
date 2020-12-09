@@ -34,10 +34,10 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public IHttpActionResult SetMaturityModel(string modelName)
+        public IHttpActionResult SetMaturityModel(string modelNameList)
         {
             int assessmentId = Auth.AssessmentForUser();
-            new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelName);
+            new MaturityManager().PersistSelectedMaturityModels(assessmentId, modelNameList);
             return Ok();
         }
 

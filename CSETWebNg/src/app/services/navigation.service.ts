@@ -505,7 +505,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
     {
-      displayText: 'Maturity Model',
+      displayText: 'Maturity Models',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity }
@@ -516,7 +516,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-        // && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+          && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
 
@@ -621,7 +621,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+          && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
 
@@ -630,7 +630,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+          && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
     {
@@ -638,7 +638,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+          && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
     {
@@ -646,7 +646,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+          && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
     {
@@ -654,7 +654,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.assessment?.MaturityModelName === 'CMMC'
+          && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
 
