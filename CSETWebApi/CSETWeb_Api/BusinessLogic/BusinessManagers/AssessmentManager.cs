@@ -88,7 +88,8 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
+                // list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
+                list = db.usp_AssessmentsForUser(userId).ToList();
             }
 
             return list;
@@ -234,17 +235,26 @@ namespace CSETWeb_Api.BusinessManagers
                      where avm.Assessment_Id == assessmentId
                      select new { mm.Maturity_Model_Id, mm.Model_Name };
 
-            var q1 = query.FirstOrDefault();
-            if (q1 != null)
+            var models = query.ToList();
+            foreach (var m in models)
             {
-                assessment.MaturityModelId = q1.Maturity_Model_Id;
-                assessment.MaturityModelName = q1.Model_Name;
+                assessment.MaturityModels.Add(new MaturityModel() 
+                { 
+                    ModelId = m.Maturity_Model_Id,
+                    ModelName = m.Model_Name
+                });
             }
 
             var ml = db.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
             if (ml != null)
             {
-                assessment.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
+                // NOTE:  In order to support different levels on different models on the same assessment,
+                //        we will need to store levels differently.  Maybe an additional column on ASSESSMENT_SELECTED_LEVELS
+                //        to hold the maturity model name or ID.
+                foreach (var m in assessment.MaturityModels)
+                {
+                    m.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
+                }
             }
         }
 
@@ -350,7 +360,7 @@ namespace CSETWeb_Api.BusinessManagers
                     //this is at the bottom deliberatly because 
                     //we want everything else to succeed first
                     MaturityManager mm = new MaturityManager();
-                    mm.PersistSelectedMaturityModel(assessmentId, "CMMC");
+                    mm.PersistSelectedMaturityModels(assessmentId, "CMMC");
                     if (mm.GetMaturityLevel(assessmentId) == 0)
                         mm.PersistMaturityLevel(assessmentId, 1);
                 }
