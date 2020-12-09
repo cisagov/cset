@@ -28,7 +28,7 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header">
+  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
     <!-- Brand -->
     <span
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
@@ -46,7 +46,7 @@
     </button>
 
     <!-- Collapse Content -->
-    <div  class="collapse navbar-collapse"
+    <div class="collapse navbar-collapse"
       id="csetNavbarCollapse">
       <div class="navbar-nav dropdown"
         *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
@@ -111,7 +111,7 @@
       </div>
 
       <!-- HELP -->
-      <div *ngIf="auth.userToken() && auth.userToken() !== 'null'" class="navbar-nav ml-auto dropdown">
+      <div class="navbar-nav ml-auto dropdown">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
           data-toggle="dropdown">
           <span class="cset-icons-question-circle-outline fs-base-4 mr-2"></span>
@@ -201,12 +201,12 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header">
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header"
+  *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')" >
     <ngb-panel id="ngb-panel-0">
       <ng-template ngbPanelTitle>
         <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
-          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterVisible, 'cset-icons-chevron-up flex-00a': !isFooterVisible}"
-          (click)="toggleFooter()"></button>
+          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">

@@ -33,7 +33,9 @@ $primary-900: map-get($primary, 900); // Main Dark Primary
 
 $primary-color: $primary-900;
 $ncua-primary-background-image: linear-gradient(to right, #0f3c7a, #5290e5, #0f3c7a);
+
 $secondary-color: #0f3c7a;
+
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
 
@@ -82,9 +84,6 @@ $bc-filters-engaged:#F9CE15;
 
 
 $spacer: 18px;
-
-
-
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -240,7 +239,7 @@ label[required]::after {
 }
 
 
-.footer .card .card-header h5 {
+.footer .card .card-header {
   display: flex;
   justify-content: center;
   flex: 1 1 auto;  
