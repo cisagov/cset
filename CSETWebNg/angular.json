@@ -48,14 +48,14 @@
               },
               "src/assets",
               "src/favicon.ico",
-              "src/uploadAssessment.html"
+              "src/uploadAssessment.html", 
+              "src/sass"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "src/sass/styles.scss",
               "src/styles.css"
             ],
             "scripts": [
