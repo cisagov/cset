@@ -199,6 +199,7 @@ import { AnalyticsService } from './services/analytics.service';
 import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -390,6 +391,7 @@ import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inher
         DataloginComponent,
         LayoutBlankComponent,
         LayoutMainComponent, 
+        AcetLayoutMainComponent,
         ReportTestComponent, 
         DetailComponent, 
         DiscoveryTearoutsComponent, 

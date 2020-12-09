@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-@import '~sass/variables';
 @import '~sass/mixins';
 
 
@@ -32,7 +31,7 @@ SOFTWARE.
   }
   
   #FixedHolder {
-    background: $white;
+    background: #fff;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     box-shadow: 3px 3px 3px rgba(0,0,0,.2);
@@ -53,7 +52,7 @@ SOFTWARE.
   
   .gauges-footer {
     display: none;
-    color: $white;
+    color: #fff;
     background-color: #285464;
     background-color: #3b7887;
     border-top: 1px solid #888;
