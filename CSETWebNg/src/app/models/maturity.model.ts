@@ -22,6 +22,6 @@
 //
 ////////////////////////////////
 export class MaturityLevel {
-    name: string;
-    value: number;
+    Label?: string;
+    Level: number;
 }
