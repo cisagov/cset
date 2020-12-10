@@ -167,11 +167,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                    return response;
                 }
 
-                Debug.WriteLine("got model here");
-                // Testing getting models here
-            
-                Debug.WriteLine(myModel.model_.Model_Name);
-
                 response.ModelName = myModel.model_.Model_Name;
 
               
