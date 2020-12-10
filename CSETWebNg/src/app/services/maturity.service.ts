@@ -17,12 +17,12 @@ export class MaturityService {
    * These are specific to CMMC and will need to be configured somewhere,
    * and not hard coded.
    */
-  levels = [
-    { name: "Level 1", value: 1 },
-    { name: "Level 2", value: 2 },
-    { name: "Level 3", value: 3 },
-    { name: "Level 4", value: 4 },
-    { name: "Level 5", value: 5 }
+  availableLevels = [
+    { Label: "Level 1", Level: 1 },
+    { Label: "Level 2", Level: 2 },
+    { Label: "Level 3", Level: 3 },
+    { Label: "Level 4", Level: 4 },
+    { Label: "Level 5", Level: 5 }
   ];
 
   cmmcData = null;
@@ -42,9 +42,9 @@ export class MaturityService {
   /**
    * Posts the current selections to the server.
    */
-  postSelection(modelNameList: string) {
+  postSelection(modelName: string) {
     return this.http.post(
-      this.configSvc.apiUrl + "MaturityModel?modelNameList=" + modelNameList,
+      this.configSvc.apiUrl + "MaturityModel?modelNameList=" + modelName,
       null,
       headers
     );
@@ -66,10 +66,10 @@ export class MaturityService {
    * Returns the name of the current target level.
    */
   targetLevelName() {
-    if (!!this.assessSvc.assessment && !!this.assessSvc.assessment.MaturityTargetLevel) {
-      const l = this.levels.find(x => x.value == this.assessSvc.assessment.MaturityTargetLevel);
+    if (!!this.assessSvc.assessment && !!this.assessSvc.assessment.MaturityModel.MaturityTargetLevel) {
+      const l = this.availableLevels.find(x => x.Level == this.assessSvc.assessment.MaturityModel.MaturityTargetLevel);
       if (!!l) {
-        return l.name;
+        return l.Label;
       }
       return '???';
     }
@@ -92,7 +92,7 @@ export class MaturityService {
    */
   saveLevel(level: number) {
     if (this.assessSvc.assessment) {
-      this.assessSvc.assessment.MaturityTargetLevel = level;
+      this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = level;
     }
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",

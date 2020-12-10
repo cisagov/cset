@@ -108,9 +108,9 @@ export class AssessmentConfigComponent implements OnInit {
 
 
     if (this.assessSvc.assessment.UseMaturity) {
-      if (this.assessSvc.assessment.MaturityTargetLevel
-        || this.assessSvc.assessment.MaturityTargetLevel == 0)
-        this.assessSvc.assessment.MaturityTargetLevel = 1;
+      if (this.assessSvc.assessment.MaturityModel.MaturityTargetLevel
+        || this.assessSvc.assessment.MaturityModel.MaturityTargetLevel == 0)
+        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
     }
 
     // tell the standard service to refresh the nav tree

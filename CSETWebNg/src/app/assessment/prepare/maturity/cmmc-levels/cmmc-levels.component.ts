@@ -34,7 +34,7 @@ import { MaturityLevel } from '../../../../models/maturity.model';
 })
 export class CmmcLevelsComponent implements OnInit {
 
-  selectedLevel: MaturityLevel = { name: "zero", value: 0 };
+  selectedLevel: MaturityLevel = { Label: "zero", Level: 0 };
 
   constructor(
     private assessSvc: AssessmentService,
@@ -50,10 +50,11 @@ export class CmmcLevelsComponent implements OnInit {
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe((data: any) => {
         this.assessSvc.assessment = data;
-        this.selectedLevel.value = this.assessSvc.assessment.MaturityTargetLevel;
+        console.log(this.assessSvc.assessment);
+        this.selectedLevel.Level = this.assessSvc.assessment.MaturityModel.MaturityTargetLevel;
       });
     } else {
-      this.selectedLevel.value = this.assessSvc.assessment.MaturityTargetLevel;
+      this.selectedLevel.Level = this.assessSvc.assessment.MaturityModel.MaturityTargetLevel;
     }
   }
 
@@ -62,13 +63,13 @@ export class CmmcLevelsComponent implements OnInit {
    * @param newLevel 
    */
   saveLevel(newLevel) {
-    this.maturitySvc.levels.forEach(l => {
-      if (l.value === newLevel) {
+    this.maturitySvc.availableLevels.forEach(l => {
+      if (l.Level === newLevel) {
         this.selectedLevel = l;
       }
     });
 
-    this.maturitySvc.saveLevel(this.selectedLevel.value).subscribe(() => {
+    this.maturitySvc.saveLevel(this.selectedLevel.Level).subscribe(() => {
       return;
     });
   }
