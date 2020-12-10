@@ -53,17 +53,18 @@ export class ModelSelectComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf';
     //remove this when we have multiple models
-    this.changeSelection(null,"CMMC");
+    //this.changeSelection(null,"CMMC");
   }
 
   /**
    * Models are multi-select, so we keep track
    * of all that are selected.
    */
-  changeSelection(event: any, model: string) {
+  changeSelection(event: any, model: string, removeModel: string) {
     if (!!event && !!this.assessSvc.assessment) {
       const checked = event?.srcElement.checked;
       if (checked) {
+        this.assessSvc.removeModel(removeModel);
         this.assessSvc.addModel(model);
       } else {
         this.assessSvc.removeModel(model);

@@ -25,8 +25,8 @@
   <div class="maturity-model-card mb-5">
     <div>
       <h4>
-        <input type="checkbox" class="maturity-model-select" name="model-select-cmmc" id="model-select-cmmc"
-          [checked]="assessSvc.usesMaturityModel('CMMC')" (change)="changeSelection($event, 'CMMC')">
+        <input type="radio" class="maturity-model-select" name="model-select-type" id="model-select-cmmc" value="model-select-cmmc"
+          [checked]="assessSvc.usesMaturityModel('CMMC')" (change)="changeSelection($event, 'CMMC', 'EDM')">
         <label for="model-select-cmmc" class="cursor-pointer">CMMC</label>
       </h4>
     </div>
@@ -54,8 +54,8 @@
   </div>
 
   <div class="maturity-model-card mb-5">
-    <h4><input type="checkbox" class="maturity-model-select" name="model-select-edm" id="model-select-edm"
-        [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM')">
+    <h4><input type="radio" class="maturity-model-select" name="model-select-type" id="model-select-edm" value="model-select-edm"
+        [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM', 'CMMC')">
       <label for="model-select-edm" class="cursor-pointer">EDM</label></h4>
     <div class="d-flex flex-row">
       <div>
