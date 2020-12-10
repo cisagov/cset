@@ -21,6 +21,8 @@ namespace CSETWeb_Api.Models
         public List<Domain> Domains;
         // public List<Category> Categories;
 
+        public string ModelName;
+
         // The current mode of the assessment
         public string ApplicationMode;
 
