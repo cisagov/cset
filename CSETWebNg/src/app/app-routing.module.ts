@@ -102,6 +102,8 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
+import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
+import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -204,10 +206,11 @@ const appRoutes: Routes = [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'model-select', component: ModelSelectComponent },
+              { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
+              { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
-              { path: 'model-select', component: ModelSelectComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },

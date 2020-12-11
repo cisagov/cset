@@ -18,6 +18,14 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionResponse
     {
+        /// <summary>
+        /// Lists the display names of the maturity levels.
+        /// </summary>
+        public List<MaturityLevel> MaturityLevels;
+
+        // The target level
+        public int MaturityTargetLevel;
+
         public List<Domain> Domains;
         // public List<Category> Categories;
 
@@ -68,10 +76,6 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string DomainText;
 
-        /// <summary>
-        /// Lists the display names of the maturity levels.
-        /// </summary>
-        public List<MaturityLevel> Levels;
 
         /// <summary>
         /// A list of categories within the domain.  CMMC domains correspond with

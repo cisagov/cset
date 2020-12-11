@@ -94,6 +94,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       (response: QuestionResponse) => {
         this.questionsSvc.questions = response;
         this.domains = response.Domains;
+        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.loaded = true;
 
         // default the selected maturity filters
