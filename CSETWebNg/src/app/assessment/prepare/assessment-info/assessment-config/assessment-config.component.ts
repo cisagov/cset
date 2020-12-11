@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { StandardService } from '../../../../services/standard.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
@@ -106,11 +105,11 @@ export class AssessmentConfigComponent implements OnInit {
 
     sessionStorage.removeItem('tree');
 
-
     if (this.assessSvc.assessment.UseMaturity) {
-      if (this.assessSvc.assessment.MaturityModel.MaturityTargetLevel
-        || this.assessSvc.assessment.MaturityModel.MaturityTargetLevel == 0)
-        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
+      if (this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel
+        || this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel == 0) {
+          this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
+        }
     }
 
     // tell the standard service to refresh the nav tree
