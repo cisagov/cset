@@ -62,8 +62,6 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
-  public maturityModels: string[] = [];
-
 
   /**
    *
@@ -280,6 +278,9 @@ export class AssessmentService {
    * @param modelName 
    */
   usesMaturityModel(modelName: string) {
+    if (!this.assessment.MaturityModel || !this.assessment.MaturityModel.ModelName) {
+      return false;
+    }
     return this.assessment.MaturityModel.ModelName.toLowerCase() === modelName.toLowerCase();
   }
 
@@ -288,6 +289,13 @@ export class AssessmentService {
    * @param modelName 
    */
   setModel(modelName: string) {
+    if (!this.assessment.MaturityModel) {
+      this.assessment.MaturityModel = {
+        ModelName: '',
+        MaturityTargetLevel: 0,
+        ModelId: 0
+      };
+    }
     this.assessment.MaturityModel.ModelName = modelName;
   }
 
