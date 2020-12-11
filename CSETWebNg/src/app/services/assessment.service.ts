@@ -32,6 +32,7 @@ import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { EmailService } from './email.service';
 
+
 export interface Role {
   AssessmentRoleId: number;
   AssessmentRole: string;
@@ -274,38 +275,21 @@ export class AssessmentService {
     }
   }
 
-
-  /**
- * 
- * @param modelName 
- */
-  usesMaturityModel(modelName: string): boolean {
-    if (!this.assessment) {
-      return false;
-    }
-    return (this.assessment.MaturityModels.filter(m => m.ModelName === modelName).length > 0);
-  }
-
   /**
    * 
    * @param modelName 
    */
-  addModel(modelName: string) {
-    this.assessment.MaturityModels.push(
-      {
-        ModelName: modelName,
-        ModelId: 0
-      });
+  usesMaturityModel(modelName: string) {
+    return this.assessment.MaturityModel.ModelName.toLowerCase() === modelName.toLowerCase();
   }
 
   /**
-   * 
+   * Sets the maturity model name on the assessment
    * @param modelName 
    */
-  removeModel(modelName: string) {
-    this.assessment.MaturityModels = this.assessment.MaturityModels.filter(m => m.ModelName != modelName).slice();
+  setModel(modelName: string) {
+    this.assessment.MaturityModel.ModelName = modelName;
   }
-
 
 
   /**

@@ -218,7 +218,7 @@ export class QuestionBlockComponent implements OnInit {
 
     this.mySubCategory.Questions.forEach(q => {
       if (q.Is_Maturity) {
-        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityTargetLevel) {
+        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel) {
           totalCount++;
           if (q.Answer && q.Answer !== "U") {
             answeredCount++;
