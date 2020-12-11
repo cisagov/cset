@@ -25,8 +25,8 @@
   <div class="maturity-model-card mb-5">
     <div>
       <h4>
-        <input type="radio" class="maturity-model-select" name="model-select-type" id="model-select-cmmc" value="model-select-cmmc"
-          [checked]="assessSvc.usesMaturityModel('CMMC')" (change)="changeSelection($event, 'CMMC', 'EDM')">
+        <input type="radio" class="maturity-model-select" name="model-select-cmmc" id="model-select-cmmc"
+          [checked]="assessSvc.usesMaturityModel('CMMC')" (change)="changeSelection($event, 'CMMC')">
         <label for="model-select-cmmc" class="cursor-pointer">CMMC</label>
       </h4>
     </div>
@@ -54,8 +54,8 @@
   </div>
 
   <div class="maturity-model-card mb-5">
-    <h4><input type="radio" class="maturity-model-select" name="model-select-type" id="model-select-edm" value="model-select-edm"
-        [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM', 'CMMC')">
+    <h4><input type="radio" class="maturity-model-select" name="model-select-edm" id="model-select-edm"
+        [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM')">
       <label for="model-select-edm" class="cursor-pointer">EDM</label></h4>
     <div class="d-flex flex-row">
       <div>
@@ -72,7 +72,7 @@
     <div class="maturity-model-select d-flex flex-row mb-5">
       <div>
         <p>
-          Called the Automated Cybersecurity Examination Toolbox (ACET), it
+          Called the Automated Cybersecurity Evaluation Toolbox (ACET), it
           provides us with a repeatable, measurable and transparent
           process that improves and standardizes our supervision related
           to cybersecurity in all federally insured credit unions.

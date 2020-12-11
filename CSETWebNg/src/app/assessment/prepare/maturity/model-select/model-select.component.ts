@@ -32,7 +32,7 @@ import { MaturityService } from '../../../../services/maturity.service';
   templateUrl: './model-select.component.html'
 })
 export class ModelSelectComponent implements OnInit {
-  
+
   docUrl: string;
   cmmcURL: string;
 
@@ -53,35 +53,25 @@ export class ModelSelectComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf';
     //remove this when we have multiple models
-    //this.changeSelection(null,"CMMC");
+    this.changeSelection(null, "CMMC");
   }
 
   /**
-   * Models are multi-select, so we keep track
-   * of all that are selected.
+   * Models are single-select within an assessment.
    */
   changeSelection(event: any, model: string, removeModel: string) {
     if (!!event && !!this.assessSvc.assessment) {
       const checked = event?.srcElement.checked;
-      if (checked) {
-        this.assessSvc.removeModel(removeModel);
-        this.assessSvc.addModel(model);
-      } else {
-        this.assessSvc.removeModel(model);
-      }
+      this.assessSvc.setModel(model);
+
+      // tell the API which model was selected
+      this.maturitySvc.postSelection(model).subscribe();
     }
 
     sessionStorage.removeItem('tree');
 
     // refresh Prepare section of the sidenav
     this.navSvc.buildTree(this.navSvc.getMagic());
-
-    // tell the API which models are selected
-    var modelNames = '';
-    this.assessSvc.assessment.MaturityModels.forEach(m => {
-      modelNames += (m.ModelName + ',');
-    });
-    this.maturitySvc.postSelection(modelNames).subscribe();
   }
 
   /**
@@ -92,14 +82,14 @@ export class ModelSelectComponent implements OnInit {
       case 'CMMC':
         return this.configSvc.docUrl + "CMMC_ModelMain 1.02.pdf";
     }
-    
+
     return '';
   }
 
   /**
    * 
    */
-  tutorialCMMC(){
+  tutorialCMMC() {
     return "https://google.com";
   }
 }

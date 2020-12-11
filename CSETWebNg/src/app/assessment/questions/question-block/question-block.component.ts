@@ -217,7 +217,14 @@ export class QuestionBlockComponent implements OnInit {
     let totalCount = 0;
 
     this.mySubCategory.Questions.forEach(q => {
-      if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityTargetLevel) {
+      if (q.Is_Maturity) {
+        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel) {
+          totalCount++;
+          if (q.Answer && q.Answer !== "U") {
+            answeredCount++;
+          }
+        }
+      } else {
         totalCount++;
         if (q.Answer && q.Answer !== "U") {
           answeredCount++;
@@ -323,7 +330,7 @@ export class QuestionBlockComponent implements OnInit {
    * justification.
    */
   isAltTextRequired(q: Question) {
-    if (this.configSvc.acetInstallation 
+    if (this.configSvc.acetInstallation
       && (!q.AltAnswerText || q.AltAnswerText.trim().length < 3)) {
       return true;
     }

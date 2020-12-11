@@ -303,7 +303,7 @@ export class QuestionsService {
 
             // maturity level filtering
             const targetLevel = this.assessmentSvc.assessment ?
-              this.assessmentSvc.assessment.MaturityTargetLevel :
+              this.assessmentSvc.assessment.MaturityModel.MaturityTargetLevel :
               10;
 
             if (filterSvc.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {

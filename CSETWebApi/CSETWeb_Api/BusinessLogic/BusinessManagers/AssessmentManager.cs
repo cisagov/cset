@@ -230,32 +230,10 @@ namespace CSETWeb_Api.BusinessManagers
         private void GetMaturityModelDetails(ref AssessmentDetail assessment, CSET_Context db)
         {
             int assessmentId = assessment.Id;
-            var query = from avm in db.AVAILABLE_MATURITY_MODELS
-                     join mm in db.MATURITY_MODELS on avm.model_id equals mm.Maturity_Model_Id
-                     where avm.Assessment_Id == assessmentId
-                     select new { mm.Maturity_Model_Id, mm.Model_Name };
 
-            var models = query.ToList();
-            foreach (var m in models)
-            {
-                assessment.MaturityModels.Add(new MaturityModel() 
-                { 
-                    ModelId = m.Maturity_Model_Id,
-                    ModelName = m.Model_Name
-                });
-            }
+            var maturityManager = new MaturityManager();
 
-            var ml = db.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
-            if (ml != null)
-            {
-                // NOTE:  In order to support different levels on different models on the same assessment,
-                //        we will need to store levels differently.  Maybe an additional column on ASSESSMENT_SELECTED_LEVELS
-                //        to hold the maturity model name or ID.
-                foreach (var m in assessment.MaturityModels)
-                {
-                    m.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
-                }
-            }
+            assessment.MaturityModel = maturityManager.GetMaturityModel(assessmentId);
         }
 
 

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +51,8 @@ declare var $: any;
   moduleId: module.id,
   selector: 'acet-layout-main',
   templateUrl: './acet-layout-main.component.html',
-  styleUrls: ['./acet-layout-main.component.scss'],
+  styleUrls: ['./acet-layout-main.component.scss'],  
+  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
@@ -136,6 +137,10 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     this.dialogRef
       .afterClosed()
       .subscribe();
+  }
+
+  isACET() {
+    return JSON.parse(localStorage.getItem('isAcetApp'));
   }
 
   termsOfUse() {

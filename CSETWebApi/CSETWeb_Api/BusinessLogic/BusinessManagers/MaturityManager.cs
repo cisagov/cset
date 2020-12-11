@@ -30,21 +30,69 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
-        /// Returns a list of all maturity models selected for the assessment.
+        /// Returns the maturity model selected for the assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public List<MaturityModel> GetMaturityModels(int assessmentId)
+        public MaturityModel GetMaturityModel(int assessmentId)
         {
             using (var db = new CSET_Context())
             {
-                var myModels = from amm in db.AVAILABLE_MATURITY_MODELS
+                var q = from amm in db.AVAILABLE_MATURITY_MODELS
                                from mm in db.MATURITY_MODELS
                                where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                               select new MaturityModel() { ModelId = mm.Maturity_Model_Id, ModelName = mm.Model_Name };
-                return myModels.ToList();
+                               select new MaturityModel() 
+                               { 
+                                   ModelId = mm.Maturity_Model_Id, 
+                                   ModelName = mm.Model_Name 
+                               };
+                var myModel = q.FirstOrDefault();
+
+                myModel.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId, db);
+
+                return myModel;
             }
         }
 
+
+        /// <summary>
+        /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaturityTargetLevel(int assessmentId, CSET_Context db)
+        {
+            // The maturity target level is stored similar to a SAL level
+            int targetLevel = 0;
+            var myLevel = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
+            if (myLevel != null)
+            {
+                targetLevel = int.Parse(myLevel.Standard_Specific_Sal_Level);
+            }
+            return targetLevel;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="myModel"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        public List<MaturityLevel> GetMaturityLevelsForModel(int maturityModelId, int targetLevel, CSET_Context db)
+        {
+            // get the levels and their display names
+            var levelNames = new List<MaturityLevel>();
+            foreach (var l in db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == maturityModelId)
+                .OrderBy(y => y.Level).ToList())
+            {
+                levelNames.Add(new MaturityLevel()
+                {
+                    Level = l.Level,
+                    Label = l.Level_Name,
+                    Applicable = l.Level <= targetLevel
+                });
+            }
+            return levelNames;
+        }
 
         /// <summary>
         /// Saves the selected maturity models.
@@ -169,8 +217,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 response.ModelName = myModel.model_.Model_Name;
 
-              
-
                 // Desifer between CMMC and EDM and add to responce list
                 if (response.ModelName == "EDM")
                 {
@@ -196,28 +242,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     }
 
+                    response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
 
-                    // The maturity target level is stored similar to a SAL level
-                    int targetLevel = 0;
-                    var myLevel = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
-                    if (myLevel != null)
-                    {
-                        targetLevel = int.Parse(myLevel.Standard_Specific_Sal_Level);
-                    }
 
-                    // get the level display names
-                    // (for now assume that the assessment uses a single model)
-                    var levelNames = new List<MaturityLevel>();
-                    foreach (var l in db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id)
-                        .OrderBy(y => y.Level).ToList())
-                    {
-                        levelNames.Add(new MaturityLevel()
-                        {
-                            Level = l.Level,
-                            Label = l.Level_Name,
-                            Applicable = l.Level <= targetLevel
-                        });
-                    }
+                    // get the levels and their display names for this model
+                    response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
+
 
 
                     // Get all maturity questions for the model regardless of level
@@ -228,8 +258,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     // Get all MATURITY answers for the assessment
                     var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Maturity)
-                                    from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                                    select new FullAnswer() { a = a, b = b };
+                                  from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                                  select new FullAnswer() { a = a, b = b };
+
+
 
 
                     // CMMC has 17 domains, which correspond to Categories in the 
@@ -244,8 +276,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         response.Domains.Add(new Domain()
                         {
                             DisplayText = d,
-                            DomainText = d,
-                            Levels = levelNames
+                            DomainText = d
                         });
                     }
 
