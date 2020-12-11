@@ -44,7 +44,7 @@ export class MaturityService {
    */
   postSelection(modelName: string) {
     return this.http.post(
-      this.configSvc.apiUrl + "MaturityModel?modelNameList=" + modelName,
+      this.configSvc.apiUrl + "MaturityModel?modelName=" + modelName,
       null,
       headers
     );

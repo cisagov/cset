@@ -47,7 +47,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                };
                 var myModel = q.FirstOrDefault();
 
-                myModel.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId, db);
+                if (myModel != null)
+                {
+                    myModel.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId, db);
+                }
 
                 return myModel;
             }
@@ -97,38 +100,26 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <summary>
         /// Saves the selected maturity models.
         /// </summary>
-        /// <param name="selectedMaturityModels"></param>
         /// <returns></returns>
-        public void PersistSelectedMaturityModels(int assessmentId, string selectedModelNameList)
+        public void PersistSelectedMaturityModel(int assessmentId, string modelName)
         {
-            if (selectedModelNameList == null)
-            {
-                selectedModelNameList = "";
-            }
-            List<string> modelList = new List<string>(selectedModelNameList.Split(','));
-            modelList.ForEach(x => x = x.Trim().ToUpper());
-            modelList.RemoveAll(x => x == "");
-
             using (var db = new CSET_Context())
             {
                 var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
                 db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
                 db.SaveChanges();
 
-                foreach (string m in modelList)
+                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == modelName).FirstOrDefault();
+                if (mm != null)
                 {
-                    var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == m).FirstOrDefault();
-                    if (mm != null)
+                    db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
                     {
-                        db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
-                        {
-                            Assessment_Id = assessmentId,
-                            model_id = mm.Maturity_Model_Id,
-                            Selected = true
-                        });
-
-                    }
+                        Assessment_Id = assessmentId,
+                        model_id = mm.Maturity_Model_Id,
+                        Selected = true
+                    });
                 }
+
                 db.SaveChanges();
             }
 
