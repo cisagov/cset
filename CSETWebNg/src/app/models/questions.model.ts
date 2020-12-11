@@ -34,6 +34,7 @@ export interface QuestionResponse {
     QuestionCount: number;
     RequirementCount: number;
     OverallIRP: number;
+    ModelName: string;
     
     // the answer options to be displayed
     AnswerOptions: string[];
