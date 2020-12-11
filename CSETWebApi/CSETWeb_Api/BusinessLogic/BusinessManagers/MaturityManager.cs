@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWeb_Api.BusinessLogic.Models;
@@ -208,142 +209,156 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var myModel = db.AVAILABLE_MATURITY_MODELS
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-
+               
                 if (myModel == null)
                 {
-                    return response;
+                   return response;
                 }
 
-                // see if any answer options should not be in the list
-                var suppressedAnswerOptions = myModel.model_.Answer_Options_Suppressed;
-                if (!string.IsNullOrEmpty(suppressedAnswerOptions))
+                response.ModelName = myModel.model_.Model_Name;
+
+                // Desifer between CMMC and EDM and add to responce list
+                if (response.ModelName == "EDM")
                 {
-                    var a = suppressedAnswerOptions.Split(',');
-                    foreach (string suppress in a)
-                    {
-                        response.AnswerOptions.Remove(suppress);
-                    }
+                    // Here handle EDM questions
+                    // Add to list
+                    List<string> supportedAnswers = new List<string>{ "Y", "I", "N", "NA" };
+                    response.AnswerOptions = supportedAnswers;
+                    
                 }
-
-
-
-                response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
-
-
-                // get the levels and their display names for this model
-                response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
-
-
-
-                // Get all maturity questions for the model regardless of level
-                // The user can choose to see questions above the target level via filtering. 
-                var questions = db.MATURITY_QUESTIONS.Where(q =>
-                    myModel.model_id == q.Maturity_Model_Id).ToList();
-
-
-                // Get all MATURITY answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Maturity)
-                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              select new FullAnswer() { a = a, b = b };
-
-
-
-
-                // CMMC has 17 domains, which correspond to Categories in the 
-                // MATURITY_QUESTIONS table.
-                // TODO:  Eventually they should probably be defined in a new generic
-                // MATURITY_DOMAINS table.
-                var domains = questions.Select(x => x.Category).Distinct().ToList();
-
-                // build a container for each domain
-                foreach (var d in domains)
+                else if (response.ModelName == "CMMC") 
                 {
-                    response.Domains.Add(new Domain()
+                  
+                    // Here Handle CMMC
+                    // ToDo: best to refactor 
+                    // see if any answer options should not be in the list
+                    var suppressedAnswerOptions = myModel.model_.Answer_Options_Suppressed;
+                    if (!string.IsNullOrEmpty(suppressedAnswerOptions))
                     {
-                        DisplayText = d,
-                        DomainText = d
-                    });
-                }
-
-                foreach (var dbR in questions)
-                {
-                    // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
-                    dbR.Category = dbR.Category ?? dbR.Category.Trim();
-                    dbR.Sub_Category = dbR.Sub_Category ?? dbR.Sub_Category.Trim();
-
-                    // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
-                    if (dbR.Sub_Category == null)
-                    {
-                        dbR.Sub_Category = dbR.Category;
-                    }
-
-
-                    var json = JsonConvert.SerializeObject(response);
-
-                    // drop into the domain
-                    var targetDomain = response.Domains.Where(cc => cc.DomainText == dbR.Category).FirstOrDefault();
-                    if (targetDomain != null)
-                    {
-                        // find or create a Category
-                        var targetCat = targetDomain.Categories.Where(c => c.GroupHeadingText == dbR.Category).FirstOrDefault();
-                        if (targetCat == null)
+                        var a = suppressedAnswerOptions.Split(',');
+                        foreach (string suppress in a)
                         {
-                            targetCat = new QuestionGroup()
+                            response.AnswerOptions.Remove(suppress);
+                        }
+                    }
+
+                    response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
+
+
+                    // get the levels and their display names for this model
+                    response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
+
+
+
+                    // Get all maturity questions for the model regardless of level
+                    // The user can choose to see questions above the target level via filtering. 
+                    var questions = db.MATURITY_QUESTIONS.Where(q =>
+                        myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+                    // Get all MATURITY answers for the assessment
+                    var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Maturity)
+                                  from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                                  select new FullAnswer() { a = a, b = b };
+
+
+
+
+                    // CMMC has 17 domains, which correspond to Categories in the 
+                    // MATURITY_QUESTIONS table.
+                    // TODO:  Eventually they should probably be defined in a new generic
+                    // MATURITY_DOMAINS table.
+                    var domains = questions.Select(x => x.Category).Distinct().ToList();
+
+                    // build a container for each domain
+                    foreach (var d in domains)
+                    {
+                        response.Domains.Add(new Domain()
+                        {
+                            DisplayText = d,
+                            DomainText = d
+                        });
+                    }
+
+                    foreach (var dbR in questions)
+                    {
+                        // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
+                        dbR.Category = dbR.Category ?? dbR.Category.Trim();
+                        dbR.Sub_Category = dbR.Sub_Category ?? dbR.Sub_Category.Trim();
+
+                        // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
+                        if (dbR.Sub_Category == null)
+                        {
+                            dbR.Sub_Category = dbR.Category;
+                        }
+
+
+                        var json = JsonConvert.SerializeObject(response);
+
+                        // drop into the domain
+                        var targetDomain = response.Domains.Where(cc => cc.DomainText == dbR.Category).FirstOrDefault();
+                        if (targetDomain != null)
+                        {
+                            // find or create a Category
+                            var targetCat = targetDomain.Categories.Where(c => c.GroupHeadingText == dbR.Category).FirstOrDefault();
+                            if (targetCat == null)
                             {
-                                GroupHeadingText = dbR.Category
-                            };
-                            targetDomain.Categories.Add(targetCat);
-                        }
+                                targetCat = new QuestionGroup()
+                                {
+                                    GroupHeadingText = dbR.Category
+                                };
+                                targetDomain.Categories.Add(targetCat);
+                            }
 
 
-                        // find or create a Subcategory
-                        var targetSubcat = targetCat.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Sub_Category).FirstOrDefault();
-                        if (targetSubcat == null)
-                        {
-                            targetSubcat = new QuestionSubCategory()
+                            // find or create a Subcategory
+                            var targetSubcat = targetCat.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Sub_Category).FirstOrDefault();
+                            if (targetSubcat == null)
                             {
-                                SubCategoryId = 0,
-                                SubCategoryHeadingText = dbR.Sub_Category,
-                                // GroupHeadingId = g.GroupHeadingId
+                                targetSubcat = new QuestionSubCategory()
+                                {
+                                    SubCategoryId = 0,
+                                    SubCategoryHeadingText = dbR.Sub_Category,
+                                    // GroupHeadingId = g.GroupHeadingId
+                                };
+
+                                targetCat.SubCategories.Add(targetSubcat);
+                            }
+
+
+                            FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Mat_Question_Id).FirstOrDefault();
+
+                            var qa = new QuestionAnswer()
+                            {
+                                DisplayNumber = dbR.Question_Title,
+                                QuestionId = dbR.Mat_Question_Id,
+                                QuestionText = dbR.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                                Answer = answer?.a.Answer_Text,
+                                AltAnswerText = answer?.a.Alternate_Justification,
+                                Comment = answer?.a.Comment,
+                                Feedback = answer?.a.Feedback,
+                                MarkForReview = answer?.a.Mark_For_Review ?? false,
+                                Reviewed = answer?.a.Reviewed ?? false,
+                                MaturityLevel = dbR.Maturity_Level,
+                                SetName = string.Empty,
+                                Is_Maturity = answer?.a.Is_Maturity ?? true,
+                                Is_Component = answer?.a.Is_Component ?? false,
+                                Is_Requirement = answer?.a.Is_Requirement ?? false
                             };
+                                if (answer != null)
+                            {
+                                TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                                TinyMapper.Map(answer.b, qa);
+                            }
 
-                            targetCat.SubCategories.Add(targetSubcat);
+                            qa.ParmSubs = null;
+
+                            targetSubcat.Questions.Add(qa);
                         }
-
-
-
-
-                        FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Mat_Question_Id).FirstOrDefault();
-
-                        var qa = new QuestionAnswer()
-                        {
-                            DisplayNumber = dbR.Question_Title,
-                            QuestionId = dbR.Mat_Question_Id,
-                            QuestionText = dbR.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
-                            Answer = answer?.a.Answer_Text,
-                            AltAnswerText = answer?.a.Alternate_Justification,
-                            Comment = answer?.a.Comment,
-                            Feedback = answer?.a.Feedback,
-                            MarkForReview = answer?.a.Mark_For_Review ?? false,
-                            Reviewed = answer?.a.Reviewed ?? false,
-                            MaturityLevel = dbR.Maturity_Level,
-                            SetName = string.Empty,
-                            Is_Maturity = answer?.a.Is_Maturity ?? true,
-                            Is_Component = answer?.a.Is_Component ?? false,
-                            Is_Requirement = answer?.a.Is_Requirement ?? false
-                        };
-                        if (answer != null)
-                        {
-                            TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
-                            TinyMapper.Map(answer.b, qa);
-                        }
-
-                        qa.ParmSubs = null;
-
-                        targetSubcat.Questions.Add(qa);
                     }
-                }
 
+                }
+                
                 return response;
             }
         }

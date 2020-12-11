@@ -59,7 +59,7 @@ export class ModelSelectComponent implements OnInit {
   /**
    * Models are single-select within an assessment.
    */
-  changeSelection(event: any, model: string) {
+  changeSelection(event: any, model: string, removeModel: string) {
     if (!!event && !!this.assessSvc.assessment) {
       const checked = event?.srcElement.checked;
       this.assessSvc.setModel(model);
