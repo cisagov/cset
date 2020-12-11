@@ -219,10 +219,6 @@
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
     <Compile Include="Manual\vParameter.cs" />
     <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
-    <Compile Include="Model2\CsetwebContext.cs" />
-    <Compile Include="Model2\DEMOGRAPHICS.cs" />
-    <Compile Include="Model2\DEMOGRAPHICS_ORGANIZATION_TYPE.cs" />
-    <Compile Include="Model2\MATURITY_REFERENCE_TEXT.cs" />
     <Compile Include="ModelDataAccess\FileDescription.cs" />
     <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
     <Compile Include="ModelDataAccess\FileResult.cs" />
