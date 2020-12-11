@@ -219,6 +219,10 @@
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
     <Compile Include="Manual\vParameter.cs" />
     <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
+    <Compile Include="Model2\CsetwebContext.cs" />
+    <Compile Include="Model2\DEMOGRAPHICS.cs" />
+    <Compile Include="Model2\DEMOGRAPHICS_ORGANIZATION_TYPE.cs" />
+    <Compile Include="Model2\MATURITY_REFERENCE_TEXT.cs" />
     <Compile Include="ModelDataAccess\FileDescription.cs" />
     <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
     <Compile Include="ModelDataAccess\FileResult.cs" />
@@ -318,6 +322,7 @@
     <Compile Include="Model\MATURITY_MODELS.cs" />
     <Compile Include="Model\MATURITY_QUESTIONS.cs" />
     <Compile Include="Model\MATURITY_REFERENCES.cs" />
+    <Compile Include="Model\MATURITY_REFERENCE_TEXT.cs" />
     <Compile Include="Model\MATURITY_SOURCE_FILES.cs" />
     <Compile Include="Model\NAVIGATION_STATE.cs" />
     <Compile Include="Model\NCSF_CATEGORY.cs" />
