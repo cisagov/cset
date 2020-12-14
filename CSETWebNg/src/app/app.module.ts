@@ -235,6 +235,8 @@ import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
+import { LoginAcetComponent } from './initial/login-acet/login-acet.component';
+import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 
 @NgModule({
     imports: [
@@ -428,6 +430,8 @@ import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm
         InherentRiskProfileComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
+        LoginAcetComponent,
+        LoginCsetComponent,
     ],
     providers: [
         ConfigService,
