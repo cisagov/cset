@@ -65,6 +65,7 @@ export interface QuestionInformationTabData {
   RequirementsData: RequirementTabData;
   ResourceDocumentList: CustomDocument[];
   SourceDocumentsList: CustomDocument[];
+  ReferenceTextList: string[];
   References: string;
   ComponentTypes: ComponentOverrideLinkInfo[];
   ComponentVisibility: boolean;
