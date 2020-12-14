@@ -259,6 +259,10 @@
 
         <div *ngIf="extras !== null && mode === 'REFS'">
             <table class="reference-table" *ngIf="tab != null">
+                <tr *ngFor="let reftext of tab?.ReferenceTextList">
+                    <td colspan="2" class="pb-3" [innerHTML]="reftext">
+                    </td>
+                </tr>
                 <tr *ngIf="tab?.SourceDocumentsList?.length > 0" class="font-weight-bold">
                     <td>Source Documents</td>
                     <td>Section</td>

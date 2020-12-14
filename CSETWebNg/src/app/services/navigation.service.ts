@@ -511,12 +511,32 @@ export class NavigationService {
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity }
     },
     {
+      displayText: 'CMMC Tutorial',
+      pageId: 'tutorial-cmmc', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cmmc',
+      condition: () => { 
+        return !!this.assessSvc.assessment
+        && this.assessSvc.assessment?.UseMaturity
+        && this.assessSvc.usesMaturityModel('CMMC');
+       }
+    },
+    {
+      displayText: 'EDM Tutorial',
+      pageId: 'tutorial-edm', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-edm',
+      condition: () => { 
+        return !!this.assessSvc.assessment
+        && this.assessSvc.assessment?.UseMaturity
+        && this.assessSvc.usesMaturityModel('EDM');
+       }
+    },
+    {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
+          && this.assessSvc.usesMaturityModel('CMMC');
       }
     },
 

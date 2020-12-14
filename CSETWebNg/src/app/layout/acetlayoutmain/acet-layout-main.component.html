@@ -1,0 +1,268 @@
+<!----------------------
+
+   Copyright 2020 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100 ncua-header"
+  id="cset-app">
+  <div class="row no-gutters local-install fs-base mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+    *ngIf="auth.isLocal">
+    <span class="col-sm-12">Local Installation</span>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+    <!-- Brand -->
+    <span
+      [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
+      (click)="this.router.url!='/resource-library' && goHome()">
+      <!-- CSET Lock Logo -->
+      <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
+        <img height="28" src="/assets/images/acet/logo.svg" />
+      </div>
+    </span>
+
+    <!-- Navbar Toggler Button -->
+    <button class="navbar-toggler c-gray-150" type="button"
+      data-toggle="collapse" data-target="#csetNavbarCollapse">
+      <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
+    </button>
+
+    <!-- Collapse Content -->
+    <div class="collapse navbar-collapse"
+      id="csetNavbarCollapse">
+      <div class="navbar-nav dropdown"
+        *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
+        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+          data-toggle="dropdown" id="toolsDropdownMenuLink">
+          <span class="cset-icons-tools fs-base-4 mr-2"></span>
+          <span>Tools</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            (click)="enableProtectedFeature()">
+            <span class="cset-icons-key-shield fs-base mr-2"></span>
+            <span>Enable Protected Features</span>
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
+            <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
+            <span>Assessment Documents</span>
+          </button>
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? editParameters() : null">
+            <span class="cset-icons-puzzle fs-base mr-2"></span>
+            <span>Parameter Editor</span>
+          </button>
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? exportToExcel() : null">
+            <span class="cset-icons-export-excel fs-base mr-2"></span>
+            <span>Export Assessment to Excel</span>
+          </button>
+          <button *ngIf="isAssessment() && isACET()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? exportToExcelNCUA() : null">
+            <span class="cset-icons-export-excel fs-base mr-2"></span>
+            <span>Export ACET to Excel</span>
+          </button>
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            (click)="exportToExcelAllNCUA()">
+            <span class="cset-icons-export-excel fs-base mr-2"></span>
+            <span>Export All ACET to Excel</span>
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [routerLink]="['/importModule']">
+            <span class="cset-icons-module fs-base mr-2"></span>
+            <span>Import Modules</span>
+          </button>
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            href="index.html?returnPath=set-list" target="csetSetBuilder">
+            <span class="cset-icons-module fs-base mr-2"></span>
+            <span>Module Builder</span>
+          </a>
+        </div>
+      </div>
+
+      <div *ngIf="false" class="navbar-nav">
+        <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"
+          href="index.html?returnPath=resource-library" target="csetResourceLibrary"
+          *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
+          <span class="cset-icons-library fs-base-4 mr-2"></span>
+          <span>Resource Library</span>
+        </a>
+      </div>
+
+      <!-- HELP -->
+      <div class="navbar-nav ml-auto dropdown">
+        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+          data-toggle="dropdown">
+          <span class="cset-icons-question-circle-outline fs-base-4 mr-2"></span>
+          <span class="">Help</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}htmlhelp/index.htm">
+            <span class="cset-icons-book-open fs-base mr-2"></span>
+            <span>User Guide</span>
+          </a>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}cdDocs/UserGuide.pdf">
+            <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+            <span>User Guide (PDF)</span>
+          </a>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}AccessibilityFeatures/index.htm">
+            <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
+            <span>Accessibility Document</span>
+          </a>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+            (click)="showKeyboardShortcuts()">
+            <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
+            <span>Keyboard Shortcuts</span>
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="termsOfUse()">
+            <span class="cset-icons-handshake fs-base mr-2"></span>
+            <span>Terms of Use</span>
+          </button>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="about()">
+            <span class="cset2-icons-acet-shield fs-base mr-2"></span>
+            <span>About</span>
+          </button>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="advisory()">
+            <span class="cset-icons-advisory fs-base mr-2"></span>
+            <span>Advisory</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- USER PROFILE -->
+      <div class="navbar-nav dropdown"
+        *ngIf="this.router.url !== '/resource-library' && this.router.url !== '/importModule' && !isModuleBuilder(this.router.url)">
+        <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+          data-toggle="dropdown" *ngIf="auth.userToken()">
+          <span class="cset-icons-profile fs-base-4 mr-2"></span>
+          <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
+            <span>{{auth.firstName()}} {{auth.lastName()}}</span>
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
+            (click)="editUser()">
+            <span class="cset-icons-profile fs-base mr-2"></span>
+            <span>User Profile</span>
+          </button>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="goHome()">
+            <span class="cset-icons-clipboard-check fs-base mr-2"></span>
+            <span>My Assessments</span>
+          </button>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
+            (click)="resetPassword()">
+            <span class="cset-icons-key fs-base mr-2"></span>
+            <span>Change Password</span>
+          </button>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
+            (click)="auth.logout()">
+            <span class="cset-icons-logout fs-base mr-2"></span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Body -->
+  <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+    <!-- gradient-background -->
+    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
+    <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
+    <div class="p-0 d-flex col-xl-8" style="background-color:#fff">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
+  </div>
+
+  <!-- Footer -->
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header"
+  *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')" >
+    <ngb-panel id="ngb-panel-0">
+      <ng-template ngbPanelTitle>
+        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
+          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
+          <div class="ncua-bgc-image d-flex flex-wrap justify-content-center flex-11a">
+            <div class="d-flex flex-column justify-content-start flex-00a">
+              <img src="/assets/images/acet/ncua_seal_white_footer.svg" height="70">
+            </div>
+          </div>
+        </div>
+        <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
+          <div class="d-flex flex-column justify-content-center flex-00a">
+            <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+              <a target="_blank" href="https://www.ncua.gov/support-services">Services</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" href="https://www.ncua.gov/consumers">Consumers</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" href="https://www.ncua.gov/analysis">Credit Union Analysis</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" href="https://www.ncua.gov/regulation-supervision">Regulation & Supervision</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" href="https://www.ncua.gov/about-ncua">About NCUA</a>
+            </div>
+
+          </div>
+        </div>
+        <div class="footer-section-2 ncua-header"
+          style="font-size:12px; padding-top:50px; padding-bottom:25px; line-height:2.3">
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+            National Credit Union Administration, 1775 Duke Street, Alexandria, VA 22314-3428
+          </div>
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+            <a target="_blank" href="https://www.ncua.gov/about-ncua/inspector-general">Office of Inspector General</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/freedom-information-act-requests">FOIA</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/no-fear-act">No Fear Act</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank"
+              href="https://www.ncua.gov/about-ncua/inspector-general/whistleblower-protection">Whistleblower
+              Protection</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://usa.gov">USA.gov</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/about-ncua/open-government">Open Government</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/about-ncua/open-government/plain-writing-act-2010">Plain
+              Writing</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/privacy">Privacy</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/accessibility-statement">Accessibility</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" href="https://www.ncua.gov/contact-us">Contact Us</a>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
