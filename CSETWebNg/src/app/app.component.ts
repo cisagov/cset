@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -51,6 +51,7 @@ declare var $: any;
   moduleId: module.id,
   selector: 'app-root',
   templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
@@ -84,6 +85,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     }
     this.setupShortCutKeys();
+    localStorage.setItem('isAcetApp', this.configSvc.acetInstallation ? 
+      this.configSvc.acetInstallation.toString() : 'false');
   }
 
   ngAfterViewInit() {

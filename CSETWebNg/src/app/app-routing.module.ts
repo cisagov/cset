@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConfigService } from './services/config.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
@@ -83,6 +84,7 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -100,8 +102,10 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
+import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
+import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 
-
+const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
 
 
@@ -113,7 +117,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'home',
-    component: LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -131,7 +135,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -202,10 +206,11 @@ const appRoutes: Routes = [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'model-select', component: ModelSelectComponent },
+              { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
+              { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
-              { path: 'model-select', component: ModelSelectComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
@@ -293,4 +298,4 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes,{enableTracing: false})],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
