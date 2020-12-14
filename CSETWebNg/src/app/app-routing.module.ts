@@ -102,6 +102,14 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
+import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
+import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
+import { AcetCommentsmarkedComponent} from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetCompensatingcontrolsComponent} from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { AcetDetailComponent} from './reports/acet-detail/acet-detail.component';
+import { AcetAnsweredquestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
+
+
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -286,6 +294,12 @@ const appRoutes: Routes = [
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
+      { path: 'acetexecutive', component: AcetExecutiveComponent },
+      { path: 'acetdeficency', component: AcetDeficencyComponent },
+      { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
+      { path: 'acetdetail', component: AcetDetailComponent },
+      { path: 'acetansweredquestions', component: AcetAnsweredquestionsComponent },
+      { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
