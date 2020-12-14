@@ -86,7 +86,7 @@
               <span>Enable Protected Features</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
               <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
               <span>Assessment Documents</span>

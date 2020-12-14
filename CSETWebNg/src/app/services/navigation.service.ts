@@ -568,7 +568,7 @@ export class NavigationService {
     {
       displayText: 'Document Request List', pageId: 'acet-drl', level: 1,
       path: 'assessment/{:id}/prepare/required',
-      condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
+      condition: () => { return false; }
     },
     {
       displayText: 'Inherent Risk Profiles', pageId: 'irp', level: 1,
