@@ -22,15 +22,19 @@
 //
 ////////////////////////////////
 
+import { MaturityLevel } from "./maturity.model";
+
 /**
  * The response returned from the API 'questionlist' request.
  */
 export interface QuestionResponse {
     Domains: Domain[];
+    MaturityTargetLevel: number;
     ApplicationMode: string;
     QuestionCount: number;
     RequirementCount: number;
     OverallIRP: number;
+    ModelName: string;
     
     // the answer options to be displayed
     AnswerOptions: string[];

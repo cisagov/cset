@@ -39,8 +39,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public bool UseMaturity;
         public bool UseDiagram;
 
-        // Selected maturity models
-        public List<MaturityModel> MaturityModels = new List<MaturityModel>();
+        // Selected maturity model and the target level
+        public MaturityModel MaturityModel;
 
 
         /// <summary>

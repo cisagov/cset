@@ -86,7 +86,6 @@ $bc-filters-engaged:#F9CE15;
 
 $spacer: 18px;
 
-
 *:not(font) {
   font-family: 'Roboto', sans-serif;
 }
@@ -659,6 +658,13 @@ table.td-align-top td {
   color: $gray-900;
 }
 
+.alt-text-required {
+  border: 2px solid $validation-color;
+}
+
+.alt-text-required-msg {
+  color: $validation-color;
+}
 
 
 .btn-sal-select {
@@ -1071,9 +1077,6 @@ th.data-table {
 
 }
 
-input[type=radio].maturity-model-select {
-  margin-right: 1rem;
-}
 
 
 // Header / Navbar
@@ -3033,9 +3036,22 @@ table.td-text-left th, table.td-text-left td {
 
 
 
-////
+//// Maturity Models ////
+
+.maturity-model-card {
+  border: 2px solid $primary-900; 
+  background-color: $white;
+  border-radius: .5rem;
+  padding: 1rem;
+  padding-top: .4rem;
+}
+
+input[type=radio].maturity-model-select {
+  margin-right: .5rem;
+}
+
 .maturity-model-select {
-  border: 2px solid #cccccc;
+  border: 2px solid $gray-250;
   border-radius: .3rem;
   margin-bottom: 1rem;
   padding: 1rem;

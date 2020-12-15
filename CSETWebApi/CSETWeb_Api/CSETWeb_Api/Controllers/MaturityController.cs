@@ -20,11 +20,11 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/MaturityModels")]
-        public List<MaturityModel> GetMaturityModels()
+        [Route("api/MaturityModel")]
+        public MaturityModel GetMaturityModel()
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityModels(assessmentId);
+            return new MaturityManager().GetMaturityModel(assessmentId);
         }
 
 
@@ -34,10 +34,10 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public IHttpActionResult SetMaturityModel(string modelNameList)
+        public IHttpActionResult SetMaturityModel(string modelName)
         {
             int assessmentId = Auth.AssessmentForUser();
-            new MaturityManager().PersistSelectedMaturityModels(assessmentId, modelNameList);
+            new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelName);
             return Ok();
         }
 

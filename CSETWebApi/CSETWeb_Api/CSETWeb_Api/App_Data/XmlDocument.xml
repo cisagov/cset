@@ -1004,7 +1004,7 @@
             Persists the selected required docs value to the database.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityModels">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityModel">
             <summary>
             Get all maturity models for the assessment.
             </summary>

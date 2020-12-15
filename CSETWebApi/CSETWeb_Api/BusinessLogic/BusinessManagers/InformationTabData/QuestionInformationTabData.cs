@@ -35,6 +35,8 @@ namespace CSET_Main.Questions.InformationTabData
         public RequirementTabData RequirementsData { get; set; }
         public List<CustomDocument> ResourceDocumentList { get; set; }
         public List<CustomDocument> SourceDocumentsList { get; set; }
+        public List<string> ReferenceTextList { get; set; }
+        
         public string References { get; set; }
 
         public string ExaminationApproach { get; set; }
@@ -495,6 +497,8 @@ namespace CSET_Main.Questions.InformationTabData
                 RequirementsData = tabData;
 
                 BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);
+
+                BuildReferenceTextForMaturityQuestion(info.QuestionID, controlContext);
             }
             catch (Exception ex)
             {
@@ -548,7 +552,7 @@ namespace CSET_Main.Questions.InformationTabData
 
 
         /// <summary>
-        /// 
+        /// Builds lists of Source Documents and Help (Resource) Document references for the question.
         /// </summary>
         /// <param name="maturityQuestion_ID"></param>
         /// <param name="controlContext"></param>
@@ -576,6 +580,28 @@ namespace CSET_Main.Questions.InformationTabData
         }
 
 
+        /// <summary>
+        /// Returns any plain text that is stored as a reference for the question.
+        /// </summary>
+        private void BuildReferenceTextForMaturityQuestion(int maturityQuestion_ID, CSET_Context controlContext)
+        {
+            var q = controlContext.MATURITY_REFERENCE_TEXT
+                .Where(x => x.Mat_Question_Id == maturityQuestion_ID)
+                .ToList().OrderBy(x => x.Sequence);
+
+            ReferenceTextList = new List<string>();
+            foreach (var t in q)
+            {
+                ReferenceTextList.Add(t.Reference_Text);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirement_ID"></param>
+        /// <param name="controlEntity"></param>
         internal void SetFrameworkQuestions(int requirement_ID, CSET_Context controlEntity)
         {
             this.FrameworkQuestions.Clear();

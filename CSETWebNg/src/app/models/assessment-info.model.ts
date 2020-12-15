@@ -46,16 +46,13 @@ export interface AssessmentDetail {
     
     MaturityModels?: MaturityModel[];
 
-    // This is left here temporarily.  It will need to be completely
-    // encapsulated in the MaturityModel object if the user is to 
-    // be able to select different maturity levels on multiple models.
-    MaturityTargetLevel?: number;
+    MaturityModel?: MaturityModel;
 }
 
 export interface MaturityModel {
     ModelId: number;
     ModelName: string;
-    // MaturityTargetLevel: number;
+    MaturityTargetLevel: number;
 }
 
 export interface AssessmentContactsResponse {
