@@ -185,7 +185,7 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
-
+                    assessment.IsAcet = true;
                     assessment.DiagramMarkup = result.aa.Diagram_Markup;
                     assessment.DiagramImage = result.aa.Diagram_Image;
 

@@ -233,6 +233,12 @@ import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
+import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
+import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
+import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetDetailComponent } from './reports/acet-detail/acet-detail.component';
+import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 
@@ -426,6 +432,12 @@ import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm
         NavBackNextComponent,
         CsetOriginComponent,
         InherentRiskProfileComponent,
+        AcetExecutiveComponent,
+        AcetDeficencyComponent,
+        AcetCommentsmarkedComponent,
+        AcetDetailComponent,
+        AcetAnsweredquestionsComponent,
+        AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
     ],

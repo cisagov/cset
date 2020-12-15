@@ -29,6 +29,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string CreditUnion;
         public string Assets;
         public bool? IsAcetOnly;
+        public bool IsAcet { get; internal set; }
 
         public string DiagramMarkup;
         public string DiagramImage;
@@ -50,6 +51,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string AdditionalNotesAndComments { get; set; }
         public string AssessmentDescription { get; set; }
         public string ExecutiveSummary { get; set; }
+        
     }
 }
 
