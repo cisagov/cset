@@ -271,7 +271,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "AccessibilityFeatures/index.htm", "_blank");
+      if (this.configSvc.acetInstallation) {
+        window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
+      } else {
+        window.open(this.docUrl + "AccessibilityFeatures/index.htm", "_blank");
+      }
       return false; // Prevent bubbling
     }));
     // User Guide

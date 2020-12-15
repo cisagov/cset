@@ -273,7 +273,7 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "AccessibilityFeatures/index.htm", "_blank");
+      window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
       return false; // Prevent bubbling
     }));
     // User Guide
