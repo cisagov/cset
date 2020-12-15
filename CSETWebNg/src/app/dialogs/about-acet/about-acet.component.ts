@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2019 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,40 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
-import { AssessmentService } from '../../services/assessment.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
-import { EmailService } from '../../services/email.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+  selector: 'app-about-acet',
+  templateUrl: './about-acet.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: {class: 'd-flex flex-column flex-11a'}
 })
-export class LoginComponent implements OnInit {
+export class AboutAcetComponent {
+  version = environment.version;
+  helpContactEmail = this.configSvc.helpContactEmail;
+  helpContactPhone = this.configSvc.helpContactPhone;
 
-  constructor(
+  constructor(private dialog: MatDialogRef<AboutAcetComponent>,
     public configSvc: ConfigService,
-    private titleSvc: Title
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit() {
-    if (this.configSvc.acetInstallation) {
-      this.titleSvc.setTitle('ACET');
-    } else {
-      this.titleSvc.setTitle('CSET');
-    }
-  }
-
-  continueStandAlone() {      
-    // this.router.navigate(['/home']);    
-  }
 }

@@ -1,0 +1,88 @@
+<!---------------------- 
+
+   Copyright 2019 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="about d-flex flex-column justify-content-center flex-11a">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+      <span class="cset2-icons-acet-shield fs-base-6 mr-3"></span>
+      <span>About</span>
+    </div>
+    <mat-dialog-content class="p-4 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+      <section class="pr-4 d-flex flex-11a flex-row flex-wrap">
+        <article class="mb-6 d-flex flex-column flex-11a w-100">
+          <div class="d-flex flex-column justify-content-start flex-00a">
+            <svg style="height: 40px;" viewBox="300 255.18 384.26901 80" class="fill-primary">
+              <path
+                d="m 269.266,258.507 -62.83,72.985 h 14.722 l 50.565,-59.612 21.763,48.831 h -48.77 l -9.222,10.781 h 77.726 l -33.897,-72.985 z m 149.03,0 -12.196,62.204 h -68.111 c -8.156,0 -11.84,-2.004 -11.053,-6.014 l 7.724,-39.396 c 0.786,-4.007 5.256,-6.012 13.412,-6.012 h 55.672 l 2.113,-10.783 h -55.671 c -17.351,0 -27.12,5.598 -29.315,16.795 l -7.724,39.396 c -2.195,11.197 5.378,16.796 22.729,16.796 h 143.172 l 2.113,-10.782 H 419.89 l 4.392,-22.394 h 58.161 l 2.115,-10.781 h -58.163 l 3.577,-18.247 h 107.612 l -12.194,62.204 h 13.786 l 12.195,-62.204 h 37.219 l 2.115,-10.782 z">
+              </path>
+            </svg>            
+            <hr class="hr-logo">
+            <span class="mb-1 font-weight-bold">Automated Cybersecurity Evaluation Toolbox</span>
+            <span class="mb-1">Version: {{version}}</span>
+            <a class="mb-1" target="_blank" href="https://www.ncua.gov">https://www.ncua.gov</a>
+  
+          </div>
+          <hr>
+          <div class="d-flex justify-content-start align-items-center flex-00a">
+            <img style="width: 60px" src="./assets/NCUA/images/ncua_seal_blue.svg">
+            <div class="c-primary ml-3 d-flex flex-column justify-content-start">
+              <div class="h4">National Credit Union Administration</div>
+            </div>
+          </div>
+          <hr>
+          <div class="c-primary d-flex flex-column justify-content-start flex-00a">
+            <div class="wrap-text">
+              <div class="mb-2">
+                We Ensure Financial Stability
+              </div>
+              <div>
+                The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured
+                credit unions for their financial needs.
+              </div>
+            </div>
+          </div>
+        </article>
+  
+        <article class="mb-6 d-flex flex-column flex-11a w-100">
+          <div class="mb-3">
+            <h3 class="wrap-text">ACET Training Resources</h3>
+            <p class="wrap-text">ACET training is available through the following resource:</p>
+            <h5 class="fw-600"><a target="_blank" href="{{this.configSvc.docUrl}}htmlhelp/index.htm">User Guide</a></h5>
+          </div>
+  
+          <div>
+            <h3>Contact</h3>
+            <div class="mb-2">
+              <div>
+                Office of Examination Insurance
+                Critical Infrastructure Division
+              </div>
+              <div>
+                CU_Cybersecurity@NCUA.GOV
+              </div>
+            </div>       
+          </div>
+  
+        </article>
+      </section>
+    </mat-dialog-content>
+  
+  </div>

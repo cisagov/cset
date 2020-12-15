@@ -237,6 +237,9 @@ import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cm
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 import { LoginAcetComponent } from './initial/login-acet/login-acet.component';
 import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
+import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
+import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
+import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
 
 @NgModule({
     imports: [
@@ -432,6 +435,9 @@ import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
         TutorialEdmComponent,
         LoginAcetComponent,
         LoginCsetComponent,
+        AboutCsetComponent,
+        AboutAcetComponent,
+        AcetOriginComponent,
     ],
     providers: [
         ConfigService,
