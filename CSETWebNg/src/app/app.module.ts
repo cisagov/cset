@@ -240,6 +240,8 @@ import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
 import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
 import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
+import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
+import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 
 @NgModule({
     imports: [
@@ -438,6 +440,8 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
+        AdvisoryAcetComponent,
+        AdvisoryCsetComponent,
     ],
     providers: [
         ConfigService,
