@@ -31,6 +31,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -41,12 +42,16 @@ import { EmailService } from '../../services/email.service';
 export class LoginComponent implements OnInit {
 
   constructor(
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    private titleSvc: Title
   ) {}
 
   ngOnInit() {
-    console.log('login component');
-    console.log(this.configSvc.acetInstallation);
+    if (this.configSvc.acetInstallation) {
+      this.titleSvc.setTitle('ACET');
+    } else {
+      this.titleSvc.setTitle('CSET');
+    }
   }
 
   continueStandAlone() {      
