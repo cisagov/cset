@@ -276,7 +276,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      if (this.configSvc.acetInstallation) {
+        window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
+      } else {
+        window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      }
       return false; // Prevent bubbling
     }));
     // Resource Library
