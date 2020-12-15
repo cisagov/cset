@@ -241,6 +241,7 @@ import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     imports: [
@@ -277,6 +278,7 @@ import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm
         CurrencyMaskModule,
         NgbModule,
         MatTabsModule,
+        NgxChartsModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
