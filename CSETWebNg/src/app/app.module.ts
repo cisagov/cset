@@ -239,6 +239,8 @@ import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-
 import { AcetDetailComponent } from './reports/acet-detail/acet-detail.component';
 import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
+import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 
 @NgModule({
     imports: [
@@ -436,6 +438,8 @@ import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingco
         AcetDetailComponent,
         AcetAnsweredquestionsComponent,
         AcetCompensatingcontrolsComponent,
+        TutorialCmmcComponent,
+        TutorialEdmComponent,
     ],
     providers: [
         ConfigService,
