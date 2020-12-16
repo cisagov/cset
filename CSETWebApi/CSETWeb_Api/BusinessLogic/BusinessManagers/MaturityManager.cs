@@ -248,7 +248,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
                     // Get all MATURITY answers for the assessment
-                    var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Maturity)
+                    var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
                                   from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                                   select new FullAnswer() { a = a, b = b };
 
@@ -380,7 +380,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             ANSWER dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Is_Requirement == answer.Is_Requirement).FirstOrDefault();
+                && x.Question_Type == answer.Question_Type).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -397,10 +397,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             dbAnswer.Feedback = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
-            dbAnswer.Is_Maturity = answer.Is_Maturity;
-            dbAnswer.Is_Component = answer.Is_Component;
-            dbAnswer.Component_Guid = answer.ComponentGuid;
-            dbAnswer.Is_Requirement = answer.Is_Requirement;
+            //dbAnswer.Is_Maturity = answer.Is_Maturity;
+            //dbAnswer.Is_Component = answer.Is_Component;
+            //dbAnswer.Component_Guid = answer.ComponentGuid;
+            //dbAnswer.Is_Requirement = answer.Is_Requirement;
+            dbAnswer.Question_Type = answer.Question_Type;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();

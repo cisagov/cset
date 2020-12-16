@@ -264,7 +264,9 @@ export class QuestionBlockComponent implements OnInit {
       }
 
       const answer: Answer = {
+        AnswerId: q.Answer_Id,
         QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
         QuestionNumber: q.DisplayNumber,
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
@@ -303,7 +305,9 @@ export class QuestionBlockComponent implements OnInit {
     q.Answer = newAnswerValue;
 
     const answer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.QuestionId,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.DisplayNumber,
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
@@ -347,7 +351,9 @@ export class QuestionBlockComponent implements OnInit {
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
+        AnswerId: q.Answer_Id,
         QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
         QuestionNumber: q.DisplayNumber,
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
@@ -396,7 +402,9 @@ export class QuestionBlockComponent implements OnInit {
     q.MarkForReview = !q.MarkForReview; // Toggle Bind
 
     const newAnswer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.QuestionId,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.DisplayNumber,
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
