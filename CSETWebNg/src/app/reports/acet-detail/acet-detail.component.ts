@@ -14,13 +14,7 @@ export class AcetDetailComponent implements OnInit {
     "information": {
       "Assessment_Name": "Manhattan Assessment",
       "Assessment_Date": "2020-09-19",
-      "Assessor_Name": "Michael Jones",
-      "Credit_Union": "Bank of Bill",
-      "Facility_Name": "Bills Bank",
-      "City_Or_Site_Name": "New New York City",
-      "State_Province_Or_Region": "New York",
-      "Charter": "NNYC",
-      "Assests": []
+      "Assessor_Name": "Michael Jones"
     }
   };
 
