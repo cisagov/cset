@@ -15,7 +15,16 @@ export class AcetDocumentComponent implements OnInit {
       "Assessment_Name": "Manhattan Assessment",
       "Assessment_Date": "2020-09-19",
       "Assessor_Name": "Michael Jones"
-    }
+    },
+    "documents_list": [
+      { "id": 1, "included": false, "name": "document 1", "comments": "best doc" }, 
+      { "id": 2, "included": true, "name": "document 1", "comments": "best doc" }
+      { "id": 3, "included": false, "name": "document 3", "comments": "best doc" }
+    ],
+    "librarys": [
+      {"id": 1, "title": "lib 1", "file_name": "file.json"},
+      { "id": 2, "title": "lib 2", "file_name": "file.py" }
+    ]
   };
 
   constructor(
