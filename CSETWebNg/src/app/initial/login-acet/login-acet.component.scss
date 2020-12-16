@@ -1,0 +1,52 @@
+@media only screen and (max-width: 600px) {
+    .login-space{
+      margin-top:0 !important;
+    }
+    .login-margin{
+      margin-top:0 !important;
+    }
+    .seal-height{
+      height: 91px !important;
+    }
+  }
+  .btn-primary {
+      color: #000;
+      background-color: #fff !important;
+      border-color: #c8c8c8;
+    }
+  .btn-primary:hover {
+      background-color: #c8c8c8 !important;
+      border-color: #c8c8c8;
+      color:#000;
+  }
+  .btn-link-dark{
+      color:white !important;
+  }
+  .btn-link-dark:hover{
+      color:#c8c8c8 !important;
+      text-decoration: underline !important;
+  }
+  label{
+      color: #fff !important;
+      font-size: 14px;
+  }
+  .login-space{
+      margin-top:147px;
+  }
+  .login-margin{
+    margin-top:20px;
+  
+  }
+  .login-background {
+      background-image: url("/assets/NCUA/images/background_image_login.jpg");
+      background-size:cover;
+      
+    }
+    
+    .login-background-color{
+      background-color: #184D96;
+    }
+  
+    .login-divider{
+      height: 90%; background-color: #fff; width: 1px; margin-top: 20px;
+    }
