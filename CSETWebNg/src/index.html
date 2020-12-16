@@ -26,6 +26,21 @@
 <head>
     <meta charset="utf-8">
     <script>
+        var config = null;
+        var acet = false;
+        // read angular config file to know how to display splash screen
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", '/assets/config.json', false);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200 || xhr.status == 0) {
+                    config = JSON.parse(xhr.responseText);
+                    acet = config.acetInstallation ?? false;
+                }
+            }
+        }
+        xhr.send(null);
+
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -71,6 +86,7 @@
             // Sorry! No Web Storage support..
         }
     </script>
+
     <title>CSET</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -82,18 +98,45 @@
 </head>
 
 <body class="d-flex flex-column flex-11a h-100 w-100 bgc-white">
-    <app-root>
+    <app-root class="bgc-page d-flex flex-column flex-11a w-100 root">
+        <style>
+            app-root {
+                position: fixed;
+                height: 100%;
+                width: 100%;
+
+            }
+
+            .centered {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -194px;
+                margin-left: -194px;
+            }
+
+            .acet-background {
+                background-color: #184D96;
+            }
+        </style>
+        <img src="assets/NCUA/images/ncua_seal_white.svg" height="388px" class="centered ncua-seal d-none" />
     </app-root>
 </body>
+
 <script>
-    // $(document).ready(function () {
-    //     $('body').on('click', 'ul.dropdown-menu [data-toggle=dropdown]', function (event) {
-    //         event.preventDefault();
-    //         event.stopPropagation();
-    //         $(this).parent().siblings().removeClass('open');
-    //         $(this).parent().toggleClass('open');
-    //     });
-    // });
+    // apply ACET styling to splash/loading screen if running as ACET
+    if (acet) {
+        var x = document.getElementsByClassName("root");
+        if (x.length > 0) {
+            x[0].classList.add("acet-background");
+        }
+
+        var x = document.getElementsByClassName("ncua-seal");
+        if (x.length > 0) {
+            x[0].classList.remove("d-none");
+        }
+    }
+
 </script>
 
 </html>
