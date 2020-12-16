@@ -248,6 +248,7 @@ import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
 import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     imports: [
@@ -284,6 +285,7 @@ import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.com
         CurrencyMaskModule,
         NgbModule,
         MatTabsModule,
+        NgxChartsModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
