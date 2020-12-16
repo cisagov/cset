@@ -262,7 +262,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.Question_Type;
 
-            dbAnswer.Question_Type = "Question";  /// TODO:  RKW
+            dbAnswer.Question_Type = answer.Question_Type;  /// TODO:  RKW
 
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Answer_Text = answer.AnswerText;
