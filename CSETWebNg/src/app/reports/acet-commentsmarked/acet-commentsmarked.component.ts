@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-acet-commentsmarked',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./acet-commentsmarked.component.scss']
 })
 export class AcetCommentsmarkedComponent implements OnInit {
+  response: any = null;
 
-  constructor() { }
+  constructor(
+    private titleService: Title,
+
+  ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle("Comments Marked Report - ASET");
+
+
   }
 
 }
