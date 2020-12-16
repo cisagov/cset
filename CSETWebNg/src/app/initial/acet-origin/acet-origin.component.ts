@@ -22,39 +22,16 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
-import { AssessmentService } from '../../services/assessment.service';
-import { AuthenticationService } from '../../services/authentication.service';
-import { ConfigService } from '../../services/config.service';
-import { EmailService } from '../../services/email.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  selector: 'app-acet-origin',
+  templateUrl: './acet-origin.component.html'
 })
-export class LoginComponent implements OnInit {
+export class AcetOriginComponent implements OnInit {
 
-  constructor(
-    public configSvc: ConfigService,
-    private titleSvc: Title
-  ) {}
+  constructor() { }
 
-  ngOnInit() {
-    if (this.configSvc.acetInstallation) {
-      this.titleSvc.setTitle('ACET');
-    } else {
-      this.titleSvc.setTitle('CSET');
-    }
+  ngOnInit(): void {
   }
 
-  continueStandAlone() {      
-    // this.router.navigate(['/home']);    
-  }
 }
