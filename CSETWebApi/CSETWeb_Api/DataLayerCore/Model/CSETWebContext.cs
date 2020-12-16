@@ -277,6 +277,15 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Feedback).IsUnicode(false);
 
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))");
+
+
                 entity.HasOne(d => d.Answer_TextNavigation)
                     .WithMany(p => p.ANSWER)
                     .HasForeignKey(d => d.Answer_Text)

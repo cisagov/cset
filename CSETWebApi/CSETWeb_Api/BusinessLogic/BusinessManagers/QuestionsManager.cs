@@ -117,7 +117,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Question")
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
@@ -200,7 +200,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Question")
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
