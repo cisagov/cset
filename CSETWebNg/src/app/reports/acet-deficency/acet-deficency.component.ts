@@ -15,7 +15,10 @@ export class AcetDeficencyComponent implements OnInit {
       "Assessment_Name": "Manhattan Assessment",
       "Assessment_Date": "2020-09-19",
       "Assessor_Name": "Michael Jones"
-    }
+    },
+    "deficiencies":[
+      { "question": { "statment": "Statement #18", "answer": "No" }, "comment": "No need to ask about this one. "}
+    ]
   };
 
   constructor(
