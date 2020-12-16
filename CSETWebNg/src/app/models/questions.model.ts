@@ -90,6 +90,7 @@ export interface SubCategory {
 export interface Question {
     DisplayNumber: number;
     QuestionId: number;
+    QuestionType: string;
     QuestionText: string;
     ParmSubs: SubToken[];
     StdRefId: string;
@@ -112,7 +113,9 @@ export interface Question {
 }
 
 export class Answer {
+    AnswerId: number;
     QuestionId: number;
+    QuestionType: string;
     QuestionNumber: number;
     AnswerText: string;
     AltAnswerText: string;
