@@ -68,7 +68,8 @@
   </div>
 
   <div class="maturity-model-card mb-5">
-    <h4><input type="radio" class="maturity-model-select" name="model-select">ACET</h4>
+    <h4><input type="radio" class="maturity-model-select" name="model-select"
+      [checked]="assessSvc.usesMaturityModel('ACET')" (change)="changeSelection($event, 'ACET')">ACET</h4>
     <div class="maturity-model-select d-flex flex-row mb-5">
       <div>
         <p>

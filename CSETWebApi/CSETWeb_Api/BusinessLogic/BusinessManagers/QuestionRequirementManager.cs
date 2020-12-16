@@ -261,6 +261,7 @@ namespace CSETWeb_Api.BusinessManagers
             dbAnswer.Assessment_Id = assessmentID;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.Question_Type;
+
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
