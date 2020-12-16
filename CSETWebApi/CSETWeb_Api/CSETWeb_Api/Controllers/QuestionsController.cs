@@ -150,6 +150,17 @@ namespace CSETWeb_Api.Controllers
         {
             if (answer == null)
                 return 0;
+            if (String.IsNullOrWhiteSpace(answer.Question_Type))
+            {
+                if (answer.IsComponent)
+                    answer.Question_Type = "Component";
+                if(answer.IsMaturity)                    
+                    answer.Question_Type = "Maturity";
+                if (answer.IsRequirement)
+                    answer.Question_Type = "Requirement";
+                if (!answer.IsRequirement && !answer.IsMaturity && !answer.IsComponent)
+                    answer.Question_Type = "Question";
+            }
 
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
