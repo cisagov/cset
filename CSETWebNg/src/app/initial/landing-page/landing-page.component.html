@@ -72,7 +72,8 @@
             </div>
         </ng-container>
         <ng-template #noAssessmentsElseBlock>
-            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">Welcome to CSET</h2>
+            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0 && configSvc.acetInstallation">Welcome to ACET</h2>
+            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0 && !configSvc.acetInstallation">Welcome to CSET</h2>
             <p>To get started, select from one of the options below:</p>
             <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
                 <div class="flex-row d-flex flex-00a">
@@ -80,7 +81,8 @@
                         <button
                             class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                             (click)="this.assessSvc.newAssessment()" matTooltip="Start a new and empty assessment.">
-                            <span class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
+                            <span *ngIf="!configSvc.acetInstallation" class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
+                            <span *ngIf="configSvc.acetInstallation" class="mr-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
                             <span class="landing-button-text landing-button-text-sm">Start a New Assessment</span>
                         </button>
                         <!-- <hr class="landing my-4"> -->
@@ -120,7 +122,8 @@
                 </div>
             </div>
             <p class="mt-3 fst-italic">
-                <app-cset-origin></app-cset-origin>
+                <app-cset-origin *ngIf="!configSvc.acetInstallation"></app-cset-origin>
+                <app-acet-origin *ngIf="configSvc.acetInstallation"></app-acet-origin>
             </p>
         </ng-template>
     </div>
