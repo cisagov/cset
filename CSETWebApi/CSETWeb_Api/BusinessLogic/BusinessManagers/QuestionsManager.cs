@@ -73,6 +73,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
+                                 QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -104,6 +105,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
+                                 QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -160,6 +162,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
+                                QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -189,6 +192,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
+                                QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -358,6 +362,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.QuestionId,
+                    QuestionType = dbQ.QuestionType,
                     QuestionText = FormatLineBreaks(dbQ.SimpleQuestion),
                     Answer = answer?.a?.Answer_Text,
                     Answer_Id = answer?.a?.Answer_Id,
@@ -504,6 +509,7 @@ namespace CSETWeb_Api.BusinessManagers
     public class QuestionPlusHeaders
     {
         public int QuestionId;
+        public string QuestionType;
         public string SimpleQuestion;
 
         public int QuestionGroupHeadingId;

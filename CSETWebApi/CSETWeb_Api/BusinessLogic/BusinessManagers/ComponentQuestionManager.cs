@@ -240,6 +240,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.Question_Id,
+                    QuestionType = dbQ.Question_Type,
                     QuestionText = FormatLineBreaks(dbQ.Simple_Question),
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
