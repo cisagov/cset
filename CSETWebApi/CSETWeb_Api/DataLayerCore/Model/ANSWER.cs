@@ -16,7 +16,7 @@ namespace DataLayerCore.Model
 
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
-        public bool Is_Requirement { get; set; }
+
         public int Question_Or_Requirement_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
         public string Comment { get; set; }
@@ -27,15 +27,23 @@ namespace DataLayerCore.Model
         [StringLength(50)]
         public string Answer_Text { get; set; }
         public Guid Component_Guid { get; set; }
-        public bool Is_Component { get; set; }
+
         [StringLength(50)]
         public string Custom_Question_Guid { get; set; }
-        public bool Is_Framework { get; set; }
+
         public int? Old_Answer_Id { get; set; }
         public bool Reviewed { get; set; }
         [StringLength(2048)]
         public string Feedback { get; set; }
-        public bool Is_Maturity { get; set; }
+
+
+        [Required]
+        [StringLength(20)]
+        public string Question_Type { get; set; }
+        public bool? Is_Requirement { get; set; }
+        public bool? Is_Component { get; set; }
+        public bool? Is_Framework { get; set; }
+        public bool? Is_Maturity { get; set; }
 
         [ForeignKey("Answer_Text")]
         [InverseProperty("ANSWER")]

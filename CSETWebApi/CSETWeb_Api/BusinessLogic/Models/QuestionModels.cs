@@ -185,6 +185,7 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string DisplayNumber;
         public int QuestionId;
+        public string QuestionType;
         public string QuestionText;
         public List<ParameterToken> ParmSubs;
         public string StdRefId;
@@ -245,11 +246,33 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public bool Reviewed;
 
-        public bool Is_Requirement;
+        public string Question_Type;
 
-        public bool Is_Component;
+        //public bool Is_Requirement;
+        public bool IsRequirement
+        {
+            get
+            {
+                return this.Question_Type == "Requirement";
+            }
+        }
 
-        public bool Is_Maturity;
+        //public bool Is_Component;
+        public bool IsComponent
+        {
+            get
+            {
+                return this.Question_Type == "Component";
+            }
+        }
+
+        //public bool Is_Maturity;
+        public bool IsMaturity {
+            get {
+                return this.Question_Type == "Maturity";
+            }
+        }
+
     }
 
 

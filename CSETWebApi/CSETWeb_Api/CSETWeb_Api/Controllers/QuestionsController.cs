@@ -154,19 +154,19 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
-            if (answer.Is_Component)
+            if (answer.IsComponent)
             {
                 QuestionsManager qm = new QuestionsManager(assessmentId);
                 return qm.StoreComponentAnswer(answer);
             }
 
-            if (answer.Is_Requirement)
+            if (answer.IsRequirement)
             {
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 return rm.StoreAnswer(answer);
             }
 
-            if (answer.Is_Maturity)
+            if (answer.IsMaturity)
             {
                 MaturityManager mm = new MaturityManager();
                 return mm.StoreAnswer(assessmentId, answer);
