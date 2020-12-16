@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-acet-answeredquestions',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./acet-answeredquestions.component.scss']
 })
 export class AcetAnsweredquestionsComponent implements OnInit {
+  response: any = null;
 
-  constructor() { }
+  constructor(
+    private titleService: Title,
+
+  ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle("Answered Questions Report - ASET");
+
+
   }
 
 }
