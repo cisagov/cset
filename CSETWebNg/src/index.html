@@ -90,7 +90,7 @@
     <title>CSET</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?">
+    <link rel="icon" href="favicon_cset.ico?app=cset">
     <!-- polyfill(s) for older browsers -->
     <script src="assets/shim.min.js"></script>
     <!-- <script src="https://unpkg.com/reflect-metadata@0.1.12"></script> -->
@@ -116,7 +116,7 @@
             }
 
             .acet-background {
-                background-color: #184D96;
+                background-color: #0f3c7a;
             }
         </style>
         <img src="assets/NCUA/images/ncua_seal_white.svg" height="388px" class="centered ncua-seal d-none" />
@@ -135,6 +135,13 @@
         if (x.length > 0) {
             x[0].classList.remove("d-none");
         }
+
+        // change favicon and title
+        var link = document.querySelector("link[rel~='icon']");
+        link.href = 'favicon_acet.ico?app=acet1';
+
+        var title = document.querySelector("title");
+        title.innerText = "ACET";
     }
 
 </script>

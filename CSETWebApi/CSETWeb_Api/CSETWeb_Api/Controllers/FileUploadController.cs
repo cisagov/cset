@@ -85,7 +85,7 @@ namespace WebAPIFileUploadExample.Controllers
                     Answer answer = new Answer();
                     answer.QuestionId = questionId;
                     answer.AnswerText = "U";
-                    answer.Question_Type = isMaturity ? "Maturity" : "";
+                    answer.QuestionType = isMaturity ? "Maturity" : "";
                     answerId = qm.StoreAnswer(answer);
                 }
                 var dm = new DocumentManager(assessmentId);

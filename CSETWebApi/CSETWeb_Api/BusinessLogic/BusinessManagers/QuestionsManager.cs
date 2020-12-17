@@ -73,7 +73,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
-                                 QuestionType = "Question",
+                                 // QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -105,7 +105,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
-                                 QuestionType = "Question",
+                                 // QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -162,7 +162,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
-                                QuestionType = "Question",
+                                // QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -192,7 +192,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
-                                QuestionType = "Question",
+                                // QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
