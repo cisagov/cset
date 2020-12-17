@@ -246,14 +246,14 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public bool Reviewed;
 
-        public string Question_Type;
+        public string QuestionType;
 
         //public bool Is_Requirement;
         public bool IsRequirement
         {
             get
             {
-                return this.Question_Type == "Requirement";
+                return this.QuestionType == "Requirement";
             }
         }
 
@@ -262,14 +262,14 @@ namespace CSETWeb_Api.Models
         {
             get
             {
-                return this.Question_Type == "Component";
+                return this.QuestionType == "Component";
             }
         }
 
         //public bool Is_Maturity;
         public bool IsMaturity {
             get {
-                return this.Question_Type == "Maturity";
+                return this.QuestionType == "Maturity";
             }
         }
 

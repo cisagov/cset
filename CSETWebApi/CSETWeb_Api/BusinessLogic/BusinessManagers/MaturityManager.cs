@@ -323,6 +323,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 DisplayNumber = dbR.Question_Title,
                                 QuestionId = dbR.Mat_Question_Id,
+                                QuestionType = "Maturity",
                                 QuestionText = dbR.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                                 Answer = answer?.a.Answer_Text,
                                 AltAnswerText = answer?.a.Alternate_Justification,
@@ -331,10 +332,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 MarkForReview = answer?.a.Mark_For_Review ?? false,
                                 Reviewed = answer?.a.Reviewed ?? false,
                                 MaturityLevel = dbR.Maturity_Level,
-                                SetName = string.Empty,
-                                Is_Maturity = answer?.a.Is_Maturity ?? true,
-                                Is_Component = answer?.a.Is_Component ?? false,
-                                Is_Requirement = answer?.a.Is_Requirement ?? false
+                                SetName = string.Empty
+                                //Is_Maturity = answer?.a.Is_Maturity ?? true,
+                                //Is_Component = answer?.a.Is_Component ?? false,
+                                //Is_Requirement = answer?.a.Is_Requirement ?? false
                             };
                                 if (answer != null)
                             {
@@ -380,7 +381,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             ANSWER dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Question_Type == answer.Question_Type).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -401,7 +402,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             //dbAnswer.Is_Component = answer.Is_Component;
             //dbAnswer.Component_Guid = answer.ComponentGuid;
             //dbAnswer.Is_Requirement = answer.Is_Requirement;
-            dbAnswer.Question_Type = answer.Question_Type;
+            dbAnswer.Question_Type = answer.QuestionType;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();
