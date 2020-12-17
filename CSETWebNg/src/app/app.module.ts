@@ -234,6 +234,7 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
+import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
@@ -443,6 +444,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         CsetOriginComponent,
         InherentRiskProfileComponent,
         IrpSectionComponent,
+        ChartsDonutComponent,
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,

@@ -18,6 +18,8 @@ export class AcetDetailComponent implements OnInit {
     }
   };
 
+  
+
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
