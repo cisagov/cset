@@ -333,9 +333,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 Reviewed = answer?.a.Reviewed ?? false,
                                 MaturityLevel = dbR.Maturity_Level,
                                 SetName = string.Empty
-                                //Is_Maturity = answer?.a.Is_Maturity ?? true,
-                                //Is_Component = answer?.a.Is_Component ?? false,
-                                //Is_Requirement = answer?.a.Is_Requirement ?? false
                             };
                                 if (answer != null)
                             {
@@ -348,7 +345,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             targetSubcat.Questions.Add(qa);
                         }
                     }
-
                 }
                 
                 return response;
@@ -391,6 +387,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             dbAnswer.Assessment_Id = assessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Type = answer.QuestionType;
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
@@ -398,11 +395,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             dbAnswer.Feedback = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
-            //dbAnswer.Is_Maturity = answer.Is_Maturity;
-            //dbAnswer.Is_Component = answer.Is_Component;
-            //dbAnswer.Component_Guid = answer.ComponentGuid;
-            //dbAnswer.Is_Requirement = answer.Is_Requirement;
-            dbAnswer.Question_Type = answer.QuestionType;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
 
             db.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
             db.SaveChanges();
