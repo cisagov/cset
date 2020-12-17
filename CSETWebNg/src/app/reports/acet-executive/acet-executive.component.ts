@@ -23,6 +23,9 @@ export class AcetExecutiveComponent implements OnInit {
       "Assests": []
     }
   };
+  donutData: any = [{
+    "name": "test", "value": 15
+  }]
 
   constructor(
     public reportSvc: ReportService,
