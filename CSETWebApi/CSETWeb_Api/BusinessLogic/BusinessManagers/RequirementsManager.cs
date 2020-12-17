@@ -685,7 +685,7 @@ namespace CSETWeb_Api.BusinessManagers
                 Answer ans = new Answer()
                 {
                     QuestionId = requirementId,
-                    Question_Type = "Requirement",
+                    QuestionType = "Requirement",
                     MarkForReview = false,
                     QuestionNumber = 0,
                     AnswerText = "U"
