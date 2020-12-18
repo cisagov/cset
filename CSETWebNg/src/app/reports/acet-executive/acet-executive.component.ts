@@ -10,7 +10,7 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 @Component({
   selector: 'app-acet-executive',
   templateUrl: './acet-executive.component.html',
-  styleUrls: ['./acet-executive.component.scss']
+  styleUrls: ['../reports.scss']
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;
