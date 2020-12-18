@@ -25,7 +25,7 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Compensating Controls Report - ASET");
+    this.titleService.setTitle("Compensating Controls Report - ACET");
 
     // Here get report data
     // ToDo: Uncomment this and connect backend for report data

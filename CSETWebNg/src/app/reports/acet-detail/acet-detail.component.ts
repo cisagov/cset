@@ -27,7 +27,7 @@ export class AcetDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Detailed Report - ASET");
+    this.titleService.setTitle("Detailed Report - ACET");
     // Here get report data
     // ToDo: Uncomment this and connect backend for report data
     //this.reportSvc.getReport('<ACET Endpoint>').subscribe(
