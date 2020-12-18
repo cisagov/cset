@@ -40,6 +40,8 @@ export class AcetExecutiveComponent implements OnInit {
     "data": this.donutData
   }];
 
+  graphdata: any = [];
+
   // Maturity Rep Data
   matDetailResponse: MatDetailResponse;
   maturityDomain: MaturityDomain;
@@ -66,11 +68,37 @@ export class AcetExecutiveComponent implements OnInit {
     //);
     this.response = this.mockDataAcetExecutive;
 
-    //this.acetSvc.getMatDetailList().subscribe(
-    //  (data: MatDetailResponse) => {
-    //    console.log(data);
+    this.acetSvc.getMatDetailList().subscribe(
+      (data: any) => {
+        console.log(data);
         // Format and connect donut data here
-    //    data.domains.forEach((domain: MaturityDomain) => {
+        data.forEach((domain: MaturityDomain) => {
+          if (domain.DomainName == "Cyber Risk Management & Oversight"){
+            domain.Assessments.forEach((assignment: MaturityAssessment) => {
+              var assesmentData = {
+                "asseessmentFactor": assignment.AssessmentFactor,
+                "sections": []
+              }
+              assignment.Components.forEach((component: MaturityComponent) => {
+                var sectionData = [
+                { "name": "Baseline", "value": component.Baseline },
+                { "name": "Evolving", "value": component.Evolving }, 
+                { "name": "Intermediate", "value": component.Intermediate },
+                { "name": "Advanced", "value": component.Advanced },
+                { "name": "Innovative", "value": component.Innovative }
+              ]
+              var sectonInfo = {
+                "name": component.ComponentName,
+                "data": sectionData
+              }
+                assesmentData.sections.push(sectonInfo);
+              })
+              this.graphdata.push(assesmentData);
+            })
+
+          };
+        })
+          
     //      domain.Assessments.forEach((assignment: MaturityAssessment) => {
     //        assignment.Components.forEach((component: MaturityComponent) => {
     //          var sectionData = [
@@ -87,13 +115,14 @@ export class AcetExecutiveComponent implements OnInit {
     //          this.donutGroup.push(sectonInfo);
     //        })
     //        
-    //      });
     //
-    //  },
-    //  error => {
-    //    console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-    //    console.log('Error getting all documents: ' + (<Error>error).stack);
-    //  });
+        },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
+
+    console.log(this.graphdata)
 
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {
