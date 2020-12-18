@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
+import { ACETService } from '../../services/acet.service';
+
 
 
 @Component({
@@ -23,12 +25,17 @@ export class AcetExecutiveComponent implements OnInit {
       "Assests": []
     }
   };
-  donutData: any = [{
-    "name": "test", "value": 15
-  }]
+  donutData: any = [
+    {"name": "Baseline", "value": 100},
+    { "name": "Evolving", "value": 100 },
+    { "name": "Intermediate", "value": 78 },
+    { "name": "Advanced", "value": 17 },
+    { "name": "Innovative", "value": 0 }
+  ]
 
   constructor(
     public reportSvc: ReportService,
+    public acetSvc: ACETService,
     private titleService: Title,
 
   ) { }
@@ -44,6 +51,16 @@ export class AcetExecutiveComponent implements OnInit {
     //  error => console.log('Executive report load Error: ' + (<Error>error).message)
     //);
     this.response = this.mockDataAcetExecutive;
+
+    this.acetSvc.getMatDetailList().subscribe(
+      (data: any) => {
+        console.log(data);
+        // Format and connect donut data here
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
 
   }
 
