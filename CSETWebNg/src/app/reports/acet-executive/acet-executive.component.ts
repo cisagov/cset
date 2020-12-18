@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/cor
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
+import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
 
 
 
@@ -31,7 +32,15 @@ export class AcetExecutiveComponent implements OnInit {
     { "name": "Intermediate", "value": 78 },
     { "name": "Advanced", "value": 17 },
     { "name": "Innovative", "value": 0 }
-  ]
+  ];
+
+  donutGroup: any = [];
+
+  // Maturity Rep Data
+  matDetailResponse: MatDetailResponse;
+  maturityDomain: MaturityDomain;
+  maturityComponent: MaturityComponent;
+  maturityAssessment: MaturityAssessment;
 
   constructor(
     public reportSvc: ReportService,
@@ -53,9 +62,28 @@ export class AcetExecutiveComponent implements OnInit {
     this.response = this.mockDataAcetExecutive;
 
     this.acetSvc.getMatDetailList().subscribe(
-      (data: any) => {
+      (data: MatDetailResponse) => {
         console.log(data);
         // Format and connect donut data here
+        data.domains.forEach((domain: MaturityDomain) => {
+          domain.Assessments.forEach((assignment: MaturityAssessment) => {
+            assignment.Components.forEach((component: MaturityComponent) => {
+              var sectionData = [
+                { "name": "Baseline", "value": component.Baseline },
+                { "name": "Evolving", "value": component.Evolving }, 
+                { "name": "Intermediate", "value": component.Intermediate },
+                { "name": "Advanced", "value": component.Advanced },
+                { "name": "Innovative", "value": component.Innovative }
+              ]
+              var sectonInfo = {
+                "name": component.ComponentName,
+                "data": sectionData
+              }
+              this.donutGroup.push(sectonInfo);
+            })
+            
+          });
+
       },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
