@@ -1,0 +1,25 @@
+<div class="mt-3 mb-4">
+    <p>
+        <b>Inherent Risk Profile</b>
+    </p>
+    <app-inherent-risk-profile [acetDashboard]="acetDashboard"></app-inherent-risk-profile>
+
+    <div class="ml-3">
+        <div>Overall Risk Level is <span class="blue-text font-weight-bold">
+                {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
+            </span>
+        </div>
+        <div *ngIf="!acetDashboard?.Override || acetDashboard?.Override == '' || acetDashboard?.Override == 0">
+            Overall Risk Level has not been overridden
+        </div>
+        <div *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+            Overall Risk Level has been overriden to <span class="blue-text font-weight-bold">{{
+                acetSvc.interpretRiskLevel(acetDashboard?.Override) }}</span>
+            <div>Override Reason:
+                <em>
+                    {{ acetDashboard?.OverrideReason }}
+                </em>
+            </div>
+        </div>
+    </div>
+</div>
