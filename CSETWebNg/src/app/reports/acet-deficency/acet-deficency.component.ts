@@ -1,44 +1,39 @@
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
+import { ConfigService } from '../../services/config.service';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AcetDashboard } from '../../models/acet-dashboard.model';
+import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
+import { ACETService } from '../../services/acet.service';
 
 
 @Component({
   selector: 'app-acet-deficency',
   templateUrl: './acet-deficency.component.html',
-  styleUrls: ['./acet-deficency.component.scss']
+  styleUrls: ['../reports.scss']
 })
 export class AcetDeficencyComponent implements OnInit {
-  response: any = null;
-  mockDataAcetDeficency: any = {
-    "information": {
-      "Assessment_Name": "Manhattan Assessment",
-      "Assessment_Date": "2020-09-19",
-      "Assessor_Name": "Michael Jones"
-    },
-    "deficiencies":[
-      { "question": { "statment": "Statement #18", "answer": "No" }, "comment": "No need to ask about this one. "}
-    ]
-  };
+  response: any;
 
   constructor(
+  public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public configSvc: ConfigService,
     private titleService: Title,
-
+    public acetSvc: ACETService,
+    private sanitizer: DomSanitizer
   ) { }
 
-  ngOnInit(): void {
-    this.titleService.setTitle("Deficency Report - ACET");
-    // Here get report data
-    // ToDo: Uncomment this and connect backend for report data
-    //this.reportSvc.getReport('<ACET Endpoint>').subscribe(
-    //  (r: any) => {
-    //    this.response = r;
-    //  },
-    //  error => console.log('Executive report load Error: ' + (<Error>error).message)
-    //);
-    this.response = this.mockDataAcetDeficency;
+  ngOnInit() {
+    this.titleService.setTitle("Deficiency Report - ACET");
 
+    this.acetSvc.getAcetDeficiency().subscribe(
+      (r: any) => {
+        this.response = r;        
+      },
+      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+    );
   }
 
 }

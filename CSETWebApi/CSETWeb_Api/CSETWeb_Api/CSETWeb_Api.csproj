@@ -4759,6 +4759,7 @@
     <Compile Include="Controllers\ProtectedFeatureController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReferenceDocumentsController.cs" />
+    <Compile Include="Controllers\ReportACETWebController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RequiredDocumentationController.cs" />
     <Compile Include="Controllers\ResetPasswordController.cs" />

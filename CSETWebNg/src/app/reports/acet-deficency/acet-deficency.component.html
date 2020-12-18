@@ -24,31 +24,42 @@
 
     <div class="flex-container">
         <div class="column">
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                DEFICENCY REPORT
+            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                DEFICIENCY 
+            </p>
+            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+            REPORT
             </p>
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img width="471" height="529" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
             </p>
             </div>
             
             <div class="cover-page-bottom mb-4">
                 <div>
-                    <img style="width: 283px; height: 133px" src="../../../../assets/images/ACET/NCUA_logo.png">
+                    <img style="height: 185px" src="../../../../assets/images/ACET/NCUA_logo.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information?.Assessment_Name}}</div>
-                <div>
-                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
-                </div>
-                <div>
-                    {{response?.information?.Assessor_Name}}
-                </div>
+                <div>{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</div>
+                <div>{{response?.information?.Assessor_Name}}</div>
             </div>
         </div>
     </div>
-
+    <div class="page-break">
+        <h1>
+            Compensating Controls            
+        </h1>
+        <hr>
+        <p>This report contains all the statements that have an associated compensating control and the comment provided.</p>        
+        <table class="table-site-info">
+            <tr *ngFor="let s of response?.DeficiencesList">
+                <td>Statement {{s.Mat.Question_Title}}:</td>
+                <td>{{s.Mat.Question_Text}}</td>
+                <td>{{s.ANSWER.Answer_Text}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
