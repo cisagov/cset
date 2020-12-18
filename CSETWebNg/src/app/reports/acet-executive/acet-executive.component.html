@@ -50,5 +50,11 @@
             </div>
         </div>
     </div> 
-    <app-charts-donut [donutData]="donutData"></app-charts-donut>
+<div class="flex-container">
+    <div *ngFor="let donutData of donutGroup; index as i">
+        <h4>{{donutData.name}}</h4>
+        <app-charts-donut [donutData]="donutData.data"></app-charts-donut>
+    </div>
+</div>
+
 </div>
