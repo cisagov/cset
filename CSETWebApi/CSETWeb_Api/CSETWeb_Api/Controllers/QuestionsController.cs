@@ -156,13 +156,13 @@ namespace CSETWeb_Api.Controllers
             if (String.IsNullOrWhiteSpace(answer.QuestionType))
             {
                 if (answer.Is_Component)
-                    answer.Question_Type = "Component";
+                    answer.QuestionType = "Component";
                 if(answer.Is_Maturity)                    
-                    answer.Question_Type = "Maturity";
+                    answer.QuestionType = "Maturity";
                 if (answer.Is_Requirement)
-                    answer.Question_Type = "Requirement";
+                    answer.QuestionType = "Requirement";
                 if (!answer.Is_Requirement && !answer.Is_Maturity && !answer.Is_Component)
-                    answer.Question_Type = "Question";
+                    answer.QuestionType = "Question";
             }
 
             int assessmentId = Auth.AssessmentForUser();

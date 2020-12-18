@@ -56,9 +56,9 @@
         <p>This report contains all the statements that have an associated compensating control and the comment provided.</p>        
         <table class="table-site-info">
             <tr *ngFor="let s of response?.DeficiencesList">
-                <td>Statement {{s.Question_Number}}:</td>
-                <td>{{s.statement}}</td>
-                <td>{{s.Answer_Text}}</td>
+                <td>Statement {{s.Mat.Question_Title}}:</td>
+                <td>{{s.Mat.Question_Text}}</td>
+                <td>{{s.ANSWER.Answer_Text}}</td>
             </tr>
         </table>
     </div>
