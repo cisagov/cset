@@ -3,6 +3,7 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
+import { AcetDashboard } from '../../models/acet-dashboard.model';
 
 
 
@@ -21,9 +22,9 @@ export class AcetExecutiveComponent implements OnInit {
       "Credit_Union": "Bank of Bill",
       "Facility_Name": "Bills Bank",
       "City_Or_Site_Name": "New New York City",
-      "State_Province_Or_Region": "New York",
+      "State_Prov_Region": "New York",
       "Charter": "NNYC",
-      "Assests": []
+      "Assets": "1234",
     }
   };
   donutData: any = [
@@ -34,13 +35,17 @@ export class AcetExecutiveComponent implements OnInit {
     { "name": "Innovative", "value": 0 }
   ];
 
-  donutGroup: any = [];
+  donutGroup: any = [{
+    "name": "Oversight",
+    "data": this.donutData
+  }];
 
   // Maturity Rep Data
   matDetailResponse: MatDetailResponse;
   maturityDomain: MaturityDomain;
   maturityComponent: MaturityComponent;
   maturityAssessment: MaturityAssessment;
+  acetDashboard: AcetDashboard;
 
   constructor(
     public reportSvc: ReportService,
@@ -61,29 +66,42 @@ export class AcetExecutiveComponent implements OnInit {
     //);
     this.response = this.mockDataAcetExecutive;
 
-    this.acetSvc.getMatDetailList().subscribe(
-      (data: MatDetailResponse) => {
-        console.log(data);
+    //this.acetSvc.getMatDetailList().subscribe(
+    //  (data: MatDetailResponse) => {
+    //    console.log(data);
         // Format and connect donut data here
-        data.domains.forEach((domain: MaturityDomain) => {
-          domain.Assessments.forEach((assignment: MaturityAssessment) => {
-            assignment.Components.forEach((component: MaturityComponent) => {
-              var sectionData = [
-                { "name": "Baseline", "value": component.Baseline },
-                { "name": "Evolving", "value": component.Evolving }, 
-                { "name": "Intermediate", "value": component.Intermediate },
-                { "name": "Advanced", "value": component.Advanced },
-                { "name": "Innovative", "value": component.Innovative }
-              ]
-              var sectonInfo = {
-                "name": component.ComponentName,
-                "data": sectionData
-              }
-              this.donutGroup.push(sectonInfo);
-            })
-            
-          });
+    //    data.domains.forEach((domain: MaturityDomain) => {
+    //      domain.Assessments.forEach((assignment: MaturityAssessment) => {
+    //        assignment.Components.forEach((component: MaturityComponent) => {
+    //          var sectionData = [
+    //            { "name": "Baseline", "value": component.Baseline },
+    //            { "name": "Evolving", "value": component.Evolving }, 
+    //            { "name": "Intermediate", "value": component.Intermediate },
+    //            { "name": "Advanced", "value": component.Advanced },
+    //            { "name": "Innovative", "value": component.Innovative }
+    //          ]
+    //          var sectonInfo = {
+    //            "name": component.ComponentName,
+    //            "data": sectionData
+    //          }
+    //          this.donutGroup.push(sectonInfo);
+    //        })
+    //        
+    //      });
+    //
+    //  },
+    //  error => {
+    //    console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+    //    console.log('Error getting all documents: ' + (<Error>error).stack);
+    //  });
 
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+
+        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
+          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        }
       },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);

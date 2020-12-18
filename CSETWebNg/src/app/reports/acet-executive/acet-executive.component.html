@@ -20,41 +20,258 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="report-body">
-
-    <div class="flex-container">
-        <div class="column">
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                EXECUTIVE REPORT
+<head>
+</head>
+<div _ngcontent-c2="" class="report-body">
+    <div _ngcontent-c2="" class="flex-container">
+        <div _ngcontent-c2="" class="column">
+            <p _ngcontent-c2="" style="margin-left: 25px; text-align: center">
+                <span _ngcontent-c2="" style="
+        font-family: Verdana;
+        font-size: 40px;
+        letter-spacing: 36px;
+        color: #0f3c7a;
+        font-weight: 100;
+        ">EXECUTIVE</span><br _ngcontent-c2="" /><span _ngcontent-c2="" style="
+        font-family: Verdana;
+        font-size: 40px;
+        letter-spacing: 36px;
+        color: #0f3c7a;
+        ">SUMMARY</span>
             </p>
         </div>
-        <div class="column">
-            <p style="text-align: center">
-                <img width="471" height="529" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+        <div _ngcontent-c2="" class="column">
+            <p _ngcontent-c2="" style="text-align: center">
+                <img _ngcontent-c2="" height="600px"
+                    src="../../../../assets/images/ACET/ACET_shield_logo.png" />
             </p>
         </div>
-
-        <div class="cover-page-bottom mb-4">
-            <div>
-                <img style="width: 283px; height: 133px" src="../../../../assets/images/ACET/NCUA_logo.png">
+        <div _ngcontent-c2="" class="cover-page-bottom mb-4">
+            <div _ngcontent-c2="">
+                <img _ngcontent-c2="" src="../../../../assets/images/ACET/NCUA_logo.png"
+                    style="height: 185px" />
             </div>
-            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information?.Assessment_Name}}</div>
-                <div>
-                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
-                </div>
-                <div>
-                    {{response?.information?.Assessor_Name}}
-                </div>
+            <div _ngcontent-c2="" style="
+        text-align: right;
+        font-weight: normal;
+        font-size: 18px;
+        flex-direction: column;
+        line-height: 150%;
+        padding-right: 2em;
+    ">
+
+                <div _ngcontent-c2="" class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                <div _ngcontent-c2="" class="title-page-content">$800,000,000</div>
             </div>
         </div>
-    </div> 
-<div class="flex-container">
-    <div *ngFor="let donutData of donutGroup; index as i">
-        <h4>{{donutData.name}}</h4>
-        <app-charts-donut [donutData]="donutData.data"></app-charts-donut>
     </div>
-</div>
+    <div _ngcontent-c2="" class="page-break"></div>
+    <!---->
+    <div _ngcontent-c2="" class="ml-3 mr-3 form">
+        <h1 _ngcontent-c2="" class="page-header" style="text-align: left; color: black">Site Information
+        </h1>
+        <hr class="page-line">
+        <table _ngcontent-c2="" class="label-value">
+            <tbody _ngcontent-c2="">
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: left">Assessment Name:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Assessment_Name}}</p>
 
+                        </div>
+                    </div>
+                </tr>
+                <!---->
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">Assessment Date:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</p>
+
+                        </div>
+                    </div>
+                </tr>
+                <!---->
+                <tr _ngcontent-c2="">
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: left">Credit Union:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Credit_Union}}</p>
+
+                        </div>
+                    </div>
+                </tr>
+                <!---->
+                <tr _ngcontent-c2="">
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">City or Site Name:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.City_Or_Site_Name}}</p>
+
+                        </div>
+                    </div>
+                </tr>
+                <!---->
+                <tr _ngcontent-c2="">
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">State/Province/Region:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.State_Prov_Region}}</p>
+
+                        </div>
+                    </div>
+                </tr>
+                <!---->
+                <tr _ngcontent-c2="">
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">Charter:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.Charter}}</p>
+
+                        </div>
+                    </div>
+                </tr>
+                <!---->
+                <tr _ngcontent-c2="">
+                <tr _ngcontent-c2="">
+                    <div _ngcontent-c2="" class="column-chart mb-4">
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">Assets:</p>
+                        </div>
+                        <div _ngcontent-c2="" class="list-item">
+                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.Assets}}</p>
+
+                        </div>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!---->
+    <div _ngcontent-c2="" class="page-break"></div>
+    <h1 _ngcontent-c2="" class="page-header">
+        Maturity Detail
+    </h1>
+    <hr class="page-line">
+    <h1 _ngcontent-c2 class="page-title">Cyber Risk Management and Oversight</h1>
+    <!---->
+    <h1 _ngcontent-c2="" class="data-title">Governance</h1>
+
+    <div *ngFor="let donutData of donutGroup; index as i">
+        <div _ngcontent-c2="" class="mt-3 mb-3 item-table">
+        
+            <h1 _ngcontent-c2="" class="item-title">{{donutData.name}}</h1>
+            <div _ngcontent-c2="" class="ml-3 mr-3 form">
+                <table _ngcontent-c2="" class="label-value">
+                    <tbody _ngcontent-c2="">
+                        <tr _ngcontent-c2="" class="item-row">
+                            <td _ngcontent-c2="" class="item-value">
+                                <app-charts-donut [donutData]="donutData.data"></app-charts-donut>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div _ngcontent-c2="" class="page-break"></div>
+    <h1 _ngcontent-c2="" class="page-header">
+        Maturity Detail
+    </h1>
+    <hr class="page-line">
+    <h1 _ngcontent-c2 class="page-title">Cyber Risk Management and Oversight</h1>
+    <!---->
+    <h1 _ngcontent-c2="" class="data-title">Risk Management</h1>
+    <div *ngFor="let donutData of donutGroup; index as i">
+        <div _ngcontent-c2="" class="mt-3 mb-3 item-table">
+    
+            <h1 _ngcontent-c2="" class="item-title">{{donutData.name}}</h1>
+            <div _ngcontent-c2="" class="ml-3 mr-3 form">
+                <table _ngcontent-c2="" class="label-value">
+                    <tbody _ngcontent-c2="">
+                        <tr _ngcontent-c2="" class="item-row">
+                            <td _ngcontent-c2="" class="item-value">
+                                <app-charts-donut [donutData]="donutData.data"></app-charts-donut>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div _ngcontent-c2="" class="page-break"></div>
+     <app-irp-section [acetDashboard]="acetDashboard"></app-irp-section>
+
+    <div _ngcontent-c2="" class="page-break"></div>
+    <h1 _ngcontent-c2="" class="page-header">
+        Maturity Detail
+    </h1>
+    <hr class="page-line" />
+    <div _ngcontent-c2="" class="cover-page-bottom mb-4">
+        <div _ngcontent-c2="" class="chart-column">
+            <p _ngcontent-c2="" class="page-title" style="text-align: center; padding-right: 460px">Domain
+            </p>
+        </div>
+        <div _ngcontent-c2="" class="chart-column">
+            <p _ngcontent-c2="" style="text-align: center; color: #1274d2; padding-right: 25px">Maturity
+                Level</p>
+        </div>
+        <div _ngcontent-c2="" class="chart-column">
+            <p _ngcontent-c2="" style="text-align: center; color: #1274d2;">Target Percentage Achieved</p>
+        </div>
+    </div>
+    <div _ngcontent-c2="" class="cover-page-bottom mb-4" style="text-indent: 24px">
+        <div _ngcontent-c2="" class="chart-column">
+            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 1:</b> Cyber Risk
+                Management and Oversight</p>
+            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 2:</b> Threat
+                Intelligence and Collaboration</p>
+            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 3:</b>
+                Cybersecurity Controls</p>
+            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 4:</b> External
+                Dependency Management</p>
+            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 5:</b> Cyber
+                Incidence Management and Resilience</p>
+        </div>
+        <div _ngcontent-c2="" class="chart-column">
+            <p _ngcontent-c2="" class="chart-maturity-level"><b>Baseline</b></p>
+            <p _ngcontent-c2="" class="chart-maturity-level"><b>Evolving</b></p>
+            <p _ngcontent-c2="" class="chart-maturity-level"><b>Innovative</b></p>
+            <p _ngcontent-c2="" class="chart-maturity-level"><b>Intermediate</b></p>
+            <p _ngcontent-c2="" class="chart-maturity-level"><b>Advanced</b></p>
+
+        </div>
+        <div _ngcontent-c2="" class="chart-column">
+            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>32%</b></p>
+            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>55%</b></p>
+            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>67%</b></p>
+            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>42%</b></p>
+            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>22%</b></p>
+
+        </div>
+    </div>
+    <hr class="page-line" />
 </div>
