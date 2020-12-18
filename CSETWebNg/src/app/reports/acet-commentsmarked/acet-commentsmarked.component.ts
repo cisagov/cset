@@ -25,7 +25,7 @@ export class AcetCommentsmarkedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Comments Marked Report - ASET");
+    this.titleService.setTitle("Comments Marked Report - ACET");
     // Here get report data
     // ToDo: Uncomment this and connect backend for report data
     //this.reportSvc.getReport('<ACET Endpoint>').subscribe(

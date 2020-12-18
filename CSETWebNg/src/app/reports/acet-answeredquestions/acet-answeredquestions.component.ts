@@ -25,7 +25,7 @@ export class AcetAnsweredquestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Answered Questions Report - ASET");
+    this.titleService.setTitle("Answered Questions Report - ACET");
 
     // Here get report data
     // ToDo: Uncomment this and connect backend for report data
