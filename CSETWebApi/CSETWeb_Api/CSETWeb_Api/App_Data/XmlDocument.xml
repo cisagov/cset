@@ -1110,7 +1110,6 @@
             <summary>
             Returns the details under a given questions details
             </summary>
-            <param name="QuestionId"></param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.StoreSubcategoryAnswers(CSETWeb_Api.Models.SubCategoryAnswers)">
             <summary>

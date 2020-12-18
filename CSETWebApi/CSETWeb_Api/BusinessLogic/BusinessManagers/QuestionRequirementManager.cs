@@ -244,13 +244,13 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentID
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Question_Type == answer.Question_Type && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
             else if (answer != null)
             {
                 dbAnswer = db.ANSWER.Where(x => x.Assessment_Id == assessmentID
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Question_Type == answer.Question_Type).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
             }
 
             if (dbAnswer == null)
@@ -260,7 +260,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             dbAnswer.Assessment_Id = assessmentID;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
-            dbAnswer.Question_Type = answer.Question_Type;
+            dbAnswer.Question_Type = answer.QuestionType;
 
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Answer_Text = answer.AnswerText;
