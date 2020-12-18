@@ -13,7 +13,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
     public class ACETReportData
     {
         
-        public List<RelevantAnswers> DeficiencesList { get; set; }
+        public List<MatRelevantAnswers> DeficiencesList { get; set; }
         public BasicReportData.INFORMATION information { get; set; }
     }
 }

@@ -528,6 +528,7 @@
     <Compile Include="ReportEngine\ACETReportData.cs" />
     <Compile Include="ReportEngine\AggInformation.cs" />
     <Compile Include="ReportEngine\AggregationReportData.cs" />
+    <Compile Include="ReportEngine\MatRelevantAnswers.cs" />
     <Compile Include="ReportEngine\MaturityReportData.cs" />
     <Compile Include="ReportEngine\BasicReportData.cs" />
     <Compile Include="ReportEngine\Builder\AliasDescendingSorter.cs" />

@@ -255,6 +255,11 @@ namespace CSETWeb_Api.Models
             {
                 return this.QuestionType == "Requirement";
             }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Requirement";
+            }
         }
 
         //public bool Is_Component;
@@ -264,12 +269,22 @@ namespace CSETWeb_Api.Models
             {
                 return this.QuestionType == "Component";
             }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Component";
+            }
         }
 
         //public bool Is_Maturity;
         public bool Is_Maturity {
             get {
                 return this.QuestionType == "Maturity";
+            }
+            set
+            {
+                if(value)
+                    this.QuestionType = "Maturity";
             }
         }
 
