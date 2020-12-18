@@ -4,18 +4,27 @@ import { ReportService } from '../../services/report.service';
 
 
 @Component({
-  selector: 'app-acet-compensatingcontrols',
-  templateUrl: './acet-compensatingcontrols.component.html',
-  styleUrls: ['./acet-compensatingcontrols.component.scss']
+  selector: 'app-acet-document',
+  templateUrl: './acet-document.component.html',
+  styleUrls: ['./acet-document.component.scss']
 })
-export class AcetCompensatingcontrolsComponent implements OnInit {
+export class AcetDocumentComponent implements OnInit {
   response: any = null;
-  mockDataAcetCompensatingcontrols: any = {
+  mockDataAcetDocument: any = {
     "information": {
       "Assessment_Name": "Manhattan Assessment",
       "Assessment_Date": "2020-09-19",
       "Assessor_Name": "Michael Jones"
-    }
+    },
+    "documents_list": [
+      { "id": 1, "included": false, "name": "document 1", "comments": "best doc" }, 
+      { "id": 2, "included": true, "name": "document 1", "comments": "best doc" }
+      { "id": 3, "included": false, "name": "document 3", "comments": "best doc" }
+    ],
+    "librarys": [
+      {"id": 1, "title": "lib 1", "file_name": "file.json"},
+      { "id": 2, "title": "lib 2", "file_name": "file.py" }
+    ]
   };
 
   constructor(
@@ -25,8 +34,7 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Compensating Controls Report - ACET");
-
+    this.titleService.setTitle("Documents Report - ACET");
     // Here get report data
     // ToDo: Uncomment this and connect backend for report data
     //this.reportSvc.getReport('<ACET Endpoint>').subscribe(
@@ -35,7 +43,7 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
     //  },
     //  error => console.log('Executive report load Error: ' + (<Error>error).message)
     //);
-    this.response = this.mockDataAcetCompensatingcontrols;
+    this.response = this.mockDataAcetDocument;
   }
 
 }

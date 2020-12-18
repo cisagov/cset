@@ -233,6 +233,8 @@ import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
+import { IrpSectionComponent } from './reports/irp/irp.component';
+import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
@@ -248,6 +250,7 @@ import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
 import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     imports: [
@@ -284,6 +287,7 @@ import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.com
         CurrencyMaskModule,
         NgbModule,
         MatTabsModule,
+        NgxChartsModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -439,6 +443,8 @@ import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.com
         NavBackNextComponent,
         CsetOriginComponent,
         InherentRiskProfileComponent,
+        IrpSectionComponent,
+        ChartsDonutComponent,
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,

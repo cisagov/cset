@@ -20,45 +20,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
+// adding comp:     <app-charts-donut [donutData]="donutData"></app-charts-donut>
+// donutData format => donutData = [{"name": "coolness", "value": 50 }]
 ////////////////////////////////
-export class MatDetailResponse {
-    domains: MaturityDomain[];
+import { Component, Input, OnInit, } from '@angular/core';
 
-    constructor() {
-        this.domains = [];
-    }
-}
+@Component({
+  selector: 'app-charts-donut',
+  templateUrl: './charts-donut.component.html', 
+  styleUrls: ['../reports.scss']
+})
+export class ChartsDonutComponent implements OnInit {
+  @Input()
+  donutData: any;
 
-export class MaturityDomain {
-    DomainName: string;
-    DomainMaturity: string;
-    Assessments: MaturityAssessment[];
-    Sequence: number;
+  view: any[] = [500, 400];
 
-    constructor() {
-        this.Assessments = [];
-    }
-}
+  // options
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
 
-export class MaturityAssessment {
-    AssessmentFactor: string;
-    AssessmentFactorMaturity: string; 
-    Components: MaturityComponent[];
-    Sequence: number;
+  constructor(
+  ) { }
 
-    constructor() {
-        this.Components = [];
-    }
-}
+  ngOnInit() {
+    
+  }
 
-export class MaturityComponent {
-    ComponentName: string;
-    Incomplete: boolean;
-    AssessedMaturityLevel: string;
-    Sequence: number;
-    Evolving: number;
-    Baseline: number;
-    Intermediate: number;
-    Advanced: number;
-    Innovative: number;
+  onSelect(event) {
+    console.log(event);
+  }
+
 }

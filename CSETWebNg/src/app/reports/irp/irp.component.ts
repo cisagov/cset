@@ -20,45 +20,47 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
+// adding comp:     <app-irp-section [acetDashboard]="acetDashboard"></app-irp-section>
 ////////////////////////////////
-export class MatDetailResponse {
-    domains: MaturityDomain[];
+import { Component, Input, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { ReportAnalysisService } from '../../services/report-analysis.service';
+import { ReportService } from '../../services/report.service';
+import { ConfigService } from '../../services/config.service';
+import { AcetDashboard } from '../../models/acet-dashboard.model';
+import { ACETService } from '../../services/acet.service';
 
-    constructor() {
-        this.domains = [];
-    }
-}
+@Component({
+  selector: 'app-irp-section',
+  templateUrl: './irp.component.html', 
+  styleUrls: ['../reports.scss']
+})
+export class IrpSectionComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @Input()
+  acetDashboard: any;
 
-export class MaturityDomain {
-    DomainName: string;
-    DomainMaturity: string;
-    Assessments: MaturityAssessment[];
-    Sequence: number;
+  constructor(
+    public analysisSvc: ReportAnalysisService,
+    public reportSvc: ReportService,
+    public configSvc: ConfigService,
+    public acetSvc: ACETService,
+  ) { }
 
-    constructor() {
-        this.Assessments = [];
-    }
-}
+  ngOnInit() {
+    
+  }
 
-export class MaturityAssessment {
-    AssessmentFactor: string;
-    AssessmentFactorMaturity: string; 
-    Components: MaturityComponent[];
-    Sequence: number;
+  /**
+   *
+   */
+  ngAfterViewInit() {
 
-    constructor() {
-        this.Components = [];
-    }
-}
+  }
 
-export class MaturityComponent {
-    ComponentName: string;
-    Incomplete: boolean;
-    AssessedMaturityLevel: string;
-    Sequence: number;
-    Evolving: number;
-    Baseline: number;
-    Intermediate: number;
-    Advanced: number;
-    Innovative: number;
+
+  /**
+   *
+   */
+  ngAfterViewChecked() {
+  }
+
 }
