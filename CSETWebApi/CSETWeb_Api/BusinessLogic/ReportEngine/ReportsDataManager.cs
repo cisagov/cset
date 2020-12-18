@@ -33,6 +33,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
         }
 
+        public List<RelevantAnswers> getACETDeficiences()
+        {
+            return RelevantAnswers.GetAnswersForAssessment(this.assessmentID).Where(x => x.Answer_Text == "N").ToList();
+        }
+
         /// <summary>
         /// 
         /// </summary>
