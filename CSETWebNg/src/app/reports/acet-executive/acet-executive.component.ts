@@ -27,18 +27,6 @@ export class AcetExecutiveComponent implements OnInit {
       "Assets": "1234",
     }
   };
-  donutData: any = [
-    {"name": "Baseline", "value": 100},
-    { "name": "Evolving", "value": 100 },
-    { "name": "Intermediate", "value": 78 },
-    { "name": "Advanced", "value": 17 },
-    { "name": "Innovative", "value": 0 }
-  ];
-
-  donutGroup: any = [{
-    "name": "Oversight",
-    "data": this.donutData
-  }];
 
   graphdata: any = [];
 
@@ -98,24 +86,6 @@ export class AcetExecutiveComponent implements OnInit {
 
           };
         })
-          
-    //      domain.Assessments.forEach((assignment: MaturityAssessment) => {
-    //        assignment.Components.forEach((component: MaturityComponent) => {
-    //          var sectionData = [
-    //            { "name": "Baseline", "value": component.Baseline },
-    //            { "name": "Evolving", "value": component.Evolving }, 
-    //            { "name": "Intermediate", "value": component.Intermediate },
-    //            { "name": "Advanced", "value": component.Advanced },
-    //            { "name": "Innovative", "value": component.Innovative }
-    //          ]
-    //          var sectonInfo = {
-    //            "name": component.ComponentName,
-    //            "data": sectionData
-    //          }
-    //          this.donutGroup.push(sectonInfo);
-    //        })
-    //        
-    //
         },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
