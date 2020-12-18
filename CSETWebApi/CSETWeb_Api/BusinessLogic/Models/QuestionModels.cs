@@ -249,7 +249,7 @@ namespace CSETWeb_Api.Models
         public string Question_Type;
 
         //public bool Is_Requirement;
-        public bool IsRequirement
+        public bool Is_Requirement
         {
             get
             {
@@ -258,7 +258,7 @@ namespace CSETWeb_Api.Models
         }
 
         //public bool Is_Component;
-        public bool IsComponent
+        public bool Is_Component
         {
             get
             {
@@ -267,7 +267,7 @@ namespace CSETWeb_Api.Models
         }
 
         //public bool Is_Maturity;
-        public bool IsMaturity {
+        public bool Is_Maturity {
             get {
                 return this.Question_Type == "Maturity";
             }

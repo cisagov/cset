@@ -152,32 +152,32 @@ namespace CSETWeb_Api.Controllers
                 return 0;
             if (String.IsNullOrWhiteSpace(answer.Question_Type))
             {
-                if (answer.IsComponent)
+                if (answer.Is_Component)
                     answer.Question_Type = "Component";
-                if(answer.IsMaturity)                    
+                if(answer.Is_Maturity)                    
                     answer.Question_Type = "Maturity";
-                if (answer.IsRequirement)
+                if (answer.Is_Requirement)
                     answer.Question_Type = "Requirement";
-                if (!answer.IsRequirement && !answer.IsMaturity && !answer.IsComponent)
+                if (!answer.Is_Requirement && !answer.Is_Maturity && !answer.Is_Component)
                     answer.Question_Type = "Question";
             }
 
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
 
-            if (answer.IsComponent)
+            if (answer.Is_Component)
             {
                 QuestionsManager qm = new QuestionsManager(assessmentId);
                 return qm.StoreComponentAnswer(answer);
             }
 
-            if (answer.IsRequirement)
+            if (answer.Is_Requirement)
             {
                 RequirementsManager rm = new RequirementsManager(assessmentId);
                 return rm.StoreAnswer(answer);
             }
 
-            if (answer.IsMaturity)
+            if (answer.Is_Maturity)
             {
                 MaturityManager mm = new MaturityManager();
                 return mm.StoreAnswer(assessmentId, answer);
