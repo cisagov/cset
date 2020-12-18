@@ -249,27 +249,42 @@ namespace CSETWeb_Api.Models
         public string QuestionType;
 
         //public bool Is_Requirement;
-        public bool IsRequirement
+        public bool Is_Requirement
         {
             get
             {
                 return this.QuestionType == "Requirement";
             }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Requirement";
+            }
         }
 
         //public bool Is_Component;
-        public bool IsComponent
+        public bool Is_Component
         {
             get
             {
                 return this.QuestionType == "Component";
             }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Component";
+            }
         }
 
         //public bool Is_Maturity;
-        public bool IsMaturity {
+        public bool Is_Maturity {
             get {
                 return this.QuestionType == "Maturity";
+            }
+            set
+            {
+                if(value)
+                    this.QuestionType = "Maturity";
             }
         }
 
