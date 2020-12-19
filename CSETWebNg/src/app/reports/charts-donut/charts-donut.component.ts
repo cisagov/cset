@@ -34,7 +34,7 @@ export class ChartsDonutComponent implements OnInit {
   @Input()
   donutData: any;
 
-  view: any[] = [500, 400];
+  view: any[] = [400, 400];
 
   // options
   showLegend: boolean = true;
