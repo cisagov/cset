@@ -47,27 +47,41 @@
     <div _ngcontent-c2="" class="page-break"></div>    
     <div>
         <h1 _ngcontent-c2="" class="page-title">Statements Marked For Review</h1>
+        <p  style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"></p>
         <hr class="page-line">        
         <table class="table-site-info">
-            <tr *ngFor="let s of response?.MarkedForReviewList">                
-                <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
-                <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+            <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
+            <tr>                
+                <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
+                    <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                </td>
+                <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>                
                 <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>                
             </tr>
+            <tr>
+                <td class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+            </tr>
+          </ng-template>   
         </table>
     </div>
     <div _ngcontent-c2="" class="page-break"></div>
     <div>
         <h1 _ngcontent-c2="" class="page-title">Statement Comments</h1>
+        <p  style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png">   </p>
         <hr class="page-line">        
         <table class="table-site-info">
-            <tr *ngFor="let s of response?.Comments">                
+            <ng-template ngFor let-s [ngForOf]="response?.Comments">
+                <tr>                
                     <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
-                        <img *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
-                    </td>                
-                    <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                        <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                    </td>
+                    <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>                
                     <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>                
-            </tr>
+                </tr>
+                <tr>
+                    <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                </tr>
+            </ng-template>               
         </table>
     </div>    
 </div>
