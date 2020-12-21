@@ -37,7 +37,9 @@ const headers = {
  * A service that provides everything that ACET needs.
  */
 @Injectable()
-export class ACETService {    
+export class ACETService {
+  
+    
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -109,6 +111,12 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'reports/acet/getDeficiencyList', headers);
     }
 
+    getCompensatingControls() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
+    } 
+    getCommentsMarked() {
+        return this.http.get(this.apiUrl + 'reports/acet/getCommentsMarked', headers);
+      }   
     /*
     * Save targetBand
     */
