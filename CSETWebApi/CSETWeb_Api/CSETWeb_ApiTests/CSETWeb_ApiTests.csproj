@@ -208,6 +208,7 @@
     <Compile Include="Controllers\QuestionsControllerTests.cs" />
     <Compile Include="Controllers\ResourceLibraryControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportEngine\ReportsDataManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
