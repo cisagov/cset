@@ -36,7 +36,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<MatRelevantAnswers> getACETDeficiences()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select * from ANSWER a
+            //select* from ANSWER a
             //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
             //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
             using (var db = new CSET_Context())
@@ -52,6 +52,67 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return cont.ToList();
             }
                 
+        }
+
+        public List<MatRelevantAnswers> getCommentsList()
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Comment!=null && m.Maturity_Model_Id == 1
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER = a,
+                               Mat = m
+                           };
+                return cont.ToList();
+            }
+        }
+
+        public List<MatRelevantAnswers> getMarkedForReviewList()
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && (a.Mark_For_Review??false)==true && m.Maturity_Model_Id == 1
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER = a,
+                               Mat = m
+                           };
+                return cont.ToList();
+            }
+        }
+
+        public List<MatRelevantAnswers> getAlternatesList()
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == 1
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER = a,
+                               Mat = m
+                           };
+                return cont.ToList();
+            }
+
         }
 
         /// <summary>

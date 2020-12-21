@@ -24,7 +24,7 @@ namespace CSETWeb_Api.Controllers
     {
         [HttpGet]
         [Route("api/reports/acet/getDeficiencyList")]
-        public ACETReportData GetSecurityPlan()
+        public ACETReportData GetDeficiencyList()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
@@ -33,5 +33,30 @@ namespace CSETWeb_Api.Controllers
             data.information = reportsDataManager.GetInformation();
             return data;
         }
+
+        [HttpGet]
+        [Route("api/reports/acet/getAltList")]
+        public ACETReportData GetAltList()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            ACETReportData data = new ACETReportData();
+            data.AlternateList = reportsDataManager.getAlternatesList();
+            data.information = reportsDataManager.GetInformation();
+            return data;
+        }
+        [HttpGet]
+        [Route("api/reports/acet/getCommentsMarked")]
+        public ACETReportData GetCommentsMarked()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            ACETReportData data = new ACETReportData();
+            data.Comments = reportsDataManager.getCommentsList();
+            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList();
+            data.information = reportsDataManager.GetInformation();
+            return data;
+        }
+        
     }
 }
