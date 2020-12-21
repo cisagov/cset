@@ -53,13 +53,20 @@
         </h1>
         <hr>
         <p>This report contains all the statements that have an associated compensating control and the comment provided.</p>        
-        <table class="table-site-info">
-            <tr *ngFor="let s of response?.AlternateList">
-                <td>Statement {{s.Mat.Sequence}}:</td>
-                <td>{{s.Mat.Question_Text}}</td>
-                <td>{{s.ANSWER.Answer_Text}}</td>
-                <td>{{s.ANSWER.Alternate_Justification}}</td>
-            </tr>
+        <p  style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png">   </p>
+        <table class="cset-table">
+            <ng-template ngFor let-s [ngForOf]="response?.AlternateList">
+                <tr>
+                    <td><b>Statement {{s.Mat.Sequence}}:</b>
+                        <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                    </td>
+                    <td>{{s.Mat.Question_Text}}</td>                    
+                    <td>{{s.ANSWER.Answer_Text}}</td>                
+                </tr>
+                <tr>
+                    <td colspan="3">{{s.ANSWER.Alternate_Justification}}</td>
+                </tr>
+              </ng-template>            
         </table>
     </div>
 </div>
