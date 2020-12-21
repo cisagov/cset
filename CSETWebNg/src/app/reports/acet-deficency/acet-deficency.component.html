@@ -53,13 +53,24 @@
             Compensating Controls            
         </h1>
         <hr>
-        <p>This report contains all the statements that have an associated compensating control and the comment provided.</p>        
-        <table class="table-site-info">
-            <tr *ngFor="let s of response?.DeficiencesList">
-                <td>Statement {{s.Mat.Question_Title}}:</td>
-                <td>{{s.Mat.Question_Text}}</td>
-                <td>{{s.ANSWER.Answer_Text}}</td>
-            </tr>
+        <p>This report contains all the statements that have been answered No and are deficient and the comment provided.</p>     
+        <p  style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png">   </p>
+        <table>            
+            <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
+                <tr>                
+                    <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
+                        <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                    </td>
+                    <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>                
+                    <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>                
+                </tr>
+                <tr>
+                    <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                </tr>
+            </ng-template>                   
         </table>
     </div>
 </div>
