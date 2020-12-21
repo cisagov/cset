@@ -50,7 +50,7 @@
         <hr class="page-line">        
         <table class="table-site-info">
             <tr *ngFor="let s of response?.MarkedForReviewList">                
-                <td class="deficiencies-list-item"><b>Statement {{s.Mat.Question_Title}}:</b></td>
+                <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
                 <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                 <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>                
             </tr>
@@ -62,7 +62,7 @@
         <hr class="page-line">        
         <table class="table-site-info">
             <tr *ngFor="let s of response?.Comments">                
-                    <td class="deficiencies-list-item"><b>Statement {{s.Mat.Question_Title}}:</b>
+                    <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
                         <img *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
                     </td>                
                     <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>

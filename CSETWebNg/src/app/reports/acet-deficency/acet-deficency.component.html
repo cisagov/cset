@@ -56,7 +56,7 @@
         <p>This report contains all the statements that have been answered No and are deficient and the comment provided.</p>        
         <table class="table-site-info">
             <tr *ngFor="let s of response?.DeficiencesList">
-                <td>Statement {{s.Mat.Question_Title}}:</td>
+                <td>Statement {{s.Mat.Sequence}}:</td>
                 <td>{{s.Mat.Question_Text}}</td>
                 <td>{{s.ANSWER.Answer_Text}}</td>
             </tr>
