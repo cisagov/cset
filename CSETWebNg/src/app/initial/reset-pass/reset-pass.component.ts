@@ -33,7 +33,8 @@ import { ConfigService } from '../../services/config.service';
     selector: 'app-reset-pass',
     templateUrl: './reset-pass.component.html',
     // tslint:disable-next-line:use-host-property-decorator
-    host: {class: 'd-flex flex-column flex-11a'}
+    host: {class: 'd-flex flex-column flex-11a'}, 
+    styleUrls: ['./reset-pass.component.scss'] 
 })
 
 export class ResetPassComponent {

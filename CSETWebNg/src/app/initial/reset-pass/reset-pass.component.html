@@ -47,7 +47,7 @@
             </svg>
         </div>
 
-        <div class="mb-4 mr-4 ml-4 p-3 bgc-secondary c-white">
+        <div class="mb-4 mr-4 ml-4 p-3 bgc-secondary c-white" [ngClass]="{'login-margin' : configSvc.acetInstallation }">
             <div *ngIf="!configSvc.acetInstallation">
                 Enter the email address associated with your CSET account.
             </div>
