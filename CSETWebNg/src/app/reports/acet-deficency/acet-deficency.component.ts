@@ -31,6 +31,7 @@ export class AcetDeficencyComponent implements OnInit {
     this.acetSvc.getAcetDeficiency().subscribe(
       (r: any) => {
         this.response = r;        
+        console.log(r);
       },
       error => console.log('Deficiency Report Error: ' + (<Error>error).message)
     );
