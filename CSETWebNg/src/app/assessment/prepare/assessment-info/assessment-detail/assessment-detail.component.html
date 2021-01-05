@@ -35,9 +35,14 @@
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!configSvc.acetInstallation">
         <label class="mb-1" for="facility">Facility Name</label>
         <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.FacilityName"
+            (change)="update($event)">
+    </div>
+    <div class="form-group" *ngIf="configSvc.acetInstallation">
+        <label class="mb-1" for="creditUnion">Credit Union</label>
+        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.CreditUnion"
             (change)="update($event)">
     </div>
     <div class="form-row">
@@ -52,7 +57,7 @@
                 (change)="update($event)">
         </div>
     </div>
-    <div class="form-row" [hidden]="!navSvc.acetSelected">
+    <div class="form-row" [hidden]="!configSvc.acetInstallation">
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
                     <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" (change)="update($event)">

@@ -75,7 +75,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "200kb"
+                  "maximumWarning": "400kb"
                 }
               ],
               "optimization": true,
