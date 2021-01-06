@@ -204,6 +204,7 @@
     <Compile Include="Manual\CSET_Context.cs" />
     <Compile Include="Manual\DOCUMENT_FILE.cs" />
     <Compile Include="Manual\ID_result.cs" />
+    <Compile Include="Manual\MaturityGroupingResult.cs" />
     <Compile Include="Manual\NEW_QUESTION_Ext.cs" />
     <Compile Include="Manual\NEW_REQUIREMENT.cs" />
     <Compile Include="Manual\usp_financial_attributes_result.cs" />
