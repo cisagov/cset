@@ -30,6 +30,7 @@ export class AcetExecutiveComponent implements OnInit {
 
   graphdata: any = [];
   maturityDetail: MaturityDomain[];
+  domainDataList: any = [];
 
   // Maturity Rep Data
   matDetailResponse: MatDetailResponse;
@@ -57,53 +58,39 @@ export class AcetExecutiveComponent implements OnInit {
     //);
     this.response = this.mockDataAcetExecutive;
 
-    // Carting mat detail data for mat deatil area
-    var maturityData = [];
-
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         console.log(data);
-        this.maturityDetail = data;
         // Format and connect donut data here
         data.forEach((domain: MaturityDomain) => {
-          var matData = { DomainName: domain.DomainName, DomainMaturity: domain.DomainMaturity, targetPercentAchieved: 0}
-          if (domain.DomainName == "Cyber Risk Management & Oversight"){
-            domain.Assessments.forEach((assignment: MaturityAssessment) => {
-              var assesmentData = {
-                "asseessmentFactor": assignment.AssessmentFactor,
-                "sections": []
-              }
-              assignment.Components.forEach((component: MaturityComponent) => {
-                var sectionData = [
-                  { "name": "Baseline", "value": component.Baseline },
-                  { "name": "Evolving", "value": component.Evolving }, 
-                  { "name": "Intermediate", "value": component.Intermediate },
-                  { "name": "Advanced", "value": component.Advanced },
-                  { "name": "Innovative", "value": component.Innovative }
-                ]
-                // var sectionAvg = (component.Baseline + component.Evolving + component.Intermediate + component.Advanced + component.Innovative)/5;
-
-                var sectonInfo = {
-                  "name": component.ComponentName,
-                  "data": sectionData
-                }
-                assesmentData.sections.push(sectonInfo);
-              })
-              this.graphdata.push(assesmentData);
-            })
-
-          };
-          // Loop over and get avrages
+          var domainData = { domainName: domain.DomainName, graphdata: []}
           domain.Assessments.forEach((assignment: MaturityAssessment) => {
+            var assesmentData = {
+              "asseessmentFactor": assignment.AssessmentFactor,
+              "sections": []
+            }
             assignment.Components.forEach((component: MaturityComponent) => {
-                var sectionAvg = (component.Baseline + component.Evolving + component.Intermediate + component.Advanced + component.Innovative)/5;
+              var sectionData = [
+                { "name": "Baseline", "value": component.Baseline },
+                { "name": "Evolving", "value": component.Evolving }, 
+                { "name": "Intermediate", "value": component.Intermediate },
+                { "name": "Advanced", "value": component.Advanced },
+                { "name": "Innovative", "value": component.Innovative }
+              ]
+              // var sectionAvg = (component.Baseline + component.Evolving + component.Intermediate + component.Advanced + component.Innovative)/5;
 
+              var sectonInfo = {
+                "name": component.ComponentName,
+                "data": sectionData
+              }
+              assesmentData.sections.push(sectonInfo);
             })
+            this.graphdata.push(assesmentData);
           })
-
-
-
+          domainData.graphdata = this.graphdata;
+          this.domainDataList.push(domainData);
         })
+        console.log(this.domainDataList);
         },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
