@@ -8,7 +8,7 @@ import { ACETService } from '../../services/acet.service';
 @Component({
   selector: 'app-acet-commentsmarked',
   templateUrl: './acet-commentsmarked.component.html',
-  styleUrls: ['../reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetCommentsmarkedComponent implements OnInit {
   response: any = null;  

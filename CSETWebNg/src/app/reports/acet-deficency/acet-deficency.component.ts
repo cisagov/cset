@@ -11,7 +11,7 @@ import { ACETService } from '../../services/acet.service';
 @Component({
   selector: 'app-acet-deficency',
   templateUrl: './acet-deficency.component.html',
-  styleUrls: ['../reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetDeficencyComponent implements OnInit {
   response: any;

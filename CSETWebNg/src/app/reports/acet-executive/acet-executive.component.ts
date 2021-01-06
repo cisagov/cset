@@ -10,7 +10,7 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 @Component({
   selector: 'app-acet-executive',
   templateUrl: './acet-executive.component.html',
-  styleUrls: ['../reports.scss', './acet-executive.component.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;
@@ -29,6 +29,7 @@ export class AcetExecutiveComponent implements OnInit {
   };
 
   graphdata: any = [];
+  maturityDetail: MaturityDomain[];
 
   // Maturity Rep Data
   matDetailResponse: MatDetailResponse;
@@ -56,11 +57,16 @@ export class AcetExecutiveComponent implements OnInit {
     //);
     this.response = this.mockDataAcetExecutive;
 
+    // Carting mat detail data for mat deatil area
+    var maturityData = [];
+
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         console.log(data);
+        this.maturityDetail = data;
         // Format and connect donut data here
         data.forEach((domain: MaturityDomain) => {
+          var matData = { DomainName: domain.DomainName, DomainMaturity: domain.DomainMaturity, targetPercentAchieved: 0}
           if (domain.DomainName == "Cyber Risk Management & Oversight"){
             domain.Assessments.forEach((assignment: MaturityAssessment) => {
               var assesmentData = {
@@ -68,25 +74,35 @@ export class AcetExecutiveComponent implements OnInit {
                 "sections": []
               }
               assignment.Components.forEach((component: MaturityComponent) => {
-                console.log("component: ");
-                console.log(component);
                 var sectionData = [
-                { "name": "Baseline", "value": component.Baseline },
-                { "name": "Evolving", "value": component.Evolving }, 
-                { "name": "Intermediate", "value": component.Intermediate },
-                { "name": "Advanced", "value": component.Advanced },
-                { "name": "Innovative", "value": component.Innovative }
-              ]
-              var sectonInfo = {
-                "name": component.ComponentName,
-                "data": sectionData
-              }
+                  { "name": "Baseline", "value": component.Baseline },
+                  { "name": "Evolving", "value": component.Evolving }, 
+                  { "name": "Intermediate", "value": component.Intermediate },
+                  { "name": "Advanced", "value": component.Advanced },
+                  { "name": "Innovative", "value": component.Innovative }
+                ]
+                // var sectionAvg = (component.Baseline + component.Evolving + component.Intermediate + component.Advanced + component.Innovative)/5;
+
+                var sectonInfo = {
+                  "name": component.ComponentName,
+                  "data": sectionData
+                }
                 assesmentData.sections.push(sectonInfo);
               })
               this.graphdata.push(assesmentData);
             })
 
           };
+          // Loop over and get avrages
+          domain.Assessments.forEach((assignment: MaturityAssessment) => {
+            assignment.Components.forEach((component: MaturityComponent) => {
+                var sectionAvg = (component.Baseline + component.Evolving + component.Intermediate + component.Advanced + component.Innovative)/5;
+
+            })
+          })
+
+
+
         })
         },
       error => {
