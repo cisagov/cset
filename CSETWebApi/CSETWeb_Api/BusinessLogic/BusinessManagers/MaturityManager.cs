@@ -38,13 +38,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var q = from amm in db.AVAILABLE_MATURITY_MODELS
-                               from mm in db.MATURITY_MODELS
-                               where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                               select new MaturityModel() 
-                               { 
-                                   ModelId = mm.Maturity_Model_Id, 
-                                   ModelName = mm.Model_Name 
-                               };
+                        from mm in db.MATURITY_MODELS
+                        where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
+                        select new MaturityModel()
+                        {
+                            ModelId = mm.Maturity_Model_Id,
+                            ModelName = mm.Model_Name
+                        };
                 var myModel = q.FirstOrDefault();
 
                 if (myModel != null)
@@ -186,6 +186,48 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
+        public MaturityResponse GetMaturityQuestions_NEW(int assessmentId)
+        {
+            var response = new MaturityResponse();
+
+            using (var db = new CSET_Context())
+            {
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                if (myModel == null)
+                {
+                    return response;
+                }
+
+
+                // read all grouping records for the maturity model
+                var ggg = db.GetMaturityGroupings(myModel.model_id);
+
+                // Get all maturity questions for the model regardless of level.
+                // The user may choose to see questions above the target level via filtering. 
+                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+                // Get all MATURITY answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b };
+
+
+                // put them together in their structure
+
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
         public object GetMaturityQuestions(int assessmentId)
         {
             // Populate response
@@ -200,10 +242,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var myModel = db.AVAILABLE_MATURITY_MODELS
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-               
+
                 if (myModel == null)
                 {
-                   return response;
+                    return response;
                 }
 
                 response.ModelName = myModel.model_.Model_Name;
@@ -213,13 +255,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     // Here handle EDM questions
                     // Add to list
-                    List<string> supportedAnswers = new List<string>{ "Y", "I", "N", "NA" };
+                    List<string> supportedAnswers = new List<string> { "Y", "I", "N", "NA" };
                     response.AnswerOptions = supportedAnswers;
-                    
+
                 }
-                else if (response.ModelName == "CMMC") 
+                else if (response.ModelName == "CMMC")
                 {
-                  
+
                     // Here Handle CMMC
                     // ToDo: best to refactor 
                     // see if any answer options should not be in the list
@@ -334,7 +376,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 MaturityLevel = dbR.Maturity_Level,
                                 SetName = string.Empty
                             };
-                                if (answer != null)
+                            if (answer != null)
                             {
                                 TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                                 TinyMapper.Map(answer.b, qa);
@@ -346,7 +388,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     }
                 }
-                
+
                 return response;
             }
         }

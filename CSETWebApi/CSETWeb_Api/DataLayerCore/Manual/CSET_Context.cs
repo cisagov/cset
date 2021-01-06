@@ -525,5 +525,29 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+
+
+        /// <summary>
+        /// Returns a list of Maturity Groupings for a maturity model.
+        /// </summary>
+        /// <param name="maturityModelId"></param>
+        /// <returns></returns>
+        public virtual IList<MaturityGroupingResult> GetMaturityGroupings(Nullable<int> maturityModelId)
+        {
+            if (!maturityModelId.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<MaturityGroupingResult> myrval = null;
+            this.LoadStoredProc("GetMaturityGroupings")
+                     .WithSqlParam("modelid", maturityModelId)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         var myrval2 = handler.ReadToList<MaturityGroupingResult>();
+                         myrval = myrval2.ToList();
+                     });
+
+            return myrval;
+        }
     }
 }
