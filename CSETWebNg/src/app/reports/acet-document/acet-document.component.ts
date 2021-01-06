@@ -6,7 +6,7 @@ import { ReportService } from '../../services/report.service';
 @Component({
   selector: 'app-acet-document',
   templateUrl: './acet-document.component.html',
-  styleUrls: ['./acet-document.component.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetDocumentComponent implements OnInit {
   response: any = null;
