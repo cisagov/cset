@@ -60,7 +60,6 @@ export class AcetExecutiveComponent implements OnInit {
 
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
-        console.log(data);
         // Format and connect donut data here
         data.forEach((domain: MaturityDomain) => {
           var domainData = { domainName: domain.DomainName, graphdata: []}
@@ -77,27 +76,22 @@ export class AcetExecutiveComponent implements OnInit {
                 { "name": "Advanced", "value": component.Advanced },
                 { "name": "Innovative", "value": component.Innovative }
               ]
-              // var sectionAvg = (component.Baseline + component.Evolving + component.Intermediate + component.Advanced + component.Innovative)/5;
-
+              
               var sectonInfo = {
                 "name": component.ComponentName,
                 "data": sectionData
               }
               assesmentData.sections.push(sectonInfo);
             })
-            this.graphdata.push(assesmentData);
+            domainData.graphdata.push(assesmentData);
           })
-          domainData.graphdata = this.graphdata;
           this.domainDataList.push(domainData);
         })
-        console.log(this.domainDataList);
         },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
-
-    console.log(this.graphdata)
 
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {
