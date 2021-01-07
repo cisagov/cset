@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/cor
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
-import { AssessmentService } from '../../services/assessment.service';
 import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 
@@ -15,20 +14,6 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;
-  mockDataAcetExecutive: any = {
-    "information": {
-      "Assessment_Name": "Manhattan Assessment",
-      "Assessment_Date": "2020-09-19",
-      "Assessor_Name": "Michael Jones",
-      "Credit_Union": "Bank of Bill",
-      "Facility_Name": "Bills Bank",
-      "City_Or_Site_Name": "New New York City",
-      "State_Prov_Region": "New York",
-      "Charter": "NNYC",
-      "Assets": "1234",
-    }
-  };
-
   graphdata: any = [];
   maturityDetail: MaturityDomain[];
   domainDataList: any = [];
@@ -42,7 +27,6 @@ export class AcetExecutiveComponent implements OnInit {
   information: any;
 
   constructor(
-    public assessSvc: AssessmentService,
     public reportSvc: ReportService,
     public acetSvc: ACETService,
     private titleService: Title,
@@ -51,23 +35,9 @@ export class AcetExecutiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
-    // Here get report data
-    // ToDo: Uncomment this and connect backend for report data
-    //this.reportSvc.getReport('<ACET Endpoint>').subscribe(
-    //  (r: any) => {
-    //    this.response = r;
-    //  },
-    //  error => console.log('Executive report load Error: ' + (<Error>error).message)
-    //);
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (data: any) => {
-        this.information = data;
-        console.log(data);
-      });
     
     this.acetSvc.getAssessmentInfromation().subscribe(
       (r: any) => {
-        console.log(r);
         this.response = r;
       },
       error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
