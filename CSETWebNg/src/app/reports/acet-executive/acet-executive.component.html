@@ -52,18 +52,18 @@
                     style="height: 185px" />
             </div>
             <div _ngcontent-c2="" style="
-        text-align: right;
-        font-weight: normal;
-        font-size: 18px;
-        flex-direction: column;
-        line-height: 150%;
-        padding-right: 2em;
-    ">
+                text-align: right;
+                font-weight: normal;
+                font-size: 18px;
+                flex-direction: column;
+                line-height: 150%;
+                padding-right: 2em;
+            ">
 
-                <div _ngcontent-c2="" class="title-page-name">{{information?.AssessmentName}}</div>
-                <div _ngcontent-c2="" class="title-page-content">{{information?.AssessmentDate | date:'dd-MMM-yyyy'}}</div>
-                <div _ngcontent-c2="" class="title-page-content">{{information?.AssessorName}}</div>
-                <div _ngcontent-c2="" class="title-page-content">{{information?.Assets | currency}}</div>
+                <div _ngcontent-c2="" class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assets | currency}}</div>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                             <p _ngcontent-c2="" style="text-align: center">Assessment Name:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: right">{{information?.AssessmentName}}</p>
+                            <p _ngcontent-c2="" style="text-align: right">{{response?.information?.Assessment_Name}}</p>
 
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                             <p _ngcontent-c2="" style="text-align: center">Assessment Date:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">{{information?.AssessmentDate | date:'dd-MMM-yyyy'}}</p>
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</p>
 
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                             <p _ngcontent-c2="" style="text-align: left">Credit Union:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">{{information?.CreditUnion}}</p>
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Credit_Union_Name}}</p>
 
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                             <p _ngcontent-c2="" style="text-align: center">City or Site Name:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">{{information?.CityOrSiteName}}</p>
+                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.City_Or_Site_Name}}</p>
 
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                             <p _ngcontent-c2="" style="text-align: center">State/Province/Region:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">{{information?.StateProvRegion}}</p>
+                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.State_Province_Or_Region}}</p>
 
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                             <p _ngcontent-c2="" style="text-align: center">Charter:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">{{information?.Charter}}</p>
+                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.Charter}}</p>
 
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                             <p _ngcontent-c2="" style="text-align: center">Assets:</p>
                         </div>
                         <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">{{information?.Assets | currency}}</p>
+                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.Assets | currency}}</p>
 
                         </div>
                     </div>

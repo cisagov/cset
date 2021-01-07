@@ -64,9 +64,15 @@ export class AcetExecutiveComponent implements OnInit {
         this.information = data;
         console.log(data);
       });
+    
+    this.acetSvc.getAssessmentInfromation().subscribe(
+      (r: any) => {
+        console.log(r);
+        this.response = r;
+      },
+      error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
+    );
   
-    this.response = this.mockDataAcetExecutive;
-
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         // Format and connect donut data here
