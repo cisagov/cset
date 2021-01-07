@@ -91,6 +91,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
+        console.info(r);
         // Break out any CIA special factors now - can't do a find in the template
         let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
         if (!!v) {

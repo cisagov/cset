@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/cor
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
+import { AssessmentService } from '../../services/assessment.service';
 import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 
@@ -38,8 +39,10 @@ export class AcetExecutiveComponent implements OnInit {
   maturityComponent: MaturityComponent;
   maturityAssessment: MaturityAssessment;
   acetDashboard: AcetDashboard;
+  information: any;
 
   constructor(
+    public assessSvc: AssessmentService,
     public reportSvc: ReportService,
     public acetSvc: ACETService,
     private titleService: Title,
@@ -56,6 +59,12 @@ export class AcetExecutiveComponent implements OnInit {
     //  },
     //  error => console.log('Executive report load Error: ' + (<Error>error).message)
     //);
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (data: any) => {
+        this.information = data;
+        console.log(data);
+      });
+  
     this.response = this.mockDataAcetExecutive;
 
     this.acetSvc.getMatDetailList().subscribe(
