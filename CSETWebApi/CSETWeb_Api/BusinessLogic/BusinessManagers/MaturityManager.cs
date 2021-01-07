@@ -188,10 +188,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
-        /// 
+        /// Assembles a response consisting of maturity settings for the assessment
+        /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions_NEW(int assessmentId)
+        public MaturityResponse GetMaturityQuestions(int assessmentId)
         {
             var response = new MaturityResponse();
 
@@ -253,7 +254,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
-        /// 
+        /// Recursive method that builds subgroupings for the specified group.
+        /// It also attaches any questions pertinent to this group.
         /// </summary>
         private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
             List<MATURITY_GROUPINGS> allGroupings, 
@@ -302,7 +304,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         MaturityLevel = myQ.Maturity_Level,
                         SetName = string.Empty
                     };
-
+                
                     if (answer != null)
                     {
                         TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -320,9 +322,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         /// <summary>
         /// 
+        /// NOTE:
+        /// 
+        /// This is the "old" version of retrieving maturity questions.
+        /// As soon as the UI is updated to handle the new method (above),
+        /// this method should be deleted.
+        /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public object GetMaturityQuestions(int assessmentId)
+        public object GetMaturityQuestions_OLD(int assessmentId)
         {
             // Populate response
             var response = new QuestionResponse
