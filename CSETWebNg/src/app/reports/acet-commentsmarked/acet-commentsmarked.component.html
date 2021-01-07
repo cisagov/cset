@@ -34,15 +34,26 @@
             <p style="text-align: center">
                 <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
             </p>
-            <div class="cover-page-bottom mb-4">                
-                    <img style="height: 185px" src="../../../../assets/images/ACET/NCUA_logo.png">
+            <div _ngcontent-c2="" class="cover-page-bottom mb-4">
+                <div _ngcontent-c2="">
+                    <img _ngcontent-c2="" src="../../../../assets/images/ACET/NCUA_logo.png" style="height: 185px" />
+                </div>
+                <div _ngcontent-c2="" style="
+                            text-align: right;
+                            font-weight: normal;
+                            font-size: 18px;
+                            flex-direction: column;
+                            line-height: 150%;
+                            padding-right: 2em;
+                        ">
+            
+                    <div _ngcontent-c2="" class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                    <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    </div>
+                    <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                    <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                </div>
             </div>
-            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information?.Assessment_Name}}</div>
-                <div>{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</div>
-                <div>{{response?.information?.Assessor_Name}}</div>
-            </div>
-        </div>
     </div>
     <div _ngcontent-c2="" class="page-break"></div>    
     <div>
