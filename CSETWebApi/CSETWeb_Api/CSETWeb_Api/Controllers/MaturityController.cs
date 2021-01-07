@@ -78,7 +78,7 @@ namespace CSETWeb_Api.Controllers
         public object GetQuestions()
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityQuestions_NEW(assessmentId);
+            return new MaturityManager().GetMaturityQuestions(assessmentId);
         }
 
 

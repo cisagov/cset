@@ -25,6 +25,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
     public class MaturityManager
     {
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MaturityManager()
         { }
 
@@ -96,6 +100,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
             return levelNames;
         }
+
 
         /// <summary>
         /// Saves the selected maturity models.
@@ -196,14 +201,28 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
-                if (myModel == null)
+
+                var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
+
+                if (myModelDefinition == null)
                 {
                     return response;
                 }
+                
+                if (myModelDefinition.Answer_Options != null)
+                {
+                    response.AnswerOptions = myModelDefinition.Answer_Options.Split(',').ToList();
+                    response.AnswerOptions.ForEach(x => x = x.Trim());
+                }
 
 
-                // read all grouping records for the maturity model
-                var ggg = db.GetMaturityGroupings(myModel.model_id);
+                response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
+
+
+                // get the levels and their display names for this model
+                response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
+
+
 
                 // Get all maturity questions for the model regardless of level.
                 // The user may choose to see questions above the target level via filtering. 
@@ -217,12 +236,87 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                               select new FullAnswer() { a = a, b = b };
 
 
-                // put them together in their structure
+                // Get all subgroupings for this maturity model
+                var allGroupings = db.MATURITY_GROUPINGS
+                    .Include(x => x.Type_)
+                    .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+
+                // Recursively build the grouping/question hierarchy
+                var tempModel = new MaturityGrouping();
+                BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
+                response.Groupings = tempModel.SubGroupings;
             }
 
             return response;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
+            List<MATURITY_GROUPINGS> allGroupings, 
+            List<MATURITY_QUESTIONS> questions, 
+            List<FullAnswer> answers)
+        {
+            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+
+            if (mySubgroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var sg in mySubgroups)
+            {
+                var newGrouping = new MaturityGrouping()
+                {
+                    GroupingID = sg.Grouping_Id,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    Title = sg.Title,
+                    Description = sg.Description
+                };
+
+                g.SubGroupings.Add(newGrouping);
+
+
+                // are there any questions that belong to this grouping?
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+
+                foreach (var myQ in myQuestions)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                    {
+                        DisplayNumber = myQ.Question_Title,
+                        QuestionId = myQ.Mat_Question_Id,
+                        QuestionType = "Maturity",
+                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        Answer = answer?.a.Answer_Text,
+                        AltAnswerText = answer?.a.Alternate_Justification,
+                        Comment = answer?.a.Comment,
+                        Feedback = answer?.a.Feedback,
+                        MarkForReview = answer?.a.Mark_For_Review ?? false,
+                        Reviewed = answer?.a.Reviewed ?? false,
+                        MaturityLevel = myQ.Maturity_Level,
+                        SetName = string.Empty
+                    };
+
+                    if (answer != null)
+                    {
+                        TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                        TinyMapper.Map(answer.b, qa);
+                    }
+
+                    newGrouping.Questions.Add(qa);
+                }
+
+                // Recurse down to build subgroupings
+                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+            }
+        }
+
 
         /// <summary>
         /// 
