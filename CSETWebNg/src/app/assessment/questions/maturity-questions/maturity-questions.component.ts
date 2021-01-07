@@ -66,7 +66,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
   }
@@ -93,6 +92,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.domains = null;
     this.maturitySvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
+
+        console.log(response);
+
         // Display either CMMC or EDM Acordingly
         this.questionsSvc.questions = response;
         this.modelName = response.ModelName; 
