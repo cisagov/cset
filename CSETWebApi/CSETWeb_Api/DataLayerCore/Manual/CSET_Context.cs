@@ -56,6 +56,26 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
             });
 
+            modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
+            {
+                entity.HasKey(e => e.Grouping_Id)
+                    .HasName("PK_MATURITY_ELEMENT");
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.HasOne(d => d.Type_)
+                    .WithMany(p => p.MATURITY_GROUPINGS)
+                    .HasForeignKey(d => d.Type_Id)
+                    .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
+            });
+
+            modelBuilder.Entity<MATURITY_GROUPING_TYPES>(entity =>
+            {
+                entity.Property(e => e.Grouping_Type_Name).IsUnicode(false);
+            });
+
             modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
             {
                 entity.HasKey(e => e.Mat_Question_Id)
@@ -524,30 +544,6 @@ namespace DataLayerCore.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }
-
-
-        /// <summary>
-        /// Returns a list of Maturity Groupings for a maturity model.
-        /// </summary>
-        /// <param name="maturityModelId"></param>
-        /// <returns></returns>
-        public virtual IList<MaturityGroupingResult> GetMaturityGroupings(Nullable<int> maturityModelId)
-        {
-            if (!maturityModelId.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<MaturityGroupingResult> myrval = null;
-            this.LoadStoredProc("GetMaturityGroupings")
-                     .WithSqlParam("modelid", maturityModelId)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         var myrval2 = handler.ReadToList<MaturityGroupingResult>();
-                         myrval = myrval2.ToList();
-                     });
-
-            return myrval;
-        }
+        }       
     }
 }

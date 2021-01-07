@@ -23,6 +23,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int MaturityTargetLevel;
 
         /// <summary>
+        /// Answer options supported for this maturity model.  
+        /// </summary>
+        public List<string> AnswerOptions = new List<string>() { "Y", "N", "NA", "A" };
+
+        /// <summary>
         /// The top level of groupings.  This will usually be Domains.
         /// </summary>
         public List<MaturityGrouping> Groupings;
@@ -34,10 +39,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
     /// </summary>
     public class MaturityGrouping
     {
+        public int GroupingID;
+
         /// <summary>
         /// The type of grouping, e.g., Domain, Goal, Capability, etc.
         /// </summary>
-        public string Type;
+        public string GroupingType;
 
         /// <summary>
         /// The display title.
@@ -52,11 +59,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// <summary>
         /// Any child groupings below this grouping.
         /// </summary>
-        public List<MaturityGrouping> Groupings;
+        public List<MaturityGrouping> SubGroupings = new List<MaturityGrouping>();
 
         /// <summary>
         /// The lowest grouping in the hierarchy will hold a collection of questions.
         /// </summary>
-        public List<QuestionAnswer> Questions;
+        public List<QuestionAnswer> Questions = new List<QuestionAnswer>();
     }
 }
