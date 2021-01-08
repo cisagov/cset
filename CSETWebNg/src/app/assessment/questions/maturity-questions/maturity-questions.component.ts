@@ -26,11 +26,12 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { Domain, QuestionResponse } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
+import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
 
 
 @Component({
@@ -39,8 +40,8 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
-  domains: Domain[] = null;
-  modelName: string=null;
+  groupings: QuestionGrouping[] = null;
+  modelName: string = null;
 
   loaded = false;
 
@@ -89,18 +90,17 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   loadQuestions() {
     const magic = this.navSvc.getMagic();
-    this.domains = null;
+    this.groupings = null;
     this.maturitySvc.getQuestionsList().subscribe(
-      (response: QuestionResponse) => {
-
-        console.log(response);
-
+      (response: MaturityQuestionResponse) => {
         // Display either CMMC or EDM Acordingly
-        this.questionsSvc.questions = response;
+        //this.questionsSvc.questions = response;
         this.modelName = response.ModelName; 
-        this.domains = response.Domains;
+        this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.loaded = true;
+
+        console.log(this.groupings);
 
         // default the selected maturity filters
         // this.questionsSvc.initializeMatFilters(response.OverallIRP);
@@ -123,10 +123,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * @param mode
    */
   expandAll(mode: boolean) {
-    this.domains.forEach((d: Domain) => {
-      d.Categories.forEach(group => {
-        group.SubCategories.forEach(subcategory => {
-          subcategory.Expanded = mode;
+    this.groupings.forEach((d: QuestionGrouping) => {
+      d.SubGroupings.forEach(group => {
+        group.SubGroupings.forEach(subcategory => {
+          // subcategory.Expanded = mode;
         });
       });
     });
@@ -158,6 +158,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * based on the current filter settings.
    */
   refreshQuestionVisibility() {
-    this.questionsSvc.evaluateFilters(this.domains);
+    // this.questionsSvc.evaluateFilters(this.groupings);
   }
 }

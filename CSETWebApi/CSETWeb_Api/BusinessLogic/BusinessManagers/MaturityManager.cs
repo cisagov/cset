@@ -209,6 +209,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     return response;
                 }
+
+
+                response.ModelName = myModelDefinition.Model_Name;
+
                 
                 if (myModelDefinition.Answer_Options != null)
                 {
