@@ -238,7 +238,6 @@ import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.compon
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetDetailComponent } from './reports/acet-detail/acet-detail.component';
 import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
@@ -448,7 +447,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,
-        AcetDetailComponent,
         AcetAnsweredquestionsComponent,
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
