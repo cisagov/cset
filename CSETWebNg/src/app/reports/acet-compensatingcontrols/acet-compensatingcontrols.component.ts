@@ -8,7 +8,7 @@ import { ACETService } from '../../services/acet.service';
 @Component({
   selector: 'app-acet-compensatingcontrols',
   templateUrl: './acet-compensatingcontrols.component.html',
-  styleUrls: ['../reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetCompensatingcontrolsComponent implements OnInit {
   response: any = null; 
@@ -29,7 +29,7 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
       (r: any) => {
         this.response = r;        
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.log('Compensating Controls Report Error: ' + (<Error>error).message)
     );
   }
 
