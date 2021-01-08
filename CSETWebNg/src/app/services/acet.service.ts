@@ -38,6 +38,8 @@ const headers = {
  */
 @Injectable()
 export class ACETService {
+  
+    
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -105,6 +107,16 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getTargetBand');
     }
 
+    getAcetDeficiency() {
+        return this.http.get(this.apiUrl + 'reports/acet/getDeficiencyList', headers);
+    }
+
+    getCompensatingControls() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
+    } 
+    getCommentsMarked() {
+        return this.http.get(this.apiUrl + 'reports/acet/getCommentsMarked', headers);
+      }   
     /*
     * Save targetBand
     */
@@ -112,7 +124,6 @@ export class ACETService {
         //adding a comment to force this to push up again
         return this.http.post(this.apiUrl + 'setTargetBand', value, headers);
     }
-
 
     /**
     * Returns the color-coded maturity styling for a particular level of maturity.

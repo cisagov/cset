@@ -181,7 +181,9 @@ export class QuestionExtrasComponent implements OnInit {
   defaultEmptyAnswer() {
     if (this.answer == null) {
       const newAnswer: Answer = {
+        AnswerId: this.myQuestion.Answer_Id,
         QuestionId: this.myQuestion.QuestionId,
+        QuestionType: this.myQuestion.QuestionType,
         QuestionNumber: this.myQuestion.DisplayNumber,
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,

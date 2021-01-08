@@ -26,6 +26,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
+import { ConfigService } from '../../../../services/config.service';
 
 
 @Component({
@@ -40,9 +41,11 @@ export class AssessmentDetailComponent implements OnInit {
   /**
    * 
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private assessSvc: AssessmentService,
-    public navSvc: NavigationService
+    public navSvc: NavigationService,
+    public configSvc: ConfigService
   ) {
     this.navSvc.getACET().subscribe((x: boolean) => {
       this.navSvc.acetSelected = x;

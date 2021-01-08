@@ -24,7 +24,7 @@
     <div class="p-0 d-flex flex-column flex-00a">
 
         <!-- CSET Logo and Name -->
-        <div class="m-4 d-flex justify-content-start flex-00a">
+        <div *ngIf="!configSvc.acetInstallation" class="m-4 d-flex justify-content-start flex-00a">
             <svg width="50" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 x="0px" y="0px" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
                 <path class="fill-white" d="M384.4,166.7c0-14.3-0.1-30.7-0.6-38.9C379.4,58.8,317,6.2,246.3,6.4v0c-0.1,0-0.2,0-0.3,0
@@ -47,8 +47,13 @@
             </svg>
         </div>
 
-        <div class="mb-4 mr-4 ml-4 p-3 bgc-secondary c-white">
-            Enter the email address associated with your CSET account.
+        <div class="mb-4 mr-4 ml-4 p-3 bgc-secondary c-white" [ngClass]="{'login-margin' : configSvc.acetInstallation }">
+            <div *ngIf="!configSvc.acetInstallation">
+                Enter the email address associated with your CSET account.
+            </div>
+            <div *ngIf="configSvc.acetInstallation">
+                Enter the email address associated with your ACET account.
+            </div>
         </div>
 
         <div class="px-4">
@@ -109,9 +114,10 @@
 
         <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-00a">
             <p class="c-gray-600 mb-4">
-                <app-cset-origin></app-cset-origin>
+                <app-cset-origin *ngIf="!configSvc.acetInstallation"></app-cset-origin>
+                <app-acet-origin *ngIf="configSvc.acetInstallation"></app-acet-origin>
             </p>
-            <img src="./assets/images/CISA_Logo_183px.png">
+            <img *ngIf="!configSvc.acetInstallation" src="./assets/images/CISA_Logo_183px.png">
         </div>
 
     </div>

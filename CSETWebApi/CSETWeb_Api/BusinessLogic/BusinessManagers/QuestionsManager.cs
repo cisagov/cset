@@ -73,6 +73,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
+                                 // QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -104,6 +105,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
+                                 // QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -117,7 +119,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Question")
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
@@ -160,6 +162,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
+                                // QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -189,6 +192,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
+                                // QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -200,7 +204,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Question")
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
@@ -358,6 +362,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.QuestionId,
+                    QuestionType = dbQ.QuestionType,
                     QuestionText = FormatLineBreaks(dbQ.SimpleQuestion),
                     Answer = answer?.a?.Answer_Text,
                     Answer_Id = answer?.a?.Answer_Id,
@@ -504,6 +509,7 @@ namespace CSETWeb_Api.BusinessManagers
     public class QuestionPlusHeaders
     {
         public int QuestionId;
+        public string QuestionType;
         public string SimpleQuestion;
 
         public int QuestionGroupHeadingId;

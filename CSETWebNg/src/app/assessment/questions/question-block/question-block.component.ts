@@ -217,7 +217,14 @@ export class QuestionBlockComponent implements OnInit {
     let totalCount = 0;
 
     this.mySubCategory.Questions.forEach(q => {
-      if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityTargetLevel) {
+      if (q.Is_Maturity) {
+        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel) {
+          totalCount++;
+          if (q.Answer && q.Answer !== "U") {
+            answeredCount++;
+          }
+        }
+      } else {
         totalCount++;
         if (q.Answer && q.Answer !== "U") {
           answeredCount++;
@@ -257,7 +264,9 @@ export class QuestionBlockComponent implements OnInit {
       }
 
       const answer: Answer = {
+        AnswerId: q.Answer_Id,
         QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
         QuestionNumber: q.DisplayNumber,
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
@@ -296,7 +305,9 @@ export class QuestionBlockComponent implements OnInit {
     q.Answer = newAnswerValue;
 
     const answer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.QuestionId,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.DisplayNumber,
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
@@ -323,7 +334,7 @@ export class QuestionBlockComponent implements OnInit {
    * justification.
    */
   isAltTextRequired(q: Question) {
-    if (this.configSvc.acetInstallation 
+    if (this.configSvc.acetInstallation
       && (!q.AltAnswerText || q.AltAnswerText.trim().length < 3)) {
       return true;
     }
@@ -340,7 +351,9 @@ export class QuestionBlockComponent implements OnInit {
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
+        AnswerId: q.Answer_Id,
         QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
         QuestionNumber: q.DisplayNumber,
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
@@ -389,7 +402,9 @@ export class QuestionBlockComponent implements OnInit {
     q.MarkForReview = !q.MarkForReview; // Toggle Bind
 
     const newAnswer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.QuestionId,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.DisplayNumber,
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,

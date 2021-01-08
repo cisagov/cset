@@ -233,7 +233,24 @@ import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
-import { EdmComponent } from './reports/edm/edm.component';
+import { IrpSectionComponent } from './reports/irp/irp.component';
+import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
+import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
+import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
+import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetDetailComponent } from './reports/acet-detail/acet-detail.component';
+import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
+import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
+import { LoginAcetComponent } from './initial/login-acet/login-acet.component';
+import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
+import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
+import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
+import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
+import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
+import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     imports: [
@@ -270,6 +287,7 @@ import { EdmComponent } from './reports/edm/edm.component';
         CurrencyMaskModule,
         NgbModule,
         MatTabsModule,
+        NgxChartsModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -386,19 +404,19 @@ import { EdmComponent } from './reports/edm/edm.component';
         CompareMissedComponent,
         CompareIndividualComponent,
         CompareBestworstComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent, 
-        AnalyticsComponent, 
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        AnalyticsComponent,
         DataloginComponent,
         LayoutBlankComponent,
-        LayoutMainComponent, 
+        LayoutMainComponent,
         AcetLayoutMainComponent,
-        ReportTestComponent, 
-        DetailComponent, 
-        DiscoveryTearoutsComponent, 
-        EvalAgainstComponent, 
-        ExecutiveComponent, 
-        SecurityplanComponent, 
+        ReportTestComponent,
+        DetailComponent,
+        DiscoveryTearoutsComponent,
+        EvalAgainstComponent,
+        ExecutiveComponent,
+        SecurityplanComponent,
         SitesummaryComponent,
         TrendReportComponent,
         CompareReportComponent,
@@ -425,7 +443,23 @@ import { EdmComponent } from './reports/edm/edm.component';
         NavBackNextComponent,
         CsetOriginComponent,
         InherentRiskProfileComponent,
-        EdmComponent,
+        IrpSectionComponent,
+        ChartsDonutComponent,
+        AcetExecutiveComponent,
+        AcetDeficencyComponent,
+        AcetCommentsmarkedComponent,
+        AcetDetailComponent,
+        AcetAnsweredquestionsComponent,
+        AcetCompensatingcontrolsComponent,
+        TutorialCmmcComponent,
+        TutorialEdmComponent,
+        LoginAcetComponent,
+        LoginCsetComponent,
+        AboutCsetComponent,
+        AboutAcetComponent,
+        AcetOriginComponent,
+        AdvisoryAcetComponent,
+        AdvisoryCsetComponent,
     ],
     providers: [
         ConfigService,
@@ -465,9 +499,9 @@ import { EdmComponent } from './reports/edm/edm.component';
         AnalyticsService,
         AggregationService,
         AggregationChartService,
-        ChartColors, 
+        ChartColors,
         ReportService,
-        ReportAnalysisService, 
+        ReportAnalysisService,
         LocalStoreManager,
         CmmcStyleService
     ],

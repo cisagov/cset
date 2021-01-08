@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +51,8 @@ declare var $: any;
   moduleId: module.id,
   selector: 'acet-layout-main',
   templateUrl: './acet-layout-main.component.html',
-  styleUrls: ['./acet-layout-main.component.scss'],
+  styleUrls: ['./acet-layout-main.component.scss'],  
+  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
@@ -136,6 +137,10 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     this.dialogRef
       .afterClosed()
       .subscribe();
+  }
+
+  isACET() {
+    return JSON.parse(localStorage.getItem('isAcetApp'));
   }
 
   termsOfUse() {
@@ -268,12 +273,12 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "AccessibilityFeatures/index.htm", "_blank");
+      window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
       return false; // Prevent bubbling
     }));
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
       return false; // Prevent bubbling
     }));
     // Resource Library

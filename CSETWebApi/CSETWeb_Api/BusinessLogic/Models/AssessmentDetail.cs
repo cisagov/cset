@@ -29,6 +29,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string CreditUnion;
         public string Assets;
         public bool? IsAcetOnly;
+        public bool IsAcet { get; internal set; }
 
         public string DiagramMarkup;
         public string DiagramImage;
@@ -38,8 +39,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public bool UseMaturity;
         public bool UseDiagram;
 
-        // Selected maturity models
-        public List<MaturityModel> MaturityModels = new List<MaturityModel>();
+        // Selected maturity model and the target level
+        public MaturityModel MaturityModel;
 
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string AdditionalNotesAndComments { get; set; }
         public string AssessmentDescription { get; set; }
         public string ExecutiveSummary { get; set; }
+        
     }
 }
 

@@ -47,7 +47,8 @@
                 "output": "./assets/monaco"
               },
               "src/assets",
-              "src/favicon.ico",
+              "src/favicon_cset.ico",
+              "src/favicon_acet.ico",
               "src/uploadAssessment.html", 
               "src/sass"
             ],
@@ -74,7 +75,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "200kb"
+                  "maximumWarning": "400kb"
                 }
               ],
               "optimization": true,
@@ -155,7 +156,8 @@
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico",
+              "src/favicon_cset.ico",
+              "src/favicon_acet.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",

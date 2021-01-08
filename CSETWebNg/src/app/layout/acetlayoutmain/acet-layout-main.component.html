@@ -28,25 +28,25 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header">
+  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header" >
     <!-- Brand -->
-    <span
+    <span *ngIf="auth.userToken() && auth.userToken() !== 'null'"
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
-        <img height="28" src="/assets/images/logo.svg" />
+        <img height="28" src="/assets/NCUA/images/logo.svg" />
       </div>
     </span>
 
     <!-- Navbar Toggler Button -->
-    <button class="navbar-toggler c-gray-150" type="button"
+    <button class="navbar-toggler c-gray-150" type="button" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
       data-toggle="collapse" data-target="#csetNavbarCollapse">
       <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
     </button>
 
     <!-- Collapse Content -->
-    <div  class="collapse navbar-collapse"
+    <div class="collapse navbar-collapse" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
       id="csetNavbarCollapse">
       <div class="navbar-nav dropdown"
         *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
@@ -62,7 +62,7 @@
             <span>Enable Protected Features</span>
           </button>
           <div class="dropdown-divider"></div>
-          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          <button *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
             <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
             <span>Assessment Documents</span>
@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <div *ngIf="false" class="navbar-nav">
+      <div class="navbar-nav" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"
           href="index.html?returnPath=resource-library" target="csetResourceLibrary"
           *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
@@ -111,7 +111,7 @@
       </div>
 
       <!-- HELP -->
-      <div *ngIf="auth.userToken() && auth.userToken() !== 'null'" class="navbar-nav ml-auto dropdown">
+      <div class="navbar-nav ml-auto dropdown" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
           data-toggle="dropdown">
           <span class="cset-icons-question-circle-outline fs-base-4 mr-2"></span>
@@ -119,7 +119,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}htmlhelp/index.htm">
+            href="{{docUrl}}htmlhelp_acet/index.htm">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>User Guide</span>
           </a>
@@ -129,7 +129,7 @@
             <span>User Guide (PDF)</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}AccessibilityFeatures/index.htm">
+            href="{{docUrl}}AccessibilityFeatures/index_acet.htm">
             <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
           </a>
@@ -201,18 +201,18 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header">
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header"
+  >
     <ngb-panel id="ngb-panel-0">
       <ng-template ngbPanelTitle>
         <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
-          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterVisible, 'cset-icons-chevron-up flex-00a': !isFooterVisible}"
-          (click)="toggleFooter()"></button>
+          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
         <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
           <div class="ncua-bgc-image d-flex flex-wrap justify-content-center flex-11a">
             <div class="d-flex flex-column justify-content-start flex-00a">
-              <img src="/assets/images/ncua_seal_white_footer.svg" height="70">
+              <img src="/assets/images/acet/ncua_seal_white_footer.svg" height="70">
             </div>
           </div>
         </div>

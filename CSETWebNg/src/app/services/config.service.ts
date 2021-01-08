@@ -107,7 +107,9 @@ export class ConfigService {
           }
           this.config = data;
 
-          this.acetInstallation = this.config.acetInstallation;
+          if (!!this.config.acetInstallation) {
+            this.acetInstallation = this.config.acetInstallation;
+          }
 
           this.populateLabelValues();
 

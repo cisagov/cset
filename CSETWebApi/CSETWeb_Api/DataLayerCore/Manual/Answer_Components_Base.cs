@@ -13,7 +13,8 @@ namespace DataLayerCore.Manual
         public int UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
-        public int Question_Id { get; set; }        
+        public int Question_Id { get; set; }    
+        public string Question_Type { get; set; }
         [StringLength(50)]
         public string Answer_Text { get; set; }
         [StringLength(1000)]

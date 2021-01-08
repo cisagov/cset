@@ -511,12 +511,32 @@ export class NavigationService {
       condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity }
     },
     {
+      displayText: 'CMMC Tutorial',
+      pageId: 'tutorial-cmmc', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cmmc',
+      condition: () => { 
+        return !!this.assessSvc.assessment
+        && this.assessSvc.assessment?.UseMaturity
+        && this.assessSvc.usesMaturityModel('CMMC');
+       }
+    },
+    {
+      displayText: 'EDM Tutorial',
+      pageId: 'tutorial-edm', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-edm',
+      condition: () => { 
+        return !!this.assessSvc.assessment
+        && this.assessSvc.assessment?.UseMaturity
+        && this.assessSvc.usesMaturityModel('EDM');
+       }
+    },
+    {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
+          && this.assessSvc.usesMaturityModel('CMMC');
       }
     },
 
@@ -548,7 +568,7 @@ export class NavigationService {
     {
       displayText: 'Document Request List', pageId: 'acet-drl', level: 1,
       path: 'assessment/{:id}/prepare/required',
-      condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
+      condition: () => { return false; }
     },
     {
       displayText: 'Inherent Risk Profiles', pageId: 'irp', level: 1,

@@ -60,7 +60,7 @@
             </svg>
         </button>
 
-        <button class="extras-button cursor-pointer" [class.active]="mode == 'DOCS'" (click)="toggleExtras('DOCS')"
+        <button *ngIf="!configSvc.acetInstallation" class="extras-button cursor-pointer" [class.active]="mode == 'DOCS'" (click)="toggleExtras('DOCS')"
             matTooltip="Documents" matTooltipPosition="above">
             <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -12px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.7)"
@@ -259,6 +259,10 @@
 
         <div *ngIf="extras !== null && mode === 'REFS'">
             <table class="reference-table" *ngIf="tab != null">
+                <tr *ngFor="let reftext of tab?.ReferenceTextList">
+                    <td colspan="2" class="pb-3" [innerHTML]="reftext">
+                    </td>
+                </tr>
                 <tr *ngIf="tab?.SourceDocumentsList?.length > 0" class="font-weight-bold">
                     <td>Source Documents</td>
                     <td>Section</td>

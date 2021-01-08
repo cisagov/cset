@@ -14,13 +14,19 @@
    "Tables": [
       {
          "HasPrimaryKey": true,
-         "Name": "[dbo].[DEMOGRAPHICS]",
-         "ObjectType": 0
+         "Name": "[dbo].[ANSWER]"
       },
       {
          "HasPrimaryKey": true,
-         "Name": "[dbo].[DEMOGRAPHICS_ORGANIZATION_TYPE]",
-         "ObjectType": 0
+         "Name": "[dbo].[DEMOGRAPHICS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DEMOGRAPHICS_ORGANIZATION_TYPE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_REFERENCE_TEXT]"
       }
    ],
    "UseDatabaseNames": true,
@@ -30,5 +36,6 @@
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseNodaTime": false,
-   "UseSpatial": false
+   "UseSpatial": false,
+   "UseStoredProcedures": false
 }
