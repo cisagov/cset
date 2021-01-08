@@ -13,6 +13,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
     public class MaturityResponse
     {
         /// <summary>
+        /// The name of the maturity model.
+        /// </summary>
+        public string ModelName;
+
+        /// <summary>
         /// Lists the display names of the maturity levels in this assessment's maturity model.
         /// </summary>
         public List<MaturityLevel> MaturityLevels;
