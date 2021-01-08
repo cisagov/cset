@@ -29,7 +29,7 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
       (r: any) => {
         this.response = r;        
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.log('Compensating Controls Report Error: ' + (<Error>error).message)
     );
   }
 

@@ -29,7 +29,7 @@ export class AcetCommentsmarkedComponent implements OnInit {
       (r: any) => {
         this.response = r;        
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
 
