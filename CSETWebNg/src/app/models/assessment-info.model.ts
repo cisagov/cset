@@ -53,6 +53,9 @@ export interface MaturityModel {
     ModelId: number;
     ModelName: string;
     MaturityTargetLevel: number;
+
+    // the options for answering questions in this model
+    AnswerOptions: string[];
 }
 
 export interface AssessmentContactsResponse {

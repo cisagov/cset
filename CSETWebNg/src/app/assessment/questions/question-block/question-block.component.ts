@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Answer, Question, QuestionGrouping, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
+import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
@@ -41,8 +41,6 @@ import { QuestionFilterService } from '../../../services/question-filter.service
 export class QuestionBlockComponent implements OnInit {
 
   @Input() mySubCategory: SubCategory;
-
-  @Input() myGrouping: QuestionGrouping;
 
   @ViewChild('extrasComponent') extrasComponent;
 
@@ -84,10 +82,6 @@ export class QuestionBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    if (!!this.myGrouping) {
-      this.mySubCategory = this.myGrouping;
-    }
-    
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
 

@@ -41,13 +41,14 @@ export interface QuestionResponse {
 }
 
 export interface MaturityQuestionResponse {
-    // the answer options to be displayed
-    AnswerOptions: string[];
-    Groupings: QuestionGrouping[];
+    ModelName: string;
     MaturityLevels: [];
     MaturityTargetLevel: number;
+    Groupings: QuestionGrouping[];
     OverallIRP: number;
-    ModelName: string;
+   
+    // the answer options to be displayed
+    AnswerOptions: string[];
 }
 
 export interface QuestionGrouping {
@@ -60,7 +61,7 @@ export interface QuestionGrouping {
 
     // these properties are used for collapsing the lowest group
     HasReviewItems: boolean;
-    Expanded: boolean;
+    // Expanded: boolean;
 }
 
 export interface ACETDomain {
