@@ -32,6 +32,7 @@ import { QuestionFiltersComponent } from '../../../dialogs/question-filters/ques
 import { QuestionFilterService } from '../../../services/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
 import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
+import { MaturityModel } from '../../../models/assessment-info.model';
 
 
 @Component({
@@ -55,10 +56,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
-  ) { 
+  ) {
 
-    if(this.assessSvc.assessment == null)
-    {
+    if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -93,14 +93,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.groupings = null;
     this.maturitySvc.getQuestionsList().subscribe(
       (response: MaturityQuestionResponse) => {
-        // Display either CMMC or EDM Acordingly
-        //this.questionsSvc.questions = response;
-        this.modelName = response.ModelName; 
+        this.modelName = response.ModelName;
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
+        this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
         this.loaded = true;
-
-        console.log(this.groupings);
 
         // default the selected maturity filters
         // this.questionsSvc.initializeMatFilters(response.OverallIRP);
@@ -118,10 +115,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     );
   }
 
-/**
-   * Controls the mass expansion/collapse of all subcategories on the screen.
-   * @param mode
-   */
+  /**
+     * Controls the mass expansion/collapse of all subcategories on the screen.
+     * @param mode
+     */
   expandAll(mode: boolean) {
     this.groupings.forEach((d: QuestionGrouping) => {
       d.SubGroupings.forEach(group => {
@@ -153,10 +150,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       });
   }
 
-    /**
-   * Re-evaluates the visibility of all questions/subcategories/categories
-   * based on the current filter settings.
-   */
+  /**
+ * Re-evaluates the visibility of all questions/subcategories/categories
+ * based on the current filter settings.
+ */
   refreshQuestionVisibility() {
     // this.questionsSvc.evaluateFilters(this.groupings);
   }

@@ -43,6 +43,8 @@ export class ConfigService {
   // button labels
   buttonLabels = {};
 
+  buttonClasses = {};
+
   // labels for graph legends and report answers
   answerLabels = {};
 
@@ -113,6 +115,8 @@ export class ConfigService {
 
           this.populateLabelValues();
 
+          this.populateButtonClasses();
+
           this.initialized = true;
         }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
     }
@@ -130,6 +134,7 @@ export class ConfigService {
     if (this.acetInstallation) {
       this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
     }
+    this.buttonLabels['I'] = this.config.buttonLabelI;
 
     this.answerLabels['Y'] = this.config.answerLabelY;
     this.answerLabels['N'] = this.config.answerLabelN;
@@ -139,11 +144,24 @@ export class ConfigService {
       this.answerLabels['A'] = this.config.answerLabelA_ACET;
     }
     this.answerLabels['U'] = this.config.answerLabelU;
+    this.answerLabels['I'] = this.config.answerLabelI;
 
+    
     this.salLabels['L'] = "Low";
     this.salLabels['M'] = "Moderate";
     this.salLabels['H'] = "High";
     this.salLabels['VH'] = "Very High";
+  }
+
+  /**
+   * 
+   */
+  populateButtonClasses() {
+    this.buttonClasses['Y'] = 'btn-yes';
+    this.buttonClasses['N'] = 'btn-no';
+    this.buttonClasses['NA'] = 'btn-na';
+    this.buttonClasses['A'] = 'btn-alt';
+    this.buttonClasses['I'] = 'btn-inc';
   }
 
   /**

@@ -646,6 +646,22 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.btn-inc {
+  background-color: $white;
+  border-color: $na-color;
+  color: $na-color;
+}
+
+.btn-inc.answer-selected:hover {
+  background-color: $na-hover-color;
+}
+
+.btn-inc.answer-selected,
+.btn-inc:hover {
+  background-color: $na-color;
+  color: $active-text-color;
+}
+
 
 .btn-mfr {
   background-color: $primary-50;
