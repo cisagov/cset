@@ -41,36 +41,57 @@
                 <div>
                     <img style="height: 185px" src="../../../../assets/images/ACET/NCUA_logo.png">
             </div>
-            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information?.Assessment_Name}}</div>
-                <div>{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</div>
-                <div>{{response?.information?.Assessor_Name}}</div>
+            <div _ngcontent-c2="" style="
+                            text-align: right;
+                            font-weight: normal;
+                            font-size: 18px;
+                            flex-direction: column;
+                            line-height: 150%;
+                            padding-right: 2em;
+                        ">
+            
+                <div _ngcontent-c2="" class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
+                </div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assets | currency}}</div>
             </div>
         </div>
     </div>
     <div class="page-break">
-        <h1>
-            Deficiencies
-        </h1>
-        <hr>
-        <p>This report contains all the statements that have been answered No and are deficient with provided comments.</p>     
-        <p  style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png">   </p>
-        <table class="cset-table">            
-            <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
-                <tr>                
-                    <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
-                        <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
-                    </td>
-                    <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>                
-                    <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>                
-                </tr>
-                <tr>
-                    <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
-                </tr>
-            </ng-template>                   
-        </table>
+        
+    <div _ngcontent-c2="" class="ml-3 mr-3 form">
+        <div _ngcontent-c2="" class="paragraph">
+            <p><br>This deficiency report lists the statements that are not currently compliant or "No" answers. <br><br>
+                This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+                the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+                the gaps by implementing the controls necessary to come into compliance with the associated statement.
+                <br><br>
+                The percentage gap in each domain is also listed and will help to determine the priority.
+                ACET is a cumulative maturity model meaning lower levels should be completed before
+                moving to higher levels. Ideally baseline should be completed before focusing efforts on
+                controls in evolving and so forth up the line of maturity levels.<br></p>
+        </div>
+        <h1 _ngcontent-c2="" class="page-title">Deficiencies</h1>
+        <hr class="page-line">
+
+        <div _ngcontent-c2="">
+            <p style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
+            <table>
+                <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
+                    <tr>
+                        <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
+                            <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                        </td>
+                        <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                        <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>
+                    </tr>
+                    <tr>
+                        <td class="deficiencies-list-item"><b>Comment:</b></td>
+                        <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
     </div>
 </div>
