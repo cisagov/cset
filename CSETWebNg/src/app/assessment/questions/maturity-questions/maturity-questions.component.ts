@@ -40,6 +40,7 @@ import { ConfigService } from '../../../services/config.service';
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   domains: Domain[] = null;
+  modelName: string=null;
 
   loaded = false;
 
@@ -92,8 +93,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.domains = null;
     this.maturitySvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
+        // Display either CMMC or EDM Acordingly
         this.questionsSvc.questions = response;
+        this.modelName = response.ModelName; 
         this.domains = response.Domains;
+        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.loaded = true;
 
         // default the selected maturity filters

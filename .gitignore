@@ -37,3 +37,5 @@ DesignTimeBuild/
 /Database Images/CSETWeb_log.ldf
 /Database Images/CSETWeb.mdf
 /CSETWebNg/node_modules_bak
+/CSETWebNg/src/assets/NCUA/images
+/CSETWebNg/src/assets/images/ACET/NCUA_logo.png

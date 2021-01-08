@@ -108,6 +108,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
+        public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
@@ -260,32 +261,45 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Answer_Id)
                     .HasName("PK_ANSWER_1");
 
-                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Component_Guid, e.Is_Requirement })
-                    .HasName("IX_ANSWER_1")
+                entity.HasIndex(e => e.Assessment_Id)
+                    .HasName("NonClusteredIndex-Answers_Assessment_Id");
+
+                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Question_Type, e.Component_Guid })
+                    .HasName("IX_ANSWER")
                     .IsUnique();
 
-                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+                entity.Property(e => e.Alternate_Justification)
+                    .IsUnicode(false)
+                    .HasComment("The Alternate Justification is used to");
 
                 entity.Property(e => e.Answer_Text)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('U')");
+                    .HasDefaultValueSql("('U')")
+                    .HasComment("The Answer Text is used to");
 
-                entity.Property(e => e.Comment).IsUnicode(false);
+                entity.Property(e => e.Comment)
+                    .IsUnicode(false)
+                    .HasComment("The Comment is used to");
+
+                entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
 
                 entity.Property(e => e.Feedback).IsUnicode(false);
 
-                entity.HasOne(d => d.Answer_TextNavigation)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Answer_Text)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ANSWER_Answer_Lookup");
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))");
 
-                entity.HasOne(d => d.Assessment_)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ANSWER_ASSESSMENTS");
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))");
+
+                entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
+
+                entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
+
+                entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
             });
 
             modelBuilder.Entity<ANSWER_LOOKUP>(entity =>

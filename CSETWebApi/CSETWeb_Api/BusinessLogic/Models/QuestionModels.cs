@@ -18,8 +18,18 @@ namespace CSETWeb_Api.Models
     /// </summary>
     public class QuestionResponse
     {
+        /// <summary>
+        /// Lists the display names of the maturity levels.
+        /// </summary>
+        public List<MaturityLevel> MaturityLevels;
+
+        // The target level
+        public int MaturityTargetLevel;
+
         public List<Domain> Domains;
         // public List<Category> Categories;
+
+        public string ModelName;
 
         // The current mode of the assessment
         public string ApplicationMode;
@@ -68,10 +78,6 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string DomainText;
 
-        /// <summary>
-        /// Lists the display names of the maturity levels.
-        /// </summary>
-        public List<MaturityLevel> Levels;
 
         /// <summary>
         /// A list of categories within the domain.  CMMC domains correspond with
@@ -179,6 +185,7 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string DisplayNumber;
         public int QuestionId;
+        public string QuestionType;
         public string QuestionText;
         public List<ParameterToken> ParmSubs;
         public string StdRefId;
@@ -239,11 +246,48 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public bool Reviewed;
 
-        public bool Is_Requirement;
+        public string QuestionType;
 
-        public bool Is_Component;
+        //public bool Is_Requirement;
+        public bool Is_Requirement
+        {
+            get
+            {
+                return this.QuestionType == "Requirement";
+            }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Requirement";
+            }
+        }
 
-        public bool Is_Maturity;
+        //public bool Is_Component;
+        public bool Is_Component
+        {
+            get
+            {
+                return this.QuestionType == "Component";
+            }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Component";
+            }
+        }
+
+        //public bool Is_Maturity;
+        public bool Is_Maturity {
+            get {
+                return this.QuestionType == "Maturity";
+            }
+            set
+            {
+                if(value)
+                    this.QuestionType = "Maturity";
+            }
+        }
+
     }
 
 

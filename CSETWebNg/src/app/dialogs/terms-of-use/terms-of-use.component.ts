@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConfigService } from '../../services/config.service';
 import { LicenseComponent } from '../license/license.component';
 
 
@@ -30,14 +31,17 @@ import { LicenseComponent } from '../license/license.component';
   selector: 'app-terms-of-use',
   templateUrl: './terms-of-use.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class TermsOfUseComponent {
 
-  constructor(private dialog: MatDialogRef<TermsOfUseComponent>,
+  constructor(
+    public configSvc: ConfigService,
+    private dialog: MatDialogRef<TermsOfUseComponent>,
     private childDialog: MatDialog,
     private childDialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
 
   close() {

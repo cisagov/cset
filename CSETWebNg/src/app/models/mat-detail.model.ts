@@ -56,7 +56,7 @@ export class MaturityComponent {
     Incomplete: boolean;
     AssessedMaturityLevel: string;
     Sequence: number;
-
+    Evolving: number;
     Baseline: number;
     Intermediate: number;
     Advanced: number;

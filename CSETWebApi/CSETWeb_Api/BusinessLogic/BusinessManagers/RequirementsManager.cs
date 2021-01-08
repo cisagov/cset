@@ -87,7 +87,7 @@ namespace CSETWeb_Api.BusinessManagers
 
 
             // Get all REQUIREMENT answers for the assessment
-            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Is_Requirement)
+            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Requirement")
                           from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
@@ -365,7 +365,7 @@ namespace CSETWeb_Api.BusinessManagers
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
-                        SetName = dbRPlus.SetName,
+                        SetName = dbRPlus.SetName,                    
                         Is_Component = answer?.a.Is_Component ?? false,
                         Is_Requirement = answer?.a.Is_Requirement ?? true
                     };
@@ -685,7 +685,7 @@ namespace CSETWeb_Api.BusinessManagers
                 Answer ans = new Answer()
                 {
                     QuestionId = requirementId,
-                    Is_Requirement = true,
+                    QuestionType = "Requirement",
                     MarkForReview = false,
                     QuestionNumber = 0,
                     AnswerText = "U"
