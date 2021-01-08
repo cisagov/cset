@@ -251,6 +251,7 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { EdmComponent } from './reports/edm/edm.component';
 
 @NgModule({
     imports: [
@@ -460,6 +461,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         AcetOriginComponent,
         AdvisoryAcetComponent,
         AdvisoryCsetComponent,
+        EdmComponent
     ],
     providers: [
         ConfigService,
