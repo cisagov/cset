@@ -25,7 +25,8 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-inherent-risk-profile',
-  templateUrl: './inherent-risk-profile.component.html'
+  templateUrl: './inherent-risk-profile.component.html',
+  styleUrls: ['../../reports/reports.scss']
 })
 export class InherentRiskProfileComponent implements OnInit {
 

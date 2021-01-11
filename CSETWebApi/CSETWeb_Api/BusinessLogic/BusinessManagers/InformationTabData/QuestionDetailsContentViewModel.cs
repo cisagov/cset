@@ -170,6 +170,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
             if (questionId != null)
             {
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
+                bool IsQuestion = mode.IsQuestion;
                 bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
                 var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId
@@ -190,6 +191,22 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Reviewed = false,
                         Is_Component = false
                     };
+
+                    // set the question type
+                    newAnswer.Question_Type = "Question";
+                    if ((bool)newAnswer.Is_Requirement)
+                    {
+                        newAnswer.Question_Type = "Requirement";
+                    }
+                    if ((bool)newAnswer.Is_Maturity)
+                    {
+                        newAnswer.Question_Type = "Maturity";
+                    }
+                    if ((bool)newAnswer.Is_Component)
+                    {
+                        newAnswer.Question_Type = "Component";
+                    }
+
                     DataContext.ANSWER.Add(newAnswer);
                 }
 
@@ -246,7 +263,6 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         {
             List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
 
-            // bool isRequirement = question.IsRequirement;
             if (question.IsFramework)
             {
                 FrameworkInfoData frameworkData = new FrameworkInfoData()

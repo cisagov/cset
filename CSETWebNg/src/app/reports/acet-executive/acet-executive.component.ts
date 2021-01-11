@@ -10,25 +10,13 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 @Component({
   selector: 'app-acet-executive',
   templateUrl: './acet-executive.component.html',
-  styleUrls: ['../reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;
-  mockDataAcetExecutive: any = {
-    "information": {
-      "Assessment_Name": "Manhattan Assessment",
-      "Assessment_Date": "2020-09-19",
-      "Assessor_Name": "Michael Jones",
-      "Credit_Union": "Bank of Bill",
-      "Facility_Name": "Bills Bank",
-      "City_Or_Site_Name": "New New York City",
-      "State_Prov_Region": "New York",
-      "Charter": "NNYC",
-      "Assets": "1234",
-    }
-  };
-
   graphdata: any = [];
+  maturityDetail: MaturityDomain[];
+  domainDataList: any = [];
 
   // Maturity Rep Data
   matDetailResponse: MatDetailResponse;
@@ -36,6 +24,7 @@ export class AcetExecutiveComponent implements OnInit {
   maturityComponent: MaturityComponent;
   maturityAssessment: MaturityAssessment;
   acetDashboard: AcetDashboard;
+  information: any;
 
   constructor(
     public reportSvc: ReportService,
@@ -46,53 +35,48 @@ export class AcetExecutiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
-    // Here get report data
-    // ToDo: Uncomment this and connect backend for report data
-    //this.reportSvc.getReport('<ACET Endpoint>').subscribe(
-    //  (r: any) => {
-    //    this.response = r;
-    //  },
-    //  error => console.log('Executive report load Error: ' + (<Error>error).message)
-    //);
-    this.response = this.mockDataAcetExecutive;
-
+    
+    this.acetSvc.getAssessmentInfromation().subscribe(
+      (r: any) => {
+        this.response = r;
+      },
+      error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
+    );
+  
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
-        console.log(data);
         // Format and connect donut data here
         data.forEach((domain: MaturityDomain) => {
-          if (domain.DomainName == "Cyber Risk Management & Oversight"){
-            domain.Assessments.forEach((assignment: MaturityAssessment) => {
-              var assesmentData = {
-                "asseessmentFactor": assignment.AssessmentFactor,
-                "sections": []
-              }
-              assignment.Components.forEach((component: MaturityComponent) => {
-                var sectionData = [
+          var domainData = { domainName: domain.DomainName, graphdata: []}
+          domain.Assessments.forEach((assignment: MaturityAssessment) => {
+            var assesmentData = {
+              "asseessmentFactor": assignment.AssessmentFactor,
+              "sections": []
+            }
+            assignment.Components.forEach((component: MaturityComponent) => {
+              var sectionData = [
                 { "name": "Baseline", "value": component.Baseline },
                 { "name": "Evolving", "value": component.Evolving }, 
                 { "name": "Intermediate", "value": component.Intermediate },
                 { "name": "Advanced", "value": component.Advanced },
                 { "name": "Innovative", "value": component.Innovative }
               ]
+              
               var sectonInfo = {
                 "name": component.ComponentName,
                 "data": sectionData
               }
-                assesmentData.sections.push(sectonInfo);
-              })
-              this.graphdata.push(assesmentData);
+              assesmentData.sections.push(sectonInfo);
             })
-
-          };
+            domainData.graphdata.push(assesmentData);
+          })
+          this.domainDataList.push(domainData);
         })
         },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
-
-    console.log(this.graphdata)
 
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {

@@ -25,6 +25,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
     public class MaturityManager
     {
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MaturityManager()
         { }
 
@@ -38,13 +42,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var q = from amm in db.AVAILABLE_MATURITY_MODELS
-                               from mm in db.MATURITY_MODELS
-                               where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                               select new MaturityModel() 
-                               { 
-                                   ModelId = mm.Maturity_Model_Id, 
-                                   ModelName = mm.Model_Name 
-                               };
+                        from mm in db.MATURITY_MODELS
+                        where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
+                        select new MaturityModel()
+                        {
+                            ModelId = mm.Maturity_Model_Id,
+                            ModelName = mm.Model_Name
+                        };
                 var myModel = q.FirstOrDefault();
 
                 if (myModel != null)
@@ -96,6 +100,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
             return levelNames;
         }
+
 
         /// <summary>
         /// Saves the selected maturity models.
@@ -183,10 +188,153 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
+        /// Assembles a response consisting of maturity settings for the assessment
+        /// as well as the question set in its hierarchy of domains, practices, etc.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public MaturityResponse GetMaturityQuestions(int assessmentId)
+        {
+            var response = new MaturityResponse();
+
+            using (var db = new CSET_Context())
+            {
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+
+                var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
+
+                if (myModelDefinition == null)
+                {
+                    return response;
+                }
+
+
+                response.ModelName = myModelDefinition.Model_Name;
+
+                
+                if (myModelDefinition.Answer_Options != null)
+                {
+                    response.AnswerOptions = myModelDefinition.Answer_Options.Split(',').ToList();
+                    response.AnswerOptions.ForEach(x => x = x.Trim());
+                }
+
+
+                response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
+
+
+                // get the levels and their display names for this model
+                response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
+
+
+
+                // Get all maturity questions for the model regardless of level.
+                // The user may choose to see questions above the target level via filtering. 
+                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+                // Get all MATURITY answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b };
+
+
+                // Get all subgroupings for this maturity model
+                var allGroupings = db.MATURITY_GROUPINGS
+                    .Include(x => x.Type_)
+                    .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+
+                // Recursively build the grouping/question hierarchy
+                var tempModel = new MaturityGrouping();
+                BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
+                response.Groupings = tempModel.SubGroupings;
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Recursive method that builds subgroupings for the specified group.
+        /// It also attaches any questions pertinent to this group.
+        /// </summary>
+        private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
+            List<MATURITY_GROUPINGS> allGroupings, 
+            List<MATURITY_QUESTIONS> questions, 
+            List<FullAnswer> answers)
+        {
+            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+
+            if (mySubgroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var sg in mySubgroups)
+            {
+                var newGrouping = new MaturityGrouping()
+                {
+                    GroupingID = sg.Grouping_Id,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    Title = sg.Title,
+                    Description = sg.Description
+                };
+
+                g.SubGroupings.Add(newGrouping);
+
+
+                // are there any questions that belong to this grouping?
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+
+                foreach (var myQ in myQuestions)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                    {
+                        DisplayNumber = myQ.Question_Title,
+                        QuestionId = myQ.Mat_Question_Id,
+                        QuestionType = "Maturity",
+                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        Answer = answer?.a.Answer_Text,
+                        AltAnswerText = answer?.a.Alternate_Justification,
+                        Comment = answer?.a.Comment,
+                        Feedback = answer?.a.Feedback,
+                        MarkForReview = answer?.a.Mark_For_Review ?? false,
+                        Reviewed = answer?.a.Reviewed ?? false,
+                        MaturityLevel = myQ.Maturity_Level,
+                        SetName = string.Empty
+                    };
+                
+                    if (answer != null)
+                    {
+                        TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                        TinyMapper.Map(answer.b, qa);
+                    }
+
+                    newGrouping.Questions.Add(qa);
+                }
+
+                // Recurse down to build subgroupings
+                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// NOTE:
+        /// 
+        /// This is the "old" version of retrieving maturity questions.
+        /// As soon as the UI is updated to handle the new method (above),
+        /// this method should be deleted.
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public object GetMaturityQuestions(int assessmentId)
+        public object GetMaturityQuestions_OLD(int assessmentId)
         {
             // Populate response
             var response = new QuestionResponse
@@ -200,10 +348,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var myModel = db.AVAILABLE_MATURITY_MODELS
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-               
+
                 if (myModel == null)
                 {
-                   return response;
+                    return response;
                 }
 
                 response.ModelName = myModel.model_.Model_Name;
@@ -213,13 +361,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     // Here handle EDM questions
                     // Add to list
-                    List<string> supportedAnswers = new List<string>{ "Y", "I", "N", "NA" };
+                    List<string> supportedAnswers = new List<string> { "Y", "I", "N", "NA" };
                     response.AnswerOptions = supportedAnswers;
-                    
+
                 }
-                else if (response.ModelName == "CMMC") 
+                else if (response.ModelName == "CMMC")
                 {
-                  
+
                     // Here Handle CMMC
                     // ToDo: best to refactor 
                     // see if any answer options should not be in the list
@@ -334,7 +482,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 MaturityLevel = dbR.Maturity_Level,
                                 SetName = string.Empty
                             };
-                                if (answer != null)
+                            if (answer != null)
                             {
                                 TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                                 TinyMapper.Map(answer.b, qa);
@@ -346,7 +494,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     }
                 }
-                
+
                 return response;
             }
         }
