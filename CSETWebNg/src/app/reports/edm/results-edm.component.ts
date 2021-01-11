@@ -24,11 +24,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm',
-  templateUrl: './edm.component.html',
-  styleUrls: ['./edm.component.scss']
+  selector: 'app-results-edm',
+  templateUrl: './results-edm.component.html',
+  styleUrls: ['./results-edm.component.scss']
 })
-export class EdmComponent implements OnInit {
+export class ResultsEdmComponent implements OnInit {
 
   constructor() { }
 
