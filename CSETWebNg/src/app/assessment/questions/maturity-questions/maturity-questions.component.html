@@ -41,7 +41,7 @@
         Additional information on how to answer questions can be found in the
         <a rel="noopener noreferrer" target="_blank" [href]="helpDocUrl()">User Guide</a>.
       </div>
-      <div class="mb-2">
+      <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to 
         <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
       </div>
@@ -51,7 +51,7 @@
 
     <div *ngIf="filterSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
     
-    <div *ngIf="!domains" class="w-100">
+    <div *ngIf="!groupings" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
@@ -59,8 +59,8 @@
 
 
     <!-- top level -->
-    <div *ngFor="let d of domains" class="w-100">
-      <app-domain-block [domain]="d"></app-domain-block>
+    <div *ngFor="let g of groupings" class="w-100">
+      <app-grouping-block [grouping]="g"></app-grouping-block>
     </div>
 
   </div>

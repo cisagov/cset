@@ -43,7 +43,7 @@ export interface AssessmentDetail {
     UseMaturity?: boolean;
     UseDiagram?: boolean;
     IsAcet?: boolean;
-    
+
     MaturityModels?: MaturityModel[];
 
     MaturityModel?: MaturityModel;
@@ -53,6 +53,9 @@ export interface MaturityModel {
     ModelId: number;
     ModelName: string;
     MaturityTargetLevel: number;
+
+    // the options for answering questions in this model
+    AnswerOptions: string[];
 }
 
 export interface AssessmentContactsResponse {
@@ -70,7 +73,7 @@ export interface Demographic {
     NeedsSupplyChain?: boolean;
     NeedsICS?: boolean;
     OrganizationName?: string;
-    Agency?: string; 
+    Agency?: string;
     OrganizationType?: string;
     Facilitator?: number;
     PointOfContact?: number;
