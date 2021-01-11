@@ -105,6 +105,8 @@ namespace DataLayerCore.Model
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
+        public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
+        public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
