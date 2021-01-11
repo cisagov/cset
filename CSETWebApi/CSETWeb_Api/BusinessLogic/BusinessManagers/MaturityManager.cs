@@ -305,6 +305,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         Feedback = answer?.a.Feedback,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
+                        Is_Maturity = true,
                         MaturityLevel = myQ.Maturity_Level,
                         SetName = string.Empty
                     };
