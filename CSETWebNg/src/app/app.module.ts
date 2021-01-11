@@ -1,4 +1,3 @@
-import { EdmComponent } from './reports/edm/results-edm.component';
 ////////////////////////////////
 //
 //   Copyright 2020 Battelle Energy Alliance, LLC
