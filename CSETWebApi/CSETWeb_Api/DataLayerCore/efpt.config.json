@@ -26,6 +26,22 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_GROUPING_TYPES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_GROUPINGS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_MODELS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[MATURITY_QUESTIONS]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[MATURITY_REFERENCE_TEXT]"
       }
    ],

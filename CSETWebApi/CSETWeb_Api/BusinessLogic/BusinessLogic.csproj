@@ -482,6 +482,7 @@
     <Compile Include="Models\MaturityDomain.cs" />
     <Compile Include="Models\MaturityMap.cs" />
     <Compile Include="Models\MaturityModel.cs" />
+    <Compile Include="Models\MaturityResponse.cs" />
     <Compile Include="Models\ModuleBuilder.cs" />
     <Compile Include="Models\ConsoleLogger.cs" />
     <Compile Include="Models\ContactDetail.cs" />

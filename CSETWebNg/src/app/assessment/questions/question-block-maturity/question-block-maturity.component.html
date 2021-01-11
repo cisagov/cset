@@ -1,0 +1,95 @@
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="question-group mb-3">
+
+    <div class="subcat-header" [class.flat-bottom]="expanded">
+        <div class="sub-head-1" (click)="expanded = !expanded" (keydown.Spacebar)="expanded = !expanded"
+            (keydown.Enter)="expanded = !expanded" [attr.aria-expanded]="expanded" tabindex="0">
+            <div class="sub-head-2">
+                <span *ngIf="myGrouping.Title != ''">{{ myGrouping.Title }}</span>
+            </div>
+            <div class="d-flex justify-content-end align-items-center flex-00a">
+                <span [class.display-hidden]="!myGrouping.HasReviewItems"
+                    class="d-flex justify-content-center align-items-center flex-00a"
+                    matTooltip="One or more controls in this category requires further review.">
+                    <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+                    <span class="mb-1 fs-small">Requires Review</span>
+                </span>
+                <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+                <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- this houses all of the questions -->
+    <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!expanded">
+        <div class="question-row" *ngFor="let q of myGrouping.Questions" [class.display-noneeeeeee]="!q.Visible">
+
+            <div style="width: 100%">
+                <div class="number-and-text">
+                    <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.DisplayNumber }}</div>
+                    <div style="width: 100%;">
+                        <div [style.word-break]="applyWordBreak(q)" [innerHTML]="formatGlossaryLink(q)">
+                        </div>
+                        <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
+                            class="debug-highlight">{{ q.QuestionId }}</span>
+                        <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
+                            (changeComponents)="refreshComponentOverrides()">
+                        </app-question-extras>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <!-- build the list of answer options -->
+                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                    <label *ngFor="let option of answerOptions" class="btn form-check-label"
+                        [class]="configSvc.buttonClasses[option]"
+                        [class.answer-selected]="q.Answer === option"
+                        [matTooltip]="configSvc.answerLabels[option]">
+                        <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+                            (click)="storeAnswer(q, option)" [checked]="q.Answer === option">
+                        {{configSvc.buttonLabels[option]}}
+                    </label>
+
+                    <!-- Mark For Review Flag  -->
+                    <label class="mr-0 ml-2 btn form-check-label btn-mfr"
+                        [class.answer-selected]="q.MarkForReview === true"
+                        matTooltip="This control requires further review.">
+                        <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" (click)="saveMFR(q);"
+                            checked="{{q.MarkForReview === true}}">
+                        <span class="cset-icons-flag-dark fs-base"></span>
+                    </label>
+                </div>
+
+                <div *ngIf="q.Answer === 'A'">
+                    <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                        style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
+                        [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
+                    <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
