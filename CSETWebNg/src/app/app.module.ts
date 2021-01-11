@@ -1,3 +1,4 @@
+import { EdmComponent } from './reports/edm/results-edm.component';
 ////////////////////////////////
 //
 //   Copyright 2020 Battelle Energy Alliance, LLC
@@ -252,6 +253,7 @@ import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.com
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { ResultsEdmComponent } from './reports/edm/results-edm.component';
 
 @NgModule({
     imports: [
@@ -453,6 +455,7 @@ import { QuestionBlockMaturityComponent } from './assessment/questions/question-
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
+        ResultsEdmComponent,
         LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,
