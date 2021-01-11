@@ -43,6 +43,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = null;
   modelName: string = null;
+  showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   loaded = false;
 

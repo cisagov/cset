@@ -89,6 +89,16 @@ export class QuestionBlockMaturityComponent implements OnInit {
     return true;
   }
 
+  formatGlossaryLink(q: Question) {
+    if (q.QuestionText.indexOf('[[') < 0) {
+       return q.QuestionText;
+    }
+
+    // we have one or more glossary terms
+    return '<span [matTooltip]="blah blah blah">services</span> ' + q.QuestionText;
+
+  }
+
   /**
    * Pushes an answer asynchronously to the API.
    * @param q
