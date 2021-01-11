@@ -41,7 +41,7 @@
         Additional information on how to answer questions can be found in the
         <a rel="noopener noreferrer" target="_blank" [href]="helpDocUrl()">User Guide</a>.
       </div>
-      <div class="mb-2">
+      <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to 
         <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
       </div>

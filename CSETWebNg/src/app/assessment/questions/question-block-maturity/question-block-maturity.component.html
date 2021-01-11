@@ -50,7 +50,7 @@
                 <div class="number-and-text">
                     <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.DisplayNumber }}</div>
                     <div style="width: 100%;">
-                        <div [style.word-break]="applyWordBreak(q)" [innerHTML]="q.QuestionText">
+                        <div [style.word-break]="applyWordBreak(q)" [innerHTML]="formatGlossaryLink(q)">
                         </div>
                         <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
                             class="debug-highlight">{{ q.QuestionId }}</span>
