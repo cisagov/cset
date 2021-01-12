@@ -615,6 +615,21 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.btn-inc {
+  background-color: $white;
+  border-color: $na-color;
+  color: $na-color;
+}
+
+.btn-inc.answer-selected:hover {
+  background-color: $na-hover-color;
+}
+
+.btn-inc.answer-selected,
+.btn-inc:hover {
+  background-color: $na-color;
+  color: $active-text-color;
+}
 
 .btn-mfr {
   background-color: $primary-50;
@@ -1704,6 +1719,11 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
 
 .questions-tab-border {
   border-bottom: 1px solid $gray-50;
+}
+
+.glossary-term {
+  text-decoration: underline dotted;
+  cursor: pointer;
 }
 
 
