@@ -133,6 +133,11 @@ export interface Question {
     Is_Requirement: boolean;
     Is_Maturity: boolean;
     ExtrasExpanded: boolean;
+
+    // parent questions aren't answered directly and have subparts that are answered.
+    IsParentQuestion: boolean;
+    ParentQuestionId: number;
+
     Visible: boolean;
 }
 
