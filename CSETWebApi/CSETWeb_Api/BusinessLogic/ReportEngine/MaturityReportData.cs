@@ -86,6 +86,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public int Sequence { get; set; }
             public string Text_Hash { get; set; }
             public int Maturity_Model_Id { get; set; }
+            public int Parent_Question_Id { get; set; }
             //public int Answer_Id { get; set; } //Used for testing, can be removed at a later date
             //public int Answer_Mark_For_Review { get; set; }
             //public string Answer_Comment { get; set; }

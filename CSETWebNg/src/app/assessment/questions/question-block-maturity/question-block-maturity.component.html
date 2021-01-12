@@ -21,10 +21,12 @@
   SOFTWARE. 
 -------------------------->
 <div class="question-group mb-3">
-
-    <div class="subcat-header" [class.flat-bottom]="expanded">
-        <div class="sub-head-1" (click)="expanded = !expanded" (keydown.Spacebar)="expanded = !expanded"
-            (keydown.Enter)="expanded = !expanded" [attr.aria-expanded]="expanded" tabindex="0">
+    <div class="subcat-header"  
+        (click)="expanded = !expanded"
+        (keydown.Spacebar)="expanded = !expanded" 
+        (keydown.Enter)="expanded = !expanded"
+        [attr.aria-expanded]="expanded">
+        <div class="sub-head-1" tabindex="0" [class.flat-bottom]="expanded">
             <div *ngIf="myGrouping.Title != ''" class="sub-head-2">
                 {{ myGrouping.Title }}
             </div>
@@ -48,24 +50,31 @@
 
     <!-- this houses all of the questions -->
     <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!expanded">
-        <div class="question-row" *ngFor="let q of myGrouping.Questions" [class.display-noneeeeeee]="!q.Visible">
+        <div *ngFor="let q of myGrouping.Questions" 
+            class="question-row" 
+            [class.no-bottom-border]="q.IsParentQuestion"
+            [class.mb-3]="q.IsParentQuestion"
+            [class.display-noneeeeeee]="!q.Visible">
 
             <div style="width: 100%">
                 <div class="number-and-text">
-                    <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.DisplayNumber }}</div>
+                    <div *ngIf="!q.ParentQuestionId" style="font-weight: bold; margin-right: 1em; white-space: nowrap;">
+                        {{ q.DisplayNumber }}
+                    </div>
+                    <div *ngIf="!!q.ParentQuestionId" style="width:10rem"></div>
                     <div style="width: 100%;">
                         <div [style.word-break]="applyWordBreak(q)" [innerHTML]="formatGlossaryLink(q)">
                         </div>
                         <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
                             class="debug-highlight">{{ q.QuestionId }}</span>
-                        <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
+                        <app-question-extras *ngIf="!q.IsParentQuestion" #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
                             (changeComponents)="refreshComponentOverrides()">
                         </app-question-extras>
                     </div>
                 </div>
             </div>
 
-            <div>
+            <div *ngIf="!q.IsParentQuestion">
                 <!-- build the list of answer options -->
                 <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                     <label *ngFor="let option of answerOptions" class="btn form-check-label"

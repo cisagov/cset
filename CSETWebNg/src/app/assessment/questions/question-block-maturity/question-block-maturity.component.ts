@@ -68,6 +68,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       // this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
+
+
   }
 
   /**
