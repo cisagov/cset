@@ -84,7 +84,7 @@
                             <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
                         </td>
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                        <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>
+                        <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
                     <tr>
                         <td class="deficiencies-list-item"><b>Comment:</b></td>
