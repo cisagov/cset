@@ -68,6 +68,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       // this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
+
+
   }
 
   /**
@@ -89,14 +91,32 @@ export class QuestionBlockMaturityComponent implements OnInit {
     return true;
   }
 
+  /**
+   * 
+   */
   formatGlossaryLink(q: Question) {
     if (q.QuestionText.indexOf('[[') < 0) {
       return q.QuestionText;
     }
 
-    // we have one or more glossary terms
-    return q.QuestionText;
+    // we have one or more glossary terms; wrap them
+    let s = '';
 
+    const pieces = q.QuestionText.split(']]');
+    pieces.forEach(x => {
+      const startBracketPos = x.lastIndexOf('[[');
+      if (startBracketPos >= 0) {
+        const a = x.substring(0, startBracketPos);
+        const term = x.substring(startBracketPos + 2);
+        s += a;
+        s += '<span class="glossary-term">' + term + '</span>';
+      } else {
+        // no starter bracket, just dump the whole thing
+        s += x;
+      }
+    });
+
+    return s;
   }
 
   /**
