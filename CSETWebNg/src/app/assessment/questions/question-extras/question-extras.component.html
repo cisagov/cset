@@ -162,10 +162,10 @@
                 class="detail">
                 <div><span class="reqlabel">Title: </span>{{tab?.RequirementFrameworkTitle}}</div>
                 <div><span class="reqlabel">Category: </span>{{tab?.RelatedFrameworkCategory}}</div>
-                <div *ngIf="!tab.IsMaturity">
+                <div *ngIf="!tab?.IsMaturity">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.LevelName}}
                 </div>
-                <div *ngIf="tab.IsMaturity">
+                <div *ngIf="tab?.IsMaturity">
                     <span class="reqlabel">Maturity Level: </span>{{tab?.LevelName}}
                 </div>
                 <div *ngIf="!tab?.ShowRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
@@ -281,7 +281,7 @@
                             target="_blank">{{reference.Title}}</a></td>
                     <td>{{reference.Section_Ref}}</td>
                 </tr>
-                <tr *ngIf="tab?.ReferenceTextList.length === 0 && tab?.SourceDocumentsList.length === 0 && tab?.ResourceDocumentList.length === 0">
+                <tr *ngIf="tab?.ReferenceTextList?.length === 0 && tab?.SourceDocumentsList.length === 0 && tab?.ResourceDocumentList.length === 0">
                     <td colspan="2">(no reference documents available)</td>
                 </tr>
             </table>
