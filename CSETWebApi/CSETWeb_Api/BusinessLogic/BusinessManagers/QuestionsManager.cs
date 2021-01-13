@@ -497,6 +497,17 @@ namespace CSETWeb_Api.BusinessManagers
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)
             {
+                if (string.IsNullOrWhiteSpace(ans.QuestionType))
+                {
+                    if (ans.Is_Component)
+                        ans.QuestionType = "Component";
+                    if (ans.Is_Maturity)
+                        ans.QuestionType = "Maturity";
+                    if (ans.Is_Requirement)
+                        ans.QuestionType = "Requirement";
+                    if (!ans.Is_Requirement && !ans.Is_Maturity && !ans.Is_Component)
+                        ans.QuestionType = "Question";
+                }
                 StoreAnswer(ans);
             }
         }
