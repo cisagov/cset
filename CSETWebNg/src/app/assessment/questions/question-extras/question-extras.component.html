@@ -191,7 +191,7 @@
                     [innerHTML]="tab?.RequirementsData?.SupplementalInfo ? (tab?.RequirementsData?.SupplementalInfo | safe) : ''">
                 </div>
                 <hr
-                    *ngIf="tab?.RequirementsData?.SupplementalInfo !== null && tab?.RequirementsData?.ExaminationApproach !== null">
+                    *ngIf="!!tab?.RequirementsData?.SupplementalInfo && !!tab?.RequirementsData?.ExaminationApproach">
                 <div
                     [innerHTML]="tab?.RequirementsData?.ExaminationApproach ? (tab?.RequirementsData?.ExaminationApproach | safe) : ''">
                 </div>
