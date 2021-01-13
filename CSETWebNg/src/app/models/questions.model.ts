@@ -61,7 +61,9 @@ export interface QuestionGrouping {
 
     // these properties are used for collapsing the lowest group
     HasReviewItems: boolean;
-    // Expanded: boolean;
+
+    // controls the expansion of question blocks
+    Expanded: boolean;
 }
 
 export interface ACETDomain {

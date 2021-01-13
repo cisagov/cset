@@ -22,11 +22,11 @@
 -------------------------->
 <div class="question-group mb-3">
     <div class="subcat-header"  
-        (click)="expanded = !expanded"
-        (keydown.Spacebar)="expanded = !expanded" 
-        (keydown.Enter)="expanded = !expanded"
-        [attr.aria-expanded]="expanded">
-        <div class="sub-head-1" tabindex="0" [class.flat-bottom]="expanded">
+        (click)="myGrouping.Expanded = !myGrouping.Expanded"
+        (keydown.Spacebar)="myGrouping.Expanded = !myGrouping.Expanded" 
+        (keydown.Enter)="myGrouping.Expanded = !myGrouping.Expanded"
+        [attr.aria-expanded]="myGrouping.Expanded">
+        <div class="sub-head-1" tabindex="0" [class.flat-bottom]="myGrouping.Expanded">
             <div *ngIf="myGrouping.Title != ''" class="sub-head-2">
                 {{ myGrouping.Title }}
             </div>
@@ -39,7 +39,7 @@
                     <span class="mb-1 fs-small">Requires Review</span>
                 </span>
                 <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
-                <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded"></i>
+                <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.Expanded"></i>
             </div>
         </div>
         <div *ngIf="myGrouping.Description.length > 0" class="mt-1">
@@ -49,12 +49,10 @@
 
 
     <!-- this houses all of the questions -->
-    <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!expanded">
+    <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.Expanded">
         <div *ngFor="let q of myGrouping.Questions" 
-            class="question-row" 
-            [class.no-bottom-border]="q.IsParentQuestion"
-            [class.mb-3]="q.IsParentQuestion"
-            [class.display-noneeeeeee]="!q.Visible">
+            class="question-row"             
+            [class.pb-3]="q.IsParentQuestion">
 
             <div style="width: 100%">
                 <div class="number-and-text">
