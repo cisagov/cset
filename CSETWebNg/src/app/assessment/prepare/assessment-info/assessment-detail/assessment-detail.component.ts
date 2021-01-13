@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
@@ -45,17 +46,20 @@ export class AssessmentDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService, 
+    public datePipe: DatePipe
   ) {
     this.navSvc.getACET().subscribe((x: boolean) => {
       this.navSvc.acetSelected = x;
       sessionStorage.setItem('ACET', x.toString());
-    });
+    });  
+    
   }
 
   ngOnInit() {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
+    
     }
   }
 
@@ -79,6 +83,11 @@ export class AssessmentDetailComponent implements OnInit {
         if (assessDate.getFullYear() <= 1900) {
           this.assessment.AssessmentDate = null;
         }
+        if(this.configSvc.acetInstallation)
+        {
+          if (this.assessment.AssessmentName === "New Assessment")
+            this.createAcetName();
+        }
       },
       error => console.log('Assessment Detail load Error: ' + (<Error>error).message)
     );
@@ -93,8 +102,26 @@ export class AssessmentDetailComponent implements OnInit {
     if (this.assessment.AssessmentName.trim().length === 0) {
       this.assessment.AssessmentName = "(Untitled Assessment)";
     }
+    this.createAcetName();
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
     // this.standardSvc.makeNavTree();
   }
+
+  createAcetName() {
+    if(this.configSvc.acetInstallation){
+      this.assessment.AssessmentName = "ACET"
+      if(this.assessment.Charter){
+        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+this.assessment.Charter;
+      } 
+      if(this.assessment.CreditUnion){
+        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+this.assessment.CreditUnion;
+      } 
+      if(this.assessment.AssessmentDate){
+        let date = new Date(Date.parse(this.assessment.AssessmentDate));
+        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+ this.datePipe.transform(date, 'MMddyy');
+      } 
+    }
+  }
+
 }

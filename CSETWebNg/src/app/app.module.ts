@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -475,6 +476,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
             useClass: JwtInterceptor,
             multi: true
         },
+        DatePipe,
         AuthGuard,
         AssessGuard,
         AggregationGuard,
