@@ -42,7 +42,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
 
-  expanded = false;
   percentAnswered = 0;
   answerOptions = [];
 
@@ -68,8 +67,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       // this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
-
-
   }
 
   /**
@@ -215,20 +212,17 @@ export class QuestionBlockMaturityComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.Questions.forEach(q => {
-      if (q.Is_Maturity) {
+      // parent questions aren't answered and don't count
+      if (q.IsParentQuestion) {
+        return;
+      }
 
-        let targetLevel = this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel;
-        if (targetLevel == 0) {
-          targetLevel = 100;
-        }
+      let targetLevel = this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel;
+      if (targetLevel == 0) {
+        targetLevel = 100;
+      }
 
-        if (q.MaturityLevel <= targetLevel) {
-          totalCount++;
-          if (q.Answer && q.Answer !== "U") {
-            answeredCount++;
-          }
-        }
-      } else {
+      if (q.MaturityLevel <= targetLevel) {
         totalCount++;
         if (q.Answer && q.Answer !== "U") {
           answeredCount++;
