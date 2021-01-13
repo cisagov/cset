@@ -1,0 +1,23 @@
+<div *ngIf="grouping.GroupingType === 'Domain'">
+    <div class="domain-group-heading" >
+        {{grouping.Title}}
+    </div>
+    <div *ngIf="grouping.Description.length > 0" class="mb-3">
+        {{grouping.Description}}
+    </div>
+</div>
+
+<div class="capability-group-heading" *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Capability'">
+    {{grouping.Title}}
+</div>
+
+
+
+<div *ngFor="let sg of grouping.SubGroupings">
+    <app-grouping-block [grouping]="sg"></app-grouping-block>
+</div>
+
+<div *ngIf="grouping.Questions.length > 0">
+    <app-question-block-maturity #questionBlock [myGrouping]="grouping">
+    </app-question-block-maturity>
+</div>
