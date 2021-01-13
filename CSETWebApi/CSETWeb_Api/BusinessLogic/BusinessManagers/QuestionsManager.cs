@@ -279,7 +279,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid, bool IsComponent, bool IsMaturity)
+        public QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity)
         {
             using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
@@ -287,7 +287,7 @@ namespace CSETWeb_Api.BusinessManagers
                     new InformationTabBuilder(datacontext),
                     datacontext
                 );
-                qvm.GetQuestionDetails(questionId, assessmentid, IsComponent, IsMaturity);
+                qvm.GetQuestionDetails(questionId, this.assessmentID, IsComponent, IsMaturity);
                 return qvm;
             }
         }
@@ -497,6 +497,7 @@ namespace CSETWeb_Api.BusinessManagers
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)
             {
+
                 if (String.IsNullOrWhiteSpace(ans.QuestionType))
                 {
                     if (ans.Is_Component)

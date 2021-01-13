@@ -121,12 +121,18 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
      * @param mode
      */
   expandAll(mode: boolean) {
-    this.groupings.forEach((d: QuestionGrouping) => {
-      d.SubGroupings.forEach(group => {
-        group.SubGroupings.forEach(subcategory => {
-          // subcategory.Expanded = mode;
-        });
-      });
+    this.groupings.forEach((g: QuestionGrouping) => {
+      this.recurseExpansion(g, mode);
+    });
+  }
+
+  /**
+   * Groupings may be several levels deep so we need to recurse.
+   */
+  recurseExpansion(g: QuestionGrouping, mode: boolean) {
+    g.Expanded = mode;
+    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+      this.recurseExpansion(sg, mode);
     });
   }
 

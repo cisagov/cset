@@ -26,7 +26,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-edm',
   templateUrl: './edm.component.html',
-  styleUrls: ['../reports.scss']
+  styleUrls: ['./edm.component.scss']
 })
 export class EdmComponent implements OnInit {
 

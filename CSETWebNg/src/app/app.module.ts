@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -250,6 +251,7 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { EdmComponent } from './reports/edm/edm.component';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmComponent } from './reports/edm/edm.component';
@@ -464,6 +466,7 @@ import { EdmComponent } from './reports/edm/edm.component';
         AdvisoryCsetComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
+        EdmComponent,
     ],
     providers: [
         ConfigService,
@@ -479,6 +482,7 @@ import { EdmComponent } from './reports/edm/edm.component';
             useClass: JwtInterceptor,
             multi: true
         },
+        DatePipe,
         AuthGuard,
         AssessGuard,
         AggregationGuard,
