@@ -254,6 +254,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EdmComponent } from './reports/edm/edm.component';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
+import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 
 @NgModule({
     imports: [
@@ -465,6 +467,8 @@ import { QuestionBlockMaturityComponent } from './assessment/questions/question-
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
+        EdmDeficiencyComponent,
+        EdmCommentsmarkedComponent,
     ],
     providers: [
         ConfigService,

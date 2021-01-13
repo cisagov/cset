@@ -27,7 +27,7 @@
             <label class="mb-1" for="name">Assessment Name</label>
             <input type="text" maxlength="100" [attr.disabled]="configSvc.acetInstallation" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
                 (ngModelChange)="assessment.AssessmentName" (change)="update($event)">
-            <div class="invalid-feedback d-block" *ngIf="configSvc.acetInstallation">
+            <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.acetInstallation">
                 Auto-populated based on data provided
             </div>
         </div>

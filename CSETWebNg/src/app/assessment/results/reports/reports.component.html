@@ -50,9 +50,21 @@
     <button *ngIf="assessSvc.usesMaturityModel('CMMC')" 
       (click)="clickReportLink('sitesummarycmmc')" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
     
+    
+  </div>
+
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')" 
+    class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <h4>External Dependencies Management</h4>
     <button *ngIf="assessSvc.usesMaturityModel('EDM')" 
       (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark">EDM Report</button>
+    <button *ngIf="assessSvc.usesMaturityModel('EDM')" 
+      (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark">EDM Deficiency Report</button>
+      <button *ngIf="assessSvc.usesMaturityModel('EDM')" 
+      (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark">Comments and Marked for Review</button>
+    
   </div>
+
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET')" class="d-flex flex-column justify-content-start align-items-start mb-4">
   <h4>ACET Reports</h4>
   
