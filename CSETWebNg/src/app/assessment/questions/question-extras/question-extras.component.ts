@@ -524,5 +524,20 @@ export class QuestionExtrasComponent implements OnInit {
 
     return false;
   }
+
+  /**
+   * Encapsulates logic that determines whether an icon should be displayed.
+   * It can grow as new behaviors are required.
+   */
+  displayIcon(mode) {
+    // EDM
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
 
