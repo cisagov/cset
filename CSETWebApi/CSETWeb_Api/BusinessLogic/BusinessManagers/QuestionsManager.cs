@@ -497,6 +497,7 @@ namespace CSETWeb_Api.BusinessManagers
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)
             {
+
                 if (String.IsNullOrWhiteSpace(ans.QuestionType))
                 {
                     if (ans.Is_Component)
