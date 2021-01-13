@@ -22,11 +22,12 @@
 -------------------------->
 <div class="question-group mb-3">
     <div class="subcat-header"  
+        [class.flat-bottom]="myGrouping.Expanded"
         (click)="myGrouping.Expanded = !myGrouping.Expanded"
         (keydown.Spacebar)="myGrouping.Expanded = !myGrouping.Expanded" 
         (keydown.Enter)="myGrouping.Expanded = !myGrouping.Expanded"
         [attr.aria-expanded]="myGrouping.Expanded">
-        <div class="sub-head-1" tabindex="0" [class.flat-bottom]="myGrouping.Expanded">
+        <div class="sub-head-1" tabindex="0">
             <div *ngIf="myGrouping.Title != ''" class="sub-head-2">
                 {{ myGrouping.Title }}
             </div>
@@ -42,7 +43,7 @@
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.Expanded"></i>
             </div>
         </div>
-        <div *ngIf="myGrouping.Description.length > 0" class="mt-1">
+        <div *ngIf="myGrouping.Expanded && myGrouping.Description.length > 0" class="mt-1">
             {{ myGrouping.Description }}
         </div>
     </div>
