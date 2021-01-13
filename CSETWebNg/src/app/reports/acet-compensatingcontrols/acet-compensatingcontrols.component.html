@@ -75,12 +75,20 @@
                                 src="../../../assets/images/icons/MarkedFlag.png">
                         </td>
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                        <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>
+                        <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
-                    <tr>
-                        <td class="deficiencies-list-item"><b>Comment:</b></td>
-                        <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
-                    </tr>
+                    <div *ngIf="s.ANSWER.Alternate_Justification">
+                        <tr>
+                            <td class="deficiencies-list-item"><b>Compensating Comment:</b></td>
+                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
+                        </tr>
+                    </div>
+                    <div *ngIf="s.ANSWER.Comment">
+                        <tr>
+                            <td class="deficiencies-list-item"><b>Comment:</b></td>
+                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                        </tr>
+                    </div>
                 </ng-template>
             </table>
         </div>

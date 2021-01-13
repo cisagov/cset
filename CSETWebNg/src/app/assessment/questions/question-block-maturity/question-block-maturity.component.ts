@@ -42,7 +42,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
 
-  expanded = false;
   percentAnswered = 0;
   answerOptions = [];
 
@@ -70,10 +69,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
     }
   }
 
-    /**
-   * If there are no spaces in the question text assume it's a hex string
-   * @param q
-   */
+  /**
+ * If there are no spaces in the question text assume it's a hex string
+ * @param q
+ */
   applyWordBreak(q: Question) {
     if (q.QuestionText.indexOf(' ') >= 0) {
       return "normal";
@@ -89,14 +88,32 @@ export class QuestionBlockMaturityComponent implements OnInit {
     return true;
   }
 
+  /**
+   * 
+   */
   formatGlossaryLink(q: Question) {
     if (q.QuestionText.indexOf('[[') < 0) {
-       return q.QuestionText;
+      return q.QuestionText;
     }
 
-    // we have one or more glossary terms
-    return '<span [matTooltip]="blah blah blah">services</span> ' + q.QuestionText;
+    // we have one or more glossary terms; wrap them
+    let s = '';
 
+    const pieces = q.QuestionText.split(']]');
+    pieces.forEach(x => {
+      const startBracketPos = x.lastIndexOf('[[');
+      if (startBracketPos >= 0) {
+        const a = x.substring(0, startBracketPos);
+        const term = x.substring(startBracketPos + 2);
+        s += a;
+        s += '<span class="glossary-term">' + term + '</span>';
+      } else {
+        // no starter bracket, just dump the whole thing
+        s += x;
+      }
+    });
+
+    return s;
   }
 
   /**
@@ -187,30 +204,36 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * Calculates the percentage of answered questions for this subcategory.
    * The percentage for maturity questions is calculated using questions
    * that are within the assessment's target level.  
+   * If a maturity model doesn't support target levels, we use a dummy
+   * target level of 100 to make the math work.
    */
   refreshPercentAnswered() {
     let answeredCount = 0;
     let totalCount = 0;
 
     this.myGrouping.Questions.forEach(q => {
-      if (q.Is_Maturity) {
-        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel) {
-          totalCount++;
-          if (q.Answer && q.Answer !== "U") {
-            answeredCount++;
-          }
-        }
-      } else {
+      // parent questions aren't answered and don't count
+      if (q.IsParentQuestion) {
+        return;
+      }
+
+      let targetLevel = this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel;
+      if (targetLevel == 0) {
+        targetLevel = 100;
+      }
+
+      if (q.MaturityLevel <= targetLevel) {
         totalCount++;
         if (q.Answer && q.Answer !== "U") {
           answeredCount++;
         }
       }
     });
+
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
 
-    /**
+  /**
    * For ACET installations, alt answers require 3 or more characters of 
    * justification.
    */

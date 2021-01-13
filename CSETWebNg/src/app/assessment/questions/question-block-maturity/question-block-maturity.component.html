@@ -21,13 +21,17 @@
   SOFTWARE. 
 -------------------------->
 <div class="question-group mb-3">
-
-    <div class="subcat-header" [class.flat-bottom]="expanded">
-        <div class="sub-head-1" (click)="expanded = !expanded" (keydown.Spacebar)="expanded = !expanded"
-            (keydown.Enter)="expanded = !expanded" [attr.aria-expanded]="expanded" tabindex="0">
-            <div class="sub-head-2">
-                <span *ngIf="myGrouping.Title != ''">{{ myGrouping.Title }}</span>
+    <div class="subcat-header"  
+        [class.flat-bottom]="myGrouping.Expanded"
+        (click)="myGrouping.Expanded = !myGrouping.Expanded"
+        (keydown.Spacebar)="myGrouping.Expanded = !myGrouping.Expanded" 
+        (keydown.Enter)="myGrouping.Expanded = !myGrouping.Expanded"
+        [attr.aria-expanded]="myGrouping.Expanded">
+        <div class="sub-head-1" tabindex="0">
+            <div *ngIf="myGrouping.Title != ''" class="sub-head-2">
+                {{ myGrouping.Title }}
             </div>
+
             <div class="d-flex justify-content-end align-items-center flex-00a">
                 <span [class.display-hidden]="!myGrouping.HasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
@@ -36,37 +40,44 @@
                     <span class="mb-1 fs-small">Requires Review</span>
                 </span>
                 <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
-                <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded"></i>
+                <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.Expanded"></i>
             </div>
+        </div>
+        <div *ngIf="myGrouping.Expanded && myGrouping.Description.length > 0" class="mt-1">
+            {{ myGrouping.Description }}
         </div>
     </div>
 
 
     <!-- this houses all of the questions -->
-    <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!expanded">
-        <div class="question-row" *ngFor="let q of myGrouping.Questions" [class.display-noneeeeeee]="!q.Visible">
+    <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.Expanded">
+        <div *ngFor="let q of myGrouping.Questions" 
+            class="question-row"             
+            [class.pb-3]="q.IsParentQuestion">
 
             <div style="width: 100%">
                 <div class="number-and-text">
-                    <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.DisplayNumber }}</div>
+                    <div *ngIf="!q.ParentQuestionId" style="font-weight: bold; margin-right: 1em; white-space: nowrap;">
+                        {{ q.DisplayNumber }}
+                    </div>
+                    <div *ngIf="!!q.ParentQuestionId" style="width:10rem"></div>
                     <div style="width: 100%;">
                         <div [style.word-break]="applyWordBreak(q)" [innerHTML]="formatGlossaryLink(q)">
                         </div>
                         <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
                             class="debug-highlight">{{ q.QuestionId }}</span>
-                        <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
+                        <app-question-extras *ngIf="!q.IsParentQuestion" #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
                             (changeComponents)="refreshComponentOverrides()">
                         </app-question-extras>
                     </div>
                 </div>
             </div>
 
-            <div>
+            <div *ngIf="!q.IsParentQuestion">
                 <!-- build the list of answer options -->
                 <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                     <label *ngFor="let option of answerOptions" class="btn form-check-label"
-                        [class]="configSvc.buttonClasses[option]"
-                        [class.answer-selected]="q.Answer === option"
+                        [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.Answer === option"
                         [matTooltip]="configSvc.answerLabels[option]">
                         <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
                             (click)="storeAnswer(q, option)" [checked]="q.Answer === option">

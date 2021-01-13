@@ -115,6 +115,7 @@ import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.
 import { AcetCommentsmarkedComponent} from './reports/acet-commentsmarked/acet-commentsmarked.component';
 import { AcetCompensatingcontrolsComponent} from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { AcetAnsweredquestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { EdmComponent } from './reports/edm/edm.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -299,6 +300,7 @@ const appRoutes: Routes = [
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
+      { path: 'edm', component: EdmComponent},
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetdeficency', component: AcetDeficencyComponent },
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
