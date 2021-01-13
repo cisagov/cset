@@ -72,97 +72,36 @@
     <div _ngcontent-c2="" class="ml-3 mr-3 form">
         <h1 _ngcontent-c2="" class="page-header" style="text-align: left; color: black">Site Information</h1>
         <hr class="page-line">
-        <table _ngcontent-c2="" class="label-value">
-            <tbody _ngcontent-c2="">
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">Assessment Name:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: right">{{response?.information?.Assessment_Name}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-                <!---->
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">Assessment Date:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-                <!---->
-                <tr _ngcontent-c2="">
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">Credit Union:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.Credit_Union_Name}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-                <!---->
-                <tr _ngcontent-c2="">
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">City or Site Name:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: left">{{response?.information?.City_Or_Site_Name}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-                <!---->
-                <tr _ngcontent-c2="">
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">State/Province/Region:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.State_Province_Or_Region}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-                <!---->
-                <tr _ngcontent-c2="">
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">Charter:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.Charter}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-                <!---->
-                <tr _ngcontent-c2="">
-                <tr _ngcontent-c2="">
-                    <div _ngcontent-c2="" class="column-chart mb-4">
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">Assets:</p>
-                        </div>
-                        <div _ngcontent-c2="" class="list-item">
-                            <p _ngcontent-c2="" style="text-align: center">{{response?.information?.Assets | currency}}</p>
-
-                        </div>
-                    </div>
-                </tr>
-            </tbody>
+        
+        <table class="table-site-info">
+            <tr>
+                <td>Assessment Name:</td>
+                <td>{{response?.information?.Assessment_Name}}</td>
+            </tr>
+            <tr>
+                <td>Assessment Date:</td>
+                <td>{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</td>
+            </tr>
+            <tr>
+                <td>Credit Union:</td>
+                <td>{{response?.information?.Credit_Union_Name}}</td>
+            </tr>
+            <tr>
+                <td>City or Site Name:</td>
+                <td>{{response?.information?.City_Or_Site_Name}}</td>
+            </tr>
+            <tr>
+                <td>State, Province or Region:</td>
+                <td>{{response?.information?.State_Province_Or_Region}}</td>
+            </tr>
+            <tr>
+                <td>Charter:</td>
+                <td>{{response?.information?.Charter}}</td>
+            </tr>
+            <tr>
+                <td>Assets:</td>
+                <td>{{response?.information?.Assets | currency}}</td>
+            </tr>
         </table>
     </div>
     <div _ngcontent-c2="" class="page-break"></div>
