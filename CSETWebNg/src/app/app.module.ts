@@ -239,7 +239,6 @@ import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.compon
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetDetailComponent } from './reports/acet-detail/acet-detail.component';
 import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
@@ -253,6 +252,8 @@ import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.com
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EdmComponent } from './reports/edm/edm.component';
+import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
+import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 
 @NgModule({
     imports: [
@@ -450,7 +451,6 @@ import { EdmComponent } from './reports/edm/edm.component';
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,
-        AcetDetailComponent,
         AcetAnsweredquestionsComponent,
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
@@ -462,6 +462,8 @@ import { EdmComponent } from './reports/edm/edm.component';
         AcetOriginComponent,
         AdvisoryAcetComponent,
         AdvisoryCsetComponent,
+        GroupingBlockComponent,
+        QuestionBlockMaturityComponent,
         EdmComponent,
     ],
     providers: [

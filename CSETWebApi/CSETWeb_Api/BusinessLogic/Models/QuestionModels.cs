@@ -185,6 +185,15 @@ namespace CSETWeb_Api.Models
         /// </summary>
         public string DisplayNumber;
         public int QuestionId;
+
+        /// <summary>
+        /// Questions that have subparts use this to put the subpart to the parent 
+        /// part of the question.
+        /// </summary>
+        public int? ParentQuestionId;
+
+        public bool IsParentQuestion = false;
+
         public string QuestionType;
         public string QuestionText;
         public List<ParameterToken> ParmSubs;
