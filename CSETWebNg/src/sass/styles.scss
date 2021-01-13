@@ -1676,6 +1676,11 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   border-bottom: 1px solid $gray-50;
 }
 
+.glossary-term {
+  text-decoration: dotted;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
 
 // Question Extras
 ///////////////////////////////////////////////////////////////////////

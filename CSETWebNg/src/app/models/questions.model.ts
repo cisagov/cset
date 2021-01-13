@@ -35,10 +35,36 @@ export interface QuestionResponse {
     RequirementCount: number;
     OverallIRP: number;
     ModelName: string;
-    
+
     // the answer options to be displayed
     AnswerOptions: string[];
-}    
+}
+
+export interface MaturityQuestionResponse {
+    ModelName: string;
+    MaturityLevels: [];
+    MaturityTargetLevel: number;
+    Groupings: QuestionGrouping[];
+    OverallIRP: number;
+   
+    // the answer options to be displayed
+    AnswerOptions: string[];
+}
+
+export interface QuestionGrouping {
+    Title: string;
+    Description: string;
+    GroupingID: number;
+    GroupingType: string;
+    Questions: Question[];
+    SubGroupings: QuestionGrouping[];
+
+    // these properties are used for collapsing the lowest group
+    HasReviewItems: boolean;
+
+    // controls the expansion of question blocks
+    Expanded: boolean;
+}
 
 export interface ACETDomain {
     DomainName: string;
@@ -109,6 +135,11 @@ export interface Question {
     Is_Requirement: boolean;
     Is_Maturity: boolean;
     ExtrasExpanded: boolean;
+
+    // parent questions aren't answered directly and have subparts that are answered.
+    IsParentQuestion: boolean;
+    ParentQuestionId: number;
+
     Visible: boolean;
 }
 

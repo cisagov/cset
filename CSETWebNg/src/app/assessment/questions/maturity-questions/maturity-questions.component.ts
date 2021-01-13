@@ -26,11 +26,13 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { Domain, QuestionResponse } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
+import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
+import { MaturityModel } from '../../../models/assessment-info.model';
 
 
 @Component({
@@ -39,8 +41,9 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
-  domains: Domain[] = null;
-  modelName: string=null;
+  groupings: QuestionGrouping[] = null;
+  modelName: string = null;
+  showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   loaded = false;
 
@@ -54,10 +57,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
-  ) { 
+  ) {
 
-    if(this.assessSvc.assessment == null)
-    {
+    if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -66,7 +68,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
   }
@@ -90,14 +91,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   loadQuestions() {
     const magic = this.navSvc.getMagic();
-    this.domains = null;
+    this.groupings = null;
     this.maturitySvc.getQuestionsList().subscribe(
-      (response: QuestionResponse) => {
-        // Display either CMMC or EDM Acordingly
-        this.questionsSvc.questions = response;
-        this.modelName = response.ModelName; 
-        this.domains = response.Domains;
+      (response: MaturityQuestionResponse) => {
+        this.modelName = response.ModelName;
+        this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
+        this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
         this.loaded = true;
 
         // default the selected maturity filters
@@ -116,17 +116,23 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     );
   }
 
-/**
-   * Controls the mass expansion/collapse of all subcategories on the screen.
-   * @param mode
-   */
+  /**
+     * Controls the mass expansion/collapse of all subcategories on the screen.
+     * @param mode
+     */
   expandAll(mode: boolean) {
-    this.domains.forEach((d: Domain) => {
-      d.Categories.forEach(group => {
-        group.SubCategories.forEach(subcategory => {
-          subcategory.Expanded = mode;
-        });
-      });
+    this.groupings.forEach((g: QuestionGrouping) => {
+      this.recurseExpansion(g, mode);
+    });
+  }
+
+  /**
+   * Groupings may be several levels deep so we need to recurse.
+   */
+  recurseExpansion(g: QuestionGrouping, mode: boolean) {
+    g.Expanded = mode;
+    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+      this.recurseExpansion(sg, mode);
     });
   }
 
@@ -151,11 +157,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       });
   }
 
-    /**
-   * Re-evaluates the visibility of all questions/subcategories/categories
-   * based on the current filter settings.
-   */
+  /**
+ * Re-evaluates the visibility of all questions/subcategories/categories
+ * based on the current filter settings.
+ */
   refreshQuestionVisibility() {
-    this.questionsSvc.evaluateFilters(this.domains);
+    // this.questionsSvc.evaluateFilters(this.groupings);
   }
 }
