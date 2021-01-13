@@ -25,6 +25,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
     public class MaturityManager
     {
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MaturityManager()
         { }
 
@@ -38,13 +42,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var q = from amm in db.AVAILABLE_MATURITY_MODELS
-                               from mm in db.MATURITY_MODELS
-                               where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                               select new MaturityModel() 
-                               { 
-                                   ModelId = mm.Maturity_Model_Id, 
-                                   ModelName = mm.Model_Name 
-                               };
+                        from mm in db.MATURITY_MODELS
+                        where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
+                        select new MaturityModel()
+                        {
+                            ModelId = mm.Maturity_Model_Id,
+                            ModelName = mm.Model_Name
+                        };
                 var myModel = q.FirstOrDefault();
 
                 if (myModel != null)
@@ -96,6 +100,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
             return levelNames;
         }
+
 
         /// <summary>
         /// Saves the selected maturity models.
@@ -183,173 +188,146 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
-        /// 
+        /// Assembles a response consisting of maturity settings for the assessment
+        /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public object GetMaturityQuestions(int assessmentId)
+        public MaturityResponse GetMaturityQuestions(int assessmentId)
         {
-            // Populate response
-            var response = new QuestionResponse
-            {
-                Domains = new List<Domain>()
-            };
-
+            var response = new MaturityResponse();
 
             using (var db = new CSET_Context())
             {
                 var myModel = db.AVAILABLE_MATURITY_MODELS
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-               
-                if (myModel == null)
+
+
+                var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
+
+                if (myModelDefinition == null)
                 {
-                   return response;
+                    return response;
                 }
 
-                response.ModelName = myModel.model_.Model_Name;
 
-                // Desifer between CMMC and EDM and add to responce list
-                if (response.ModelName == "EDM")
-                {
-                    // Here handle EDM questions
-                    // Add to list
-                    List<string> supportedAnswers = new List<string>{ "Y", "I", "N", "NA" };
-                    response.AnswerOptions = supportedAnswers;
-                    
-                }
-                else if (response.ModelName == "CMMC") 
-                {
-                  
-                    // Here Handle CMMC
-                    // ToDo: best to refactor 
-                    // see if any answer options should not be in the list
-                    var suppressedAnswerOptions = myModel.model_.Answer_Options_Suppressed;
-                    if (!string.IsNullOrEmpty(suppressedAnswerOptions))
-                    {
-                        var a = suppressedAnswerOptions.Split(',');
-                        foreach (string suppress in a)
-                        {
-                            response.AnswerOptions.Remove(suppress);
-                        }
-                    }
+                response.ModelName = myModelDefinition.Model_Name;
 
-                    response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
-
-
-                    // get the levels and their display names for this model
-                    response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
-
-
-
-                    // Get all maturity questions for the model regardless of level
-                    // The user can choose to see questions above the target level via filtering. 
-                    var questions = db.MATURITY_QUESTIONS.Where(q =>
-                        myModel.model_id == q.Maturity_Model_Id).ToList();
-
-
-                    // Get all MATURITY answers for the assessment
-                    var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
-                                  from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                                  select new FullAnswer() { a = a, b = b };
-
-
-
-
-                    // CMMC has 17 domains, which correspond to Categories in the 
-                    // MATURITY_QUESTIONS table.
-                    // TODO:  Eventually they should probably be defined in a new generic
-                    // MATURITY_DOMAINS table.
-                    var domains = questions.Select(x => x.Category).Distinct().ToList();
-
-                    // build a container for each domain
-                    foreach (var d in domains)
-                    {
-                        response.Domains.Add(new Domain()
-                        {
-                            DisplayText = d,
-                            DomainText = d
-                        });
-                    }
-
-                    foreach (var dbR in questions)
-                    {
-                        // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
-                        dbR.Category = dbR.Category ?? dbR.Category.Trim();
-                        dbR.Sub_Category = dbR.Sub_Category ?? dbR.Sub_Category.Trim();
-
-                        // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
-                        if (dbR.Sub_Category == null)
-                        {
-                            dbR.Sub_Category = dbR.Category;
-                        }
-
-
-                        var json = JsonConvert.SerializeObject(response);
-
-                        // drop into the domain
-                        var targetDomain = response.Domains.Where(cc => cc.DomainText == dbR.Category).FirstOrDefault();
-                        if (targetDomain != null)
-                        {
-                            // find or create a Category
-                            var targetCat = targetDomain.Categories.Where(c => c.GroupHeadingText == dbR.Category).FirstOrDefault();
-                            if (targetCat == null)
-                            {
-                                targetCat = new QuestionGroup()
-                                {
-                                    GroupHeadingText = dbR.Category
-                                };
-                                targetDomain.Categories.Add(targetCat);
-                            }
-
-
-                            // find or create a Subcategory
-                            var targetSubcat = targetCat.SubCategories.Where(sc => sc.SubCategoryHeadingText == dbR.Sub_Category).FirstOrDefault();
-                            if (targetSubcat == null)
-                            {
-                                targetSubcat = new QuestionSubCategory()
-                                {
-                                    SubCategoryId = 0,
-                                    SubCategoryHeadingText = dbR.Sub_Category,
-                                    // GroupHeadingId = g.GroupHeadingId
-                                };
-
-                                targetCat.SubCategories.Add(targetSubcat);
-                            }
-
-
-                            FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Mat_Question_Id).FirstOrDefault();
-
-                            var qa = new QuestionAnswer()
-                            {
-                                DisplayNumber = dbR.Question_Title,
-                                QuestionId = dbR.Mat_Question_Id,
-                                QuestionType = "Maturity",
-                                QuestionText = dbR.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
-                                Answer = answer?.a.Answer_Text,
-                                AltAnswerText = answer?.a.Alternate_Justification,
-                                Comment = answer?.a.Comment,
-                                Feedback = answer?.a.Feedback,
-                                MarkForReview = answer?.a.Mark_For_Review ?? false,
-                                Reviewed = answer?.a.Reviewed ?? false,
-                                MaturityLevel = dbR.Maturity_Level,
-                                SetName = string.Empty
-                            };
-                                if (answer != null)
-                            {
-                                TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
-                                TinyMapper.Map(answer.b, qa);
-                            }
-
-                            qa.ParmSubs = null;
-
-                            targetSubcat.Questions.Add(qa);
-                        }
-                    }
-                }
                 
-                return response;
+                if (myModelDefinition.Answer_Options != null)
+                {
+                    response.AnswerOptions = myModelDefinition.Answer_Options.Split(',').ToList();
+                    response.AnswerOptions.ForEach(x => x = x.Trim());
+                }
+
+
+                response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
+
+
+                // get the levels and their display names for this model
+                response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
+
+
+
+                // Get all maturity questions for the model regardless of level.
+                // The user may choose to see questions above the target level via filtering. 
+                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+                // Get all MATURITY answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b };
+
+
+                // Get all subgroupings for this maturity model
+                var allGroupings = db.MATURITY_GROUPINGS
+                    .Include(x => x.Type_)
+                    .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+
+                // Recursively build the grouping/question hierarchy
+                var tempModel = new MaturityGrouping();
+                BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
+                response.Groupings = tempModel.SubGroupings;
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Recursive method that builds subgroupings for the specified group.
+        /// It also attaches any questions pertinent to this group.
+        /// </summary>
+        private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
+            List<MATURITY_GROUPINGS> allGroupings, 
+            List<MATURITY_QUESTIONS> questions, 
+            List<FullAnswer> answers)
+        {
+            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+
+            if (mySubgroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var sg in mySubgroups)
+            {
+                var newGrouping = new MaturityGrouping()
+                {
+                    GroupingID = sg.Grouping_Id,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    Title = sg.Title,
+                    Description = sg.Description
+                };
+
+                g.SubGroupings.Add(newGrouping);
+
+
+                // are there any questions that belong to this grouping?
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+
+                var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
+
+                foreach (var myQ in myQuestions)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                    {
+                        DisplayNumber = myQ.Question_Title,
+                        QuestionId = myQ.Mat_Question_Id,
+                        ParentQuestionId = myQ.Parent_Question_Id,
+                        QuestionType = "Maturity",
+                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        Answer = answer?.a.Answer_Text,
+                        AltAnswerText = answer?.a.Alternate_Justification,
+                        Comment = answer?.a.Comment,
+                        Feedback = answer?.a.Feedback,
+                        MarkForReview = answer?.a.Mark_For_Review ?? false,
+                        Reviewed = answer?.a.Reviewed ?? false,
+                        Is_Maturity = true,
+                        MaturityLevel = myQ.Maturity_Level,
+                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
+                        SetName = string.Empty
+                    };
+                
+                    if (answer != null)
+                    {
+                        TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                        TinyMapper.Map(answer.b, qa);
+                    }
+
+                    newGrouping.Questions.Add(qa);
+                }
+
+                // Recurse down to build subgroupings
+                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
             }
         }
+
 
 
         /// <summary>

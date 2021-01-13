@@ -30,6 +30,8 @@ namespace DataLayerCore.Model
         [MaxLength(20)]
         public byte[] Text_Hash { get; set; }
         public int Maturity_Model_Id { get; set; }
+        public int? Parent_Question_Id { get; set; }
+        public int? Grouping_Id { get; set; }
 
         [ForeignKey(nameof(Maturity_Level))]
         [InverseProperty(nameof(MATURITY_LEVELS.MATURITY_QUESTIONS))]

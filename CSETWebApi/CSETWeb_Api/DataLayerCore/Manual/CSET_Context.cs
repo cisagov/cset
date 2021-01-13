@@ -56,6 +56,26 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
             });
 
+            modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
+            {
+                entity.HasKey(e => e.Grouping_Id)
+                    .HasName("PK_MATURITY_ELEMENT");
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.HasOne(d => d.Type_)
+                    .WithMany(p => p.MATURITY_GROUPINGS)
+                    .HasForeignKey(d => d.Type_Id)
+                    .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
+            });
+
+            modelBuilder.Entity<MATURITY_GROUPING_TYPES>(entity =>
+            {
+                entity.Property(e => e.Grouping_Type_Name).IsUnicode(false);
+            });
+
             modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
             {
                 entity.HasKey(e => e.Mat_Question_Id)
@@ -524,6 +544,6 @@ namespace DataLayerCore.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }
+        }       
     }
 }

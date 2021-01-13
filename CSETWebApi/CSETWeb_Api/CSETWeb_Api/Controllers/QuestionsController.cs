@@ -201,7 +201,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId, IsComponent, IsMaturity);
+            return qm.GetDetails(QuestionId, IsComponent, IsMaturity);
         }
 
 
