@@ -535,6 +535,9 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'DETAIL') {
         return false;
       }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
     }
 
     return true;
