@@ -7,7 +7,13 @@
     </div>
 </div>
 
-<div class="capability-group-heading" *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Capability'">
+<div class="capability-group-heading" 
+    *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Capability'">
+    {{grouping.Title}}
+</div>
+
+<div class="assessment-factor-group-heading"
+    *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Assessment Factor'">
     {{grouping.Title}}
 </div>
 
