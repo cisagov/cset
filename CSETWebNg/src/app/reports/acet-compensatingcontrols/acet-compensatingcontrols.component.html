@@ -77,18 +77,27 @@
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                         <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
-                    <div *ngIf="s.ANSWER.Alternate_Justification">
-                        <tr>
-                            <td class="deficiencies-list-item"><b>Compensating Comment:</b></td>
-                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
-                        </tr>
-                    </div>
                     <div *ngIf="s.ANSWER.Comment">
                         <tr>
                             <td class="deficiencies-list-item"><b>Comment:</b></td>
                             <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
                         </tr>
                     </div>
+                    <div *ngIf="s.ANSWER.Alternate_Justification;else no_comments_given">
+                        <tr>
+                            <td class="deficiencies-list-item"><b>Compensating Comment:</b></td>
+                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
+                        </tr>
+                    </div>
+                    <ng-template #no_comments_given>
+                        <tr>
+                            <td colspan="3" class="deficiencies-list-comment">
+                                <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review"
+                                    src="../../../assets/images/icons/warning-triangle.png">
+                                No compensating comment or explanation was provided.
+                            </td>
+                        </tr>
+                    </ng-template>
                 </ng-template>
             </table>
         </div>
