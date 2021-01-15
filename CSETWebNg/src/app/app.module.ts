@@ -455,7 +455,6 @@ import { EdmComponent } from './reports/edm/edm.component';
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
-        EdmComponent,
         LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,
