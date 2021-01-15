@@ -251,7 +251,6 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { EdmComponent } from './reports/edm/edm.component';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmComponent } from './reports/edm/edm.component';
