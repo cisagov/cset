@@ -759,7 +759,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.usesMaturityModel('CMMC');
+          && this.assessSvc.usesMaturityModel('ACET');
       }
     },
     {
@@ -767,7 +767,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.usesMaturityModel('CMMC');
+          && this.assessSvc.usesMaturityModel('ACET');
       }
     },
 
