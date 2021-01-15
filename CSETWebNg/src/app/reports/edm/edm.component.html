@@ -36,10 +36,13 @@
       </div>
       <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
         <div>
-          Report for **User**
+          <!-- {{response?.information.Assessment_Name}} -->
         </div>
         <div>
-          **Current Date**
+            <!-- {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}} -->
+        </div>
+        <div>
+            <!-- {{response?.information.Assessor_Name}} -->
         </div>
       </div>
     </div>
@@ -151,17 +154,53 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Summary Results</h1>
-    <h2>Percentage of Complete Practices by MIL</h2>
 
-    <div>
-      **Chart showing percentages of complete practices by MIL**
-    </div>
-
-    <h2>Maturity Indicator Level*</h2>
-
-    <div>
-      **Chart showing organization MIL level**
-    </div>
+      <div style="max-width: calc(100% - 4em); margin: 0 auto">
+        <div style="display: flex; flex-direction: column;">
+          <div>
+            <div
+              style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+              Percentage of Complete Practices by MIL
+            </div>
+            <div
+            style="border: 2px solid #000; border-bottom-left-radius: 1.2em; border-bottom-right-radius:1.2em; border-top: none; padding: 1em; margin-bottom: 20px; box-shadow: 5px 0px 5px #0004;">
+              <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: right; margin-left: 175px;">
+                <div>0%</div><div>10%</div><div>20%</div><div>30%</div><div>40%</div><div>50%</div><div>60%</div>
+                <div>70%</div><div>80%</div><div>90%</div><div>100%</div>
+              </div>
+              <ul style="list-style-type: none; margin-bottom: 5px;">
+                <div class="row" style="margin-bottom: 10px;">Relationship <br/> Formation</div>
+                <div class="row" style="margin-bottom: 10px;">Relationship <br/> Management <br/> and Governance</div>
+                <div class="row" style="margin-bottom: 10px;">Service Protection <br/> and Sustainment</div>
+                <div class="row" style="margin-bottom: 10px;">MIL-2 Planned</div>
+                <div class="row" style="margin-bottom: 10px;">MIL-3 Managed</div>
+                <div class="row" style="margin-bottom: 10px;">MIL-4 Measured</div>
+                <div class="row" style="margin-bottom: 10px;">MIL-5 Defined</div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div style="max-width: calc(100% - 4em); margin: 0 auto">
+        <div style="display: flex; flex-direction: column;">
+          <div>
+            <div
+              style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+              Maturity Indicator Level*
+            </div>
+            <div
+            style="border: 2px solid #000; border-bottom-left-radius: 1.2em; border-bottom-right-radius: 1.2em; border-top: none; padding: 1em; margin-bottom: 20px; box-shadow: 5px 0px 5px #0004;">
+              <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                <div style="text-align: left">Your Organization</div>
+              </div>
+              <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 150px;">
+                <div>0</div><div>0.25</div><div>0.50</div><div>MIL-1</div><div>MIL-2</div><div>MIL-3</div><div>MIL-4</div><div>MIL-5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <p>
       Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
@@ -177,6 +216,15 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Relationship Formation</h1>
+    <p>
+      The purpose of Relationship Formation is to assess whether the acquirer evaluates and controls the risks
+      of relying on external entities before entering into relationships with them. Relationship Formation includes
+      understanding the acquirer’s critical services, having a process for entering into formal relationships, and
+      evaluating external entities. A key aspect of Relationship Formation is identifying resilience requirements
+      as the basis for risk management and formal agreements. Resilience requirements typically focus on
+      integrity, confidentiality, and availability, but can also include other requirements important to the critical
+      service.
+    </p>
 
   </div>
 
