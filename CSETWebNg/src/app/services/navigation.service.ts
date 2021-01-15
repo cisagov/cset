@@ -573,12 +573,20 @@ export class NavigationService {
     {
       displayText: 'Inherent Risk Profiles', pageId: 'irp', level: 1,
       path: 'assessment/{:id}/prepare/irp',
-      condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('ACET');
+      }
     },
     {
       displayText: 'Inherent Risk Profile Summary', pageId: 'irp-summary', level: 1,
       path: 'assessment/{:id}/prepare/irp-summary',
-      condition: () => { return this.assessSvc.assessment?.UseStandard && this.acetSelected }
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('ACET');
+      }
     },
 
     //  Diagram
@@ -748,14 +756,18 @@ export class NavigationService {
     // ACET results pages
     {
       displayText: 'ACET Maturity Results', pageId: 'acet-maturity', level: 1, path: 'assessment/{:id}/results/acet-maturity',
-      condition: () => { 
-        return this.assessSvc.assessment?.UseStandard && this.acetSelected 
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('ACET');
       }
     },
     {
       displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 1, path: 'assessment/{:id}/results/acet-dashboard',
-      condition: () => { 
-        return this.assessSvc.assessment?.UseStandard && this.acetSelected 
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('ACET');
       }
     },
 
