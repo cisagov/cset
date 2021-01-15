@@ -24,7 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm',
+  selector: 'edm',
   templateUrl: './edm.component.html',
   styleUrls: ['../reports.scss']
 })
