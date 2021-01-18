@@ -187,7 +187,7 @@ export class LandingPageComponent implements OnInit {
           "?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.assessSvc.removeContact(0, assessment.AssessmentId).subscribe(
+            this.assessSvc.removeMyContact(assessment.AssessmentId).subscribe(
               x => {
                 this.sortedAssessments.splice(assessmentIndex, 1);
               },
