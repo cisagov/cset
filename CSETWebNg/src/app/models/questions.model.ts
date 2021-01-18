@@ -114,7 +114,7 @@ export interface SubCategory {
 }
 
 export interface Question {
-    DisplayNumber: number;
+    DisplayNumber: string;
     QuestionId: number;
     QuestionType: string;
     QuestionText: string;
@@ -147,7 +147,7 @@ export class Answer {
     AnswerId: number;
     QuestionId: number;
     QuestionType: string;
-    QuestionNumber: number;
+    QuestionNumber: string;
     AnswerText: string;
     AltAnswerText: string;
     Comment: string;
