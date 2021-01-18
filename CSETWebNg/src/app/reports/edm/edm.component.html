@@ -487,7 +487,7 @@
       </ol>
     </div>
 
-    <div style="display: flex; border: 1px solid; flex-direction: column;">
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
       <h2 style="color: black; font-weight: bold;">Goal 3 - Risk management includes external dependencies.</h2>
       <p> The purpose of this goal is to assess whether the acquirer's risk management process includes external dependency risk.</p>
       <ol style="font-weight: bold;">
@@ -584,8 +584,138 @@
           NIST CSF References: ID.RA-4, ID.RA-5, ID.SC-2, ID.SC-4 <br/><br/>
         </li>
       </ol>
+    </div>
 
-      
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 4 - External entities are evaluated.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer evaluates external entities for their ability to meet the critical service's resilience requirements.</p>
+      <ol style="font-weight: bold;">
+        <li>Are resilience requirements included in written communications with prospective suppliers, for example in requests for proposals (RFPs)? [EXD:SG3.SP3]</li>
+        <li>Does the acquirer consider the ability of suppliers to meet the resilience requirements of the critical service before entering into formal agreements? [EXD:SG3.SP3]</li>
+        <li>Does the acquirer identify suppliers from which it requires documented verification of an ability to meet the critical service's resilience requirements? [EXD:SG3.SP3]</li>
+        <li>Does the acquirer consider external entities' own external dependency risks before entering into agreements to support the critical service? [EXD:SG3.SP3]</li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities. <br/><br/>
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the acquirer's specifications, which should be outlined in
+          various work products. These products include requests for proposals, external entity selection criteria,
+          evaluations of each external entity proposal against the selection criteria, and selection decision and
+          supporting rationale documents. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          [CERT CMMI-ACQ, SSAD: SG1.SP2] Establish a Solicitation Package <br/><br/>
+          Establish and maintain a solicitation package that includes the requirements and proposal evaluation
+          criteria. Solicitation packages are used to seek proposals from potential suppliers. The acquirer
+          structures the solicitation package to facilitate an accurate and complete response from each potential
+          supplier and to enable an effective comparison and evaluation of proposals. <br/><br/>
+          The solicitation package includes a description of the desired form of the response, the relevant
+          statement of work for the supplier, and required provisions in the supplier agreement (e.g., a copy of the
+          standard supplier agreement or non-disclosure provisions). In government acquisitions, some or all of
+          the content and structure of the solicitation package can be defined by regulation. <br/><br/>
+          The solicitation package is rigorous to ensure consistent and comparable responses but flexible enough
+          to allow consideration of supplier suggestions for better ways to satisfy requirements. <br/> <br/>
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for Federal Information Systems,”
+          Section 3.2.5 Complete Procurement. <br/><br/>
+          NIST CSF References: ID.SC-2, ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities. <br/><br/>
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the organization's specifications. <br/><br/>
+          From a resilience perspective, the selection process for external entities is often an extension of or
+          supplement to the organization's standard procurement processes. Resilience specifications may simply
+          serve as additional requirements for consideration and evaluation as part of the standard procurement
+          process. In all cases, <span style="font-style: italic;">due diligence should be performed on candidate external entities to evaluate their
+          ability to meet the resilience specifications</span> that have been established for the actions they hope to
+          perform for the organization. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, "Security and Privacy Controls for Federal Information
+          Systems and Organizations", SA-12(2) Supply Chain Protection | Supplier Reviews. <br/><br/>
+          The organization conducts a supplier review prior to entering into a contractual agreement to acquire the
+          information system, system component, or information system service. <br/><br/>
+          <span style="text-decoration: underline;">Supplemental Guidance:</span> <span style="font-style: italic;"> Supplier reviews include, for example:</span> 
+          (i) analysis of supplier processes used to design, develop, test, implement, verify, deliver, and support information systems, system
+          components, and information system services; and (ii) assessment of supplier training and experience in
+          developing systems, components, or services with the required security capability. These reviews
+          provide organizations with increased levels of visibility into supplier activities during the system
+          development life cycle to promote more effective supply chain risk management. <br/><br/>
+          <span style="font-style: italic;">NIST Special Publication 800-39</span>, “Managing Information Security Risk Acquirer, Mission, and
+          Information System View," 24-26. <br/><br/>
+          NIST CSF References: ID.BE-1, ID.BE-4, ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br/><br/>
+          Evaluate suppliers based on their abilities to meet the resilience specifications and in accordance with
+          the established selection criteria. Due diligence should be performed on candidate external entities to
+          validate their ability to meet the resilience specifications that have been established for the actions they
+          hope to perform for the acquirer. Any specifications that are not being met by the external entity should
+          be treated as risks and potentially be a factor in eliminating that supplier from consideration as an
+          approved service provider. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Management Systems and Organizations,” 46. <br/><br/>
+          A variety of methods may be used to communicate and subsequently <span style="font-style: italic;">verify and monitor ICT SCRM
+          requirements</span>  through such vehicles as contracts, interagency agreements, lines of business
+          arrangements, licensing agreements, and/or supply chain transactions. These methods include
+          <ul>
+            <li>Clearly defining the types of external services provided to the external organization</li>
+            <li>Describing how the external services should be protected in accordance with the federal agency
+              ICT supply chain security requirements; and</li>
+          </ul>
+          Obtaining the necessary verifications that the risk to the organizations' organizational operations and
+          assets, individuals, other organizations, and the Nation arising from the use of the external services is
+          acceptable. <br/><br/>
+          NIST CSF References: ID.SC-2, ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br/><br/>
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the organization's specifications. <br/><br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP2]</span> Establish Resilience Specifications for External Entities. <br/><br/>
+          Resilience specification should include include specific characteristics that are required such as <span style="font-style: italic;">degree
+          of reliance on other external entities.</span> <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy Controls for Federal Information
+          Systems and Organizations”, SA12(2) Supply Chain Protection| Supplier Reviews. <br/><br/>
+          <span style="font-style: italic;">Supplier reviews can also help to determine whether primary suppliers have security safeguards in place
+          and practice for vetting subordinate suppliers, for example, second and third-tier suppliers, and any
+          subcontractors.</span> <br/><br/>
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Management Systems and Organizations,” Sections 3.3.1 and 3.3.2. <br/><br/>
+          System integrators are those entities that provide customized services to the acquirer including custom
+          development, test, operations, and maintenance. This group usually replies to a request for proposal
+          from an acquirer with a proposal that describes solution or services that are customized to the acquirer's
+          requirements. Such proposals provided by system integrators can include many layers of suppliers (see
+          Chapter 3.3.2). <span style="font-style: italic;"> The system integrator should ensure that those suppliers are vetted and verified with
+          respect to the acquirer's ICT SCRM requirements. </span> Because of the level of visibility that can be obtained
+          in the relationship with the system integrator, the acquirer has the ability to require rigorous supplier
+          acceptance criteria as well as any relevant countermeasures to address identified or potential risks. <br/><br/>
+          Organizations should consider that the costs of doing business with suppliers may be directly impacted
+          by the level of <span style="font-style: italic;">visibility the suppliers allow into how they apply security and supply chain practices</span> to
+          their solutions. When organizations or system integrators require greater levels of transparency from
+          suppliers, they must consider the possible cost implications of such requirements. Suppliers may select
+          to not participate in procurements to avoid increased costs or perceived risks to their intellectual
+          property, limiting an organization's supply or technology choices. The risk to suppliers is the potential for
+          multiple, different sets of requirements that they may have to individually comply with, which may not be
+          scalable. <br/><br/>
+          <span style="font-style: italic;">Board of Governors of the Federal Reserve System</span>, December 5, 2013. “Guidance on Managing
+          Outsourcing Risk,” 4-6. <br/><br/>
+          NIST CSF References: ID.SC-2, ID.SC-3 <br/><br/>
+        </li>
+      </ol>
+    </div>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 5 - Formal agreements include resilience requirements.</h2>
     </div>
 
   </div>
