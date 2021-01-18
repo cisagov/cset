@@ -716,6 +716,229 @@
 
     <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
       <h2 style="color: black; font-weight: bold;">Goal 5 - Formal agreements include resilience requirements.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer includes appropriate requirements in agreements with
+      external entities where there is some ability to negotiate, such as suppliers.</p>
+        <ol style="font-weight: bold;">
+          <li>Are resilience requirements for the critical service included in formal agreements with suppliers? [EXD:SG3.SP4]</li>
+          <li>Do formal agreements require suppliers to manage their own external dependencies? [EXD:SG3.SP4, EXD:GG2.GP4]</li>
+          <li>Do formal agreements with suppliers include requirements to report incidents that affect the critical service? [EXD:SG3.SP4, IMC:GG2.GP4]</li>
+          <li>Do formal agreements require that suppliers manage vulnerabilities that may affect the critical service? [EXD:SG3.SP2, VAR:GG2.GP4]</li>
+          <li>Do formal agreements require that suppliers maintain disruption management plans (incident management, service continuity, etc.)? [IMC:GG2.GP4, SC:GG2.GP4]</li>
+          <li>Do formal agreements with suppliers that support the critical service require their participation in disruption management planning and exercising? [IMC:GG2.GP7, SC:GG2.GP4]</li>
+        </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP4]</span> Formalize Relationships <br/><br/>
+          Agreements are often composed from multiple sections or multiple documents, each of which describes
+          some aspect of the arrangement and agreement. In all cases, the agreement, regardless of form, should:
+          <ul>
+            <li>be enforceable by the organization</li>
+            <li><span style="font-style: italic;">include detailed and complete specifications that must be met by the external entity (see EXD:SG3.SP1 and EXD:SG3.SP2)</span></li>
+            <li><span style="font-style: italic;">include any required performance standards or work products from the organization</span></li>
+            <li>be changed to reflect changes in specifications over the life of the relationship</li>
+          </ul>
+          Subpractices:
+          <ol>
+            <li>Select an agreement type that best fits the performance standards required by the organization and that is enforceable if problems arise.</li>
+            <li>Properly document the agreement terms, conditions, specifications and other provisions.</li>
+          </ol>
+          All agreement provisions should be documented in the agreement in language that is unambiguous. <br/><br/>
+          The agreement <span style="font-style: italic;">should not contain any general exceptions for achieving the resilience specifications
+          unless they are carefully considered and negotiated.</span> It may, however, contain scenarios of types of
+          unforeseen events for which the external entity is not expected to prepare. Any exceptions granted to
+          resilience specifications or scenarios for which the external entity is not required to prepare should be
+          treated as risks under EXD:SG2. <br/><br/>
+          All agreements should <span style="font-style: italic;">establish and enable procedures for monitoring the performance of external
+          entities</span> and inspecting the services or products they deliver to the organization. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Management Systems and Organizations,” Section 1.5 Foundational Practices. <br/><br/>
+          Foundational practices are described in NIST standards and guidelines as well as other applicable
+          national and international standards and best practices. They include: ensuring that organizations
+          understand the cost and scheduling constraints of implementing ICT SCRM; integrating information
+          security requirements into the acquisition process; using applicable baseline security controls as one of
+          the sources for security requirements. <br/><br/>
+          <span style="font-style: italic;">ISO 27036-2</span>, “IT-Security Techniques-Information Security for Supplier Relationships,” Section 6.1
+          Agreement Processes. <br/><br/>
+          <span style="font-style: italic;">ISO 27036-1</span>, “IT-Security Techniques-Information Security for Supplier Relationships,” Section 5.5 ICT
+          Supply Chain Considerations. <br/><br/>
+          NIST CSF References: ID.BE-1, ID.SC-3, PR.AT-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP4]</span> Formalize Relationships <br/><br/>
+          Formal agreements should be established with external entities. The agreement content may take
+          different forms depending on <span style="font-style: italic;">subcontracting provisions - The external entity's rights and ability to
+          subcontract their obligations under the agreement to others should be included.</span> <br/><br/>
+          <span style="font-weight: bold;">[EXD:GG2.GP4]</span> Assign Responsibility <br/><br/>
+          Assign responsibility and authority for performing the external dependencies management process,
+          developing the work products, and providing the services of the process. <br/><br/>
+          <span style="font-style: italic;">Those responsible for services and assets are involved in identifying and prioritizing external
+          dependencies and establishing resilience specifications that external entities must fulfill. Formal
+          agreements identify external entity actions</span>, including ensuring continuity of operations during times of
+          stress. <br/><br/>
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+          </ol> <br/>
+          The organization must ensure that responsibility and authority <span style="font-style: italic;">extends to all external entities and to any
+          entities with whom the external entity has contracted to provide services or products in support of the
+          external entity's formal agreement with the organization.</span> <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Management Systems and Organizations,” Sections 3.3.1 and 3.3.2. <br/><br/>
+          System integrators are those entities that provide customized services to the acquirer including custom
+          development, test, operations, and maintenance. Because of the level of visibility that can be obtained in
+          the relationship with the system integrator, <span style="font-style: italic;">the acquirer has the ability to require rigorous supplier
+          acceptance criteria as well as any relevant countermeasures to address identified or potential risks. </span> <br/><br/>
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for Federal Information Systems”,
+          Section 4.7.1 Acquirer - Programmatic Activities. <br/><br/>
+          <span style="font-style: italic;">i) Require the integrator to monitor supplier activities</span>, with notification to supplier, to detect and assess
+          threats or attempts to gain, or exploit exposure of, access to elements, supply chain processes, or supply chain actors. <br/><br/>
+          <span style="font-style: italic;">j) Require that reviewers are qualified to identify weaknesses and vulnerabilities</span> in the supply chain or
+          integrator SCRM processes and procedures. <br/><br/>
+          <span style="font-style: italic;">ISO 27036-1</span>, “IT-Security Techniques-Information Security for Supplier Relationships,” 5.3 Information
+          Security Risks in Supplier Relationships and Associated Threats. <br/><br/>
+          NIST CSF References: ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP4]</span> Formalize Relationships <br/><br/>
+          Supplier agreement should define obligations of the external entity to protect the acquirer's assets and
+          report material incidents that have the potential to impact those assets. Those obligations should include
+          requirements for the notification of the acquirer in the event of disruptions and security incidents such as
+          breaches and disclosures. <br/><br/>
+          <span style="font-weight: bold;">[IMC:GG2.GP4]</span> Assign Responsibility <br/><br/>
+          Assign responsibility and authority for performing the incident management and control process,
+          developing the work products, and providing the services of the process. <br/><br/>
+          Specific practice IMC:SG1.SP1 indicates that the incident management plan should define the roles and
+          responsibilities necessary to carry out the plan, as well as documenting commitments from those
+          responsible. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy Controls for Federal Information
+          Systems and Organizations", SA-12(12) | Inter-Organizational Agreements, SA-12(13) Supply Chain Protection | Critical Information System Components. <br/><br/>
+          The organization establishes inter-organizational agreements and procedures with entities involved in
+          the supply chain for the information system, system component, or information system service. <br/><br/>
+          <span style="text-decoration: underline;">Supplemental Guidance:</span> The <span style="font-style: italic;">establishment of inter-organizational agreements and procedures provides
+          for notification of supply chain compromises.</span> Early notification of supply chain compromises that can
+          potentially adversely affect or have adversely affected organizational information systems, including
+          critical system components, is essential for organizations to provide appropriate responses to such incidents. <br/><br/>
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Management Systems and Organizations,” Section 2.5 Foundational Practices. <br/><br/>
+          NIST CSF References: ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP2]</span> Establish Resilience Specifications for External Dependencies <br/><br/>
+          Consider the following topics when establishing required behaviors and standards of performance for
+          external dependencies and entities:
+          <ul>
+            <li>security, including incident management procedures and performance, <span style="font-style: italic;">vulnerability and
+              penetration management</span>, logical and physical access controls, identity management, and security standards compliance.</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">[VAR:GG2.GP4]</span> Assign Responsibility <br/><br/>
+          Assign responsibility and authority for performing the specific tasks of the process, including by
+          <ul>
+            <li>developing and implementing contractual instruments (including service level agreements) with
+              external entities to establish responsibility and authority for performing process tasks on
+              outsourced functions.</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">ISO 27036-1</span>, “IT-Security Techniques-Information Security for Supplier Relationships,” 5.5 ICT Supply
+          Chain Considerations, 5.3 Information Security Risks in Supplier Relationships and Associated Threats. <br/><br/>
+          NIST CSF References: ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[IMC:GG2.GP4]</span> Assign Responsibility <br/><br/>
+          Assign responsibility and authority for performing the incident management and control process,
+          developing the work products, and providing the services of the process. <br/><br/>
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+            <li>Assign responsibility and authority for performing the specific tasks of the process such as: 
+              <span style="font-style: italic;">developing and implementing contractual instruments (including service level agreements) with
+              external entities to establish responsibility and authority for performing process tasks on outsourced functions, assets, and services.</span>
+            </li>
+          </ol> <br/>
+          <span style="font-weight: bold;">[IMC:GG2.GP4]</span> Assign Responsibility <br/><br/>
+          Assign responsibility and authority for performing the service continuity process, developing the work
+          products, and providing the services of the process. <br/><br/>
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+            <li>Assign responsibility and authority for performing the specific tasks of the process, such as:
+              <span style="font-style: italic;">developing and implementing contractual instruments (including service level agreements) with
+                external entities to establish responsibility and authority for performing process tasks on outsourced functions.</span>
+            </li>
+          </ol>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">ISO 22301 First Edition</span>, “Societal Security - Business continuity management systems - Requirements.” <br/><br/>
+          NIST CSF References: ID.SC-3 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[IMC:GG2.GP7]</span> Identify and Involve Relevant Stakeholders <br/><br/>
+          Assign responsibility and authority for performing the incident management and control process,
+          developing the work products, and providing the services of the process. <br/><br/>
+          Stakeholders (including external entities) may be involved in various tasks in the incident management
+          and control process, such as
+          <ul>
+            <li>detecting events and incident</li>
+            <li>planning for incident handling, management, and response</li>
+            <li>making commitments to process plans and activities</li>
+            <li>collecting, documenting, and preserving event and incident evidence</li>
+            <li>analyzing events and incidents</li>
+            <li>declaring incidents</li>
+            <li>responding to incidents, including participating on incident response teams</li>
+            <li>communicating events and incidents and the status of incidents as they move through the incident life cycle</li>
+            <li>escalating incidents</li>
+            <li>coordinating process activities</li>
+            <li>reviewing and appraising the effectiveness of process activities</li>
+            <li>performing post-incident review and improvement processes</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">[SC:GG2.GP4]</span> Assign Responsibility <br/><br/>
+          Assign responsibility and authority for performing the service continuity process, developing the work
+          products, and providing the services of the process. <br/><br/>
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+            <li>Assign responsibility and authority for performing the specific tasks of the process, such as:
+              <span style="font-style: italic;">developing and implementing contractual instruments (including service level agreements) with
+              external entities to establish responsibility and authority for performing process tasks on
+              outsourced functions.</span> <br/><br/>
+            </li>
+          </ol>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy Controls for Federal Information
+          Systems and Organizations”, CP-4 Contingency Plan Testing. <br/><br/>
+          The <span style="font-style: italic;">organization coordinates contingency plan testing with organizational elements responsible for
+          related plans.</span> <br/><br/>
+          <span style="text-decoration: underline;">Supplemental Guidance:</span> Plans related to contingency plans for organizational information systems
+          include, for example, Business Continuity Plans, Disaster Recovery Plans, Continuity of Operations
+          Plans, Crisis Communications Plans, Critical Infrastructure Plans, Cyber Incident Response Plans, and
+          Occupant Emergency Plans. This control enhancement does not require organizations to create
+          organizational elements to handle related plans or to align such elements with specific plans. It does require, however, 
+          that if such organizational elements are responsible for related plans, organizations
+          should coordinate with those elements. Related controls: IR-8, PM-8. <br/><br/>
+          Federal Financial Institutions Examination Council (FFIEC) <span style="font-style: italic;">Business Continuity Planning IT Examination
+          Handbook</span>, Testing Strategies, 16. <br/><br/>
+          The testing policy should include enterprise-wide testing strategies that establish expectations for
+          individual business lines. Business lines include all internal and external supporting functions, such as IT
+          and facilities management. The testing strategy should include the following:
+          <ul>
+            <li>Expectations for business lines and support functions to demonstrate the achievement of
+              business continuity test objectives consistent with the BIA and risk assessment;
+            </li>
+            <li>Expectations for testing internal and external interdependencies;</li>
+          </ul> <br/>
+          <span style="font-style: italic;">ITIL Service Design</span>, The Stationery Office, 2011, Best Management Practice. Section
+          4.8.5.5. “Sourcing Structures,” 219-220. <br/><br/>
+          NIST CSF References: ID.SC-3, ID.SC-5<br/><br/>
+        </li>
+      </ol>
     </div>
 
   </div>
