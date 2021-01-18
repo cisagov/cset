@@ -64,6 +64,13 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
 
+    // set sub questions' titles so that they align with their parent when hidden
+    this.myGrouping.Questions.forEach(q => {
+      if (!!q.ParentQuestionId) {
+        q.DisplayNumber = this.myGrouping.Questions.find(x => x.QuestionId == q.ParentQuestionId).DisplayNumber;
+      }
+    });
+
     if (this.configSvc.acetInstallation) {
       // this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
