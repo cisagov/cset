@@ -11,6 +11,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string DomainName { get; set; }
         public string DomainMaturity { get; set; }
         public int Sequence { get; set; }
+
+        public double TargetPercentageAchieved { get; set; }
         public List<MaturityAssessment> Assessments { get; set; }
     }
 }
