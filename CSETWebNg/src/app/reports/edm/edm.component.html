@@ -256,7 +256,7 @@
         and
         control objectives because these are fundamental activities for effectively managing external dependencies.
       </p>
-      <ol>
+      <ol style="font-weight: bold;">
         <li>Are the acquirer’s services identified and documented across the enterprise? [SC:SG2.SP1]</li>
         <li>Are the acquirer’s services prioritized based on an analysis of the potential impact if the services are
           disrupted? [SC:SG2.SP1]</li>
@@ -355,14 +355,14 @@
       </ol>
     </div>
 
-    <div style="display: flex; border: 1px solid; flex-direction: column;">
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
       <h2 style="color: black; font-weight: bold;">Goal 2 - Forming relationships with external entities is planned.
       </h2>
       <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,
         and
         control objectives because these are fundamental activities for effectively managing external dependencies.
       </p>
-      <ol>
+      <ol style="font-weight: bold;">
         <li>Does the acquirer have an established process for entering into formal agreements with external entities?
           [EXD:SG3.SP3]</li>
         <li>Has the acquirer identified and documented baseline (boilerplate) requirements that apply to any supplier
@@ -435,11 +435,11 @@
           entity's services, support, products, assets, or staff on which the acquirer relies.
           Requirements should be gathered and documented for each type of external dependency. Even in cases
           where it is not practical to include these requirements in formal agreements with external entities, they
-          are useful as a way to assess and manage risks against external dependencies. <br /><br />
-          <span style="font-weight: bold;">Additional References</span> <br />
+          are useful as a way to assess and manage risks against external dependencies. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
           <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for
           Federal Information Systems,”
-          Section 3.2.3 Define/Develop Requirements <br /><br />
+          Section 3.2.3 Define/Develop Requirements <br/><br/>
           The acquirer mission/business owner or their designee, with assistance from the procurement official
           and other members of the SCRM team, if applicable, should define and document requirements for the
           procurement. During this process, mission, functionality, quality, and security requirements should be
@@ -451,8 +451,8 @@
           NIST CSF References: ID.BE-1, ID.BE-5, ID.SC-3 <br/><br/>
         </li>
         <li>
-          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
-          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br /><br />
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br/><br/>
           From a resilience perspective, the selection process for external entities is often an extension of or
           supplement to the organization's standard procurement processes. Resilience specifications may simply
           serve as additional requirements for consideration and evaluation as part of the standard procurement
@@ -468,8 +468,7 @@
           In cases where the specifications cannot be changed, any unmet specifications should be treated as risks. <br/><br/>
           <span style="font-weight: bold;">Additional References</span> <br/>
           <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
-          Controls for Federal Information
-          Systems and Organizations”, SA12(2) Supply Chain Protection | Supplier Reviews. <br/><br/>
+          Controls for Federal Information Systems and Organizations”, SA12(2) Supply Chain Protection | Supplier Reviews. <br/><br/>
           <span style="font-style: italic;">The organization conducts a supplier review prior to entering into a
           contractual agreement to acquire the information system, system component, or information system service. Supplemental Guidance:
           Supplier reviews include, for example:</span>(i) analysis of supplier processes used to design, develop,
@@ -486,6 +485,107 @@
           NIST CSF References: ID.BE-1, ID.BE-4, ID.SC-3 <br/><br/>
         </li>
       </ol>
+    </div>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column;">
+      <h2 style="color: black; font-weight: bold;">Goal 3 - Risk management includes external dependencies.</h2>
+      <p> The purpose of this goal is to assess whether the acquirer's risk management process includes external dependency risk.</p>
+      <ol style="font-weight: bold;">
+        <li>Has a plan for managing operational risk been established and agreed to by Stakeholders? [RISK:SG1.SP2]</li>
+        <li>Are the risks of relying on external entities to support the critical service identified and managed (accepted, transferred, mitigated, etc.)? [EXD:SG2.SP1]
+          <ol>
+            <li>Suppliers</li>
+            <li>Infrastructure providers</li>
+            <li>Governmental services</li>
+          </ol>
+        </li>
+        <li>Does the acquirer identify and manage the risk of an external entity being a single point of failure? [EXD:SG1.SP2]</li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[RISK:SG1.SP2]</span> Establish a Risk Management Strategy <br/><br/>
+          Because of the pervasive nature of operational risk, a comprehensive operational risk management
+          strategy is needed to ensure proper consideration of risk and the effects on operational resilience. The
+          strategy provides a common foundation for the performance of operational risk management activities
+          (which are typically dispersed throughout the organization) and for the collection, coordination, and
+          elevation of operational risk to the organization's enterprise risk management process. <br/><br/>
+          Preparation for operational risk management requires the organization to develop and maintain a
+          strategy for identifying, analyzing, and mitigating operational risks. This strategy is documented in a risk
+          management plan and addresses the activities that the organization performs enterprise-wide to carry
+          out a continuous risk management program. This includes identifying the sources and types of
+          operational risk and establishing a strategy that details the organization's approach, activities, and
+          objectives for managing these risks as a fundamental operational resilience management process. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-39</span>, “Managing Information Security Risk Acquirer, Mission, and
+          Information System View,” 2.1 Components of Risk Management. <br/><br/>
+          <span style="font-style: italic;">Managing risk is a complex, multifaceted activity that requires the involvement of the entire organization</span>-
+          from senior leaders/executives providing the strategic vision and top-level goals and objectives for the
+          organization; to mid-level leaders planning, executing, and managing projects; to individuals on the front
+          lines operating the information systems supporting the organization's missions/business functions. Risk
+          management is a comprehensive process that requires organizations to: (i) frame risk (i.e., establish the
+          context for risk-based decisions); (ii) assess risk; (iii) respond to risk once determined; and (iv) monitor
+          risk on an ongoing basis using effective organizational communications and a feedback loop for
+          continuous improvement in the risk-related activities of organizations. Risk management is carried out as
+          a holistic, organization-wide activity that addresses risk from the strategic level to the tactical level,
+          ensuring that risk- based decision making is integrated into every aspect of the organization. <br/><br/>
+          NIST CSF References: ID.GV-4, ID.RM-1, ID.SC-1 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG2.SP1]</span> Identify Risks Due to External Dependencies. <br/><br/>
+          Identification of risks due to external dependencies requires an understanding of the actions of the
+          associated external entity in the operation, support, or resilience of the organization's services. External
+          entities will be responsible for varying dependencies in the support of the organization's operations. <br/><br/>
+          <span style="font-weight: bold;">[RISK:SG1:SP1]</span> Determine Risk Sources and Categories. <br/><br/>
+          The sources of risk to assets and services are identified and the categories of risk that are relevant to
+          the organization are determined. <br/><br/>
+          Identifying risk sources helps the organization to determine and categorize the types of operational risk
+          that are most likely to affect day-to-day operations and to seed an organization-specific risk taxonomy
+          that can be used as a tool for managing risk on a continuous basis as operating conditions change and
+          evolve. The sources of risk can be both internal and external to the organization. <br/><br/>
+          Categorizing operational risks provides the organization a means from which to perform advanced
+          analysis and mitigation activities that allow for similar types of risks to be effectively neutralized or
+          contained by limited actions by the organization. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-30</span>, “Risk Management Guide for Information Technology Systems,”
+          Section 2.4 Application of Risk Assessments. <span style="font-style: italic;">ISO 28000 First Edition</span>, Specifications for security
+          management systems for the supply Chain.” <br/><br/>
+          NIST CSF References: ID.BE-1, ID.RA-5, ID.RA-6, ID.SC-1, ID.SC-2, ID.SC-4 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br/>
+          <span style="font-weight: bold;">[EXD:SG1.SP2]</span> Prioritize External Dependencies <br/><br/>
+          Determine whether the loss of a single supplier will cause unacceptable disruption to critical services.
+          This can be accomplished through affinity analysis. For this type of vendor, allow for service risks by
+          clearly defining requirements and/or applicable mitigations, such as alternate vendors in the event of a
+          failure from the primary vendor. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy Controls for Federal Information
+          Systems and Organizations”, SA12(13) Supply Chain Protection | Critical Information System Components. <br/><br/>
+          Adversaries can attempt to impede organizational operations by disrupting the supply of critical
+          information system components or corrupting supplier operations. Safeguards to ensure adequate
+          supplies of critical information system components include, for example: <br/>
+          <span style="font-style: italic;">(i) the use of multiple suppliers throughout the supply chain for the identified critical components; and (ii)
+          stockpiling of spare components to ensure operation during mission- critical times.</span> <br/><br/>
+          OCC Bulletin 2013-29. Subject: Third-Party Relationships United States Department of the Treasury,
+          October 30, 2013. <br/><br/>
+          Senior management should ensure that periodic independent reviews are conducted on the third-party
+          risk management process, particularly when a bank involves third parties in critical activities. . . .
+          Reviews may include assessing the adequacy of the bank's process for 
+          <ul>
+            <li>identifying and managing concentration risks that may arise from relying on a single third party
+              for multiple activities, or from geographic concentration of business due to either direct
+              contracting or subcontracting agreements to the same locations.</li>
+          </ul> <br/>
+          <span style="font-style: italic;">ITIL Service Strategy</span>, The Stationery Office, 2011, Best Management Practice. Section 3.7.3, “Multivendor
+          Sourcing.” <br/><br/>
+          NIST CSF References: ID.RA-4, ID.RA-5, ID.SC-2, ID.SC-4 <br/><br/>
+        </li>
+      </ol>
+
+      
     </div>
 
   </div>
