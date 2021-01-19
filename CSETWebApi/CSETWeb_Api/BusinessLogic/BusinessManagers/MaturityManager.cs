@@ -454,12 +454,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         {
                             DomainName = d.Domain,
                             Assessments = new List<MaturityAssessment>(),
-                            Sequence = tGroupOrder == null ? 0 : tGroupOrder.grouporder
+                            Sequence = tGroupOrder == null ? 0 : tGroupOrder.grouporder,
+                            TargetPercentageAchieved = 0
                         };
+                        var DomainQT = 0;
+                        var DomainAT = 0;
+
                         var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Domain).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
                         foreach (var s in partial_sub_categoy)
                         {
 
+                            int AssQT = 0;
+                            int AssAT = 0;
 
                             var maturityAssessment = new MaturityAssessment
                             {
@@ -471,6 +477,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             var assessmentCategories = sub_categories.Where(x => x.AssessmentFactor == s);
                             foreach (var c in assessmentCategories)
                             {
+                                int CompQT = 0;
+                                int CompAT = 0;
+                                int CompQuestions = 0;
+                                int totalAnswered = 0;
+                                double AnsweredPer = 0;
 
                                 var component = new MaturityComponent
                                 {
@@ -484,6 +495,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                     Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                                 };
+
+                                // Calc total questons and anserwed
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).Total ) : 0;
+                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                                                               
+                                totalAnswered = 0;
+
+                                if (AnsweredPer > 0)
+                                {
+                                    totalAnswered = Convert.ToInt32( (AnsweredPer / 100) * CompQuestions);
+                                }
+                                CompQT += CompQuestions; 
+                                CompAT += totalAnswered;
+
                                 var evolving = new SalAnswers
                                 {
 
@@ -491,24 +516,77 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
                                 };
+
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()).Total) : 0;
+                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                                totalAnswered = 0;
+
+                                if (AnsweredPer > 0)
+                                {
+                                    totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                                }
+                                CompQT += CompQuestions;
+                                CompAT += totalAnswered;
+
+
                                 var intermediate = new SalAnswers
                                 {
 
                                     Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                                 };
+
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).Total) : 0;
+                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                                totalAnswered = 0;
+
+                                if (AnsweredPer > 0)
+                                {
+                                    totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                                }
+                                CompQT += CompQuestions;
+                                CompAT += totalAnswered;
+
                                 var advanced = new SalAnswers
                                 {
 
                                     Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                                 };
+
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).Total) : 0;
+                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                                totalAnswered = 0;
+
+                                if (AnsweredPer > 0)
+                                {
+                                    totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                                }
+                                CompQT += CompQuestions;
+                                CompAT += totalAnswered;
+
                                 var innovative = new SalAnswers
                                 {
 
                                     Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                                 };
+
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).Total) : 0;
+                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                                totalAnswered = 0;
+
+                                if (AnsweredPer > 0)
+                                {
+                                    totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                                }
+                                CompQT += CompQuestions;
+                                CompAT += totalAnswered;
+
                                 component.Baseline = baseline.Answered;
                                 component.Evolving = evolving.Answered;
                                 component.Intermediate = intermediate.Answered;
@@ -524,6 +602,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                                 maturityAssessment.Components.Add(component);
 
+                                AssQT += CompQT;
+                                AssAT += CompAT;
                             }
 
                             maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
@@ -537,7 +617,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
                             maturityDomain.Assessments.Add(maturityAssessment);
 
-
+                            DomainQT += AssQT;
+                            DomainAT += AssAT;
 
                         }
 
@@ -550,7 +631,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                                                                             maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
                                                                                                 Constants.IncompleteMaturity;
                         maturityDomain.Assessments = maturityDomain.Assessments.OrderBy(x => x.Sequence).ToList();
+
+                        double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
+                        maturityDomain.TargetPercentageAchieved = AchPerTol;
                         maturityDomains.Add(maturityDomain);
+
                     }
                 }
                 maturityDomains = maturityDomains.OrderBy(x => x.Sequence).ToList();
