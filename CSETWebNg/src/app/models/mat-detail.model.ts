@@ -34,6 +34,7 @@ export class MaturityDomain {
     DomainMaturity: string;
     Assessments: MaturityAssessment[];
     Sequence: number;
+    TargetPercentageAchieved: number;
 
     constructor() {
         this.Assessments = [];

@@ -632,14 +632,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                                                                                 Constants.IncompleteMaturity;
                         maturityDomain.Assessments = maturityDomain.Assessments.OrderBy(x => x.Sequence).ToList();
 
-                        Debug.WriteLine("Domain Q Total:");
-                        Debug.WriteLine(DomainQT);
-                        Debug.WriteLine("Domain A Total:");
-                        Debug.WriteLine(DomainAT);
-
-                        Debug.WriteLine("Domain Achived Percent total:");
-                        double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 2);
-                        Debug.WriteLine(AchPerTol);
+                        double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
                         maturityDomain.TargetPercentageAchieved = AchPerTol;
                         maturityDomains.Add(maturityDomain);
 

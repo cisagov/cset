@@ -154,36 +154,25 @@
         <div _ngcontent-c2="" class="chart-column">
             <p _ngcontent-c2="" style="text-align: center; color: #1274d2;">Target Percentage Achieved</p>
         </div>
+    
     </div>
     <div _ngcontent-c2="" class="cover-page-bottom mb-4" style="text-indent: 24px">
         <div _ngcontent-c2="" class="chart-column">
-            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 1:</b> Cyber Risk
-                Management and Oversight</p>
-            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 2:</b> Threat
-                Intelligence and Collaboration</p>
-            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 3:</b>
-                Cybersecurity Controls</p>
-            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 4:</b> External
-                Dependency Management</p>
-            <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px"><b>Domain 5:</b> Cyber
-                Incidence Management and Resilience</p>
+            <div *ngFor="let domainData of domainDataList; index as i">
+                <p _ngcontent-c2="" style="text-align: left; padding-bottom: 24px">
+                    <b>Domain {{i+1}}:</b> {{domainData.domainName}}</p>
+            </div>
         </div>
         <div _ngcontent-c2="" class="chart-column">
-            <p _ngcontent-c2="" class="chart-maturity-level"><b>Baseline</b></p>
-            <p _ngcontent-c2="" class="chart-maturity-level"><b>Evolving</b></p>
-            <p _ngcontent-c2="" class="chart-maturity-level"><b>Innovative</b></p>
-            <p _ngcontent-c2="" class="chart-maturity-level"><b>Intermediate</b></p>
-            <p _ngcontent-c2="" class="chart-maturity-level"><b>Advanced</b></p>
-
+            <div *ngFor="let domainData of domainDataList; index as i">
+                <p _ngcontent-c2="" class="chart-maturity-level"><b>{{domainData.domainMaturity}}</b></p>
+            </div>
         </div>
         <div _ngcontent-c2="" class="chart-column">
-            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>32%</b></p>
-            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>55%</b></p>
-            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>67%</b></p>
-            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>42%</b></p>
-            <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>22%</b></p>
-
+            <div *ngFor="let domainData of domainDataList; index as i">
+                <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>{{domainData.targetPercentageAchieved}}%</b></p>
+            </div>
         </div>
+            
     </div>
-    <hr class="page-line" />
 </div>
