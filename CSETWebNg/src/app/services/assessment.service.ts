@@ -189,10 +189,24 @@ export class AssessmentService {
     );
   }
 
-  removeContact(userId: number, assessment_id: number) {
+  /**
+   * Disconnects the current user from an assessment.
+   */
+  removeMyContact(assessment_id: number) {
     return this.http.post(
       this.apiUrl + 'contacts/remove',
-      { UserId: userId, Assessment_ID: assessment_id },
+      { AssessmentId: assessment_id },
+      headers
+    );
+  }
+
+  /**
+   * Requests removing a user from an assessment.
+   */
+  removeContact(assessmentContactId: number) {
+    return this.http.post(
+      this.apiUrl + 'contacts/remove',
+      { AssessmentContactId: assessmentContactId },
       headers
     );
   }
