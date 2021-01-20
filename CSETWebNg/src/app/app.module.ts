@@ -256,6 +256,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 
 @NgModule({
     imports: [
@@ -469,6 +470,7 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        MaturityQuestionsAcetComponent,
     ],
     providers: [
         ConfigService,
