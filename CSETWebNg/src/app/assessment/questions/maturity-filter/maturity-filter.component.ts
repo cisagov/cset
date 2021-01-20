@@ -61,11 +61,6 @@ export class MaturityFilterComponent implements OnInit {
    */
   ngOnInit() {
     this.domainName = this.domain.Title;
-
-    ////// TEMP CODE -- playing with filter selection
-    this.levels.forEach(l => {
-      l.Applicable = true;
-    });
   }
 
   /**
