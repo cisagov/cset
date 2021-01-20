@@ -441,6 +441,7 @@ import { EdmComponent } from './reports/edm/edm.component';
         CategoryBlockComponent,
         AskQuestionsComponent,
         MaturityQuestionsComponent,
+        MaturityQuestionsAcetComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
@@ -470,7 +471,6 @@ import { EdmComponent } from './reports/edm/edm.component';
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
-        MaturityQuestionsAcetComponent,
     ],
     providers: [
         ConfigService,
