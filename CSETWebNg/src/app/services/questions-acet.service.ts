@@ -34,24 +34,10 @@ export class QuestionsAcetService {
   * Any 'empty' values below the bottom of the band are set as well.
   */
   initializeMatFilters(irp: number) {
-    console.log('initializeMatFilters');
-
     this.overallIRP = irp;
 
     // if we have an IRP, default the maturity filters based on the stairstep.
-
-
-    // this.domainMatFilters = new Map<string, Map<string, boolean>>();
     this.domainMatFilters = new Map();
-
-
-    // if we don't have domain names in this array of questions, there's no maturity filters to worry about
-    if (!this.domains) {
-      return;
-    }
-    else if (!this.domains[0] || !this.domains[0].DomainName) {
-      return;
-    }
 
     this.acetFilterSvc.getFilters().subscribe((x: ACETFilter[]) => {
       // set the filters based on the bands
