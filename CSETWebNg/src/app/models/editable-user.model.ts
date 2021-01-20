@@ -29,6 +29,7 @@ export class EditableUser implements User {
   UserId?: number;
   AssessmentId?: number;
   AssessmentRoleId?: number;
+  AssessmentContactId?: number;
   ContactId?: string;
   FirstName?: string = '';
   LastName?: string = '';
@@ -54,6 +55,7 @@ export class EditableUser implements User {
     } else {
       this.AssessmentRoleId = 1;
     }
+    this.AssessmentContactId = user.AssessmentContactId;
     this.ContactId = user.ContactId;
     this.FirstName = user.FirstName;
     this.Id = user.Id;

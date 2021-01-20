@@ -272,6 +272,7 @@
     <Compile Include="AssessmentIO\import\CSET_09_2_2_to_09_2_3_Upgrade.cs" />
     <Compile Include="AssessmentIO\import\CSET_09_2_1_to_09_2_2_Upgrade.cs" />
     <Compile Include="AssessmentIO\import\CSET_09_2_0_to_09_2_1_Upgrade.cs" />
+    <Compile Include="AssessmentIO\import\ImportManagerACET.cs" />
     <Compile Include="AssessmentIO\import\ImportManagerAwwa.cs" />
     <Compile Include="AssessmentIO\models\Version_10.1\AllGeneralJsonModels.cs" />
     <Compile Include="AssessmentIO\models\Version_10.1\UploadAssessmentModel.cs" />

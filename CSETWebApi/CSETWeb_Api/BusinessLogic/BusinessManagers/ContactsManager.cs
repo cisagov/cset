@@ -383,12 +383,12 @@ namespace CSETWeb_Api.BusinessManagers
         /// Removes a Contact/User from an Assessment.
         /// Currently we actually delete the ASSESSMENT_CONTACTS record.  
         /// </summary>
-        public List<ContactDetail> RemoveContact(int userId, int assessmentId)
+        public List<ContactDetail> RemoveContact(int assessmentContactId)
         {
             using (var db = new CSET_Context())
             {
                 var ac = (from cc in db.ASSESSMENT_CONTACTS
-                            where cc.UserId == userId && cc.Assessment_Id == assessmentId
+                            where cc.Assessment_Contact_Id == assessmentContactId
                             select cc).FirstOrDefault();
                 if (ac == null)
                     throw new NoSuchUserException();
@@ -407,9 +407,9 @@ namespace CSETWeb_Api.BusinessManagers
 
                 db.SaveChanges();
 
-                AssessmentUtil.TouchAssessment(assessmentId);
+                AssessmentUtil.TouchAssessment(ac.Assessment_Id);
 
-                return GetContacts(assessmentId);
+                return GetContacts(ac.Assessment_Id);
             }
         }
 

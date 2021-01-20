@@ -253,6 +253,8 @@ import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.com
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
+import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { EdmComponent } from './reports/edm/edm.component';
 
 @NgModule({
@@ -465,6 +467,8 @@ import { EdmComponent } from './reports/edm/edm.component';
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
+        EdmDeficiencyComponent,
+        EdmCommentsmarkedComponent,
     ],
     providers: [
         ConfigService,
