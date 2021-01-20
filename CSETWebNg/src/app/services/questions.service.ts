@@ -27,10 +27,8 @@ import { Injectable } from '@angular/core';
 import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
-import { AcetFiltersService, ACETFilter } from './acet-filters.service';
 import { QuestionFilterService } from './question-filter.service';
 import { QuestionsAcetService } from './questions-acet.service';
-
 
 
 

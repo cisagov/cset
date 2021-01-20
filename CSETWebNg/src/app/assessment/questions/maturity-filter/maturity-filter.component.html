@@ -28,7 +28,7 @@
     [class.active]="l.Applicable"
     [class.default-mat-filter]="isDefaultMatLevel(l.Level)" ngbButtonLabel>
     <input class="form-check-input" type="checkbox" ngbButton 
-      [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get(l.Level)"
+      [ngModel]="acetQuestionSvc.domainMatFilters?.get(domainName)?.get(l.Level)"
       (ngModelChange)="filterChanged(l.Level, $event)">
       {{ l.Label }}
     </label>    
