@@ -27,6 +27,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { AcetFiltersService } from '../../../services/acet-filters.service';
 import { Domain } from 'domain';
 import { MaturityDomain } from '../../../models/mat-detail.model';
+import { QuestionsAcetService } from '../../../services/questions-acet.service';
 
 
 @Component({
@@ -36,6 +37,9 @@ import { MaturityDomain } from '../../../models/mat-detail.model';
 export class MaturityFilterComponent implements OnInit {
 
   // public filterSettings = [];
+
+  @Input()
+  levels: any[];
 
   @Input()
   domainName: string;
@@ -48,10 +52,17 @@ export class MaturityFilterComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
+    public acetQuestionSvc: QuestionsAcetService,
     private filterSvc: AcetFiltersService
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
+    this.levels.forEach(l => {
+      l.Applicable = true;
+    });
   }
 
   /**
@@ -60,7 +71,7 @@ export class MaturityFilterComponent implements OnInit {
    * @param mat
    */
   isDefaultMatLevel(mat: string) {
-    return (this.questionsSvc.isDefaultMatLevel(mat));
+    return (this.acetQuestionSvc.isDefaultMatLevel(mat));
   }
 
   /**
@@ -71,9 +82,9 @@ export class MaturityFilterComponent implements OnInit {
    */
   filterChanged(f: string, e) {
     // set my filter settings in questions service
-    this.questionsSvc.domainMatFilters.get(this.domainName).set(f, e);
+    this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
     this.filterSvc.saveFilter(this.domainName,f,e).subscribe();
     // tell my host page
-    this.filtersChanged.emit(this.questionsSvc.domainMatFilters.get(this.domainName));
+    this.filtersChanged.emit(this.acetQuestionSvc.domainMatFilters.get(this.domainName));
   }
 }
