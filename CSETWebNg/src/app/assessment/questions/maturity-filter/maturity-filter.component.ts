@@ -23,32 +23,32 @@
 ////////////////////////////////
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
-import { stringify } from '@angular/compiler/src/util';
 import { AcetFiltersService } from '../../../services/acet-filters.service';
-import { Domain } from 'domain';
-import { MaturityDomain } from '../../../models/mat-detail.model';
 import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { QuestionGrouping } from '../../../models/questions.model';
 
-
+/**
+ * A visible checkbox control that marks questions in the associated
+ * domain as visible or not, depending on the maturity level of the
+ * question vs the selected level of this control.
+ */
 @Component({
   selector: 'app-maturity-filter',
   templateUrl: './maturity-filter.component.html'
 })
 export class MaturityFilterComponent implements OnInit {
 
-  // public filterSettings = [];
-
   @Input()
   levels: any[];
 
   @Input()
-  domainName: string;
-
-  @Input()
-  domain: any;
-
+  domain: QuestionGrouping;
+  
   @Output()
   filtersChanged = new EventEmitter<Map<string, boolean>>();
+  
+  // the domain that we are filtering
+  domainName: string;
 
   constructor(
     public questionsSvc: QuestionsService,
@@ -60,6 +60,9 @@ export class MaturityFilterComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.domainName = this.domain.Title;
+
+    ////// TEMP CODE -- playing with filter selection
     this.levels.forEach(l => {
       l.Applicable = true;
     });
@@ -82,7 +85,8 @@ export class MaturityFilterComponent implements OnInit {
    */
   filterChanged(f: string, e) {
     // set my filter settings in questions service
-    this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
+    console.log(this.acetQuestionSvc.domainMatFilters);
+ //   this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
     this.filterSvc.saveFilter(this.domainName,f,e).subscribe();
     // tell my host page
     this.filtersChanged.emit(this.acetQuestionSvc.domainMatFilters.get(this.domainName));
