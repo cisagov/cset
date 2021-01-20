@@ -47,7 +47,11 @@ export class AcetExecutiveComponent implements OnInit {
       (data: any) => {
         // Format and connect donut data here
         data.forEach((domain: MaturityDomain) => {
-          var domainData = { domainName: domain.DomainName, graphdata: []}
+          var domainData = { 
+            domainName: domain.DomainName, 
+            domainMaturity: domain.DomainMaturity, 
+            targetPercentageAchieved: domain.TargetPercentageAchieved,
+            graphdata: []}
           domain.Assessments.forEach((assignment: MaturityAssessment) => {
             var assesmentData = {
               "asseessmentFactor": assignment.AssessmentFactor,
