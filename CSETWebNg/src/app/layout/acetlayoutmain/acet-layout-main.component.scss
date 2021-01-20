@@ -9,8 +9,8 @@ $black: #000000;
 
 /* --- Blues --- */
 $primary: ( 50: #E9EDF2, 100: #D1D9E6, 150: #BCCFDA, 200: #A3B4CC, 250: #8FB0C1, 300: #79A0B5, 350: #6390A9, 
-400: #83A5D4, 450: #163a6b, 500: #206184, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d, 
-750: #083C58, 800: #07354D, 850: #062D42, 900: #052637, 950: #041E2C);
+400: #83A5D4, 450: #3B68AA, 500: #206184, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d, 
+750: #083C58, 800: #07354D, 850: #062D42, 900: #18375F, 950: #041E2C);
 
 $primary-50: map-get($primary, 50);
 $primary-100: map-get($primary, 100);
@@ -32,9 +32,8 @@ $primary-850: map-get($primary, 850);
 $primary-900: map-get($primary, 900); // Main Dark Primary
 
 $primary-color: $primary-900;
-$ncua-primary-background-image: linear-gradient(to right, #0f3c7a, #5290e5, #0f3c7a);
 
-$secondary-color: #0f3c7a;
+$secondary-color: $primary-450;
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -72,7 +71,7 @@ $warn-color: #eae894;
 $validation-color: red;
 
 // Oranges
-$local-install-background-color: #B06C23;
+$local-install-background-color: #a55601;
 $bg-debug-highlight: #fbe1c2;
 $bc-filters-engaged:#F9CE15;
 
@@ -104,6 +103,10 @@ body {
 
 *:focus{
   outline:none !important;
+}
+
+.white {
+  color: $white;
 }
 
 .gutter-background {
@@ -211,7 +214,7 @@ label[required]::after {
 }
 .footer .card-header {
   padding: 0rem;
-  background-image: $ncua-primary-background-image !important;
+  background-color: $primary-color !important;
   border-bottom:none;
 }
 .footer .card-body {
@@ -1074,7 +1077,7 @@ th.data-table {
 // Header / Navbar
 /////////////////////////////////////////////
 .ncua-header {
-  background-image: $ncua-primary-background-image !important;
+  background-color: $primary-color !important;
 }
 
 .header-help {
@@ -1100,7 +1103,7 @@ th.data-table {
 
 .local-install {
   background-color: $local-install-background-color;
-  color: $gray-100;
+  color: $white;
   font-weight: 600;
 }
 
