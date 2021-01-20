@@ -85,8 +85,7 @@ export class MaturityFilterComponent implements OnInit {
    */
   filterChanged(f: string, e) {
     // set my filter settings in questions service
-    console.log(this.acetQuestionSvc.domainMatFilters);
- //   this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
+    this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
     this.filterSvc.saveFilter(this.domainName,f,e).subscribe();
     // tell my host page
     this.filtersChanged.emit(this.acetQuestionSvc.domainMatFilters.get(this.domainName));
