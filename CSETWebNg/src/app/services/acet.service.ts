@@ -120,6 +120,9 @@ export class ACETService {
     getAssessmentInfromation() {
         return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInfromation', headers);
     }  
+    getAnsweredQuestions() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
+    }  
     /*
     * Save targetBand
     */
