@@ -69,7 +69,7 @@
           <div class="col-sm-6">
             <div class="float-left login-divider"></div>
             <div class="m-4">
-              <img src="/assets/NCUA/images/logo.svg" height="55px" style="padding-left: 25px; margin-bottom: 20px;">
+              <img src="/assets/NCUA/images/logo.svg" alt="ncua" height="55px" style="padding-left: 25px; margin-bottom: 20px;">
               <div class="m-4 d-flex flex-column justify-content-between flex-00a" style="width:325px;" *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
                 <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate class="d-flex flex-column justify-content-between flex-00a">
                     <div *ngIf="incorrect">
@@ -105,7 +105,7 @@
       </div>
       <div class="row align-self-center h-100 align-items-center" *ngIf="mode === 'LOGIN'">
         <div class="col">
-          <img src="/assets/NCUA/images/ncua_seal_white_footer.svg" class="seal-height" height="150px">
+          <img src="/assets/NCUA/images/ncua_seal_white_footer.svg" alt="ncua" class="seal-height" height="150px">
         </div>
       </div>
   
