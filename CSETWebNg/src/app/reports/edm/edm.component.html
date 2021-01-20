@@ -1,1 +1,1189 @@
-<p>edm works!</p>
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+
+<div class="report-body">
+
+  <div class="flex-container">
+    <div class="column">
+      <p style="text-align: center">
+        <img width="500" height="200" style="margin-top: 50;" src="../../../assets/images/EDM/EDM_logo.png">
+      </p>
+    </div>
+
+    <div class="cover-page-bottom">
+      <div>
+        <img style="width: 283px; height: 133px" src="../../../assets/images/ExecutiveFiles/image003.jpg">
+      </div>
+      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+        <div>
+          <!-- {{response?.information.Assessment_Name}} -->
+        </div>
+        <div>
+          <!-- {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}} -->
+        </div>
+        <div>
+          <!-- {{response?.information.Assessor_Name}} -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="page-break">
+    <h1>Disclaimer</h1>
+
+    <p>The analysis, data, and reports in CSET
+      <sup>®</sup> are provided "as is" for informational purposes only. The Department of Homeland Security (DHS)
+      does
+      not provide any warranties of any kind regarding any information contained within. In no event shall the
+      United
+      States Government or its contractors or subcontractors be liable for any damages, including but not limited
+      to,
+      direct, indirect, special, or consequential damages and including damages based on any negligence of the
+      United
+      States Government or its contractors or subcontractors, arising out of, resulting from, or in any way
+      connected
+      with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained
+      from,
+      or arose out of the results of, or reliance upon the report.
+    </p>
+
+    <p>
+      DHS does not endorse any commercial product or service, including the subject of the assessment or
+      evaluation in this report.
+      Any reference to specific commercial products, processes, or services by trademark, manufacturer, or
+      otherwise,
+      does not constitute or imply its endorsement, recommendation, or favoring by DHS.
+    </p>
+
+    <p>
+      The display of the DHS official seal or other DHS visual identities on this report shall not be interpreted
+      to provide the
+      recipient organization authorization to use the official seal, insignia, or other visual identities of DHS.
+      The
+      DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any
+      commercial
+      product or activity by DHS or the United States Government. Use of the DHS seal without proper authorization
+      violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against DHS policies governing usage of the
+      seal.
+    </p>
+
+    <p>
+      The report is prepared and intended for internal use by the organization that made the request. The contents
+      of this report
+      may be subject to government or private intellectual property rights. To request distribution of this report
+      outside the organization for which it was prepared, contact the CSET Program Office. The contents of this
+      report
+      may be reproduced or incorporated into other reports, but may not be modified without the prior express
+      written
+      permission of the CSET Program Office.
+    </p>
+  </div>
+
+
+
+  <div class="page-break">
+    <h1>Advisory</h1>
+    <p>
+      CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust
+      cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of
+      security
+      weaknesses, and should not be the sole means of determining an organization’s security posture.
+    </p>
+
+    <p>
+      The tool will not provide a detailed architectural analysis of the network or a detailed network
+      hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex
+      risk assessment. CSET® is not
+      intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained
+      professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach
+      including facility walk downs, interviews, and observation and examination of facility practices.
+      Consideration should also be
+      given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or
+      non-production systems, or systems where failures, unexpected faults, or other unexpected results will not
+      compromise
+      production or safety.
+    </p>
+
+    <p>
+      CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting
+      of representatives
+      from operational, maintenance, information technology, business, and security areas is essential. The
+      representatives
+      must be subject matter experts with significant expertise in their respective areas. No one individual has
+      the
+      span of responsibility or knowledge to effectively answer all the questions.
+    </p>
+
+    <p>
+      Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a
+      manner appropriate
+      to their sensitivity.
+    </p>
+  </div>
+
+
+  <!-- Begin performance summary section -->
+
+  <div class="page-break">
+    <h1 class="pageHeader">Performance Summary</h1>
+    <div style="display: flex; flex-direction: row; align-items: right; margin-bottom: 5px;">
+      <h2 style="text-align: center; color: #000;">EDM MIL-1 Performance Summary</h2>
+      
+      <ngx-charts-bar-horizontal-normalized 
+        [view]="view" 
+        [scheme]="colorScheme"
+        [results]="performanceLegend" 
+        [gradient]="gradient" 
+        [xAxis]="performanceLegendShowXAxis"
+        [yAxis]="performanceLegendShowYAxis" 
+        [yAxisLabel]="performanceLegendYAxisLabel"
+        [xAxisLabel]="performanceLegendXAxisLabel"
+        [showXAxisLabel]="performanceLegendShowXAxisLabel">
+      </ngx-charts-bar-horizontal-normalized>
+    </div>
+
+    <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+      <h2 style="text-align: center; border-top: 5px; border-bottom: 5px; border-color: #000; color: #000; text-decoration: underline;">PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
+      <h2>Relationship Formation</h2>
+      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+        <strong>Goal 1</strong> - Acquirer service and asset <br/> priorities are established.
+        <ngx-charts-bar-horizontal-normalized 
+          [view]="view" 
+          [scheme]="colorScheme"
+          [results]="relationshipFormationG1" 
+          [gradient]="gradient" 
+          [xAxis]="goalShowXAxis"
+          [yAxis]="goalShowYAxis" 
+          [showXAxisLabel]="goalShowXAxisLabel">
+        </ngx-charts-bar-horizontal-normalized>
+      </div>
+      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+        <strong>Goal 2</strong> - Forming relationships with <br/> external entities is planned.
+        <ngx-charts-bar-horizontal-normalized 
+          [view]="view" 
+          [scheme]="colorScheme"
+          [results]="relationshipFormationG2" 
+          [gradient]="gradient" 
+          [xAxis]="goalShowXAxis"
+          [yAxis]="goalShowYAxis" 
+          [showXAxisLabel]="goalShowXAxisLabel">
+        </ngx-charts-bar-horizontal-normalized>
+      </div>
+      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+        <strong>Goal 3</strong> - Risk management includes <br/> external dependencies.
+        <ngx-charts-bar-horizontal-normalized 
+          [view]="view" 
+          [scheme]="colorScheme"
+          [results]="relationshipFormationG3" 
+          [gradient]="gradient" 
+          [xAxis]="goalShowXAxis"
+          [yAxis]="goalShowYAxis" 
+          [showXAxisLabel]="goalShowXAxisLabel">
+        </ngx-charts-bar-horizontal-normalized>
+      </div>
+      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+        <strong>Goal 4</strong> - External entities are evaluated.
+        <ngx-charts-bar-horizontal-normalized 
+          [view]="view" 
+          [scheme]="colorScheme"
+          [results]="relationshipFormationG4" 
+          [gradient]="gradient" 
+          [xAxis]="goalShowXAxis"
+          [yAxis]="goalShowYAxis" 
+          [showXAxisLabel]="goalShowXAxisLabel">
+        </ngx-charts-bar-horizontal-normalized>
+      </div>
+      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+        <strong>Goal 5</strong>- Formal agreements include <br/> resilience requirements.
+        <ngx-charts-bar-horizontal-normalized 
+          [view]="view" 
+          [scheme]="colorScheme"
+          [results]="relationshipFormationG5" 
+          [gradient]="gradient" 
+          [xAxis]="goalShowXAxis"
+          [yAxis]="goalShowYAxis" 
+          [showXAxisLabel]="goalShowXAxisLabel">
+        </ngx-charts-bar-horizontal-normalized>
+      </div>
+      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+        <strong>Goal 6</strong> - Technology asset supply chain <br/> risks are managed.
+        <ngx-charts-bar-horizontal-normalized
+          [view]="view" 
+          [scheme]="colorScheme"
+          [results]="relationshipFormationG6" 
+          [gradient]="gradient" 
+          [xAxis]="goalShowXAxis"
+          [yAxis]="goalShowYAxis" 
+          [showXAxisLabel]="goalShowXAxisLabel">
+        </ngx-charts-bar-horizontal-normalized>
+      </div>
+    </div>
+
+    <table style="border: 1px solid black;">
+      <tr>
+        <th style="border: 1px solid black;">MIL-1 Performed:</th>
+        <th style="border: 1px solid black;">MIL-2 Planned:</th>
+        <th style="border: 1px solid black;">MIL-3 Managed:</th>
+        <th style="border: 1px solid black;">MIL-4 Measured:</th>
+        <th style="border: 1px solid black;">MIL-5 Defined:</th>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black;">Domain practices are being performed</td>
+        <td style="border: 1px solid black;">Domain practices are supported by planning, policy, stakeholders, and standards.</td>
+        <td style="border: 1px solid black;">Domain practices are supported by governance and adequate resources.</td>
+        <td style="border: 1px solid black;">Domain practices are supported by measurement, monitoring, and executive oversight.</td>
+        <td style="border: 1px solid black;">Domain practices are supported by enterprise standardization and analysis of lessons learned.</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black;">Domain practices are being performed</td>
+        <td style="background-color: #5AA454; border: 1px solid black;">1. Is there a documented plan for performing external dependencies management?</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">1. Is there management oversight of the performance of external dependencies management?</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">1. Are external dependencies management activities measured and periodically reviewed to ensure they are effective and producing intended results?</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">1. Has the acquirer identified, described, and disseminated standard external dependencies management processes that apply across the enterprise?</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black;">Domain practices are being performed</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">2. Is there a documented policy for external dependencies management?</td>
+        <td style="background-color:#A10A28; border: 1px solid black;">2. Are the acquirer's external dependencies management processes periodically reviewed to identify and manage risks to these processes?</td>
+        <td style="background-color: #5AA454; border: 1px solid black;">2. Are external dependencies management activities periodically reviewed to ensure they are adhering to the plan?</td>
+        <td style="background-color: #5AA454; border: 1px solid black;">2. Has the acquirer provided individual operating units with guidelines to help them tailor standard enterprise processes to fit their unique operating circumstances?</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black;">Domain practices are being performed</td>
+        <td style="background-color:#A10A28; border: 1px solid black;">3. Does the plan or policy identify and describe external dependencies management processes?</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">3. Have qualified staff been assigned to perform external dependencies management activities as planned?</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">3. Is higher level management aware of issues related to the performance of external dependencies management?</td>
+        <td style="background-color:#5AA454; border: 1px solid black;">3. Are improvements to external dependencies management documented and shared across the acquirer enterprise?</td>
+      </tr>
+    </table>
+
+  </div>
+
+
+  <!-- Begin summary results section -->
+
+  <div class="page-break">
+    <h1 class="pageHeader">Summary Results</h1>
+
+    <div style="max-width: calc(100% - 4em); margin: 0 auto">
+      <div style="display: flex; flex-direction: column;">
+        <div>
+          <div
+            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+            Percentage of Complete Practices by MIL
+          </div>
+          <div
+            style="border: 2px solid #000; border-bottom-left-radius: 1.2em; border-bottom-right-radius:1.2em; border-top: none; padding: 1em; margin-bottom: 20px; box-shadow: 5px 0px 5px #0004;">
+            <div
+              style="display: flex; flex-direction: row; justify-content: space-between; align-items: right; margin-left: 175px;">
+              <div>0%</div>
+              <div>10%</div>
+              <div>20%</div>
+              <div>30%</div>
+              <div>40%</div>
+              <div>50%</div>
+              <div>60%</div>
+              <div>70%</div>
+              <div>80%</div>
+              <div>90%</div>
+              <div>100%</div>
+            </div>
+            <ul style="list-style-type: none; margin-bottom: 5px;">
+              <div class="row" style="margin-bottom: 10px;">Relationship <br /> Formation <div style="width: 500px; vertical-align: middle; height: 20px; background-color: rgb(83, 3, 83); margin-left: 50px;"></div></div>
+              <div class="row" style="margin-bottom: 10px;">Relationship <br /> Management <br /> and Governance <div style="width: 375px; vertical-align: middle; height: 20px; background-color: rgb(83, 3, 83); margin-left: 20px;"></div></div>
+              <div class="row" style="margin-bottom: 10px;">Service Protection <br /> and Sustainment</div>
+              <div class="row" style="margin-bottom: 10px;">MIL-2 Planned</div>
+              <div class="row" style="margin-bottom: 10px;">MIL-3 Managed</div>
+              <div class="row" style="margin-bottom: 10px;">MIL-4 Measured</div>
+              <div class="row" style="margin-bottom: 10px;">MIL-5 Defined</div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: calc(100% - 4em); margin: 0 auto">
+      <div style="display: flex; flex-direction: column;">
+        <div>
+          <div
+            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+            Maturity Indicator Level*
+          </div>
+          <div
+            style="border: 2px solid #000; border-bottom-left-radius: 1.2em; border-bottom-right-radius: 1.2em; border-top: none; padding: 1em; margin-bottom: 20px; box-shadow: 5px 0px 5px #0004;">
+            <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+              <div class="row" style="text-align: left">Your Organization <div style="width: 375px; vertical-align: middle; height: 20px; background-color: rgb(25, 65, 139); margin-left: 35px;"></div></div> 
+            </div>
+            <div
+              style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 150px;">
+              <div>0</div>
+              <div>0.25</div>
+              <div>0.50</div>
+              <div>0.75</div>
+              <div>MIL-1</div>
+              <div>MIL-2</div>
+              <div>MIL-3</div>
+              <div>MIL-4</div>
+              <div>MIL-5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
+      enterprise management activities necessary to ensure that this capability is sustained over time, despite
+      disruptions or organizational
+      changes. The MIL scale is cumulative; each MIL level must be complete before achieving a higher MIL is possible.
+      Viewed collectively, these
+      depictions provide an understanding of overall performance. While achieving a certain Maturity Indicator Level is
+      one possible process
+      improvement objective, it may not be the most important objective for every organization or in every context.
+    </p>
+
+  </div>
+
+
+  <!-- Begin relationship formation section -->
+
+  <div class="page-break">
+    <h1 class="pageHeader">Relationship Formation</h1>
+    <p>
+      The purpose of Relationship Formation is to assess whether the acquirer evaluates and controls the risks
+      of relying on external entities before entering into relationships with them. Relationship Formation includes
+      understanding the acquirer’s critical services, having a process for entering into formal relationships, and
+      evaluating external entities. A key aspect of Relationship Formation is identifying resilience requirements
+      as the basis for risk management and formal agreements. Resilience requirements typically focus on
+      integrity, confidentiality, and availability, but can also include other requirements important to the critical
+      service.
+    </p>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 1 - Acquirer service and asset priorities are established.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,
+        and
+        control objectives because these are fundamental activities for effectively managing external dependencies.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Are the acquirer’s services identified and documented across the enterprise? [SC:SG2.SP1] <span style="background-color: #5AA454;">Yes</span></li>
+        <li>Are the acquirer’s services prioritized based on an analysis of the potential impact if the services are
+          disrupted? [SC:SG2.SP1] <span style="background-color: #5AA454;">Yes</span></li>
+        <li>Are the acquirer’s assets that directly support the critical service inventoried? [ADM:SG1.SP1] <span style="background-color: #5AA454;">Yes</span></li>
+        <li>Have control objectives been established for acquirer assets that support the critical service(s)?
+          [CTRL:SG1.SP1] <span style="background-color: #5AA454;">Yes</span></li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[SC:SG2.SP1]</span> Identify the acquirer's high-value services <br /><br />
+          A fundamental risk management principle is to focus on activities to protect and sustain services and
+          assets that most directly affect the acquirer's ability to achieve its mission. This practice refers to
+          identifying the assessed acquirer's high-value services, which it provides to its customers and other
+          stakeholders. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, The Fundamentals, 2.1 Multitiered Risk Management. <br /><br />
+          To integrate the risk management process throughout the organization and more effectively address
+          mission/business concerns, a three-tiered approach is employed that addresses risk at the: (i)
+          <span style="font-style: italic;">organizational</span> level; (ii) <span
+            style="font-style: italic;">mission/business</span> process level;
+          and (iii) <span style="font-style: italic;">information system</span> level. <br /><br />
+          Tier 1 provides a <span style="font-style: italic;">prioritization of organizational missions/business
+            functions which in turn drives
+            investment strategies and funding decisions</span> --promoting cost-effective, efficient information
+          technology
+          solutions consistent with the strategic goals and objectives of the organization and measures of
+          performance. <br /><br />
+          NIST CSF References: ID.BE <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[SC:SG2.SP1]</span> Identify the acquirer's high-value services <br /><br />
+          Prioritize and document the list of high-value services that must be provided if a disruption occurs.
+          Consideration of the consequences of the loss of high-value acquirer services is typically performed as
+          part of a business impact analysis. In addition, the consequences of risks to high-value services are
+          identified and analyzed in risk assessment activities. The acquirer must consider this information when
+          prioritizing high-value services. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-34</span>, “Contingency Planning for Federal
+          Information Systems,”
+          3.2.3 Identify System Resource Recovery Priorities, 16-18. <br /><br />
+          <span style="font-style: italic;">Recovery priorities can be effectively established taking into consideration
+            mission/business process
+            criticality, outage impacts, tolerable downtime, and system resources</span> The result is an information
+          system recovery priority hierarchy. The ISCP Coordinator should consider system recovery measures
+          and technologies to meet the recovery priorities. <br /><br />
+          NIST CSF References: ID.AM-5, ID.BE <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[ADM:SG1.SP1]</span> Inventory assets <br /><br />
+          An acquirer must be able to identify its high-value assets, document them, and establish their value. This
+          is done in order to develop strategies for protecting and sustaining assets commensurate with their value
+          to services. The term high-value assets refers both to assets that are internal to the assessed acquirer
+          and those that are owned, maintained, provided, etc. by external entities. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-18 Revision 1</span>, “Guide for Developing
+          Security Plans for Federal
+          Information Systems,” 2-3. <br /><br />
+          NIST CSF References: ID.AM-1, ID.AM-2, ID.AM-4 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[CTRL:SG1.SP1]</span> Define control objectives <br /><br />
+          Define and document control objectives that result from management directives and guidelines. Affinity
+          analysis of directives and guidelines may be useful in identifying categories of control objectives.
+          <br /><br />
+          These are examples of control objectives:
+          <ul>
+            <li>prevent unauthorized use of purchase orders</li>
+            <li>ensure adequate supplies of materials</li>
+            <li>establish an enterprise architecture for information technology</li>
+            <li>all outside support personnel are identified</li>
+            <li>identify and assess risks that may cause material misstatements of financial records</li>
+            <li>educate and train staff</li>
+            <li>ensure the confidentiality and integrity of customers' payment information</li>
+            <li>establish a compliance program</li>
+          </ul> <br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, 2.1 Multitiered Risk Management. <br /><br />
+          The selection and specification of security controls for an information system is accomplished as part of
+          an organization-wide information security program for the management of risk --that is, the risk to
+          organizational operations and assets, individuals, other organizations, and the Nation associated with the
+          operation of information systems.
+          <span style="font-style: italic;">Risk-based approaches to security control selection and
+            specification consider effectiveness, efficiency, and constraints due to applicable federal laws, Executive
+            Orders, directives, policies, regulations, standards, and guidelines.</span> <br /><br />
+          NIST CSF References: ID.BE-5, ID.GV-3 <br /><br />
+        </li>
+      </ol>
+    </div>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 2 - Forming relationships with external entities is planned.
+      </h2>
+      <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,
+        and
+        control objectives because these are fundamental activities for effectively managing external dependencies.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Does the acquirer have an established process for entering into formal agreements with external entities?
+          [EXD:SG3.SP3] <span style="background-color: #5AA454;">Yes</span></li>
+        <li>Has the acquirer identified and documented baseline (boilerplate) requirements that apply to any supplier
+          that supports the critical service? [EXD:SG3.SP1] <span style="background-color: #A10A28;">No</span></li>
+        <li>Does the acquirer have a process to identify and document resilience requirements for specific external
+          entities (suppliers, infrastructure providers, and governmental services) that support the critical service?
+          [EXD:SG3.SP2] <span style="background-color: #A10A28;">No</span></li>
+        <li>Does the acquirer's process to enter into formal agreements with suppliers ensure that resilience
+          requirements are considered before entering into agreements? [EXD:SG3.SP3] <span style="background-color: #5AA454;">Yes</span></li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[CTRL:SG1.SP1]</span> Evaluate and Select External Entities. <br /><br />
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the acquirer's specifications. <br /><br />
+          <span style="font-weight: bold;">NIST Reference</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, SA-12 Supply Chain Protection. <br /><br />
+          Protection of organizational information systems is accomplished through threat awareness, by the
+          identification, management, and reduction of vulnerabilities at each phase of the life cycle and the use of
+          complementary, mutually reinforcing strategies to respond to risk. Organizations <span
+            style="font-style: italic;">consider implementing
+            a standardized process to address supply chain risk with respect to information systems and system
+            components, and to educate the acquisition workforce on threats, risk, and required security
+            controls.</span> <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">TIL Service Strategy</span>, The Stationery Office, 2011, Best Management
+          Practice. Section 3.7, “Sourcing
+          Strategy,” 117-125. <br /><br />
+          NIST CSF References: ID.BE-1, ID.SC-1, ID.SC-2, ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP1]</span> Establish Enterprise Specifications for External
+          Dependencies <br /><br />
+          When external entities support the execution of the organization's services, they become an extension of
+          the organization and should be subject to the same or similar policies, standards, and guidelines as the
+          organization's staff. These enterprise level policies, standards and guidelines must be translated to a set
+          of enterprise-level specifications and reflected in agreements with each external entity to ensure a
+          seamless implementation of the organization's resilience strategy. <br /><br />
+          <span style="font-weight: bold;">NIST Reference</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, The Fundamentals, 2.1. <br /><br />
+          Basic practices include ensuring that federal department and agency acquirers understand the cost and
+          scheduling constraints of the practices, integrating information security requirements into the acquisition
+          language, <span style="font-style: italic;">using applicable baseline security controls as one of the sources
+            for security requirements,</span>
+          ensuring a robust software quality control process, and establishing multiple delivery routes for critical
+          system elements. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">ISO 27036-3</span>, “Information Technology - Security
+          techniques-Information Security for Supplier
+          Relationships,” Part 3, 6.1.1, 7. <br /><br />
+          NIST CSF References: ID.BE-1, ID.GV-3, ID.SC-3, PR.IP-5 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP2]</span> Establish Resilience Specifications for External
+          Entities. <br /><br />
+          For each external dependency, establish a list of resilience specifications that apply to the responsible
+          external entity. The process for determining and documenting the resilience specifications that apply to
+          an external dependency and entity will vary based on the action of the entity in relation to the acquirer's
+          operations, the priority of the external dependency, and the management structure within the acquirer. At
+          a minimum, the resilience specifications should include a clear and definitive statement of the external
+          entity's services, support, products, assets, or staff on which the acquirer relies.
+          Requirements should be gathered and documented for each type of external dependency. Even in cases
+          where it is not practical to include these requirements in formal agreements with external entities, they
+          are useful as a way to assess and manage risks against external dependencies. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for
+          Federal Information Systems,”
+          Section 3.2.3 Define/Develop Requirements <br /><br />
+          The acquirer mission/business owner or their designee, with assistance from the procurement official
+          and other members of the SCRM team, if applicable, should define and document requirements for the
+          procurement. During this process, mission, functionality, quality, and security requirements should be
+          developed and documented. This process will identify the requirements for the procurement and how
+          these requirements will apply to the specific items of supply (elements and processes). <br /><br />
+          <span style="font-style: italic;">ISO 27036-2</span>, IT-Security Techniques-Information Security for Supplier
+          Relationships, ” Requirements
+          Introduction. <br /><br />
+          NIST CSF References: ID.BE-1, ID.BE-5, ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br /><br />
+          From a resilience perspective, the selection process for external entities is often an extension of or
+          supplement to the organization's standard procurement processes. Resilience specifications may simply
+          serve as additional requirements for consideration and evaluation as part of the standard procurement
+          process. In all cases, due diligence should be performed on candidate external entities to evaluate their
+          ability to meet the resilience specifications that have been established for the actions they hope to
+          perform for the organization. <br /><br />
+          In some cases, external entities cannot be selected from a pool of candidates; they may be inherited in
+          the course of an acquisition or merger or they may be the only provider of a high-value service on which
+          the organization depends (this is often the case for public services). In cases in which external entities
+          cannot be selected, the due diligence process for selection should still be performed to identify any
+          specifications that are not met by the external entity. It may be appropriate to alter the specifications by
+          changing the actions or nature of the dependence on the external entity to resolve the unmet specifications.
+          In cases where the specifications cannot be changed, any unmet specifications should be treated as risks.
+          <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information Systems and Organizations”, SA12(2) Supply Chain Protection | Supplier
+          Reviews. <br /><br />
+          <span style="font-style: italic;">The organization conducts a supplier review prior to entering into a
+            contractual agreement to acquire the information system, system component, or information system service.
+            Supplemental Guidance:
+            Supplier reviews include, for example:</span>(i) analysis of supplier processes used to design, develop,
+          test, implement, verify, deliver, and support information systems, system components, and information
+          system services; and (ii) assessment of supplier training and experience in developing systems,
+          components, or services with the required security capability. These reviews provide organizations with
+          increased levels of visibility into supplier activities during the system development life cycle to promote
+          more effective supply chain risk management. Supplier reviews can also help to determine whether
+          primary suppliers have security safeguards in place and a practice for vetting subordinate suppliers, for
+          example, second- and third-tier suppliers, and any subcontractors. <br /><br />
+          <span style="font-style: italic;">ITIL Service Strategy</span>, The Stationery Office, 2011, Best Management
+          Practice. Section 3.7, “Sourcing
+          Strategy,” 117-125. <br /><br />
+          NIST CSF References: ID.BE-1, ID.BE-4, ID.SC-3 <br /><br />
+        </li>
+      </ol>
+    </div>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 3 - Risk management includes external dependencies.</h2>
+      <p> The purpose of this goal is to assess whether the acquirer's risk management process includes external
+        dependency risk.</p>
+      <ol style="font-weight: bold;">
+        <li>Has a plan for managing operational risk been established and agreed to by Stakeholders? [RISK:SG1.SP2]</li>
+        <li>Are the risks of relying on external entities to support the critical service identified and managed
+          (accepted, transferred, mitigated, etc.)? [EXD:SG2.SP1]
+          <ol>
+            <li>Suppliers</li>
+            <li>Infrastructure providers</li>
+            <li>Governmental services</li>
+          </ol>
+        </li>
+        <li>Does the acquirer identify and manage the risk of an external entity being a single point of failure?
+          [EXD:SG1.SP2]</li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[RISK:SG1.SP2]</span> Establish a Risk Management Strategy <br /><br />
+          Because of the pervasive nature of operational risk, a comprehensive operational risk management
+          strategy is needed to ensure proper consideration of risk and the effects on operational resilience. The
+          strategy provides a common foundation for the performance of operational risk management activities
+          (which are typically dispersed throughout the organization) and for the collection, coordination, and
+          elevation of operational risk to the organization's enterprise risk management process. <br /><br />
+          Preparation for operational risk management requires the organization to develop and maintain a
+          strategy for identifying, analyzing, and mitigating operational risks. This strategy is documented in a risk
+          management plan and addresses the activities that the organization performs enterprise-wide to carry
+          out a continuous risk management program. This includes identifying the sources and types of
+          operational risk and establishing a strategy that details the organization's approach, activities, and
+          objectives for managing these risks as a fundamental operational resilience management process. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-39</span>, “Managing Information Security Risk
+          Acquirer, Mission, and
+          Information System View,” 2.1 Components of Risk Management. <br /><br />
+          <span style="font-style: italic;">Managing risk is a complex, multifaceted activity that requires the
+            involvement of the entire organization</span>-
+          from senior leaders/executives providing the strategic vision and top-level goals and objectives for the
+          organization; to mid-level leaders planning, executing, and managing projects; to individuals on the front
+          lines operating the information systems supporting the organization's missions/business functions. Risk
+          management is a comprehensive process that requires organizations to: (i) frame risk (i.e., establish the
+          context for risk-based decisions); (ii) assess risk; (iii) respond to risk once determined; and (iv) monitor
+          risk on an ongoing basis using effective organizational communications and a feedback loop for
+          continuous improvement in the risk-related activities of organizations. Risk management is carried out as
+          a holistic, organization-wide activity that addresses risk from the strategic level to the tactical level,
+          ensuring that risk- based decision making is integrated into every aspect of the organization. <br /><br />
+          NIST CSF References: ID.GV-4, ID.RM-1, ID.SC-1 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG2.SP1]</span> Identify Risks Due to External Dependencies.
+          <br /><br />
+          Identification of risks due to external dependencies requires an understanding of the actions of the
+          associated external entity in the operation, support, or resilience of the organization's services. External
+          entities will be responsible for varying dependencies in the support of the organization's operations.
+          <br /><br />
+          <span style="font-weight: bold;">[RISK:SG1:SP1]</span> Determine Risk Sources and Categories. <br /><br />
+          The sources of risk to assets and services are identified and the categories of risk that are relevant to
+          the organization are determined. <br /><br />
+          Identifying risk sources helps the organization to determine and categorize the types of operational risk
+          that are most likely to affect day-to-day operations and to seed an organization-specific risk taxonomy
+          that can be used as a tool for managing risk on a continuous basis as operating conditions change and
+          evolve. The sources of risk can be both internal and external to the organization. <br /><br />
+          Categorizing operational risks provides the organization a means from which to perform advanced
+          analysis and mitigation activities that allow for similar types of risks to be effectively neutralized or
+          contained by limited actions by the organization. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-30</span>, “Risk Management Guide for
+          Information Technology Systems,”
+          Section 2.4 Application of Risk Assessments. <span style="font-style: italic;">ISO 28000 First Edition</span>,
+          Specifications for security
+          management systems for the supply Chain.” <br /><br />
+          NIST CSF References: ID.BE-1, ID.RA-5, ID.RA-6, ID.SC-1, ID.SC-2, ID.SC-4 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP2]</span> Prioritize External Dependencies <br /><br />
+          Determine whether the loss of a single supplier will cause unacceptable disruption to critical services.
+          This can be accomplished through affinity analysis. For this type of vendor, allow for service risks by
+          clearly defining requirements and/or applicable mitigations, such as alternate vendors in the event of a
+          failure from the primary vendor. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, SA12(13) Supply Chain Protection | Critical Information System Components.
+          <br /><br />
+          Adversaries can attempt to impede organizational operations by disrupting the supply of critical
+          information system components or corrupting supplier operations. Safeguards to ensure adequate
+          supplies of critical information system components include, for example: <br />
+          <span style="font-style: italic;">(i) the use of multiple suppliers throughout the supply chain for the
+            identified critical components; and (ii)
+            stockpiling of spare components to ensure operation during mission- critical times.</span> <br /><br />
+          OCC Bulletin 2013-29. Subject: Third-Party Relationships United States Department of the Treasury,
+          October 30, 2013. <br /><br />
+          Senior management should ensure that periodic independent reviews are conducted on the third-party
+          risk management process, particularly when a bank involves third parties in critical activities. . . .
+          Reviews may include assessing the adequacy of the bank's process for
+          <ul>
+            <li>identifying and managing concentration risks that may arise from relying on a single third party
+              for multiple activities, or from geographic concentration of business due to either direct
+              contracting or subcontracting agreements to the same locations.</li>
+          </ul> <br />
+          <span style="font-style: italic;">ITIL Service Strategy</span>, The Stationery Office, 2011, Best Management
+          Practice. Section 3.7.3, “Multivendor
+          Sourcing.” <br /><br />
+          NIST CSF References: ID.RA-4, ID.RA-5, ID.SC-2, ID.SC-4 <br /><br />
+        </li>
+      </ol>
+    </div>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 4 - External entities are evaluated.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer evaluates external entities for their ability to
+        meet the critical service's resilience requirements.</p>
+      <ol style="font-weight: bold;">
+        <li>Are resilience requirements included in written communications with prospective suppliers, for example in
+          requests for proposals (RFPs)? [EXD:SG3.SP3]</li>
+        <li>Does the acquirer consider the ability of suppliers to meet the resilience requirements of the critical
+          service before entering into formal agreements? [EXD:SG3.SP3]</li>
+        <li>Does the acquirer identify suppliers from which it requires documented verification of an ability to meet
+          the critical service's resilience requirements? [EXD:SG3.SP3]</li>
+        <li>Does the acquirer consider external entities' own external dependency risks before entering into agreements
+          to support the critical service? [EXD:SG3.SP3]</li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities. <br /><br />
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the acquirer's specifications, which should be outlined in
+          various work products. These products include requests for proposals, external entity selection criteria,
+          evaluations of each external entity proposal against the selection criteria, and selection decision and
+          supporting rationale documents. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          [CERT CMMI-ACQ, SSAD: SG1.SP2] Establish a Solicitation Package <br /><br />
+          Establish and maintain a solicitation package that includes the requirements and proposal evaluation
+          criteria. Solicitation packages are used to seek proposals from potential suppliers. The acquirer
+          structures the solicitation package to facilitate an accurate and complete response from each potential
+          supplier and to enable an effective comparison and evaluation of proposals. <br /><br />
+          The solicitation package includes a description of the desired form of the response, the relevant
+          statement of work for the supplier, and required provisions in the supplier agreement (e.g., a copy of the
+          standard supplier agreement or non-disclosure provisions). In government acquisitions, some or all of
+          the content and structure of the solicitation package can be defined by regulation. <br /><br />
+          The solicitation package is rigorous to ensure consistent and comparable responses but flexible enough
+          to allow consideration of supplier suggestions for better ways to satisfy requirements. <br /> <br />
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for
+          Federal Information Systems,”
+          Section 3.2.5 Complete Procurement. <br /><br />
+          NIST CSF References: ID.SC-2, ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities. <br /><br />
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the organization's specifications. <br /><br />
+          From a resilience perspective, the selection process for external entities is often an extension of or
+          supplement to the organization's standard procurement processes. Resilience specifications may simply
+          serve as additional requirements for consideration and evaluation as part of the standard procurement
+          process. In all cases, <span style="font-style: italic;">due diligence should be performed on candidate
+            external entities to evaluate their
+            ability to meet the resilience specifications</span> that have been established for the actions they hope to
+          perform for the organization. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, "Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations", SA-12(2) Supply Chain Protection | Supplier Reviews. <br /><br />
+          The organization conducts a supplier review prior to entering into a contractual agreement to acquire the
+          information system, system component, or information system service. <br /><br />
+          <span style="text-decoration: underline;">Supplemental Guidance:</span> <span style="font-style: italic;">
+            Supplier reviews include, for example:</span>
+          (i) analysis of supplier processes used to design, develop, test, implement, verify, deliver, and support
+          information systems, system
+          components, and information system services; and (ii) assessment of supplier training and experience in
+          developing systems, components, or services with the required security capability. These reviews
+          provide organizations with increased levels of visibility into supplier activities during the system
+          development life cycle to promote more effective supply chain risk management. <br /><br />
+          <span style="font-style: italic;">NIST Special Publication 800-39</span>, “Managing Information Security Risk
+          Acquirer, Mission, and
+          Information System View," 24-26. <br /><br />
+          NIST CSF References: ID.BE-1, ID.BE-4, ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br /><br />
+          Evaluate suppliers based on their abilities to meet the resilience specifications and in accordance with
+          the established selection criteria. Due diligence should be performed on candidate external entities to
+          validate their ability to meet the resilience specifications that have been established for the actions they
+          hope to perform for the acquirer. Any specifications that are not being met by the external entity should
+          be treated as risks and potentially be a factor in eliminating that supplier from consideration as an
+          approved service provider. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management
+          Practices for Federal Information
+          Management Systems and Organizations,” 46. <br /><br />
+          A variety of methods may be used to communicate and subsequently <span style="font-style: italic;">verify and
+            monitor ICT SCRM
+            requirements</span> through such vehicles as contracts, interagency agreements, lines of business
+          arrangements, licensing agreements, and/or supply chain transactions. These methods include
+          <ul>
+            <li>Clearly defining the types of external services provided to the external organization</li>
+            <li>Describing how the external services should be protected in accordance with the federal agency
+              ICT supply chain security requirements; and</li>
+          </ul>
+          Obtaining the necessary verifications that the risk to the organizations' organizational operations and
+          assets, individuals, other organizations, and the Nation arising from the use of the external services is
+          acceptable. <br /><br />
+          NIST CSF References: ID.SC-2, ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP3]</span> Evaluate and Select External Entities <br /><br />
+          External entities should be selected according to an organized and thorough process and according to
+          explicit specifications and selection criteria. The selection process and criteria should be designed to
+          ensure that the selected entity can fully meet the organization's specifications. <br /><br />
+          <span style="font-weight: bold;">[EXD:SG3.SP2]</span> Establish Resilience Specifications for External
+          Entities. <br /><br />
+          Resilience specification should include include specific characteristics that are required such as <span
+            style="font-style: italic;">degree
+            of reliance on other external entities.</span> <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, SA12(2) Supply Chain Protection| Supplier Reviews. <br /><br />
+          <span style="font-style: italic;">Supplier reviews can also help to determine whether primary suppliers have
+            security safeguards in place
+            and practice for vetting subordinate suppliers, for example, second and third-tier suppliers, and any
+            subcontractors.</span> <br /><br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management
+          Practices for Federal Information
+          Management Systems and Organizations,” Sections 3.3.1 and 3.3.2. <br /><br />
+          System integrators are those entities that provide customized services to the acquirer including custom
+          development, test, operations, and maintenance. This group usually replies to a request for proposal
+          from an acquirer with a proposal that describes solution or services that are customized to the acquirer's
+          requirements. Such proposals provided by system integrators can include many layers of suppliers (see
+          Chapter 3.3.2). <span style="font-style: italic;"> The system integrator should ensure that those suppliers
+            are vetted and verified with
+            respect to the acquirer's ICT SCRM requirements. </span> Because of the level of visibility that can be
+          obtained
+          in the relationship with the system integrator, the acquirer has the ability to require rigorous supplier
+          acceptance criteria as well as any relevant countermeasures to address identified or potential risks.
+          <br /><br />
+          Organizations should consider that the costs of doing business with suppliers may be directly impacted
+          by the level of <span style="font-style: italic;">visibility the suppliers allow into how they apply security
+            and supply chain practices</span> to
+          their solutions. When organizations or system integrators require greater levels of transparency from
+          suppliers, they must consider the possible cost implications of such requirements. Suppliers may select
+          to not participate in procurements to avoid increased costs or perceived risks to their intellectual
+          property, limiting an organization's supply or technology choices. The risk to suppliers is the potential for
+          multiple, different sets of requirements that they may have to individually comply with, which may not be
+          scalable. <br /><br />
+          <span style="font-style: italic;">Board of Governors of the Federal Reserve System</span>, December 5, 2013.
+          “Guidance on Managing
+          Outsourcing Risk,” 4-6. <br /><br />
+          NIST CSF References: ID.SC-2, ID.SC-3 <br /><br />
+        </li>
+      </ol>
+    </div>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 5 - Formal agreements include resilience requirements.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer includes appropriate requirements in agreements with
+        external entities where there is some ability to negotiate, such as suppliers.</p>
+      <ol style="font-weight: bold;">
+        <li>Are resilience requirements for the critical service included in formal agreements with suppliers?
+          [EXD:SG3.SP4]</li>
+        <li>Do formal agreements require suppliers to manage their own external dependencies? [EXD:SG3.SP4, EXD:GG2.GP4]
+        </li>
+        <li>Do formal agreements with suppliers include requirements to report incidents that affect the critical
+          service? [EXD:SG3.SP4, IMC:GG2.GP4]</li>
+        <li>Do formal agreements require that suppliers manage vulnerabilities that may affect the critical service?
+          [EXD:SG3.SP2, VAR:GG2.GP4]</li>
+        <li>Do formal agreements require that suppliers maintain disruption management plans (incident management,
+          service continuity, etc.)? [IMC:GG2.GP4, SC:GG2.GP4]</li>
+        <li>Do formal agreements with suppliers that support the critical service require their participation in
+          disruption management planning and exercising? [IMC:GG2.GP7, SC:GG2.GP4]</li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP4]</span> Formalize Relationships <br /><br />
+          Agreements are often composed from multiple sections or multiple documents, each of which describes
+          some aspect of the arrangement and agreement. In all cases, the agreement, regardless of form, should:
+          <ul>
+            <li>be enforceable by the organization</li>
+            <li><span style="font-style: italic;">include detailed and complete specifications that must be met by the
+                external entity (see EXD:SG3.SP1 and EXD:SG3.SP2)</span></li>
+            <li><span style="font-style: italic;">include any required performance standards or work products from the
+                organization</span></li>
+            <li>be changed to reflect changes in specifications over the life of the relationship</li>
+          </ul>
+          Subpractices:
+          <ol>
+            <li>Select an agreement type that best fits the performance standards required by the organization and that
+              is enforceable if problems arise.</li>
+            <li>Properly document the agreement terms, conditions, specifications and other provisions.</li>
+          </ol>
+          All agreement provisions should be documented in the agreement in language that is unambiguous. <br /><br />
+          The agreement <span style="font-style: italic;">should not contain any general exceptions for achieving the
+            resilience specifications
+            unless they are carefully considered and negotiated.</span> It may, however, contain scenarios of types of
+          unforeseen events for which the external entity is not expected to prepare. Any exceptions granted to
+          resilience specifications or scenarios for which the external entity is not required to prepare should be
+          treated as risks under EXD:SG2. <br /><br />
+          All agreements should <span style="font-style: italic;">establish and enable procedures for monitoring the
+            performance of external
+            entities</span> and inspecting the services or products they deliver to the organization. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management
+          Practices for Federal Information
+          Management Systems and Organizations,” Section 1.5 Foundational Practices. <br /><br />
+          Foundational practices are described in NIST standards and guidelines as well as other applicable
+          national and international standards and best practices. They include: ensuring that organizations
+          understand the cost and scheduling constraints of implementing ICT SCRM; integrating information
+          security requirements into the acquisition process; using applicable baseline security controls as one of
+          the sources for security requirements. <br /><br />
+          <span style="font-style: italic;">ISO 27036-2</span>, “IT-Security Techniques-Information Security for
+          Supplier Relationships,” Section 6.1
+          Agreement Processes. <br /><br />
+          <span style="font-style: italic;">ISO 27036-1</span>, “IT-Security Techniques-Information Security for
+          Supplier Relationships,” Section 5.5 ICT
+          Supply Chain Considerations. <br /><br />
+          NIST CSF References: ID.BE-1, ID.SC-3, PR.AT-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP4]</span> Formalize Relationships <br /><br />
+          Formal agreements should be established with external entities. The agreement content may take
+          different forms depending on <span style="font-style: italic;">subcontracting provisions - The external
+            entity's rights and ability to
+            subcontract their obligations under the agreement to others should be included.</span> <br /><br />
+          <span style="font-weight: bold;">[EXD:GG2.GP4]</span> Assign Responsibility <br /><br />
+          Assign responsibility and authority for performing the external dependencies management process,
+          developing the work products, and providing the services of the process. <br /><br />
+          <span style="font-style: italic;">Those responsible for services and assets are involved in identifying and
+            prioritizing external
+            dependencies and establishing resilience specifications that external entities must fulfill. Formal
+            agreements identify external entity actions</span>, including ensuring continuity of operations during times
+          of
+          stress. <br /><br />
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+          </ol> <br />
+          The organization must ensure that responsibility and authority <span style="font-style: italic;">extends to
+            all external entities and to any
+            entities with whom the external entity has contracted to provide services or products in support of the
+            external entity's formal agreement with the organization.</span> <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management
+          Practices for Federal Information
+          Management Systems and Organizations,” Sections 3.3.1 and 3.3.2. <br /><br />
+          System integrators are those entities that provide customized services to the acquirer including custom
+          development, test, operations, and maintenance. Because of the level of visibility that can be obtained in
+          the relationship with the system integrator, <span style="font-style: italic;">the acquirer has the ability to
+            require rigorous supplier
+            acceptance criteria as well as any relevant countermeasures to address identified or potential risks.
+          </span> <br /><br />
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for
+          Federal Information Systems”,
+          Section 4.7.1 Acquirer - Programmatic Activities. <br /><br />
+          <span style="font-style: italic;">i) Require the integrator to monitor supplier activities</span>, with
+          notification to supplier, to detect and assess
+          threats or attempts to gain, or exploit exposure of, access to elements, supply chain processes, or supply
+          chain actors. <br /><br />
+          <span style="font-style: italic;">j) Require that reviewers are qualified to identify weaknesses and
+            vulnerabilities</span> in the supply chain or
+          integrator SCRM processes and procedures. <br /><br />
+          <span style="font-style: italic;">ISO 27036-1</span>, “IT-Security Techniques-Information Security for
+          Supplier Relationships,” 5.3 Information
+          Security Risks in Supplier Relationships and Associated Threats. <br /><br />
+          NIST CSF References: ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP4]</span> Formalize Relationships <br /><br />
+          Supplier agreement should define obligations of the external entity to protect the acquirer's assets and
+          report material incidents that have the potential to impact those assets. Those obligations should include
+          requirements for the notification of the acquirer in the event of disruptions and security incidents such as
+          breaches and disclosures. <br /><br />
+          <span style="font-weight: bold;">[IMC:GG2.GP4]</span> Assign Responsibility <br /><br />
+          Assign responsibility and authority for performing the incident management and control process,
+          developing the work products, and providing the services of the process. <br /><br />
+          Specific practice IMC:SG1.SP1 indicates that the incident management plan should define the roles and
+          responsibilities necessary to carry out the plan, as well as documenting commitments from those
+          responsible. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations", SA-12(12) | Inter-Organizational Agreements, SA-12(13) Supply Chain Protection |
+          Critical Information System Components. <br /><br />
+          The organization establishes inter-organizational agreements and procedures with entities involved in
+          the supply chain for the information system, system component, or information system service. <br /><br />
+          <span style="text-decoration: underline;">Supplemental Guidance:</span> The <span
+            style="font-style: italic;">establishment of inter-organizational agreements and procedures provides
+            for notification of supply chain compromises.</span> Early notification of supply chain compromises that can
+          potentially adversely affect or have adversely affected organizational information systems, including
+          critical system components, is essential for organizations to provide appropriate responses to such incidents.
+          <br /><br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management
+          Practices for Federal Information
+          Management Systems and Organizations,” Section 2.5 Foundational Practices. <br /><br />
+          NIST CSF References: ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG3.SP2]</span> Establish Resilience Specifications for External
+          Dependencies <br /><br />
+          Consider the following topics when establishing required behaviors and standards of performance for
+          external dependencies and entities:
+          <ul>
+            <li>security, including incident management procedures and performance, <span
+                style="font-style: italic;">vulnerability and
+                penetration management</span>, logical and physical access controls, identity management, and security
+              standards compliance.</li>
+          </ul> <br />
+          <span style="font-weight: bold;">[VAR:GG2.GP4]</span> Assign Responsibility <br /><br />
+          Assign responsibility and authority for performing the specific tasks of the process, including by
+          <ul>
+            <li>developing and implementing contractual instruments (including service level agreements) with
+              external entities to establish responsibility and authority for performing process tasks on
+              outsourced functions.</li>
+          </ul> <br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">ISO 27036-1</span>, “IT-Security Techniques-Information Security for
+          Supplier Relationships,” 5.5 ICT Supply
+          Chain Considerations, 5.3 Information Security Risks in Supplier Relationships and Associated Threats.
+          <br /><br />
+          NIST CSF References: ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[IMC:GG2.GP4]</span> Assign Responsibility <br /><br />
+          Assign responsibility and authority for performing the incident management and control process,
+          developing the work products, and providing the services of the process. <br /><br />
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+            <li>Assign responsibility and authority for performing the specific tasks of the process such as:
+              <span style="font-style: italic;">developing and implementing contractual instruments (including service
+                level agreements) with
+                external entities to establish responsibility and authority for performing process tasks on outsourced
+                functions, assets, and services.</span>
+            </li>
+          </ol> <br />
+          <span style="font-weight: bold;">[IMC:GG2.GP4]</span> Assign Responsibility <br /><br />
+          Assign responsibility and authority for performing the service continuity process, developing the work
+          products, and providing the services of the process. <br /><br />
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+            <li>Assign responsibility and authority for performing the specific tasks of the process, such as:
+              <span style="font-style: italic;">developing and implementing contractual instruments (including service
+                level agreements) with
+                external entities to establish responsibility and authority for performing process tasks on outsourced
+                functions.</span>
+            </li>
+          </ol>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">ISO 22301 First Edition</span>, “Societal Security - Business continuity
+          management systems - Requirements.” <br /><br />
+          NIST CSF References: ID.SC-3 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[IMC:GG2.GP7]</span> Identify and Involve Relevant Stakeholders <br /><br />
+          Assign responsibility and authority for performing the incident management and control process,
+          developing the work products, and providing the services of the process. <br /><br />
+          Stakeholders (including external entities) may be involved in various tasks in the incident management
+          and control process, such as
+          <ul>
+            <li>detecting events and incident</li>
+            <li>planning for incident handling, management, and response</li>
+            <li>making commitments to process plans and activities</li>
+            <li>collecting, documenting, and preserving event and incident evidence</li>
+            <li>analyzing events and incidents</li>
+            <li>declaring incidents</li>
+            <li>responding to incidents, including participating on incident response teams</li>
+            <li>communicating events and incidents and the status of incidents as they move through the incident life
+              cycle</li>
+            <li>escalating incidents</li>
+            <li>coordinating process activities</li>
+            <li>reviewing and appraising the effectiveness of process activities</li>
+            <li>performing post-incident review and improvement processes</li>
+          </ul> <br />
+          <span style="font-weight: bold;">[SC:GG2.GP4]</span> Assign Responsibility <br /><br />
+          Assign responsibility and authority for performing the service continuity process, developing the work
+          products, and providing the services of the process. <br /><br />
+          Subpractices:
+          <ol>
+            <li>Assign responsibility and authority for performing the process.</li>
+            <li>Assign responsibility and authority for performing the specific tasks of the process, such as:
+              <span style="font-style: italic;">developing and implementing contractual instruments (including service
+                level agreements) with
+                external entities to establish responsibility and authority for performing process tasks on
+                outsourced functions.</span> <br /><br />
+            </li>
+          </ol>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy
+          Controls for Federal Information
+          Systems and Organizations”, CP-4 Contingency Plan Testing. <br /><br />
+          The <span style="font-style: italic;">organization coordinates contingency plan testing with organizational
+            elements responsible for
+            related plans.</span> <br /><br />
+          <span style="text-decoration: underline;">Supplemental Guidance:</span> Plans related to contingency plans for
+          organizational information systems
+          include, for example, Business Continuity Plans, Disaster Recovery Plans, Continuity of Operations
+          Plans, Crisis Communications Plans, Critical Infrastructure Plans, Cyber Incident Response Plans, and
+          Occupant Emergency Plans. This control enhancement does not require organizations to create
+          organizational elements to handle related plans or to align such elements with specific plans. It does
+          require, however,
+          that if such organizational elements are responsible for related plans, organizations
+          should coordinate with those elements. Related controls: IR-8, PM-8. <br /><br />
+          Federal Financial Institutions Examination Council (FFIEC) <span style="font-style: italic;">Business
+            Continuity Planning IT Examination
+            Handbook</span>, Testing Strategies, 16. <br /><br />
+          The testing policy should include enterprise-wide testing strategies that establish expectations for
+          individual business lines. Business lines include all internal and external supporting functions, such as IT
+          and facilities management. The testing strategy should include the following:
+          <ul>
+            <li>Expectations for business lines and support functions to demonstrate the achievement of
+              business continuity test objectives consistent with the BIA and risk assessment;
+            </li>
+            <li>Expectations for testing internal and external interdependencies;</li>
+          </ul> <br />
+          <span style="font-style: italic;">ITIL Service Design</span>, The Stationery Office, 2011, Best Management
+          Practice. Section
+          4.8.5.5. “Sourcing Structures,” 219-220. <br /><br />
+          NIST CSF References: ID.SC-3, ID.SC-5<br /><br />
+        </li>
+      </ol>
+    </div>
+
+  </div>
+
+
+  <!-- Begin relationship management and governance section -->
+
+  <div class="page-break">
+    <h1 class="pageHeader">Relationship Management and Governance</h1>
+
+  </div>
+
+
+  <!-- Begin service protection and sustainment section -->
+
+  <div class="page-break">
+    <h1 class="pageHeader">Service Protection and Sustainment</h1>
+
+  </div>
+
+
+  <!-- Begin maturity indicator levels section -->
+
+  <div class="page-break">
+    <h1 class="pageHeader">Maturity Indicator Levels</h1>
+
+  </div>
+
+</div>

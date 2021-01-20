@@ -251,11 +251,11 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { EdmComponent } from './reports/edm/edm.component';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { EdmComponent } from './reports/edm/edm.component';
 
 @NgModule({
     imports: [
@@ -409,19 +409,19 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         CompareMissedComponent,
         CompareIndividualComponent,
         CompareBestworstComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent, 
-        AnalyticsComponent, 
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        AnalyticsComponent,
         DataloginComponent,
         LayoutBlankComponent,
-        LayoutMainComponent, 
+        LayoutMainComponent,
         AcetLayoutMainComponent,
-        ReportTestComponent, 
-        DetailComponent, 
-        DiscoveryTearoutsComponent, 
-        EvalAgainstComponent, 
-        ExecutiveComponent, 
-        SecurityplanComponent, 
+        ReportTestComponent,
+        DetailComponent,
+        DiscoveryTearoutsComponent,
+        EvalAgainstComponent,
+        ExecutiveComponent,
+        SecurityplanComponent,
         SitesummaryComponent,
         TrendReportComponent,
         CompareReportComponent,
@@ -509,9 +509,9 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         AnalyticsService,
         AggregationService,
         AggregationChartService,
-        ChartColors, 
+        ChartColors,
         ReportService,
-        ReportAnalysisService, 
+        ReportAnalysisService,
         LocalStoreManager,
         CmmcStyleService
     ],
