@@ -257,6 +257,8 @@ import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 
 @NgModule({
     imports: [
@@ -294,6 +296,7 @@ import { EdmComponent } from './reports/edm/edm.component';
         NgbModule,
         MatTabsModule,
         NgxChartsModule,
+        TooltipModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -471,6 +474,7 @@ import { EdmComponent } from './reports/edm/edm.component';
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        QuestionTextComponent,
     ],
     providers: [
         ConfigService,
