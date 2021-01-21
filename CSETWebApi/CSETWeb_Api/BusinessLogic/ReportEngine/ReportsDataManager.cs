@@ -126,9 +126,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
             using (var db = new CSET_Context())
             {
-                
-                var response = new MaturityResponse();
-
+               
                 var myModel = db.AVAILABLE_MATURITY_MODELS
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -150,14 +148,13 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
 
                 // Recursively build the grouping/question hierarchy
-                var tempModel = new MaturityGrouping();
-                BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
-                response.Groupings = tempModel.SubGroupings;
+                var questionGrouping = new MaturityGrouping();
+                BuildSubGroupings(questionGrouping, null, allGroupings, questions, answers.ToList());
 
                 var maturityDomains = new List<MatAnsweredQuestionDomain>();
 
                 // ToDo: Refactor the following stucture of loops
-                foreach (var domain in tempModel.SubGroupings){
+                foreach (var domain in questionGrouping.SubGroupings){
                     
                     var newDomain = new MatAnsweredQuestionDomain()
                     {
