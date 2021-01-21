@@ -46,6 +46,7 @@ export class AcetExecutiveComponent implements OnInit {
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         // Format and connect donut data here
+        console.log(data);
         data.forEach((domain: MaturityDomain) => {
           var domainData = { 
             domainName: domain.DomainName, 
