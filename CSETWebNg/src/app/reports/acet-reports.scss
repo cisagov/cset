@@ -70,6 +70,26 @@ table.label-value td {
     text-align: center
 }
 
+.report-text-blue {
+  color: #0f3c7a;
+}
+
+.color-white {
+  color: #fff;
+}
+
+.background-1 {
+  background-color: #094997;
+}
+
+.background-2 {
+  background-color: #88b1d4;
+}
+
+.background-3 {
+  background-color: #c1d7ea;
+}
+
 .item-row {
     text-align: center;
 }
@@ -296,19 +316,19 @@ table.label-value td {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 .form-control::-webkit-input-placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control::-ms-input-placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control::placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control:disabled,
@@ -409,7 +429,7 @@ textarea.form-control {
   margin-left: -1.25rem;
 }
 .form-check-input:disabled ~ .form-check-label {
-  color: #6c757d;
+  color: #6c757c;
 }
 .form-check-label {
   margin-bottom: 0;
