@@ -75,6 +75,7 @@ namespace CSETWeb_Api.Controllers
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             ACETReportData data = new ACETReportData();
             data.MatAnsweredQuestions = reportsDataManager.getAnsweredQuestionList(assessmentId);
+            data.information = reportsDataManager.GetInformation();
             return data;
         }
 

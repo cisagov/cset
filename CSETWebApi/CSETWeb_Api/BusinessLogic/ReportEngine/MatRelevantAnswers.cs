@@ -26,7 +26,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
         public string Title { get; set; }
-        public List<MaturityAnsweredQuestionsAssesment> AssesmentFactor { get; set; }
+        public List<MaturityAnsweredQuestionsAssesment> AssessmentFactors { get; set; }
     }
 
     public class MaturityAnsweredQuestionsAssesment
@@ -35,7 +35,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
         }
         public string Title { get; set; }
-        public List<MaturityAnsweredQuestionsComponent> Component { get; set; }
+        public List<MaturityAnsweredQuestionsComponent> Components { get; set; }
     }
     public class MaturityAnsweredQuestionsComponent
     {
