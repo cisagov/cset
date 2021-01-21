@@ -21,6 +21,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         /// <summary>
         /// Maps the legacy NEW_REQUIRMENT ID to the MATURITY_QUESTIONS ID for ACET assessments.
+        /// These relationships can also be found in the database table FINANCIAL_REQUIREMENTS.
         /// </summary>
         public static Dictionary<int, int> requirementToMaturity = new Dictionary<int, int>()
         {
@@ -526,6 +527,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         /// <summary>
         /// Maps the legacy NEW_QUESTION ID to the MATURITY_QUESTIONS ID for ACET assessments.
+        /// These relationships can also be found in the database table FINANCIAL_QUESTIONS.
         /// </summary>
         public static Dictionary<int, int> questionToMaturity = new Dictionary<int, int>()
         {

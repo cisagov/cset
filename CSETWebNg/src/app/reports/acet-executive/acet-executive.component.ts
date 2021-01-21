@@ -36,11 +36,11 @@ export class AcetExecutiveComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
     
-    this.acetSvc.getAssessmentInfromation().subscribe(
+    this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
   
     this.acetSvc.getMatDetailList().subscribe(

@@ -43,13 +43,13 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Answered Questions Report - ACET");
+    this.titleService.setTitle("Answered Statements Report - ACET");
 
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
   }
 }

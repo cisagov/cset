@@ -30,6 +30,7 @@ import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation.service';
 import { QuestionFilterService } from '../../services/question-filter.service';
 import { ConfigService } from '../../services/config.service';
+import { QuestionsAcetService } from '../../services/questions-acet.service';
 
 
 
@@ -66,6 +67,7 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   constructor(
     public questionsSvc: QuestionsService,
+    public questionsAcetSvc: QuestionsAcetService,
     public assessSvc: AssessmentService,
     private configSvc: ConfigService,
     public filterSvc: QuestionFilterService,
@@ -212,7 +214,8 @@ export class QuestionsComponent implements AfterViewChecked {
         this.domains = response.Domains;
 
         // default the selected maturity filters
-        this.questionsSvc.initializeMatFilters(response.OverallIRP);
+        this.questionsAcetSvc.initializeMatFilters(response.OverallIRP);
+        this.questionsSvc.evaluateFilters(this.domains);
 
         this.assessSvc.currentTab = 'questions';
         this.loaded = true;
