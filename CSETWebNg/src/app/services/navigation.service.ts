@@ -617,7 +617,20 @@ export class NavigationService {
       path: 'assessment/{:id}/maturity-questions',
       level: 1,
       condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity;
+        return this.assessSvc.assessment?.UseMaturity
+        && !(this.configSvc.acetInstallation
+          && this.assessSvc.usesMaturityModel('ACET'));
+      }
+    },
+    {
+      displayText: 'Maturity Questions',
+      pageId: 'maturity-questions-acet',
+      path: 'assessment/{:id}/maturity-questions-acet',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.UseMaturity
+        && (this.configSvc.acetInstallation
+          && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
 

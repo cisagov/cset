@@ -62,8 +62,7 @@
                         {{ q.DisplayNumber }}
                     </div>
                     <div style="width: 100%;">
-                        <div [style.word-break]="applyWordBreak(q)" [innerHTML]="formatGlossaryLink(q)">
-                        </div>
+                        <app-question-text [questionText]="q.QuestionText"></app-question-text>    
                         <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
                             class="debug-highlight">{{ q.QuestionId }}</span>
                         <app-question-extras *ngIf="!q.IsParentQuestion" #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
