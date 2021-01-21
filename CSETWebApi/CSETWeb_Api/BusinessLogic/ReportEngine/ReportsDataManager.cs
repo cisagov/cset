@@ -205,16 +205,70 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     .Include(x => x.Type_)
                     .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+                Debug.WriteLine(questions);
+                Debug.WriteLine(answers);
+                Debug.WriteLine(allGroupings);
+
+
 
                 // Recursively build the grouping/question hierarchy
                 var tempModel = new MaturityGrouping();
                 BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
                 response.Groupings = tempModel.SubGroupings;
 
+                var maturityDomains = new List<MatAnsweredQuestionDomain>();
+
+                foreach (var domain in tempModel.SubGroupings){
+                    
+                    var newDomain = new MatAnsweredQuestionDomain()
+                    {
+                        Title = domain.Title,
+                        AssesmentFactor = new List<MaturityAnsweredQuestionsAssesment>()
+                    };
+                    foreach (var assesmentFactor in domain.SubGroupings)
+                    {
+                        var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
+                        {
+                            Title = assesmentFactor.Title,
+                            Component = new List<MaturityAnsweredQuestionsComponent>()
+                        };
+
+                        foreach( var componenet in assesmentFactor.SubGroupings)
+                        {
+                            var newComponent = new MaturityAnsweredQuestionsComponent()
+                            {
+                                Title = componenet.Title,
+                                Questions = new List<MaturityAnsweredQuestions>()
+                            };
+
+                            foreach (var question in componenet.Questions)
+                            {
+                                if (question.Answer != null)
+                                {
+                                    var newQuestion = new MaturityAnsweredQuestions()
+                                    {
+                                        Title = question.DisplayNumber,
+                                        QuestionText = question.QuestionText,
+                                        Comments = question.Comment
+                                    };
+                                    newComponent.Questions.Add(newQuestion);
+
+                                }
+                            }
+
+                            newAssesmentFactor.Component.Add(newComponent);
+
+                        }
+
+                        newDomain.AssesmentFactor.Add(newAssesmentFactor);
+                    }
+
+                    maturityDomains.Add(newDomain);
+                }
+
                 Debug.WriteLine("+++++++");
                 Debug.WriteLine(response);
 
-                var maturityDomains = new List<MatAnsweredQuestionDomain>();
 
                 return maturityDomains;
             }
