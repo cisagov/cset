@@ -126,64 +126,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
             using (var db = new CSET_Context())
             {
-                /* // ToDo: Create query here:
-                "Domains": [{
-                    "Title": "Cyber Risk Management & Oversight",
-                    "Assessment Factors": [{
-                        "Title": "Governance",
-                        "Components": [{
-                            "Title": "Oversight",
-                            "Questions": [{
-                                "Title": "Statement 1",
-                                 "QuestionText": "Designated members of management are held accountable ... ",
-                                 "Maturity Level": "B",
-                                 "Comments": "Yes"
-                             }]
-                         }]
-                     }, {
-                         "Title": "Risk Management",
-                         "Components": [{
-                            "Title": "Strategy / Policies",
-                            "Questions": [{
-                                "Title": "Stmt 28",
-                                "QuestionText": "The Institution has policies commensurate with its risk ....",
-                                "Maturity Level": "Int",
-                                "Comments": "No"
-                             }]
-                         }]
-                     }] 
-                 }] 
                 
-                 Model Format:
-                public List<MaturityAnsweredQuestionsDomain> AnsweredQuestions { get; set; }
-                
-                public class MaturityAnsweredQuestionsDomain
-                {
-                    public string Title { get; set; }
-                    public List<MaturityAnsweredQuestionsAssesment> AssesmentFactor { get; set; }
-                }
-                public class MaturityAnsweredQuestionsAssesment
-                {
-                    public string Title { get; set; }
-                    public List<MaturityAnsweredQuestionsComponent> Component { get; set; }
-                }
-                public class MaturityAnsweredQuestionsComponent
-                {
-                    public string Title { get; set; }
-                    public List<MaturityAnsweredQuestions> Questions { get; set; }
-                }
-                public class MaturityAnsweredQuestions
-                {
-                    public string Title { get; set; }
-                    public string QuestionText { get; set; }
-                    public string MaturityLevel { get; set; }
-                    public string Comments { get; set; }
-                }
-                 
-                 */
-
-                // Get all maturity questions for the model regardless of level.
-                // The user may choose to see questions above the target level via filtering. 
                 var response = new MaturityResponse();
 
                 var myModel = db.AVAILABLE_MATURITY_MODELS
@@ -205,11 +148,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     .Include(x => x.Type_)
                     .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-                Debug.WriteLine(questions);
-                Debug.WriteLine(answers);
-                Debug.WriteLine(allGroupings);
-
-
 
                 // Recursively build the grouping/question hierarchy
                 var tempModel = new MaturityGrouping();
@@ -218,6 +156,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 var maturityDomains = new List<MatAnsweredQuestionDomain>();
 
+                // ToDo: Refactor the following stucture of loops
                 foreach (var domain in tempModel.SubGroupings){
                     
                     var newDomain = new MatAnsweredQuestionDomain()
@@ -249,26 +188,64 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                     {
                                         Title = question.DisplayNumber,
                                         QuestionText = question.QuestionText,
-                                        Comments = question.Comment
                                     };
+
+                                    if (question.Comment != null)
+                                    {
+                                        newQuestion.Comments = "Yes";
+                                    } else
+                                    {
+                                        newQuestion.Comments = "No";
+                                    }
+                                  
+
+                                    if (question.MaturityLevel == 6) {
+                                        newQuestion.MaturityLevel = "ADV";
+                                    } else if (question.MaturityLevel == 7)
+                                    {
+                                        newQuestion.MaturityLevel = "B";
+
+                                    }
+                                    else if (question.MaturityLevel == 8)
+                                    {
+                                        newQuestion.MaturityLevel = "E";
+
+                                    }
+                                    else if (question.MaturityLevel == 9)
+                                    {
+                                        newQuestion.MaturityLevel = "INN";
+
+                                    }
+                                    else if (question.MaturityLevel == 10)
+                                    {
+                                        newQuestion.MaturityLevel = "INT";
+
+                                    }
+                                    else
+                                    {
+                                        newQuestion.MaturityLevel = "";
+                                    }
                                     newComponent.Questions.Add(newQuestion);
 
                                 }
                             }
-
-                            newAssesmentFactor.Component.Add(newComponent);
+                            if (newComponent.Questions.Count > 0)
+                            {
+                                newAssesmentFactor.Component.Add(newComponent);
+                            }
 
                         }
+                        if (newAssesmentFactor.Component.Count > 0)
+                        {
+                            newDomain.AssesmentFactor.Add(newAssesmentFactor);
+                        }
 
-                        newDomain.AssesmentFactor.Add(newAssesmentFactor);
                     }
-
-                    maturityDomains.Add(newDomain);
+                    if (newDomain.AssesmentFactor.Count > 0)
+                    {
+                        maturityDomains.Add(newDomain);
+                    }
                 }
-
-                Debug.WriteLine("+++++++");
-                Debug.WriteLine(response);
-
 
                 return maturityDomains;
             }
