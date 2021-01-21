@@ -20,6 +20,9 @@ using DataLayerCore.Manual;
 using DataLayerCore;
 using Snickler.EFCore;
 using System.Runtime.InteropServices.WindowsRuntime;
+using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.Models;
+using System.Diagnostics;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -113,6 +116,175 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return cont.ToList();
             }
 
+        }
+
+        public List<MatAnsweredQuestionDomain> getAnsweredQuestionList(int assessmentId)
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                /* // ToDo: Create query here:
+                "Domains": [{
+                    "Title": "Cyber Risk Management & Oversight",
+                    "Assessment Factors": [{
+                        "Title": "Governance",
+                        "Components": [{
+                            "Title": "Oversight",
+                            "Questions": [{
+                                "Title": "Statement 1",
+                                 "QuestionText": "Designated members of management are held accountable ... ",
+                                 "Maturity Level": "B",
+                                 "Comments": "Yes"
+                             }]
+                         }]
+                     }, {
+                         "Title": "Risk Management",
+                         "Components": [{
+                            "Title": "Strategy / Policies",
+                            "Questions": [{
+                                "Title": "Stmt 28",
+                                "QuestionText": "The Institution has policies commensurate with its risk ....",
+                                "Maturity Level": "Int",
+                                "Comments": "No"
+                             }]
+                         }]
+                     }] 
+                 }] 
+                
+                 Model Format:
+                public List<MaturityAnsweredQuestionsDomain> AnsweredQuestions { get; set; }
+                
+                public class MaturityAnsweredQuestionsDomain
+                {
+                    public string Title { get; set; }
+                    public List<MaturityAnsweredQuestionsAssesment> AssesmentFactor { get; set; }
+                }
+                public class MaturityAnsweredQuestionsAssesment
+                {
+                    public string Title { get; set; }
+                    public List<MaturityAnsweredQuestionsComponent> Component { get; set; }
+                }
+                public class MaturityAnsweredQuestionsComponent
+                {
+                    public string Title { get; set; }
+                    public List<MaturityAnsweredQuestions> Questions { get; set; }
+                }
+                public class MaturityAnsweredQuestions
+                {
+                    public string Title { get; set; }
+                    public string QuestionText { get; set; }
+                    public string MaturityLevel { get; set; }
+                    public string Comments { get; set; }
+                }
+                 
+                 */
+
+                // Get all maturity questions for the model regardless of level.
+                // The user may choose to see questions above the target level via filtering. 
+                var response = new MaturityResponse();
+
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+                // Get all MATURITY answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b };
+
+
+                // Get all subgroupings for this maturity model
+                var allGroupings = db.MATURITY_GROUPINGS
+                    .Include(x => x.Type_)
+                    .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+
+                // Recursively build the grouping/question hierarchy
+                var tempModel = new MaturityGrouping();
+                BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
+                response.Groupings = tempModel.SubGroupings;
+
+                Debug.WriteLine("+++++++");
+                Debug.WriteLine(response);
+
+                var maturityDomains = new List<MatAnsweredQuestionDomain>();
+
+                return maturityDomains;
+            }
+        }
+
+        private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
+            List<MATURITY_GROUPINGS> allGroupings,
+            List<MATURITY_QUESTIONS> questions,
+            List<FullAnswer> answers)
+        {
+            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+
+            if (mySubgroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var sg in mySubgroups)
+            {
+                var newGrouping = new MaturityGrouping()
+                {
+                    GroupingID = sg.Grouping_Id,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    Title = sg.Title,
+                    Description = sg.Description
+                };
+
+                g.SubGroupings.Add(newGrouping);
+
+
+                // are there any questions that belong to this grouping?
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+
+                var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
+
+                foreach (var myQ in myQuestions)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                        {
+                            DisplayNumber = myQ.Question_Title,
+                            QuestionId = myQ.Mat_Question_Id,
+                            ParentQuestionId = myQ.Parent_Question_Id,
+                            QuestionType = "Maturity",
+                            QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                            Answer = answer?.a.Answer_Text,
+                            AltAnswerText = answer?.a.Alternate_Justification,
+                            Comment = answer?.a.Comment,
+                            Feedback = answer?.a.Feedback,
+                            MarkForReview = answer?.a.Mark_For_Review ?? false,
+                            Reviewed = answer?.a.Reviewed ?? false,
+                            Is_Maturity = true,
+                            MaturityLevel = myQ.Maturity_Level,
+                            IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
+                            SetName = string.Empty
+                        };
+
+                    if (answer != null)
+                    {
+                        TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                        TinyMapper.Map(answer.b, qa);
+                    }
+
+                    newGrouping.Questions.Add(qa);
+                }
+
+                // Recurse down to build subgroupings
+                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+            }
         }
 
         /// <summary>
