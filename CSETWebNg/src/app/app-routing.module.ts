@@ -115,7 +115,7 @@ import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent} from './reports/acet-commentsmarked/acet-commentsmarked.component';
 import { AcetCompensatingcontrolsComponent} from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
-import { AcetAnsweredquestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetAnsweredQuestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
@@ -310,7 +310,7 @@ const appRoutes: Routes = [
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetdeficency', component: AcetDeficencyComponent },
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
-      { path: 'acetansweredquestions', component: AcetAnsweredquestionsComponent },
+      { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
     ]
   },

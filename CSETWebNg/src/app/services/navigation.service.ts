@@ -48,6 +48,7 @@ export interface NavTreeNode {
   isCurrent?: boolean;
   expandable: boolean;
   visible: boolean;
+  index?: number;
 }
 
 /**
@@ -202,7 +203,7 @@ export class NavigationService {
    */
   buildTocData(): NavTreeNode[] {
     const toc: NavTreeNode[] = [];
-
+    
     for (let i = 0; i < this.pages.length; i++) {
       let p = this.pages[i];
       let visible = this.shouldIShow(p.condition);
@@ -225,6 +226,7 @@ export class NavigationService {
       }
 
       const parentPage = this.findParentPage(i);
+      node.index = i;
       if (!!parentPage) {
         const parentNode = this.findInTree(toc, parentPage.pageId);
         if (!!parentNode) {

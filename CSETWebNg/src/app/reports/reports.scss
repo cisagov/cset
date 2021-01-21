@@ -18,6 +18,10 @@
     width: 15px;  height: auto;
   }
 
+  .WarningTriangle{
+    width: 15px;  height: auto;
+  }
+
   h1 {
     line-height: 115%;
     page-break-after: avoid;
@@ -350,6 +354,17 @@
     vertical-align: top;
   }
   
+  table.td-align-top td {
+    vertical-align: top;
+  }
+
+  table.td-padding-half-rem td {
+    padding: .5rem;
+  }
+
+  .text-underline {
+    text-decoration: underline;
+  }
   
   /* ---- signature styles ---- */
   
