@@ -162,14 +162,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     var newDomain = new MatAnsweredQuestionDomain()
                     {
                         Title = domain.Title,
-                        AssesmentFactor = new List<MaturityAnsweredQuestionsAssesment>()
+                        AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
                     };
                     foreach (var assesmentFactor in domain.SubGroupings)
                     {
                         var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
                         {
                             Title = assesmentFactor.Title,
-                            Component = new List<MaturityAnsweredQuestionsComponent>()
+                            Components = new List<MaturityAnsweredQuestionsComponent>()
                         };
 
                         foreach( var componenet in assesmentFactor.SubGroupings)
@@ -231,17 +231,17 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                             }
                             if (newComponent.Questions.Count > 0)
                             {
-                                newAssesmentFactor.Component.Add(newComponent);
+                                newAssesmentFactor.Components.Add(newComponent);
                             }
 
                         }
-                        if (newAssesmentFactor.Component.Count > 0)
+                        if (newAssesmentFactor.Components.Count > 0)
                         {
-                            newDomain.AssesmentFactor.Add(newAssesmentFactor);
+                            newDomain.AssessmentFactors.Add(newAssesmentFactor);
                         }
 
                     }
-                    if (newDomain.AssesmentFactor.Count > 0)
+                    if (newDomain.AssessmentFactors.Count > 0)
                     {
                         maturityDomains.Add(newDomain);
                     }
