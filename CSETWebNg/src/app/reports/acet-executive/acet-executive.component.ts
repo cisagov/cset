@@ -76,6 +76,7 @@ export class AcetExecutiveComponent implements OnInit {
             domainData.graphdata.push(assesmentData);
           })
           this.domainDataList.push(domainData);
+          this.domainDataList.reverse();
         })
         },
       error => {
@@ -96,6 +97,14 @@ export class AcetExecutiveComponent implements OnInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
 
+  }
+
+  isNaNValuevalue(value) {
+    if (value == "NaN"){
+      return 0
+    } else {
+      return value
+    }
   }
 
 }
