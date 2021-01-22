@@ -17,6 +17,7 @@ namespace CSET_Main.Questions.POCO
         public int RequirementID { get; set; }
         public String Text { get; set; }
         public String SupplementalInfo { get; set; }
+        public String ExaminationApproach { get; set; }
 
         public string Set_Name { get; set; }
     }

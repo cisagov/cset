@@ -32,6 +32,7 @@ namespace DataLayerCore.Model
         public int Maturity_Model_Id { get; set; }
         public int? Parent_Question_Id { get; set; }
         public int? Grouping_Id { get; set; }
+        public string Examination_Approach { get; set; }
 
         [ForeignKey(nameof(Maturity_Level))]
         [InverseProperty(nameof(MATURITY_LEVELS.MATURITY_QUESTIONS))]

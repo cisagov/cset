@@ -79,6 +79,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public string Question_Title { get; set; }
             public string Question_Text { get; set; }
             public string Supplemental_Info { get; set; }
+            public string Examination_Approach { get; set; }
             public string Category { get; set; }
             public string Sub_Category { get; set; }
             public int Maturity_Level { get; set; }
