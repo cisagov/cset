@@ -479,7 +479,6 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 ShowRequirementFrameworkTitle = false;
                 RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
-                RelatedFrameworkCategory = info.MaturityQuestion.Category;
                 ShowRequirementStandards = true;
 
                 var l = controlContext.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
