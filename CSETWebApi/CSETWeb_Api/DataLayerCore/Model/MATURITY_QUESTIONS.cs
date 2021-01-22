@@ -21,10 +21,6 @@ namespace DataLayerCore.Model
         [Required]
         public string Question_Text { get; set; }
         public string Supplemental_Info { get; set; }
-        [StringLength(250)]
-        public string Category { get; set; }
-        [StringLength(250)]
-        public string Sub_Category { get; set; }
         public int Maturity_Level { get; set; }
         public int Sequence { get; set; }
         [MaxLength(20)]
