@@ -494,6 +494,9 @@ namespace CSET_Main.Questions.InformationTabData
                 RequirementTabData tabData = new RequirementTabData();
                 tabData.SupplementalInfo = info.MaturityQuestion.Supplemental_Info;
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
+
+                tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
+
                 RequirementsData = tabData;
 
                 BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);

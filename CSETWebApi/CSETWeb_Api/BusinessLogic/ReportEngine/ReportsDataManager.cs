@@ -1036,6 +1036,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     newQuestion.Question_Title = queryItem.mq.Question_Title;
                     newQuestion.Question_Text = queryItem.mq.Question_Text;
                     newQuestion.Supplemental_Info = queryItem.mq.Supplemental_Info;
+                    newQuestion.Examination_Approach = queryItem.mq.Examination_Approach;
                     newQuestion.Category = queryItem.mq.Category;
                     newQuestion.Sub_Category = queryItem.mq.Sub_Category;
                     newQuestion.Maturity_Level = queryItem.mq.Maturity_Level;
