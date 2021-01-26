@@ -28,7 +28,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { ACETService } from '../../../services/acet.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { AcetFiltersService } from '../../../services/acet-filters.service';
 
 @Component({
     selector: 'app-irp-summary',
@@ -48,7 +48,7 @@ export class IrpSummaryComponent implements OnInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public acetSvc: ACETService,
-        public acetQuestionSvc: QuestionsAcetService
+        public acetFiltersSvc: AcetFiltersService
     ) { }
 
     /**
@@ -82,7 +82,7 @@ export class IrpSummaryComponent implements OnInit {
      * 
      */
     changeInfoIrp() {
-        this.acetQuestionSvc.resetBandS(this.acetDashboard.Override);
+        this.acetFiltersSvc.resetDmf(this.acetDashboard.Override);
         this.changeInfo();
     }
 

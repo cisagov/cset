@@ -31,9 +31,8 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
-import { MaturityModel } from '../../../models/assessment-info.model';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { AcetFiltersService } from '../../../services/acet-filters.service';
+
 
 @Component({
   selector: 'app-maturity-questions-acet',
@@ -55,8 +54,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public questionsAcetSvc: QuestionsAcetService,
     public filterSvc: QuestionFilterService,
+    private acetFiltersSvc: AcetFiltersService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
@@ -104,7 +103,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.loaded = true;
 
         // default the selected maturity filters
-        this.questionsAcetSvc.initializeMatFilters(response.OverallIRP);
+        this.acetFiltersSvc.initializeMatFilters(response.MaturityTargetLevel);
 
         this.refreshQuestionVisibility();
       },

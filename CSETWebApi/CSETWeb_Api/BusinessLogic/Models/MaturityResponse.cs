@@ -28,6 +28,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int MaturityTargetLevel;
 
         /// <summary>
+        /// This is ACET's maturity target level.  It would be nice to combine this into the property above. ^
+        /// </summary>
+        public int OverallIRP;
+
+        /// <summary>
         /// Answer options supported for this maturity model.  
         /// </summary>
         public List<string> AnswerOptions = new List<string>() { "Y", "N", "NA", "A" };

@@ -28,9 +28,7 @@ import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCate
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './question-filter.service';
-import { QuestionsAcetService } from './questions-acet.service';
-
-
+import { AcetFiltersService } from './acet-filters.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -67,7 +65,7 @@ export class QuestionsService {
     private configSvc: ConfigService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService,
-    private questionsAcetSvc: QuestionsAcetService
+    private acetFiltersSvc: AcetFiltersService
   ) {
     this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
   }
@@ -233,8 +231,8 @@ export class QuestionsService {
             }
 
             // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
-            if (!!c.DomainName && !!this.questionsAcetSvc.domainMatFilters.get(c.DomainName)) {
-              if (this.questionsAcetSvc.domainMatFilters.get(c.DomainName).get(q.MaturityLevel.toString()) === false) {
+            if (!!c.DomainName && !!this.acetFiltersSvc.domainMatFilters.get(c.DomainName)) {
+              if (this.acetFiltersSvc.domainMatFilters.get(c.DomainName).get(q.MaturityLevel) === false) {
                 q.Visible = false;
               }
             }
