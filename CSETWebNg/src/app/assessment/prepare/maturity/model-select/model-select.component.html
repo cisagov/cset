@@ -54,7 +54,7 @@
   </div>
 
   <div class="maturity-model-card mb-5">
-    <h4><input type="radio" class="maturity-model-select" name="model-select-family" id="model-select-edm"
+    <h4><input type="radio" class="maturity-model-select" tabindex="0" name="model-select-family" id="model-select-edm"
         [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM')">
       <label for="model-select-edm" class="cursor-pointer">EDM</label></h4>
     <div class="d-flex flex-row">
