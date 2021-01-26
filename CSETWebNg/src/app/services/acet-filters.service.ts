@@ -25,6 +25,8 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { ACETDomain, Domain } from '../models/questions.model';
+import { Observable, Subject } from 'rxjs';
+import { observeOn } from 'rxjs/operators';
 
 
 const headers = {
@@ -38,11 +40,6 @@ export class ACETFilter {
   DomainName: string;
   DomainId: number;
   Settings: ACETFilterSetting[];
-  // B: boolean;
-  // E: boolean;
-  // Int: boolean;
-  // A: boolean;
-  // Inn: boolean;
 }
 
 export class ACETFilterSetting {
@@ -55,10 +52,11 @@ export class ACETFilterSetting {
 })
 export class AcetFiltersService {
 
+
   /**
- * Tracks the maturity filter settings across all domains
- */
-  public domainMatFilters: Map<string, Map<number, boolean>>;
+   * Trying a new way to manage these things.  This is now the master filter object.
+   */
+  public domainFilters: ACETFilter[];
 
   public overallIRP: number;
 
@@ -75,8 +73,6 @@ export class AcetFiltersService {
     console.log('acet-filters.service constructor');
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
-      console.log('acet-filters.service set domains to...');
-      console.log(this.domains);
       this.initializeMatFilters(1);
     });
   }
@@ -85,30 +81,34 @@ export class AcetFiltersService {
   * Sets the starting value of the maturity filters, based on the 'stairstep.'
   * Any 'empty' values below the bottom of the band are set as well.
   */
-  initializeMatFilters(targetLevel: number) {
-    this.overallIRP = targetLevel;
+  initializeMatFilters(targetLevel: number): Promise<any> {
+    return new Promise((resolve) => {
+      this.overallIRP = targetLevel;
 
-    // if we have an IRP, default the maturity filters based on the stairstep.
-    this.domainMatFilters = new Map();
+      // if we have an IRP, default the maturity filters based on the stairstep.
+      this.domainFilters = [];
 
-    this.getFilters().subscribe((x: ACETFilter[]) => {
-      // the server has not filter pref set -- set default filters based on the bands
-      if (!x || x.length === 0) {
-        this.setDmfFromDefaultBand(targetLevel);
-        this.saveFilters(this.domainMatFilters).subscribe();
-      } else {
-        for (const entry of x) {
-          const tmpMap = new Map();
-          this.domainMatFilters.set(entry.DomainName, tmpMap);
-          entry.Settings.forEach(s => {
-            tmpMap.set(s.Level, s.Value);
-          });
+      this.getFilters().subscribe((x: ACETFilter[]) => {
+        if (!x || x.length === 0) {
+          // the server has not filter pref set -- set default filters based on the bands
+          this.setDmfFromDefaultBand(targetLevel);
+          this.saveFilters(this.domainFilters).subscribe();
+        } else {
+          // rebuild domainFilters from what the API gave us
+          this.domainFilters = [];
+          for (const entry of x) {
+            this.domainFilters.push({
+              DomainName: entry.DomainName,
+              DomainId: entry.DomainId,
+              Settings: entry.Settings
+            });
+          }
         }
-      }
-    });
 
-    console.log('initializeMatFilters DMF...');
-    console.log(this.domainMatFilters);
+        // resolve this promise
+        resolve(this.domainFilters);
+      });
+    });
   }
 
   /**
@@ -117,27 +117,38 @@ export class AcetFiltersService {
    */
   setDmfFromDefaultBand(irp: number) {
     const bands = this.getStairstepOrig(irp);
-    const dmf = this.domainMatFilters;
+    const dmf = this.domainFilters;
 
     this.domains.forEach((d: Domain) => {
-      dmf.set(d.DomainName, new Map());
-      dmf.get(d.DomainName).set(1, bands.includes(1)); // B
-      dmf.get(d.DomainName).set(2, bands.includes(2)); // E
-      dmf.get(d.DomainName).set(3, bands.includes(3)); // Int
-      dmf.get(d.DomainName).set(4, bands.includes(4)); // A
-      dmf.get(d.DomainName).set(5, bands.includes(5)); // Inn
+      const settings: ACETFilterSetting[] = [];
+      for (let i = 1; i <= 5; i++) {
+        settings.push({
+          Level: i,
+          Value: bands.includes(i)
+        });
+      }
+      dmf.push(
+        {
+          DomainName: d.DomainName,
+          DomainId: 0,
+          Settings: settings
+        });
+      // dmf.set(d.DomainName, new Map());
+      // dmf.get(d.DomainName).set(1, bands.includes(1)); // B
+      // dmf.get(d.DomainName).set(2, bands.includes(2)); // E
+      // dmf.get(d.DomainName).set(3, bands.includes(3)); // Int
+      // dmf.get(d.DomainName).set(4, bands.includes(4)); // A
+      // dmf.get(d.DomainName).set(5, bands.includes(5)); // Inn
 
-      // bottom fill
+      const dFilter = this.domainFilters.find(f => f.DomainName == d.DomainName);
+      let ix = 0;
       let belowBand = true;
-      const i = this.domainMatFilters.get(d.DomainName).entries();
-      let e = i.next();
-      while (!e.done && belowBand) {
-        if (e.value[1]) {
-          belowBand = false;
+      while (belowBand) {
+        if (dFilter.Settings[ix].Value == false) {
+          dFilter.Settings[ix].Value == true;
         } else {
-          dmf.get(d.DomainName).set(e.value[0], true);
+          belowBand = false;
         }
-        e = i.next();
       }
     });
   }
@@ -202,22 +213,15 @@ export class AcetFiltersService {
    * This is used primarily to ngif the 'all filters are off' message.
    */
   maturityFiltersAllOff(domainName: string) {
+    const targetFilter = this.domainFilters.find(f => f.DomainName == domainName);
+
     // If not ACET (no domain name), return false
     if (!domainName || domainName.length === 0
-      || !this.domainMatFilters || !this.domainMatFilters.get(domainName)) {
+      || !this.domainFilters || !targetFilter) {
       return false;
     }
 
-    const i = this.domainMatFilters.get(domainName).entries();
-    let e = i.next();
-    while (!e.done) {
-      if (e.value[1]) {
-        return false;
-      }
-      e = i.next();
-    }
-
-    return true;
+    return targetFilter.Settings.every(s => s.Value == false);
   }
 
   /**
@@ -237,9 +241,9 @@ export class AcetFiltersService {
   resetDmf(irp: number) {
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
-      this.domainMatFilters = new Map();
+      this.domainFilters = [];
       this.setDmfFromDefaultBand(irp);
-      this.saveFilters(this.domainMatFilters).subscribe();
+      this.saveFilters(this.domainFilters).subscribe();
     });
   }
 
@@ -261,38 +265,34 @@ export class AcetFiltersService {
   }
 
   /**
-   * 
+   * Sets a bit ('val') for the domain and level.  The bit indicates if the fiter is
+   * on or of.
    */
-  saveFilter(domainName: string, f: number, e: any) {
-    const setting = { DomainName: domainName, Level: f, Value: e };
+  saveFilter(domainName: string, level: number, val: any) {
+    const setting = { DomainName: domainName, Level: level, Value: val };
     return this.http.post(this.configSvc.apiUrl + 'SaveAcetFilter', setting, headers);
   }
 
   /**
    * 
    */
-  saveFilters(filters: Map<string, Map<number, boolean>>) {
-    const saveValue: ACETFilter[] = [];
+  saveFilters(filters: ACETFilter[]) {
+    // const saveValue: ACETFilter[] = [];
 
-    console.log('saveFilters...');
-    console.log(filters);
+    // for (const domainEntry of Array.from(filters.entries())) {
+    //   const x: ACETFilter = new ACETFilter();
+    //   x.DomainName = domainEntry[0];
+    //   x.DomainId = 0;
+    //   domainEntry[1].forEach(setting => {
+    //     x.Settings.push({ 
+    //       Level: setting[0], 
+    //       Value: setting[1]
+    //     });
+    //   });
 
-    for (const entry of Array.from(filters.entries())) {
-      const x: ACETFilter = new ACETFilter();
-      x.DomainName = entry[0];
-      x.DomainId = 0;
-      // entry.forEach(e => {
-      //   x.Settings.push{ Level: entry[1]});
-      // });
-      // x.B = entry[1].get(1);
-      // x.E = entry[1].get(2);
-      // x.Int = entry[1].get(3);
-      // x.A = entry[1].get(4);
-      // x.Inn = entry[1].get(5);
+    //   saveValue.push(x);
+    // }
 
-      saveValue.push(x);
-    }
-
-    return this.http.post(this.configSvc.apiUrl + 'SaveAcetFilters', saveValue, headers);
+    return this.http.post(this.configSvc.apiUrl + 'SaveAcetFilters', filters, headers);
   }
 }

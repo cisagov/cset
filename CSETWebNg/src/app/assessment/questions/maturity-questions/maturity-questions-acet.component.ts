@@ -31,7 +31,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { ACETFilter, AcetFiltersService } from '../../../services/acet-filters.service';
 
 
 @Component({
@@ -44,6 +44,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   groupings: QuestionGrouping[] = null;
   modelName: string = null;
   showTargetLevel = false;    // TODO: set this from a new column in the DB
+
+  domainFilterSettings: ACETFilter[];
 
   loaded = false;
 
@@ -96,16 +98,22 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     this.maturitySvc.getQuestionsList().subscribe(
       (response: MaturityQuestionResponse) => {        
         this.modelName = response.ModelName;
+
+        // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.MaturityLevels;
+
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
-        this.loaded = true;
+        
+        // get the selected maturity filters
+        this.acetFiltersSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
+          this.domainFilterSettings = this.acetFiltersSvc.domainFilters;
+          
+          this.refreshQuestionVisibility();
 
-        // default the selected maturity filters
-        this.acetFiltersSvc.initializeMatFilters(response.MaturityTargetLevel);
-
-        this.refreshQuestionVisibility();
+          this.loaded = true;
+        });
       },
       error => {
         console.log(

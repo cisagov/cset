@@ -100,9 +100,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
         this.loaded = true;
 
-        // default the selected maturity filters
-        // this.questionsSvc.initializeMatFilters(response.OverallIRP);
-
         this.refreshQuestionVisibility();
       },
       error => {
