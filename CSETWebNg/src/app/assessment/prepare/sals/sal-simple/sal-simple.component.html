@@ -26,7 +26,7 @@
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"
         (click)="saveLevel(level.value,'std')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_main" [checked]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level">
+        <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main" [checked]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level">
         {{level.value}}
       </label>
     </ng-template>
@@ -43,7 +43,7 @@
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.CLevel"
         (click)="saveLevel(level.value,'C')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_confidentiality" [checked]="level.value === this.salsSvc.SelectedSAL?.CLevel">
+        <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_confidentiality" [checked]="level.value === this.salsSvc.SelectedSAL?.CLevel">
         {{level.value}}
       </label>
     </ng-template>
@@ -60,7 +60,7 @@
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ILevel"
         (click)="saveLevel(level.value,'I')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_integrity" [checked]="level.value === this.salsSvc.SelectedSAL?.ILevel">
+        <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_integrity" [checked]="level.value === this.salsSvc.SelectedSAL?.ILevel">
         {{level.value}}
       </label>
     </ng-template>
@@ -77,7 +77,7 @@
     <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
       <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ALevel"
         (click)="saveLevel(level.value,'A')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_availability" [checked]="level.value === this.salsSvc.SelectedSAL?.ALevel">
+        <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_availability" [checked]="level.value === this.salsSvc.SelectedSAL?.ALevel">
         {{level.value}}
       </label>
     </ng-template>
