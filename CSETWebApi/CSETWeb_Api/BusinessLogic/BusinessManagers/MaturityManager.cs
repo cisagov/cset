@@ -395,7 +395,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var data = db.usp_MaturityDetailsCalculations(assessmentId).ToList();
+                var data = db.GetMaturityDetailsCalculations(assessmentId).ToList();
                 return CalculateComponentValues(data, assessmentId);
             }
 
@@ -426,7 +426,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MaturityDomain> CalculateComponentValues(List<usp_MaturityDetailsCalculations_Result> maturity, int assessmentId)
+        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId)
         {
             using (var db = new CSET_Context())
             {

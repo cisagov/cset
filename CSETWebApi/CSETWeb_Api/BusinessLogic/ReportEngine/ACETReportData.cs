@@ -18,5 +18,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<MatRelevantAnswers> AlternateList { get; set; }
         public List<MatRelevantAnswers> Comments { get; set; }
         public List<MatRelevantAnswers> MarkedForReviewList { get; set; }
+        public List<MatAnsweredQuestionDomain> MatAnsweredQuestions { get; set; }
     }
 }

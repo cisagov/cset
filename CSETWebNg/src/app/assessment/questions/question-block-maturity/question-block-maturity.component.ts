@@ -21,7 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
@@ -41,6 +42,8 @@ import { QuestionsService } from '../../../services/questions.service';
 export class QuestionBlockMaturityComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
+
+  private _timeoutId: NodeJS.Timeout;
 
   percentAnswered = 0;
   answerOptions = [];
@@ -95,6 +98,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     return true;
   }
 
+  
+
   /**
    * 
    */
@@ -113,7 +118,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
         const a = x.substring(0, startBracketPos);
         const term = x.substring(startBracketPos + 2);
         s += a;
-        s += '<span class="glossary-term">' + term + '</span>';
+        s += '<span class="glossary-term" [tooltip]="my tooltip">' + term + '</span>';
       } else {
         // no starter bracket, just dump the whole thing
         s += x;
@@ -250,5 +255,39 @@ export class QuestionBlockMaturityComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Pushes the answer to the API, specifically containing the alt text
+   * @param q
+   * @param altText
+   */
+  storeAltText(q: Question) {
+
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        AnswerId: q.Answer_Id,
+        QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
+        QuestionNumber: q.DisplayNumber,
+        AnswerText: q.Answer,
+        AltAnswerText: q.AltAnswerText,
+        Comment: q.Comment,
+        Feedback: q.Feedback,
+        MarkForReview: q.MarkForReview,
+        Reviewed: q.Reviewed,
+        Is_Component: q.Is_Component,
+        Is_Requirement: q.Is_Requirement,
+        Is_Maturity: q.Is_Maturity,
+        ComponentGuid: q.ComponentGuid
+      };
+
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
+
   }
 }

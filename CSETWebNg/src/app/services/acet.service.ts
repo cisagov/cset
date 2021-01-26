@@ -117,8 +117,11 @@ export class ACETService {
     getCommentsMarked() {
         return this.http.get(this.apiUrl + 'reports/acet/getCommentsMarked', headers);
       }   
-    getAssessmentInfromation() {
-        return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInfromation', headers);
+    getAssessmentInformation() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
+    }  
+    getAnsweredQuestions() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
     }  
     /*
     * Save targetBand
