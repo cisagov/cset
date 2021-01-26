@@ -223,6 +223,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
 
+                if (response.ModelName == "ACET")
+                {
+                    response.OverallIRP = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
+                    response.MaturityTargetLevel = response.OverallIRP;
+                }
+
 
                 // get the levels and their display names for this model
                 response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);

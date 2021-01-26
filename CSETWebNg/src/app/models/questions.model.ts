@@ -45,7 +45,6 @@ export interface MaturityQuestionResponse {
     MaturityLevels: [];
     MaturityTargetLevel: number;
     Groupings: QuestionGrouping[];
-    OverallIRP: number;
    
     // the answer options to be displayed
     AnswerOptions: string[];
@@ -77,8 +76,9 @@ export interface ACETDomain {
  * Standard Questions, Component Defaults or Component Overrides.
  */
 export interface Domain {
-    SetName: string;
-    SetShortName: string;
+    SetName: string;   // TODO:  delete when possible
+    SetShortName: string; // TODO:  delete when possible
+    DomainName: string;
     DisplayText: string;
     IsDomain: boolean;
     DomainText: string;

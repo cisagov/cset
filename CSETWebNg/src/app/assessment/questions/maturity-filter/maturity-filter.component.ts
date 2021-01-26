@@ -24,7 +24,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
 import { AcetFiltersService } from '../../../services/acet-filters.service';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 
 /**
@@ -45,15 +44,14 @@ export class MaturityFilterComponent implements OnInit {
   domain: QuestionGrouping;
   
   @Output()
-  filtersChanged = new EventEmitter<Map<string, boolean>>();
+  filtersChanged = new EventEmitter<Map<number, boolean>>();
   
   // the domain that we are filtering
   domainName: string;
 
   constructor(
     public questionsSvc: QuestionsService,
-    public acetQuestionSvc: QuestionsAcetService,
-    private filterSvc: AcetFiltersService
+    private acetFiltersSvc: AcetFiltersService
   ) { }
 
   /**
@@ -68,8 +66,8 @@ export class MaturityFilterComponent implements OnInit {
    * corresponds to the overall IRP risk level.
    * @param mat
    */
-  isDefaultMatLevel(mat: string) {
-    return (this.acetQuestionSvc.isDefaultMatLevel(mat));
+  isDefaultMatLevel(mat: number) {
+    return (this.acetFiltersSvc.isDefaultMatLevel(mat));
   }
 
   /**
@@ -78,11 +76,15 @@ export class MaturityFilterComponent implements OnInit {
    * @param f
    * @param e
    */
-  filterChanged(f: string, e) {
+  filterChanged(f: number, e) {
+    console.log('filterChanged: ' + f);
+    console.log(this.domainName);
+    console.log(this.acetFiltersSvc.domainMatFilters);
+    debugger;
     // set my filter settings in questions service
-    this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
-    this.filterSvc.saveFilter(this.domainName,f,e).subscribe();
+    this.acetFiltersSvc.domainMatFilters.get(this.domainName).set(f, e);
+    this.acetFiltersSvc.saveFilter(this.domainName, f, e).subscribe();
     // tell my host page
-    this.filtersChanged.emit(this.acetQuestionSvc.domainMatFilters.get(this.domainName));
+    this.filtersChanged.emit(this.acetFiltersSvc.domainMatFilters.get(this.domainName));
   }
 }
