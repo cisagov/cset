@@ -39,7 +39,7 @@
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
           (click)="setTab('prepare')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-            (click)="navSvc.navDirect('phase-prepare')">
+            (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
             <span class="tab-icon cset-icons-clipboard-pencil mr-2" id="prepareIcon"></span>
             <span class="nav-tab-text">Prepare</span>
           </button>
@@ -47,7 +47,7 @@
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
           (click)="setTab('questions')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-            (click)="navSvc.navDirect('phase-assessment')">
+            (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
             <span class="tab-icon cset-icons-question-mark mr-2" id="questionsIcon" alt="assessment icon"></span>
             <span class="nav-tab-text">Assessment</span>
           </button>
@@ -55,7 +55,7 @@
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
           (click)="setTab('results')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-            (click)="navSvc.navDirect('phase-results')">
+            (click)="navSvc.navDirect('phase-results')" tabindex="0">
             <span class="tab-icon cset-icons-results mr-2"></span>
             <span class="nav-tab-text">Results</span>
           </button>
@@ -74,7 +74,7 @@
           <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
             [class.current-node]="node?.isCurrent">
 
-            <button (click)="selectNavItem(node?.value)" [disabled]="isTocLoading(node?.label)"
+            <button (click)="selectNavItem(node?.value)" [disabled]="isTocLoading(node?.label)" tabindex="0"
               class="btn btn-link no-underline ta-left">
               <span class="menu-link ws-normal">
                 {{node?.label}}
@@ -83,7 +83,7 @@
           </mat-tree-node>
 
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navSvc?.hasNestedChild" [hidden]="!node.visible">
-            <button class="btn btn-link no-underline" matTreeNodeToggle mat-icon-button>
+            <button class="btn btn-link no-underline" matTreeNodeToggle mat-icon-button tabindex="0">
               <div class="menu-link d-flex">
                 <mat-icon style="position: relative; top: -.1rem;">
                   {{navSvc?.treeControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
