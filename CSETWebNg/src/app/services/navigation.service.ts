@@ -48,6 +48,7 @@ export interface NavTreeNode {
   isCurrent?: boolean;
   expandable: boolean;
   visible: boolean;
+  index?: number;
 }
 
 /**
@@ -202,7 +203,7 @@ export class NavigationService {
    */
   buildTocData(): NavTreeNode[] {
     const toc: NavTreeNode[] = [];
-
+    
     for (let i = 0; i < this.pages.length; i++) {
       let p = this.pages[i];
       let visible = this.shouldIShow(p.condition);
@@ -225,6 +226,7 @@ export class NavigationService {
       }
 
       const parentPage = this.findParentPage(i);
+      node.index = i;
       if (!!parentPage) {
         const parentNode = this.findInTree(toc, parentPage.pageId);
         if (!!parentNode) {
@@ -615,7 +617,20 @@ export class NavigationService {
       path: 'assessment/{:id}/maturity-questions',
       level: 1,
       condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity;
+        return this.assessSvc.assessment?.UseMaturity
+        && !(this.configSvc.acetInstallation
+          && this.assessSvc.usesMaturityModel('ACET'));
+      }
+    },
+    {
+      displayText: 'Maturity Questions',
+      pageId: 'maturity-questions-acet',
+      path: 'assessment/{:id}/maturity-questions-acet',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.UseMaturity
+        && (this.configSvc.acetInstallation
+          && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
 

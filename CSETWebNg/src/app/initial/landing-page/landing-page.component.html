@@ -137,13 +137,13 @@
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 ">
 
 
-        <table mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-            <th mat-sort-header="assessment">Assessment Name</th>
-            <th mat-sort-header="date" style="width:15%;">Last Modified</th>
-            <th mat-sort-header="assessor" style="width:20%;">Primary Assessor</th>
-            <th mat-sort-header="status" style="width:20%;">Status</th>
-            <th style="width:5%; min-width:25px;"></th>
-            <th style="width:5%;"></th>
+        <table role="presentation" aria-label="assessments" mat-table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
+            <th aria-label="assessment name" mat-sort-header="assessment">Assessment Name</th>
+            <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
+            <th aria-label="assessor" mat-sort-header="assessor" style="width:20%;">Primary Assessor</th>
+            <th aria-label="status" mat-sort-header="status" style="width:20%;">Status</th>
+            <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
+            <th aria-label="export assessment" style="width:5%;"></th>
             <tr *ngFor="let assessment of sortedAssessments; let i = index">
                 <td>
                     <button tabindex="0"

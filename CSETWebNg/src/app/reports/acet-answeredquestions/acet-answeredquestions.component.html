@@ -1,7 +1,5 @@
 <!---------------------- 
-
    Copyright 2020 Battelle Energy Alliance, LLC  
-
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
   in the Software without restriction, including without limitation the rights 
@@ -26,7 +24,7 @@
         <div class="column">
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                ANSWERED QUESTIONS
+                ANSWERED STATEMENTS
             </p>
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
@@ -35,13 +33,13 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png" alt="acet">
             </p>
         </div>
 
         <div class="cover-page-bottom mb-4">
             <div>
-                <img style="height: 185px" src="../../../../assets/images/ACET/NCUA_logo.png">
+                <img style="height: 185px" src="../../../../assets/NCUA/images/ncua_seal_blue.svg" alt="ncua">
             </div>
             <div _ngcontent-c2="" style="
                             text-align: right;
@@ -61,18 +59,66 @@
             </div>
         </div>
     </div>
-    <div class="page-break"> 
-    <h1 _ngcontent-c2="" class="page-title">Answered Statements</h1>
-    <hr class="page-line">
-    <div _ngcontent-c2="" class="paragraph">
-        <p><br>
-            This report includes all the statements within your maturity level, your answers, and whether there is a comment
-            attached to the statement.
-            <br><br>
-            The percentages at the Domain Level are for Yes answers out of your statement set. The
-            statement set is determined by your maturity level.<br>
-        </p>
-    </div>
     <div class="page-break">
-    
-</div>
+        <h1 _ngcontent-c2="" class="page-title">Answered Statements</h1>
+        <hr class="page-line">
+        <div _ngcontent-c2="" class="paragraph">
+            <p><br>
+                This report includes all the statements within your maturity level, your answers, and whether there is a
+                comment
+                attached to the statement.
+                <br><br>
+                The percentages at the Domain Level are for Yes answers out of your statement set. The
+                statement set is determined by your maturity level.<br>
+            </p>
+        </div>
+        <div class="page-break pb-5">
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div>
+                    <div class="report-text-blue text-underline">
+                        Statement Key:
+                    </div>
+                    B - Baseline<br>
+                    E - Evolving<br>
+                    Int - Intermediate<br>
+                    Inn - Innovative
+                </div>
+                <div style="align-self: flex-end;">
+                    <div class="h2 report-text-blue">Answered Statements</div>
+                </div>
+            </div>
+            <table class="table-responsive td-align-top td-padding-half-rem">
+                <tr class="report-text-blue">
+                    <td></td>
+                    <td></td>
+                    <td>Maturity Level</td>
+                    <td>Comments</td>
+                </tr>
+                <ng-container *ngFor="let d of response?.MatAnsweredQuestions">
+                    <tr class="rkw-domain">
+                        <td colspan="4" class="background-1 h4 color-white">{{d.Title}} - Domain</td>
+                    </tr>
+                    <ng-container *ngFor="let f of d.AssessmentFactors">
+                        <tr>
+                            <td colspan="4" class="background-2 font-weight-bold pl-4">{{f.Title}} - Assessment Factor
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let c of f.Components">
+                            <tr>
+                                <td colspan="4" class="background-3 pl-5">{{c.Title}} - Component</td>
+                            </tr>
+                            <ng-container *ngFor="let q of c.Questions">
+                                <tr>
+                                    <td class="font-weight-bold text-nowrap">{{q.Title}}</td>
+                                    <td class="pr-3" [innerHTML]="q.QuestionText"></td>
+                                    <td class="pr-3">{{q.MaturityLevel}}</td>
+                                    <td>{{q.Comments}}</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </table>
+        </div>
+
+    </div>

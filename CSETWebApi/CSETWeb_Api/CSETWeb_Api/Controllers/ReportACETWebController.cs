@@ -58,12 +58,23 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
         [HttpGet]
-        [Route("api/reports/acet/GetAssessmentInfromation")]
-        public ACETReportData GetAssessmentInfromation()
+        [Route("api/reports/acet/GetAssessmentInformation")]
+        public ACETReportData GetAssessmentInformation()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             ACETReportData data = new ACETReportData();
+            data.information = reportsDataManager.GetInformation();
+            return data;
+        }
+        [HttpGet]
+        [Route("api/reports/acet/getAnsweredQuestions")]
+        public ACETReportData GetAnsweredQuestions()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            ACETReportData data = new ACETReportData();
+            data.MatAnsweredQuestions = reportsDataManager.getAnsweredQuestionList(assessmentId);
             data.information = reportsDataManager.GetInformation();
             return data;
         }

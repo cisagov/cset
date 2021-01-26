@@ -239,7 +239,7 @@ import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.compon
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetAnsweredquestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
@@ -251,11 +251,14 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
 import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { EdmComponent } from './reports/edm/edm.component';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
+import { EdmComponent } from './reports/edm/edm.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 
 @NgModule({
     imports: [
@@ -293,6 +296,7 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         NgbModule,
         MatTabsModule,
         NgxChartsModule,
+        TooltipModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -409,19 +413,19 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         CompareMissedComponent,
         CompareIndividualComponent,
         CompareBestworstComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent, 
-        AnalyticsComponent, 
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        AnalyticsComponent,
         DataloginComponent,
         LayoutBlankComponent,
-        LayoutMainComponent, 
+        LayoutMainComponent,
         AcetLayoutMainComponent,
-        ReportTestComponent, 
-        DetailComponent, 
-        DiscoveryTearoutsComponent, 
-        EvalAgainstComponent, 
-        ExecutiveComponent, 
-        SecurityplanComponent, 
+        ReportTestComponent,
+        DetailComponent,
+        DiscoveryTearoutsComponent,
+        EvalAgainstComponent,
+        ExecutiveComponent,
+        SecurityplanComponent,
         SitesummaryComponent,
         TrendReportComponent,
         CompareReportComponent,
@@ -440,6 +444,7 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         CategoryBlockComponent,
         AskQuestionsComponent,
         MaturityQuestionsComponent,
+        MaturityQuestionsAcetComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
@@ -453,7 +458,7 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,
-        AcetAnsweredquestionsComponent,
+        AcetAnsweredQuestionsComponent,
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
@@ -469,6 +474,7 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        QuestionTextComponent,
     ],
     providers: [
         ConfigService,
@@ -509,9 +515,9 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
         AnalyticsService,
         AggregationService,
         AggregationChartService,
-        ChartColors, 
+        ChartColors,
         ReportService,
-        ReportAnalysisService, 
+        ReportAnalysisService,
         LocalStoreManager,
         CmmcStyleService
     ],

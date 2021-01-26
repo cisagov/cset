@@ -36,16 +36,17 @@ export class AcetExecutiveComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
     
-    this.acetSvc.getAssessmentInfromation().subscribe(
+    this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
   
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         // Format and connect donut data here
+        console.log(data);
         data.forEach((domain: MaturityDomain) => {
           var domainData = { 
             domainName: domain.DomainName, 
@@ -75,6 +76,7 @@ export class AcetExecutiveComponent implements OnInit {
             domainData.graphdata.push(assesmentData);
           })
           this.domainDataList.push(domainData);
+          this.domainDataList.reverse();
         })
         },
       error => {
@@ -95,6 +97,14 @@ export class AcetExecutiveComponent implements OnInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
 
+  }
+
+  isNaNValuevalue(value) {
+    if (value == "NaN"){
+      return 0
+    } else {
+      return value
+    }
   }
 
 }

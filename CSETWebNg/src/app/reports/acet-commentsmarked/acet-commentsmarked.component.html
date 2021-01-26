@@ -32,11 +32,11 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png" alt="acet">
             </p>
             <div _ngcontent-c2="" class="cover-page-bottom mb-4">
                 <div _ngcontent-c2="">
-                    <img _ngcontent-c2="" src="../../../../assets/images/ACET/NCUA_logo.png" style="height: 185px" />
+                    <img _ngcontent-c2="" src="../../../../assets/NCUA/images/ncua_seal_blue.svg" style="height: 185px" alt="ncua"/>
                 </div>
                 <div _ngcontent-c2="" style="
                             text-align: right;
@@ -63,12 +63,12 @@
                 src="../../../assets/images/icons/MarkedFlag.png"></p>
         <hr class="page-line">
         <div _ngcontent-c2="">
-            <table>
+            <table role="presentation">
                 <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
                     <tr>
                         <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:  </b>   
                             <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review"
-                                src="../../../assets/images/icons/MarkedFlag.png">
+                                src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review">
                         </td>
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                         <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
@@ -85,7 +85,7 @@
     <div _ngcontent-c2="" class="ml-3 mr-3 form">
         <h1 _ngcontent-c2="" class="page-title">Statement Comments</h1>
         <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                src="../../../assets/images/icons/MarkedFlag.png"> </p>
+                src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
         <hr class="page-line">
         <div _ngcontent-c2="">
             <table>

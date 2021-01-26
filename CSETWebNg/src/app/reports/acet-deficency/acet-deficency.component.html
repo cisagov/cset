@@ -39,7 +39,7 @@
             
             <div class="cover-page-bottom mb-4">
                 <div>
-                    <img style="height: 185px" src="../../../../assets/images/ACET/NCUA_logo.png">
+                    <img style="height: 185px" alt="ncua" src="../../../../assets/NCUA/images/ncua_seal_blue.svg">
             </div>
             <div _ngcontent-c2="" style="
                             text-align: right;
@@ -77,11 +77,11 @@
 
         <div _ngcontent-c2="">
             <p style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
-            <table>
+            <table role="presentation">
                 <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                     <tr>
                         <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
-                            <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                            <img class="MarkedFlag" alt="marked for review" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
                         </td>
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                         <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>

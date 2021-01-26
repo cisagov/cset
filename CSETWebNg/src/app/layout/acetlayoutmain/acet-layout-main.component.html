@@ -22,7 +22,7 @@
 -------------------------->
 <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100 ncua-header"
   id="cset-app">
-  <div class="row no-gutters local-install fs-base mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+  <div class="row no-gutters local-install fs-base mt-0 pl-1 d-flex justify-content-center align-items-center flex-00a"
     *ngIf="auth.isLocal">
     <span class="col-sm-12">Local Installation</span>
   </div>
@@ -35,7 +35,7 @@
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
-        <img height="28" src="/assets/NCUA/images/logo.svg" tabindex="0" />
+        <img height="28" src="/assets/NCUA/images/logo.svg" tabindex="0" alt="acet"/>
       </div>
     </span>
 
@@ -118,6 +118,7 @@
           <span class="">Help</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
+
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="0">
             <span class="cset-icons-book-open fs-base mr-2"></span>
@@ -212,7 +213,7 @@
         <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
           <div class="ncua-bgc-image d-flex flex-wrap justify-content-center flex-11a">
             <div class="d-flex flex-column justify-content-start flex-00a">
-              <img src="/assets/images/acet/ncua_seal_white_footer.svg" height="70">
+              <img src="/assets/NCUA/images/ncua_seal_white_footer.svg" alt="ncua" height="70">
             </div>
           </div>
         </div>

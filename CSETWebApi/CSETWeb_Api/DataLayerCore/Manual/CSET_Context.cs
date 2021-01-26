@@ -412,6 +412,28 @@ namespace DataLayerCore.Model
 
 
         /// <summary>
+        /// Executes stored procedure GetMaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<GetMaturityDetailsCalculations_Result> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<GetMaturityDetailsCalculations_Result> myrval = null;
+            this.LoadStoredProc("GetMaturityDetailsCalculations")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<GetMaturityDetailsCalculations_Result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
         /// Executes stored procedure usp_StatementsReviewed.
         /// </summary>
         /// <param name="assessment_id"></param>
@@ -453,6 +475,9 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+
+
+
 
 
         /// <summary>
