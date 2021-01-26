@@ -80,8 +80,8 @@ export class QuestionsService {
    */
   questions: QuestionResponse = null;
 
-  
- 
+
+
   /**
    * Sets the application mode of the assessment.
    */
@@ -231,8 +231,9 @@ export class QuestionsService {
             }
 
             // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
-            if (!!c.DomainName && !!this.acetFiltersSvc.domainMatFilters.get(c.DomainName)) {
-              if (this.acetFiltersSvc.domainMatFilters.get(c.DomainName).get(q.MaturityLevel) === false) {
+            if (!!c.DomainName) {
+              const filter = this.acetFiltersSvc.domainFilters.find(f => f.DomainName == c.DomainName);
+              if (!!filter && filter.Settings.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
                 q.Visible = false;
               }
             }
@@ -245,7 +246,7 @@ export class QuestionsService {
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
-      
+
       // evaluate domain heading visibility
       d.Visible = (!!d.Categories.find(c => c.Visible));
     });

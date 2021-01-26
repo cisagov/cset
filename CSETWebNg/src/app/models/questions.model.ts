@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 
-import { MaturityLevel } from "./maturity.model";
 
 /**
  * The response returned from the API 'questionlist' request.
@@ -70,6 +69,8 @@ export interface ACETDomain {
     DomainId: number;
     Acronym: string;
 }
+
+
 
 /**
  * Multi-purpose container for domain, standard (requirements mode),  

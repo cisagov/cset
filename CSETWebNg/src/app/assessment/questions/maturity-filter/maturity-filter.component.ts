@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { ACETFilter, ACETFilterSetting, AcetFiltersService } from '../../../services/acet-filters.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 
 /**
@@ -35,23 +35,27 @@ import { QuestionGrouping } from '../../../models/questions.model';
   selector: 'app-maturity-filter',
   templateUrl: './maturity-filter.component.html'
 })
-export class MaturityFilterComponent implements OnInit {
-
-  @Input()
-  levels: any[];
+export class MaturityFilterComponent implements OnInit, AfterViewInit {
 
   @Input()
   domain: QuestionGrouping;
-  
+
+  @Input()
+  maturityLevels: any[];
+
+  //@Input()
+  // filterSettings: ACETFilterSetting[];
+
+
   @Output()
-  filtersChanged = new EventEmitter<Map<number, boolean>>();
-  
+  filtersChanged = new EventEmitter<ACETFilter>();
+
   // the domain that we are filtering
   domainName: string;
 
   constructor(
     public questionsSvc: QuestionsService,
-    private acetFiltersSvc: AcetFiltersService
+    public acetFiltersSvc: AcetFiltersService
   ) { }
 
   /**
@@ -59,7 +63,25 @@ export class MaturityFilterComponent implements OnInit {
    */
   ngOnInit() {
     this.domainName = this.domain.Title;
+
+
   }
+
+  ngAfterViewInit() {
+  }
+
+  /**
+   * 
+   * @param level 
+   */
+  isFilterActive(level: any) {
+    const filterForDomain = this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domain.Title);
+    if (!filterForDomain) {
+      return false;
+    }
+    return filterForDomain.Settings.find(s => s.Level == level.Level).Value;
+  }
+
 
   /**
    * Indicates whether the specified maturity level
@@ -77,14 +99,13 @@ export class MaturityFilterComponent implements OnInit {
    * @param e
    */
   filterChanged(f: number, e) {
-    console.log('filterChanged: ' + f);
-    console.log(this.domainName);
-    console.log(this.acetFiltersSvc.domainMatFilters);
-    debugger;
-    // set my filter settings in questions service
-    this.acetFiltersSvc.domainMatFilters.get(this.domainName).set(f, e);
+    console.log('filterChanged: ' + f.toString() + ', ');
+    console.log(e);
+    // set my filter settings in filtering service
+    this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domainName)
+      .Settings.find(s => s.Level == f).Value = e;
     this.acetFiltersSvc.saveFilter(this.domainName, f, e).subscribe();
     // tell my host page
-    this.filtersChanged.emit(this.acetFiltersSvc.domainMatFilters.get(this.domainName));
+    this.filtersChanged.emit(this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domainName));
   }
 }
