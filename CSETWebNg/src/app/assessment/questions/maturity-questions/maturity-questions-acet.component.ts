@@ -42,7 +42,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
 
   maturityLevels: any[];
   groupings: QuestionGrouping[] = null;
-  modelName: string = null;
+  modelName: string = '';
+  questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   domainFilterSettings: ACETFilter[];
@@ -98,6 +99,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     this.maturitySvc.getQuestionsList().subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelName = response.ModelName;
+        this.questionsAlias = response.QuestionsAlias;
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.MaturityLevels;

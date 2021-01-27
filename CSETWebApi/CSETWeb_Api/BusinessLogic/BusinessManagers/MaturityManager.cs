@@ -47,7 +47,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         select new MaturityModel()
                         {
                             ModelId = mm.Maturity_Model_Id,
-                            ModelName = mm.Model_Name
+                            ModelName = mm.Model_Name,
+                            QuestionsAlias = mm.Questions_Alias
                         };
                 var myModel = q.FirstOrDefault();
 
@@ -212,6 +213,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
                 response.ModelName = myModelDefinition.Model_Name;
+
+                response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
 
                 
                 if (myModelDefinition.Answer_Options != null)

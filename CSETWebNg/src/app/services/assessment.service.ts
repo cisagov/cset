@@ -313,7 +313,8 @@ export class AssessmentService {
         ModelName: '',
         MaturityTargetLevel: 0,
         ModelId: 0,
-        AnswerOptions: []
+        AnswerOptions: [],
+        QuestionsAlias: ''
       };
     }
     this.assessment.MaturityModel.ModelName = modelName;
