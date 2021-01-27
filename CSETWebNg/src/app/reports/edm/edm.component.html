@@ -371,6 +371,26 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Relationship Formation</h1>
+    <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-bottom: 10px;">
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 2;">
+        Goal 1
+      </div>
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 2;">
+        Goal 2
+      </div>
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 2">
+        Goal 3
+      </div>
+      <div style="background-color: #5AA454; margin: 5px; padding: 5px; flex-grow: 3;">
+        Goal 4
+      </div>
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 4">
+        Goal 5
+      </div>
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 3">
+        Goal 6
+      </div>
+    </div>
     <p>
       The purpose of Relationship Formation is to assess whether the acquirer evaluates and controls the risks
       of relying on external entities before entering into relationships with them. Relationship Formation includes
@@ -383,8 +403,7 @@
 
     <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
       <h2 style="color: black; font-weight: bold;">Goal 1 - Acquirer service and asset priorities are established.</h2>
-      <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,
-        and
+      <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,and
         control objectives because these are fundamental activities for effectively managing external dependencies.
       </p>
       <ol style="font-weight: bold;">
@@ -1199,6 +1218,107 @@
       communicating with external entities about key aspects of protecting the critical service, and controlling
       external entities' access to the acquirer.
     </p>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 1 - External dependencies are identified and prioritized.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer identifies the external entities that it depends on to support
+        the critical service and prioritizes them in order to make decisions about managing these dependencies.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Are dependencies on external entities that are critical to the service(s) identified? [EXD:SG1.SP1]
+          <ol>
+            <li>Suppliers <span style="background-color: #5AA454;">Yes</span></li>
+            <li>Infrastructure providers <span style="background-color: #5AA454;">Yes</span></li>
+            <li>Governmental services <span style="background-color: #5AA454;">Yes</span></li>
+          </ol>
+        </li>
+        <li>Are external dependencies prioritized? [EXD:SG1.SP2] <span style="background-color: #5AA454;">Yes</span></li>
+        <li>Has a process been established for maintaining a list of external dependencies and related information? [EXD:SG1.SP1] <span style="background-color: #C7B42C">Incomplete</span></li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP1]</span> Identify External Dependencies <br /><br />
+          It is important for the organization to identify and characterize external dependencies so that they can be
+          understood, formalized, monitored, and managed as part of the organization's comprehensive risk
+          management process. <br /><br />
+          The organization's list of services should be examined to discover services that may be subject to
+          external dependencies, in whole or in part. The organization's inventory of assets should also be
+          examined to discover assets that are under the control of external entities or are in other ways subject to
+          external dependencies. The organization may find value and efficiency in establishing close service links
+          or overlap to facilitate information sharing between the external dependencies list, the services listing,
+          and the asset inventory. The organization's customer database and supplier database may also be
+          valuable sources of insight when establishing the catalog of external dependencies. The organization's
+          set of current supplier and vendor contracts and related service level agreements (SLAs) are additional
+          sources. <br /><br />
+          When the organization is establishing the catalog of external dependencies, its customer database and
+          supplier database may also be valuable sources of insight. The organization's set of current supplier and
+          vendor contracts and related service level agreements (SLAs) are additional sources. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for Federal Information Systems,”
+          Section 4.1, Uniquely Identify Supply Chain Elements, Processes, and Actors. <br /><br />
+          Knowing who and what is in an enterprise's supply chain is critical to gaining visibility into what is
+          happening within it, as well as monitoring and identifying high-risk events and activities.
+          <span style="font-style: italic;">Without reasonable visibility and traceability into the supply chain, e.g., elements, processes, and actors, it is
+          impossible to understand and therefore manage risk, and to reduce the likelihood of an adverse event.</span> <br /><br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Systems and Organizations,” Section 2-0 Criticality Analysis. <br /><br />
+          Update Criticality Analysis of mission-critical functions, systems, and components to narrow the scope
+          (and resources) for ICT SCRM activities to those most important to mission success. <br /><br />
+          Criticality analysis should include the ICT supply chain infrastructure for both the organization and
+          applicable system integrators, suppliers, external service providers, and the systems/components/
+          services. Criticality analysis assesses the direct impact they each have on the mission priorities. <br /><br />
+          In addition to updating and tailoring Baseline Criticality, performing criticality analysis in the Assess Step
+          may include the following:
+          <ul>
+            <li style="font-style: italic;">Obtain and review existing information that the agency has about critical ICT systems/
+              components, such as locations where they are manufactured or developed, physical and logical
+              delivery paths, information flows and financial transactions associated with these components,
+              and any other available information that can provide insights into ICT supply chain of these
+              components</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">ITIL Service Design</span>, The Stationery Office, 2011, Best Management Practice. 4.8.7 “Information
+          Management,” 224. <br /><br />
+          NIST CSF References: ID.BE-4, ID.SC-2
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP2]</span> Prioritize External Dependencies <br /><br />
+          Apply the acquirer's prioritization criteria to the list of external dependencies to produce a prioritized list.
+          Depending on the prioritization scheme developed by an organization, the result might be several lists,
+          tiers, or sets of external dependencies. Be sure that external dependencies that are required for the
+          successful execution of security activities, service continuity plans, and service restoration plans are
+          prioritized appropriately. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Systems and Organizations,” Section 2.2.1 Frame. <br /><br />
+          <span style="font-style: italic;">As a part of identifying ICT supply chain Risk Assumptions within the broader Risk Management process</span>
+          (described in NIST SP 800-39), agencies should do the following:
+          <ul>
+            <li>Define ICT SCRM mission, business, and system-level requiremen</li>
+            <li>Identify which mission functions and related components are critical to the organization,
+              including FIPS 199 impact level, to determine the baseline criticality;</li> 
+          </ul>
+          <br /><br />
+          NIST CSF References: ID.BE-4, ID.SC-2 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP1]</span> Identify External Dependencies <br /><br />
+          <span style="font-style: italic;">The organization may use any number of techniques to establish a catalog or detailed list of external
+            dependencies. <br /><br /> The purpose of the catalog of external dependencies is to support the identification and prioritization of
+            external dependencies and the management of risks associated with selected dependencies.</span> <br /><br />
+            The organization's external dependencies will change over time as a result of changes to relationships
+            with essential suppliers and customers, changes in services, the life cycle of assets, and many other
+            reasons. Once the list of external dependencies is established, it is important that it be maintained. A
+            process for updating the list on a regular basis should be established. <br /><br />
+            <span style="font-weight: bold;">Additional References</span> <br /><br />
+            NIST CSF References: ID.BE-4, ID.SC-2
+        </li>
+      </ol>
+    </div>
 
   </div>
 
