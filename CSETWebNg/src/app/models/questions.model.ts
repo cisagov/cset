@@ -62,6 +62,9 @@ export interface QuestionGrouping {
 
     // controls the expansion of question blocks
     Expanded: boolean;
+
+    // indicates if filtering has hidden the grouping
+    Visible: boolean;
 }
 
 export interface ACETDomain {

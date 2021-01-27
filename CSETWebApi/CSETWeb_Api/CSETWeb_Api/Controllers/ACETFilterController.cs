@@ -18,7 +18,7 @@ namespace CSETWeb_Api.Controllers
     {
         [HttpGet]
         [Route("api/IsAcetOnly")]
-        public bool getAcetOnly()
+        public bool GetAcetOnly()
         {
             //if the appcode is null throw an exception
             //if it is not null return the default for the app
@@ -46,6 +46,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
         [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveIsAcetOnly")]
@@ -66,7 +67,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/ACETDomains")]
-        public List<ACETDomain> getAcetDomains()
+        public List<ACETDomain> GetAcetDomains()
         {
             int assessmentId = Auth.AssessmentForUser();
             using (var db = new CSET_Context())
@@ -85,6 +86,13 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        /// <summary>
+        /// Returns known filter settings.  The columns in the FINANCIAL_DOMAIN_FILTERS
+        /// are "hard-coded" as B, E, Int, A and Inn.  This method genericizes them
+        /// to their numeric equivalent.  If CSET implements a new maturity model
+        /// in the future that wants domain-level maturity filtering, we will need
+        /// the generic numbers, rather than the ACET names.
+        /// </summary>
         /// <returns></returns>
         [CSETAuthorize]
         [HttpGet]
@@ -124,6 +132,11 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Persists a filter setting.
+        /// </summary>
+        /// <param name="filterValue"></param>
         [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilter")]
@@ -174,6 +187,11 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        /// <summary>
+        /// Persists settings for a group of filters.  This is normally used
+        /// upon visiting the questions page for the first time and the filters are set based on the bands.
+        /// </summary>
+        /// <param name="filters"></param>
         [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilters")]
@@ -189,29 +207,41 @@ namespace CSETWeb_Api.Controllers
                     var filter = context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
                     if (filter == null)
                     {
-                        context.FINANCIAL_DOMAIN_FILTERS.Add(new FINANCIAL_DOMAIN_FILTERS()
+                        filter = new FINANCIAL_DOMAIN_FILTERS()
                         {
                             Assessment_Id = assessmentId,
-                            DomainId = domainId,
-                            B = f.B,
-                            E = f.E,
-                            Int = f.Int,
-                            A = f.A,
-                            Inn = f.Inn
-                        });
+                            DomainId = domainId
+                        };
+                        context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
                     }
-                    else
+
+                    foreach (var s in f.Settings)
                     {
-                        filter.B = f.B;
-                        filter.E = f.E;
-                        filter.Int = f.Int;
-                        filter.A = f.A;
-                        filter.Inn = f.Inn;
+                        switch (s.Level)
+                        {
+                            case 1:
+                                filter.B = s.Value;
+                                break;
+                            case 2:
+                                filter.E = s.Value;
+                                break;
+                            case 3:
+                                filter.Int = s.Value;
+                                break;
+                            case 4:
+                                filter.A = s.Value;
+                                break;
+                            case 5:
+                                filter.Inn = s.Value;
+                                break;
+                        }
                     }
                 }
+
                 context.SaveChanges();
             }
         }
+
 
         /// <summary>
         /// Removes all maturity filters for the current assessment.
