@@ -72,7 +72,6 @@ export class AcetFiltersService {
   ) {
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
-      this.initializeMatFilters(1);
     });
   }
 
@@ -248,7 +247,7 @@ export class AcetFiltersService {
     console.log('acet filters service evaluateFilters');
     console.log(groupings);
 
-  
+
     groupings.forEach(g => {
       this.recurseQuestions(g);
     });

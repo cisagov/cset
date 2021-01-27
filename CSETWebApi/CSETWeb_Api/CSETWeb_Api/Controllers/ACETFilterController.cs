@@ -69,7 +69,6 @@ namespace CSETWeb_Api.Controllers
         [Route("api/ACETDomains")]
         public List<ACETDomain> GetAcetDomains()
         {
-            int assessmentId = Auth.AssessmentForUser();
             using (var db = new CSET_Context())
             {
                 List<ACETDomain> domains = new List<ACETDomain>();
