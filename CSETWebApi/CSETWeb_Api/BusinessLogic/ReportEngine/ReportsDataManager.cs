@@ -185,6 +185,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                     {
                                         Title = question.DisplayNumber,
                                         QuestionText = question.QuestionText,
+                                        AnswerText = question.Answer,
                                     };
 
                                     if (question.Comment != null)
