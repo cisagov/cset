@@ -482,7 +482,27 @@
             <param name="documentPath">The physical path to XML document.</param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ACETFilterController.GetACETFilters">
+            <summary>
+            Returns known filter settings.  The columns in the FINANCIAL_DOMAIN_FILTERS
+            are "hard-coded" as B, E, Int, A and Inn.  This method genericizes them
+            to their numeric equivalent.  If CSET implements a new maturity model
+            in the future that wants domain-level maturity filtering, we will need
+            the generic numbers, rather than the ACET names.
+            </summary>
             <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.SaveACETFilters(CSETWeb_Api.Controllers.ACETFilterValue)">
+            <summary>
+            Persists a filter setting.
+            </summary>
+            <param name="filterValue"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.SaveACETFilters(System.Collections.Generic.List{CSETWeb_Api.Controllers.ACETFilter})">
+            <summary>
+            Persists settings for a group of filters.  This is normally used
+            upon visiting the questions page for the first time and the filters are set based on the bands.
+            </summary>
+            <param name="filters"></param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ACETFilterController.ResetAllAcetFilters">
             <summary>

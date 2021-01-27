@@ -54,6 +54,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis
                 overall == 5 ? Constants.MostIrp : string.Empty;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetOverallIrpNumber(int assessmentId)
+        {
+            var calc = GetIrpCalculation(assessmentId);
+            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
+            return overall;
+        }
+
+
         /// <summary>
         /// Get all IRP calculations for display
         /// </summary>

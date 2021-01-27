@@ -23,8 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { ACETFilter, ACETFilterSetting, AcetFiltersService } from '../../../services/acet-filters.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 
 /**
@@ -39,21 +38,21 @@ import { QuestionGrouping } from '../../../models/questions.model';
 export class MaturityFilterComponent implements OnInit {
 
   @Input()
-  levels: any[];
+  domain: QuestionGrouping;
 
   @Input()
-  domain: QuestionGrouping;
-  
+  maturityLevels: any[];
+
+
   @Output()
-  filtersChanged = new EventEmitter<Map<string, boolean>>();
-  
+  filtersChanged = new EventEmitter<ACETFilter>();
+
   // the domain that we are filtering
   domainName: string;
 
   constructor(
     public questionsSvc: QuestionsService,
-    public acetQuestionSvc: QuestionsAcetService,
-    private filterSvc: AcetFiltersService
+    public acetFiltersSvc: AcetFiltersService
   ) { }
 
   /**
@@ -64,12 +63,32 @@ export class MaturityFilterComponent implements OnInit {
   }
 
   /**
+   * Returns the Value property for the domain and level
+   */
+  getNgModel(level: any) {
+    return this.acetFiltersSvc.domainFilters?.find(d => d.DomainName == this.domainName)?.Settings.find(s => s.Level == level.Level).Value;
+  }
+
+  /**
+   * 
+   * @param level 
+   */
+  isFilterActive(level: any) {
+    const filterForDomain = this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domain.Title);
+    if (!filterForDomain) {
+      return false;
+    }
+    return filterForDomain.Settings.find(s => s.Level == level.Level).Value;
+  }
+
+
+  /**
    * Indicates whether the specified maturity level
    * corresponds to the overall IRP risk level.
    * @param mat
    */
-  isDefaultMatLevel(mat: string) {
-    return (this.acetQuestionSvc.isDefaultMatLevel(mat));
+  isDefaultMatLevel(mat: number) {
+    return (this.acetFiltersSvc.isDefaultMatLevel(mat));
   }
 
   /**
@@ -78,11 +97,14 @@ export class MaturityFilterComponent implements OnInit {
    * @param f
    * @param e
    */
-  filterChanged(f: string, e) {
-    // set my filter settings in questions service
-    this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
-    this.filterSvc.saveFilter(this.domainName,f,e).subscribe();
+  filterChanged(f: number, e: boolean) {
+    // set my filter settings in filtering service
+    this.acetFiltersSvc.domainFilters
+      .find(f => f.DomainName == this.domainName)
+      .Settings.find(s => s.Level == f).Value = e;
+    this.acetFiltersSvc.saveFilter(this.domainName, f, e).subscribe();
+
     // tell my host page
-    this.filtersChanged.emit(this.acetQuestionSvc.domainMatFilters.get(this.domainName));
+    this.filtersChanged.emit(this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domainName));
   }
 }

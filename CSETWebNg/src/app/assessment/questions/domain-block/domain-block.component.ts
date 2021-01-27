@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Domain } from '../../../models/questions.model';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { AcetFiltersService } from '../../../services/acet-filters.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class DomainBlockComponent implements OnInit {
    */
   constructor(
     public questionsSvc: QuestionsService,
-    public questionsAcetSvc: QuestionsAcetService
+    public acetFiltersSvc: AcetFiltersService
   ) { }
 
   /**

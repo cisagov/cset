@@ -21,10 +21,6 @@ namespace DataLayerCore.Model
         [Required]
         public string Question_Text { get; set; }
         public string Supplemental_Info { get; set; }
-        [StringLength(250)]
-        public string Category { get; set; }
-        [StringLength(250)]
-        public string Sub_Category { get; set; }
         public int Maturity_Level { get; set; }
         public int Sequence { get; set; }
         [MaxLength(20)]
@@ -32,6 +28,7 @@ namespace DataLayerCore.Model
         public int Maturity_Model_Id { get; set; }
         public int? Parent_Question_Id { get; set; }
         public int? Grouping_Id { get; set; }
+        public string Examination_Approach { get; set; }
 
         [ForeignKey(nameof(Maturity_Level))]
         [InverseProperty(nameof(MATURITY_LEVELS.MATURITY_QUESTIONS))]

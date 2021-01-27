@@ -994,8 +994,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// 
         /// </summary>
         /// <returns></returns>
-        /// 
-        public List<MaturityReportData.MaturityModel> getMaturityModelData()
+        public List<MaturityReportData.MaturityModel> GetMaturityModelData()
         {
             List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();
             List<MaturityReportData.MaturityModel> mat_models = new List<MaturityReportData.MaturityModel>(); 
@@ -1036,12 +1035,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     newQuestion.Question_Title = queryItem.mq.Question_Title;
                     newQuestion.Question_Text = queryItem.mq.Question_Text;
                     newQuestion.Supplemental_Info = queryItem.mq.Supplemental_Info;
-                    newQuestion.Category = queryItem.mq.Category;
-                    newQuestion.Sub_Category = queryItem.mq.Sub_Category;
+                    newQuestion.Examination_Approach = queryItem.mq.Examination_Approach;
+                    newQuestion.Grouping_Id = queryItem.mq.Grouping_Id ?? 0;
+                    newQuestion.Parent_Question_Id = queryItem.mq.Parent_Question_Id;
                     newQuestion.Maturity_Level = queryItem.mq.Maturity_Level;
                     newQuestion.Set_Name = queryItem.mm.Model_Name;
                     newQuestion.Sequence = queryItem.mq.Sequence;
-                    //newQuestion.Text_Hash = queryItem.mq.Text_Hash;
                     newQuestion.Maturity_Model_Id = queryItem.mm.Maturity_Model_Id;
                     newQuestion.Answer = queryItem.ans;
 
