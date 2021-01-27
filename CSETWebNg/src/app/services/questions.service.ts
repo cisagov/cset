@@ -219,7 +219,6 @@ export class QuestionsService {
             }
 
             // maturity level filtering
-            debugger;
             const targetLevel = this.assessmentSvc.assessment ?
               this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
               10;
