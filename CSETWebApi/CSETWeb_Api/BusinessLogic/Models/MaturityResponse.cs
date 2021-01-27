@@ -38,6 +38,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public List<string> AnswerOptions = new List<string>() { "Y", "N", "NA", "A" };
 
         /// <summary>
+        /// If the maturity model refers to 'questions' by another name, this is that name.
+        /// </summary>
+        public string QuestionsAlias;
+
+        /// <summary>
         /// The top level of groupings.  This will usually be Domains.
         /// </summary>
         public List<MaturityGrouping> Groupings;

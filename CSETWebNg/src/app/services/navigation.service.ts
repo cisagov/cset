@@ -95,9 +95,7 @@ export class NavigationService {
     private assessSvc: AssessmentService,
     private analyticsSvc: AnalyticsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private questionsSvc: QuestionsService,
-    private maturitySvc: MaturityService,
     private configSvc: ConfigService
   ) {
 
@@ -217,6 +215,9 @@ export class NavigationService {
         visible: visible
       };
 
+      // the node might need tweaking based on certain factors
+      this.adjustNode(node);
+
       if (p.level === 0) {
         node.isPhaseNode = true;
       }
@@ -238,6 +239,18 @@ export class NavigationService {
     }
 
     return toc;
+  }
+
+  /**
+   * Any runtime adjustments can be made here.
+   */
+  adjustNode(node: NavTreeNode) {
+    if (node.value == 'maturity-questions') {
+      const alias = this.assessSvc.assessment?.MaturityModel?.QuestionsAlias;
+      if (!!alias) {
+        node.label = alias;
+      }
+    }
   }
 
   /**
@@ -612,7 +625,7 @@ export class NavigationService {
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
 
     {
-      displayText: 'Maturity Questions',
+      displayText: 'Maturity Questions' + this.assessSvc.assessment?.MaturityModel.QuestionsAlias,
       pageId: 'maturity-questions',
       path: 'assessment/{:id}/maturity-questions',
       level: 1,
@@ -623,7 +636,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Maturity Questions',
+      displayText: 'Statements',
       pageId: 'maturity-questions-acet',
       path: 'assessment/{:id}/maturity-questions-acet',
       level: 1,
