@@ -223,6 +223,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 response.MaturityTargetLevel = this.GetMaturityTargetLevel(assessmentId, db);
 
+                if (response.ModelName == "ACET")
+                {
+                    response.OverallIRP = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
+                    response.MaturityTargetLevel = response.OverallIRP;
+                }
+
 
                 // get the levels and their display names for this model
                 response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
@@ -231,7 +237,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 // Get all maturity questions for the model regardless of level.
                 // The user may choose to see questions above the target level via filtering. 
-                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                var questions = db.MATURITY_QUESTIONS
+                    .Include(x => x.Maturity_LevelNavigation)
+                    .Where(q =>
                     myModel.model_id == q.Maturity_Model_Id).ToList();
 
 
@@ -309,7 +317,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        MaturityLevel = myQ.Maturity_Level,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
@@ -512,13 +521,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 var evolving = new SalAnswers
                                 {
 
-                                    Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()).AnswerPercent * 100) : 0
+                                    Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()).AnswerPercent * 100) : 0
 
 
                                 };
 
-                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()).Total) : 0;
-                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvinMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()).Total) : 0;
+                                AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()).AnswerPercent * 100) : 0;
 
                                 totalAnswered = 0;
 
@@ -595,7 +604,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 component.AssessedMaturityLevel = baseline.UnAnswered ? Constants.IncompleteMaturity :
                                                                     baseline.Answered < 100 ? Constants.SubBaselineMaturity :
                                                                         evolving.Answered < 100 ? Constants.BaselineMaturity :
-                                                                            intermediate.Answered < 100 ? Constants.EvolvinMaturity :
+                                                                            intermediate.Answered < 100 ? Constants.EvolvingMaturity :
                                                                                 advanced.Answered < 100 ? Constants.IntermediateMaturity :
                                                                                     innovative.Answered < 100 ? Constants.AdvancedMaturity :
                                                                                     "Innovative";
@@ -609,7 +618,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.SubBaselineMaturity) ? Constants.SubBaselineMaturity :
                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
-                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.EvolvinMaturity) ? Constants.EvolvinMaturity :
+                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.EvolvingMaturity) ? Constants.EvolvingMaturity :
                                                                                 maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
                                                                                    maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.AdvancedMaturity) ? Constants.AdvancedMaturity :
                                                                                        maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
@@ -625,7 +634,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
                                                                             maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.SubBaselineMaturity) ? Constants.SubBaselineMaturity :
                                                                                maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
-                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.EvolvinMaturity) ? Constants.EvolvinMaturity :
+                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.EvolvingMaturity) ? Constants.EvolvingMaturity :
                                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
                                                                                         maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.AdvancedMaturity) ? Constants.AdvancedMaturity :
                                                                                             maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
@@ -664,13 +673,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             switch (irpRating)
             {
                 case 1:
-                    return new List<string> { Constants.BaselineMaturity, Constants.EvolvinMaturity };
+                    return new List<string> { Constants.BaselineMaturity, Constants.EvolvingMaturity };
                 case 2:
                     return new List<string>
-                        {Constants.BaselineMaturity, Constants.EvolvinMaturity, Constants.IntermediateMaturity};
+                        {Constants.BaselineMaturity, Constants.EvolvingMaturity, Constants.IntermediateMaturity};
                 case 3:
                     return new List<string>
-                        {Constants.EvolvinMaturity, Constants.IntermediateMaturity, Constants.AdvancedMaturity};
+                        {Constants.EvolvingMaturity, Constants.IntermediateMaturity, Constants.AdvancedMaturity};
                 case 4:
                     return new List<string>
                         {Constants.IntermediateMaturity, Constants.AdvancedMaturity, Constants.InnovativeMaturity};
@@ -679,7 +688,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 default:
                     return new List<string>
                     {
-                        Constants.BaselineMaturity, Constants.EvolvinMaturity, Constants.IntermediateMaturity,
+                        Constants.BaselineMaturity, Constants.EvolvingMaturity, Constants.IntermediateMaturity,
                         Constants.AdvancedMaturity, Constants.InnovativeMaturity
                     };
             }

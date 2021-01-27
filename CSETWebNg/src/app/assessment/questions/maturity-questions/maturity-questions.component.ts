@@ -26,7 +26,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
@@ -100,9 +100,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
         this.loaded = true;
 
-        // default the selected maturity filters
-        // this.questionsSvc.initializeMatFilters(response.OverallIRP);
-
         this.refreshQuestionVisibility();
       },
       error => {
@@ -162,6 +159,20 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    // this.questionsSvc.evaluateFilters(this.groupings);
+    var domains: Domain[] = [];
+    this.groupings.forEach(g => {
+      domains.push({
+        DomainName: g.Title,
+        DisplayText: g.Title,
+        IsDomain: true,
+        Categories: [],
+        DomainText: '',
+        Visible: true,
+        SetName: '',
+        SetShortName: ''
+      });
+    });
+
+    this.questionsSvc.evaluateFilters(domains);
   }
 }

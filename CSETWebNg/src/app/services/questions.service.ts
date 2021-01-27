@@ -24,13 +24,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './question-filter.service';
-import { QuestionsAcetService } from './questions-acet.service';
-
-
+import { AcetFiltersService } from './acet-filters.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -67,7 +65,7 @@ export class QuestionsService {
     private configSvc: ConfigService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService,
-    private questionsAcetSvc: QuestionsAcetService
+    private acetFiltersSvc: AcetFiltersService
   ) {
     this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
   }
@@ -82,8 +80,8 @@ export class QuestionsService {
    */
   questions: QuestionResponse = null;
 
-  
- 
+
+
   /**
    * Sets the application mode of the assessment.
    */
@@ -170,6 +168,9 @@ export class QuestionsService {
       return;
     }
 
+    console.log('questions service evalueateFilters');
+    console.log(domains);
+
     const filterSvc = this.questionFilterSvc;
 
     const filterStringLowerCase = filterSvc.filterString.toLowerCase();
@@ -218,6 +219,7 @@ export class QuestionsService {
             }
 
             // maturity level filtering
+            debugger;
             const targetLevel = this.assessmentSvc.assessment ?
               this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
               10;
@@ -233,8 +235,9 @@ export class QuestionsService {
             }
 
             // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
-            if (!!c.DomainName && !!this.questionsAcetSvc.domainMatFilters.get(c.DomainName)) {
-              if (this.questionsAcetSvc.domainMatFilters.get(c.DomainName).get(q.MaturityLevel.toString()) === false) {
+            if (!!c.DomainName) {
+              const filter = this.acetFiltersSvc.domainFilters.find(f => f.DomainName == c.DomainName);
+              if (!!filter && filter.Settings.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
                 q.Visible = false;
               }
             }
@@ -247,7 +250,7 @@ export class QuestionsService {
         // evaluate category heading visibility
         c.Visible = (!!c.SubCategories.find(s => s.Visible));
       });
-      
+
       // evaluate domain heading visibility
       d.Visible = (!!d.Categories.find(c => c.Visible));
     });
