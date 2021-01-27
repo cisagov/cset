@@ -24,9 +24,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { ACETDomain, Domain } from '../models/questions.model';
-import { Observable, Subject } from 'rxjs';
-import { observeOn } from 'rxjs/operators';
+import { ACETDomain, Domain, QuestionGrouping } from '../models/questions.model';
+import { QuestionFilterService } from './question-filter.service';
 
 
 const headers = {
@@ -68,9 +67,9 @@ export class AcetFiltersService {
 
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private questionFilterSvc: QuestionFilterService
   ) {
-    console.log('acet-filters.service constructor');
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
       this.initializeMatFilters(1);
@@ -116,6 +115,9 @@ export class AcetFiltersService {
    * for all Domains from that stairstep.
    */
   setDmfFromDefaultBand(irp: number) {
+    if (!this.domains) {
+      return;
+    }
     const bands = this.getStairstepOrig(irp);
     const dmf = this.domainFilters;
 
@@ -133,12 +135,6 @@ export class AcetFiltersService {
           DomainId: 0,
           Settings: settings
         });
-      // dmf.set(d.DomainName, new Map());
-      // dmf.get(d.DomainName).set(1, bands.includes(1)); // B
-      // dmf.get(d.DomainName).set(2, bands.includes(2)); // E
-      // dmf.get(d.DomainName).set(3, bands.includes(3)); // Int
-      // dmf.get(d.DomainName).set(4, bands.includes(4)); // A
-      // dmf.get(d.DomainName).set(5, bands.includes(5)); // Inn
 
       const dFilter = this.domainFilters.find(f => f.DomainName == d.DomainName);
       let ix = 0;
@@ -197,17 +193,6 @@ export class AcetFiltersService {
     }
   }
 
-  // /**
-  //  * Indicates whether a certain filter is set to 'on'
-  //  */
-  // isDomainMatFilterSet(domainName: string, mat: number) {
-  //   if (!this.domainMatFilters.get(domainName)) {
-  //     return false;
-  //   }
-
-  //   return this.domainMatFilters.get(domainName).get(mat);
-  // }
-
   /**
    * Returns true if no maturity filters are enabled.
    * This is used primarily to ngif the 'all filters are off' message.
@@ -216,8 +201,10 @@ export class AcetFiltersService {
     const targetFilter = this.domainFilters.find(f => f.DomainName == domainName);
 
     // If not ACET (no domain name), return false
-    if (!domainName || domainName.length === 0
-      || !this.domainFilters || !targetFilter) {
+    if (!domainName
+      || domainName.length === 0
+      || !this.domainFilters
+      || !targetFilter) {
       return false;
     }
 
@@ -238,12 +225,114 @@ export class AcetFiltersService {
   /**
    * 
    */
-  resetDmf(irp: number) {
+  resetDomainFilters(irp: number) {
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
       this.domainFilters = [];
       this.setDmfFromDefaultBand(irp);
       this.saveFilters(this.domainFilters).subscribe();
+    });
+  }
+
+
+  /**
+   * Sets the Visible property on all Questions, Subcategories and Categories
+   * based on the current filter settings.
+   * @param cats
+   */
+  public evaluateFilters(groupings: QuestionGrouping[]) {
+    if (!groupings) {
+      return;
+    }
+
+    console.log('acet filters service evaluateFilters');
+    console.log(groupings);
+
+  
+    groupings.forEach(g => {
+      this.recurseQuestions(g);
+    });
+  }
+
+
+  /**
+   * Recurses any number of grouping levels and returns any Questions found.
+   */
+  recurseQuestions(g: QuestionGrouping) {
+    const filterSvc = this.questionFilterSvc;
+    const filterStringLowerCase = filterSvc.filterString.toLowerCase();
+
+    g.Questions.forEach(q => {
+
+      // start with false, then set true if possible
+      q.Visible = false;
+
+      // If search string is specified, any questions that don't contain the string
+      // are not shown.  No need to check anything else.
+      if (filterSvc.filterString.length > 0
+        && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+        return;
+      }
+
+      // evaluate answers
+      if (filterSvc.answerValues.includes(q.Answer) && filterSvc.showFilters.includes(q.Answer)) {
+        q.Visible = true;
+      }
+
+      // consider null answers as 'U'
+      if (q.Answer == null && filterSvc.showFilters.includes('U')) {
+        q.Visible = true;
+      }
+
+      // evaluate other features
+      if (filterSvc.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
+        q.Visible = true;
+      }
+
+      if (filterSvc.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
+        q.Visible = true;
+      }
+
+      if (filterSvc.showFilters.includes('M') && q.MarkForReview) {
+        q.Visible = true;
+      }
+
+      if (filterSvc.showFilters.includes('D') && q.HasDiscovery) {
+        q.Visible = true;
+      }
+
+      // maturity level filtering
+      // debugger;
+      // const targetLevel = this.assessmentSvc.assessment ?
+      //   this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
+      //   10;
+
+      // if (filterSvc.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
+      //   q.Visible = true;
+      // }
+
+      // // if the 'show above target' filter is turned off, hide the question
+      // // if it is above the target level
+      // if (!filterSvc.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
+      //   q.Visible = false;
+      // }
+
+      // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
+      // if (g.GroupingType == "Domain") {
+      //   const filter = this.domainFilters.find(f => f.DomainName == c.DomainName);
+      //   if (!!filter && filter.Settings.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
+      //     q.Visible = false;
+      //   }
+      // }
+
+      // evaluate subcat visiblity
+      g.Visible = (!!g.Questions.find(q => q.Visible));
+    });
+
+
+    // now dig down another level to see if there are questions
+    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+      this.recurseQuestions(sg);
     });
   }
 
@@ -274,25 +363,9 @@ export class AcetFiltersService {
   }
 
   /**
-   * 
+   * Sets the state of a group of filters.  
    */
   saveFilters(filters: ACETFilter[]) {
-    // const saveValue: ACETFilter[] = [];
-
-    // for (const domainEntry of Array.from(filters.entries())) {
-    //   const x: ACETFilter = new ACETFilter();
-    //   x.DomainName = domainEntry[0];
-    //   x.DomainId = 0;
-    //   domainEntry[1].forEach(setting => {
-    //     x.Settings.push({ 
-    //       Level: setting[0], 
-    //       Value: setting[1]
-    //     });
-    //   });
-
-    //   saveValue.push(x);
-    // }
-
     return this.http.post(this.configSvc.apiUrl + 'SaveAcetFilters', filters, headers);
   }
 }

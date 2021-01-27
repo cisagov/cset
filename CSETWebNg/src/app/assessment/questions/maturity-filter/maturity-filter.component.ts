@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
 import { ACETFilter, ACETFilterSetting, AcetFiltersService } from '../../../services/acet-filters.service';
 import { QuestionGrouping } from '../../../models/questions.model';
@@ -35,16 +35,13 @@ import { QuestionGrouping } from '../../../models/questions.model';
   selector: 'app-maturity-filter',
   templateUrl: './maturity-filter.component.html'
 })
-export class MaturityFilterComponent implements OnInit, AfterViewInit {
+export class MaturityFilterComponent implements OnInit {
 
   @Input()
   domain: QuestionGrouping;
 
   @Input()
   maturityLevels: any[];
-
-  //@Input()
-  // filterSettings: ACETFilterSetting[];
 
 
   @Output()
@@ -63,11 +60,13 @@ export class MaturityFilterComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.domainName = this.domain.Title;
-
-
   }
 
-  ngAfterViewInit() {
+  /**
+   * Returns the Value property for the domain and level
+   */
+  getNgModel(level: any) {
+    return this.acetFiltersSvc.domainFilters?.find(d => d.DomainName == this.domainName)?.Settings.find(s => s.Level == level.Level).Value;
   }
 
   /**
@@ -98,13 +97,13 @@ export class MaturityFilterComponent implements OnInit, AfterViewInit {
    * @param f
    * @param e
    */
-  filterChanged(f: number, e) {
-    console.log('filterChanged: ' + f.toString() + ', ');
-    console.log(e);
+  filterChanged(f: number, e: boolean) {
     // set my filter settings in filtering service
-    this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domainName)
+    this.acetFiltersSvc.domainFilters
+      .find(f => f.DomainName == this.domainName)
       .Settings.find(s => s.Level == f).Value = e;
     this.acetFiltersSvc.saveFilter(this.domainName, f, e).subscribe();
+
     // tell my host page
     this.filtersChanged.emit(this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domainName));
   }

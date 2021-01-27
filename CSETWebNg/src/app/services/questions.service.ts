@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, ACETDomain, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './question-filter.service';
@@ -168,6 +168,9 @@ export class QuestionsService {
       return;
     }
 
+    console.log('questions service evalueateFilters');
+    console.log(domains);
+
     const filterSvc = this.questionFilterSvc;
 
     const filterStringLowerCase = filterSvc.filterString.toLowerCase();
@@ -216,6 +219,7 @@ export class QuestionsService {
             }
 
             // maturity level filtering
+            debugger;
             const targetLevel = this.assessmentSvc.assessment ?
               this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
               10;

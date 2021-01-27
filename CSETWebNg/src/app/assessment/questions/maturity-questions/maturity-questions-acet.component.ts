@@ -26,7 +26,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
@@ -96,7 +96,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList().subscribe(
-      (response: MaturityQuestionResponse) => {        
+      (response: MaturityQuestionResponse) => {
         this.modelName = response.ModelName;
 
         // the recommended maturity level(s) based on IRP
@@ -105,11 +105,11 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
-        
+
         // get the selected maturity filters
         this.acetFiltersSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
           this.domainFilterSettings = this.acetFiltersSvc.domainFilters;
-          
+
           this.refreshQuestionVisibility();
 
           this.loaded = true;
@@ -172,6 +172,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    // this.questionsSvc.evaluateFilters(this.groupings);
+    this.acetFiltersSvc.evaluateFilters(this.groupings);
   }
 }

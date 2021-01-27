@@ -27,7 +27,6 @@ import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { ACETService } from '../../../services/acet.service';
-import { QuestionsService } from '../../../services/questions.service';
 import { AcetFiltersService } from '../../../services/acet-filters.service';
 
 @Component({
@@ -82,7 +81,7 @@ export class IrpSummaryComponent implements OnInit {
      * 
      */
     changeInfoIrp() {
-        this.acetFiltersSvc.resetDmf(this.acetDashboard.Override);
+        this.acetFiltersSvc.resetDomainFilters(this.acetDashboard.Override);
         this.changeInfo();
     }
 
@@ -102,5 +101,4 @@ export class IrpSummaryComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
     }
-
 }
