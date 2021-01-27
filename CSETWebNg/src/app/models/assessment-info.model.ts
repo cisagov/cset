@@ -44,8 +44,6 @@ export interface AssessmentDetail {
     UseDiagram?: boolean;
     IsAcet?: boolean;
 
-    MaturityModels?: MaturityModel[];
-
     MaturityModel?: MaturityModel;
 }
 
@@ -53,6 +51,7 @@ export interface MaturityModel {
     ModelId: number;
     ModelName: string;
     MaturityTargetLevel: number;
+    QuestionsAlias: string;
 
     // the options for answering questions in this model
     AnswerOptions: string[];

@@ -42,7 +42,9 @@ import { MaturityModel } from '../../../models/assessment-info.model';
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = null;
-  modelName: string = null;
+  pageTitle: string = '';
+  modelName: string = '';
+  questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   loaded = false;
@@ -71,7 +73,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
   }
-
+  
   /**
    *
    */
@@ -95,9 +97,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.maturitySvc.getQuestionsList().subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelName = response.ModelName;
+        this.questionsAlias = response.QuestionsAlias;
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
+        this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.loaded = true;
 
         this.refreshQuestionVisibility();
