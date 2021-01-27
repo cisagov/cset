@@ -28,20 +28,20 @@
 </p>
 <p>
   For help choosing assessment options and features see the additional information in the 
-  <a rel="noopener noreferrer" target="_blank" [href]="helpDocUrl()">User Guide</a>.
+  <a rel="noopener noreferrer" target="_blank" tabindex="0" [href]="helpDocUrl()">User Guide</a>.
 </p>
 
 <div *ngFor="let s of features" class="d-flex flex-column justify-content-between flex-00a">
   <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
-      <input type="checkbox" id="{{s.code}}" name="{{s.code}}" class="mt-1" (change)="submit(s, $event)"
+      <input type="checkbox" tabindex="0" id="{{s.code}}" name="{{s.code}}" class="mt-1" (change)="submit(s, $event)"
         [checked]="s.selected">
       <label for="{{s.code}}">
         {{s.label}}
       </label>
     </div>
     <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.code]"
-      (click)="toggleExpansion(s.code)"></i>
+      (click)="toggleExpansion(s.code)" tabindex="0"></i>
   </div>
   <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.code]"
     [class.closed-desc]="!expandedDesc[s.code]">
