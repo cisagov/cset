@@ -197,7 +197,7 @@ export class AcetFiltersService {
    * This is used primarily to ngif the 'all filters are off' message.
    */
   maturityFiltersAllOff(domainName: string) {
-    const targetFilter = this.domainFilters.find(f => f.DomainName == domainName);
+    const targetFilter = this.domainFilters?.find(f => f.DomainName == domainName);
 
     // If not ACET (no domain name), return false
     if (!domainName
@@ -301,7 +301,6 @@ export class AcetFiltersService {
       }
 
       // maturity level filtering
-      // debugger;
       // const targetLevel = this.assessmentSvc.assessment ?
       //   this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
       //   10;

@@ -48,6 +48,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
   percentAnswered = 0;
   answerOptions = [];
 
+  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
+  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+
   /**
    * Constructor.
    * @param configSvc 
@@ -75,7 +78,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
     });
 
     if (this.configSvc.acetInstallation) {
-      // this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
   }
 
