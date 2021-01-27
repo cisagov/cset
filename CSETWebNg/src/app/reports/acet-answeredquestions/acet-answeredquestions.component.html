@@ -68,8 +68,7 @@
                 comment
                 attached to the statement.
                 <br><br>
-                The percentages at the Domain Level are for Yes answers out of your statement set. The
-                statement set is determined by your maturity level.<br>
+                The statement set is determined by your maturity level.<br>
             </p>
         </div>
         <div class="page-break pb-5">
@@ -92,26 +91,28 @@
                 <tr class="report-text-blue">
                     <td></td>
                     <td></td>
+                    <td>Answeres</td>
                     <td>Maturity Level</td>
                     <td>Comments</td>
                 </tr>
                 <ng-container *ngFor="let d of response?.MatAnsweredQuestions">
                     <tr class="rkw-domain">
-                        <td colspan="4" class="background-1 h4 color-white">{{d.Title}} - Domain</td>
+                        <td colspan="5" class="background-1 h4 color-white">{{d.Title}} - Domain</td>
                     </tr>
                     <ng-container *ngFor="let f of d.AssessmentFactors">
                         <tr>
-                            <td colspan="4" class="background-2 font-weight-bold pl-4">{{f.Title}} - Assessment Factor
+                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.Title}} - Assessment Factor
                             </td>
                         </tr>
                         <ng-container *ngFor="let c of f.Components">
                             <tr>
-                                <td colspan="4" class="background-3 pl-5">{{c.Title}} - Component</td>
+                                <td colspan="5" class="background-3 pl-5">{{c.Title}} - Component</td>
                             </tr>
                             <ng-container *ngFor="let q of c.Questions">
                                 <tr>
                                     <td class="font-weight-bold text-nowrap">{{q.Title}}</td>
                                     <td class="pr-3" [innerHTML]="q.QuestionText"></td>
+                                    <td class="pr-3">{{configSvc.answerLabels[q.AnswerText]}}</td>
                                     <td class="pr-3">{{q.MaturityLevel}}</td>
                                     <td>{{q.Comments}}</td>
                                 </tr>

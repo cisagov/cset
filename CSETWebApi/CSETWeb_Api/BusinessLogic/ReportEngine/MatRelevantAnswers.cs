@@ -55,5 +55,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public string QuestionText { get; set; }
         public string MaturityLevel { get; set; }
         public string Comments { get; set; }
+        public string AnswerText { get; set; }
     }
 }
