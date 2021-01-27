@@ -55,7 +55,7 @@ export class QuestionBlockComponent implements OnInit {
   private _timeoutId: NodeJS.Timeout;
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+
 
   /**
    * 
@@ -84,10 +84,6 @@ export class QuestionBlockComponent implements OnInit {
   ngOnInit() {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
-
-    if (this.configSvc.acetInstallation) {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
-    }
   }
 
   /**
