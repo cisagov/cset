@@ -73,10 +73,13 @@
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                         <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
-                    <tr>
-                        <td class="deficiencies-list-item"><b>Comment:</b></td>
-                        <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
-                    </tr>
+                    <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
+                    <ng-template #c_comments_given>
+                        <tr>
+                            <td class="deficiencies-list-item"><b>Comment:</b></td>
+                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                        </tr>
+                    </ng-template>
                 </ng-template>
             </table>
         </div>
@@ -97,10 +100,13 @@
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                         <td style="text-align: center; color: #555555">{{s.ANSWER.Answer_Text}}</td>
                     </tr>
-                    <tr>
-                        <td class="deficiencies-list-item"><b>Comment:</b></td>
-                        <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
-                    </tr>
+                    <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
+                    <ng-template #sc_comments_given>
+                        <tr>
+                            <td class="deficiencies-list-item"><b>Comment:</b></td>
+                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                        </tr>
+                    </ng-template>
                 </ng-template>
             </table>
         </div>
