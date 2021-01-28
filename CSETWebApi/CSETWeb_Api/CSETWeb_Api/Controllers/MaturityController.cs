@@ -75,10 +75,11 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public object GetQuestions()
+        public object GetQuestions([FromUri] bool isAcetInstallation)
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityQuestions(assessmentId);
+            
+            return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
         }
 
 

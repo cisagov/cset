@@ -187,22 +187,43 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             AssessmentUtil.TouchAssessment(assessmentId);
         }
 
+        private AVAILABLE_MATURITY_MODELS processModelDefaults(CSET_Context db, int assessmentId, bool isAcetInstallation)
+        {
+            //if the available maturity model is not selected and the application is CSET
+            //the default is EDM
+            //if the application is ACET the default is ACET
+            
+            var myModel = db.AVAILABLE_MATURITY_MODELS
+              .Include(x => x.model_)
+              .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (myModel == null)
+            {
+                myModel = new AVAILABLE_MATURITY_MODELS()
+                {
+                    Assessment_Id = assessmentId,
+                    model_id = isAcetInstallation ? 1 : 3,
+                    Selected = true
+                };
+                db.AVAILABLE_MATURITY_MODELS.Add(myModel);
+                db.SaveChanges();
+            }
+
+                return myModel;
+        }
 
         /// <summary>
         /// Assembles a response consisting of maturity settings for the assessment
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation)
         {
             var response = new MaturityResponse();
 
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS
-                    .Include(x => x.model_)
-                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-
+                var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
+                
 
                 var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
 
