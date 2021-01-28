@@ -292,12 +292,20 @@ export class AssessmentService {
    * @param modelName 
    */
   usesMaturityModel(modelName: string) {
+    if (!this.assessment) {
+      return false;
+    }
+    
     if (!this.assessment.MaturityModel) {
       return false;
     }
 
     if (!this.assessment.MaturityModel.ModelName) {
       return false;
+    }
+
+    if (modelName == '*' && !!this.assessment.MaturityModel.ModelName) {
+      return true;
     }
     
     return this.assessment.MaturityModel.ModelName.toLowerCase() === modelName.toLowerCase();
