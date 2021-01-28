@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
+import { Domain } from '../models/questions.model';
 import { AssessmentService } from './assessment.service';
 
 /**
@@ -187,5 +188,78 @@ export class QuestionFilterService {
       a1.splice(idx, 1);
     }
     return a1;
+  }
+
+  /**
+   * Sets the Visible property on all Questions, Subcategories and Categories
+   * based on the current filter settings.
+   * @param cats
+   */
+  public evaluateFilters(domains: Domain[]) {
+    if (!domains) {
+      return;
+    }
+
+    console.log('questions service evalueateFilters');
+    console.log(domains);
+
+
+    const filterStringLowerCase = this.filterString.toLowerCase();
+
+    let categoryAccessControl = null;
+
+    domains.forEach(d => {
+      d.Categories.forEach(c => {
+        c.SubCategories.forEach(s => {
+          s.Questions.forEach(q => {
+            // start with false, then set true if possible
+            q.Visible = false;
+
+            // If search string is specified, any questions that don't contain the string
+            // are not shown.  No need to check anything else.
+            if (this.filterString.length > 0
+              && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+              return;
+            }
+
+            // evaluate answers
+            if (this.answerValues.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
+              q.Visible = true;
+            }
+
+            // consider null answers as 'U'
+            if (q.Answer == null && this.showFilters.includes('U')) {
+              q.Visible = true;
+            }
+
+            // evaluate other features
+            if (this.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('M') && q.MarkForReview) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('D') && q.HasDiscovery) {
+              q.Visible = true;
+            }
+          });
+
+          // evaluate subcat visiblity
+          s.Visible = (!!s.Questions.find(q => q.Visible));
+        });
+
+        // evaluate category heading visibility
+        c.Visible = (!!c.SubCategories.find(s => s.Visible));
+      });
+
+      // evaluate domain heading visibility
+      d.Visible = (!!d.Categories.find(c => c.Visible));
+    });
   }
 }
