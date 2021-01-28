@@ -150,6 +150,6 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
    * that are not currently visible.
    */
   refreshQuestionVisibility() {
-    this.questionsSvc.evaluateFilters(this.domains);
+    this.filterSvc.evaluateFilters(this.domains);
   }
 }

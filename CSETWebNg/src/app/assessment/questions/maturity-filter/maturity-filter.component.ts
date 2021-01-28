@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
-import { ACETFilter, ACETFilterSetting, AcetFiltersService } from '../../../services/acet-filters.service';
+import { AcetFiltersService } from '../../../services/acet-filters.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 
 /**
@@ -43,9 +43,6 @@ export class MaturityFilterComponent implements OnInit {
   @Input()
   maturityLevels: any[];
 
-
-  @Output()
-  filtersChanged = new EventEmitter<ACETFilter>();
 
   // the domain that we are filtering
   domainName: string;
@@ -105,6 +102,6 @@ export class MaturityFilterComponent implements OnInit {
     this.acetFiltersSvc.saveFilter(this.domainName, f, e).subscribe();
 
     // tell my host page
-    this.filtersChanged.emit(this.acetFiltersSvc.domainFilters.find(f => f.DomainName == this.domainName));
+    this.acetFiltersSvc.recurseQuestions(this.domain);
   }
 }

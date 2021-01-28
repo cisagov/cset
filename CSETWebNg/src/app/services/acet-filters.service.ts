@@ -65,6 +65,42 @@ export class AcetFiltersService {
   domains = null;
 
 
+  /**
+   * The allowable filter values.  Used for "select all"
+   */
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
+
+  /**
+   * The allowable maturity filter values.  Only applicable on maturity questions page.
+   * On a non-maturity page, they are always assumed to be ON.
+   */
+  readonly maturityFilters = ['MT', 'MT+'];
+
+  /**
+   * Filter settings
+   *   Comments - C
+   *   Marked For Review - M
+   *   Discoveries (Observations) - D
+   */
+  public showFilters: string[];
+
+  /**
+   * Filters that are turned on at the start.
+   */
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT'];
+
+  /**
+   * If the user enters characters into the box, only questions containing that string
+   * are visible.
+   */
+  public filterString = '';
+
+  /**
+   * Valid 'answer'-type filter values
+   */
+  public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
+
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -72,8 +108,123 @@ export class AcetFiltersService {
   ) {
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
+      
+      this.refresh();
     });
+
   }
+
+    /**
+   * Reset the filters back to default settings.
+   */
+  refresh() {
+    this.showFilters = this.defaultFilterSettings;
+  }
+
+
+  /**
+ * Returns true if the filter is turned on to show
+ * questions above the maturity target level.
+ */
+  showingAboveMaturityTargetLevel() {
+    return (this.showFilters.indexOf('MT+') >= 0);
+  }
+
+
+  /**
+   * Returns true if we have any inclusion filters turned off.
+   * We don't count MT+ for this, since it is normally turned off.
+   */
+  isFilterEngaged() {
+    if (this.filterString.length > 0) {
+      return true;
+    }
+
+    // see if any filters (not counting MT+) are turned off
+    const e = (this.remove(this.allowableFilters, 'MT+').length !== this.remove(this.showFilters, 'MT+').length);
+
+    return e;
+  }
+
+
+  /**
+   * Indicates if the specified answer filter is currently 'on'
+   * @param ans
+   */
+  filterOn(ans: string) {
+    if (ans === 'ALL') {
+      if (this.arraysAreEqual(this.remove(this.showFilters, 'MT+'), this.remove(this.allowableFilters, 'MT+'))) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return (this.showFilters.indexOf(ans) >= 0);
+  }
+
+  /**
+   * Adds or removes the specified answer.
+   * @param ans
+   * @param show
+   */
+  setFilter(ans: string, show: boolean) {
+    if (ans === 'ALL') {
+      if (show) {
+        this.showFilters = this.allowableFilters.slice();
+        this.showFilters = this.remove(this.showFilters, 'MT+');
+      } else {
+        this.showFilters = [];
+      }
+      return;
+    }
+
+    if (show) {
+      if (this.showFilters.indexOf(ans) < 0) {
+        this.showFilters.push(ans);
+      }
+    } else {
+      const i = this.showFilters.indexOf(ans);
+      if (i >= 0) {
+        this.showFilters.splice(i, 1);
+      }
+    }
+  }
+
+  /**
+  * Utility method.  Should be moved somewhere common.
+  */
+  arraysAreEqual(a1: any[], a2: any[]) {
+    if (a1.length !== a2.length) {
+      return false;
+    }
+
+    for (let i = 0, l = a1.length; i < l; i++) {
+      if (a1[i] instanceof Array && a2[i] instanceof Array) {
+        if (!a1[i].equals(a2[i])) {
+          return false;
+        }
+      } else if (a1[i] !== a2[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Returns an array with the target removed.
+   * @param a 
+   * @param target 
+   */
+  remove(a: any[], target: any) {
+    const a1 = a.slice();
+    const idx = a1.indexOf(target);
+    if (idx >= 0) {
+      a1.splice(idx, 1);
+    }
+    return a1;
+  }
+
+
 
   /**
   * Sets the starting value of the maturity filters, based on the 'stairstep.'
@@ -233,9 +384,10 @@ export class AcetFiltersService {
     });
   }
 
+  currentDomainName = '';
 
   /**
-   * Sets the Visible property on all Questions, Subcategories and Categories
+   * Sets the Visible property on all Questions
    * based on the current filter settings.
    * @param cats
    */
@@ -243,10 +395,6 @@ export class AcetFiltersService {
     if (!groupings) {
       return;
     }
-
-    console.log('acet filters service evaluateFilters');
-    console.log(groupings);
-
 
     groupings.forEach(g => {
       this.recurseQuestions(g);
@@ -261,10 +409,24 @@ export class AcetFiltersService {
     const filterSvc = this.questionFilterSvc;
     const filterStringLowerCase = filterSvc.filterString.toLowerCase();
 
-    g.Questions.forEach(q => {
+    if (g.GroupingType == 'Domain') {
+      this.currentDomainName = g.Title;
+    }
 
+    g.Questions.forEach(q => {
       // start with false, then set true if possible
       q.Visible = false;
+
+
+      // Check maturity level filtering first.  If the question is not visible the rest of the 
+      // conditions can be avoided.
+      debugger;
+      const filtersForDomain = this.domainFilters.find(f => f.DomainName == this.currentDomainName).Settings;
+      if (filtersForDomain.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
+        return;
+      }
+
+
 
       // If search string is specified, any questions that don't contain the string
       // are not shown.  No need to check anything else.
@@ -300,7 +462,8 @@ export class AcetFiltersService {
         q.Visible = true;
       }
 
-      // maturity level filtering
+      // non-ACET maturity level filtering
+
       // const targetLevel = this.assessmentSvc.assessment ?
       //   this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
       //   10;

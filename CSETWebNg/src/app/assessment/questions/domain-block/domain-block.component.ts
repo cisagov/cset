@@ -17,8 +17,7 @@ export class DomainBlockComponent implements OnInit {
    * 
    */
   constructor(
-    public questionsSvc: QuestionsService,
-    public acetFiltersSvc: AcetFiltersService
+    public questionsSvc: QuestionsService
   ) { }
 
   /**

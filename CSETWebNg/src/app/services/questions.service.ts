@@ -64,8 +64,7 @@ export class QuestionsService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessmentSvc: AssessmentService,
-    private questionFilterSvc: QuestionFilterService,
-    private acetFiltersSvc: AcetFiltersService
+    private questionFilterSvc: QuestionFilterService
   ) {
     this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
   }
@@ -158,102 +157,7 @@ export class QuestionsService {
     return this.http.get(this.configSvc.apiUrl + 'questionsfordocument?id=' + id, headers);
   }
 
-  /**
-   * Sets the Visible property on all Questions, Subcategories and Categories
-   * based on the current filter settings.
-   * @param cats
-   */
-  public evaluateFilters(domains: Domain[]) {
-    if (!domains) {
-      return;
-    }
-
-    console.log('questions service evalueateFilters');
-    console.log(domains);
-
-    const filterSvc = this.questionFilterSvc;
-
-    const filterStringLowerCase = filterSvc.filterString.toLowerCase();
-
-    let categoryAccessControl = null;
-
-    domains.forEach(d => {
-      d.Categories.forEach(c => {
-        c.SubCategories.forEach(s => {
-          s.Questions.forEach(q => {
-            // start with false, then set true if possible
-            q.Visible = false;
-
-            // If search string is specified, any questions that don't contain the string
-            // are not shown.  No need to check anything else.
-            if (filterSvc.filterString.length > 0
-              && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
-              return;
-            }
-
-            // evaluate answers
-            if (filterSvc.answerValues.includes(q.Answer) && filterSvc.showFilters.includes(q.Answer)) {
-              q.Visible = true;
-            }
-
-            // consider null answers as 'U'
-            if (q.Answer == null && filterSvc.showFilters.includes('U')) {
-              q.Visible = true;
-            }
-
-            // evaluate other features
-            if (filterSvc.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
-              q.Visible = true;
-            }
-
-            if (filterSvc.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
-              q.Visible = true;
-            }
-
-            if (filterSvc.showFilters.includes('M') && q.MarkForReview) {
-              q.Visible = true;
-            }
-
-            if (filterSvc.showFilters.includes('D') && q.HasDiscovery) {
-              q.Visible = true;
-            }
-
-            // maturity level filtering
-            const targetLevel = this.assessmentSvc.assessment ?
-              this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
-              10;
-
-            if (filterSvc.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
-              q.Visible = true;
-            }
-
-            // if the 'show above target' filter is turned off, hide the question
-            // if it is above the target level
-            if (!filterSvc.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
-              q.Visible = false;
-            }
-
-            // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
-            if (!!c.DomainName) {
-              const filter = this.acetFiltersSvc.domainFilters.find(f => f.DomainName == c.DomainName);
-              if (!!filter && filter.Settings.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
-                q.Visible = false;
-              }
-            }
-          });
-
-          // evaluate subcat visiblity
-          s.Visible = (!!s.Questions.find(q => q.Visible));
-        });
-
-        // evaluate category heading visibility
-        c.Visible = (!!c.SubCategories.find(s => s.Visible));
-      });
-
-      // evaluate domain heading visibility
-      d.Visible = (!!d.Categories.find(c => c.Visible));
-    });
-  }
+  
 
   /**
    * 

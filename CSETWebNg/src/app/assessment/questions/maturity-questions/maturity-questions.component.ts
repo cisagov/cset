@@ -33,6 +33,7 @@ import { QuestionFilterService } from '../../../services/question-filter.service
 import { ConfigService } from '../../../services/config.service';
 import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
 import { MaturityModel } from '../../../models/assessment-info.model';
+import { AcetFiltersService } from '../../../services/acet-filters.service';
 
 
 @Component({
@@ -56,7 +57,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public filterSvc: QuestionFilterService,
+    public acetFiltersSvc: AcetFiltersService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
@@ -163,20 +164,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    var domains: Domain[] = [];
-    this.groupings.forEach(g => {
-      domains.push({
-        DomainName: g.Title,
-        DisplayText: g.Title,
-        IsDomain: true,
-        Categories: [],
-        DomainText: '',
-        Visible: true,
-        SetName: '',
-        SetShortName: ''
-      });
-    });
-
-    this.questionsSvc.evaluateFilters(domains);
+    this.acetFiltersSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
   }
 }
