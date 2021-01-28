@@ -63,6 +63,9 @@ export class AcetExecutiveComponent implements OnInit {
 
         console.log(data);
         data.forEach((domain: MaturityDomain) => {
+          if (domain.DomainMaturity == "Sub-Baseline"){
+            domain.DomainMaturity = "ad-hoc";
+          }
           var domainData = { 
             domainName: domain.DomainName, 
             domainMaturity: domain.DomainMaturity, 
