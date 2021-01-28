@@ -26,6 +26,7 @@ import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { MaturityService } from '../../../../services/maturity.service';
+import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-model-select',
@@ -63,13 +64,15 @@ export class ModelSelectComponent implements OnInit {
       this.assessSvc.setModel(model);
 
       // tell the API which model was selected
-      this.maturitySvc.postSelection(model).subscribe();
+      this.maturitySvc.postSelection(model).subscribe((response: MaturityModel) => {
+        this.assessSvc.assessment.MaturityModel = response;
+
+        sessionStorage.removeItem('tree');
+
+        // refresh Prepare section of the sidenav
+        this.navSvc.buildTree(this.navSvc.getMagic());
+      });
     }
-
-    sessionStorage.removeItem('tree');
-
-    // refresh Prepare section of the sidenav
-    this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
   /**
