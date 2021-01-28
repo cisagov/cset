@@ -61,7 +61,7 @@
         </button>
 
         <button *ngIf="!configSvc.acetInstallation" class="extras-button cursor-pointer" [class.active]="mode == 'DOCS'"
-            (click)="toggleExtras('DOCS')" matTooltip="Documents" matTooltipPosition="above">
+            (click)="toggleExtras('DOCS')" matTooltip="Artifacts / Documents" matTooltipPosition="above">
             <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -12px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.7)"
                     d="M19.495,0L19.495,8.726 28.221,8.726z M0,0.202L0,35 28.02,35 28.02,11.522 16.7,11.522 16.7,0.202z M5.729,16.483L22.08,16.483 22.08,19.558 5.729,19.558z M5.729,21.654L22.08,21.654 22.08,24.728 5.729,24.728z M5.729,26.825L22.08,26.825 22.08,29.899 5.729,29.899z" />
@@ -214,7 +214,7 @@
         <div *ngIf="extras !== null && mode === 'DOCS'">
             <table class="reference-table">
                 <tr>
-                    <th>Document Title</th>
+                    <th>Artifact / Document Title</th>
                     <th>File Name</th>
                     <th></th>
                 </tr>
