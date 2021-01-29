@@ -148,9 +148,19 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Performance Summary</h1>
-    <div style="display: flex; flex-direction: row; align-items: right; margin-bottom: 5px;">
-      <h2 style="text-align: center; color: #000;">EDM MIL-1 Performance Summary</h2>
-      
+    <h2 style="text-align: left; color: #000;">EDM MIL-1 Performance Summary</h2>
+    
+    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
+      <ngx-charts-bar-vertical
+        [view]="view2"
+        [scheme]="colorScheme"
+        [results]="performanceLegend2"
+        [gradient]="gradient"
+        [xAxis]="false"
+        [yAxis]="true"
+        [legend]="false">
+      </ngx-charts-bar-vertical>
+
       <ngx-charts-bar-horizontal-normalized 
         [view]="view" 
         [scheme]="colorScheme"
@@ -164,80 +174,97 @@
       </ngx-charts-bar-horizontal-normalized>
     </div>
 
-    <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
-      <h2 style="text-align: center; border-top: 5px; border-bottom: 5px; border-color: #000; color: #000; text-decoration: underline;">PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
-      <h2>Relationship Formation</h2>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 1</strong> - Acquirer service and asset <br/> priorities are established.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG1" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
+    <h2 style="text-align: center; border-top: 5px; border-bottom: 5px; border-color: #000; color: #000; text-decoration: underline;">PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
+    <h2>Relationship Formation</h2>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-between; vertical-align: middle;">
+      
+      <div style="margin-right: 15px; margin-top: 8%;">
+      <ngx-charts-bar-vertical
+        [view]="view2"
+        [scheme]="colorScheme"
+        [results]="relationshipFormationSummary"
+        [gradient]="gradient"
+        [xAxis]="false"
+        [yAxis]="true"
+        [legend]="false">
+      </ngx-charts-bar-vertical>
       </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 2</strong> - Forming relationships with <br/> external entities is planned.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG2" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 3</strong> - Risk management includes <br/> external dependencies.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG3" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 4</strong> - External entities are evaluated.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG4" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 5</strong>- Formal agreements include <br/> resilience requirements.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG5" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 6</strong> - Technology asset supply chain <br/> risks are managed.
-        <ngx-charts-bar-horizontal-normalized
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG6" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
+
+      <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+        
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 1</strong> - Acquirer service and asset <br/> priorities are established.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG1" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 2</strong> - Forming relationships with <br/> external entities is planned.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG2" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 3</strong> - Risk management includes <br/> external dependencies.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG3" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 4</strong> - External entities are <br/> evaluated.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG4" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 5</strong>- Formal agreements include <br/> resilience requirements.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG5" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 6</strong> - Technology asset supply <br/> chain risks are managed.</span>
+          <ngx-charts-bar-horizontal-normalized
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG6" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
       </div>
     </div>
 
