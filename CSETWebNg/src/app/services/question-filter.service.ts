@@ -37,13 +37,8 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
 
-  /**
-   * The allowable maturity filter values.  Only applicable on maturity questions page.
-   * On a non-maturity page, they are always assumed to be ON.
-   */
-  readonly maturityFilters = ['MT', 'MT+'];
 
   /**
    * Filter settings
@@ -56,7 +51,7 @@ export class QuestionFilterService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -76,7 +71,7 @@ export class QuestionFilterService {
    */
   constructor(
     private assessSvc: AssessmentService
-  ) { 
+  ) {
     this.refresh();
   }
 
@@ -87,7 +82,7 @@ export class QuestionFilterService {
     this.showFilters = this.defaultFilterSettings;
   }
 
-  /**
+    /**
    * Returns true if we have any inclusion filters turned off.
    * We don't count MT+ for this, since it is normally turned off.
    */
@@ -102,14 +97,7 @@ export class QuestionFilterService {
     return e;
   }
 
-  /**
-   * Returns true if the filter is turned on to show
-   * questions above the maturity target level.
-   */
-  showingAboveMaturityTargetLevel() {
-    return (this.showFilters.indexOf('MT+') >= 0);
-  }
-
+  
   /**
    * Indicates if the specified answer filter is currently 'on'
    * @param ans
@@ -152,8 +140,6 @@ export class QuestionFilterService {
       }
     }
   }
-
-
 
 
   /**
@@ -206,7 +192,6 @@ export class QuestionFilterService {
 
     const filterStringLowerCase = this.filterString.toLowerCase();
 
-    let categoryAccessControl = null;
 
     domains.forEach(d => {
       d.Categories.forEach(c => {

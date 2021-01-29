@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
 
 @Component({
   selector: 'app-grouping-block',
@@ -11,7 +11,7 @@ export class GroupingBlockComponent implements OnInit {
 
 
   constructor(
-    public acetFiltersSvc: AcetFiltersService
+    public acetFiltersSvc: MaturityFiltersService
   ) { }
 
   ngOnInit(): void {

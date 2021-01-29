@@ -33,7 +33,7 @@ import { QuestionFilterService } from '../../../services/question-filter.service
 import { ConfigService } from '../../../services/config.service';
 import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
 import { MaturityModel } from '../../../models/assessment-info.model';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
 
 
 @Component({
@@ -57,7 +57,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public acetFiltersSvc: AcetFiltersService,
+    public acetFiltersSvc: MaturityFiltersService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {

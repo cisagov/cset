@@ -31,7 +31,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-import { ACETFilter, AcetFiltersService } from '../../../services/acet-filters.service';
+import { ACETFilter, MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
 
 
 @Component({
@@ -58,7 +58,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
-    private acetFiltersSvc: AcetFiltersService,
+    private acetFiltersSvc: MaturityFiltersService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
