@@ -1324,11 +1324,11 @@
           <span style="font-style: italic;">As a part of identifying ICT supply chain Risk Assumptions within the broader Risk Management process</span>
           (described in NIST SP 800-39), agencies should do the following:
           <ul>
-            <li>Define ICT SCRM mission, business, and system-level requiremen</li>
+            <li>Define ICT SCRM mission, business, and system-level requirements</li>
             <li>Identify which mission functions and related components are critical to the organization,
               including FIPS 199 impact level, to determine the baseline criticality;</li> 
           </ul>
-          <br /><br />
+          <br />
           NIST CSF References: ID.BE-4, ID.SC-2 <br /><br />
         </li>
         <li>
@@ -1342,7 +1342,18 @@
             reasons. Once the list of external dependencies is established, it is important that it be maintained. A
             process for updating the list on a regular basis should be established. <br /><br />
             <span style="font-weight: bold;">Additional References</span> <br /><br />
-            NIST CSF References: ID.BE-4, ID.SC-2
+            NIST CSF References: ID.BE-4, ID.SC-2 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[SC:SG3.SP2]</span> Develop and document Service Continuity Plans <br /><br />
+          Document the service continuity plans using available templates as appropriate. A service continuity
+          plan typically includes the following information:
+          <ul>
+            <li>identification of authority for initiating and executing the plan (plan ownership)</li>
+            <li>identification of the communication mechanism to initiate execution of the plan</li>
+          </ul>
+
         </li>
       </ol>
     </div>
@@ -1354,6 +1365,104 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Service Protection and Sustainment</h1>
+
+    <div style="display: flex; flex-direction: row; justify-content: left; text-align: center; margin-bottom: 10px;">
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 1;">
+        Goal 1
+      </div>
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 1;">
+        Goal 2
+      </div>
+      <div style="background-color: #C7B42C; margin: 5px; padding: 5px; flex-grow: 2">
+        Goal 3
+      </div>
+    </div>
+
+    <p>
+      The purpose of Service Protection and Sustainment is to assess whether the acquirer accounts for its
+      dependence on external entities as part of its operational activities around managing incidents and threats.
+      This includes integrating external entity considerations into the acquirer's disruption planning - typically
+      incident management and business continuity, validating controls at external entities, and maintaining
+      situational awareness activities directed at external dependencies.
+    </p>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+
+      <h2 style="color: black; font-weight: bold;">Goal 1 - Disruption planning includes external dependencies.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer accounts for external dependencies as part of its incident
+        management and service continuity processes.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Does the acquirer have an incident management plan to protect the critical service? [IMC:SG1.SP1]</li>
+        <li>Have incident declaration criteria that support the critical service been established and communicated to relevant external entities? [IMC:SG3.SP1, IMC:GG2.GP7]</li>
+        <li>Does the acquirer have a documented service continuity/business continuity plan to sustain the critical service? [SC:SG3.SP2]</li>
+        <li>Do the acquirer's plans account for dependence on external entities? [EXD:SG2.SP2, SC:SG3.SP2]
+          <ol>
+            <li>4.1 Incident management</li>
+            <li>4.2 Service continuity</li>
+          </ol>
+        </li>
+        <li>Do relevant external entities participate in the acquirer's planning activities? [IMC:GG2.GP7, SC:SG2.SP2]
+          <ol>
+            <li>5.1 Incident management</li>
+            <li>5.2 Service continuity</li>
+          </ol>
+        </li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP1]</span> Identify External Dependencies <br /><br />
+          Establish the incident management plan. The incident management plan should address, at a minimum
+          <ul>
+            <li>the acquirer's philosophy for incident management</li>
+            <li>the structure of the incident management process</li>
+            <li>the requirements and objectives of the incident management process relative to managing operational resilience</li>
+            <li>a description of how the acquirer will identify incidents, analyze them, and respond</li>
+            <li>the roles and responsibilities necessary to carry out the plan</li>
+            <li>applicable training needs and requirements</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy Controls for Federal Information
+          Systems and Organizations”, IR-4 Incident Handling.
+          <ol>
+            <li>Implements an <span style="font-style: italic;">incident handling capability for security incidents that includes preparation,
+              detection and analysis, containment, eradication, and recovery;</span></li>
+            <li>Coordinates incident handling activities with contingency planning activities; and</li>
+            <li>Incorporates lessons learned from ongoing incident handling activities into incident response
+              procedures, training, and testing/exercises, and implements the resulting A. changes
+              accordingly.</li>
+          </ol> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-61</span>, “Computer Security Incident Handling Guide,” Handbook for Computer
+          Security Incident Response Teams (CSIRTs). <br/><br/>
+          NIST CSF References: ID.SC-5, PR.IP-9
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[IMC:SG3.SP1]</span> Define and Maintain Incident Declaration Criteria <br /><br />
+          <span style="font-style: italic;">Each organization has many unique factors that must be considered in determining when to declare an
+          incident</span> Through experience, an organization may have a baseline set of events that define standard
+          incidents, such as a virus outbreak, unauthorized access to a user account, or a denial-of-service attack.
+          However, in reality, incident declaration may occur on an event-by-event basis. <br/><br/>
+          To guide the organization in determining when to declare an incident (particularly if incident declaration
+          is not immediately apparent), the organization must define incident declaration criteria. <br/><br/>
+          <span style="font-weight: bold;">[IMC:GG2.GP7]</span> Involve Stakeholders <br /><br />
+          Stakeholders for the incident management and control process may extend across the organization and
+          externally to business partners and vendors. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST 800-161</span>, “Supply Chain Risk Management Practices for Federal Information Systems and
+          Organizations,” Section AC-21 Collaboration and Information Sharing. <br/><br/>
+          <span style="font-style: italic;">Sharing information within the ICT supply chain can help to manage ICT supply chain risks.</span>
+          This information may include vulnerabilities, threats, criticality of systems and components, or delivery
+          information. This information sharing should be carefully managed to ensure that the information is
+          accessible only to authorized individuals within the organization's ICT supply chain. <br/><br/>
+          <span style="font-style: italic;">NIST Special Publication 800-61</span>, “Computer Security Incident Handling Guide,” Section 3.3.1 Choosing
+          a Containment Strategy. <br/><br/>
+          NIST CSF References: DE.AE-5
+        </li>
+      </ol>
+    </div>
 
   </div>
 
