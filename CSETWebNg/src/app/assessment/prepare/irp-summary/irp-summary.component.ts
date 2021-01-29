@@ -27,7 +27,7 @@ import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { ACETService } from '../../../services/acet.service';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
 
 @Component({
     selector: 'app-irp-summary',
@@ -47,7 +47,7 @@ export class IrpSummaryComponent implements OnInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public acetSvc: ACETService,
-        public acetFiltersSvc: AcetFiltersService
+        public acetFiltersSvc: MaturityFiltersService
     ) { }
 
     /**

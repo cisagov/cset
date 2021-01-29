@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 
 /**
@@ -49,7 +49,7 @@ export class MaturityFilterComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
-    public acetFiltersSvc: AcetFiltersService
+    public acetFiltersSvc: MaturityFiltersService
   ) { }
 
   /**

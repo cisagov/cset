@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Domain } from '../../../models/questions.model';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
+import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({

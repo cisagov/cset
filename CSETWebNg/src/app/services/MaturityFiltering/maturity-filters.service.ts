@@ -23,9 +23,13 @@
 ////////////////////////////////
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { ConfigService } from './config.service';
-import { ACETDomain, Domain, QuestionGrouping } from '../models/questions.model';
-import { QuestionFilterService } from './question-filter.service';
+import { ConfigService } from '../config.service';
+import { ACETDomain, Domain, QuestionGrouping } from '../../models/questions.model';
+import { QuestionFilterService } from '../question-filter.service';
+import { AcetFilteringSpecifics } from './acet-filtering-specifics';
+import { CmmcFilteringSpecifics } from './cmmc-filtering-specifics';
+import { EdmFilteringSpecifics } from './edm-filtering-specifics';
+import { AssessmentService } from '../assessment.service';
 
 
 const headers = {
@@ -49,11 +53,14 @@ export class ACETFilterSetting {
 @Injectable({
   providedIn: 'root'
 })
-export class AcetFiltersService {
+export class MaturityFiltersService {
+
+
 
 
   /**
    * Trying a new way to manage these things.  This is now the master filter object.
+   * These are currently used exclusively for ACET.
    */
   public domainFilters: ACETFilter[];
 
@@ -82,7 +89,7 @@ export class AcetFiltersService {
    *   Marked For Review - M
    *   Discoveries (Observations) - D
    */
-  public showFilters: string[];
+  public showFilters: string[] = [];
 
   /**
    * Filters that are turned on at the start.
@@ -101,22 +108,32 @@ export class AcetFiltersService {
   public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
 
+
+  acetFS = new AcetFilteringSpecifics();
+  cmmcFS = new CmmcFilteringSpecifics();
+  edmFS = new EdmFilteringSpecifics();
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private questionFilterSvc: QuestionFilterService
+    private questionFilterSvc: QuestionFilterService,
+    private assesmentSvc: AssessmentService
   ) {
+
+
+
     this.getACETDomains().subscribe((domains: ACETDomain) => {
       this.domains = domains;
-      
-      this.refresh();
+
     });
+
+    this.refresh();
 
   }
 
-    /**
-   * Reset the filters back to default settings.
-   */
+  /**
+ * Reset the filters back to default settings.
+ */
   refresh() {
     this.showFilters = this.defaultFilterSettings;
   }
@@ -216,6 +233,9 @@ export class AcetFiltersService {
    * @param target 
    */
   remove(a: any[], target: any) {
+    if (!a) {
+      return a;
+    }
     const a1 = a.slice();
     const idx = a1.indexOf(target);
     if (idx >= 0) {
@@ -396,6 +416,9 @@ export class AcetFiltersService {
       return;
     }
 
+    debugger;
+
+
     groupings.forEach(g => {
       this.recurseQuestions(g);
     });
@@ -420,9 +443,21 @@ export class AcetFiltersService {
 
       // Check maturity level filtering first.  If the question is not visible the rest of the 
       // conditions can be avoided.
-      debugger;
-      const filtersForDomain = this.domainFilters.find(f => f.DomainName == this.currentDomainName).Settings;
-      if (filtersForDomain.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
+      switch (this.assesmentSvc.assessment.MaturityModel.ModelName) {
+        case 'ACET':
+          this.acetFS.setQuestionVisibility(q, this.currentDomainName, this.domainFilters);
+          break;
+
+        case 'CMMC':
+          this.cmmcFS.setQuestionVisibility(q);
+          break;
+
+        case 'EDM':
+          this.edmFS.setQuestionVisibility(q);
+          break;
+      }
+
+      if (!q.Visible) {
         return;
       }
 
