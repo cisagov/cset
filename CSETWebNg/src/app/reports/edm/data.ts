@@ -18,6 +18,36 @@ export var performanceLegend = [
     }
 ];
 
+export var performanceLegend2 = [
+  {
+    "name": "Practices performed",
+    "value": 77
+  },
+  {
+    "name": "Practices incompletely performed",
+    "value": 7
+  },
+  {
+    "name": "Practices not performed",
+    "value": 6
+  }
+];
+
+export var relationshipFormationSummary = [
+  {
+    "name": "Practices performed",
+    "value": 22
+  },
+  {
+    "name": "Practices incompletely performed",
+    "value": 5
+  },
+  {
+    "name": "Practices not performed",
+    "value": 1
+  }
+];
+
 export var relationshipFormationG1 = [
     {
       "name": "Goal 1 - Acquirer service and asset priorities are established.",
