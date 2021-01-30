@@ -27,8 +27,7 @@ import { Injectable } from '@angular/core';
 import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
-import { QuestionFilterService } from './question-filter.service';
-import { MaturityFiltersService } from './MaturityFiltering/maturity-filters.service';
+import { QuestionFilterService } from './filtering/question-filter.service';
 
 const headers = {
   headers: new HttpHeaders()

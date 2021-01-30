@@ -28,7 +28,7 @@ import { QuestionResponse, Domain } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation.service';
-import { QuestionFilterService } from '../../services/question-filter.service';
+import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({

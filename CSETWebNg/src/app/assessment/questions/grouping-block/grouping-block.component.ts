@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
+import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+
 
 @Component({
   selector: 'app-grouping-block',
@@ -11,7 +12,7 @@ export class GroupingBlockComponent implements OnInit {
 
 
   constructor(
-    public acetFiltersSvc: MaturityFiltersService
+    public acetFilteringSvc: AcetFilteringService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +30,7 @@ export class GroupingBlockComponent implements OnInit {
    */
   filtersAllOff(): boolean {
     if (this.isDomain()) {
-      if (this.acetFiltersSvc.maturityFiltersAllOff(this.grouping.Title)) {
+      if (this.acetFilteringSvc.maturityFiltersAllOff(this.grouping.Title)) {
         return true;
       }
     }

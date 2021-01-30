@@ -29,11 +29,11 @@ import { QuestionsService } from '../../../services/questions.service';
 import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
 import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
 import { MaturityModel } from '../../../models/assessment-info.model';
-import { MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 
 
 @Component({
@@ -57,7 +57,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public acetFiltersSvc: MaturityFiltersService,
+    public acetFiltersSvc: MaturityFilteringService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {

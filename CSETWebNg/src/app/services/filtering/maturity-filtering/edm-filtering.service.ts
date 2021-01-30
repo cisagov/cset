@@ -21,23 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Question } from "../../models/questions.model";
-import { ACETFilter } from "./maturity-filters.service";
+import { Injectable } from "@angular/core";
+import { Question } from "../../../models/questions.model";
 
-export class AcetFilteringSpecifics {
+@Injectable()
+export class EdmFilteringService {
 
     /**
-     * Indicates if the ACET question should be visible based on current
+     * Indicates if the EDM question should be visible based on current
      * filtering.
      */
-    public setQuestionVisibility(q: Question, currentDomainName: string, domainFilters: ACETFilter[]): boolean {
-        if (!!domainFilters) {
-            const filtersForDomain = domainFilters.find(f => f.DomainName == currentDomainName).Settings;
-            if (filtersForDomain.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
-                return;
-            } else {
-                q.Visible = true;
-            }
-        }
+    public setQuestionVisibility(q: Question): boolean {
+        return true;
     }
 }

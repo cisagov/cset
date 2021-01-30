@@ -166,7 +166,7 @@ import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dash
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
+import { DomainMaturityFilterComponent } from './assessment/questions/domain-maturity-filter/domain-maturity-filter.component';
 import { ResourceLibraryService } from './services/resource-library.service';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
 import { DiagramComponent } from './assessment/diagram/diagram.component';
@@ -259,6 +259,9 @@ import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
+import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
+import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
+import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 
 @NgModule({
     imports: [
@@ -389,7 +392,7 @@ import { QuestionTextComponent } from './assessment/questions/question-text/ques
         AddRequirementComponent,
         StandardDocumentsComponent,
         RefDocumentComponent,
-        MaturityFilterComponent,
+        DomainMaturityFilterComponent,
         IrpSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
@@ -519,7 +522,10 @@ import { QuestionTextComponent } from './assessment/questions/question-text/ques
         ReportService,
         ReportAnalysisService,
         LocalStoreManager,
-        CmmcStyleService
+        CmmcStyleService,
+        AcetFilteringService,
+        CmmcFilteringService,
+        EdmFilteringService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
