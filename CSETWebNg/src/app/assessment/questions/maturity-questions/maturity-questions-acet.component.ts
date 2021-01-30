@@ -29,9 +29,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-import { ACETFilter, MaturityFiltersService } from '../../../services/MaturityFiltering/maturity-filters.service';
+import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
-  domainFilterSettings: ACETFilter[];
+  //domainFilterSettings: ACETFilter[];
 
   loaded = false;
 
@@ -58,7 +59,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
-    private acetFiltersSvc: MaturityFiltersService,
+    public maturityFilteringSvc: MaturityFilteringService,
+    private acetFilteringSvc: AcetFilteringService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
@@ -109,11 +111,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
 
         // get the selected maturity filters
-        this.acetFiltersSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
-          this.domainFilterSettings = this.acetFiltersSvc.domainFilters;
-
+        this.acetFilteringSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
           this.refreshQuestionVisibility();
-
           this.loaded = true;
         });
       },
@@ -174,6 +173,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    this.acetFiltersSvc.evaluateFilters(this.groupings);
+    this.maturityFilteringSvc.evaluateFilters(this.groupings);
   }
 }

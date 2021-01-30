@@ -30,7 +30,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({

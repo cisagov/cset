@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { QuestionFilterService } from '../../services/question-filter.service';
+import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
 @Component({
   selector: 'app-question-filters',

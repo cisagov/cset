@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { Domain } from '../models/questions.model';
-import { AssessmentService } from './assessment.service';
+import { Domain } from '../../models/questions.model';
+import { AssessmentService } from '../assessment.service';
 
 /**
  * A new generic filtering service separate from maturity level filtering that was done

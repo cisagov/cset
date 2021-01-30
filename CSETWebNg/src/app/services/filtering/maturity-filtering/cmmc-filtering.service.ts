@@ -21,13 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Question } from "../../models/questions.model";
+import { Injectable } from "@angular/core";
+import { Question } from "../../../models/questions.model";
 
 /**
  * Maturity filtering for CMMC is basically whether to include questions
  * above the target level or not.  
  */
-export class CmmcFilteringSpecifics {
+@Injectable()
+export class CmmcFilteringService {
 
     /**
      * Indicates if the CMMC question should be visible based on current
@@ -36,4 +38,30 @@ export class CmmcFilteringSpecifics {
     public setQuestionVisibility(q: Question): boolean {
         return true;
     }
+
+
+
+     // CMMC filtering is based on target level.  Should we show questions above target level?
+
+      // const targetLevel = this.assessmentSvc.assessment ?
+      //   this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
+      //   10;
+
+      // if (filterSvc.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
+      //   q.Visible = true;
+      // }
+
+      // // if the 'show above target' filter is turned off, hide the question
+      // // if it is above the target level
+      // if (!filterSvc.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
+      //   q.Visible = false;
+      // }
+
+      // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
+      // if (g.GroupingType == "Domain") {
+      //   const filter = this.domainFilters.find(f => f.DomainName == c.DomainName);
+      //   if (!!filter && filter.Settings.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
+      //     q.Visible = false;
+      //   }
+      // }
 }
