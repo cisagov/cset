@@ -21,7 +21,6 @@ namespace CSETWeb_Api
             // Configure the CORS parameters
             string allowedOrigin = ConfigurationManager.AppSettings["CORS Allowed Origin"];
             var cors = new EnableCorsAttribute(allowedOrigin, "*", "*");
-
             config.EnableCors(cors);
 
 

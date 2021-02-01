@@ -107,10 +107,6 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getTargetBand');
     }
 
-    getAcetDeficiency() {
-        return this.http.get(this.apiUrl + 'reports/acet/getDeficiencyList', headers);
-    }
-
     getCompensatingControls() {
         return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
     } 

@@ -33,28 +33,38 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
         }
 
-        public List<MatRelevantAnswers> getACETDeficiences()
+        public List<MatRelevantAnswers> getMaturityDeficiences(string maturityModel)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
             using (var db = new CSET_Context())
             {
+                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturityModel.ToUpper())?.Maturity_Model_Id;
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "N" && m.Maturity_Model_Id == 1
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "N" && m.Maturity_Model_Id == maturityId
                            select new MatRelevantAnswers()
                            {
                                ANSWER=a,
                                Mat=m
                            };
+                if (maturityModel.ToUpper() == "EDM")
+                {
+                    var incompletes = from a in db.ANSWER
+                        join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "I" && m.Maturity_Model_Id == maturityId
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
+                    cont = cont.Union(incompletes);
+                }
                 return cont.ToList();
             }
                 
         }
 
-        public List<MatRelevantAnswers> getCommentsList()
+        public List<MatRelevantAnswers> getCommentsList(int maturityModel)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
             //select* from ANSWER a
@@ -64,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Comment!=null && m.Maturity_Model_Id == 1
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Comment!=null && m.Maturity_Model_Id == maturityModel
                            select new MatRelevantAnswers()
                            {
                                ANSWER = a,
@@ -74,7 +84,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             }
         }
 
-        public List<MatRelevantAnswers> getMarkedForReviewList()
+        public List<MatRelevantAnswers> getMarkedForReviewList(int maturityModel)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
             //select* from ANSWER a
@@ -84,7 +94,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && (a.Mark_For_Review??false)==true && m.Maturity_Model_Id == 1
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && (a.Mark_For_Review??false)==true && m.Maturity_Model_Id == maturityModel
                            select new MatRelevantAnswers()
                            {
                                ANSWER = a,
