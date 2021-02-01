@@ -37,7 +37,7 @@ import { ImportAssessmentService } from "../../services/import-assessment.servic
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
 import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
-import { QuestionFilterService } from '../../services/question-filter.service';
+import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
 interface UserAssessment {
   AssessmentId: number;
