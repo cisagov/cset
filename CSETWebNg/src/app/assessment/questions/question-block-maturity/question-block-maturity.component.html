@@ -53,7 +53,7 @@
     <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.Expanded">
         <div *ngFor="let q of myGrouping.Questions" 
             class="question-row"             
-            [class.pb-3]="q.IsParentQuestion">
+            [class.pb-3]="q.IsParentQuestion" [class.display-none]="!q.Visible">
 
             <div style="width: 100%">
                 <div class="number-and-text">

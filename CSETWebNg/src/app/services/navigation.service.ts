@@ -31,8 +31,7 @@ import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
-import { QuestionResponse } from '../models/questions.model';
-import { MaturityService } from './maturity.service';
+
 
 
 export interface NavTreeNode {
@@ -625,12 +624,13 @@ export class NavigationService {
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
 
     {
-      displayText: 'Maturity Questions' + this.assessSvc.assessment?.MaturityModel.QuestionsAlias,
+      displayText: 'Maturity Questions',
       pageId: 'maturity-questions',
       path: 'assessment/{:id}/maturity-questions',
       level: 1,
       condition: () => {
         return this.assessSvc.assessment?.UseMaturity
+        && this.assessSvc.usesMaturityModel('*')
         && !(this.configSvc.acetInstallation
           && this.assessSvc.usesMaturityModel('ACET'));
       }
