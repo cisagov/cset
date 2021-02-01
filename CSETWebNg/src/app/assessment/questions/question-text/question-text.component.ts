@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MatTooltip, TooltipComponent } from '@angular/material/tooltip';
+import { GlossaryTermComponent } from './glossary-term/glossary-term.component';
 
 @Component({
   selector: 'app-question-text',
@@ -13,7 +13,6 @@ export class QuestionTextComponent implements OnInit {
 
   @Input() glossaryEntries: any[];
 
-  private tooltip: ComponentRef<MatTooltip>;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -30,7 +29,7 @@ export class QuestionTextComponent implements OnInit {
     },
     {
       term: 'assets',
-      definition: 'stuff that you have'
+      definition: '<em>stuff</em> that you have'
     }];
 
 
@@ -41,7 +40,7 @@ export class QuestionTextComponent implements OnInit {
   }
 
   /**
-   * Using this page as a reference for dynamically creating and inserting tooltip items:
+   * Using this page as a reference for dynamically creating and inserting glossary-term components:
    * https://stackoverflow.com/questions/60284184/how-to-dynamically-apply-a-tooltip-to-part-of-an-elements-dynamic-text-content
    */
   buildQuestionTextWithGlossary() {
@@ -54,37 +53,23 @@ export class QuestionTextComponent implements OnInit {
 
         const entry = this.glossaryEntries.find(x => x.term == term);
 
+        // append text before the glossary term
         this.renderer.appendChild(
           this.para.nativeElement,
           this.renderer.createText(leadingText)
         );
 
-        // ---- This code is an attempt to create the tooltip.  Not working yet.
-        // ---- In the meantime, there is somem dummy code below to keep the question text intact.
-        // let factory = this.resolver.resolveComponentFactory(TooltipComponent);
-        // let ref = factory.create(this.injector);
-        // ref.instance.text = term;
-        // ref.instance.message = 'I AM A TOOLTIP.  HEAR ME ROAR!';
-        // ref.instance.tooltipClass = 'glossary-term';
-        // ref.changeDetectorRef.detectChanges();
-        // this.renderer.appendChild(
-        //   this.para.nativeElement,
-        //   ref.location.nativeElement
-        // );
+        // create and append a GlossaryTerm component 
+        let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
+        let ref = factory.create(this.injector);
+        ref.instance.term = term;
+        ref.instance.definition = !!entry ? entry.definition : term;
 
-        // ---- This is dummy code, just to get the glossary term rendered into the question.
-        // ---- Once we get the real tooltip working, delete this.
-        const span = this.renderer.createElement('span');
-        span.innerText = term;
-        span.setAttribute('class', 'glossary-term');
-        span.setAttribute('title', !!entry ? entry.definition : term);
-
+        ref.changeDetectorRef.detectChanges();
         this.renderer.appendChild(
           this.para.nativeElement,
-          span
+          ref.location.nativeElement
         );
-        // ---- End of dummy code
-
       } else {
         // no starter bracket, just dump the text
         this.renderer.appendChild(
