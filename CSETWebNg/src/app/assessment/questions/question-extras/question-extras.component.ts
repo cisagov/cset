@@ -542,5 +542,8 @@ export class QuestionExtrasComponent implements OnInit {
 
     return true;
   }
+  isEDM(){
+    return true;
+  }
 }
 
