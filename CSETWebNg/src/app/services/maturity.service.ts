@@ -112,4 +112,8 @@ export class MaturityService {
     )
   }
 
+  getMaturityDeficiency(maturityModel) {
+    return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList/'+"?maturity="+maturityModel);
+  }
+
 }

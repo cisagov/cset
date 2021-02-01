@@ -60,7 +60,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
-
         /// <summary>
         /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
         /// </summary>

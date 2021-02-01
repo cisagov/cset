@@ -5,7 +5,7 @@ import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
-import { ACETService } from '../../services/acet.service';
+import { MaturityService } from '../../services/maturity.service';
 
 
 @Component({
@@ -21,14 +21,13 @@ export class AcetDeficencyComponent implements OnInit {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public acetSvc: ACETService,
-    private sanitizer: DomSanitizer
+    public maturitySvc: MaturityService
   ) { }
 
   ngOnInit() {
     this.titleService.setTitle("Deficiency Report - ACET");
 
-    this.acetSvc.getAcetDeficiency().subscribe(
+    this.maturitySvc.getMaturityDeficiency("ACET").subscribe(
       (r: any) => {
         this.response = r;        
       },
