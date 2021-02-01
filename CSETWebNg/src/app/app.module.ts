@@ -262,6 +262,7 @@ import { QuestionTextComponent } from './assessment/questions/question-text/ques
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
+import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 
 @NgModule({
     imports: [
@@ -478,6 +479,7 @@ import { EdmFilteringService } from './services/filtering/maturity-filtering/edm
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
         QuestionTextComponent,
+        GlossaryTermComponent,
     ],
     providers: [
         ConfigService,

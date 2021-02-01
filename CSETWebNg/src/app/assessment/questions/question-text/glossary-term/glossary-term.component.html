@@ -1,0 +1,7 @@
+<ng-template #definitionHtml>
+   <div [innerHTML]="definition"></div>
+</ng-template>
+
+<span [tooltip]="definitionHtml" content-type="template" class="glossary-term">
+    {{term}}
+</span>
