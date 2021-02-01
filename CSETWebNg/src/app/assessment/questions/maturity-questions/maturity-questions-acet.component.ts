@@ -26,7 +26,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
@@ -47,7 +47,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
-  //domainFilterSettings: ACETFilter[];
 
   loaded = false;
 
@@ -173,6 +172,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    this.maturityFilteringSvc.evaluateFilters(this.groupings);
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
   }
 }

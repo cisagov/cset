@@ -29,9 +29,9 @@ export class EdmFilteringService {
 
     /**
      * Indicates if the EDM question should be visible based on current
-     * filtering.
+     * MATURITY-based filtering.
      */
-    public setQuestionVisibility(q: Question): boolean {
-        return true;
+    public setQuestionVisibility(q: Question) {
+        q.Visible = true;
     }
 }

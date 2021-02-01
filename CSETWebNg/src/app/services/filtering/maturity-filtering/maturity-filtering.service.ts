@@ -80,7 +80,7 @@ export class MaturityFilteringService {
    * If the user enters characters into the box, only questions containing that string
    * are visible.
    */
-  public filterString = '';
+  public filterSearchString = '';
 
   /**
    * Valid 'answer'-type filter values
@@ -128,7 +128,7 @@ export class MaturityFilteringService {
    * We don't count MT+ for this, since it is normally turned off.
    */
   isFilterEngaged() {
-    if (this.filterString.length > 0) {
+    if (this.filterSearchString.length > 0) {
       return true;
     }
 
@@ -246,11 +246,13 @@ export class MaturityFilteringService {
    */
   public recurseQuestions(g: QuestionGrouping) {
     const filterSvc = this.questionFilterSvc;
-    const filterStringLowerCase = filterSvc.filterString.toLowerCase();
+    const filterStringLowerCase = filterSvc.filterSearchString.toLowerCase();
 
     if (g.GroupingType == 'Domain') {
       this.currentDomainName = g.Title;
     }
+
+    g.Visible = true;
 
     g.Questions.forEach(q => {
       // start with false, then set true if the question should be shown
@@ -275,11 +277,14 @@ export class MaturityFilteringService {
         return;
       }
 
+      // If we made it this far, start over assuming visible = false
+      q.Visible = false;
+
 
 
       // If search string is specified, any questions that don't contain the string
       // are not shown.  No need to check anything else.
-      if (filterSvc.filterString.length > 0
+      if (filterSvc.filterSearchString.length > 0
         && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
         return;
       }
@@ -310,17 +315,23 @@ export class MaturityFilteringService {
       if (filterSvc.showFilters.includes('D') && q.HasDiscovery) {
         q.Visible = true;
       }
-
-
-      // evaluate group visiblity
-      g.Visible = (!!g.Questions.find(q => q.Visible));
     });
 
-
+    
     // now dig down another level to see if there are questions
     g.SubGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseQuestions(sg);
     });
-  }
 
+
+    // if I have questions and they are all invisible, then I am invisible
+    if (g.Questions.length > 0 && g.Questions.every(q => !q.Visible)) {
+      g.Visible = false;    
+    }
+
+    // if all my subgroups are invisible, then I am invisible
+    if (g.SubGroupings.length > 0 && g.SubGroupings.every(sg => !sg.Visible)) {
+      g.Visible = false;
+    }
+  }
 }

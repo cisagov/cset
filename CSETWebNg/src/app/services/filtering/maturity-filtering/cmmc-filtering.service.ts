@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Injectable } from "@angular/core";
 import { Question } from "../../../models/questions.model";
+import { AssessmentService } from "../../assessment.service";
+import { QuestionFilterService } from "../question-filter.service";
 
 /**
  * Maturity filtering for CMMC is basically whether to include questions
@@ -31,37 +33,29 @@ import { Question } from "../../../models/questions.model";
 @Injectable()
 export class CmmcFilteringService {
 
+    constructor(
+        public assessmentSvc: AssessmentService,
+        public questionFilterSvc: QuestionFilterService
+    ) { }
+
     /**
      * Indicates if the CMMC question should be visible based on current
-     * filtering.
+     * filtering.  CMMC filtering is based on target level.  
+     * Should we show questions above target level?
      */
-    public setQuestionVisibility(q: Question): boolean {
-        return true;
+    public setQuestionVisibility(q: Question) {
+        const targetLevel = this.assessmentSvc.assessment ?
+            this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
+            10;
+
+        // if the question's maturity level is at or below the target level, show it
+        if (q.MaturityLevel <= targetLevel) {
+            q.Visible = true;
+        }
+
+        // if the question is above the target level, but the 'show above target' filter is turned on, show it
+        if (q.MaturityLevel > targetLevel && this.questionFilterSvc.showFilters.includes('MT+')) {
+            q.Visible = true;
+        }
     }
-
-
-
-     // CMMC filtering is based on target level.  Should we show questions above target level?
-
-      // const targetLevel = this.assessmentSvc.assessment ?
-      //   this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
-      //   10;
-
-      // if (filterSvc.showFilters.includes('MT') && q.MaturityLevel <= targetLevel) {
-      //   q.Visible = true;
-      // }
-
-      // // if the 'show above target' filter is turned off, hide the question
-      // // if it is above the target level
-      // if (!filterSvc.showFilters.includes('MT+') && q.MaturityLevel > targetLevel) {
-      //   q.Visible = false;
-      // }
-
-      // If maturity filters are engaged (ACET standard) then they can override what would otherwise be visible
-      // if (g.GroupingType == "Domain") {
-      //   const filter = this.domainFilters.find(f => f.DomainName == c.DomainName);
-      //   if (!!filter && filter.Settings.find(s => s.Level == q.MaturityLevel && s.Value == false)) {
-      //     q.Visible = false;
-      //   }
-      // }
 }

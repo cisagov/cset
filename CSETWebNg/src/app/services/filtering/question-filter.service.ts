@@ -41,6 +41,8 @@ export class QuestionFilterService {
 
 
   /**
+   * This is a list of what to SHOW.
+   * 
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
@@ -57,7 +59,7 @@ export class QuestionFilterService {
    * If the user enters characters into the box, only questions containing that string
    * are visible.
    */
-  public filterString = '';
+  public filterSearchString = '';
 
   /**
    * Valid 'answer'-type filter values
@@ -82,12 +84,12 @@ export class QuestionFilterService {
     this.showFilters = this.defaultFilterSettings;
   }
 
-    /**
-   * Returns true if we have any inclusion filters turned off.
-   * We don't count MT+ for this, since it is normally turned off.
-   */
+  /**
+ * Returns true if we have any inclusion filters turned off.
+ * We don't count MT+ for this, since it is normally turned off.
+ */
   isFilterEngaged() {
-    if (this.filterString.length > 0) {
+    if (this.filterSearchString.length > 0) {
       return true;
     }
 
@@ -97,7 +99,7 @@ export class QuestionFilterService {
     return e;
   }
 
-  
+
   /**
    * Indicates if the specified answer filter is currently 'on'
    * @param ans
@@ -186,12 +188,7 @@ export class QuestionFilterService {
       return;
     }
 
-    console.log('questions service evalueateFilters');
-    console.log(domains);
-
-
-    const filterStringLowerCase = this.filterString.toLowerCase();
-
+    const filterStringLowerCase = this.filterSearchString.toLowerCase();
 
     domains.forEach(d => {
       d.Categories.forEach(c => {
@@ -202,7 +199,7 @@ export class QuestionFilterService {
 
             // If search string is specified, any questions that don't contain the string
             // are not shown.  No need to check anything else.
-            if (this.filterString.length > 0
+            if (this.filterSearchString.length > 0
               && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
               return;
             }
