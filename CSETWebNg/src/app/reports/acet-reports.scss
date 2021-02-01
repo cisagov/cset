@@ -176,10 +176,23 @@ table.label-value td {
     color: black;
     padding-bottom: 25px;
     padding-top: 25px;
+    vertical-align: top;
 }
 .deficiencies-list-comment {
     width: 70%;
     color: #555555;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    vertical-align: top;
+}
+
+.deficiencies-list-question-text {
+  width: 10%;
+  color: #555555; 
+  padding-bottom: 25px;
+  padding-top: 25px;
+  padding-left: 25px;
+  vertical-align: top;
 }
 
 table.cset-table {
