@@ -65,7 +65,7 @@ export class QuestionFiltersComponent {
     }
 
     const s = (<HTMLInputElement>e.srcElement).value.trim();
-    this.filterSvc.filterString = s;
+    this.filterSvc.filterSearchString = s;
 
     this.filterChanged.emit(true);
   }

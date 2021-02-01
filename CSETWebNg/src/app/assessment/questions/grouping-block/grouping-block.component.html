@@ -1,39 +1,45 @@
-<div *ngIf="isDomain()">
-    <div class="domain-group-heading" >
+<ng-container *ngIf="isDomainVisible()">
+    <div class="domain-group-heading">
         {{grouping.Title}}
     </div>
     <div *ngIf="grouping.Description.length > 0" class="mb-3">
         {{grouping.Description}}
     </div>
+</ng-container>
+
+
+<!-- (applies to ACET only) indicates when all maturity filters turned off for this domain -->
+<div *ngIf="allDomainMaturityLevelsHidden()"
+    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        All maturity filters are deselected for this domain. Select one or more maturity levels to view questions.
+    </span>
 </div>
 
-<div class="capability-group-heading" 
-    *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Capability'">
-    {{grouping.Title}}
-</div>
+<ng-container *ngIf="!allDomainMaturityLevelsHidden()">
 
-<div class="assessment-factor-group-heading"
-    *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Assessment Factor'">
-    {{grouping.Title}}
-</div>
+    <ng-container *ngIf="grouping.Visible">
 
+        <div class="capability-group-heading"
+            *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Capability'">
+            {{grouping.Title}}
+        </div>
 
-<!-- indicates when all maturity filters turned off for this domain -->
-<div *ngIf="filtersAllOff() else filtersAreOn"
-  class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-  <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-  <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-    All maturity filters are deselected for this domain. Select one or more maturity levels to view questions.
-  </span>
-</div>
+        <div class="assessment-factor-group-heading"
+            *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Assessment Factor'">
+            {{grouping.Title}}
+        </div>
 
-<ng-template #filtersAreOn>
-    <div *ngFor="let sg of grouping.SubGroupings">
-        <app-grouping-block [grouping]="sg"></app-grouping-block>
-    </div>
-    
-    <div *ngIf="grouping.Questions.length > 0">
-        <app-question-block-maturity #questionBlock [myGrouping]="grouping">
-        </app-question-block-maturity>
-    </div>
-</ng-template>
+        <div *ngFor="let sg of grouping.SubGroupings">
+            <app-grouping-block [grouping]="sg"></app-grouping-block>
+        </div>
+
+        <div *ngIf="grouping.Questions.length > 0">
+            <app-question-block-maturity #questionBlock [myGrouping]="grouping">
+            </app-question-block-maturity>
+        </div>
+
+    </ng-container>
+
+</ng-container>

@@ -57,7 +57,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public acetFiltersSvc: MaturityFilteringService,
+    public maturityFilteringSvc: MaturityFilteringService,
+    public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
@@ -164,6 +165,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    this.acetFiltersSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
   }
 }

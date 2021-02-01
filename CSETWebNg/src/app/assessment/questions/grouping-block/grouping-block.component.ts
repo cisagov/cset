@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { QuestionGrouping } from '../../../models/questions.model';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 
 
 @Component({
@@ -8,11 +10,12 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 })
 export class GroupingBlockComponent implements OnInit {
 
-  @Input('grouping') grouping: any;
+  @Input('grouping') grouping: QuestionGrouping;
 
 
   constructor(
-    public acetFilteringSvc: AcetFilteringService
+    public acetFilteringSvc: AcetFilteringService,
+    public maturityFilteringService: MaturityFilteringService
   ) { }
 
   ngOnInit(): void {
@@ -26,11 +29,32 @@ export class GroupingBlockComponent implements OnInit {
   }
 
   /**
+   * Indicates if the domain label should be shown
+   */
+  isDomainVisible(): boolean {
+    if (!this.isDomain()) {
+      return false;
+    }
+
+    // ACET domains are always visible
+    if (this.maturityFilteringService.assesmentSvc.assessment.MaturityModel.ModelName == 'ACET') {
+      return true;
+    }
+
+    // hide invisible domains
+    if (!this.grouping.Visible) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Indicates if all domain maturity filters have been turned off for the domain
    */
-  filtersAllOff(): boolean {
+  allDomainMaturityLevelsHidden(): boolean {
     if (this.isDomain()) {
-      if (this.acetFilteringSvc.maturityFiltersAllOff(this.grouping.Title)) {
+      if (this.acetFilteringSvc.allDomainMaturityLevelsHidden(this.grouping.Title)) {
         return true;
       }
     }

@@ -68,7 +68,6 @@ export class AcetFilteringService {
     constructor(
         public http: HttpClient,
         public configSvc: ConfigService,
-        public questionFilterSvc: QuestionFilterService,
         public assessmentSvc: AssessmentService
     ) {
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
@@ -197,7 +196,7 @@ export class AcetFilteringService {
      * Returns true if no maturity filters are enabled.
      * This is used primarily to ngif the 'all filters are off' message.
      */
-    maturityFiltersAllOff(domainName: string) {
+    allDomainMaturityLevelsHidden(domainName: string) {
         const targetFilter = this.domainFilters?.find(f => f.DomainName == domainName);
 
         // If not ACET (no domain name), return false
