@@ -29,7 +29,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.DeficiencesList = reportsDataManager.getACETDeficiences();            
+            data.DeficiencesList = reportsDataManager.getMaturityDeficiences("ACET");
             data.information = reportsDataManager.GetInformation();
             return data;
         }
@@ -69,11 +69,11 @@ namespace CSETWeb_Api.Controllers
         }
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
-        public ACETReportData GetAnsweredQuestions()
+        public MaturityBasicReportData GetAnsweredQuestions()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            ACETReportData data = new ACETReportData();
+            MaturityBasicReportData data = new MaturityBasicReportData();
             data.MatAnsweredQuestions = reportsDataManager.getAnsweredQuestionList(assessmentId);
             data.information = reportsDataManager.GetInformation();
             return data;
