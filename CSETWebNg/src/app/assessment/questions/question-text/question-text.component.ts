@@ -43,7 +43,15 @@ export class QuestionTextComponent implements OnInit {
       const startBracketPos = x.lastIndexOf('[[');
       if (startBracketPos >= 0) {
         const leadingText = x.substring(0, startBracketPos);
-        const term = x.substring(startBracketPos + 2);
+        let term = x.substring(startBracketPos + 2);
+        let displayWord = term;
+
+        if (term.indexOf('|') > 0) {
+          debugger;
+          const p = term.split('|');
+          term = p[0];
+          displayWord = p[1];
+        }
 
         const entry = this.glossarySvc.glossaryEntries.find(x => x.Term.toLowerCase() == term.toLowerCase());
 
@@ -56,8 +64,8 @@ export class QuestionTextComponent implements OnInit {
         // create and append a GlossaryTerm component 
         let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
         let ref = factory.create(this.injector);
-        ref.instance.term = term;
-        ref.instance.definition = !!entry ? entry.Definition : term;
+        ref.instance.term = displayWord;
+        ref.instance.definition = !!entry ? entry.Definition : displayWord;
 
         ref.changeDetectorRef.detectChanges();
         this.renderer.appendChild(
