@@ -82,7 +82,15 @@ namespace CSETWeb_Api.Controllers
             return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
         }
 
+        [HttpGet]
+        [Route("api/MaturityModels")]
+        public List<MaturityModel> GetAllModels()
+        {
+            int assessmentId = Auth.AssessmentForUser();
 
+            return new MaturityManager().GetAllModels();
+        }
+        
 
 
 
