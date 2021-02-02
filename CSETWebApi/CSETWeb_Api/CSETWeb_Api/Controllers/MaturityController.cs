@@ -31,11 +31,11 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public IHttpActionResult SetMaturityModel(string modelName)
+        public MaturityModel SetMaturityModel(string modelName)
         {
             int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelName);
-            return Ok();
+            return new MaturityManager().GetMaturityModel(assessmentId);
         }
 
 
@@ -72,10 +72,11 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public object GetQuestions()
+        public object GetQuestions([FromUri] bool isAcetInstallation)
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityQuestions(assessmentId);
+            
+            return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
         }
 
 

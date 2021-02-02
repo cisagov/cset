@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 --------------------------> 
-<div class="btn-group btn-group-toggle">
+<div class="btn-group btn-group-toggle my-1">
 
-  <label *ngFor="let l of domain.Levels" class="btn btn-app-mode" 
+  <label *ngFor="let l of maturityLevels" class="btn btn-app-mode" 
     [class.font-weight-bold]="l.Applicable"
     [class.font-italic]="l.Applicable"
-    [class.active]="l.Applicable"
-    [class.default-mat-filter]="isDefaultMatLevel(l.Level)" ngbButtonLabel>
+    [class.active]="isFilterActive(l)"
+    [class.default-mat-filter]="acetFilteringSvc.isDefaultMatLevel(l.Level)" ngbButtonLabel>
     <input class="form-check-input" type="checkbox" ngbButton 
-      [ngModel]="questionsSvc.domainMatFilters?.get(domainName)?.get(l.Level)"
+      [ngModel]="getNgModel(l)"
       (ngModelChange)="filterChanged(l.Level, $event)">
       {{ l.Label }}
     </label>    

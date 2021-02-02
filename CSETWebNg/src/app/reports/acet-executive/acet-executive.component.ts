@@ -17,6 +17,13 @@ export class AcetExecutiveComponent implements OnInit {
   graphdata: any = [];
   maturityDetail: MaturityDomain[];
   domainDataList: any = [];
+  sortDomainListKey: string[] = ["Cyber Risk Management & Oversight", 
+    "Threat Intelligence & Collaboration", 
+    "Cybersecurity Controls", 
+    "External Dependency Management", 
+    "Cyber Incident Management and Resilience"]
+
+  sortedDomainList: any = []
 
   // Maturity Rep Data
   matDetailResponse: MatDetailResponse;
@@ -36,17 +43,29 @@ export class AcetExecutiveComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
     
-    this.acetSvc.getAssessmentInfromation().subscribe(
+    this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Assessment Infromation Error: ' + (<Error>error).message)
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
   
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         // Format and connect donut data here
+        // Finall order:
+
+        // Cyber Risk Management & OversightThreat 
+        // Intelligence & Collaboration  
+        // Cybersecurity Controls 
+        // External Dependency Management 
+        // Cyber Incident Management and Resilience
+
+        console.log(data);
         data.forEach((domain: MaturityDomain) => {
+          if (domain.DomainMaturity == "Sub-Baseline"){
+            domain.DomainMaturity = "ad-hoc";
+          }
           var domainData = { 
             domainName: domain.DomainName, 
             domainMaturity: domain.DomainMaturity, 
@@ -76,6 +95,17 @@ export class AcetExecutiveComponent implements OnInit {
           })
           this.domainDataList.push(domainData);
         })
+      
+        // Domains do not currently come sorted from API, this will sort the domains into proper order.
+        this.sortDomainListKey.forEach(domain => {
+          this.domainDataList.filter(item => {
+            if (item.domainName == domain) {
+              this.sortedDomainList.push(item);
+            }
+          })
+        })
+        this.domainDataList = this.sortedDomainList;
+
         },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -95,6 +125,14 @@ export class AcetExecutiveComponent implements OnInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
 
+  }
+
+  isNaNValuevalue(value) {
+    if (value == "NaN"){
+      return 0
+    } else {
+      return value
+    }
   }
 
 }

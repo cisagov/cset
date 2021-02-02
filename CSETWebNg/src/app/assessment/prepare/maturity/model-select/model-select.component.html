@@ -47,14 +47,14 @@
         <a rel="noopener noreferrer" target="_blank" [href]="tutorialCMMC()">For more information see the CMMC document</a>.
       </div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img src="/assets/images/CMMC/CMMC-practices-per-level.png" style="width: 100%;">
+        <img src="/assets/images/CMMC/CMMC-practices-per-level.png" alt="cmmc" style="width: 100%;">
       </div>
     </div>
 
   </div>
 
   <div class="maturity-model-card mb-5">
-    <h4><input type="radio" class="maturity-model-select" name="model-select-family" id="model-select-edm"
+    <h4><input type="radio" class="maturity-model-select" tabindex="0" name="model-select-family" id="model-select-edm"
         [checked]="assessSvc.usesMaturityModel('EDM')" (change)="changeSelection($event, 'EDM')">
       <label for="model-select-edm" class="cursor-pointer">EDM</label></h4>
     <div class="d-flex flex-row">
@@ -62,7 +62,7 @@
         The External Dependency Management Assessment
       </div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img src="/assets/images/EDM/EDM_logo.png" style="width: 100%;">
+        <img src="/assets/images/EDM/EDM_logo.png" alt="edm" style="width: 100%;">
       </div>
     </div>
   </div>
@@ -79,7 +79,7 @@
           to cybersecurity in all federally insured credit unions.
       </div>
       <div style="max-width: 50%; min-width: 10rem" class="text-center pl-3">
-        <img src="/assets/images/ACET/ACET_shield_only.png" style="width: 100%;">
+        <img src="/assets/images/ACET/ACET_shield_only.png" alt="acet" style="width: 100%;">
       </div>
     </div>
   </div>

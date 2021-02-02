@@ -479,7 +479,6 @@ namespace CSET_Main.Questions.InformationTabData
             {
                 ShowRequirementFrameworkTitle = false;
                 RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
-                RelatedFrameworkCategory = info.MaturityQuestion.Category;
                 ShowRequirementStandards = true;
 
                 var l = controlContext.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
@@ -494,6 +493,9 @@ namespace CSET_Main.Questions.InformationTabData
                 RequirementTabData tabData = new RequirementTabData();
                 tabData.SupplementalInfo = info.MaturityQuestion.Supplemental_Info;
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
+
+                tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
+
                 RequirementsData = tabData;
 
                 BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);

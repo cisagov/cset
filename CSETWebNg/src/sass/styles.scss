@@ -99,7 +99,7 @@ a:not([href]).btn-link-dark:hover {
 }
 .btn-link-subtle:disabled,
 .btn-link-subtle.disabled {
-  color: #6c757d;
+  color: #6c757c;
   pointer-events: none;
 }
 
@@ -926,7 +926,7 @@ ul.mat-tree-node mat-tree-node {
 .filters-engaged {
   background-color: $bc-filters-engaged;
   margin-top: .2rem;
-  margin-bottom: .2rem;
+  margin-bottom: 1rem;
   padding: .6em;
   width: 100%;
   border-radius: .5em;

@@ -26,13 +26,14 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
 import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
 import { MaturityModel } from '../../../models/assessment-info.model';
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 
 
 @Component({
@@ -42,7 +43,9 @@ import { MaturityModel } from '../../../models/assessment-info.model';
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = null;
-  modelName: string = null;
+  pageTitle: string = '';
+  modelName: string = '';
+  questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   loaded = false;
@@ -54,6 +57,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
@@ -71,7 +75,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
   }
-
+  
   /**
    *
    */
@@ -92,16 +96,15 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList().subscribe(
+    this.maturitySvc.getQuestionsList(this.configSvc.acetInstallation).subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelName = response.ModelName;
+        this.questionsAlias = response.QuestionsAlias;
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
+        this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.loaded = true;
-
-        // default the selected maturity filters
-        // this.questionsSvc.initializeMatFilters(response.OverallIRP);
 
         this.refreshQuestionVisibility();
       },
@@ -162,6 +165,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    // this.questionsSvc.evaluateFilters(this.groupings);
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
   }
 }

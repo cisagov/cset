@@ -11,5 +11,6 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int ModelId { get; set; }
         public string ModelName { get; set; }
         public int MaturityTargetLevel { get; set; }
+        public string QuestionsAlias { get; set; }
     }
 }

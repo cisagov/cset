@@ -22,7 +22,8 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { AssessmentService } from './assessment.service';
+import { Domain } from '../../models/questions.model';
+import { AssessmentService } from '../assessment.service';
 
 /**
  * A new generic filtering service separate from maturity level filtering that was done
@@ -36,15 +37,12 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
+
 
   /**
-   * The allowable maturity filter values.  Only applicable on maturity questions page.
-   * On a non-maturity page, they are always assumed to be ON.
-   */
-  readonly maturityFilters = ['MT', 'MT+'];
-
-  /**
+   * This is a list of what to SHOW.
+   * 
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
@@ -55,13 +53,13 @@ export class QuestionFilterService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
    * are visible.
    */
-  public filterString = '';
+  public filterSearchString = '';
 
   /**
    * Valid 'answer'-type filter values
@@ -75,7 +73,7 @@ export class QuestionFilterService {
    */
   constructor(
     private assessSvc: AssessmentService
-  ) { 
+  ) {
     this.refresh();
   }
 
@@ -87,11 +85,11 @@ export class QuestionFilterService {
   }
 
   /**
-   * Returns true if we have any inclusion filters turned off.
-   * We don't count MT+ for this, since it is normally turned off.
-   */
+ * Returns true if we have any inclusion filters turned off.
+ * We don't count MT+ for this, since it is normally turned off.
+ */
   isFilterEngaged() {
-    if (this.filterString.length > 0) {
+    if (this.filterSearchString.length > 0) {
       return true;
     }
 
@@ -101,13 +99,6 @@ export class QuestionFilterService {
     return e;
   }
 
-  /**
-   * Returns true if the filter is turned on to show
-   * questions above the maturity target level.
-   */
-  showingAboveMaturityTargetLevel() {
-    return (this.showFilters.indexOf('MT+') >= 0);
-  }
 
   /**
    * Indicates if the specified answer filter is currently 'on'
@@ -153,8 +144,6 @@ export class QuestionFilterService {
   }
 
 
-
-
   /**
    * Utility method.  Should be moved somewhere common.
    */
@@ -187,5 +176,72 @@ export class QuestionFilterService {
       a1.splice(idx, 1);
     }
     return a1;
+  }
+
+  /**
+   * Sets the Visible property on all Questions, Subcategories and Categories
+   * based on the current filter settings.
+   * @param cats
+   */
+  public evaluateFilters(domains: Domain[]) {
+    if (!domains) {
+      return;
+    }
+
+    const filterStringLowerCase = this.filterSearchString.toLowerCase();
+
+    domains.forEach(d => {
+      d.Categories.forEach(c => {
+        c.SubCategories.forEach(s => {
+          s.Questions.forEach(q => {
+            // start with false, then set true if possible
+            q.Visible = false;
+
+            // If search string is specified, any questions that don't contain the string
+            // are not shown.  No need to check anything else.
+            if (this.filterSearchString.length > 0
+              && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+              return;
+            }
+
+            // evaluate answers
+            if (this.answerValues.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
+              q.Visible = true;
+            }
+
+            // consider null answers as 'U'
+            if (q.Answer == null && this.showFilters.includes('U')) {
+              q.Visible = true;
+            }
+
+            // evaluate other features
+            if (this.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('M') && q.MarkForReview) {
+              q.Visible = true;
+            }
+
+            if (this.showFilters.includes('D') && q.HasDiscovery) {
+              q.Visible = true;
+            }
+          });
+
+          // evaluate subcat visiblity
+          s.Visible = (!!s.Questions.find(q => q.Visible));
+        });
+
+        // evaluate category heading visibility
+        c.Visible = (!!c.SubCategories.find(s => s.Visible));
+      });
+
+      // evaluate domain heading visibility
+      d.Visible = (!!d.Categories.find(c => c.Visible));
+    });
   }
 }
