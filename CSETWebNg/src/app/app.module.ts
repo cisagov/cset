@@ -263,6 +263,7 @@ import { AcetFilteringService } from './services/filtering/maturity-filtering/ac
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
+import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 
 @NgModule({
     imports: [
@@ -480,6 +481,7 @@ import { GlossaryTermComponent } from './assessment/questions/question-text/glos
         EdmCommentsmarkedComponent,
         QuestionTextComponent,
         GlossaryTermComponent,
+        PlaceholderQuestionsComponent,
     ],
     providers: [
         ConfigService,
