@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Router, ActivatedRoute, NavigationEnd, Event } from '@angular/router';
+import { Router } from '@angular/router';
 import { AssessmentService } from './assessment.service';
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { EventEmitter, Injectable, Output, Pipe, Directive } from "@angular/core";
+import { EventEmitter, Injectable, Output, Directive } from "@angular/core";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from './config.service';
@@ -195,6 +195,7 @@ export class NavigationService {
     }
     return navTree;
   }
+
   /**
    * Returns a list of tree node elements
    */
@@ -624,6 +625,18 @@ export class NavigationService {
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
 
     {
+      displayText: 'Assessment Questions',
+      pageId: 'placeholder-questions',
+      path: 'assessment/{:id}/placeholder-questions',
+      level: 1,
+      condition: () => {
+         return !(this.assessSvc.assessment?.UseMaturity
+          || this.assessSvc.assessment?.UseDiagram
+          || this.assessSvc.assessment?.UseStandard);
+      }
+    },
+
+    {
       displayText: 'Maturity Questions',
       pageId: 'maturity-questions',
       path: 'assessment/{:id}/maturity-questions',
@@ -635,6 +648,7 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
+
     {
       displayText: 'Statements',
       pageId: 'maturity-questions-acet',
