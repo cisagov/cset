@@ -73,19 +73,16 @@ export class MatDetailComponent implements OnInit {
         this.acetSvc.getMatDetailList().subscribe(
             (data: any) => {
                 data.forEach((domain: MaturityDomain) => {
-                    //if (domain.DomainMaturity == "Sub-Baseline") {
-                    //    domain.DomainMaturity = "Ad-hoc";
-                    //}
                     var domainData = {
                         domainName: domain.DomainName,
-                        domainMaturity: domain.DomainMaturity,
+                        domainMaturity: this.updateMaturity(domain.DomainMaturity),
                         targetPercentageAchieved: domain.TargetPercentageAchieved,
                         graphdata: []
                     }
                     domain.Assessments.forEach((assignment: MaturityAssessment) => {
                         var assesmentData = {
                             "asseessmentFactor": assignment.AssessmentFactor,
-                            "domainMaturity": assignment.AssessmentFactorMaturity,
+                            "domainMaturity": this.updateMaturity(assignment.AssessmentFactorMaturity),
                             "sections": []
                         }
                         assignment.Components.forEach((component: MaturityComponent) => {
@@ -99,7 +96,7 @@ export class MatDetailComponent implements OnInit {
 
                             var sectonInfo = {
                                 "name": component.ComponentName,
-                                "AssessedMaturityLevel": component.AssessedMaturityLevel,
+                                "AssessedMaturityLevel": this.updateMaturity(component.AssessedMaturityLevel),
                                 "data": sectionData
                             }
                             assesmentData.sections.push(sectonInfo);
@@ -124,6 +121,13 @@ export class MatDetailComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
+    }
+
+    updateMaturity(domainMaturity: string){
+        if (domainMaturity == "Sub-Baseline") {
+            domainMaturity = "Ad-hoc";
+        }
+        return domainMaturity
     }
 
     getTargetBand(){
