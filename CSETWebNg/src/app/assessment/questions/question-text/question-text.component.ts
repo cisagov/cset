@@ -47,7 +47,6 @@ export class QuestionTextComponent implements OnInit {
         let displayWord = term;
 
         if (term.indexOf('|') > 0) {
-          debugger;
           const p = term.split('|');
           term = p[0];
           displayWord = p[1];
