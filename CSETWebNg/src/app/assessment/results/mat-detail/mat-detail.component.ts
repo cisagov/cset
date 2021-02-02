@@ -44,7 +44,15 @@ export class MatDetailComponent implements OnInit {
     overallIrp: string;
     targetBandOnly: boolean = true;
     bottomExpected: string;
-    
+
+    domainDataList: any = [];
+    sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
+        "Threat Intelligence & Collaboration",
+        "Cybersecurity Controls",
+        "External Dependency Management",
+        "Cyber Incident Management and Resilience"]
+
+    sortedDomainList: any = []
 
     constructor(private router: Router,
         private assessSvc: AssessmentService,
@@ -63,8 +71,54 @@ export class MatDetailComponent implements OnInit {
 
     loadMatDetails() {
         this.acetSvc.getMatDetailList().subscribe(
-            (data) => {
-                this.matDetails = data;
+            (data: any) => {
+                data.forEach((domain: MaturityDomain) => {
+                    //if (domain.DomainMaturity == "Sub-Baseline") {
+                    //    domain.DomainMaturity = "Ad-hoc";
+                    //}
+                    var domainData = {
+                        domainName: domain.DomainName,
+                        domainMaturity: domain.DomainMaturity,
+                        targetPercentageAchieved: domain.TargetPercentageAchieved,
+                        graphdata: []
+                    }
+                    domain.Assessments.forEach((assignment: MaturityAssessment) => {
+                        var assesmentData = {
+                            "asseessmentFactor": assignment.AssessmentFactor,
+                            "domainMaturity": assignment.AssessmentFactorMaturity,
+                            "sections": []
+                        }
+                        assignment.Components.forEach((component: MaturityComponent) => {
+                            var sectionData = [
+                                { "name": "Baseline", "value": component.Baseline },
+                                { "name": "Evolving", "value": component.Evolving },
+                                { "name": "Intermediate", "value": component.Intermediate },
+                                { "name": "Advanced", "value": component.Advanced },
+                                { "name": "Innovative", "value": component.Innovative }
+                            ]
+
+                            var sectonInfo = {
+                                "name": component.ComponentName,
+                                "AssessedMaturityLevel": component.AssessedMaturityLevel,
+                                "data": sectionData
+                            }
+                            assesmentData.sections.push(sectonInfo);
+                        })
+                        domainData.graphdata.push(assesmentData);
+                    })
+                    this.domainDataList.push(domainData);
+                })
+
+                // Domains do not currently come sorted from API, this will sort the domains into proper order.
+                this.sortDomainListKey.forEach(domain => {
+                    this.domainDataList.filter(item => {
+                        if (item.domainName == domain) {
+                            this.sortedDomainList.push(item);
+                        }
+                    })
+                })
+                this.domainDataList = this.sortedDomainList;
+
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
