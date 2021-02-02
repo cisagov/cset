@@ -282,6 +282,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var tempModel = new MaturityGrouping();
                 BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
                 response.Groupings = tempModel.SubGroupings;
+
+
+                // Add any glossary terms
+                var glossaryTerms = from g in db.GLOSSARY.Where(x => x.Maturity_Model_Id == myModel.model_id)
+                                    select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
+                response.Glossary = glossaryTerms.ToList();
             }
 
             return response;
@@ -359,7 +365,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
             }
         }
-
 
 
         /// <summary>
