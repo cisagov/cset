@@ -43,13 +43,13 @@
         <div _ngcontent-c2="" class="column">
             <p _ngcontent-c2="" style="text-align: center">
                 <img _ngcontent-c2="" height="600px"
-                    src="../../../../assets/images/ACET/ACET_shield_logo.png" />
+                    src="../../../../assets/images/ACET/ACET_shield_logo.png" alt="acet" />
             </p>
         </div>
         <div _ngcontent-c2="" class="cover-page-bottom mb-4">
             <div _ngcontent-c2="">
-                <img _ngcontent-c2="" src="../../../../assets/images/ACET/NCUA_logo.png"
-                    style="height: 185px" />
+                <img _ngcontent-c2="" src="../../../../assets/NCUA/images/ncua_seal_blue.svg"
+                    style="height: 185px" alt="ncua" />
             </div>
             <div _ngcontent-c2="" style="
                 text-align: right;
@@ -70,7 +70,9 @@
     <div _ngcontent-c2="" class="page-break"></div>
     <!---->
     <div _ngcontent-c2="" class="ml-3 mr-3 form">
-        <h1 _ngcontent-c2="" class="page-header" style="text-align: left; color: black">Site Information</h1>
+        <h1 _ngcontent-c2="" class="page-header">
+            Site Information
+        </h1>
         <hr class="page-line">
         
         <table class="table-site-info">
@@ -117,9 +119,9 @@
             <div *ngFor="let donutData of gd.sections; index as i">
                 <div _ngcontent-c2="" class="mt-3 mb-3 item-table">
         
-                    <h1 _ngcontent-c2="" class="item-title">{{donutData.name}}</h1>
+                    <h1 _ngcontent-c2="" class="item-title mt-3">{{donutData.name}}</h1>
                     <div _ngcontent-c2="" class="ml-3 mr-3 form">
-                        <table _ngcontent-c2="" class="label-value">
+                        <table _ngcontent-c2="" class="label-value mx-auto">
                             <tbody _ngcontent-c2="">
                                 <tr _ngcontent-c2="" class="item-row">
                                     <td _ngcontent-c2="" >
@@ -138,7 +140,8 @@
     <h1 _ngcontent-c2="" class="page-header">
         Inherent Risk Profile
     </h1>
-     <app-irp-section [acetDashboard]="acetDashboard"></app-irp-section>
+    <hr class="page-line" />
+    <app-irp-section [acetDashboard]="acetDashboard"></app-irp-section>
 
     <div _ngcontent-c2="" class="page-break"></div>
     <h1 _ngcontent-c2="" class="page-header">
@@ -173,7 +176,7 @@
         </div>
         <div _ngcontent-c2="" class="chart-column">
             <div *ngFor="let domainData of domainDataList; index as i">
-                <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>{{domainData.targetPercentageAchieved}}%</b></p>
+                    <p _ngcontent-c2="" style="text-align: center; padding-bottom: 24px"><b>{{isNaNValuevalue(domainData.targetPercentageAchieved)}}%</b></p>
             </div>
         </div>
             

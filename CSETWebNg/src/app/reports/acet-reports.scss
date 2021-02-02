@@ -1,4 +1,4 @@
-
+@import '_variables.scss';
 
    .page-title {
     color: #1274d2;
@@ -57,6 +57,7 @@
   .data-title {
     font-size: 22px;
     color: black;
+    margin-top: 1rem;
 }
 
 .mb-4,
@@ -70,11 +71,33 @@ table.label-value td {
     text-align: center
 }
 
+.report-text-blue {
+  color: #0f3c7a;
+}
+
+.color-white {
+  color: #fff;
+}
+
+.background-1 {
+  background-color: #094997;
+}
+
+.background-2 {
+  background-color: #88b1d4;
+}
+
+.background-3 {
+  background-color: #c1d7ea;
+}
+
 .item-row {
     text-align: center;
 }
 .item-table {
-    background-color: #eeefff;
+    background-color: #ffffff;
+    border: 1px solid $primary-600;
+    border-radius: 1rem;
 }
 .item-value {
     text-align: left !important;
@@ -153,10 +176,23 @@ table.label-value td {
     color: black;
     padding-bottom: 25px;
     padding-top: 25px;
+    vertical-align: top;
 }
 .deficiencies-list-comment {
     width: 70%;
     color: #555555;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    vertical-align: top;
+}
+
+.deficiencies-list-question-text {
+  width: 10%;
+  color: #555555; 
+  padding-bottom: 25px;
+  padding-top: 25px;
+  padding-left: 25px;
+  vertical-align: top;
 }
 
 table.cset-table {
@@ -250,9 +286,9 @@ td.tint2 {
   background-color: #f2f7f9;
 }
 table.label-value td {
-  padding: 0.1rem 1rem 0.1rem 0.1rem;
+  // padding: 0.1rem 1rem 0.1rem 0.1rem;
   vertical-align: top;
-    text-align: center
+  text-align: center;
 }
 
 .table-responsive {
@@ -296,19 +332,19 @@ table.label-value td {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 .form-control::-webkit-input-placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control::-ms-input-placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control::placeholder {
-  color: #6c757d;
+  color: #6c757c;
   opacity: 1;
 }
 .form-control:disabled,
@@ -409,7 +445,7 @@ textarea.form-control {
   margin-left: -1.25rem;
 }
 .form-check-input:disabled ~ .form-check-label {
-  color: #6c757d;
+  color: #6c757c;
 }
 .form-check-label {
   margin-bottom: 0;

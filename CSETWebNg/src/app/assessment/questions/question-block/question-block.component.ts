@@ -28,7 +28,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -55,7 +55,7 @@ export class QuestionBlockComponent implements OnInit {
   private _timeoutId: NodeJS.Timeout;
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+
 
   /**
    * 
@@ -84,10 +84,6 @@ export class QuestionBlockComponent implements OnInit {
   ngOnInit() {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
-
-    if (this.configSvc.acetInstallation) {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
-    }
   }
 
   /**

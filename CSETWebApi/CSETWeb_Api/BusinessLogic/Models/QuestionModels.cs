@@ -219,9 +219,16 @@ namespace CSETWeb_Api.Models
         public int? Answer_Id { get; set; }
 
         /// <summary>
-        /// Indicates the maturity level of the question/requirement/statement
+        /// Indicates the maturity level of the question/requirement/statement.
+        /// This is NOT the maturity_level_id from the MATURITY_LEVELS table.
         /// </summary>
         public int MaturityLevel { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string MaturityLevelName { get; set; }
+
         public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }

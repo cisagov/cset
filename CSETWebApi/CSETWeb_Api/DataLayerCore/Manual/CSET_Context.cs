@@ -81,13 +81,9 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Mat_Question_Id)
                     .HasName("PK__MATURITY__EBDCEAE635AFA091");
 
-                entity.Property(e => e.Category).IsUnicode(false);
-
                 entity.Property(e => e.Question_Text).IsUnicode(false);
 
                 entity.Property(e => e.Question_Title).IsUnicode(false);
-
-                entity.Property(e => e.Sub_Category).IsUnicode(false);
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);
 
@@ -412,6 +408,28 @@ namespace DataLayerCore.Model
 
 
         /// <summary>
+        /// Executes stored procedure GetMaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<GetMaturityDetailsCalculations_Result> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<GetMaturityDetailsCalculations_Result> myrval = null;
+            this.LoadStoredProc("GetMaturityDetailsCalculations")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<GetMaturityDetailsCalculations_Result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
         /// Executes stored procedure usp_StatementsReviewed.
         /// </summary>
         /// <param name="assessment_id"></param>
@@ -453,6 +471,9 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+
+
+
 
 
         /// <summary>

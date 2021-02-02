@@ -29,15 +29,15 @@
 
   <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.UseStandard || assessSvc.assessment.UseDiagram)" class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Standards and Diagram</h4>
-    <button (click)="clickReportLink('executive')" class="btn btn-link btn-link-dark">Executive Summary</button>
+    <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark">Executive Summary</button>
 
-    <button (click)="clickReportLink('sitesummary')" class="btn btn-link btn-link-dark">Site Summary Report</button>
+    <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark">Site Summary Report</button>
 
-    <button (click)="clickReportLink('securityplan')" class="btn btn-link btn-link-dark">Site Cybersecurity Plan</button>
+    <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark">Site Cybersecurity Plan</button>
 
-    <button (click)="clickReportLink('detail')" class="btn btn-link btn-link-dark">Site Detail Report</button>
+    <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark">Site Detail Report</button>
 
-    <button (click)="clickReportLink('discoveries')" class="btn btn-link btn-link-dark">Observations Tear-Out Sheets</button>
+    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark">Observations Tear-Out Sheets</button>
   </div>
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.assessment.UseMaturity" 
@@ -45,10 +45,10 @@
     <h4>Capability Maturity Model</h4>
     
     <button *ngIf="assessSvc.usesMaturityModel('CMMC')" 
-      (click)="clickReportLink('executivecmmc')" class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
+      (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
 
     <button *ngIf="assessSvc.usesMaturityModel('CMMC')" 
-      (click)="clickReportLink('sitesummarycmmc')" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
+      (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
     
     
   </div>
@@ -56,23 +56,22 @@
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')" 
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>
-    <button *ngIf="assessSvc.usesMaturityModel('EDM')" 
+    <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0"
       (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark">EDM Report</button>
-    <button *ngIf="assessSvc.usesMaturityModel('EDM')" 
+    <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0"
       (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark">EDM Deficiency Report</button>
-      <button *ngIf="assessSvc.usesMaturityModel('EDM')" 
+      <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0"
       (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark">Comments and Marked for Review</button>
     
   </div>
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET')" class="d-flex flex-column justify-content-start align-items-start mb-4">
   <h4>ACET Reports</h4>
-  
-  <button (click)="clickReportLink('acetexecutive')" class="btn btn-link btn-link-dark">ACET Executive Summary</button>
-  <button (click)="clickReportLink('acetdeficency')" class="btn btn-link btn-link-dark">ACET Deficiency Report</button>
-  <button (click)="clickReportLink('acetcommentsmarked')" class="btn btn-link btn-link-dark">ACET Comments and Marked for Review</button>
-  <button (click)="clickReportLink('acetansweredquestions')" class="btn btn-link btn-link-dark">ACET Answered Questions</button>
-  <button (click)="clickReportLink('acetcompensatingcontrols')" class="btn btn-link btn-link-dark">ACET Compensating Controls</button>    
+  <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark">ACET Executive Summary</button>
+  <button (click)="clickReportLink('acetdeficency')" tabindex="0" class="btn btn-link btn-link-dark">ACET Deficiency Report</button>
+  <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark">ACET Comments and Marked for Review</button>
+  <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark">ACET Answered Questions</button>
+  <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark">ACET Compensating Controls</button>    
 </div>
 
   <app-nav-back-next [page]="'reports'"></app-nav-back-next>

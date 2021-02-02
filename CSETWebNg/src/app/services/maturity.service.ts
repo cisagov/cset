@@ -105,9 +105,9 @@ export class MaturityService {
   /**
    * 
    */
-  getQuestionsList() {
+  getQuestionsList( isAcetInstallation:boolean) {
     return this.http.get(
-      this.configSvc.apiUrl + "MaturityQuestions",
+      this.configSvc.apiUrl + "MaturityQuestions?isAcetInstallation="+isAcetInstallation,
       headers
     )
   }
