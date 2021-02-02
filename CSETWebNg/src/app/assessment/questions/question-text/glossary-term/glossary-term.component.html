@@ -2,6 +2,6 @@
    <div [innerHTML]="definition"></div>
 </ng-template>
 
-<span [tooltip]="definitionHtml" content-type="template" class="glossary-term">
+<span [tooltip]="definitionHtml" content-type="template" class="glossary-term" [options]="tooltipOptions">
     {{term}}
 </span>

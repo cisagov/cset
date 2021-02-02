@@ -12,6 +12,12 @@ export class GlossaryTermComponent implements OnInit {
   @Input()
   definition: string;
 
+  tooltipOptions = {
+    'placement': 'left',
+    'hide-delay': 10000,
+    'tooltip-class': 'glossary-definition'
+  };
+
   /**
    * 
    */
