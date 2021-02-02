@@ -37,6 +37,7 @@ import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
+import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
   selector: 'app-question-extras',
@@ -71,7 +72,8 @@ export class QuestionExtrasComponent implements OnInit {
     public dialog: MatDialog,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
-    public assessSvc: AssessmentService) {
+    public assessSvc: AssessmentService,
+    private maturitySvc: MaturityService) {
   }
 
 
@@ -543,7 +545,7 @@ export class QuestionExtrasComponent implements OnInit {
     return true;
   }
   isEDM(){
-    return true;
+    return this.maturitySvc.maturityModelIsEDM();
   }
 }
 

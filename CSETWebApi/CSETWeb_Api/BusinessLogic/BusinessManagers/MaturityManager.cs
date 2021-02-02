@@ -102,6 +102,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return levelNames;
         }
 
+        public List<MaturityModel> GetAllModels()
+        {
+            using (var db = new CSET_Context())
+            {
+                var result = from a in db.MATURITY_MODELS
+                             select new MaturityModel()
+                             {
+                                 MaturityTargetLevel = 1,
+                                 ModelId = a.Maturity_Model_Id,
+                                 ModelName = a.Model_Name,
+                                 QuestionsAlias = a.Questions_Alias
+                             };
+                return result.ToList();
+            }
+        }
+
 
         /// <summary>
         /// Saves the selected maturity models.
