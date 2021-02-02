@@ -132,7 +132,10 @@ export class MaturityService {
   }
 
   getModel(modelName: string): MaturityModel{
-    
+    for (let m of MaturityService.allMaturityModels){
+      if(m.ModelName == modelName)
+        return m;
+    }
   }
 
 }
