@@ -307,6 +307,7 @@
     <Compile Include="Model\GEN_SAL_NAMES.cs" />
     <Compile Include="Model\GEN_SAL_WEIGHTS.cs" />
     <Compile Include="Model\GLOBAL_PROPERTIES.cs" />
+    <Compile Include="Model\GLOSSARY.cs" />
     <Compile Include="Model\IMPORTANCE.cs" />
     <Compile Include="Model\INFORMATION.cs" />
     <Compile Include="Model\INSTALLATION.cs" />

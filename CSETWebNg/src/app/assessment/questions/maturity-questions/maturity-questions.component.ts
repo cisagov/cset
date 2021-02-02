@@ -34,6 +34,7 @@ import { ConfigService } from '../../../services/config.service';
 import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
 import { MaturityModel } from '../../../models/assessment-info.model';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+import { GlossaryService } from '../../../services/glossary.service';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public questionsSvc: QuestionsService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
+    public glossarySvc: GlossaryService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
@@ -104,6 +106,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+        this.glossarySvc.glossaryEntries = response.Glossary;
         this.loaded = true;
 
         this.refreshQuestionVisibility();

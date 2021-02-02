@@ -46,6 +46,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// The top level of groupings.  This will usually be Domains.
         /// </summary>
         public List<MaturityGrouping> Groupings;
+
+        /// <summary>
+        /// All known glossary terms for the maturity model.
+        /// </summary>
+        public List<GlossaryEntry> Glossary;
     }
 
 
@@ -80,5 +85,22 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// The lowest grouping in the hierarchy will hold a collection of questions.
         /// </summary>
         public List<QuestionAnswer> Questions = new List<QuestionAnswer>();
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GlossaryEntry
+    {
+        /// <summary>
+        /// A glossary term.
+        /// </summary>
+        public string Term;
+
+        /// <summary>
+        /// The definition for the term.  May contain HTML markup.
+        /// </summary>
+        public string Definition;
     }
 }
