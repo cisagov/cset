@@ -44,6 +44,7 @@ export interface MaturityQuestionResponse {
     QuestionsAlias: string;
     MaturityLevels: [];
     MaturityTargetLevel: number;
+    Glossary: GlossaryEntry[];
     Groupings: QuestionGrouping[];
    
     // the answer options to be displayed
@@ -72,6 +73,11 @@ export interface ACETDomain {
     DomainName: string;
     DomainId: number;
     Acronym: string;
+}
+
+export interface GlossaryEntry {
+    Term: string;
+    Definition: string;
 }
 
 
