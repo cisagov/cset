@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MatTooltip, TooltipComponent } from '@angular/material/tooltip';
+import { GlossaryService } from '../../../services/glossary.service';
+import { GlossaryTermComponent } from './glossary-term/glossary-term.component';
 
 @Component({
   selector: 'app-question-text',
@@ -13,35 +14,27 @@ export class QuestionTextComponent implements OnInit {
 
   @Input() glossaryEntries: any[];
 
-  private tooltip: ComponentRef<MatTooltip>;
 
   constructor(
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private glossarySvc: GlossaryService
   ) { }
 
   ngOnInit(): void {
 
-    // dummy code
-    this.glossaryEntries = [{
-      term: 'services',
-      definition: 'Services - A funeral gathering for a dead person'
-    },
-    {
-      term: 'assets',
-      definition: 'stuff that you have'
-    }];
-
-
   }
 
+  /**
+   * 
+   */
   ngAfterViewInit() {
     this.buildQuestionTextWithGlossary();
   }
 
   /**
-   * Using this page as a reference for dynamically creating and inserting tooltip items:
+   * Using this page as a reference for dynamically creating and inserting glossary-term components:
    * https://stackoverflow.com/questions/60284184/how-to-dynamically-apply-a-tooltip-to-part-of-an-elements-dynamic-text-content
    */
   buildQuestionTextWithGlossary() {
@@ -50,41 +43,35 @@ export class QuestionTextComponent implements OnInit {
       const startBracketPos = x.lastIndexOf('[[');
       if (startBracketPos >= 0) {
         const leadingText = x.substring(0, startBracketPos);
-        const term = x.substring(startBracketPos + 2);
+        let term = x.substring(startBracketPos + 2);
+        let displayWord = term;
 
-        const entry = this.glossaryEntries.find(x => x.term == term);
+        if (term.indexOf('|') > 0) {
+          debugger;
+          const p = term.split('|');
+          term = p[0];
+          displayWord = p[1];
+        }
 
+        const entry = this.glossarySvc.glossaryEntries.find(x => x.Term.toLowerCase() == term.toLowerCase());
+
+        // append text before the glossary term
         this.renderer.appendChild(
           this.para.nativeElement,
           this.renderer.createText(leadingText)
         );
 
-        // ---- This code is an attempt to create the tooltip.  Not working yet.
-        // ---- In the meantime, there is somem dummy code below to keep the question text intact.
-        // let factory = this.resolver.resolveComponentFactory(TooltipComponent);
-        // let ref = factory.create(this.injector);
-        // ref.instance.text = term;
-        // ref.instance.message = 'I AM A TOOLTIP.  HEAR ME ROAR!';
-        // ref.instance.tooltipClass = 'glossary-term';
-        // ref.changeDetectorRef.detectChanges();
-        // this.renderer.appendChild(
-        //   this.para.nativeElement,
-        //   ref.location.nativeElement
-        // );
+        // create and append a GlossaryTerm component 
+        let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
+        let ref = factory.create(this.injector);
+        ref.instance.term = displayWord;
+        ref.instance.definition = !!entry ? entry.Definition : displayWord;
 
-        // ---- This is dummy code, just to get the glossary term rendered into the question.
-        // ---- Once we get the real tooltip working, delete this.
-        const span = this.renderer.createElement('span');
-        span.innerText = term;
-        span.setAttribute('class', 'glossary-term');
-        span.setAttribute('title', !!entry ? entry.definition : term);
-
+        ref.changeDetectorRef.detectChanges();
         this.renderer.appendChild(
           this.para.nativeElement,
-          span
+          ref.location.nativeElement
         );
-        // ---- End of dummy code
-
       } else {
         // no starter bracket, just dump the text
         this.renderer.appendChild(
