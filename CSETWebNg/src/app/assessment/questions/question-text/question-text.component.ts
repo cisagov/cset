@@ -1,4 +1,5 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { GlossaryService } from '../../../services/glossary.service';
 import { GlossaryTermComponent } from './glossary-term/glossary-term.component';
 
 @Component({
@@ -17,24 +18,17 @@ export class QuestionTextComponent implements OnInit {
   constructor(
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private glossarySvc: GlossaryService
   ) { }
 
   ngOnInit(): void {
 
-    // dummy code
-    this.glossaryEntries = [{
-      term: 'services',
-      definition: 'Services - A funeral gathering for a dead person'
-    },
-    {
-      term: 'assets',
-      definition: '<em>stuff</em> that you have'
-    }];
-
-
   }
 
+  /**
+   * 
+   */
   ngAfterViewInit() {
     this.buildQuestionTextWithGlossary();
   }
@@ -51,7 +45,7 @@ export class QuestionTextComponent implements OnInit {
         const leadingText = x.substring(0, startBracketPos);
         const term = x.substring(startBracketPos + 2);
 
-        const entry = this.glossaryEntries.find(x => x.term == term);
+        const entry = this.glossarySvc.glossaryEntries.find(x => x.Term.toLowerCase() == term.toLowerCase());
 
         // append text before the glossary term
         this.renderer.appendChild(
@@ -63,7 +57,7 @@ export class QuestionTextComponent implements OnInit {
         let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
         let ref = factory.create(this.injector);
         ref.instance.term = term;
-        ref.instance.definition = !!entry ? entry.definition : term;
+        ref.instance.definition = !!entry ? entry.Definition : term;
 
         ref.changeDetectorRef.detectChanges();
         this.renderer.appendChild(

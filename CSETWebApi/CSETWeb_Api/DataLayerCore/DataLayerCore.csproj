@@ -220,6 +220,16 @@
     <Compile Include="Manual\VIEW_QUESTIONS_STATUS.cs" />
     <Compile Include="Manual\vParameter.cs" />
     <Compile Include="Manual\vQUESTION_HEADINGS.cs" />
+    <Compile Include="Model2\ANSWER.cs" />
+    <Compile Include="Model2\CsetwebContext.cs" />
+    <Compile Include="Model2\DEMOGRAPHICS.cs" />
+    <Compile Include="Model2\DEMOGRAPHICS_ORGANIZATION_TYPE.cs" />
+    <Compile Include="Model2\GLOSSARY.cs" />
+    <Compile Include="Model2\MATURITY_GROUPINGS.cs" />
+    <Compile Include="Model2\MATURITY_GROUPING_TYPES.cs" />
+    <Compile Include="Model2\MATURITY_MODELS.cs" />
+    <Compile Include="Model2\MATURITY_QUESTIONS.cs" />
+    <Compile Include="Model2\MATURITY_REFERENCE_TEXT.cs" />
     <Compile Include="ModelDataAccess\FileDescription.cs" />
     <Compile Include="ModelDataAccess\FileDescriptionShort.cs" />
     <Compile Include="ModelDataAccess\FileResult.cs" />
@@ -307,6 +317,7 @@
     <Compile Include="Model\GEN_SAL_NAMES.cs" />
     <Compile Include="Model\GEN_SAL_WEIGHTS.cs" />
     <Compile Include="Model\GLOBAL_PROPERTIES.cs" />
+    <Compile Include="Model\GLOSSARY.cs" />
     <Compile Include="Model\IMPORTANCE.cs" />
     <Compile Include="Model\INFORMATION.cs" />
     <Compile Include="Model\INSTALLATION.cs" />
