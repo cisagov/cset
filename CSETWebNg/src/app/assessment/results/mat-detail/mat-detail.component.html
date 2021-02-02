@@ -45,110 +45,96 @@
             </div>
         </div>
 
-        <div class="row" *ngFor="let domain of matDetails">
+        <div class="row" *ngFor="let domain of domainDataList">
             <div class="col-lg" style="padding-bottom:20px;">
-                <div class="row"><h5>Domain</h5></div>
+                <div class="row">
+                    <h5>Domain</h5>
+                </div>
                 <div class="row">
                     <div class="col-8">
-                        <h6>{{domain.DomainName}}</h6>
+                        <h6>{{domain.domainName}}</h6>
                     </div>
                     <div class="col-4 float-right">
-                        <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)"  style="float:right; width:300px;">
-                            <!-- <div class="row">
-                                <div class="col-8">
-                                    Expected Level: 
-                                </div>
-                                <div class="col-4">
-                                    {{bottomExpected}}
-                                </div>
-                            </div> -->
+                        <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)" style="float:right; width:300px;">
+                           
                             <div class="row">
                                 <div class="col-8">
-                                    Actual Level: 
+                                    Actual Level:
                                 </div>
-                                <div class="col-4" [ngClass]="checkMaturity(domain.DomainMaturity)">
-                                    {{ acetSvc.translateMaturity(domain.DomainMaturity) }}
+                                <div class="col-4" [ngClass]="checkMaturity(domain.domainMaturity)">
+                                    {{ acetSvc.translateMaturity(domain.domainMaturity) }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row"><h5>Assessment Factor</h5></div>
+                <div class="row">
+                    <h5>Assessment Factor</h5>
+                </div>
                 <div class="row">
                     <div class="col-lg">
-                            
-                            <mat-accordion multi="true" >
-
-                                    <mat-expansion-panel *ngFor="let factor of domain.Assessments" [expanded]="expanded">
-                                      <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                    <h6>{{factor.AssessmentFactor}}</h6>
-                                                  </mat-panel-title>
-                                                  <mat-panel-description>
-                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.AssessmentFactorMaturity)"
-                                                        style="width:125px;height:41px; margin-top:15px;">{{ acetSvc.translateMaturity(factor.AssessmentFactorMaturity) }}</div>
-                                                  </mat-panel-description> 
-                                      </mat-expansion-panel-header>
-                                      <div class="row"><h5>Components</h5></div>
-                                      <div class="row clearfix" *ngFor="let comp of factor.Components; last as isLast">
-                                          <div class="col">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                        <h6>{{ comp.ComponentName }}</h6>
-                                                </div>
-                                                <div class="col-4">
-                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
-                                                        style="width:125px; height:41px ;margin-right:23px;float:right;">{{ acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
-                                                </div>
+        
+                        <mat-accordion multi="true">
+        
+                            <mat-expansion-panel *ngFor="let factor of domain.graphdata" [expanded]="expanded">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <h6>{{factor.asseessmentFactor}}</h6>
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
+                                            style="width:125px;height:41px; margin-top:15px;">{{
+                                            acetSvc.translateMaturity(factor.domainMaturity) }}</div>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <h5>Components</h5>
+                                </div>
+                                <div class="row clearfix" *ngFor="let comp of factor.sections; last as isLast">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h6>{{ comp.name }}</h6>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-1" style="width:200px;max-width:200px;">
-                                                    Baseline
-                                                    <br/>
-                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Baseline)">{{ comp.Baseline }}%
-                                                    </div>
-                                                </div>
-                                                <div class="col-1" style="width:200px;max-width:200px;">
-                                                    Evolving
-                                                    <br/>
-                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Evolving)">{{ comp.Evolving }}%
-                                                    </div>
-                                                </div>
-                                                <div class="col-1" style="width:200px;max-width:200px;">
-                                                    Intermediate
-                                                    <br/>
-                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Intermediate)">{{ comp.Intermediate }}%
-                                                    </div>
-                                                </div>
-                                                <div class="col-1" style="width:200px;max-width:200px;">
-                                                    Advanced
-                                                    <br/>
-                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Advanced)">{{ comp.Advanced }}%
-                                                    </div>
-                                                </div>
-                                                <div class="col-1" style="width:200px;max-width:200px;">
-                                                    Innovative
-                                                    <br/>
-                                                    <div class="alert" style="width:70px;" [ngClass]="acetSvc.levelClasses(comp.Innovative)">{{ comp.Innovative }}%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <hr [hidden]="isLast">
-                                                </div>
+                                            <div class="col-4">
+                                                <div class="alert"
+                                                    [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
+                                                    style="width:125px; height:41px ;margin-right:23px;float:right;">{{
+                                                    acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
                                             </div>
                                         </div>
-                                          
-                                      </div>
-                                    </mat-expansion-panel>
-                                  </mat-accordion>
+                                        <div class="row">
+
+                                            <div _ngcontent-c2="" class="ml-3 mr-3 form">
+                                                <table _ngcontent-c2="" class="label-value mx-auto">
+                                                    <tbody _ngcontent-c2="">
+                                                        <tr _ngcontent-c2="" class="item-row">
+                                                            <td _ngcontent-c2="">
+                                                                <app-charts-donut [donutData]="comp.data"></app-charts-donut>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <hr [hidden]="isLast">
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </div>
                 </div>
-                
+        
             </div>
-            
+        
         </div>
+
     </div>
 
 <!--

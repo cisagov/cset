@@ -96,6 +96,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<GEN_SAL_NAMES> GEN_SAL_NAMES { get; set; }
         public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
+        public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
@@ -1442,6 +1443,15 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Property_Value).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<GLOSSARY>(entity =>
+            {
+                entity.HasKey(e => new { e.Maturity_Model_Id, e.Term });
+
+                entity.Property(e => e.Term).IsUnicode(false);
+
+                entity.Property(e => e.Definition).IsUnicode(false);
             });
 
             modelBuilder.Entity<IMPORTANCE>(entity =>

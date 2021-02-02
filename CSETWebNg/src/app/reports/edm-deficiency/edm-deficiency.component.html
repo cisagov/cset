@@ -1,1 +1,90 @@
-<p>edm-deficiency works!</p>
+<!---------------------- 
+
+   Copyright 2020 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                DEFICIENCY REPORT EDM
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img width="471" height="529" src="../../../../assets/images/ExecutiveFiles/image002.jpg">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom">
+            <div>
+                <img style="width: 283px; height: 133px" src="../../../../assets/images/ExecutiveFiles/image003.jpg">
+            </div>
+            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+                <div>{{response?.information.Assessment_Name}}</div>
+                <div>
+                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                </div>
+                <div>
+                    {{response?.information.Assessor_Name}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-break">
+        
+    <div _ngcontent-c2="" class="ml-3 mr-3 form">
+        <div _ngcontent-c2="" class="paragraph">
+            <p><br>This deficiency report lists the statements that are not currently compliant or "No" answers. <br><br>
+                This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+                the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+                the gaps by implementing the controls necessary to come into compliance with the associated statement.
+                <br><br>
+                The percentage gap in each domain is also listed and will help to determine the priority.
+                EDM is a cumulative maturity model meaning lower levels should be completed before
+                moving to higher levels. Ideally baseline should be completed before focusing efforts on
+                controls in evolving and so forth up the line of maturity levels.<br></p>
+        </div>
+        <h1 _ngcontent-c2="" class="page-title">Deficiencies</h1>
+        <hr class="page-line">
+
+        <div _ngcontent-c2="">
+            <p style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
+            <table>
+                <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
+                    <tr>
+                        <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
+                            <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                        </td>
+                        <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                        <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                    </tr>
+                    <tr>
+                        <td class="deficiencies-list-item"><b>Comment:</b></td>
+                        <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
+    </div>
+</div>
+
