@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessLogic.ReportEngine;
 
 
 namespace CSETWeb_Api.Controllers
 {
-    //[CSETAuthorize]
+    [CSETAuthorize]
     public class MaturityController : ApiController
     {
         /// <summary>
@@ -157,6 +154,26 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().SetTargetBandOnly(assessmentId, value);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/getMaturityDeficiencyList")]
+        public IHttpActionResult GetDeficiencyList([FromUri]string maturity)
+        {
+            try
+            {
+
+                int assessmentId = Auth.AssessmentForUser();
+                ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+                MaturityBasicReportData data = new MaturityBasicReportData();
+                data.DeficiencesList = reportsDataManager.getMaturityDeficiences(maturity);
+                data.information = reportsDataManager.GetInformation();
+                return Ok(data);
+            }
+            catch ( Exception ex )
+            {
+                return Ok();
+            }
         }
     }
 }

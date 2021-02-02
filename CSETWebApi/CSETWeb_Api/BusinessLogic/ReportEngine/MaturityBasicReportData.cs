@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
-    public class ACETReportData
+    public class MaturityBasicReportData
     {
         
         public List<MatRelevantAnswers> DeficiencesList { get; set; }
