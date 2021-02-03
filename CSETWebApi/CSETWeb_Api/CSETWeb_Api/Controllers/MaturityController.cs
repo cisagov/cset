@@ -5,7 +5,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.ReportEngine;
-
+using System.Collections.Generic;
 
 namespace CSETWeb_Api.Controllers
 {
