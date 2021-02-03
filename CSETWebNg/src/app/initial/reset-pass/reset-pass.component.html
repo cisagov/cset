@@ -59,12 +59,12 @@
         <div class="px-4">
             <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate class="d-flex flex-column justify-content-between flex-00a">
                 <div class="mb-3" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                    <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+                    <input type="email" tabindex="0" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
                         #email="ngModel" required />
                     <div *ngIf="f.submitted && !email.valid" class="alert alert-danger">eMail is required</div>
                 </div>
                 <div class="d-flex justify-content-between flex-11a">
-                    <button [disabled]="loading || !enableNext" class="btn btn-primary" (click)="loadQuestions()">Next</button>
+                    <button [disabled]="loading || !enableNext"  tabindex="0" class="btn btn-primary" (click)="loadQuestions()">Next</button>
                     <a [routerLink]="['/home','login']">Login</a>
                 </div>
 
@@ -90,13 +90,13 @@
                     <tr *ngIf="securityQuestion !== null">
                         <td>{{securityQuestion}}</td>
                         <td>
-                            <input required type="text" class="form-control" id="questionAnswer" name="questionAnswer"
+                            <input required  tabindex="0" type="text" class="form-control" id="questionAnswer" name="questionAnswer"
                                 #answer="ngModel" [(ngModel)]="securityAnswer">
                             <div *ngIf="f.submitted && !answer.valid" class="alert alert-danger">answer is required</div>
                         </td>
                     </tr>
                 </table>
-                <button type="submit" [disabled]="loading" class="btn btn-primary">Reset Password</button>
+                <button type="submit"  tabindex="0" [disabled]="loading" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
 

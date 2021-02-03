@@ -21,11 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { QuestionsService } from '../../../services/questions.service';
-import { AcetFiltersService } from '../../../services/acet-filters.service';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { QuestionGrouping } from '../../../models/questions.model';
+import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+
 
 /**
  * A visible checkbox control that marks questions in the associated
@@ -34,26 +35,27 @@ import { QuestionGrouping } from '../../../models/questions.model';
  */
 @Component({
   selector: 'app-maturity-filter',
-  templateUrl: './maturity-filter.component.html'
+  templateUrl: './domain-maturity-filter.component.html'
 })
-export class MaturityFilterComponent implements OnInit {
-
-  @Input()
-  levels: any[];
+export class DomainMaturityFilterComponent implements OnInit {
 
   @Input()
   domain: QuestionGrouping;
-  
+
+  @Input()
+  maturityLevels: any[];
+
   @Output()
-  filtersChanged = new EventEmitter<Map<string, boolean>>();
-  
+  changed = new EventEmitter<string>();
+
+
   // the domain that we are filtering
   domainName: string;
 
   constructor(
     public questionsSvc: QuestionsService,
-    public acetQuestionSvc: QuestionsAcetService,
-    private filterSvc: AcetFiltersService
+    public maturityFilteringSvc: MaturityFilteringService,
+    public acetFilteringSvc: AcetFilteringService,
   ) { }
 
   /**
@@ -63,26 +65,34 @@ export class MaturityFilterComponent implements OnInit {
     this.domainName = this.domain.Title;
   }
 
+
   /**
-   * Indicates whether the specified maturity level
-   * corresponds to the overall IRP risk level.
-   * @param mat
+   * Returns the Value property for the domain and level
    */
-  isDefaultMatLevel(mat: string) {
-    return (this.acetQuestionSvc.isDefaultMatLevel(mat));
+  getNgModel(level: any) {
+    return this.acetFilteringSvc.domainFilters?.find(d => d.DomainName == this.domainName)?.Settings.find(s => s.Level == level.Level).Value;
   }
 
   /**
-   * Sets the new value in the service's filter map and tells the host page
-   * to refresh the question list.
-   * @param f
-   * @param e
+   * 
+   * @param level 
+   * @param e event
    */
-  filterChanged(f: string, e) {
-    // set my filter settings in questions service
-    this.acetQuestionSvc.domainMatFilters.get(this.domainName).set(f, e);
-    this.filterSvc.saveFilter(this.domainName,f,e).subscribe();
-    // tell my host page
-    this.filtersChanged.emit(this.acetQuestionSvc.domainMatFilters.get(this.domainName));
+  filterChanged(level: number, e: boolean) {
+    this.acetFilteringSvc.filterChanged(this.domainName, level, e);
+    this.changed.emit('');
   }
+
+  /**
+   * 
+   * @param level 
+   */
+  isFilterActive(level: any) {
+    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.DomainName == this.domain.Title);
+    if (!filterForDomain) {
+      return false;
+    }
+    return filterForDomain.Settings.find(s => s.Level == level.Level).Value;
+  }
+
 }

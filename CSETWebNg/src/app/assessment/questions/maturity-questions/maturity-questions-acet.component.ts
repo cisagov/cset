@@ -29,11 +29,11 @@ import { QuestionsService } from '../../../services/questions.service';
 import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
-import { MaturityModel } from '../../../models/assessment-info.model';
-import { QuestionsAcetService } from '../../../services/questions-acet.service';
+import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+
 
 @Component({
   selector: 'app-maturity-questions-acet',
@@ -43,8 +43,10 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
 
   maturityLevels: any[];
   groupings: QuestionGrouping[] = null;
-  modelName: string = null;
+  modelName: string = '';
+  questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
+
 
   loaded = false;
 
@@ -55,8 +57,9 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public questionsAcetSvc: QuestionsAcetService,
     public filterSvc: QuestionFilterService,
+    public maturityFilteringSvc: MaturityFilteringService,
+    private acetFilteringSvc: AcetFilteringService,
     public navSvc: NavigationService,
     private dialog: MatDialog
   ) {
@@ -94,19 +97,23 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList().subscribe(
-      (response: MaturityQuestionResponse) => {        
+    this.maturitySvc.getQuestionsList(this.configSvc.acetInstallation).subscribe(
+      (response: MaturityQuestionResponse) => {
         this.modelName = response.ModelName;
+        this.questionsAlias = response.QuestionsAlias;
+
+        // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.MaturityLevels;
+
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
-        this.loaded = true;
 
-        // default the selected maturity filters
-        this.questionsAcetSvc.initializeMatFilters(response.OverallIRP);
-
-        this.refreshQuestionVisibility();
+        // get the selected maturity filters
+        this.acetFilteringSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
+          this.refreshQuestionVisibility();
+          this.loaded = true;
+        });
       },
       error => {
         console.log(
@@ -165,6 +172,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    // this.questionsSvc.evaluateFilters(this.groupings);
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
   }
 }

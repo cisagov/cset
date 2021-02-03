@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
-
+using CSETWeb_Api.BusinessLogic.ReportEngine;
+using System.Collections.Generic;
 
 namespace CSETWeb_Api.Controllers
 {
-    //[CSETAuthorize]
+    [CSETAuthorize]
     public class MaturityController : ApiController
     {
         /// <summary>
@@ -34,11 +31,11 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public IHttpActionResult SetMaturityModel(string modelName)
+        public MaturityModel SetMaturityModel(string modelName)
         {
             int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelName);
-            return Ok();
+            return new MaturityManager().GetMaturityModel(assessmentId);
         }
 
 
@@ -75,13 +72,22 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public object GetQuestions()
+        public object GetQuestions([FromUri] bool isAcetInstallation)
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityQuestions(assessmentId);
+            
+            return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
         }
 
+        [HttpGet]
+        [Route("api/MaturityModels")]
+        public List<MaturityModel> GetAllModels()
+        {
+            int assessmentId = Auth.AssessmentForUser();
 
+            return new MaturityManager().GetAllModels();
+        }
+        
 
 
 
@@ -156,6 +162,26 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().SetTargetBandOnly(assessmentId, value);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/getMaturityDeficiencyList")]
+        public IHttpActionResult GetDeficiencyList([FromUri]string maturity)
+        {
+            try
+            {
+
+                int assessmentId = Auth.AssessmentForUser();
+                ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+                MaturityBasicReportData data = new MaturityBasicReportData();
+                data.DeficiencesList = reportsDataManager.getMaturityDeficiences(maturity);
+                data.information = reportsDataManager.GetInformation();
+                return Ok(data);
+            }
+            catch ( Exception ex )
+            {
+                return Ok();
+            }
         }
     }
 }

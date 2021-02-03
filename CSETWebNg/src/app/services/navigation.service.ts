@@ -21,18 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Router, ActivatedRoute, NavigationEnd, Event } from '@angular/router';
+import { Router } from '@angular/router';
 import { AssessmentService } from './assessment.service';
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { EventEmitter, Injectable, Output, Pipe, Directive } from "@angular/core";
+import { EventEmitter, Injectable, Output, Directive } from "@angular/core";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
-import { QuestionResponse } from '../models/questions.model';
-import { MaturityService } from './maturity.service';
+
 
 
 export interface NavTreeNode {
@@ -95,9 +94,7 @@ export class NavigationService {
     private assessSvc: AssessmentService,
     private analyticsSvc: AnalyticsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private questionsSvc: QuestionsService,
-    private maturitySvc: MaturityService,
     private configSvc: ConfigService
   ) {
 
@@ -198,6 +195,7 @@ export class NavigationService {
     }
     return navTree;
   }
+
   /**
    * Returns a list of tree node elements
    */
@@ -216,6 +214,9 @@ export class NavigationService {
         expandable: true,
         visible: visible
       };
+
+      // the node might need tweaking based on certain factors
+      this.adjustNode(node);
 
       if (p.level === 0) {
         node.isPhaseNode = true;
@@ -238,6 +239,18 @@ export class NavigationService {
     }
 
     return toc;
+  }
+
+  /**
+   * Any runtime adjustments can be made here.
+   */
+  adjustNode(node: NavTreeNode) {
+    if (node.value == 'maturity-questions') {
+      const alias = this.assessSvc.assessment?.MaturityModel?.QuestionsAlias;
+      if (!!alias) {
+        node.label = alias;
+      }
+    }
   }
 
   /**
@@ -612,18 +625,32 @@ export class NavigationService {
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
 
     {
+      displayText: 'Assessment Questions',
+      pageId: 'placeholder-questions',
+      path: 'assessment/{:id}/placeholder-questions',
+      level: 1,
+      condition: () => {
+         return !(this.assessSvc.assessment?.UseMaturity
+          || this.assessSvc.assessment?.UseDiagram
+          || this.assessSvc.assessment?.UseStandard);
+      }
+    },
+
+    {
       displayText: 'Maturity Questions',
       pageId: 'maturity-questions',
       path: 'assessment/{:id}/maturity-questions',
       level: 1,
       condition: () => {
         return this.assessSvc.assessment?.UseMaturity
+        && this.assessSvc.usesMaturityModel('*')
         && !(this.configSvc.acetInstallation
           && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
+
     {
-      displayText: 'Maturity Questions',
+      displayText: 'Statements',
       pageId: 'maturity-questions-acet',
       path: 'assessment/{:id}/maturity-questions-acet',
       level: 1,

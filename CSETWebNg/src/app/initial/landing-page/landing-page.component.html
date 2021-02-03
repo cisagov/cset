@@ -41,19 +41,19 @@
                         <span class="mr-2 fs-base cset-icons-document"></span>
                         <span>New Assessment</span>
                     </button>
-                    <label *ngIf="authSvc.isLocal"
+                    <label *ngIf="authSvc.isLocal" tabindex="0"
                         class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
                         matTooltip="Import an assessment from an external CSET file. ({{ exportExtension }})">
                         <span class="mr-2 fs-base cset-icons-import"></span>
                         <label for="importFile" class="m-0">Import</label>
-                        <input type="file" class="display-none" id="importFile" multiple
+                        <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                             accept="{{ exportExtension }},.cset" (change)="importAssessmentFile($event)">
                     </label>
                     <label *ngIf="!authSvc.isLocal" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                         matTooltip="Import an assessment from an external ACET file. ({{ exportExtension }})">
                         <span class="mr-2 fs-base cset-icons-import"></span>
                         <label for="importFile" class="m-0">Import</label>
-                        <input type="file" class="display-none" id="importFile" multiple accept="{{ exportExtension }}"
+                        <input type="file" tabindex="0" class="display-none" id="importFile" multiple accept="{{ exportExtension }}"
                             (change)="importAssessmentFile($event)">
                     </label>
                 </div>
@@ -64,7 +64,7 @@
                         <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
                             imported for enterprise installations.</span>
                         <span class="fs-base-1"><a href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm"
-                                target="_blank" rel="noopener noreferrer">For more information, see the import section
+                                target="_blank" tabindex="0" rel="noopener noreferrer">For more information, see the import section
                                 of the user
                                 guide</a></span>
                     </div>
@@ -146,7 +146,7 @@
             <th aria-label="export assessment" style="width:5%;"></th>
             <tr *ngFor="let assessment of sortedAssessments; let i = index">
                 <td>
-                    <button
+                    <button tabindex="0"
                         class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
                         (click)="this.assessSvc.loadAssessment(assessment.AssessmentId)">
                         {{assessment.AssessmentName}}
@@ -158,7 +158,7 @@
                         matTooltip="This assessment contains answers that require further review.">Needs
                         Review</span></td>
                 <td>
-                    <button
+                    <button tabindex="0"
                         class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                         (click)="removeAssessment(assessment, i)" matTooltip="Permanently remove this assessment.">
                         <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
@@ -166,7 +166,7 @@
                     </button>
                 </td>
                 <td>
-                    <button
+                    <button tabindex="0"
                         class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                         (click)="clickDownloadLink(assessment.AssessmentId)"
                         matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">

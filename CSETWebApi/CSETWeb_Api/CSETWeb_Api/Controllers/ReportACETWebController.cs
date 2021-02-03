@@ -24,56 +24,56 @@ namespace CSETWeb_Api.Controllers
     {
         [HttpGet]
         [Route("api/reports/acet/getDeficiencyList")]
-        public ACETReportData GetDeficiencyList()
+        public MaturityBasicReportData GetDeficiencyList()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            ACETReportData data = new ACETReportData();
-            data.DeficiencesList = reportsDataManager.getACETDeficiences();            
+            MaturityBasicReportData data = new MaturityBasicReportData();
+            data.DeficiencesList = reportsDataManager.getMaturityDeficiences("ACET");
             data.information = reportsDataManager.GetInformation();
             return data;
         }
 
         [HttpGet]
         [Route("api/reports/acet/getAltList")]
-        public ACETReportData GetAltList()
+        public MaturityBasicReportData GetAltList()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            ACETReportData data = new ACETReportData();
+            MaturityBasicReportData data = new MaturityBasicReportData();
             data.AlternateList = reportsDataManager.getAlternatesList();
             data.information = reportsDataManager.GetInformation();
             return data;
         }
         [HttpGet]
         [Route("api/reports/acet/getCommentsMarked")]
-        public ACETReportData GetCommentsMarked()
+        public MaturityBasicReportData GetCommentsMarked()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            ACETReportData data = new ACETReportData();
-            data.Comments = reportsDataManager.getCommentsList();
-            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList();
+            MaturityBasicReportData data = new MaturityBasicReportData();
+            data.Comments = reportsDataManager.getCommentsList(1);
+            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList(1);
             data.information = reportsDataManager.GetInformation();
             return data;
         }
         [HttpGet]
         [Route("api/reports/acet/GetAssessmentInformation")]
-        public ACETReportData GetAssessmentInformation()
+        public MaturityBasicReportData GetAssessmentInformation()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            ACETReportData data = new ACETReportData();
+            MaturityBasicReportData data = new MaturityBasicReportData();
             data.information = reportsDataManager.GetInformation();
             return data;
         }
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
-        public ACETReportData GetAnsweredQuestions()
+        public MaturityBasicReportData GetAnsweredQuestions()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            ACETReportData data = new ACETReportData();
+            MaturityBasicReportData data = new MaturityBasicReportData();
             data.MatAnsweredQuestions = reportsDataManager.getAnsweredQuestionList(assessmentId);
             data.information = reportsDataManager.GetInformation();
             return data;
