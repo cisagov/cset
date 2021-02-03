@@ -5,7 +5,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.ReportEngine;
-
+using System.Collections.Generic;
 
 namespace CSETWeb_Api.Controllers
 {
@@ -79,7 +79,15 @@ namespace CSETWeb_Api.Controllers
             return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
         }
 
+        [HttpGet]
+        [Route("api/MaturityModels")]
+        public List<MaturityModel> GetAllModels()
+        {
+            int assessmentId = Auth.AssessmentForUser();
 
+            return new MaturityManager().GetAllModels();
+        }
+        
 
 
 
