@@ -119,6 +119,7 @@ import { AcetAnsweredQuestionsComponent} from './reports/acet-answeredquestions/
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -247,6 +248,7 @@ const appRoutes: Routes = [
           },          
 
           { path: 'questions', component: QuestionsComponent },
+          { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },

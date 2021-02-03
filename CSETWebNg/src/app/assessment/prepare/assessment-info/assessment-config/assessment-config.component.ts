@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
+import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-assessment-config',
@@ -58,6 +59,7 @@ export class AssessmentConfigComponent implements OnInit {
     }
   ];
 
+  
   /**
    * Constructor.
    */
@@ -65,8 +67,11 @@ export class AssessmentConfigComponent implements OnInit {
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    public maturitySvc: MaturityService
+  ) { 
+
+  }
 
   /**
    * 
@@ -101,17 +106,24 @@ export class AssessmentConfigComponent implements OnInit {
         this.assessSvc.assessment.UseDiagram = value;
         break;
     }
-    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
-
-    sessionStorage.removeItem('tree');
+    
 
     if (this.assessSvc.assessment.UseMaturity) {
+      if(this.assessSvc.assessment.MaturityModel==undefined){
+        if(this.configSvc.acetInstallation){          
+          this.assessSvc.assessment.MaturityModel = this.maturitySvc.getModel("ACET");
+        }
+        else{
+          this.assessSvc.assessment.MaturityModel = this.maturitySvc.getModel("EDM");
+        }
+      }
       if (this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel
         || this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel == 0) {
           this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
         }
     }
-
+    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
+    sessionStorage.removeItem('tree');
     // tell the standard service to refresh the nav tree
     this.navSvc.buildTree(this.navSvc.getMagic());
   }

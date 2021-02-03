@@ -25,6 +25,7 @@ import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/cor
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
     public reportSvc: ReportService,
     private titleService: Title,
     public acetSvc: ACETService,
+    public configSvc: ConfigService,
 
   ) { }
 
@@ -48,6 +50,7 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
+        console.log(this.response);
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );

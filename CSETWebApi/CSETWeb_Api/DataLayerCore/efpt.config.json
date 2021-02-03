@@ -26,6 +26,10 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[GLOSSARY]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[MATURITY_GROUPING_TYPES]"
       },
       {

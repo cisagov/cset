@@ -1,4 +1,4 @@
-
+@import '_variables.scss';
 
    .page-title {
     color: #1274d2;
@@ -57,6 +57,7 @@
   .data-title {
     font-size: 22px;
     color: black;
+    margin-top: 1rem;
 }
 
 .mb-4,
@@ -94,7 +95,9 @@ table.label-value td {
     text-align: center;
 }
 .item-table {
-    background-color: #eeefff;
+    background-color: #ffffff;
+    border: 1px solid $primary-600;
+    border-radius: 1rem;
 }
 .item-value {
     text-align: left !important;
@@ -173,10 +176,23 @@ table.label-value td {
     color: black;
     padding-bottom: 25px;
     padding-top: 25px;
+    vertical-align: top;
 }
 .deficiencies-list-comment {
     width: 70%;
     color: #555555;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    vertical-align: top;
+}
+
+.deficiencies-list-question-text {
+  width: 10%;
+  color: #555555; 
+  padding-bottom: 25px;
+  padding-top: 25px;
+  padding-left: 25px;
+  vertical-align: top;
 }
 
 table.cset-table {
@@ -270,9 +286,9 @@ td.tint2 {
   background-color: #f2f7f9;
 }
 table.label-value td {
-  padding: 0.1rem 1rem 0.1rem 0.1rem;
+  // padding: 0.1rem 1rem 0.1rem 0.1rem;
   vertical-align: top;
-    text-align: center
+  text-align: center;
 }
 
 .table-responsive {

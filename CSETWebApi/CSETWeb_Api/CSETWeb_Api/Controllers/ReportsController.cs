@@ -64,10 +64,10 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityReportData data = new MaturityReportData();
-            data.analyzeMaturityData();
-            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.AnalyzeMaturityData();
+            data.MaturityModels = reportsDataManager.GetMaturityModelData();
             data.information = reportsDataManager.GetInformation();
-            data.analyzeMaturityData();
+            data.AnalyzeMaturityData();
 
             return data;
         }
@@ -79,10 +79,10 @@ namespace CSETWeb_Api.Controllers
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityReportData data = new MaturityReportData();
             
-            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.MaturityModels = reportsDataManager.GetMaturityModelData();
             data.information = reportsDataManager.GetInformation();
             //data.StatementsAndReferences = reportsDataManager.GetStatementsAndReferences();
-            data.analyzeMaturityData();
+            data.AnalyzeMaturityData();
 
             return data;
         }

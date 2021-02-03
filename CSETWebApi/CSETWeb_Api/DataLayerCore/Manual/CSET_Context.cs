@@ -81,13 +81,9 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Mat_Question_Id)
                     .HasName("PK__MATURITY__EBDCEAE635AFA091");
 
-                entity.Property(e => e.Category).IsUnicode(false);
-
                 entity.Property(e => e.Question_Text).IsUnicode(false);
 
                 entity.Property(e => e.Question_Title).IsUnicode(false);
-
-                entity.Property(e => e.Sub_Category).IsUnicode(false);
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);
 
