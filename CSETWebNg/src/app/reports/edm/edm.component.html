@@ -148,9 +148,19 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Performance Summary</h1>
-    <div style="display: flex; flex-direction: row; align-items: right; margin-bottom: 5px;">
-      <h2 style="text-align: center; color: #000;">EDM MIL-1 Performance Summary</h2>
-      
+    <h2 style="text-align: left; color: #000;">EDM MIL-1 Performance Summary</h2>
+    
+    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
+      <ngx-charts-bar-vertical
+        [view]="view2"
+        [scheme]="colorScheme"
+        [results]="performanceLegend2"
+        [gradient]="gradient"
+        [xAxis]="false"
+        [yAxis]="true"
+        [legend]="false">
+      </ngx-charts-bar-vertical>
+
       <ngx-charts-bar-horizontal-normalized 
         [view]="view" 
         [scheme]="colorScheme"
@@ -164,80 +174,97 @@
       </ngx-charts-bar-horizontal-normalized>
     </div>
 
-    <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
-      <h2 style="text-align: center; border-top: 5px; border-bottom: 5px; border-color: #000; color: #000; text-decoration: underline;">PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
-      <h2>Relationship Formation</h2>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 1</strong> - Acquirer service and asset <br/> priorities are established.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG1" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
+    <h2 style="text-align: center; border-top: 5px; border-bottom: 5px; border-color: #000; color: #000; text-decoration: underline;">PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
+    <h2>Relationship Formation</h2>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-between; vertical-align: middle;">
+      
+      <div style="margin-right: 15px; margin-top: 8%;">
+      <ngx-charts-bar-vertical
+        [view]="view2"
+        [scheme]="colorScheme"
+        [results]="relationshipFormationSummary"
+        [gradient]="gradient"
+        [xAxis]="false"
+        [yAxis]="true"
+        [legend]="false">
+      </ngx-charts-bar-vertical>
       </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 2</strong> - Forming relationships with <br/> external entities is planned.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG2" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 3</strong> - Risk management includes <br/> external dependencies.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG3" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 4</strong> - External entities are evaluated.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG4" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 5</strong>- Formal agreements include <br/> resilience requirements.
-        <ngx-charts-bar-horizontal-normalized 
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG5" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
-      </div>
-      <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-        <strong>Goal 6</strong> - Technology asset supply chain <br/> risks are managed.
-        <ngx-charts-bar-horizontal-normalized
-          [view]="view" 
-          [scheme]="colorScheme"
-          [results]="relationshipFormationG6" 
-          [gradient]="gradient" 
-          [xAxis]="goalShowXAxis"
-          [yAxis]="goalShowYAxis" 
-          [showXAxisLabel]="goalShowXAxisLabel">
-        </ngx-charts-bar-horizontal-normalized>
+
+      <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+        
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 1</strong> - Acquirer service and asset <br/> priorities are established.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG1" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 2</strong> - Forming relationships with <br/> external entities is planned.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG2" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 3</strong> - Risk management includes <br/> external dependencies.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG3" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 4</strong> - External entities are <br/> evaluated.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG4" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 5</strong>- Formal agreements include <br/> resilience requirements.</span>
+          <ngx-charts-bar-horizontal-normalized 
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG5" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
+          <span style="font-size: small;"><strong>Goal 6</strong> - Technology asset supply <br/> chain risks are managed.</span>
+          <ngx-charts-bar-horizontal-normalized
+            [view]="view" 
+            [scheme]="colorScheme"
+            [results]="relationshipFormationG6" 
+            [gradient]="gradient" 
+            [xAxis]="goalShowXAxis"
+            [yAxis]="goalShowYAxis" 
+            [showXAxisLabel]="goalShowXAxisLabel">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
       </div>
     </div>
 
@@ -353,15 +380,12 @@
       </div>
     </div>
 
-    <p>
+    <p style="margin-top: 30px; margin-bottom: 30px;">
       Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
       enterprise management activities necessary to ensure that this capability is sustained over time, despite
-      disruptions or organizational
-      changes. The MIL scale is cumulative; each MIL level must be complete before achieving a higher MIL is possible.
-      Viewed collectively, these
-      depictions provide an understanding of overall performance. While achieving a certain Maturity Indicator Level is
-      one possible process
-      improvement objective, it may not be the most important objective for every organization or in every context.
+      disruptions or organizational changes. The MIL scale is cumulative; each MIL level must be complete before achieving a higher MIL is possible.
+      Viewed collectively, these depictions provide an understanding of overall performance. While achieving a certain Maturity Indicator Level is
+      one possible process improvement objective, it may not be the most important objective for every organization or in every context.
     </p>
 
   </div>
@@ -371,6 +395,111 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Relationship Formation</h1>
+    <div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
+      <div style="background-color: #5AA454; margin: 4px; padding: 5px; flex-grow: 2;">
+        Goal 1
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 2;">
+        Goal 2
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 1">
+        Goal 3
+      </div>
+      <div style="background-color: #5AA454; margin: 4px; padding: 5px; flex-grow: 2;">
+        Goal 4
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 4">
+        Goal 5
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 3">
+        Goal 6
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: flex-start; margin-bottom: 10px; font-size: small;">
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 3px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 6px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #C7B42C; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 3px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #C7B42C; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 3px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 5px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 6px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 2px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 3px 0px 1px; padding: 5px;">
+        Q6
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 6px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+    </div>
     <p>
       The purpose of Relationship Formation is to assess whether the acquirer evaluates and controls the risks
       of relying on external entities before entering into relationships with them. Relationship Formation includes
@@ -383,8 +512,7 @@
 
     <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
       <h2 style="color: black; font-weight: bold;">Goal 1 - Acquirer service and asset priorities are established.</h2>
-      <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,
-        and
+      <p>The purpose of this goal is to assess whether the acquirer has identified its own critical services, assets,and
         control objectives because these are fundamental activities for effectively managing external dependencies.
       </p>
       <ol style="font-weight: bold;">
@@ -1168,6 +1296,251 @@
   <div class="page-break">
     <h1 class="pageHeader">Relationship Management and Governance</h1>
 
+    <div style="display: flex; flex-direction: row; justify-content: center; text-align: center;">
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 1;">
+        Goal 1
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 4;">
+        Goal 2
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 2">
+        Goal 3
+      </div>
+      <div style="background-color: #5AA454; margin: 4px; padding: 5px; flex-grow: 3;">
+        Goal 4
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 1">
+        Goal 5
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; flex-grow: 3">
+        Goal 6
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: flex-start; margin-bottom: 10px; font-size: small;">
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 7px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q6
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 7px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 7px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 8px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #C7B42C; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 7px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: flex-start; text-align: center;">
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; width: 115px; margin-top: 20px;">
+        Goal 7
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: flex-start; margin-bottom: 10px; font-size: small;">
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+    </div>
+
+    <p style="margin-top: 30px; margin-bottom: 30px;">
+      The purpose of Relationship Management and Governance is to assess whether the acquirer manages
+      ongoing relationships to maintain the resilience of the critical service, and mitigate dependency risk. This
+      includes identifying the external entities that support the critical service, ongoing risk management,
+      communicating with external entities about key aspects of protecting the critical service, and controlling
+      external entities' access to the acquirer.
+    </p>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">Goal 1 - External dependencies are identified and prioritized.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer identifies the external entities that it depends on to support
+        the critical service and prioritizes them in order to make decisions about managing these dependencies.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Are dependencies on external entities that are critical to the service(s) identified? [EXD:SG1.SP1]
+          <ol>
+            <li>Suppliers <span style="background-color: #5AA454;">Yes</span></li>
+            <li>Infrastructure providers <span style="background-color: #5AA454;">Yes</span></li>
+            <li>Governmental services <span style="background-color: #5AA454;">Yes</span></li>
+          </ol>
+        </li>
+        <li>Are external dependencies prioritized? [EXD:SG1.SP2] <span style="background-color: #5AA454;">Yes</span></li>
+        <li>Has a process been established for maintaining a list of external dependencies and related information? [EXD:SG1.SP1] <span style="background-color: #C7B42C">Incomplete</span></li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP1]</span> Identify External Dependencies <br /><br />
+          It is important for the organization to identify and characterize external dependencies so that they can be
+          understood, formalized, monitored, and managed as part of the organization's comprehensive risk
+          management process. <br /><br />
+          The organization's list of services should be examined to discover services that may be subject to
+          external dependencies, in whole or in part. The organization's inventory of assets should also be
+          examined to discover assets that are under the control of external entities or are in other ways subject to
+          external dependencies. The organization may find value and efficiency in establishing close service links
+          or overlap to facilitate information sharing between the external dependencies list, the services listing,
+          and the asset inventory. The organization's customer database and supplier database may also be
+          valuable sources of insight when establishing the catalog of external dependencies. The organization's
+          set of current supplier and vendor contracts and related service level agreements (SLAs) are additional
+          sources. <br /><br />
+          When the organization is establishing the catalog of external dependencies, its customer database and
+          supplier database may also be valuable sources of insight. The organization's set of current supplier and
+          vendor contracts and related service level agreements (SLAs) are additional sources. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NISTIR 7622</span>, “Notional Supply Chain Risk Management Practices for Federal Information Systems,”
+          Section 4.1, Uniquely Identify Supply Chain Elements, Processes, and Actors. <br /><br />
+          Knowing who and what is in an enterprise's supply chain is critical to gaining visibility into what is
+          happening within it, as well as monitoring and identifying high-risk events and activities.
+          <span style="font-style: italic;">Without reasonable visibility and traceability into the supply chain, e.g., elements, processes, and actors, it is
+          impossible to understand and therefore manage risk, and to reduce the likelihood of an adverse event.</span> <br /><br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Systems and Organizations,” Section 2-0 Criticality Analysis. <br /><br />
+          Update Criticality Analysis of mission-critical functions, systems, and components to narrow the scope
+          (and resources) for ICT SCRM activities to those most important to mission success. <br /><br />
+          Criticality analysis should include the ICT supply chain infrastructure for both the organization and
+          applicable system integrators, suppliers, external service providers, and the systems/components/
+          services. Criticality analysis assesses the direct impact they each have on the mission priorities. <br /><br />
+          In addition to updating and tailoring Baseline Criticality, performing criticality analysis in the Assess Step
+          may include the following:
+          <ul>
+            <li style="font-style: italic;">Obtain and review existing information that the agency has about critical ICT systems/
+              components, such as locations where they are manufactured or developed, physical and logical
+              delivery paths, information flows and financial transactions associated with these components,
+              and any other available information that can provide insights into ICT supply chain of these
+              components</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">ITIL Service Design</span>, The Stationery Office, 2011, Best Management Practice. 4.8.7 “Information
+          Management,” 224. <br /><br />
+          NIST CSF References: ID.BE-4, ID.SC-2
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP2]</span> Prioritize External Dependencies <br /><br />
+          Apply the acquirer's prioritization criteria to the list of external dependencies to produce a prioritized list.
+          Depending on the prioritization scheme developed by an organization, the result might be several lists,
+          tiers, or sets of external dependencies. Be sure that external dependencies that are required for the
+          successful execution of security activities, service continuity plans, and service restoration plans are
+          prioritized appropriately. <br /><br />
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-161</span>, “Supply Chain Risk Management Practices for Federal Information
+          Systems and Organizations,” Section 2.2.1 Frame. <br /><br />
+          <span style="font-style: italic;">As a part of identifying ICT supply chain Risk Assumptions within the broader Risk Management process</span>
+          (described in NIST SP 800-39), agencies should do the following:
+          <ul>
+            <li>Define ICT SCRM mission, business, and system-level requirements</li>
+            <li>Identify which mission functions and related components are critical to the organization,
+              including FIPS 199 impact level, to determine the baseline criticality;</li> 
+          </ul>
+          <br />
+          NIST CSF References: ID.BE-4, ID.SC-2 <br /><br />
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP1]</span> Identify External Dependencies <br /><br />
+          <span style="font-style: italic;">The organization may use any number of techniques to establish a catalog or detailed list of external
+            dependencies. <br /><br /> The purpose of the catalog of external dependencies is to support the identification and prioritization of
+            external dependencies and the management of risks associated with selected dependencies.</span> <br /><br />
+            The organization's external dependencies will change over time as a result of changes to relationships
+            with essential suppliers and customers, changes in services, the life cycle of assets, and many other
+            reasons. Once the list of external dependencies is established, it is important that it be maintained. A
+            process for updating the list on a regular basis should be established. <br /><br />
+            <span style="font-weight: bold;">Additional References</span> <br /><br />
+            NIST CSF References: ID.BE-4, ID.SC-2 <br/><br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[SC:SG3.SP2]</span> Develop and document Service Continuity Plans <br /><br />
+          Document the service continuity plans using available templates as appropriate. A service continuity
+          plan typically includes the following information:
+          <ul>
+            <li>identification of authority for initiating and executing the plan (plan ownership)</li>
+            <li>identification of the communication mechanism to initiate execution of the plan</li>
+          </ul>
+
+        </li>
+      </ol>
+    </div>
+
   </div>
 
 
@@ -1176,6 +1549,153 @@
   <div class="page-break">
     <h1 class="pageHeader">Service Protection and Sustainment</h1>
 
+    <div style="display: flex; flex-direction: row; justify-content: left; text-align: center;">
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; width: 148px">
+        Goal 1
+      </div>
+      <div style="background-color: #5AA454; margin: 4px; padding: 5px; width: 115px">
+        Goal 2
+      </div>
+      <div style="background-color: #C7B42C; margin: 4px; padding: 5px; width: 175px">
+        Goal 3
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: flex-start; margin-bottom: 10px; font-size: small;">
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #C7B42C; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #C7B42C; margin: 0px 4px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 4px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+
+      <div style="background-color: #C7B42C; margin: 0px 1px 0px 4px; padding: 5px;">
+        Q1
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q2
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q3
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q4
+      </div>
+      <div style="background-color: #A10A28; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q5
+      </div>
+      <div style="background-color: #5AA454; margin: 0px 1px 0px 1px; padding: 5px;">
+        Q6
+      </div>
+    </div>
+
+    <p style="margin-top: 30px; margin-bottom: 30px;">
+      The purpose of Service Protection and Sustainment is to assess whether the acquirer accounts for its
+      dependence on external entities as part of its operational activities around managing incidents and threats.
+      This includes integrating external entity considerations into the acquirer's disruption planning - typically
+      incident management and business continuity, validating controls at external entities, and maintaining
+      situational awareness activities directed at external dependencies.
+    </p>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+
+      <h2 style="color: black; font-weight: bold;">Goal 1 - Disruption planning includes external dependencies.</h2>
+      <p>The purpose of this goal is to assess whether the acquirer accounts for external dependencies as part of its incident
+        management and service continuity processes.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Does the acquirer have an incident management plan to protect the critical service? [IMC:SG1.SP1]</li>
+        <li>Have incident declaration criteria that support the critical service been established and communicated to relevant external entities? [IMC:SG3.SP1, IMC:GG2.GP7]</li>
+        <li>Does the acquirer have a documented service continuity/business continuity plan to sustain the critical service? [SC:SG3.SP2]</li>
+        <li>Do the acquirer's plans account for dependence on external entities? [EXD:SG2.SP2, SC:SG3.SP2]
+          <ol>
+            <li>4.1 Incident management</li>
+            <li>4.2 Service continuity</li>
+          </ol>
+        </li>
+        <li>Do relevant external entities participate in the acquirer's planning activities? [IMC:GG2.GP7, SC:SG2.SP2]
+          <ol>
+            <li>5.1 Incident management</li>
+            <li>5.2 Service continuity</li>
+          </ol>
+        </li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[EXD:SG1.SP1]</span> Identify External Dependencies <br /><br />
+          Establish the incident management plan. The incident management plan should address, at a minimum
+          <ul>
+            <li>the acquirer's philosophy for incident management</li>
+            <li>the structure of the incident management process</li>
+            <li>the requirements and objectives of the incident management process relative to managing operational resilience</li>
+            <li>a description of how the acquirer will identify incidents, analyze them, and respond</li>
+            <li>the roles and responsibilities necessary to carry out the plan</li>
+            <li>applicable training needs and requirements</li>
+          </ul> <br/>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST Special Publication 800-53 Revision 4</span>, “Security and Privacy Controls for Federal Information
+          Systems and Organizations”, IR-4 Incident Handling.
+          <ol>
+            <li>Implements an <span style="font-style: italic;">incident handling capability for security incidents that includes preparation,
+              detection and analysis, containment, eradication, and recovery;</span></li>
+            <li>Coordinates incident handling activities with contingency planning activities; and</li>
+            <li>Incorporates lessons learned from ongoing incident handling activities into incident response
+              procedures, training, and testing/exercises, and implements the resulting A. changes
+              accordingly.</li>
+          </ol> <br/>
+          <span style="font-style: italic;">NIST Special Publication 800-61</span>, “Computer Security Incident Handling Guide,” Handbook for Computer
+          Security Incident Response Teams (CSIRTs). <br/><br/>
+          NIST CSF References: ID.SC-5, PR.IP-9
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          <span style="font-weight: bold;">[IMC:SG3.SP1]</span> Define and Maintain Incident Declaration Criteria <br /><br />
+          <span style="font-style: italic;">Each organization has many unique factors that must be considered in determining when to declare an
+          incident</span> Through experience, an organization may have a baseline set of events that define standard
+          incidents, such as a virus outbreak, unauthorized access to a user account, or a denial-of-service attack.
+          However, in reality, incident declaration may occur on an event-by-event basis. <br/><br/>
+          To guide the organization in determining when to declare an incident (particularly if incident declaration
+          is not immediately apparent), the organization must define incident declaration criteria. <br/><br/>
+          <span style="font-weight: bold;">[IMC:GG2.GP7]</span> Involve Stakeholders <br /><br />
+          Stakeholders for the incident management and control process may extend across the organization and
+          externally to business partners and vendors. <br/><br/>
+          <span style="font-weight: bold;">Additional References</span> <br />
+          <span style="font-style: italic;">NIST 800-161</span>, “Supply Chain Risk Management Practices for Federal Information Systems and
+          Organizations,” Section AC-21 Collaboration and Information Sharing. <br/><br/>
+          <span style="font-style: italic;">Sharing information within the ICT supply chain can help to manage ICT supply chain risks.</span>
+          This information may include vulnerabilities, threats, criticality of systems and components, or delivery
+          information. This information sharing should be carefully managed to ensure that the information is
+          accessible only to authorized individuals within the organization's ICT supply chain. <br/><br/>
+          <span style="font-style: italic;">NIST Special Publication 800-61</span>, “Computer Security Incident Handling Guide,” Section 3.3.1 Choosing
+          a Containment Strategy. <br/><br/>
+          NIST CSF References: DE.AE-5
+        </li>
+      </ol>
+    </div>
+
   </div>
 
 
@@ -1183,6 +1703,163 @@
 
   <div class="page-break">
     <h1 class="pageHeader">Maturity Indicator Levels</h1>
+
+    <div style="display: flex; flex-direction: row; justify-content: left; text-align: center; margin-bottom: 10px;">
+      <div style="background-color: #A10A28; margin: 5px; padding: 5px; flex-grow: 2;">
+        MIL2
+      </div>
+      <div style="background-color: #A10A28; margin: 5px; padding: 5px; flex-grow: 1;">
+        MIL3
+      </div>
+      <div style="background-color: #A10A28; margin: 5px; padding: 5px; flex-grow: 1">
+        MIL4
+      </div>
+      <div style="background-color: #A10A28; margin: 5px; padding: 5px; flex-grow: 1">
+        MIL5
+      </div>
+    </div>
+
+    <p>
+      The maturity indicator level questions below apply to all of the domains in this assessment; Relationship
+      Formation, Relationship Management and Governance, and Service Protection and Sustainment.
+      Achievement of the maturity indicator levels means that external dependencies management is more likely
+      to be effective, consistent, and retained during times of disruption or organizational change. One maturity
+      scale is used because the three domains represent one continuous lifecycle.
+    </p>
+
+    <div style="display: flex; border: 1px solid; flex-direction: column; margin-bottom: 5px;">
+      <h2 style="color: black; font-weight: bold;">MIL2 - Planned</h2> <br/><br/>
+      <p>Performance at MIL2 - Planned means that external dependencies management to protect the critical service is not
+      only performed but also supported by sufficient planning, stakeholder involvement, and standards and guidelines.
+      </p>
+      <ol style="font-weight: bold;">
+        <li>Is there a documented plan for performing external dependencies management?</li>>
+        <li>Is there a documented policy for external dependencies management?</li>
+        <li>Does the plan or policy identify and describe external dependencies management processes?</li>
+        <li>Have internal and external stakeholders for external dependencies management activities been identified and made 
+          aware of their cybersecurity roles?
+        </li>
+        <li>Have external dependencies management standards, guidelines and roles been established and implemented?</li>
+      </ol>
+      <h2 style="color: black; font-weight: bold;"> Option(s) for Consideration</h2>
+      <ol>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          Consider developing a plan for performing External Dependencies Management. A plan is developed 
+          to ensure that the acquirer and its staff know how external dependencies will be managed across the 
+          entire lifecycle of relationships. External dependencies exist when external entities have defined obligations 
+          or relationships with assets or services that the acquirer depends on to support the critical service. Examples 
+          include external entities that provide, operate, control, have access to, own, or have other responsibilities with 
+          respect to key assets. <br/> <br/>
+          The plan should address the resilience specifications for the critical service or the product being provided. The EDM plan 
+          should detail how core goals relating to EDM will be performed - for example evaluating suppliers, entering into formal agreements, 
+          monitoring changes at external entities, and prioritizing dependencies. The EDM plan will normally also detail the other resilience 
+          and security domains that are relevant to EDM at the acquirer. These may include, for example, risk management, incident management, 
+          service continuity, or change management. This is important so that the resilience processes across the acquirer will adequately 
+          support EDM according to consistent requirements and priorities. <br/><br/>
+          In practice, many of the required actions to manage external dependencies may be documented in other plans or documents (for example vendor selection and contracting procedures).
+          The purpose of an EDM plan is not to duplicate or repeat material in other plans or documentation, but rather to clarify and harmonize the roles and responsibilities of staff and 
+          processes across the acquirer. For example, the acquirer's service continuity plan may include actions involving suppliers in the event of a natural disaster. <br><br/>
+          The EDM plan, on the other hand, may detail roles, responsibilities, and processes to ensure that continuity plans are updated based on relevant changes, for example contractual 
+          changes that may affect service continuity. The plan may detail how different functions or departments will coordinate their efforts to support EDM. <br/><br/> 
+          Plans should explain:
+          <ul>
+            <li>who performs EDM practices</li>
+            <li>key stakeholders</li>
+            <li>when and how often they are performed, and</li>
+            <li>the key processes involved in EDM</li>
+          </ul>
+          Typical items addressed in an EDM plan may include:
+          <ul>
+            <li>identifying and prioritizing external dependencies</li>
+            <li>associating external dependencies with services and assets</li>
+            <li>managing operational risks resulting from external dependencies</li>
+            <li>evaluating and selecting external entities</li>
+            <li>formalizing and enforcing agreements with external entities, including changing provisions</li>
+            <li>terminations of relationships with external entities</li>
+            <li>integrating external dependencies into incident management and service continuity planning and exercising</li>
+          </ul> <br/>
+          Sub practices:
+          <ul>
+            <li>Document the plan</li>
+            <li>Document the process description</li>
+            <li>Review the plan with relevant stakeholders and obtain their agreement</li>
+            <li>Revise the plan as necessary</li>
+          </ul>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          Consider developing policies for external dependencies management. Policy consists of high level statements 
+          by organizational leadership concerning external dependencies management. The purpose of policy is to 
+          establish and maintain governance over the planning and performance of external dependencies management. 
+          Policy will typically address:
+          <ul>
+            <li>responsibility, authority, and ownership for performing activities</li>
+            <li>the importance of external dependencies management</li>
+            <li>the acquirer's approach to its critical services and their prioritization</li>
+            <li>methods for measuring adherence to policy, granting exceptions, and identifying policy violations</li>
+            <li>consequences for noncompliance with policy</li>
+            <li>the acquirer's approach to selecting suppliers and external entities</li>
+            <li>the acquirer's approach to risk management as it pertains to external dependencies</li>
+            <li>enterprise requirements or policies to which external entities are expected to adhere</li>
+            <li>monitoring the performance of external entities</li>
+            <li>issue escalation and dispute resolution</li>
+            <li>applying corrective action to relationships with external entities as specified in formal agreements</li>
+            <li>terminating relationships with external entities as specified in formal agreements</li>
+          </ul>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          Consider including process descriptions for EDM in policy or plan documents. Process descriptions document 
+          the series of actions or specific steps that are necessary to perform external dependencies management activities 
+          in a repeatable, predictable manner. <br/>
+          Examples may include:
+          <ul>
+            <li>the process to form supplier relationships, for example the steps ("gates") and approval authorities required for new relationships</li>
+            <li>the actions required to purchase or invest in new technology</li>
+            <li>processes to ensure the external entity concerns are included in risk management. For example, 
+              these may include a process to ensure that supplier performance problems are entered into risk 
+              registers or other risk monitoring tools.</li>
+            <li>the process to identify external dependencies, for example processes involving checking internal 
+              financial statements to identify supplier relationships outside the formal relationship management program.</li>
+            <li>the process to make changes to plans that involve external dependencies management, for example the service continuity, risk management, or incident management plans.</li>
+            <li>the process to make sure that requirements for infrastructure providers and governmental services are managed. For example, these processes may focus on advising the
+               corporate staff who interface with infrastructure and governmental authorities about changes and threats to the critical service.</li>
+            <li>the process to transition supplier relationships including, for example, the input of technical staff or critical service business owners at the acquirer.</li>
+            <li>the process to manage external entity access to the acquirer, for example the process to remove access when contractor staff are terminated or change staff positions</li>
+          </ul>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          Consider identifying stakeholders of the EDM process and engaging them to ensure they are aware of their roles. Examples include:
+          <ul>
+            <li>internal and external owners and custodians of organizational assets</li>
+            <li>internal and external service owners</li>
+            <li>organizational unit and line of business managers responsible for high-value assets and the services the support</li>
+            <li>staff responsible for managing operational risk</li>
+            <li>staff responsible for establishing, implementing, and maintaining an internal control system for organizational assets</li>
+            <li>staff required to develop, test, implement, and execute service continuity plans that involve external dependencies</li>
+            <li>acquisition and procurement staff</li>
+            <li>internal and external auditors</li>
+          </ul> <br/>
+        </li>
+        <li>
+          <span style="font-weight: bold;">CERT-RMM Reference</span> <br />
+          Consider developing standards and guidelines for external dependencies management. Examples include:
+          <ul>
+            <li>criteria for prioritizing external dependencies</li>
+            <li>templates that define the information required to identify, track and manage external dependencies in databases or information repositories</li>
+            <li>the guidelines and standards required to make risk statements and impact valuations</li>
+            <li>agreement templates, including enterprise specifications that apply to external entities</li>
+            <li>standard RFPs, including applicable requirements</li>
+            <li>criteria for selecting external entities</li>
+            <li>performance-monitoring report standards and templates</li>
+            <li>inspection reports on deliverables</li>
+            <li>corrective-action report standards and examples</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
 
   </div>
 
