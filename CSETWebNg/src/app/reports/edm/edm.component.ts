@@ -1,4 +1,4 @@
-import { performanceLegend, relationshipFormationG1, relationshipFormationG2, relationshipFormationG3, relationshipFormationG4, relationshipFormationG5, relationshipFormationG6 } from './data';
+import { performanceLegend, relationshipFormationG1, relationshipFormationG2, relationshipFormationG3, relationshipFormationG4, relationshipFormationG5, relationshipFormationG6, performanceLegend2, relationshipFormationSummary } from './data';
 ////////////////////////////////
 //
 //   Copyright 2020 Battelle Energy Alliance, LLC
@@ -32,13 +32,16 @@ import { Component, OnInit } from '@angular/core';
 export class EdmComponent implements OnInit {
 
   performanceLegend: any[];
+  performanceLegend2: any[];
+  relationshipFormationSummary: any[];
   relationshipFormationG1: any[];
   relationshipFormationG2: any[];
   relationshipFormationG3: any[];
   relationshipFormationG4: any[];
   relationshipFormationG5: any[];
   relationshipFormationG6: any[];
-  view: any[] = [480, 60];
+  view: any[] = [400, 50];
+  view2: any[] = [200, 150];
 
   // performance summary legend options
   performanceLegendShowXAxis: boolean = false;
@@ -61,6 +64,8 @@ export class EdmComponent implements OnInit {
 
   constructor() { 
     Object.assign(this, { performanceLegend });
+    Object.assign(this, { performanceLegend2 });
+    Object.assign(this, { relationshipFormationSummary });
     Object.assign(this, { relationshipFormationG1 });
     Object.assign(this, { relationshipFormationG2 });
     Object.assign(this, { relationshipFormationG3 });
