@@ -12,8 +12,6 @@ const headers = {
   providedIn: 'root'
 })
 export class MaturityService {
-  
-
   static currentMaturityModel: string;
   static allMaturityModels: MaturityModel[];
   /**
@@ -119,7 +117,6 @@ export class MaturityService {
       headers
     )
   }
-
 
   /**
    * 
