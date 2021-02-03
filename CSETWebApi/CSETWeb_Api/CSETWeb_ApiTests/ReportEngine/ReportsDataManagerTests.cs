@@ -15,7 +15,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine.Tests
         public void getACETDeficiencesTest()
         {
             ReportsDataManager dataManager = new ReportsDataManager(2357);
-            var stuff = dataManager.getACETDeficiences();
+            var stuff = dataManager.getMaturityDeficiences("ACET");
             Assert.IsTrue(stuff.Count > 0);
             
         }
