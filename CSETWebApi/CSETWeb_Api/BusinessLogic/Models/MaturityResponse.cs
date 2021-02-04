@@ -7,6 +7,12 @@ using CSETWeb_Api.Models;
 
 namespace CSETWeb_Api.BusinessLogic.Models
 {
+    public class MaturityDomainRemarks
+    {
+        public int Group_Id { get; set; }
+        public string DomainRemark { get; set; }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -75,6 +81,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// An optional description.  Usually displayed below the title.
         /// </summary>
         public string Description;
+
+        /// <summary>
+        /// an optional remark for each domain in the model
+        /// </summary>
+        public string DomainRemark; 
 
         /// <summary>
         /// Any child groupings below this grouping.

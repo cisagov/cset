@@ -61,6 +61,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
+       
+
         /// <summary>
         /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
         /// </summary>
@@ -75,6 +77,42 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 targetLevel = int.Parse(myLevel.Standard_Specific_Sal_Level);
             }
             return targetLevel;
+        }
+
+        public List<MaturityDomainRemarks> GetDomainRemarks(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                List<MaturityDomainRemarks> remarks = new List<MaturityDomainRemarks>();
+                foreach(var m in db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId).ToList())
+                {
+                    remarks.Add(new MaturityDomainRemarks()
+                    {
+                        Group_Id = m.Grouping_ID,
+                        DomainRemark = m.DomainRemarks
+                    });
+                }
+                return remarks;
+            }
+
+        }
+        public void SetDomainRemarks(int assessmentId, MaturityDomainRemarks remarks)
+        {
+            using (var db = new CSET_Context())
+            {
+                var remark = db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId 
+                && x.Grouping_ID == remarks.Group_Id).FirstOrDefault();
+                if (remark != null)
+                    remark.DomainRemarks = remarks.DomainRemark;
+                else
+                    db.MATURITY_DOMAIN_REMARKS.Add(new MATURITY_DOMAIN_REMARKS()
+                    {
+                        Assessment_Id = assessmentId,
+                        Grouping_ID = remarks.Group_Id,
+                        DomainRemarks = remarks.DomainRemark
+                    });
+                db.SaveChanges();
+            }
         }
 
 
@@ -238,8 +276,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
-                
 
+                
                 var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
 
                 if (myModelDefinition == null)
@@ -290,13 +328,27 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 // Get all subgroupings for this maturity model
                 var allGroupings = db.MATURITY_GROUPINGS
-                    .Include(x => x.Type_)
+                    .Include(x => x.Type)
                     .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
                 // Recursively build the grouping/question hierarchy
                 var tempModel = new MaturityGrouping();
                 BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
+
+                //GRAB all the domain remarks and assign them if necessary
+                Dictionary<int, MATURITY_DOMAIN_REMARKS> domainRemarks =
+                    db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId)
+                    .ToDictionary(x=> x.Grouping_ID, x=> x);                
+                foreach(MaturityGrouping g in tempModel.SubGroupings)
+                {
+                    MATURITY_DOMAIN_REMARKS dm; 
+                    if(domainRemarks.TryGetValue(g.GroupingID,out dm))
+                    {
+                        g.DomainRemark = dm.DomainRemarks;
+                    }
+                }
+
                 response.Groupings = tempModel.SubGroupings;
 
 
@@ -331,10 +383,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var newGrouping = new MaturityGrouping()
                 {
                     GroupingID = sg.Grouping_Id,
-                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
-                    Description = sg.Description
+                    Description = sg.Description                    
                 };
+
 
                 g.SubGroupings.Add(newGrouping);
 

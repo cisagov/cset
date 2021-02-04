@@ -322,6 +322,7 @@
     <Compile Include="Model\LEVEL_BACKUP_ACET.cs" />
     <Compile Include="Model\LEVEL_BACKUP_ACET_QUESTIONS.cs" />
     <Compile Include="Model\LEVEL_NAMES.cs" />
+    <Compile Include="Model\MATURITY_DOMAIN_REMARKS.cs" />
     <Compile Include="Model\MATURITY_GROUPINGS.cs" />
     <Compile Include="Model\MATURITY_GROUPING_TYPES.cs" />
     <Compile Include="Model\MATURITY_LEVELS.cs" />

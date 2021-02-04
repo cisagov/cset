@@ -39,6 +39,12 @@
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>
+        <div *ngIf="isDomain()">
+            <label for="DomainRemarks" style="display: block;">Domain Remarks</label>
+            <textarea [(ngModel)]="grouping.DomainRemark" id="DomainRemarks" name="DomainRemarks"
+            style="display: block; width: 100%;"  (blur)="submitTextComment(grouping)">                
+            </textarea>
+        </div>
 
     </ng-container>
 
