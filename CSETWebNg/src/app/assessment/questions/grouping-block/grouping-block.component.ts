@@ -2,6 +2,7 @@ import { group } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MaturityDomain } from '../../../models/mat-detail.model';
 import { MaturityDomainRemarks, QuestionGrouping } from '../../../models/questions.model';
+import { AssessmentService } from '../../../services/assessment.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -19,6 +20,7 @@ export class GroupingBlockComponent implements OnInit {
    * 
    */
   constructor(
+    public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public maturityFilteringService: MaturityFilteringService,
     public matSvc: MaturityService
@@ -36,11 +38,11 @@ export class GroupingBlockComponent implements OnInit {
   submitTextComment(grouping:QuestionGrouping){
     const id = grouping.GroupingID;
     const strRemark = grouping.DomainRemark;
-    const remark: MaturityDomainRemarks ={
-        Group_Id: id,
-        DomainRemark: strRemark
+    const remark: MaturityDomainRemarks = {
+      Group_Id: id,
+      DomainRemark: strRemark
     };
-    
+
     this.matSvc.postDomainObservation(remark).subscribe();
   }
 

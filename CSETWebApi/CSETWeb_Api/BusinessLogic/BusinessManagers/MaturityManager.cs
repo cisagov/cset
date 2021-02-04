@@ -61,7 +61,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
-       
 
         /// <summary>
         /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
@@ -79,12 +78,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return targetLevel;
         }
 
+
+        /// <summary>
+        /// Gets all domain remarks for an assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public List<MaturityDomainRemarks> GetDomainRemarks(int assessmentId)
         {
             using (var db = new CSET_Context())
             {
                 List<MaturityDomainRemarks> remarks = new List<MaturityDomainRemarks>();
-                foreach(var m in db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId).ToList())
+                foreach (var m in db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId).ToList())
                 {
                     remarks.Add(new MaturityDomainRemarks()
                     {
@@ -96,21 +101,35 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
 
         }
+
+
+        /// <summary>
+        /// Persists a domain remark.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="remarks"></param>
         public void SetDomainRemarks(int assessmentId, MaturityDomainRemarks remarks)
         {
             using (var db = new CSET_Context())
             {
-                var remark = db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId 
+                var remark = db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId
                 && x.Grouping_ID == remarks.Group_Id).FirstOrDefault();
                 if (remark != null)
+                {
                     remark.DomainRemarks = remarks.DomainRemark;
+                }
                 else
-                    db.MATURITY_DOMAIN_REMARKS.Add(new MATURITY_DOMAIN_REMARKS()
+                {
+                    if (remarks.DomainRemark != null)
                     {
-                        Assessment_Id = assessmentId,
-                        Grouping_ID = remarks.Group_Id,
-                        DomainRemarks = remarks.DomainRemark
-                    });
+                        db.MATURITY_DOMAIN_REMARKS.Add(new MATURITY_DOMAIN_REMARKS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Grouping_ID = remarks.Group_Id,
+                            DomainRemarks = remarks.DomainRemark
+                        });
+                    }
+                }
                 db.SaveChanges();
             }
         }
@@ -139,6 +158,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return levelNames;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<MaturityModel> GetAllModels()
         {
             using (var db = new CSET_Context())
@@ -245,7 +269,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
             //if the application is ACET the default is ACET
-            
+
             var myModel = db.AVAILABLE_MATURITY_MODELS
               .Include(x => x.model_)
               .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -261,7 +285,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 db.SaveChanges();
             }
 
-                return myModel;
+            return myModel;
         }
 
         /// <summary>
@@ -277,7 +301,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
 
-                
+
                 var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
 
                 if (myModelDefinition == null)
@@ -290,7 +314,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
 
-                
+
                 if (myModelDefinition.Answer_Options != null)
                 {
                     response.AnswerOptions = myModelDefinition.Answer_Options.Split(',').ToList();
@@ -339,11 +363,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 //GRAB all the domain remarks and assign them if necessary
                 Dictionary<int, MATURITY_DOMAIN_REMARKS> domainRemarks =
                     db.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId)
-                    .ToDictionary(x=> x.Grouping_ID, x=> x);                
-                foreach(MaturityGrouping g in tempModel.SubGroupings)
+                    .ToDictionary(x => x.Grouping_ID, x => x);
+                foreach (MaturityGrouping g in tempModel.SubGroupings)
                 {
-                    MATURITY_DOMAIN_REMARKS dm; 
-                    if(domainRemarks.TryGetValue(g.GroupingID,out dm))
+                    MATURITY_DOMAIN_REMARKS dm;
+                    if (domainRemarks.TryGetValue(g.GroupingID, out dm))
                     {
                         g.DomainRemark = dm.DomainRemarks;
                     }
@@ -366,9 +390,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// Recursive method that builds subgroupings for the specified group.
         /// It also attaches any questions pertinent to this group.
         /// </summary>
-        private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
-            List<MATURITY_GROUPINGS> allGroupings, 
-            List<MATURITY_QUESTIONS> questions, 
+        private void BuildSubGroupings(MaturityGrouping g, int? parentID,
+            List<MATURITY_GROUPINGS> allGroupings,
+            List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
@@ -385,7 +409,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     GroupingID = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
-                    Description = sg.Description                    
+                    Description = sg.Description
                 };
 
 
@@ -420,7 +444,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
-                
+
                     if (answer != null)
                     {
                         TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -603,16 +627,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 };
 
                                 // Calc total questons and anserwed
-                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).Total ) : 0;
+                                CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).Total) : 0;
                                 AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0;
-                                                               
+
                                 totalAnswered = 0;
 
                                 if (AnsweredPer > 0)
                                 {
-                                    totalAnswered = Convert.ToInt32( (AnsweredPer / 100) * CompQuestions);
+                                    totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
                                 }
-                                CompQT += CompQuestions; 
+                                CompQT += CompQuestions;
                                 CompAT += totalAnswered;
 
                                 var evolving = new SalAnswers

@@ -51,10 +51,10 @@ export class MaturityService {
    }
 
 
-  maturityModelIsEDM(): boolean{
+  maturityModelIsEDM(): boolean{   
     if(MaturityService.currentMaturityModel==undefined){
       MaturityService.currentMaturityModel = this.assessSvc.assessment.MaturityModel.ModelName;
-    };
+    };   
     return MaturityService.currentMaturityModel == "EDM";
   }
 
