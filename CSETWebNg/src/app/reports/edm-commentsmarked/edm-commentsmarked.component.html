@@ -61,21 +61,24 @@
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:  </b>   
-                                <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review"
+                            <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b>   
+                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
                                     src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review">
                             </td>
-                            <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                            <td class="deficiencies-list-comment" [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
                             <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
                         <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                         <ng-template #c_comments_given>
                             <tr>
-                                <td class="deficiencies-list-item"><b>Comment:</b></td>
-                                <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                                <td class="deficiencies-list-item pt-1"><b>Comment:</b></td>
+                                <td colspan="3" class="deficiencies-list-comment pt-1">{{s.ANSWER.Comment}}</td>
                             </tr>
                         </ng-template>
                     </ng-template>
+                    <tr>
+                        <td colspan="4"><hr></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -89,19 +92,22 @@
                 <table>
                     <ng-template ngFor let-s [ngForOf]="response?.Comments">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}: </b>
-                                <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                            <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b>
+                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
                             </td>
-                            <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                            <td class="deficiencies-list-comment" [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
                             <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
                         <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
                         <ng-template #sc_comments_given>
                             <tr>
-                                <td class="deficiencies-list-item"><b>Comment:</b></td>
-                                <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                                <td class="deficiencies-list-item pt-1"><b>Comment:</b></td>
+                                <td colspan="3" class="deficiencies-list-comment pt-1">{{s.ANSWER.Comment}}</td>
                             </tr>
                         </ng-template>
+                        <tr>
+                            <td colspan="4"><hr></td>
+                        </tr>
                     </ng-template>
                 </table>
             </div>

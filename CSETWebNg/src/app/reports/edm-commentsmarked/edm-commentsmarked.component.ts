@@ -5,7 +5,6 @@ import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
-
 @Component({
   selector: 'app-edm-commentsmarked',
   templateUrl: './edm-commentsmarked.component.html',
@@ -28,7 +27,7 @@ export class EdmCommentsmarkedComponent implements OnInit {
 
     this.maturitySvc.getCommentsMarked('EDM').subscribe(
       (r: any) => {
-        this.response = r;        
+        this.response = r;       
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
