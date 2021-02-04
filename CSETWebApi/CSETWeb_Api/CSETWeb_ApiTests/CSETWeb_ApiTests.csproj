@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.0\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.SqlClient, Version=2.0.20168.4, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL">
@@ -55,12 +56,15 @@
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
