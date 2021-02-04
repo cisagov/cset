@@ -1,7 +1,10 @@
+import { group } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
-import { QuestionGrouping } from '../../../models/questions.model';
+import { MaturityDomain } from '../../../models/mat-detail.model';
+import { MaturityDomainRemarks, QuestionGrouping } from '../../../models/questions.model';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+import { MaturityService } from '../../../services/maturity.service';
 
 
 @Component({
@@ -15,10 +18,23 @@ export class GroupingBlockComponent implements OnInit {
 
   constructor(
     public acetFilteringSvc: AcetFilteringService,
-    public maturityFilteringService: MaturityFilteringService
+    public maturityFilteringService: MaturityFilteringService,
+    public matSvc: MaturityService
+
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+  }
+
+  submitTextComment(grouping:QuestionGrouping){
+    const id = grouping.GroupingID;
+    const strRemark = grouping.DomainRemark;
+    const remark: MaturityDomainRemarks ={
+        Group_Id: id,
+        DomainRemark: strRemark
+    };
+    
+    this.matSvc.postDomainObservation(remark).subscribe();
   }
 
   /**

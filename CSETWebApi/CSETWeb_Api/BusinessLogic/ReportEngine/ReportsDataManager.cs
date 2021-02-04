@@ -153,7 +153,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 // Get all subgroupings for this maturity model
                 var allGroupings = db.MATURITY_GROUPINGS
-                    .Include(x => x.Type_)
+                    .Include(x => x.Type)
                     .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
@@ -276,7 +276,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var newGrouping = new MaturityGrouping()
                 {
                     GroupingID = sg.Grouping_Id,
-                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
                     Description = sg.Description
                 };
