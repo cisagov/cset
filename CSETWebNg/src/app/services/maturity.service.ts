@@ -142,4 +142,7 @@ export class MaturityService {
 	return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity='+maturityModel);  
   }
 
+  getCommentsMarked(maturity) {
+    return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity='+maturity, headers);
+  }   
 }

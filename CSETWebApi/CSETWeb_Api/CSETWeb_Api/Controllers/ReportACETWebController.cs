@@ -45,18 +45,7 @@ namespace CSETWeb_Api.Controllers
             data.information = reportsDataManager.GetInformation();
             return data;
         }
-        [HttpGet]
-        [Route("api/reports/acet/getCommentsMarked")]
-        public MaturityBasicReportData GetCommentsMarked()
-        {
-            int assessmentId = Auth.AssessmentForUser();
-            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            MaturityBasicReportData data = new MaturityBasicReportData();
-            data.Comments = reportsDataManager.getCommentsList(1);
-            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList(1);
-            data.information = reportsDataManager.GetInformation();
-            return data;
-        }
+        
         [HttpGet]
         [Route("api/reports/acet/GetAssessmentInformation")]
         public MaturityBasicReportData GetAssessmentInformation()
