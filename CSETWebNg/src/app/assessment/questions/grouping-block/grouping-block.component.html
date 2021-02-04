@@ -39,13 +39,16 @@
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>
-        <div *ngIf="isDomain()">
-            <label for="DomainRemarks" style="display: block;">Domain Remarks</label>
-            <textarea [(ngModel)]="grouping.DomainRemark" id="DomainRemarks" name="DomainRemarks"
-            style="display: block; width: 100%;"  (blur)="submitTextComment(grouping)">                
+
+        <div *ngIf="isDomain() && assessSvc.usesMaturityModel('EDM')" class="mt-4">
+            <h5 for="DomainRemarks">Domain Remarks</h5>
+            <textarea [(ngModel)]="grouping.DomainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
+                autosize (blur)="submitTextComment(grouping)">
             </textarea>
         </div>
 
     </ng-container>
 
 </ng-container>
+
+<div *ngIf="isDomain()" class="mb-5"></div>
