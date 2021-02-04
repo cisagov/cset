@@ -1036,6 +1036,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetDomainRemarks">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetDomainRemarks(CSETWeb_Api.BusinessLogic.Models.MaturityDomainRemarks)">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityLevel">
             <summary>
             Return the current maturity level for an assessment.

@@ -11,12 +11,13 @@ namespace DataLayerCore.Model
         public MATURITY_MODELS()
         {
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
+            MATURITY_GROUPINGS = new HashSet<MATURITY_GROUPINGS>();
             MATURITY_LEVELS = new HashSet<MATURITY_LEVELS>();
             MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
         }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string Model_Name { get; set; }
         [Key]
         public int Maturity_Model_Id { get; set; }
@@ -31,5 +32,7 @@ namespace DataLayerCore.Model
         public virtual ICollection<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
         [InverseProperty("Maturity_Model_")]
         public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
+        [InverseProperty("Maturity_Model")]
+        public virtual ICollection<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }        
     }
 }

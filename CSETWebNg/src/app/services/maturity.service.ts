@@ -3,6 +3,7 @@ import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
 import {MaturityModel} from "../models/assessment-info.model";
+import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -65,6 +66,19 @@ export class MaturityService {
     return this.http.post(
       this.configSvc.apiUrl + "MaturityModel?modelName=" + modelName,
       null,
+      headers
+    );
+  }
+
+  getDomainObservations(){
+    return this.http.get(this.configSvc.apiUrl + "MaturityModel/DomainRemarks",
+    headers)
+  }
+
+  postDomainObservation(group:MaturityDomainRemarks){
+    return this.http.post(
+      this.configSvc.apiUrl + "MaturityModel/DomainRemarks",
+      group,
       headers
     );
   }

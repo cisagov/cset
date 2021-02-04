@@ -32,8 +32,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
-
+                entity.HasKey(e => new { e.Assessment_Id, e.model_id });                
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
                     .HasForeignKey(d => d.Assessment_Id)
@@ -65,7 +64,7 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Title).IsUnicode(false);
 
-                entity.HasOne(d => d.Type_)
+                entity.HasOne(d => d.Type)
                     .WithMany(p => p.MATURITY_GROUPINGS)
                     .HasForeignKey(d => d.Type_Id)
                     .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
@@ -89,7 +88,10 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))");
             });
-
+            modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Grouping_ID });
+            });
 
             modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
             {

@@ -18,7 +18,7 @@ namespace DataLayerCore.Model
         [StringLength(100)]
         public string Grouping_Type_Name { get; set; }
 
-        [InverseProperty("Type_")]
+        [InverseProperty("Type")]
         public virtual ICollection<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
     }
 }
