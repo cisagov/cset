@@ -24,8 +24,9 @@ namespace DataLayerCore.Model
         public int Sequence { get; set; }
         public int? Parent_Id { get; set; }
         public int? Group_Level { get; set; }
-        public int Type_Id { get; set; }
-        public int Unique_Node_Id { get; set; }
+        public int Type_Id { get; set; }        
+        [StringLength(250)]
+        public string Title_Id { get; set; }
 
         [ForeignKey(nameof(Maturity_Model_Id))]
         [InverseProperty(nameof(MATURITY_MODELS.MATURITY_GROUPINGS))]
