@@ -545,7 +545,7 @@ export class QuestionExtrasComponent implements OnInit {
     return true;
   }
   isEDM(){
-    return this.maturitySvc.maturityModelIsEDM();
+    return this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM');    
   }
 }
 
