@@ -72,15 +72,20 @@
             <table>
                 <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                     <tr>
-                        <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
-                            <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                        <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b>
+                            <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
                         </td>
-                        <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                        <td class="deficiencies-list-comment" [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
                         <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
                     <tr>
-                        <td class="deficiencies-list-item"><b>Comment:</b></td>
-                        <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                        <td class="deficiencies-list-item pt-1"><b>Comment:</b></td>
+                        <td colspan="3" class="deficiencies-list-comment pt-1">{{s.ANSWER.Comment}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr>
+                        </td>
                     </tr>
                 </ng-template>
             </table>

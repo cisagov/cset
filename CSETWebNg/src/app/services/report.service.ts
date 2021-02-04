@@ -45,7 +45,7 @@ export class ReportService {
     /**
      * Calls the GetReport API method and returns an Observable.
      */
-    public getReport(reportId: string) {        
+    public getReport(reportId: string) {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
@@ -87,5 +87,42 @@ export class ReportService {
         });
         return divs;
     }
-}
 
+    /**
+     * Returns question text that has been scrubbed of glossary markup.
+     */
+    public scrubGlossaryMarkup(questionText: string): string {
+        console.log('scrubGlossaryMarkkup');
+        if (questionText.indexOf('[[') < 0) {
+            return questionText;
+          }
+      
+          console.log(questionText);
+          // we have one or more glossary terms; mediate them
+          let s = '';
+      
+          const pieces = questionText.split(']]');
+          pieces.forEach(x => {
+            const startBracketPos = x.lastIndexOf('[[');
+            if (startBracketPos >= 0) {
+                const leadingText = x.substring(0, startBracketPos);
+                let term = x.substring(startBracketPos + 2);
+                let displayWord = term;
+        
+                if (term.indexOf('|') > 0) {
+                  const p = term.split('|');
+                  term = p[0];
+                  displayWord = p[1];
+                }
+
+                s += leadingText;
+                s += displayWord;
+            } else {
+              // no starter bracket, just dump the whole thing
+              s += x;
+            }
+          });
+      
+          return s;
+    }
+}
