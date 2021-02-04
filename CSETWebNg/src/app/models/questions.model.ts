@@ -51,7 +51,14 @@ export interface MaturityQuestionResponse {
     AnswerOptions: string[];
 }
 
+export interface MaturityDomainRemarks
+{
+    Group_Id: number;
+    DomainRemark: string;
+}
+
 export interface QuestionGrouping {
+    DomainRemark: string;
     Title: string;
     Description: string;
     GroupingID: number;

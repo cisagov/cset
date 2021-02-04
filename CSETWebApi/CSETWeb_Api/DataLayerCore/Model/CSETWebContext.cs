@@ -104,6 +104,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
+        public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
         public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }

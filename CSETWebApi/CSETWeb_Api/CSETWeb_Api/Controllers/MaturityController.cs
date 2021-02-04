@@ -38,6 +38,30 @@ namespace CSETWeb_Api.Controllers
             return new MaturityManager().GetMaturityModel(assessmentId);
         }
 
+        /// <summary>
+        /// Set selected maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityModel/DomainRemarks")]
+        public List<MaturityDomainRemarks> GetDomainRemarks()
+        {
+            int assessmentId = Auth.AssessmentForUser();            
+            return new MaturityManager().GetDomainRemarks(assessmentId);
+        }
+
+        /// <summary>
+        /// Set selected maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/MaturityModel/DomainRemarks")]
+        public IHttpActionResult SetDomainRemarks(MaturityDomainRemarks remarks)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            new MaturityManager().SetDomainRemarks(assessmentId, remarks);
+            return Ok();
+        }
 
         /// <summary>
         /// Return the current maturity level for an assessment.
