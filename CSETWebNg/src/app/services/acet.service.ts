@@ -110,10 +110,7 @@ export class ACETService {
     getCompensatingControls() {
         return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
     } 
-    getCommentsMarked() {
-        return this.http.get(this.apiUrl + 'reports/acet/getCommentsMarked', headers);
-      }   
-    getAssessmentInformation() {
+        getAssessmentInformation() {
         return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
     }  
     getAnsweredQuestions() {

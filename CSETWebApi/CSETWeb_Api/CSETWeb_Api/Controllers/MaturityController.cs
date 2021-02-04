@@ -207,5 +207,18 @@ namespace CSETWeb_Api.Controllers
                 return Ok();
             }
         }
+
+        [HttpGet]
+        [Route("api/getCommentsMarked")]
+        public MaturityBasicReportData GetCommentsMarked(string maturity)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityBasicReportData data = new MaturityBasicReportData();
+            data.Comments = reportsDataManager.getCommentsList(maturity);
+            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList(maturity);
+            data.information = reportsDataManager.GetInformation();
+            return data;
+        }
     }
 }
