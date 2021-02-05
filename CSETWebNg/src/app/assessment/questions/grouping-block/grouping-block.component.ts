@@ -16,19 +16,26 @@ export class GroupingBlockComponent implements OnInit {
 
   @Input('grouping') grouping: QuestionGrouping;
 
-
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public maturityFilteringService: MaturityFilteringService,
     public matSvc: MaturityService
-
   ) { }
 
-  ngOnInit(): void {
+  /**
+   * 
+   */
+  ngOnInit(): void {    
   }
 
-  submitTextComment(grouping: QuestionGrouping) {
+  /**
+   * 
+   */
+  submitTextComment(grouping:QuestionGrouping){
     const id = grouping.GroupingID;
     const strRemark = grouping.DomainRemark;
     const remark: MaturityDomainRemarks = {

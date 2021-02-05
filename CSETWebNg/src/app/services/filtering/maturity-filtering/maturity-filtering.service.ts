@@ -323,7 +323,6 @@ export class MaturityFilteringService {
       this.recurseQuestions(sg);
     });
 
-
     // if I have questions and they are all invisible, then I am invisible
     if (g.Questions.length > 0 && g.Questions.every(q => !q.Visible)) {
       g.Visible = false;    
