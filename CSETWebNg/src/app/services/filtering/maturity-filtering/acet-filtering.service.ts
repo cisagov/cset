@@ -245,6 +245,8 @@ export class AcetFilteringService {
             } else {
                 q.Visible = true;
             }
+        } else {
+            q.Visible = true;
         }
     }
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 shopt extglob dotglob nullglob
 
-DEPLOY_DIR='//csetac.inl.gov/csetac'
+DEPLOY_DIR='//cset-tst.inl.gov/csetdemo'
 
 copyJS() {
 	echo 'copying .js'
@@ -58,6 +58,7 @@ copyLucene() {
 	echo 'finished Lucene'
 }
 
+echo 'Starting copy...'
 date
 
 copyJS &
@@ -67,16 +68,13 @@ copySVG &
 copyTTF &
 copyWOFF &
 copyBin &
+# copyLucene &
 
-#if (1) {
-#	copyLucene &
-#}
 
 wait
 
-date
-
 echo 'Copy complete'
+date
 
 
 
