@@ -3,64 +3,77 @@ shopt extglob dotglob nullglob
 
 DEPLOY_DIR='//cset-tst.inl.gov/csetdemo'
 
-copyJs() {
+copyJS() {
 	echo 'copying .js'
 	cp dist/*.js $DEPLOY_DIR
+	echo 'finished .js'
 }
 
 copyOther() {
 	echo 'copying other'
 	cp dist/*.html $DEPLOY_DIR
+	echo 'finished .html (other)'
 	cp dist/*.ico $DEPLOY_DIR
+	echo 'finished .ico (other)'
 	cp dist/*.css $DEPLOY_DIR
+	echo 'finished .css (other)'
+	cp dist/web.config $DEPLOY_DIR
+	echo 'finished other'
 }
 
-copyEot() {
+copyEOT() {
 	echo 'copying .eot'
 	cp dist/*.eot $DEPLOY_DIR
+	echo 'finished .eot'
 }
 
-copySvg() {
+copySVG() {
 	echo 'copying .svg'
 	cp dist/*.svg $DEPLOY_DIR
+	echo 'finished .svg'
 }
 
-copyTtf() {
+copyTTF() {
 	echo 'copying .ttf'
 	cp dist/*.ttf $DEPLOY_DIR
+	echo 'finished .ttf'
 }
 
-copyWoff() {
+copyWOFF() {
 	echo 'copying .woff'
 	cp dist/*.woff $DEPLOY_DIR
 	cp dist/*.woff2 $DEPLOY_DIR
+	echo 'finished .woff'
 }
 
 copyBin() {
 	echo 'copying bin'
 	cp dist/bin/*.dll $DEPLOY_DIR/bin
+	echo 'finished bin'
 }
 
 copyLucene() {
 	echo 'copying Lucene'
 	cp dist/Lucene/*.* $DEPLOY_DIR/Lucene
+	echo 'finished Lucene'
 }
 
-copyJs &
-copyOther &
-copyEot &
-copySvg &
-copyTtf &
-copyWoff &
-copyBin &
+echo 'Starting copy...'
+date
 
-#if (1) {
-#	copyLucene &
-#}
+copyJS &
+copyOther &
+copyEOT &
+copySVG &
+copyTTF &
+copyWOFF &
+copyBin &
+# copyLucene &
 
 wait
 
 echo 'Copy complete'
+date
 
 
 
