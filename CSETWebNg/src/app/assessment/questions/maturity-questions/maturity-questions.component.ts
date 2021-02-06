@@ -31,11 +31,8 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-import { GroupingBlockComponent } from '../grouping-block/grouping-block.component';
-import { MaturityModel } from '../../../models/assessment-info.model';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { GlossaryService } from '../../../services/glossary.service';
-
 
 @Component({
   selector: 'app-maturity-questions',
@@ -105,6 +102,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
+        this.filterSvc.answerOptions = response.AnswerOptions;
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.Glossary;
         this.loaded = true;
@@ -146,9 +144,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * 
    */
   showFilterDialog() {
+    // show the 'above target level' filter option for CMMC
+    let show = this.modelName === 'CMMC';
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {
       data: {
-        isMaturity: true
+        showFilterAboveTargetLevel: show
       }
     });
 
