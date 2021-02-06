@@ -58,7 +58,7 @@ copyLucene() {
 	echo 'finished Lucene'
 }
 
-echo 'Starting copy...'
+echo 'Starting copy to' $DEPLOY_DIR
 date
 
 copyJS &

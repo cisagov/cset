@@ -108,6 +108,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
+        this.filterSvc.answerOptions = response.AnswerOptions;
 
         // get the selected maturity filters
         this.acetFilteringSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
