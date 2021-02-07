@@ -85,7 +85,7 @@ export class MaturityFilteringService {
   /**
    * Valid 'answer'-type filter values
    */
-  public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
+  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
 
 
@@ -290,7 +290,7 @@ export class MaturityFilteringService {
       }
 
       // evaluate answers
-      if (filterSvc.answerValues.includes(q.Answer) && filterSvc.showFilters.includes(q.Answer)) {
+      if (filterSvc.answerOptions.includes(q.Answer) && filterSvc.showFilters.includes(q.Answer)) {
         q.Visible = true;
       }
 

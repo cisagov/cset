@@ -154,7 +154,7 @@ export class ConfigService {
   }
 
   /**
-   * 
+   * Associates a CSS class with each answer option.
    */
   populateButtonClasses() {
     this.buttonClasses['Y'] = 'btn-yes';
