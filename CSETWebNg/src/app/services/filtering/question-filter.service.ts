@@ -37,7 +37,7 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'U', 'C', 'M', 'D', 'FB'];
 
 
   /**
@@ -53,7 +53,7 @@ export class QuestionFilterService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'U', 'C', 'M', 'D', 'FB'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -62,9 +62,10 @@ export class QuestionFilterService {
   public filterSearchString = '';
 
   /**
-   * Valid 'answer'-type filter values
+   * Valid 'answer'-type filter values.  Defaulted to these (for standards)
+   * but overrideable by a maturity model.
    */
-  public answerValues: string[] = ['Y', 'N', 'NA', 'A', 'U'];
+  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
 
   /**
@@ -205,7 +206,7 @@ export class QuestionFilterService {
             }
 
             // evaluate answers
-            if (this.answerValues.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
+            if (this.answerOptions.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
               q.Visible = true;
             }
 

@@ -21,8 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ConfigService } from '../../services/config.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
 @Component({
@@ -31,21 +32,29 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionFiltersComponent {
+export class QuestionFiltersComponent implements OnInit {
 
-  isMaturity = false;
+  showFilterAboveTargetLevel = false;
 
   @Output() filterChanged = new EventEmitter<any>();
+
+  answerOptions: any[];
 
   constructor(
     public filterSvc: QuestionFilterService,
     private dialog: MatDialogRef<QuestionFiltersComponent>,
+    private configSvc: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
-    if (!!data && !!data.isMaturity) {
-      this.isMaturity = data.isMaturity
+    if (!!data && !!data.showFilterAboveTargetLevel) {
+      this.showFilterAboveTargetLevel = data.showFilterAboveTargetLevel
     }
+
+    this.answerOptions = [];
+    this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
+      this.answerOptions.push({value: o, text: this.configSvc.answerLabels[o]});
+    });
+
 
     // close the dialog if enter is pressed when focus is on background
     dialog.keydownEvents().subscribe(e => {
@@ -53,6 +62,19 @@ export class QuestionFiltersComponent {
         this.close();
       }
     });
+  }
+
+  /**
+   * 
+   */
+  ngOnInit(): any {
+  }
+
+  /**
+   * 
+   */
+  getId(option: any): string {
+    return 'cbShowOption' + option.value;
   }
 
   /**

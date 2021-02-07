@@ -1,7 +1,7 @@
 #!/bin/bash
 shopt extglob dotglob nullglob
 
-DEPLOY_DIR='//cset-tst.inl.gov/csetdemo'
+DEPLOY_DIR='//csetac.inl.gov/csetac'
 
 copyJS() {
 	echo 'copying .js'
@@ -58,7 +58,7 @@ copyLucene() {
 	echo 'finished Lucene'
 }
 
-echo 'Starting copy...'
+echo 'Starting copy to' $DEPLOY_DIR
 date
 
 copyJS &
