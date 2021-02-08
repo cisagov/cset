@@ -209,6 +209,8 @@ export class QuestionsComponent implements AfterViewChecked {
 
         this.domains = response.Domains;
 
+        this.filterSvc.answerOptions = response.AnswerOptions;
+
         this.filterSvc.evaluateFilters(this.domains);
 
         this.assessSvc.currentTab = 'questions';

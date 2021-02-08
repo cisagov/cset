@@ -51,12 +51,28 @@ export interface MaturityModel {
     ModelId: number;
     ModelName: string;
     MaturityTargetLevel: number;
+
+    // supported levels in this model
+    Levels: MaturityLevel[];
+
     QuestionsAlias: string;
 
     // the options for answering questions in this model
     AnswerOptions: string[];
 }
 
+/**
+ * Defines a single maturity level.
+ */
+export interface MaturityLevel {
+    Label: string;
+    Level: number;
+    Applicable: boolean;
+}
+
+/**
+ * 
+ */
 export interface AssessmentContactsResponse {
     ContactList: User[];
     CurrentUserRole: number;
@@ -77,7 +93,5 @@ export interface Demographic {
     Facilitator?: number;
     PointOfContact?: number;
     IsScoped?: boolean;
-
-
 }
 
