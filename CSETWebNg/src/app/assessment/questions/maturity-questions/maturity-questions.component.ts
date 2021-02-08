@@ -101,8 +101,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.questionsAlias = response.QuestionsAlias;
         this.groupings = response.Groupings;
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
+
         this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
         this.filterSvc.answerOptions = response.AnswerOptions;
+
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.Glossary;
         this.loaded = true;

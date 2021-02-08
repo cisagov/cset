@@ -29,7 +29,7 @@
   </p>
 
   <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-    <ng-template ngFor let-level [ngForOf]="maturitySvc.availableLevels">
+    <ng-template ngFor let-level [ngForOf]="availableLevels">
       <label class="btn btn-level btn-rounded form-check-label"
         [class.activeLevel]="level.Level <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel">
         <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="mat_cmmc_level"
