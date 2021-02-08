@@ -55,6 +55,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 if (myModel != null)
                 {
                     myModel.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId, db);
+
+                    myModel.Levels = GetMaturityLevelsForModel(myModel.ModelId, 100, db);
                 }
 
                 return myModel;
@@ -165,6 +167,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         public List<MaturityModel> GetAllModels()
         {
+            var response = new List<MaturityModel>();
+
             using (var db = new CSET_Context())
             {
                 var result = from a in db.MATURITY_MODELS
@@ -175,7 +179,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                  ModelName = a.Model_Name,
                                  QuestionsAlias = a.Questions_Alias
                              };
-                return result.ToList();
+                foreach (var m in result.ToList())
+                {
+                    response.Add(m);
+                    m.Levels = GetMaturityLevelsForModel(m.ModelId, 100, db);
+                }
+
+                return response;
             }
         }
 
@@ -332,7 +342,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
                 // get the levels and their display names for this model
-                response.MaturityLevels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
+                response.Levels = this.GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel, db);
 
 
 

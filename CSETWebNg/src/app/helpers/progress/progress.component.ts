@@ -46,6 +46,9 @@ export class ProgressComponent implements OnInit, OnChanges {
   }
 
   private progress(value: number) {
+    if (isNaN(value)) {
+      value = 0;
+    }
     const progress = value / 100;
     this.dashoffset = this.circumference * (1 - progress);
   }

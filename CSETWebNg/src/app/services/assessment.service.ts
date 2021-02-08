@@ -320,6 +320,7 @@ export class AssessmentService {
       this.assessment.MaturityModel = {
         ModelName: '',
         MaturityTargetLevel: 0,
+        Levels: [],
         ModelId: 0,
         AnswerOptions: [],
         QuestionsAlias: ''
