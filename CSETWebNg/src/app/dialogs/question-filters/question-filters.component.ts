@@ -50,12 +50,6 @@ export class QuestionFiltersComponent implements OnInit {
       this.showFilterAboveTargetLevel = data.showFilterAboveTargetLevel
     }
 
-    this.answerOptions = [];
-    this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      this.answerOptions.push({value: o, text: this.configSvc.answerLabels[o]});
-    });
-
-
     // close the dialog if enter is pressed when focus is on background
     dialog.keydownEvents().subscribe(e => {
       if ((<KeyboardEvent>e).keyCode === 13) {
@@ -68,6 +62,17 @@ export class QuestionFiltersComponent implements OnInit {
    * 
    */
   ngOnInit(): any {
+    this.refreshAnswerOptions();
+  }
+
+  /**
+   * 
+   */
+  refreshAnswerOptions() {
+    this.answerOptions = [];
+    this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
+      this.answerOptions.push({value: o, text: this.configSvc.answerLabels[o]});
+    });
   }
 
   /**

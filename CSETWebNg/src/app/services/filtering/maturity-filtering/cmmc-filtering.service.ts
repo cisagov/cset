@@ -53,8 +53,8 @@ export class CmmcFilteringService {
             q.Visible = true;
         }
 
-        // if the question is above the target level, but the 'show above target' filter is turned on, show it
-        if (q.MaturityLevel > targetLevel && this.questionFilterSvc.showFilters.includes('MT+')) {
+        // if the 'show above target' filter is turned on, show it, regardless of the question's level
+        if (this.questionFilterSvc.showFilters.includes('MT+')) {
             q.Visible = true;
         }
     }

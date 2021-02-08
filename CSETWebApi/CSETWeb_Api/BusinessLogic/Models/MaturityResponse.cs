@@ -26,7 +26,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         /// <summary>
         /// Lists the display names of the maturity levels in this assessment's maturity model.
         /// </summary>
-        public List<MaturityLevel> MaturityLevels;
+        public List<MaturityLevel> Levels;
 
         /// <summary>
         /// The target level selected for the assessment.

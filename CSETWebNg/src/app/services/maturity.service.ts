@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
-import {MaturityModel} from "../models/assessment-info.model";
+import { MaturityModel } from "../models/assessment-info.model";
 import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -13,21 +13,10 @@ const headers = {
   providedIn: 'root'
 })
 export class MaturityService {
-  
 
-  static currentMaturityModel: string;
+
+  static currentMaturityModelName: string;
   static allMaturityModels: MaturityModel[];
-  /**
-   * These are specific to CMMC and will need to be configured somewhere,
-   * and not hard coded.
-   */
-  availableLevels = [
-    { Label: "Level 1", Level: 1 },
-    { Label: "Level 2", Level: 2 },
-    { Label: "Level 3", Level: 3 },
-    { Label: "Level 4", Level: 4 },
-    { Label: "Level 5", Level: 5 }
-  ];
 
   cmmcData = null;
 
@@ -41,28 +30,27 @@ export class MaturityService {
     private http: HttpClient,
     private configSvc: ConfigService
   ) {
-      this.http.get(
-        this.configSvc.apiUrl + "MaturityModels",
-        headers
-      ).subscribe((data: MaturityModel[]) => {
-          MaturityService.allMaturityModels = data;
-        }      
-      );
-   }
+    this.http.get(
+      this.configSvc.apiUrl + "MaturityModels",
+      headers
+    ).subscribe((data: MaturityModel[]) => {
+      MaturityService.allMaturityModels = data;
+    });
+  }
 
 
-  maturityModelIsEDM(): boolean{   
-    if(MaturityService.currentMaturityModel==undefined){
-      MaturityService.currentMaturityModel = this.assessSvc.assessment.MaturityModel.ModelName;
-    };   
-    return MaturityService.currentMaturityModel == "EDM";
+  maturityModelIsEDM(): boolean {
+    if (MaturityService.currentMaturityModelName == undefined) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel.ModelName;
+    };
+    return MaturityService.currentMaturityModelName == "EDM";
   }
 
   /**
    * Posts the current selections to the server.
    */
   postSelection(modelName: string) {
-    MaturityService.currentMaturityModel = modelName;
+    MaturityService.currentMaturityModelName = modelName;
     return this.http.post(
       this.configSvc.apiUrl + "MaturityModel?modelName=" + modelName,
       null,
@@ -70,12 +58,12 @@ export class MaturityService {
     );
   }
 
-  getDomainObservations(){
+  getDomainObservations() {
     return this.http.get(this.configSvc.apiUrl + "MaturityModel/DomainRemarks",
-    headers)
+      headers)
   }
 
-  postDomainObservation(group:MaturityDomainRemarks){
+  postDomainObservation(group: MaturityDomainRemarks) {
     return this.http.post(
       this.configSvc.apiUrl + "MaturityModel/DomainRemarks",
       group,
@@ -99,8 +87,9 @@ export class MaturityService {
    * Returns the name of the current target level.
    */
   targetLevelName() {
-    if (!!this.assessSvc.assessment && !!this.assessSvc.assessment.MaturityModel.MaturityTargetLevel) {
-      const l = this.availableLevels.find(x => x.Level == this.assessSvc.assessment.MaturityModel.MaturityTargetLevel);
+    const model = this.assessSvc.assessment.MaturityModel;
+    if (!!this.assessSvc.assessment && !!model.MaturityTargetLevel) {
+      const l = model.Levels.find(x => x.Level == this.assessSvc.assessment.MaturityModel.MaturityTargetLevel);
       if (!!l) {
         return l.Label;
       }
@@ -111,10 +100,10 @@ export class MaturityService {
     }
   }
 
-  
-  public getResultsData(reportId: string) {      
-    if(!this.cmmcData) {
-      this.cmmcData =  this.http.get(this.configSvc.apiUrl+ 'reports/' + reportId);
+
+  public getResultsData(reportId: string) {
+    if (!this.cmmcData) {
+      this.cmmcData = this.http.get(this.configSvc.apiUrl + 'reports/' + reportId);
     }
     return this.cmmcData
   }
@@ -138,25 +127,25 @@ export class MaturityService {
   /**
    * 
    */
-  getQuestionsList( isAcetInstallation:boolean) {
+  getQuestionsList(isAcetInstallation: boolean) {
     return this.http.get(
-      this.configSvc.apiUrl + "MaturityQuestions?isAcetInstallation="+isAcetInstallation,
+      this.configSvc.apiUrl + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation,
       headers
     )
   }
 
-  getModel(modelName: string): MaturityModel{
-    for (let m of MaturityService.allMaturityModels){
-      if(m.ModelName == modelName)
+  getModel(modelName: string): MaturityModel {
+    for (let m of MaturityService.allMaturityModels) {
+      if (m.ModelName == modelName)
         return m;
     }
   }
 
   getMaturityDeficiency(maturityModel) {
-	return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity='+maturityModel);  
+    return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
 
   getCommentsMarked(maturity) {
-    return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity='+maturity, headers);
-  }   
+    return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity=' + maturity, headers);
+  }
 }
