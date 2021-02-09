@@ -135,6 +135,8 @@ export class ACETService {
             return "alert-incomplete";
         } else if (mat === "Sub-Baseline") {
             return "alert-danger";
+        } else if (mat === "Ad-hoc") {
+            return "alert-danger";
         } else if (mat === "Baseline") {
             return "alert-baseline";
         } else if (mat === "Evolving") {
