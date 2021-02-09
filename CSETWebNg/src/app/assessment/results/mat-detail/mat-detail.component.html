@@ -68,6 +68,9 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div *ngFor="let factor of domain.graphdata">
                 <div class="row">
                     <h5>Assessment Factor</h5>
                 </div>
@@ -76,7 +79,7 @@
         
                         <mat-accordion multi="true">
         
-                            <mat-expansion-panel *ngFor="let factor of domain.graphdata" [expanded]="expanded">
+                            <mat-expansion-panel [expanded]="expanded">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <h6>{{factor.asseessmentFactor}}</h6>
@@ -129,6 +132,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>
+                </div>
                 </div>
         
             </div>
