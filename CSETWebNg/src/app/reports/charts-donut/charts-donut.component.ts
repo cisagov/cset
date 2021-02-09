@@ -37,6 +37,7 @@ export class ChartsDonutComponent implements OnInit {
   // options
   showLegend: boolean = false;
   showLabels: boolean = false;
+  view: any[] = [600,200];
   
   minWidth: any = 100;
   colorScheme = {
