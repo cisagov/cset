@@ -135,6 +135,8 @@ export class ACETService {
             return "alert-incomplete";
         } else if (mat === "Sub-Baseline") {
             return "alert-danger";
+        } else if (mat === "Ad-hoc") {
+            return "alert-danger";
         } else if (mat === "Baseline") {
             return "alert-baseline";
         } else if (mat === "Evolving") {
@@ -158,6 +160,9 @@ export class ACETService {
     translateMaturity(maturity: string) {
         if (maturity === "Sub-Baseline") {
             return "Incomplete";
+        }
+        else if (maturity === "Ad-hoc") {
+            return "Ad Hoc";
         }
         return maturity;
     }
