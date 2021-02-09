@@ -3137,12 +3137,6 @@
     <Content Include="Documents\AC 20-173.pdf" />
     <Content Include="Documents\AcceptableUsePolicy_SANS.docx" />
     <Content Include="Documents\AcceptableUsePolicy_SANS.pdf" />
-    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\colorschememapping.xml" />
-    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\filelist.xml" />
-    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\header.htm" />
-    <Content Include="Documents\AccessibilityFeatures\AccessibilityFeatures_files\themedata.thmx" />
-    <Content Include="Documents\AccessibilityFeatures\index_acet.htm" />
-    <Content Include="Documents\AccessibilityFeatures\index.htm" />
     <Content Include="Documents\AcqAssessPolicy_SANS.docx" />
     <Content Include="Documents\AcqAssessPolicy_SANS.pdf" />
     <Content Include="Documents\Active Directory.pdf" />

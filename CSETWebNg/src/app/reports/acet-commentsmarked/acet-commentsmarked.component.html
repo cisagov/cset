@@ -100,13 +100,23 @@
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                         <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr>
+                        </td>
+                    </tr>
                     <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
                     <ng-template #sc_comments_given>
                         <tr>
                             <td class="deficiencies-list-item"><b>Comment:</b></td>
                             <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
-                        </tr>
+                        </tr>                       
                     </ng-template>
+                    <tr>
+                        <td colspan="4">
+                            <hr>
+                        </td>
+                    </tr>
                 </ng-template>
             </table>
         </div>
