@@ -32,7 +32,7 @@ import { NavigationService } from '../../../services/navigation.service';
 @Component({
     selector: 'app-mat-detail',
     templateUrl: './mat-detail.component.html',
-    styleUrls: ['./mat-detail.component.scss']
+    styleUrls: ['./mat-detail.component.scss', '../../../reports/acet-reports.scss']
 })
 export class MatDetailComponent implements OnInit {
     readonly expandAll = "Expand All";
