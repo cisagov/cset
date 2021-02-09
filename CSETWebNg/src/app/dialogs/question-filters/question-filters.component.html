@@ -23,7 +23,7 @@
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-filter"></span>
-    <span>Question Filters</span>
+    <span>{{Question}} Filters</span>
   </div>
 
   <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
@@ -42,44 +42,44 @@
       <div *ngFor="let option of answerOptions">
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn(option.value)" [id]="getId(option)" (click)="updateFilters($event, option.value)">
         <label [for]="getId(option)">
-          Show questions answered <em><strong>{{option.text}}</strong></em>
+          Show {{questions}} answered <em><strong>{{option.text}}</strong></em>
         </label>
       </div>
       <div>
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
         <label for="cbShowU">
-          Show unanswered questions
+          Show unanswered {{questions}}
         </label>
       </div>
       <div>
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments">
-          Show questions with comments
+          Show {{questions}} with comments
         </label>
       </div>
       <div>
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback" name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
         <label for="cbShowFeedback">
-          Show questions with feedback
+          Show {{questions}} with feedback
         </label>
       </div>
       <div>
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked">
-          Show questions marked for review
+          Show {{questions}} marked for review
         </label>
       </div>
       <div>
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
         <label for="cbShowDisc">
-          Show questions with observations
+          Show {{questions}} with observations
         </label>
       </div>
       <hr class="mt-2 mb-2" *ngIf="showFilterAboveTargetLevel">
       <div *ngIf="showFilterAboveTargetLevel">
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('MT+')" id="cbShowAboveMatTarget" name="cbShowAboveMatTarget" (click)="updateFilters($event, 'MT+')">
         <label for="cbShowAboveMatTarget">
-          Include questions above maturity target level
+          Include {{questions}} above maturity target level
         </label>
       </div>
     </div>
