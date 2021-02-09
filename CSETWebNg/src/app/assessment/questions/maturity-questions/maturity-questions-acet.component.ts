@@ -103,7 +103,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.questionsAlias = response.QuestionsAlias;
 
         // the recommended maturity level(s) based on IRP
-        console.log(response.Levels);
         this.maturityLevels = response.Levels;
 
         this.groupings = response.Groupings;
