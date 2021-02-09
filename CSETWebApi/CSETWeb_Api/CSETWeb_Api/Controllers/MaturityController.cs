@@ -103,6 +103,11 @@ namespace CSETWeb_Api.Controllers
             return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/MaturityModels")]
         public List<MaturityModel> GetAllModels()
@@ -111,8 +116,23 @@ namespace CSETWeb_Api.Controllers
 
             return new MaturityManager().GetAllModels();
         }
-        
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityAnswerCompletion")]
+        public double GetAnswerCompletion()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            var jjj =  new MaturityManager().GetAnswerCompletion(assessmentId);
+
+            return jjj;
+        }
 
 
         // --------------------------------------

@@ -1066,6 +1066,18 @@
             
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAllModels">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAnswerCompletion">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
             <summary>
             Get maturity calculations
