@@ -159,6 +159,9 @@ export class ACETService {
         if (maturity === "Sub-Baseline") {
             return "Incomplete";
         }
+        else if (maturity === "Ad-hoc") {
+            return "Ad Hoc";
+        }
         return maturity;
     }
 
