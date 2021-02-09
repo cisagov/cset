@@ -32,7 +32,7 @@ import { NavigationService } from '../../../services/navigation.service';
 @Component({
     selector: 'app-mat-detail',
     templateUrl: './mat-detail.component.html',
-    styleUrls: ['./mat-detail.component.scss']
+    styleUrls: ['./mat-detail.component.scss', '../../../reports/acet-reports.scss']
 })
 export class MatDetailComponent implements OnInit {
     readonly expandAll = "Expand All";
@@ -177,12 +177,15 @@ export class MatDetailComponent implements OnInit {
     
     checkMaturity(mat:string){
         if(this.bottomExpected == "Baseline" && mat == "Incomplete"){
+            return "domain-gray";
+        }
+        else if (this.bottomExpected == "Baseline" && mat == "Ad-hoc") {
             return "domain-red";
-        } else if( this.bottomExpected == "Evolving" && (mat == "Incomplete" || mat == "Baseline")){
+        } else if( this.bottomExpected == "Evolving" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline")){
             return "domain-red";
-        } else if (this.bottomExpected == "Intermediate" && (mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")){
+        } else if (this.bottomExpected == "Intermediate" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")){
             return "domain-red";
-        } else if (this.bottomExpected == "Advanced" && (mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")){
+        } else if (this.bottomExpected == "Advanced" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")){
             return "domain-red";
         } else {
             return "domain-green";

@@ -68,6 +68,9 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div *ngFor="let factor of domain.graphdata">
                 <div class="row">
                     <h5>Assessment Factor</h5>
                 </div>
@@ -76,7 +79,7 @@
         
                         <mat-accordion multi="true">
         
-                            <mat-expansion-panel *ngFor="let factor of domain.graphdata" [expanded]="expanded">
+                            <mat-expansion-panel [expanded]="expanded">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <h6>{{factor.asseessmentFactor}}</h6>
@@ -93,28 +96,29 @@
                                 <div class="row clearfix" *ngFor="let comp of factor.sections; last as isLast">
                                     <div class="col">
                                         <div class="row">
-                                            <div class="col-8">
-                                                <h6>{{ comp.name }}</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="alert"
-                                                    [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
-                                                    style="width:125px; height:41px ;margin-right:23px;float:right;">{{
-                                                    acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-                                            <div _ngcontent-c2="" class="ml-3 mr-3 form">
-                                                <table _ngcontent-c2="" class="label-value mx-auto">
-                                                    <tbody _ngcontent-c2="">
-                                                        <tr _ngcontent-c2="" class="item-row">
-                                                            <td _ngcontent-c2="">
-                                                                <app-charts-donut [donutData]="comp.data"></app-charts-donut>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div _ngcontent-c2="" class="mt-3 mb-3 item-table">
+                                        
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <h1 _ngcontent-c2="" class="item-title mt-3">{{comp.name}}</h1>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
+                                                            style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                                                            acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
+                                                    </div>
+                                                </div>
+                                                <div _ngcontent-c2="" class="ml-3 mr-3 form">
+                                                    <table _ngcontent-c2="" class="label-value mx-auto">
+                                                        <tbody _ngcontent-c2="">
+                                                            <tr _ngcontent-c2="" class="item-row">
+                                                                <td _ngcontent-c2="">
+                                                                    <app-charts-donut [donutData]="comp.data"></app-charts-donut>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                             
                                         </div>
@@ -129,6 +133,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>
+                </div>
                 </div>
         
             </div>
