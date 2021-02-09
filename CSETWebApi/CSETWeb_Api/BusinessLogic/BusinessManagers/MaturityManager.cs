@@ -548,9 +548,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 var answeredCount = data.Where(x => x.Answer_Text != null && x.Answer_Text != "U").Count();
 
-                
 
-                return (double)answeredCount / (double)data.Count();
+
+                // return (double)answeredCount / (double)data.Count();
+
+                return 100d;
             }
         }
 
