@@ -35,8 +35,9 @@ export class ChartsDonutComponent implements OnInit {
   donutData: any;
 
   // options
-  showLegend: boolean = true;
-  showLabels: boolean = true;
+  showLegend: boolean = false;
+  showLabels: boolean = false;
+  
   minWidth: any = 100;
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
