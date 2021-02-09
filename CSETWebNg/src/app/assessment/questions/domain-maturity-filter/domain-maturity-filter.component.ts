@@ -34,7 +34,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
  * question vs the selected level of this control.
  */
 @Component({
-  selector: 'app-maturity-filter',
+  selector: 'app-domain-maturity-filter',
   templateUrl: './domain-maturity-filter.component.html'
 })
 export class DomainMaturityFilterComponent implements OnInit {
