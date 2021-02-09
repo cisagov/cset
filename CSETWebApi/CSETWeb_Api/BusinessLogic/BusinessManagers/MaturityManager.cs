@@ -146,18 +146,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public List<MaturityLevel> GetMaturityLevelsForModel(int maturityModelId, int targetLevel, CSET_Context db)
         {
             // get the levels and their display names
-            var levelNames = new List<MaturityLevel>();
+            var levels = new List<MaturityLevel>();
             foreach (var l in db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == maturityModelId)
                 .OrderBy(y => y.Level).ToList())
             {
-                levelNames.Add(new MaturityLevel()
+                levels.Add(new MaturityLevel()
                 {
                     Level = l.Level,
                     Label = l.Level_Name,
                     Applicable = l.Level <= targetLevel
                 });
             }
-            return levelNames;
+            return levels;
         }
 
 
@@ -297,6 +297,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             return myModel;
         }
+
 
         /// <summary>
         /// Assembles a response consisting of maturity settings for the assessment
@@ -524,6 +525,37 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         }
 
 
+        /// <summary>
+        /// Returns the percentage of maturity questions that have been answered.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public double GetAnswerCompletion(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var targetLevel = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
+
+                double pct = 0;
+
+                var data = db.GetMaturityDetailsCalculations(assessmentId).ToList();
+
+                var activeLevels = new List<string>() { 
+                    "BASELINE", "EVOLVING"
+                };
+
+                var m = data.Where(x => activeLevels.Contains(x.MaturityLevel)).ToList();
+
+                var answeredCount = data.Where(x => x.Answer_Text != null && x.Answer_Text != "U").Count();
+
+                
+
+                return (double)answeredCount / (double)data.Count();
+            }
+        }
+
+
+
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
@@ -595,8 +627,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             DomainName = d.Domain,
                             Assessments = new List<MaturityAssessment>(),
                             Sequence = tGroupOrder == null ? 0 : tGroupOrder.grouporder,
-                            TargetPercentageAchieved = 0
+                            TargetPercentageAchieved = 0,
+                            PercentAnswered = 0
                         };
+
                         var DomainQT = 0;
                         var DomainAT = 0;
 
@@ -633,7 +667,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 {
                                     UnAnswered = !maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).Complete,
                                     Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0
-
                                 };
 
                                 // Calc total questons and anserwed
@@ -686,6 +719,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 {
                                     totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
                                 }
+
                                 CompQT += CompQuestions;
                                 CompAT += totalAnswered;
 
@@ -705,6 +739,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 {
                                     totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
                                 }
+
                                 CompQT += CompQuestions;
                                 CompAT += totalAnswered;
 
@@ -724,6 +759,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 {
                                     totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
                                 }
+
                                 CompQT += CompQuestions;
                                 CompAT += totalAnswered;
 
@@ -774,14 +810,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                         double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
                         maturityDomain.TargetPercentageAchieved = AchPerTol;
-                        maturityDomains.Add(maturityDomain);
 
+                        maturityDomains.Add(maturityDomain);
                     }
                 }
+
                 maturityDomains = maturityDomains.OrderBy(x => x.Sequence).ToList();
                 return maturityDomains;
             }
         }
+
 
         /// <summary>
         /// Get matrix for maturity determination based on total irp rating

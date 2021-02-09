@@ -14,5 +14,10 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         public double TargetPercentageAchieved { get; set; }
         public List<MaturityAssessment> Assessments { get; set; }
+
+        /// <summary>
+        /// The percentage of answers in this domain.  NULL and "U" answers don't count.
+        /// </summary>
+        public double PercentAnswered { get; set; }
     }
 }
