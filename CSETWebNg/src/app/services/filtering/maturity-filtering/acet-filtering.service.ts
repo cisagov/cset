@@ -188,6 +188,7 @@ export class AcetFilteringService {
                 } else {
                     belowBand = false;
                 }
+                ix++;
             }
         });
     }

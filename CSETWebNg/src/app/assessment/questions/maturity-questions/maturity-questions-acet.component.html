@@ -59,7 +59,8 @@
 
         <!-- top level (Domains) -->
         <div *ngFor="let g of groupings" class="w-100 mb-5">
-            <app-maturity-filter [domain]="g" [maturityLevels]="maturityLevels" (changed)="refreshQuestionVisibility()"></app-maturity-filter>
+            <app-domain-maturity-filter [domain]="g" [maturityLevels]="maturityLevels"
+                (changed)="refreshQuestionVisibility()"></app-domain-maturity-filter>
             <app-grouping-block [grouping]="g"></app-grouping-block>
         </div>
 
