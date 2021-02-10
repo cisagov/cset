@@ -120,6 +120,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                            where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == 1
+                           orderby m.Sequence
                            select new MatRelevantAnswers()
                            {
                                ANSWER = a,
