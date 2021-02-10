@@ -24,7 +24,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { DemographicService } from '../../../services/demographic.service';
 import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
@@ -36,12 +35,16 @@ import { NavigationService } from '../../../services/navigation.service';
 export class AssessmentInfoComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
-    public navSvc: NavigationService,
+    public navSvc: NavigationService
   ) { }
 
   @ViewChild('assessmentDetail') assessmentDetail;
 
 
   ngOnInit() {
+
   }
+
+
+
 }
