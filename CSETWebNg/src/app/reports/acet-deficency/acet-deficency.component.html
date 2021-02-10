@@ -20,28 +20,30 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="report-body">
+<div class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column">
-            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                DEFICIENCY 
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                DEFICIENCY
             </p>
-            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-            REPORT
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
             </p>
         </div>
         <div class="column">
             <p style="text-align: center">
                 <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
             </p>
+        </div>
+
+        <div class="cover-page-bottom mb-4">
+            <div>
+                <img style="height: 185px" alt="ncua" src="../../../../assets/NCUA/images/ncua_seal_blue.svg">
             </div>
-            
-            <div class="cover-page-bottom mb-4">
-                <div>
-                    <img style="height: 185px" alt="ncua" src="../../../../assets/NCUA/images/ncua_seal_blue.svg">
-            </div>
-            <div _ngcontent-c2="" style="
+            <div style="
                             text-align: right;
                             font-weight: normal;
                             font-size: 18px;
@@ -49,42 +51,51 @@
                             line-height: 150%;
                             padding-right: 2em;
                         ">
-            
-                <div _ngcontent-c2="" class="title-page-name">{{response?.information?.Assessment_Name}}</div>
-                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
+
+                <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.Assessment_Date |
+                    date:'dd-MMM-yyyy'}}
                 </div>
-                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
             </div>
         </div>
     </div>
     <div class="page-break">
-        
-    <div _ngcontent-c2="" class="ml-3 mr-3 form">
-        <div _ngcontent-c2="" class="paragraph">
-            <p><br>This deficiency report lists the statements that are not currently compliant or "No" answers. <br><br>
-                This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
-                the report in identifying gaps, prioritizing work, and beginning to make a plan to address
-                the gaps by implementing the controls necessary to come into compliance with the associated statement.
-                <br><br>
-                The percentage gap in each domain is also listed and will help to determine the priority.
-                ACET is a cumulative maturity model meaning lower levels should be completed before
-                moving to higher levels. Ideally baseline should be completed before focusing efforts on
-                controls in evolving and so forth up the line of maturity levels.<br></p>
-        </div>
-        <h1 _ngcontent-c2="" class="page-title">Deficiencies</h1>
-        <hr class="page-line">
 
-        <div _ngcontent-c2="">
-            <p style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
+        <div class="ml-3 mr-3 form">
+            <div class="paragraph">
+                <p><br>This deficiency report lists the statements that are not currently compliant or "No" answers.
+                    <br><br>
+                    This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+                    the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+                    the gaps by implementing the controls necessary to come into compliance with the associated
+                    statement.
+                    <br><br>
+                    The percentage gap in each domain is also listed and will help to determine the priority.
+                    ACET is a cumulative maturity model meaning lower levels should be completed before
+                    moving to higher levels. Ideally baseline should be completed before focusing efforts on
+                    controls in evolving and so forth up the line of maturity levels.<br>
+                </p>
+            </div>
+
+
+            <div class="d-flex flex-row justify-content-between align-items-end">
+                <h1 class="page-title">Deficiencies</h1>
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0">
             <table role="presentation">
                 <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                     <tr>
                         <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b>
-                            <img class="MarkedFlag" alt="marked for review" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
+                            <img class="MarkedFlag ml-2" alt="marked for review" *ngIf="s.ANSWER.Mark_For_Review"
+                                src="../../../assets/images/icons/MarkedFlag.png">
                         </td>
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                        <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                        <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                        </td>
                     </tr>
                     <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                     <ng-template #c_comments_given>
@@ -93,7 +104,11 @@
                             <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
                         </tr>
                     </ng-template>
-
+                    <tr>
+                        <td colspan="3">
+                            <hr class="my-2">
+                        </td>
+                    </tr>
                 </ng-template>
             </table>
         </div>
