@@ -526,33 +526,31 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
-        /// Returns the percentage of maturity questions that have been answered.
+        /// Returns the percentage of maturity questions that have been answered for the 
+        /// current maturity level (IRP).
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public double GetAnswerCompletion(int assessmentId)
+        public double GetAnswerCompletionRate(int assessmentId)
         {
             using (var db = new CSET_Context())
             {
                 var targetLevel = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
 
-                double pct = 0;
+                var answerDistribution = db.AcetAnswerDistribution(assessmentId, targetLevel).ToList();
 
-                var data = db.GetMaturityDetailsCalculations(assessmentId).ToList();
+                var answeredCount = 0;
+                var totalCount = 0;
+                foreach (var d in answerDistribution)
+                {
+                    if (d.Answer_Text != "U")
+                    {
+                        answeredCount += d.Count;
+                    }
+                    totalCount += d.Count;
+                }
 
-                var activeLevels = new List<string>() { 
-                    "BASELINE", "EVOLVING"
-                };
-
-                var m = data.Where(x => activeLevels.Contains(x.MaturityLevel)).ToList();
-
-                var answeredCount = data.Where(x => x.Answer_Text != null && x.Answer_Text != "U").Count();
-
-
-
-                // return (double)answeredCount / (double)data.Count();
-
-                return 100d;
+                return (double)answeredCount / (double)totalCount;
             }
         }
 
