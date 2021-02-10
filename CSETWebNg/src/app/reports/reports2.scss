@@ -8406,17 +8406,22 @@ table.label-value td {
     width: 85%;
     text-indent: 28px;
 }
+
 .paragraph {
     text-align: left;
     color: #555555;
 }
+
 .deficiencies-list-item {
     width: 20%;
     color: black;
-    padding-bottom: 25px;
-    padding-top: 25px;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 }
+
 .deficiencies-list-comment {
     width: 70%;
     color: #555555;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 }

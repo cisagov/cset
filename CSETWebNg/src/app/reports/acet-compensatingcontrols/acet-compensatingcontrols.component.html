@@ -20,26 +20,29 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="report-body">
+<div class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column">
-            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                COMPENSATING CONTROLS 
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                COMPENSATING CONTROLS
             </p>
-            <p style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-            REPORT
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
             </p>
         </div>
         <div class="column">
             <p style="text-align: center">
                 <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
             </p>
-            <div _ngcontent-c2="" class="cover-page-bottom mb-4">
-                <div _ngcontent-c2="">
-                    <img _ngcontent-c2="" src="../../../../assets/NCUA/images/ncua_seal_blue.svg" alt="ncua" style="height: 185px" alt="ncua" />
+            <div class="cover-page-bottom mb-4">
+                <div>
+                    <img src="../../../../assets/NCUA/images/ncua_seal_blue.svg" alt="ncua" style="height: 185px"
+                        alt="ncua" />
                 </div>
-                <div _ngcontent-c2="" style="
+                <div style="
                                     text-align: right;
                                     font-weight: normal;
                                     font-size: 18px;
@@ -47,72 +50,77 @@
                                     line-height: 150%;
                                     padding-right: 2em;
                                 ">
-        
-                    <div _ngcontent-c2="" class="title-page-name">{{response?.information?.Assessment_Name}}</div>
-                    <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessment_Date |
+
+                    <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                    <div class="title-page-content">{{response?.information?.Assessment_Date |
                         date:'dd-MMM-yyyy'}}
                     </div>
-                    <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                    <div _ngcontent-c2="" class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                    <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                    <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
                 </div>
             </div>
         </div>
     </div>
     <div class="page-break">
-    <div _ngcontent-c2="" class="ml-3 mr-3 form">
-        <h1 _ngcontent-c2="" class="page-title">Compensating Controls</h1>
-                <p>This report contains all the statements that have an associated compensating control and the comment provided.</p>
-
-        <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                src="../../../assets/images/icons/MarkedFlag.png"></p>
-        <hr class="page-line">
-        <div _ngcontent-c2="">
-            <table role="presentation">
-                <ng-template ngFor let-s [ngForOf]="response?.AlternateList">
-                    <tr>
-                        <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}: </b>
-                            <img class="MarkedFlag" *ngIf="s.ANSWER.Mark_For_Review"
-                                src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review">
-                        </td>
-                        <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                        <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
-                    </tr>
-                    <div *ngIf="s.ANSWER.Comment;then show_comments else no_comments">
-                    </div>
-                    <ng-template #show_comments>
+        <div class="ml-3 mr-3 form">
+            <div class="d-flex flex-row justify-content-between align-items-end">
+                <div>
+                    <h1 class="page-title">Compensating Controls</h1>
+                    <p>This report contains all the statements that have an associated compensating control and the
+                        comment provided.</p>
+                </div>
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0">
+            <div>
+                <table role="presentation">
+                    <ng-template ngFor let-s [ngForOf]="response?.AlternateList">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Comment:</b></td>
-                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}: </b>
+                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
+                                    src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review">
+                            </td>
+                            <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                            <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                            </td>
                         </tr>
-                    </ng-template>
-                    <ng-template #no_comments>
-                    </ng-template>
-                    <div *ngIf="s.ANSWER.Alternate_Justification;then c_comments_given else no_c_comments_given">
-                    </div>
-                    <ng-template #c_comments_given>
+                        <div *ngIf="s.ANSWER.Comment;then show_comments else no_comments">
+                        </div>
+                        <ng-template #show_comments>
+                            <tr>
+                                <td class="deficiencies-list-item"><b>Comment:</b></td>
+                                <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #no_comments>
+                        </ng-template>
+                        <div *ngIf="s.ANSWER.Alternate_Justification;then c_comments_given else no_c_comments_given">
+                        </div>
+                        <ng-template #c_comments_given>
+                            <tr>
+                                <td class="deficiencies-list-item"><b>Compensating Comment:</b></td>
+                                <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #no_c_comments_given>
+                            <tr>
+                                <td colspan="3" class="deficiencies-list-comment">
+                                    <img class="WarningTriangle" src="../../../assets/images/icons/WarningTriangle.png"
+                                        alt="warning triangle">
+                                    No compensating comment or explanation was provided.
+                                </td>
+                            </tr>
+                        </ng-template>
                         <tr>
-                            <td class="deficiencies-list-item"><b>Compensating Comment:</b></td>
-                            <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Alternate_Justification}}</td>
-                        </tr>
-                    </ng-template>
-                    <ng-template #no_c_comments_given>
-                        <tr>
-                            <td colspan="3" class="deficiencies-list-comment">
-                                <img class="WarningTriangle"
-                                    src="../../../assets/images/icons/WarningTriangle.png" alt="warning triangle">
-                                No compensating comment or explanation was provided.
+                            <td colspan="4">
+                                <hr class="my-2">
                             </td>
                         </tr>
                     </ng-template>
-                    <tr>
-                        <td colspan="4">
-                            <hr>
-                        </td>
-                    </tr>
-                </ng-template>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
-    </div>
 </div>
-
