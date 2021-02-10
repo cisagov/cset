@@ -124,14 +124,12 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/MaturityAnswerCompletion")]
-        public double GetAnswerCompletion()
+        [Route("api/MaturityAnswerCompletionRate")]
+        public double GetAnswerCompletionRate()
         {
             int assessmentId = Auth.AssessmentForUser();
 
-            var jjj =  new MaturityManager().GetAnswerCompletion(assessmentId);
-
-            return jjj;
+            return new MaturityManager().GetAnswerCompletionRate(assessmentId);
         }
 
 

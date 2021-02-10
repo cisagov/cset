@@ -106,7 +106,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             return;
         }
 
-        this.acetSvc.getAnswerCompletion().subscribe((percentAnswered: number) => {
+        this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
             if (percentAnswered == 100) {
                 this.disableAcetReportLinks = false;
             }
