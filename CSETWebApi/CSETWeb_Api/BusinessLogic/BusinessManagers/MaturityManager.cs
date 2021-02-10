@@ -550,7 +550,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     totalCount += d.Count;
                 }
 
-                return (double)answeredCount / (double)totalCount;
+                return ((double)answeredCount / (double)totalCount) * 100d;
             }
         }
 
