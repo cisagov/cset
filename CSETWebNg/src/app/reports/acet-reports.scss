@@ -174,23 +174,24 @@ table.label-value td {
 .deficiencies-list-item {
     width: 20%;
     color: black;
-    padding-bottom: 25px;
-    padding-top: 25px;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
     vertical-align: top;
 }
 .deficiencies-list-comment {
     width: 70%;
     color: #555555;
     
-    padding-top: 25px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     vertical-align: top;
 }
 
 .deficiencies-list-question-text {
   width: 10%;
   color: #555555; 
-  padding-bottom: 25px;
-  padding-top: 25px;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
   padding-left: 25px;
   vertical-align: top;
 }
