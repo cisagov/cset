@@ -1493,11 +1493,12 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   align-items: flex-start;
 }
 
-.standard-item > div > label {
+.standard-item > div > label, input[type=checkbox] + label {
   margin: 0 .5em;
   font-weight: normal;
   color: $gray-800;
 }
+
 
 .standard-item > div > label.recommended-standard {
   font-weight: bold;
