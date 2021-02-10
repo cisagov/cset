@@ -42,7 +42,7 @@ export interface QuestionResponse {
 export interface MaturityQuestionResponse {
     ModelName: string;
     QuestionsAlias: string;
-    MaturityLevels: [];
+    Levels: [];
     MaturityTargetLevel: number;
     Glossary: GlossaryEntry[];
     Groupings: QuestionGrouping[];

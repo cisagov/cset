@@ -21,8 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { findLastKey } from 'lodash';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { ACETService } from '../../../services/acet.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
@@ -32,42 +35,81 @@ import { NavigationService } from '../../../services/navigation.service';
     selector: 'app-reports',
     templateUrl: './reports.component.html',
     // tslint:disable-next-line:use-host-property-decorator
-    host: {class: 'd-flex flex-column flex-11a'}
+    host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
 
+    /**
+     * Indicates if all ACET questions have been answered.  This is only
+     * used when the ACET model is in use and this is an ACET installation.
+     */
+    disableAcetReportLinks: boolean = true;
+
+    /**
+     * 
+     */
     constructor(
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
+        private acetSvc: ACETService,
         private router: Router,
         private route: ActivatedRoute,
-        private authSvc: AuthenticationService,
         public configSvc: ConfigService,
         private cdr: ChangeDetectorRef
-    ) { 
-        if(this.assessSvc.assessment == null)
-        {
-        this.assessSvc.getAssessmentDetail().subscribe(
-            (data: any) => {
-            this.assessSvc.assessment = data;
-            });
+    ) {
+        if (this.assessSvc.assessment == null) {
+            this.assessSvc.getAssessmentDetail().subscribe(
+                (data: any) => {
+                    this.assessSvc.assessment = data;
+                });
         }
     }
 
+    /**
+     * 
+     */
     ngOnInit() {
         this.assessSvc.currentTab = 'results';
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
         });
+
+        // call the API for a ruling on whether all questions have been answered
+        if (this.configSvc.acetInstallation) {
+            this.checkAcetDisabledStatus();
+        }
     }
 
+    /**
+     * 
+     */
     ngAfterViewInit() {
         this.cdr.detectChanges();
     }
 
+    /**
+     * 
+     * @param reportType 
+     */
     clickReportLink(reportType: string) {
-        console.log('/index.html?returnPath=report/'+reportType)
-        const url = '/index.html?returnPath=report/'+reportType;
+        const url = '/index.html?returnPath=report/' + reportType;
         window.open(url, "_blank");
+    }
+
+    /**
+     * If all ACET statements are not answered, set the 'disable' flag
+     * to true.  
+     */
+    checkAcetDisabledStatus() {
+        this.disableAcetReportLinks = true;
+        if (!this.assessSvc.usesMaturityModel('ACET')) {
+            return;
+        }
+
+        this.acetSvc.getAnswerCompletion().subscribe((percentAnswered: number) => {
+            if (percentAnswered == 100) {
+                this.disableAcetReportLinks = false;
+            }
+        });
     }
 }

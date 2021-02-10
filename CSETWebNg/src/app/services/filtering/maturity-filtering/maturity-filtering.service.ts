@@ -281,7 +281,6 @@ export class MaturityFilteringService {
       q.Visible = false;
 
 
-
       // If search string is specified, any questions that don't contain the string
       // are not shown.  No need to check anything else.
       if (filterSvc.filterSearchString.length > 0
@@ -295,7 +294,7 @@ export class MaturityFilteringService {
       }
 
       // consider null answers as 'U'
-      if (q.Answer == null && filterSvc.showFilters.includes('U')) {
+      if ((q.Answer == null || q.Answer == 'U') && filterSvc.showFilters.includes('U')) {
         q.Visible = true;
       }
 
