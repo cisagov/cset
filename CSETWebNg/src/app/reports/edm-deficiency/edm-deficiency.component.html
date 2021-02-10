@@ -68,19 +68,27 @@
         <hr class="page-line">
 
         <div >
-            <p style="color: #de761c;text-align: right;">Marked for Review -<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
+            <p style="color: #de761c;text-align: right;">Marked for Review -&nbsp;<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
             <table>
                 <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                     <tr>
-                        <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b>
-                            <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
-                        </td>
-                        <td class="deficiencies-list-comment" [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
-                        <td style="text-align: center; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                        <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
+                        <td class="deficiencies-list-comment" [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
+                        <td style="padding-top:1rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
                     <tr>
-                        <td class="deficiencies-list-item pt-1"><b>Comment:</b></td>
-                        <td colspan="3" class="deficiencies-list-comment pt-1">{{s.ANSWER.Comment}}</td>
+                        <td></td>
+                        <td colspan="4">
+                            <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                <table>
+                                    <tr>
+                                        <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
+                                        <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="4">
