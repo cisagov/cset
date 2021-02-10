@@ -60,16 +60,16 @@ export class ChartsDonutComponent implements OnInit {
     let colors = [];
     data.forEach(item => {
       if (item.value === 0){
-        colors.push('red');
+        colors.push('#d9534f');
       }
       else if (item.value > 0 && item.value < 100) {
-        colors.push('yellow');
+        colors.push('#f0ad4e');
       }
       else if (item.value === 100) {
-        colors.push('green');
+        colors.push('#5cb85c');
       }
       else {
-        colors.push('gray');
+        colors.push('#5bc0de');
       }
 
     });
