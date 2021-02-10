@@ -41,18 +41,39 @@ export class ChartsDonutComponent implements OnInit {
   
   minWidth: any = 100;
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['green', 'yellow', 'red', '#7aa3e5', '#a8385d', '#aae3f5']
   };
 
   constructor(
   ) { }
 
   ngOnInit() {
-    
+    let donutColors = this.getDonutColors(this.donutData);
+    this.colorScheme.domain = donutColors;
   }
 
   onSelect(event) {
     console.log(event);
+  }
+
+  getDonutColors(data: any){
+    let colors = [];
+    data.forEach(item => {
+      if (item.value === 0){
+        colors.push('red');
+      }
+      else if (item.value > 0 && item.value < 100) {
+        colors.push('yellow');
+      }
+      else if (item.value === 100) {
+        colors.push('green');
+      }
+      else {
+        colors.push('gray');
+      }
+
+    });
+    return colors;
   }
 
 }
