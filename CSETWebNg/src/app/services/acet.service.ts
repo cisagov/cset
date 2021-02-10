@@ -75,8 +75,8 @@ export class ACETService {
         return this.http.post(this.apiUrl + 'summary', selected, headers);
     }
 
-    getAnswerCompletion() {
-        return this.http.get(this.apiUrl + 'MaturityAnswerCompletion');
+    getAnswerCompletionRate() {
+        return this.http.get(this.apiUrl + 'MaturityAnswerCompletionRate');
     }
 
     ////////////////// Maturity Detail functions ///////////////////////////

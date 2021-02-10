@@ -1072,7 +1072,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAnswerCompletion">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAnswerCompletionRate">
             <summary>
             
             </summary>
