@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
@@ -59,7 +58,7 @@ export class AssessmentConfigComponent implements OnInit {
     }
   ];
 
-  
+
   /**
    * Constructor.
    */
@@ -69,7 +68,7 @@ export class AssessmentConfigComponent implements OnInit {
     public configSvc: ConfigService,
     public dialog: MatDialog,
     public maturitySvc: MaturityService
-  ) { 
+  ) {
 
   }
 
@@ -89,52 +88,7 @@ export class AssessmentConfigComponent implements OnInit {
       });
   }
 
-  /**
-   * Sets the selection of a feature and posts the assesment detail to the server.
-   */
-  submit(feature, event: any) {
-    const value = event.srcElement.checked;
 
-    switch (feature.code) {
-      case 'maturity':
-        this.assessSvc.assessment.UseMaturity = value;
-        break;
-      case 'standard':
-        this.assessSvc.assessment.UseStandard = value;
-        break;
-      case 'diagram':
-        this.assessSvc.assessment.UseDiagram = value;
-        break;
-    }
-    
-
-    if (this.assessSvc.assessment.UseMaturity) {
-      if(this.assessSvc.assessment.MaturityModel==undefined){
-        if(this.configSvc.acetInstallation){          
-          this.assessSvc.assessment.MaturityModel = this.maturitySvc.getModel("ACET");
-        }
-        else{
-          this.assessSvc.assessment.MaturityModel = this.maturitySvc.getModel("EDM");
-        }
-      }
-      if (this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel
-        || this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel == 0) {
-          this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
-        }
-    }
-    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
-    sessionStorage.removeItem('tree');
-    // tell the standard service to refresh the nav tree
-    this.navSvc.buildTree(this.navSvc.getMagic());
-  }
-
-
-  /**
-   * Toggles the open/closed style of the description div.
-   */
-  toggleExpansion(std) {
-    this.expandedDesc[std] = !this.expandedDesc[std];
-  }
 
   /**
  * Returns the URL of the Questions page in the user guide.

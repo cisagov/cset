@@ -20,17 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<h4>Assessment Options</h4>
+<div class="standard-item d-flex justify-content-between flex-11a">
+    <div>
+        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1"
+            (change)="submit(feature, $event)" [checked]="feature.selected">
+        <label for="{{feature.code}}">
+            {{feature.label}}
+        </label>
+    </div>
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()"
+        tabindex="0"></i>
+</div>
+<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc">
+    {{feature.description}}
+</div>
 
-<p>
-  Select the features that will be used to perform this assessment. Each feature can be expanded for
-  additional information. More than one feature can be chosen for a more comprehensive assessment.
-</p>
-<p>
-  For help choosing assessment options and features see the additional information in the 
-  <a rel="noopener noreferrer" target="_blank" tabindex="0" [href]="helpDocUrl()">User Guide</a>.
-</p>
-
-<div *ngFor="let f of features" class="d-flex flex-column justify-content-between flex-00a">
-  <app-feature-option [feature]="f"></app-feature-option>
+<div class="pl-5" *ngIf="feature.code == 'maturity' && configSvc.acetInstallation && assessSvc.assessment?.UseMaturity">
+    <div>
+        <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"
+            (change)="submit('acet-only', $event)" [checked]="assessSvc.acetOnly">
+        <label for="acet-only">
+            ACET Only
+        </label>
+    </div>
 </div>

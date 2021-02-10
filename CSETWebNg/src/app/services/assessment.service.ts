@@ -62,6 +62,12 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
+  /**
+   * Defines certain behaviors that are inherent to the app
+   * running as an ACET installation.
+   */
+  public acetOnly: boolean;
+
 
   /**
    *
@@ -78,6 +84,9 @@ export class AssessmentService {
         .subscribe((response: Role[]) => (this.roles = response));
       this.initialized = true;
     }
+
+    // default acetOnly mode if this is an ACET installation
+    this.acetOnly = this.configSvc.acetInstallation;
   }
 
   dropAssessment() {
