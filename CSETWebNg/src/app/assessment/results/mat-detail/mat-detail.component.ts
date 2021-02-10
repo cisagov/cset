@@ -72,7 +72,6 @@ export class MatDetailComponent implements OnInit {
     loadMatDetails() {
         this.acetSvc.getMatDetailList().subscribe(
             (data: any) => {
-                console.log(data);
                 data.forEach((domain: MaturityDomain) => {
                     var domainData = {
                         domainName: domain.DomainName,
