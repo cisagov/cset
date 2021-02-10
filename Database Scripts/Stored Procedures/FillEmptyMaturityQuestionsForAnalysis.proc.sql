@@ -11,8 +11,8 @@ BEGIN
 	begin
 	BEGIN TRANSACTION;  
 	EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';
-	INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id],[Answer_Text],[Is_Component],[Is_Framework],[Is_Maturity],[Assessment_Id])     
-		select Is_Requirement=0,mq.Mat_Question_Id,Answer_Text = 'U', Is_Component='0',Is_Framework=0, Is_Maturity=1, Assessment_Id =@Assessment_Id
+	INSERT INTO [dbo].[ANSWER]  ([Question_Or_Requirement_Id],[Answer_Text],[Question_Type],[Assessment_Id])     
+		select mq.Mat_Question_Id,Answer_Text = 'U', Question_Type='Maturity', Assessment_Id =@Assessment_Id
 		from [CSETWeb].[dbo].[MATURITY_QUESTIONS] mq
 			where Maturity_Model_Id in
 			(select model_id from [CSETWeb].[dbo].[AVAILABLE_MATURITY_MODELS]
@@ -32,3 +32,5 @@ BEGIN
 	end
 
 END
+/****** Object:  StoredProcedure [dbo].[FillEmptyQuestionsForAnalysis]    Script Date: 12/16/2020 11:01:33 AM ******/
+SET ANSI_NULLS ON
