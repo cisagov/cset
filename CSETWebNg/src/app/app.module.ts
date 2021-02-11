@@ -264,6 +264,7 @@ import { CmmcFilteringService } from './services/filtering/maturity-filtering/cm
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
+import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
 
 @NgModule({
     imports: [
@@ -482,6 +483,7 @@ import { PlaceholderQuestionsComponent } from './assessment/questions/placeholde
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        FeatureOptionComponent,
     ],
     providers: [
         ConfigService,
