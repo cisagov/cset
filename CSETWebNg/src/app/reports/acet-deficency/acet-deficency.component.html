@@ -89,10 +89,10 @@
             <table role="presentation">
                 <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                     <tr>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                        <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
                         <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
                         <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                        <td style="padding-top:1rem;padding-left:10px; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                        <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                     </tr>
                     <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                     <ng-template #c_comments_given>
@@ -111,7 +111,7 @@
                         </tr>
                     </ng-template>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             <hr class="my-2">
                         </td>
                     </tr>
