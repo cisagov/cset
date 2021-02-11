@@ -45,6 +45,11 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedDesc: boolean;
 
+  /**
+   * Indicates the expanded state of the ACET Only description
+   */
+  expandedAcet: boolean;
+
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -76,6 +81,12 @@ export class FeatureOptionComponent implements OnInit {
     // special case for acet-only
     if (feature == 'acet-only') {
         this.assessSvc.acetOnly = value;
+        this.assessSvc.assessment.IsAcet = value;
+        this.assessSvc.assessment.IsAcetOnly = value;
+
+        if (value) {
+          this.assessSvc.setAcetDefaults();
+        }
     }
 
 
@@ -106,5 +117,12 @@ export class FeatureOptionComponent implements OnInit {
    */
   toggleExpansion() {
     this.expandedDesc = !this.expandedDesc;
+  }
+
+  /**
+   * 
+   */
+  toggleExpansionAcet() {
+    this.expandedAcet = !this.expandedAcet;
   }
 }
