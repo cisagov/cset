@@ -71,19 +71,25 @@
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}: </b>
-                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                                    src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review">
-                            </td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
                             <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                            <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
-                            </td>
+                            <td style="padding-top:1rem; padding-left:10px; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
                         <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                         <ng-template #c_comments_given>
                             <tr>
-                                <td class="deficiencies-list-item"><b>Comment:</b></td>
-                                <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                        <table>
+                                            <tr>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
                         </ng-template>
                     </ng-template>
@@ -102,19 +108,25 @@
                 <table>
                     <ng-template ngFor let-s [ngForOf]="response?.Comments">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}: </b>
-                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                                    src="../../../assets/images/icons/MarkedFlag.png">
-                            </td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
                             <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                            <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
-                            </td>
+                            <td style="padding-top:1rem; padding-left:10px; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
                         <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
                         <ng-template #sc_comments_given>
                             <tr>
-                                <td class="deficiencies-list-item"><b>Comment:</b></td>
-                                <td colspan="3" class="deficiencies-list-comment">{{s.ANSWER.Comment}}</td>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                        <table>
+                                            <tr>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
                         </ng-template>
                         <tr>
