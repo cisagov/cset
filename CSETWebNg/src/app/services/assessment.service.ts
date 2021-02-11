@@ -31,6 +31,7 @@ import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { EmailService } from './email.service';
+import { config } from 'rxjs';
 
 
 export interface Role {
@@ -92,8 +93,8 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'contacts/allroles');
   }
 
-  createAssessment() {
-    return this.http.get(this.apiUrl + 'createassessment');
+  createAssessment(mode) {
+    return this.http.get(this.apiUrl + 'createassessment?mode='+mode);
   }
 
   getAssessments() {
@@ -234,7 +235,8 @@ export class AssessmentService {
   }
 
   newAssessment() {
-    this.createAssessment()
+    let mode = this.configSvc.acetInstallation;
+    this.createAssessment(mode)
       .toPromise()
       .then(
         (response: any) => this.loadAssessment(response.Id),
