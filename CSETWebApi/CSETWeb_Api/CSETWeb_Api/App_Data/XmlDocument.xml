@@ -644,7 +644,7 @@
             Manages assessments.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AssessmentController.CreateAssessment">
+        <member name="M:CSETWeb_Api.Controllers.AssessmentController.CreateAssessment(System.Boolean)">
             <summary>
             Creates a new Assessment with the current user as the first contact
             in an admin role.
