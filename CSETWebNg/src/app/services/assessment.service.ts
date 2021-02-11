@@ -32,6 +32,8 @@ import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { EmailService } from './email.service';
 import { config } from 'rxjs';
+import { MaturityService } from './maturity.service';
+
 
 
 export interface Role {
@@ -54,8 +56,11 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
 
+  /**
+   * This is private because we need a setter so that we can do things
+   * when the assessment is loaded.
+   */
   public assessment: AssessmentDetail;
-
 
   /**
    * Stores the active assessment 'features' that the user wishes to use,
@@ -63,12 +68,23 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
+  /**
+   * Defines certain behaviors that are inherent to the app
+   * running as an ACET installation.
+   */
+  public acetOnly: boolean;
+
+  /**
+   * Indicates if a brand-new assessment is being created.
+   * This will allow the assessment-detail page to do certain
+   * things that should only be done on the very first load of an assessment.
+   */
+  public isBrandNew = false;
 
   /**
    *
    */
   constructor(
-    private emailSvc: EmailService,
     private http: HttpClient,
     private configSvc: ConfigService,
     private router: Router
@@ -79,8 +95,14 @@ export class AssessmentService {
         .subscribe((response: Role[]) => (this.roles = response));
       this.initialized = true;
     }
+
+    // default acetOnly mode if this is an ACET installation
+    this.acetOnly = this.configSvc.acetInstallation;
   }
 
+  /**
+   * 
+   */
   dropAssessment() {
     this.userRoleId = undefined;
     this.currentTab = undefined;
@@ -89,6 +111,9 @@ export class AssessmentService {
     sessionStorage.removeItem('assessmentId');
   }
 
+  /**
+   * 
+   */
   refreshRoles() {
     return this.http.get(this.apiUrl + 'contacts/allroles');
   }
@@ -97,10 +122,16 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'createassessment?mode='+mode);
   }
 
+  /**
+   * 
+   */
   getAssessments() {
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
 
+  /**
+   * 
+   */
   getAssessmentToken(assessId: number) {
     return this.http
       .get(this.apiUrl + 'auth/token?assessmentId=' + assessId)
@@ -118,10 +149,16 @@ export class AssessmentService {
       });
   }
 
+  /**
+   * 
+   */
   getAssessmentDetail() {
     return this.http.get(this.apiUrl + 'assessmentdetail');
   }
 
+  /**
+   * 
+   */
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
     return this.http
@@ -133,6 +170,9 @@ export class AssessmentService {
       .subscribe();
   }
 
+  /**
+   * 
+   */
   getAssessmentContacts() {
     return this.http
       .get(this.apiUrl + 'contacts')
@@ -143,10 +183,16 @@ export class AssessmentService {
       });
   }
 
+  /**
+   * 
+   */
   getOrganizationTypes() {
     return this.http.get(this.apiUrl + 'getOrganizationTypes');
   }
 
+  /**
+   * 
+   */
   searchContacts(term: User) {
     return this.http.post(
       this.apiUrl + 'contacts/search',
@@ -155,6 +201,9 @@ export class AssessmentService {
     );
   }
 
+  /**
+   * 
+   */
   createContact(contact: User) {
     const body = this.configSvc.config.defaultInviteTemplate;
     return this.http.post(
@@ -171,6 +220,9 @@ export class AssessmentService {
     );
   }
 
+  /**
+   * 
+   */
   updateContact(contact: User): any {
     return this.http.post(
       this.apiUrl + 'contacts/UpdateUser',
@@ -179,6 +231,9 @@ export class AssessmentService {
     );
   }
 
+  /**
+   * 
+   */
   addContact(contact: User) {
     return this.http.post(
       this.apiUrl + 'contacts/add',
@@ -224,29 +279,61 @@ export class AssessmentService {
     );
   }
 
+  /**
+   * 
+   */
   id(): number {
     return +sessionStorage.getItem('assessmentId');
   }
 
+  /**
+   * 
+   */
   getMode() {
     this.http
       .get(this.apiUrl + 'GetMode')
       .subscribe((mode: string) => (this.applicationMode = mode));
   }
 
+  /**
+   * Create a new assessment.
+   */
   newAssessment() {
     let mode = this.configSvc.acetInstallation;
     this.createAssessment(mode)
       .toPromise()
       .then(
-        (response: any) => this.loadAssessment(response.Id),
+        (response: any) => {
+          // set the brand new flag
+          this.isBrandNew = true;
+
+          // if (this.configSvc.acetInstallation) {
+          //   this.setAcetDefaults();
+          // }
+
+          this.loadAssessment(response.Id);
+        },
         error =>
           console.log(
             'Unable to create new assessment: ' + (<Error>error).message
           )
       );
   }
+  
+  /**
+   * Reset things to ACET defaults
+   */
+  setAcetDefaults() {
+    this.acetOnly = true;
+    if (!!this.assessment) {
+      this.assessment.UseMaturity = true;
+      this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == 'ACET');
+    }
+  }
 
+  /**
+   * 
+   */
   loadAssessment(id: number) {
     this.getAssessmentToken(id).then(() => {
       const rpath = localStorage.getItem('returnPath');
@@ -260,10 +347,16 @@ export class AssessmentService {
     });
   }
 
+  /**
+   * 
+   */
   getAssessmentDocuments() {
     return this.http.get(this.apiUrl + 'assessmentdocuments');
   }
 
+  /**
+   * 
+   */
   hasDiagram() {
     return this.http.get(this.apiUrl + 'diagram/has');
   }
@@ -290,14 +383,13 @@ export class AssessmentService {
   }
 
   /**
-   * 
-   * @param modelName 
+   * Indicates if the assessment uses a maturity model.
    */
   usesMaturityModel(modelName: string) {
     if (!this.assessment) {
       return false;
     }
-    
+
     if (!this.assessment.MaturityModel) {
       return false;
     }
@@ -309,7 +401,7 @@ export class AssessmentService {
     if (modelName == '*' && !!this.assessment.MaturityModel.ModelName) {
       return true;
     }
-    
+
     return this.assessment.MaturityModel.ModelName.toLowerCase() === modelName.toLowerCase();
   }
 
@@ -318,19 +410,8 @@ export class AssessmentService {
    * @param modelName 
    */
   setModel(modelName: string) {
-    if (!this.assessment.MaturityModel) {
-      this.assessment.MaturityModel = {
-        ModelName: '',
-        MaturityTargetLevel: 0,
-        Levels: [],
-        ModelId: 0,
-        AnswerOptions: [],
-        QuestionsAlias: ''
-      };
-    }
-    this.assessment.MaturityModel.ModelName = modelName;
+    this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == modelName);
   }
-
 
   /**
    * Converts linebreak characters to HTML <br> tag.

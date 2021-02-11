@@ -523,7 +523,11 @@ export class NavigationService {
       displayText: 'Maturity Models',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
-      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity }
+      condition: () => { 
+        return !!this.assessSvc.assessment 
+        && this.assessSvc.assessment?.UseMaturity 
+        && !this.assessSvc.acetOnly
+      }
     },
     {
       displayText: 'CMMC Tutorial',

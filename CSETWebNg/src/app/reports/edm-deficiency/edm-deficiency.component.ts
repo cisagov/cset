@@ -31,4 +31,7 @@ export class EdmDeficiencyComponent implements OnInit {
         error => console.log('Deficiency Report Error: ' + (<Error>error).message)
       );
     }
+    getQuestion(q){
+      return q.split(/(?<=^\S+)\s/)[1];
+    }
 }
