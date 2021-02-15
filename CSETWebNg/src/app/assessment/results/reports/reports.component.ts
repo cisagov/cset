@@ -75,6 +75,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
 
         // call the API for a ruling on whether all questions have been answered
+        this.disableAcetReportLinks = false;
         if (this.configSvc.acetInstallation) {
             this.checkAcetDisabledStatus();
         }
