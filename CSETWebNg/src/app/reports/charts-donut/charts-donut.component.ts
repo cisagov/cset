@@ -38,6 +38,7 @@ export class ChartsDonutComponent implements OnInit {
   showLegend: boolean = false;
   showLabels: boolean = false;
   view: any[] = [600,200];
+  label: string = "Total %"
   
   minWidth: any = 100;
   colorScheme = {
