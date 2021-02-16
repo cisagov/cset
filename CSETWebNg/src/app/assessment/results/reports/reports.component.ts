@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -75,6 +75,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
 
         // call the API for a ruling on whether all questions have been answered
+        this.disableAcetReportLinks = false;
         if (this.configSvc.acetInstallation) {
             this.checkAcetDisabledStatus();
         }

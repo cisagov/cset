@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -31,13 +31,13 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/createassessment")]
-        public AssessmentDetail CreateAssessment()
+        public AssessmentDetail CreateAssessment(bool mode)
         {   
             // Get the current userid to set as the Assessment creator and first attached user
             int currentUserId = Auth.GetUserId();
 
             AssessmentManager man = new AssessmentManager();
-            return man.CreateNewAssessment(currentUserId);            
+            return man.CreateNewAssessment(currentUserId, mode);            
         }
 
 

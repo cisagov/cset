@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -264,6 +264,7 @@ import { CmmcFilteringService } from './services/filtering/maturity-filtering/cm
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
+import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
 
 @NgModule({
     imports: [
@@ -482,6 +483,7 @@ import { PlaceholderQuestionsComponent } from './assessment/questions/placeholde
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        FeatureOptionComponent,
     ],
     providers: [
         ConfigService,

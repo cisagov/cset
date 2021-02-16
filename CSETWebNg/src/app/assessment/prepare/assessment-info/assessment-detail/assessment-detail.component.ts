@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
+import { MaturityService } from '../../../../services/maturity.service';
 
 
 @Component({
@@ -43,8 +44,8 @@ export class AssessmentDetailComponent implements OnInit {
    * 
    */
   constructor(
-    private route: ActivatedRoute,
     private assessSvc: AssessmentService,
+    private maturitySvc: MaturityService,
     public navSvc: NavigationService,
     public configSvc: ConfigService, 
     public datePipe: DatePipe
@@ -59,7 +60,6 @@ export class AssessmentDetailComponent implements OnInit {
   ngOnInit() {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
-    
     }
   }
 
@@ -71,10 +71,23 @@ export class AssessmentDetailComponent implements OnInit {
     return (String(padChar).repeat(size) + text).substr((size * -1), size);
   }
 
+  /**
+   * Called every time this page is loaded.  
+   */
   getAssessmentDetail() {
     this.assessSvc.getAssessmentDetail().subscribe(
       (data: AssessmentDetail) => {
         this.assessment = data;
+
+
+        // a few things for a brand new assessment
+        if (this.assessSvc.isBrandNew) {
+          // set up some ACET-specific things
+          if (this.assessSvc.acetOnly) {
+            this.assessSvc.setAcetDefaults();
+          }
+        }
+        this.assessSvc.isBrandNew = false;
 
         this.setCharterPad();
 
@@ -105,9 +118,11 @@ export class AssessmentDetailComponent implements OnInit {
     this.createAcetName();
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
-    // this.standardSvc.makeNavTree();
   }
 
+  /**
+   * 
+   */
   createAcetName() {
     if(this.configSvc.acetInstallation){
       this.assessment.AssessmentName = "ACET"
@@ -123,5 +138,4 @@ export class AssessmentDetailComponent implements OnInit {
       } 
     }
   }
-
 }

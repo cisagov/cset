@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using System;
 using System.Collections.Generic;
 using System.Linq;
