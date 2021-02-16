@@ -48,7 +48,7 @@
     "document-register-element": "^1.13.1",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
-    "gutenberg-css": "^0.4.7",
+    "gutenberg-css": "^0.6.1",
     "handlebars": "^4.7.7",
     "intersection-observer": "^0.11.0",
     "jquery": "^3.5.1",
