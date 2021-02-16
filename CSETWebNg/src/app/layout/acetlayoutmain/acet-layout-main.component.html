@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2020 Battelle Energy Alliance, LLC
+   Copyright 2021 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <div class="navbar-nav" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+      <div class="navbar-nav" *ngIf="auth.userToken() && auth.userToken() !== 'null' && !isACET()">
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
           href="index.html?returnPath=resource-library" target="csetResourceLibrary"
           *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">

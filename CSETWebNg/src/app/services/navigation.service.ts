@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -523,7 +523,11 @@ export class NavigationService {
       displayText: 'Maturity Models',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
-      condition: () => { return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseMaturity }
+      condition: () => { 
+        return !!this.assessSvc.assessment 
+        && this.assessSvc.assessment?.UseMaturity 
+        && !this.assessSvc.acetOnly
+      }
     },
     {
       displayText: 'CMMC Tutorial',
@@ -814,7 +818,11 @@ export class NavigationService {
     },
 
 
-    { displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview' },
+    { displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
+      condition: () => {
+        return !this.configSvc.acetInstallation;
+      }
+  },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
     { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }

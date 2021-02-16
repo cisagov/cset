@@ -1,0 +1,51 @@
+<!---------------------- 
+
+   Copyright 2021 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="standard-item d-flex justify-content-between flex-11a">
+    <div>
+        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1" [disabled]="assessSvc.acetOnly && feature.code == 'standard'"
+            (change)="submit(feature, $event)" [checked]="feature.selected">
+        <label for="{{feature.code}}" [class.o65]="assessSvc.acetOnly && feature.code == 'standard'">
+            {{feature.label}}
+        </label>
+    </div>
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()"
+        tabindex="0"></i>
+</div>
+<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc">
+    {{feature.description}}
+</div>
+
+<div class="d-flex justify-content-between pl-4" *ngIf="feature.code == 'maturity' && configSvc.acetInstallation && assessSvc.assessment?.UseMaturity">
+    <div>
+        <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"
+            (change)="submit('acet-only', $event)" [checked]="assessSvc.acetOnly">
+        <label for="acet-only">
+            ACET Only
+        </label>
+    </div>
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedAcet" (click)="toggleExpansionAcet()"
+        tabindex="0"></i>
+</div>
+<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedAcet" [class.closed-desc]="!expandedAcet">
+    The ACET Only mode is selected by default for ACET users. When selected you will see ACET-specific functionality.
+</div>

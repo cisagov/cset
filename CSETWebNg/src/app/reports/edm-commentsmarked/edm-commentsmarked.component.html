@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -51,28 +51,35 @@
         </div>
     </div>
     <div class="page-break">  
-
         <div>
             <h1 class="page-title">Questions Marked for Review</h1>
-            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                    src="../../../assets/images/icons/MarkedFlag.png"></p>
+           
             <hr class="page-line">
+             <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                    src="../../../assets/images/icons/MarkedFlag.png"></p>
             <div>
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b>   
-                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                                    src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review">
-                            </td>
-                            <td class="deficiencies-list-comment" [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
-                            <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
+                            <td class="deficiencies-list-comment" [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
+                            <td style="padding-top:1rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
                         <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                         <ng-template #c_comments_given>
                             <tr>
-                                <td class="deficiencies-list-item pt-1"><b>Comment:</b></td>
-                                <td colspan="3" class="deficiencies-list-comment pt-1">{{s.ANSWER.Comment}}</td>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                        <table>
+                                            <tr>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
                         </ng-template>
                     </ng-template>
@@ -84,27 +91,34 @@
                 </table>
             </div>
         </div>
-
         <div>
             <h1 class="page-title">Statement Comments</h1>
-            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                    src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             <hr class="page-line">
+            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             <div >
                 <table>
                     <ng-template ngFor let-s [ngForOf]="response?.Comments">
                         <tr>
-                            <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b>
-                                <img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png">
-                            </td>
-                            <td class="deficiencies-list-comment" [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
-                            <td class="deficiencies-list-question-text">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
+                            <td class="deficiencies-list-comment" [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
+                            <td style="padding-top:1rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
                         <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
                         <ng-template #sc_comments_given>
                             <tr>
-                                <td class="deficiencies-list-item pt-1"><b>Comment:</b></td>
-                                <td colspan="3" class="deficiencies-list-comment pt-1">{{s.ANSWER.Comment}}</td>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                        <table>
+                                            <tr>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
                         </ng-template>
                         <tr>

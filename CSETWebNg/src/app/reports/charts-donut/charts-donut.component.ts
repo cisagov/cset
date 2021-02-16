@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ export class ChartsDonutComponent implements OnInit {
   showLegend: boolean = false;
   showLabels: boolean = false;
   view: any[] = [600,200];
+  label: string = "Total %"
   
   minWidth: any = 100;
   colorScheme = {

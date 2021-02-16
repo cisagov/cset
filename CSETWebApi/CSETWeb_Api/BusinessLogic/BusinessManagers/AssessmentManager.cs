@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,12 +24,12 @@ namespace CSETWeb_Api.BusinessManagers
     public class AssessmentManager
     {
 
-        public AssessmentDetail CreateNewAssessment(int currentUserId)
+        public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
         {
             DateTime nowUTC = Utilities.UtcToLocal(DateTime.UtcNow);
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = "New Assessment",
+                AssessmentName = mode ? "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
