@@ -17,7 +17,7 @@
     "@angular-devkit/build-webpack": "^0.1002.1",
     "@angular-devkit/schematics": "^11.2.0",
     "@angular/animations": "^11.2.0",
-    "@angular/cdk": "^10.2.7",
+    "@angular/cdk": "^11.2.0",
     "@angular/cli": "^11.2.0",
     "@angular/common": "^11.2.0",
     "@angular/compiler": "^11.2.0",
