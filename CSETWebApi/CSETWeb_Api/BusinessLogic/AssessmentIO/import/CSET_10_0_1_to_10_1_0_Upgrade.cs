@@ -1,4 +1,10 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json.Linq;
 

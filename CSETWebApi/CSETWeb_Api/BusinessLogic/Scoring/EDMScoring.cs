@@ -1,4 +1,10 @@
-﻿using DataLayerCore.Model;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

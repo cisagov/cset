@@ -1,4 +1,10 @@
-﻿using CSETWeb_Api.BusinessLogic.ImportAssessment;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
