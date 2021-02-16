@@ -46,7 +46,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/MaturityModel/DomainRemarks")]
         public List<MaturityDomainRemarks> GetDomainRemarks()
         {
-            int assessmentId = Auth.AssessmentForUser();            
+            int assessmentId = Auth.AssessmentForUser();
             return new MaturityManager().GetDomainRemarks(assessmentId);
         }
 
@@ -85,7 +85,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/MaturityLevel")]
         public IHttpActionResult SetMaturityLevel([FromBody] int level)
         {
-            int assessmentId = Auth.AssessmentForUser();            
+            int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
@@ -99,8 +99,8 @@ namespace CSETWeb_Api.Controllers
         public object GetQuestions([FromUri] bool isAcetInstallation)
         {
             int assessmentId = Auth.AssessmentForUser();
-            
-            return new MaturityManager().GetMaturityQuestions(assessmentId,isAcetInstallation);
+
+            return new MaturityManager().GetMaturityQuestions(assessmentId, isAcetInstallation);
         }
 
 
@@ -206,6 +206,11 @@ namespace CSETWeb_Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// get maturity definiciency list
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityDeficiencyList")]
         public IHttpActionResult GetDeficiencyList([FromUri]string maturity)
@@ -220,12 +225,17 @@ namespace CSETWeb_Api.Controllers
                 data.information = reportsDataManager.GetInformation();
                 return Ok(data);
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 return Ok();
             }
         }
 
+        /// <summary>
+        /// get all comments and marked for review
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/getCommentsMarked")]
         public MaturityBasicReportData GetCommentsMarked(string maturity)
@@ -237,6 +247,24 @@ namespace CSETWeb_Api.Controllers
             data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList(maturity);
             data.information = reportsDataManager.GetInformation();
             return data;
+        }
+
+        [HttpGet]
+        [Route("api/getEdmScores")]
+        public IHttpActionResult GetEdmScores()
+        {
+            try
+            {
+                int assessmentId = Auth.AssessmentForUser();
+                MaturityManager maturityManager = new MaturityManager();
+                var scores = maturityManager.GetEdmScores(assessmentId);
+
+                return Ok(scores);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
     }
 }
