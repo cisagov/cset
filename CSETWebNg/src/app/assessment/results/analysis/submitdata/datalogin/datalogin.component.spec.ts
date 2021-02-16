@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DataloginComponent } from './datalogin.component';
 
@@ -29,7 +29,7 @@ describe('DataloginComponent', () => {
   let component: DataloginComponent;
   let fixture: ComponentFixture<DataloginComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DataloginComponent ]
     })
