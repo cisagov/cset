@@ -25,7 +25,7 @@
     "@angular/elements": "^11.2.0",
     "@angular/flex-layout": "^6.0.0-beta.18",
     "@angular/forms": "^11.2.0",
-    "@angular/material": "^10.2.7",
+    "@angular/material": "^11.2.0",
     "@angular/platform-browser": "^11.2.0",
     "@angular/platform-browser-dynamic": "^11.2.0",
     "@angular/platform-server": "^11.2.0",
