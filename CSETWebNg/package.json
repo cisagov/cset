@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-webpack": "^0.1102.0",
+    "@angular-devkit/build-webpack": "^0.1102.1",
     "@angular-devkit/schematics": "^11.2.0",
     "@angular/animations": "^11.2.0",
     "@angular/cdk": "^11.2.0",
