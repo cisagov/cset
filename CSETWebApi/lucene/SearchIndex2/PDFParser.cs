@@ -52,7 +52,7 @@ namespace SearchIndex
             Debug.WriteLine("DocID: " + doc_id);
 
             StringBuilder keyTextBuilder = new StringBuilder();
-            foreach (FILE_KEYWORDS keywordobj in doc.FILE_KEYWORDS.ToList())
+            foreach (FILE_KEYWORDS keywordobj in doc.FILE_KEYWORDs.ToList())
             {
                 keyTextBuilder.Append(keywordobj.Keyword + " ");
  

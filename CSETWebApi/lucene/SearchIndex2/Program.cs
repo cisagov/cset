@@ -47,25 +47,12 @@ namespace SearchIndex
             string luceneIndexDir = solutionPath + @"\CSETWeb_Api\CSETWeb_Api\LuceneIndex2";
             string luceneIndexDestDir = solutionPath + @"\CSETWeb_Api\CSETWeb_Api\LuceneIndex"; 
             
-            CSETWebEntities entity = new CSETWebEntities();
-            Dictionary<int, GEN_FILE> dictionaryGenFiles = new Dictionary<int, GEN_FILE>();
+            CsetwebContext entity = new CsetwebContext();
+            Dictionary<int, GEN_FILE> dictionaryGenFiles = entity.GEN_FILE.ToDictionary(x => x.Gen_File_Id, x=>x);
+
             List<REF_LIBRARY_PATH> listLibDocs = entity.REF_LIBRARY_PATH.ToList();
             int count = 0;
             Debug.WriteLine("Number of Resource Nodes: " + listLibDocs.Count);
-            foreach (REF_LIBRARY_PATH resnodes in listLibDocs)
-            {
-
-                foreach (GEN_FILE file in resnodes.GEN_FILE)
-                {
-                    if (!dictionaryGenFiles.ContainsKey(file.Gen_File_Id))
-                    {
-                        dictionaryGenFiles.Add(file.Gen_File_Id, file);
-                    }
-                }
-
-
-
-            }
 
 
             if (System.IO.Directory.Exists(luceneIndexDir))
