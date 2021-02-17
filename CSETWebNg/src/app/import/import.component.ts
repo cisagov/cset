@@ -30,7 +30,8 @@ import { interval, Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators/debounce';
 import { startWith } from 'rxjs/operators/startWith';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
-import * as screenfull from 'screenfull';
+import * as screenfull from "screenfull";
+import {Screenfull} from "screenfull";
 import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
@@ -250,15 +251,15 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public getFullScreen() {
-    return screenfull && screenfull.isFullscreen;
+    return screenfull && (screenfull as Screenfull).isFullscreen;
   }
 
   public fullScreen() {
     if (screenfull) {
-      if (!screenfull.isFullscreen) {
-        screenfull.request(this.codeContainer.nativeElement);
+      if (!(screenfull as Screenfull).isFullscreen) {
+        (screenfull as Screenfull).request(this.codeContainer.nativeElement);
       } else {
-        screenfull.exit();
+        (screenfull as Screenfull).exit();
       }
     }
   }
@@ -268,7 +269,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     private fileClient: FileUploadClientService,
     private sanitizer: DomSanitizer,
     private editorService: CodeEditorService
-  ) {
+  ) {    
     // hardcoding the polyfill here, as ugly as that is TODO:  Remove
     Promise.all = function (values: any): Promise<any> {
       let resolve: (v: any) => void;

@@ -30,8 +30,7 @@ import * as $ from 'jquery';
 
 @Component({
   selector: 'app-cmmc-gaps',
-  templateUrl: './cmmc-gaps.component.html',
-  styleUrls: ['/sass/cmmc-results.scss'],
+  templateUrl: './cmmc-gaps.component.html',  
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
