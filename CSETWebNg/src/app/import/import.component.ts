@@ -250,12 +250,12 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public getFullScreen() {
-    return screenfull && screenfull.isEnabled;
+    return screenfull && screenfull.isFullscreen;
   }
 
   public fullScreen() {
     if (screenfull) {
-      if (!screenfull.isEnabled) {
+      if (!screenfull.isFullscreen) {
         screenfull.request(this.codeContainer.nativeElement);
       } else {
         screenfull.exit();
