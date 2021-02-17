@@ -326,6 +326,11 @@ export class AssessmentService {
       this.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
 
+        // make sure that the acet only switch is turned off when in standard CSET
+        if (!this.configSvc.acetInstallation) {
+          this.assessment.IsAcetOnly = false;
+        }
+
         const rpath = localStorage.getItem('returnPath');
         if (rpath != null) {
           localStorage.removeItem('returnPath');
