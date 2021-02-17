@@ -25,7 +25,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   AssessmentContactsResponse,
-  AssessmentDetail
+  AssessmentDetail,
+  MaturityModel
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
@@ -68,6 +69,8 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
+  public allMaturityModels: MaturityModel[];
+
 
   /**
    * Indicates if a brand-new assessment is being created.
@@ -88,6 +91,12 @@ export class AssessmentService {
       this.apiUrl = this.configSvc.apiUrl;
       this.http.get(this.apiUrl + 'contacts/allroles')
         .subscribe((response: Role[]) => (this.roles = response));
+        this.http.get(
+          this.configSvc.apiUrl + "MaturityModels",
+          headers
+        ).subscribe((data: MaturityModel[]) => {
+          this.allMaturityModels = data;
+        });
       this.initialized = true;
     }
   }
@@ -335,7 +344,7 @@ export class AssessmentService {
   setAcetDefaults() {
     if (!!this.assessment) {
       this.assessment.UseMaturity = true;
-      this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == 'ACET');
+      this.assessment.MaturityModel = this.allMaturityModels.find(m => m.ModelName == 'ACET');
       this.assessment.IsAcetOnly = true;
 
       this.assessment.UseStandard = false;
@@ -408,7 +417,7 @@ export class AssessmentService {
    * @param modelName 
    */
   setModel(modelName: string) {
-    this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == modelName);
+    this.assessment.MaturityModel = this.allMaturityModels.find(m => m.ModelName == modelName);
   }
 
   /**
